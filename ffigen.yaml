@@ -1,0 +1,74 @@
+name: CvNative
+description: |
+  Native bindings for OpenCV
+output: 
+  bindings: lib/src/opencv.g.dart
+  # symbol-file:
+  #   # Although file paths are supported here, prefer Package Uri's here
+  #   # so that other pacakges can use them.
+  #   output: 'package:opencv_dart/src/symbols.yaml'
+  #   import-path: 'package:opencv_dart/base.dart'
+# ffi-native:
+#   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+compiler-opts: ""
+headers:
+  entry-points:
+    - src/gocv/aruco.h
+    - src/gocv/asyncarray.h
+    - src/gocv/calib3d.h
+    - src/gocv/core.h
+    - src/gocv/dnn.h
+    - src/gocv/features2d.h
+    - src/gocv/highgui_gocv.h
+    - src/gocv/imgcodecs.h
+    - src/gocv/imgproc.h
+    - src/gocv/objdetect.h
+    - src/gocv/photo.h
+    - src/gocv/svd.h
+    - src/gocv/version.h
+    - src/gocv/video.h
+    - src/gocv/videoio.h
+  include-directives:
+    - src/gocv/aruco.h
+    - src/gocv/asyncarray.h
+    - src/gocv/calib3d.h
+    - src/gocv/core.h
+    - src/gocv/dnn.h
+    - src/gocv/features2d.h
+    - src/gocv/highgui_gocv.h
+    - src/gocv/imgcodecs.h
+    - src/gocv/imgproc.h
+    - src/gocv/objdetect.h
+    - src/gocv/photo.h
+    - src/gocv/svd.h
+    - src/gocv/version.h
+    - src/gocv/video.h
+    - src/gocv/videoio.h
+functions:
+  symbol-address:
+    include:
+      - '.*' # Do this to expose all function pointers.
+    exclude: # If you only use exclude, then everything not excluded is generated.
+      - 'dispose'
+
+# globals:
+#   exclude:
+#     - _*
+# structs:
+#   # exclude:
+#   #   - _*
+#   rename:
+#     'Mat': 'CMat'
+
+
+preamble: |
+  // opencv_dart - OpenCV bindings for Dart language
+  //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: any
+  length: full

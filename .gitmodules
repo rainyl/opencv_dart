@@ -1,0 +1,3 @@
+[submodule "src/gocv"]
+	path = src/gocv
+	url = https://github.com/rainyl/gocv.git
