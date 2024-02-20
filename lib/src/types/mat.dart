@@ -1,11 +1,9 @@
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
-import 'dart:math';
 
 import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/src/types/rect.dart';
 import 'package:opencv_dart/src/types/scalar.dart';
-import 'package:w_common/disposable.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'mat_type.dart';

@@ -6,15 +6,8 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../cv_exception.dart';
-import '../types/mat_type.dart';
-import '../types/contours.dart';
-import '../types/scalar.dart';
 import '../types/types.dart';
-import '../types/point.dart';
 import '../types/mat.dart';
-import '../types/rect.dart';
-import '../types/moments.dart';
-import '../types/extensions.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 

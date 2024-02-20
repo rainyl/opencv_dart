@@ -1,8 +1,6 @@
-@Skip("Disaled temporarily")
 import 'dart:io';
 
 import 'package:test/test.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 

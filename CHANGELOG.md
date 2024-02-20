@@ -1,3 +1,4 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Initial Release
+* Implemented: imgproc, imgcodecs, core, video, need to be tested!

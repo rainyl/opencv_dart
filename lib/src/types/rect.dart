@@ -6,8 +6,6 @@ import '../opencv.g.dart' as cvg;
 import 'types.dart';
 import 'point.dart';
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
-
 class Rect extends CvObject with EquatableMixin {
   Rect._(this._ptr) : super(_ptr) {
     _finalizer.attach(this, _ptr);

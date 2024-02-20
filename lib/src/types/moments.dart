@@ -3,7 +3,6 @@ import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'types.dart';
-import 'point.dart';
 
 class Moments extends CvObject {
   Moments._(this._ptr) : super(_ptr) {

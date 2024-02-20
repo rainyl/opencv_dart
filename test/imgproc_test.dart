@@ -1,13 +1,7 @@
 // @Skip()
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:test/test.dart';
-import 'package:ffi/ffi.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/src/opencv.g.dart' as cvg;
 
 void main() async {
   // String libPath = Platform.environment["OPENCV_DART_LIB_DIR"] ?? ".";
@@ -78,7 +72,7 @@ void main() async {
     expect(contours.length, greaterThan(0));
     expect(hierarchy.isEmpty, equals(false));
     expect(
-      List.generate(contours.length, (index) => contours?[index].length)
+      List.generate(contours.length, (index) => contours[index].length)
           .every((element) => element == 4),
       equals(true),
     );

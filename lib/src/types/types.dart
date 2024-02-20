@@ -2,12 +2,6 @@ library cv;
 
 import 'dart:ffi' as ffi;
 import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:ffi/ffi.dart';
-import 'package:w_common/disposable.dart';
-
-import '../opencv.g.dart' as cvg;
 
 const _libraryName = "opencv_dart";
 
@@ -15,8 +9,6 @@ const _libraryName = "opencv_dart";
 const double CV_PI = 3.1415926535897932384626433832795;
 const double CV_2PI = 6.283185307179586476925286766559;
 const double CV_LOG2 = 0.69314718055994530941723212145818;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 ffi.DynamicLibrary loadNativeLibrary() {
   if (Platform.isWindows) {

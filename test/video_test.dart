@@ -1,12 +1,6 @@
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:test/test.dart';
-import 'package:ffi/ffi.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/src/opencv.g.dart' as cvg;
 
 void main() async{
   test('cv.VideoWriter.empty', () {

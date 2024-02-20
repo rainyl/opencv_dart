@@ -34,6 +34,14 @@ OpenCV Bindings for Dart Language.
   - [ ] test
 - [x] videoio
   - [ ] test
+- [ ] cuda
+  - [ ] test
+- [ ] contrib
+  - [ ] test
+
+### Others
+
+- [ ] add more examples
 
 ## Acknowledgement
 

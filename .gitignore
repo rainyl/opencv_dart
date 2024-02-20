@@ -5,7 +5,6 @@ bak/
 .vscode/
 .bak/
 .pytest_cache/
-example/
 test/_data/
 ffigen/
 ffigen_test/

@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:ffi' as ffi;
 
 import 'types.dart';
 import '../opencv.g.dart' as cvg;

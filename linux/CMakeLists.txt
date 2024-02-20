@@ -11,12 +11,17 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 # This can be changed to accommodate different builds.
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
+file(GLOB opencv_dart_libs
+  "${CMAKE_CURRENT_SOURCE_DIR}/libs/*"
+)
+
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(opencv_dart_bundled_libraries
   # Defined in ../src/CMakeLists.txt.
   # This can be changed to accommodate different builds.
-  $<TARGET_FILE:opencv_dart>
+  # $<TARGET_FILE:opencv_dart>
+  ${opencv_dart_libs}
   PARENT_SCOPE
 )
