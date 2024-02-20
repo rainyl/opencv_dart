@@ -1,5 +1,5 @@
 gocv/
-# test/
+test/
 bak/
 scripts/
 opencv_dart.iml

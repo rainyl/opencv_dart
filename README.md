@@ -2,6 +2,8 @@
 
 OpenCV Bindings for Dart Language.
 
+**!!!This package is experiment and APIs may change in the future!!!**
+
 ## TODO
 
 ### Bindings
