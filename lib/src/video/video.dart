@@ -4,11 +4,11 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../types/mat_type.dart';
-import '../types/types.dart';
-import '../types/mat.dart';
-import '../types/rect.dart';
-import '../types/extensions.dart';
+import '../core/mat_type.dart';
+import '../core/base.dart';
+import '../core/mat.dart';
+import '../core/rect.dart';
+import '../core/extensions.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -84,7 +84,7 @@ class BackgroundSubtractorKNN extends CvObject {
 
   cvg.BackgroundSubtractorKNN _ptr;
   @override
-  ffi.Pointer<ffi.NativeType> get ptr => _ptr;
+  cvg.BackgroundSubtractorKNN get ptr => _ptr;
 
   @override
   ffi.NativeType get ref => throw UnsupportedError("");
@@ -93,13 +93,13 @@ class BackgroundSubtractorKNN extends CvObject {
   ffi.NativeType toNative() => throw UnsupportedError("");
 }
 
-// NewBackgroundSubtractorMOG2 returns a new BackgroundSubtractor algorithm
-// of type MOG2. MOG2 is a Gaussian Mixture-based Background/Foreground
-// Segmentation Algorithm.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/de/de1/group__video__motion.html#ga2beb2dee7a073809ccec60f145b6b29c
-// https://docs.opencv.org/master/d7/d7b/classcv_1_1BackgroundSubtractorMOG2.html
+/// NewBackgroundSubtractorMOG2 returns a new BackgroundSubtractor algorithm
+/// of type MOG2. MOG2 is a Gaussian Mixture-based Background/Foreground
+/// Segmentation Algorithm.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/de/de1/group__video__motion.html#ga2beb2dee7a073809ccec60f145b6b29c
+/// https://docs.opencv.org/master/d7/d7b/classcv_1_1BackgroundSubtractorMOG2.html
 BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   int history = 500,
   double varThreshold = 16,
@@ -113,16 +113,16 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   ));
 }
 
-// Apply computes a foreground mask using the current BackgroundSubtractorMOG2.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/d7/df6/classcv_1_1BackgroundSubtractor.html#aa735e76f7069b3fa9c3f32395f9ccd21
+/// Apply computes a foreground mask using the current BackgroundSubtractorMOG2.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/df6/classcv_1_1BackgroundSubtractor.html#aa735e76f7069b3fa9c3f32395f9ccd21
 
-// CalcOpticalFlowFarneback computes a dense optical flow using
-// Gunnar Farneback's algorithm.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga5d10ebbd59fe09c5f650289ec0ece5af
+/// CalcOpticalFlowFarneback computes a dense optical flow using
+/// Gunnar Farneback's algorithm.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga5d10ebbd59fe09c5f650289ec0ece5af
 
 void calcOpticalFlowFarneback(
   InputArray prev,
@@ -150,11 +150,11 @@ void calcOpticalFlowFarneback(
   );
 }
 
-// CalcOpticalFlowPyrLK calculates an optical flow for a sparse feature set using
-// the iterative Lucas-Kanade method with pyramids.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga473e4b886d0bcc6b65831eb88ed93323
+/// CalcOpticalFlowPyrLK calculates an optical flow for a sparse feature set using
+/// the iterative Lucas-Kanade method with pyramids.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga473e4b886d0bcc6b65831eb88ed93323
 void calcOpticalFlowPyrLK(
   InputArray prevImg,
   InputArray nextImg,
@@ -186,10 +186,10 @@ void calcOpticalFlowPyrLK(
   });
 }
 
-// FindTransformECC finds the geometric transform (warp) between two images in terms of the ECC criterion.
-//
-// For futther details, please see:
-// https://docs.opencv.org/4.x/dc/d6b/group__video__track.html#ga1aa357007eaec11e9ed03500ecbcbe47
+/// FindTransformECC finds the geometric transform (warp) between two images in terms of the ECC criterion.
+///
+/// For futther details, please see:
+/// https://docs.opencv.org/4.x/dc/d6b/group__video__track.html#ga1aa357007eaec11e9ed03500ecbcbe47
 double findTransformECC(
   InputArray templateImage,
   InputArray inputImage,
@@ -210,9 +210,9 @@ double findTransformECC(
   );
 }
 
-// Tracker is the base interface for object tracking.
-//
-// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
+/// Tracker is the base interface for object tracking.
+///
+/// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
 class TrackerMIL extends CvObject {
   TrackerMIL(this._ptr) : super(_ptr) {
     finalizer.attach(this, _ptr);
@@ -245,12 +245,12 @@ class TrackerMIL extends CvObject {
   ffi.NativeType toNative() => throw UnsupportedError("");
 }
 
-// KalmanFilter implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter.
-// However, you can modify transitionMatrix, controlMatrix, and measurementMatrix
-// to get an extended Kalman filter functionality.
-//
-// For further details, please see:
-// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
+/// KalmanFilter implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter.
+/// However, you can modify transitionMatrix, controlMatrix, and measurementMatrix
+/// to get an extended Kalman filter functionality.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
 class KalmanFilter extends CvObject {
   KalmanFilter(this._ptr) : super(_ptr) {
     finalizer.attach(this, _ptr);

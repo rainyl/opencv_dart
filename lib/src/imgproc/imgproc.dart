@@ -4,14 +4,14 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../types/contours.dart';
-import '../types/scalar.dart';
-import '../types/types.dart';
-import '../types/point.dart';
-import '../types/mat.dart';
-import '../types/rect.dart';
-import '../types/moments.dart';
-import '../types/extensions.dart';
+import '../core/contours.dart';
+import '../core/scalar.dart';
+import '../core/base.dart';
+import '../core/point.dart';
+import '../core/mat.dart';
+import '../core/rect.dart';
+import '../core/moments.dart';
+import '../core/extensions.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 

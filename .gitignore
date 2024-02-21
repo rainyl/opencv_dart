@@ -13,6 +13,7 @@ ffigen_cuda.yaml
 replace.py
 generate.py
 demo.c
+coverage/
 
 # Files and directories created by pub
 .dart_tool/

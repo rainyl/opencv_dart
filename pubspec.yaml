@@ -1,6 +1,6 @@
 name: opencv_dart
 description: "OpenCV4 bindings for Dart language"
-version: 0.0.2
+version: 0.0.3-dev.0
 homepage: https://github.com/rainyl/opencv_dart
 
 environment:
@@ -18,16 +18,8 @@ dependencies:
 dev_dependencies:
   ffigen: ^11.0.0
   image: ^4.1.4
-  args: ^2.4.2
-  yaml: ^3.1.2
-  yaml_writer: ^2.0.0
-  path: ^1.9.0
-  native_assets_cli: ^0.4.2
-  native_toolchain_c: ^0.3.4+1
-  glob: ^2.1.2
   logging: ^1.2.0
   test: ^1.25.2
-  pana: ^0.22.1
 
 topics:
   - opencv

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
-import 'types.dart';
+import 'base.dart';
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 

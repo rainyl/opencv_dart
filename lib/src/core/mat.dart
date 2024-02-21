@@ -2,12 +2,12 @@ import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/types/rect.dart';
-import 'package:opencv_dart/src/types/scalar.dart';
+import 'package:opencv_dart/src/core/rect.dart';
+import 'package:opencv_dart/src/core/scalar.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'mat_type.dart';
-import 'types.dart';
+import 'base.dart';
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 

@@ -55,11 +55,20 @@ extension RecordSizeExtension on ({int width, int height}) {
   }
 }
 
+extension RecordSizeExtension1 on (int, int) {
+  ffi.Pointer<cvg.Size> toSize(Arena arena) {
+    final size = arena<cvg.Size>()
+      ..ref.width = this.$1
+      ..ref.height = this.$2;
+    return size;
+  }
+}
+
 extension RecordPointExtension on ({int x, int y}) {
   ffi.Pointer<cvg.Point> toPoint(Arena arena) {
-    final size = arena<cvg.Point>()
+    final point = arena<cvg.Point>()
       ..ref.x = this.x
       ..ref.y = this.y;
-    return size;
+    return point;
   }
 }

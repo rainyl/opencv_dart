@@ -1,7 +1,7 @@
 library cv;
 
 import 'package:equatable/equatable.dart';
-import '../cv_exception.dart';
+import 'cv_exception.dart';
 
 class MatType extends Equatable {
   final int value;

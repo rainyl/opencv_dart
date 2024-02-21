@@ -1,8 +1,8 @@
 import 'dart:ffi' as ffi;
 
 import '../opencv.g.dart' as cvg;
-import '../types/types.dart';
-import '../types/mat.dart';
+import 'base.dart';
+import 'mat.dart';
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 

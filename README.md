@@ -8,7 +8,7 @@ OpenCV Bindings for Dart Language.
 
 ### Bindings
 
-- [ ] aruco
+- [x] aruco
   - [ ] test
 - [ ] asyncarray
   - [ ] test
@@ -18,19 +18,19 @@ OpenCV Bindings for Dart Language.
   - [ ] test
 - [ ] dnn
   - [ ] test
-- [ ] features2d
+- [x] features2d
   - [ ] test
-- [ ] highgui
+- [x] highgui
   - [ ] test
 - [x] imgcodecs
   - [ ] test
 - [x] imgproc
   - [ ] test
-- [ ] objdetect
+- [x] objdetect
   - [ ] test
 - [ ] photo
   - [ ] test
-- [ ] svd
+- [x] svd
   - [ ] test
 - [x] video
   - [ ] test

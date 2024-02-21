@@ -38,6 +38,20 @@ class CvNative {
       _ArucoDetectorParameters_CreatePtr.asFunction<
           ArucoDetectorParameters Function()>();
 
+  void ArucoDetectorParameters_Close(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_Close(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_Close');
+  late final _ArucoDetectorParameters_Close = _ArucoDetectorParameters_ClosePtr
+      .asFunction<void Function(ArucoDetectorParameters)>();
+
   void ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
     ArucoDetectorParameters ap,
     int adaptiveThreshWinSizeMin,
@@ -10484,20 +10498,22 @@ class CvNative {
     Mat w,
     Mat u,
     Mat vt,
+    int flags,
   ) {
     return _SVD_Compute(
       src,
       w,
       u,
       vt,
+      flags,
     );
   }
 
-  late final _SVD_ComputePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>(
-          'SVD_Compute');
+  late final _SVD_ComputePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, ffi.Int)>>(
+      'SVD_Compute');
   late final _SVD_Compute =
-      _SVD_ComputePtr.asFunction<void Function(Mat, Mat, Mat, Mat)>();
+      _SVD_ComputePtr.asFunction<void Function(Mat, Mat, Mat, Mat, int)>();
 
   ffi.Pointer<ffi.Char> openCVVersion() {
     return _openCVVersion();
@@ -11654,6 +11670,9 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ArucoDetectorParameters Function()>>
       get ArucoDetectorParameters_Create =>
           _library._ArucoDetectorParameters_CreatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_Close =>
+          _library._ArucoDetectorParameters_ClosePtr;
   ffi.Pointer<
           ffi
           .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
@@ -13532,7 +13551,8 @@ class _SymbolAddresses {
           ffi
           .NativeFunction<ffi.Void Function(Mat, Mat, Mat, ffi.Float, ffi.Int)>>
       get PhotoInpaint => _library._PhotoInpaintPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, ffi.Int)>>
       get SVD_Compute => _library._SVD_ComputePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>
       get openCVVersion => _library._openCVVersionPtr;

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
-import 'types.dart';
+import 'base.dart';
 import 'point.dart';
 
 class Rect extends CvObject with EquatableMixin {
@@ -40,6 +40,22 @@ class Rect extends CvObject with EquatableMixin {
 
   @override
   String toString() => "Rect($x, $y, $width, $height)";
+}
+
+abstract class Rects{
+  static List<Rect> toList(cvg.Rects rects){
+    return List.generate(rects.length, (i) => Rect.fromNative(rects.rects[i]));
+  }
+}
+
+extension ListRectExtension on List<Rect> {
+  ffi.Pointer<cvg.Rects> toNative(Arena arena){
+    final vec = arena<cvg.Rects>()..ref.length = this.length;
+    for (var i = 0; i < this.length; i++) {
+      vec.ref.rects[i] = this[i].toNative();
+    }
+    return vec;
+  }
 }
 
 class RotatedRect extends CvObject {

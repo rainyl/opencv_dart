@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'types.dart';
+import 'base.dart';
 import '../opencv.g.dart' as cvg;
 import 'point.dart';
 
