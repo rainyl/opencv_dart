@@ -44,6 +44,8 @@ OpenCV Bindings for Dart Language.
 ### Others
 
 - [ ] add more examples
+- [ ] modify C wrapper to catch exceptions
+- [ ] Native Assets
 
 ## Acknowledgement
 

@@ -2462,6 +2462,45 @@ class CvNative {
   late final _Mat_GetSChar3 =
       _Mat_GetSChar3Ptr.asFunction<int Function(Mat, int, int, int)>();
 
+  int Mat_GetUShort(
+    Mat m,
+    int row,
+    int col,
+  ) {
+    return _Mat_GetUShort(
+      m,
+      row,
+      col,
+    );
+  }
+
+  late final _Mat_GetUShortPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(Mat, ffi.Int, ffi.Int)>>(
+          'Mat_GetUShort');
+  late final _Mat_GetUShort =
+      _Mat_GetUShortPtr.asFunction<int Function(Mat, int, int)>();
+
+  int Mat_GetUShort3(
+    Mat m,
+    int x,
+    int y,
+    int z,
+  ) {
+    return _Mat_GetUShort3(
+      m,
+      x,
+      y,
+      z,
+    );
+  }
+
+  late final _Mat_GetUShort3Ptr = _lookup<
+          ffi
+          .NativeFunction<ffi.Uint16 Function(Mat, ffi.Int, ffi.Int, ffi.Int)>>(
+      'Mat_GetUShort3');
+  late final _Mat_GetUShort3 =
+      _Mat_GetUShort3Ptr.asFunction<int Function(Mat, int, int, int)>();
+
   int Mat_GetShort(
     Mat m,
     int row,
@@ -2953,6 +2992,69 @@ class CvNative {
   late final _Mat_DivideUChar =
       _Mat_DivideUCharPtr.asFunction<void Function(Mat, int)>();
 
+  void Mat_AddI32(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_AddI32(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_AddI32Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>(
+          'Mat_AddI32');
+  late final _Mat_AddI32 = _Mat_AddI32Ptr.asFunction<void Function(Mat, int)>();
+
+  void Mat_SubtractI32(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_SubtractI32(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_SubtractI32Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>(
+          'Mat_SubtractI32');
+  late final _Mat_SubtractI32 =
+      _Mat_SubtractI32Ptr.asFunction<void Function(Mat, int)>();
+
+  void Mat_MultiplyI32(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_MultiplyI32(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_MultiplyI32Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>(
+          'Mat_MultiplyI32');
+  late final _Mat_MultiplyI32 =
+      _Mat_MultiplyI32Ptr.asFunction<void Function(Mat, int)>();
+
+  void Mat_DivideI32(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_DivideI32(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_DivideI32Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>(
+          'Mat_DivideI32');
+  late final _Mat_DivideI32 =
+      _Mat_DivideI32Ptr.asFunction<void Function(Mat, int)>();
+
   void Mat_AddFloat(
     Mat m,
     double val,
@@ -2964,7 +3066,7 @@ class CvNative {
   }
 
   late final _Mat_AddFloatPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>(
           'Mat_AddFloat');
   late final _Mat_AddFloat =
       _Mat_AddFloatPtr.asFunction<void Function(Mat, double)>();
@@ -2980,7 +3082,7 @@ class CvNative {
   }
 
   late final _Mat_SubtractFloatPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>(
           'Mat_SubtractFloat');
   late final _Mat_SubtractFloat =
       _Mat_SubtractFloatPtr.asFunction<void Function(Mat, double)>();
@@ -2996,7 +3098,7 @@ class CvNative {
   }
 
   late final _Mat_MultiplyFloatPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>(
           'Mat_MultiplyFloat');
   late final _Mat_MultiplyFloat =
       _Mat_MultiplyFloatPtr.asFunction<void Function(Mat, double)>();
@@ -3012,10 +3114,74 @@ class CvNative {
   }
 
   late final _Mat_DivideFloatPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>(
           'Mat_DivideFloat');
   late final _Mat_DivideFloat =
       _Mat_DivideFloatPtr.asFunction<void Function(Mat, double)>();
+
+  void Mat_AddF64(
+    Mat m,
+    double val,
+  ) {
+    return _Mat_AddF64(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_AddF64Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>(
+          'Mat_AddF64');
+  late final _Mat_AddF64 =
+      _Mat_AddF64Ptr.asFunction<void Function(Mat, double)>();
+
+  void Mat_SubtractF64(
+    Mat m,
+    double val,
+  ) {
+    return _Mat_SubtractF64(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_SubtractF64Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>(
+          'Mat_SubtractF64');
+  late final _Mat_SubtractF64 =
+      _Mat_SubtractF64Ptr.asFunction<void Function(Mat, double)>();
+
+  void Mat_MultiplyF64(
+    Mat m,
+    double val,
+  ) {
+    return _Mat_MultiplyF64(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_MultiplyF64Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>(
+          'Mat_MultiplyF64');
+  late final _Mat_MultiplyF64 =
+      _Mat_MultiplyF64Ptr.asFunction<void Function(Mat, double)>();
+
+  void Mat_DivideF64(
+    Mat m,
+    double val,
+  ) {
+    return _Mat_DivideF64(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_DivideF64Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>(
+          'Mat_DivideF64');
+  late final _Mat_DivideF64 =
+      _Mat_DivideF64Ptr.asFunction<void Function(Mat, double)>();
 
   Mat Mat_MultiplyMatrix(
     Mat x,
@@ -12150,6 +12316,12 @@ class _SymbolAddresses {
   ffi.Pointer<
           ffi.NativeFunction<ffi.Int8 Function(Mat, ffi.Int, ffi.Int, ffi.Int)>>
       get Mat_GetSChar3 => _library._Mat_GetSChar3Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Uint16 Function(Mat, ffi.Int, ffi.Int)>>
+      get Mat_GetUShort => _library._Mat_GetUShortPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Uint16 Function(Mat, ffi.Int, ffi.Int, ffi.Int)>>
+      get Mat_GetUShort3 => _library._Mat_GetUShort3Ptr;
   ffi.Pointer<ffi.NativeFunction<ffi.Int16 Function(Mat, ffi.Int, ffi.Int)>>
       get Mat_GetShort => _library._Mat_GetShortPtr;
   ffi.Pointer<
@@ -12232,14 +12404,30 @@ class _SymbolAddresses {
       get Mat_MultiplyUChar => _library._Mat_MultiplyUCharPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Uint8)>>
       get Mat_DivideUChar => _library._Mat_DivideUCharPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>
+      get Mat_AddI32 => _library._Mat_AddI32Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>
+      get Mat_SubtractI32 => _library._Mat_SubtractI32Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>
+      get Mat_MultiplyI32 => _library._Mat_MultiplyI32Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Int32)>>
+      get Mat_DivideI32 => _library._Mat_DivideI32Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>
       get Mat_AddFloat => _library._Mat_AddFloatPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>
       get Mat_SubtractFloat => _library._Mat_SubtractFloatPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>
       get Mat_MultiplyFloat => _library._Mat_MultiplyFloatPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Float)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, float_t)>>
       get Mat_DivideFloat => _library._Mat_DivideFloatPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>
+      get Mat_AddF64 => _library._Mat_AddF64Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>
+      get Mat_SubtractF64 => _library._Mat_SubtractF64Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>
+      get Mat_MultiplyF64 => _library._Mat_MultiplyF64Ptr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, double_t)>>
+      get Mat_DivideF64 => _library._Mat_DivideF64Ptr;
   ffi.Pointer<ffi.NativeFunction<Mat Function(Mat, Mat)>>
       get Mat_MultiplyMatrix => _library._Mat_MultiplyMatrixPtr;
   ffi.Pointer<ffi.NativeFunction<Mat Function(Mat)>> get Mat_T =>
@@ -14183,6 +14371,10 @@ final class Mats extends ffi.Struct {
   external int length;
 }
 
+typedef float_t = ffi.Float;
+typedef Dartfloat_t = double;
+typedef double_t = ffi.Double;
+typedef Dartdouble_t = double;
 typedef TermCriteria = ffi.Pointer<ffi.Void>;
 typedef PointVector = ffi.Pointer<ffi.Void>;
 typedef PointsVector = ffi.Pointer<ffi.Void>;

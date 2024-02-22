@@ -9,7 +9,7 @@ class MatType extends Equatable {
   MatType(this.value);
   MatType.fromInt32(int v) : this(v);
 
-  int get depth => value & (0);
+  int get depth => value & (CV_DEPTH_MAX - 1);
   bool get isInteger => depth < CV_32F;
   int get channels => (value >> CV_CN_SHIFT) + 1;
 

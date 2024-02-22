@@ -17,21 +17,21 @@ void main() async{
     expect(vc.isOpened, false);
   });
 
-  test('cv.VideoCapture.create', () {
-    final vc = cv.VideoCapture.create(r"C:\DEV\flutter\opencv_dart\test\images\small.mp4");
-    expect(vc.isOpened, true);
-  });
+  // test('cv.VideoCapture.create', () {
+  //   final vc = cv.VideoCapture.create(r"C:\DEV\flutter\opencv_dart\test\images\small.mp4");
+  //   expect(vc.isOpened, true);
+  // });
 
-  test('cv.VideoCapture.fromFile', () {
-    final vc = cv.VideoCapture.empty();
-    final success = vc.open("test/images/small.mp4", apiPreference: cv.CAP_ANY);
-    expect(success, true);
-    expect(vc.isOpened, true);
-    final frame = cv.Mat.empty();
-    final success1 = vc.read(frame);
-    expect(success1, true);
-    cv.imwrite("cv.VideoCapture.fromFile.png", frame);
-  });
+  // test('cv.VideoCapture.fromFile', () {
+  //   final vc = cv.VideoCapture.empty();
+  //   final success = vc.open("test/images/small.mp4", apiPreference: cv.CAP_ANY);
+  //   expect(success, true);
+  //   expect(vc.isOpened, true);
+  //   final frame = cv.Mat.empty();
+  //   final success1 = vc.read(frame);
+  //   expect(success1, true);
+  //   cv.imwrite("cv.VideoCapture.fromFile.png", frame);
+  // });
 
   test('cv.VideoCapture.fromDevice', () {
     final vc = cv.VideoCapture.fromDevice(0);

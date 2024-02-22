@@ -1,21 +1,22 @@
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
+import 'dart:math' show pow;
 
+import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/rect.dart';
-import 'package:opencv_dart/src/core/scalar.dart';
 
-import '../opencv.g.dart' as cvg;
+import 'rect.dart';
+import 'scalar.dart';
 import 'mat_type.dart';
 import 'base.dart';
+import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-class Mat extends CvObject {
+class Mat extends CvObject with EquatableMixin {
   Mat._(this._ptr) : super(_ptr) {
     _finalizer.attach(this, _ptr);
   }
-  Mat(this._ptr) : super(_ptr);
   factory Mat.fromCMat(cvg.Mat mat) => Mat._(mat);
   factory Mat.empty() {
     final mat = _bindings.Mat_New();
@@ -30,32 +31,25 @@ class Mat extends CvObject {
     int b = 0,
     MatType? type,
   }) {
-    late final cvg.Mat ptr;
     type = type ?? MatType.CV_8UC3;
-    using((arena) {
-      final scalar = arena<cvg.Scalar>()
-        ..ref.val1 = b.toDouble()
-        ..ref.val2 = g.toDouble()
-        ..ref.val3 = r.toDouble();
-      ptr = _bindings.Mat_NewWithSizeFromScalar(
-          scalar.ref, height, width, type!.toInt32());
-    });
+    final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
+    final _ptr = _bindings.Mat_NewWithSizeFromScalar(scalar.ref, height, width, type.toInt32());
 
-    return Mat._(ptr);
-  }
-
-  factory Mat.eye(int rows, int cols, int type) {
-    final _ptr = _bindings.Eye(rows, cols, type);
     return Mat._(_ptr);
   }
 
-  factory Mat.zeros(int rows, int cols, int type) {
-    final _ptr = _bindings.Zeros(rows, cols, type);
+  factory Mat.eye(int rows, int cols, MatType type) {
+    final _ptr = _bindings.Eye(rows, cols, type.toInt32());
     return Mat._(_ptr);
   }
 
-  factory Mat.ones(int rows, int cols, int type) {
-    final _ptr = _bindings.Ones(rows, cols, type);
+  factory Mat.zeros(int rows, int cols, MatType type) {
+    final _ptr = _bindings.Zeros(rows, cols, type.toInt32());
+    return Mat._(_ptr);
+  }
+
+  factory Mat.ones(int rows, int cols, MatType type) {
+    final _ptr = _bindings.Ones(rows, cols, type.toInt32());
     return Mat._(_ptr);
   }
 
@@ -82,29 +76,103 @@ class Mat extends CvObject {
   bool get isContinus => _bindings.Mat_IsContinuous(_ptr);
   int get step => _bindings.Mat_Step(_ptr);
   int get elemSize => _bindings.Mat_ElemSize(_ptr);
-  int get countNoneZero => _bindings.Mat_CountNonZero(_ptr);
-  // TODO: add at() to retrive mat values
+
+  /// only for channels == 1
+  int get countNoneZero {
+    assert(channels == 1, "countNoneZero only for channels == 1");
+    return _bindings.Mat_CountNonZero(_ptr);
+  }
 
   static const int U8_MAX = 255; // uchar
   static const int U8_MIN = 0;
-  static const int I8_MAX = 127; //schar
+  static const int I8_MAX = 127; // schar
   static const int I8_MIN = -128;
-  static const int U16_MAX = 65535;
+  static const int U16_MAX = 65535; // ushort
   static const int U16_MIN = 0;
+  static const int I16_MAX = 32767; // short
+  static const int I16_MIN = -32768;
+  static const int U32_MAX = 4294967295;
+  static const int U32_MIN = 0;
+  static const int I32_MAX = 2147483647; // int
+  static const int I32_MIN = -2147483648;
+  static const double F32_MAX = 3.4028234663852886e+38;
+  static const double F64_MAX = 1.7976931348623157e+308;
 
-// TODO:  for now, dart do not support operator overloading
-// https://github.com/dart-lang/language/issues/2456
-// waiting for it's implementation and add more methods
+  T at<T extends num>(int row, int col) {
+    double? vDouble;
+    switch (type.depth) {
+      case MatType.CV_8U:
+        vDouble = _bindings.Mat_GetUChar(_ptr, row, col).toDouble();
+      case MatType.CV_8S:
+        vDouble = _bindings.Mat_GetSChar(_ptr, row, col).toDouble();
+      case MatType.CV_16U:
+        vDouble = _bindings.Mat_GetUShort(_ptr, row, col).toDouble();
+      case MatType.CV_16S:
+        vDouble = _bindings.Mat_GetShort(_ptr, row, col).toDouble();
+      case MatType.CV_32S:
+        vDouble = _bindings.Mat_GetInt(_ptr, row, col).toDouble();
+      case MatType.CV_32F:
+        vDouble = _bindings.Mat_GetFloat(_ptr, row, col);
+      case MatType.CV_64F:
+        vDouble = _bindings.Mat_GetDouble(_ptr, row, col);
+      default:
+        throw UnsupportedError("at() for $type is not supported!");
+    }
+    if (T == int) {
+      return vDouble.toInt() as T;
+    } else {
+      return vDouble as T;
+    }
+  }
+
+  // TODO:  for now, dart do not support operator overloading
+  // https://github.com/dart-lang/language/issues/2456
+  // waiting for it's implementation and add more methods
   // operator +(int v) {
   //   _bindings.Mat_AddUChar(_ptr, v);
   // }
-  Mat addMat(Mat other) {
-    final dst = Mat.empty();
-    _bindings.Mat_Add(_ptr, other.ptr, dst.ptr);
-    return dst;
+
+  /// add
+  Mat add<T>(T val, {bool inplace = false}) {
+    if (T == Mat) {
+      return addMat(val as Mat, inplace: inplace);
+    } else if (T == double) {
+      switch (type.depth) {
+        case MatType.CV_32F:
+          return addF32(val as double, inplace: inplace);
+        case MatType.CV_64F:
+          return addF64(val as double, inplace: inplace);
+        default:
+          throw UnsupportedError("add float to $type is not supported!");
+      }
+    } else if (T == int) {
+      switch (type.depth) {
+        case MatType.CV_8U:
+          return addU8(val as int, inplace: inplace);
+        case MatType.CV_32S:
+          return addI32(val as int, inplace: inplace);
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      throw UnsupportedError("Type $T is not supported");
+    }
+  }
+
+  Mat addMat(Mat other, {bool inplace = false}) {
+    assert(other.type == type, "${this.type} != ${other.type}");
+    if (inplace) {
+      _bindings.Mat_Add(_ptr, other.ptr, _ptr);
+      return this;
+    } else {
+      final dst = Mat.empty();
+      _bindings.Mat_Add(_ptr, other.ptr, dst.ptr);
+      return dst;
+    }
   }
 
   Mat addU8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8U && val >= U8_MIN && val <= U8_MAX, "addU8() only for CV_8U");
     if (inplace) {
       _bindings.Mat_AddUChar(_ptr, val);
       return this;
@@ -115,7 +183,20 @@ class Mat extends CvObject {
     }
   }
 
-  Mat addDouble(double val, {bool inplace = false}) {
+  Mat addI32(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32S && val >= I32_MIN && val <= I32_MAX, "addI32() only for CV_32S");
+    if (inplace) {
+      _bindings.Mat_AddI32(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_AddI32(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  Mat addF32(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32F && val <= F32_MAX, "addF32() only for CV_32F");
     if (inplace) {
       _bindings.Mat_AddFloat(_ptr, val);
       return this;
@@ -126,13 +207,59 @@ class Mat extends CvObject {
     }
   }
 
-  Mat subtractMat(Mat other) {
-    final dst = Mat.empty();
-    _bindings.Mat_Subtract(_ptr, other.ptr, dst.ptr);
-    return dst;
+  Mat addF64(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_64F && val <= F64_MAX, "addF64() only for CV_64F");
+    if (inplace) {
+      _bindings.Mat_AddF64(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_AddF64(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  /// subtract
+  Mat subtract<T>(T val, {bool inplace = false}) {
+    if (T == Mat) {
+      return subtractMat(val as Mat, inplace: inplace);
+    } else if (T == double) {
+      switch (type.depth) {
+        case MatType.CV_32F:
+          return subtractF32(val as double, inplace: inplace);
+        case MatType.CV_64F:
+          return subtractF64(val as double, inplace: inplace);
+        default:
+          throw UnsupportedError("subtract float to $type is not supported!");
+      }
+    } else if (T == int) {
+      switch (type.depth) {
+        case MatType.CV_8U:
+          return subtractU8(val as int, inplace: inplace);
+        case MatType.CV_32S:
+          return subtractI32(val as int, inplace: inplace);
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      throw UnsupportedError("Type $T is not supported");
+    }
+  }
+
+  Mat subtractMat(Mat other, {bool inplace = false}) {
+    assert(other.type == type, "${this.type} != ${other.type}");
+    if (inplace) {
+      _bindings.Mat_Subtract(_ptr, other.ptr, _ptr);
+      return this;
+    } else {
+      final dst = Mat.empty();
+      _bindings.Mat_Subtract(_ptr, other.ptr, dst.ptr);
+      return dst;
+    }
   }
 
   Mat subtractU8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8U && val >= U8_MIN && val <= U8_MAX, "subtractU8() only for CV_8U");
     if (inplace) {
       _bindings.Mat_SubtractUChar(_ptr, val);
       return this;
@@ -143,7 +270,20 @@ class Mat extends CvObject {
     }
   }
 
-  Mat subtractDouble(double val, {bool inplace = false}) {
+  Mat subtractI32(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32S && val >= I32_MIN && val <= I32_MAX, "subtractI32() only for CV_32S");
+    if (inplace) {
+      _bindings.Mat_SubtractI32(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_SubtractI32(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  Mat subtractF32(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32F && val <= F32_MAX, "subtractF32() only for CV_32F");
     if (inplace) {
       _bindings.Mat_SubtractFloat(_ptr, val);
       return this;
@@ -154,13 +294,59 @@ class Mat extends CvObject {
     }
   }
 
-  Mat multiplyMat(Mat other) {
-    final dst = Mat.empty();
-    _bindings.Mat_Multiply(_ptr, other.ptr, dst.ptr);
-    return dst;
+  Mat subtractF64(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_64F && val <= F64_MAX, "subtractF64() only for CV_64F");
+    if (inplace) {
+      _bindings.Mat_SubtractF64(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_SubtractF64(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  /// multiply
+  Mat multiply<T>(T val, {bool inplace = false}) {
+    if (T == Mat) {
+      return multiplyMat(val as Mat, inplace: inplace);
+    } else if (T == double) {
+      switch (type.depth) {
+        case MatType.CV_32F:
+          return multiplyF32(val as double, inplace: inplace);
+        case MatType.CV_64F:
+          return multiplyF64(val as double, inplace: inplace);
+        default:
+          throw UnsupportedError("multiply float to $type is not supported!");
+      }
+    } else if (T == int) {
+      switch (type.depth) {
+        case MatType.CV_8U:
+          return multiplyU8(val as int, inplace: inplace);
+        case MatType.CV_32S:
+          return multiplyI32(val as int, inplace: inplace);
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      throw UnsupportedError("Type $T is not supported");
+    }
+  }
+
+  Mat multiplyMat(Mat other, {bool inplace = false}) {
+    assert(other.type == type, "${this.type} != ${other.type}");
+    if (inplace) {
+      _bindings.Mat_Multiply(_ptr, other.ptr, _ptr);
+      return this;
+    } else {
+      final dst = Mat.empty();
+      _bindings.Mat_Multiply(_ptr, other.ptr, dst.ptr);
+      return dst;
+    }
   }
 
   Mat multiplyU8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8U && val >= U8_MIN && val <= U8_MAX, "multiplyU8() only for CV_8U");
     if (inplace) {
       _bindings.Mat_MultiplyUChar(_ptr, val);
       return this;
@@ -171,7 +357,20 @@ class Mat extends CvObject {
     }
   }
 
-  Mat multiplyDouble(double val, {bool inplace = false}) {
+  Mat multiplyI32(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32S && val >= I32_MIN && val <= I32_MAX, "multiplyI32() only for CV_32S");
+    if (inplace) {
+      _bindings.Mat_MultiplyI32(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_MultiplyI32(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  Mat multiplyF32(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32F && val <= F32_MAX, "multiplyF32() only for CV_32F");
     if (inplace) {
       _bindings.Mat_MultiplyFloat(_ptr, val);
       return this;
@@ -182,13 +381,59 @@ class Mat extends CvObject {
     }
   }
 
-  Mat divideMat(Mat other) {
-    final dst = Mat.empty();
-    _bindings.Mat_Divide(_ptr, other.ptr, dst.ptr);
-    return dst;
+  Mat multiplyF64(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_64F && val <= F64_MAX, "multiplyF64() only for CV_64F");
+    if (inplace) {
+      _bindings.Mat_MultiplyF64(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_MultiplyF64(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  /// divide
+  Mat divide<T>(T val, {bool inplace = false}) {
+    if (T == Mat) {
+      return divideMat(val as Mat, inplace: inplace);
+    } else if (T == double) {
+      switch (type.depth) {
+        case MatType.CV_32F:
+          return divideF32(val as double, inplace: inplace);
+        case MatType.CV_64F:
+          return divideF64(val as double, inplace: inplace);
+        default:
+          throw UnsupportedError("divide float to $type is not supported!");
+      }
+    } else if (T == int) {
+      switch (type.depth) {
+        case MatType.CV_8U:
+          return divideU8(val as int, inplace: inplace);
+        case MatType.CV_32S:
+          return divideI32(val as int, inplace: inplace);
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      throw UnsupportedError("Type $T is not supported");
+    }
+  }
+
+  Mat divideMat(Mat other, {bool inplace = false}) {
+    assert(other.type == type, "${this.type} != ${other.type}");
+    if (inplace) {
+      _bindings.Mat_Divide(_ptr, other.ptr, _ptr);
+      return this;
+    } else {
+      final dst = Mat.empty();
+      _bindings.Mat_Divide(_ptr, other.ptr, dst.ptr);
+      return dst;
+    }
   }
 
   Mat divideU8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8U && val >= U8_MIN && val <= U8_MAX, "divideU8() only for CV_8U");
     if (inplace) {
       _bindings.Mat_DivideUChar(_ptr, val);
       return this;
@@ -199,13 +444,38 @@ class Mat extends CvObject {
     }
   }
 
-  Mat divideDouble(double val, {bool inplace = false}) {
+  Mat divideI32(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32S && val >= I32_MIN && val <= I32_MAX, "divideI32() only for CV_32S");
+    if (inplace) {
+      _bindings.Mat_DivideI32(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_DivideI32(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  Mat divideF32(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_32F && val <= F32_MAX, "divideF32() only for CV_32F");
     if (inplace) {
       _bindings.Mat_DivideFloat(_ptr, val);
       return this;
     } else {
       final dst = this.clone();
       _bindings.Mat_DivideFloat(dst.ptr, val);
+      return dst;
+    }
+  }
+
+  Mat divideF64(double val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_64F && val <= F64_MAX, "divideF64() only for CV_64F");
+    if (inplace) {
+      _bindings.Mat_DivideF64(_ptr, val);
+      return this;
+    } else {
+      final dst = this.clone();
+      _bindings.Mat_DivideF64(dst.ptr, val);
       return dst;
     }
   }
@@ -222,9 +492,9 @@ class Mat extends CvObject {
     _bindings.Mat_CopyToWithMask(_ptr, dst.ptr, mask.ptr);
   }
 
-  Mat convertTo(int type, {double alpha = 1, double beta = 0}) {
+  Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
     final dst = Mat.empty();
-    _bindings.Mat_ConvertToWithParams(_ptr, dst.ptr, type, alpha, beta);
+    _bindings.Mat_ConvertToWithParams(_ptr, dst.ptr, type.toInt32(), alpha, beta);
     return dst;
   }
 
@@ -270,8 +540,9 @@ class Mat extends CvObject {
   /// PatchNaNs converts NaN's to zeros.
   void patchNaNs({double val = 0}) => _bindings.Mat_PatchNaNs(_ptr, val);
 
-  void setTo(Scalar s) {
+  Mat setTo(Scalar s) {
     _bindings.Mat_SetTo(_ptr, s.ref);
+    return this;
   }
 
   @override
@@ -299,6 +570,9 @@ class Mat extends CvObject {
   ffi.NativeType get ref => throw UnsupportedError("Mat has no Native type");
   @override
   ffi.NativeType toNative() => throw UnsupportedError("Mat has no Native type");
+
+  @override
+  List<Object?> get props => [_ptr.address];
 }
 
 typedef OutputArray = Mat;
@@ -319,4 +593,5 @@ extension ListMatExtension on List<Mat> {
   }
 }
 
+// TODO
 extension MatsExtension on ffi.Pointer<cvg.Mats> {}
