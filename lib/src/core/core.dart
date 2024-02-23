@@ -3,7 +3,6 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/opencv_dart.dart';
 
 import 'rng.dart';
 import 'scalar.dart';
