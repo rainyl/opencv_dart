@@ -14,10 +14,10 @@ OpenCV Bindings for Dart Language.
 | core       | :white_check_mark: | :white_check_mark: | Core module             |
 | features2d | :white_check_mark: | :x:                | Features2D module       |
 | highgui    | :white_check_mark: | :x:                | HighGUI module          |
-| imgcodecs  | :x:                | :x:                | ImageCodecs module      |
+| imgcodecs  | :white_check_mark: | :white_check_mark: | ImageCodecs module      |
 | imgproc    | :white_check_mark: | :x:                | ImageProc module        |
 | objdetect  | :white_check_mark: | :x:                | Object Detection module |
-| svd        | :x:                | :x:                | SVD module              |
+| svd        | :white_check_mark: | :white_check_mark: | SVD module              |
 | video      | :white_check_mark: | :x:                | Video module            |
 | videoio    | :white_check_mark: | :x:                | VideoIO module          |
 | asyncarray | :x:                | :x:                | AsyncArray module       |
