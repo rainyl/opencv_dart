@@ -34,8 +34,7 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 bool imwrite(String filename, InputArray img, {List<int>? params}) {
   bool isSuccess = false;
   if (params == null) {
-    isSuccess =
-        _bindings.Image_IMWrite(filename.toNativeUtf8().cast(), img.ptr);
+    isSuccess = _bindings.Image_IMWrite(filename.toNativeUtf8().cast(), img.ptr);
   } else {
     using((arena) {
       final fname = filename.toNativeUtf8();
@@ -89,15 +88,15 @@ Uint8List imencode(
   return buf;
 }
 
-/// IMDecode reads an image from a buffer in memory.
-/// The function IMDecode reads an image from the specified buffer in memory.
+/// imdecode reads an image from a buffer in memory.
+/// The function imdecode reads an image from the specified buffer in memory.
 /// If the buffer is too short or contains invalid data, the function
 /// returns an empty matrix.
 /// @param buf Input array or vector of bytes.
 /// @param flags The same flags as in cv::imread, see cv::ImreadModes.
 /// For further details, please see:
 /// https://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga26a67788faa58ade337f8d28ba0eb19e
-Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
+Mat imdecode(Uint8List buf, int flags, {Mat? dst = null}) {
   final buffer = _bindings.UCharVector_New();
   for (var i = 0; i < buf.length; i++) {
     _bindings.UCharVector_Append(buffer, buf[i]);

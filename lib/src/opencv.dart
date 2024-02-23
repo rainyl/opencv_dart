@@ -20,9 +20,11 @@ export 'core/rng.dart';
 export 'core/scalar.dart';
 
 export 'features2d/features2d.dart';
+export 'highgui/highgui.dart';
 export 'imgcodecs/imgcodecs.dart';
 export 'imgproc/imgproc.dart';
 export 'objdetect/objdetect.dart';
+export 'svd/svd.dart';
 
 export 'video/video.dart';
 export 'video/videoio.dart';

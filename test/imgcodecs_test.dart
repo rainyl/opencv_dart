@@ -24,5 +24,10 @@ void main() async {
     expect(cvimgDecode.height, equals(cvImage.height));
     expect(cvimgDecode.width, equals(cvImage.width));
     expect(cvimgDecode.channels, equals(cvImage.channels));
+
+    final dst = cv.Mat.empty();
+    cv.imdecode(buf, cv.IMREAD_COLOR, dst: dst);
+    expect(dst.isEmpty, false);
+    expect((dst.rows, dst.cols, dst.channels), (cvImage.rows, cvImage.cols, cvImage.channels));
   });
 }

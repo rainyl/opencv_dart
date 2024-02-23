@@ -24,7 +24,7 @@ class Mat extends CvObject with EquatableMixin {
     return Mat._(mat);
   }
 
-  factory Mat.fromScalar(Scalar s, MatType type, {int rows=1, int cols=1}) {
+  factory Mat.fromScalar(Scalar s, MatType type, {int rows = 1, int cols = 1}) {
     final _ptr = _bindings.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.toInt32());
     return Mat._(_ptr);
   }
@@ -100,6 +100,17 @@ class Mat extends CvObject with EquatableMixin {
   bool get isContinus => _bindings.Mat_IsContinuous(_ptr);
   int get step => _bindings.Mat_Step(_ptr);
   int get elemSize => _bindings.Mat_ElemSize(_ptr);
+  List<int> get size {
+    return using<List<int>>((arena) {
+      final s = arena<cvg.IntVector>();
+      _bindings.Mat_Size(_ptr, s);
+      final ss = <int>[];
+      for (var i = 0; i < s.ref.length; i++) {
+        ss.add(s.ref.val[i]);
+      }
+      return ss;
+    });
+  }
 
   /// only for channels == 1
   int get countNoneZero {
@@ -151,37 +162,37 @@ class Mat extends CvObject with EquatableMixin {
   setValue<T extends num>(int row, int col, T val, {int cn = 0}) {
     switch (type.depth) {
       case MatType.CV_8U:
-      assert(T==int, "$type only support int");
+        assert(T == int, "$type only support int");
         type.channels == 1
             ? _bindings.Mat_SetUChar(_ptr, row, col, val as int)
             : _bindings.Mat_SetUChar3(_ptr, row, col, cn, val as int);
       case MatType.CV_8S:
-      assert(T==int, "$type only support int");
+        assert(T == int, "$type only support int");
         type.channels == 1
             ? _bindings.Mat_SetSChar(_ptr, row, col, val as int)
             : _bindings.Mat_SetSChar3(_ptr, row, col, cn, val as int);
       case MatType.CV_16U:
-      assert(T==int, "$type only support int");
+        assert(T == int, "$type only support int");
         type.channels == 1
             ? _bindings.Mat_SetUShort(_ptr, row, col, val as int)
             : _bindings.Mat_SetUShort3(_ptr, row, col, cn, val as int);
       case MatType.CV_16S:
-      assert(T==int, "$type only support int");
+        assert(T == int, "$type only support int");
         type.channels == 1
             ? _bindings.Mat_SetShort(_ptr, row, col, val as int)
             : _bindings.Mat_SetShort3(_ptr, row, col, cn, val as int);
       case MatType.CV_32S:
-      assert(T==int, "$type only support int");
+        assert(T == int, "$type only support int");
         type.channels == 1
             ? _bindings.Mat_SetInt(_ptr, row, col, val as int)
             : _bindings.Mat_SetInt3(_ptr, row, col, cn, val as int);
       case MatType.CV_32F:
-      assert(T==double, "$type only support double");
+        assert(T == double, "$type only support double");
         type.channels == 1
             ? _bindings.Mat_SetFloat(_ptr, row, col, val as double)
             : _bindings.Mat_SetFloat3(_ptr, row, col, cn, val as double);
       case MatType.CV_64F:
-      assert(T==double, "$type only support double");
+        assert(T == double, "$type only support double");
         type.channels == 1
             ? _bindings.Mat_SetDouble(_ptr, row, col, val as double)
             : _bindings.Mat_SetDouble3(_ptr, row, col, cn, val as double);
