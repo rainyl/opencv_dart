@@ -16,7 +16,7 @@ void main() async {
 
   test("cv2.approxPolyDP", () {
     final img =
-        cv.Mat.create(width: 100, height: 200, type: cv.MatType.CV_8UC1);
+        cv.Mat.create(cols: 100, rows: 200, type: cv.MatType.CV_8UC1);
     final color = cv.Scalar.all(255);
     cv.line(
       img,
@@ -173,7 +173,7 @@ void main() async {
 
   test('basic drawings', () {
     final src =
-        cv.Mat.create(width: 100, height: 100, type: cv.MatType.CV_8UC3);
+        cv.Mat.create(cols: 100, rows: 100, type: cv.MatType.CV_8UC3);
     cv.line(src, cv.Point(10, 10), cv.Point(90, 90), cv.Scalar.red, thickness: 2, lineType: cv.LINE_AA);
     cv.ellipse(src, cv.Point(50, 50), cv.Point(10, 20), 30.0, 0, 360, cv.Scalar.green);
     cv.rectangle(src, cv.Rect(20, 20, 30, 50), cv.Scalar.blue);

@@ -8,7 +8,7 @@
     LICENSE: Apache-2.0
 */
 
-enum ErrorCode {
+enum ErrorCode{
   /// @brief everithing is ok [CV_StsOk]
   StsOk(0),
 
@@ -163,4 +163,10 @@ enum ErrorCode {
 
   const ErrorCode(this.code);
   final int code;
+}
+
+extension ErrorCodeExtension on ErrorCode{
+  bool equals(int v){
+    return this.code == v;
+  }
 }

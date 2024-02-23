@@ -2798,6 +2798,50 @@ class CvNative {
   late final _Mat_SetShort3 =
       _Mat_SetShort3Ptr.asFunction<void Function(Mat, int, int, int, int)>();
 
+  void Mat_SetUShort(
+    Mat m,
+    int row,
+    int col,
+    int val,
+  ) {
+    return _Mat_SetUShort(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetUShortPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              Mat, ffi.Int, ffi.Int, ffi.Uint16)>>('Mat_SetUShort');
+  late final _Mat_SetUShort =
+      _Mat_SetUShortPtr.asFunction<void Function(Mat, int, int, int)>();
+
+  void Mat_SetUShort3(
+    Mat m,
+    int x,
+    int y,
+    int z,
+    int val,
+  ) {
+    return _Mat_SetUShort3(
+      m,
+      x,
+      y,
+      z,
+      val,
+    );
+  }
+
+  late final _Mat_SetUShort3Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>>('Mat_SetUShort3');
+  late final _Mat_SetUShort3 =
+      _Mat_SetUShort3Ptr.asFunction<void Function(Mat, int, int, int, int)>();
+
   void Mat_SetInt(
     Mat m,
     int row,
@@ -3551,16 +3595,26 @@ class CvNative {
 
   bool Mat_CheckRange(
     Mat m,
+    bool quiet,
+    ffi.Pointer<Point> pos,
+    double minVal,
+    double maxVal,
   ) {
     return _Mat_CheckRange(
       m,
+      quiet,
+      pos,
+      minVal,
+      maxVal,
     );
   }
 
-  late final _Mat_CheckRangePtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('Mat_CheckRange');
-  late final _Mat_CheckRange =
-      _Mat_CheckRangePtr.asFunction<bool Function(Mat)>();
+  late final _Mat_CheckRangePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Bool Function(Mat, ffi.Bool, ffi.Pointer<Point>, ffi.Double,
+              ffi.Double)>>('Mat_CheckRange');
+  late final _Mat_CheckRange = _Mat_CheckRangePtr.asFunction<
+      bool Function(Mat, bool, ffi.Pointer<Point>, double, double)>();
 
   void Mat_CompleteSymm(
     Mat m,
@@ -4668,7 +4722,7 @@ class CvNative {
   late final _Mat_Transform =
       _Mat_TransformPtr.asFunction<void Function(Mat, Mat, Mat)>();
 
-  void Mat_Transpose(
+  int Mat_Transpose(
     Mat src,
     Mat dst,
   ) {
@@ -4679,9 +4733,9 @@ class CvNative {
   }
 
   late final _Mat_TransposePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>('Mat_Transpose');
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat, Mat)>>('Mat_Transpose');
   late final _Mat_Transpose =
-      _Mat_TransposePtr.asFunction<void Function(Mat, Mat)>();
+      _Mat_TransposePtr.asFunction<int Function(Mat, Mat)>();
 
   void Mat_PolarToCart(
     Mat magnitude,
@@ -12374,6 +12428,14 @@ class _SymbolAddresses {
       get Mat_SetShort3 => _library._Mat_SetShort3Ptr;
   ffi.Pointer<
           ffi
+          .NativeFunction<ffi.Void Function(Mat, ffi.Int, ffi.Int, ffi.Uint16)>>
+      get Mat_SetUShort => _library._Mat_SetUShortPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>>
+      get Mat_SetUShort3 => _library._Mat_SetUShort3Ptr;
+  ffi.Pointer<
+          ffi
           .NativeFunction<ffi.Void Function(Mat, ffi.Int, ffi.Int, ffi.Int32)>>
       get Mat_SetInt => _library._Mat_SetIntPtr;
   ffi.Pointer<
@@ -12484,8 +12546,11 @@ class _SymbolAddresses {
   ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, ffi.Bool)>>
       get Mat_CartToPolar => _library._Mat_CartToPolarPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(Mat)>> get Mat_CheckRange =>
-      _library._Mat_CheckRangePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Bool Function(
+                  Mat, ffi.Bool, ffi.Pointer<Point>, ffi.Double, ffi.Double)>>
+      get Mat_CheckRange => _library._Mat_CheckRangePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, ffi.Bool)>>
       get Mat_CompleteSymm => _library._Mat_CompleteSymmPtr;
   ffi.Pointer<
@@ -12647,7 +12712,7 @@ class _SymbolAddresses {
       _library._Mat_TracePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat)>>
       get Mat_Transform => _library._Mat_TransformPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(Mat, Mat)>>
       get Mat_Transpose => _library._Mat_TransposePtr;
   ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, ffi.Bool)>>

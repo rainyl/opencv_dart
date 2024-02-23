@@ -1,8 +1,11 @@
 library cv;
 
-import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/rng.dart';
+import 'dart:ffi' as ffi;
 
+import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/opencv_dart.dart';
+
+import 'rng.dart';
 import 'scalar.dart';
 import 'base.dart';
 import 'point.dart';
@@ -15,10 +18,8 @@ final _bindings = cvg.CvNative(loadNativeLibrary());
 
 /// get version
 String openCvVersion() {
-  final v = _bindings.openCVVersion().cast<Utf8>();
-  final vv = v.toDartString();
-  calloc.free(v);
-  return vv;
+  final v = _bindings.openCVVersion().cast<Utf8>().toDartString();
+  return v;
 }
 
 /// AbsDiff calculates the per-element absolute difference between two arrays
@@ -34,7 +35,7 @@ void absDiff(Mat src1, Mat src2, Mat dst) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
-void Add(Mat src1, Mat src2, Mat dst) {
+void add(Mat src1, Mat src2, Mat dst) {
   _bindings.Mat_Add(src1.ptr, src2.ptr, dst.ptr);
 }
 
@@ -208,17 +209,15 @@ void cartToPolar(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga2bd19d89cae59361416736f87e3c7a64
-bool checkRange(
-  InputArray a,
-  // TODO: add more params
-  // {
-  // bool quiet = true,
-  // Point pos = 0,
-  // double minVal = -DBL_MAX,
-  // double maxVal = DBL_MAX,
-  /// }
-) {
-  return _bindings.Mat_CheckRange(a.ptr);
+(bool, Point) checkRange(
+  InputArray a, {
+  bool quiet = true,
+  double minVal = -CV_F64_MAX,
+  double maxVal = CV_F64_MAX,
+}) {
+  final pos = calloc<cvg.Point>();
+  final ret = _bindings.Mat_CheckRange(a.ptr, quiet, pos, minVal, maxVal);
+  return (ret, Point.fromPointer(pos));
 }
 
 /// Compare performs the per-element comparison of two arrays
@@ -607,190 +606,338 @@ void max(InputArray src1, InputArray src2, OutputArray dst) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
-/// TODO
+meanStdDev(
+  InputArray src,
+  OutputArray mean,
+  OutputArray stddev, {
+  InputArray? mask, // TODO
+}) {
+  _bindings.Mat_MeanStdDev(src.ptr, mean.ptr, stddev.ptr);
+}
 
 /// Merge creates one multi-channel array out of several single-channel ones.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
-/// TODO
+void merge(List<Mat> mv, OutputArray dst) {
+  using((arena) {
+    _bindings.Mat_Merge(mv.toMats(arena).ref, dst.ptr);
+  });
+}
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
-/// TODO
+void min(InputArray src1, InputArray src2, OutputArray dst) {
+  _bindings.Mat_Min(src1.ptr, src2.ptr, dst.ptr);
+}
 
 /// MinMaxIdx finds the global minimum and maximum in an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7622c466c628a75d9ed008b42250a73f
-/// TODO
+(double minVal, double maxVal, int minIdx, int maxIdx) minMaxIdx(
+  InputArray src, {
+  InputArray? mask,
+}) {
+  return using<(double, double, int, int)>((arena) {
+    final minValP = arena<ffi.Double>();
+    final maxValP = arena<ffi.Double>();
+    final minIdxP = arena<ffi.Int>();
+    final maxIdxP = arena<ffi.Int>();
+    _bindings.Mat_MinMaxIdx(src.ptr, minValP, maxValP, minIdxP, maxIdxP);
+    return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
+  });
+}
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
-/// TODO
+(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
+  return using<(double, double, Point, Point)>((arena) {
+    final minValP = arena<ffi.Double>();
+    final maxValP = arena<ffi.Double>();
+    final minLocP = arena<cvg.Point>();
+    final maxLocP = arena<cvg.Point>();
+    _bindings.Mat_MinMaxLoc(src.ptr, minValP, maxValP, minLocP, maxLocP);
+    return (minValP.value, maxValP.value, Point(minLocP.ref.x, minLocP.ref.y), Point(maxLocP.ref.x, maxLocP.ref.y));
+  });
+}
 
 /// Copies specified channels from input arrays to the specified channels of output arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-/// TODO
+// List<Mat> mixChannels(List<Mat> src, List<int> fromTo) {
+//   return using<List<Mat>>((arena) {
+//     final dstP = arena<cvg.Mats>();
+//     _bindings.Mat_MixChannels(src.toMats(arena).ref, dstP.ref, fromTo.toNativeVector(arena).ref);
+//     return dstP.toList();
+//   });
+// }
 
 /// Mulspectrums performs the per-element multiplication of two Fourier spectrums.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3ab38646463c59bf0ce962a9d51db64f
-/// TODO
+void mulSpectrums(
+  InputArray a,
+  InputArray b,
+  OutputArray c,
+  int flags, {
+  bool conjB = false,
+}) {
+  _bindings.Mat_MulSpectrums(a.ptr, b.ptr, c.ptr, flags);
+}
 
 /// Multiply calculates the per-element scaled product of two arrays.
 /// Both input arrays must be of the same size and the same type.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga979d898a58d7f61c53003e162e7ad89f
-/// TODO
+void multiply(
+  InputArray src1,
+  InputArray src2,
+  OutputArray dst, {
+  double scale = 1,
+  int dtype = -1,
+}) {
+  _bindings.Mat_MultiplyWithParams(src1.ptr, src2.ptr, dst.ptr, scale, dtype);
+}
 
 /// Normalize normalizes the norm or value range of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga87eef7ee3970f86906d69a92cbf064bd
-/// TODO
+void normalize(
+  InputArray src,
+  InputOutputArray dst, {
+  double alpha = 1,
+  double beta = 0,
+  int norm_type = NORM_L2,
+  // TODO
+  // int dtype = -1,
+  // InputArray? mask,
+}) {
+  _bindings.Mat_Normalize(src.ptr, dst.ptr, alpha, beta, norm_type);
+}
 
 /// Norm calculates the absolute norm of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-/// TODO
+double norm(
+  InputArray src1, {
+  int normType = NORM_L2,
+  InputArray? mask,
+}) {
+  return _bindings.Norm(src1.ptr, normType);
+}
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-/// TODO
+double norm1(
+  InputArray src1,
+  InputArray src2, {
+  int normType = NORM_L2,
+  InputArray? mask,
+}) {
+  return _bindings.NormWithMats(src1.ptr, src2.ptr, normType);
+}
 
 /// PerspectiveTransform performs the perspective matrix transformation of vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
-/// TODO
+void perspectiveTransform(InputArray src, OutputArray dst, InputArray m) {
+  _bindings.Mat_PerspectiveTransform(src.ptr, dst.ptr, m.ptr);
+}
 
 /// Solve solves one or more linear systems or least-squares problems.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga12b43690dbd31fed96f213eefead2373
-/// TODO
+bool solve(
+  InputArray src1,
+  InputArray src2,
+  OutputArray dst, {
+  int flags = DECOMP_LU,
+}) {
+  return _bindings.Mat_Solve(src1.ptr, src2.ptr, dst.ptr, flags);
+}
 
 /// SolveCubic finds the real roots of a cubic equation.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
-/// TODO
+int solveCubic(InputArray coeffs, OutputArray roots) {
+  return _bindings.Mat_SolveCubic(coeffs.ptr, roots.ptr);
+}
 
 /// SolvePoly finds the real or complex roots of a polynomial equation.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
-/// TODO
+double solvePoly(
+  InputArray coeffs,
+  OutputArray roots, {
+  int maxIters = 300,
+}) {
+  return _bindings.Mat_SolvePoly(coeffs.ptr, roots.ptr, maxIters);
+}
 
 /// Reduce reduces a matrix to a vector.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
-/// TODO
+void reduce(InputArray src, OutputArray dst, int dim, int rtype, {int dtype = -1}) {
+  _bindings.Mat_Reduce(src.ptr, dst.ptr, dim, rtype, dtype);
+}
 
 /// Finds indices of max elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
-/// TODO
+void reduceArgMax(InputArray src, OutputArray dst, int axis, {bool lastIndex = false}) {
+  _bindings.Mat_ReduceArgMax(src.ptr, dst.ptr, axis, lastIndex);
+}
 
 /// Finds indices of min elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
-/// TODO
+void reduceArgMin(InputArray src, OutputArray dst, int axis, {bool lastIndex = false}) {
+  _bindings.Mat_ReduceArgMin(src.ptr, dst.ptr, axis, lastIndex);
+}
 
 /// Repeat fills the output array with repeated copies of the input array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
-/// TODO
+void repeat(InputArray src, int ny, int nx, OutputArray dst) {
+  _bindings.Mat_Repeat(src.ptr, ny, nx, dst.ptr);
+}
 
 /// Calculates the sum of a scaled array and another array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
-/// TODO
+void scaleAdd(InputArray src1, double alpha, InputArray src2, OutputArray dst) {
+  _bindings.Mat_ScaleAdd(src1.ptr, alpha, src2.ptr, dst.ptr);
+}
 
 /// SetIdentity initializes a scaled identity matrix.
 /// For further details, please see:
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
-/// TODO
+void setIdentity(InputOutputArray mtx, {double s = 1}) {
+  _bindings.Mat_SetIdentity(mtx.ptr, s);
+}
 
 /// Sort sorts each row or each column of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
-/// TODO
+void sort(InputArray src, OutputArray dst, int flags) {
+  _bindings.Mat_Sort(src.ptr, dst.ptr, flags);
+}
 
 /// SortIdx sorts each row or each column of a matrix.
 /// Instead of reordering the elements themselves, it stores the indices of sorted elements in the output array
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
-/// TODO
+void sortIdx(InputArray src, OutputArray dst, int flags) {
+  _bindings.Mat_SortIdx(src.ptr, dst.ptr, flags);
+}
 
 /// Split creates an array of single channel images from a multi-channel image
 /// Created images should be closed manualy to avoid memory leaks.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
-/// TODO
+List<Mat> split(InputArray m) {
+  return using<List<Mat>>((arena) {
+    final mats = arena<cvg.Mats>();
+    _bindings.Mat_Split(m.ptr, mats);
+    return mats.toList();
+  });
+}
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa0f00d98b4b5edeaeb7b8333b2de353b
-/// TODO
+void subtract(
+  InputArray src1,
+  InputArray src2,
+  OutputArray dst,
+  // TODO
+  // {
+  //   InputArray? mask,
+  //   int dtype = -1,
+  // }
+) {
+  _bindings.Mat_Subtract(src1.ptr, src2.ptr, dst.ptr);
+}
 
 /// Trace returns the trace of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
-/// TODO
+Scalar trace(InputArray mtx) {
+  return Scalar.fromNative(_bindings.Mat_Trace(mtx.ptr));
+}
 
 /// Transform performs the matrix transformation of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
-/// TODO
+void transform(InputArray src, OutputArray dst, InputArray m) {
+  _bindings.Mat_Transform(src.ptr, dst.ptr, m.ptr);
+}
 
 /// Transpose transposes a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
-/// TODO
+void transpose(InputArray src, OutputArray dst) {
+  _bindings.Mat_Transpose(src.ptr, dst.ptr);
+}
 
 /// Pow raises every array element to a power.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
-/// TODO
+void pow(InputArray src, double power, OutputArray dst) {
+  _bindings.Mat_Pow(src.ptr, power, dst.ptr);
+}
 
 /// PolatToCart calculates x and y coordinates of 2D vectors from their magnitude and angle.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga581ff9d44201de2dd1b40a50db93d665
-/// TODO
+void polarToCart(
+  InputArray magnitude,
+  InputArray angle,
+  OutputArray x,
+  OutputArray y, {
+  bool angleInDegrees = false,
+}) {
+  _bindings.Mat_PolarToCart(magnitude.ptr, angle.ptr, x.ptr, y.ptr, angleInDegrees);
+}
 
 /// Phase calculates the rotation angle of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
-/// TODO
+void phase(InputArray x, InputArray y, OutputArray angle, {bool angleInDegrees = false}) {
+  _bindings.Mat_Phase(x.ptr, y.ptr, angle.ptr, angleInDegrees);
+}
 
 /// TermCriteria is the criteria for iterative algorithms.
 ///

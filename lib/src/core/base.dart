@@ -10,6 +10,21 @@ const double CV_PI = 3.1415926535897932384626433832795;
 const double CV_2PI = 6.283185307179586476925286766559;
 const double CV_LOG2 = 0.69314718055994530941723212145818;
 
+const int CV_U8_MAX = 255; // uchar
+const int CV_U8_MIN = 0;
+const int CV_I8_MAX = 127; // schar
+const int CV_I8_MIN = -128;
+const int CV_U16_MAX = 65535; // ushort
+const int CV_U16_MIN = 0;
+const int CV_I16_MAX = 32767; // short
+const int CV_I16_MIN = -32768;
+const int CV_U32_MAX = 4294967295;
+const int CV_U32_MIN = 0;
+const int CV_I32_MAX = 2147483647; // int
+const int CV_I32_MIN = -2147483648;
+const double CV_F32_MAX = 3.4028234663852886e+38;
+const double CV_F64_MAX = 1.7976931348623157e+308;
+
 ffi.DynamicLibrary loadNativeLibrary() {
   if (Platform.isWindows) {
     return ffi.DynamicLibrary.open("lib$_libraryName.dll");
@@ -24,7 +39,6 @@ typedef Size = ({int width, int height});
 
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
   CvObject(this._ptr);
-  CvObject.fromPointer(this._ptr);
   ffi.Pointer<T> _ptr;
   ffi.Pointer<T> get ptr => _ptr;
 
