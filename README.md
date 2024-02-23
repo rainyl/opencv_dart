@@ -4,44 +4,28 @@ OpenCV Bindings for Dart Language.
 
 **!!!This package is experiment and APIs may change in the future!!!**
 
-## TODO
+## Status
 
-### Bindings
+module | Binding status | Test status | description
+--- | --- | --- | ---
+aruco | :white_check_mark: | :x: | ArUco module
+core | :white_check_mark: | :white_check_mark: | Core module
+features2d | :white_check_mark: | :x: | Features2D module
+highgui | :white_check_mark: | :x: | HighGUI module
+imgcodecs | :white_check_mark: | :x: | ImageCodecs module
+imgproc | :white_check_mark: | :x: | ImageProc module
+objdetect | :white_check_mark: | :x: | Object Detection module
+svd | :white_check_mark: | :x: | SVD module
+video | :white_check_mark: | :x: | Video module
+videoio | :white_check_mark: | :x: | VideoIO module
+asyncarray | :x: | :x: | AsyncArray module
+calib3d | :x: | :x: | Calib3D module
+dnn | :x: | :x: | DNN module
+photo | :x: | :x: | Photo module
+cuda | :x: | :x: | CUDA module
+contrib | :x: | :x: | Contrib module
 
-- [x] aruco
-  - [ ] test
-- [ ] asyncarray
-  - [ ] test
-- [ ] calib3d
-  - [ ] test
-- [x] core
-  - [ ] test
-- [ ] dnn
-  - [ ] test
-- [x] features2d
-  - [ ] test
-- [x] highgui
-  - [ ] test
-- [x] imgcodecs
-  - [ ] test
-- [x] imgproc
-  - [ ] test
-- [x] objdetect
-  - [ ] test
-- [ ] photo
-  - [ ] test
-- [x] svd
-  - [ ] test
-- [x] video
-  - [ ] test
-- [x] videoio
-  - [ ] test
-- [ ] cuda
-  - [ ] test
-- [ ] contrib
-  - [ ] test
-
-### Others
+### TODO
 
 - [ ] add more examples
 - [ ] modify C wrapper to catch exceptions
