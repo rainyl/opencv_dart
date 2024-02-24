@@ -63,8 +63,7 @@ class CascadeClassifier implements ffi.Finalizable {
 
   cvg.CascadeClassifier _ptr;
   cvg.CascadeClassifier get ptr => _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.CascadeClassifier_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.CascadeClassifier_Close);
 }
 
 class HOGDescriptor implements ffi.Finalizable {
@@ -126,8 +125,7 @@ class HOGDescriptor implements ffi.Finalizable {
 
   cvg.HOGDescriptor _ptr;
   cvg.HOGDescriptor get ptr => _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.HOGDescriptor_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.HOGDescriptor_Close);
 }
 
 // GroupRectangles groups the object candidate rectangles.
@@ -136,8 +134,7 @@ class HOGDescriptor implements ffi.Finalizable {
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 List<Rect> groupRectangles(List<Rect> rects, int groupThreshold, double eps) {
   final ret = using<List<Rect>>((arena) {
-    final _rects = _bindings.GroupRectangles(
-        rects.toNative(arena).ref, groupThreshold, eps);
+    final _rects = _bindings.GroupRectangles(rects.toNative(arena).ref, groupThreshold, eps);
     return Rects.toList(_rects);
   });
   return ret;
@@ -164,12 +161,11 @@ class QRCodeDetector implements ffi.Finalizable {
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a7290bd6a5d59b14a37979c3a14fbf394
   String detectAndDecode(
     InputArray img,
-    OutputArray points,
-    OutputArray? straight_code,
-  ) {
+    OutputArray points, {
+    OutputArray? straight_code = null,
+  }) {
     straight_code ??= Mat.empty();
-    final ret = _bindings.QRCodeDetector_DetectAndDecode(
-        _ptr, img.ptr, points.ptr, straight_code.ptr);
+    final ret = _bindings.QRCodeDetector_DetectAndDecode(_ptr, img.ptr, points.ptr, straight_code.ptr);
     if (ret == ffi.nullptr) return "";
     return ret.cast<Utf8>().toDartString();
   }
@@ -189,12 +185,11 @@ class QRCodeDetector implements ffi.Finalizable {
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a4172c2eb4825c844fb1b0ae67202d329
   String decode(
     InputArray img,
-    InputArray points,
-    OutputArray? straight_code,
-  ) {
+    InputArray points, {
+    OutputArray? straight_code = null,
+  }) {
     straight_code ??= Mat.empty();
-    final ret = _bindings.QRCodeDetector_Decode(
-        _ptr, img.ptr, points.ptr, straight_code.ptr);
+    final ret = _bindings.QRCodeDetector_Decode(_ptr, img.ptr, points.ptr, straight_code.ptr);
     if (ret == ffi.nullptr) return "";
     return ret.cast<Utf8>().toDartString();
   }
@@ -221,6 +216,5 @@ class QRCodeDetector implements ffi.Finalizable {
 
   cvg.QRCodeDetector _ptr;
   cvg.QRCodeDetector get ptr => _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.QRCodeDetector_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.QRCodeDetector_Close);
 }

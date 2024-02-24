@@ -24,7 +24,7 @@ class Window {
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
-  Window(this.name) : open = true {
+  Window(this.name) : isOpen = true {
     final cname = name.toNativeUtf8();
     _bindings.Window_New(cname.cast(), 0);
     calloc.free(cname);
@@ -34,7 +34,7 @@ class Window {
     final cname = name.toNativeUtf8();
     _bindings.Window_Close(cname.cast());
     calloc.free(cname);
-    open = false;
+    isOpen = false;
   }
 
   /// [getWindowProperty] returns properties of a window.
@@ -64,7 +64,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
   void setWindowTitle(String title) {
     final cname = name.toNativeUtf8();
-    final ctitle = name.toNativeUtf8();
+    final ctitle = title.toNativeUtf8();
     _bindings.Window_SetTitle(cname.cast(), ctitle.cast());
     calloc.free(cname);
     calloc.free(ctitle);
@@ -144,7 +144,7 @@ class Window {
   }
 
   String name;
-  bool open;
+  bool isOpen;
 }
 
 /// WaitKey that is not attached to a specific Window.
@@ -152,20 +152,15 @@ class Window {
 int waitKey(int delay) => _bindings.Window_WaitKey(delay);
 
 class Trackbar {
-  Trackbar(this.name, this.parent, this.max, {List<int>? values}) {
-    final arena = Arena();
+  Trackbar(this.name, this.parent, this.max, {int? value}) {
     final tname = name.toNativeUtf8();
     final pname = parent.name.toNativeUtf8();
-    if (values != null) {
-      final _values = arena<ffi.Int>(values.length);
-      for (var i = 0; i < values.length; i++) _values[i] = values[i];
-      _bindings.Trackbar_CreateWithValue(pname.cast(), tname.cast(), _values, max);
-    } else {
-      _bindings.Trackbar_Create(pname.cast(), tname.cast(), max);
+    _bindings.Trackbar_Create(pname.cast(), tname.cast(), max);
+    if (value != null) {
+      pos = value;
     }
     calloc.free(tname);
     calloc.free(pname);
-    arena.releaseAll();
   }
 
   /// pos returns the trackbar position.
@@ -248,7 +243,7 @@ enum WindowFlag {
   WINDOW_GUI_NORMAL(0x00000010);
 
   const WindowFlag(this.value);
-  final int value;
+  final double value;
 }
 
 enum WindowPropertyFlags {

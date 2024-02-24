@@ -21,8 +21,7 @@ class Rect extends CvObject with EquatableMixin {
   factory Rect.fromNative(cvg.Rect r) => Rect(r.x, r.y, r.width, r.height);
   factory Rect.fromPointer(ffi.Pointer<cvg.Rect> p) => Rect._(p);
 
-  static final _finalizer =
-      Finalizer<ffi.Pointer<cvg.Rect>>((p0) => calloc.free(p0));
+  static final _finalizer = Finalizer<ffi.Pointer<cvg.Rect>>((p0) => calloc.free(p0));
   int get x => _ptr.ref.x;
   int get y => _ptr.ref.y;
   int get width => _ptr.ref.width;
@@ -42,26 +41,27 @@ class Rect extends CvObject with EquatableMixin {
   String toString() => "Rect($x, $y, $width, $height)";
 }
 
-abstract class Rects{
-  static List<Rect> toList(cvg.Rects rects){
+abstract class Rects {
+  static List<Rect> toList(cvg.Rects rects) {
     return List.generate(rects.length, (i) => Rect.fromNative(rects.rects[i]));
   }
 }
 
 extension ListRectExtension on List<Rect> {
-  ffi.Pointer<cvg.Rects> toNative(Arena arena){
+  ffi.Pointer<cvg.Rects> toNative(Arena arena) {
     final vec = arena<cvg.Rects>()..ref.length = this.length;
+    final rects = arena<cvg.Rect>(this.length);
     for (var i = 0; i < this.length; i++) {
-      vec.ref.rects[i] = this[i].toNative();
+      rects[i] = this[i].toNative();
     }
+    vec.ref.rects = rects;
     return vec;
   }
 }
 
 class RotatedRect extends CvObject {
   RotatedRect._(this._ptr) : super(_ptr);
-  factory RotatedRect(List<Point> pts, Rect boundingRect, Point center,
-      int width, int height, double angle) {
+  factory RotatedRect(List<Point> pts, Rect boundingRect, Point center, int width, int height, double angle) {
     final _ptr = calloc<cvg.RotatedRect>();
     using((arena) {
       final size = calloc<cvg.Size>()
@@ -82,8 +82,7 @@ class RotatedRect extends CvObject {
     final _ptr = calloc<cvg.RotatedRect>()..ref = r;
     return RotatedRect._(_ptr);
   }
-  factory RotatedRect.fromPointer(ffi.Pointer<cvg.RotatedRect> p) =>
-      RotatedRect._(p);
+  factory RotatedRect.fromPointer(ffi.Pointer<cvg.RotatedRect> p) => RotatedRect._(p);
 
   List<Point> get pts => _ptr.ref.pts.toList();
   Rect get boundingRect => Rect.fromNative(_ptr.ref.boundingRect);
