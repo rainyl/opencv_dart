@@ -48,8 +48,7 @@ double arcLength(List<Point> curve, bool closed) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
-void convexHull(
-    List<Point> points, Mat hull, bool clockwise, bool returnPoints) {
+void convexHull(List<Point> points, Mat hull, {bool clockwise = false, bool returnPoints = true}) {
   final pointVec = points.toNativeVecotr();
   _bindings.ConvexHull(pointVec, hull.ptr, clockwise, returnPoints);
   _bindings.PointVector_Close(pointVec);
@@ -88,8 +87,7 @@ void equalizeHist(Mat src, Mat dst) {
 ///
 /// For futher details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga6ca1876785483836f72a77ced8ea759a
-void calcHist(List<Mat> src, List<int> channels, Mat mask, Mat hist,
-    List<int> histSize, List<double> ranges,
+void calcHist(List<Mat> src, List<int> channels, Mat mask, Mat hist, List<int> histSize, List<double> ranges,
     {bool accumulate = false}) {
   using((arena) {
     final matsPtr = src.toMats(arena);
@@ -112,8 +110,7 @@ void calcHist(List<Mat> src, List<int> channels, Mat mask, Mat hist,
 ///
 /// For futher details, please see:
 /// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
-void calcBackProject(List<Mat> src, List<int> channels, Mat hist,
-    Mat backProject, List<double> ranges,
+void calcBackProject(List<Mat> src, List<int> channels, Mat hist, Mat backProject, List<double> ranges,
     {bool uniform = true}) {
   using((arena) {
     final srcPtr = src.toMats(arena);
@@ -142,8 +139,7 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 /// ClipLine clips the line against the image rectangle.
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
-bool clipLine(
-    (int width, int height) imgSize, (int x, int y) pt1, (int x, int y) pt2) {
+bool clipLine((int width, int height) imgSize, (int x, int y) pt1, (int x, int y) pt2) {
   bool r = false;
   using((arena) {
     final size = arena<cvg.Size>()
@@ -170,8 +166,7 @@ bool clipLine(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
-void bilateralFilter(
-    Mat src, Mat dst, int diameter, double sigmaColor, double sigmaSpace) {
+void bilateralFilter(Mat src, Mat dst, int diameter, double sigmaColor, double sigmaSpace) {
   _bindings.BilateralFilter(src.ptr, dst.ptr, diameter, sigmaColor, sigmaSpace);
 }
 
@@ -182,7 +177,7 @@ void bilateralFilter(
 void blur(
   Mat src,
   Mat dst,
-  ({int width, int height}) ksize,
+  Size ksize,
 ) {
   using((arena) {
     _bindings.Blur(src.ptr, dst.ptr, ksize.toSize(arena).ref);
@@ -193,7 +188,7 @@ void blur(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
-void boxFilter(Mat src, Mat dst, int depth, ({int width, int height}) ksize) {
+void boxFilter(Mat src, Mat dst, int depth, Size ksize) {
   using((arena) {
     _bindings.BoxFilter(src.ptr, dst.ptr, depth, ksize.toSize(arena).ref);
   });
@@ -202,9 +197,8 @@ void boxFilter(Mat src, Mat dst, int depth, ({int width, int height}) ksize) {
 /// SqBoxFilter calculates the normalized sum of squares of the pixel values overlapping the filter.
 ///
 /// For further details, please see:
-/// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga045028184a9ef65d7d2579e5c4bff6c0
-void sqrBoxFilter(
-    Mat src, Mat dst, int depth, ({int width, int height}) ksize) {
+/// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
+void sqrBoxFilter(Mat src, Mat dst, int depth, Size ksize) {
   using((arena) {
     _bindings.SqBoxFilter(src.ptr, dst.ptr, depth, ksize.toSize(arena).ref);
   });
@@ -355,7 +349,7 @@ RotatedRect fitEllipse(List<Point> pts) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
-({Point2f center, double radius}) minEnclosingCircle(List<Point> pts) {
+(Point2f, double) minEnclosingCircle(List<Point> pts) {
   late final Point2f center;
   late final double radius;
   using((arena) {
@@ -368,7 +362,7 @@ RotatedRect fitEllipse(List<Point> pts) {
     center = Point2f.fromNative(_center.ref);
     radius = _radius.value;
   });
-  return (center: center, radius: radius);
+  return (center, radius);
 }
 
 /// FindContours finds contours in a binary image.
@@ -377,8 +371,7 @@ RotatedRect fitEllipse(List<Point> pts) {
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
 (Contours contours, Mat hierarchy) findContours(Mat src, int mode, int method) {
   final hierarchy = Mat.empty();
-  final _contours =
-      _bindings.FindContours(src.ptr, hierarchy.ptr, mode, method);
+  final _contours = _bindings.FindContours(src.ptr, hierarchy.ptr, mode, method);
   final contours = Contours.fromPointer(_contours);
   return (contours, hierarchy);
 }
@@ -465,7 +458,7 @@ Moments moments(Mat src, {bool binaryImage = false}) {
 void pyrDown(
   Mat src,
   Mat dst, {
-  ({int width, int height}) dstsize = (width: 0, height: 0),
+  (int, int) dstsize = (0, 0),
   int borderType = BORDER_CONSTANT,
 }) {
   using((arena) {
@@ -480,7 +473,7 @@ void pyrDown(
 void pyrUp(
   Mat src,
   Mat dst, {
-  ({int width, int height}) dstsize = (width: 0, height: 0),
+  (int, int) dstsize = (0, 0),
   int borderType = BORDER_CONSTANT,
 }) {
   using((arena) {
@@ -533,7 +526,7 @@ void morphologyEx(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
 Mat getStructuringElement(
   int shape,
-  ({int width, int height}) ksize, {
+  Size ksize, {
   Point? anchor,
 }) {
   anchor ??= Point(-1, -1);
@@ -554,7 +547,7 @@ Mat getStructuringElement(
 void gaussianBlur(
   Mat src,
   Mat dst,
-  ({int width, int height}) ksize,
+  Size ksize,
   double sigmaX, {
   double sigmaY = 0,
   int borderType = BORDER_DEFAULT,
@@ -702,8 +695,8 @@ void Canny(
 void cornerSubPix(
   InputArray image,
   InputOutputArray corners,
-  ({int width, int height}) winSize,
-  ({int width, int height}) zeroZone,
+  Size winSize,
+  Size zeroZone,
   cvg.TermCriteria criteria,
 ) {
   using((arena) {
@@ -1110,7 +1103,7 @@ void polylines(
 ///
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga3d2abfcb995fd2db908c8288199dba82
-({Size size, int baseline}) getTextSize(
+(Size size, int baseline) getTextSize(
   String text,
   int fontFace,
   double fontScale,
@@ -1127,8 +1120,8 @@ void polylines(
     _baseline,
   );
 
-  Size sz = (width: _size.width, height: _size.height);
-  final result = (size: sz, baseline: _baseline.value);
+  Size sz = (_size.width, _size.height);
+  final result = (sz, _baseline.value);
 
   calloc.free(_baseline);
   calloc.free(textPtr);
@@ -1616,8 +1609,7 @@ void accumulate(InputArray src, InputOutputArray dst, {InputArray? mask}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
-void accumulateSquare(InputArray src, InputOutputArray dst,
-    {InputArray? mask}) {
+void accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null)
     _bindings.Mat_AccumulateSquare(src.ptr, dst.ptr);
   else
@@ -1628,24 +1620,20 @@ void accumulateSquare(InputArray src, InputOutputArray dst,
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga82518a940ecfda49460f66117ac82520
-void accumulateProduct(
-    InputArray src1, InputArray src2, InputOutputArray dst, InputArray? mask) {
+void accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, InputArray? mask) {
   if (mask == null)
     _bindings.Mat_AccumulateProduct(src1.ptr, src2.ptr, dst.ptr);
   else
-    _bindings.Mat_AccumulateProductWithMask(
-        src1.ptr, src2.ptr, dst.ptr, mask.ptr);
+    _bindings.Mat_AccumulateProductWithMask(src1.ptr, src2.ptr, dst.ptr, mask.ptr);
 }
 
 /// Updates a running average.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
-void accumulateWeighted(
-    InputArray src, InputOutputArray dst, double alpha, InputArray? mask) {
+void accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, InputArray? mask) {
   if (mask == null)
     _bindings.Mat_AccumulatedWeighted(src.ptr, dst.ptr, alpha);
   else
-    _bindings.Mat_AccumulatedWeightedWithMask(
-        src.ptr, dst.ptr, alpha, mask.ptr);
+    _bindings.Mat_AccumulatedWeightedWithMask(src.ptr, dst.ptr, alpha, mask.ptr);
 }

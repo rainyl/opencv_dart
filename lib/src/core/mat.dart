@@ -634,6 +634,26 @@ class Mat extends CvObject with EquatableMixin {
     return this;
   }
 
+  List<List<T>> toList<T extends num>({int cn = 0}) {
+    return List.generate(
+      this.cols,
+      (col) => List.generate(
+        this.rows,
+        (row) => this.at<T>(row, col, cn: cn),
+      ),
+    );
+  }
+
+  List<List<List<T>>> toList3D<T extends num>() {
+    assert(this.channels == 3, "toList3D() only for 3 channels, but this.channels=${this.channels}");
+    return List.generate(3, (cn) => toList(cn: cn));
+  }
+
+  List<List<List<List<T>>>> toList4D<T extends num>() {
+    assert(this.channels == 4, "toList4D() only for 4 channels, but this.channels=${this.channels}");
+    return List.generate(4, (cn) => toList(cn: cn));
+  }
+
   @override
   cvg.Mat get ptr => _ptr;
 

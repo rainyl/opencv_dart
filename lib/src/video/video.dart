@@ -19,16 +19,14 @@ class BackgroundSubtractorMOG2 extends CvObject {
     finalizer.attach(this, _ptr);
   }
   factory BackgroundSubtractorMOG2.empty() {
-    return BackgroundSubtractorMOG2(
-        _bindings.BackgroundSubtractorMOG2_Create());
+    return BackgroundSubtractorMOG2(_bindings.BackgroundSubtractorMOG2_Create());
   }
   factory BackgroundSubtractorMOG2.create({
     int history = 500,
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    return BackgroundSubtractorMOG2(
-        _bindings.BackgroundSubtractorMOG2_CreateWithParams(
+    return BackgroundSubtractorMOG2(_bindings.BackgroundSubtractorMOG2_CreateWithParams(
       history,
       varThreshold,
       detectShadows,
@@ -42,8 +40,7 @@ class BackgroundSubtractorMOG2 extends CvObject {
   }
 
   cvg.BackgroundSubtractorMOG2 _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.BackgroundSubtractorMOG2_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.BackgroundSubtractorMOG2_Close);
 
   @override
   ffi.NativeType get ref => throw UnsupportedError("");
@@ -57,8 +54,7 @@ class BackgroundSubtractorKNN extends CvObject {
     finalizer.attach(this, _ptr);
   }
 
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.BackgroundSubtractorKNN_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.BackgroundSubtractorKNN_Close);
 
   factory BackgroundSubtractorKNN.empty() {
     return BackgroundSubtractorKNN(_bindings.BackgroundSubtractorKNN_Create());
@@ -68,8 +64,7 @@ class BackgroundSubtractorKNN extends CvObject {
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    return BackgroundSubtractorKNN(
-        _bindings.BackgroundSubtractorKNN_CreateWithParams(
+    return BackgroundSubtractorKNN(_bindings.BackgroundSubtractorKNN_CreateWithParams(
       history,
       varThreshold,
       detectShadows,
@@ -105,8 +100,7 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   double varThreshold = 16,
   bool detectShadows = true,
 }) {
-  return BackgroundSubtractorMOG2(
-      _bindings.BackgroundSubtractorMOG2_CreateWithParams(
+  return BackgroundSubtractorMOG2(_bindings.BackgroundSubtractorMOG2_CreateWithParams(
     history,
     varThreshold,
     detectShadows,
@@ -162,7 +156,7 @@ void calcOpticalFlowPyrLK(
   InputOutputArray nextPts,
   OutputArray status,
   OutputArray err, {
-  Size winSize = (width: 21, height: 21),
+  Size winSize = (21, 21),
   int maxLevel = 3,
   cvg.TermCriteria? criteria,
   int flags = 0,
@@ -235,8 +229,7 @@ class TrackerMIL extends CvObject {
   }
 
   cvg.TrackerMIL _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.TrackerMIL_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.TrackerMIL_Close);
 
   @override
   ffi.NativeType get ref => throw UnsupportedError("");
@@ -262,8 +255,7 @@ class KalmanFilter extends CvObject {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    return KalmanFilter(_bindings.KalmanFilter_NewWithParams(
-        dynamParams, measureParams, controlParams, type));
+    return KalmanFilter(_bindings.KalmanFilter_NewWithParams(dynamParams, measureParams, controlParams, type));
   }
 
   Mat correct(Mat measurement) {
@@ -274,8 +266,7 @@ class KalmanFilter extends CvObject {
     if (control == null) {
       return Mat.fromCMat(_bindings.KalmanFilter_Predict(_ptr));
     } else {
-      return Mat.fromCMat(
-          _bindings.KalmanFilter_PredictWithParams(_ptr, control.ptr));
+      return Mat.fromCMat(_bindings.KalmanFilter_PredictWithParams(_ptr, control.ptr));
     }
   }
 
@@ -285,13 +276,11 @@ class KalmanFilter extends CvObject {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    _bindings.KalmanFilter_InitWithParams(
-        _ptr, dynamParams, measureParams, controlParams, type);
+    _bindings.KalmanFilter_InitWithParams(_ptr, dynamParams, measureParams, controlParams, type);
   }
 
   cvg.TrackerMIL _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.KalmanFilter_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.KalmanFilter_Close);
 
   // corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
   Mat get statePost => Mat.fromCMat(_bindings.KalmanFilter_GetStatePost(_ptr));
@@ -304,8 +293,7 @@ class KalmanFilter extends CvObject {
     _bindings.KalmanFilter_SetStatePre(_ptr, state.ptr);
   }
 
-  Mat get transitionMatrix =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetTransitionMatrix(_ptr));
+  Mat get transitionMatrix => Mat.fromCMat(_bindings.KalmanFilter_GetTransitionMatrix(_ptr));
   set transitionMatrix(Mat m) {
     _bindings.KalmanFilter_SetTransitionMatrix(_ptr, m.ptr);
   }
@@ -316,20 +304,17 @@ class KalmanFilter extends CvObject {
   Mat get temp4 => Mat.fromCMat(_bindings.KalmanFilter_GetTemp4(_ptr));
   Mat get temp5 => Mat.fromCMat(_bindings.KalmanFilter_GetTemp5(_ptr));
 
-  Mat get processNoiseCov =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetProcessNoiseCov(_ptr));
+  Mat get processNoiseCov => Mat.fromCMat(_bindings.KalmanFilter_GetProcessNoiseCov(_ptr));
   set processNoiseCov(Mat m) {
     _bindings.KalmanFilter_SetProcessNoiseCov(_ptr, m.ptr);
   }
 
-  Mat get measurementNoiseCov =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetMeasurementNoiseCov(_ptr));
+  Mat get measurementNoiseCov => Mat.fromCMat(_bindings.KalmanFilter_GetMeasurementNoiseCov(_ptr));
   set measurementNoiseCov(Mat m) {
     _bindings.KalmanFilter_SetMeasurementNoiseCov(_ptr, m.ptr);
   }
 
-  Mat get measurementMatrix =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetMeasurementMatrix(_ptr));
+  Mat get measurementMatrix => Mat.fromCMat(_bindings.KalmanFilter_GetMeasurementMatrix(_ptr));
   set measurementMatrix(Mat m) {
     _bindings.KalmanFilter_SetMeasurementMatrix(_ptr, m.ptr);
   }
@@ -339,20 +324,17 @@ class KalmanFilter extends CvObject {
     _bindings.KalmanFilter_SetGain(_ptr, m.ptr);
   }
 
-  Mat get errorCovPre =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetErrorCovPre(_ptr));
+  Mat get errorCovPre => Mat.fromCMat(_bindings.KalmanFilter_GetErrorCovPre(_ptr));
   set errorCovPre(Mat m) {
     _bindings.KalmanFilter_SetErrorCovPre(_ptr, m.ptr);
   }
 
-  Mat get errorCovPost =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetErrorCovPost(_ptr));
+  Mat get errorCovPost => Mat.fromCMat(_bindings.KalmanFilter_GetErrorCovPost(_ptr));
   set errorCovPost(Mat m) {
     _bindings.KalmanFilter_SetErrorCovPost(_ptr, m.ptr);
   }
 
-  Mat get controlMatrix =>
-      Mat.fromCMat(_bindings.KalmanFilter_GetControlMatrix(_ptr));
+  Mat get controlMatrix => Mat.fromCMat(_bindings.KalmanFilter_GetControlMatrix(_ptr));
   set controlMatrix(Mat m) {
     _bindings.KalmanFilter_SetControlMatrix(_ptr, m.ptr);
   }

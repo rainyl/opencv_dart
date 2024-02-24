@@ -9,7 +9,7 @@ void main() async{
   });
 
   test('cv.VideoWriter.open', () {
-    final writer = cv.VideoWriter.open("test/images/small.mp4", "MJPG", 60, (width: 400, height: 300));
+    final writer = cv.VideoWriter.open("test/images/small.mp4", "MJPG", 60, (400, 300));
   });
 
   test('cv.VideoCapture.empty', () {

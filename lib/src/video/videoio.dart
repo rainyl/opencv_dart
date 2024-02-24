@@ -146,8 +146,8 @@ class VideoWriter implements ffi.Finalizable {
       name.cast(),
       _codec.cast(),
       fps,
-      frameSize.width,
-      frameSize.height,
+      frameSize.$1,
+      frameSize.$2,
       isColor,
     );
     calloc.free(name);
@@ -169,8 +169,8 @@ class VideoWriter implements ffi.Finalizable {
       name.cast(),
       _codec.cast(),
       fps,
-      frameSize.width,
-      frameSize.height,
+      frameSize.$1,
+      frameSize.$2,
       isColor,
     );
     calloc.free(name);

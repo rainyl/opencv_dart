@@ -34,38 +34,6 @@ abstract class VideoAccelerationType {
   static const int VIDEO_ACCELERATION_MFX = 4;
 }
 
-/// @name OBSENSOR (for Orbbec 3D-Sensor device/module )
-/// @{
-/// /
-/// //! OBSENSOR data given from image generator
-abstract class VideoCaptureOBSensorDataType {
-  /// !< Depth values in mm (CV_16UC1)
-  static const int CAP_OBSENSOR_DEPTH_MAP = 0;
-
-  /// !< Data given from BGR stream generator
-  static const int CAP_OBSENSOR_BGR_IMAGE = 1;
-
-  /// !< Data given from IR stream generator(CV_16UC1)
-  static const int CAP_OBSENSOR_IR_IMAGE = 2;
-}
-
-/// ! OBSENSOR stream generator
-abstract class VideoCaptureOBSensorGenerators {
-  static const int CAP_OBSENSOR_DEPTH_GENERATOR = 536870912;
-  static const int CAP_OBSENSOR_IMAGE_GENERATOR = 268435456;
-  static const int CAP_OBSENSOR_IR_GENERATOR = 134217728;
-  static const int CAP_OBSENSOR_GENERATORS_MASK = 939524096;
-}
-
-/// !OBSENSOR properties
-abstract class VideoCaptureOBSensorProperties {
-  /// INTRINSIC
-  static const int CAP_PROP_OBSENSOR_INTRINSIC_FX = 26001;
-  static const int CAP_PROP_OBSENSOR_INTRINSIC_FY = 26002;
-  static const int CAP_PROP_OBSENSOR_INTRINSIC_CX = 26003;
-  static const int CAP_PROP_OBSENSOR_INTRINSIC_CY = 26004;
-}
-
 const int COLOR_BGR2BGRA = 0;
 
 const int COLOR_RGB2RGBA = 0;
@@ -1933,3 +1901,37 @@ const int CAP_PROP_VIEWFINDER = 17010;
 const int CAP_PROP_IMAGES_BASE = 18000;
 
 const int CAP_PROP_IMAGES_LAST = 19000;
+
+const int CAP_OBSENSOR_DEPTH_MAP = 0;
+
+const int CAP_OBSENSOR_BGR_IMAGE = 1;
+
+const int CAP_OBSENSOR_IR_IMAGE = 2;
+
+const int CAP_OBSENSOR_DEPTH_GENERATOR = 536870912;
+
+const int CAP_OBSENSOR_IMAGE_GENERATOR = 268435456;
+
+const int CAP_OBSENSOR_IR_GENERATOR = 134217728;
+
+const int CAP_OBSENSOR_GENERATORS_MASK = 939524096;
+
+const int CAP_PROP_OBSENSOR_INTRINSIC_FX = 26001;
+
+const int CAP_PROP_OBSENSOR_INTRINSIC_FY = 26002;
+
+const int CAP_PROP_OBSENSOR_INTRINSIC_CX = 26003;
+
+const int CAP_PROP_OBSENSOR_INTRINSIC_CY = 26004;
+
+const int TM_SQDIFF = 0;
+
+const int TM_SQDIFF_NORMED = 1;
+
+const int TM_CCORR = 2;
+
+const int TM_CCORR_NORMED = 3;
+
+const int TM_CCOEFF = 4;
+
+const int TM_CCOEFF_NORMED = 5;

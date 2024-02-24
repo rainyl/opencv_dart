@@ -43,8 +43,8 @@ class CascadeClassifier implements ffi.Finalizable {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
     int flags = 0,
-    Size minSize = (width: 0, height: 0),
-    Size maxSize = (width: 0, height: 0),
+    Size minSize = (0, 0),
+    Size maxSize = (0, 0),
   }) {
     final rects = using<cvg.Rects>((arena) {
       final _rects = _bindings.CascadeClassifier_DetectMultiScaleWithParams(
@@ -85,8 +85,8 @@ class HOGDescriptor implements ffi.Finalizable {
     InputArray image, {
     double hitThreshold = 0,
     int minNeighbors = 3,
-    Size winStride = (width: 0, height: 0),
-    Size padding = (width: 0, height: 0),
+    Size winStride = (0, 0),
+    Size padding = (0, 0),
     double scale = 1.05,
     double groupThreshold = 2.0,
     bool useMeanshiftGrouping = false,

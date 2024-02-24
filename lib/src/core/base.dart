@@ -3,6 +3,8 @@ library cv;
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
+
 const _libraryName = "opencv_dart";
 
 /* fundamental constants */
@@ -35,7 +37,8 @@ ffi.DynamicLibrary loadNativeLibrary() {
   }
 }
 
-typedef Size = ({int width, int height});
+/// (width, height)
+typedef Size = (int, int);
 
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
   CvObject(this._ptr);

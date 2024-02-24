@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import 'base.dart';
 import '../opencv.g.dart' as cvg;
 
 extension ListIntExtension on List<int> {
@@ -55,7 +56,7 @@ extension RecordSizeExtension on ({int width, int height}) {
   }
 }
 
-extension RecordSizeExtension1 on (int, int) {
+extension RecordSizeExtension1 on Size {
   ffi.Pointer<cvg.Size> toSize(Arena arena) {
     final size = arena<cvg.Size>()
       ..ref.width = this.$1
