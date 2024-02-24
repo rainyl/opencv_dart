@@ -1,6 +1,6 @@
 name: opencv_dart
 description: "OpenCV4 bindings for Dart language and Flutter, using dart::ffi."
-version: 0.0.3-dev.1
+version: 0.0.3
 homepage: https://github.com/rainyl/opencv_dart
 
 environment:
