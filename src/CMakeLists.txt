@@ -36,7 +36,7 @@ set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED
     COMPONENTS
-    core calib3d dnn highgui features2d photo imgproc objdetect video videoio
+    aruco core calib3d dnn highgui features2d photo imgproc objdetect video videoio
 )
 find_package(Eigen3 )
 

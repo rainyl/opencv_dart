@@ -12,7 +12,7 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
 file(GLOB opencv_dart_libs
-  "${CMAKE_CURRENT_SOURCE_DIR}/libs/*"
+  "${CMAKE_CURRENT_SOURCE_DIR}/*"
 )
 
 # List of absolute paths to libraries that should be bundled with the plugin.

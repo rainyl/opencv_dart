@@ -11,6 +11,7 @@ src/CMakeLists.txt
 src/constants.h
 src/opencv_dart.cpp
 src/opencv_dart.h
+example/
 
 .idea/
 .vscode/

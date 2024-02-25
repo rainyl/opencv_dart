@@ -16,7 +16,7 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 file(GLOB opencv_dart_libs
-  "${CMAKE_CURRENT_SOURCE_DIR}/libs/*"
+  "${CMAKE_CURRENT_SOURCE_DIR}/*"
 )
 
 set(opencv_dart_bundled_libraries
