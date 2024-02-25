@@ -7,6 +7,10 @@ coverage/
 *.dll.a
 src/opencv/
 src/opencv_contrib/
+src/CMakeLists.txt
+src/constants.h
+src/opencv_dart.cpp
+src/opencv_dart.h
 
 .idea/
 .vscode/
