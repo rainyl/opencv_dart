@@ -14,6 +14,7 @@ replace.py
 generate.py
 demo.c
 coverage/
+pkgs/
 
 # Files and directories created by pub
 .dart_tool/

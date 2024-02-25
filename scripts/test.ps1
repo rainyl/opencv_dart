@@ -1,4 +1,4 @@
-$ENV:PATH += ";$pwd/windows/libs"
+$ENV:PATH += ";$pwd/windows"
 
 dart pub global run coverage:test_with_coverage
 

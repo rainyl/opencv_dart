@@ -1374,26 +1374,27 @@ Mat getAffineTransform2f(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
-Mat findHomography(
-  InputArray srcPoints,
-  InputArray dstPoints, {
-  int method = 0,
-  double ransacReprojThreshold = 3,
-  OutputArray? mask,
-  int maxIters = 2000,
-  double confidence = 0.995,
-}) {
-  final mat = _bindings.FindHomography(
-    srcPoints.ptr,
-    dstPoints.ptr,
-    method,
-    ransacReprojThreshold,
-    mask == null ? _bindings.Mat_New() : mask.ptr,
-    maxIters,
-    confidence,
-  );
-  return Mat.fromCMat(mat);
-}
+// TODO
+// Mat findHomography(
+//   InputArray srcPoints,
+//   InputArray dstPoints, {
+//   int method = 0,
+//   double ransacReprojThreshold = 3,
+//   OutputArray? mask,
+//   int maxIters = 2000,
+//   double confidence = 0.995,
+// }) {
+//   final mat = _bindings.FindHomography(
+//     srcPoints.ptr,
+//     dstPoints.ptr,
+//     method,
+//     ransacReprojThreshold,
+//     mask == null ? _bindings.Mat_New() : mask.ptr,
+//     maxIters,
+//     confidence,
+//   );
+//   return Mat.fromCMat(mat);
+// }
 
 /// DrawContours draws contours outlines or filled contours.
 ///
@@ -1620,7 +1621,7 @@ void accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) 
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga82518a940ecfda49460f66117ac82520
-void accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, InputArray? mask) {
+void accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null)
     _bindings.Mat_AccumulateProduct(src1.ptr, src2.ptr, dst.ptr);
   else
@@ -1631,7 +1632,7 @@ void accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, I
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
-void accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, InputArray? mask) {
+void accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) {
   if (mask == null)
     _bindings.Mat_AccumulatedWeighted(src.ptr, dst.ptr, alpha);
   else

@@ -5187,6 +5187,14 @@ class CvNative {
   late final _CStrings_Close =
       _CStrings_ClosePtr.asFunction<void Function(CStrings)>();
 
+  RNG Rng_New() {
+    return _Rng_New();
+  }
+
+  late final _Rng_NewPtr =
+      _lookup<ffi.NativeFunction<RNG Function()>>('Rng_New');
+  late final _Rng_New = _Rng_NewPtr.asFunction<RNG Function()>();
+
   RNG Rng_NewWithState(
     int state,
   ) {
@@ -7269,6 +7277,15 @@ class CvNative {
           'Window_SelectROIs');
   late final _Window_SelectROIs = _Window_SelectROIsPtr.asFunction<
       Rects Function(ffi.Pointer<ffi.Char>, Mat)>();
+
+  void destroyAllWindows() {
+    return _destroyAllWindows();
+  }
+
+  late final _destroyAllWindowsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('destroyAllWindows');
+  late final _destroyAllWindows =
+      _destroyAllWindowsPtr.asFunction<void Function()>();
 
   /// Trackbar
   void Trackbar_Create(
@@ -11756,6 +11773,20 @@ class CvNative {
   late final _VideoCapture_Read =
       _VideoCapture_ReadPtr.asFunction<int Function(VideoCapture, Mat)>();
 
+  void VideoCapture_Release(
+    VideoCapture v,
+  ) {
+    return _VideoCapture_Release(
+      v,
+    );
+  }
+
+  late final _VideoCapture_ReleasePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoCapture)>>(
+          'VideoCapture_Release');
+  late final _VideoCapture_Release =
+      _VideoCapture_ReleasePtr.asFunction<void Function(VideoCapture)>();
+
   void VideoCapture_Grab(
     VideoCapture v,
     int skip,
@@ -11859,6 +11890,20 @@ class CvNative {
           'VideoWriter_Write');
   late final _VideoWriter_Write =
       _VideoWriter_WritePtr.asFunction<void Function(VideoWriter, Mat)>();
+
+  void VideoWriter_Release(
+    VideoWriter vw,
+  ) {
+    return _VideoWriter_Release(
+      vw,
+    );
+  }
+
+  late final _VideoWriter_ReleasePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoWriter)>>(
+          'VideoWriter_Release');
+  late final _VideoWriter_Release =
+      _VideoWriter_ReleasePtr.asFunction<void Function(VideoWriter)>();
 
   int VideoWriter_Fourcc(
     int c1,
@@ -12780,6 +12825,8 @@ class _SymbolAddresses {
       get IntVector_Close => _library._IntVector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CStrings)>>
       get CStrings_Close => _library._CStrings_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<RNG Function()>> get Rng_New =>
+      _library._Rng_NewPtr;
   ffi.Pointer<ffi.NativeFunction<RNG Function(ffi.Uint64)>>
       get Rng_NewWithState => _library._Rng_NewWithStatePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RNG)>> get Rng_Close =>
@@ -13152,6 +13199,8 @@ class _SymbolAddresses {
       get Window_SelectROI => _library._Window_SelectROIPtr;
   ffi.Pointer<ffi.NativeFunction<Rects Function(ffi.Pointer<ffi.Char>, Mat)>>
       get Window_SelectROIs => _library._Window_SelectROIsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> get destroyAllWindows =>
+      _library._destroyAllWindowsPtr;
   ffi.Pointer<
           ffi.NativeFunction<
               ffi.Void Function(
@@ -14004,6 +14053,8 @@ class _SymbolAddresses {
       get VideoCapture_IsOpened => _library._VideoCapture_IsOpenedPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Int Function(VideoCapture, Mat)>>
       get VideoCapture_Read => _library._VideoCapture_ReadPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoCapture)>>
+      get VideoCapture_Release => _library._VideoCapture_ReleasePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoCapture, ffi.Int)>>
       get VideoCapture_Grab => _library._VideoCapture_GrabPtr;
   ffi.Pointer<ffi.NativeFunction<VideoWriter Function()>> get VideoWriter_New =>
@@ -14024,6 +14075,8 @@ class _SymbolAddresses {
       get VideoWriter_IsOpened => _library._VideoWriter_IsOpenedPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoWriter, Mat)>>
       get VideoWriter_Write => _library._VideoWriter_WritePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoWriter)>>
+      get VideoWriter_Release => _library._VideoWriter_ReleasePtr;
   ffi.Pointer<
           ffi.NativeFunction<
               ffi.Int Function(ffi.Char, ffi.Char, ffi.Char, ffi.Char)>>

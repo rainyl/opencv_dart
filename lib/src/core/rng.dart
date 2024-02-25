@@ -7,12 +7,19 @@ import 'mat.dart';
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
 class Rng extends CvObject {
-  Rng._(this._ptr) : super(_ptr) {
-    _finalizer.attach(this, _ptr);
+  Rng._(this._ptr, {bool attach = true}) : super(_ptr) {
+    if (attach) _finalizer.attach(this, _ptr);
   }
-  factory Rng.fromPtr(cvg.RNG _ptr) {
+
+  factory Rng() {
+    final _ptr = _bindings.Rng_New();
     return Rng._(_ptr);
   }
+
+  // cv::theRNG() is thread safe and will be automatically freed
+  // so, don't attach again or will be double freed
+  factory Rng.fromTheRng(cvg.RNG p) => Rng._(p, attach: false);
+
   factory Rng.fromSeed(int seed) {
     final _ptr = _bindings.Rng_NewWithState(seed);
     return Rng._(_ptr);
@@ -22,8 +29,7 @@ class Rng extends CvObject {
   cvg.RNG get ptr => _ptr;
   static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Rng_Close);
 
-  Mat fill(Mat mat, int distType, double a, double b, bool saturateRange,
-      {bool inplace = false}) {
+  Mat fill(Mat mat, int distType, double a, double b, bool saturateRange, {bool inplace = false}) {
     if (inplace) {
       _bindings.RNG_Fill(_ptr, mat.ptr, distType, a, b, saturateRange);
       return mat;

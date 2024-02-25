@@ -4,14 +4,18 @@ bak/
 scripts/
 opencv_dart.iml
 coverage/
-*.dll.a
+*.a
+*.dll
+*.so
+*.dylib
+src/opencv/.github/
 src/opencv/
 src/opencv_contrib/
 src/CMakeLists.txt
 src/constants.h
 src/opencv_dart.cpp
 src/opencv_dart.h
-example/
+pkgs/
 
 .idea/
 .vscode/

@@ -29,9 +29,8 @@ class VideoCapture extends CvObject {
   }) {
     final ptr_ = _bindings.VideoCapture_New();
     final cname = filename.toNativeUtf8();
-    final success =
-        _bindings.VideoCapture_OpenWithAPI(ptr_, cname.cast(), apiPreference);
-    calloc.free(cname);
+    final success = _bindings.VideoCapture_OpenWithAPI(ptr_, cname.cast(), apiPreference);
+    // calloc.free(cname);
     if (success) {
       return VideoCapture._(ptr_);
     } else {
@@ -44,8 +43,7 @@ class VideoCapture extends CvObject {
     int apiPreference = CAP_ANY,
     List<int>? params,
   }) {
-    return VideoCapture.create(filename,
-        apiPreference: apiPreference, params: params);
+    return VideoCapture.create(filename, apiPreference: apiPreference, params: params);
   }
 
   factory VideoCapture.fromDevice(
@@ -54,8 +52,7 @@ class VideoCapture extends CvObject {
     List<int>? params,
   }) {
     final ptr_ = _bindings.VideoCapture_New();
-    final success =
-        _bindings.VideoCapture_OpenDeviceWithAPI(ptr_, device, apiPreference);
+    final success = _bindings.VideoCapture_OpenDeviceWithAPI(ptr_, device, apiPreference);
     if (success) {
       return VideoCapture._(ptr_);
     } else {
@@ -64,8 +61,7 @@ class VideoCapture extends CvObject {
   }
 
   cvg.VideoCapture _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.VideoCapture_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.VideoCapture_Close);
 
   double getProp(int propId) {
     return _bindings.VideoCapture_Get(_ptr, propId);
@@ -88,8 +84,7 @@ class VideoCapture extends CvObject {
 
   bool open(String filename, {int apiPreference = CAP_ANY}) {
     final cname = filename.toNativeUtf8();
-    final success =
-        _bindings.VideoCapture_OpenWithAPI(_ptr, cname.cast(), apiPreference);
+    final success = _bindings.VideoCapture_OpenWithAPI(_ptr, cname.cast(), apiPreference);
     calloc.free(cname);
     return success;
   }
@@ -107,11 +102,11 @@ class VideoCapture extends CvObject {
     final codes = ascii.encode(codec);
     if (codes.length != 4) return -1;
     final c1 = codes[0], c2 = codes[1], c3 = codes[2], c4 = codes[3];
-    return ((c1 & 255) +
-            ((c2 & 255) << 8) +
-            ((c3 & 255) << 16) +
-            ((c4 & 255) << 24))
-        .toDouble();
+    return ((c1 & 255) + ((c2 & 255) << 8) + ((c3 & 255) << 16) + ((c4 & 255) << 24)).toDouble();
+  }
+
+  void release() {
+    _bindings.VideoCapture_Release(_ptr);
   }
 
   @override
@@ -187,10 +182,13 @@ class VideoWriter implements ffi.Finalizable {
     return _bindings.VideoWriter_Fourcc(_cc[0], _cc[1], _cc[2], _cc[3]);
   }
 
+  void release() {
+    _bindings.VideoWriter_Release(_ptr);
+  }
+
   cvg.VideoWriter _ptr;
   cvg.VideoWriter get ptr => _ptr;
-  static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.VideoWriter_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.VideoWriter_Close);
 
   bool get isOpened => _bindings.VideoWriter_IsOpened(_ptr) != 0;
 }

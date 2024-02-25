@@ -677,26 +677,26 @@ void main() async {
     expect(count, greaterThan(0));
   });
 
-  test('cv.theRNG', () {
-    final rng = cv.theRNG();
-    expect(rng.next(), isA<int>());
-  });
-
   test('cv.randn', () {
     final dst = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
     cv.randn(dst, cv.Scalar.all(10), cv.Scalar.all(1));
     expect(dst.isEmpty, false);
   });
 
-  test('cv.randShuffle', () {
-    final dst = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
-    cv.randShuffle(dst);
-    expect(dst.isEmpty, false);
-  });
-
   test('cv.randu', () {
     final dst = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
     cv.randu(dst, cv.Scalar.all(10), cv.Scalar.all(100));
+    expect(dst.isEmpty, false);
+  });
+
+  test('cv.theRNG', () {
+    final rng = cv.theRNG();
+    expect(rng.next(), isA<int>());
+  });
+
+  test('cv.randShuffle', () {
+    final dst = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
+    cv.randShuffle(dst);
     expect(dst.isEmpty, false);
   });
 

@@ -20,7 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String imagePath = r"";
   cv.Mat? image;
   ui.Image? uiImage;
 
@@ -75,7 +74,7 @@ Future<ui.Image> convertImageToFlutterUi(img.Image image) async {
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
-                Image.file(File(imagePath)),
+                Image.asset("images/lenna.png"),
                 spacerSmall,
                 ElevatedButton(
                     onPressed: () async {

@@ -1797,4 +1797,11 @@ enum {
                                   }\f] */
 };
 
+//! type of the robust estimation algorithm
+enum {
+    HOMOGRAPY_ALL_POINTS = 0,
+    HOMOGRAPY_LMEDS = 4,
+    HOMOGRAPY_RANSAC = 8
+};
+
 #endif //OPENCV_DART_LIBRARY_ENUMS_H

@@ -661,7 +661,12 @@ void min(InputArray src1, InputArray src2, OutputArray dst) {
     final minLocP = arena<cvg.Point>();
     final maxLocP = arena<cvg.Point>();
     _bindings.Mat_MinMaxLoc(src.ptr, minValP, maxValP, minLocP, maxLocP);
-    return (minValP.value, maxValP.value, Point(minLocP.ref.x, minLocP.ref.y), Point(maxLocP.ref.x, maxLocP.ref.y));
+    return (
+      minValP.value,
+      maxValP.value,
+      Point(minLocP.ref.x, minLocP.ref.y),
+      Point(maxLocP.ref.x, maxLocP.ref.y)
+    );
   });
 }
 
@@ -966,8 +971,9 @@ double getTickFrequency() {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
+/// Disabled: double free
 Rng theRNG() {
-  return Rng.fromPtr(_bindings.TheRNG());
+  return Rng.fromTheRng(_bindings.TheRNG());
 }
 
 /// RandN Fills the array with normally distributed random numbers.
@@ -987,8 +993,11 @@ void randShuffle(
   double iterFactor = 1,
   Rng? rng,
 }) {
-  rng ??= theRNG();
-  _bindings.RandShuffleWithParams(dst.ptr, iterFactor, rng.ptr);
+  if (rng == null) {
+    _bindings.RandShuffle(dst.ptr);
+  } else {
+    _bindings.RandShuffleWithParams(dst.ptr, iterFactor, rng.ptr);
+  }
 }
 
 /// RandU Generates a single uniformly-distributed random

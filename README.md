@@ -6,6 +6,15 @@ OpenCV Bindings for Dart Language.
 
 *Many tests unfinished, contributions are welcome!*
 
+Prebuilt binaries for Linux and Windows are available, for other platforms, you have to build 
+them your self.
+
+**IMPORTANT**
+
+After added to `pubspec.yaml` or install by commandline, 
+please run `dart run opencv_dart:setup -p <platform>` to download 
+prebuilt binaries, for now, `platform` supports `auto`, `linux` and `windows`.
+
 ## Status
 
 | module     | Binding status     | Test status             | description             |
@@ -15,11 +24,11 @@ OpenCV Bindings for Dart Language.
 | features2d | :white_check_mark: | :x:                     | Features2D module       |
 | highgui    | :white_check_mark: | :white_check_mark:      | HighGUI module          |
 | imgcodecs  | :white_check_mark: | :white_check_mark:      | ImageCodecs module      |
-| imgproc    | :white_check_mark: | :ballot_box_with_check: | ImageProc module        |
+| imgproc    | :white_check_mark: | :white_check_mark:      | ImageProc module        |
 | objdetect  | :white_check_mark: | :white_check_mark:      | Object Detection module |
 | svd        | :white_check_mark: | :white_check_mark:      | SVD module              |
 | video      | :white_check_mark: | :x:                     | Video module            |
-| videoio    | :white_check_mark: | :x:                     | VideoIO module          |
+| videoio    | :white_check_mark: | :ballot_box_with_check: | VideoIO module          |
 | asyncarray | :x:                | :x:                     | AsyncArray module       |
 | calib3d    | :x:                | :x:                     | Calib3D module          |
 | dnn        | :x:                | :x:                     | DNN module              |
@@ -28,8 +37,24 @@ OpenCV Bindings for Dart Language.
 | contrib    | :x:                | :x:                     | Contrib module          |
 
 - :x: : not finished
-- :ballot_box_with_check: : mostly finished
+- :ballot_box_with_check: : almost finished
 - :white_check_mark: : finished
+
+### Usage
+
+```dart
+import 'package:opencv_dart/opencv_dart.dart' as cv;
+
+final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+final gray = cv.Mat.empty();
+
+cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
+print("${img.rows}, ${img.cols}");
+
+cv.imwrite("test_cvtcolor.png", gray);
+```
+
+More examples are comming...
 
 ### TODO
 

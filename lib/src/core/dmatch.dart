@@ -8,8 +8,6 @@ import 'package:ffi/ffi.dart';
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
-
 class DMatch extends CvObject with EquatableMixin {
   DMatch._(this._ptr) : super(_ptr) {
     _finalizer.attach(this, _ptr);

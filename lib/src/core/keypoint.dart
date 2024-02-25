@@ -8,8 +8,6 @@ import 'package:ffi/ffi.dart';
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
-
 class KeyPoint extends CvObject with EquatableMixin {
   KeyPoint._(this._ptr) : super(_ptr) {
     _finalizer.attach(this, _ptr);

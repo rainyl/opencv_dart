@@ -763,75 +763,163 @@ void main() async {
   });
 
   // findHomography
-  test('cv.findHomography', () {
-    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC1);
-    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
-    final srcPts = [
-      cv.Point(193, 932),
-      cv.Point(191, 378),
-      cv.Point(1497, 183),
-      cv.Point(1889, 681),
-    ];
-    final dstPts = [
-      cv.Point2f(51.51206544281359, -0.10425475260813055),
-      cv.Point2f(51.51211051314331, -0.10437947532732306),
-      cv.Point2f(51.512222354139325, -0.10437679311830816),
-      cv.Point2f(51.51214828037607, -0.1042212249954444),
-    ];
-  });
+  // test('cv.findHomography', () {
+  //   final src = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC1);
+  //   final dst = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC2);
+  //   final srcPts = [
+  //     cv.Point(193, 932),
+  //     cv.Point(191, 378),
+  //     cv.Point(1497, 183),
+  //     cv.Point(1889, 681),
+  //   ];
+  //   final dstPts = [
+  //     cv.Point2f(51.51206544281359, -0.10425475260813055),
+  //     cv.Point2f(51.51211051314331, -0.10437947532732306),
+  //     cv.Point2f(51.512222354139325, -0.10437679311830816),
+  //     cv.Point2f(51.51214828037607, -0.1042212249954444),
+  //   ];
+  //   List.generate(srcPts.length, (index) => index).forEach((i) {
+  //     src.setValue<double>(i, 0, srcPts[i].x.toDouble());
+  //     src.setValue<double>(i, 1, srcPts[i].y.toDouble());
+  //   });
+  //   List.generate(dstPts.length, (index) => index).forEach((i) {
+  //     dst.setValue<double>(i, 0, dstPts[i].x.toDouble());
+  //     dst.setValue<double>(i, 1, dstPts[i].y.toDouble());
+  //   });
+
+  //   final mask = cv.Mat.empty();
+  //   final m = cv.findHomography(
+  //     src,
+  //     dst,
+  //     method: cv.HOMOGRAPY_ALL_POINTS,
+  //     ransacReprojThreshold: 3,
+  //     mask: mask,
+  //   );
+  //   expect(m.isEmpty, false);
+  // });
 
   // remap
   test('cv.remap', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.empty();
+    final map1 = cv.Mat.zeros(256, 256, cv.MatType.CV_16SC2);
+    map1.setValue<int>(50, 50, 25);
+    final map2 = cv.Mat.empty();
+    cv.remap(src, dst, map1, map2, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
+    expect(dst.isEmpty, false);
   });
 
   // filter2D
   test('cv.filter2D', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.empty();
+    final kernel = cv.getStructuringElement(cv.MORPH_RECT, (1, 1));
+    cv.filter2D(src, dst, -1, kernel);
+    expect(dst.isEmpty, false);
   });
 
   // sepFilter2D
   test('cv.sepFilter2D', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.empty();
+    final kernelX = cv.getStructuringElement(cv.MORPH_RECT, (1, 1));
+    final kernelY = cv.getStructuringElement(cv.MORPH_RECT, (1, 1));
+    cv.sepFilter2D(src, dst, -1, kernelX, kernelY, anchor: cv.Point(-1, -1), delta: 0);
+    expect(dst.isEmpty, false);
   });
 
   // logPolar
   test('cv.logPolar', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.empty();
+    cv.logPolar(src, dst, cv.Point2f(21, 21), 1, cv.INTER_LINEAR);
+    expect(dst.isEmpty, false);
   });
 
   // linearPolar
   test('cv.linearPolar', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.empty();
+    cv.linearPolar(src, dst, cv.Point2f(21, 21), 1, cv.INTER_LINEAR);
+    expect(dst.isEmpty, false);
   });
 
   // fitLine
   test('cv.fitLine', () {
-    // TODO
+    final pts = [
+      cv.Point(125, 24),
+      cv.Point(124, 75),
+      cv.Point(175, 76),
+      cv.Point(176, 25),
+    ];
+    final dst = cv.Mat.empty();
+    cv.fitLine(pts, dst, cv.DIST_L2, 0, 0.01, 0.01);
+    expect(dst.isEmpty, false);
   });
 
   // matchShapes
   test('cv.matchShapes', () {
-    // TODO
+    final pts1 = [
+      cv.Point(0, 0),
+      cv.Point(1, 0),
+      cv.Point(2, 2),
+      cv.Point(3, 3),
+      cv.Point(3, 4),
+    ];
+    final pts2 = [
+      cv.Point(0, 0),
+      cv.Point(1, 0),
+      cv.Point(2, 3),
+      cv.Point(3, 3),
+      cv.Point(3, 5),
+    ];
+    final similarity = cv.matchShapes(pts1, pts2, cv.CONTOURS_MATCH_I2, 0);
+    expect(2.0 <= similarity && similarity <= 3.0, true);
   });
 
   // accumulate
   test('cv.accumulate', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_64FC3);
+    final mask = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_8UC1);
+    cv.accumulate(src, dst, mask: mask);
+    expect(dst.isEmpty, false);
   });
 
   // accumulateSquare
   test('cv.accumulateSquare', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_64FC3);
+    final mask = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_8UC1);
+    cv.accumulateSquare(src, dst, mask: mask);
+    expect(dst.isEmpty, false);
   });
 
   // accumulateProduct
   test('cv.accumulateProduct', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    expect(src.isEmpty, false);
+    final src2 = src.clone();
+    final dst = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_64FC3);
+    final mask = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_8UC1);
+    cv.accumulateProduct(src, src2, dst, mask: mask);
+    expect(dst.isEmpty, false);
   });
 
   // accumulateWeighted
   test('cv.accumulateWeighted', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    expect(src.isEmpty, false);
+    final dst = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_64FC3);
+    final mask = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_8UC1);
+    cv.accumulateWeighted(src, dst, 0.1, mask: mask);
+    expect(dst.isEmpty, false);
   });
 }

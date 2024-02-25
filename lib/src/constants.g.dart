@@ -1935,3 +1935,9 @@ const int TM_CCORR_NORMED = 3;
 const int TM_CCOEFF = 4;
 
 const int TM_CCOEFF_NORMED = 5;
+
+const int HOMOGRAPY_ALL_POINTS = 0;
+
+const int HOMOGRAPY_LMEDS = 4;
+
+const int HOMOGRAPY_RANSAC = 8;
