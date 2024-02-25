@@ -3,8 +3,6 @@ library cv;
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
-import 'package:equatable/equatable.dart';
-
 const _libraryName = "opencv_dart";
 
 /* fundamental constants */

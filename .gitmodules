@@ -1,3 +1,9 @@
 [submodule "src/gocv"]
 	path = src/gocv
 	url = https://github.com/rainyl/gocv.git
+[submodule "src/opencv"]
+	path = src/opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "src/opencv_contrib"]
+	path = src/opencv_contrib
+	url = https://github.com/opencv/opencv_contrib.git

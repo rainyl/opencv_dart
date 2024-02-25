@@ -24,7 +24,6 @@ class Contours with IterableMixin<List<Point>> {
   cvg.PointsVector _ptr;
   cvg.PointsVector get ptr => _ptr;
   static final _finalizer = Finalizer<cvg.PointsVector>((p0) {
-    print("Start to free Contours...");
     _bindings.PointsVector_Close(p0);
   });
 

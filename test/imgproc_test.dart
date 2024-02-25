@@ -239,6 +239,13 @@ void main() async {
     cv.circle(src, cv.Point(50, 50), 10, cv.Scalar.red);
     expect((src.width, src.height, src.channels), (100, 100, 3));
 
+    cv.fillPoly(
+        src,
+        [
+          [cv.Point(10, 10), cv.Point(10, 30), cv.Point(30, 30)]
+        ],
+        cv.Scalar.green);
+
     cv.imwrite("test/images_out/basic_drawings.png", src);
   });
 
@@ -585,11 +592,6 @@ void main() async {
     expect(dst.isEmpty || img.rows != dst.rows || img.cols != dst.cols, false);
   });
 
-  // fillPoly
-  test('cv.fillPoly', () {
-    // TODO
-  });
-
   // getTextSize
   test('cv.getTextSize', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
@@ -631,7 +633,27 @@ void main() async {
 
   // warpPerspective
   test('cv.warpPerspective', () {
-    // TODO
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    expect(img.isEmpty, false);
+    final pvs = [
+      cv.Point(0, 0),
+      cv.Point(10, 5),
+      cv.Point(10, 10),
+      cv.Point(5, 10),
+    ];
+
+    final pvd = [
+      cv.Point(0, 0),
+      cv.Point(10, 0),
+      cv.Point(10, 10),
+      cv.Point(0, 10),
+    ];
+
+    final m = cv.getPerspectiveTransform(pvs, pvd);
+    final dst = cv.Mat.empty();
+    cv.warpPerspective(img, dst, m, (img.width, img.height));
+
+    expect((dst.rows, dst.cols), (img.rows, img.cols));
   });
 
   // watershed
@@ -655,37 +677,107 @@ void main() async {
 
   // applyColorMap
   test('cv.applyColorMap', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
+    final dst = src.clone();
+    cv.applyColorMap(src, dst, cv.COLORMAP_AUTUMN);
+    expect((dst.rows, dst.cols), (src.rows, src.cols));
   });
 
   // applyCustomColorMap
   test('cv.applyCustomColorMap', () {
-    // TODO
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
+    final cmap = cv.Mat.zeros(256, 1, cv.MatType.CV_8UC1);
+    final dst = src.clone();
+    cv.applyCustomColorMap(src, dst, cmap);
+    expect((dst.rows, dst.cols), (src.rows, src.cols));
   });
 
   // getPerspectiveTransform
   test('cv.getPerspectiveTransform', () {
-    // TODO
+    final src = [
+      cv.Point(0, 0),
+      cv.Point(10, 5),
+      cv.Point(10, 10),
+      cv.Point(5, 10),
+    ];
+    final dst = [
+      cv.Point(0, 0),
+      cv.Point(10, 0),
+      cv.Point(10, 10),
+      cv.Point(0, 10),
+    ];
+    final m = cv.getPerspectiveTransform(src, dst);
+    expect((m.rows, m.cols), (3, 3));
   });
 
   // getPerspectiveTransform2f
   test('cv.getPerspectiveTransform2f', () {
-    // TODO
+    final src = [
+      cv.Point2f(0, 0),
+      cv.Point2f(10, 5),
+      cv.Point2f(10, 10),
+      cv.Point2f(5, 10),
+    ];
+    final dst = [
+      cv.Point2f(0, 0),
+      cv.Point2f(10, 0),
+      cv.Point2f(10, 10),
+      cv.Point2f(0, 10),
+    ];
+    final m = cv.getPerspectiveTransform2f(src, dst);
+    expect((m.rows, m.cols), (3, 3));
   });
 
   // getAffineTransform
   test('cv.getAffineTransform', () {
-    // TODO
+    final src = [
+      cv.Point(0, 0),
+      cv.Point(10, 5),
+      cv.Point(10, 10),
+    ];
+
+    final dst = [
+      cv.Point(0, 0),
+      cv.Point(10, 0),
+      cv.Point(10, 10),
+    ];
+    final m = cv.getAffineTransform(src, dst);
+    expect((m.rows, m.cols), (2, 3));
   });
 
   // getAffineTransform2f
   test('cv.getAffineTransform2f', () {
-    // TODO
+    final src = [
+      cv.Point2f(0, 0),
+      cv.Point2f(10, 5),
+      cv.Point2f(10, 10),
+    ];
+
+    final dst = [
+      cv.Point2f(0, 0),
+      cv.Point2f(10, 0),
+      cv.Point2f(10, 10),
+    ];
+    final m = cv.getAffineTransform2f(src, dst);
+    expect((m.rows, m.cols), (2, 3));
   });
 
   // findHomography
   test('cv.findHomography', () {
-    // TODO
+    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC1);
+    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final srcPts = [
+      cv.Point(193, 932),
+      cv.Point(191, 378),
+      cv.Point(1497, 183),
+      cv.Point(1889, 681),
+    ];
+    final dstPts = [
+      cv.Point2f(51.51206544281359, -0.10425475260813055),
+      cv.Point2f(51.51211051314331, -0.10437947532732306),
+      cv.Point2f(51.512222354139325, -0.10437679311830816),
+      cv.Point2f(51.51214828037607, -0.1042212249954444),
+    ];
   });
 
   // remap

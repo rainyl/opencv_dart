@@ -1,20 +1,20 @@
-$buildType = "Release"
+$build_type = "Release"
 $platform = "x64"
 $os = "windows"
 
-$baseDir = $pwd
+$base_dir = $pwd
 
-$buildDirectory = "$baseDir/build/opencv/${os}-${platform}"
-mkdir $buildDirectory -Force -ErrorAction Stop | Out-Null
-cd $buildDirectory
+$build_dir = "$base_dir/build/opencv/${os}-${platform}"
+mkdir $build_dir -Force -ErrorAction Stop | Out-Null
+cd $build_dir
 echo "Working in $pwd"
 
-$opencvDir = "$baseDir/src/opencv"
-$opencvContribDir = "$baseDir/src/opencv_contrib/modules"
+$opencv_dir = "$base_dir/src/opencv"
+$opencv_contrib_dir = "$base_dir/src/opencv_contrib/modules"
 
 
 cmake -G "MinGW Makefiles" `
-    -D CMAKE_BUILD_TYPE=$buildType `
+    -D CMAKE_BUILD_TYPE=$build_type `
     -D CMAKE_INSTALL_PREFIX=install `
     -D INSTALL_C_EXAMPLES=OFF `
     -D INSTALL_PYTHON_EXAMPLES=OFF `
@@ -48,9 +48,9 @@ cmake -G "MinGW Makefiles" `
     -D ENABLE_PRECOMPILED_HEADERS=OFF `
     -D CMAKE_NO_SYSTEM_FROM_IMPORTED=ON `
     -D OPENCV_ENABLE_NONFREE=OFF `
-    -D OPENCV_EXTRA_MODULES_PATH=$opencvContribDir `
-    -D BUILD_SHARED_LIBS=ON $opencvDir
+    -D OPENCV_EXTRA_MODULES_PATH=$opencv_contrib_dir `
+    -D BUILD_SHARED_LIBS=OFF $opencv_dir
 
 cmake --build . -j 16 --target install
 
-cd $baseDir
+cd $base_dir

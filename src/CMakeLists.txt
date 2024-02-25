@@ -1,7 +1,7 @@
 # The Flutter tooling requires that developers have CMake 3.10 or later
 # installed. You should not increase this version, as doing so will cause
 # the plugin to fail to compile for some customers of the plugin.
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.21)
 
 project(opencv_dart_library VERSION 0.0.1 LANGUAGES C CXX)
 set(library_name "opencv_dart")
@@ -9,6 +9,10 @@ set(library_name "opencv_dart")
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INSTALL_PREFIX "install")
+
+set(OpenCV_BUILD_DIR "${CMAKE_BINARY_DIR}/../../opencv")
+
+message(STATUS "OpenCV_BUILD_DIR: ${OpenCV_BUILD_DIR}")
 
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "amd64.*|x86_64.*|AMD64.*")
     set(OpenCV_Dart_ARCH x64)
@@ -18,19 +22,23 @@ endif ()
 
 if (WIN32)
     set(OpenCV_Dart_OS windows)
+    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}-${OpenCV_Dart_ARCH}")
 elseif (UNIX)
     set(OpenCV_Dart_OS linux)
+    set(OpenCV_DIR
+        "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}-${OpenCV_Dart_ARCH}")
 elseif (APPLE)
     set(OpenCV_Dart_OS macos)
+    # TODO
 endif ()
 
-set(OpenCV_DIR
-    "${CMAKE_CURRENT_SOURCE_DIR}/../build/opencv/${OpenCV_Dart_OS}-${OpenCV_Dart_ARCH}/install/")
+set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED
     COMPONENTS
     core calib3d dnn highgui features2d photo imgproc objdetect video videoio
 )
+find_package(Eigen3 )
 
 message(STATUS "OpenCV library status:")
 message(STATUS "    config: ${OpenCV_DIR}")
@@ -45,10 +53,9 @@ file(GLOB GOCV_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/gocv/*.cpp"
 )
 add_library(${library_name} SHARED ${GOCV_FILES}
-    #    cv/types.h
 )
 target_include_directories(${library_name} SYSTEM PUBLIC
-    "${OpenCV_DIR}/include"
+    ${OpenCV_INCLUDE_DIRS}
 )
 target_link_libraries(${library_name} PUBLIC ${OpenCV_LIBS})
 set_target_properties(opencv_dart PROPERTIES
@@ -64,10 +71,24 @@ endif (WIN32)
 
 target_compile_definitions(${library_name} PUBLIC DART_SHARED_LIB)
 
-add_custom_command(TARGET ${library_name} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:${library_name}> $<TARGET_FILE_DIR:${library_name}>
-    COMMAND_EXPAND_LISTS
+add_executable(
+    demo
+    "demo.c"
 )
+# target_include_directories(demo SYSTEM)
+target_link_libraries(
+    demo
+    PUBLIC
+    ${OpenCV_LIBS}
+    ${library_name}
+)
+
+#add_custom_command(TARGET demo POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#    "$<TARGET_RUNTIME_DLLS:demo>"
+#    "$<TARGET_FILE_DIR:demo>"
+#    COMMAND_EXPAND_LISTS
+#)
 
 ### install
 install(TARGETS ${library_name}
@@ -91,16 +112,3 @@ elseif (UNIX)
     install(FILES ${OPENCV_DART_WIN_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../linux/libs")
 endif ()
 
-if (OPENCV_DART_COMPILE_DEMO)
-    add_executable(
-        demo
-        "demo.c"
-    )
-    # target_include_directories(demo SYSTEM)
-    target_link_libraries(
-        demo
-        PUBLIC
-        ${library_name}
-        ${OpenCV_LIBS}
-    )
-endif ()

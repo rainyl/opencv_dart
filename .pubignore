@@ -4,6 +4,9 @@ bak/
 scripts/
 opencv_dart.iml
 coverage/
+*.dll.a
+src/opencv/
+src/opencv_contrib/
 
 .idea/
 .vscode/
