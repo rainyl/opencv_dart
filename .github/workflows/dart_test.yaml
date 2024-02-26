@@ -17,6 +17,9 @@ jobs:
           # flutter-version: '3.16.9'
           channel: 'stable'
 
+      - name: Set env
+        run: export LD_LIBRARY_PATH=./linux:$LD_LIBRARY_PATH
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -33,21 +36,8 @@ jobs:
           # flutter-version: '3.16.9'
           channel: 'stable'
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Run tests
-        run: flutter test test/
-
-  test_macos:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: 'stable'
+      - name: Set env
+        run: $ENV:PATH += ";./windows"
 
       - name: Install dependencies
         run: flutter pub get

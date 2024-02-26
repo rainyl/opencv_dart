@@ -1,3 +1,7 @@
+## 0.2.0
+
+* :tada: add android `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64` prebuild binaries, e.g., `dart run opencv_dart:setup -p android -a arm64-v8a` to download prebuilt binaries for android arm64-v8a
+
 ## 0.1.0
 
 * Finished: test for aruco, features2d, video module
