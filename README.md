@@ -55,7 +55,7 @@ print("${img.rows}, ${img.cols}");
 cv.imwrite("test_cvtcolor.png", gray);
 ```
 
-More examples are comming...
+More examples are on the way...
 
 ### TODO
 

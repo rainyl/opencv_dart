@@ -1,3 +1,9 @@
+## 0.1.0
+
+* Finished: test for aruco, features2d, video module
+* :tada: this package is STABLE now! :rocket: check API reference for more details
+* more examples and docs are on the way
+
 ## 0.0.4
 
 * adjust prebuilt binaries distribution, use `dart run opencv_dart:setup` to download prebuilt binaries
