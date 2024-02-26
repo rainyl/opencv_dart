@@ -1,4 +1,3 @@
-import 'package:test/expect.dart';
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
