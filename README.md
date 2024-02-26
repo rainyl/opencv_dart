@@ -59,7 +59,7 @@ More examples are on the way...
 
 ### TODO
 
-- [ ] compile libs for android, linux
+- [x] compile libs for android, linux
 - [ ] support for iOS, macOS
 - [ ] add more examples
 - [ ] modify C wrapper to catch exceptions

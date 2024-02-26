@@ -17,6 +17,12 @@ class OS {
 
 void main(List<String> args) async {
   final parser = ArgParser();
+  // parser.addFlag(
+  //   "flutter",
+  //   negatable: true,
+  //   defaultsTo: false,
+  //   help: "Setup for Flutter",
+  // );
   parser.addOption(
     "platform",
     abbr: "p",
@@ -32,8 +38,27 @@ void main(List<String> args) async {
     defaultsTo: "auto",
     help: "Platform to setup",
   );
+  parser.addOption(
+    "arch",
+    abbr: "a",
+    allowed: [
+      "auto",
+      "x86",
+      "x64",
+      "x86_64",
+      "arm64-v8a",
+      "armeabi-v7a",
+    ],
+    defaultsTo: "auto",
+    help: "Architecture to setup",
+  );
   final argsParsed = parser.parse(args);
-  final platform = argsParsed["platform"] == OS.auto ? Platform.operatingSystem : argsParsed["platform"] as String;
+  final platform =
+      argsParsed["platform"] == OS.auto ? Platform.operatingSystem : argsParsed["platform"] as String;
+  final arch = argsParsed["arch"] == OS.auto
+      ? (platform == "android" ? "arm64-v8a" : "x64")
+      : argsParsed["arch"] as String;
+  final setupPkgName = "opencv_dart";
 
   // Assumed package root
   final root = Directory.current.uri;
@@ -59,15 +84,15 @@ void main(List<String> args) async {
 
   // Determine the source path of package:webcrypto in the PUB_CACHE
   final pkg = (packageConfig['packages'] ?? []).firstWhere(
-    (e) => e['name'] == 'opencv_dart',
+    (e) => e['name'] == setupPkgName,
     orElse: () => null,
   );
   if (pkg == null) {
-    print('dependency on package:opencv_dart is required');
+    print('dependency on package:$setupPkgName is required');
     exit(1);
   }
   final opencvRoot = packageConfigFile.uri.resolve(pkg['rootUri'] ?? '');
-  print('Using package:opencv_dart from ${opencvRoot.toFilePath()}');
+  print('Using package:$setupPkgName from ${opencvRoot.toFilePath()}');
 
   final doc = loadYaml(File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
   final _version = doc["version"] as String;
@@ -78,23 +103,21 @@ void main(List<String> args) async {
   String savePath;
   switch (platform) {
     case OS.windows:
-      url += "/libopencv_dart-win-x64.dll";
+      url += "/libopencv_dart-$platform-$arch.dll";
       savePath = p.join(opencvRoot.toFilePath(), "windows", "libopencv_dart.dll");
       break;
     case OS.linux:
-      url += "/libopencv_dart-linux-x64.so";
+      url += "/libopencv_dart-$platform-$arch.so";
       savePath = p.join(opencvRoot.toFilePath(), "linux", "libopencv_dart.so");
       break;
     case OS.android:
+      url += "/libopencv_dart-$platform-$arch.so";
+      savePath =
+          p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch, "libopencv_dart.so");
     case OS.fuchsia:
-      url = "";
-      savePath = "";
-      throw UnimplementedError();
-      break;
     case OS.ios:
     case OS.macos:
       throw UnimplementedError();
-      break;
     default:
       throw UnsupportedError("Platform $platform not supported");
   }

@@ -1,7 +1,7 @@
 # The Flutter tooling requires that developers have CMake 3.10 or later
 # installed. You should not increase this version, as doing so will cause
 # the plugin to fail to compile for some customers of the plugin.
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.10)
 
 project(opencv_dart_library VERSION 0.0.1 LANGUAGES C CXX)
 set(library_name "opencv_dart")
@@ -10,23 +10,33 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INSTALL_PREFIX "install")
 
-set(OpenCV_BUILD_DIR "${CMAKE_BINARY_DIR}/../../opencv")
+set(OpenCV_BUILD_DIR "${CMAKE_BINARY_DIR}/../../../opencv")
 
 message(STATUS "OpenCV_BUILD_DIR: ${OpenCV_BUILD_DIR}")
 
-if (CMAKE_SYSTEM_PROCESSOR MATCHES "amd64.*|x86_64.*|AMD64.*")
-    set(OpenCV_Dart_ARCH x64)
+if(ANDROID_ABI)
+    set(OpenCV_Dart_ARCH ${ANDROID_ABI})
 else ()
-    set(OpenCV_Dart_ARCH x86)
-endif ()
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "amd64.*|x86_64.*|AMD64.*")
+        set(OpenCV_Dart_ARCH x64)
+    else ()
+        set(OpenCV_Dart_ARCH x86)
+    endif ()
+endif()
+
+message(STATUS "OpenCV_Dart_ARCH: ${OpenCV_Dart_ARCH}")
+
 
 if (WIN32)
     set(OpenCV_Dart_OS windows)
-    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}-${OpenCV_Dart_ARCH}")
+    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/${OpenCV_Dart_ARCH}")
+elseif(ANDROID)
+    set(OpenCV_Dart_OS android)
+    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/sdk/native/jni")
 elseif (UNIX)
     set(OpenCV_Dart_OS linux)
     set(OpenCV_DIR
-        "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}-${OpenCV_Dart_ARCH}")
+        "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/${OpenCV_Dart_ARCH}")
 elseif (APPLE)
     set(OpenCV_Dart_OS macos)
     # TODO
@@ -36,9 +46,9 @@ set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED
     COMPONENTS
-    aruco core calib3d dnn highgui features2d photo imgproc objdetect video videoio
+    core calib3d dnn highgui features2d photo imgproc objdetect video videoio
 )
-find_package(Eigen3 )
+find_package(Eigen3)
 
 message(STATUS "OpenCV library status:")
 message(STATUS "    config: ${OpenCV_DIR}")
@@ -104,11 +114,12 @@ install(FILES ${CV_DEPENDENCIES} DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL
 #file(COPY ${CV_DEPENDENCIES} DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX})
 #file(COPY "gocv/images/circles.jpg" DESTINATION ${CMAKE_BINARY_DIR})
 
-file(GLOB OPENCV_DART_WIN_DLLS "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX}/*")
-if (WIN32)
-    # file(COPY ${OPENCV_DART_WIN_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../windows/libs")
-    install(FILES ${OPENCV_DART_WIN_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../windows")
-elseif (UNIX)
-    install(FILES ${OPENCV_DART_WIN_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../linux")
-endif ()
+# file(GLOB OPENCV_DART_DLLS "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX}/*")
+# install(FILES ${OPENCV_DART_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../bin")
+# if (WIN32)
+#     # file(COPY ${OPENCV_DART_WIN_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../windows/libs")
+#     install(FILES ${OPENCV_DART_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../windows")
+# elseif (UNIX)
+#     install(FILES ${OPENCV_DART_DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../linux")
+# endif ()
 
