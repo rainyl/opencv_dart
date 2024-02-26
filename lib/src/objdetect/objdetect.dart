@@ -3,8 +3,8 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/extensions.dart';
 
+import '../core/extensions.dart';
 import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';

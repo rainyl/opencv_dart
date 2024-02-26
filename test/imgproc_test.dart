@@ -47,6 +47,7 @@ void main() async {
     expect(img.isEmpty, false);
     final (contours, hierarchy) = cv.findContours(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
     expect(contours.length, greaterThan(0));
+    expect(hierarchy.isEmpty, false);
 
     final area = cv.contourArea(contours[0]);
     expect(area, closeTo(127280.0, 1e-4));

@@ -26,6 +26,9 @@ class Rect extends CvObject with EquatableMixin {
   int get y => _ptr.ref.y;
   int get width => _ptr.ref.width;
   int get height => _ptr.ref.height;
+  int get right => x + width;
+  int get bottom => y + height;
+
   ffi.Pointer<cvg.Rect> _ptr;
   @override
   ffi.Pointer<cvg.Rect> get ptr => _ptr;

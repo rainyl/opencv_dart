@@ -14,8 +14,8 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-class BackgroundSubtractorMOG2 extends CvObject {
-  BackgroundSubtractorMOG2(this._ptr) : super(_ptr) {
+class BackgroundSubtractorMOG2 implements ffi.Finalizable {
+  BackgroundSubtractorMOG2(this._ptr) {
     finalizer.attach(this, _ptr);
   }
   factory BackgroundSubtractorMOG2.empty() {
@@ -41,16 +41,10 @@ class BackgroundSubtractorMOG2 extends CvObject {
 
   cvg.BackgroundSubtractorMOG2 _ptr;
   static final finalizer = ffi.NativeFinalizer(_bindings.addresses.BackgroundSubtractorMOG2_Close);
-
-  @override
-  ffi.NativeType get ref => throw UnsupportedError("");
-
-  @override
-  ffi.NativeType toNative() => throw UnsupportedError("");
 }
 
-class BackgroundSubtractorKNN extends CvObject {
-  BackgroundSubtractorKNN(this._ptr) : super(_ptr) {
+class BackgroundSubtractorKNN implements ffi.Finalizable {
+  BackgroundSubtractorKNN(this._ptr) {
     finalizer.attach(this, _ptr);
   }
 
@@ -78,14 +72,7 @@ class BackgroundSubtractorKNN extends CvObject {
   }
 
   cvg.BackgroundSubtractorKNN _ptr;
-  @override
   cvg.BackgroundSubtractorKNN get ptr => _ptr;
-
-  @override
-  ffi.NativeType get ref => throw UnsupportedError("");
-
-  @override
-  ffi.NativeType toNative() => throw UnsupportedError("");
 }
 
 /// NewBackgroundSubtractorMOG2 returns a new BackgroundSubtractor algorithm
@@ -117,7 +104,6 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga5d10ebbd59fe09c5f650289ec0ece5af
-
 void calcOpticalFlowFarneback(
   InputArray prev,
   InputArray next,
@@ -207,8 +193,8 @@ double findTransformECC(
 /// Tracker is the base interface for object tracking.
 ///
 /// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
-class TrackerMIL extends CvObject {
-  TrackerMIL(this._ptr) : super(_ptr) {
+class TrackerMIL implements ffi.Finalizable {
+  TrackerMIL(this._ptr) {
     finalizer.attach(this, _ptr);
   }
   factory TrackerMIL.create() {
@@ -219,6 +205,17 @@ class TrackerMIL extends CvObject {
     InputArray image,
     Rect boundingBox,
   ) {
+    assert(boundingBox.x >= 0, "boundingBox.x must be >= 0");
+    assert(boundingBox.y >= 0, "boundingBox.y must be >= 0");
+    assert(
+      boundingBox.right <= image.cols,
+      "boundingBox.right=${boundingBox.right} must be <= image.cols=${image.cols}",
+    );
+    assert(
+      boundingBox.bottom <= image.rows,
+      "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
+    );
+
     return _bindings.Tracker_Init(_ptr, image.ptr, boundingBox.ref);
   }
 
@@ -230,12 +227,6 @@ class TrackerMIL extends CvObject {
 
   cvg.TrackerMIL _ptr;
   static final finalizer = ffi.NativeFinalizer(_bindings.addresses.TrackerMIL_Close);
-
-  @override
-  ffi.NativeType get ref => throw UnsupportedError("");
-
-  @override
-  ffi.NativeType toNative() => throw UnsupportedError("");
 }
 
 /// KalmanFilter implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter.
@@ -244,8 +235,8 @@ class TrackerMIL extends CvObject {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
-class KalmanFilter extends CvObject {
-  KalmanFilter(this._ptr) : super(_ptr) {
+class KalmanFilter implements ffi.Finalizable {
+  KalmanFilter(this._ptr) {
     finalizer.attach(this, _ptr);
   }
 
@@ -255,7 +246,8 @@ class KalmanFilter extends CvObject {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    return KalmanFilter(_bindings.KalmanFilter_NewWithParams(dynamParams, measureParams, controlParams, type));
+    return KalmanFilter(
+        _bindings.KalmanFilter_NewWithParams(dynamParams, measureParams, controlParams, type));
   }
 
   Mat correct(Mat measurement) {
@@ -338,10 +330,4 @@ class KalmanFilter extends CvObject {
   set controlMatrix(Mat m) {
     _bindings.KalmanFilter_SetControlMatrix(_ptr, m.ptr);
   }
-
-  @override
-  ffi.NativeType get ref => throw UnsupportedError("");
-
-  @override
-  ffi.NativeType toNative() => throw UnsupportedError("");
 }

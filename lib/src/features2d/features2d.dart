@@ -652,10 +652,10 @@ class BFMatcher implements ffi.Finalizable {
     return matches;
   }
 
-  cvg.SimpleBlobDetector _ptr;
-  cvg.SimpleBlobDetector get ptr => _ptr;
+  cvg.BFMatcher _ptr;
+  cvg.BFMatcher get ptr => _ptr;
   static final finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.SimpleBlobDetector_Close);
+      ffi.NativeFinalizer(_bindings.addresses.BFMatcher_Close);
 }
 
 /// FlannBasedMatcher is a wrapper around the cv::FlannBasedMatcher.

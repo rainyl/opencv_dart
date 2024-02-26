@@ -21,13 +21,13 @@ prebuilt binaries, for now, `platform` supports `auto`, `linux` and `windows`.
 | ---------- | ------------------ | ----------------------- | ----------------------- |
 | aruco      | :white_check_mark: | :x:                     | ArUco module            |
 | core       | :white_check_mark: | :white_check_mark:      | Core module             |
-| features2d | :white_check_mark: | :x:                     | Features2D module       |
+| features2d | :white_check_mark: | :white_check_mark:      | Features2D module       |
 | highgui    | :white_check_mark: | :white_check_mark:      | HighGUI module          |
 | imgcodecs  | :white_check_mark: | :white_check_mark:      | ImageCodecs module      |
 | imgproc    | :white_check_mark: | :white_check_mark:      | ImageProc module        |
 | objdetect  | :white_check_mark: | :white_check_mark:      | Object Detection module |
 | svd        | :white_check_mark: | :white_check_mark:      | SVD module              |
-| video      | :white_check_mark: | :x:                     | Video module            |
+| video      | :white_check_mark: | :white_check_mark:      | Video module            |
 | videoio    | :white_check_mark: | :ballot_box_with_check: | VideoIO module          |
 | asyncarray | :x:                | :x:                     | AsyncArray module       |
 | calib3d    | :x:                | :x:                     | Calib3D module          |
@@ -39,6 +39,7 @@ prebuilt binaries, for now, `platform` supports `auto`, `linux` and `windows`.
 - :x: : not finished
 - :ballot_box_with_check: : almost finished
 - :white_check_mark: : finished
+- videoio: `cv.VideoCapture` from file is not supported yet
 
 ### Usage
 
