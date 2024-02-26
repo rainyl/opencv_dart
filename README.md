@@ -19,7 +19,7 @@ prebuilt binaries, for now, `platform` supports `auto`, `linux` and `windows`.
 
 | module     | Binding status     | Test status             | description             |
 | ---------- | ------------------ | ----------------------- | ----------------------- |
-| aruco      | :white_check_mark: | :x:                     | ArUco module            |
+| aruco      | :white_check_mark: | :white_check_mark:      | ArUco module            |
 | core       | :white_check_mark: | :white_check_mark:      | Core module             |
 | features2d | :white_check_mark: | :white_check_mark:      | Features2D module       |
 | highgui    | :white_check_mark: | :white_check_mark:      | HighGUI module          |
