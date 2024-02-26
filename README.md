@@ -65,13 +65,17 @@ More examples are on the way...
 - [ ] modify C wrapper to catch exceptions
 - [ ] Native Assets
 
-## Develop
+## For Developers
 
-This package is in heavy development, dynamic libraries for Windows have been compiled, for other platforms, you need to compile it yourself.
+This package is in heavy development, dynamic libraries for Windows and linux have been compiled, for other platforms, you need to compile it yourself.
 
-1. compile opencv
-2. compile this package along with gocv
-3. copy libs
+### How to compile
+
+1. clone this repo.
+2. compile opencv, windows: `./scripts/build_opencv.ps1`, linux: `./scripts/build_opencv.sh`
+3. compile this package along with gocv, windows: `./scripts/build.ps1`, linux: `./scripts/build.sh`, this will generate `libopencv_dart.dll` or `libopencv_dart.so`
+4. copy libs to corresponding platform directorys, i.e., `libopencv_dart.dll` to `windows`, `libopencv_dart.so` to `linux`. this is necessary for dart and flutter to load the dynamic library.
+5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
 ## Acknowledgement
 
