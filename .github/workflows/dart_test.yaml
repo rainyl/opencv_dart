@@ -2,9 +2,9 @@ name: Dart Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   test-linux:
@@ -15,11 +15,12 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
-          channel: 'stable'
+          channel: "stable"
 
       - name: Set env
         shell: bash
         run: |
+          sudo apt-get update
           sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
           echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
@@ -37,12 +38,14 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
-          channel: 'stable'
+          channel: "stable"
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Run tests
+        shell: pwsh
         run: |
-          echo "$GITHUB_WORKSPACE\windows" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $env:PATH = "${{github.workspace}};${env:PATH}"
+          echo "PATH=$env:PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           flutter test test/
