@@ -21,10 +21,10 @@ def cmake_generate(args: Namespace):
             cmake += (
                 '-G "Visual Studio 16 2019" '
                 "-D BUILD_WITH_STATIC_CRT=OFF "
-                f"-A {arch}"
+                f"-D CMAKE_GENERATOR_PLATFORM={arch}"
             )
         case "linux":
-            cmake += f'-G "Ninja" -A {args.arch}'
+            cmake += f'-G "Ninja" -A -D CMAKE_GENERATOR_PLATFORM={arch}'
         case "android":
             ndk = Path(args.ndk)
             if not ndk.exists():
