@@ -20,35 +20,24 @@ set(OpenCV_BUILD_DIR "${CMAKE_BINARY_DIR}/../../../opencv")
 
 message(STATUS "OpenCV_BUILD_DIR: ${OpenCV_BUILD_DIR}")
 
-if (ANDROID_ABI)
-    set(OpenCV_Dart_ARCH ${ANDROID_ABI})
-else ()
-    if (CMAKE_SYSTEM_PROCESSOR MATCHES "amd64.*|x86_64.*|AMD64.*")
-        set(OpenCV_Dart_ARCH x64)
-    else ()
-        set(OpenCV_Dart_ARCH x86)
-    endif ()
-endif ()
-
-message(STATUS "OpenCV_Dart_ARCH: ${OpenCV_Dart_ARCH}")
-
 set(ARUCO_ON "aruco")
 if (WIN32)
-    set(OpenCV_Dart_OS windows)
-    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/${OpenCV_Dart_ARCH}")
+    if (${CMAKE_GENERATOR_PLATFORM} STREQUAL "Win32")
+        set(OpenCV_DIR "${OpenCV_BUILD_DIR}/windows/x86")
+    else ()
+        set(OpenCV_DIR "${OpenCV_BUILD_DIR}/windows/x64")
+    endif ()
 elseif (ANDROID)
     set(ARUCO_ON "")
-    set(OpenCV_Dart_OS android)
-    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/sdk/native/jni")
+    set(OpenCV_DIR "${OpenCV_BUILD_DIR}/android/sdk/native/jni")
 elseif (UNIX)
-    set(OpenCV_Dart_OS linux)
     set(OpenCV_DIR
-        "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/${OpenCV_Dart_ARCH}")
+        "${OpenCV_BUILD_DIR}/linux/${CMAKE_GENERATOR_PLATFORM}")
 elseif (APPLE)
-    set(OpenCV_Dart_OS macos)
     # TODO
 endif ()
 
+message(STATUS "OpenCV_DIR: ${OpenCV_DIR}")
 set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED

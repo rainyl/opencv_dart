@@ -7,22 +7,6 @@ from argparse import ArgumentParser, Namespace
 import py7zr
 import pyldd
 
-"""
-UCRT libs:
-x64:
-mingw-w64-ucrt-x86_64-freetype
-mingw-w64-ucrt-x86_64-libjpeg-turbo
-mingw-w64-ucrt-x86_64-toolchain
-mingw-w64-ucrt-x86_64-nasm
-mingw-w64-ucrt-x86_64-ccache
-mingw-w64-ucrt-x86_64-gst-libav
-mingw-w64-ucrt-x86_64-hdf5
-mingw-w64-ucrt-x86_64-ninja
-mingw-w64-ucrt-x86_64-cmake
-mingw-w64-ucrt-x86_64-openjpeg2
-mingw-w64-ucrt-x86_64-blas64 mingw-w64-ucrt-x86_64-cblas mingw-w64-ucrt-x86_64-cblas64 mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-lapack64 mingw-w64-ucrt-x86_64-lapacke mingw-w64-ucrt-x86_64-lapacke64
-
-"""
 
 LIB_NAME = "opencv_dart"
 
@@ -33,9 +17,14 @@ def cmake_generate(args: Namespace):
     cmake = "cmake "
     match args.os:
         case "windows":
-            cmake += '-G "Visual Studio 16 2019" ' "-D BUILD_WITH_STATIC_CRT=OFF "
+            arch = "x64" if args.arch == "x64" else "Win32"
+            cmake += (
+                '-G "Visual Studio 16 2019" '
+                "-D BUILD_WITH_STATIC_CRT=OFF "
+                f"-A {arch}"
+            )
         case "linux":
-            cmake += '-G "Ninja" '
+            cmake += f'-G "Ninja" -A {args.arch}'
         case "android":
             ndk = Path(args.ndk)
             if not ndk.exists():
