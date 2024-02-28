@@ -15,6 +15,7 @@ generate.py
 demo.c
 coverage/
 pkgs/
+__pycache__
 
 # Files and directories created by pub
 .dart_tool/

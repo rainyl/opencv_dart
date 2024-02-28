@@ -172,7 +172,7 @@ void main() async {
   });
 
   test('cv.VideoWriter.open', () {
-    final writer = cv.VideoWriter.open("test/images/small.mp4", "mp4v", 60, (400, 300));
+    final writer = cv.VideoWriter.open("test/images/small2.mp4", "mp4v", 60, (400, 300));
     writer.release();
   });
 
@@ -182,25 +182,13 @@ void main() async {
     vc.release();
   });
 
-  // test('cv.VideoCapture.create', () {
-  //   final vc = cv.VideoCapture.empty();
-  //   vc.setProp(cv.CAP_PROP_FOURCC, vc.toCodec("mp4v"));
-  //   final success = vc.open("test/images/small.mp4");
-  //   expect(success, true);
-  //   expect(vc.isOpened, true);
-  //   vc.release();
-  // });
-
-  // test('cv.VideoCapture.fromFile', () {
-  //   final vc = cv.VideoCapture.empty();
-  //   final success = vc.open("test/images/small.mp4", apiPreference: cv.CAP_ANY);
-  //   expect(success, true);
-  //   expect(vc.isOpened, true);
-  //   final frame = cv.Mat.empty();
-  //   final success1 = vc.read(frame);
-  //   expect(success1, true);
-  //   cv.imwrite("cv.VideoCapture.fromFile.png", frame);
-  // });
+  test('cv.VideoCapture.fromFile', () {
+    final vc = cv.VideoCapture.fromFile("test/images/small.mp4", apiPreference: cv.CAP_ANY);
+    final frame = cv.Mat.empty();
+    final success1 = vc.read(frame);
+    expect(success1, true);
+    // cv.imwrite("cv.VideoCapture.fromFile.png", frame);
+  });
 
   test('cv.VideoCapture.fromDevice', () {
     final vc = cv.VideoCapture.fromDevice(0);

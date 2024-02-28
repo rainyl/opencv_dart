@@ -9,11 +9,14 @@ OpenCV Bindings for Dart Language.
 Prebuilt binaries for Linux and Windows are available, for other platforms, you have to build 
 them your self.
 
-**IMPORTANT**
+## IMPORTANT
 
-After added to `pubspec.yaml` or install by commandline, 
-please run `dart run opencv_dart:setup -p <platform>` to download 
-prebuilt binaries, for now, `platform` supports `auto`, `linux` and `windows`.
+After added to `pubspec.yaml` or install by commandline,
+please run `dart run opencv_dart:setup -p <platform> -a <arch>` to download
+prebuilt binaries.
+
+- `platform`: `auto` `android` `linux` `windows`
+- `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
 
 ## Status
 
@@ -71,11 +74,33 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
 ### How to compile
 
-1. clone this repo.
-2. compile opencv, windows: `./scripts/build_opencv.ps1`, linux: `./scripts/build_opencv.sh`
-3. compile this package along with gocv, windows: `./scripts/build.ps1`, linux: `./scripts/build.sh`, this will generate `libopencv_dart.dll` or `libopencv_dart.so`
-4. copy libs to corresponding platform directorys, i.e., `libopencv_dart.dll` to `windows`, `libopencv_dart.so` to `linux`. this is necessary for dart and flutter to load the dynamic library.
-5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+1. prepare a compiler.
+
+   windows: [MinGW-w64 GCC 13.2.0](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0posix-17.0.6-11.0.1-ucrt-r5/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-17.0.6-mingw-w64ucrt-11.0.1-r5.7z), and add it to PATH.
+
+   ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
+2. install `cmake`, `python`, add to PATH
+3. clone this repo, `git clone https://github.com/rainyl/opencv_dart.git`
+4. `cd opencv_dart` and `git submodule update --init`
+5. compile opencv
+
+   for windows:
+
+   ```pwsh
+   python .\scripts\build.py --opencv --os linux --arch x64 --build-dir build --src src
+   ```
+
+    for linux:
+
+    ```bash
+    python ./scripts/build.py --opencv --os linux --arch x64 --build-dir build --src src
+    ```
+
+    for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/android` directory.
+
+6. compile this package along with gocv, windows: `./scripts/build.ps1`, linux: `./scripts/build.sh`, this will generate `libopencv_dart.dll` or `libopencv_dart.so`
+7. copy libs to corresponding platform directorys, i.e., `libopencv_dart.dll` to `windows`, `libopencv_dart.so` to `linux`. this is necessary for dart and flutter to load the dynamic library.
+8.  If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
 ## Acknowledgement
 

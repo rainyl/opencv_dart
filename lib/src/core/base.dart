@@ -27,7 +27,7 @@ const double CV_F64_MAX = 1.7976931348623157e+308;
 
 ffi.DynamicLibrary loadNativeLibrary() {
   if (Platform.isWindows) {
-    return ffi.DynamicLibrary.open("lib$_libraryName.dll");
+    return ffi.DynamicLibrary.open("$_libraryName.dll");
   } else if (Platform.isAndroid || Platform.isFuchsia || Platform.isLinux) {
     return ffi.DynamicLibrary.open("lib$_libraryName.so");
   } else {

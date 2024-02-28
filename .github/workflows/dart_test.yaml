@@ -16,6 +16,9 @@ jobs:
         with:
           # flutter-version: '3.16.9'
           channel: "stable"
+      - name: Setup GStreamer
+        id:   setup_gstreamer
+        uses: blinemedical/setup-gstreamer@1.0
 
       - name: Set env
         shell: bash
@@ -46,6 +49,6 @@ jobs:
       - name: Run tests
         shell: pwsh
         run: |
-          $env:PATH = "${{github.workspace}};${env:PATH}"
+          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
           echo "PATH=$env:PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           flutter test test/

@@ -4,8 +4,38 @@ import shutil
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
 
+import py7zr
+import pyldd
 
-LIB_NAME = "libopencv_dart"
+"""
+UCRT libs:
+x64:
+mingw-w64-ucrt-x86_64-freetype
+mingw-w64-ucrt-x86_64-libjpeg-turbo
+mingw-w64-ucrt-x86_64-toolchain
+mingw-w64-ucrt-x86_64-nasm
+mingw-w64-ucrt-x86_64-ccache
+mingw-w64-ucrt-x86_64-gst-libav
+mingw-w64-ucrt-x86_64-hdf5
+mingw-w64-ucrt-x86_64-ninja
+mingw-w64-ucrt-x86_64-cmake
+mingw-w64-ucrt-x86_64-openjpeg2
+mingw-w64-ucrt-x86_64-blas64 mingw-w64-ucrt-x86_64-cblas mingw-w64-ucrt-x86_64-cblas64 mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-lapack64 mingw-w64-ucrt-x86_64-lapacke mingw-w64-ucrt-x86_64-lapacke64
+
+x86:
+mingw-w64-ucrt-x86_64-freetype
+mingw-w64-ucrt-x86_64-libjpeg-turbo
+mingw-w64-ucrt-x86_64-toolchain
+mingw-w64-ucrt-x86_64-nasm
+mingw-w64-ucrt-x86_64-ccache
+mingw-w64-ucrt-x86_64-gst-libav
+mingw-w64-ucrt-x86_64-hdf5
+mingw-w64-ucrt-x86_64-ninja
+mingw-w64-ucrt-x86_64-cmake
+mingw-w64-ucrt-x86_64-openjpeg2
+"""
+
+LIB_NAME = "opencv_dart"
 
 
 def cmake_generate(args: Namespace):
@@ -14,7 +44,7 @@ def cmake_generate(args: Namespace):
     cmake = "cmake "
     match args.os:
         case "windows":
-            cmake += '-G "Ninja" '
+            cmake += '-G "Visual Studio 16 2019" ' "-D BUILD_WITH_STATIC_CRT=OFF "
         case "linux":
             cmake += '-G "Ninja" '
         case "android":
@@ -63,13 +93,18 @@ def cmake_generate(args: Namespace):
             "-D BUILD_opencv_python_tests=OFF "
             "-D BUILD_opencv_ts=OFF "
             "-D BUILD_opencv_world=OFF "
-            "-D WITH_MSMF=OFF "
-            "-D WITH_MSMF_DXVA=OFF "
+            "-D WITH_FFMPEG=ON "
+            "-D WITH_GSTREAMER=OFF "
+            "-D WITH_OPENEXR=OFF "
+            "-D WITH_EIGEN=OFF "
+            # "-D VIDEOIO_PLUGIN_LIST=all "
+            "-D WITH_MSMF=ON "
+            "-D WITH_MSMF_DXVA=ON "
             "-D WITH_QT=OFF "
             "-D WITH_FREETYPE=OFF "
             "-D WITH_TESSERACT=OFF "
-            "-D WITH_OBSSENSOR=OFF "
-            "-D WITH_LAPACK=ON "
+            "-D WITH_OBSENSOR=OFF "
+            "-D WITH_LAPACK=OFF "
             "-D ENABLE_CXX11=1 "
             "-D ENABLE_PRECOMPILED_HEADERS=OFF "
             "-D CMAKE_NO_SYSTEM_FROM_IMPORTED=ON "
@@ -92,12 +127,15 @@ def cmake_generate(args: Namespace):
 
 
 def cmake_build(args: Namespace):
-    cmd = f"cmake --build . -j {os.cpu_count()*2} --target install"
+    cmd = f"cmake --build . -j {os.cpu_count()*2} --target install --config Release"
     os.system(cmd)
 
 
 def main(args: Namespace):
     args.src = Path(args.src).absolute()
+    if args.opencv:
+        args.src = args.src / "opencv"
+
     build_sub = "opencv_dart" if args.dart else "opencv"
     if args.os == "android":
         args.arch = args.abi
@@ -109,23 +147,30 @@ def main(args: Namespace):
         args.dst.mkdir(parents=True)
     os.chdir(args.dst)
     cmake_generate(args)
+    if args.no_build:
+        return
     cmake_build(args)
+
     os.chdir(args.work_dir)
 
-    lib_copy_to_dir = ""
-    lib_name_suffix = ""
+    if not args.dart:
+        return
+    lib_copy_to_dir: Path
+    lib_name_suffix: str = ""
     match args.os:
         case "windows":
             lib_copy_to_dir = args.work_dir / args.os
             lib_name_suffix = ".dll"
         case "android":
-            lib_copy_to_dir = args.work_dir / args.os / "src" / "main" / "jniLibs" / args.abi
+            lib_copy_to_dir = (
+                args.work_dir / args.os / "src" / "main" / "jniLibs" / args.abi
+            )
             lib_name_suffix = ".so"
         case "linux":
             lib_copy_to_dir = args.work_dir / args.os
             lib_name_suffix = ".so"
         case "macos" | "ios":
-            lib_copy_to_dir = f"{LIB_NAME}.dylib"
+            lib_copy_to_dir = f"lib{LIB_NAME}.dylib"
             lib_name_suffix = ".dylib"
             raise NotImplementedError
         case _:
@@ -136,13 +181,53 @@ def main(args: Namespace):
     publish_dir = args.work_dir / "build" / "publish"
     if not publish_dir.exists():
         publish_dir.mkdir(parents=True)
-    
-    lib = Path(args.dst) / "install" / f"{LIB_NAME}{lib_name_suffix}"
-    shutil.copy(lib, lib_copy_to_dir)
-    print(f"copy {lib} to {lib_copy_to_dir}")
-    lib_pub = publish_dir/f"{LIB_NAME}-{args.os}-{args.arch}{lib_name_suffix}"
-    shutil.copy(lib, lib_pub)
-    print(f"copy {lib} to {lib_pub}")
+
+    install_dir = Path(args.dst) / "install"
+    shutil.copy(install_dir / f"{LIB_NAME}{lib_name_suffix}", lib_copy_to_dir)
+    # lib_pub = publish_dir / f"{LIB_NAME}-{args.os}-{args.arch}{lib_name_suffix}"
+    # shutil.copy(lib, lib_pub)
+    # print(f"copy {lib} to {lib_pub}")
+
+    if args.copy_dlls:
+        dependencies = pyldd.parse_to_list(
+            pyldd.Args(
+                format_="json",
+                path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
+                sort_by="soname",
+                recursive=True,
+                unused=True,
+            )
+        )
+        for dep in dependencies:
+            skip = (
+                dep["soname"] is None
+                # skip system dlls
+                or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
+                or not Path(dep["path"]).is_absolute()  # skip existed
+                or not isinstance(dep["path"], str)
+            )
+
+            if skip:
+                print(f"skip {dep['soname']}: {dep['path']}")
+                continue
+            dep_path = Path(dep["path"])
+            shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
+
+            if str(Path(dep["path"])).startswith(str(install_dir)):
+                print(f"skip {dep['soname']}: {dep['path']}")
+                continue
+
+            dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
+
+            shutil.copyfile(dep["path"], dst)
+            print(f"{dep['path']} -> {dst}")
+
+    # archive to 7z
+    lib_name_prefix: str = "lib" if args.os == "windows" else ""
+    fname = publish_dir / f"{lib_name_prefix}{LIB_NAME}-{args.os}-{args.arch}.7z"
+    with py7zr.SevenZipFile(fname, "w") as z:
+        z.writeall(install_dir, arcname=f"{args.os}")
+    print(f"7z {install_dir} to {fname}")
 
 
 if __name__ == "__main__":
@@ -150,6 +235,18 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--opencv", dest="opencv", action="store_true", default=False)
     parser.add_argument("--dart", dest="dart", action="store_true", default=False)
+    parser.add_argument(
+        "--no-build",
+        dest="no_build",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "--copy-dlls",
+        dest="copy_dlls",
+        action="store_true",
+        default=False,
+    )
 
     parser.add_argument(
         "--os",
@@ -199,5 +296,6 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    assert not all([args.opencv, args.dart])
     args.work_dir = work_dir
     main(args)
