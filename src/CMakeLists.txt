@@ -32,11 +32,12 @@ endif ()
 
 message(STATUS "OpenCV_Dart_ARCH: ${OpenCV_Dart_ARCH}")
 
-
+set(ARUCO_ON "aruco")
 if (WIN32)
     set(OpenCV_Dart_OS windows)
     set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/${OpenCV_Dart_ARCH}")
 elseif (ANDROID)
+    set(ARUCO_ON "")
     set(OpenCV_Dart_OS android)
     set(OpenCV_DIR "${OpenCV_BUILD_DIR}/${OpenCV_Dart_OS}/sdk/native/jni")
 elseif (UNIX)
@@ -52,7 +53,7 @@ set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED
     COMPONENTS
-    aruco core calib3d dnn highgui features2d photo imgproc objdetect video videoio
+    ${ARUCO_ON} core calib3d dnn highgui features2d photo imgproc objdetect video videoio
 )
 find_package(Eigen3)
 # find_package(OpenEXR)
