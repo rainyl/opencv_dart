@@ -22,17 +22,6 @@ mingw-w64-ucrt-x86_64-cmake
 mingw-w64-ucrt-x86_64-openjpeg2
 mingw-w64-ucrt-x86_64-blas64 mingw-w64-ucrt-x86_64-cblas mingw-w64-ucrt-x86_64-cblas64 mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-lapack64 mingw-w64-ucrt-x86_64-lapacke mingw-w64-ucrt-x86_64-lapacke64
 
-x86:
-mingw-w64-ucrt-x86_64-freetype
-mingw-w64-ucrt-x86_64-libjpeg-turbo
-mingw-w64-ucrt-x86_64-toolchain
-mingw-w64-ucrt-x86_64-nasm
-mingw-w64-ucrt-x86_64-ccache
-mingw-w64-ucrt-x86_64-gst-libav
-mingw-w64-ucrt-x86_64-hdf5
-mingw-w64-ucrt-x86_64-ninja
-mingw-w64-ucrt-x86_64-cmake
-mingw-w64-ucrt-x86_64-openjpeg2
 """
 
 LIB_NAME = "opencv_dart"
@@ -183,7 +172,8 @@ def main(args: Namespace):
         publish_dir.mkdir(parents=True)
 
     install_dir = Path(args.dst) / "install"
-    shutil.copy(install_dir / f"{LIB_NAME}{lib_name_suffix}", lib_copy_to_dir)
+    _prefix: str = "" if args.os == "windows" else "lib"
+    shutil.copy(install_dir / f"{_prefix}{LIB_NAME}{lib_name_suffix}", lib_copy_to_dir)
     # lib_pub = publish_dir / f"{LIB_NAME}-{args.os}-{args.arch}{lib_name_suffix}"
     # shutil.copy(lib, lib_pub)
     # print(f"copy {lib} to {lib_pub}")

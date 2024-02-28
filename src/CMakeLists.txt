@@ -91,17 +91,17 @@ endif (WIN32)
 
 target_compile_definitions(${library_name} PUBLIC DART_SHARED_LIB)
 
-add_executable(
-    demo
-    "demo.c"
-)
-# target_include_directories(demo SYSTEM)
-target_link_libraries(
-    demo
-    PUBLIC
-    ${OpenCV_LIBS}
-    ${library_name}
-)
+#add_executable(
+#    demo
+#    "demo.c"
+#)
+## target_include_directories(demo SYSTEM)
+#target_link_libraries(
+#    demo
+#    PUBLIC
+#    ${OpenCV_LIBS}
+#    ${library_name}
+#)
 #
 #add_custom_command(TARGET ${library_name} POST_BUILD
 #    COMMAND ${CMAKE_COMMAND} -E copy_if_different
