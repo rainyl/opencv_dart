@@ -24,7 +24,7 @@ def cmake_generate(args: Namespace):
                 f"-D CMAKE_GENERATOR_PLATFORM={arch}"
             )
         case "linux":
-            cmake += f'-G "Ninja" -D CMAKE_GENERATOR_PLATFORM={args.arch}'
+            cmake += f'-G "Unix Makefiles" -D CMAKE_GENERATOR_PLATFORM={args.arch}'
         case "android":
             ndk = Path(args.ndk)
             if not ndk.exists():
