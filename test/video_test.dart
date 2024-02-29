@@ -190,7 +190,8 @@ void main() async {
     // cv.imwrite("cv.VideoCapture.fromFile.png", frame);
   });
 
-  test('cv.VideoCapture.fromDevice', () {
+  // Disable for github
+  test('cv.VideoCapture.fromDevice', skip: true, () {
     final vc = cv.VideoCapture.fromDevice(0);
     expect(vc.isOpened, true);
     final frame = cv.Mat.empty();

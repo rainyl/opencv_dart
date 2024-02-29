@@ -115,6 +115,41 @@ def cmake_build(args: Namespace):
     cmd = f"cmake --build . -j {os.cpu_count()*2} --target install --config Release"
     os.system(cmd)
 
+def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
+    lib_name_prefix: str = "lib" if args.os == "windows" else ""
+    if args.copy_dlls:
+        dependencies = pyldd.parse_to_list(
+            pyldd.Args(
+                format_="json",
+                path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
+                sort_by="soname",
+                recursive=True,
+                unused=True,
+            )
+        )
+        for dep in dependencies:
+            skip = (
+                dep["soname"] is None
+                # skip system dlls
+                or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
+                or not Path(dep["path"]).is_absolute()  # skip existed
+                or not isinstance(dep["path"], str)
+            )
+
+            if skip:
+                print(f"skip {dep['soname']}: {dep['path']}")
+                continue
+            dep_path = Path(dep["path"])
+            shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
+
+            if str(Path(dep["path"])).startswith(str(install_dir)):
+                print(f"skip {dep['soname']}: {dep['path']}")
+                continue
+
+            dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
+
+            shutil.copyfile(dep["path"], dst)
+            print(f"{dep['path']} -> {dst}")
 
 def main(args: Namespace):
     args.src = Path(args.src).absolute()
@@ -170,49 +205,15 @@ def main(args: Namespace):
     install_dir = Path(args.dst) / "install"
     _prefix: str = "" if args.os == "windows" else "lib"
     shutil.copy(install_dir / f"{_prefix}{LIB_NAME}{lib_name_suffix}", lib_copy_to_dir)
-    # lib_pub = publish_dir / f"{LIB_NAME}-{args.os}-{args.arch}{lib_name_suffix}"
-    # shutil.copy(lib, lib_pub)
-    # print(f"copy {lib} to {lib_pub}")
 
-    if args.copy_dlls:
-        dependencies = pyldd.parse_to_list(
-            pyldd.Args(
-                format_="json",
-                path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
-                sort_by="soname",
-                recursive=True,
-                unused=True,
-            )
-        )
-        for dep in dependencies:
-            skip = (
-                dep["soname"] is None
-                # skip system dlls
-                or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
-                or not Path(dep["path"]).is_absolute()  # skip existed
-                or not isinstance(dep["path"], str)
-            )
-
-            if skip:
-                print(f"skip {dep['soname']}: {dep['path']}")
-                continue
-            dep_path = Path(dep["path"])
-            shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
-
-            if str(Path(dep["path"])).startswith(str(install_dir)):
-                print(f"skip {dep['soname']}: {dep['path']}")
-                continue
-
-            dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
-
-            shutil.copyfile(dep["path"], dst)
-            print(f"{dep['path']} -> {dst}")
+    # copy_dlls()
 
     # archive
-    lib_name_prefix: str = "lib" if args.os == "windows" else ""
-    fname = publish_dir / f"{lib_name_prefix}{LIB_NAME}-{args.os}-{args.arch}.tar.gz"
+    fname = publish_dir / f"lib{LIB_NAME}-{args.os}-{args.arch}.tar.gz"
     with tarfile.open(fname, mode="w:gz") as tar:
-        tar.add(install_dir, arcname=f"{args.os}")
+        for file in install_dir.glob("*"):
+            if file.is_file():
+                tar.add(file, arcname=file.name)
     print(f"published: {fname}")
 
 

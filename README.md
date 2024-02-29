@@ -76,7 +76,7 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
 1. prepare a compiler.
 
-   windows: [MinGW-w64 GCC 13.2.0](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0posix-17.0.6-11.0.1-ucrt-r5/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-17.0.6-mingw-w64ucrt-11.0.1-r5.7z), and add it to PATH.
+   windows: Install Visual Studio 2019 or Later
 
    ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
 2. install `cmake`, `python`, add to PATH
