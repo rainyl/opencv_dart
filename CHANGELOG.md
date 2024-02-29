@@ -1,3 +1,7 @@
+## 0.4.1
+
+* add `asyncarray`
+
 ## 0.4.0
 
 * :rocket: add support for `photo` module

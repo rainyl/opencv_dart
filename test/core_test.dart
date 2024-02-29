@@ -8,6 +8,11 @@ void main() async {
     expect(version.length, greaterThan(0));
   });
 
+  test('cv.AsyncArray', () {
+    final arr = cv.AsyncArray.empty();
+    expect(arr.ptr, isNotNull);
+  });
+
   test('cv.absDiff', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);

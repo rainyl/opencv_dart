@@ -5,6 +5,7 @@ export 'constants.g.dart';
 export 'aruco/aruco.dart';
 export 'aruco/aruco_dict.dart';
 
+export 'core/asyncarray.dart';
 export 'core/base.dart';
 export 'core/core.dart';
 export 'core/contours.dart';
