@@ -130,7 +130,7 @@ void main() async {
   });
 
   test("cv2.findContours, cv.drawContours", () {
-    final src = cv.imread("test/_data/image/markers_6x6_250.png", flags: cv.IMREAD_GRAYSCALE);
+    final src = cv.imread("test/images/markers_6x6_250.png", flags: cv.IMREAD_GRAYSCALE);
     expect((src.width, src.height, src.channels), (612, 760, 1));
     cv.bitwise_not(src, src);
     expect((src.width, src.height, src.channels), (612, 760, 1));

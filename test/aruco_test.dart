@@ -2,9 +2,9 @@ import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
-const arucoImage6x6_250 = "test/images/aruco_6x6_250_6.png";
-const arucoImage6x6_250_contour = "test/images/aruco_6x6_250_6_contour.png";
-const arucoImage6x6_250_1 = "test/images/aruco_6x6_250_1.png";
+const arucoImage6x6_250 = "test/images/aruco_6X6_250_6.png";
+const arucoImage6x6_250_contour = "test/images/aruco_6X6_250_6_contour.png";
+const arucoImage6x6_250_1 = "test/images/aruco_6X6_250_1.png";
 
 void main() async {
   test('cv.ArucoDetector', () {
@@ -127,7 +127,8 @@ void main() async {
     expect(params.cornerRefinementMinAccuracy, closeTo(cornerRefinementMinAccuracy, 1e-4));
     expect(params.markerBorderBits, markerBorderBits);
     expect(params.perspectiveRemovePixelPerCell, perspectiveRemovePixelPerCell);
-    expect(params.perspectiveRemoveIgnoredMarginPerCell, closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4));
+    expect(
+        params.perspectiveRemoveIgnoredMarginPerCell, closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4));
     expect(params.maxErroneousBitsInBorderRate, closeTo(maxErroneousBitsInBorderRate, 1e-4));
     expect(params.minOtsuStdDev, closeTo(minOtsuStdDev, 1e-4));
     expect(params.errorCorrectionRate, closeTo(errorCorrectionRate, 1e-4));
