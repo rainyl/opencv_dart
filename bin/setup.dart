@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:yaml/yaml.dart';
+import 'package:archive/archive_io.dart';
 import 'package:path/path.dart' as p;
 
 class OS {
@@ -97,23 +98,40 @@ void main(List<String> args) async {
   final doc = loadYaml(File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
   final _version = doc["version"] as String;
   final version = _version.replaceAll(RegExp(r"\-dev.*"), "");
+  final libTarName = "libopencv_dart-$platform-$arch.tar.gz";
 
   print('Downloading prebuilt binary...');
-  String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version";
-  String savePath;
+  String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+
+  final cacheTarPath = p.join(opencvRoot.toFilePath(), ".cache", libTarName);
+  final saveFile = File(cacheTarPath);
+  if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
+
+  print("Downloading $url");
+  final request = await HttpClient().getUrl(Uri.parse(url));
+  final response = await request.close();
+  if (response.statusCode == 200) {
+    await response.pipe(saveFile.openWrite());
+    print("Cached to $cacheTarPath");
+  } else {
+    print("Download Failed with status: ${response.statusCode}");
+    exit(1);
+  }
+
+  print("Extracting...");
+  String extractPath = "";
   switch (platform) {
     case OS.windows:
-      url += "/libopencv_dart-$platform-$arch.dll";
-      savePath = p.join(opencvRoot.toFilePath(), "windows", "libopencv_dart.dll");
+      // url += "/libopencv_dart-$platform-$arch.dll";
+      extractPath = p.join(opencvRoot.toFilePath(), "windows");
       break;
     case OS.linux:
-      url += "/libopencv_dart-$platform-$arch.so";
-      savePath = p.join(opencvRoot.toFilePath(), "linux", "libopencv_dart.so");
+      // url += "/libopencv_dart-$platform-$arch.so";
+      extractPath = p.join(opencvRoot.toFilePath(), "linux");
       break;
     case OS.android:
-      url += "/libopencv_dart-$platform-$arch.so";
-      savePath =
-          p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch, "libopencv_dart.so");
+      // url += "/libopencv_dart-$platform-$arch.so";
+      extractPath = p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
     case OS.fuchsia:
     case OS.ios:
     case OS.macos:
@@ -122,18 +140,8 @@ void main(List<String> args) async {
       throw UnsupportedError("Platform $platform not supported");
   }
 
-  final saveFile = File(savePath);
-  if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
+  extractFileToDisk(cacheTarPath, extractPath);
 
-  print("Downloading $url");
-  final request = await HttpClient().getUrl(Uri.parse(url));
-  final response = await request.close();
-  if (response.statusCode == 200) {
-    await response.pipe(saveFile.openWrite());
-    print("Saved to $savePath");
-  } else {
-    print("Download Failed with status: ${response.statusCode}");
-    exit(1);
-  }
+  print("Finished");
   exit(0);
 }

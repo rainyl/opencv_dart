@@ -4,7 +4,8 @@ import shutil
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
 
-import py7zr
+import tarfile
+
 import pyldd
 
 
@@ -21,10 +22,15 @@ def cmake_generate(args: Namespace):
             cmake += (
                 '-G "Visual Studio 16 2019" '
                 "-D BUILD_WITH_STATIC_CRT=OFF "
-                f"-D CMAKE_GENERATOR_PLATFORM={arch}"
+                f"-D CMAKE_GENERATOR_PLATFORM={arch} "
             )
         case "linux":
-            cmake += f'-G "Unix Makefiles" -D CMAKE_GENERATOR_PLATFORM={args.arch}'
+            flags = (
+                "-D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32"
+                if args.arch == "x86"
+                else ""
+            )
+            cmake += f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} {flags} '
         case "android":
             ndk = Path(args.ndk)
             if not ndk.exists():
@@ -71,6 +77,7 @@ def cmake_generate(args: Namespace):
             "-D BUILD_opencv_python_tests=OFF "
             "-D BUILD_opencv_ts=OFF "
             "-D BUILD_opencv_world=OFF "
+            "-D WITH_1394=OFF "
             "-D WITH_FFMPEG=ON "
             "-D WITH_GSTREAMER=OFF "
             "-D WITH_OPENEXR=OFF "
@@ -201,12 +208,12 @@ def main(args: Namespace):
             shutil.copyfile(dep["path"], dst)
             print(f"{dep['path']} -> {dst}")
 
-    # archive to 7z
+    # archive
     lib_name_prefix: str = "lib" if args.os == "windows" else ""
-    fname = publish_dir / f"{lib_name_prefix}{LIB_NAME}-{args.os}-{args.arch}.7z"
-    with py7zr.SevenZipFile(fname, "w") as z:
-        z.writeall(install_dir, arcname=f"{args.os}")
-    print(f"7z {install_dir} to {fname}")
+    fname = publish_dir / f"{lib_name_prefix}{LIB_NAME}-{args.os}-{args.arch}.tar.gz"
+    with tarfile.open(fname, mode="w:gz") as tar:
+        tar.add(install_dir, arcname=f"{args.os}")
+    print(f"published: {fname}")
 
 
 if __name__ == "__main__":
