@@ -16,19 +16,17 @@ jobs:
         with:
           # flutter-version: '3.16.9'
           channel: "stable"
-      - name: Setup GStreamer
-        id:   setup_gstreamer
-        uses: blinemedical/setup-gstreamer@1.0
 
       - name: Set env
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
           echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run opencv_dart:setup -p linux -a x64
 
       - name: Run tests
         run: flutter test test/
@@ -44,7 +42,9 @@ jobs:
           channel: "stable"
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run opencv_dart:setup -p windows -a x64
 
       - name: Run tests
         shell: pwsh
