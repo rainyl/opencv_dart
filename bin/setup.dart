@@ -39,6 +39,20 @@ void main(List<String> args) async {
     defaultsTo: "auto",
     help: "Platform to setup",
   );
+  parser.addOption(
+    "arch",
+    abbr: "a",
+    allowed: [
+      "auto",
+      "x86",
+      "x64",
+      "x86_64",
+      "arm64-v8a",
+      "armeabi-v7a",
+    ],
+    defaultsTo: "auto",
+    help: "Architecture to setup",
+  );
 
   final argsParsed = parser.parse(args);
   final platform =
