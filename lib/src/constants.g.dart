@@ -1941,3 +1941,17 @@ const int HOMOGRAPY_ALL_POINTS = 0;
 const int HOMOGRAPY_LMEDS = 4;
 
 const int HOMOGRAPY_RANSAC = 8;
+
+const int RECURS_FILTER = 1;
+
+const int NORMCONV_FILTER = 2;
+
+const int INPAINT_NS = 0;
+
+const int INPAINT_TELEA = 1;
+
+const int NORMAL_CLONE = 1;
+
+const int MIXED_CLONE = 2;
+
+const int MONOCHROME_TRANSFER = 3;

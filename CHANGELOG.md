@@ -1,3 +1,11 @@
+## 0.4.0
+
+* :rocket: add support for `photo` module
+
+## 0.3.0
+
+* Please use 0.3.0 or later, tested for android, linux, and windows
+
 ## 0.2.0
 
 * :tada: add android `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64` prebuild binaries, e.g., `dart run opencv_dart:setup -p android -a arm64-v8a` to download prebuilt binaries for android arm64-v8a

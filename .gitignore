@@ -21,6 +21,7 @@ __pycache__
 *.a
 *.lib
 .cache/
+small2.mp4
 
 # Files and directories created by pub
 .dart_tool/

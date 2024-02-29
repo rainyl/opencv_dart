@@ -17,26 +17,28 @@ prebuilt binaries.
 - `platform`: `auto` `android` `linux` `windows`
 - `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
 
+**Please use v0.3.0 and later version.**
+
 ## Status
 
-| module     | Binding status     | Test status             | description             |
-| ---------- | ------------------ | ----------------------- | ----------------------- |
-| aruco      | :white_check_mark: | :white_check_mark:      | ArUco module            |
-| core       | :white_check_mark: | :white_check_mark:      | Core module             |
-| features2d | :white_check_mark: | :white_check_mark:      | Features2D module       |
-| highgui    | :white_check_mark: | :white_check_mark:      | HighGUI module          |
-| imgcodecs  | :white_check_mark: | :white_check_mark:      | ImageCodecs module      |
-| imgproc    | :white_check_mark: | :white_check_mark:      | ImageProc module        |
-| objdetect  | :white_check_mark: | :white_check_mark:      | Object Detection module |
-| svd        | :white_check_mark: | :white_check_mark:      | SVD module              |
-| video      | :white_check_mark: | :white_check_mark:      | Video module            |
-| videoio    | :white_check_mark: | :ballot_box_with_check: | VideoIO module          |
-| asyncarray | :x:                | :x:                     | AsyncArray module       |
-| calib3d    | :x:                | :x:                     | Calib3D module          |
-| dnn        | :x:                | :x:                     | DNN module              |
-| photo      | :x:                | :x:                     | Photo module            |
-| cuda       | :x:                | :x:                     | CUDA module             |
-| contrib    | :x:                | :x:                     | Contrib module          |
+| module     | Binding status     | Test status        | description             |
+| ---------- | ------------------ | ------------------ | ----------------------- |
+| aruco      | :white_check_mark: | :white_check_mark: | ArUco module            |
+| core       | :white_check_mark: | :white_check_mark: | Core module             |
+| features2d | :white_check_mark: | :white_check_mark: | Features2D module       |
+| highgui    | :white_check_mark: | :white_check_mark: | HighGUI module          |
+| imgcodecs  | :white_check_mark: | :white_check_mark: | ImageCodecs module      |
+| imgproc    | :white_check_mark: | :white_check_mark: | ImageProc module        |
+| objdetect  | :white_check_mark: | :white_check_mark: | Object Detection module |
+| svd        | :white_check_mark: | :white_check_mark: | SVD module              |
+| video      | :white_check_mark: | :white_check_mark: | Video module            |
+| videoio    | :white_check_mark: | :white_check_mark: | VideoIO module          |
+| asyncarray | :x:                | :x:                | AsyncArray module       |
+| calib3d    | :x:                | :x:                | Calib3D module          |
+| dnn        | :x:                | :x:                | DNN module              |
+| photo      | :white_check_mark: | :white_check_mark: | Photo module            |
+| cuda       | :x:                | :x:                | CUDA module             |
+| contrib    | :x:                | :x:                | Contrib module          |
 
 - :x: : not finished
 - :ballot_box_with_check: : almost finished
@@ -66,6 +68,7 @@ More examples are on the way...
 - [ ] add more examples
 - [ ] modify C wrapper to catch exceptions
 - [ ] Native Assets
+- [ ] async?
 
 ## For Developers
 
@@ -99,7 +102,7 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
 6. compile this package along with gocv, windows: `./scripts/build.ps1`, linux: `./scripts/build.sh`, this will generate `libopencv_dart.dll` or `libopencv_dart.so`
 7. copy libs to corresponding platform directorys, i.e., `libopencv_dart.dll` to `windows`, `libopencv_dart.so` to `linux`. this is necessary for dart and flutter to load the dynamic library.
-8.  If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+8. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
 ## Acknowledgement
 
