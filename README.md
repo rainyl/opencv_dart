@@ -6,8 +6,7 @@ OpenCV Bindings for Dart Language.
 
 *Many tests unfinished, contributions are welcome!*
 
-Prebuilt binaries for Linux and Windows are available, for other platforms, you have to build 
-them your self.
+Prebuilt binaries for Android(arm64-v8a, armeabi-v7a, x86_64), Linux(x64) and Windows(x64) are available,for other platforms, you have to build them your self.
 
 ## IMPORTANT
 
@@ -42,7 +41,7 @@ prebuilt binaries.
 - :x: : not finished
 - :ballot_box_with_check: : almost finished
 - :white_check_mark: : finished
-- videoio: `cv.VideoCapture` from file is not supported yet
+- ~~videoio: `cv.VideoCapture` from file is not supported yet~~ supported now.
 
 ### Usage
 
@@ -79,7 +78,7 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
    windows: Install Visual Studio 2019 or Later
 
    ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
-2. install `cmake`, `python`, add to PATH
+2. install dependencies: `cmake`, `python`, add to PATH
 3. clone this repo, `git clone https://github.com/rainyl/opencv_dart.git`
 4. `cd opencv_dart` and `git submodule update --init`
 5. compile opencv
