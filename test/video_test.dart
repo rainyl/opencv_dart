@@ -50,11 +50,7 @@ void main() async {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
     final img2 = img.clone();
-    final prev = cv.Mat.empty(),
-        next = cv.Mat.empty(),
-        status = cv.Mat.empty(),
-        err = cv.Mat.empty(),
-        corners = cv.Mat.empty();
+    final next = cv.Mat.empty(), status = cv.Mat.empty(), err = cv.Mat.empty(), corners = cv.Mat.empty();
     cv.goodFeaturesToTrack(img, corners, 500, 0.01, 10);
     final tc = cv.termCriteriaNew(cv.TERM_COUNT | cv.TERM_EPS, 20, 0.03);
     cv.cornerSubPix(img, corners, (10, 10), (-1, -1), tc);
