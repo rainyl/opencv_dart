@@ -140,7 +140,8 @@ void main(List<String> args) async {
       throw UnsupportedError("Platform $platform not supported");
   }
 
-  extractFileToDisk(cacheTarPath, extractPath);
+  if (!Directory(extractPath).existsSync()) Directory(extractPath).createSync(recursive: true);
+  await extractFileToDisk(cacheTarPath, extractPath);
 
   print("Finished");
   exit(0);

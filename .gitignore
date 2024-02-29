@@ -19,6 +19,8 @@ __pycache__
 *.dll
 *.so
 *.a
+*.lib
+.cache/
 
 # Files and directories created by pub
 .dart_tool/
