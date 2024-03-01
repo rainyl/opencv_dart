@@ -24,20 +24,19 @@ class Fisheye {
     InputArray K,
     InputArray D, {
     OutputArray? undistorted,
-    InputArray? Knew,
-    Size new_size = (0, 0),
+    InputArray? knew,
+    Size newSize = (0, 0),
   }) {
     return using<Mat>((arena) {
-      Knew ??= Mat.empty();
+      knew ??= Mat.empty();
       undistorted ??= Mat.empty();
-      new_size = (0, 0);
       _bindings.Fisheye_UndistortImageWithParams(
         distorted.ptr,
         undistorted!.ptr,
         K.ptr,
         D.ptr,
-        Knew!.ptr,
-        new_size.toSize(arena).ref,
+        knew!.ptr,
+        newSize.toSize(arena).ref,
       );
       return undistorted!;
     });

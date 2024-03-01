@@ -1,7 +1,6 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/point.dart';
 
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
