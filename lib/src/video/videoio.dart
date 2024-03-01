@@ -27,15 +27,16 @@ class VideoCapture extends CvObject {
     int apiPreference = CAP_ANY,
     List<int>? params,
   }) {
-    final ptr_ = _bindings.VideoCapture_New();
-    final cname = filename.toNativeUtf8();
-    final success = _bindings.VideoCapture_OpenWithAPI(ptr_, cname.cast(), apiPreference);
-    // calloc.free(cname);
-    if (success) {
-      return VideoCapture._(ptr_);
-    } else {
-      throw OpenCvDartException("Open $filename failed!");
-    }
+    return using<VideoCapture>((arena) {
+      final ptr_ = _bindings.VideoCapture_New();
+      final cname = filename.toNativeUtf8(allocator: arena);
+      final success = _bindings.VideoCapture_OpenWithAPI(ptr_, cname.cast(), apiPreference);
+      if (success) {
+        return VideoCapture._(ptr_);
+      } else {
+        throw OpenCvDartException("Open $filename failed!");
+      }
+    });
   }
 
   factory VideoCapture.fromFile(
@@ -83,10 +84,11 @@ class VideoCapture extends CvObject {
   }
 
   bool open(String filename, {int apiPreference = CAP_ANY}) {
-    final cname = filename.toNativeUtf8();
-    final success = _bindings.VideoCapture_OpenWithAPI(_ptr, cname.cast(), apiPreference);
-    calloc.free(cname);
-    return success;
+    return using<bool>((arena) {
+      final cname = filename.toNativeUtf8(allocator: arena);
+      final success = _bindings.VideoCapture_OpenWithAPI(_ptr, cname.cast(), apiPreference);
+      return success;
+    });
   }
 
   String get codec {
@@ -133,21 +135,21 @@ class VideoWriter implements ffi.Finalizable {
     Size frameSize, {
     bool isColor = true,
   }) {
-    final _ptr = _bindings.VideoWriter_New();
-    final name = filename.toNativeUtf8();
-    final _codec = codec.toNativeUtf8();
-    _bindings.VideoWriter_Open(
-      _ptr,
-      name.cast(),
-      _codec.cast(),
-      fps,
-      frameSize.$1,
-      frameSize.$2,
-      isColor,
-    );
-    calloc.free(name);
-    calloc.free(_codec);
-    return VideoWriter._(_ptr);
+    return using<VideoWriter>((arena) {
+      final _ptr = _bindings.VideoWriter_New();
+      final name = filename.toNativeUtf8(allocator: arena);
+      final _codec = codec.toNativeUtf8(allocator: arena);
+      _bindings.VideoWriter_Open(
+        _ptr,
+        name.cast(),
+        _codec.cast(),
+        fps,
+        frameSize.$1,
+        frameSize.$2,
+        isColor,
+      );
+      return VideoWriter._(_ptr);
+    });
   }
 
   void open(
@@ -157,19 +159,19 @@ class VideoWriter implements ffi.Finalizable {
     Size frameSize, {
     bool isColor = true,
   }) {
-    final name = filename.toNativeUtf8();
-    final _codec = codec.toNativeUtf8();
-    _bindings.VideoWriter_Open(
-      _ptr,
-      name.cast(),
-      _codec.cast(),
-      fps,
-      frameSize.$1,
-      frameSize.$2,
-      isColor,
-    );
-    calloc.free(name);
-    calloc.free(_codec);
+    using((arena) {
+      final name = filename.toNativeUtf8(allocator: arena);
+      final _codec = codec.toNativeUtf8(allocator: arena);
+      _bindings.VideoWriter_Open(
+        _ptr,
+        name.cast(),
+        _codec.cast(),
+        fps,
+        frameSize.$1,
+        frameSize.$2,
+        isColor,
+      );
+    });
   }
 
   void write(InputArray image) {

@@ -27,10 +27,11 @@ class CascadeClassifier implements ffi.Finalizable {
   /// For further details, please see:
   /// http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#a1a5884c8cc749422f9eb77c2471958bc
   bool load(String name) {
-    final cname = name.toNativeUtf8();
-    final ret = _bindings.CascadeClassifier_Load(_ptr, cname.cast());
-    calloc.free(cname);
-    return ret != 0;
+    return using<bool>((arena) {
+      final cname = name.toNativeUtf8(allocator: arena);
+      final ret = _bindings.CascadeClassifier_Load(_ptr, cname.cast());
+      return ret != 0;
+    });
   }
 
   /// DetectMultiScale detects objects of different sizes in the input Mat image.

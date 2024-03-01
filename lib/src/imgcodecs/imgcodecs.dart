@@ -21,10 +21,10 @@ final _bindings = cvg.CvNative(loadNativeLibrary());
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
-  final name_ptr = filename.toNativeUtf8();
-  final mat = _bindings.Image_IMRead(name_ptr.cast(), flags);
-  calloc.free(name_ptr);
-  return Mat.fromCMat(mat);
+  return using<Mat>((arena) {
+    final mat = _bindings.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags);
+    return Mat.fromCMat(mat);
+  });
 }
 
 /// IMWrite writes a Mat to an image file.
@@ -32,21 +32,20 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
 bool imwrite(String filename, InputArray img, {List<int>? params}) {
-  bool isSuccess = false;
-  if (params == null) {
-    isSuccess = _bindings.Image_IMWrite(filename.toNativeUtf8().cast(), img.ptr);
-  } else {
-    using((arena) {
-      final fname = filename.toNativeUtf8();
+  return using<bool>((arena) {
+    bool isSuccess = false;
+    if (params == null) {
+      isSuccess = _bindings.Image_IMWrite(filename.toNativeUtf8(allocator: arena).cast(), img.ptr);
+    } else {
+      final fname = filename.toNativeUtf8(allocator: arena);
       isSuccess = _bindings.Image_IMWrite_WithParams(
         fname.cast(),
         img.ptr,
         params.toNativeVector(arena).ref,
       );
-      calloc.free(fname);
-    });
-  }
-  return isSuccess;
+    }
+    return isSuccess;
+  });
 }
 
 /// IMEncode encodes an image Mat into a memory buffer.
@@ -60,32 +59,31 @@ Uint8List imencode(
   InputArray img, {
   List<int>? params,
 }) {
-  final buffer = _bindings.UCharVector_New();
+  return using<Uint8List>((arena) {
+    final buffer = _bindings.UCharVector_New();
 
-  if (params == null) {
-    _bindings.Image_IMEncode(ext.toNativeUtf8().cast(), img.ptr, buffer);
-  } else {
-    using((arena) {
-      final ptr = ext.toNativeUtf8();
+    if (params == null) {
+      _bindings.Image_IMEncode(ext.toNativeUtf8(allocator: arena).cast(), img.ptr, buffer);
+    } else {
+      final ptr = ext.toNativeUtf8(allocator: arena);
       _bindings.Image_IMEncode_WithParams(
         ptr.cast(),
         img.ptr,
         params.toNativeVector(arena).ref,
         buffer,
       );
-      calloc.free(ptr);
-    });
-  }
+    }
 
-  final length = _bindings.UCharVector_Size(buffer);
+    final length = _bindings.UCharVector_Size(buffer);
 
-  final buf = Uint8List(length);
-  for (var i = 0; i < length; i++) {
-    buf[i] = _bindings.UCharVector_At(buffer, i);
-  }
-  _bindings.UCharVector_Free(buffer);
+    final buf = Uint8List(length);
+    for (var i = 0; i < length; i++) {
+      buf[i] = _bindings.UCharVector_At(buffer, i);
+    }
+    _bindings.UCharVector_Free(buffer);
 
-  return buf;
+    return buf;
+  });
 }
 
 /// imdecode reads an image from a buffer in memory.

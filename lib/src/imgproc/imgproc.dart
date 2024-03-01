@@ -1109,24 +1109,21 @@ void polylines(
   double fontScale,
   int thickness,
 ) {
-  final _baseline = calloc<ffi.Int>();
-  final textPtr = text.toNativeUtf8();
+  return using<(Size, int)>((arena) {
+    final _baseline = arena<ffi.Int>();
+    final textPtr = text.toNativeUtf8(allocator: arena);
 
-  final _size = _bindings.GetTextSizeWithBaseline(
-    textPtr.cast(),
-    fontFace,
-    fontScale,
-    thickness,
-    _baseline,
-  );
+    final _size = _bindings.GetTextSizeWithBaseline(
+      textPtr.cast(),
+      fontFace,
+      fontScale,
+      thickness,
+      _baseline,
+    );
 
-  Size sz = (_size.width, _size.height);
-  final result = (sz, _baseline.value);
-
-  calloc.free(_baseline);
-  calloc.free(textPtr);
-
-  return result;
+    Size sz = (_size.width, _size.height);
+    return (sz, _baseline.value);
+  });
 }
 
 /// PutTextWithParams draws a text string.
@@ -1147,19 +1144,20 @@ void putText(
   int lineType = LINE_8,
   bool bottomLeftOrigin = false,
 }) {
-  final textPtr = text.toNativeUtf8();
-  _bindings.PutTextWithParams(
-    img.ptr,
-    textPtr.cast(),
-    org.toNative(),
-    fontFace,
-    fontScale,
-    color.toNative(),
-    thickness,
-    lineType,
-    bottomLeftOrigin,
-  );
-  calloc.free(textPtr);
+  using((arena) {
+    final textPtr = text.toNativeUtf8(allocator: arena);
+    _bindings.PutTextWithParams(
+      img.ptr,
+      textPtr.cast(),
+      org.toNative(),
+      fontFace,
+      fontScale,
+      color.toNative(),
+      thickness,
+      lineType,
+      bottomLeftOrigin,
+    );
+  });
 }
 
 /// Resize resizes an image.

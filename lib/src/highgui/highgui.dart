@@ -23,16 +23,16 @@ class Window {
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
   Window(this.name) : isOpen = true {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_New(cname.cast(), 0);
-    calloc.free(cname);
+    using((arena) {
+      _bindings.Window_New(name.toNativeUtf8(allocator: arena).cast(), 0);
+    });
   }
 
   void close() {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_Close(cname.cast());
-    calloc.free(cname);
-    isOpen = false;
+    using((arena) {
+      _bindings.Window_Close(name.toNativeUtf8(allocator: arena).cast());
+      isOpen = false;
+    });
   }
 
   /// [getWindowProperty] returns properties of a window.
@@ -40,10 +40,10 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gaaf9504b8f9cf19024d9d44a14e461656
   double getWindowProperty(WindowPropertyFlags flag) {
-    final cname = name.toNativeUtf8();
-    final result = _bindings.Window_GetProperty(cname.cast(), flag.value);
-    calloc.free(cname);
-    return result;
+    return using<double>((arena) {
+      final result = _bindings.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value);
+      return result;
+    });
   }
 
   /// [setWindowProperty] changes parameters of a window dynamically.
@@ -51,9 +51,9 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
   void setWindowProperty(WindowPropertyFlags flag, double value) {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_SetProperty(cname.cast(), flag.value, value);
-    calloc.free(cname);
+    using((arena) {
+      _bindings.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value);
+    });
   }
 
   /// SetWindowTitle updates window title.
@@ -61,11 +61,10 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
   void setWindowTitle(String title) {
-    final cname = name.toNativeUtf8();
-    final ctitle = title.toNativeUtf8();
-    _bindings.Window_SetTitle(cname.cast(), ctitle.cast());
-    calloc.free(cname);
-    calloc.free(ctitle);
+    using((arena) {
+      _bindings.Window_SetTitle(
+          name.toNativeUtf8(allocator: arena).cast(), title.toNativeUtf8(allocator: arena).cast());
+    });
   }
 
   /// IMShow displays an image Mat in the specified window.
@@ -75,9 +74,9 @@ class Window {
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
   void imshow(Mat img) {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_IMShow(cname.cast(), img.ptr);
-    calloc.free(cname);
+    using((arena) {
+      _bindings.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
+    });
   }
 
   /// WaitKey waits for a pressed key.
@@ -94,9 +93,9 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
   void moveWindow(int x, int y) {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_Move(cname.cast(), x, y);
-    calloc.free(cname);
+    using((arena) {
+      _bindings.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y);
+    });
   }
 
   /// ResizeWindow resizes window to the specified size.
@@ -104,9 +103,9 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
   void resizeWindow(int width, int height) {
-    final cname = name.toNativeUtf8();
-    _bindings.Window_Resize(cname.cast(), width, height);
-    calloc.free(cname);
+    using((arena) {
+      _bindings.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height);
+    });
   }
 
   /// SelectROI selects a Region Of Interest (ROI) on the given image.
@@ -119,10 +118,10 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8daf4730d3adf7035b6de9be4c469af5
   Rect selectROI(Mat img) {
-    final cname = name.toNativeUtf8();
-    final result = _bindings.Window_SelectROI(cname.cast(), img.ptr);
-    calloc.free(cname);
-    return Rect.fromNative(result);
+    return using<Rect>((arena) {
+      final result = _bindings.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
+      return Rect.fromNative(result);
+    });
   }
 
   /// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
@@ -135,10 +134,10 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga0f11fad74a6432b8055fb21621a0f893
   List<Rect> selectROIs(Mat img) {
-    final cname = name.toNativeUtf8();
-    final result = _bindings.Window_SelectROIs(cname.cast(), img.ptr);
-    calloc.free(cname);
-    return Rects.toList(result);
+    return using<List<Rect>>((arena) {
+      final result = _bindings.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
+      return Rects.toList(result);
+    });
   }
 
   String name;
@@ -151,14 +150,16 @@ int waitKey(int delay) => _bindings.Window_WaitKey(delay);
 
 class Trackbar {
   Trackbar(this.name, this.parent, this.max, {int? value}) {
-    final tname = name.toNativeUtf8();
-    final pname = parent.name.toNativeUtf8();
-    _bindings.Trackbar_Create(pname.cast(), tname.cast(), max);
-    if (value != null) {
-      pos = value;
-    }
-    calloc.free(tname);
-    calloc.free(pname);
+    using((arena) {
+      _bindings.Trackbar_Create(
+        parent.name.toNativeUtf8(allocator: arena).cast(),
+        name.toNativeUtf8(allocator: arena).cast(),
+        max,
+      );
+      if (value != null) {
+        pos = value;
+      }
+    });
   }
 
   /// pos returns the trackbar position.
@@ -166,12 +167,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga122632e9e91b9ec06943472c55d9cda8
   int get pos {
-    final pname = parent.name.toNativeUtf8();
-    final tname = name.toNativeUtf8();
-    final result = _bindings.Trackbar_GetPos(pname.cast(), tname.cast());
-    calloc.free(pname);
-    calloc.free(tname);
-    return result;
+    return using<int>((arena) {
+      final result = _bindings.Trackbar_GetPos(
+        parent.name.toNativeUtf8(allocator: arena).cast(),
+        name.toNativeUtf8(allocator: arena).cast(),
+      );
+      return result;
+    });
   }
 
   /// pos sets the trackbar position.
@@ -179,11 +181,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga67d73c4c9430f13481fd58410d01bd8d
   void set pos(int pos) {
-    final pname = parent.name.toNativeUtf8();
-    final tname = name.toNativeUtf8();
-    _bindings.Trackbar_SetPos(pname.cast(), tname.cast(), pos);
-    calloc.free(pname);
-    calloc.free(tname);
+    using((arena) {
+      _bindings.Trackbar_SetPos(
+        parent.name.toNativeUtf8(allocator: arena).cast(),
+        name.toNativeUtf8(allocator: arena).cast(),
+        pos,
+      );
+    });
   }
 
   /// SetMin sets the trackbar minimum position.
@@ -191,11 +195,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gabe26ffe8d2b60cc678895595a581b7aa
   set minPos(int pos) {
-    final pname = parent.name.toNativeUtf8();
-    final tname = name.toNativeUtf8();
-    _bindings.Trackbar_SetMin(pname.cast(), tname.cast(), pos);
-    calloc.free(pname);
-    calloc.free(tname);
+    using((arena) {
+      _bindings.Trackbar_SetMin(
+        parent.name.toNativeUtf8(allocator: arena).cast(),
+        name.toNativeUtf8(allocator: arena).cast(),
+        pos,
+      );
+    });
   }
 
   /// SetMax sets the trackbar maximum position.
@@ -203,11 +209,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga7e5437ccba37f1154b65210902fc4480
   set maxPos(int pos) {
-    final pname = parent.name.toNativeUtf8();
-    final tname = name.toNativeUtf8();
-    _bindings.Trackbar_SetMax(pname.cast(), tname.cast(), pos);
-    calloc.free(pname);
-    calloc.free(tname);
+    using((arena) {
+      _bindings.Trackbar_SetMax(
+        parent.name.toNativeUtf8(allocator: arena).cast(),
+        name.toNativeUtf8(allocator: arena).cast(),
+        pos,
+      );
+    });
   }
 
   String name;

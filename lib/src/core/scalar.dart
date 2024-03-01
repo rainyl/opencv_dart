@@ -18,17 +18,14 @@ class Scalar extends CvObject<cvg.Scalar> with EquatableMixin {
       ..ref.val4 = val4;
     return Scalar._(_ptr);
   }
-  factory Scalar.fromNative(cvg.Scalar s) =>
-      Scalar(s.val1, s.val2, s.val3, s.val4);
+  factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);
   factory Scalar.all(double val) => Scalar(val, val, val, val);
-  factory Scalar.default_() => Scalar(
-      double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
+  factory Scalar.default_() => Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
   factory Scalar.fromRgb(int r, int g, int b) {
     return Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
   }
 
-  static final _finalizer =
-      Finalizer<ffi.Pointer<cvg.Scalar>>((p0) => calloc.free(p0));
+  static final _finalizer = Finalizer<ffi.Pointer<cvg.Scalar>>((p0) => calloc.free(p0));
   double get val1 => _ptr.ref.val1;
   double get val2 => _ptr.ref.val2;
   double get val3 => _ptr.ref.val3;
