@@ -1,3 +1,4 @@
+@Tags(['skip-workflow'])
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -14,7 +15,8 @@ void main() async {
     expect(win.isOpen, true);
 
     win.setWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN, cv.WindowFlag.WINDOW_FULLSCREEN.value);
-    expect(win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN), cv.WindowFlag.WINDOW_FULLSCREEN.value);
+    expect(win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
+        cv.WindowFlag.WINDOW_FULLSCREEN.value);
     win.moveWindow(100, 100);
     win.resizeWindow(100, 100);
 
@@ -56,7 +58,7 @@ void main() async {
     trackbar.maxPos = 15;
 
     // win.waitKey(1000);
-    
+
     win.close();
   });
 }

@@ -27,7 +27,7 @@ jobs:
           dart run opencv_dart:setup -p linux -a x64
 
       - name: Run tests
-        run: flutter test
+        run: flutter test -x skip-workflow
 
   test_windows:
     runs-on: windows-latest

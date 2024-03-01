@@ -215,6 +215,11 @@ class Trackbar {
   int max;
 }
 
+/// destroy all windows.
+void destroyAllWindows() {
+  _bindings.destroyAllWindows();
+}
+
 enum WindowFlag {
   /// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
   WINDOW_NORMAL(0x00000000),
