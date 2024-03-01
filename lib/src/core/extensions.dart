@@ -1,6 +1,7 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/src/core/point.dart';
 
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
@@ -31,12 +32,7 @@ extension ListDoubleExtension on List<double> {
   }
 }
 
-extension RecordScalarExtension on ({
-  double val0,
-  double val1,
-  double val2,
-  double val3
-}) {
+extension RecordScalarExtension on ({double val0, double val1, double val2, double val3}) {
   ffi.Pointer<cvg.Scalar> toScalar(Arena arena) {
     final scalar = arena<cvg.Scalar>()
       ..ref.val1 = this.val0

@@ -34,7 +34,7 @@ prebuilt binaries.
 | video      | :white_check_mark: | :white_check_mark: | Video module            |
 | videoio    | :white_check_mark: | :white_check_mark: | VideoIO module          |
 | asyncarray | :white_check_mark: | :white_check_mark: | AsyncArray module       |
-| calib3d    | :x:                | :x:                | Calib3D module          |
+| calib3d    | :white_check_mark: | :white_check_mark: | Calib3D module          |
 | dnn        | :x:                | :x:                | DNN module              |
 | photo      | :white_check_mark: | :white_check_mark: | Photo module            |
 | cuda       | :x:                | :x:                | CUDA module             |

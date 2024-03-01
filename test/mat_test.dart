@@ -209,7 +209,7 @@ void main() async {
     final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
     final mat1 = mat0.region(cv.Rect(10, 10, 100, 100));
     expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
-    expect(mat1.at<int>(0, 0), equals(mat0.at<int>(10, 10)));
+    expect(mat1.at<int>(0, 0, cn: 0), equals(mat0.at<int>(10, 10, cn: 0)));
   });
 
   test('Mat Rotate', () {

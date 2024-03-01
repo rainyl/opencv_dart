@@ -34,6 +34,49 @@ abstract class VideoAccelerationType {
   static const int VIDEO_ACCELERATION_MFX = 4;
 }
 
+abstract class SolvePnPMethod {
+  /// !< Pose refinement using non-linear Levenberg-Marquardt minimization scheme @cite Madsen04 @cite Eade13 \n
+  /// !< Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. \n
+  /// !< Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
+  static const int SOLVEPNP_ITERATIVE = 0;
+
+  /// !< EPnP: Efficient Perspective-n-Point Camera Pose Estimation @cite lepetit2009epnp
+  static const int SOLVEPNP_EPNP = 1;
+
+  /// !< Complete Solution Classification for the Perspective-Three-Point Problem @cite gao2003complete
+  static const int SOLVEPNP_P3P = 2;
+
+  /// !< **Broken implementation. Using this flag will fallback to EPnP.** \n
+  /// !< A Direct Least-Squares (DLS) Method for PnP @cite hesch2011direct
+  static const int SOLVEPNP_DLS = 3;
+
+  /// !< **Broken implementation. Using this flag will fallback to EPnP.** \n
+  /// !< Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation @cite penate2013exhaustive
+  static const int SOLVEPNP_UPNP = 4;
+
+  /// !< An Efficient Algebraic Solution to the Perspective-Three-Point Problem @cite Ke17
+  static const int SOLVEPNP_AP3P = 5;
+
+  /// !< Infinitesimal Plane-Based Pose Estimation @cite Collins14 \n
+  /// !< Object points must be coplanar.
+  static const int SOLVEPNP_IPPE = 6;
+
+  /// !< Infinitesimal Plane-Based Pose Estimation @cite Collins14 \n
+  /// !< This is a special case suitable for marker pose estimation.\n
+  /// !< 4 coplanar object points must be defined in the following order:
+  /// !<   - point 0: [-squareLength / 2,  squareLength / 2, 0]
+  /// !<   - point 1: [ squareLength / 2,  squareLength / 2, 0]
+  /// !<   - point 2: [ squareLength / 2, -squareLength / 2, 0]
+  /// !<   - point 3: [-squareLength / 2, -squareLength / 2, 0]
+  static const int SOLVEPNP_IPPE_SQUARE = 7;
+
+  /// !< SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem @cite Terzakis2020SQPnP
+  static const int SOLVEPNP_SQPNP = 8;
+
+  /// !< Used for count
+  static const int SOLVEPNP_MAX_COUNT = 9;
+}
+
 const int COLOR_BGR2BGRA = 0;
 
 const int COLOR_RGB2RGBA = 0;
@@ -1955,3 +1998,95 @@ const int NORMAL_CLONE = 1;
 const int MIXED_CLONE = 2;
 
 const int MONOCHROME_TRANSFER = 3;
+
+const int LMEDS = 4;
+
+const int RANSAC = 8;
+
+const int RHO = 16;
+
+const int USAC_DEFAULT = 32;
+
+const int USAC_PARALLEL = 33;
+
+const int USAC_FM_8PTS = 34;
+
+const int USAC_FAST = 35;
+
+const int USAC_ACCURATE = 36;
+
+const int USAC_PROSAC = 37;
+
+const int USAC_MAGSAC = 38;
+
+const int CALIB_CB_ADAPTIVE_THRESH = 1;
+
+const int CALIB_CB_NORMALIZE_IMAGE = 2;
+
+const int CALIB_CB_FILTER_QUADS = 4;
+
+const int CALIB_CB_FAST_CHECK = 8;
+
+const int CALIB_CB_EXHAUSTIVE = 16;
+
+const int CALIB_CB_ACCURACY = 32;
+
+const int CALIB_CB_LARGER = 64;
+
+const int CALIB_CB_MARKER = 128;
+
+const int CALIB_CB_PLAIN = 256;
+
+const int CALIB_CB_SYMMETRIC_GRID = 1;
+
+const int CALIB_CB_ASYMMETRIC_GRID = 2;
+
+const int CALIB_CB_CLUSTERING = 4;
+
+const int CALIB_NINTRINSIC = 18;
+
+const int CALIB_USE_INTRINSIC_GUESS = 1;
+
+const int CALIB_FIX_ASPECT_RATIO = 2;
+
+const int CALIB_FIX_PRINCIPAL_POINT = 4;
+
+const int CALIB_ZERO_TANGENT_DIST = 8;
+
+const int CALIB_FIX_FOCAL_LENGTH = 16;
+
+const int CALIB_FIX_K1 = 32;
+
+const int CALIB_FIX_K2 = 64;
+
+const int CALIB_FIX_K3 = 128;
+
+const int CALIB_FIX_K4 = 2048;
+
+const int CALIB_FIX_K5 = 4096;
+
+const int CALIB_FIX_K6 = 8192;
+
+const int CALIB_RATIONAL_MODEL = 16384;
+
+const int CALIB_THIN_PRISM_MODEL = 32768;
+
+const int CALIB_FIX_S1_S2_S3_S4 = 65536;
+
+const int CALIB_TILTED_MODEL = 262144;
+
+const int CALIB_FIX_TAUX_TAUY = 524288;
+
+const int CALIB_USE_QR = 1048576;
+
+const int CALIB_FIX_TANGENT_DIST = 2097152;
+
+const int CALIB_FIX_INTRINSIC = 256;
+
+const int CALIB_SAME_FOCAL_LENGTH = 512;
+
+const int CALIB_ZERO_DISPARITY = 1024;
+
+const int CALIB_USE_LU = 131072;
+
+const int CALIB_USE_EXTRINSIC_GUESS = 4194304;

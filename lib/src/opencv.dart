@@ -20,6 +20,7 @@ export 'core/rect.dart';
 export 'core/rng.dart';
 export 'core/scalar.dart';
 
+export 'calib3d/calib3d.dart';
 export 'features2d/features2d.dart';
 export 'highgui/highgui.dart';
 export 'imgcodecs/imgcodecs.dart';

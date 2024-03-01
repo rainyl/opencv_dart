@@ -1367,6 +1367,7 @@ class CvNative {
     Mat rvecs,
     Mat tvecs,
     int flag,
+    TermCriteria criteria,
   ) {
     return _CalibrateCamera(
       objectPoints,
@@ -1377,16 +1378,17 @@ class CvNative {
       rvecs,
       tvecs,
       flag,
+      criteria,
     );
   }
 
   late final _CalibrateCameraPtr = _lookup<
       ffi.NativeFunction<
           ffi.Double Function(Points3fVector, Points2fVector, Size, Mat, Mat,
-              Mat, Mat, ffi.Int)>>('CalibrateCamera');
+              Mat, Mat, ffi.Int, TermCriteria)>>('CalibrateCamera');
   late final _CalibrateCamera = _CalibrateCameraPtr.asFunction<
-      double Function(
-          Points3fVector, Points2fVector, Size, Mat, Mat, Mat, Mat, int)>();
+      double Function(Points3fVector, Points2fVector, Size, Mat, Mat, Mat, Mat,
+          int, TermCriteria)>();
 
   void Undistort(
     Mat src,
@@ -12244,7 +12246,9 @@ class _SymbolAddresses {
               Mat,
               Mat,
               Mat,
-              ffi.Int)>> get CalibrateCamera => _library._CalibrateCameraPtr;
+              ffi.Int,
+              TermCriteria)>> get CalibrateCamera =>
+      _library._CalibrateCameraPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat)>>
       get Undistort => _library._UndistortPtr;
   ffi.Pointer<
@@ -14140,6 +14144,7 @@ final class Rect extends ffi.Struct {
 }
 
 typedef Points3fVector = ffi.Pointer<ffi.Void>;
+typedef TermCriteria = ffi.Pointer<ffi.Void>;
 typedef Point2fVector = ffi.Pointer<ffi.Void>;
 
 /// Wrapper for std::vector<string>
@@ -14493,7 +14498,6 @@ typedef float_t = ffi.Float;
 typedef Dartfloat_t = double;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
-typedef TermCriteria = ffi.Pointer<ffi.Void>;
 typedef PointVector = ffi.Pointer<ffi.Void>;
 typedef PointsVector = ffi.Pointer<ffi.Void>;
 typedef RNG = ffi.Pointer<ffi.Void>;

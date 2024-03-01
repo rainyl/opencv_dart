@@ -1,6 +1,7 @@
-## 0.4.1
+## 0.5.0
 
 * add `asyncarray`
+* add `calib3d` module
 
 ## 0.4.0
 

@@ -5,8 +5,6 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/src/core/cv_exception.dart';
 
-import '../core/mat_type.dart';
-import '../core/point.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../opencv.g.dart' as cvg;

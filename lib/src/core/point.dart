@@ -1,6 +1,7 @@
 import 'dart:ffi' as ffi;
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/src/core/mat.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'base.dart';
@@ -20,8 +21,7 @@ class Point extends CvObject with EquatableMixin {
   factory Point.fromNative(cvg.Point p) => Point(p.x, p.y);
   factory Point.fromPointer(ffi.Pointer<cvg.Point> p) => Point._(p);
 
-  static final _finalizer =
-      Finalizer<ffi.Pointer<cvg.Point>>((p0) => calloc.free(p0));
+  static final _finalizer = Finalizer<ffi.Pointer<cvg.Point>>((p0) => calloc.free(p0));
   int get x => _ptr.ref.x;
   int get y => _ptr.ref.y;
   ffi.Pointer<cvg.Point> _ptr;
@@ -53,8 +53,7 @@ class Point2f extends CvObject with EquatableMixin {
   factory Point2f.fromNative(cvg.Point2f p) => Point2f(p.x, p.y);
   factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> p) => Point2f._(p);
 
-  static final _finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.Point2f_Close.cast());
+  static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Point2f_Close.cast());
   double get x => _ptr.ref.x;
   double get y => _ptr.ref.y;
   ffi.Pointer<cvg.Point2f> _ptr;
@@ -87,8 +86,7 @@ class Point3f extends CvObject with EquatableMixin {
   factory Point3f.fromNative(cvg.Point3f p) => Point3f(p.x, p.y, p.z);
   factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> p) => Point3f._(p);
 
-  static final _finalizer =
-      ffi.NativeFinalizer(_bindings.addresses.Point3f_Close.cast());
+  static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Point3f_Close.cast());
   double get x => _ptr.ref.x;
   double get y => _ptr.ref.y;
   double get z => _ptr.ref.z;
@@ -104,6 +102,19 @@ class Point3f extends CvObject with EquatableMixin {
   cvg.Point3f get ref => _ptr.ref;
   @override
   cvg.Point3f toNative() => _ptr.ref;
+}
+
+class ListPoint2f {
+  static List<Point2f> fromMat(Mat mat) {
+    final vec = _bindings.Point2fVector_NewFromMat(mat.ptr);
+    final ret = List.generate(
+      _bindings.Point2fVector_Size(vec),
+      (index) => Point2f.fromNative(_bindings.Point2fVector_At(vec, index)),
+    );
+
+    _bindings.Point2fVector_Close(vec);
+    return ret;
+  }
 }
 
 extension ListPointExtension on List<Point> {
@@ -125,7 +136,7 @@ extension ListPointExtension on List<Point> {
   }
 }
 
-extension ListPointsExtension on List<List<Point>> {
+extension ListListPointExtension on List<List<Point>> {
   ///! Remeber to free from `native` side
   cvg.PointsVector toNativeVector() {
     final vec = _bindings.PointsVector_New();
@@ -146,12 +157,23 @@ extension PointsToList on cvg.Points {
   }
 }
 
-extension ListToVector1 on List<Point2f> {
+extension ListPoint2fExtension on List<Point2f> {
   ///! Remeber to free from `native` side
   cvg.Point2fVector toNativeVecotr() {
     final vec = _bindings.Point2fVector_New();
     for (var i = 0; i < length; i++) {
       _bindings.Point2fVector_Append(vec, this[i].toNative());
+    }
+    return vec;
+  }
+}
+
+extension ListPoint3fExtension on List<Point3f> {
+  ///! Remeber to free from `native` side
+  cvg.Point3fVector toNativeVecotr() {
+    final vec = _bindings.Point3fVector_New();
+    for (var i = 0; i < length; i++) {
+      _bindings.Point3fVector_Append(vec, this[i].toNative());
     }
     return vec;
   }

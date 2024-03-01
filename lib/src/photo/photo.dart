@@ -12,12 +12,12 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-// MergeMertens algorithm merge the ldr image should result in a HDR image.
+/// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
-// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
+/// For further details, please see:
+/// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
+/// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
+/// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
 class MergeMertens implements ffi.Finalizable {
   MergeMertens._(this.ptr) {
     finalizer.attach(this, ptr);
@@ -40,10 +40,10 @@ class MergeMertens implements ffi.Finalizable {
   final cvg.MergeMertens ptr;
   static final finalizer = ffi.NativeFinalizer(_bindings.addresses.MergeMertens_Close);
 
-// BalanceWhite computes merge LDR images using the current MergeMertens.
-// Return a image MAT : 8bits 3 channel image ( RGB 8 bits )
-// For further details, please see:
-// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
+  /// BalanceWhite computes merge LDR images using the current MergeMertens.
+  /// Return a image MAT : 8bits 3 channel image ( RGB 8 bits )
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
   Mat process(List<Mat> src) {
     return using<Mat>((arena) {
       final dst = Mat.empty();
@@ -53,43 +53,40 @@ class MergeMertens implements ffi.Finalizable {
   }
 }
 
-// AlignMTB for converts images to median threshold bitmaps.
-// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
-// brighter than median luminance and 0 otherwise) and than aligns the resulting
-// bitmaps using bit operations.
-
-// For further details, please see:
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
-// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
+/// AlignMTB for converts images to median threshold bitmaps.
+/// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
+/// brighter than median luminance and 0 otherwise) and than aligns the resulting
+/// bitmaps using bit operations.
+/// For further details, please see:
+/// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
+/// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
+/// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
 class AlignMTB implements ffi.Finalizable {
   AlignMTB._(this.ptr) {
     finalizer.attach(this, ptr);
   }
 
-// AlignMTB for converts images to median threshold bitmaps.
-// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
-// brighter than median luminance and 0 otherwise) and than aligns the resulting
-// bitmaps using bit operations.
-
-// For further details, please see:
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
-// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
+  /// AlignMTB for converts images to median threshold bitmaps.
+  /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
+  /// brighter than median luminance and 0 otherwise) and than aligns the resulting
+  /// bitmaps using bit operations.
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
+  /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
+  /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
     final _ptr = _bindings.AlignMTB_Create();
     return AlignMTB._(_ptr);
   }
 
-// returns an AlignMTB for converts images to median threshold bitmaps.
-// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
-// brighter than median luminance and 0 otherwise) and than aligns the resulting
-// bitmaps using bit operations.
-
-// For further details, please see:
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
-// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
-// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
+  /// returns an AlignMTB for converts images to median threshold bitmaps.
+  /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
+  /// brighter than median luminance and 0 otherwise) and than aligns the resulting
+  /// bitmaps using bit operations.
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
+  /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
+  /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.create({int max_bits = 6, int exclude_range = 4, bool cut = true}) {
     final _ptr = _bindings.AlignMTB_CreateWithParams(max_bits, exclude_range, cut);
     return AlignMTB._(_ptr);
@@ -110,10 +107,10 @@ class AlignMTB implements ffi.Finalizable {
   }
 }
 
-// ColorChange mix two differently colored versions of an image seamlessly.
+/// ColorChange mix two differently colored versions of an image seamlessly.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga6684f35dc669ff6196a7c340dc73b98e
+/// For further details, please see:
+/// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga6684f35dc669ff6196a7c340dc73b98e
 Mat colorChange(
   InputArray src,
   InputArray mask, {
@@ -126,20 +123,20 @@ Mat colorChange(
   return dst;
 }
 
-// SeamlessClone blend two image by Poisson Blending.
+/// SeamlessClone blend two image by Poisson Blending.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
+/// For further details, please see:
+/// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
 Mat seamlessClone(InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
   final blend = Mat.empty();
   _bindings.SeamlessClone(src.ptr, dst.ptr, mask.ptr, p.ref, blend.ptr, flags);
   return blend;
 }
 
-// IlluminationChange modifies locally the apparent illumination of an image.
+/// IlluminationChange modifies locally the apparent illumination of an image.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/df/da0/group__photo__clone.html#gac5025767cf2febd8029d474278e886c7
+/// For further details, please see:
+/// https://docs.opencv.org/master/df/da0/group__photo__clone.html#gac5025767cf2febd8029d474278e886c7
 Mat illuminationChange(
   InputArray src,
   InputArray mask, {
@@ -151,10 +148,10 @@ Mat illuminationChange(
   return dst;
 }
 
-// TextureFlattening washes out the texture of the selected region, giving its contents a flat aspect.
+/// TextureFlattening washes out the texture of the selected region, giving its contents a flat aspect.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/df/da0/group__photo__clone.html#gad55df6aa53797365fa7cc23959a54004
+/// For further details, please see:
+/// https://docs.opencv.org/master/df/da0/group__photo__clone.html#gad55df6aa53797365fa7cc23959a54004
 Mat textureFlattening(
   InputArray src,
   InputArray mask, {
@@ -167,11 +164,11 @@ Mat textureFlattening(
   return dst;
 }
 
-// FastNlMeansDenoising performs image denoising using Non-local Means Denoising algorithm
-// http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/
+/// FastNlMeansDenoising performs image denoising using Non-local Means Denoising algorithm
+/// http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/d1/d79/group__photo__denoise.html#ga4c6b0031f56ea3f98f768881279ffe93
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d1/d79/group__photo__denoise.html#ga4c6b0031f56ea3f98f768881279ffe93
 Mat fastNlMeansDenoising(
   InputArray src, {
   double h = 3,
@@ -189,10 +186,10 @@ Mat fastNlMeansDenoising(
   return dst;
 }
 
-// FastNlMeansDenoisingColored is a modification of fastNlMeansDenoising function for colored images.
+/// FastNlMeansDenoisingColored is a modification of fastNlMeansDenoising function for colored images.
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/d1/d79/group__photo__denoise.html#ga21abc1c8b0e15f78cd3eff672cb6c476
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d1/d79/group__photo__denoise.html#ga21abc1c8b0e15f78cd3eff672cb6c476
 Mat fastNlMeansDenoisingColored(
   InputArray src, {
   double h = 3,
@@ -212,10 +209,10 @@ Mat fastNlMeansDenoisingColored(
   return dst;
 }
 
-// FastNlMeansDenoisingColoredMulti denoises the selected images.
+/// FastNlMeansDenoisingColoredMulti denoises the selected images.
 //
-// For further details, please see:
-// https://docs.opencv.org/master/d1/d79/group__photo__denoise.html#gaa501e71f52fb2dc17ff8ca5e7d2d3619
+/// For further details, please see:
+/// https://docs.opencv.org/master/d1/d79/group__photo__denoise.html#gaa501e71f52fb2dc17ff8ca5e7d2d3619
 Mat fastNlMeansDenoisingColoredMulti(
   List<Mat> srcImgs,
   int imgToDenoiseIndex,
@@ -241,21 +238,21 @@ Mat fastNlMeansDenoisingColoredMulti(
   });
 }
 
-// DetailEnhance filter enhances the details of a particular image
+/// DetailEnhance filter enhances the details of a particular image
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#ga0de660cb6f371a464a74c7b651415975
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#ga0de660cb6f371a464a74c7b651415975
 Mat detailEnhance(InputArray src, {double sigma_s = 10, double sigma_r = 0.15}) {
   final dst = Mat.empty();
   _bindings.DetailEnhance(src.ptr, dst.ptr, sigma_s, sigma_r);
   return dst;
 }
 
-// EdgePreservingFilter filtering is the fundamental operation in image and video processing.
-// Edge-preserving smoothing filters are used in many different applications.
+/// EdgePreservingFilter filtering is the fundamental operation in image and video processing.
+/// Edge-preserving smoothing filters are used in many different applications.
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gafaee2977597029bc8e35da6e67bd31f7
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gafaee2977597029bc8e35da6e67bd31f7
 Mat edgePreservingFilter(
   InputArray src, {
   int flags = 1,
@@ -267,10 +264,10 @@ Mat edgePreservingFilter(
   return dst;
 }
 
-// PencilSketch pencil-like non-photorealistic line drawing.
+/// PencilSketch pencil-like non-photorealistic line drawing.
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gae5930dd822c713b36f8529b21ddebd0c
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gae5930dd822c713b36f8529b21ddebd0c
 (Mat dst1, Mat dst2) pencilSketch(
   InputArray src, {
   double sigma_s = 60,
@@ -283,13 +280,13 @@ Mat edgePreservingFilter(
   return (dst1, dst2);
 }
 
-// Stylization aims to produce digital imagery with a wide variety of effects
-// not focused on photorealism. Edge-aware filters are ideal for stylization,
-// as they can abstract regions of low contrast while preserving, or enhancing,
-// high-contrast features.
+/// Stylization aims to produce digital imagery with a wide variety of effects
+/// not focused on photorealism. Edge-aware filters are ideal for stylization,
+/// as they can abstract regions of low contrast while preserving, or enhancing,
+/// high-contrast features.
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gacb0f7324017df153d7b5d095aed53206
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gacb0f7324017df153d7b5d095aed53206
 Mat stylization(
   InputArray src, {
   double sigma_s = 60,
@@ -300,12 +297,12 @@ Mat stylization(
   return dst;
 }
 
-// Inpaint reconstructs the selected image area from the pixel near the area boundary.
-// The function may be used to remove dust and scratches from a scanned photo, or to
-// remove undesirable objects from still images or video.
+/// Inpaint reconstructs the selected image area from the pixel near the area boundary.
+/// The function may be used to remove dust and scratches from a scanned photo, or to
+/// remove undesirable objects from still images or video.
 //
-// For further details, please see:
-// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
 Mat inpaint(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
   final dst = Mat.empty();
   _bindings.PhotoInpaint(src.ptr, inpaintMask.ptr, dst.ptr, inpaintRadius, flags);
