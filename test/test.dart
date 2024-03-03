@@ -1,39 +1,21 @@
+import 'dart:io';
+
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
-  print(cv.openCvVersion());
-  final img = cv.imread("test/images/chessboard_4x6_distort.png", flags: cv.IMREAD_GRAYSCALE);
+  cv.registerErrorCallback();
+  final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final model = cv.Net.fromTorch("test/models/openface.nn4.small2.v1.t7");
 
-  final (found, corners) = cv.findChessboardCorners(img, (4, 6), flags: 0);
+    final blob = cv.blobFromImage(
+      img,
+      scalefactor: 1.0,
+      size: (224, 224),
+      mean: cv.Scalar.all(0),
+      swapRB: false,
+      crop: false,
+    );
 
-  final objectPointsVector = cv.Contours3f.fromList([
-    List.generate(
-      3 * 4,
-      (i) => cv.Point3f(
-        (i ~/ 3).toDouble() * 100,
-        (i % 3).toDouble() * 100,
-        0.0,
-      ),
-    ),
-  ]);
-  print(objectPointsVector);
-  final imagePointsVector = cv.Contours2f.fromList([
-    cv.ListPoint2f.fromMat(corners),
-  ]);
-  print(imagePointsVector);
-
-  final cameraMatrix = cv.Mat.empty(), distCoeffs = cv.Mat.empty();
-  final rcvs = cv.Mat.empty();
-  final tcvs = cv.Mat.empty();
-  cv.calibrateCamera(
-    objectPointsVector,
-    imagePointsVector,
-    (img.rows, img.cols),
-    cameraMatrix,
-    distCoeffs,
-    rvecs: rcvs,
-    tvecs: tcvs,
-    flags: 0,
-  );
-  print("Finished");
+    model.setInput(blob);
+    fi
 }

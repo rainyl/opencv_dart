@@ -647,10 +647,10 @@ class Mat extends CvObject with EquatableMixin {
 
   List<List<T>> toList<T extends num>({int cn = 0}) {
     return List.generate(
-      this.cols,
-      (col) => List.generate(
-        this.rows,
-        (row) => this.at<T>(row, col, cn: cn),
+      this.rows,
+      (row) => List.generate(
+        this.cols,
+        (col) => this.at<T>(row, col, cn: cn),
       ),
     );
   }

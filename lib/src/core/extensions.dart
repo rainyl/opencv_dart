@@ -1,4 +1,5 @@
 import 'dart:ffi' as ffi;
+import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
@@ -66,5 +67,16 @@ extension RecordPointExtension on ({int x, int y}) {
       ..ref.x = this.x
       ..ref.y = this.y;
     return point;
+  }
+}
+
+extension U8ListExtension on Uint8List {
+  ffi.Pointer<cvg.ByteArray> toByteArray(Arena arena) {
+    final _data = arena<ffi.Char>(this.length);
+    for (var i = 0; i < this.length; i++) _data[i] = this[i];
+    final _array = arena<cvg.ByteArray>()
+      ..ref.length = this.length
+      ..ref.data = _data;
+    return _array;
   }
 }

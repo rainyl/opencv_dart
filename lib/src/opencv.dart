@@ -10,6 +10,7 @@ export 'core/base.dart';
 export 'core/core.dart';
 export 'core/contours.dart';
 export 'core/dmatch.dart';
+export 'core/exception.dart';
 export 'core/extensions.dart';
 export 'core/keypoint.dart';
 export 'core/mat_type.dart';
@@ -21,13 +22,14 @@ export 'core/rng.dart';
 export 'core/scalar.dart';
 
 export 'calib3d/calib3d.dart';
+export 'dnn/dnn.dart';
 export 'features2d/features2d.dart';
 export 'highgui/highgui.dart';
 export 'imgcodecs/imgcodecs.dart';
 export 'imgproc/imgproc.dart';
 export 'objdetect/objdetect.dart';
-export 'svd/svd.dart';
 export 'photo/photo.dart';
+export 'svd/svd.dart';
 
 export 'video/video.dart';
 export 'video/videoio.dart';

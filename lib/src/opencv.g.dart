@@ -5161,6 +5161,7 @@ class CvNative {
   late final _Point2fVector_Size =
       _Point2fVector_SizePtr.asFunction<int Function(Point2fVector)>();
 
+  /// IntVector* IntVector_New();
   void IntVector_Close(
     IntVector ivec,
   ) {
@@ -5174,6 +5175,21 @@ class CvNative {
           'IntVector_Close');
   late final _IntVector_Close =
       _IntVector_ClosePtr.asFunction<void Function(IntVector)>();
+
+  /// FloatVector* FloatVector_New();
+  void FloatVector_Close(
+    FloatVector ivec,
+  ) {
+    return _FloatVector_Close(
+      ivec,
+    );
+  }
+
+  late final _FloatVector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FloatVector)>>(
+          'FloatVector_Close');
+  late final _FloatVector_Close =
+      _FloatVector_ClosePtr.asFunction<void Function(FloatVector)>();
 
   void CStrings_Close(
     CStrings cstrs,
@@ -5827,22 +5843,33 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Int Function()>>('GetNumThreads');
   late final _GetNumThreads = _GetNumThreadsPtr.asFunction<int Function()>();
 
+  Net Net_Create() {
+    return _Net_Create();
+  }
+
+  late final _Net_CreatePtr =
+      _lookup<ffi.NativeFunction<Net Function()>>('Net_Create');
+  late final _Net_Create = _Net_CreatePtr.asFunction<Net Function()>();
+
   Net Net_ReadNet(
     ffi.Pointer<ffi.Char> model,
     ffi.Pointer<ffi.Char> config,
+    ffi.Pointer<ffi.Char> framework,
   ) {
     return _Net_ReadNet(
       model,
       config,
+      framework,
     );
   }
 
   late final _Net_ReadNetPtr = _lookup<
       ffi.NativeFunction<
-          Net Function(
-              ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>>('Net_ReadNet');
+          Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('Net_ReadNet');
   late final _Net_ReadNet = _Net_ReadNetPtr.asFunction<
-      Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+      Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>)>();
 
   Net Net_ReadNetBytes(
     ffi.Pointer<ffi.Char> framework,
@@ -5898,45 +5925,84 @@ class CvNative {
 
   Net Net_ReadNetFromTensorflow(
     ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
   ) {
     return _Net_ReadNetFromTensorflow(
       model,
+      config,
     );
   }
 
-  late final _Net_ReadNetFromTensorflowPtr =
-      _lookup<ffi.NativeFunction<Net Function(ffi.Pointer<ffi.Char>)>>(
-          'Net_ReadNetFromTensorflow');
+  late final _Net_ReadNetFromTensorflowPtr = _lookup<
+      ffi.NativeFunction<
+          Net Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('Net_ReadNetFromTensorflow');
   late final _Net_ReadNetFromTensorflow = _Net_ReadNetFromTensorflowPtr
-      .asFunction<Net Function(ffi.Pointer<ffi.Char>)>();
+      .asFunction<Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
 
   Net Net_ReadNetFromTensorflowBytes(
     ByteArray model,
+    ByteArray config,
   ) {
     return _Net_ReadNetFromTensorflowBytes(
       model,
+      config,
     );
   }
 
   late final _Net_ReadNetFromTensorflowBytesPtr =
-      _lookup<ffi.NativeFunction<Net Function(ByteArray)>>(
+      _lookup<ffi.NativeFunction<Net Function(ByteArray, ByteArray)>>(
           'Net_ReadNetFromTensorflowBytes');
   late final _Net_ReadNetFromTensorflowBytes =
-      _Net_ReadNetFromTensorflowBytesPtr.asFunction<Net Function(ByteArray)>();
+      _Net_ReadNetFromTensorflowBytesPtr.asFunction<
+          Net Function(ByteArray, ByteArray)>();
 
-  Net Net_ReadNetFromTorch(
+  Net Net_ReadNetFromTFLite(
     ffi.Pointer<ffi.Char> model,
   ) {
-    return _Net_ReadNetFromTorch(
+    return _Net_ReadNetFromTFLite(
       model,
     );
   }
 
-  late final _Net_ReadNetFromTorchPtr =
+  late final _Net_ReadNetFromTFLitePtr =
       _lookup<ffi.NativeFunction<Net Function(ffi.Pointer<ffi.Char>)>>(
-          'Net_ReadNetFromTorch');
-  late final _Net_ReadNetFromTorch = _Net_ReadNetFromTorchPtr.asFunction<
+          'Net_ReadNetFromTFLite');
+  late final _Net_ReadNetFromTFLite = _Net_ReadNetFromTFLitePtr.asFunction<
       Net Function(ffi.Pointer<ffi.Char>)>();
+
+  Net Net_ReadNetFromTFLiteBytes(
+    ByteArray bufferModel,
+  ) {
+    return _Net_ReadNetFromTFLiteBytes(
+      bufferModel,
+    );
+  }
+
+  late final _Net_ReadNetFromTFLiteBytesPtr =
+      _lookup<ffi.NativeFunction<Net Function(ByteArray)>>(
+          'Net_ReadNetFromTFLiteBytes');
+  late final _Net_ReadNetFromTFLiteBytes =
+      _Net_ReadNetFromTFLiteBytesPtr.asFunction<Net Function(ByteArray)>();
+
+  Net Net_ReadNetFromTorch(
+    ffi.Pointer<ffi.Char> model,
+    bool isBinary,
+    bool evaluate,
+  ) {
+    return _Net_ReadNetFromTorch(
+      model,
+      isBinary,
+      evaluate,
+    );
+  }
+
+  late final _Net_ReadNetFromTorchPtr = _lookup<
+      ffi.NativeFunction<
+          Net Function(ffi.Pointer<ffi.Char>, ffi.Bool,
+              ffi.Bool)>>('Net_ReadNetFromTorch');
+  late final _Net_ReadNetFromTorch = _Net_ReadNetFromTorchPtr.asFunction<
+      Net Function(ffi.Pointer<ffi.Char>, bool, bool)>();
 
   Net Net_ReadNetFromONNX(
     ffi.Pointer<ffi.Char> model,
@@ -5973,6 +6039,7 @@ class CvNative {
     Scalar mean,
     bool swapRB,
     bool crop,
+    int ddepth,
   ) {
     return _Net_BlobFromImage(
       image,
@@ -5981,15 +6048,16 @@ class CvNative {
       mean,
       swapRB,
       crop,
+      ddepth,
     );
   }
 
   late final _Net_BlobFromImagePtr = _lookup<
       ffi.NativeFunction<
-          Mat Function(Mat, ffi.Double, Size, Scalar, ffi.Bool,
-              ffi.Bool)>>('Net_BlobFromImage');
+          Mat Function(Mat, ffi.Double, Size, Scalar, ffi.Bool, ffi.Bool,
+              ffi.Int)>>('Net_BlobFromImage');
   late final _Net_BlobFromImage = _Net_BlobFromImagePtr.asFunction<
-      Mat Function(Mat, double, Size, Scalar, bool, bool)>();
+      Mat Function(Mat, double, Size, Scalar, bool, bool, int)>();
 
   void Net_BlobFromImages(
     Mats images,
@@ -6191,6 +6259,25 @@ class CvNative {
   late final _Net_GetLayerNames = _Net_GetLayerNamesPtr.asFunction<
       void Function(Net, ffi.Pointer<CStrings>)>();
 
+  void Net_GetInputDetails(
+    Net net,
+    ffi.Pointer<FloatVector> scales,
+    ffi.Pointer<IntVector> zeropoints,
+  ) {
+    return _Net_GetInputDetails(
+      net,
+      scales,
+      zeropoints,
+    );
+  }
+
+  late final _Net_GetInputDetailsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(Net, ffi.Pointer<FloatVector>,
+              ffi.Pointer<IntVector>)>>('Net_GetInputDetails');
+  late final _Net_GetInputDetails = _Net_GetInputDetailsPtr.asFunction<
+      void Function(Net, ffi.Pointer<FloatVector>, ffi.Pointer<IntVector>)>();
+
   Mat Net_GetBlobChannel(
     Mat blob,
     int imgidx,
@@ -6366,6 +6453,104 @@ class CvNative {
   late final _NMSBoxesWithParams = _NMSBoxesWithParamsPtr.asFunction<
       void Function(Rects, FloatVector, double, double, ffi.Pointer<IntVector>,
           double, int)>();
+
+  void registerErrorCallback(
+    ErrorCallback callback,
+  ) {
+    return _registerErrorCallback(
+      callback,
+    );
+  }
+
+  late final _registerErrorCallbackPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>>(
+          'registerErrorCallback');
+  late final _registerErrorCallback =
+      _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
+
+  int CvException_GetCode(
+    CvException exception,
+  ) {
+    return _CvException_GetCode(
+      exception,
+    );
+  }
+
+  late final _CvException_GetCodePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(CvException)>>(
+          'CvException_GetCode');
+  late final _CvException_GetCode =
+      _CvException_GetCodePtr.asFunction<int Function(CvException)>();
+
+  ffi.Pointer<ffi.Char> CvException_GetErr(
+    CvException exception,
+  ) {
+    return _CvException_GetErr(
+      exception,
+    );
+  }
+
+  late final _CvException_GetErrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>(
+          'CvException_GetErr');
+  late final _CvException_GetErr = _CvException_GetErrPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(CvException)>();
+
+  ffi.Pointer<ffi.Char> CvException_GetFunc(
+    CvException exception,
+  ) {
+    return _CvException_GetFunc(
+      exception,
+    );
+  }
+
+  late final _CvException_GetFuncPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>(
+          'CvException_GetFunc');
+  late final _CvException_GetFunc = _CvException_GetFuncPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(CvException)>();
+
+  ffi.Pointer<ffi.Char> CvException_GetFile(
+    CvException exception,
+  ) {
+    return _CvException_GetFile(
+      exception,
+    );
+  }
+
+  late final _CvException_GetFilePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>(
+          'CvException_GetFile');
+  late final _CvException_GetFile = _CvException_GetFilePtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(CvException)>();
+
+  int CvException_GetLine(
+    CvException exception,
+  ) {
+    return _CvException_GetLine(
+      exception,
+    );
+  }
+
+  late final _CvException_GetLinePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(CvException)>>(
+          'CvException_GetLine');
+  late final _CvException_GetLine =
+      _CvException_GetLinePtr.asFunction<int Function(CvException)>();
+
+  void CvException_Close(
+    CvException exception,
+  ) {
+    return _CvException_Close(
+      exception,
+    );
+  }
+
+  late final _CvException_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CvException)>>(
+          'CvException_Close');
+  late final _CvException_Close =
+      _CvException_ClosePtr.asFunction<void Function(CvException)>();
 
   AKAZE AKAZE_Create() {
     return _AKAZE_Create();
@@ -12827,6 +13012,8 @@ class _SymbolAddresses {
       get Point2fVector_Size => _library._Point2fVector_SizePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(IntVector)>>
       get IntVector_Close => _library._IntVector_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FloatVector)>>
+      get FloatVector_Close => _library._FloatVector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CStrings)>>
       get CStrings_Close => _library._CStrings_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<RNG Function()>> get Rng_New =>
@@ -12933,10 +13120,13 @@ class _SymbolAddresses {
       get SetNumThreads => _library._SetNumThreadsPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Int Function()>> get GetNumThreads =>
       _library._GetNumThreadsPtr;
+  ffi.Pointer<ffi.NativeFunction<Net Function()>> get Net_Create =>
+      _library._Net_CreatePtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>>
-      get Net_ReadNet => _library._Net_ReadNetPtr;
+      ffi.NativeFunction<
+          Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>> get Net_ReadNet =>
+      _library._Net_ReadNetPtr;
   ffi.Pointer<
           ffi.NativeFunction<
               Net Function(ffi.Pointer<ffi.Char>, ByteArray, ByteArray)>>
@@ -12947,12 +13137,20 @@ class _SymbolAddresses {
       get Net_ReadNetFromCaffe => _library._Net_ReadNetFromCaffePtr;
   ffi.Pointer<ffi.NativeFunction<Net Function(ByteArray, ByteArray)>>
       get Net_ReadNetFromCaffeBytes => _library._Net_ReadNetFromCaffeBytesPtr;
-  ffi.Pointer<ffi.NativeFunction<Net Function(ffi.Pointer<ffi.Char>)>>
+  ffi.Pointer<
+          ffi.NativeFunction<
+              Net Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>>
       get Net_ReadNetFromTensorflow => _library._Net_ReadNetFromTensorflowPtr;
-  ffi.Pointer<ffi.NativeFunction<Net Function(ByteArray)>>
+  ffi.Pointer<ffi.NativeFunction<Net Function(ByteArray, ByteArray)>>
       get Net_ReadNetFromTensorflowBytes =>
           _library._Net_ReadNetFromTensorflowBytesPtr;
   ffi.Pointer<ffi.NativeFunction<Net Function(ffi.Pointer<ffi.Char>)>>
+      get Net_ReadNetFromTFLite => _library._Net_ReadNetFromTFLitePtr;
+  ffi.Pointer<ffi.NativeFunction<Net Function(ByteArray)>>
+      get Net_ReadNetFromTFLiteBytes => _library._Net_ReadNetFromTFLiteBytesPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              Net Function(ffi.Pointer<ffi.Char>, ffi.Bool, ffi.Bool)>>
       get Net_ReadNetFromTorch => _library._Net_ReadNetFromTorchPtr;
   ffi.Pointer<ffi.NativeFunction<Net Function(ffi.Pointer<ffi.Char>)>>
       get Net_ReadNetFromONNX => _library._Net_ReadNetFromONNXPtr;
@@ -12960,7 +13158,8 @@ class _SymbolAddresses {
       get Net_ReadNetFromONNXBytes => _library._Net_ReadNetFromONNXBytesPtr;
   ffi.Pointer<
           ffi.NativeFunction<
-              Mat Function(Mat, ffi.Double, Size, Scalar, ffi.Bool, ffi.Bool)>>
+              Mat Function(
+                  Mat, ffi.Double, Size, Scalar, ffi.Bool, ffi.Bool, ffi.Int)>>
       get Net_BlobFromImage => _library._Net_BlobFromImagePtr;
   ffi.Pointer<
       ffi.NativeFunction<
@@ -13002,6 +13201,11 @@ class _SymbolAddresses {
           _library._Net_GetUnconnectedOutLayersPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Net, ffi.Pointer<CStrings>)>>
       get Net_GetLayerNames => _library._Net_GetLayerNamesPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  Net, ffi.Pointer<FloatVector>, ffi.Pointer<IntVector>)>>
+      get Net_GetInputDetails => _library._Net_GetInputDetailsPtr;
   ffi.Pointer<ffi.NativeFunction<Mat Function(Mat, ffi.Int, ffi.Int)>>
       get Net_GetBlobChannel => _library._Net_GetBlobChannelPtr;
   ffi.Pointer<ffi.NativeFunction<Scalar Function(Mat)>> get Net_GetBlobSize =>
@@ -13035,6 +13239,20 @@ class _SymbolAddresses {
               ffi.Float,
               ffi.Int)>> get NMSBoxesWithParams =>
       _library._NMSBoxesWithParamsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>>
+      get registerErrorCallback => _library._registerErrorCallbackPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(CvException)>>
+      get CvException_GetCode => _library._CvException_GetCodePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>
+      get CvException_GetErr => _library._CvException_GetErrPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>
+      get CvException_GetFunc => _library._CvException_GetFuncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(CvException)>>
+      get CvException_GetFile => _library._CvException_GetFilePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(CvException)>>
+      get CvException_GetLine => _library._CvException_GetLinePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CvException)>>
+      get CvException_Close => _library._CvException_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<AKAZE Function()>> get AKAZE_Create =>
       _library._AKAZE_CreatePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AKAZE)>> get AKAZE_Close =>
@@ -14506,6 +14724,22 @@ typedef uchar = ffi.UnsignedChar;
 typedef Dartuchar = int;
 typedef Point3fVector = ffi.Pointer<ffi.Void>;
 typedef Layer = ffi.Pointer<ffi.Void>;
+typedef ErrorCallback = ffi.Pointer<ffi.NativeFunction<ErrorCallbackFunction>>;
+typedef ErrorCallbackFunction = ffi.Void Function(
+    ffi.Int status,
+    ffi.Pointer<ffi.Char> func_name,
+    ffi.Pointer<ffi.Char> err_msg,
+    ffi.Pointer<ffi.Char> file_name,
+    ffi.Int line,
+    ffi.Pointer<ffi.Void> userdata);
+typedef DartErrorCallbackFunction = void Function(
+    int status,
+    ffi.Pointer<ffi.Char> func_name,
+    ffi.Pointer<ffi.Char> err_msg,
+    ffi.Pointer<ffi.Char> file_name,
+    int line,
+    ffi.Pointer<ffi.Void> userdata);
+typedef CvException = ffi.Pointer<ffi.Void>;
 typedef AKAZE = ffi.Pointer<ffi.Void>;
 typedef AgastFeatureDetector = ffi.Pointer<ffi.Void>;
 typedef BRISK = ffi.Pointer<ffi.Void>;

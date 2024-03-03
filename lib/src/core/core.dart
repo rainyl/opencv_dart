@@ -15,6 +15,7 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
+
 /// get version
 String openCvVersion() {
   final v = _bindings.openCVVersion().cast<Utf8>().toDartString();

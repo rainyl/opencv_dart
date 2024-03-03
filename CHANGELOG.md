@@ -1,3 +1,9 @@
+## 0.6.0
+
+* add `dnn` module
+* add more friendly error message, use `cv.registerErrorCallback();` before potential error occurring.
+* change return shape of `Mat.toList()` from `(cols, rows)` to `(rows, cols)`
+
 ## 0.5.0
 
 * add `asyncarray`
