@@ -4,18 +4,10 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
   cv.registerErrorCallback();
-  final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-    final model = cv.Net.fromTorch("test/models/openface.nn4.small2.v1.t7");
-
-    final blob = cv.blobFromImage(
-      img,
-      scalefactor: 1.0,
-      size: (224, 224),
-      mean: cv.Scalar.all(0),
-      swapRB: false,
-      crop: false,
-    );
-
-    model.setInput(blob);
-    fi
+  final stitcher = cv.Stitcher.create(mode: cv.StitcherMode.PANORAMA);
+  final images = [
+    cv.Mat.zeros(33, 33, cv.MatType.CV_8UC3),
+    cv.Mat.zeros(33, 33, cv.MatType.CV_8UC3).setTo(cv.Scalar(255, 255, 255, 0)),
+  ];
+  final (status, pano) = stitcher.stitch(images);
 }

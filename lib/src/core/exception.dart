@@ -82,6 +82,17 @@ class OpenCvException implements Exception {
 
   OpenCvException.empty() : this(ErrorCode.StsOk, "", "", "", 0);
   OpenCvException.message(ErrorCode code, message) : this(code, "", message, "", 0);
+  factory OpenCvException.fromStatus(cvg.CvStatus s) {
+    return using<OpenCvException>((p0) {
+      return OpenCvException(
+        ErrorCode(s.code),
+        s.func.cast<Utf8>().toDartString(),
+        s.msg.cast<Utf8>().toDartString(),
+        s.file.cast<Utf8>().toDartString(),
+        s.line,
+      );
+    });
+  }
 
   String toString() {
     if (message.isEmpty) return "OpenCvException";

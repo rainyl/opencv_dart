@@ -30,6 +30,7 @@ export 'imgproc/imgproc.dart';
 export 'objdetect/objdetect.dart';
 export 'photo/photo.dart';
 export 'svd/svd.dart';
+export 'stitching/stitching.dart';
 
 export 'video/video.dart';
 export 'video/videoio.dart';

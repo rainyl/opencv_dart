@@ -25,6 +25,7 @@ headers:
     - src/gocv/imgproc.h
     - src/gocv/objdetect.h
     - src/gocv/photo.h
+    - src/gocv/stitching.h
     - src/gocv/svd.h
     - src/gocv/version.h
     - src/gocv/video.h
@@ -42,6 +43,7 @@ headers:
     - src/gocv/imgproc.h
     - src/gocv/objdetect.h
     - src/gocv/photo.h
+    - src/gocv/stitching.h
     - src/gocv/svd.h
     - src/gocv/version.h
     - src/gocv/video.h

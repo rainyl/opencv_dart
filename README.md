@@ -37,6 +37,7 @@ prebuilt binaries.
 | calib3d    | :white_check_mark: | :white_check_mark: | Calib3D module          |
 | dnn        | :white_check_mark: | :white_check_mark: | DNN module              |
 | photo      | :white_check_mark: | :white_check_mark: | Photo module            |
+| stiching   | :x:                | :x:                | Stiching module         |
 | cuda       | :x:                | :x:                | CUDA module             |
 | contrib    | :x:                | :x:                | Contrib module          |
 

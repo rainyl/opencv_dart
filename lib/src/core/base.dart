@@ -3,6 +3,9 @@ library cv;
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
+import "../opencv.g.dart" show CvStatus;
+import "exception.dart" show OpenCvException;
+
 const _libraryName = "opencv_dart";
 
 /* fundamental constants */
@@ -47,22 +50,11 @@ abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
   T get ref;
 }
 
-// abstract class CvObject extends Disposable {
-//   CvObject(this._ptr);
-//   CvObject.fromPointer(this._ptr);
-
-//   ffi.Pointer<ffi.NativeType> _ptr;
-//   ffi.Pointer<ffi.NativeType> get ptr => _ptr;
-//   bool _isDisposed = false;
-
-//   ffi.NativeType toNative();
-
-//   @override
-//   Future<Null> dispose() {
-//     if (!_isDisposed) calloc.free(_ptr);
-//     return super.dispose();
-//   }
-// }
+void throwIfFailed(CvStatus status){
+  if (status.code != 0) {
+    throw OpenCvException.fromStatus(status);
+  }
+}
 
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)

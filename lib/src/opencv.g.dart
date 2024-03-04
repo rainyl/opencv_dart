@@ -10917,6 +10917,398 @@ class CvNative {
   late final _PhotoInpaint =
       _PhotoInpaintPtr.asFunction<void Function(Mat, Mat, Mat, double, int)>();
 
+  CvStatus Stitcher_Create(
+    int mode,
+    ffi.Pointer<Stitcher> rval,
+  ) {
+    return _Stitcher_Create(
+      mode,
+      rval,
+    );
+  }
+
+  late final _Stitcher_CreatePtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(ffi.Int, ffi.Pointer<Stitcher>)>>(
+      'Stitcher_Create');
+  late final _Stitcher_Create = _Stitcher_CreatePtr.asFunction<
+      CvStatus Function(int, ffi.Pointer<Stitcher>)>();
+
+  void Stitcher_Close(
+    Stitcher stitcher,
+  ) {
+    return _Stitcher_Close(
+      stitcher,
+    );
+  }
+
+  late final _Stitcher_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Stitcher)>>(
+          'Stitcher_Close');
+  late final _Stitcher_Close =
+      _Stitcher_ClosePtr.asFunction<void Function(Stitcher)>();
+
+  CvStatus Stitcher_GetRegistrationResol(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _Stitcher_GetRegistrationResol(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetRegistrationResolPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher,
+              ffi.Pointer<ffi.Double>)>>('Stitcher_GetRegistrationResol');
+  late final _Stitcher_GetRegistrationResol = _Stitcher_GetRegistrationResolPtr
+      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus Stitcher_SetRegistrationResol(
+    Stitcher stitcher,
+    double inval,
+  ) {
+    return _Stitcher_SetRegistrationResol(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetRegistrationResolPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+          'Stitcher_SetRegistrationResol');
+  late final _Stitcher_SetRegistrationResol = _Stitcher_SetRegistrationResolPtr
+      .asFunction<CvStatus Function(Stitcher, double)>();
+
+  CvStatus Stitcher_GetSeamEstimationResol(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _Stitcher_GetSeamEstimationResol(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetSeamEstimationResolPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher,
+              ffi.Pointer<ffi.Double>)>>('Stitcher_GetSeamEstimationResol');
+  late final _Stitcher_GetSeamEstimationResol =
+      _Stitcher_GetSeamEstimationResolPtr.asFunction<
+          CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus Stitcher_SetSeamEstimationResol(
+    Stitcher stitcher,
+    double inval,
+  ) {
+    return _Stitcher_SetSeamEstimationResol(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetSeamEstimationResolPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+          'Stitcher_SetSeamEstimationResol');
+  late final _Stitcher_SetSeamEstimationResol =
+      _Stitcher_SetSeamEstimationResolPtr.asFunction<
+          CvStatus Function(Stitcher, double)>();
+
+  CvStatus Stitcher_GetCompositingResol(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _Stitcher_GetCompositingResol(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetCompositingResolPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher,
+              ffi.Pointer<ffi.Double>)>>('Stitcher_GetCompositingResol');
+  late final _Stitcher_GetCompositingResol = _Stitcher_GetCompositingResolPtr
+      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus Stitcher_SetCompositingResol(
+    Stitcher stitcher,
+    double inval,
+  ) {
+    return _Stitcher_SetCompositingResol(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetCompositingResolPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+          'Stitcher_SetCompositingResol');
+  late final _Stitcher_SetCompositingResol = _Stitcher_SetCompositingResolPtr
+      .asFunction<CvStatus Function(Stitcher, double)>();
+
+  CvStatus Stitcher_GetPanoConfidenceThresh(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _Stitcher_GetPanoConfidenceThresh(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetPanoConfidenceThreshPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher,
+              ffi.Pointer<ffi.Double>)>>('Stitcher_GetPanoConfidenceThresh');
+  late final _Stitcher_GetPanoConfidenceThresh =
+      _Stitcher_GetPanoConfidenceThreshPtr.asFunction<
+          CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus Stitcher_SetPanoConfidenceThresh(
+    Stitcher stitcher,
+    double inval,
+  ) {
+    return _Stitcher_SetPanoConfidenceThresh(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetPanoConfidenceThreshPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+          'Stitcher_SetPanoConfidenceThresh');
+  late final _Stitcher_SetPanoConfidenceThresh =
+      _Stitcher_SetPanoConfidenceThreshPtr.asFunction<
+          CvStatus Function(Stitcher, double)>();
+
+  CvStatus Stitcher_GetWaveCorrection(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _Stitcher_GetWaveCorrection(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetWaveCorrectionPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>>(
+      'Stitcher_GetWaveCorrection');
+  late final _Stitcher_GetWaveCorrection = _Stitcher_GetWaveCorrectionPtr
+      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus Stitcher_SetWaveCorrection(
+    Stitcher stitcher,
+    bool inval,
+  ) {
+    return _Stitcher_SetWaveCorrection(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetWaveCorrectionPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Bool)>>(
+          'Stitcher_SetWaveCorrection');
+  late final _Stitcher_SetWaveCorrection = _Stitcher_SetWaveCorrectionPtr
+      .asFunction<CvStatus Function(Stitcher, bool)>();
+
+  CvStatus Stitcher_GetInterpolationFlags(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_GetInterpolationFlags(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetInterpolationFlagsPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>(
+      'Stitcher_GetInterpolationFlags');
+  late final _Stitcher_GetInterpolationFlags =
+      _Stitcher_GetInterpolationFlagsPtr.asFunction<
+          CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_SetInterpolationFlags(
+    Stitcher stitcher,
+    int inval,
+  ) {
+    return _Stitcher_SetInterpolationFlags(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetInterpolationFlagsPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>(
+          'Stitcher_SetInterpolationFlags');
+  late final _Stitcher_SetInterpolationFlags =
+      _Stitcher_SetInterpolationFlagsPtr.asFunction<
+          CvStatus Function(Stitcher, int)>();
+
+  CvStatus Stitcher_GetWaveCorrectKind(
+    Stitcher stitcher,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_GetWaveCorrectKind(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetWaveCorrectKindPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>(
+      'Stitcher_GetWaveCorrectKind');
+  late final _Stitcher_GetWaveCorrectKind = _Stitcher_GetWaveCorrectKindPtr
+      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_SetWaveCorrectKind(
+    Stitcher stitcher,
+    int inval,
+  ) {
+    return _Stitcher_SetWaveCorrectKind(
+      stitcher,
+      inval,
+    );
+  }
+
+  late final _Stitcher_SetWaveCorrectKindPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>(
+          'Stitcher_SetWaveCorrectKind');
+  late final _Stitcher_SetWaveCorrectKind = _Stitcher_SetWaveCorrectKindPtr
+      .asFunction<CvStatus Function(Stitcher, int)>();
+
+  CvStatus Stitcher_EstimateTransform(
+    Stitcher stitcher,
+    Mats mats,
+    Rects masks,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_EstimateTransform(
+      stitcher,
+      mats,
+      masks,
+      rval,
+    );
+  }
+
+  late final _Stitcher_EstimateTransformPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher, Mats, Rects,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_EstimateTransform');
+  late final _Stitcher_EstimateTransform =
+      _Stitcher_EstimateTransformPtr.asFunction<
+          CvStatus Function(Stitcher, Mats, Rects, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_ComposePanorama(
+    Stitcher stitcher,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_ComposePanorama(
+      stitcher,
+      rpano,
+      rval,
+    );
+  }
+
+  late final _Stitcher_ComposePanoramaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher, Mat,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_ComposePanorama');
+  late final _Stitcher_ComposePanorama = _Stitcher_ComposePanoramaPtr
+      .asFunction<CvStatus Function(Stitcher, Mat, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_ComposePanorama_1(
+    Stitcher stitcher,
+    Mats mats,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_ComposePanorama_1(
+      stitcher,
+      mats,
+      rpano,
+      rval,
+    );
+  }
+
+  late final _Stitcher_ComposePanorama_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher, Mats, Mat,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_ComposePanorama_1');
+  late final _Stitcher_ComposePanorama_1 =
+      _Stitcher_ComposePanorama_1Ptr.asFunction<
+          CvStatus Function(Stitcher, Mats, Mat, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_Stitch(
+    Stitcher stitcher,
+    Mats mats,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_Stitch(
+      stitcher,
+      mats,
+      rpano,
+      rval,
+    );
+  }
+
+  late final _Stitcher_StitchPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Stitcher, Mats, Mat, ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch');
+  late final _Stitcher_Stitch = _Stitcher_StitchPtr.asFunction<
+      CvStatus Function(Stitcher, Mats, Mat, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_Stitch_1(
+    Stitcher stitcher,
+    Mats mats,
+    Rects masks,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Stitcher_Stitch_1(
+      stitcher,
+      mats,
+      masks,
+      rpano,
+      rval,
+    );
+  }
+
+  late final _Stitcher_Stitch_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Stitcher, Mats, Rects, Mat,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch_1');
+  late final _Stitcher_Stitch_1 = _Stitcher_Stitch_1Ptr.asFunction<
+      CvStatus Function(Stitcher, Mats, Rects, Mat, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Stitcher_Component(
+    Stitcher stitcher,
+    ffi.Pointer<IntVector> rval,
+  ) {
+    return _Stitcher_Component(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_ComponentPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<IntVector>)>>(
+      'Stitcher_Component');
+  late final _Stitcher_Component = _Stitcher_ComponentPtr.asFunction<
+      CvStatus Function(Stitcher, ffi.Pointer<IntVector>)>();
+
   void SVD_Compute(
     Mat src,
     Mat w,
@@ -14076,6 +14468,88 @@ class _SymbolAddresses {
           .NativeFunction<ffi.Void Function(Mat, Mat, Mat, ffi.Float, ffi.Int)>>
       get PhotoInpaint => _library._PhotoInpaintPtr;
   ffi.Pointer<
+          ffi.NativeFunction<CvStatus Function(ffi.Int, ffi.Pointer<Stitcher>)>>
+      get Stitcher_Create => _library._Stitcher_CreatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Stitcher)>>
+      get Stitcher_Close => _library._Stitcher_ClosePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>>
+      get Stitcher_GetRegistrationResol =>
+          _library._Stitcher_GetRegistrationResolPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>
+      get Stitcher_SetRegistrationResol =>
+          _library._Stitcher_SetRegistrationResolPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>>
+      get Stitcher_GetSeamEstimationResol =>
+          _library._Stitcher_GetSeamEstimationResolPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>
+      get Stitcher_SetSeamEstimationResol =>
+          _library._Stitcher_SetSeamEstimationResolPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>>
+      get Stitcher_GetCompositingResol =>
+          _library._Stitcher_GetCompositingResolPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>
+      get Stitcher_SetCompositingResol =>
+          _library._Stitcher_SetCompositingResolPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>>
+      get Stitcher_GetPanoConfidenceThresh =>
+          _library._Stitcher_GetPanoConfidenceThreshPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>
+      get Stitcher_SetPanoConfidenceThresh =>
+          _library._Stitcher_SetPanoConfidenceThreshPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>>
+      get Stitcher_GetWaveCorrection => _library._Stitcher_GetWaveCorrectionPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Bool)>>
+      get Stitcher_SetWaveCorrection => _library._Stitcher_SetWaveCorrectionPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_GetInterpolationFlags =>
+          _library._Stitcher_GetInterpolationFlagsPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>
+      get Stitcher_SetInterpolationFlags =>
+          _library._Stitcher_SetInterpolationFlagsPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_GetWaveCorrectKind =>
+          _library._Stitcher_GetWaveCorrectKindPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>
+      get Stitcher_SetWaveCorrectKind =>
+          _library._Stitcher_SetWaveCorrectKindPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(Stitcher, Mats, Rects, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_EstimateTransform => _library._Stitcher_EstimateTransformPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(Stitcher, Mat, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_ComposePanorama => _library._Stitcher_ComposePanoramaPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(Stitcher, Mats, Mat, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_ComposePanorama_1 => _library._Stitcher_ComposePanorama_1Ptr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(Stitcher, Mats, Mat, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_Stitch => _library._Stitcher_StitchPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(
+                  Stitcher, Mats, Rects, Mat, ffi.Pointer<ffi.Int>)>>
+      get Stitcher_Stitch_1 => _library._Stitcher_Stitch_1Ptr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<IntVector>)>>
+      get Stitcher_Component => _library._Stitcher_ComponentPtr;
+  ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, ffi.Int)>>
       get SVD_Compute => _library._SVD_ComputePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>
@@ -14702,6 +15176,22 @@ final class Moment extends ffi.Struct {
   external double nu03;
 }
 
+final class CvStatus extends ffi.Struct {
+  @ffi.Int()
+  external int code;
+
+  external ffi.Pointer<ffi.Char> msg;
+
+  external ffi.Pointer<ffi.Char> err;
+
+  external ffi.Pointer<ffi.Char> func;
+
+  external ffi.Pointer<ffi.Char> file;
+
+  @ffi.Int()
+  external int line;
+}
+
 typedef InputOutputArray = ffi.Pointer<ffi.Void>;
 
 /// Wrapper for the vector of Mat aka std::vector<Mat>
@@ -14758,6 +15248,7 @@ typedef HOGDescriptor = ffi.Pointer<ffi.Void>;
 typedef QRCodeDetector = ffi.Pointer<ffi.Void>;
 typedef MergeMertens = ffi.Pointer<ffi.Void>;
 typedef AlignMTB = ffi.Pointer<ffi.Void>;
+typedef Stitcher = ffi.Pointer<ffi.Void>;
 typedef BackgroundSubtractorMOG2 = ffi.Pointer<ffi.Void>;
 typedef BackgroundSubtractorKNN = ffi.Pointer<ffi.Void>;
 typedef Tracker = ffi.Pointer<ffi.Void>;
@@ -14765,3 +15256,15 @@ typedef TrackerMIL = ffi.Pointer<ffi.Void>;
 typedef KalmanFilter = ffi.Pointer<ffi.Void>;
 typedef VideoCapture = ffi.Pointer<ffi.Void>;
 typedef VideoWriter = ffi.Pointer<ffi.Void>;
+
+const int STITCHING_PANORAMA = 0;
+
+const int STITCHING_SCANS = 1;
+
+const int STITCHING_OK = 0;
+
+const int STITCHING_ERR_NEED_MORE_IMGS = 1;
+
+const int STITCHING_ERR_HOMOGRAPHY_EST_FAIL = 2;
+
+const int STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL = 3;

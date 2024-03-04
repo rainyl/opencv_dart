@@ -44,7 +44,8 @@ set(OpenCV_STATIC ON)
 #find_package(OpenCV 4.9.0 REQUIRED)
 find_package(OpenCV REQUIRED
     COMPONENTS
-    ${ARUCO_ON} core calib3d dnn highgui features2d photo imgproc objdetect video videoio
+    ${ARUCO_ON} core calib3d dnn highgui features2d photo imgproc 
+    objdetect video videoio stitching
 )
 find_package(Eigen3)
 # find_package(OpenEXR)
@@ -83,18 +84,18 @@ endif (WIN32)
 
 target_compile_definitions(${library_name} PUBLIC DART_SHARED_LIB)
 
-# add_executable(
-#     demo
-#     "demo.c"
-# )
-# # target_include_directories(demo SYSTEM)
-# target_link_libraries(
-#     demo
-#     PUBLIC
-#     ${OpenCV_LIBS}
-#     ${library_name}
-# )
-#
+add_executable(
+    demo
+    "demo.c"
+)
+# target_include_directories(demo SYSTEM)
+target_link_libraries(
+    demo
+    PUBLIC
+    ${OpenCV_LIBS}
+    ${library_name}
+)
+
 #add_custom_command(TARGET ${library_name} POST_BUILD
 #    COMMAND ${CMAKE_COMMAND} -E copy_if_different
 #    "$<TARGET_RUNTIME_DLLS:${library_name}>"
