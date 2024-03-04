@@ -10919,7 +10919,7 @@ class CvNative {
 
   CvStatus Stitcher_Create(
     int mode,
-    ffi.Pointer<Stitcher> rval,
+    ffi.Pointer<PtrStitcher> rval,
   ) {
     return _Stitcher_Create(
       mode,
@@ -10928,14 +10928,14 @@ class CvNative {
   }
 
   late final _Stitcher_CreatePtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ffi.Int, ffi.Pointer<Stitcher>)>>(
-      'Stitcher_Create');
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Int, ffi.Pointer<PtrStitcher>)>>('Stitcher_Create');
   late final _Stitcher_Create = _Stitcher_CreatePtr.asFunction<
-      CvStatus Function(int, ffi.Pointer<Stitcher>)>();
+      CvStatus Function(int, ffi.Pointer<PtrStitcher>)>();
 
   void Stitcher_Close(
-    Stitcher stitcher,
+    PtrStitcher stitcher,
   ) {
     return _Stitcher_Close(
       stitcher,
@@ -10943,10 +10943,27 @@ class CvNative {
   }
 
   late final _Stitcher_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Stitcher)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrStitcher)>>(
           'Stitcher_Close');
   late final _Stitcher_Close =
-      _Stitcher_ClosePtr.asFunction<void Function(Stitcher)>();
+      _Stitcher_ClosePtr.asFunction<void Function(PtrStitcher)>();
+
+  CvStatus Stitcher_Get(
+    PtrStitcher stitcher,
+    ffi.Pointer<Stitcher> rval,
+  ) {
+    return _Stitcher_Get(
+      stitcher,
+      rval,
+    );
+  }
+
+  late final _Stitcher_GetPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrStitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
+  late final _Stitcher_Get = _Stitcher_GetPtr.asFunction<
+      CvStatus Function(PtrStitcher, ffi.Pointer<Stitcher>)>();
 
   CvStatus Stitcher_GetRegistrationResol(
     Stitcher stitcher,
@@ -11188,7 +11205,7 @@ class CvNative {
   CvStatus Stitcher_EstimateTransform(
     Stitcher stitcher,
     Mats mats,
-    Rects masks,
+    Mats masks,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _Stitcher_EstimateTransform(
@@ -11201,11 +11218,11 @@ class CvNative {
 
   late final _Stitcher_EstimateTransformPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, Mats, Rects,
+          CvStatus Function(Stitcher, Mats, Mats,
               ffi.Pointer<ffi.Int>)>>('Stitcher_EstimateTransform');
   late final _Stitcher_EstimateTransform =
       _Stitcher_EstimateTransformPtr.asFunction<
-          CvStatus Function(Stitcher, Mats, Rects, ffi.Pointer<ffi.Int>)>();
+          CvStatus Function(Stitcher, Mats, Mats, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_ComposePanorama(
     Stitcher stitcher,
@@ -11272,7 +11289,7 @@ class CvNative {
   CvStatus Stitcher_Stitch_1(
     Stitcher stitcher,
     Mats mats,
-    Rects masks,
+    Mats masks,
     Mat rpano,
     ffi.Pointer<ffi.Int> rval,
   ) {
@@ -11287,10 +11304,10 @@ class CvNative {
 
   late final _Stitcher_Stitch_1Ptr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, Mats, Rects, Mat,
+          CvStatus Function(Stitcher, Mats, Mats, Mat,
               ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch_1');
   late final _Stitcher_Stitch_1 = _Stitcher_Stitch_1Ptr.asFunction<
-      CvStatus Function(Stitcher, Mats, Rects, Mat, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(Stitcher, Mats, Mats, Mat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_Component(
     Stitcher stitcher,
@@ -14468,10 +14485,15 @@ class _SymbolAddresses {
           .NativeFunction<ffi.Void Function(Mat, Mat, Mat, ffi.Float, ffi.Int)>>
       get PhotoInpaint => _library._PhotoInpaintPtr;
   ffi.Pointer<
-          ffi.NativeFunction<CvStatus Function(ffi.Int, ffi.Pointer<Stitcher>)>>
+          ffi
+          .NativeFunction<CvStatus Function(ffi.Int, ffi.Pointer<PtrStitcher>)>>
       get Stitcher_Create => _library._Stitcher_CreatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Stitcher)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrStitcher)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(PtrStitcher, ffi.Pointer<Stitcher>)>>
+      get Stitcher_Get => _library._Stitcher_GetPtr;
   ffi.Pointer<
           ffi
           .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>>
@@ -14526,7 +14548,7 @@ class _SymbolAddresses {
           _library._Stitcher_SetWaveCorrectKindPtr;
   ffi.Pointer<
           ffi.NativeFunction<
-              CvStatus Function(Stitcher, Mats, Rects, ffi.Pointer<ffi.Int>)>>
+              CvStatus Function(Stitcher, Mats, Mats, ffi.Pointer<ffi.Int>)>>
       get Stitcher_EstimateTransform => _library._Stitcher_EstimateTransformPtr;
   ffi.Pointer<
           ffi.NativeFunction<
@@ -14543,7 +14565,7 @@ class _SymbolAddresses {
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(
-                  Stitcher, Mats, Rects, Mat, ffi.Pointer<ffi.Int>)>>
+                  Stitcher, Mats, Mats, Mat, ffi.Pointer<ffi.Int>)>>
       get Stitcher_Stitch_1 => _library._Stitcher_Stitch_1Ptr;
   ffi.Pointer<
           ffi
@@ -15248,6 +15270,7 @@ typedef HOGDescriptor = ffi.Pointer<ffi.Void>;
 typedef QRCodeDetector = ffi.Pointer<ffi.Void>;
 typedef MergeMertens = ffi.Pointer<ffi.Void>;
 typedef AlignMTB = ffi.Pointer<ffi.Void>;
+typedef PtrStitcher = ffi.Pointer<ffi.Pointer<ffi.Void>>;
 typedef Stitcher = ffi.Pointer<ffi.Void>;
 typedef BackgroundSubtractorMOG2 = ffi.Pointer<ffi.Void>;
 typedef BackgroundSubtractorKNN = ffi.Pointer<ffi.Void>;
