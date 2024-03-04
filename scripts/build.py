@@ -3,10 +3,7 @@ import sys
 import shutil
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
-
 import tarfile
-
-import pyldd
 
 
 LIB_NAME = "opencv_dart"
@@ -115,6 +112,7 @@ def cmake_build(args: Namespace):
     cmd = f"cmake --build . -j {os.cpu_count()*2} --target install --config Release"
     os.system(cmd)
 
+
 def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
     lib_name_prefix: str = "lib" if args.os == "windows" else ""
     if args.copy_dlls:
@@ -150,6 +148,7 @@ def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
 
             shutil.copyfile(dep["path"], dst)
             print(f"{dep['path']} -> {dst}")
+
 
 def main(args: Namespace):
     args.src = Path(args.src).absolute()
