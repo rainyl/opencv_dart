@@ -4,7 +4,17 @@ OpenCV Bindings for Dart Language.
 
 **!!!This package is experiment and APIs may change in the future!!!**
 
-*Many tests unfinished, contributions are welcome!*
+*WIP, contributions are welcome!*
+
+| Platform | Supported          | Tested                  | Prebuilt Binaries              |
+| -------- | ------------------ | ----------------------- | ------------------------------ |
+| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :x:                | :x:                     | :x:                            |
+| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
+| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
+| macOS    | :x:                | :x:                     | :x:                            |
+
+- I have no Apple devices, so iOS and macOS are not supported yet, theorically the dart codes will work, you can compile binaries by yourself, contributions are welcome!
 
 Prebuilt binaries for Android(arm64-v8a, armeabi-v7a, x86_64), Linux(x64) and Windows(x64) are available,for other platforms, you have to build them your self.
 
@@ -21,28 +31,28 @@ prebuilt binaries.
 
 ## Status
 
-| module     | Binding status     | Test status        | description             |
-| ---------- | ------------------ | ------------------ | ----------------------- |
-| aruco      | :white_check_mark: | :white_check_mark: | ArUco module            |
-| core       | :white_check_mark: | :white_check_mark: | Core module             |
-| features2d | :white_check_mark: | :white_check_mark: | Features2D module       |
-| highgui    | :white_check_mark: | :white_check_mark: | HighGUI module          |
-| imgcodecs  | :white_check_mark: | :white_check_mark: | ImageCodecs module      |
-| imgproc    | :white_check_mark: | :white_check_mark: | ImageProc module        |
-| objdetect  | :white_check_mark: | :white_check_mark: | Object Detection module |
-| svd        | :white_check_mark: | :white_check_mark: | SVD module              |
-| video      | :white_check_mark: | :white_check_mark: | Video module            |
-| videoio    | :white_check_mark: | :white_check_mark: | VideoIO module          |
-| asyncarray | :white_check_mark: | :white_check_mark: | AsyncArray module       |
-| calib3d    | :white_check_mark: | :white_check_mark: | Calib3D module          |
-| dnn        | :white_check_mark: | :white_check_mark: | DNN module              |
-| photo      | :white_check_mark: | :white_check_mark: | Photo module            |
-| stiching   | :x:                | :x:                | Stiching module         |
-| cuda       | :x:                | :x:                | CUDA module             |
-| contrib    | :x:                | :x:                | Contrib module          |
+| module     | Binding status          | Test status             | description             |
+| ---------- | ----------------------- | ----------------------- | ----------------------- |
+| aruco      | :white_check_mark:      | :white_check_mark:      | ArUco module            |
+| core       | :white_check_mark:      | :white_check_mark:      | Core module             |
+| features2d | :white_check_mark:      | :white_check_mark:      | Features2D module       |
+| highgui    | :white_check_mark:      | :white_check_mark:      | HighGUI module          |
+| imgcodecs  | :white_check_mark:      | :white_check_mark:      | ImageCodecs module      |
+| imgproc    | :white_check_mark:      | :white_check_mark:      | ImageProc module        |
+| objdetect  | :white_check_mark:      | :white_check_mark:      | Object Detection module |
+| svd        | :white_check_mark:      | :white_check_mark:      | SVD module              |
+| video      | :white_check_mark:      | :white_check_mark:      | Video module            |
+| videoio    | :white_check_mark:      | :white_check_mark:      | VideoIO module          |
+| asyncarray | :white_check_mark:      | :white_check_mark:      | AsyncArray module       |
+| calib3d    | :white_check_mark:      | :white_check_mark:      | Calib3D module          |
+| dnn        | :white_check_mark:      | :white_check_mark:      | DNN module              |
+| photo      | :white_check_mark:      | :white_check_mark:      | Photo module            |
+| stitching  | :ballot_box_with_check: | :ballot_box_with_check: | Stitching module        |
+| cuda       | :x:                     | :x:                     | CUDA module             |
+| contrib    | :x:                     | :x:                     | Contrib module          |
 
 - :x: : not finished
-- :ballot_box_with_check: : almost finished
+- :ballot_box_with_check: : partially supported
 - :white_check_mark: : finished
 - ~~videoio: `cv.VideoCapture` from file is not supported yet~~ supported now.
 
@@ -51,13 +61,15 @@ prebuilt binaries.
 ```dart
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
-final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-final gray = cv.Mat.empty();
+void main() {
+  final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+  final gray = cv.Mat.empty();
 
-cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
-print("${img.rows}, ${img.cols}");
+  cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
+  print("${img.rows}, ${img.cols}");
 
-cv.imwrite("test_cvtcolor.png", gray);
+  cv.imwrite("test_cvtcolor.png", gray);
+}
 ```
 
 More examples are on the way...

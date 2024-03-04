@@ -1,3 +1,7 @@
+## 0.6.1
+
+* add `stitching` module, for now, cv::Stitcher implemented
+
 ## 0.6.0
 
 * add `dnn` module
