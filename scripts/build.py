@@ -29,15 +29,14 @@ def cmake_generate(args: Namespace):
             )
             cmake += f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} {flags} '
         case "android":
-            ndk = Path(args.ndk)
-            if not ndk.exists():
-                raise FileNotFoundError(f"Android NDK not found at {ndk}")
+            if not args.ndk.exists():
+                raise FileNotFoundError(f"Android NDK not found at {args.ndk}")
             cmake += (
                 '-G "Ninja" '
                 "-D ANDROID_STL=c++_static "
-                f"-D ANDROID_NDK={ndk} "
+                f"-D ANDROID_NDK={args.ndk} "
                 "-D ANDROID_TOOLCHAIN=clang "
-                f"-D CMAKE_TOOLCHAIN_FILE={ndk}/build/cmake/android.toolchain.cmake "
+                f"-D CMAKE_TOOLCHAIN_FILE={args.ndk}/build/cmake/android.toolchain.cmake "
                 f"-D ANDROID_ABI={args.abi} "
                 # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
             )
@@ -97,10 +96,12 @@ def cmake_generate(args: Namespace):
             f"{src_dir} "
         )
     elif args.dart:
+        demo = "-D WITH_OPENCV_DART_DEMO=ON " if args.build_demo else ""
         cmd = (
             f"{cmake} "
             "-D CMAKE_BUILD_TYPE=Release "
             "-D CMAKE_INSTALL_PREFIX=install "
+            f"{demo} "
             f"{src_dir} "
         )
     else:
@@ -114,58 +115,56 @@ def cmake_build(args: Namespace):
     os.system(cmd)
 
 
-def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
-    lib_name_prefix: str = "lib" if args.os == "windows" else ""
-    if args.copy_dlls:
-        dependencies = pyldd.parse_to_list(
-            pyldd.Args(
-                format_="json",
-                path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
-                sort_by="soname",
-                recursive=True,
-                unused=True,
-            )
-        )
-        for dep in dependencies:
-            skip = (
-                dep["soname"] is None
-                # skip system dlls
-                or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
-                or not Path(dep["path"]).is_absolute()  # skip existed
-                or not isinstance(dep["path"], str)
-            )
+# def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
+#     lib_name_prefix: str = "lib" if args.os == "windows" else ""
+#     if args.copy_dlls:
+#         dependencies = pyldd.parse_to_list(
+#             pyldd.Args(
+#                 format_="json",
+#                 path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
+#                 sort_by="soname",
+#                 recursive=True,
+#                 unused=True,
+#             )
+#         )
+#         for dep in dependencies:
+#             skip = (
+#                 dep["soname"] is None
+#                 # skip system dlls
+#                 or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
+#                 or not Path(dep["path"]).is_absolute()  # skip existed
+#                 or not isinstance(dep["path"], str)
+#             )
 
-            if skip:
-                print(f"skip {dep['soname']}: {dep['path']}")
-                continue
-            dep_path = Path(dep["path"])
-            shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
+#             if skip:
+#                 print(f"skip {dep['soname']}: {dep['path']}")
+#                 continue
+#             dep_path = Path(dep["path"])
+#             shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
 
-            if str(Path(dep["path"])).startswith(str(install_dir)):
-                print(f"skip {dep['soname']}: {dep['path']}")
-                continue
+#             if str(Path(dep["path"])).startswith(str(install_dir)):
+#                 print(f"skip {dep['soname']}: {dep['path']}")
+#                 continue
 
-            dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
+#             dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
 
-            shutil.copyfile(dep["path"], dst)
-            print(f"{dep['path']} -> {dst}")
+#             shutil.copyfile(dep["path"], dst)
+#             print(f"{dep['path']} -> {dst}")
 
 
 def main(args: Namespace):
-    args.src = Path(args.src).absolute()
     if args.opencv:
         args.src = args.src / "opencv"
 
     build_sub = "opencv_dart" if args.dart else "opencv"
     if args.os == "android":
         args.arch = args.abi
-    args.dst = (
-        Path(args.build_dir).absolute() / build_sub / f"{args.os}" / f"{args.arch}"
-    )
     args.extra_modules = Path(args.extra_modules).absolute()
+    args.dst = args.dst / build_sub / f"{args.os}" / f"{args.arch}"
     if not args.dst.exists():
         args.dst.mkdir(parents=True)
     os.chdir(args.dst)
+
     cmake_generate(args)
     if args.no_build:
         return
@@ -229,6 +228,12 @@ if __name__ == "__main__":
         default=False,
     )
     parser.add_argument(
+        "--build-demo",
+        dest="build_demo",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
         "--copy-dlls",
         dest="copy_dlls",
         action="store_true",
@@ -285,4 +290,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     assert not all([args.opencv, args.dart])
     args.work_dir = work_dir
+    args.src = Path(args.src).absolute()
+    args.ndk = Path(args.ndk)
+    args.dst = Path(args.build_dir).absolute()
     main(args)
