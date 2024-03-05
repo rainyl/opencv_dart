@@ -8,6 +8,12 @@ void main() async {
     expect(version.length, greaterThan(0));
   });
 
+  test('cv.getBuildInformation', () {
+    final info = cv.getBuildInformation();
+    print(info);
+    expect(info.length, greaterThan(0));
+  });
+
   test('cv.AsyncArray', () {
     final arr = cv.AsyncArray.empty();
     expect(arr.ptr, isNotNull);

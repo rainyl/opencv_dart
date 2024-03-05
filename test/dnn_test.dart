@@ -90,6 +90,10 @@ bool checkOnnx(cv.Net net) {
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
 
+  final probAsync = net.forwardAsync(outputName: "prob_1");
+  final probMatAsync = probAsync.get();
+  expect(probMatAsync.isEmpty, false);
+
   final perf = net.getPerfProfile();
   expect(perf, greaterThan(0));
   return true;
@@ -103,6 +107,8 @@ bool checkTflite(cv.Net net) {
   final blob = cv.blobFromImage(img,
       scalefactor: 1.0, size: (224, 224), mean: cv.Scalar.all(0), swapRB: true, crop: false);
   expect(blob.isEmpty, false);
+
+  // TODO: TFLite support of opencv is not complete
 
   // print(net.getLayerNames());
   // net.setInput(blob, name: "inputs_0");

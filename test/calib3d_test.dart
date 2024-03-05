@@ -117,8 +117,8 @@ void main() async {
       r,
       P: knew,
       balance: 1,
-      new_size: (1920, 1080),
-      fov_scale: 1,
+      newSize: (1920, 1080),
+      fovScale: 1,
     );
 
     cv.Fisheye.undistortPoints(src, k, d);

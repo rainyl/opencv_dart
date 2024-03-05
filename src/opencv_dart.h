@@ -22,7 +22,3 @@
 #define FFI_PLUGIN_EXPORT
 #endif // __cplusplus
 #endif // _WIN32
-
-// FFI_PLUGIN_EXPORT void rmbg_cv(CvMatPtr src, CvMatPtr dst, double contrast, double brightness, double threshold, int n_erode, int n_dilate);
-
-FFI_PLUGIN_EXPORT int sum(int a, int b);

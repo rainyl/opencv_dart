@@ -135,121 +135,118 @@ class ArucoDetectorParameters implements ffi.Finalizable {
   static final finalizer = ffi.NativeFinalizer(_bindings.addresses.ArucoDetectorParameters_Close);
 
   int get adaptiveThreshWinSizeMin => _bindings.ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(_ptr);
-  void set adaptiveThreshWinSizeMin(int value) =>
+  set adaptiveThreshWinSizeMin(int value) =>
       _bindings.ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(_ptr, value);
 
   int get adaptiveThreshWinSizeMax => _bindings.ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(_ptr);
-  void set adaptiveThreshWinSizeMax(int value) =>
+  set adaptiveThreshWinSizeMax(int value) =>
       _bindings.ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(_ptr, value);
 
   int get adaptiveThreshWinSizeStep => _bindings.ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(_ptr);
-  void set adaptiveThreshWinSizeStep(int value) =>
+  set adaptiveThreshWinSizeStep(int value) =>
       _bindings.ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(_ptr, value);
 
   double get adaptiveThreshConstant => _bindings.ArucoDetectorParameters_GetAdaptiveThreshConstant(_ptr);
-  void set adaptiveThreshConstant(double value) =>
+  set adaptiveThreshConstant(double value) =>
       _bindings.ArucoDetectorParameters_SetAdaptiveThreshConstant(_ptr, value);
 
   double get minMarkerPerimeterRate => _bindings.ArucoDetectorParameters_GetMinMarkerPerimeterRate(_ptr);
-  void set minMarkerPerimeterRate(double value) =>
+  set minMarkerPerimeterRate(double value) =>
       _bindings.ArucoDetectorParameters_SetMinMarkerPerimeterRate(_ptr, value);
 
   double get maxMarkerPerimeterRate => _bindings.ArucoDetectorParameters_GetMaxMarkerPerimeterRate(_ptr);
-  void set maxMarkerPerimeterRate(double value) =>
+  set maxMarkerPerimeterRate(double value) =>
       _bindings.ArucoDetectorParameters_SetMaxMarkerPerimeterRate(_ptr, value);
 
   double get polygonalApproxAccuracyRate =>
       _bindings.ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(_ptr);
-  void set polygonalApproxAccuracyRate(double value) =>
+  set polygonalApproxAccuracyRate(double value) =>
       _bindings.ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(_ptr, value);
 
   double get minCornerDistanceRate => _bindings.ArucoDetectorParameters_GetMinCornerDistanceRate(_ptr);
-  void set minCornerDistanceRate(double value) =>
+  set minCornerDistanceRate(double value) =>
       _bindings.ArucoDetectorParameters_SetMinCornerDistanceRate(_ptr, value);
 
   int get minDistanceToBorder => _bindings.ArucoDetectorParameters_GetMinDistanceToBorder(_ptr);
-  void set minDistanceToBorder(int value) =>
-      _bindings.ArucoDetectorParameters_SetMinDistanceToBorder(_ptr, value);
+  set minDistanceToBorder(int value) => _bindings.ArucoDetectorParameters_SetMinDistanceToBorder(_ptr, value);
 
   double get minMarkerDistanceRate => _bindings.ArucoDetectorParameters_GetMinMarkerDistanceRate(_ptr);
-  void set minMarkerDistanceRate(double value) =>
+  set minMarkerDistanceRate(double value) =>
       _bindings.ArucoDetectorParameters_SetMinMarkerDistanceRate(_ptr, value);
 
   int get cornerRefinementMethod => _bindings.ArucoDetectorParameters_GetCornerRefinementMethod(_ptr);
-  void set cornerRefinementMethod(int value) =>
+  set cornerRefinementMethod(int value) =>
       _bindings.ArucoDetectorParameters_SetCornerRefinementMethod(_ptr, value);
 
   int get cornerRefinementWinSize => _bindings.ArucoDetectorParameters_GetCornerRefinementWinSize(_ptr);
-  void set cornerRefinementWinSize(int value) =>
+  set cornerRefinementWinSize(int value) =>
       _bindings.ArucoDetectorParameters_SetCornerRefinementWinSize(_ptr, value);
 
   int get cornerRefinementMaxIterations =>
       _bindings.ArucoDetectorParameters_GetCornerRefinementMaxIterations(_ptr);
-  void set cornerRefinementMaxIterations(int value) =>
+  set cornerRefinementMaxIterations(int value) =>
       _bindings.ArucoDetectorParameters_SetCornerRefinementMaxIterations(_ptr, value);
 
   double get cornerRefinementMinAccuracy =>
       _bindings.ArucoDetectorParameters_GetCornerRefinementMinAccuracy(_ptr);
-  void set cornerRefinementMinAccuracy(double value) =>
+  set cornerRefinementMinAccuracy(double value) =>
       _bindings.ArucoDetectorParameters_SetCornerRefinementMinAccuracy(_ptr, value);
 
   int get markerBorderBits => _bindings.ArucoDetectorParameters_GetMarkerBorderBits(_ptr);
-  void set markerBorderBits(int value) => _bindings.ArucoDetectorParameters_SetMarkerBorderBits(_ptr, value);
+  set markerBorderBits(int value) => _bindings.ArucoDetectorParameters_SetMarkerBorderBits(_ptr, value);
 
   int get perspectiveRemovePixelPerCell =>
       _bindings.ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(_ptr);
-  void set perspectiveRemovePixelPerCell(int value) =>
+  set perspectiveRemovePixelPerCell(int value) =>
       _bindings.ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(_ptr, value);
 
   double get perspectiveRemoveIgnoredMarginPerCell =>
       _bindings.ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(_ptr);
-  void set perspectiveRemoveIgnoredMarginPerCell(double value) =>
+  set perspectiveRemoveIgnoredMarginPerCell(double value) =>
       _bindings.ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(_ptr, value);
 
   double get maxErroneousBitsInBorderRate =>
       _bindings.ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(_ptr);
-  void set maxErroneousBitsInBorderRate(double value) =>
+  set maxErroneousBitsInBorderRate(double value) =>
       _bindings.ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(_ptr, value);
 
   double get minOtsuStdDev => _bindings.ArucoDetectorParameters_GetMinOtsuStdDev(_ptr);
-  void set minOtsuStdDev(double value) => _bindings.ArucoDetectorParameters_SetMinOtsuStdDev(_ptr, value);
+  set minOtsuStdDev(double value) => _bindings.ArucoDetectorParameters_SetMinOtsuStdDev(_ptr, value);
 
   double get errorCorrectionRate => _bindings.ArucoDetectorParameters_GetErrorCorrectionRate(_ptr);
-  void set errorCorrectionRate(double value) =>
+  set errorCorrectionRate(double value) =>
       _bindings.ArucoDetectorParameters_SetErrorCorrectionRate(_ptr, value);
 
   double get aprilTagQuadDecimate => _bindings.ArucoDetectorParameters_GetAprilTagQuadDecimate(_ptr);
-  void set aprilTagQuadDecimate(double value) =>
+  set aprilTagQuadDecimate(double value) =>
       _bindings.ArucoDetectorParameters_SetAprilTagQuadDecimate(_ptr, value);
 
   double get aprilTagQuadSigma => _bindings.ArucoDetectorParameters_GetAprilTagQuadSigma(_ptr);
-  void set aprilTagQuadSigma(double value) =>
-      _bindings.ArucoDetectorParameters_SetAprilTagQuadSigma(_ptr, value);
+  set aprilTagQuadSigma(double value) => _bindings.ArucoDetectorParameters_SetAprilTagQuadSigma(_ptr, value);
 
   int get aprilTagMinClusterPixels => _bindings.ArucoDetectorParameters_GetAprilTagMinClusterPixels(_ptr);
-  void set aprilTagMinClusterPixels(int value) =>
+  set aprilTagMinClusterPixels(int value) =>
       _bindings.ArucoDetectorParameters_SetAprilTagMinClusterPixels(_ptr, value);
 
   int get aprilTagMaxNmaxima => _bindings.ArucoDetectorParameters_GetAprilTagMaxNmaxima(_ptr);
-  void set aprilTagMaxNmaxima(int value) =>
-      _bindings.ArucoDetectorParameters_SetAprilTagMaxNmaxima(_ptr, value);
+  set aprilTagMaxNmaxima(int value) => _bindings.ArucoDetectorParameters_SetAprilTagMaxNmaxima(_ptr, value);
 
   double get aprilTagCriticalRad => _bindings.ArucoDetectorParameters_GetAprilTagCriticalRad(_ptr);
-  void set aprilTagCriticalRad(double value) =>
+  set aprilTagCriticalRad(double value) =>
       _bindings.ArucoDetectorParameters_SetAprilTagCriticalRad(_ptr, value);
 
   double get aprilTagMaxLineFitMse => _bindings.ArucoDetectorParameters_GetAprilTagMaxLineFitMse(_ptr);
-  void set aprilTagMaxLineFitMse(double value) =>
+  set aprilTagMaxLineFitMse(double value) =>
       _bindings.ArucoDetectorParameters_SetAprilTagMaxLineFitMse(_ptr, value);
 
   int get aprilTagMinWhiteBlackDiff => _bindings.ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(_ptr);
-  void set aprilTagMinWhiteBlackDiff(int value) =>
+  set aprilTagMinWhiteBlackDiff(int value) =>
       _bindings.ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(_ptr, value);
 
   int get aprilTagDeglitch => _bindings.ArucoDetectorParameters_GetAprilTagDeglitch(_ptr);
-  void set aprilTagDeglitch(int value) => _bindings.ArucoDetectorParameters_SetAprilTagDeglitch(_ptr, value);
+  set aprilTagDeglitch(int value) => _bindings.ArucoDetectorParameters_SetAprilTagDeglitch(_ptr, value);
 
   bool get detectInvertedMarker => _bindings.ArucoDetectorParameters_GetDetectInvertedMarker(_ptr);
-  void set detectInvertedMarker(bool value) =>
+  set detectInvertedMarker(bool value) =>
       _bindings.ArucoDetectorParameters_SetDetectInvertedMarker(_ptr, value);
 }

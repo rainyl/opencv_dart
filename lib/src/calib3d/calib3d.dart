@@ -70,24 +70,24 @@ class Fisheye {
   static Mat estimateNewCameraMatrixForUndistortRectify(
     InputArray K,
     InputArray D,
-    Size image_size,
+    Size imageSize,
     InputArray R, {
     OutputArray? P,
     double balance = 0.0,
-    Size new_size = (0, 0),
-    double fov_scale = 1.0,
+    Size newSize = (0, 0),
+    double fovScale = 1.0,
   }) {
     return using<Mat>((arena) {
       P ??= Mat.empty();
       _bindings.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
         K.ptr,
         D.ptr,
-        image_size.toSize(arena).ref,
+        imageSize.toSize(arena).ref,
         R.ptr,
         P!.ptr,
         balance,
-        new_size.toSize(arena).ref,
-        fov_scale,
+        newSize.toSize(arena).ref,
+        fovScale,
       );
       return P!;
     });
@@ -139,7 +139,7 @@ class Fisheye {
 }) {
   return using<(Mat, Rect)>((arena) {
     final validPixROI = arena<cvg.Rect>();
-    final _p = _bindings.GetOptimalNewCameraMatrixWithParams(
+    final matPtr = _bindings.GetOptimalNewCameraMatrixWithParams(
       cameraMatrix.ptr,
       distCoeffs.ptr,
       imageSize.toSize(arena).ref,
@@ -148,7 +148,7 @@ class Fisheye {
       validPixROI,
       centerPrincipalPoint,
     );
-    return (Mat.fromCMat(_p), Rect.fromNative(validPixROI.ref));
+    return (Mat.fromCMat(matPtr), Rect.fromNative(validPixROI.ref));
   });
 }
 
@@ -306,11 +306,11 @@ Mat drawChessboardCorners(
   OutputArray? inliers,
 }) {
   inliers ??= Mat.empty();
-  final _from = from.toNativeVecotr();
-  final _to = to.toNativeVecotr();
+  final vecFrom = from.toNativeVecotr();
+  final vecTo = to.toNativeVecotr();
   final p = _bindings.EstimateAffinePartial2DWithParams(
-    _from,
-    _to,
+    vecFrom,
+    vecTo,
     inliers.ptr,
     method,
     ransacReprojThreshold,
@@ -318,8 +318,8 @@ Mat drawChessboardCorners(
     confidence,
     refineIters,
   );
-  _bindings.Point2fVector_Close(_from);
-  _bindings.Point2fVector_Close(_to);
+  _bindings.Point2fVector_Close(vecFrom);
+  _bindings.Point2fVector_Close(vecTo);
   return (Mat.fromCMat(p), inliers);
 }
 
@@ -338,11 +338,11 @@ Mat drawChessboardCorners(
   OutputArray? inliers,
 }) {
   inliers ??= Mat.empty();
-  final _from = from.toNativeVecotr();
-  final _to = to.toNativeVecotr();
+  final vecFrom = from.toNativeVecotr();
+  final vecTo = to.toNativeVecotr();
   final p = _bindings.EstimateAffine2DWithParams(
-    _from,
-    _to,
+    vecFrom,
+    vecTo,
     inliers.ptr,
     method,
     ransacReprojThreshold,
@@ -350,7 +350,7 @@ Mat drawChessboardCorners(
     confidence,
     refineIters,
   );
-  _bindings.Point2fVector_Close(_from);
-  _bindings.Point2fVector_Close(_to);
+  _bindings.Point2fVector_Close(vecFrom);
+  _bindings.Point2fVector_Close(vecTo);
   return (Mat.fromCMat(p), inliers);
 }

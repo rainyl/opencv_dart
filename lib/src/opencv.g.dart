@@ -11358,6 +11358,16 @@ class CvNative {
   late final _openCVVersion =
       _openCVVersionPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
 
+  ffi.Pointer<ffi.Char> getBuildInfo() {
+    return _getBuildInfo();
+  }
+
+  late final _getBuildInfoPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
+          'getBuildInfo');
+  late final _getBuildInfo =
+      _getBuildInfoPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
+
   BackgroundSubtractorMOG2 BackgroundSubtractorMOG2_Create() {
     return _BackgroundSubtractorMOG2_Create();
   }
@@ -14576,6 +14586,8 @@ class _SymbolAddresses {
       get SVD_Compute => _library._SVD_ComputePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>
       get openCVVersion => _library._openCVVersionPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>
+      get getBuildInfo => _library._getBuildInfoPtr;
   ffi.Pointer<ffi.NativeFunction<BackgroundSubtractorMOG2 Function()>>
       get BackgroundSubtractorMOG2_Create =>
           _library._BackgroundSubtractorMOG2_CreatePtr;

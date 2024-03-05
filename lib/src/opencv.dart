@@ -2,8 +2,8 @@ library cv;
 
 export 'constants.g.dart';
 
-export 'aruco/aruco.dart';
-export 'aruco/aruco_dict.dart';
+export 'contrib/aruco.dart';
+export 'contrib/aruco_dict.dart';
 
 export 'core/asyncarray.dart';
 export 'core/base.dart';

@@ -22,6 +22,14 @@ String openCvVersion() {
   return v;
 }
 
+/// Returns full configuration time cmake output.
+///
+/// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture. 
+String getBuildInformation() {
+  final v = _bindings.getBuildInfo().cast<Utf8>().toDartString();
+  return v;
+}
+
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
 ///
