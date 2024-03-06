@@ -12,13 +12,10 @@ OpenCV Bindings for Dart Language.
 | iOS      | :x:                     | :x:                     | :x:                            |
 | Linux    | :white_check_mark:      | :white_check_mark:      | x64                            |
 | Windows  | :white_check_mark:      | :white_check_mark:      | x64                            |
-| macOS    | :ballot_box_with_check: | :ballot_box_with_check: | Experimental, see workflow     |
+| macOS    | :ballot_box_with_check: | :ballot_box_with_check: | x64, Experimental              |
 
-- I have no Apple devices, so iOS and macOS are not supported yet, theorically the dart codes will work, you can compile binaries by yourself, contributions are welcome!
-- For macOS: refer to [this workflow](https://github.com/rainyl/opencv_dart/actions/workflows/build_macos.yaml)
-to download `.dylib` for macos and try if it works.
-
-Prebuilt binaries for Android(arm64-v8a, armeabi-v7a, x86_64), Linux(x64) and Windows(x64) are available,for other platforms, you have to build them your self.
+- I have no Apple devices, so iOS and ~~macOS are not supported yet~~ macOS compiled by Github Workflow available now, try it!
+- Theorically the dart codes will work for iOS, you can compile binaries by yourself, contributions are welcome!
 
 ## IMPORTANT
 
@@ -26,7 +23,7 @@ After added to `pubspec.yaml` or install by commandline,
 please run `dart run opencv_dart:setup -p <platform> -a <arch>` to download
 prebuilt binaries.
 
-- `platform`: `auto` `android` `linux` `windows`
+- `platform`: `auto` `android` `linux` `windows` `macos`
 - `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
 
 **Please use v0.3.0 and later version.**

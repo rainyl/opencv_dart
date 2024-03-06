@@ -29,11 +29,11 @@ topics:
   - ffi
   - flutter
 
-platforms:
-  android:
-  linux:
-  windows:
-  # macos:
+# platforms:
+#   android:
+#   linux:
+#   windows:
+#   macos:
 
 flutter:
   plugin:

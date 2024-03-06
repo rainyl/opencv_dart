@@ -123,19 +123,17 @@ void main(List<String> args) async {
   String extractPath = "";
   switch (platform) {
     case OS.windows:
-      // url += "/libopencv_dart-$platform-$arch.dll";
       extractPath = p.join(opencvRoot.toFilePath(), "windows");
       break;
     case OS.linux:
-      // url += "/libopencv_dart-$platform-$arch.so";
       extractPath = p.join(opencvRoot.toFilePath(), "linux");
       break;
     case OS.android:
-      // url += "/libopencv_dart-$platform-$arch.so";
       extractPath = p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
+    case OS.macos:
+      extractPath = p.join(opencvRoot.toFilePath(), "macos");
     case OS.fuchsia:
     case OS.ios:
-    case OS.macos:
       throw UnimplementedError();
     default:
       throw UnsupportedError("Platform $platform not supported");

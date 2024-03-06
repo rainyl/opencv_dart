@@ -42,7 +42,7 @@ def cmake_generate(args: Namespace):
                 # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
             )
         case "macos":
-            cmake += '-G "Unix Makefiles" '
+            cmake += '-G "Ninja" '
         case "ios":
             cmake += '-G "Unix Makefiles" '
             raise NotImplementedError
