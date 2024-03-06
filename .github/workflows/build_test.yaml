@@ -186,7 +186,7 @@ jobs:
       - name: Run Test
         run: |
           ls -alh $GITHUB_WORKSPACE/macos
-          export "DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/macos:$DYLD_LIBRARY_PATH"
+          export DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/macos:$DYLD_LIBRARY_PATH
           flutter pub get
           flutter test -x no-local-files
       - name: Release
