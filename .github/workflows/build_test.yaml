@@ -109,7 +109,7 @@ jobs:
           name: libopencv_dart-linux-x64.tar.gz
       - name: Run Test
         run: |
-          export "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH"
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH
           flutter pub get
           flutter test -x skip-workflow,no-local-files
       - name: Release
