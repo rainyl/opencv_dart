@@ -1,3 +1,7 @@
+## 0.6.3
+
+* try add support for macos, see [this workflow](https://github.com/rainyl/opencv_dart/actions/workflows/build_macos.yaml)
+
 ## 0.6.1
 
 * add `stitching` module, for now, cv::Stitcher implemented

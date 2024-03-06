@@ -2,19 +2,21 @@
 
 OpenCV Bindings for Dart Language.
 
-**!!!This package is experiment and APIs may change in the future!!!**
+**!!!This package is experimental and APIs may change in the future!!!**
 
 *WIP, contributions are welcome!*
 
-| Platform | Supported          | Tested                  | Prebuilt Binaries              |
-| -------- | ------------------ | ----------------------- | ------------------------------ |
-| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :x:                | :x:                     | :x:                            |
-| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
-| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
-| macOS    | :x:                | :x:                     | :x:                            |
+| Platform | Supported               | Tested                  | Prebuilt Binaries              |
+| -------- | ----------------------- | ----------------------- | ------------------------------ |
+| Android  | :white_check_mark:      | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :x:                     | :x:                     | :x:                            |
+| Linux    | :white_check_mark:      | :white_check_mark:      | x64                            |
+| Windows  | :white_check_mark:      | :white_check_mark:      | x64                            |
+| macOS    | :ballot_box_with_check: | :ballot_box_with_check: | Experimental, see workflow     |
 
 - I have no Apple devices, so iOS and macOS are not supported yet, theorically the dart codes will work, you can compile binaries by yourself, contributions are welcome!
+- For macOS: refer to [this workflow](https://github.com/rainyl/opencv_dart/actions/workflows/build_macos.yaml)
+to download `.dylib` for macos and try if it works.
 
 Prebuilt binaries for Android(arm64-v8a, armeabi-v7a, x86_64), Linux(x64) and Windows(x64) are available,for other platforms, you have to build them your self.
 
