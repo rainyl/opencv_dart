@@ -1,0 +1,160 @@
+name: build binaries
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  ANDROID_NDK_VERSION: r26c
+  OPENCV_VERSION: 4.9.0
+
+jobs:
+  build-android:
+    name: build-android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: setup
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y build-essential libgtk-3-dev ffmpeg libavcodec-dev \
+            cmake ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev libgflags-dev \
+            python3 unzip tree
+
+          cd ${{github.workspace}}
+          mkdir -p build/opencv/android
+          wget -q -O build/opencv-$OPENCV_VERSION-android-sdk.zip \
+            https://github.com/opencv/opencv/releases/download/$OPENCV_VERSION/opencv-$OPENCV_VERSION-android-sdk.zip
+
+          unzip -q -o build/opencv-$OPENCV_VERSION-android-sdk.zip -d build/opencv/
+          mv build/opencv/OpenCV-android-sdk/* build/opencv/android
+
+          wget -q -O build/android-ndk-$ANDROID_NDK_VERSION-linux.zip \
+            https://dl.google.com/android/repository/android-ndk-$ANDROID_NDK_VERSION-linux.zip
+
+          unzip -q -o build/android-ndk-$ANDROID_NDK_VERSION-linux.zip -d build/
+          mv build/android-ndk-$ANDROID_NDK_VERSION build/android-ndk
+      - name: build-android
+        run: |
+          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
+            --android-ndk build/android-ndk --android-abi x86_64
+          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
+            --android-ndk build/android-ndk --android-abi arm64-v8a
+          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
+            --android-ndk build/android-ndk --android-abi armeabi-v7a
+  
+      - uses: actions/upload-artifact@v4
+        name: upload-libopencv_dart-android-x86_64
+        with:
+          path: build/publish/libopencv_dart-android-x86_64.tar.gz
+          name: libopencv_dart-android-x86_64.tar.gz
+
+      - uses: actions/upload-artifact@v4
+        name: upload-libopencv_dart-android-arm64-v8a
+        with:
+          path: build/publish/libopencv_dart-android-arm64-v8a.tar.gz
+          name: libopencv_dart-android-arm64-v8a.tar.gz
+
+      - uses: actions/upload-artifact@v4
+        name: upload-libopencv_dart-android-armeabi-v7a
+        with:
+          path: build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
+          name: libopencv_dart-android-armeabi-v7a.tar.gz
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            build/publish/libopencv_dart-android-arm64-v8a.tar.gz
+            build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
+            build/publish/libopencv_dart-android-x86_64.tar.gz
+
+  build-ubuntu:
+    name: build-ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl git wget python3 unzip build-essential \
+            libgtk-3-dev ffmpeg libavcodec-dev \
+            cmake ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev libgflags-dev \
+            libjpeg-dev libpng-dev libtiff-dev
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build-opencv-dart
+        run: |
+          python3 scripts/build.py --opencv --os linux --arch x64 --src src --build-dir build
+          python3 scripts/build.py --dart --os linux --arch x64 --src src --build-dir build
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - name: Run Test
+        run: |
+          export "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH"
+          flutter pub get
+          flutter test -x skip-workflow,no-local-files
+      - uses: actions/upload-artifact@v4
+        name: upload-libopencv_dart-linux-x64
+        with:
+          path: build/publish/libopencv_dart-linux-x64.tar.gz
+          name: libopencv_dart-linux-x64.tar.gz
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            build/publish/libopencv_dart-linux-x64.tar.gz
+
+  build-windows:
+    name: build-windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: build-opencv-dart
+        run: |
+          python3 ${{github.workspace}}\scripts\build.py --opencv --os windows --arch x64 --src src --build-dir build
+          python3 ${{github.workspace}}\scripts\build.py --dart --os windows --arch x64 --src src --build-dir build
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - name: Run Test
+        run: |
+          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
+          flutter pub get
+          flutter test -x no-local-files
+      - uses: actions/upload-artifact@v4
+        name: upload-libopencv_dart-windows-x64
+        with:
+          path: build/publish/libopencv_dart-windows-x64.tar.gz
+          name: libopencv_dart-windows-x64.tar.gz
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            build/publish/libopencv_dart-windows-x64.tar.gz

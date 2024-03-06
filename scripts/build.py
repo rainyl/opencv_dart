@@ -17,7 +17,8 @@ def cmake_generate(args: Namespace):
         case "windows":
             arch = "x64" if args.arch == "x64" else "Win32"
             cmake += (
-                '-G "Visual Studio 16 2019" '
+                # f"-D CMAKE_TOOLCHAIN_FILE={args.dst / 'conan_toolchain.cmake'} "
+                # '-G "Visual Studio 16 2019" '
                 "-D BUILD_WITH_STATIC_CRT=OFF "
                 f"-D CMAKE_GENERATOR_PLATFORM={arch} "
             )
@@ -74,16 +75,16 @@ def cmake_generate(args: Namespace):
             "-D BUILD_opencv_ts=OFF "
             "-D BUILD_opencv_world=OFF "
             "-D WITH_OPENVINO=OFF "
-            "-D WITH_1394=OFF "
+            # "-D WITH_1394=OFF "
             "-D WITH_FFMPEG=ON "
-            "-D WITH_GSTREAMER=OFF "
+            # "-D WITH_GSTREAMER=OFF "
             "-D WITH_OPENEXR=OFF "
             "-D WITH_EIGEN=ON "
             # "-D VIDEOIO_PLUGIN_LIST=all "
             "-D WITH_MSMF=ON "
             "-D WITH_MSMF_DXVA=ON "
             "-D WITH_QT=OFF "
-            "-D WITH_FREETYPE=OFF "
+            # "-D WITH_FREETYPE=OFF "
             "-D WITH_TESSERACT=OFF "
             "-D WITH_OBSENSOR=OFF "
             "-D WITH_LAPACK=OFF "
@@ -93,7 +94,8 @@ def cmake_generate(args: Namespace):
             "-D OPENCV_ENABLE_NONFREE=OFF "
             f"-D OPENCV_EXTRA_MODULES_PATH={args.extra_modules} "
             "-D BUILD_SHARED_LIBS=OFF "
-            f"{src_dir} "
+            f"-S {src_dir} "
+            f"-B {args.dst} "
         )
     elif args.dart:
         demo = "-D WITH_OPENCV_DART_DEMO=ON " if args.build_demo else ""
@@ -102,7 +104,8 @@ def cmake_generate(args: Namespace):
             "-D CMAKE_BUILD_TYPE=Release "
             "-D CMAKE_INSTALL_PREFIX=install "
             f"{demo} "
-            f"{src_dir} "
+            f"-S {src_dir} "
+            f"-B {args.dst} "
         )
     else:
         raise NotImplementedError
@@ -291,6 +294,6 @@ if __name__ == "__main__":
     assert not all([args.opencv, args.dart])
     args.work_dir = work_dir
     args.src = Path(args.src).absolute()
-    args.ndk = Path(args.ndk)
+    args.ndk = Path(args.ndk).absolute()
     args.dst = Path(args.build_dir).absolute()
     main(args)
