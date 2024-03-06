@@ -95,6 +95,13 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
    windows: Install Visual Studio 2019 or Later
 
    ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
+
+   ```bash
+   sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
+      ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev \
+      libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev
+   ```
+
 2. install dependencies: `cmake`, `python`, add to PATH
 3. clone this repo, `git clone --recursive https://github.com/rainyl/opencv_dart.git`
 4. `cd opencv_dart`

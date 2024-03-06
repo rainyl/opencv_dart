@@ -43,7 +43,6 @@ def cmake_generate(args: Namespace):
             )
         case "macos":
             cmake += '-G "Unix Makefiles" '
-            raise NotImplementedError
         case "ios":
             cmake += '-G "Unix Makefiles" '
             raise NotImplementedError
@@ -192,9 +191,8 @@ def main(args: Namespace):
             lib_copy_to_dir = args.work_dir / args.os
             lib_name_suffix = ".so"
         case "macos" | "ios":
-            lib_copy_to_dir = f"lib{LIB_NAME}.dylib"
+            lib_copy_to_dir = args.work_dir / args.os
             lib_name_suffix = ".dylib"
-            raise NotImplementedError
         case _:
             raise NotImplementedError
     if not lib_copy_to_dir.exists():
