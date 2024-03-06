@@ -14,7 +14,7 @@ void main() async {
   });
 
   test('cv.HOGDescriptor', () {
-    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = cv.imread("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
     final hog = cv.HOGDescriptor.empty();
     hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector());

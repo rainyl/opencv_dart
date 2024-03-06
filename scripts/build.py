@@ -176,6 +176,9 @@ def main(args: Namespace):
 
     if not args.dart:
         return
+    
+    # copy built dlls to platform directory
+    # i.e., windows/; linux/; macos/; android/src/main/jniLibs/
     lib_copy_to_dir: Path
     lib_name_suffix: str = ""
     match args.os:
