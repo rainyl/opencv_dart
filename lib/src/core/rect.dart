@@ -2,9 +2,9 @@ import 'dart:ffi' as ffi;
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'point.dart';
+import '../opencv.g.dart' as cvg;
 
 class Rect extends CvObject with EquatableMixin {
   Rect._(this._ptr) : super(_ptr) {

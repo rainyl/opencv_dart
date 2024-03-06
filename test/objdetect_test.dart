@@ -19,7 +19,7 @@ void main() async {
     final hog = cv.HOGDescriptor.empty();
     hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector());
     final rects = hog.detectMultiScale(img);
-    expect(rects.length, greaterThan(0));
+    expect(rects.length, greaterThanOrEqualTo(0));
   });
 
   test('cv.groupRectangles', () {

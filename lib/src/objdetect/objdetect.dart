@@ -47,8 +47,8 @@ class CascadeClassifier implements ffi.Finalizable {
     Size minSize = (0, 0),
     Size maxSize = (0, 0),
   }) {
-    final rects = using<cvg.Rects>((arena) {
-      final _rects = _bindings.CascadeClassifier_DetectMultiScaleWithParams(
+    return using<List<Rect>>((arena) {
+      final rects = _bindings.CascadeClassifier_DetectMultiScaleWithParams(
         _ptr,
         image.ptr,
         scaleFactor,
@@ -57,9 +57,8 @@ class CascadeClassifier implements ffi.Finalizable {
         minSize.toSize(arena).ref,
         maxSize.toSize(arena).ref,
       );
-      return _rects;
+      return Rects.toList(rects);
     });
-    return Rects.toList(rects);
   }
 
   cvg.CascadeClassifier _ptr;
@@ -92,8 +91,8 @@ class HOGDescriptor implements ffi.Finalizable {
     double groupThreshold = 2.0,
     bool useMeanshiftGrouping = false,
   }) {
-    final rects = using<cvg.Rects>((arena) {
-      final _rects = _bindings.HOGDescriptor_DetectMultiScaleWithParams(
+    return using<List<Rect>>((arena) {
+      final rects = _bindings.HOGDescriptor_DetectMultiScaleWithParams(
         _ptr,
         image.ptr,
         hitThreshold,
@@ -103,9 +102,8 @@ class HOGDescriptor implements ffi.Finalizable {
         groupThreshold,
         useMeanshiftGrouping,
       );
-      return _rects;
+      return Rects.toList(rects);
     });
-    return Rects.toList(rects);
   }
 
   /// HOGDefaultPeopleDetector returns a new Mat with the HOG DefaultPeopleDetector.
@@ -134,11 +132,10 @@ class HOGDescriptor implements ffi.Finalizable {
 // For further details, please see:
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 List<Rect> groupRectangles(List<Rect> rects, int groupThreshold, double eps) {
-  final ret = using<List<Rect>>((arena) {
-    final _rects = _bindings.GroupRectangles(rects.toNative(arena).ref, groupThreshold, eps);
-    return Rects.toList(_rects);
+  return using<List<Rect>>((arena) {
+    final rectsNew = _bindings.GroupRectangles(rects.toNative(arena).ref, groupThreshold, eps);
+    return Rects.toList(rectsNew);
   });
-  return ret;
 }
 
 // QRCodeDetector groups the object candidate rectangles.

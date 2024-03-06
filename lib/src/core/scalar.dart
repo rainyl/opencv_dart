@@ -2,8 +2,8 @@ import 'dart:ffi' as ffi;
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
 import 'base.dart';
+import '../opencv.g.dart' as cvg;
 
 class Scalar extends CvObject<cvg.Scalar> with EquatableMixin {
   Scalar._(this._ptr) : super(_ptr) {
