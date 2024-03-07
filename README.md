@@ -24,7 +24,7 @@ please run `dart run opencv_dart:setup -p <platform> -a <arch>` to download
 prebuilt binaries.
 
 - `platform`: `auto` `android` `linux` `windows` `macos`
-- `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
+- `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64` (macOS only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
 
 **Please use v0.3.0 and later version.**
 
@@ -101,6 +101,12 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
       libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev
    ```
 
+   macos:
+
+   ```bash
+   brew install --force --overwrite ninja ccache ffmpeg nasm
+   ```
+
 2. install dependencies: `cmake`, `python`, add to PATH
 3. clone this repo, `git clone --recursive https://github.com/rainyl/opencv_dart.git`
 4. `cd opencv_dart`
@@ -118,7 +124,13 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
     python ./scripts/build.py --opencv --os linux --arch x64 --build-dir build --src src
     ```
 
-    for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.
+   for macOS:
+
+   ```bash
+   python3 ./scripts/build.py --opencv --os macos --arch arm64 --build-dir build --src src
+   ```
+
+   for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.
 
 6. compile this package along with gocv.
 
@@ -132,7 +144,13 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
    ```bash
     python ./scripts/build.py --dart --os linux --arch x64 --build-dir build --src src
-    ```
+   ```
+
+   macOS:
+
+   ```bash
+   python3 ./scripts/build.py --dart --os macos --arch arm64 --build-dir build --src src
+   ```
 
    Android:
 
