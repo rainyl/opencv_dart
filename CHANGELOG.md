@@ -1,3 +1,7 @@
+## 0.6.3
+
+- add support for macOS with Apple Silicon
+
 ## 0.6.2
 
 * try add support for macos, see [this workflow](https://github.com/rainyl/opencv_dart/actions/workflows/build_macos.yaml)
