@@ -42,7 +42,7 @@ def cmake_generate(args: Namespace):
                 # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
             )
         case "macos":
-            cmake += '-G "Ninja" '
+            cmake += f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} '
         case "ios":
             cmake += '-G "Unix Makefiles" '
             raise NotImplementedError
@@ -176,7 +176,7 @@ def main(args: Namespace):
 
     if not args.dart:
         return
-    
+
     # copy built dlls to platform directory
     # i.e., windows/; linux/; macos/; android/src/main/jniLibs/
     lib_copy_to_dir: Path

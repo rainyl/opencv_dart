@@ -47,6 +47,7 @@ void main(List<String> args) async {
       "x86",
       "x64",
       "x86_64",
+      "arm64",
       "arm64-v8a",
       "armeabi-v7a",
     ],
