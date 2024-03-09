@@ -9,42 +9,72 @@ import tarfile
 LIB_NAME = "opencv_dart"
 
 
+def generate_windows(args: Namespace):
+    arch = "x64" if args.arch == "x64" else "Win32"
+    cmake_cmd = (
+        "cmake "
+        # f"-D CMAKE_TOOLCHAIN_FILE={args.dst / 'conan_toolchain.cmake'} "
+        # '-G "Visual Studio 16 2019" '
+        "-D BUILD_WITH_STATIC_CRT=OFF "
+        f"-D CMAKE_GENERATOR_PLATFORM={arch} "
+    )
+    return cmake_cmd
+
+
+def generate_linux(args: Namespace):
+    flags = (
+        "-D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32" if args.arch == "x86" else ""
+    )
+    cmake_cmd = f'cmake -G "Ninja" -D OPENCV_DART_ARCH={args.arch} {flags} '
+    return cmake_cmd
+
+
+def generate_macos(args: Namespace):
+    target = "arm64-apple-macos" if args.arch == "arm64" else "x86_64-apple-macos"
+    cmake_cmd = (
+        "cmake "
+        f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} '
+        f"-D CMAKE_CXX_FLAGS='-target {target}' "
+        f"-D CMAKE_C_FLAGS='-target {target}' "
+    )
+    return cmake_cmd
+
+
+def generate_android(args: Namespace):
+    if not args.ndk.exists():
+        raise FileNotFoundError(f"Android NDK not found at {args.ndk}")
+    cmake_cmd = (
+        "cmake "
+        '-G "Ninja" '
+        "-D ANDROID_STL=c++_static "
+        f"-D ANDROID_NDK={args.ndk} "
+        "-D ANDROID_TOOLCHAIN=clang "
+        f"-D CMAKE_TOOLCHAIN_FILE={args.ndk}/build/cmake/android.toolchain.cmake "
+        f"-D ANDROID_ABI={args.abi} "
+        # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
+    )
+    return cmake_cmd
+
+
+def generate_ios(args: Namespace):
+    raise NotImplementedError
+
+
 def cmake_generate(args: Namespace):
     src_dir = Path(args.src).absolute()
 
-    cmake = "cmake "
-    match args.os:
+    cmake = ""
+    match args.platform:
         case "windows":
-            arch = "x64" if args.arch == "x64" else "Win32"
-            cmake += (
-                # f"-D CMAKE_TOOLCHAIN_FILE={args.dst / 'conan_toolchain.cmake'} "
-                # '-G "Visual Studio 16 2019" '
-                "-D BUILD_WITH_STATIC_CRT=OFF "
-                f"-D CMAKE_GENERATOR_PLATFORM={arch} "
-            )
+            cmake = generate_windows(args)
         case "linux":
-            flags = (
-                "-D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32"
-                if args.arch == "x86"
-                else ""
-            )
-            cmake += f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} {flags} '
+            cmake = generate_linux(args)
         case "android":
-            if not args.ndk.exists():
-                raise FileNotFoundError(f"Android NDK not found at {args.ndk}")
-            cmake += (
-                '-G "Ninja" '
-                "-D ANDROID_STL=c++_static "
-                f"-D ANDROID_NDK={args.ndk} "
-                "-D ANDROID_TOOLCHAIN=clang "
-                f"-D CMAKE_TOOLCHAIN_FILE={args.ndk}/build/cmake/android.toolchain.cmake "
-                f"-D ANDROID_ABI={args.abi} "
-                # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
-            )
+            cmake = generate_android(args)
         case "macos":
-            cmake += f'-G "Ninja" -D OPENCV_DART_ARCH={args.arch} '
+            cmake = generate_macos(args)
         case "ios":
-            cmake += '-G "Unix Makefiles" '
+            cmake = generate_ios(args)
             raise NotImplementedError
         case _:
             raise NotImplementedError
@@ -117,52 +147,13 @@ def cmake_build(args: Namespace):
     os.system(cmd)
 
 
-# def copy_dlls(args, install_dir, lib_name_suffix, lib_copy_to_dir):
-#     lib_name_prefix: str = "lib" if args.os == "windows" else ""
-#     if args.copy_dlls:
-#         dependencies = pyldd.parse_to_list(
-#             pyldd.Args(
-#                 format_="json",
-#                 path=install_dir / f"{LIB_NAME}{lib_name_suffix}",
-#                 sort_by="soname",
-#                 recursive=True,
-#                 unused=True,
-#             )
-#         )
-#         for dep in dependencies:
-#             skip = (
-#                 dep["soname"] is None
-#                 # skip system dlls
-#                 or str(Path(dep["path"]).absolute()).startswith("C:\WINDOWS")
-#                 or not Path(dep["path"]).is_absolute()  # skip existed
-#                 or not isinstance(dep["path"], str)
-#             )
-
-#             if skip:
-#                 print(f"skip {dep['soname']}: {dep['path']}")
-#                 continue
-#             dep_path = Path(dep["path"])
-#             shutil.copyfile(dep["path"], lib_copy_to_dir / dep_path.name)
-
-#             if str(Path(dep["path"])).startswith(str(install_dir)):
-#                 print(f"skip {dep['soname']}: {dep['path']}")
-#                 continue
-
-#             dst = install_dir / f"{lib_name_prefix}{dep_path.name}"
-
-#             shutil.copyfile(dep["path"], dst)
-#             print(f"{dep['path']} -> {dst}")
-
-
 def main(args: Namespace):
     if args.opencv:
         args.src = args.src / "opencv"
 
     build_sub = "opencv_dart" if args.dart else "opencv"
-    if args.os == "android":
-        args.arch = args.abi
     args.extra_modules = Path(args.extra_modules).absolute()
-    args.dst = args.dst / build_sub / f"{args.os}" / f"{args.arch}"
+    args.dst = args.dst / build_sub / f"{args.platform}" / f"{args.arch}"
     if not args.dst.exists():
         args.dst.mkdir(parents=True)
     os.chdir(args.dst)
@@ -181,20 +172,20 @@ def main(args: Namespace):
     # i.e., windows/; linux/; macos/; android/src/main/jniLibs/
     lib_copy_to_dir: Path
     lib_name_suffix: str = ""
-    match args.os:
+    match args.platform:
         case "windows":
-            lib_copy_to_dir = args.work_dir / args.os
+            lib_copy_to_dir = args.work_dir / args.platform
             lib_name_suffix = ".dll"
         case "android":
             lib_copy_to_dir = (
-                args.work_dir / args.os / "src" / "main" / "jniLibs" / args.abi
+                args.work_dir / args.platform / "src" / "main" / "jniLibs" / args.abi
             )
             lib_name_suffix = ".so"
         case "linux":
-            lib_copy_to_dir = args.work_dir / args.os
+            lib_copy_to_dir = args.work_dir / args.platform
             lib_name_suffix = ".so"
         case "macos" | "ios":
-            lib_copy_to_dir = args.work_dir / args.os
+            lib_copy_to_dir = args.work_dir / args.platform
             lib_name_suffix = ".dylib"
         case _:
             raise NotImplementedError
@@ -206,13 +197,13 @@ def main(args: Namespace):
         publish_dir.mkdir(parents=True)
 
     install_dir = Path(args.dst) / "install"
-    _prefix: str = "" if args.os == "windows" else "lib"
+    _prefix: str = "" if args.platform == "windows" else "lib"
     shutil.copy(install_dir / f"{_prefix}{LIB_NAME}{lib_name_suffix}", lib_copy_to_dir)
 
     # copy_dlls()
 
     # archive
-    fname = publish_dir / f"lib{LIB_NAME}-{args.os}-{args.arch}.tar.gz"
+    fname = publish_dir / f"lib{LIB_NAME}-{args.platform}-{args.arch}.tar.gz"
     with tarfile.open(fname, mode="w:gz") as tar:
         for file in install_dir.glob("*"):
             if file.is_file():
@@ -238,38 +229,16 @@ if __name__ == "__main__":
         default=False,
     )
     parser.add_argument(
-        "--copy-dlls",
-        dest="copy_dlls",
-        action="store_true",
-        default=False,
-    )
-
-    parser.add_argument(
-        "--os",
-        dest="os",
-        type=str,
-        default="windows",
-        choices=["windows", "linux", "android", "macos", "ios"],
-    )
-    parser.add_argument(
-        "--arch",
-        dest="arch",
-        type=str,
-        default="x64",
-        choices=["x64", "x86", "arm64", "arm"],
-    )
-
-    parser.add_argument(
         "--src",
         dest="src",
         type=str,
-        default=str((work_dir / "src").absolute()),
+        default="src",
     )
     parser.add_argument(
         "--build-dir",
         dest="build_dir",
         type=str,
-        default=str((work_dir / "build").absolute()),
+        default="build",
     )
     parser.add_argument(
         "--extra-modules",
@@ -277,24 +246,67 @@ if __name__ == "__main__":
         type=str,
         default=str((work_dir / "src" / "opencv_contrib" / "modules").absolute()),
     )
-    parser.add_argument(
+
+    sub_parsers = parser.add_subparsers(title="platform", dest="platform")
+    # macOS
+    sub_macos = sub_parsers.add_parser("macos")
+    sub_macos.add_argument(
+        "--arch",
+        dest="arch",
+        type=str,
+        default="x64",
+        choices=["x64", "arm64"],
+    )
+
+    # Windows
+    sub_windows = sub_parsers.add_parser("windows")
+    sub_windows.add_argument(
+        "--arch",
+        dest="arch",
+        type=str,
+        default="x64",
+        choices=["x64", "x86"],
+    )
+
+    # linux
+    sub_linux = sub_parsers.add_parser("linux")
+    sub_linux.add_argument(
+        "--arch",
+        dest="arch",
+        type=str,
+        default="x64",
+        choices=["x64", "x86"],
+    )
+
+    # android
+    sub_android = sub_parsers.add_parser("android")
+    sub_android.add_argument(
+        "--arch",
+        dest="arch",
+        type=str,
+        default="arm64-v8a",
+        choices=["arm64-v8a", "armeabi-v7a", "x86", "x86_64"],
+        help="i.e., android abi",
+    )
+    sub_android.add_argument(
         "--android-ndk",
         dest="ndk",
         type=str,
         default=os.environ.get("ANDROID_NDK_HOME", ""),
     )
-    parser.add_argument(
-        "--android-abi",
-        dest="abi",
-        type=str,
-        default="arm64-v8a",
-        choices=["arm64-v8a", "armeabi-v7a", "x86", "x86_64"],
-    )
+
+    # ios
+    sub_ios = sub_parsers.add_parser("ios")
 
     args = parser.parse_args()
+
+    print(args)
     assert not all([args.opencv, args.dart])
+
     args.work_dir = work_dir
     args.src = Path(args.src).absolute()
-    args.ndk = Path(args.ndk).absolute()
     args.dst = Path(args.build_dir).absolute()
+    if args.platform == "android":
+        args.ndk = Path(args.ndk).absolute()
+
     main(args)

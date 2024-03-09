@@ -43,12 +43,12 @@ jobs:
           mv build/android-ndk-$ANDROID_NDK_VERSION build/android-ndk
       - name: build-android
         run: |
-          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
-            --android-ndk build/android-ndk --android-abi x86_64
-          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
-            --android-ndk build/android-ndk --android-abi arm64-v8a
-          python3 scripts/build.py --dart --os android --arch x64 --src src --build-dir build \
-            --android-ndk build/android-ndk --android-abi armeabi-v7a
+          python3 scripts/build.py --dart --src src --build-dir build \
+            --android-ndk build/android-ndk android --arch x86_64
+          python3 scripts/build.py --dart --src src --build-dir build \
+            --android-ndk build/android-ndk android --arch arm64-v8a
+          python3 scripts/build.py --dart --src src --build-dir build \
+            --android-ndk build/android-ndk android --arch armeabi-v7a
   
       - uses: actions/upload-artifact@v4
         name: upload-libopencv_dart-android-x86_64
@@ -96,8 +96,8 @@ jobs:
           submodules: true
       - name: build-opencv-dart
         run: |
-          python3 scripts/build.py --opencv --os linux --arch x64 --src src --build-dir build
-          python3 scripts/build.py --dart --os linux --arch x64 --src src --build-dir build
+          python3 scripts/build.py --opencv --src src --build-dir build linux --arch x64
+          python3 scripts/build.py --dart --src src --build-dir build linux --arch x64
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
@@ -134,8 +134,8 @@ jobs:
           python-version: '3.11'
       - name: build-opencv-dart
         run: |
-          python3 ${{github.workspace}}\scripts\build.py --opencv --os windows --arch x64 --src src --build-dir build
-          python3 ${{github.workspace}}\scripts\build.py --dart --os windows --arch x64 --src src --build-dir build
+          python3 ${{github.workspace}}\scripts\build.py --opencv --src src --build-dir build windows --arch x64
+          python3 ${{github.workspace}}\scripts\build.py --dart --src src --build-dir build windows --arch x64
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
@@ -172,10 +172,8 @@ jobs:
           cd ${{github.workspace}}
       - name: build
         run: |
-          python3 scripts/build.py --opencv --os macos --arch x64 --src src --build-dir build
-          python3 scripts/build.py --dart --os macos --arch x64 --src src --build-dir build
-          python3 scripts/build.py --opencv --os macos --arch arm64 --src src --build-dir build
-          python3 scripts/build.py --dart --os macos --arch arm64 --src src --build-dir build
+          python3 scripts/build.py --opencv --src src --build-dir build macos --arch x64
+          python3 scripts/build.py --dart --src src --build-dir build macos --arch x64
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
