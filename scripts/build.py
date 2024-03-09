@@ -50,7 +50,7 @@ def generate_android(args: Namespace):
         f"-D ANDROID_NDK={args.ndk} "
         "-D ANDROID_TOOLCHAIN=clang "
         f"-D CMAKE_TOOLCHAIN_FILE={args.ndk}/build/cmake/android.toolchain.cmake "
-        f"-D ANDROID_ABI={args.abi} "
+        f"-D ANDROID_ABI={args.arch} "
         # f"-D ANDROID_PLATFORM=android-$MINSDKVERSION"
     )
     return cmake_cmd
@@ -178,7 +178,7 @@ def main(args: Namespace):
             lib_name_suffix = ".dll"
         case "android":
             lib_copy_to_dir = (
-                args.work_dir / args.platform / "src" / "main" / "jniLibs" / args.abi
+                args.work_dir / args.platform / "src" / "main" / "jniLibs" / args.arch
             )
             lib_name_suffix = ".so"
         case "linux":
