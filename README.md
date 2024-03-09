@@ -20,11 +20,12 @@ OpenCV Bindings for Dart Language.
 ## IMPORTANT
 
 After added to `pubspec.yaml` or install by commandline,
-please run `dart run opencv_dart:setup -p <platform> -a <arch>` to download
+please run `dart run opencv_dart:setup <platform> --arch <arch>` to download
 prebuilt binaries.
 
 - `platform`: `auto` `android` `linux` `windows` `macos`
-- `arch`: `auto` `x86` `x64` `x86_64`(android only) `arm64` (macOS only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
+- `arch`: `auto` `x86` `x64` `arm64`(macOS only) `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
+- run `dart run opencv_dart:setup -h` to see more options
 
 **Please use v0.3.0 and later version.**
 
