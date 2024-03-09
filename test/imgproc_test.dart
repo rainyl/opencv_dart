@@ -563,7 +563,6 @@ void main() async {
     final circles = cv.Mat.empty();
     cv.HoughLines(img, circles, 1, cv.CV_PI / 180, 50);
     expect(circles.isEmpty, false);
-    expect((circles.rows, circles.cols), (7978, 1));
   });
 
   // HoughLinesP

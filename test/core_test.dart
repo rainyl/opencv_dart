@@ -712,9 +712,9 @@ void main() async {
   });
 
   test('cv.setNumThreads', () {
-    cv.setNumThreads(4);
+    cv.setNumThreads(2);
     final n = cv.getNumThreads();
-    expect(n, equals(4));
+    expect(n, equals(2));
   });
 
   test('cv.getNumThreads', () {
