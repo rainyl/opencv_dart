@@ -45,11 +45,11 @@ jobs:
       - name: build-android
         run: |
           python3 scripts/build.py --dart --src src --build-dir build \
-            --android-ndk build/android-ndk android --arch x86_64
+            android --arch x86_64 --android-ndk build/android-ndk
           python3 scripts/build.py --dart --src src --build-dir build \
-            --android-ndk build/android-ndk android --arch arm64-v8a
+            android --arch arm64-v8a --android-ndk build/android-ndk
           python3 scripts/build.py --dart --src src --build-dir build \
-            --android-ndk build/android-ndk android --arch armeabi-v7a
+            android --arch armeabi-v7a --android-ndk build/android-ndk
   
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
