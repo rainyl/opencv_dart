@@ -711,11 +711,17 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test('cv.setNumThreads', () {
-    cv.setNumThreads(2);
-    final n = cv.getNumThreads();
-    expect(n, equals(2));
-  });
+  test(
+    'cv.setNumThreads',
+    onPlatform: {
+      "mac-os": const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150")
+    },
+    () {
+      cv.setNumThreads(2);
+      final n = cv.getNumThreads();
+      expect(n, equals(2));
+    },
+  );
 
   test('cv.getNumThreads', () {
     final n = cv.getNumThreads();
