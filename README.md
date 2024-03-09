@@ -6,13 +6,13 @@ OpenCV Bindings for Dart Language.
 
 *WIP, contributions are welcome!*
 
-| Platform | Supported               | Tested                  | Prebuilt Binaries              |
-| -------- | ----------------------- | ----------------------- | ------------------------------ |
-| Android  | :white_check_mark:      | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :x:                     | :x:                     | :x:                            |
-| Linux    | :white_check_mark:      | :white_check_mark:      | x64                            |
-| Windows  | :white_check_mark:      | :white_check_mark:      | x64                            |
-| macOS    | :ballot_box_with_check: | :ballot_box_with_check: | x64, Experimental              |
+| Platform | Supported          | Tested                  | Prebuilt Binaries              |
+| -------- | ------------------ | ----------------------- | ------------------------------ |
+| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :x:                | :x:                     | :x:                            |
+| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
+| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
+| macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
 
 - I have no Apple devices, so iOS and ~~macOS are not supported yet~~ macOS compiled by Github Workflow available now, try it!
 - Theorically the dart codes will work for iOS, you can compile binaries by yourself, contributions are welcome!
@@ -115,19 +115,19 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
    for windows:
 
    ```pwsh
-   python .\scripts\build.py --opencv --os linux --arch x64 --build-dir build --src src
+   python .\scripts\build.py --opencv --build-dir build --src src windows --arch x64
    ```
 
     for linux:
 
     ```bash
-    python ./scripts/build.py --opencv --os linux --arch x64 --build-dir build --src src
+    python ./scripts/build.py --opencv --build-dir build --src src linux --arch x64
     ```
 
    for macOS:
 
    ```bash
-   python3 ./scripts/build.py --opencv --os macos --arch arm64 --build-dir build --src src
+   python3 ./scripts/build.py --opencv --build-dir build --src src macos --arch <arm64, x64>
    ```
 
    for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.
@@ -137,25 +137,25 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
    windows:
 
    ```bash
-    python ./scripts/build.py --dart --os windows --arch x64 --build-dir build --src src
+    python ./scripts/build.py --dart --build-dir build --src src windows --arch x64
     ```
 
    linux:
 
    ```bash
-    python ./scripts/build.py --dart --os linux --arch x64 --build-dir build --src src
+    python ./scripts/build.py --dart --build-dir build --src src linux --arch x64
    ```
 
    macOS:
 
    ```bash
-   python3 ./scripts/build.py --dart --os macos --arch arm64 --build-dir build --src src
+   python3 ./scripts/build.py --dart --build-dir build --src src macos --arch <x64, arm64>
    ```
 
    Android:
 
    ```bash
-    python ./scripts/build.py --dart --os android --arch x64 --build-dir build --src src --android-ndk <Android NDK path> --android-abi <x86_64, arm64-v8a, armeabi-v7a>
+    python ./scripts/build.py --dart --build-dir build --src src --android-ndk <Android NDK path> android --arch <x86_64, arm64-v8a, armeabi-v7a>
     ```
 
 7. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`

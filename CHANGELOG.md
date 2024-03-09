@@ -4,7 +4,7 @@
 
 ## 0.6.2
 
-* try add support for macos, see [this workflow](https://github.com/rainyl/opencv_dart/actions/workflows/build_macos.yaml)
+* add support for macos x64
 
 ## 0.6.1
 
