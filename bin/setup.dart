@@ -3,7 +3,7 @@ import 'package:args/command_runner.dart';
 import 'setup_commands.dart';
 
 void main(List<String> args) async {
-  final runner = CommandRunner("setup", "Setup for opencv_dart")
+  CommandRunner("setup", "Setup for opencv_dart")
     ..addCommand(WindowsSetupCommand())
     ..addCommand(LinuxSetupCommand())
     ..addCommand(MacOsSetupCommand())

@@ -102,7 +102,9 @@ abstract class BaseSetupCommand extends Command {
         throw UnsupportedError("Platform $os not supported");
     }
     if (!Directory(extractPath).existsSync()) Directory(extractPath).createSync(recursive: true);
-    await extractFileToDisk(cacheTarPath, extractPath);
+    final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
+    final archive = TarDecoder().decodeBytes(tarBytes);
+    extractArchiveToDisk(archive, extractPath, bufferSize: 1024 * 1024 * 10); // 10MB
   }
 
   @override
@@ -124,11 +126,6 @@ class MacOsSetupCommand extends BaseSetupCommand {
   MacOsSetupCommand() {
     argParser.addOption("arch", allowed: ["auto", "x64", "arm64"], defaultsTo: "auto");
   }
-
-  @override
-  void run() {
-    super.run();
-  }
 }
 
 class WindowsSetupCommand extends BaseSetupCommand {
@@ -140,10 +137,6 @@ class WindowsSetupCommand extends BaseSetupCommand {
 
   WindowsSetupCommand() {
     argParser.addOption("arch", allowed: ["x64"], defaultsTo: "x64");
-  }
-  @override
-  void run() {
-    super.run();
   }
 }
 
