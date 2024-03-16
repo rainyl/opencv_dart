@@ -9,6 +9,25 @@ import tarfile
 from pathlib import Path
 import yaml
 
+# for compatibility
+arch_map = {
+    "windows": {
+        "x86_64": "x64",
+    },
+    "linux": {
+        "x86_64": "x64",
+    },
+    "android": {
+        "x86_64": "x86_64",
+        "armv8": "arm64-v8a",
+        "armv7": "armeabi-v7a",
+    },
+    "macos": {
+        "x86_64": "x64",
+        "armv8": "arm64",
+    },
+}
+
 # (name, enabled)
 OCV_MODULES = {
     "calib3d": True,
@@ -379,13 +398,7 @@ class OcvDartDesktop(ConanFile):
         # archive
         install_dir = Path(self.install_folder)
         os = str(self.settings.os).lower()
-        arch = str(self.settings.arch)
-        if arch == "x86_64" and os != "android":
-            arch = "x64"
-        if os == "android":
-            # keep compatibility
-            android_arch_map = {"armv8": "arm64-v8a", "armv7": "armeabi-v7a"}
-            arch = android_arch_map.get(arch, arch)
+        arch = arch_map[os][str(self.settings.arch)]
         new_name = f"lib{self.name}-{os}-{arch}.tar.gz"
         fname = self.publish_folder / new_name
         print(fname)

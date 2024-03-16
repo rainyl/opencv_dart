@@ -41,11 +41,11 @@ jobs:
       - name: build-android
         run: |
           conan build . -b missing -pr:h profiles/android-x86_64 \
-            -c tools.android:ndk_path="build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
           conan build . -b missing -pr:h profiles/android-armv8 \
-            -c tools.android:ndk_path="build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
           conan build . -b missing -pr:h profiles/android-armv7 \
-            -c tools.android:ndk_path="build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
         with:
