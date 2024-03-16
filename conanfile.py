@@ -417,7 +417,7 @@ class OcvDartDesktop(ConanFile):
         elif self.settings.os == "Linux":
             return str(dir / "lib" / "cmake" / "opencv4")
         elif self.settings.os == "Macos":
-            return str(dir)
+            return str(dir / "lib" / "cmake" / "opencv4")
         elif self.settings.os == "Android":
             return str(dir / "sdk" / "native" / "jni")
         elif self.settings.os == "iOS":
