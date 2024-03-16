@@ -83,6 +83,7 @@ More examples are on the way...
 - [ ] modify C wrapper to catch exceptions
 - [ ] Native Assets
 - [ ] async?
+- [ ] directly include opencv source code, refactor cmakelists.txt
 
 ## For Developers
 
