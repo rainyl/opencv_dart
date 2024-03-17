@@ -1,5 +1,5 @@
 import os
-import sys
+import warnings
 import shutil
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
@@ -211,6 +211,9 @@ def main(args: Namespace):
 
 
 if __name__ == "__main__":
+    warnings.warn(
+        "This script has been deprecated and will be removed in v0.7.0, please use conan to build, refer to https://github.com/rainyl/opencv_dart/blob/main/README.md#how-to-compile for more details."
+    )
     work_dir = Path(__file__).parent.parent.absolute()
     parser = ArgumentParser()
     parser.add_argument("--opencv", dest="opencv", action="store_true", default=False)

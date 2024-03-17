@@ -1,3 +1,10 @@
+## 0.6.4
+
+- this is a minor version and no functional code changes
+- speed up download and extract
+- change build system to conan
+- remove submodules to clean up structure
+
 ## 0.6.3
 
 - add support for macOS with Apple Silicon

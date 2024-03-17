@@ -77,13 +77,13 @@ More examples are on the way...
 ### TODO
 
 - [x] ~~compile libs for android, linux~~
-- [ ] support for iOS, macOS
+- [ ] support for iOS, ~~macOS~~
 - [ ] add more examples
 - [ ] documentation
 - [ ] modify C wrapper to catch exceptions
 - [ ] Native Assets
 - [ ] async?
-- [ ] directly include opencv source code, refactor cmakelists.txt
+- [x] ~~directly include opencv source code,~~ refactor cmakelists.txt
 
 ## For Developers
 
@@ -100,67 +100,45 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
    ```bash
    sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
       ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev \
-      libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev
+      libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev python3-pip
    ```
 
    macos:
 
    ```bash
-   brew install --force --overwrite ninja ccache ffmpeg nasm
+   brew install --force --overwrite ninja ccache ffmpeg nasm cmake
    ```
 
-2. install dependencies: `cmake`, `python`, add to PATH
-3. clone this repo, `git clone --recursive https://github.com/rainyl/opencv_dart.git`
-4. `cd opencv_dart`
-5. compile opencv
+   from v0.6.4, build system has been migrated to [conan](https://conan.io/)
+
+   ```bash
+      python3 -m pip install conan
+      conan profile detect -f
+   ```
+
+2. clone this repo, `git clone https://github.com/rainyl/opencv_dart.git`
+3. `cd opencv_dart`
+4. compile
 
    for windows:
 
    ```pwsh
-   python .\scripts\build.py --opencv --build-dir build --src src windows --arch x64
+   conan build . -b missing -s compiler.cppstd=20
    ```
 
-    for linux:
+    for linux, macos:
 
     ```bash
-    python ./scripts/build.py --opencv --build-dir build --src src linux --arch x64
+    conan build . -b missing
     ```
 
-   for macOS:
+   for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) ~~and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.~~ NO need for opencv sdk now, will be compiled from source to enable contrib modules
 
    ```bash
-   python3 ./scripts/build.py --opencv --build-dir build --src src macos --arch <arm64, x64>
+   conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
    ```
 
-   for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.
-
-6. compile this package along with gocv.
-
-   windows:
-
-   ```bash
-    python ./scripts/build.py --dart --build-dir build --src src windows --arch x64
-    ```
-
-   linux:
-
-   ```bash
-    python ./scripts/build.py --dart --build-dir build --src src linux --arch x64
-   ```
-
-   macOS:
-
-   ```bash
-   python3 ./scripts/build.py --dart --build-dir build --src src macos --arch <x64, arm64>
-   ```
-
-   Android:
-
-   ```bash
-    python ./scripts/build.py --dart --build-dir build --src src --android-ndk <Android NDK path> android --arch <x86_64, arm64-v8a, armeabi-v7a>
-    ```
-
-7. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
 ## Acknowledgement
 

@@ -13,41 +13,41 @@ output:
 compiler-opts: ""
 headers:
   entry-points:
-    - src/gocv/aruco.h
-    - src/gocv/asyncarray.h
-    - src/gocv/calib3d.h
-    - src/gocv/core.h
-    - src/gocv/dnn.h
-    - src/gocv/exception.h
-    - src/gocv/features2d.h
-    - src/gocv/highgui_gocv.h
-    - src/gocv/imgcodecs.h
-    - src/gocv/imgproc.h
-    - src/gocv/objdetect.h
-    - src/gocv/photo.h
-    - src/gocv/stitching.h
-    - src/gocv/svd.h
-    - src/gocv/version.h
-    - src/gocv/video.h
-    - src/gocv/videoio.h
+    - src/aruco.h
+    - src/asyncarray.h
+    - src/calib3d.h
+    - src/core.h
+    - src/dnn.h
+    - src/exception.h
+    - src/features2d.h
+    - src/highgui_gocv.h
+    - src/imgcodecs.h
+    - src/imgproc.h
+    - src/objdetect.h
+    - src/photo.h
+    - src/stitching.h
+    - src/svd.h
+    - src/version.h
+    - src/video.h
+    - src/videoio.h
   include-directives:
-    - src/gocv/aruco.h
-    - src/gocv/asyncarray.h
-    - src/gocv/calib3d.h
-    - src/gocv/core.h
-    - src/gocv/dnn.h
-    - src/gocv/exception.h
-    - src/gocv/features2d.h
-    - src/gocv/highgui_gocv.h
-    - src/gocv/imgcodecs.h
-    - src/gocv/imgproc.h
-    - src/gocv/objdetect.h
-    - src/gocv/photo.h
-    - src/gocv/stitching.h
-    - src/gocv/svd.h
-    - src/gocv/version.h
-    - src/gocv/video.h
-    - src/gocv/videoio.h
+    - src/aruco.h
+    - src/asyncarray.h
+    - src/calib3d.h
+    - src/core.h
+    - src/dnn.h
+    - src/exception.h
+    - src/features2d.h
+    - src/highgui_gocv.h
+    - src/imgcodecs.h
+    - src/imgproc.h
+    - src/objdetect.h
+    - src/photo.h
+    - src/stitching.h
+    - src/svd.h
+    - src/version.h
+    - src/video.h
+    - src/videoio.h
 functions:
   symbol-address:
     include:

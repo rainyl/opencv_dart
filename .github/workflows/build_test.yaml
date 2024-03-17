@@ -2,7 +2,7 @@ name: build test release
 
 on:
   push:
-    # branches: [ "main" ]
+    # branches: ["conan"]
     tags:
       - "v*.*.*"
   # pull_request:
@@ -26,31 +26,26 @@ jobs:
           sudo apt-get update
 
           sudo apt-get install -y build-essential libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev libgflags-dev \
-            python3 unzip tree
+            cmake ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev \
+            libgflags-dev python3 unzip tree python3-pip
+
+          python3 -m pip install conan
+          conan profile detect -f
 
           cd ${{github.workspace}}
-          mkdir -p build/opencv/android
-          wget -q -O build/opencv-$OPENCV_VERSION-android-sdk.zip \
-            https://github.com/opencv/opencv/releases/download/$OPENCV_VERSION/opencv-$OPENCV_VERSION-android-sdk.zip
-
-          unzip -q -o build/opencv-$OPENCV_VERSION-android-sdk.zip -d build/opencv/
-          mv build/opencv/OpenCV-android-sdk/* build/opencv/android
+          mkdir -p build/android
 
           wget -q -O build/android-ndk-$ANDROID_NDK_VERSION-linux.zip \
             https://dl.google.com/android/repository/android-ndk-$ANDROID_NDK_VERSION-linux.zip
-
           unzip -q -o build/android-ndk-$ANDROID_NDK_VERSION-linux.zip -d build/
-          mv build/android-ndk-$ANDROID_NDK_VERSION build/android-ndk
       - name: build-android
         run: |
-          python3 scripts/build.py --dart --src src --build-dir build \
-            android --arch x86_64 --android-ndk build/android-ndk
-          python3 scripts/build.py --dart --src src --build-dir build \
-            android --arch arm64-v8a --android-ndk build/android-ndk
-          python3 scripts/build.py --dart --src src --build-dir build \
-            android --arch armeabi-v7a --android-ndk build/android-ndk
-  
+          conan build . -b missing -pr:h profiles/android-x86_64 \
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
+          conan build . -b missing -pr:h profiles/android-armv8 \
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
+          conan build . -b missing -pr:h profiles/android-armv7 \
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
         with:
@@ -89,16 +84,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y curl git wget python3 unzip build-essential \
             libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev libgflags-dev \
-            libjpeg-dev libpng-dev libtiff-dev
+            cmake ninja-build ccache nasm libavformat-dev libavutil-dev \
+            libswscale-dev libgflags-dev \
+            libjpeg-dev libpng-dev libtiff-dev python3-pip
+
+          python3 -m pip install conan
+          conan profile detect -f
 
       - uses: actions/checkout@v4
         with:
           submodules: true
       - name: build-opencv-dart
         run: |
-          python3 scripts/build.py --opencv --src src --build-dir build linux --arch x64
-          python3 scripts/build.py --dart --src src --build-dir build linux --arch x64
+          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
@@ -132,20 +130,22 @@ jobs:
           submodules: true
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
       - name: build-opencv-dart
         run: |
-          python3 ${{github.workspace}}\scripts\build.py --opencv --src src --build-dir build windows --arch x64
-          python3 ${{github.workspace}}\scripts\build.py --dart --src src --build-dir build windows --arch x64
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
+          python3 -m pip install conan
+          conan profile detect -f
+          conan build . -b missing -s compiler.cppstd=20
+
       - uses: actions/upload-artifact@v4
         name: upload-windows-x64
         with:
           path: build/publish/libopencv_dart-windows-x64.tar.gz
           name: libopencv_dart-windows-x64.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
       - name: Run Test
         run: |
           $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
@@ -168,22 +168,23 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          # brew update
           brew install --force --overwrite ninja ccache ffmpeg nasm
+          python3 -m pip install conan
+          conan profile detect -f
           cd ${{github.workspace}}
       - name: build
         run: |
-          python3 scripts/build.py --opencv --src src --build-dir build macos --arch x64
-          python3 scripts/build.py --dart --src src --build-dir build macos --arch x64
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
+          conan build . -b missing
+
       - uses: actions/upload-artifact@v4
         name: upload-macos-x64
         with:
           path: build/publish/libopencv_dart-macos-x64.tar.gz
           name: libopencv_dart-macos-x64.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
       - name: Run Test
         run: |
           ls -alh $GITHUB_WORKSPACE/macos
@@ -209,21 +210,23 @@ jobs:
         run: |
           # brew update
           brew install --force --overwrite ninja ccache ffmpeg nasm
+          python3 -m pip install conan
+          conan profile detect -f
           cd ${{github.workspace}}
       - name: build
         run: |
-          python3 scripts/build.py --opencv --src src --build-dir build macos --arch arm64
-          python3 scripts/build.py --dart --src src --build-dir build macos --arch arm64
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
+          conan build . -b missing
+          ls -alh build/Macos
 
       - uses: actions/upload-artifact@v4
         name: upload-macos-arm64
         with:
           path: build/publish/libopencv_dart-macos-arm64.tar.gz
           name: libopencv_dart-macos-arm64.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
       - name: Run Test
         run: |
           ls -alh $GITHUB_WORKSPACE/macos
