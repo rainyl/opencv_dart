@@ -29,6 +29,10 @@ prebuilt binaries.
 
 **Please use v0.3.0 and later version.**
 
+## Example
+
+![example](images/example.png)
+
 ## Status
 
 | module     | Binding status          | Test status             | description             |

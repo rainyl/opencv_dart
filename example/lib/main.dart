@@ -45,7 +45,9 @@ class _MyAppState extends State<MyApp> {
     var frame = cv.Mat.empty();
     if (cameraController.is_camera_init) {
       final im = await cameraController.action_take_picture(
-          onCameraNotInit: () {}, onCameraNotSelect: () {}, onCameraNotActive: () {});
+          onCameraNotInit: () {},
+          onCameraNotSelect: () {},
+          onCameraNotActive: () {});
       if (im != null) {
         frame = cv.imread(im.path);
       }
@@ -98,14 +100,19 @@ class _MyAppState extends State<MyApp> {
                         },
                       ),
                     ),
-                    Expanded(child: videoFrame == null ? Text("Empty") : Image.memory(videoFrame!))
+                    Expanded(
+                        child: videoFrame == null
+                            ? Text("Empty")
+                            : Image.memory(videoFrame!))
                   ],
                 ),
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
-                  final im = cv.imdecode(data.buffer.asUint8List(), cv.IMREAD_COLOR);
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
+                  final im =
+                      cv.imdecode(data.buffer.asUint8List(), cv.IMREAD_COLOR);
                   final gray = cv.Mat.empty();
                   cv.cvtColor(im, gray, cv.COLOR_BGR2GRAY);
                   final blur = cv.Mat.empty();
@@ -123,11 +130,22 @@ class _MyAppState extends State<MyApp> {
               ),
               Expanded(
                 flex: 2,
-                child: ListView.builder(
-                  itemCount: images.length,
-                  itemBuilder: (ctx, idx) => Card(
-                    child: Image.memory(images[idx]),
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: images.length,
+                        itemBuilder: (ctx, idx) => Card(
+                          child: Image.memory(images[idx]),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(cv.getBuildInformation()),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
