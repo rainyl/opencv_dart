@@ -23,7 +23,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            # brew install --force --overwrite ninja ccache ffmpeg nasm
+            brew install --force --overwrite ninja ccache nasm
             python3 -m pip install conan
             conan profile detect -f
             cd ${{github.workspace}}
