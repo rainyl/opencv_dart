@@ -24,7 +24,7 @@ dart run opencv_dart:setup <platform> --arch <arch>
 
 to download prebuilt binaries.
 
-- **platform**: `auto` `android` `linux` `windows` `macos`
+- **platform**: `auto` `android` `linux` `windows` `macos` `ios`
 - for **Windows**, arch: `x64`
 - for **Linux**, arch: `x64`
 - for **macOS**, arch: `x64` `arm64`
@@ -145,6 +145,13 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
    ```bash
    conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
+   ```
+
+   for ios:
+
+   ```bash
+   echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-<arch>
+   conan build . -b missing -pr:h profiles/ios-<arch>
    ```
 
 5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
