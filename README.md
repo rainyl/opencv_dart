@@ -31,7 +31,7 @@ prebuilt binaries.
 
 ## Example
 
-![example](images/example.png)
+![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
 
 ## Status
 

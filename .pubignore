@@ -9,14 +9,12 @@ coverage/
 *.so
 *.dylib
 *.lib
-src/opencv/.github/
-src/opencv/
-src/opencv_contrib/
-src/CMakeLists.txt
-src/constants.h
-src/opencv_dart.cpp
-src/opencv_dart.h
 pkgs/
+src/*.cpp
+src/*.h
+images/
+CMakeUserPresets*
+ffigen*
 
 .idea/
 .vscode/
