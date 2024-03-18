@@ -17,6 +17,14 @@ if(ANDROID)
     list(APPEND OpenCV_LIBS camera2ndk mediandk -landroid)
 endif(ANDROID)
 
+if(IOS)
+    list(APPEND OpenCV_LIBS
+        "-framework CoreFoundation"
+        "-framework CoreImage"
+        "-framework Foundation"
+    )
+endif(IOS)
+
 message(STATUS "OpenCV library status:")
 message(STATUS "    config: ${OpenCV_DIR}")
 message(STATUS "    version: ${OpenCV_VERSION}")
@@ -42,14 +50,23 @@ target_include_directories(${library_name} SYSTEM PUBLIC
     ${OpenCV_INCLUDE_DIRS}
 )
 target_link_libraries(${library_name} PRIVATE ${OpenCV_LIBS})
-set_target_properties(${library_name} PROPERTIES
 
+set_target_properties(${library_name} PROPERTIES
     # PUBLIC_HEADER ${GOCV_HEADERS}
     OUTPUT_NAME ${library_name}
     CXX_VISIBILITY_PRESET default
     C_VISIBILITY_PRESET default
     LINK_FLAGS_RELEASE -s
 )
+
+if(IOS)
+    set_target_properties(${library_name} PROPERTIES
+        FRAMEWORK TRUE
+        FRAMEWORK_VERSION CXX
+        MACOSX_FRAMEWORK_IDENTIFIER dev.rainyl.opencv_dart
+    )
+endif(IOS)
+
 
 if(WIN32)
     set_target_properties(${library_name} PROPERTIES

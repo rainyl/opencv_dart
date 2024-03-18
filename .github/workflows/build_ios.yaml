@@ -1,0 +1,56 @@
+name: test build for ios
+
+on:
+  push:
+    branches: ["ios"]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "ios" ]
+
+env:
+  ANDROID_NDK_VERSION: r26c
+  OPENCV_VERSION: 4.9.0
+  LIB_NAME: libopencv_dart
+
+jobs:
+  build-ios:
+      name: build-ios
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: setup
+          run: |
+            brew install --force --overwrite ninja ccache ffmpeg nasm
+            python3 -m pip install conan
+            conan profile detect -f
+            cd ${{github.workspace}}
+        - name: build
+          run: |
+            echo "`pwd`/profiles/ios.toolchain.cmake" >> profiles/ios-armv8
+            conan build . -b missing -pr:h profiles/ios-armv8
+
+            echo "`pwd`/profiles/ios.toolchain.cmake" >> profiles/ios-x86_64
+            conan build . -b missing -pr:h profiles/ios-x86_64
+
+        - uses: actions/upload-artifact@v4
+          name: upload
+          with:
+            path: build/publish/libopencv_dart-ios-arm64.tar.gz
+            name: libopencv_dart-ios-arm64.tar.gz
+        - uses: actions/upload-artifact@v4
+          name: upload x64
+          with:
+            path: build/publish/libopencv_dart-ios-x64.tar.gz
+            name: libopencv_dart-ios-x64.tar.gz
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            draft: true
+            prerelease: false
+            files: |
+              build/publish/libopencv_dart-ios-arm64.tar.gz
+              build/publish/libopencv_dart-ios-x64.tar.gz
