@@ -33,8 +33,13 @@ ffi.DynamicLibrary loadNativeLibrary() {
     return ffi.DynamicLibrary.open("$_libraryName.dll");
   } else if (Platform.isAndroid || Platform.isFuchsia || Platform.isLinux) {
     return ffi.DynamicLibrary.open("lib$_libraryName.so");
-  } else {
+  } else if (Platform.isMacOS) {
     return ffi.DynamicLibrary.open("lib$_libraryName.dylib");
+  } else if (Platform.isIOS) {
+    return ffi.DynamicLibrary.process();
+  } else {
+    throw UnsupportedError(
+        "Platform ${Platform.operatingSystem} not supported");
   }
 }
 
@@ -50,7 +55,7 @@ abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
   T get ref;
 }
 
-void throwIfFailed(CvStatus status){
+void throwIfFailed(CvStatus status) {
   if (status.code != 0) {
     throw OpenCvException.fromStatus(status);
   }

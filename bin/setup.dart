@@ -8,6 +8,6 @@ void main(List<String> args) async {
     ..addCommand(LinuxSetupCommand())
     ..addCommand(MacOsSetupCommand())
     ..addCommand(AndroidSetupCommand())
-    // ..addCommand(IosSetupCommand())
+    ..addCommand(IosSetupCommand())
     ..run(args);
 }

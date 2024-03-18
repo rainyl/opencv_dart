@@ -59,17 +59,20 @@ abstract class BaseSetupCommand extends Command {
     final opencvRoot = packageConfigFile.uri.resolve(pkg['rootUri'] ?? '');
     print('Using package:$setupPkgName from ${opencvRoot.toFilePath()}');
 
-    final doc = loadYaml(File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
+    final doc = loadYaml(
+        File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
     final _version = doc["version"] as String;
     final libTarName = "libopencv_dart-$os-$arch.tar.gz";
     final version = _version.replaceAll(RegExp(r"\-dev.*"), "");
 
     print('Downloading prebuilt binary...');
-    String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+    String url =
+        "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
 
     final cacheTarPath = p.join(opencvRoot.toFilePath(), ".cache", libTarName);
     final saveFile = File(cacheTarPath);
-    if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
+    if (!saveFile.parent.existsSync())
+      saveFile.parent.createSync(recursive: true);
 
     print("Downloading $url");
     final request = await HttpClient().getUrl(Uri.parse(url));
@@ -92,7 +95,8 @@ abstract class BaseSetupCommand extends Command {
         extractPath = p.join(opencvRoot.toFilePath(), "linux");
         break;
       case OS.android:
-        extractPath = p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
+        extractPath = p.join(
+            opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
       case OS.macos:
         extractPath = p.join(opencvRoot.toFilePath(), "macos");
       case OS.fuchsia:
@@ -101,10 +105,12 @@ abstract class BaseSetupCommand extends Command {
       default:
         throw UnsupportedError("Platform $os not supported");
     }
-    if (!Directory(extractPath).existsSync()) Directory(extractPath).createSync(recursive: true);
+    if (!Directory(extractPath).existsSync())
+      Directory(extractPath).createSync(recursive: true);
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);
-    extractArchiveToDisk(archive, extractPath, bufferSize: 1024 * 1024 * 10); // 10MB
+    extractArchiveToDisk(archive, extractPath,
+        bufferSize: 1024 * 1024 * 10); // 10MB
   }
 
   @override
@@ -124,7 +130,12 @@ class MacOsSetupCommand extends BaseSetupCommand {
   String get name => "macos";
 
   MacOsSetupCommand() {
-    argParser.addOption("arch", allowed: ["auto", "x64", "arm64"], defaultsTo: "auto");
+    argParser.addOption(
+      "arch",
+      abbr: "a",
+      allowed: ["auto", "x64", "arm64"],
+      defaultsTo: "auto",
+    );
   }
 }
 
@@ -136,7 +147,7 @@ class WindowsSetupCommand extends BaseSetupCommand {
   String get name => "windows";
 
   WindowsSetupCommand() {
-    argParser.addOption("arch", allowed: ["x64"], defaultsTo: "x64");
+    argParser.addOption("arch", abbr: "a", allowed: ["x64"], defaultsTo: "x64");
   }
 }
 
@@ -148,7 +159,7 @@ class LinuxSetupCommand extends BaseSetupCommand {
   String get name => "linux";
 
   LinuxSetupCommand() {
-    argParser.addOption("arch", allowed: ["x64"], defaultsTo: "x64");
+    argParser.addOption("arch", abbr: "a", allowed: ["x64"], defaultsTo: "x64");
   }
 }
 
@@ -162,6 +173,7 @@ class AndroidSetupCommand extends BaseSetupCommand {
   AndroidSetupCommand() {
     argParser.addOption(
       "arch",
+      abbr: "a",
       allowed: ["auto", "x86_64", "arm64-v8a", "armeabi-v7a"],
       defaultsTo: "auto",
     );
@@ -176,8 +188,12 @@ class IosSetupCommand extends BaseSetupCommand {
   String get name => "ios";
 
   IosSetupCommand() {
-    // argParser.addOption("arch", allowed: ["auto", "x64", "arm64"], defaultsTo: "auto");
-    throw UnimplementedError();
+    argParser.addOption(
+      "arch",
+      abbr: "a",
+      allowed: ["auto", "x64", "arm64"],
+      defaultsTo: "auto",
+    );
   }
 }
 

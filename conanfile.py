@@ -26,6 +26,10 @@ arch_map = {
         "x86_64": "x64",
         "armv8": "arm64",
     },
+    "ios": {
+        "x86_64": "x64",
+        "armv8": "arm64",
+    }
 }
 
 # (name, enabled)
@@ -205,6 +209,22 @@ class OcvDartDesktop(ConanFile):
 
     def generate(self):
         tc: CMakeToolchain = CMakeToolchain(self)
+        if self.settings.os == "iOS":
+            platform_map = {
+                "armv8": "OS64",
+                "x86_64": "SIMULATOR64"
+                # TODO: maybe need a conf var to support "SIMULATORARM64" and more
+            }
+            platform = platform_map[str(self.settings.arch)]
+            block = tc.blocks["user_toolchain"]
+            block.template = (
+                f"set(PLATFORM {platform})\n"
+                "set(ENABLE_ARC FALSE)\n"
+                "set(ENABLE_BITCODE FALSE)\n"
+                f"{block.template}"
+            )
+            # tc.variables["CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM"] = "rainyl"
+            # tc.variables["CODE_SIGNING_ALLOWED"] = "NO"
         tc.variables["BUILD_CUDA_STUBS"] = False
         tc.variables["BUILD_DOCS"] = False
         tc.variables["BUILD_EXAMPLES"] = False
@@ -256,7 +276,8 @@ class OcvDartDesktop(ConanFile):
         tc.variables["WITH_ITT"] = False
         tc.variables["WITH_LIBREALSENSE"] = False
         tc.variables["WITH_MFX"] = False
-        tc.variables["WITH_OPENCL"] = self.get_bool("with_opencl", False)
+        # opencl fails on ios
+        tc.variables["WITH_OPENCL"] = False if self.settings.os == "iOS" else self.get_bool("with_opencl", False)
         tc.variables["WITH_OPENCLAMDBLAS"] = False
         tc.variables["WITH_OPENCLAMDFFT"] = False
         tc.variables["WITH_OPENCL_SVM"] = False
@@ -340,8 +361,9 @@ class OcvDartDesktop(ConanFile):
             )
 
     def build_requirements(self):
-        self.tool_requires("cmake/3.22.6")
+        self.tool_requires("cmake/3.28.1")
         self.tool_requires("nasm/2.16.01")
+        # self.tool_requires("ccache/4.9.1")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
 
@@ -389,7 +411,8 @@ class OcvDartDesktop(ConanFile):
                 "CMAKE_CXX_VISIBILITY_PRESET": "hidden",
             },
         )
-        cmake.build()
+        tool_args = ["CODE_SIGNING_ALLOWED=NO"] if self.settings.os == "iOS" else None
+        cmake.build(build_tool_args=tool_args)
         cmake.install(cli_args=["--strip"])
 
         self.post_build()
@@ -405,9 +428,9 @@ class OcvDartDesktop(ConanFile):
         if not fname.parent.exists():
             fname.parent.mkdir(parents=True)
         with tarfile.open(fname, mode="w:gz") as tar:
-            for file in install_dir.glob("*"):
-                if file.is_file():
-                    tar.add(file, arcname=file.name)
+            for file in install_dir.glob("**/*"):
+                print(f"Adding {file}...")
+                tar.add(file, arcname=file.name)
         print(f"published: {fname}")
         dst = self.publish_folder.parent.parent / os
         if os == "android":
@@ -427,14 +450,10 @@ class OcvDartDesktop(ConanFile):
     def opencv_dir(self, dir: Path) -> str:
         if self.settings.os == "Windows":
             return str(dir)
-        elif self.settings.os == "Linux":
-            return str(dir / "lib" / "cmake" / "opencv4")
-        elif self.settings.os == "Macos":
+        elif self.settings.os in ["Linux", "Macos", "iOS"]:
             return str(dir / "lib" / "cmake" / "opencv4")
         elif self.settings.os == "Android":
             return str(dir / "sdk" / "native" / "jni")
-        elif self.settings.os == "iOS":
-            raise NotImplementedError
         else:
             raise ConanInvalidConfiguration
 
