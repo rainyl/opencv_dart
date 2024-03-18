@@ -9,29 +9,34 @@ OpenCV Bindings for Dart Language.
 | Platform | Supported          | Tested                  | Prebuilt Binaries              |
 | -------- | ------------------ | ----------------------- | ------------------------------ |
 | Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :x:                | :x:                     | :x:                            |
+| iOS      | :white_check_mark: | :ballot_box_with_check: | arm64, x64(Simulator)          |
 | Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
 | Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
 | macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
 
-- I have no Apple devices, so iOS and ~~macOS are not supported yet~~ macOS compiled by Github Workflow available now, try it!
-- Theorically the dart codes will work for iOS, you can compile binaries by yourself, contributions are welcome!
-
 ## IMPORTANT
 
-After added to `pubspec.yaml` or install by commandline,
-please run `dart run opencv_dart:setup <platform> --arch <arch>` to download
-prebuilt binaries.
+Please run
 
-- `platform`: `auto` `android` `linux` `windows` `macos`
-- `arch`: `auto` `x86` `x64` `arm64`(macOS only) `x86_64`(android only) `arm64-v8a`(android only) `armeabi-v7a`(android only)
+```bash
+dart run opencv_dart:setup <platform> --arch <arch>
+```
+
+to download prebuilt binaries.
+
+- **platform**: `auto` `android` `linux` `windows` `macos`
+- for **Windows**, arch: `x64`
+- for **Linux**, arch: `x64`
+- for **macOS**, arch: `x64` `arm64`
+- for **IOS**, arch: `x64` `arm64`
+- for **Android**, arch: `x86_64` `arm64-v8a` `armeabi-v7a`
 - run `dart run opencv_dart:setup -h` to see more options
 
 **Please use v0.3.0 and later version.**
 
 ## Example
 
-![example](images/example.png)
+![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
 
 ## Status
 
@@ -81,13 +86,13 @@ More examples are on the way...
 ### TODO
 
 - [x] ~~compile libs for android, linux~~
-- [ ] support for iOS, ~~macOS~~
+- [ ] ~~support for iOS, macOS~~
 - [ ] add more examples
 - [ ] documentation
 - [ ] modify C wrapper to catch exceptions
 - [ ] Native Assets
 - [ ] async?
-- [x] ~~directly include opencv source code,~~ refactor cmakelists.txt
+- [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
 ## For Developers
 
