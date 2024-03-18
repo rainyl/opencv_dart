@@ -428,7 +428,7 @@ class OcvDartDesktop(ConanFile):
         if not fname.parent.exists():
             fname.parent.mkdir(parents=True)
         with tarfile.open(fname, mode="w:gz") as tar:
-            for file in install_dir.glob("**/*"):
+            for file in install_dir.glob("*"):
                 print(f"Adding {file}...")
                 tar.add(file, arcname=file.name)
         print(f"published: {fname}")

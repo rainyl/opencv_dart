@@ -1,3 +1,8 @@
+## 0.6.5
+
+- :tada: IOS supported now, tested on simulator, try it!
+- fix ios dynamic library loading
+
 ## 0.6.4
 
 - this is a minor version and no functional code changes
