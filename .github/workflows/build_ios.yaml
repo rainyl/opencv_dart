@@ -23,13 +23,14 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja ccache ffmpeg nasm
+            # brew install --force --overwrite ninja ccache ffmpeg nasm
             python3 -m pip install conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: build
           run: |
             echo "`pwd`/profiles/ios.toolchain.cmake" >> profiles/ios-armv8
+            cat profiles/ios-armv8
             conan build . -b missing -pr:h profiles/ios-armv8
 
             echo "`pwd`/profiles/ios.toolchain.cmake" >> profiles/ios-x86_64
