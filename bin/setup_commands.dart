@@ -99,14 +99,15 @@ abstract class BaseSetupCommand extends Command {
             opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
       case OS.macos:
         extractPath = p.join(opencvRoot.toFilePath(), "macos");
-      case OS.fuchsia:
       case OS.ios:
-        throw UnimplementedError();
+        extractPath = p.join(opencvRoot.toFilePath(), "ios");
+      case OS.fuchsia:
       default:
         throw UnsupportedError("Platform $os not supported");
     }
-    if (!Directory(extractPath).existsSync())
+    if (!Directory(extractPath).existsSync()) {
       Directory(extractPath).createSync(recursive: true);
+    }
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);
     extractArchiveToDisk(archive, extractPath,
