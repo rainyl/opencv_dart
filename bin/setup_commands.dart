@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
@@ -18,7 +17,7 @@ abstract class BaseSetupCommand extends Command {
 
   String get arch {
     final arch_ = argResults?["arch"] as String;
-    return arch_ == "auto" ? Abi.current().toString().split("_").last : arch_;
+    return arch_;
   }
 
   String get os => name;
@@ -134,8 +133,8 @@ class MacOsSetupCommand extends BaseSetupCommand {
     argParser.addOption(
       "arch",
       abbr: "a",
-      allowed: ["auto", "x64", "arm64"],
-      defaultsTo: "auto",
+      allowed: ["x64", "arm64"],
+      mandatory: true,
     );
   }
 }
@@ -148,7 +147,7 @@ class WindowsSetupCommand extends BaseSetupCommand {
   String get name => "windows";
 
   WindowsSetupCommand() {
-    argParser.addOption("arch", abbr: "a", allowed: ["x64"], defaultsTo: "x64");
+    argParser.addOption("arch", abbr: "a", allowed: ["x64"], mandatory: true);
   }
 }
 
@@ -160,7 +159,7 @@ class LinuxSetupCommand extends BaseSetupCommand {
   String get name => "linux";
 
   LinuxSetupCommand() {
-    argParser.addOption("arch", abbr: "a", allowed: ["x64"], defaultsTo: "x64");
+    argParser.addOption("arch", abbr: "a", allowed: ["x64"], mandatory: true);
   }
 }
 
@@ -175,8 +174,8 @@ class AndroidSetupCommand extends BaseSetupCommand {
     argParser.addOption(
       "arch",
       abbr: "a",
-      allowed: ["auto", "x86_64", "arm64-v8a", "armeabi-v7a"],
-      defaultsTo: "auto",
+      allowed: ["x86_64", "arm64-v8a", "armeabi-v7a"],
+      mandatory: true,
     );
   }
 }
@@ -192,8 +191,8 @@ class IosSetupCommand extends BaseSetupCommand {
     argParser.addOption(
       "arch",
       abbr: "a",
-      allowed: ["auto", "x64", "arm64"],
-      defaultsTo: "auto",
+      allowed: ["x64", "arm64"],
+      mandatory: true,
     );
   }
 }
