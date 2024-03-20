@@ -922,4 +922,36 @@ void main() async {
     cv.accumulateWeighted(src, dst, 0.1, mask: mask);
     expect(dst.isEmpty, false);
   });
+
+  test("Issue 8", () {
+    cv.Mat mask = cv.Mat.ones(512, 512, cv.MatType.CV_32FC1);
+
+    List<cv.Point2f> faceTemplate = [
+      cv.Point2f(192.98138, 239.94708),
+      cv.Point2f(318.90277, 240.1936),
+      cv.Point2f(256.63416, 314.01935),
+      cv.Point2f(201.26117, 371.41043),
+      cv.Point2f(314.08905, 371.15118)
+    ];
+
+    List<cv.Point2f> landmarks = [
+      cv.Point2f(916.1744018554688, 436.8168579101563),
+      cv.Point2f(1179.1181030273438, 448.0384765625),
+      cv.Point2f(1039.171106147766, 604.8748825073242),
+      cv.Point2f(908.7911743164062, 683.4760314941407),
+      cv.Point2f(1167.2201416015625, 693.495068359375),
+    ];
+
+    var (affineMatrix, _) = cv.estimateAffinePartial2D(landmarks, faceTemplate, method: cv.LMEDS);
+
+    var invMask = cv.Mat.empty();
+    cv.warpAffine(mask, invMask, affineMatrix, (2048, 2048));
+
+    for (int i = 0; i < 2047; i++) {
+      for (int j = 0; j < 2047; j++) {
+        var val = invMask.at<double>(i, j);
+        expect(val == 0 || val == 1, true);
+      }
+    }
+  });
 }

@@ -58,20 +58,17 @@ abstract class BaseSetupCommand extends Command {
     final opencvRoot = packageConfigFile.uri.resolve(pkg['rootUri'] ?? '');
     print('Using package:$setupPkgName from ${opencvRoot.toFilePath()}');
 
-    final doc = loadYaml(
-        File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
-    final _version = doc["version"] as String;
+    final doc = loadYaml(File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
+    final _version = doc["binary_version"] as String;
     final libTarName = "libopencv_dart-$os-$arch.tar.gz";
     final version = _version.replaceAll(RegExp(r"\-dev.*"), "");
 
     print('Downloading prebuilt binary...');
-    String url =
-        "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+    String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
 
     final cacheTarPath = p.join(opencvRoot.toFilePath(), ".cache", libTarName);
     final saveFile = File(cacheTarPath);
-    if (!saveFile.parent.existsSync())
-      saveFile.parent.createSync(recursive: true);
+    if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
 
     print("Downloading $url");
     final request = await HttpClient().getUrl(Uri.parse(url));
@@ -94,8 +91,7 @@ abstract class BaseSetupCommand extends Command {
         extractPath = p.join(opencvRoot.toFilePath(), "linux");
         break;
       case OS.android:
-        extractPath = p.join(
-            opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
+        extractPath = p.join(opencvRoot.toFilePath(), "android", "src", "main", "jniLibs", arch);
       case OS.macos:
         extractPath = p.join(opencvRoot.toFilePath(), "macos");
       case OS.ios:
@@ -109,8 +105,7 @@ abstract class BaseSetupCommand extends Command {
     }
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);
-    extractArchiveToDisk(archive, extractPath,
-        bufferSize: 1024 * 1024 * 10); // 10MB
+    extractArchiveToDisk(archive, extractPath, bufferSize: 1024 * 1024 * 10); // 10MB
   }
 
   @override

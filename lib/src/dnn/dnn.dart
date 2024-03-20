@@ -212,7 +212,7 @@ class Net implements ffi.Finalizable {
   /// SetInput sets the new value for the layer output blob.
   ///
   /// For further details, please see:
-  /// https://docs.opencv.org/trunk/db/d30/classcv_1_1dnn_1_1Net.html#a672a08ae76444d75d05d7bfea3e4a328
+  /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a5e74adacffd6aa53d56046581de7fcbd
   void setInput(InputArray blob, {String name = "", double scalefactor = 1.0, Scalar? mean}) {
     mean ??= Scalar.default_();
     using((arena) {

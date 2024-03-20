@@ -12,7 +12,7 @@ ffigen_contrib.yaml
 ffigen_cuda.yaml
 replace.py
 generate.py
-demo.c
+demo.*
 coverage/
 pkgs/
 __pycache__

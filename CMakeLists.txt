@@ -79,7 +79,7 @@ target_compile_definitions(${library_name} PUBLIC DART_SHARED_LIB)
 if(WITH_OPENCV_DART_DEMO)
     add_executable(
         demo
-        "demo.c"
+        "src/demo.cxx"
     )
     target_link_libraries(
         demo

@@ -223,8 +223,6 @@ void main() async {
 
   test('Mat test others', () {
     final mat0 = cv.Mat.ones(200, 100, cv.MatType.CV_8UC3);
-    expect(() => mat0.ref, throwsUnsupportedError);
-    expect(() => mat0.toNative(), throwsUnsupportedError);
     expect(mat0.props, equals([mat0.ptr.address]));
     final data = mat0.data;
     expect(data.length, greaterThan(0));

@@ -13,9 +13,9 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-class Mat extends CvObject with EquatableMixin {
-  Mat._(this._ptr) : super(_ptr) {
-    _finalizer.attach(this, _ptr);
+class Mat with EquatableMixin implements ffi.Finalizable {
+  Mat._(this.ptr) {
+    _finalizer.attach(this, ptr);
   }
   factory Mat.fromCMat(cvg.Mat mat) => Mat._(mat);
 
@@ -88,24 +88,24 @@ class Mat extends CvObject with EquatableMixin {
   }
 
   static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Mat_Close);
-  cvg.Mat _ptr;
-  MatType get _type => MatType(_bindings.Mat_Type(_ptr));
-  int get width => _bindings.Mat_Cols(_ptr);
-  int get height => _bindings.Mat_Rows(_ptr);
-  int get cols => _bindings.Mat_Cols(_ptr);
-  int get rows => _bindings.Mat_Rows(_ptr);
-  int get channels => _bindings.Mat_Channels(_ptr);
-  int get total => _bindings.Mat_Total(_ptr);
-  bool get isEmpty => _bindings.Mat_Empty(_ptr);
-  bool get isContinus => _bindings.Mat_IsContinuous(_ptr);
-  int get step => _bindings.Mat_Step(_ptr);
-  int get elemSize => _bindings.Mat_ElemSize(_ptr);
+  cvg.Mat ptr;
+  MatType get _type => MatType(_bindings.Mat_Type(ptr));
+  int get width => _bindings.Mat_Cols(ptr);
+  int get height => _bindings.Mat_Rows(ptr);
+  int get cols => _bindings.Mat_Cols(ptr);
+  int get rows => _bindings.Mat_Rows(ptr);
+  int get channels => _bindings.Mat_Channels(ptr);
+  int get total => _bindings.Mat_Total(ptr);
+  bool get isEmpty => _bindings.Mat_Empty(ptr);
+  bool get isContinus => _bindings.Mat_IsContinuous(ptr);
+  int get step => _bindings.Mat_Step(ptr);
+  int get elemSize => _bindings.Mat_ElemSize(ptr);
 
   /// (rows, cols)
   List<int> get size {
     return using<List<int>>((arena) {
       final s = arena<cvg.IntVector>();
-      _bindings.Mat_Size(_ptr, s);
+      _bindings.Mat_Size(ptr, s);
       final ss = List.generate(s.ref.length, (index) => s.ref.val[index]);
       return ss;
     });
@@ -120,7 +120,7 @@ class Mat extends CvObject with EquatableMixin {
   /// only for channels == 1
   int get countNoneZero {
     assert(channels == 1, "countNoneZero only for channels == 1");
-    return _bindings.Mat_CountNonZero(_ptr);
+    return _bindings.Mat_CountNonZero(ptr);
   }
 
   T at<T extends num>(int row, int col, {int? cn}) {
@@ -128,32 +128,32 @@ class Mat extends CvObject with EquatableMixin {
     switch (type.depth) {
       case MatType.CV_8U:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetUChar(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetUChar3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetUChar(ptr, row, col).toDouble()
+            : _bindings.Mat_GetUChar3(ptr, row, col, cn).toDouble();
       case MatType.CV_8S:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetSChar(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetSChar3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetSChar(ptr, row, col).toDouble()
+            : _bindings.Mat_GetSChar3(ptr, row, col, cn).toDouble();
       case MatType.CV_16U:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetUShort(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetUShort3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetUShort(ptr, row, col).toDouble()
+            : _bindings.Mat_GetUShort3(ptr, row, col, cn).toDouble();
       case MatType.CV_16S:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetShort(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetShort3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetShort(ptr, row, col).toDouble()
+            : _bindings.Mat_GetShort3(ptr, row, col, cn).toDouble();
       case MatType.CV_32S:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetInt(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetInt3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetInt(ptr, row, col).toDouble()
+            : _bindings.Mat_GetInt3(ptr, row, col, cn).toDouble();
       case MatType.CV_32F:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetFloat(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetFloat3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetFloat(ptr, row, col).toDouble()
+            : _bindings.Mat_GetFloat3(ptr, row, col, cn).toDouble();
       case MatType.CV_64F:
         vDouble = type.channels == 1 || cn == null
-            ? _bindings.Mat_GetDouble(_ptr, row, col).toDouble()
-            : _bindings.Mat_GetDouble3(_ptr, row, col, cn).toDouble();
+            ? _bindings.Mat_GetDouble(ptr, row, col).toDouble()
+            : _bindings.Mat_GetDouble3(ptr, row, col, cn).toDouble();
       default:
         throw UnsupportedError("at() for $type is not supported!");
     }
@@ -169,38 +169,38 @@ class Mat extends CvObject with EquatableMixin {
       case MatType.CV_8U:
         assert(T == int, "$type only support int");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetUChar(_ptr, row, col, val as int)
-            : _bindings.Mat_SetUChar3(_ptr, row, col, cn, val as int);
+            ? _bindings.Mat_SetUChar(ptr, row, col, val as int)
+            : _bindings.Mat_SetUChar3(ptr, row, col, cn, val as int);
       case MatType.CV_8S:
         assert(T == int, "$type only support int");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetSChar(_ptr, row, col, val as int)
-            : _bindings.Mat_SetSChar3(_ptr, row, col, cn, val as int);
+            ? _bindings.Mat_SetSChar(ptr, row, col, val as int)
+            : _bindings.Mat_SetSChar3(ptr, row, col, cn, val as int);
       case MatType.CV_16U:
         assert(T == int, "$type only support int");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetUShort(_ptr, row, col, val as int)
-            : _bindings.Mat_SetUShort3(_ptr, row, col, cn, val as int);
+            ? _bindings.Mat_SetUShort(ptr, row, col, val as int)
+            : _bindings.Mat_SetUShort3(ptr, row, col, cn, val as int);
       case MatType.CV_16S:
         assert(T == int, "$type only support int");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetShort(_ptr, row, col, val as int)
-            : _bindings.Mat_SetShort3(_ptr, row, col, cn, val as int);
+            ? _bindings.Mat_SetShort(ptr, row, col, val as int)
+            : _bindings.Mat_SetShort3(ptr, row, col, cn, val as int);
       case MatType.CV_32S:
         assert(T == int, "$type only support int");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetInt(_ptr, row, col, val as int)
-            : _bindings.Mat_SetInt3(_ptr, row, col, cn, val as int);
+            ? _bindings.Mat_SetInt(ptr, row, col, val as int)
+            : _bindings.Mat_SetInt3(ptr, row, col, cn, val as int);
       case MatType.CV_32F:
         assert(T == double, "$type only support double");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetFloat(_ptr, row, col, val as double)
-            : _bindings.Mat_SetFloat3(_ptr, row, col, cn, val as double);
+            ? _bindings.Mat_SetFloat(ptr, row, col, val as double)
+            : _bindings.Mat_SetFloat3(ptr, row, col, cn, val as double);
       case MatType.CV_64F:
         assert(T == double, "$type only support double");
         type.channels == 1 || cn == null
-            ? _bindings.Mat_SetDouble(_ptr, row, col, val as double)
-            : _bindings.Mat_SetDouble3(_ptr, row, col, cn, val as double);
+            ? _bindings.Mat_SetDouble(ptr, row, col, val as double)
+            : _bindings.Mat_SetDouble3(ptr, row, col, cn, val as double);
       default:
         throw UnsupportedError("setValue() for $type is not supported!");
     }
@@ -243,11 +243,11 @@ class Mat extends CvObject with EquatableMixin {
   Mat addMat(Mat other, {bool inplace = false}) {
     assert(other.type == type, "${this.type} != ${other.type}");
     if (inplace) {
-      _bindings.Mat_Add(_ptr, other.ptr, _ptr);
+      _bindings.Mat_Add(ptr, other.ptr, ptr);
       return this;
     } else {
       final dst = Mat.empty();
-      _bindings.Mat_Add(_ptr, other.ptr, dst.ptr);
+      _bindings.Mat_Add(ptr, other.ptr, dst.ptr);
       return dst;
     }
   }
@@ -255,7 +255,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat addU8(int val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "addU8() only for CV_8U");
     if (inplace) {
-      _bindings.Mat_AddUChar(_ptr, val);
+      _bindings.Mat_AddUChar(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -265,10 +265,9 @@ class Mat extends CvObject with EquatableMixin {
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "addI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "addI32() only for CV_32S");
     if (inplace) {
-      _bindings.Mat_AddI32(_ptr, val);
+      _bindings.Mat_AddI32(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -280,7 +279,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat addF32(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "addF32() only for CV_32F");
     if (inplace) {
-      _bindings.Mat_AddFloat(_ptr, val);
+      _bindings.Mat_AddFloat(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -292,7 +291,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat addF64(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "addF64() only for CV_64F");
     if (inplace) {
-      _bindings.Mat_AddF64(_ptr, val);
+      _bindings.Mat_AddF64(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -331,20 +330,19 @@ class Mat extends CvObject with EquatableMixin {
   Mat subtractMat(Mat other, {bool inplace = false}) {
     assert(other.type == type, "${this.type} != ${other.type}");
     if (inplace) {
-      _bindings.Mat_Subtract(_ptr, other.ptr, _ptr);
+      _bindings.Mat_Subtract(ptr, other.ptr, ptr);
       return this;
     } else {
       final dst = Mat.empty();
-      _bindings.Mat_Subtract(_ptr, other.ptr, dst.ptr);
+      _bindings.Mat_Subtract(ptr, other.ptr, dst.ptr);
       return dst;
     }
   }
 
   Mat subtractU8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "subtractU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "subtractU8() only for CV_8U");
     if (inplace) {
-      _bindings.Mat_SubtractUChar(_ptr, val);
+      _bindings.Mat_SubtractUChar(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -354,10 +352,9 @@ class Mat extends CvObject with EquatableMixin {
   }
 
   Mat subtractI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "subtractI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "subtractI32() only for CV_32S");
     if (inplace) {
-      _bindings.Mat_SubtractI32(_ptr, val);
+      _bindings.Mat_SubtractI32(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -369,7 +366,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat subtractF32(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "subtractF32() only for CV_32F");
     if (inplace) {
-      _bindings.Mat_SubtractFloat(_ptr, val);
+      _bindings.Mat_SubtractFloat(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -381,7 +378,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat subtractF64(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "subtractF64() only for CV_64F");
     if (inplace) {
-      _bindings.Mat_SubtractF64(_ptr, val);
+      _bindings.Mat_SubtractF64(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -420,20 +417,19 @@ class Mat extends CvObject with EquatableMixin {
   Mat multiplyMat(Mat other, {bool inplace = false}) {
     assert(other.type == type, "${this.type} != ${other.type}");
     if (inplace) {
-      _bindings.Mat_Multiply(_ptr, other.ptr, _ptr);
+      _bindings.Mat_Multiply(ptr, other.ptr, ptr);
       return this;
     } else {
       final dst = Mat.empty();
-      _bindings.Mat_Multiply(_ptr, other.ptr, dst.ptr);
+      _bindings.Mat_Multiply(ptr, other.ptr, dst.ptr);
       return dst;
     }
   }
 
   Mat multiplyU8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "multiplyU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "multiplyU8() only for CV_8U");
     if (inplace) {
-      _bindings.Mat_MultiplyUChar(_ptr, val);
+      _bindings.Mat_MultiplyUChar(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -443,10 +439,9 @@ class Mat extends CvObject with EquatableMixin {
   }
 
   Mat multiplyI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "multiplyI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "multiplyI32() only for CV_32S");
     if (inplace) {
-      _bindings.Mat_MultiplyI32(_ptr, val);
+      _bindings.Mat_MultiplyI32(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -458,7 +453,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat multiplyF32(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "multiplyF32() only for CV_32F");
     if (inplace) {
-      _bindings.Mat_MultiplyFloat(_ptr, val);
+      _bindings.Mat_MultiplyFloat(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -470,7 +465,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat multiplyF64(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "multiplyF64() only for CV_64F");
     if (inplace) {
-      _bindings.Mat_MultiplyF64(_ptr, val);
+      _bindings.Mat_MultiplyF64(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -509,11 +504,11 @@ class Mat extends CvObject with EquatableMixin {
   Mat divideMat(Mat other, {bool inplace = false}) {
     assert(other.type == type, "${this.type} != ${other.type}");
     if (inplace) {
-      _bindings.Mat_Divide(_ptr, other.ptr, _ptr);
+      _bindings.Mat_Divide(ptr, other.ptr, ptr);
       return this;
     } else {
       final dst = Mat.empty();
-      _bindings.Mat_Divide(_ptr, other.ptr, dst.ptr);
+      _bindings.Mat_Divide(ptr, other.ptr, dst.ptr);
       return dst;
     }
   }
@@ -521,7 +516,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat divideU8(int val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "divideU8() only for CV_8U");
     if (inplace) {
-      _bindings.Mat_DivideUChar(_ptr, val);
+      _bindings.Mat_DivideUChar(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -531,10 +526,9 @@ class Mat extends CvObject with EquatableMixin {
   }
 
   Mat divideI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "divideI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "divideI32() only for CV_32S");
     if (inplace) {
-      _bindings.Mat_DivideI32(_ptr, val);
+      _bindings.Mat_DivideI32(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -546,7 +540,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat divideF32(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "divideF32() only for CV_32F");
     if (inplace) {
-      _bindings.Mat_DivideFloat(_ptr, val);
+      _bindings.Mat_DivideFloat(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -558,7 +552,7 @@ class Mat extends CvObject with EquatableMixin {
   Mat divideF64(double val, {bool inplace = false}) {
     assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "divideF64() only for CV_64F");
     if (inplace) {
-      _bindings.Mat_DivideF64(_ptr, val);
+      _bindings.Mat_DivideF64(ptr, val);
       return this;
     } else {
       final dst = this.clone();
@@ -569,61 +563,61 @@ class Mat extends CvObject with EquatableMixin {
 
   Mat transpose({bool inplace = false}) {
     final dst = inplace ? this : Mat.empty();
-    final code = _bindings.Mat_Transpose(_ptr, dst.ptr);
+    final code = _bindings.Mat_Transpose(ptr, dst.ptr);
     if (code == ErrorCode.StsOk.code) return dst;
     throw Exception("transpose() failed with code $code");
   }
 
-  Mat clone() => Mat._(_bindings.Mat_Clone(_ptr));
+  Mat clone() => Mat._(_bindings.Mat_Clone(ptr));
 
   void copyTo(Mat dst) {
-    _bindings.Mat_CopyTo(_ptr, dst.ptr);
+    _bindings.Mat_CopyTo(ptr, dst.ptr);
   }
 
   void copyToWithMask(Mat dst, Mat mask) {
-    _bindings.Mat_CopyToWithMask(_ptr, dst.ptr, mask.ptr);
+    _bindings.Mat_CopyToWithMask(ptr, dst.ptr, mask.ptr);
   }
 
   Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
     final dst = Mat.empty();
-    _bindings.Mat_ConvertToWithParams(_ptr, dst.ptr, type.toInt32(), alpha, beta);
+    _bindings.Mat_ConvertToWithParams(ptr, dst.ptr, type.toInt32(), alpha, beta);
     return dst;
   }
 
   Mat region(Rect rect) {
     assert(rect.x + rect.width <= width && rect.y + rect.height <= height, "rect is out of range");
-    return Mat._(_bindings.Mat_Region(_ptr, rect.ref));
+    return Mat._(_bindings.Mat_Region(ptr, rect.ref));
   }
 
-  Mat reshape(int cn, int rows) => Mat._(_bindings.Mat_Reshape(_ptr, cn, rows));
+  Mat reshape(int cn, int rows) => Mat._(_bindings.Mat_Reshape(ptr, cn, rows));
 
   Mat rotate(int rotationCode, {bool inplace = false}) {
     if (inplace) {
-      _bindings.Rotate(_ptr, _ptr, rotationCode);
+      _bindings.Rotate(ptr, ptr, rotationCode);
       return this;
     } else {
       final dst = this.clone();
-      _bindings.Rotate(_ptr, dst.ptr, rotationCode);
+      _bindings.Rotate(ptr, dst.ptr, rotationCode);
       return dst;
     }
   }
 
   Mat rowRange(int start, int end) {
-    return Mat.fromCMat(_bindings.Mat_rowRange(_ptr, start, end));
+    return Mat.fromCMat(_bindings.Mat_rowRange(ptr, start, end));
   }
 
   Mat colRange(int start, int end) {
-    return Mat.fromCMat(_bindings.Mat_colRange(_ptr, start, end));
+    return Mat.fromCMat(_bindings.Mat_colRange(ptr, start, end));
   }
 
-  Mat convertToFp16() => Mat._(_bindings.Mat_ConvertFp16(_ptr));
+  Mat convertToFp16() => Mat._(_bindings.Mat_ConvertFp16(ptr));
 
   Scalar mean({Mat? mask}) {
     final cvg.Scalar s;
     if (mask == null) {
-      s = _bindings.Mat_Mean(_ptr);
+      s = _bindings.Mat_Mean(ptr);
     } else {
-      s = _bindings.Mat_MeanWithMask(_ptr, mask.ptr);
+      s = _bindings.Mat_MeanWithMask(ptr, mask.ptr);
     }
     return Scalar.fromNative(s);
   }
@@ -631,17 +625,17 @@ class Mat extends CvObject with EquatableMixin {
   /// Calculates a square root of array elements.
   Mat sqrt() {
     assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F, "sqrt() only for CV_32F or CV_64F");
-    return Mat._(_bindings.Mat_Sqrt(_ptr));
+    return Mat._(_bindings.Mat_Sqrt(ptr));
   }
 
   /// Sum calculates the per-channel pixel sum of an image.
-  Scalar sum() => Scalar.fromNative(_bindings.Mat_Sum(_ptr));
+  Scalar sum() => Scalar.fromNative(_bindings.Mat_Sum(ptr));
 
   /// PatchNaNs converts NaN's to zeros.
-  void patchNaNs({double val = 0}) => _bindings.Mat_PatchNaNs(_ptr, val);
+  void patchNaNs({double val = 0}) => _bindings.Mat_PatchNaNs(ptr, val);
 
   Mat setTo(Scalar s) {
-    _bindings.Mat_SetTo(_ptr, s.ref);
+    _bindings.Mat_SetTo(ptr, s.ref);
     return this;
   }
 
@@ -665,15 +659,8 @@ class Mat extends CvObject with EquatableMixin {
     return List.generate(4, (cn) => toList(cn: cn));
   }
 
-  @override
-  cvg.Mat get ptr => _ptr;
-
-  set ptr(cvg.Mat value) {
-    _ptr = value;
-  }
-
   Uint8List get data {
-    final _data = _bindings.Mat_DataPtr(_ptr);
+    final _data = _bindings.Mat_DataPtr(ptr);
     return _data.data.cast<ffi.Uint8>().asTypedList(_data.length);
   }
 
@@ -686,12 +673,7 @@ class Mat extends CvObject with EquatableMixin {
   // }
 
   @override
-  ffi.NativeType get ref => throw UnsupportedError("Mat has no Native type");
-  @override
-  ffi.NativeType toNative() => throw UnsupportedError("Mat has no Native type");
-
-  @override
-  List<Object?> get props => [_ptr.address];
+  List<Object?> get props => [ptr.address];
 }
 
 typedef OutputArray = Mat;
