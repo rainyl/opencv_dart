@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-windows:
-    name: build-windows
+  test-windows:
+    name: test-windows
     runs-on: windows-latest
 
     steps:
