@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-windows:
+    name: build-windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - name: Run Test
+        run: |
+          dart run opencv_dart:setup windows -a x64
+          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
+          flutter pub get
+          flutter test -x no-local-files
