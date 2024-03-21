@@ -1,3 +1,9 @@
+## 0.6.6
+
+- add `cv.invertAffineTransform`
+- remove net.forwardAsync
+- add ios version info
+
 ## 0.6.5
 
 - :tada: IOS supported now, tested on simulator, try it!
