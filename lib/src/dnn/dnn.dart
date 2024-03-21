@@ -214,7 +214,7 @@ class Net implements ffi.Finalizable {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a5e74adacffd6aa53d56046581de7fcbd
   void setInput(InputArray blob, {String name = "", double scalefactor = 1.0, Scalar? mean}) {
-    mean ??= Scalar.default_();
+    // mean ??= Scalar.default_(); not supported yet
     using((arena) {
       final cname = name.toNativeUtf8(allocator: arena);
       _bindings.Net_SetInput(ptr, blob.ptr, cname.cast());
@@ -233,18 +233,18 @@ class Net implements ffi.Finalizable {
     );
   }
 
+  /// OpenVINO not supported yet, this is not available
   /// ForwardAsync runs forward pass to compute output of layer with name outputName.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a814890154ea9e10b132fec00b6f6ba30
-  AsyncArray forwardAsync({String outputName = ""}) {
-    return using<AsyncArray>((arena) {
-      final cname = outputName.toNativeUtf8(allocator: arena);
-      return AsyncArray.fromPointer(
-        _bindings.Net_forwardAsync(ptr, cname.cast()),
-      );
-    });
-  }
+  // AsyncArray forwardAsync({String outputName = ""}) {
+  //   return using<AsyncArray>((arena) {
+  //     final cname = outputName.toNativeUtf8(allocator: arena);
+  //     final p = _bindings.Net_forwardAsync(ptr, cname.cast());
+  //     return AsyncArray.fromPointer(p);
+  //   });
+  // }
 
   /// ForwardLayers forward pass to compute outputs of layers listed in outBlobNames.
   ///
@@ -352,7 +352,7 @@ Mat blobFromImage(
 }) {
   return using<Mat>((arena) {
     size ??= (0, 0);
-    mean ??= Scalar.default_();
+    mean ??= Scalar.zeros;
     final _ptr = _bindings.Net_BlobFromImage(
       image.ptr,
       scalefactor,
@@ -384,7 +384,7 @@ Mat blobFromImages(
   return using<Mat>((arena) {
     blob ??= Mat.empty();
     size ??= (0, 0);
-    mean ??= Scalar.default_();
+    mean ??= Scalar.zeros;
     _bindings.Net_BlobFromImages(
       images.toMats(arena).ref,
       blob!.ptr,

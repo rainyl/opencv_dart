@@ -63,7 +63,9 @@ if(IOS)
     set_target_properties(${library_name} PROPERTIES
         FRAMEWORK TRUE
         FRAMEWORK_VERSION CXX
-        MACOSX_FRAMEWORK_IDENTIFIER dev.rainyl.opencv_dart
+        MACOSX_FRAMEWORK_IDENTIFIER dev.rainyl.opencvDart
+        MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
     )
 endif(IOS)
 

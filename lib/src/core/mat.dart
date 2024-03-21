@@ -15,7 +15,7 @@ final _bindings = cvg.CvNative(loadNativeLibrary());
 
 class Mat with EquatableMixin implements ffi.Finalizable {
   Mat._(this.ptr) {
-    _finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr);
   }
   factory Mat.fromCMat(cvg.Mat mat) => Mat._(mat);
 
@@ -25,8 +25,8 @@ class Mat with EquatableMixin implements ffi.Finalizable {
   }
 
   factory Mat.fromScalar(Scalar s, MatType type, {int rows = 1, int cols = 1}) {
-    final _ptr = _bindings.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.toInt32());
-    return Mat._(_ptr);
+    final ptr = _bindings.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.toInt32());
+    return Mat._(ptr);
   }
 
   factory Mat.create({
@@ -39,24 +39,24 @@ class Mat with EquatableMixin implements ffi.Finalizable {
   }) {
     type = type ?? MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
-    final _ptr = _bindings.Mat_NewWithSizeFromScalar(scalar.ref, rows, cols, type.toInt32());
+    final ptr = _bindings.Mat_NewWithSizeFromScalar(scalar.ref, rows, cols, type.toInt32());
 
-    return Mat._(_ptr);
+    return Mat._(ptr);
   }
 
   factory Mat.eye(int rows, int cols, MatType type) {
-    final _ptr = _bindings.Eye(rows, cols, type.toInt32());
-    return Mat._(_ptr);
+    final ptr = _bindings.Eye(rows, cols, type.toInt32());
+    return Mat._(ptr);
   }
 
   factory Mat.zeros(int rows, int cols, MatType type) {
-    final _ptr = _bindings.Zeros(rows, cols, type.toInt32());
-    return Mat._(_ptr);
+    final ptr = _bindings.Zeros(rows, cols, type.toInt32());
+    return Mat._(ptr);
   }
 
   factory Mat.ones(int rows, int cols, MatType type) {
-    final _ptr = _bindings.Ones(rows, cols, type.toInt32());
-    return Mat._(_ptr);
+    final ptr = _bindings.Ones(rows, cols, type.toInt32());
+    return Mat._(ptr);
   }
 
   factory Mat.randn(int rows, int cols, MatType type, {Scalar? mean, Scalar? std}) {
@@ -83,11 +83,11 @@ class Mat with EquatableMixin implements ffi.Finalizable {
     int prows,
     int pcols,
   ) {
-    final _ptr = _bindings.Mat_FromPtr(m, rows, cols, type, prows, pcols);
-    return Mat._(_ptr);
+    final ptr = _bindings.Mat_FromPtr(m, rows, cols, type, prows, pcols);
+    return Mat._(ptr);
   }
 
-  static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Mat_Close);
+  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.Mat_Close);
   cvg.Mat ptr;
   MatType get _type => MatType(_bindings.Mat_Type(ptr));
   int get width => _bindings.Mat_Cols(ptr);
@@ -660,17 +660,16 @@ class Mat with EquatableMixin implements ffi.Finalizable {
   }
 
   Uint8List get data {
-    final _data = _bindings.Mat_DataPtr(ptr);
-    return _data.data.cast<ffi.Uint8>().asTypedList(_data.length);
+    final data = _bindings.Mat_DataPtr(ptr);
+    return data.data.cast<ffi.Uint8>().asTypedList(data.length);
   }
 
   MatType get type => _type;
 
-  // @override
-  // Future<Null> onDispose() {
-  //   _bindings.Mat_Close(_ptr);
-  //   return super.onDispose();
-  // }
+  @override
+  String toString() {
+    return "Mat(address=${ptr.address}, type=$type rows=$rows, cols=$cols, channels=$channels)";
+  }
 
   @override
   List<Object?> get props => [ptr.address];

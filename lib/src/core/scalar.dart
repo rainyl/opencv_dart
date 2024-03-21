@@ -42,4 +42,6 @@ class Scalar with EquatableMixin implements ffi.Finalizable {
   static final Scalar blue = Scalar.fromRgb(0, 0, 255);
   static final Scalar black = Scalar.fromRgb(0, 0, 0);
   static final Scalar white = Scalar.fromRgb(255, 255, 255);
+  static final Scalar zeros = Scalar.fromRgb(0, 0, 0);
+  static final Scalar max = Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
 }

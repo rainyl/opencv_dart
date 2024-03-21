@@ -1570,6 +1570,18 @@ double matchShapes(
   return r;
 }
 
+/// Inverts an affine transformation.
+/// The function computes an inverse affine transformation represented by 2×3 matrix M:
+/// The result is also a 2×3 matrix of the same type as M.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga57d3505a878a7e1a636645727ca08f51
+Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
+  iM ??= Mat.empty();
+  _bindings.InvertAffineTransform(M.ptr, iM.ptr);
+  return iM;
+}
+
 /// NewCLAHE returns a new CLAHE algorithm
 ///
 /// For further details, please see:

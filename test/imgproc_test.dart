@@ -882,6 +882,24 @@ void main() async {
     expect(2.0 <= similarity && similarity <= 3.0, true);
   });
 
+  test('cv.invertAffineTransform', () {
+    final src = [
+      cv.Point(0, 0),
+      cv.Point(10, 5),
+      cv.Point(10, 10),
+    ];
+
+    final dst = [
+      cv.Point(0, 0),
+      cv.Point(10, 0),
+      cv.Point(10, 10),
+    ];
+    final m = cv.getAffineTransform(src, dst);
+    final inv = cv.invertAffineTransform(m);
+    expect(inv.isEmpty, false);
+    expect((inv.rows, inv.cols), (2, 3));
+  });
+
   // accumulate
   test('cv.accumulate', () {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
