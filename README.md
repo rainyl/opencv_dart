@@ -86,7 +86,7 @@ More examples are on the way...
 ### TODO
 
 - [x] ~~compile libs for android, linux~~
-- [ ] ~~support for iOS, macOS~~
+- [x] ~~support for iOS, macOS~~
 - [ ] add more examples
 - [ ] documentation
 - [ ] modify C wrapper to catch exceptions

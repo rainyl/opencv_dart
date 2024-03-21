@@ -205,7 +205,7 @@ class OcvDartDesktop(ConanFile):
         super().__init__(display_name)
         with open("pubspec.yaml", "r") as f:
             doc = yaml.safe_load(f)
-        self.version = doc["version"]
+        self.version = doc["binary_version"]
 
     def generate(self):
         tc: CMakeToolchain = CMakeToolchain(self)
