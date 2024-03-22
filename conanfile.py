@@ -38,7 +38,7 @@ OCV_MODULES = {
     "dnn": True,
     "features2d": True,
     "flann": True,
-    "gapi": True,
+    "gapi": True,  # not implemented
     "highgui": True,
     "imgcodecs": True,
     "imgproc": True,

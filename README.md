@@ -40,29 +40,44 @@ to download prebuilt binaries.
 
 ## Status
 
+### Core Modules
+
 | module     | Binding status          | Test status             | description             |
 | ---------- | ----------------------- | ----------------------- | ----------------------- |
-| aruco      | :white_check_mark:      | :white_check_mark:      | ArUco module            |
 | core       | :white_check_mark:      | :white_check_mark:      | Core module             |
+| calib3d    | :white_check_mark:      | :white_check_mark:      | Calib3D module          |
+| dnn        | :white_check_mark:      | :white_check_mark:      | DNN module              |
 | features2d | :white_check_mark:      | :white_check_mark:      | Features2D module       |
+| gapi       | :x:                     | :x:                     | GAPI module             |
 | highgui    | :white_check_mark:      | :white_check_mark:      | HighGUI module          |
 | imgcodecs  | :white_check_mark:      | :white_check_mark:      | ImageCodecs module      |
 | imgproc    | :white_check_mark:      | :white_check_mark:      | ImageProc module        |
+| ml         | :x:                     | :x:                     | ML module               |
 | objdetect  | :white_check_mark:      | :white_check_mark:      | Object Detection module |
+| photo      | :white_check_mark:      | :white_check_mark:      | Photo module            |
+| stitching  | :ballot_box_with_check: | :ballot_box_with_check: | Stitching module        |
 | svd        | :white_check_mark:      | :white_check_mark:      | SVD module              |
 | video      | :white_check_mark:      | :white_check_mark:      | Video module            |
 | videoio    | :white_check_mark:      | :white_check_mark:      | VideoIO module          |
-| asyncarray | :white_check_mark:      | :white_check_mark:      | AsyncArray module       |
-| calib3d    | :white_check_mark:      | :white_check_mark:      | Calib3D module          |
-| dnn        | :white_check_mark:      | :white_check_mark:      | DNN module              |
-| photo      | :white_check_mark:      | :white_check_mark:      | Photo module            |
-| stitching  | :ballot_box_with_check: | :ballot_box_with_check: | Stitching module        |
-| cuda       | :x:                     | :x:                     | CUDA module             |
-| contrib    | :x:                     | :x:                     | Contrib module          |
+
+### Contrib Modules
+
+| module        | Binding status     | Test status        | description  |
+| ------------- | ------------------ | ------------------ | ------------ |
+| aruco         | :white_check_mark: | :white_check_mark: | ArUco module |
+| cuda          | :x:                | :x:                |              |
+| wechat_qrcode | :x:                | :x:                |              |
+| bgsegm        | :x:                | :x:                |              |
+| superres      | :x:                | :x:                |              |
+| xfeatures2d   | :x:                | :x:                |              |
+| ximgproc      | :x:                | :x:                |              |
+| xobjdetect    | :x:                | :x:                |              |
+| xphoto        | :x:                | :x:                |              |
 
 - :x: : not finished
 - :ballot_box_with_check: : partially supported
 - :white_check_mark: : finished
+- modules not in the above table are not considered, contributions are welcome
 - ~~videoio: `cv.VideoCapture` from file is not supported yet~~ supported now.
 
 ### Usage
