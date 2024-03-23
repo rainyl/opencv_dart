@@ -9,7 +9,7 @@ find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS
     opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
-    opencv_features2d opencv_photo opencv_imgproc
+    opencv_features2d opencv_gapi opencv_photo opencv_imgproc
     opencv_objdetect opencv_video opencv_videoio opencv_stitching
 )
 
@@ -73,6 +73,7 @@ endif(IOS)
 if(WIN32)
     set_target_properties(${library_name} PROPERTIES
         WINDOWS_EXPORT_ALL_SYMBOLS ON
+        COMPILE_FLAGS "/EHsc"
     )
 endif(WIN32)
 
@@ -89,6 +90,11 @@ if(WITH_OPENCV_DART_DEMO)
         ${OpenCV_LIBS}
         ${library_name}
     )
+    if(WIN32)
+        set_target_properties(demo PROPERTIES
+            COMPILE_FLAGS "/EHsc"
+        )
+    endif(WIN32)
 endif()
 
 # ## install

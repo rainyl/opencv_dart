@@ -1,0 +1,53 @@
+name: build for catch exceptions
+
+on:
+  push:
+    branches: ["catch-exceptions"]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "catch-exceptions" ]
+
+env:
+  ANDROID_NDK_VERSION: r26c
+  OPENCV_VERSION: 4.9.0
+  LIB_NAME: libopencv_dart
+
+jobs:
+  build-ubuntu:
+    name: build-ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl git wget python3 unzip build-essential \
+            libgtk-3-dev ffmpeg libavcodec-dev \
+            cmake ninja-build ccache nasm libavformat-dev libavutil-dev \
+            libswscale-dev libgflags-dev \
+            libjpeg-dev libpng-dev libtiff-dev python3-pip
+
+          python3 -m pip install conan
+          conan profile detect -f
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build-opencv-dart
+        run: |
+          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/upload-artifact@v4
+        name: upload-linux-x64
+        with:
+          path: build/publish/libopencv_dart-linux-x64.tar.gz
+          name: libopencv_dart-linux-x64.tar.gz
+      - name: Run Test
+        run: |
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH
+          flutter pub get
+          flutter test -x skip-workflow,no-local-files
