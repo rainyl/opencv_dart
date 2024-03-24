@@ -13,7 +13,7 @@ extern "C"
 #endif
 
 #include "core.h"
-#include "dnn.h"
+#include "../dnn.h"
 
 #ifdef __cplusplus
     typedef cv::AsyncArray *AsyncArray;

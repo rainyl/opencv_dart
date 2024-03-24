@@ -8,115 +8,138 @@
 
 #include "calib3d.h"
 
-void Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d)
+CvStatus Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d)
 {
-    cv::fisheye::undistortImage(*distorted, *undistorted, *k, *d);
+  BEGIN_WRAP
+  cv::fisheye::undistortImage(*distorted, *undistorted, *k, *d);
+  END_WRAP
 }
 
-void Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size)
+CvStatus Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size)
 {
-    cv::Size sz(size.width, size.height);
-    cv::fisheye::undistortImage(*distorted, *undistorted, *k, *d, *knew, sz);
+  BEGIN_WRAP
+  cv::Size sz(size.width, size.height);
+  cv::fisheye::undistortImage(*distorted, *undistorted, *k, *d, *knew, sz);
+  END_WRAP
 }
 
-void Fisheye_UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p)
+CvStatus Fisheye_UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p)
 {
-    cv::fisheye::undistortPoints(*distorted, *undistorted, *k, *d, *r, *p);
+  BEGIN_WRAP
+  cv::fisheye::undistortPoints(*distorted, *undistorted, *k, *d, *r, *p);
+  END_WRAP
 }
 
-void Fisheye_EstimateNewCameraMatrixForUndistortRectify(Mat k, Mat d, Size imgSize, Mat r, Mat p, double balance,
-                                                        Size newSize, double fovScale)
+CvStatus Fisheye_EstimateNewCameraMatrixForUndistortRectify(Mat k, Mat d, Size imgSize, Mat r, Mat p, double balance, Size newSize, double fovScale)
 {
-    cv::Size newSz(newSize.width, newSize.height);
-    cv::Size imgSz(imgSize.width, imgSize.height);
-    cv::fisheye::estimateNewCameraMatrixForUndistortRectify(*k, *d, imgSz, *r, *p, balance, newSz, fovScale);
+  BEGIN_WRAP
+  cv::Size newSz(newSize.width, newSize.height);
+  cv::Size imgSz(imgSize.width, imgSize.height);
+  cv::fisheye::estimateNewCameraMatrixForUndistortRectify(*k, *d, imgSz, *r, *p, balance, newSz, fovScale);
+  END_WRAP
 }
 
-void InitUndistortRectifyMap(Mat cameraMatrix, Mat distCoeffs, Mat r, Mat newCameraMatrix, Size size, int m1type, Mat map1,
-                             Mat map2)
+CvStatus InitUndistortRectifyMap(Mat cameraMatrix, Mat distCoeffs, Mat r, Mat newCameraMatrix, Size size, int m1type, Mat map1, Mat map2)
 {
-    cv::Size sz(size.width, size.height);
-    cv::initUndistortRectifyMap(*cameraMatrix, *distCoeffs, *r, *newCameraMatrix, sz, m1type, *map1, *map2);
+  BEGIN_WRAP
+  cv::Size sz(size.width, size.height);
+  cv::initUndistortRectifyMap(*cameraMatrix, *distCoeffs, *r, *newCameraMatrix, sz, m1type, *map1, *map2);
+  END_WRAP
 }
 
-Mat GetOptimalNewCameraMatrixWithParams(Mat cameraMatrix, Mat distCoeffs, Size size, double alpha, Size newImgSize,
-                                        Rect *validPixROI, bool centerPrincipalPoint)
+CvStatus GetOptimalNewCameraMatrixWithParams(Mat cameraMatrix, Mat distCoeffs, Size size, double alpha, Size newImgSize, Rect *validPixROI, bool centerPrincipalPoint, Mat *rval)
 {
-    cv::Size sz(size.width, size.height);
-    cv::Size newSize(newImgSize.width, newImgSize.height);
-    cv::Rect rect(validPixROI->x, validPixROI->y, validPixROI->width, validPixROI->height);
-    cv::Mat *mat = new cv::Mat(
-        cv::getOptimalNewCameraMatrix(*cameraMatrix, *distCoeffs, sz, alpha, newSize, &rect, centerPrincipalPoint));
-    validPixROI->x = rect.x;
-    validPixROI->y = rect.y;
-    validPixROI->width = rect.width;
-    validPixROI->height = rect.height;
-    return mat;
+  BEGIN_WRAP
+  cv::Size sz(size.width, size.height);
+  cv::Size newSize(newImgSize.width, newImgSize.height);
+  cv::Rect rect(validPixROI->x, validPixROI->y, validPixROI->width, validPixROI->height);
+  cv::Mat *mat = new cv::Mat(
+      cv::getOptimalNewCameraMatrix(*cameraMatrix, *distCoeffs, sz, alpha, newSize, &rect, centerPrincipalPoint));
+  validPixROI->x = rect.x;
+  validPixROI->y = rect.y;
+  validPixROI->width = rect.width;
+  validPixROI->height = rect.height;
+  *rval = mat;
+  END_WRAP
 }
 
-double CalibrateCamera(Points3fVector objectPoints, Points2fVector imagePoints, Size imageSize, Mat cameraMatrix,
-                       Mat distCoeffs, Mat rvecs, Mat tvecs, int flag, TermCriteria criteria)
+CvStatus CalibrateCamera(VecVecPoint3f objectPoints, VecVecPoint2f imagePoints, Size imageSize, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs, int flag, TermCriteria criteria, double *rval)
 {
-    return cv::calibrateCamera(*objectPoints, *imagePoints, cv::Size(imageSize.width, imageSize.height), *cameraMatrix,
-                               *distCoeffs, *rvecs, *tvecs, flag, *criteria);
+  BEGIN_WRAP
+  *rval = cv::calibrateCamera(*objectPoints, *imagePoints, cv::Size(imageSize.width, imageSize.height), *cameraMatrix, *distCoeffs, *rvecs, *tvecs, flag, *criteria);
+  END_WRAP
 }
 
-void Undistort(Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCameraMatrix)
+CvStatus Undistort(Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCameraMatrix)
 {
-    cv::undistort(*src, *dst, *cameraMatrix, *distCoeffs, *newCameraMatrix);
+  BEGIN_WRAP
+  cv::undistort(*src, *dst, *cameraMatrix, *distCoeffs, *newCameraMatrix);
+  END_WRAP
 }
 
-void UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p)
+CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p)
 {
-    cv::undistortPoints(*distorted, *undistorted, *k, *d, *r, *p);
+  BEGIN_WRAP
+  cv::undistortPoints(*distorted, *undistorted, *k, *d, *r, *p);
+  END_WRAP
 }
 
-bool FindChessboardCorners(Mat image, Size patternSize, Mat corners, int flags)
+CvStatus FindChessboardCorners(Mat image, Size patternSize, Mat corners, int flags, bool *rval)
 {
-    cv::Size sz(patternSize.width, patternSize.height);
-    return cv::findChessboardCorners(*image, sz, *corners, flags);
+  BEGIN_WRAP
+  cv::Size sz(patternSize.width, patternSize.height);
+  *rval = cv::findChessboardCorners(*image, sz, *corners, flags);
+  END_WRAP
 }
 
-bool FindChessboardCornersSB(Mat image, Size patternSize, Mat corners, int flags)
+CvStatus FindChessboardCornersSB(Mat image, Size patternSize, Mat corners, int flags, bool *rval)
 {
-    cv::Size sz(patternSize.width, patternSize.height);
-    return cv::findChessboardCornersSB(*image, sz, *corners, flags);
+  BEGIN_WRAP
+  cv::Size sz(patternSize.width, patternSize.height);
+  *rval = cv::findChessboardCornersSB(*image, sz, *corners, flags);
+  END_WRAP
 }
 
-bool FindChessboardCornersSBWithMeta(Mat image, Size patternSize, Mat corners, int flags, Mat meta)
+CvStatus FindChessboardCornersSBWithMeta(Mat image, Size patternSize, Mat corners, int flags, Mat meta, bool *rval)
 {
-    cv::Size sz(patternSize.width, patternSize.height);
-    return cv::findChessboardCornersSB(*image, sz, *corners, flags, *meta);
+  BEGIN_WRAP
+  cv::Size sz(patternSize.width, patternSize.height);
+  *rval = cv::findChessboardCornersSB(*image, sz, *corners, flags, *meta);
+  END_WRAP
 }
 
-void DrawChessboardCorners(Mat image, Size patternSize, Mat corners, bool patternWasFound)
+CvStatus DrawChessboardCorners(Mat image, Size patternSize, Mat corners, bool patternWasFound)
 {
-    cv::Size sz(patternSize.width, patternSize.height);
-    cv::drawChessboardCorners(*image, sz, *corners, patternWasFound);
+  BEGIN_WRAP
+  cv::Size sz(patternSize.width, patternSize.height);
+  cv::drawChessboardCorners(*image, sz, *corners, patternWasFound);
+  END_WRAP
 }
 
-Mat EstimateAffinePartial2D(Point2fVector from, Point2fVector to)
+CvStatus EstimateAffinePartial2D(VecPoint2f from, VecPoint2f to, Mat *rval)
 {
-    return new cv::Mat(cv::estimateAffinePartial2D(*from, *to));
+  BEGIN_WRAP
+  *rval = new cv::Mat(cv::estimateAffinePartial2D(*from, *to));
+  END_WRAP
 }
 
-Mat EstimateAffinePartial2DWithParams(Point2fVector from, Point2fVector to, Mat inliers, int method,
-                                      double ransacReprojThreshold, size_t maxIters, double confidence,
-                                      size_t refineIters)
+CvStatus EstimateAffinePartial2DWithParams(VecPoint2f from, VecPoint2f to, Mat inliers, int method, double ransacReprojThreshold, size_t maxIters, double confidence, size_t refineIters, Mat *rval)
 {
-    return new cv::Mat(
-        cv::estimateAffinePartial2D(*from, *to, *inliers, method, ransacReprojThreshold, maxIters, confidence,
-                                    refineIters));
+  BEGIN_WRAP
+  *rval = new cv::Mat(cv::estimateAffinePartial2D(*from, *to, *inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters));
+  END_WRAP
 }
 
-Mat EstimateAffine2D(Point2fVector from, Point2fVector to)
+CvStatus EstimateAffine2D(VecPoint2f from, VecPoint2f to, Mat *rval)
 {
-    return new cv::Mat(cv::estimateAffine2D(*from, *to));
+  BEGIN_WRAP
+  *rval = new cv::Mat(cv::estimateAffine2D(*from, *to));
+  END_WRAP
 }
 
-Mat EstimateAffine2DWithParams(Point2fVector from, Point2fVector to, Mat inliers, int method, double ransacReprojThreshold,
-                               size_t maxIters, double confidence, size_t refineIters)
+CvStatus EstimateAffine2DWithParams(VecPoint2f from, VecPoint2f to, Mat inliers, int method, double ransacReprojThreshold, size_t maxIters, double confidence, size_t refineIters, Mat *rval)
 {
-    return new cv::Mat(cv::estimateAffine2D(*from, *to, *inliers, method, ransacReprojThreshold, maxIters, confidence,
-                                            refineIters));
+  BEGIN_WRAP
+  *rval = new cv::Mat(cv::estimateAffine2D(*from, *to, *inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters));
+  END_WRAP
 }

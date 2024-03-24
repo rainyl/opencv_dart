@@ -175,6 +175,10 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
 
 - `gocv` project: <https://github.com/hybridgroup/gocv> License: Apache-2.0
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rainyl/opencv_dart&type=Date)](https://star-history.com/#rainyl/opencv_dart&Date)
+
 ## License
 
 Apache-2.0 License
