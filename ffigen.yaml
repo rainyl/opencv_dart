@@ -10,44 +10,46 @@ output:
   #   import-path: 'package:opencv_dart/base.dart'
 # ffi-native:
 #   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
-compiler-opts: ""
+compiler-opts: "-Isrc"
 headers:
   entry-points:
-    - src/aruco.h
-    - src/asyncarray.h
-    - src/calib3d.h
-    - src/core.h
-    - src/dnn.h
-    - src/exception.h
-    - src/features2d.h
-    - src/highgui_gocv.h
-    - src/imgcodecs.h
-    - src/imgproc.h
-    - src/objdetect.h
-    - src/photo.h
-    - src/stitching.h
-    - src/svd.h
-    - src/version.h
-    - src/video.h
-    - src/videoio.h
+    # - src/calib3d/calib3d.h
+    - src/core/core.h
+    - src/core/exception.h
+    - src/core/svd.h
+    - src/core/vec.h
+    - src/core/version.h
+    - src/dnn/asyncarray.h
+    - src/dnn/dnn.h
+    # - src/extra/aruco.h
+    # - src/features2d/features2d.h
+    # - src/highgui/highgui.h
+    # - src/imgcodecs/imgcodecs.h
+    # - src/imgproc/imgproc.h
+    # - src/objdetect/objdetect.h
+    # - src/photo/photo.h
+    # - src/stitching/stitching.h
+    # - src/video/video.h
+    # - src/video/videoio.h
   include-directives:
-    - src/aruco.h
-    - src/asyncarray.h
-    - src/calib3d.h
-    - src/core.h
-    - src/dnn.h
-    - src/exception.h
-    - src/features2d.h
-    - src/highgui_gocv.h
-    - src/imgcodecs.h
-    - src/imgproc.h
-    - src/objdetect.h
-    - src/photo.h
-    - src/stitching.h
-    - src/svd.h
-    - src/version.h
-    - src/video.h
-    - src/videoio.h
+    # - src/calib3d/calib3d.h
+    - src/core/core.h
+    - src/core/exception.h
+    - src/core/svd.h
+    - src/core/vec.h
+    - src/core/version.h
+    - src/dnn/asyncarray.h
+    - src/dnn/dnn.h
+    # - src/extra/aruco.h
+    # - src/features2d/features2d.h
+    # - src/highgui/highgui.h
+    # - src/imgcodecs/imgcodecs.h
+    # - src/imgproc/imgproc.h
+    # - src/objdetect/objdetect.h
+    # - src/photo/photo.h
+    # - src/stitching/stitching.h
+    # - src/video/video.h
+    # - src/video/videoio.h
 functions:
   symbol-address:
     include:

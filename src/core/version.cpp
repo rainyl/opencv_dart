@@ -8,12 +8,16 @@
 
 #include "version.h"
 
-const char *openCVVersion()
+CvStatus openCVVersion(const char **rval)
 {
-    return CV_VERSION;
+  BEGIN_WRAP
+  *rval = CV_VERSION;
+  END_WRAP
 }
 
-const char *getBuildInfo()
+CvStatus getBuildInfo(const char **rval)
 {
-    return cv::getBuildInformation().c_str();
+  BEGIN_WRAP
+  *rval = cv::getBuildInformation().c_str();
+  END_WRAP
 }

@@ -1,4 +1,6 @@
 #include "vec.h"
+#include <string.h>
+#include <vector>
 
 CvStatus VecPoint_New(VecPoint *rval)
 {
@@ -359,7 +361,7 @@ CvStatus VecChar_New(VecChar *rval)
   END_WRAP
 }
 
-CvStatus VecChar_NewFromPointer(char *p, int length, VecChar *rval)
+CvStatus VecChar_NewFromPointer(const char *p, int length, VecChar *rval)
 {
   BEGIN_WRAP
   *rval = new std::vector<char>();
@@ -390,7 +392,69 @@ CvStatus VecChar_Size(VecChar vec, int *rval)
   END_WRAP
 }
 
+CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
+{
+  BEGIN_WRAP
+  *length = static_cast<int>(vec->size());
+  char* tempBuffer = new char[*length + 1];
+  std::memcpy(tempBuffer, vec->data(), *length);
+  tempBuffer[*length] = '\0';
+  *rval = tempBuffer;
+  END_WRAP
+}
+
 void VecChar_Close(VecChar vec)
+{
+  vec->clear();
+  delete vec;
+  vec = nullptr;
+}
+
+CvStatus VecVecChar_New(VecVecChar *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<char>>();
+  END_WRAP
+}
+CvStatus VecVecChar_Append(VecVecChar vec, VecChar v)
+{
+  BEGIN_WRAP
+  vec->push_back(*v);
+  END_WRAP
+}
+CvStatus VecVecChar_Append_Str(VecVecChar vec, const char *str)
+{
+  BEGIN_WRAP
+  int len = strlen(str);
+
+  std::vector<char> v(str, str + len);
+  vec->push_back(v);
+  END_WRAP
+}
+CvStatus VecVecChar_At(VecVecChar vec, int idx, VecChar *rval)
+{
+  BEGIN_WRAP
+  *rval = &vec->at(idx);
+  END_WRAP
+}
+CvStatus VecVecChar_At_Str(VecVecChar vec, int idx, char **rval, int *length)
+{
+  BEGIN_WRAP
+  auto str = vec->at(idx);
+  *length = static_cast<int>(str.size());
+  char* tempBuffer = new char[*length + 1];
+  std::memcpy(tempBuffer, str.data(), *length);
+  tempBuffer[*length] = '\0';
+  *rval = tempBuffer;
+  END_WRAP
+}
+CvStatus VecVecChar_Size(VecVecChar vec, int *rval)
+{
+  BEGIN_WRAP
+  *rval = vec->size();
+  END_WRAP
+}
+void VecVecChar_Close(VecVecChar vec)
 {
   vec->clear();
   delete vec;

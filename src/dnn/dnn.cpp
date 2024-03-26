@@ -7,326 +7,273 @@
 */
 
 #include "dnn.h"
+#include <string.h>
+#include <vector>
 
-Net Net_Create()
+CvStatus Net_Create(Net *rval)
 {
-  return new cv::dnn::Net();
+  BEGIN_WRAP
+  *rval = new cv::dnn::Net();
+  END_WRAP
 }
-
-Net Net_ReadNet(const char *model, const char *config, const char *framework)
+CvStatus Net_ReadNet(const char *model, const char *config, const char *framework, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNet(model, config, framework));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNet(model, config, framework));
+  END_WRAP
 }
-
-Net Net_ReadNetBytes(const char *framework, VecUChar model, VecUChar config)
+CvStatus Net_ReadNetBytes(const char *framework, VecUChar model, VecUChar config, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNet(framework, *model, *config));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNet(framework, *model, *config));
+  END_WRAP
 }
-
-Net Net_ReadNetFromCaffe(const char *prototxt, const char *caffeModel)
+CvStatus Net_ReadNetFromCaffe(const char *prototxt, const char *caffeModel, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromCaffe(prototxt, caffeModel));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromCaffe(prototxt, caffeModel));
+  END_WRAP
 }
-
-Net Net_ReadNetFromCaffeBytes(VecUChar prototxt, VecUChar caffeModel)
+CvStatus Net_ReadNetFromCaffeBytes(VecUChar prototxt, VecUChar caffeModel, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromCaffe(*prototxt, *caffeModel));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromCaffe(*prototxt, *caffeModel));
+  END_WRAP
 }
-
-Net Net_ReadNetFromTensorflow(const char *model, const char *config)
+CvStatus Net_ReadNetFromTensorflow(const char *model, const char *config, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromTensorflow(model, config));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromTensorflow(model, config));
+  END_WRAP
 }
-
-Net Net_ReadNetFromTensorflowBytes(VecUChar model, VecUChar config)
+CvStatus Net_ReadNetFromTensorflowBytes(VecUChar model, VecUChar config, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromTensorflow(*model, *config));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromTensorflow(*model, *config));
+  END_WRAP
 }
-
-Net Net_ReadNetFromTFLite(const char *model)
+CvStatus Net_ReadNetFromTFLite(const char *model, Net rval)
 {
-  return new cv::dnn::Net(cv::dnn::readNetFromTFLite(model));
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromTFLite(model));
+  END_WRAP
 }
-
-Net Net_ReadNetFromTFLiteBytes(VecUChar bufferModel)
+CvStatus Net_ReadNetFromTFLiteBytes(VecUChar bufferModel, Net rval)
 {
-  return new cv::dnn::Net(cv::dnn::readNetFromTFLite(*bufferModel));
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromTFLite(*bufferModel));
+  END_WRAP
 }
-
-Net Net_ReadNetFromTorch(const char *model, bool isBinary, bool evaluate)
+CvStatus Net_ReadNetFromTorch(const char *model, bool isBinary, bool evaluate, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromTorch(model, isBinary, evaluate));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromTorch(model, isBinary, evaluate));
+  END_WRAP
 }
-
-Net Net_ReadNetFromONNX(const char *model)
+CvStatus Net_ReadNetFromONNX(const char *model, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromONNX(model));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromONNX(model));
+  END_WRAP
 }
-
-Net Net_ReadNetFromONNXBytes(VecUChar model)
+CvStatus Net_ReadNetFromONNXBytes(VecUChar model, Net rval)
 {
-  Net n = new cv::dnn::Net(cv::dnn::readNetFromONNX(*model));
-  return n;
+  BEGIN_WRAP
+  *rval = cv::dnn::Net(cv::dnn::readNetFromONNX(*model));
+  END_WRAP
 }
 
 void Net_Close(Net net)
 {
   delete net;
+  net = nullptr;
 }
 
-bool Net_Empty(Net net)
+CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
 {
-  return net->empty();
-}
-
-void Net_SetInput(Net net, Mat blob, const char *name)
-{
-  net->setInput(*blob, name);
-}
-
-Mat Net_Forward(Net net, const char *outputName)
-{
-  return new cv::Mat(net->forward(outputName));
-}
-
-void Net_ForwardLayers(Net net, VecMat outputBlobs, vec outBlobNames)
-{
-  std::vector<cv::Mat> blobs;
-
-  std::vector<cv::String> names;
-  for (int i = 0; i < outBlobNames.length; ++i) {
-    names.push_back(cv::String(outBlobNames.strs[i]));
-  }
-  net->forward(blobs, names);
-
-  // copy blobs into outputBlobs
-  outputBlobs->mats = new Mat[blobs.size()];
-
-  for (size_t i = 0; i < blobs.size(); ++i) {
-    outputBlobs->mats[i] = new cv::Mat(blobs[i]);
-  }
-
-  outputBlobs->length = (int)blobs.size();
-}
-
-void Net_SetPreferableBackend(Net net, int backend)
-{
-  net->setPreferableBackend(backend);
-}
-
-void Net_SetPreferableTarget(Net net, int target)
-{
-  net->setPreferableTarget(target);
-}
-
-int64_t Net_GetPerfProfile(Net net)
-{
-  std::vector<double> layersTimes;
-  return net->getPerfProfile(layersTimes);
-}
-
-void Net_GetUnconnectedOutLayers(Net net, VecInt *res)
-{
-  std::vector<int> cids(net->getUnconnectedOutLayers());
-  int             *ids = new int[cids.size()];
-
-  for (size_t i = 0; i < cids.size(); ++i) {
-    ids[i] = cids[i];
-  }
-
-  res->length = cids.size();
-  res->val = ids;
-  return;
-}
-
-void Net_GetLayerNames(Net net, CStrings *names)
-{
-  std::vector<cv::String> cstrs = net->getLayerNames();
-  char                  **strs = new char *[cstrs.size()];
-
-  for (size_t i = 0; i < cstrs.size(); ++i) {
-    strs[i] = strdup(cstrs.at(i).c_str());
-  }
-
-  names->length = (int)cstrs.size();
-  names->strs = strs;
-}
-
-void Net_GetInputDetails(Net net, FloatVector *scales, IntVector *zeropoints)
-{
-  auto vecScales = std::vector<float>();
-  auto vecZeropoints = std::vector<int>();
-  net->getInputDetails(vecScales, vecZeropoints);
-
-  float *s = new float[vecScales.size()];
-  for (int i = 0; i < vecScales.size(); i++)
-    s[i] = vecScales[i];
-  scales->length = vecScales.size();
-  scales->val = s;
-
-  int *z = new int[vecZeropoints.size()];
-  for (int i = 0; i < vecZeropoints.size(); i++)
-    z[i] = vecZeropoints[i];
-  zeropoints->length = vecZeropoints.size();
-  zeropoints->val = z;
-}
-
-Mat Net_BlobFromImage(Mat image, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
-{
+  BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
   cv::Scalar cm(mean.val1, mean.val2, mean.val3, mean.val4);
-  // use the default target ddepth here.
-  return new cv::Mat(cv::dnn::blobFromImage(*image, scalefactor, sz, cm, swapRB, crop, ddepth));
+  cv::dnn::blobFromImage(*image, *blob, scalefactor, sz, cm, swapRB, crop, ddepth);
+  END_WRAP
 }
 
-void Net_BlobFromImages(struct Mats images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
+CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
 {
-  std::vector<cv::Mat> imgs;
-
-  for (int i = 0; i < images.length; ++i) {
-    imgs.push_back(*images.mats[i]);
-  }
-
+  BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
   cv::Scalar cm = cv::Scalar(mean.val1, mean.val2, mean.val3, mean.val4);
-
-  // ignore the passed in ddepth, just use default.
-  cv::dnn::blobFromImages(imgs, *blob, scalefactor, sz, cm, swapRB, crop);
+  cv::dnn::blobFromImages(*images, *blob, scalefactor, sz, cm, swapRB, crop, ddepth);
+  END_WRAP
 }
 
-void Net_ImagesFromBlob(Mat blob_, struct Mats *images_)
+CvStatus Net_ImagesFromBlob(Mat blob, VecMat rval)
 {
+  BEGIN_WRAP
   std::vector<cv::Mat> imgs;
-  cv::dnn::imagesFromBlob(*blob_, imgs);
-  images_->mats = new Mat[imgs.size()];
-
-  for (size_t i = 0; i < imgs.size(); ++i) {
-    images_->mats[i] = new cv::Mat(imgs[i]);
-  }
-  images_->length = (int)imgs.size();
+  cv::dnn::imagesFromBlob(*blob, imgs);
+  *rval = imgs;
+  END_WRAP
 }
 
-Mat Net_GetBlobChannel(Mat blob, int imgidx, int chnidx)
+CvStatus Net_Empty(Net net, bool *rval)
 {
+  BEGIN_WRAP
+  *rval = net->empty();
+  END_WRAP
+}
+
+CvStatus Net_SetInput(Net net, Mat blob, const char *name)
+{
+  BEGIN_WRAP
+  net->setInput(*blob, name);
+  END_WRAP
+}
+
+CvStatus Net_Forward(Net net, const char *outputName, Mat rval)
+{
+  BEGIN_WRAP
+  *rval = net->forward(outputName);
+  END_WRAP
+}
+
+CvStatus Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobNames)
+{
+  BEGIN_WRAP
+  std::vector<cv::Mat>    blobs;
+  std::vector<cv::String> names;
+  for (int i = 0; i < outBlobNames->size(); ++i) {
+    auto n = outBlobNames->at(i);
+    names.push_back(cv::String(n.begin(), n.end()));
+  }
+  net->forward(blobs, names);
+  END_WRAP
+}
+
+CvStatus Net_SetPreferableBackend(Net net, int backend)
+{
+  BEGIN_WRAP
+  net->setPreferableBackend(backend);
+  END_WRAP
+}
+
+CvStatus Net_SetPreferableTarget(Net net, int target)
+{
+  BEGIN_WRAP
+  net->setPreferableTarget(target);
+  END_WRAP
+}
+
+CvStatus Net_GetPerfProfile(Net net, int64_t *rval)
+{
+  BEGIN_WRAP
+  std::vector<double> layersTimes;
+  *rval = net->getPerfProfile(layersTimes);
+  END_WRAP
+}
+
+CvStatus Net_GetUnconnectedOutLayers(Net net, VecInt rval)
+{
+  BEGIN_WRAP
+  std::vector<int> cids(net->getUnconnectedOutLayers());
+  *rval = cids;
+  END_WRAP
+}
+
+CvStatus Net_GetLayerNames(Net net, VecVecChar rval)
+{
+  BEGIN_WRAP
+  std::vector<std::vector<char>> vec;
+  std::vector<cv::String>        cstrs = net->getLayerNames();
+  for (size_t i = 0; i < cstrs.size(); i++) {
+    std::vector<char> cstr(cstrs[i].begin(), cstrs[i].end());
+    vec.push_back(cstr);
+  }
+  *rval = vec;
+  END_WRAP
+}
+
+CvStatus Net_GetInputDetails(Net net, VecFloat scales, VecInt zeropoints)
+{
+  BEGIN_WRAP
+  *scales = std::vector<float>();
+  *zeropoints = std::vector<int>();
+  net->getInputDetails(*scales, *zeropoints);
+  END_WRAP
+}
+
+CvStatus Net_GetBlobChannel(Mat blob, int imgidx, int chnidx, Mat rval)
+{
+  BEGIN_WRAP
   size_t w = blob->size[3];
   size_t h = blob->size[2];
-  return new cv::Mat(h, w, CV_32F, blob->ptr<float>(imgidx, chnidx));
+  *rval = cv::Mat(h, w, CV_32F, blob->ptr<float>(imgidx, chnidx));
+  END_WRAP
 }
 
-Scalar Net_GetBlobSize(Mat blob)
+CvStatus Net_GetBlobSize(Mat blob, Scalar *rval)
 {
-  Scalar scal = Scalar();
-  scal.val1 = blob->size[0];
-  scal.val2 = blob->size[1];
-  scal.val3 = blob->size[2];
-  scal.val4 = blob->size[3];
-  return scal;
+  BEGIN_WRAP
+  *rval = {
+      (double)(blob->size[0]),
+      (double)(blob->size[1]),
+      (double)(blob->size[2]),
+      (double)(blob->size[3]),
+  };
+  END_WRAP
 }
 
-Layer Net_GetLayer(Net net, int layerid)
+CvStatus Net_GetLayer(Net net, int layerid, Layer *rval)
 {
-  return new cv::Ptr<cv::dnn::Layer>(net->getLayer(layerid));
+  BEGIN_WRAP
+  *rval = new cv::Ptr<cv::dnn::Layer>(net->getLayer(layerid));
+  END_WRAP
+}
+
+CvStatus Layer_InputNameToIndex(Layer layer, const char *name, int *rval)
+{
+  BEGIN_WRAP
+  *rval = (*layer)->inputNameToIndex(name);
+  END_WRAP
+}
+
+CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, int *rval)
+{
+  BEGIN_WRAP
+  *rval = (*layer)->outputNameToIndex(name);
+  END_WRAP
+}
+
+CvStatus Layer_GetName(Layer layer, char **rval)
+{
+  BEGIN_WRAP
+  *rval = strdup((*layer)->name.c_str());
+  END_WRAP
+}
+
+CvStatus Layer_GetType(Layer layer, char **rval)
+{
+  BEGIN_WRAP
+  *rval = strdup((*layer)->type.c_str());
+  END_WRAP
 }
 
 void Layer_Close(Layer layer)
 {
   delete layer;
+  layer = nullptr;
 }
 
-int Layer_InputNameToIndex(Layer layer, const char *name)
+CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt indices)
 {
-  return (*layer)->inputNameToIndex(name);
+  BEGIN_WRAP
+  cv::dnn::NMSBoxes(*bboxes, *scores, score_threshold, nms_threshold, *indices, 1.f, 0);
+  END_WRAP
 }
 
-int Layer_OutputNameToIndex(Layer layer, const char *name)
+CvStatus NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold, const float nms_threshold, VecInt indices, const float eta, const int top_k)
 {
-  return (*layer)->outputNameToIndex(name);
-}
-
-const char *Layer_GetName(Layer layer)
-{
-  return (*layer)->name.c_str();
-}
-
-const char *Layer_GetType(Layer layer)
-{
-  return (*layer)->type.c_str();
-}
-
-void NMSBoxes(struct Rects bboxes, FloatVector scores, float score_threshold, float nms_threshold, IntVector *indices)
-{
-  std::vector<cv::Rect> _bboxes;
-
-  for (int i = 0; i < bboxes.length; ++i) {
-    _bboxes.push_back(cv::Rect(
-        bboxes.rects[i].x,
-        bboxes.rects[i].y,
-        bboxes.rects[i].width,
-        bboxes.rects[i].height));
-  }
-
-  std::vector<float> _scores;
-
-  float *f;
-  int    i;
-  for (i = 0, f = scores.val; i < scores.length; ++f, ++i) {
-    _scores.push_back(*f);
-  }
-
-  std::vector<int> _indices(indices->length);
-
-  cv::dnn::NMSBoxes(_bboxes, _scores, score_threshold, nms_threshold, _indices, 1.f, 0);
-
-  int *ptr = new int[_indices.size()];
-
-  for (size_t i = 0; i < _indices.size(); ++i) {
-    ptr[i] = _indices[i];
-  }
-
-  indices->length = _indices.size();
-  indices->val = ptr;
-  return;
-}
-
-void NMSBoxesWithParams(struct Rects bboxes, FloatVector scores, const float score_threshold, const float nms_threshold, IntVector *indices, const float eta, const int top_k)
-{
-  std::vector<cv::Rect> _bboxes;
-
-  for (int i = 0; i < bboxes.length; ++i) {
-    _bboxes.push_back(cv::Rect(
-        bboxes.rects[i].x,
-        bboxes.rects[i].y,
-        bboxes.rects[i].width,
-        bboxes.rects[i].height));
-  }
-
-  std::vector<float> _scores;
-
-  float *f;
-  int    i;
-  for (i = 0, f = scores.val; i < scores.length; ++f, ++i) {
-    _scores.push_back(*f);
-  }
-
-  std::vector<int> _indices(indices->length);
-
-  cv::dnn::NMSBoxes(_bboxes, _scores, score_threshold, nms_threshold, _indices, eta, top_k);
-
-  int *ptr = new int[_indices.size()];
-
-  for (size_t i = 0; i < _indices.size(); ++i) {
-    ptr[i] = _indices[i];
-  }
-
-  indices->length = _indices.size();
-  indices->val = ptr;
-  return;
+  BEGIN_WRAP
+  cv::dnn::NMSBoxes(*bboxes, *scores, score_threshold, nms_threshold, *indices, eta, top_k);
+  END_WRAP
 }

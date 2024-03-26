@@ -9,23 +9,23 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-class CvException implements ffi.Finalizable {
-  CvException._(this.ptr) {
-    finalizer.attach(this, ptr);
-  }
+class CvException {
+  CvException(
+    this.code, {
+    this.msg = "",
+    this.err = "",
+    this.file = "",
+    this.func = "",
+    this.line = -1,
+  });
 
-  cvg.CvException ptr;
-  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.CvException_Close);
-
-  int get code => _bindings.CvException_GetCode(ptr);
-  String get err => _bindings.CvException_GetErr(ptr).cast<Utf8>().toDartString();
-  String get file => _bindings.CvException_GetFile(ptr).cast<Utf8>().toDartString();
-  String get func => _bindings.CvException_GetFunc(ptr).cast<Utf8>().toDartString();
-  int get line => _bindings.CvException_GetLine(ptr);
+  int code;
+  String err, msg, file, func;
+  int line;
 
   @override
   String toString() {
-    return "CvException(code: $code, err: $err) in $func of file $file:$line";
+    return "CvException(code: $code, err: $err, msg:$msg) in $func of file $file:$line";
   }
 }
 

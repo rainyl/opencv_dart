@@ -59,11 +59,20 @@ CvStatus VecUChar_Size(VecUChar vec, int *rval);
 void     VecUChar_Close(VecUChar vec);
 
 CvStatus VecChar_New(VecChar *rval);
-CvStatus VecChar_NewFromPointer(char *p, int length, VecChar *rval);
+CvStatus VecChar_NewFromPointer(const char *p, int length, VecChar *rval);
 CvStatus VecChar_Append(VecChar vec, char i);
 CvStatus VecChar_At(VecChar vec, int idx, char *rval);
 CvStatus VecChar_Size(VecChar vec, int *rval);
+CvStatus VecChar_ToString(VecChar vec, char **rval, int *length);
 void     VecChar_Close(VecChar vec);
+
+CvStatus VecVecChar_New(VecVecChar *rval);
+CvStatus VecVecChar_Append(VecVecChar vec, VecChar v);
+CvStatus VecVecChar_Append_Str(VecVecChar vec, const char *str);
+CvStatus VecVecChar_At(VecVecChar vec, int idx, VecChar *rval);
+CvStatus VecVecChar_At_Str(VecVecChar vec, int idx, char **rval, int *length);
+CvStatus VecVecChar_Size(VecVecChar vec, int *rval);
+void     VecVecChar_Close(VecVecChar vec);
 
 CvStatus VecInt_New(VecInt *rval);
 CvStatus VecInt_NewFromPointer(int *p, int length, VecInt *rval);

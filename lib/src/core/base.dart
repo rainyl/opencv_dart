@@ -3,8 +3,10 @@ library cv;
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
+import 'package:ffi/ffi.dart';
+
 import "../opencv.g.dart" show CvStatus;
-import "exception.dart" show OpenCvException;
+import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
 
@@ -38,8 +40,7 @@ ffi.DynamicLibrary loadNativeLibrary() {
   } else if (Platform.isIOS) {
     return ffi.DynamicLibrary.process();
   } else {
-    throw UnsupportedError(
-        "Platform ${Platform.operatingSystem} not supported");
+    throw UnsupportedError("Platform ${Platform.operatingSystem} not supported");
   }
 }
 
@@ -57,7 +58,13 @@ abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
 
 void throwIfFailed(CvStatus status) {
   if (status.code != 0) {
-    throw OpenCvException.fromStatus(status);
+    throw CvException(
+      status.code,
+      msg: status.msg.cast<Utf8>().toDartString(),
+      file: status.file.cast<Utf8>().toDartString(),
+      func: status.func.cast<Utf8>().toDartString(),
+      line: status.line,
+    );
   }
 }
 

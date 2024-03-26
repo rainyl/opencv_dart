@@ -4,7 +4,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/exception.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../opencv.g.dart' as cvg;
@@ -19,8 +18,12 @@ class AsyncArray implements ffi.Finalizable {
   factory AsyncArray.fromPointer(cvg.AsyncArray ptr) => AsyncArray._(ptr);
 
   factory AsyncArray.empty() {
-    final _ptr = _bindings.AsyncArray_New();
-    return AsyncArray._(_ptr);
+    return using<AsyncArray>((arena) {
+      final ptr = arena<cvg.AsyncArray>();
+      final status = _bindings.AsyncArray_New(ptr);
+      throwIfFailed(status);
+      return AsyncArray._(ptr.value);
+    });
   }
 
   cvg.AsyncArray ptr;
@@ -29,9 +32,8 @@ class AsyncArray implements ffi.Finalizable {
   Mat get() {
     return using<Mat>((arena) {
       final dst = Mat.empty();
-      final result = _bindings.AsyncArray_GetAsync(ptr, dst.ptr);
-      final dartStr = result.cast<Utf8>().toDartString();
-      if (dartStr.isNotEmpty) throw OpenCvDartException(dartStr);
+      final status = _bindings.AsyncArray_Get(ptr, dst.ptr);
+      throwIfFailed(status);
       return dst;
     });
   }

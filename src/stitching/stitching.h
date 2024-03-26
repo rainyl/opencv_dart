@@ -6,8 +6,8 @@
 #ifndef OPENCV_DART_LIBRARY_STITCHING_H
 #define OPENCV_DART_LIBRARY_STITCHING_H
 
-#include "core.h"
-#include "exception.h"
+#include "core/core.h"
+#include "core/exception.h"
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>

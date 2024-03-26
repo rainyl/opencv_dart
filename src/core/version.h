@@ -6,22 +6,21 @@
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
 
-#ifndef _OPENCV3_SVD_H_
-#define _OPENCV3_SVD_H_
+#ifndef _OPENCV3_VERSION_H_
+#define _OPENCV3_VERSION_H_
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core.h"
 
-    void SVD_Compute(Mat src, Mat w, Mat u, Mat vt, int flags);
+CvStatus openCVVersion(const char **rval);
+CvStatus getBuildInfo(const char **rval);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //_OPENCV3_SVD_H
+#endif //_OPENCV3_VERSION_H_

@@ -15,7 +15,7 @@ extern "C"
 {
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
     // Window
     void Window_New(const char *winname, int flags);

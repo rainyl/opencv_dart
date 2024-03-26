@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../core/asyncarray.dart';
 import '../core/mat_type.dart';
 import '../core/rect.dart';
 import '../core/extensions.dart';

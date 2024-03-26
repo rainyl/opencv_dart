@@ -6,7 +6,7 @@
 #ifndef OPENCV_DART_GAPI_H
 #define OPENCV_DART_GAPI_H
 
-#include "core.h"
+#include "core/core.h"
 
 #ifdef __cplusplus
 #include <opencv2/gapi.hpp>

@@ -20,18 +20,6 @@ extern "C"
 
     void registerErrorCallback(ErrorCallback callback);
 
-    int CvException_GetCode(CvException exception);
-
-    const char *CvException_GetErr(CvException exception);
-
-    const char *CvException_GetFunc(CvException exception);
-
-    const char *CvException_GetFile(CvException exception);
-
-    int CvException_GetLine(CvException exception);
-
-    void CvException_Close(CvException exception);
-
 #ifdef __cplusplus
 }
 #endif

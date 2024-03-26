@@ -12,8 +12,8 @@ extern "C"
 {
 #endif
 
-#include "core.h"
-#include "../dnn.h"
+#include "core/core.h"
+#include "dnn.h"
 
 #ifdef __cplusplus
     typedef cv::AsyncArray *AsyncArray;
@@ -21,10 +21,10 @@ extern "C"
 typedef void *AsyncArray;
 #endif
 
-    AsyncArray AsyncArray_New();
-    const char *AsyncArray_GetAsync(AsyncArray async_out, Mat out);
+    CvStatus AsyncArray_New(AsyncArray *rval);
+    CvStatus AsyncArray_Get(AsyncArray async_out, Mat out);
+    CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
     void AsyncArray_Close(AsyncArray a);
-    AsyncArray Net_forwardAsync(Net net, const char *outputName);
 
 #ifdef __cplusplus
 }

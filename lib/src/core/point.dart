@@ -8,9 +8,9 @@ import '../opencv.g.dart' as cvg;
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-class Point extends CvObject with EquatableMixin {
-  Point._(this._ptr) : super(_ptr) {
-    _finalizer.attach(this, _ptr);
+class Point with EquatableMixin implements ffi.Finalizable {
+  Point._(this.ptr) {
+    _finalizer.attach(this, ptr);
   }
   factory Point(int x, int y) {
     final ptr = calloc<cvg.Point>()
@@ -22,15 +22,12 @@ class Point extends CvObject with EquatableMixin {
   factory Point.fromPointer(ffi.Pointer<cvg.Point> p) => Point._(p);
 
   static final _finalizer = Finalizer<ffi.Pointer<cvg.Point>>((p0) => calloc.free(p0));
-  int get x => _ptr.ref.x;
-  int get y => _ptr.ref.y;
-  ffi.Pointer<cvg.Point> _ptr;
-  ffi.Pointer<cvg.Point> get ptr => _ptr;
+  int get x => ptr.ref.x;
+  int get y => ptr.ref.y;
+  ffi.Pointer<cvg.Point> ptr;
 
-  @override
-  cvg.Point toNative() => _ptr.ref;
-  @override
-  cvg.Point get ref => _ptr.ref;
+  cvg.Point toNative() => ptr.ref;
+  cvg.Point get ref => ptr.ref;
 
   @override
   String toString() => 'Point($x, $y)';
@@ -39,9 +36,9 @@ class Point extends CvObject with EquatableMixin {
   List<Object?> get props => [x, y];
 }
 
-class Point2f extends CvObject with EquatableMixin {
-  Point2f._(this._ptr) : super(_ptr) {
-    _finalizer.attach(this, _ptr.cast());
+class Point2f with EquatableMixin implements ffi.Finalizable {
+  Point2f._(this.ptr) {
+    _finalizer.attach(this, ptr.cast());
   }
 
   factory Point2f(double x, double y) {
@@ -53,15 +50,12 @@ class Point2f extends CvObject with EquatableMixin {
   factory Point2f.fromNative(cvg.Point2f p) => Point2f(p.x, p.y);
   factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> p) => Point2f._(p);
 
-  static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Point2f_Close.cast());
-  double get x => _ptr.ref.x;
-  double get y => _ptr.ref.y;
-  ffi.Pointer<cvg.Point2f> _ptr;
-  ffi.Pointer<cvg.Point2f> get ptr => _ptr;
+  static final _finalizer = Finalizer<ffi.Pointer<cvg.Point2f>>((p0) => calloc.free(p0));
+  double get x => ptr.ref.x;
+  double get y => ptr.ref.y;
+  ffi.Pointer<cvg.Point2f> ptr;
 
-  @override
-  cvg.Point2f get ref => _ptr.ref;
-  @override
+  cvg.Point2f get ref => ptr.ref;
   cvg.Point2f toNative() => ptr.ref;
 
   @override
@@ -71,9 +65,9 @@ class Point2f extends CvObject with EquatableMixin {
   List<Object?> get props => [x, y];
 }
 
-class Point3f extends CvObject with EquatableMixin {
-  Point3f._(this._ptr) : super(_ptr) {
-    _finalizer.attach(this, _ptr.cast());
+class Point3f with EquatableMixin implements ffi.Finalizable {
+  Point3f._(this.ptr) {
+    _finalizer.attach(this, ptr.cast());
   }
 
   factory Point3f(double x, double y, double z) {
@@ -86,22 +80,19 @@ class Point3f extends CvObject with EquatableMixin {
   factory Point3f.fromNative(cvg.Point3f p) => Point3f(p.x, p.y, p.z);
   factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> p) => Point3f._(p);
 
-  static final _finalizer = ffi.NativeFinalizer(_bindings.addresses.Point3f_Close.cast());
-  double get x => _ptr.ref.x;
-  double get y => _ptr.ref.y;
-  double get z => _ptr.ref.z;
-  ffi.Pointer<cvg.Point3f> _ptr;
-  ffi.Pointer<cvg.Point3f> get ptr => _ptr;
+  static final _finalizer = Finalizer<ffi.Pointer<cvg.Point3f>>((p0) => calloc.free(p0));
+  double get x => ptr.ref.x;
+  double get y => ptr.ref.y;
+  double get z => ptr.ref.z;
+  ffi.Pointer<cvg.Point3f> ptr;
 
   @override
   String toString() => 'Point3f($x, $y, $z)';
   @override
   List<Object?> get props => [x, y, z];
 
-  @override
-  cvg.Point3f get ref => _ptr.ref;
-  @override
-  cvg.Point3f toNative() => _ptr.ref;
+  cvg.Point3f get ref => ptr.ref;
+  cvg.Point3f toNative() => ptr.ref;
 }
 
 class ListPoint2f {

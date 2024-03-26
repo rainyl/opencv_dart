@@ -1,76 +1,88 @@
 import 'dart:collection';
 import 'dart:ffi' as ffi;
 
+import 'package:ffi/ffi.dart';
+
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
 import 'point.dart';
 
 final _bindings = cvg.CvNative(loadNativeLibrary());
 
-// class Contour with IterableMixin<Point> {
-//   Contour._(this._ptr) {
-//     finalizer.attach(this, _ptr);
-//   }
-//   factory Contour.fromPointer(cvg.PointVector pts) {
-//     return Contour._(pts);
-//   }
-//   factory Contour.fromList(List<Point> pts) {
-//     final vec = _bindings.PointVector_New();
-//     for (var i = 0; i < pts.length; i++) {
-//       _bindings.PointVector_Append(vec, pts[i].toNative());
-//     }
-//     return Contour._(vec);
-//   }
+class Contour with IterableMixin<Point> {
+  Contour._(this.ptr) {
+    finalizer.attach(this, ptr);
+  }
+  factory Contour.fromPointer(cvg.VecPoint pts) {
+    return Contour._(pts);
+  }
+  factory Contour.fromList(List<Point> pts) {
+    return using<Contour>((arena) {
+      final ptr = arena<cvg.VecPoint>();
+      final status = _bindings.VecPoint_New(ptr);
+      throwIfFailed(status);
+      for (var i = 0; i < pts.length; i++) {
+        _bindings.VecPoint_Append(ptr.value, pts[i].toNative());
+      }
+      return Contour._(ptr.value);
+    });
+  }
 
-//   cvg.PointVector _ptr;
-//   cvg.PointVector get ptr => _ptr;
-//   static final finalizer = Finalizer<cvg.PointVector>((p0) {
-//     _bindings.PointVector_Close(p0);
-//   });
+  cvg.VecPoint ptr;
+  static final finalizer = Finalizer<cvg.VecPoint>((p0) {
+    _bindings.VecPoint_Close(p0);
+  });
 
-//   int get length => _bindings.PointVector_Size(_ptr);
+  int get length {
+    return using<int>((arena) {
+      final p = arena<ffi.Int>();
+      final status = _bindings.VecPoint_Size(ptr, p);
+      throwIfFailed(status);
+      return p.value;
+    });
+  }
 
-//   Point operator [](int idx) {
-//     final p = _bindings.PointVector_At(_ptr, idx);
-//     return Point.fromNative(p);
-//   }
+  Point operator [](int idx) {
+    final p = _bindings.VecPoint_At(ptr, idx);
+    return Point.fromNative(p);
+  }
 
-//   @override
-//   Iterator<Point> get iterator => ContourIterator(_ptr);
+  @override
+  Iterator<Point> get iterator => ContourIterator(ptr);
 
-//   @override
-//   String toString() {
-//     return "Contour(length=$length, address=0x${ptr.address})";
-//   }
-// }
+  @override
+  String toString() {
+    return "Contour(length=$length, address=0x${ptr.address})";
+  }
+}
 
-// class ContourIterator implements Iterator<Point> {
-//   ContourIterator(this._ptr);
+class ContourIterator implements Iterator<Point> {
+  ContourIterator(this._ptr);
 
-//   int get length => _bindings.PointVector_Size(_ptr);
-//   int currentIndex = 0;
+  int get length => _bindings.VecPoint_Size(_ptr);
+  int currentIndex = 0;
 
-//   Point operator [](int idx) {
-//     final p = _bindings.PointVector_At(_ptr, idx);
-//     return Point.fromNative(p);
-//   }
+  Point operator [](int idx) {
+    final p = _bindings.VecPoint_At(_ptr, idx);
+    return Point.fromNative(p);
+  }
 
-//   final cvg.PointVector _ptr;
+  final cvg.VecPoint _ptr;
 
-//   @override
-//   Point get current {
-//     if (currentIndex < length) {
-//       return this[currentIndex];
-//     }
-//     throw IndexError.withLength(currentIndex, length);
-//   }
+  @override
+  Point get current {
+    if (currentIndex < length) {
+      return this[currentIndex];
+    }
+    throw IndexError.withLength(currentIndex, length);
+  }
 
-//   @override
-//   bool moveNext() {
-//     currentIndex++;
-//     return currentIndex < length;
-//   }
-// }
+  @override
+  bool moveNext() {
+    currentIndex++;
+    return currentIndex < length;
+  }
+}
 
 class Contours with IterableMixin<List<Point>> implements ffi.Finalizable {
   Contours._(this._ptr) {
@@ -96,8 +108,8 @@ class Contours with IterableMixin<List<Point>> implements ffi.Finalizable {
   List<Point> operator [](int idx) {
     final pv = _bindings.PointsVector_At(_ptr, idx);
     return List.generate(
-      _bindings.PointVector_Size(pv),
-      (index) => Point.fromNative(_bindings.PointVector_At(pv, index)),
+      _bindings.VecPoint_Size(pv),
+      (index) => Point.fromNative(_bindings.VecPoint_At(pv, index)),
     );
   }
 
@@ -119,8 +131,8 @@ class ContoursIterator implements Iterator<List<Point>> {
   List<Point> operator [](int idx) {
     final pv = _bindings.PointsVector_At(_ptr, idx);
     return List.generate(
-      _bindings.PointVector_Size(pv),
-      (index) => Point.fromNative(_bindings.PointVector_At(pv, index)),
+      _bindings.VecPoint_Size(pv),
+      (index) => Point.fromNative(_bindings.VecPoint_At(pv, index)),
     );
   }
 

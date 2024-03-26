@@ -17,7 +17,7 @@ extern "C"
 {
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
     Mat Image_IMRead(const char *filename, int flags);
     bool Image_IMWrite(const char *filename, Mat img);

@@ -65,7 +65,6 @@ extern "C" {
   }
 
 #ifdef __cplusplus
-typedef cv::Exception                         *CvException;
 typedef cv::Mat                               *Mat;
 typedef cv::_InputOutputArray                 *InputOutputArray;
 typedef cv::TermCriteria                      *TermCriteria;
@@ -81,6 +80,7 @@ typedef std::vector<char>                     *VecChar;
 typedef std::vector<int>                      *VecInt;
 typedef std::vector<float>                    *VecFloat;
 typedef std::vector<double>                   *VecDouble;
+typedef std::vector<std::vector<char>>        *VecVecChar;
 typedef std::vector<cv::Mat>                  *VecMat;
 typedef std::vector<cv::Rect>                 *VecRect;
 typedef std::vector<cv::KeyPoint>             *VecKeyPoint;
@@ -89,7 +89,6 @@ typedef std::vector<std::vector<cv::DMatch>>  *VecVecDMatch;
 #else
 typedef unsigned char uchar;
 
-typedef void *CvException;
 typedef void *Mat;
 typedef void *InputOutputArray;
 typedef void *TermCriteria;
@@ -105,6 +104,7 @@ typedef void *VecChar;
 typedef void *VecInt;
 typedef void *VecFloat;
 typedef void *VecDouble;
+typedef void *VecVecChar;
 typedef void *VecMat;
 typedef void *VecRect;
 typedef void *VecKeyPoint;

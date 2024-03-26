@@ -23,7 +23,7 @@ extern "C"
 typedef void *CLAHE;
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
     double ArcLength(PointVector curve, bool is_closed);
     PointVector ApproxPolyDP(PointVector curve, double epsilon, bool closed);

@@ -10,31 +10,31 @@
 #include <string.h>
 
 // AsyncArray_New creates a new empty AsyncArray
-AsyncArray AsyncArray_New()
+CvStatus AsyncArray_New(AsyncArray *rval)
 {
-    return new cv::AsyncArray();
+  BEGIN_WRAP
+  *rval = new cv::AsyncArray();
+  END_WRAP
 }
 
 // AsyncArray_Close deletes an existing AsyncArray
 void AsyncArray_Close(AsyncArray a)
 {
-    delete a;
+  delete a;
+  a = nullptr;
 }
 
-const char *AsyncArray_GetAsync(AsyncArray async_out, Mat out)
+CvStatus AsyncArray_Get(AsyncArray async_out, Mat out)
 {
-    try
-    {
-        async_out->get(*out);
-    }
-    catch (cv::Exception ex)
-    {
-        return ex.err.c_str();
-    }
-    return "";
+  BEGIN_WRAP
+  async_out->get(*out);
+  END_WRAP
 }
 
-AsyncArray Net_forwardAsync(Net net, const char *outputName)
+CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval)
 {
-    return new cv::AsyncArray(net->forwardAsync(outputName));
+  BEGIN_WRAP
+  auto arr = net->forwardAsync();
+  *rval = &arr;
+  END_WRAP
 }

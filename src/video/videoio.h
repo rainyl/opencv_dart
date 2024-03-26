@@ -15,7 +15,7 @@ extern "C"
 {
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
 #ifdef __cplusplus
     typedef cv::VideoCapture *VideoCapture;

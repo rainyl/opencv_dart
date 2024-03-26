@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
 #ifdef __cplusplus
     // see : https://docs.opencv.org/3.4/d7/dd6/classcv_1_1MergeMertens.html

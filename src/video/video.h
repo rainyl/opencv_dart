@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 
-#include "core.h"
+#include "core/core.h"
 
 #ifdef __cplusplus
     typedef cv::Ptr<cv::BackgroundSubtractorMOG2> *BackgroundSubtractorMOG2;
