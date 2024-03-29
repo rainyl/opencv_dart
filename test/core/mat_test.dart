@@ -233,7 +233,9 @@ void main() async {
     final sum_ = mat0.sum();
     expect(sum_.val1, equals(200 * 100));
 
-    final sqrt_ = mat0.convertTo(cv.MatType.CV_32FC3).sqrt();
+    final mat1 = mat0.convertTo(cv.MatType.CV_32FC3);
+    expect(mat1.at<double>(0, 0), 1);
+    final sqrt_ = mat1.sqrt();
     expect(sqrt_.at<double>(0, 0), equals(1.0));
   });
 }

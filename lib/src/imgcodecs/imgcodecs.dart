@@ -7,11 +7,9 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../core/extensions.dart';
+import '../core/vec.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 /// IMRead reads an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
@@ -21,9 +19,12 @@ final _bindings = cvg.CvNative(loadNativeLibrary());
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
-  return using<Mat>((arena) {
-    final mat = _bindings.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags);
-    return Mat.fromCMat(mat);
+  return cvRunArena<Mat>((arena) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => CFFI.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    final dst = Mat.fromCMat(p.value);
+    calloc.free(p);
+    return dst;
   });
 }
 
@@ -31,20 +32,23 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
-bool imwrite(String filename, InputArray img, {List<int>? params}) {
+bool imwrite(String filename, InputArray img, {VecInt? params}) {
   return using<bool>((arena) {
-    bool isSuccess = false;
+    final fname = filename.toNativeUtf8(allocator: arena);
+    final p = arena<ffi.Bool>();
     if (params == null) {
-      isSuccess = _bindings.Image_IMWrite(filename.toNativeUtf8(allocator: arena).cast(), img.ptr);
+      cvRun(() => CFFI.Image_IMWrite(fname.cast(), img.ptr, p));
     } else {
-      final fname = filename.toNativeUtf8(allocator: arena);
-      isSuccess = _bindings.Image_IMWrite_WithParams(
-        fname.cast(),
-        img.ptr,
-        params.toNativeVector(arena).ref,
+      cvRun(
+        () => CFFI.Image_IMWrite_WithParams(
+          fname.cast(),
+          img.ptr,
+          params.ptr,
+          p,
+        ),
       );
     }
-    return isSuccess;
+    return p.value;
   });
 }
 
@@ -57,32 +61,19 @@ bool imwrite(String filename, InputArray img, {List<int>? params}) {
 Uint8List imencode(
   String ext,
   InputArray img, {
-  List<int>? params,
+  VecInt? params,
 }) {
   return using<Uint8List>((arena) {
-    final buffer = _bindings.UCharVector_New();
+    final buffer = arena<cvg.VecUChar>();
+    final cExt = ext.toNativeUtf8(allocator: arena);
 
     if (params == null) {
-      _bindings.Image_IMEncode(ext.toNativeUtf8(allocator: arena).cast(), img.ptr, buffer);
+      CFFI.Image_IMEncode(cExt.cast(), img.ptr, buffer);
     } else {
-      final ptr = ext.toNativeUtf8(allocator: arena);
-      _bindings.Image_IMEncode_WithParams(
-        ptr.cast(),
-        img.ptr,
-        params.toNativeVector(arena).ref,
-        buffer,
-      );
+      CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ptr, params.ptr, buffer);
     }
 
-    final length = _bindings.UCharVector_Size(buffer);
-
-    final buf = Uint8List(length);
-    for (var i = 0; i < length; i++) {
-      buf[i] = _bindings.UCharVector_At(buffer, i);
-    }
-    _bindings.UCharVector_Free(buffer);
-
-    return buf;
+    return VecUChar.fromPointer(buffer.value).toU8List();
   });
 }
 
@@ -94,19 +85,9 @@ Uint8List imencode(
 /// @param flags The same flags as in cv::imread, see cv::ImreadModes.
 /// For further details, please see:
 /// https://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga26a67788faa58ade337f8d28ba0eb19e
-Mat imdecode(Uint8List buf, int flags, {Mat? dst = null}) {
-  final buffer = _bindings.UCharVector_New();
-  for (var i = 0; i < buf.length; i++) {
-    _bindings.UCharVector_Append(buffer, buf[i]);
-  }
-  if (dst == null) {
-    final mat = _bindings.Image_IMDecode(buffer, flags);
-    final cvimgDecode = Mat.fromCMat(mat);
-    _bindings.UCharVector_Free(buffer);
-    return cvimgDecode;
-  } else {
-    _bindings.Image_IMDecodeIntoMat(buffer, flags, dst.ptr);
-    _bindings.UCharVector_Free(buffer);
-    return dst;
-  }
+Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
+  final vec = VecUChar.fromList(buf);
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.Image_IMDecode(vec.ptr, flags, dst!.ptr));
+  return dst;
 }

@@ -26,7 +26,7 @@ class Stitcher implements ffi.Finalizable {
   cvg.Stitcher get stitcher {
     final s = calloc<cvg.Stitcher>();
     final status1 = _bindings.Stitcher_Get(ptr, s);
-    throwIfFailed(status1);
+    cvRun(status1);
     return s.value;
   }
 
@@ -37,7 +37,7 @@ class Stitcher implements ffi.Finalizable {
   factory Stitcher.create({StitcherMode mode = StitcherMode.PANORAMA}) {
     final ptr_ = calloc<cvg.PtrStitcher>();
     final status = _bindings.Stitcher_Create(mode.index, ptr_);
-    throwIfFailed(status);
+    cvRun(status);
     return Stitcher._(ptr_.value);
   }
 
@@ -46,7 +46,7 @@ class Stitcher implements ffi.Finalizable {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
       final status = _bindings.Stitcher_GetRegistrationResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -55,7 +55,7 @@ class Stitcher implements ffi.Finalizable {
   set registrationResol(double value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetRegistrationResol(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -64,7 +64,7 @@ class Stitcher implements ffi.Finalizable {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
       final status = _bindings.Stitcher_GetSeamEstimationResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -73,7 +73,7 @@ class Stitcher implements ffi.Finalizable {
   set seamEstimationResol(double value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetSeamEstimationResol(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -82,7 +82,7 @@ class Stitcher implements ffi.Finalizable {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
       final status = _bindings.Stitcher_GetCompositingResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -91,7 +91,7 @@ class Stitcher implements ffi.Finalizable {
   set compositingResol(double value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetCompositingResol(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -100,7 +100,7 @@ class Stitcher implements ffi.Finalizable {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
       final status = _bindings.Stitcher_GetPanoConfidenceThresh(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -109,7 +109,7 @@ class Stitcher implements ffi.Finalizable {
   set panoConfidenceThresh(double value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetPanoConfidenceThresh(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -118,7 +118,7 @@ class Stitcher implements ffi.Finalizable {
     return using<bool>((arena) {
       final rptr = arena<ffi.Bool>();
       final status = _bindings.Stitcher_GetWaveCorrection(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -127,7 +127,7 @@ class Stitcher implements ffi.Finalizable {
   set waveCorrection(bool value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetWaveCorrection(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -136,7 +136,7 @@ class Stitcher implements ffi.Finalizable {
     return using<int>((arena) {
       final rptr = arena<ffi.Int>();
       final status = _bindings.Stitcher_GetInterpolationFlags(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -145,7 +145,7 @@ class Stitcher implements ffi.Finalizable {
   set interpolationFlags(int value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetInterpolationFlags(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -154,7 +154,7 @@ class Stitcher implements ffi.Finalizable {
     return using<int>((arena) {
       final rptr = arena<ffi.Int>();
       final status = _bindings.Stitcher_GetWaveCorrectKind(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return rptr.value;
     });
   }
@@ -163,7 +163,7 @@ class Stitcher implements ffi.Finalizable {
   set waveCorrectKind(int value) {
     using<void>((arena) {
       final status = _bindings.Stitcher_SetWaveCorrectKind(stitcher, value);
-      throwIfFailed(status);
+      cvRun(status);
     });
   }
 
@@ -175,7 +175,7 @@ class Stitcher implements ffi.Finalizable {
       masks ??= [];
       final status = _bindings.Stitcher_EstimateTransform(
           stitcher, images.toMats(arena).ref, masks!.toMats(arena).ref, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return StitcherStatus.fromInt(rptr.value);
     });
   }
@@ -191,7 +191,7 @@ class Stitcher implements ffi.Finalizable {
       final status = images == null
           ? _bindings.Stitcher_ComposePanorama(stitcher, rpano.value, rptr)
           : _bindings.Stitcher_ComposePanorama_1(stitcher, images.toMats(arena).ref, rpano.value, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return (StitcherStatus.fromInt(rptr.value), Mat.fromCMat(rpano.value));
     });
   }
@@ -207,7 +207,7 @@ class Stitcher implements ffi.Finalizable {
           ? _bindings.Stitcher_Stitch(stitcher, images.toMats(arena).ref, rpano.ptr, rptr)
           : _bindings.Stitcher_Stitch_1(
               stitcher, images.toMats(arena).ref, masks.toMats(arena).ref, rpano.ptr, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return (StitcherStatus.fromInt(rptr.value), rpano);
     });
   }
@@ -217,7 +217,7 @@ class Stitcher implements ffi.Finalizable {
     return using<List<int>>((arena) {
       final rptr = arena<cvg.IntVector>();
       final status = _bindings.Stitcher_Component(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(status);
       return List.generate(rptr.ref.length, (i) => rptr.ref.val[i]);
     });
   }

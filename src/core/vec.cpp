@@ -29,11 +29,18 @@ CvStatus VecPoint_NewFromMat(Mat mat, VecPoint *rval)
   END_WRAP
 }
 
+CvStatus VecPoint_NewFromVec(VecPoint vec, VecPoint *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::Point>(*vec);
+  END_WRAP
+}
+
 CvStatus VecPoint_At(VecPoint vec, int idx, Point *rval)
 {
   BEGIN_WRAP
-  rval->x = vec->at(idx).x;
-  rval->y = vec->at(idx).y;
+  auto p = vec->at(idx);
+  *rval = {p.x, p.y};
   END_WRAP
 }
 
@@ -47,7 +54,7 @@ CvStatus VecPoint_Append(VecPoint vec, Point p)
 CvStatus VecPoint_Size(VecPoint vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -76,24 +83,31 @@ CvStatus VecVecPoint_NewFromPointer(VecPoint *points, int length, VecVecPoint *r
   END_WRAP
 }
 
+CvStatus VecVecPoint_NewFromVec(VecVecPoint vec, VecVecPoint *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<cv::Point>>(*vec);
+  END_WRAP
+}
+
 CvStatus VecVecPoint_At(VecVecPoint vec, int idx, VecPoint *rval)
 {
   BEGIN_WRAP
-  *rval = &vec->at(idx);
+  *rval = new std::vector<cv::Point>(vec->at(idx));
   END_WRAP
 }
 
 CvStatus VecVecPoint_Append(VecVecPoint vec, VecPoint pv)
 {
   BEGIN_WRAP
-  vec->push_back((std::vector<cv::Point>)*pv);
+  vec->push_back(*pv);
   END_WRAP
 }
 
 CvStatus VecVecPoint_Size(VecVecPoint vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -138,11 +152,18 @@ CvStatus VecPoint2f_NewFromMat(Mat mat, VecPoint2f *rval)
   END_WRAP
 }
 
+CvStatus VecPoint2f_NewFromVec(VecPoint2f vec, VecPoint2f *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::Point2f>(*vec);
+  END_WRAP
+}
+
 CvStatus VecPoint2f_At(VecPoint2f vec, int idx, Point2f *rval)
 {
   BEGIN_WRAP
-  rval->x = vec->at(idx).x;
-  rval->y = vec->at(idx).y;
+  auto p = vec->at(idx);
+  *rval = {p.x, p.y};
   END_WRAP
 }
 
@@ -156,7 +177,7 @@ CvStatus VecPoint2f_Append(VecPoint2f vec, Point2f p)
 CvStatus VecPoint2f_Size(VecPoint2f vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -178,6 +199,13 @@ CvStatus VecVecPoint2f_NewFromPointer(VecPoint2f *points, int length, VecVecPoin
   END_WRAP
 }
 
+CvStatus VecVecPoint2f_NewFromVec(VecVecPoint2f vec, VecVecPoint2f *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<cv::Point2f>>(*vec);
+  END_WRAP
+}
+
 CvStatus VecVecPoint2f_At(VecVecPoint2f vec, int idx, VecPoint2f *rval)
 {
   BEGIN_WRAP
@@ -195,7 +223,7 @@ CvStatus VecVecPoint2f_Append(VecVecPoint2f vec, VecPoint2f pv)
 CvStatus VecVecPoint2f_Size(VecVecPoint2f vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -240,12 +268,18 @@ CvStatus VecPoint3f_NewFromMat(Mat mat, VecPoint3f *rval)
   END_WRAP
 }
 
+CvStatus VecPoint3f_NewFromVec(VecPoint3f vec, VecPoint3f *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::Point3f>(*vec);
+  END_WRAP
+}
+
 CvStatus VecPoint3f_At(VecPoint3f vec, int idx, Point3f *rval)
 {
   BEGIN_WRAP
-  rval->x = vec->at(idx).x;
-  rval->y = vec->at(idx).y;
-  rval->z = vec->at(idx).z;
+  auto p = vec->at(idx);
+  *rval = {p.x, p.y, p.z};
   END_WRAP
 }
 
@@ -259,7 +293,7 @@ CvStatus VecPoint3f_Append(VecPoint3f vec, Point3f p)
 CvStatus VecPoint3f_Size(VecPoint3f vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -281,6 +315,13 @@ CvStatus VecVecPoint3f_NewFromPointer(VecPoint3f *points, int length, VecVecPoin
   END_WRAP
 }
 
+CvStatus VecVecPoint3f_NewFromVec(VecVecPoint3f vec, VecVecPoint3f *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<cv::Point3f>>(*vec);
+  END_WRAP
+}
+
 CvStatus VecVecPoint3f_At(VecVecPoint3f vec, int idx, VecPoint3f *rval)
 {
   BEGIN_WRAP
@@ -298,7 +339,7 @@ CvStatus VecVecPoint3f_Append(VecVecPoint3f vec, VecPoint3f pv)
 CvStatus VecVecPoint3f_Size(VecVecPoint3f vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -326,6 +367,13 @@ CvStatus VecUChar_NewFromPointer(uchar *p, int length, VecUChar *rval)
   END_WRAP
 }
 
+CvStatus VecUChar_NewFromVec(VecUChar vec, VecUChar *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<uchar>(*vec);
+  END_WRAP
+}
+
 CvStatus VecUChar_Append(VecUChar vec, uchar i)
 {
   BEGIN_WRAP
@@ -343,7 +391,7 @@ CvStatus VecUChar_At(VecUChar vec, int idx, uchar *rval)
 CvStatus VecUChar_Size(VecUChar vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -371,6 +419,13 @@ CvStatus VecChar_NewFromPointer(const char *p, int length, VecChar *rval)
   END_WRAP
 }
 
+CvStatus VecChar_NewFromVec(VecChar vec, VecChar *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<char>(*vec);
+  END_WRAP
+}
+
 CvStatus VecChar_Append(VecChar vec, char i)
 {
   BEGIN_WRAP
@@ -388,7 +443,7 @@ CvStatus VecChar_At(VecChar vec, int idx, char *rval)
 CvStatus VecChar_Size(VecChar vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -396,7 +451,7 @@ CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
 {
   BEGIN_WRAP
   *length = static_cast<int>(vec->size());
-  char* tempBuffer = new char[*length + 1];
+  char *tempBuffer = new char[*length + 1];
   std::memcpy(tempBuffer, vec->data(), *length);
   tempBuffer[*length] = '\0';
   *rval = tempBuffer;
@@ -414,6 +469,12 @@ CvStatus VecVecChar_New(VecVecChar *rval)
 {
   BEGIN_WRAP
   *rval = new std::vector<std::vector<char>>();
+  END_WRAP
+}
+CvStatus VecVecChar_NewFromVec(VecVecChar vec, VecVecChar *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<char>>(*vec);
   END_WRAP
 }
 CvStatus VecVecChar_Append(VecVecChar vec, VecChar v)
@@ -442,7 +503,7 @@ CvStatus VecVecChar_At_Str(VecVecChar vec, int idx, char **rval, int *length)
   BEGIN_WRAP
   auto str = vec->at(idx);
   *length = static_cast<int>(str.size());
-  char* tempBuffer = new char[*length + 1];
+  char *tempBuffer = new char[*length + 1];
   std::memcpy(tempBuffer, str.data(), *length);
   tempBuffer[*length] = '\0';
   *rval = tempBuffer;
@@ -478,6 +539,13 @@ CvStatus VecInt_NewFromPointer(int *p, int length, VecInt *rval)
   END_WRAP
 }
 
+CvStatus VecInt_NewFromVec(VecInt vec, VecInt *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<int>(*vec);
+  END_WRAP
+}
+
 CvStatus VecInt_Append(VecInt vec, int i)
 {
   BEGIN_WRAP
@@ -495,7 +563,7 @@ CvStatus VecInt_At(VecInt vec, int idx, int *rval)
 CvStatus VecInt_Size(VecInt vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -523,6 +591,13 @@ CvStatus VecFloat_NewFromPointer(float *p, int length, VecFloat *rval)
   END_WRAP
 }
 
+CvStatus VecFloat_NewFromVec(VecFloat vec, VecFloat *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<float>(*vec);
+  END_WRAP
+}
+
 CvStatus VecFloat_Append(VecFloat vec, float f)
 {
   BEGIN_WRAP
@@ -540,7 +615,7 @@ CvStatus VecFloat_At(VecFloat vec, int idx, float *rval)
 CvStatus VecFloat_Size(VecFloat vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -568,6 +643,13 @@ CvStatus VecDouble_NewFromPointer(double *p, int length, VecDouble *rval)
   END_WRAP
 }
 
+CvStatus VecDouble_NewFromVec(VecDouble vec, VecDouble *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<double>(*vec);
+  END_WRAP
+}
+
 CvStatus VecDouble_Append(VecDouble vec, double d)
 {
   BEGIN_WRAP
@@ -585,7 +667,7 @@ CvStatus VecDouble_At(VecDouble vec, int idx, double *rval)
 CvStatus VecDouble_Size(VecDouble vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -613,6 +695,13 @@ CvStatus VecMat_NewFromPointer(Mat *mats, int length, VecMat *rval)
   END_WRAP
 }
 
+CvStatus VecMat_NewFromVec(VecMat vec, VecMat *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::Mat>(*vec);
+  END_WRAP
+}
+
 CvStatus VecMat_Append(VecMat vec, Mat mat)
 {
   BEGIN_WRAP
@@ -630,7 +719,7 @@ CvStatus VecMat_At(VecMat vec, int i, Mat *rval)
 CvStatus VecMat_Size(VecMat vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -658,6 +747,13 @@ CvStatus VecRect_NewFromPointer(Rect *rects, int length, VecRect *rval)
   END_WRAP
 }
 
+CvStatus VecRect_NewFromVec(VecRect vec, VecRect *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::Rect>(*vec);
+  END_WRAP
+}
+
 CvStatus VecRect_At(VecRect vec, int idx, Rect *rval)
 {
   BEGIN_WRAP
@@ -676,7 +772,7 @@ CvStatus VecRect_Append(VecRect vec, Rect rect)
 CvStatus VecRect_Size(VecRect vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -705,6 +801,13 @@ CvStatus VecKeyPoint_NewFromPointer(KeyPoint *keypoints, int length, VecKeyPoint
   END_WRAP
 }
 
+CvStatus VecKeyPoint_NewFromVec(VecKeyPoint vec, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::KeyPoint>(*vec);
+  END_WRAP
+}
+
 CvStatus VecKeyPoint_Append(VecKeyPoint vec, KeyPoint kp)
 {
   BEGIN_WRAP
@@ -723,7 +826,7 @@ CvStatus VecKeyPoint_At(VecKeyPoint vec, int idx, KeyPoint *rval)
 CvStatus VecKeyPoint_Size(VecKeyPoint vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -752,6 +855,13 @@ CvStatus VecDMatch_NewFromPointer(DMatch *matches, int length, VecDMatch *rval)
   END_WRAP
 }
 
+CvStatus VecDMatch_NewFromVec(VecDMatch vec, VecDMatch *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<cv::DMatch>(*vec);
+  END_WRAP
+}
+
 CvStatus VecDMatch_Append(VecDMatch vec, DMatch dm)
 {
   BEGIN_WRAP
@@ -770,7 +880,7 @@ CvStatus VecDMatch_At(VecDMatch vec, int idx, DMatch *rval)
 CvStatus VecDMatch_Size(VecDMatch vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 
@@ -799,11 +909,17 @@ CvStatus VecVecDMatch_NewFromPointer(VecDMatch *matches, int length, VecVecDMatc
   END_WRAP
 }
 
+CvStatus VecVecDMatch_NewFromVec(VecVecDMatch vec, VecVecDMatch *rval)
+{
+  BEGIN_WRAP
+  *rval = new std::vector<std::vector<cv::DMatch>>(*vec);
+  END_WRAP
+}
+
 CvStatus VecVecDMatch_At(VecVecDMatch vec, int idx, VecDMatch *rval)
 {
   BEGIN_WRAP
-  auto dms = vec->at(idx);
-  *rval = &dms;
+  *rval = &vec->at(idx);
   END_WRAP
 }
 
@@ -817,7 +933,7 @@ CvStatus VecVecDMatch_Append(VecVecDMatch vec, VecDMatch dm)
 CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
 {
   BEGIN_WRAP
-  *rval = (int)vec->size();
+  *rval = static_cast<int>(vec->size());
   END_WRAP
 }
 

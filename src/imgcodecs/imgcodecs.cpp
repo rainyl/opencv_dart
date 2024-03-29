@@ -7,58 +7,45 @@
 */
 
 #include "imgcodecs.h"
+#include <vector>
 
-// Image
-Mat Image_IMRead(const char *filename, int flags)
+CvStatus Image_IMRead(const char *filename, int flags, Mat *rval)
 {
-    // BEGIN_WRAP
-    return new cv::Mat(cv::imread(filename, flags));
-    // END_WRAP
+  BEGIN_WRAP
+  *rval = new cv::Mat(cv::imread(filename, flags));
+  END_WRAP
 }
-
-bool Image_IMWrite(const char *filename, Mat img)
+CvStatus Image_IMWrite(const char *filename, Mat img, bool *rval)
 {
-    return cv::imwrite(filename, *img);
+  BEGIN_WRAP
+  *rval = cv::imwrite(filename, *img);
+  END_WRAP
 }
-
-bool Image_IMWrite_WithParams(const char *filename, Mat img, IntVector params)
+CvStatus Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, bool *rval)
 {
-    std::vector<int> compression_params;
-
-    for (int i = 0, *v = params.val; i < params.length; ++v, ++i)
-    {
-        compression_params.push_back(*v);
-    }
-
-    return cv::imwrite(filename, *img, compression_params);
+  BEGIN_WRAP
+  *rval = cv::imwrite(filename, *img, *params);
+  END_WRAP
 }
-
-void Image_IMEncode(const char *fileExt, Mat img, void *vector)
+CvStatus Image_IMEncode(const char *fileExt, Mat img, VecUChar *rval)
 {
-    auto vectorPtr = reinterpret_cast<std::vector<uchar> *>(vector);
-    cv::imencode(fileExt, *img, *vectorPtr);
+  BEGIN_WRAP
+  auto buf = new std::vector<uchar>();
+  cv::imencode(fileExt, *img, *buf);
+  *rval = buf;
+  END_WRAP
 }
-
-void Image_IMEncode_WithParams(const char *fileExt, Mat img, IntVector params, void *vector)
+CvStatus Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, VecUChar *rval)
 {
-    auto vectorPtr = reinterpret_cast<std::vector<uchar> *>(vector);
-    std::vector<int> compression_params;
-
-    for (int i = 0, *v = params.val; i < params.length; ++v, ++i)
-    {
-        compression_params.push_back(*v);
-    }
-
-    cv::imencode(fileExt, *img, *vectorPtr, compression_params);
+  BEGIN_WRAP
+  auto buf = new std::vector<uchar>();
+  cv::imencode(fileExt, *img, *buf, *params);
+  *rval = buf;
+  END_WRAP
 }
-
-Mat Image_IMDecode(UCharVector buf, int flags)
+CvStatus Image_IMDecode(VecUChar buf, int flags, Mat rval)
 {
-    cv::Mat img = cv::imdecode(*buf, flags);
-    return new cv::Mat(img);
-}
-
-void Image_IMDecodeIntoMat(UCharVector buf, int flags, Mat dest)
-{
-    cv::imdecode(*buf, flags, dest);
+  BEGIN_WRAP
+  cv::imdecode(*buf, flags, rval);
+  END_WRAP
 }

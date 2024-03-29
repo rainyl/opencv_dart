@@ -24,7 +24,7 @@ headers:
     # - src/extra/aruco.h
     # - src/features2d/features2d.h
     # - src/highgui/highgui.h
-    # - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs.h
     # - src/imgproc/imgproc.h
     # - src/objdetect/objdetect.h
     # - src/photo/photo.h
@@ -43,7 +43,7 @@ headers:
     # - src/extra/aruco.h
     # - src/features2d/features2d.h
     # - src/highgui/highgui.h
-    # - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs.h
     # - src/imgproc/imgproc.h
     # - src/objdetect/objdetect.h
     # - src/photo/photo.h

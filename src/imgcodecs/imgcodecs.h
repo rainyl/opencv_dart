@@ -13,20 +13,17 @@
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core/core.h"
 
-    Mat Image_IMRead(const char *filename, int flags);
-    bool Image_IMWrite(const char *filename, Mat img);
-    bool Image_IMWrite_WithParams(const char *filename, Mat img, IntVector params);
-    void Image_IMEncode(const char *fileExt, Mat img, void *vector);
-
-    void Image_IMEncode_WithParams(const char *fileExt, Mat img, IntVector params, void *vector);
-    Mat Image_IMDecode(UCharVector buf, int flags);
-    void Image_IMDecodeIntoMat(UCharVector buf, int flag, Mat dest);
+CvStatus Image_IMRead(const char *filename, int flags, Mat *rval);
+CvStatus Image_IMWrite(const char *filename, Mat img, bool *rval);
+CvStatus Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, bool *rval);
+CvStatus Image_IMEncode(const char *fileExt, Mat img, VecUChar *rval);
+CvStatus Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, VecUChar *rval);
+CvStatus Image_IMDecode(VecUChar buf, int flags, Mat rval);
 
 #ifdef __cplusplus
 }

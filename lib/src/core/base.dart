@@ -1,11 +1,15 @@
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
 library cv;
 
 import 'dart:ffi' as ffi;
+import 'dart:ffi';
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" show CvStatus;
+import "../opencv.g.dart" show CvStatus, CvNative;
 import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
@@ -44,19 +48,25 @@ ffi.DynamicLibrary loadNativeLibrary() {
   }
 }
 
-/// (width, height)
-typedef Size = (int, int);
+final CFFI = CvNative(loadNativeLibrary());
 
-abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
-  CvObject(this._ptr);
-  ffi.Pointer<T> _ptr;
-  ffi.Pointer<T> get ptr => _ptr;
+abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
-  T toNative();
+abstract class CvStruct<T extends ffi.Struct> extends CvObject<T> with EquatableMixin {
+  CvStruct.fromPointer(this.ptr);
+
+  ffi.Pointer<T> ptr;
   T get ref;
+  T toNative();
 }
 
-void throwIfFailed(CvStatus status) {
+abstract class CvPtrVoid<T extends ffi.Pointer<ffi.Void>> extends CvObject<T> with EquatableMixin {
+  CvPtrVoid.fromPointer(this.ptr);
+  T ptr;
+}
+
+R? cvRun<R>(CvStatus Function() func, [R? rval]) {
+  final status = func();
   if (status.code != 0) {
     throw CvException(
       status.code,
@@ -65,6 +75,25 @@ void throwIfFailed(CvStatus status) {
       func: status.func.cast<Utf8>().toDartString(),
       line: status.line,
     );
+  }
+  return rval;
+}
+
+R cvRunArena<R>(R Function(Arena arena) computation,
+    [Allocator wrappedAllocator = calloc, bool keep = false]) {
+  final arena = Arena(wrappedAllocator);
+  bool isAsync = false;
+  try {
+    final result = computation(arena);
+    if (result is Future) {
+      isAsync = true;
+      return (result.whenComplete(arena.releaseAll) as R);
+    }
+    return result;
+  } finally {
+    if (!isAsync && !keep) {
+      arena.releaseAll();
+    }
   }
 }
 

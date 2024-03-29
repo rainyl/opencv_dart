@@ -84,6 +84,24 @@ CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecChar buf, Mat *rval)
   *rval = new cv::Mat(rows, cols, type, buf);
   END_WRAP
 }
+CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval)
+{
+  BEGIN_WRAP
+  *rval = new cv::Mat(*vec);
+  END_WRAP
+}
+CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval)
+{
+  BEGIN_WRAP
+  *rval = new cv::Mat(*vec);
+  END_WRAP
+}
+CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval)
+{
+  BEGIN_WRAP
+  *rval = new cv::Mat(*vec);
+  END_WRAP
+}
 CvStatus Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval)
 {
   BEGIN_WRAP
@@ -137,16 +155,16 @@ CvStatus Mat_ConvertToWithParams(Mat m, Mat dst, int type, float alpha, float be
   m->convertTo(*dst, type, alpha, beta);
   END_WRAP
 }
-CvStatus Mat_ToVecUChar(Mat m, VecUChar *rval)
+CvStatus Mat_ToVecUChar(Mat m, VecUChar rval)
 {
   BEGIN_WRAP
-  *rval = new std::vector<uchar>(m->begin<uchar>(), m->end<uchar>());
+  *rval = std::vector<uchar>(m->begin<uchar>(), m->end<uchar>());
   END_WRAP
 }
-CvStatus Mat_ToVecChar(Mat m, VecChar *rval)
+CvStatus Mat_ToVecChar(Mat m, VecChar rval)
 {
   BEGIN_WRAP
-  *rval = new std::vector<char>(m->begin<char>(), m->end<char>());
+  *rval = std::vector<char>(m->begin<char>(), m->end<char>());
   END_WRAP
 }
 CvStatus Mat_Region(Mat m, Rect r, Mat *rval)
@@ -170,9 +188,9 @@ CvStatus Mat_PatchNaNs(Mat m, double val)
 CvStatus Mat_ConvertFp16(Mat m, Mat *rval)
 {
   BEGIN_WRAP
-  Mat dst = new cv::Mat();
-  cv::convertFp16(*m, *dst);
-  *rval = dst;
+  auto dst = cv::Mat();
+  cv::convertFp16(*m, dst);
+  *rval = new cv::Mat(dst);
   END_WRAP
 }
 CvStatus Mat_Mean(Mat m, Scalar *rval)
@@ -192,9 +210,9 @@ CvStatus Mat_MeanWithMask(Mat m, Mat mask, Scalar *rval)
 CvStatus Mat_Sqrt(Mat m, Mat *rval)
 {
   BEGIN_WRAP
-  Mat dst = new cv::Mat();
-  cv::sqrt(*m, *dst);
-  *rval = dst;
+  auto dst = cv::Mat();
+  cv::sqrt(*m, dst);
+  *rval = new cv::Mat(dst);
   END_WRAP
 }
 CvStatus Mat_Rows(Mat m, int *rval)
@@ -233,14 +251,16 @@ CvStatus Mat_Total(Mat m, int *rval)
   *rval = m->total();
   END_WRAP
 }
-CvStatus Mat_Size(Mat m, VecInt *rval)
+CvStatus Mat_Size(Mat m, VecInt rval)
 {
   BEGIN_WRAP
-  *rval = new std::vector<int>();
+  std::vector<int> v;
+
   auto size = m->size;
   for (int i = 0; i < size.dims(); i++) {
-    (*rval)->push_back(size[i]);
+    v.push_back(size[i]);
   }
+  *rval = v;
   END_WRAP
 }
 CvStatus Mat_ElemSize(Mat m, int *rval)
@@ -1065,12 +1085,12 @@ CvStatus Mat_SortIdx(Mat src, Mat dst, int flags)
   END_WRAP
 }
 
-CvStatus Mat_Split(Mat src, VecMat *rval)
+CvStatus Mat_Split(Mat src, VecMat rval)
 {
   BEGIN_WRAP
   std::vector<cv::Mat> channels;
   cv::split(*src, channels);
-  *rval = &channels;
+  *rval = channels;
   END_WRAP
 }
 

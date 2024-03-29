@@ -10,7 +10,7 @@
 
 import 'package:equatable/equatable.dart';
 
-class ErrorCode with EquatableMixin{
+class ErrorCode with EquatableMixin {
   /// @brief everithing is ok [CV_StsOk]
   static final ErrorCode StsOk = ErrorCode(0);
 
@@ -165,7 +165,7 @@ class ErrorCode with EquatableMixin{
 
   ErrorCode(this.code);
   final int code;
-  
+
   @override
   List<Object?> get props => [code];
 }

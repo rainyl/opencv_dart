@@ -38,6 +38,7 @@ file(GLOB_RECURSE CPP_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/dnn/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/imgcodecs/*.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
