@@ -34,50 +34,45 @@ class DMatch extends CvStruct<cvg.DMatch> {
   @override
   cvg.DMatch get ref => ptr.ref;
   @override
-  cvg.DMatch toNative() => ptr.ref;
-
-  @override
   String toString() => "DMatch($queryIdx, $trainIdx, $imgIdx, ${distance.toStringAsFixed(3)})";
 }
 
-class VecDMatch extends Vec<DMatch> {
+class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   VecDMatch._(this.ptr) {
     finalizer.attach(this, ptr);
   }
   factory VecDMatch.fromPointer(cvg.VecDMatch ptr) {
     final p = calloc<cvg.VecDMatch>();
-    try {
-      cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));
-      final vec = VecDMatch._(p.value);
-      return vec;
-    } finally {
-      calloc.free(p);
-    }
+    cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));
+    final vec = VecDMatch._(p);
+    return vec;
   }
   factory VecDMatch.fromList(List<DMatch> pts) {
     final ptr = calloc<cvg.VecDMatch>();
     cvRun(() => CFFI.VecDMatch_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecDMatch_Append(ptr.value, pts[i].ref));
+      cvRun(() => CFFI.VecDMatch_Append(ptr.ref, pts[i].ref));
     }
-    final vec = VecDMatch._(ptr.value);
-    calloc.free(ptr);
+    final vec = VecDMatch._(ptr);
     return vec;
   }
 
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecDMatch_Size(ptr, ptrlen));
+    cvRun(() => CFFI.VecDMatch_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  cvg.VecDMatch ptr;
-  static final finalizer = ffi.NativeFinalizer(CFFI.addresses.VecDMatch_Close);
+  static final finalizer = Finalizer<cvg.VecDMatchPtr>((p) => CFFI.VecDMatch_Close(p));
   @override
-  Iterator<DMatch> get iterator => VecDMatchIterator(ptr);
+  Iterator<DMatch> get iterator => VecDMatchIterator(ref);
+  @override
+  cvg.VecDMatch get ref => ptr.ref;
+  @override
+  ffi.Pointer<cvg.VecDMatch> ptr;
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
@@ -102,36 +97,37 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   }
 }
 
-class VecVecDMatch extends Vec<Vec<DMatch>> {
+class VecVecDMatch extends Vec<Vec<DMatch>> implements CvStruct<cvg.VecVecDMatch> {
   VecVecDMatch._(this.ptr) {
     finalizer.attach(this, ptr);
   }
   factory VecVecDMatch.fromPointer(cvg.VecVecDMatch ptr) {
     final p = calloc<cvg.VecVecDMatch>();
-    try {
-      cvRun(() => CFFI.VecVecDMatch_NewFromVec(ptr, p));
-      final vec = VecVecDMatch._(p.value);
-      return vec;
-    } finally {
-      calloc.free(p);
-    }
+    cvRun(() => CFFI.VecVecDMatch_NewFromVec(ptr, p));
+    final vec = VecVecDMatch._(p);
+    return vec;
   }
   factory VecVecDMatch.fromList(List<List<DMatch>> pts) {
     final p = calloc<cvg.VecVecDMatch>();
     cvRun(() => CFFI.VecVecDMatch_New(p));
     for (var i = 0; i < pts.length; i++) {
       final point = pts[i].ocv;
-      cvRun(() => CFFI.VecVecDMatch_Append(p.value, point.ptr));
+      cvRun(() => CFFI.VecVecDMatch_Append(p.ref, point.ref));
     }
-    final vec = VecVecDMatch._(p.value);
-    calloc.free(p);
+    final vec = VecVecDMatch._(p);
     return vec;
   }
 
-  cvg.VecVecDMatch ptr;
-  static final finalizer = ffi.NativeFinalizer(CFFI.addresses.VecVecDMatch_Close);
   @override
-  Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ptr);
+  cvg.VecVecDMatchPtr ptr;
+  static final finalizer = Finalizer<cvg.VecVecDMatchPtr>((p) {
+    CFFI.VecVecDMatch_Close(p);
+    calloc.free(p);
+  });
+  @override
+  Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
+  @override
+  cvg.VecVecDMatch get ref => ptr.ref;
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {
@@ -151,7 +147,7 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
     return cvRunArena<VecDMatch>((arena) {
       final p = arena<cvg.VecDMatch>();
       cvRun(() => CFFI.VecVecDMatch_At(ptr, idx, p));
-      final vec = VecDMatch.fromPointer(p.value);
+      final vec = VecDMatch.fromPointer(p.ref);
       return vec;
     });
   }

@@ -5,6 +5,7 @@ import '../opencv.g.dart' as cvg;
 
 /// (width, height)
 typedef Size = (int, int);
+typedef Size2f = (double, double);
 
 extension RecordSizeExtension1 on Size {
   ffi.Pointer<cvg.Size> toSize(Arena arena) {

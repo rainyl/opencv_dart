@@ -17,7 +17,7 @@ void main() {
         ..ref.y = 2;
       final p = cv.Point.fromNative(cPoint.ref);
       expect(p, cv.Point(1, 2));
-      expect(p.toNative().x, 1);
+      expect(p.ref.x, 1);
     });
 
     final point1 = cv.Point2f(1.50, 2.3);
@@ -30,7 +30,7 @@ void main() {
         ..ref.y = 2;
       final p = cv.Point2f.fromNative(cPoint.ref);
       expect(p, cv.Point2f(1, 2));
-      expect(p.toNative().x, 1);
+      expect(p.ref.x, 1);
     });
 
     final point2 = cv.Point3f(1.50, 2.3, 3.4);
@@ -45,7 +45,7 @@ void main() {
         ..ref.z = 3;
       final p = cv.Point3f.fromNative(cPoint.ref);
       expect(p, cv.Point3f(1, 2, 3));
-      expect(p.toNative().x, 1);
+      expect(p.ref.x, 1);
     });
   });
 

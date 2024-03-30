@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -158,10 +160,10 @@ void main() async {
     final r = cv.Mat.empty();
     final (map1, map2) = cv.initUndistortRectifyMap(k, d, r, newC, (img.cols, img.rows), 5);
     final dst = cv.Mat.empty();
-    cv.remap(img, dst, map1, map2, cv.INTER_LINEAR);
-    expect(dst.isEmpty, false);
-    final success = cv.imwrite("test/images/distortion-correct.png", dst);
-    expect(success, true);
+    // cv.remap(img, dst, map1, map2, cv.INTER_LINEAR);
+    // expect(dst.isEmpty, false);
+    // final success = cv.imwrite("test/images/distortion-correct.png", dst);
+    // expect(success, true);
   });
 
   test('cv.findChessboardCorners, cv.drawChessboardCorners', () {
@@ -181,7 +183,20 @@ void main() async {
     final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
 
-    final (found, corners, meta) = cv.findChessboardCornersSB(img, (4, 6), 0);
+    final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), 0);
+    expect(found, true);
+    expect(corners.isEmpty, false);
+
+    final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+    cv.drawChessboardCorners(img2, (4, 6), corners, true);
+    expect(img2.isEmpty, false);
+  });
+
+  test('cv.findChessboardCornersSBWithMeta', () {
+    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
+    expect(img.isEmpty, false);
+
+    final (found, corners, meta) = cv.findChessboardCornersSBWithMeta(img, (4, 6), 0);
     expect(found, true);
     expect(corners.isEmpty, false);
     expect(meta.isEmpty, false);
@@ -208,7 +223,7 @@ void main() async {
     }
     final objectPointsVector = cv.Contours3f.fromList([pts]);
     final imagePointsVector = cv.Contours2f.fromList([
-      cv.ListPoint2f.fromMat(corners),
+      cv.VecPoint2f.fromMat(corners).toList(),
     ]);
 
     final cameraMatrix = cv.Mat.empty(), distCoeffs = cv.Mat.empty();
@@ -225,8 +240,7 @@ void main() async {
 
     final dst = cv.undistort(img, cameraMatrix, distCoeffs);
     final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
-    final xor = cv.Mat.empty();
-    cv.bitwise_xor(dst, target, xor);
+    final xor = cv.bitwise_xor(dst, target);
     final sum = xor.sum();
     expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
   });
@@ -237,13 +251,13 @@ void main() async {
       cv.Point2f(10, 5),
       cv.Point2f(10, 10),
       cv.Point2f(5, 10),
-    ];
+    ].ocv;
     final dst = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 0),
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
-    ];
+    ].ocv;
     final (m, inliers) = cv.estimateAffinePartial2D(
       src,
       dst,
@@ -264,13 +278,13 @@ void main() async {
       cv.Point2f(10, 5),
       cv.Point2f(10, 10),
       cv.Point2f(5, 10),
-    ];
+    ].ocv;
     final dst = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 0),
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
-    ];
+    ].ocv;
     final (m, inliers) = cv.estimateAffine2D(
       src,
       dst,

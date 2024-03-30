@@ -13,28 +13,28 @@
 CvStatus AsyncArray_New(AsyncArray *rval)
 {
   BEGIN_WRAP
-  *rval = new cv::AsyncArray();
+  *rval = {new cv::AsyncArray()};
   END_WRAP
 }
 
 // AsyncArray_Close deletes an existing AsyncArray
-void AsyncArray_Close(AsyncArray a)
+void AsyncArray_Close(AsyncArray *a)
 {
-  delete a;
-  a = nullptr;
+  delete CVD_TYPECAST_CPP(AsyncArray, a);
+  a->ptr = nullptr;
 }
 
 CvStatus AsyncArray_Get(AsyncArray async_out, Mat out)
 {
   BEGIN_WRAP
-  async_out->get(*out);
+  async_out.ptr->get(*out.ptr);
   END_WRAP
 }
 
 CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval)
 {
   BEGIN_WRAP
-  auto arr = net->forwardAsync();
-  *rval = &arr;
+  auto arr = net.ptr->forwardAsync();
+  *rval = {&arr};
   END_WRAP
 }

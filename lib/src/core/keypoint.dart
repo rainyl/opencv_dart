@@ -49,9 +49,6 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   @override
   cvg.KeyPoint get ref => ptr.ref;
   @override
-  cvg.KeyPoint toNative() => ptr.ref;
-
-  @override
   String toString() => "KeyPoint("
       "${x.toStringAsFixed(3)}, "
       "${y.toStringAsFixed(3)}, "
@@ -61,44 +58,43 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
       "$octave, $classID)";
 }
 
-class VecKeyPoint extends Vec<KeyPoint> {
+class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   VecKeyPoint._(this.ptr) {
     finalizer.attach(this, ptr);
   }
   factory VecKeyPoint.fromPointer(cvg.VecKeyPoint ptr) {
     final p = calloc<cvg.VecKeyPoint>();
-    try {
-      cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));
-      final vec = VecKeyPoint._(p.value);
-      return vec;
-    } finally {
-      calloc.free(p);
-    }
+    cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));
+    final vec = VecKeyPoint._(p);
+    return vec;
   }
   factory VecKeyPoint.fromList(List<KeyPoint> pts) {
     final ptr = calloc<cvg.VecKeyPoint>();
     cvRun(() => CFFI.VecKeyPoint_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecKeyPoint_Append(ptr.value, pts[i].ref));
+      cvRun(() => CFFI.VecKeyPoint_Append(ptr.ref, pts[i].ref));
     }
-    final vec = VecKeyPoint._(ptr.value);
-    calloc.free(ptr);
+    final vec = VecKeyPoint._(ptr);
     return vec;
   }
 
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecKeyPoint_Size(ptr, ptrlen));
+    cvRun(() => CFFI.VecKeyPoint_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  cvg.VecKeyPoint ptr;
-  static final finalizer = ffi.NativeFinalizer(CFFI.addresses.VecKeyPoint_Close);
   @override
-  Iterator<KeyPoint> get iterator => VecKeyPointIterator(ptr);
+  cvg.VecKeyPointPtr ptr;
+  static final finalizer = Finalizer(CFFI.VecKeyPoint_Close);
+  @override
+  Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
+
+  @override
+  cvg.VecKeyPoint get ref => ptr.ref;
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {

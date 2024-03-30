@@ -5,7 +5,7 @@
     Modified by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
-
+#pragma once
 #ifndef _OPENCV3_SVD_H_
 #define _OPENCV3_SVD_H_
 

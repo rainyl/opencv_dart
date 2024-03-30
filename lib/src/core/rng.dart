@@ -6,40 +6,38 @@ import 'base.dart';
 import 'mat.dart';
 import '../opencv.g.dart' as cvg;
 
-class Rng extends CvPtrVoid<cvg.RNG> {
-  Rng._(cvg.RNG ptr, {bool attach = true}) : super.fromPointer(ptr) {
+class Rng extends CvStruct<cvg.RNG> {
+  Rng._(cvg.RNGPtr ptr, {bool attach = true}) : super.fromPointer(ptr) {
     if (attach) finalizer.attach(this, ptr);
   }
 
   factory Rng() {
     final p = calloc<cvg.RNG>();
     cvRun(() => CFFI.Rng_New(p));
-    final rng = Rng._(p.value);
-    calloc.free(p);
+    final rng = Rng._(p);
     return rng;
   }
 
   // cv::theRNG() is thread safe and will be automatically freed
   // so, don't attach again or will be double freed
-  factory Rng.fromTheRng(cvg.RNG p) => Rng._(p, attach: false);
+  factory Rng.fromTheRng(cvg.RNGPtr p) => Rng._(p, attach: false);
 
   factory Rng.fromSeed(int seed) {
     final p = calloc<cvg.RNG>();
     cvRun(() => CFFI.Rng_NewWithState(seed, p));
-    final rng = Rng._(p.value);
-    calloc.free(p);
+    final rng = Rng._(p);
     return rng;
   }
 
-  static final finalizer = ffi.NativeFinalizer(CFFI.addresses.Rng_Close);
+  static final finalizer = Finalizer(CFFI.Rng_Close);
 
   Mat fill(Mat mat, int distType, double a, double b, bool saturateRange, {bool inplace = false}) {
     if (inplace) {
-      cvRun(() => CFFI.RNG_Fill(ptr, mat.ptr, distType, a, b, saturateRange));
+      cvRun(() => CFFI.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
       return mat;
     } else {
       final m = mat.clone();
-      cvRun(() => CFFI.RNG_Fill(ptr, m.ptr, distType, a, b, saturateRange));
+      cvRun(() => CFFI.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
       return m;
     }
   }
@@ -47,7 +45,7 @@ class Rng extends CvPtrVoid<cvg.RNG> {
   double gaussian(double sigma) {
     return cvRunArena((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.RNG_Gaussian(ptr, sigma, p));
+      cvRun(() => CFFI.RNG_Gaussian(ref, sigma, p));
       return p.value;
     });
   }
@@ -55,7 +53,7 @@ class Rng extends CvPtrVoid<cvg.RNG> {
   int next() {
     return cvRunArena((arena) {
       final p = arena<ffi.Uint32>();
-      cvRun(() => CFFI.RNG_Next(ptr, p));
+      cvRun(() => CFFI.RNG_Next(ref, p));
       return p.value;
     });
   }
@@ -64,11 +62,11 @@ class Rng extends CvPtrVoid<cvg.RNG> {
     return cvRunArena<T>((arena) {
       if (T is int) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.RNG_Uniform(ptr, a as int, b as int, p));
+        cvRun(() => CFFI.RNG_Uniform(ref, a as int, b as int, p));
         return p.value as T;
       } else if (T is double) {
         final p = arena<ffi.Double>();
-        cvRun(() => CFFI.RNG_UniformDouble(ptr, a as double, b as double, p));
+        cvRun(() => CFFI.RNG_UniformDouble(ref, a as double, b as double, p));
         return p.value as T;
       } else {
         throw UnsupportedError("Unsupported type $T");
@@ -80,11 +78,13 @@ class Rng extends CvPtrVoid<cvg.RNG> {
   double uniformDouble(double a, double b) {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.RNG_UniformDouble(ptr, a, b, p));
+      cvRun(() => CFFI.RNG_UniformDouble(ref, a, b, p));
       return p.value;
     });
   }
 
   @override
   List<int> get props => [ptr.address];
+  @override
+  cvg.RNG get ref => ptr.ref;
 }

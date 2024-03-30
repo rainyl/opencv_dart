@@ -11,6 +11,6 @@
 CvStatus SVD_Compute(Mat src, Mat w, Mat u, Mat vt, int flags)
 {
   BEGIN_WRAP
-  cv::SVD::compute(*src, *w, *u, *vt, flags);
+  cv::SVD::compute(*src.ptr, *w.ptr, *u.ptr, *vt.ptr, flags);
   END_WRAP
 }

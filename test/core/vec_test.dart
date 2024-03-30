@@ -9,7 +9,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecInt.fromPointer(vec.ptr);
+    final vec1 = cv.VecInt.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -20,7 +20,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecUChar.fromPointer(vec.ptr);
+    final vec1 = cv.VecUChar.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -31,7 +31,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecChar.fromPointer(vec.ptr);
+    final vec1 = cv.VecChar.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -42,7 +42,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecChar.fromPointer(vec.ptr);
+    final vec1 = cv.VecVecChar.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -53,7 +53,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecFloat.fromPointer(vec.ptr);
+    final vec1 = cv.VecFloat.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -64,7 +64,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecDouble.fromPointer(vec.ptr);
+    final vec1 = cv.VecDouble.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -76,19 +76,18 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "Rect(0, 0, 10, 20)");
 
-    final vec1 = cv.VecRect.fromPointer(vec.ptr);
+    final vec1 = cv.VecRect.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
   test('RotatedRect', () {
-    final pts = List.generate(4, (index) => cv.Point(index, index));
-    final rect = cv.RotatedRect(pts, cv.Rect(0, 0, 10, 20), cv.Point(0, 0), (10, 10), 60);
-    expect(rect.pts, pts);
-    expect(rect.boundingRect, cv.Rect(0, 0, 10, 20));
-    expect(rect.center, cv.Point(0, 0));
+    final rect = cv.RotatedRect(cv.Point2f(1, 1), (10, 10), 60);
+    expect(rect.points.length, greaterThan(0));
+    expect(rect.boundingRect, cv.Rect(-6, -6, 15, 15));
+    expect(rect.center, cv.Point2f(1, 1));
     expect(rect.size, (10, 10));
     expect(rect.angle, 60);
-    expect(rect.toString(), 'RotatedRect(Rect(0, 0, 10, 20), Point(0, 0), (10, 10), 60.000)');
+    expect(rect.toString(), 'RotatedRect(Point2f(1.000, 1.000), (10.0, 10.0), 60.000)');
 
     final rect2 = cv.RotatedRect.fromNative(rect.ref);
     expect(rect2, rect);
@@ -101,7 +100,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "DMatch(0, 0, 0, 0.000)");
 
-    final vec1 = cv.VecDMatch.fromPointer(vec.ptr);
+    final vec1 = cv.VecDMatch.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -113,7 +112,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecDMatch.fromPointer(vec.ptr);
+    final vec1 = cv.VecVecDMatch.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 
@@ -136,7 +135,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "KeyPoint(0.000, 0.000, 0.000, 0.000, 0.000, 0, 0)");
 
-    final vec1 = cv.VecKeyPoint.fromPointer(vec.ptr);
+    final vec1 = cv.VecKeyPoint.fromPointer(vec.ref);
     expect(vec1, vec);
   });
 }

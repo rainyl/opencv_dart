@@ -29,7 +29,7 @@ arch_map = {
     "ios": {
         "x86_64": "x64",
         "armv8": "arm64",
-    }
+    },
 }
 
 # (name, enabled)
@@ -212,7 +212,7 @@ class OcvDartDesktop(ConanFile):
         if self.settings.os == "iOS":
             platform_map = {
                 "armv8": "OS64",
-                "x86_64": "SIMULATOR64"
+                "x86_64": "SIMULATOR64",
                 # TODO: maybe need a conf var to support "SIMULATORARM64" and more
             }
             platform = platform_map[str(self.settings.arch)]
@@ -277,7 +277,9 @@ class OcvDartDesktop(ConanFile):
         tc.variables["WITH_LIBREALSENSE"] = False
         tc.variables["WITH_MFX"] = False
         # opencl fails on ios
-        tc.variables["WITH_OPENCL"] = False if self.settings.os == "iOS" else self.get_bool("with_opencl", False)
+        tc.variables["WITH_OPENCL"] = (
+            False if self.settings.os == "iOS" else self.get_bool("with_opencl", False)
+        )
         tc.variables["WITH_OPENCLAMDBLAS"] = False
         tc.variables["WITH_OPENCLAMDFFT"] = False
         tc.variables["WITH_OPENCL_SVM"] = False
@@ -409,10 +411,12 @@ class OcvDartDesktop(ConanFile):
                 "CMAKE_VISIBILITY_INLINES_HIDDEN": "hidden",
                 "CMAKE_C_VISIBILITY_PRESET": "hidden",
                 "CMAKE_CXX_VISIBILITY_PRESET": "hidden",
+                "INSTALL_GTEST": False,
             },
         )
         tool_args = ["CODE_SIGNING_ALLOWED=NO"] if self.settings.os == "iOS" else None
         cmake.build(build_tool_args=tool_args)
+        # cmake.test()
         cmake.install(cli_args=["--strip"])
 
         self.post_build()

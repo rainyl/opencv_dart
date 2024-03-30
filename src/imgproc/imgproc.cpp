@@ -7,793 +7,708 @@
 */
 
 #include "imgproc.h"
+#include <vector>
 
-double ArcLength(PointVector curve, bool is_closed)
+CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
 {
-    return cv::arcLength(*curve, is_closed);
+  BEGIN_WRAP
+  *rval = cv::arcLength(*curve.ptr, is_closed);
+  END_WRAP
 }
-
-PointVector ApproxPolyDP(PointVector curve, double epsilon, bool closed)
+CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, VecPoint *rval)
 {
-    PointVector approxCurvePts = new std::vector<cv::Point>;
-    cv::approxPolyDP(*curve, *approxCurvePts, epsilon, closed);
-
-    return approxCurvePts;
+  BEGIN_WRAP
+  auto approxCurvePts = new std::vector<cv::Point>();
+  cv::approxPolyDP(*curve.ptr, *approxCurvePts, epsilon, closed);
+  *rval = {approxCurvePts};
+  END_WRAP
 }
-
-void CvtColor(Mat src, Mat dst, int code)
+CvStatus CvtColor(Mat src, Mat dst, int code)
 {
-    cv::cvtColor(*src, *dst, code);
+  BEGIN_WRAP
+  cv::cvtColor(*src.ptr, *dst.ptr, code);
+  END_WRAP
 }
-
-void EqualizeHist(Mat src, Mat dst)
+CvStatus EqualizeHist(Mat src, Mat dst)
 {
-    cv::equalizeHist(*src, *dst);
+  BEGIN_WRAP
+  cv::equalizeHist(*src.ptr, *dst.ptr);
+  END_WRAP
 }
-
-void CalcHist(struct Mats mats, IntVector chans, Mat mask, Mat hist, IntVector sz, FloatVector rng, bool acc)
+CvStatus CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, VecFloat rng, bool acc)
 {
-    std::vector<cv::Mat> images;
-
-    for (int i = 0; i < mats.length; ++i)
-    {
-        images.push_back(*mats.mats[i]);
-    }
-
-    std::vector<int> channels;
-
-    for (int i = 0, *v = chans.val; i < chans.length; ++v, ++i)
-    {
-        channels.push_back(*v);
-    }
-
-    std::vector<int> histSize;
-
-    for (int i = 0, *v = sz.val; i < sz.length; ++v, ++i)
-    {
-        histSize.push_back(*v);
-    }
-
-    std::vector<float> ranges;
-
-    float *f;
-    int i;
-    for (i = 0, f = rng.val; i < rng.length; ++f, ++i)
-    {
-        ranges.push_back(*f);
-    }
-
-    cv::calcHist(images, channels, *mask, *hist, histSize, ranges, acc);
+  BEGIN_WRAP
+  cv::calcHist(*mats.ptr, *chans.ptr, *mask.ptr, *hist.ptr, *sz.ptr, *rng.ptr, acc);
+  END_WRAP
 }
-
-void CalcBackProject(struct Mats mats, IntVector chans, Mat hist, Mat backProject, FloatVector rng, bool uniform)
+CvStatus CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, bool uniform)
 {
-    std::vector<cv::Mat> images;
-
-    for (int i = 0; i < mats.length; ++i)
-    {
-        images.push_back(*mats.mats[i]);
-    }
-
-    std::vector<int> channels;
-    for (int i = 0, *v = chans.val; i < chans.length; ++v, ++i)
-    {
-        channels.push_back(*v);
-    }
-
-    std::vector<float> ranges;
-
-    float *f;
-    int i;
-    for (i = 0, f = rng.val; i < rng.length; ++f, ++i)
-    {
-        ranges.push_back(*f);
-    }
-
-    cv::calcBackProject(images, channels, *hist, *backProject, ranges, uniform);
+  BEGIN_WRAP
+  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, uniform);
+  END_WRAP
 }
-
-double CompareHist(Mat hist1, Mat hist2, int method)
+CvStatus CompareHist(Mat hist1, Mat hist2, int method, double *rval)
 {
-    return cv::compareHist(*hist1, *hist2, method);
+  BEGIN_WRAP
+  *rval = cv::compareHist(*hist1.ptr, *hist2.ptr, method);
+  END_WRAP
 }
-
-struct RotatedRect FitEllipse(PointVector pts)
+CvStatus ConvexHull(VecPoint points, Mat hull, bool clockwise, bool returnPoints)
 {
-    cv::RotatedRect bRect = cv::fitEllipse(*pts);
-
-    Rect r = {bRect.boundingRect().x, bRect.boundingRect().y, bRect.boundingRect().width, bRect.boundingRect().height};
-    Point centrpt = {int(lroundf(bRect.center.x)), int(lroundf(bRect.center.y))};
-    Size szsz = {int(lroundf(bRect.size.width)), int(lroundf(bRect.size.height))};
-
-    cv::Point2f *pts4 = new cv::Point2f[4];
-    bRect.points(pts4);
-    Point *rpts = new Point[4];
-    for (size_t j = 0; j < 4; j++)
-    {
-        Point pt = {int(lroundf(pts4[j].x)), int(lroundf(pts4[j].y))};
-        rpts[j] = pt;
-    }
-
-    delete[] pts4;
-
-    RotatedRect rotRect = {Points{rpts, 4}, r, centrpt, szsz, bRect.angle};
-    return rotRect;
+  BEGIN_WRAP
+  cv::convexHull(*points.ptr, *hull.ptr, clockwise, returnPoints);
+  END_WRAP
 }
-
-void ConvexHull(PointVector points, Mat hull, bool clockwise, bool returnPoints)
+CvStatus ConvexityDefects(VecPoint points, Mat hull, Mat result)
 {
-    cv::convexHull(*points, *hull, clockwise, returnPoints);
+  BEGIN_WRAP
+  cv::convexityDefects(*points.ptr, *hull.ptr, *result.ptr);
+  END_WRAP
 }
-
-void ConvexityDefects(PointVector points, Mat hull, Mat result)
+CvStatus BilateralFilter(Mat src, Mat dst, int d, double sc, double ss)
 {
-    cv::convexityDefects(*points, *hull, *result);
+  BEGIN_WRAP
+  cv::bilateralFilter(*src.ptr, *dst.ptr, d, sc, ss);
+  END_WRAP
 }
-
-void BilateralFilter(Mat src, Mat dst, int d, double sc, double ss)
+CvStatus Blur(Mat src, Mat dst, Size ps)
 {
-    cv::bilateralFilter(*src, *dst, d, sc, ss);
+  BEGIN_WRAP
+  cv::blur(*src.ptr, *dst.ptr, cv::Size(ps.width, ps.height));
+  END_WRAP
 }
-
-void Blur(Mat src, Mat dst, Size ps)
+CvStatus BoxFilter(Mat src, Mat dst, int ddepth, Size ps)
 {
-    cv::Size sz(ps.width, ps.height);
-    cv::blur(*src, *dst, sz);
+  BEGIN_WRAP
+  cv::boxFilter(*src.ptr, *dst.ptr, ddepth, cv::Size(ps.width, ps.height));
+  END_WRAP
 }
-
-void BoxFilter(Mat src, Mat dst, int ddepth, Size ps)
+CvStatus SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps)
 {
-    cv::Size sz(ps.width, ps.height);
-    cv::boxFilter(*src, *dst, ddepth, sz);
+  BEGIN_WRAP
+  cv::sqrBoxFilter(*src.ptr, *dst.ptr, ddepth, cv::Size(ps.width, ps.height));
+  END_WRAP
 }
-
-void SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps)
+CvStatus Dilate(Mat src, Mat dst, Mat kernel)
 {
-    cv::Size sz(ps.width, ps.height);
-    cv::sqrBoxFilter(*src, *dst, ddepth, sz);
+  BEGIN_WRAP
+  cv::dilate(*src.ptr, *dst.ptr, *kernel.ptr);
+  END_WRAP
 }
-
-void Dilate(Mat src, Mat dst, Mat kernel)
+CvStatus DilateWithParams(Mat src, Mat dst, Mat kernel, Point anchor, int iterations, int borderType, Scalar borderValue)
 {
-    cv::dilate(*src, *dst, *kernel);
+  BEGIN_WRAP
+  cv::dilate(*src.ptr, *dst.ptr, *kernel.ptr, cv::Point(anchor.x, anchor.y), iterations, borderType, cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4));
+  END_WRAP
 }
-
-void DilateWithParams(Mat src, Mat dst, Mat kernel, Point anchor, int iterations, int borderType, Scalar borderValue)
+CvStatus DistanceTransform(Mat src, Mat dst, Mat labels, int distanceType, int maskSize, int labelType)
 {
-    cv::Point pt1(anchor.x, anchor.y);
-    cv::Scalar c = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
-
-    cv::dilate(*src, *dst, *kernel, pt1, iterations, borderType, c);
+  BEGIN_WRAP
+  cv::distanceTransform(*src.ptr, *dst.ptr, *labels.ptr, distanceType, maskSize, labelType);
+  END_WRAP
 }
-
-void DistanceTransform(Mat src, Mat dst, Mat labels, int distanceType, int maskSize, int labelType)
-{
-    cv::distanceTransform(*src, *dst, *labels, distanceType, maskSize, labelType);
+CvStatus Erode(Mat src, Mat dst, Mat kernel)
+{
+  BEGIN_WRAP
+  cv::erode(*src.ptr, *dst.ptr, *kernel.ptr);
+  END_WRAP
+}
+CvStatus ErodeWithParams(Mat src, Mat dst, Mat kernel, Point anchor, int iterations, int borderType, Scalar borderValue)
+{
+  BEGIN_WRAP
+  cv::erode(*src.ptr, *dst.ptr, *kernel.ptr, cv::Point(anchor.x, anchor.y), iterations, borderType, cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4));
+  END_WRAP
+}
+CvStatus MatchTemplate(Mat image, Mat templ, Mat result, int method, Mat mask)
+{
+  BEGIN_WRAP
+  cv::matchTemplate(*image.ptr, *templ.ptr, *result.ptr, method, *mask.ptr);
+  END_WRAP
+}
+CvStatus Moments(Mat src, bool binaryImage, Moment *rval)
+{
+  BEGIN_WRAP
+  auto m = cv::moments(*src.ptr, binaryImage);
+  *rval = {
+      m.m00,
+      m.m10,
+      m.m01,
+      m.m20,
+      m.m11,
+      m.m02,
+      m.m30,
+      m.m21,
+      m.m12,
+      m.m03,
+      m.mu20,
+      m.mu11,
+      m.mu02,
+      m.mu30,
+      m.mu21,
+      m.mu12,
+      m.mu03,
+      m.nu20,
+      m.nu11,
+      m.nu02,
+      m.nu30,
+      m.nu21,
+      m.nu12,
+      m.nu03,
+  };
+  END_WRAP
 }
-
-void Erode(Mat src, Mat dst, Mat kernel)
+CvStatus PyrDown(Mat src, Mat dst, Size dstsize, int borderType)
 {
-    cv::erode(*src, *dst, *kernel);
+  BEGIN_WRAP
+  cv::pyrDown(*src.ptr, *dst.ptr, cv::Size(dstsize.width, dstsize.height), borderType);
+  END_WRAP
 }
-
-void ErodeWithParams(Mat src, Mat dst, Mat kernel, Point anchor, int iterations, int borderType, Scalar borderValue)
+CvStatus PyrUp(Mat src, Mat dst, Size dstsize, int borderType)
 {
-    cv::Point pt1(anchor.x, anchor.y);
-    cv::Scalar c = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
-
-    cv::erode(*src, *dst, *kernel, pt1, iterations, borderType, c);
+  BEGIN_WRAP
+  cv::pyrUp(*src.ptr, *dst.ptr, cv::Size(dstsize.width, dstsize.height), borderType);
+  END_WRAP
 }
-
-void MatchTemplate(Mat image, Mat templ, Mat result, int method, Mat mask)
+CvStatus BoundingRect(VecPoint pts, Rect *rval)
 {
-    cv::matchTemplate(*image, *templ, *result, method, *mask);
+  BEGIN_WRAP
+  cv::Rect r = cv::boundingRect(*pts.ptr);
+  *rval = {r.x, r.y, r.width, r.height};
+  END_WRAP
 }
-
-struct Moment Moments(Mat src, bool binaryImage)
+CvStatus BoxPoints(RotatedRect rect, Mat boxPts)
 {
-    cv::Moments m = cv::moments(*src, binaryImage);
-    Moment mom = {m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30, m.m21, m.m12, m.m03,
-                  m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
-                  m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03};
-    return mom;
+  BEGIN_WRAP
+  cv::boxPoints(cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y), cv::Size2f(rect.size.width, rect.size.height), rect.angle), *boxPts.ptr);
+  END_WRAP
 }
-
-void PyrDown(Mat src, Mat dst, Size size, int borderType)
+CvStatus ContourArea(VecPoint pts, double *rval)
 {
-    cv::Size cvSize(size.width, size.height);
-    cv::pyrDown(*src, *dst, cvSize, borderType);
+  BEGIN_WRAP
+  *rval = cv::contourArea(*pts.ptr);
+  END_WRAP
 }
-
-void PyrUp(Mat src, Mat dst, Size size, int borderType)
+CvStatus MinAreaRect(VecPoint pts, RotatedRect *rval)
 {
-    cv::Size cvSize(size.width, size.height);
-    cv::pyrUp(*src, *dst, cvSize, borderType);
+  BEGIN_WRAP
+  auto r = cv::minAreaRect(*pts.ptr);
+  *rval = {{r.center.x, r.center.y}, {r.size.width, r.size.height}, r.angle};
+  END_WRAP
 }
-
-struct Rect BoundingRect(PointVector pts)
+CvStatus FitEllipse(VecPoint pts, RotatedRect *rval)
 {
-    cv::Rect bRect = cv::boundingRect(*pts);
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
-    return r;
+  BEGIN_WRAP
+  auto r = cv::fitEllipse(*pts.ptr);
+  *rval = {{r.center.x, r.center.y}, {r.size.width, r.size.height}, r.angle};
+  END_WRAP
 }
-
-void BoxPoints(RotatedRect rect, Mat boxPts)
+CvStatus MinEnclosingCircle(VecPoint pts, Point2f *center, float *radius)
 {
-    cv::Point2f centerPt(rect.center.x, rect.center.y);
-    cv::Size2f rSize(rect.size.width, rect.size.height);
-    cv::RotatedRect rotatedRectangle(centerPt, rSize, rect.angle);
-    cv::boxPoints(rotatedRectangle, *boxPts);
+  BEGIN_WRAP
+  cv::Point2f c;
+  float       r;
+  cv::minEnclosingCircle(*pts.ptr, c, r);
+  *center = {c.y, c.x};
+  *radius = r;
+  END_WRAP
 }
-
-double ContourArea(PointVector pts)
+CvStatus FindContours(Mat src, Mat hierarchy, int mode, int method, VecVecPoint *rval)
 {
-    return cv::contourArea(*pts);
+  BEGIN_WRAP
+  VecVecPoint_CPP contours = new std::vector<std::vector<cv::Point>>();
+  //   std::vector<cv::Vec4i> hierarchy;
+  cv::findContours(*src.ptr, *contours, *hierarchy.ptr, mode, method);
+  *rval = {contours};
+  END_WRAP
 }
-
-struct RotatedRect MinAreaRect(PointVector pts)
+CvStatus PointPolygonTest(VecPoint pts, Point2f pt, bool measureDist, double *rval)
 {
-    cv::RotatedRect cvrect = cv::minAreaRect(*pts);
-
-    Point *rpts = new Point[4];
-    cv::Point2f *pts4 = new cv::Point2f[4];
-    cvrect.points(pts4);
-
-    for (size_t j = 0; j < 4; j++)
-    {
-        Point pt = {int(lroundf(pts4[j].x)), int(lroundf(pts4[j].y))};
-        rpts[j] = pt;
-    }
-
-    delete[] pts4;
-
-    cv::Rect bRect = cvrect.boundingRect();
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
-    Point centrpt = {int(lroundf(cvrect.center.x)), int(lroundf(cvrect.center.y))};
-    Size szsz = {int(lroundf(cvrect.size.width)), int(lroundf(cvrect.size.height))};
-
-    Points points = {.points = rpts, .length = 4};
-    RotatedRect retrect = {points, r, centrpt, szsz, cvrect.angle};
-    return retrect;
+  BEGIN_WRAP
+  double d = cv::pointPolygonTest(*pts.ptr, cv::Point2f(pt.x, pt.y), measureDist);
+  *rval = d;
+  END_WRAP
 }
-
-void MinEnclosingCircle(PointVector pts, Point2f *center, float *radius)
+CvStatus ConnectedComponents(Mat src, Mat dst, int connectivity, int ltype, int ccltype, int *rval)
 {
-    cv::Point2f center2f;
-    cv::minEnclosingCircle(*pts, center2f, *radius);
-    center->x = center2f.x;
-    center->y = center2f.y;
+  BEGIN_WRAP
+  *rval = cv::connectedComponents(*src.ptr, *dst.ptr, connectivity, ltype, ccltype);
+  END_WRAP
 }
-
-PointsVector FindContours(Mat src, Mat hierarchy, int mode, int method)
+CvStatus ConnectedComponentsWithStats(Mat src, Mat labels, Mat stats, Mat centroids, int connectivity, int ltype, int ccltype, int *rval)
 {
-    PointsVector contours = new std::vector<std::vector<cv::Point>>;
-    cv::findContours(*src, *contours, *hierarchy, mode, method);
-
-    return contours;
+  BEGIN_WRAP
+  *rval = cv::connectedComponentsWithStats(*src.ptr, *labels.ptr, *stats.ptr, *centroids.ptr, connectivity, ltype, ccltype);
+  END_WRAP
 }
 
-double PointPolygonTest(PointVector pts, Point2f pt, bool measureDist)
+CvStatus GaussianBlur(Mat src, Mat dst, Size ps, double sX, double sY, int bt)
 {
-    cv::Point2f pt1(pt.x, pt.y);
-
-    return cv::pointPolygonTest(*pts, pt1, measureDist);
+  BEGIN_WRAP
+  cv::GaussianBlur(*src.ptr, *dst.ptr, cv::Size(ps.width, ps.height), sX, sY, bt);
+  END_WRAP
 }
-
-int ConnectedComponents(Mat src, Mat labels, int connectivity, int ltype, int ccltype)
+CvStatus GetGaussianKernel(int ksize, double sigma, int ktype, Mat *rval)
 {
-    return cv::connectedComponents(*src, *labels, connectivity, ltype, ccltype);
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getGaussianKernel(ksize, sigma, ktype))};
+  END_WRAP
 }
-
-int ConnectedComponentsWithStats(Mat src, Mat labels, Mat stats, Mat centroids,
-                                 int connectivity, int ltype, int ccltype)
+CvStatus Laplacian(Mat src, Mat dst, int dDepth, int kSize, double scale, double delta, int borderType)
 {
-    return cv::connectedComponentsWithStats(*src, *labels, *stats, *centroids, connectivity, ltype, ccltype);
+  BEGIN_WRAP
+  cv::Laplacian(*src.ptr, *dst.ptr, dDepth, kSize, scale, delta, borderType);
+  END_WRAP
 }
-
-Mat GetStructuringElement(int shape, Size ksize)
+CvStatus Scharr(Mat src, Mat dst, int dDepth, int dx, int dy, double scale, double delta, int borderType)
 {
-    cv::Size sz(ksize.width, ksize.height);
-    return new cv::Mat(cv::getStructuringElement(shape, sz));
+  BEGIN_WRAP
+  cv::Scharr(*src.ptr, *dst.ptr, dDepth, dx, dy, scale, delta, borderType);
+  END_WRAP
 }
-
-Scalar MorphologyDefaultBorderValue()
+CvStatus GetStructuringElement(int shape, Size ksize, Mat *rval)
 {
-    cv::Scalar cs = cv::morphologyDefaultBorderValue();
-    Scalar s = {cs[0], cs[1], cs[2], cs[3]};
-    return s;
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getStructuringElement(shape, cv::Size(ksize.width, ksize.height)))};
+  END_WRAP
 }
-
-void MorphologyEx(Mat src, Mat dst, int op, Mat kernel)
+CvStatus MorphologyDefaultBorderValue(Scalar *rval)
 {
-    cv::morphologyEx(*src, *dst, op, *kernel);
+  BEGIN_WRAP
+  auto scalar = cv::morphologyDefaultBorderValue();
+  *rval = {scalar.val[0], scalar.val[1], scalar.val[2], scalar.val[3]};
+  END_WRAP
 }
-
-void MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType)
+CvStatus MorphologyEx(Mat src, Mat dst, int op, Mat kernel)
 {
-    cv::Point pt1(pt.x, pt.y);
-    cv::morphologyEx(*src, *dst, op, *kernel, pt1, iterations, borderType);
+  BEGIN_WRAP
+  cv::morphologyEx(*src.ptr, *dst.ptr, op, *kernel.ptr);
+  END_WRAP
 }
-
-void GaussianBlur(Mat src, Mat dst, Size ps, double sX, double sY, int bt)
+CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType)
 {
-    cv::Size sz(ps.width, ps.height);
-    cv::GaussianBlur(*src, *dst, sz, sX, sY, bt);
+  BEGIN_WRAP
+  cv::morphologyEx(*src.ptr, *dst.ptr, op, *kernel.ptr, cv::Point(pt.x, pt.y), iterations, borderType);
+  END_WRAP
 }
-
-Mat GetGaussianKernel(int ksize, double sigma, int ktype)
+CvStatus MedianBlur(Mat src, Mat dst, int ksize)
 {
-    return new cv::Mat(cv::getGaussianKernel(ksize, sigma, ktype));
+  BEGIN_WRAP
+  cv::medianBlur(*src.ptr, *dst.ptr, ksize);
+  END_WRAP
 }
 
-void Laplacian(Mat src, Mat dst, int dDepth, int kSize, double scale, double delta,
-               int borderType)
+CvStatus Canny(Mat src, Mat edges, double t1, double t2)
 {
-    cv::Laplacian(*src, *dst, dDepth, kSize, scale, delta, borderType);
+  BEGIN_WRAP
+  cv::Canny(*src.ptr, *edges.ptr, t1, t2);
+  END_WRAP
 }
-
-void Scharr(Mat src, Mat dst, int dDepth, int dx, int dy, double scale, double delta,
-            int borderType)
+CvStatus CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCriteria criteria)
 {
-    cv::Scharr(*src, *dst, dDepth, dx, dy, scale, delta, borderType);
+  BEGIN_WRAP
+  cv::cornerSubPix(*img.ptr, *corners.ptr, cv::Size(winSize.width, winSize.height), cv::Size(zeroZone.width, zeroZone.height), *criteria.ptr);
+  END_WRAP
 }
-
-void MedianBlur(Mat src, Mat dst, int ksize)
+CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist)
 {
-    cv::medianBlur(*src, *dst, ksize);
+  BEGIN_WRAP
+  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist);
+  END_WRAP
 }
-
-void Canny(Mat src, Mat edges, double t1, double t2)
+CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
 {
-    cv::Canny(*src, *edges, t1, t2);
+  BEGIN_WRAP
+  cv::grabCut(*img.ptr, *mask.ptr, cv::Rect(rect.x, rect.y, rect.width, rect.height), *bgdModel.ptr, *fgdModel.ptr, iterCount, mode);
+  END_WRAP
 }
-
-void CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCriteria criteria)
+CvStatus HoughCircles(Mat src, Mat circles, int method, double dp, double minDist)
 {
-    cv::Size wsz(winSize.width, winSize.height);
-    cv::Size zsz(zeroZone.width, zeroZone.height);
-    cv::cornerSubPix(*img, *corners, wsz, zsz, *criteria);
+  BEGIN_WRAP
+  cv::HoughCircles(*src.ptr, *circles.ptr, method, dp, minDist);
+  END_WRAP
 }
-
-void GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist)
+CvStatus HoughCirclesWithParams(Mat src, Mat circles, int method, double dp, double minDist, double param1, double param2, int minRadius, int maxRadius)
 {
-    cv::goodFeaturesToTrack(*img, *corners, maxCorners, quality, minDist);
+  BEGIN_WRAP
+  cv::HoughCircles(*src.ptr, *circles.ptr, method, dp, minDist, param1, param2, minRadius, maxRadius);
+  END_WRAP
 }
-
-void GrabCut(Mat img, Mat mask, Rect r, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
+CvStatus HoughLines(Mat src, Mat lines, double rho, double theta, int threshold)
 {
-    cv::Rect cvRect = cv::Rect(r.x, r.y, r.width, r.height);
-    cv::grabCut(*img, *mask, cvRect, *bgdModel, *fgdModel, iterCount, mode);
+  BEGIN_WRAP
+  cv::HoughLines(*src.ptr, *lines.ptr, rho, theta, threshold);
+  END_WRAP
 }
-
-void HoughCircles(Mat src, Mat circles, int method, double dp, double minDist)
+CvStatus HoughLinesP(Mat src, Mat lines, double rho, double theta, int threshold)
 {
-    cv::HoughCircles(*src, *circles, method, dp, minDist);
+  BEGIN_WRAP
+  cv::HoughLinesP(*src.ptr, *lines.ptr, rho, theta, threshold);
+  END_WRAP
 }
-
-void HoughCirclesWithParams(Mat src, Mat circles, int method, double dp, double minDist,
-                            double param1, double param2, int minRadius, int maxRadius)
+CvStatus HoughLinesPWithParams(Mat src, Mat lines, double rho, double theta, int threshold, double minLineLength, double maxLineGap)
 {
-    cv::HoughCircles(*src, *circles, method, dp, minDist, param1, param2, minRadius, maxRadius);
+  BEGIN_WRAP
+  cv::HoughLinesP(*src.ptr, *lines.ptr, rho, theta, threshold, minLineLength, maxLineGap);
+  END_WRAP
 }
-
-void HoughLines(Mat src, Mat lines, double rho, double theta, int threshold)
+CvStatus HoughLinesPointSet(Mat points, Mat lines, int lines_max, int threshold, double min_rho, double max_rho, double rho_step, double min_theta, double max_theta, double theta_step)
 {
-    cv::HoughLines(*src, *lines, rho, theta, threshold);
+  BEGIN_WRAP
+  cv::HoughLinesPointSet(*points.ptr, *lines.ptr, lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step);
+  END_WRAP
 }
-
-void HoughLinesP(Mat src, Mat lines, double rho, double theta, int threshold)
+CvStatus Integral(Mat src, Mat sum, Mat sqsum, Mat tilted)
 {
-    cv::HoughLinesP(*src, *lines, rho, theta, threshold);
+  BEGIN_WRAP
+  cv::integral(*src.ptr, *sum.ptr, *sqsum.ptr, *tilted.ptr);
+  END_WRAP
 }
-
-void HoughLinesPWithParams(Mat src, Mat lines, double rho, double theta, int threshold, double minLineLength, double maxLineGap)
+CvStatus Threshold(Mat src, Mat dst, double thresh, double maxvalue, int typ, double *rval)
 {
-    cv::HoughLinesP(*src, *lines, rho, theta, threshold, minLineLength, maxLineGap);
+  BEGIN_WRAP
+  *rval = cv::threshold(*src.ptr, *dst.ptr, thresh, maxvalue, typ);
+  END_WRAP
 }
-
-void HoughLinesPointSet(Mat points, Mat lines, int linesMax, int threshold,
-                        double minRho, double maxRho, double rhoStep,
-                        double minTheta, double maxTheta, double thetaStep)
+CvStatus AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveTyp, int typ, int blockSize, double c)
 {
-    cv::HoughLinesPointSet(*points, *lines, linesMax, threshold,
-                           minRho, maxRho, rhoStep, minTheta, maxTheta, thetaStep);
+  BEGIN_WRAP
+  cv::adaptiveThreshold(*src.ptr, *dst.ptr, maxValue, adaptiveTyp, typ, blockSize, c);
+  END_WRAP
 }
 
-void Integral(Mat src, Mat sum, Mat sqsum, Mat tilted)
+CvStatus ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
 {
-    cv::integral(*src, *sum, *sqsum, *tilted);
+  BEGIN_WRAP
+  cv::arrowedLine(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-double Threshold(Mat src, Mat dst, double thresh, double maxvalue, int typ)
+CvStatus Circle(Mat img, Point center, int radius, Scalar color, int thickness)
 {
-    return cv::threshold(*src, *dst, thresh, maxvalue, typ);
+  BEGIN_WRAP
+  cv::circle(*img.ptr, cv::Point(center.x, center.y), radius, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveMethod, int thresholdType,
-                       int blockSize, double c)
+CvStatus CircleWithParams(Mat img, Point center, int radius, Scalar color, int thickness, int lineType, int shift)
 {
-    cv::adaptiveThreshold(*src, *dst, maxValue, adaptiveMethod, thresholdType, blockSize, c);
-}
-
-void ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
-{
-    cv::Point p1(pt1.x, pt1.y);
-    cv::Point p2(pt2.x, pt2.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::arrowedLine(*img, p1, p2, c, thickness);
+  BEGIN_WRAP
+  cv::circle(*img.ptr, cv::Point(center.x, center.y), radius, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, shift);
+  END_WRAP
 }
-
-bool ClipLine(Size imgSize, Point pt1, Point pt2)
-{
-    cv::Size sz(imgSize.width, imgSize.height);
-    cv::Point p1(pt1.x, pt1.y);
-    cv::Point p2(pt2.x, pt2.y);
-
-    return cv::clipLine(sz, p1, p2);
-}
-
-void Circle(Mat img, Point center, int radius, Scalar color, int thickness)
+CvStatus Ellipse(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness)
 {
-    cv::Point p1(center.x, center.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::circle(*img, p1, radius, c, thickness);
+  BEGIN_WRAP
+  cv::ellipse(*img.ptr, cv::Point(center.x, center.y), cv::Size(axes.x, axes.y), angle, startAngle, endAngle, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void CircleWithParams(Mat img, Point center, int radius, Scalar color, int thickness, int lineType, int shift)
+CvStatus EllipseWithParams(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness, int lineType, int shift)
 {
-    cv::Point p1(center.x, center.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::circle(*img, p1, radius, c, thickness, lineType, shift);
-}
-
-void Ellipse(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness)
-{
-    cv::Point p1(center.x, center.y);
-    cv::Point p2(axes.x, axes.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::ellipse(*img, p1, p2, angle, startAngle, endAngle, c, thickness);
+  BEGIN_WRAP
+  cv::ellipse(*img.ptr, cv::Point(center.x, center.y), cv::Size(axes.x, axes.y), angle, startAngle, endAngle, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, shift);
+  END_WRAP
 }
-
-void EllipseWithParams(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness, int lineType, int shift)
-{
-    cv::Point p1(center.x, center.y);
-    cv::Point p2(axes.x, axes.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::ellipse(*img, p1, p2, angle, startAngle, endAngle, c, thickness, lineType, shift);
-}
-
-void Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
-{
-    cv::Point p1(pt1.x, pt1.y);
-    cv::Point p2(pt2.x, pt2.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::line(*img, p1, p2, c, thickness);
+CvStatus Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
+{
+  BEGIN_WRAP
+  cv::line(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void Rectangle(Mat img, Rect r, Scalar color, int thickness)
-{
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::rectangle(
-        *img,
-        cv::Point(r.x, r.y),
-        cv::Point(r.x + r.width, r.y + r.height),
-        c,
-        thickness,
-        cv::LINE_AA);
+CvStatus Rectangle(Mat img, Rect rect, Scalar color, int thickness)
+{
+  BEGIN_WRAP
+  cv::rectangle(*img.ptr, cv::Rect(rect.x, rect.y, rect.width, rect.height), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void RectangleWithParams(Mat img, Rect r, Scalar color, int thickness, int lineType, int shift)
-{
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::rectangle(
-        *img,
-        cv::Point(r.x, r.y),
-        cv::Point(r.x + r.width, r.y + r.height),
-        c,
-        thickness,
-        lineType,
-        shift);
+CvStatus RectangleWithParams(Mat img, Rect rect, Scalar color, int thickness, int lineType, int shift)
+{
+  BEGIN_WRAP
+  cv::rectangle(*img.ptr, cv::Rect(rect.x, rect.y, rect.width, rect.height), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, shift);
+  END_WRAP
 }
-
-void FillPoly(Mat img, PointsVector pts, Scalar color)
+CvStatus FillPoly(Mat img, VecVecPoint points, Scalar color)
 {
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::fillPoly(*img, *pts, c);
+  BEGIN_WRAP
+  cv::fillPoly(*img.ptr, *points.ptr, cv::Scalar(color.val1, color.val2, color.val3, color.val4));
+  END_WRAP
 }
-
-void FillPolyWithParams(Mat img, PointsVector pts, Scalar color, int lineType, int shift, Point offset)
+CvStatus FillPolyWithParams(Mat img, VecVecPoint points, Scalar color, int lineType, int shift, Point offset)
 {
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::fillPoly(*img, *pts, c, lineType, shift, cv::Point(offset.x, offset.y));
+  BEGIN_WRAP
+  cv::fillPoly(*img.ptr, *points.ptr, cv::Scalar(color.val1, color.val2, color.val3, color.val4), lineType, shift, cv::Point(offset.x, offset.y));
+  END_WRAP
 }
-
-void Polylines(Mat img, PointsVector pts, bool isClosed, Scalar color, int thickness)
+CvStatus Polylines(Mat img, VecVecPoint points, bool isClosed, Scalar color, int thickness)
 {
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-
-    cv::polylines(*img, *pts, isClosed, c, thickness);
+  BEGIN_WRAP
+  cv::polylines(*img.ptr, *points.ptr, isClosed, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-struct Size GetTextSize(const char *text, int fontFace, double fontScale, int thickness)
+CvStatus GetTextSizeWithBaseline(const char *text, int fontFace, double fontScale, int thickness, int *baseline, Size *rval)
 {
-    return GetTextSizeWithBaseline(text, fontFace, fontScale, thickness, NULL);
+  BEGIN_WRAP
+  cv::Size r = cv::getTextSize(text, fontFace, fontScale, thickness, baseline);
+  *rval = {r.width, r.height};
+  END_WRAP
 }
-
-struct Size GetTextSizeWithBaseline(const char *text, int fontFace, double fontScale, int thickness, int *baesline)
+CvStatus PutText(Mat img, const char *text, Point org, int fontFace, double fontScale, Scalar color, int thickness)
 {
-    cv::Size sz = cv::getTextSize(text, fontFace, fontScale, thickness, baesline);
-    Size size = {sz.width, sz.height};
-    return size;
+  BEGIN_WRAP
+  cv::putText(*img.ptr, text, cv::Point(org.x, org.y), fontFace, fontScale, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void PutText(Mat img, const char *text, Point org, int fontFace, double fontScale,
-             Scalar color, int thickness)
+CvStatus PutTextWithParams(Mat img, const char *text, Point org, int fontFace, double fontScale, Scalar color, int thickness, int lineType, bool bottomLeftOrigin)
 {
-    cv::Point pt(org.x, org.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::putText(*img, text, pt, fontFace, fontScale, c, thickness);
+  BEGIN_WRAP
+  cv::putText(*img.ptr, text, cv::Point(org.x, org.y), fontFace, fontScale, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, bottomLeftOrigin);
+  END_WRAP
 }
-
-void PutTextWithParams(Mat img, const char *text, Point org, int fontFace, double fontScale,
-                       Scalar color, int thickness, int lineType, bool bottomLeftOrigin)
+CvStatus Resize(Mat src, Mat dst, Size sz, double fx, double fy, int interp)
 {
-    cv::Point pt(org.x, org.y);
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::putText(*img, text, pt, fontFace, fontScale, c, thickness, lineType, bottomLeftOrigin);
+  BEGIN_WRAP
+  cv::resize(*src.ptr, *dst.ptr, cv::Size(sz.width, sz.height), fx, fy, interp);
+  END_WRAP
 }
-
-void Resize(Mat src, Mat dst, Size dsize, double fx, double fy, int interp)
+CvStatus GetRectSubPix(Mat src, Size patchSize, Point2f center, Mat dst)
 {
-    cv::Size sz(dsize.width, dsize.height);
-    cv::resize(*src, *dst, sz, fx, fy, interp);
+  BEGIN_WRAP
+  cv::getRectSubPix(*src.ptr, cv::Size(patchSize.width, patchSize.height), cv::Point2f(center.x, center.y), *dst.ptr);
+  END_WRAP
 }
-
-void GetRectSubPix(Mat src, Size patchSize, Point2f center, Mat dst)
+CvStatus GetRotationMatrix2D(Point2f center, double angle, double scale, Mat *rval)
 {
-    cv::Size sz(patchSize.width, patchSize.height);
-    cv::Point2f pt(center.x, center.y);
-    cv::getRectSubPix(*src, sz, pt, *dst);
+  BEGIN_WRAP
+  auto mat = cv::getRotationMatrix2D(cv::Point2f(center.x, center.y), angle, scale);
+  *rval = {new cv::Mat(mat)};
+  END_WRAP
 }
-
-Mat GetRotationMatrix2D(Point2f center, double angle, double scale)
+CvStatus WarpAffine(Mat src, Mat dst, Mat rot_mat, Size dsize)
 {
-    cv::Point2f pt(center.x, center.y);
-    return new cv::Mat(cv::getRotationMatrix2D(pt, angle, scale));
+  BEGIN_WRAP
+  cv::warpAffine(*src.ptr, *dst.ptr, *rot_mat.ptr, cv::Size(dsize.width, dsize.height));
+  END_WRAP
 }
-
-void WarpAffine(Mat src, Mat dst, Mat m, Size dsize)
+CvStatus WarpAffineWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, int flags, int borderMode, Scalar borderValue)
 {
-    cv::Size sz(dsize.width, dsize.height);
-    cv::warpAffine(*src, *dst, *m, sz);
+  BEGIN_WRAP
+  cv::warpAffine(*src.ptr, *dst.ptr, *rot_mat.ptr, cv::Size(dsize.width, dsize.height), flags, borderMode, cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4));
+  END_WRAP
 }
-
-void WarpAffineWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, int flags, int borderMode,
-                          Scalar borderValue)
+CvStatus WarpPerspective(Mat src, Mat dst, Mat m, Size dsize)
 {
-    cv::Size sz(dsize.width, dsize.height);
-    cv::Scalar c = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
-    cv::warpAffine(*src, *dst, *rot_mat, sz, flags, borderMode, c);
+  BEGIN_WRAP
+  cv::warpPerspective(*src.ptr, *dst.ptr, *m.ptr, cv::Size(dsize.width, dsize.height));
+  END_WRAP
 }
-
-void WarpPerspective(Mat src, Mat dst, Mat m, Size dsize)
+CvStatus WarpPerspectiveWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, int flags, int borderMode, Scalar borderValue)
 {
-    cv::Size sz(dsize.width, dsize.height);
-    cv::warpPerspective(*src, *dst, *m, sz);
+  BEGIN_WRAP
+  cv::warpPerspective(*src.ptr, *dst.ptr, *rot_mat.ptr, cv::Size(dsize.width, dsize.height), flags, borderMode, cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4));
+  END_WRAP
 }
-
-void WarpPerspectiveWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, int flags, int borderMode,
-                               Scalar borderValue)
+CvStatus Watershed(Mat image, Mat markers)
 {
-    cv::Size sz(dsize.width, dsize.height);
-    cv::Scalar c = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
-    cv::warpPerspective(*src, *dst, *rot_mat, sz, flags, borderMode, c);
+  BEGIN_WRAP
+  cv::watershed(*image.ptr, *markers.ptr);
+  END_WRAP
 }
-
-void Watershed(Mat image, Mat markers)
+CvStatus ApplyColorMap(Mat src, Mat dst, int colormap)
 {
-    cv::watershed(*image, *markers);
+  BEGIN_WRAP
+  cv::applyColorMap(*src.ptr, *dst.ptr, colormap);
+  END_WRAP
 }
-
-void ApplyColorMap(Mat src, Mat dst, int colormap)
+CvStatus ApplyCustomColorMap(Mat src, Mat dst, Mat colormap)
 {
-    cv::applyColorMap(*src, *dst, colormap);
+  BEGIN_WRAP
+  cv::applyColorMap(*src.ptr, *dst.ptr, *colormap.ptr);
+  END_WRAP
 }
-
-void ApplyCustomColorMap(Mat src, Mat dst, Mat colormap)
+CvStatus GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval)
 {
-    cv::applyColorMap(*src, *dst, *colormap);
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getPerspectiveTransform(*src.ptr, *dst.ptr))};
+  END_WRAP
 }
-
-Mat GetPerspectiveTransform(PointVector src, PointVector dst)
+CvStatus GetPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval)
 {
-    std::vector<cv::Point2f> src_pts;
-    copyPointVectorToPoint2fVector(src, &src_pts);
-
-    std::vector<cv::Point2f> dst_pts;
-    copyPointVectorToPoint2fVector(dst, &dst_pts);
-
-    return new cv::Mat(cv::getPerspectiveTransform(src_pts, dst_pts));
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getAffineTransform(*src.ptr, *dst.ptr))};
+  END_WRAP
 }
-
-Mat GetPerspectiveTransform2f(Point2fVector src, Point2fVector dst)
+CvStatus GetAffineTransform(VecPoint src, VecPoint dst, Mat *rval)
 {
-    return new cv::Mat(cv::getPerspectiveTransform(*src, *dst));
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getAffineTransform(*src.ptr, *dst.ptr))};
+  END_WRAP
 }
-
-Mat GetAffineTransform(PointVector src, PointVector dst)
+CvStatus GetAffineTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval)
 {
-    std::vector<cv::Point2f> src_pts;
-    copyPointVectorToPoint2fVector(src, &src_pts);
-
-    std::vector<cv::Point2f> dst_pts;
-    copyPointVectorToPoint2fVector(dst, &dst_pts);
-
-    return new cv::Mat(cv::getAffineTransform(src_pts, dst_pts));
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::getAffineTransform(*src.ptr, *dst.ptr))};
+  END_WRAP
 }
-
-Mat GetAffineTransform2f(Point2fVector src, Point2fVector dst)
+CvStatus FindHomography(Mat src, Mat dst, int method, double ransacReprojThreshold, Mat mask, const int maxIters, const double confidence, Mat *rval)
 {
-    return new cv::Mat(cv::getAffineTransform(*src, *dst));
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::findHomography(*src.ptr, *dst.ptr, method, ransacReprojThreshold, *mask.ptr, maxIters, confidence))};
+  END_WRAP
 }
-
-Mat FindHomography(Mat src, Mat dst, int method, double ransacReprojThreshold, Mat mask, const int maxIters, const double confidence)
+CvStatus DrawContours(Mat src, VecVecPoint contours, int contourIdx, Scalar color, int thickness)
 {
-    return new cv::Mat(cv::findHomography(*src, *dst, method, ransacReprojThreshold, *mask, maxIters, confidence));
+  BEGIN_WRAP
+  cv::drawContours(*src.ptr, *contours.ptr, contourIdx, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  END_WRAP
 }
-
-void DrawContours(Mat src, PointsVector contours, int contourIdx, Scalar color, int thickness)
+CvStatus DrawContoursWithParams(Mat src, VecVecPoint contours, int contourIdx, Scalar color, int thickness, int lineType, Mat hierarchy, int maxLevel, Point offset)
 {
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::drawContours(*src, *contours, contourIdx, c, thickness);
+  BEGIN_WRAP
+  cv::drawContours(*src.ptr, *contours.ptr, contourIdx, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, *hierarchy.ptr, maxLevel, cv::Point(offset.x, offset.y));
+  END_WRAP
 }
-
-void DrawContoursWithParams(Mat src, PointsVector contours, int contourIdx, Scalar color, int thickness, int lineType, Mat hierarchy, int maxLevel, Point offset)
+CvStatus Sobel(Mat src, Mat dst, int ddepth, int dx, int dy, int ksize, double scale, double delta, int borderType)
 {
-    cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::Point offsetPt(offset.x, offset.y);
-
-    std::vector<cv::Vec4i> vecHierarchy;
-    if (hierarchy->empty() == 0)
-    {
-        for (int j = 0; j < hierarchy->cols; ++j)
-        {
-            vecHierarchy.push_back(hierarchy->at<cv::Vec4i>(0, j));
-        }
-    }
-    cv::drawContours(*src, *contours, contourIdx, c, thickness, lineType, vecHierarchy, maxLevel, offsetPt);
+  BEGIN_WRAP
+  cv::Sobel(*src.ptr, *dst.ptr, ddepth, dx, dy, ksize, scale, delta, borderType);
+  END_WRAP
 }
-
-void Sobel(Mat src, Mat dst, int ddepth, int dx, int dy, int ksize, double scale, double delta, int borderType)
+CvStatus SpatialGradient(Mat src, Mat dx, Mat dy, int ksize, int borderType)
 {
-    cv::Sobel(*src, *dst, ddepth, dx, dy, ksize, scale, delta, borderType);
+  BEGIN_WRAP
+  cv::spatialGradient(*src.ptr, *dx.ptr, *dy.ptr, ksize, borderType);
+  END_WRAP
 }
-
-void SpatialGradient(Mat src, Mat dx, Mat dy, int ksize, int borderType)
+CvStatus Remap(Mat src, Mat dst, Mat map1, Mat map2, int interpolation, int borderMode, Scalar borderValue)
 {
-    cv::spatialGradient(*src, *dx, *dy, ksize, borderType);
+  BEGIN_WRAP
+  cv::remap(*src.ptr, *dst.ptr, *map1.ptr, *map2.ptr, interpolation, borderMode, cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4));
+  END_WRAP
 }
-
-void Remap(Mat src, Mat dst, Mat map1, Mat map2, int interpolation, int borderMode, Scalar borderValue)
+CvStatus Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, Point anchor, double delta, int borderType)
 {
-    cv::Scalar c = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
-    cv::remap(*src, *dst, *map1, *map2, interpolation, borderMode, c);
+  BEGIN_WRAP
+  cv::filter2D(*src.ptr, *dst.ptr, ddepth, *kernel.ptr, cv::Point(anchor.x, anchor.y), delta, borderType);
+  END_WRAP
 }
-
-void Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, Point anchor, double delta, int borderType)
+CvStatus SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, Point anchor, double delta, int borderType)
 {
-    cv::Point anchorPt(anchor.x, anchor.y);
-    cv::filter2D(*src, *dst, ddepth, *kernel, anchorPt, delta, borderType);
+  BEGIN_WRAP
+  cv::sepFilter2D(*src.ptr, *dst.ptr, ddepth, *kernelX.ptr, *kernelY.ptr, cv::Point(anchor.x, anchor.y), delta, borderType);
+  END_WRAP
 }
-
-void SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, Point anchor, double delta, int borderType)
+CvStatus LogPolar(Mat src, Mat dst, Point2f center, double m, int flags)
 {
-    cv::Point anchorPt(anchor.x, anchor.y);
-    cv::sepFilter2D(*src, *dst, ddepth, *kernelX, *kernelY, anchorPt, delta, borderType);
+  BEGIN_WRAP
+  cv::logPolar(*src.ptr, *dst.ptr, cv::Point2f(center.x, center.y), m, flags);
+  END_WRAP
 }
-
-void LogPolar(Mat src, Mat dst, Point2f center, double m, int flags)
+CvStatus FitLine(VecPoint pts, Mat line, int distType, double param, double reps, double aeps)
 {
-    cv::Point2f centerPt(center.x, center.y);
-    cv::logPolar(*src, *dst, centerPt, m, flags);
+  BEGIN_WRAP
+  cv::fitLine(*pts.ptr, *line.ptr, distType, param, reps, aeps);
+  END_WRAP
 }
-
-void FitLine(PointVector pts, Mat line, int distType, double param, double reps, double aeps)
+CvStatus LinearPolar(Mat src, Mat dst, Point2f center, double maxRadius, int flags)
 {
-    cv::fitLine(*pts, *line, distType, param, reps, aeps);
+  BEGIN_WRAP
+  cv::linearPolar(*src.ptr, *dst.ptr, cv::Point2f(center.x, center.y), maxRadius, flags);
+  END_WRAP
 }
-
-void LinearPolar(Mat src, Mat dst, Point2f center, double maxRadius, int flags)
+CvStatus MatchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter, double *rval)
 {
-    cv::Point2f centerPt(center.x, center.y);
-    cv::linearPolar(*src, *dst, centerPt, maxRadius, flags);
+  BEGIN_WRAP
+  *rval = cv::matchShapes(*contour1.ptr, *contour2.ptr, method, parameter);
+  END_WRAP
 }
-
-double MatchShapes(PointVector contour1, PointVector contour2, int method, double parameter)
+CvStatus ClipLine(Rect imgRect, Point pt1, Point pt2, bool *rval)
 {
-    return cv::matchShapes(*contour1, *contour2, method, parameter);
+  BEGIN_WRAP
+  auto      sz = cv::Rect(imgRect.x, imgRect.y, imgRect.width, imgRect.height);
+  cv::Point p1(pt1.x, pt1.y);
+  cv::Point p2(pt2.x, pt2.y);
+  *rval = cv::clipLine(sz, p1, p2);
+  END_WRAP
 }
 
-CLAHE CLAHE_Create()
+CvStatus CLAHE_Create(CLAHE *rval)
 {
-    return new cv::Ptr<cv::CLAHE>(cv::createCLAHE());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::CLAHE>(cv::createCLAHE())};
+  END_WRAP
 }
-
-CLAHE CLAHE_CreateWithParams(double clipLimit, Size tileGridSize)
+CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval)
 {
-    cv::Size sz(tileGridSize.width, tileGridSize.height);
-    return new cv::Ptr<cv::CLAHE>(cv::createCLAHE(clipLimit, sz));
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::CLAHE>(cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height)))};
+  END_WRAP
 }
-
-void CLAHE_Close(CLAHE c)
+void CLAHE_Close(CLAHE *c)
 {
-    delete c;
+  delete CVD_TYPECAST_CPP(CLAHE, c);
+  c->ptr = nullptr;
 }
-
-void CLAHE_Apply(CLAHE c, Mat src, Mat dst)
+CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst)
 {
-    (*c)->apply(*src, *dst);
+  BEGIN_WRAP(*c.ptr)->apply(*src.ptr, *dst.ptr);
+  END_WRAP
 }
-
-void InvertAffineTransform(Mat src, Mat dst)
+CvStatus InvertAffineTransform(Mat src, Mat dst)
 {
-    cv::invertAffineTransform(*src, *dst);
+  BEGIN_WRAP
+  cv::invertAffineTransform(*src.ptr, *dst.ptr);
+  END_WRAP
 }
-
-Point2f PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response)
+CvStatus PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response, Point2f *rval)
 {
-    cv::Point2d result = cv::phaseCorrelate(*src1, *src2, *window, response);
-
-    Point2f result2f = {
-        float(result.x),
-        float(result.y),
-    };
-    return result2f;
+  BEGIN_WRAP
+  auto p = cv::phaseCorrelate(*src1.ptr, *src2.ptr, *window.ptr, response);
+  *rval = {static_cast<float>(p.x), static_cast<float>(p.y)};
+  END_WRAP
 }
 
-void Mat_Accumulate(Mat src, Mat dst)
+CvStatus Mat_Accumulate(Mat src, Mat dst)
 {
-    cv::accumulate(*src, *dst);
+  BEGIN_WRAP
+  cv::accumulate(*src.ptr, *dst.ptr);
+  END_WRAP
 }
-void Mat_AccumulateWithMask(Mat src, Mat dst, Mat mask)
+CvStatus Mat_AccumulateWithMask(Mat src, Mat dst, Mat mask)
 {
-    cv::accumulate(*src, *dst, *mask);
+  BEGIN_WRAP
+  cv::accumulate(*src.ptr, *dst.ptr, *mask.ptr);
+  END_WRAP
 }
-
-void Mat_AccumulateSquare(Mat src, Mat dst)
+CvStatus Mat_AccumulateSquare(Mat src, Mat dst)
 {
-    cv::accumulateSquare(*src, *dst);
+  BEGIN_WRAP
+  cv::accumulateSquare(*src.ptr, *dst.ptr);
+  END_WRAP
 }
-
-void Mat_AccumulateSquareWithMask(Mat src, Mat dst, Mat mask)
+CvStatus Mat_AccumulateSquareWithMask(Mat src, Mat dst, Mat mask)
 {
-    cv::accumulateSquare(*src, *dst, *mask);
+  BEGIN_WRAP
+  cv::accumulateSquare(*src.ptr, *dst.ptr, *mask.ptr);
+  END_WRAP
 }
-
-void Mat_AccumulateProduct(Mat src1, Mat src2, Mat dst)
+CvStatus Mat_AccumulateProduct(Mat src1, Mat src2, Mat dst)
 {
-    cv::accumulateProduct(*src1, *src2, *dst);
+  BEGIN_WRAP
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, *dst.ptr);
+  END_WRAP
 }
-
-void Mat_AccumulateProductWithMask(Mat src1, Mat src2, Mat dst, Mat mask)
+CvStatus Mat_AccumulateProductWithMask(Mat src1, Mat src2, Mat dst, Mat mask)
 {
-    cv::accumulateProduct(*src1, *src2, *dst, *mask);
+  BEGIN_WRAP
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, *dst.ptr, *mask.ptr);
+  END_WRAP
 }
-
-void Mat_AccumulatedWeighted(Mat src, Mat dst, double alpha)
+CvStatus Mat_AccumulatedWeighted(Mat src, Mat dst, double alpha)
 {
-    cv::accumulateWeighted(*src, *dst, alpha);
+  BEGIN_WRAP
+  cv::accumulateWeighted(*src.ptr, *dst.ptr, alpha);
+  END_WRAP
 }
-
-void Mat_AccumulatedWeightedWithMask(Mat src, Mat dst, double alpha, Mat mask)
+CvStatus Mat_AccumulatedWeightedWithMask(Mat src, Mat dst, double alpha, Mat mask)
 {
-    cv::accumulateWeighted(*src, *dst, alpha, *mask);
+  BEGIN_WRAP
+  cv::accumulateWeighted(*src.ptr, *dst.ptr, alpha, *mask.ptr);
+  END_WRAP
 }

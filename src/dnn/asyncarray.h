@@ -8,23 +8,24 @@
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core/core.h"
 #include "dnn.h"
 
 #ifdef __cplusplus
-    typedef cv::AsyncArray *AsyncArray;
+CVD_TYPEDEF(cv::AsyncArray, AsyncArray);
 #else
-typedef void *AsyncArray;
+CVD_TYPEDEF(void, AsyncArray)
 #endif
 
-    CvStatus AsyncArray_New(AsyncArray *rval);
-    CvStatus AsyncArray_Get(AsyncArray async_out, Mat out);
-    CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
-    void AsyncArray_Close(AsyncArray a);
+CVD_TYPEDEF_PTR(AsyncArray)
+
+CvStatus AsyncArray_New(AsyncArray *rval);
+CvStatus AsyncArray_Get(AsyncArray async_out, Mat out);
+CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
+void     AsyncArray_Close(AsyncArray *a);
 
 #ifdef __cplusplus
 }

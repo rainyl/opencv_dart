@@ -14,7 +14,7 @@ TEST(TermCriteria, New_Close)
   TermCriteria tc;
   s = TermCriteria_New(typ, maxCount, epsilon, &tc);
   ASSERT_EQ(s.code, 0);
-  ASSERT_NE(tc, nullptr);
+  ASSERT_NE(tc.ptr, nullptr);
 
   int    type, max_count;
   double eps;
@@ -35,13 +35,13 @@ TEST(Mat, New_Close)
   CvStatus s;
   s = Mat_New(&mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
-  Mat_Close(mat);
+  EXPECT_NE(mat.ptr, nullptr);
+  Mat_Close(&mat);
 
   Mat mat1;
   s = Mat_NewWithSize(3, 3, CV_8UC1, &mat1);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat1, nullptr);
+  EXPECT_NE(mat1.ptr, nullptr);
 
   bool is_empty;
   s = Mat_Empty(mat1, &is_empty);
@@ -58,9 +58,9 @@ TEST(Mat, New_Close)
   s = Mat_Type(mat1, &type);
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(type, CV_8UC1);
-  Mat_Close(mat1);
+  Mat_Close(&mat1);
 
-  VecInt sizes = new std::vector<int>({3, 3});
+  VecInt sizes = {new std::vector<int>({3, 3})};
   type = CV_8UC1;
 
   Mat mat2;
@@ -69,63 +69,63 @@ TEST(Mat, New_Close)
 
   s = Mat_Rows(mat2, &rows);
   EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(rows, sizes->at(0));
+  EXPECT_EQ(rows, sizes.ptr->at(0));
   s = Mat_Cols(mat2, &cols);
   EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(cols, sizes->at(1));
+  EXPECT_EQ(cols, sizes.ptr->at(1));
   s = Mat_Type(mat2, &type);
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(type, CV_8UC1);
-  Mat_Close(mat2);
+  Mat_Close(&mat2);
 
   Scalar scalar = {1, 2, 3, 4};
-  Mat    mat3 = nullptr;
+  Mat    mat3;
 
   s = Mat_NewWithSizesFromScalar(sizes, CV_8UC3, scalar, &mat3);
 
   // Check the result
   ASSERT_EQ(s.code, 0);
-  ASSERT_NE(mat3, nullptr);
-  EXPECT_EQ(mat3->rows, sizes->at(0));
-  EXPECT_EQ(mat3->cols, sizes->at(1));
-  EXPECT_EQ(mat3->type(), CV_8UC3);
+  ASSERT_NE(mat3.ptr, nullptr);
+  EXPECT_EQ(mat3.ptr->rows, sizes.ptr->at(0));
+  EXPECT_EQ(mat3.ptr->cols, sizes.ptr->at(1));
+  EXPECT_EQ(mat3.ptr->type(), CV_8UC3);
   cv::Scalar expectedScalar(1, 2, 3, 4);
-  for (int i = 0; i < mat3->rows; i++) {
-    for (int j = 0; j < mat3->cols; j++) {
-      cv::Vec3b pixel = mat3->at<cv::Vec3b>(i, j);
+  for (int i = 0; i < mat3.ptr->rows; i++) {
+    for (int j = 0; j < mat3.ptr->cols; j++) {
+      cv::Vec3b pixel = mat3.ptr->at<cv::Vec3b>(i, j);
       EXPECT_EQ(pixel[0], expectedScalar.val[0]);
       EXPECT_EQ(pixel[1], expectedScalar.val[1]);
       EXPECT_EQ(pixel[2], expectedScalar.val[2]);
     }
   }
-  Mat_Close(mat3);
+  Mat_Close(&mat3);
 
   Mat mat4;
   s = Mat_NewFromScalar(scalar, CV_8UC3, &mat4);
   ASSERT_EQ(s.code, 0);
 
   // Assert the created Mat object
-  EXPECT_EQ(mat4->rows, 1);
-  EXPECT_EQ(mat4->cols, 1);
-  EXPECT_EQ(mat4->type(), CV_8UC3);
-  Mat_Close(mat4);
+  EXPECT_EQ(mat4.ptr->rows, 1);
+  EXPECT_EQ(mat4.ptr->cols, 1);
+  EXPECT_EQ(mat4.ptr->type(), CV_8UC3);
+  Mat_Close(&mat4);
 
-  Mat mat5 = nullptr;
+  Mat mat5;
   s = Mat_NewWithSizeFromScalar(scalar, rows, cols, CV_8UC3, &mat5);
   EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(mat5->rows, rows);
-  EXPECT_EQ(mat5->cols, cols);
-  EXPECT_EQ(mat5->type(), CV_8UC3);
+  EXPECT_EQ(mat5.ptr->rows, rows);
+  EXPECT_EQ(mat5.ptr->cols, cols);
+  EXPECT_EQ(mat5.ptr->type(), CV_8UC3);
 
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < cols; j++) {
-      cv::Vec3b pixel = mat5->at<cv::Vec3b>(i, j);
+      cv::Vec3b pixel = mat5.ptr->at<cv::Vec3b>(i, j);
       EXPECT_EQ(pixel[0], scalar.val1);
       EXPECT_EQ(pixel[1], scalar.val2);
       EXPECT_EQ(pixel[2], scalar.val3);
     }
   }
-  Mat_Close(mat5);
+  Mat_Close(&mat5);
 }
 
 TEST(Mat, Create_extra)
@@ -135,29 +135,29 @@ TEST(Mat, Create_extra)
 
   s = Zeros(3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
-  EXPECT_EQ(mat->rows, 3);
-  EXPECT_EQ(mat->cols, 3);
-  EXPECT_EQ(mat->type(), CV_8UC3);
-  Mat_Close(mat);
+  EXPECT_NE(mat.ptr, nullptr);
+  EXPECT_EQ(mat.ptr->rows, 3);
+  EXPECT_EQ(mat.ptr->cols, 3);
+  EXPECT_EQ(mat.ptr->type(), CV_8UC3);
+  Mat_Close(&mat);
 
   Mat mat1;
   s = Ones(3, 3, CV_8UC3, &mat1);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat1, nullptr);
-  EXPECT_EQ(mat1->rows, 3);
-  EXPECT_EQ(mat1->cols, 3);
-  EXPECT_EQ(mat1->type(), CV_8UC3);
-  Mat_Close(mat1);
+  EXPECT_NE(mat1.ptr, nullptr);
+  EXPECT_EQ(mat1.ptr->rows, 3);
+  EXPECT_EQ(mat1.ptr->cols, 3);
+  EXPECT_EQ(mat1.ptr->type(), CV_8UC3);
+  Mat_Close(&mat1);
 
   Mat mat2;
   s = Eye(3, 3, CV_8UC3, &mat2);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat2, nullptr);
-  EXPECT_EQ(mat2->rows, 3);
-  EXPECT_EQ(mat2->cols, 3);
-  EXPECT_EQ(mat2->type(), CV_8UC3);
-  Mat_Close(mat2);
+  EXPECT_NE(mat2.ptr, nullptr);
+  EXPECT_EQ(mat2.ptr->rows, 3);
+  EXPECT_EQ(mat2.ptr->cols, 3);
+  EXPECT_EQ(mat2.ptr->type(), CV_8UC3);
+  Mat_Close(&mat2);
 }
 
 TEST(Mat, Property)
@@ -167,7 +167,7 @@ TEST(Mat, Property)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   int rows, cols, type, channels, step, total, elem_size;
   s = Mat_Rows(mat, &rows);
@@ -192,7 +192,7 @@ TEST(Mat, Property)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(elem_size, 3);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_UChar)
@@ -202,7 +202,7 @@ TEST(Mat, Getter_Setter_UChar)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   uchar pix;
   s = Mat_GetUChar(mat, 0, 0, &pix);
@@ -218,7 +218,7 @@ TEST(Mat, Getter_Setter_UChar)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 241);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_Char)
@@ -228,7 +228,7 @@ TEST(Mat, Getter_Setter_Char)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8SC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   int8_t pix;
   s = Mat_GetSChar(mat, 0, 0, &pix);
@@ -244,7 +244,7 @@ TEST(Mat, Getter_Setter_Char)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_UShort)
@@ -254,7 +254,7 @@ TEST(Mat, Getter_Setter_UShort)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_16UC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   uint16_t pix;
   s = Mat_GetUShort(mat, 0, 0, &pix);
@@ -270,7 +270,7 @@ TEST(Mat, Getter_Setter_UShort)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_Short)
@@ -280,7 +280,7 @@ TEST(Mat, Getter_Setter_Short)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_16SC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   int16_t pix;
   s = Mat_GetShort(mat, 0, 0, &pix);
@@ -296,7 +296,7 @@ TEST(Mat, Getter_Setter_Short)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_Int)
@@ -306,7 +306,7 @@ TEST(Mat, Getter_Setter_Int)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_32SC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   int pix;
   s = Mat_GetInt(mat, 0, 0, &pix);
@@ -322,7 +322,7 @@ TEST(Mat, Getter_Setter_Int)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_Float)
@@ -332,7 +332,7 @@ TEST(Mat, Getter_Setter_Float)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_32FC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   float pix;
   s = Mat_GetFloat(mat, 0, 0, &pix);
@@ -348,7 +348,7 @@ TEST(Mat, Getter_Setter_Float)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }
 
 TEST(Mat, Getter_Setter_Double)
@@ -358,7 +358,7 @@ TEST(Mat, Getter_Setter_Double)
   Mat      mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_64FC3, &mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat, nullptr);
+  EXPECT_NE(mat.ptr, nullptr);
 
   double pix;
   s = Mat_GetDouble(mat, 0, 0, &pix);
@@ -374,5 +374,5 @@ TEST(Mat, Getter_Setter_Double)
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
 
-  Mat_Close(mat);
+  Mat_Close(&mat);
 }

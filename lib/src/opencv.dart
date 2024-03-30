@@ -23,12 +23,12 @@ export 'core/rng.dart';
 export 'core/scalar.dart';
 export 'core/size.dart';
 
-// export 'calib3d/calib3d.dart';
-// export 'dnn/dnn.dart';
+export 'calib3d/calib3d.dart';
+export 'dnn/dnn.dart';
 // export 'features2d/features2d.dart';
 // export 'highgui/highgui.dart';
 export 'imgcodecs/imgcodecs.dart';
-// export 'imgproc/imgproc.dart';
+export 'imgproc/imgproc.dart';
 // export 'objdetect/objdetect.dart';
 // export 'photo/photo.dart';
 // export 'svd/svd.dart';

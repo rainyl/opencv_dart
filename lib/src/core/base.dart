@@ -52,12 +52,15 @@ final CFFI = CvNative(loadNativeLibrary());
 
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
-abstract class CvStruct<T extends ffi.Struct> extends CvObject<T> with EquatableMixin {
-  CvStruct.fromPointer(this.ptr);
+abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
+  ICvStruct.fromPointer(this.ptr);
 
   ffi.Pointer<T> ptr;
   T get ref;
-  T toNative();
+}
+
+abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with EquatableMixin {
+  CvStruct.fromPointer(super.ptr) : super.fromPointer();
 }
 
 abstract class CvPtrVoid<T extends ffi.Pointer<ffi.Void>> extends CvObject<T> with EquatableMixin {
@@ -65,7 +68,7 @@ abstract class CvPtrVoid<T extends ffi.Pointer<ffi.Void>> extends CvObject<T> wi
   T ptr;
 }
 
-R? cvRun<R>(CvStatus Function() func, [R? rval]) {
+void cvRun(CvStatus Function() func) {
   final status = func();
   if (status.code != 0) {
     throw CvException(
@@ -76,7 +79,6 @@ R? cvRun<R>(CvStatus Function() func, [R? rval]) {
       line: status.line,
     );
   }
-  return rval;
 }
 
 R cvRunArena<R>(R Function(Arena arena) computation,

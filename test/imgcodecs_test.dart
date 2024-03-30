@@ -6,15 +6,13 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() async {
   test("cv2.imread, cv2.imwrite", () {
-    final cvImage = cv.imread(r"test/images/circles.jpg",
-        flags: cv.IMREAD_COLOR);
+    final cvImage = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_COLOR);
     expect((cvImage.width, cvImage.height), (512, 512));
     expect(cv.imwrite("test/images_out/test_imwrite.png", cvImage), true);
   });
 
   test("cv2.imencode, cv2.imdecode", () async {
-    final cvImage = cv.imread(r"test/images/circles.jpg",
-        flags: cv.IMREAD_COLOR);
+    final cvImage = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_COLOR);
     expect((cvImage.width, cvImage.height), (512, 512));
     final buf = cv.imencode(".png", cvImage);
     expect(buf.length, greaterThan(0));

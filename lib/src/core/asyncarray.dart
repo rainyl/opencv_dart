@@ -8,29 +8,31 @@ import 'base.dart';
 import 'mat.dart';
 import '../opencv.g.dart' as cvg;
 
-class AsyncArray extends CvPtrVoid<cvg.AsyncArray> {
-  AsyncArray._(cvg.AsyncArray ptr) : super.fromPointer(ptr) {
+class AsyncArray extends CvStruct<cvg.AsyncArray> {
+  AsyncArray._(cvg.AsyncArrayPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
 
-  factory AsyncArray.fromPointer(cvg.AsyncArray ptr) => AsyncArray._(ptr);
+  factory AsyncArray.fromPointer(cvg.AsyncArrayPtr ptr) => AsyncArray._(ptr);
 
   factory AsyncArray.empty() {
     final p = calloc<cvg.AsyncArray>();
     cvRun(() => CFFI.AsyncArray_New(p));
-    final arr = AsyncArray._(p.value);
-    calloc.free(p);
+    final arr = AsyncArray._(p);
     return arr;
   }
 
-  static final finalizer = ffi.NativeFinalizer(CFFI.addresses.AsyncArray_Close);
+  static final finalizer = Finalizer(CFFI.AsyncArray_Close);
 
   Mat get() {
     final dst = Mat.empty();
-    cvRun(() => CFFI.AsyncArray_Get(ptr, dst.ptr));
+    cvRun(() => CFFI.AsyncArray_Get(ref, dst.ref));
     return dst;
   }
 
   @override
   List<int> get props => [ptr.address];
+
+  @override
+  cvg.AsyncArray get ref => ptr.ref;
 }

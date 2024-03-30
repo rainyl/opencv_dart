@@ -11,9 +11,10 @@ output:
 # ffi-native:
 #   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
 compiler-opts: "-Isrc"
+sort: true
 headers:
   entry-points:
-    # - src/calib3d/calib3d.h
+    - src/calib3d/calib3d.h
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
@@ -25,14 +26,14 @@ headers:
     # - src/features2d/features2d.h
     # - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
-    # - src/imgproc/imgproc.h
+    - src/imgproc/imgproc.h
     # - src/objdetect/objdetect.h
     # - src/photo/photo.h
     # - src/stitching/stitching.h
     # - src/video/video.h
     # - src/video/videoio.h
   include-directives:
-    # - src/calib3d/calib3d.h
+    - src/calib3d/calib3d.h
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
@@ -44,7 +45,7 @@ headers:
     # - src/features2d/features2d.h
     # - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
-    # - src/imgproc/imgproc.h
+    - src/imgproc/imgproc.h
     # - src/objdetect/objdetect.h
     # - src/photo/photo.h
     # - src/stitching/stitching.h
@@ -61,11 +62,10 @@ functions:
 #   exclude:
 #     - _*
 # structs:
-#   # exclude:
-#   #   - _*
+#   exclude:
+#     - _
 #   rename:
 #     'Mat': 'CMat'
-
 
 preamble: |
   // opencv_dart - OpenCV bindings for Dart language
@@ -76,5 +76,5 @@ preamble: |
   // Date: 2024/01/28
 
 comments:
-  style: any
-  length: full
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).

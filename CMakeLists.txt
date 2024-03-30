@@ -39,6 +39,7 @@ file(GLOB_RECURSE CPP_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/dnn/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/imgcodecs/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/imgproc/*.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
@@ -106,6 +107,18 @@ if(WIN32)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 endif(WIN32)
 FetchContent_MakeAvailable(googletest)
+# copy test images
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test)
+file(COPY
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/images"
+    DESTINATION ${CMAKE_BINARY_DIR}/test
+)
+file(COPY
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/models"
+    DESTINATION ${CMAKE_BINARY_DIR}/test
+)
+
+
 enable_testing()
 
 macro(add_ocv_dart_test executable_name source_file)
@@ -131,7 +144,13 @@ endmacro()
 
 add_ocv_dart_test(ocv_dart_test_vec "src/test/vec.cc")
 add_ocv_dart_test(ocv_dart_test_core "src/test/core.cc")
+add_ocv_dart_test(ocv_dart_test_calib3d "src/test/calib3d.cc")
+add_ocv_dart_test(ocv_dart_test_dnn "src/test/dnn.cc")
+add_ocv_dart_test(ocv_dart_test_imgcodecs "src/test/imgcodecs.cc")
 
 include(GoogleTest)
 gtest_discover_tests(ocv_dart_test_vec)
 gtest_discover_tests(ocv_dart_test_core)
+gtest_discover_tests(ocv_dart_test_calib3d)
+gtest_discover_tests(ocv_dart_test_dnn)
+gtest_discover_tests(ocv_dart_test_imgcodecs)

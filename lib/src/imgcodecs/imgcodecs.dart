@@ -20,10 +20,9 @@ import '../opencv.g.dart' as cvg;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
-    final p = calloc<cvg.Mat>();
+    final p = arena<cvg.Mat>();
     cvRun(() => CFFI.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
-    final dst = Mat.fromCMat(p.value);
-    calloc.free(p);
+    final dst = Mat.fromCMat(p.ref);
     return dst;
   });
 }
@@ -37,13 +36,13 @@ bool imwrite(String filename, InputArray img, {VecInt? params}) {
     final fname = filename.toNativeUtf8(allocator: arena);
     final p = arena<ffi.Bool>();
     if (params == null) {
-      cvRun(() => CFFI.Image_IMWrite(fname.cast(), img.ptr, p));
+      cvRun(() => CFFI.Image_IMWrite(fname.cast(), img.ref, p));
     } else {
       cvRun(
         () => CFFI.Image_IMWrite_WithParams(
           fname.cast(),
-          img.ptr,
-          params.ptr,
+          img.ref,
+          params.ref,
           p,
         ),
       );
@@ -68,12 +67,12 @@ Uint8List imencode(
     final cExt = ext.toNativeUtf8(allocator: arena);
 
     if (params == null) {
-      CFFI.Image_IMEncode(cExt.cast(), img.ptr, buffer);
+      CFFI.Image_IMEncode(cExt.cast(), img.ref, buffer);
     } else {
-      CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ptr, params.ptr, buffer);
+      CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ref, params.ref, buffer);
     }
 
-    return VecUChar.fromPointer(buffer.value).toU8List();
+    return VecUChar.fromPointer(buffer.ref).toU8List();
   });
 }
 
@@ -88,6 +87,6 @@ Uint8List imencode(
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Image_IMDecode(vec.ptr, flags, dst!.ptr));
+  cvRun(() => CFFI.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;
 }

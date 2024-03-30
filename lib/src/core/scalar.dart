@@ -33,8 +33,6 @@ class Scalar extends CvStruct<cvg.Scalar> {
   @override
   cvg.Scalar get ref => ptr.ref;
   @override
-  cvg.Scalar toNative() => ptr.ref;
-  @override
   List<Object?> get props => [val1, val2, val3, val4];
   @override
   String toString() {

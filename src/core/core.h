@@ -5,13 +5,13 @@
     Modified by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
-
-#include <corecrt_math.h>
+#pragma once
 #pragma warning(disable : 4996)
 #ifndef _OPENCV3_CORE_H_
 #define _OPENCV3_CORE_H_
 
-#include "math.h"
+#include <corecrt_math.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -20,6 +20,8 @@
 #include <vector>
 extern "C" {
 #endif
+
+#define CVD_OUT
 
 #define BEGIN_WRAP \
   try {
@@ -64,53 +66,85 @@ extern "C" {
     return s;                                         \
   }
 
+#define CVD_TYPECAST_C(value) \
+  reinterpret_cast<void *>(value);
+
+#define CVD_TYPEDEF_PTR(TYPE)                               \
+  typedef TYPE *TYPE##Ptr;                                  \
+  /**                                                       \
+   * Dart ffigen will not generate typedefs if not referred \
+   * so here we confirm they are included                   \
+   */                                                       \
+  typedef struct {                                          \
+    TYPE##Ptr *p;                                           \
+  } NO_USE_##TYPE##Ptr;
+
 #ifdef __cplusplus
-typedef cv::Mat                               *Mat;
-typedef cv::_InputOutputArray                 *InputOutputArray;
-typedef cv::TermCriteria                      *TermCriteria;
-typedef cv::RNG                               *RNG;
-typedef std::vector<cv::Point>                *VecPoint;
-typedef std::vector<std::vector<cv::Point>>   *VecVecPoint;
-typedef std::vector<cv::Point2f>              *VecPoint2f;
-typedef std::vector<std::vector<cv::Point2f>> *VecVecPoint2f;
-typedef std::vector<cv::Point3f>              *VecPoint3f;
-typedef std::vector<std::vector<cv::Point3f>> *VecVecPoint3f;
-typedef std::vector<uchar>                    *VecUChar;
-typedef std::vector<char>                     *VecChar;
-typedef std::vector<int>                      *VecInt;
-typedef std::vector<float>                    *VecFloat;
-typedef std::vector<double>                   *VecDouble;
-typedef std::vector<std::vector<char>>        *VecVecChar;
-typedef std::vector<cv::Mat>                  *VecMat;
-typedef std::vector<cv::Rect>                 *VecRect;
-typedef std::vector<cv::KeyPoint>             *VecKeyPoint;
-typedef std::vector<cv::DMatch>               *VecDMatch;
-typedef std::vector<std::vector<cv::DMatch>>  *VecVecDMatch;
+#define CVD_TYPECAST_CPP(TYPE, value) \
+  reinterpret_cast<TYPE##_CPP>(value->ptr)
+
+#define CVD_TYPEDEF(TYPE, NAME)    \
+  typedef TYPE *NAME##_CPP; \
+  typedef struct NAME {            \
+    TYPE *ptr;                     \
+  } NAME;
+
+CVD_TYPEDEF(cv::Mat, Mat)
+CVD_TYPEDEF(cv::_InputOutputArray, InputOutputArray)
+CVD_TYPEDEF(cv::TermCriteria, TermCriteria)
+CVD_TYPEDEF(cv::RNG, RNG)
+CVD_TYPEDEF(std::vector<cv::Point>, VecPoint)
+CVD_TYPEDEF(std::vector<std::vector<cv::Point>>, VecVecPoint)
+CVD_TYPEDEF(std::vector<cv::Point2f>, VecPoint2f)
+CVD_TYPEDEF(std::vector<std::vector<cv::Point2f>>, VecVecPoint2f)
+CVD_TYPEDEF(std::vector<cv::Point3f>, VecPoint3f)
+CVD_TYPEDEF(std::vector<std::vector<cv::Point3f>>, VecVecPoint3f)
+CVD_TYPEDEF(std::vector<uchar>, VecUChar)
+CVD_TYPEDEF(std::vector<char>, VecChar)
+CVD_TYPEDEF(std::vector<int>, VecInt)
+CVD_TYPEDEF(std::vector<float>, VecFloat)
+CVD_TYPEDEF(std::vector<double>, VecDouble)
+CVD_TYPEDEF(std::vector<std::vector<char>>, VecVecChar)
+CVD_TYPEDEF(std::vector<cv::Mat>, VecMat)
+CVD_TYPEDEF(std::vector<cv::Rect>, VecRect)
+CVD_TYPEDEF(std::vector<cv::KeyPoint>, VecKeyPoint)
+CVD_TYPEDEF(std::vector<cv::DMatch>, VecDMatch)
+CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
 #else
+#define CVD_TYPEDEF(TYPE, NAME) \
+  typedef struct NAME {         \
+    TYPE *ptr;                  \
+  } NAME;
+
 typedef unsigned char uchar;
 
-typedef void *Mat;
-typedef void *InputOutputArray;
-typedef void *TermCriteria;
-typedef void *RNG;
-typedef void *VecPoint;
-typedef void *VecVecPoint;
-typedef void *VecPoint2f;
-typedef void *VecVecPoint2f;
-typedef void *VecPoint3f;
-typedef void *VecVecPoint3f;
-typedef void *VecUChar;
-typedef void *VecChar;
-typedef void *VecInt;
-typedef void *VecFloat;
-typedef void *VecDouble;
-typedef void *VecVecChar;
-typedef void *VecMat;
-typedef void *VecRect;
-typedef void *VecKeyPoint;
-typedef void *VecDMatch;
-typedef void *VecVecDMatch;
+CVD_TYPEDEF(void, Mat)
+CVD_TYPEDEF(void, InputOutputArray)
+CVD_TYPEDEF(void, TermCriteria)
+CVD_TYPEDEF(void, RNG)
+CVD_TYPEDEF(void, VecPoint)
+CVD_TYPEDEF(void, VecVecPoint)
+CVD_TYPEDEF(void, VecPoint2f)
+CVD_TYPEDEF(void, VecVecPoint2f)
+CVD_TYPEDEF(void, VecPoint3f)
+CVD_TYPEDEF(void, VecVecPoint3f)
+CVD_TYPEDEF(void, VecUChar)
+CVD_TYPEDEF(void, VecChar)
+CVD_TYPEDEF(void, VecInt)
+CVD_TYPEDEF(void, VecFloat)
+CVD_TYPEDEF(void, VecDouble)
+CVD_TYPEDEF(void, VecVecChar)
+CVD_TYPEDEF(void, VecMat)
+CVD_TYPEDEF(void, VecRect)
+CVD_TYPEDEF(void, VecKeyPoint)
+CVD_TYPEDEF(void, VecDMatch)
+CVD_TYPEDEF(void, VecVecDMatch)
 #endif
+
+CVD_TYPEDEF_PTR(Mat)
+CVD_TYPEDEF_PTR(InputOutputArray)
+CVD_TYPEDEF_PTR(TermCriteria)
+CVD_TYPEDEF_PTR(RNG)
 
 typedef struct RawData {
   int     width;
@@ -144,19 +178,29 @@ typedef struct Rect {
   int height;
 } Rect;
 
+typedef struct Rect2f {
+  float x;
+  float y;
+  float width;
+  float height;
+} Rect2f;
+
 // Wrapper for an individual cv::cvSize
 typedef struct Size {
   int width;
   int height;
 } Size;
 
+typedef struct Size2f {
+  float width;
+  float height;
+} Size2f;
+
 // Wrapper for an individual cv::RotatedRect
 typedef struct RotatedRect {
-  VecPoint pts;
-  Rect     boundingRect;
-  Point    center;
-  Size     size;
-  double   angle;
+  Point2f center;
+  Size2f  size;
+  double  angle;
 } RotatedRect;
 
 // Wrapper for an individual cv::cvScalar
@@ -256,6 +300,9 @@ typedef VecVecPoint   Contours;
 typedef VecVecPoint2f Contours2f;
 typedef VecVecPoint3f Contours3f;
 
+CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts);
+CvStatus RotatedRect_BoundingRect(RotatedRect rect, Rect *rval);
+CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval);
 // CvStatus noArray(InputOutputArray *rval);
 
 // internal use
@@ -265,7 +312,7 @@ CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *r
 CvStatus TermCriteria_Type(TermCriteria tc, int *rval);
 CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval);
 CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval);
-void     TermCriteria_Close(TermCriteria tc);
+void     TermCriteria_Close(TermCriteria *tc);
 
 CvStatus Mat_New(Mat *rval);
 CvStatus Mat_NewWithSize(int rows, int cols, int type, Mat *rval);
@@ -274,12 +321,13 @@ CvStatus Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval
 CvStatus Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval);
 CvStatus Mat_NewFromScalar(const Scalar ar, int type, Mat *rval);
 CvStatus Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
-CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecChar buf, Mat *rval);
+CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, Mat *rval);
 CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
-void     Mat_Close(Mat m);
+CvStatus Mat_FromCMat(Mat m, Mat *rval);
+void     Mat_Close(Mat *m);
 CvStatus Mat_Empty(Mat m, bool *rval);
 CvStatus Mat_IsContinuous(Mat m, bool *rval);
 CvStatus Mat_Clone(Mat m, Mat *rval);
@@ -287,8 +335,8 @@ CvStatus Mat_CopyTo(Mat m, Mat dst);
 CvStatus Mat_CopyToWithMask(Mat m, Mat dst, Mat mask);
 CvStatus Mat_ConvertTo(Mat m, Mat dst, int type);
 CvStatus Mat_ConvertToWithParams(Mat m, Mat dst, int type, float alpha, float beta);
-CvStatus Mat_ToVecUChar(Mat m, VecUChar rval);
-CvStatus Mat_ToVecChar(Mat m, VecChar rval);
+CvStatus Mat_ToVecUChar(Mat m, VecUChar *rval);
+CvStatus Mat_ToVecChar(Mat m, VecChar *rval);
 CvStatus Mat_Region(Mat m, Rect r, Mat *rval);
 CvStatus Mat_Reshape(Mat m, int cn, int rows, Mat *rval);
 CvStatus Mat_PatchNaNs(Mat m, double val);
@@ -302,7 +350,7 @@ CvStatus Mat_Channels(Mat m, int *rval);
 CvStatus Mat_Type(Mat m, int *rval);
 CvStatus Mat_Step(Mat m, int *rval);
 CvStatus Mat_Total(Mat m, int *rval);
-CvStatus Mat_Size(Mat m, VecInt rval);
+CvStatus Mat_Size(Mat m, VecInt *rval);
 CvStatus Mat_ElemSize(Mat m, int *rval);
 CvStatus Eye(int rows, int cols, int type, Mat *rval);
 CvStatus Zeros(int rows, int cols, int type, Mat *rval);
@@ -437,7 +485,7 @@ CvStatus Mat_ScaleAdd(Mat src1, double alpha, Mat src2, Mat dst);
 CvStatus Mat_SetIdentity(Mat src, double scalar);
 CvStatus Mat_Sort(Mat src, Mat dst, int flags);
 CvStatus Mat_SortIdx(Mat src, Mat dst, int flags);
-CvStatus Mat_Split(Mat src, VecMat rval);
+CvStatus Mat_Split(Mat src, VecMat *rval);
 CvStatus Mat_Subtract(Mat src1, Mat src2, Mat dst);
 CvStatus Mat_T(Mat x, Mat *rval);
 CvStatus Mat_Trace(Mat src, Scalar *rval);
@@ -461,7 +509,7 @@ CvStatus NormWithMats(Mat src1, Mat src2, int normType, double *rval);
 
 CvStatus Rng_New(RNG *rval);
 CvStatus Rng_NewWithState(uint64_t state, RNG *rval);
-void     Rng_Close(RNG rng);
+void     Rng_Close(RNG *rng);
 CvStatus TheRNG(RNG *rval);
 CvStatus SetRNGSeed(int seed);
 CvStatus RNG_Fill(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange);

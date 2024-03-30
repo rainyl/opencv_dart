@@ -2,7 +2,7 @@
     Created by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
-
+#pragma once
 #ifndef OPENCV_DART_LIBRARY_EXCEPTION_H
 #define OPENCV_DART_LIBRARY_EXCEPTION_H
 
