@@ -1,5 +1,9 @@
-#ifndef _OPENCV3_IMG_HASH_H_
-#define _OPENCV3_IMG_HASH_H_
+/*
+    Created by mdeleau.
+    Licensed: Apache 2.0 license. Copyright (c) 2024 mdeleau.
+*/
+#ifndef OCV_DART_IMG_HASH_H_
+#define OCV_DART_IMG_HASH_H_
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
@@ -26,4 +30,4 @@ double radialVarianceHashCompare(Mat a, Mat b, double sigma, int numOfAngleLine)
 }
 #endif
 
-#endif //_OPENCV3_IMG_HASH_H_
+#endif //OCV_DART_IMG_HASH_H_
