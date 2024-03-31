@@ -28,8 +28,6 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval)
   END_WRAP
 }
 
-VecPoint2f vecPointToVecPoint2f(VecPoint src);
-
 CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval)
 {
   BEGIN_WRAP
@@ -302,6 +300,13 @@ CvStatus Mat_ElemSize(Mat m, int *rval)
   *rval = m.ptr->elemSize();
   END_WRAP
 }
+CvStatus Mat_Data(Mat m, VecUChar *rval)
+{
+  BEGIN_WRAP
+  *rval = {new std::vector<uchar>(*m.ptr->data)};
+  END_WRAP
+}
+
 CvStatus Eye(int rows, int cols, int type, Mat *rval)
 {
   BEGIN_WRAP

@@ -20,8 +20,10 @@ extern "C" {
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::Ptr<cv::CLAHE>, CLAHE)
 #else
-typedef void *CLAHE;
+CVD_TYPEDEF(void, CLAHE)
 #endif
+
+CVD_TYPEDEF_PTR(CLAHE)
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, CVD_OUT double *rval);
 CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, CVD_OUT VecPoint *rval);
@@ -46,7 +48,7 @@ CvStatus Moments(Mat src, bool binaryImage, Moment *rval);
 CvStatus PyrDown(Mat src, Mat dst, Size dstsize, int borderType);
 CvStatus PyrUp(Mat src, Mat dst, Size dstsize, int borderType);
 CvStatus BoundingRect(VecPoint pts, Rect *rval);
-CvStatus BoxPoints(RotatedRect rect, Mat boxPts);
+CvStatus BoxPoints(RotatedRect rect, VecPoint2f *boxPts);
 CvStatus ContourArea(VecPoint pts, double *rval);
 CvStatus MinAreaRect(VecPoint pts, RotatedRect *rval);
 CvStatus FitEllipse(VecPoint pts, RotatedRect *rval);
@@ -63,29 +65,30 @@ CvStatus Scharr(Mat src, Mat dst, int dDepth, int dx, int dy, double scale, doub
 CvStatus GetStructuringElement(int shape, Size ksize, Mat *rval);
 CvStatus MorphologyDefaultBorderValue(Scalar *rval);
 CvStatus MorphologyEx(Mat src, Mat dst, int op, Mat kernel);
-CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType);
+CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType, Scalar borderValue);
 CvStatus MedianBlur(Mat src, Mat dst, int ksize);
 
-CvStatus Canny(Mat src, Mat edges, double t1, double t2);
+CvStatus Canny(Mat src, Mat edges, double t1, double t2, int apertureSize, bool l2gradient);
 CvStatus CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCriteria criteria);
-CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist);
+CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, bool useHarrisDetector, double k);
+CvStatus GoodFeaturesToTrackWithGradient(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, int gradientSize, bool useHarrisDetector, double k);
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode);
 CvStatus HoughCircles(Mat src, Mat circles, int method, double dp, double minDist);
 CvStatus HoughCirclesWithParams(Mat src, Mat circles, int method, double dp, double minDist, double param1, double param2, int minRadius, int maxRadius);
-CvStatus HoughLines(Mat src, Mat lines, double rho, double theta, int threshold);
+CvStatus HoughLines(Mat src, Mat lines, double rho, double theta, int threshold, double srn, double stn, double min_theta, double max_theta);
 CvStatus HoughLinesP(Mat src, Mat lines, double rho, double theta, int threshold);
 CvStatus HoughLinesPWithParams(Mat src, Mat lines, double rho, double theta, int threshold, double minLineLength, double maxLineGap);
 CvStatus HoughLinesPointSet(Mat points, Mat lines, int lines_max, int threshold, double min_rho, double max_rho, double rho_step, double min_theta, double max_theta, double theta_step);
-CvStatus Integral(Mat src, Mat sum, Mat sqsum, Mat tilted);
+CvStatus Integral(Mat src, Mat sum, Mat sqsum, Mat tilted, int sdepth, int sqdepth);
 CvStatus Threshold(Mat src, Mat dst, double thresh, double maxvalue, int typ, double *rval);
 CvStatus AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveTyp, int typ, int blockSize, double c);
 
-CvStatus ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness);
+CvStatus ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness, int line_type, int shift, double tipLength);
 CvStatus Circle(Mat img, Point center, int radius, Scalar color, int thickness);
 CvStatus CircleWithParams(Mat img, Point center, int radius, Scalar color, int thickness, int lineType, int shift);
 CvStatus Ellipse(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness);
 CvStatus EllipseWithParams(Mat img, Point center, Point axes, double angle, double startAngle, double endAngle, Scalar color, int thickness, int lineType, int shift);
-CvStatus Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness);
+CvStatus Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness, int lineType, int shift);
 CvStatus Rectangle(Mat img, Rect rect, Scalar color, int thickness);
 CvStatus RectangleWithParams(Mat img, Rect rect, Scalar color, int thickness, int lineType, int shift);
 CvStatus FillPoly(Mat img, VecVecPoint points, Scalar color);
@@ -104,8 +107,8 @@ CvStatus WarpPerspectiveWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, in
 CvStatus Watershed(Mat image, Mat markers);
 CvStatus ApplyColorMap(Mat src, Mat dst, int colormap);
 CvStatus ApplyCustomColorMap(Mat src, Mat dst, Mat colormap);
-CvStatus GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval);
-CvStatus GetPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval);
+CvStatus GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval, int solveMethod);
+CvStatus GetPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval, int solveMethod);
 CvStatus GetAffineTransform(VecPoint src, VecPoint dst, Mat *rval);
 CvStatus GetAffineTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval);
 CvStatus FindHomography(Mat src, Mat dst, int method, double ransacReprojThreshold, Mat mask, const int maxIters, const double confidence, Mat *rval);
@@ -126,6 +129,12 @@ CvStatus CLAHE_Create(CLAHE *rval);
 CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval);
 void     CLAHE_Close(CLAHE *c);
 CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst);
+CvStatus CLAHE_CollectGarbage(CLAHE c);
+CvStatus CLAHE_GetClipLimit(CLAHE c, double *rval);
+CvStatus CLAHE_SetClipLimit(CLAHE c, double clipLimit);
+CvStatus CLAHE_GetTilesGridSize(CLAHE c, Size *rval);
+CvStatus CLAHE_SetTilesGridSize(CLAHE c, Size size);
+
 CvStatus InvertAffineTransform(Mat src, Mat dst);
 CvStatus PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response, Point2f *rval);
 

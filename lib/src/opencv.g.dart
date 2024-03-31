@@ -136,6 +136,9 @@ class CvNative {
     Point pt2,
     Scalar color,
     int thickness,
+    int line_type,
+    int shift,
+    double tipLength,
   ) {
     return _ArrowedLine(
       img,
@@ -143,15 +146,18 @@ class CvNative {
       pt2,
       color,
       thickness,
+      line_type,
+      shift,
+      tipLength,
     );
   }
 
   late final _ArrowedLinePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              Mat, Point, Point, Scalar, ffi.Int)>>('ArrowedLine');
+          CvStatus Function(Mat, Point, Point, Scalar, ffi.Int, ffi.Int,
+              ffi.Int, ffi.Double)>>('ArrowedLine');
   late final _ArrowedLine = _ArrowedLinePtr.asFunction<
-      CvStatus Function(Mat, Point, Point, Scalar, int)>();
+      CvStatus Function(Mat, Point, Point, Scalar, int, int, int, double)>();
 
   void AsyncArray_Close(
     ffi.Pointer<AsyncArray> a,
@@ -274,7 +280,7 @@ class CvNative {
 
   CvStatus BoxPoints(
     RotatedRect rect,
-    Mat boxPts,
+    ffi.Pointer<VecPoint2f> boxPts,
   ) {
     return _BoxPoints(
       rect,
@@ -282,11 +288,12 @@ class CvNative {
     );
   }
 
-  late final _BoxPointsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(RotatedRect, Mat)>>(
-          'BoxPoints');
-  late final _BoxPoints =
-      _BoxPointsPtr.asFunction<CvStatus Function(RotatedRect, Mat)>();
+  late final _BoxPointsPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              RotatedRect, ffi.Pointer<VecPoint2f>)>>('BoxPoints');
+  late final _BoxPoints = _BoxPointsPtr.asFunction<
+      CvStatus Function(RotatedRect, ffi.Pointer<VecPoint2f>)>();
 
   CvStatus CLAHE_Apply(
     CLAHE c,
@@ -320,6 +327,20 @@ class CvNative {
   late final _CLAHE_Close =
       _CLAHE_ClosePtr.asFunction<void Function(ffi.Pointer<CLAHE>)>();
 
+  CvStatus CLAHE_CollectGarbage(
+    CLAHE c,
+  ) {
+    return _CLAHE_CollectGarbage(
+      c,
+    );
+  }
+
+  late final _CLAHE_CollectGarbagePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(CLAHE)>>(
+          'CLAHE_CollectGarbage');
+  late final _CLAHE_CollectGarbage =
+      _CLAHE_CollectGarbagePtr.asFunction<CvStatus Function(CLAHE)>();
+
   CvStatus CLAHE_Create(
     ffi.Pointer<CLAHE> rval,
   ) {
@@ -352,6 +373,71 @@ class CvNative {
               ffi.Double, Size, ffi.Pointer<CLAHE>)>>('CLAHE_CreateWithParams');
   late final _CLAHE_CreateWithParams = _CLAHE_CreateWithParamsPtr.asFunction<
       CvStatus Function(double, Size, ffi.Pointer<CLAHE>)>();
+
+  CvStatus CLAHE_GetClipLimit(
+    CLAHE c,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _CLAHE_GetClipLimit(
+      c,
+      rval,
+    );
+  }
+
+  late final _CLAHE_GetClipLimitPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(CLAHE, ffi.Pointer<ffi.Double>)>>(
+      'CLAHE_GetClipLimit');
+  late final _CLAHE_GetClipLimit = _CLAHE_GetClipLimitPtr.asFunction<
+      CvStatus Function(CLAHE, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus CLAHE_GetTilesGridSize(
+    CLAHE c,
+    ffi.Pointer<Size> rval,
+  ) {
+    return _CLAHE_GetTilesGridSize(
+      c,
+      rval,
+    );
+  }
+
+  late final _CLAHE_GetTilesGridSizePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(CLAHE, ffi.Pointer<Size>)>>(
+          'CLAHE_GetTilesGridSize');
+  late final _CLAHE_GetTilesGridSize = _CLAHE_GetTilesGridSizePtr.asFunction<
+      CvStatus Function(CLAHE, ffi.Pointer<Size>)>();
+
+  CvStatus CLAHE_SetClipLimit(
+    CLAHE c,
+    double clipLimit,
+  ) {
+    return _CLAHE_SetClipLimit(
+      c,
+      clipLimit,
+    );
+  }
+
+  late final _CLAHE_SetClipLimitPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(CLAHE, ffi.Double)>>(
+          'CLAHE_SetClipLimit');
+  late final _CLAHE_SetClipLimit =
+      _CLAHE_SetClipLimitPtr.asFunction<CvStatus Function(CLAHE, double)>();
+
+  CvStatus CLAHE_SetTilesGridSize(
+    CLAHE c,
+    Size size,
+  ) {
+    return _CLAHE_SetTilesGridSize(
+      c,
+      size,
+    );
+  }
+
+  late final _CLAHE_SetTilesGridSizePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(CLAHE, Size)>>(
+          'CLAHE_SetTilesGridSize');
+  late final _CLAHE_SetTilesGridSize =
+      _CLAHE_SetTilesGridSizePtr.asFunction<CvStatus Function(CLAHE, Size)>();
 
   CvStatus CalcBackProject(
     VecMat mats,
@@ -453,20 +539,25 @@ class CvNative {
     Mat edges,
     double t1,
     double t2,
+    int apertureSize,
+    bool l2gradient,
   ) {
     return _Canny(
       src,
       edges,
       t1,
       t2,
+      apertureSize,
+      l2gradient,
     );
   }
 
   late final _CannyPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Mat, Mat, ffi.Double, ffi.Double)>>('Canny');
-  late final _Canny =
-      _CannyPtr.asFunction<CvStatus Function(Mat, Mat, double, double)>();
+          CvStatus Function(
+              Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Bool)>>('Canny');
+  late final _Canny = _CannyPtr.asFunction<
+      CvStatus Function(Mat, Mat, double, double, int, bool)>();
 
   CvStatus Circle(
     Mat img,
@@ -1616,40 +1707,44 @@ class CvNative {
     VecPoint src,
     VecPoint dst,
     ffi.Pointer<Mat> rval,
+    int solveMethod,
   ) {
     return _GetPerspectiveTransform(
       src,
       dst,
       rval,
+      solveMethod,
     );
   }
 
   late final _GetPerspectiveTransformPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(VecPoint, VecPoint,
-              ffi.Pointer<Mat>)>>('GetPerspectiveTransform');
+          CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>,
+              ffi.Int)>>('GetPerspectiveTransform');
   late final _GetPerspectiveTransform = _GetPerspectiveTransformPtr.asFunction<
-      CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>)>();
+      CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>, int)>();
 
   CvStatus GetPerspectiveTransform2f(
     VecPoint2f src,
     VecPoint2f dst,
     ffi.Pointer<Mat> rval,
+    int solveMethod,
   ) {
     return _GetPerspectiveTransform2f(
       src,
       dst,
       rval,
+      solveMethod,
     );
   }
 
   late final _GetPerspectiveTransform2fPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(VecPoint2f, VecPoint2f,
-              ffi.Pointer<Mat>)>>('GetPerspectiveTransform2f');
+          CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>,
+              ffi.Int)>>('GetPerspectiveTransform2f');
   late final _GetPerspectiveTransform2f =
       _GetPerspectiveTransform2fPtr.asFunction<
-          CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>();
+          CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, int)>();
 
   CvStatus GetRectSubPix(
     Mat src,
@@ -1762,6 +1857,10 @@ class CvNative {
     int maxCorners,
     double quality,
     double minDist,
+    Mat mask,
+    int blockSize,
+    bool useHarrisDetector,
+    double k,
   ) {
     return _GoodFeaturesToTrack(
       img,
@@ -1769,15 +1868,64 @@ class CvNative {
       maxCorners,
       quality,
       minDist,
+      mask,
+      blockSize,
+      useHarrisDetector,
+      k,
     );
   }
 
   late final _GoodFeaturesToTrackPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Mat, Mat, ffi.Int, ffi.Double,
-              ffi.Double)>>('GoodFeaturesToTrack');
+          CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double, Mat,
+              ffi.Int, ffi.Bool, ffi.Double)>>('GoodFeaturesToTrack');
   late final _GoodFeaturesToTrack = _GoodFeaturesToTrackPtr.asFunction<
-      CvStatus Function(Mat, Mat, int, double, double)>();
+      CvStatus Function(
+          Mat, Mat, int, double, double, Mat, int, bool, double)>();
+
+  CvStatus GoodFeaturesToTrackWithGradient(
+    Mat img,
+    Mat corners,
+    int maxCorners,
+    double quality,
+    double minDist,
+    Mat mask,
+    int blockSize,
+    int gradientSize,
+    bool useHarrisDetector,
+    double k,
+  ) {
+    return _GoodFeaturesToTrackWithGradient(
+      img,
+      corners,
+      maxCorners,
+      quality,
+      minDist,
+      mask,
+      blockSize,
+      gradientSize,
+      useHarrisDetector,
+      k,
+    );
+  }
+
+  late final _GoodFeaturesToTrackWithGradientPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double)>>('GoodFeaturesToTrackWithGradient');
+  late final _GoodFeaturesToTrackWithGradient =
+      _GoodFeaturesToTrackWithGradientPtr.asFunction<
+          CvStatus Function(
+              Mat, Mat, int, double, double, Mat, int, int, bool, double)>();
 
   CvStatus GrabCut(
     Mat img,
@@ -1875,6 +2023,10 @@ class CvNative {
     double rho,
     double theta,
     int threshold,
+    double srn,
+    double stn,
+    double min_theta,
+    double max_theta,
   ) {
     return _HoughLines(
       src,
@@ -1882,15 +2034,20 @@ class CvNative {
       rho,
       theta,
       threshold,
+      srn,
+      stn,
+      min_theta,
+      max_theta,
     );
   }
 
   late final _HoughLinesPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>>('HoughLines');
+          CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int,
+              ffi.Double, ffi.Double, ffi.Double, ffi.Double)>>('HoughLines');
   late final _HoughLines = _HoughLinesPtr.asFunction<
-      CvStatus Function(Mat, Mat, double, double, int)>();
+      CvStatus Function(
+          Mat, Mat, double, double, int, double, double, double, double)>();
 
   CvStatus HoughLinesP(
     Mat src,
@@ -2141,20 +2298,24 @@ class CvNative {
     Mat sum,
     Mat sqsum,
     Mat tilted,
+    int sdepth,
+    int sqdepth,
   ) {
     return _Integral(
       src,
       sum,
       sqsum,
       tilted,
+      sdepth,
+      sqdepth,
     );
   }
 
-  late final _IntegralPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat, Mat, Mat)>>(
-          'Integral');
-  late final _Integral =
-      _IntegralPtr.asFunction<CvStatus Function(Mat, Mat, Mat, Mat)>();
+  late final _IntegralPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int, ffi.Int)>>('Integral');
+  late final _Integral = _IntegralPtr.asFunction<
+      CvStatus Function(Mat, Mat, Mat, Mat, int, int)>();
 
   CvStatus InvertAffineTransform(
     Mat src,
@@ -2365,6 +2526,8 @@ class CvNative {
     Point pt2,
     Scalar color,
     int thickness,
+    int lineType,
+    int shift,
   ) {
     return _Line(
       img,
@@ -2372,14 +2535,17 @@ class CvNative {
       pt2,
       color,
       thickness,
+      lineType,
+      shift,
     );
   }
 
   late final _LinePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Mat, Point, Point, Scalar, ffi.Int)>>('Line');
-  late final _Line =
-      _LinePtr.asFunction<CvStatus Function(Mat, Point, Point, Scalar, int)>();
+          CvStatus Function(
+              Mat, Point, Point, Scalar, ffi.Int, ffi.Int, ffi.Int)>>('Line');
+  late final _Line = _LinePtr.asFunction<
+      CvStatus Function(Mat, Point, Point, Scalar, int, int, int)>();
 
   CvStatus LinearPolar(
     Mat src,
@@ -3258,6 +3424,22 @@ class CvNative {
           'Mat_DFT');
   late final _Mat_DFT =
       _Mat_DFTPtr.asFunction<CvStatus Function(Mat, Mat, int)>();
+
+  CvStatus Mat_Data(
+    Mat m,
+    ffi.Pointer<VecUChar> rval,
+  ) {
+    return _Mat_Data(
+      m,
+      rval,
+    );
+  }
+
+  late final _Mat_DataPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>>(
+      'Mat_Data');
+  late final _Mat_Data =
+      _Mat_DataPtr.asFunction<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>();
 
   CvStatus Mat_Determinant(
     Mat m,
@@ -4389,6 +4571,17 @@ class CvNative {
   late final _Mat_MultiplyWithParams = _Mat_MultiplyWithParamsPtr.asFunction<
       CvStatus Function(Mat, Mat, Mat, double, int)>();
 
+  /// @brief Create empty Mat
+  ///
+  /// ALL return values with a type of `Pointer of Struct`,
+  /// e.g., Mat, the internal pointer (Mat.ptr) MUST be NULL
+  /// otherwise the memory of mat.ptr pointed to will NOT be freed correctly.
+  /// Mat* mat = (Mat*)malloc(sizeof(Mat));
+  /// CvStatus status = Mat_New(mat);
+  /// Mat_Close(mat);
+  ///
+  /// @param rval Mat*
+  /// @return CvStatus
   CvStatus Mat_New(
     ffi.Pointer<Mat> rval,
   ) {
@@ -5839,6 +6032,7 @@ class CvNative {
     Point pt,
     int iterations,
     int borderType,
+    Scalar borderValue,
   ) {
     return _MorphologyExWithParams(
       src,
@@ -5848,15 +6042,16 @@ class CvNative {
       pt,
       iterations,
       borderType,
+      borderValue,
     );
   }
 
   late final _MorphologyExWithParamsPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Mat, Mat, ffi.Int, Mat, Point, ffi.Int,
-              ffi.Int)>>('MorphologyExWithParams');
+          CvStatus Function(Mat, Mat, ffi.Int, Mat, Point, ffi.Int, ffi.Int,
+              Scalar)>>('MorphologyExWithParams');
   late final _MorphologyExWithParams = _MorphologyExWithParamsPtr.asFunction<
-      CvStatus Function(Mat, Mat, int, Mat, Point, int, int)>();
+      CvStatus Function(Mat, Mat, int, Mat, Point, int, int, Scalar)>();
 
   CvStatus NMSBoxes(
     VecRect bboxes,
@@ -9713,20 +9908,6 @@ class CvNative {
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
 
-  VecPoint2f vecPointToVecPoint2f(
-    VecPoint src,
-  ) {
-    return _vecPointToVecPoint2f(
-      src,
-    );
-  }
-
-  late final _vecPointToVecPoint2fPtr =
-      _lookup<ffi.NativeFunction<VecPoint2f Function(VecPoint)>>(
-          'vecPointToVecPoint2f');
-  late final _vecPointToVecPoint2f =
-      _vecPointToVecPoint2fPtr.asFunction<VecPoint2f Function(VecPoint)>();
-
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -9752,9 +9933,16 @@ class _SymbolAddresses {
               CvStatus Function(VecPoint, ffi.Bool, ffi.Pointer<ffi.Double>)>>
       get ArcLength => _library._ArcLengthPtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              CvStatus Function(Mat, Point, Point, Scalar, ffi.Int)>>
-      get ArrowedLine => _library._ArrowedLinePtr;
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat,
+              Point,
+              Point,
+              Scalar,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double)>> get ArrowedLine => _library._ArrowedLinePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AsyncArray>)>>
       get AsyncArray_Close => _library._AsyncArray_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(AsyncArray, Mat)>>
@@ -9772,18 +9960,31 @@ class _SymbolAddresses {
       get BoundingRect => _library._BoundingRectPtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, Mat, ffi.Int, Size)>>
       get BoxFilter => _library._BoxFilterPtr;
-  ffi.Pointer<ffi.NativeFunction<CvStatus Function(RotatedRect, Mat)>>
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(RotatedRect, ffi.Pointer<VecPoint2f>)>>
       get BoxPoints => _library._BoxPointsPtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(CLAHE, Mat, Mat)>>
       get CLAHE_Apply => _library._CLAHE_ApplyPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<CLAHE>)>>
       get CLAHE_Close => _library._CLAHE_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(CLAHE)>>
+      get CLAHE_CollectGarbage => _library._CLAHE_CollectGarbagePtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(ffi.Pointer<CLAHE>)>>
       get CLAHE_Create => _library._CLAHE_CreatePtr;
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(ffi.Double, Size, ffi.Pointer<CLAHE>)>>
       get CLAHE_CreateWithParams => _library._CLAHE_CreateWithParamsPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<CvStatus Function(CLAHE, ffi.Pointer<ffi.Double>)>>
+      get CLAHE_GetClipLimit => _library._CLAHE_GetClipLimitPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(CLAHE, ffi.Pointer<Size>)>>
+      get CLAHE_GetTilesGridSize => _library._CLAHE_GetTilesGridSizePtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(CLAHE, ffi.Double)>>
+      get CLAHE_SetClipLimit => _library._CLAHE_SetClipLimitPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(CLAHE, Size)>>
+      get CLAHE_SetTilesGridSize => _library._CLAHE_SetTilesGridSizePtr;
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(VecMat, VecInt, Mat, Mat, VecFloat, ffi.Bool)>>
@@ -9808,8 +10009,9 @@ class _SymbolAddresses {
               ffi.Pointer<ffi.Double>)>> get CalibrateCamera =>
       _library._CalibrateCameraPtr;
   ffi.Pointer<
-          ffi
-          .NativeFunction<CvStatus Function(Mat, Mat, ffi.Double, ffi.Double)>>
+          ffi.NativeFunction<
+              CvStatus Function(
+                  Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Bool)>>
       get Canny => _library._CannyPtr;
   ffi.Pointer<
           ffi.NativeFunction<
@@ -10061,11 +10263,12 @@ class _SymbolAddresses {
       _library._GetOptimalNewCameraMatrixWithParamsPtr;
   ffi.Pointer<
           ffi.NativeFunction<
-              CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>)>>
+              CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>, ffi.Int)>>
       get GetPerspectiveTransform => _library._GetPerspectiveTransformPtr;
   ffi.Pointer<
           ffi.NativeFunction<
-              CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>>
+              CvStatus Function(
+                  VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, ffi.Int)>>
       get GetPerspectiveTransform2f => _library._GetPerspectiveTransform2fPtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, Size, Point2f, Mat)>>
       get GetRectSubPix => _library._GetRectSubPixPtr;
@@ -10091,9 +10294,32 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(ffi.Pointer<ffi.Double>)>>
       get GetTickFrequency => _library._GetTickFrequencyPtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double)>>
-      get GoodFeaturesToTrack => _library._GoodFeaturesToTrackPtr;
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              Mat,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double)>> get GoodFeaturesToTrack =>
+      _library._GoodFeaturesToTrackPtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double)>> get GoodFeaturesToTrackWithGradient =>
+      _library._GoodFeaturesToTrackWithGradientPtr;
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(Mat, Mat, Rect, Mat, Mat, ffi.Int, ffi.Int)>>
@@ -10116,9 +10342,17 @@ class _SymbolAddresses {
               ffi.Int)>> get HoughCirclesWithParams =>
       _library._HoughCirclesWithParamsPtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>>
-      get HoughLines => _library._HoughLinesPtr;
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat,
+              Mat,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Double,
+              ffi.Double)>> get HoughLines => _library._HoughLinesPtr;
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>>
@@ -10181,7 +10415,9 @@ class _SymbolAddresses {
           ffi.NativeFunction<
               CvStatus Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat, Mat)>>
       get InitUndistortRectifyMap => _library._InitUndistortRectifyMapPtr;
-  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, Mat, Mat, Mat)>>
+  ffi.Pointer<
+          ffi.NativeFunction<
+              CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int, ffi.Int)>>
       get Integral => _library._IntegralPtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, Mat)>>
       get InvertAffineTransform => _library._InvertAffineTransformPtr;
@@ -10227,9 +10463,10 @@ class _SymbolAddresses {
                   Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>>
       get Layer_OutputNameToIndex => _library._Layer_OutputNameToIndexPtr;
   ffi.Pointer<
-      ffi.NativeFunction<
-          CvStatus Function(Mat, Point, Point, Scalar, ffi.Int)>> get Line =>
-      _library._LinePtr;
+          ffi.NativeFunction<
+              CvStatus Function(
+                  Mat, Point, Point, Scalar, ffi.Int, ffi.Int, ffi.Int)>>
+      get Line => _library._LinePtr;
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(Mat, Mat, Point2f, ffi.Double, ffi.Int)>>
@@ -10372,6 +10609,8 @@ class _SymbolAddresses {
       get Mat_DCT => _library._Mat_DCTPtr;
   ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, Mat, ffi.Int)>>
       get Mat_DFT => _library._Mat_DFTPtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>>
+      get Mat_Data => _library._Mat_DataPtr;
   ffi.Pointer<
           ffi.NativeFunction<CvStatus Function(Mat, ffi.Pointer<ffi.Double>)>>
       get Mat_Determinant => _library._Mat_DeterminantPtr;
@@ -10788,7 +11027,7 @@ class _SymbolAddresses {
   ffi.Pointer<
           ffi.NativeFunction<
               CvStatus Function(
-                  Mat, Mat, ffi.Int, Mat, Point, ffi.Int, ffi.Int)>>
+                  Mat, Mat, ffi.Int, Mat, Point, ffi.Int, ffi.Int, Scalar)>>
       get MorphologyExWithParams => _library._MorphologyExWithParamsPtr;
   ffi.Pointer<
       ffi.NativeFunction<
@@ -11547,8 +11786,6 @@ class _SymbolAddresses {
       get openCVVersion => _library._openCVVersionPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>>
       get registerErrorCallback => _library._registerErrorCallbackPtr;
-  ffi.Pointer<ffi.NativeFunction<VecPoint2f Function(VecPoint)>>
-      get vecPointToVecPoint2f => _library._vecPointToVecPoint2fPtr;
 }
 
 final class AsyncArray extends ffi.Struct {
@@ -11556,7 +11793,12 @@ final class AsyncArray extends ffi.Struct {
 }
 
 typedef AsyncArrayPtr = ffi.Pointer<AsyncArray>;
-typedef CLAHE = ffi.Pointer<ffi.Void>;
+
+final class CLAHE extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef CLAHEPtr = ffi.Pointer<CLAHE>;
 
 final class CvStatus extends ffi.Struct {
   @ffi.Int()
@@ -11724,6 +11966,13 @@ final class Moment extends ffi.Struct {
 /// so here we confirm they are included                   \
 final class NO_USE_AsyncArrayPtr extends ffi.Struct {
   external ffi.Pointer<AsyncArrayPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred \
+/// so here we confirm they are included                   \
+final class NO_USE_CLAHEPtr extends ffi.Struct {
+  external ffi.Pointer<CLAHEPtr> p;
 }
 
 /// \
@@ -11925,16 +12174,6 @@ final class RNG extends ffi.Struct {
 }
 
 typedef RNGPtr = ffi.Pointer<RNG>;
-
-final class RawData extends ffi.Struct {
-  @ffi.Int()
-  external int width;
-
-  @ffi.Int()
-  external int height;
-
-  external VecChar data;
-}
 
 final class Rect extends ffi.Struct {
   @ffi.Int()

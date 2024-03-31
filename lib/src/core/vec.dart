@@ -106,6 +106,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   VecUChar._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  factory VecUChar([int length = 0, int value = 0]) => VecUChar.fromList(List.generate(length, (i) => value));
   factory VecUChar.fromPointer(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
     cvRun(() => CFFI.VecUChar_NewFromVec(ptr, p));
@@ -170,6 +171,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   VecChar._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  factory VecChar([int length = 0, int value = 0]) => VecChar.fromList(List.generate(length, (i) => value));
   factory VecChar.fromPointer(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
     cvRun(() => CFFI.VecChar_NewFromVec(ptr, p));
@@ -230,7 +232,7 @@ class VecCharIterator extends VecIterator<int> {
   }
 }
 
-class VecVecChar extends Vec<Vec<int>> implements CvStruct<cvg.VecVecChar> {
+class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
   VecVecChar._(this.ptr) {
     finalizer.attach(this, ptr);
   }
@@ -292,6 +294,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   VecFloat._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  factory VecFloat([int length = 0, double value = 0]) => VecFloat.fromList(List.generate(length, (i) => value));
   factory VecFloat.fromPointer(cvg.VecFloat ptr) {
     final p = calloc<cvg.VecFloat>();
     cvRun(() => CFFI.VecFloat_NewFromVec(ptr, p));
@@ -354,6 +357,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   VecDouble._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  factory VecDouble([int length = 0, double value = 0]) => VecDouble.fromList(List.generate(length, (i) => value));
   factory VecDouble.fromPointer(cvg.VecDouble ptr) {
     final p = calloc<cvg.VecDouble>();
     cvRun(() => CFFI.VecDouble_NewFromVec(ptr, p));

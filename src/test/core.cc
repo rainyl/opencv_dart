@@ -1,4 +1,5 @@
 #include "../core/core.h"
+#include <corecrt_malloc.h>
 #include <gtest/gtest.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -31,12 +32,12 @@ TEST(TermCriteria, New_Close)
 
 TEST(Mat, New_Close)
 {
-  Mat      mat;
+  Mat     *mat = (Mat *)malloc(sizeof(Mat));
   CvStatus s;
-  s = Mat_New(&mat);
+  s = Mat_New(mat);
   EXPECT_EQ(s.code, 0);
-  EXPECT_NE(mat.ptr, nullptr);
-  Mat_Close(&mat);
+  EXPECT_NE((*mat).ptr, nullptr);
+  Mat_Close(mat);
 
   Mat mat1;
   s = Mat_NewWithSize(3, 3, CV_8UC1, &mat1);

@@ -7,6 +7,7 @@
 */
 
 #include "imgproc.h"
+#include <memory>
 #include <vector>
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -176,10 +177,20 @@ CvStatus BoundingRect(VecPoint pts, Rect *rval)
   *rval = {r.x, r.y, r.width, r.height};
   END_WRAP
 }
-CvStatus BoxPoints(RotatedRect rect, Mat boxPts)
+
+CvStatus BoxPoints(RotatedRect rect, VecPoint2f *boxPts)
 {
   BEGIN_WRAP
-  cv::boxPoints(cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y), cv::Size2f(rect.size.width, rect.size.height), rect.angle), *boxPts.ptr);
+  /// bottom left, top left, top right, bottom right
+  auto mat = cv::Mat();
+  auto center = cv::Point2f(rect.center.x, rect.center.y);
+  auto size = cv::Size2f(rect.size.width, rect.size.height);
+  cv::boxPoints(cv::RotatedRect(center, size, rect.angle), mat);
+  std::vector<cv::Point2f> *vec = new std::vector<cv::Point2f>;
+  for (int i = 0; i < mat.rows; i++) {
+    vec->push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
+  }
+  *boxPts = {vec};
   END_WRAP
 }
 CvStatus ContourArea(VecPoint pts, double *rval)
@@ -284,10 +295,11 @@ CvStatus MorphologyEx(Mat src, Mat dst, int op, Mat kernel)
   cv::morphologyEx(*src.ptr, *dst.ptr, op, *kernel.ptr);
   END_WRAP
 }
-CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType)
+CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, int iterations, int borderType, Scalar borderValue)
 {
   BEGIN_WRAP
-  cv::morphologyEx(*src.ptr, *dst.ptr, op, *kernel.ptr, cv::Point(pt.x, pt.y), iterations, borderType);
+  auto bv = cv::Scalar(borderValue.val1, borderValue.val2, borderValue.val3, borderValue.val4);
+  cv::morphologyEx(*src.ptr, *dst.ptr, op, *kernel.ptr, cv::Point(pt.x, pt.y), iterations, borderType, bv);
   END_WRAP
 }
 CvStatus MedianBlur(Mat src, Mat dst, int ksize)
@@ -297,10 +309,10 @@ CvStatus MedianBlur(Mat src, Mat dst, int ksize)
   END_WRAP
 }
 
-CvStatus Canny(Mat src, Mat edges, double t1, double t2)
+CvStatus Canny(Mat src, Mat edges, double t1, double t2, int apertureSize, bool l2gradient)
 {
   BEGIN_WRAP
-  cv::Canny(*src.ptr, *edges.ptr, t1, t2);
+  cv::Canny(*src.ptr, *edges.ptr, t1, t2, apertureSize, l2gradient);
   END_WRAP
 }
 CvStatus CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCriteria criteria)
@@ -309,10 +321,16 @@ CvStatus CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCri
   cv::cornerSubPix(*img.ptr, *corners.ptr, cv::Size(winSize.width, winSize.height), cv::Size(zeroZone.width, zeroZone.height), *criteria.ptr);
   END_WRAP
 }
-CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist)
+CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist);
+  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize, useHarrisDetector, k);
+  END_WRAP
+}
+CvStatus GoodFeaturesToTrackWithGradient(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, int gradientSize, bool useHarrisDetector, double k)
+{
+  BEGIN_WRAP
+  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize, gradientSize, useHarrisDetector, k);
   END_WRAP
 }
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
@@ -333,10 +351,10 @@ CvStatus HoughCirclesWithParams(Mat src, Mat circles, int method, double dp, dou
   cv::HoughCircles(*src.ptr, *circles.ptr, method, dp, minDist, param1, param2, minRadius, maxRadius);
   END_WRAP
 }
-CvStatus HoughLines(Mat src, Mat lines, double rho, double theta, int threshold)
+CvStatus HoughLines(Mat src, Mat lines, double rho, double theta, int threshold, double srn, double stn, double min_theta, double max_theta)
 {
   BEGIN_WRAP
-  cv::HoughLines(*src.ptr, *lines.ptr, rho, theta, threshold);
+  cv::HoughLines(*src.ptr, *lines.ptr, rho, theta, threshold, srn, stn, min_theta, max_theta);
   END_WRAP
 }
 CvStatus HoughLinesP(Mat src, Mat lines, double rho, double theta, int threshold)
@@ -357,10 +375,10 @@ CvStatus HoughLinesPointSet(Mat points, Mat lines, int lines_max, int threshold,
   cv::HoughLinesPointSet(*points.ptr, *lines.ptr, lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step);
   END_WRAP
 }
-CvStatus Integral(Mat src, Mat sum, Mat sqsum, Mat tilted)
+CvStatus Integral(Mat src, Mat sum, Mat sqsum, Mat tilted, int sdepth, int sqdepth)
 {
   BEGIN_WRAP
-  cv::integral(*src.ptr, *sum.ptr, *sqsum.ptr, *tilted.ptr);
+  cv::integral(*src.ptr, *sum.ptr, *sqsum.ptr, *tilted.ptr, sdepth, sqdepth);
   END_WRAP
 }
 CvStatus Threshold(Mat src, Mat dst, double thresh, double maxvalue, int typ, double *rval)
@@ -376,10 +394,10 @@ CvStatus AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveTyp, i
   END_WRAP
 }
 
-CvStatus ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
+CvStatus ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness, int line_type, int shift, double tipLength)
 {
   BEGIN_WRAP
-  cv::arrowedLine(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  cv::arrowedLine(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, line_type, shift, tipLength);
   END_WRAP
 }
 CvStatus Circle(Mat img, Point center, int radius, Scalar color, int thickness)
@@ -406,10 +424,10 @@ CvStatus EllipseWithParams(Mat img, Point center, Point axes, double angle, doub
   cv::ellipse(*img.ptr, cv::Point(center.x, center.y), cv::Size(axes.x, axes.y), angle, startAngle, endAngle, cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, shift);
   END_WRAP
 }
-CvStatus Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness)
+CvStatus Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness, int lineType, int shift)
 {
   BEGIN_WRAP
-  cv::line(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness);
+  cv::line(*img.ptr, cv::Point(pt1.x, pt1.y), cv::Point(pt2.x, pt2.y), cv::Scalar(color.val1, color.val2, color.val3, color.val4), thickness, lineType, shift);
   END_WRAP
 }
 CvStatus Rectangle(Mat img, Rect rect, Scalar color, int thickness)
@@ -522,22 +540,36 @@ CvStatus ApplyCustomColorMap(Mat src, Mat dst, Mat colormap)
   cv::applyColorMap(*src.ptr, *dst.ptr, *colormap.ptr);
   END_WRAP
 }
-CvStatus GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval)
+
+std::vector<cv::Point2f> vecPointToVecPoint2f(std::vector<cv::Point> src)
+{
+  std::vector<cv::Point2f> v;
+  for (int i = 0; i < src.size(); i++) {
+    v.push_back(cv::Point2f(src.at(i).x, src.at(i).y));
+  }
+  return v;
+}
+
+CvStatus GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval, int solveMethod)
 {
   BEGIN_WRAP
-  *rval = {new cv::Mat(cv::getPerspectiveTransform(*src.ptr, *dst.ptr))};
+  std::vector<cv::Point2f> src2f = vecPointToVecPoint2f(*src.ptr);
+  std::vector<cv::Point2f> dst2f = vecPointToVecPoint2f(*dst.ptr);
+  *rval = {new cv::Mat(cv::getPerspectiveTransform(src2f, dst2f, solveMethod))};
   END_WRAP
 }
-CvStatus GetPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval)
+CvStatus GetPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval, int solveMethod)
 {
   BEGIN_WRAP
-  *rval = {new cv::Mat(cv::getAffineTransform(*src.ptr, *dst.ptr))};
+  *rval = {new cv::Mat(cv::getPerspectiveTransform(*src.ptr, *dst.ptr, solveMethod))};
   END_WRAP
 }
 CvStatus GetAffineTransform(VecPoint src, VecPoint dst, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::Mat(cv::getAffineTransform(*src.ptr, *dst.ptr))};
+  std::vector<cv::Point2f> src2f = vecPointToVecPoint2f(*src.ptr);
+  std::vector<cv::Point2f> dst2f = vecPointToVecPoint2f(*dst.ptr);
+  *rval = {new cv::Mat(cv::getAffineTransform(src2f, dst2f))};
   END_WRAP
 }
 CvStatus GetAffineTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval)
@@ -650,6 +682,36 @@ CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst)
   BEGIN_WRAP(*c.ptr)->apply(*src.ptr, *dst.ptr);
   END_WRAP
 }
+CvStatus CLAHE_CollectGarbage(CLAHE c)
+{
+  BEGIN_WRAP(*c.ptr)->collectGarbage();
+  END_WRAP
+}
+
+CvStatus CLAHE_GetClipLimit(CLAHE c, double *rval)
+{
+  BEGIN_WRAP
+  *rval = (*c.ptr)->getClipLimit();
+  END_WRAP
+}
+CvStatus CLAHE_SetClipLimit(CLAHE c, double clipLimit)
+{
+  BEGIN_WRAP(*c.ptr)->setClipLimit(clipLimit);
+  END_WRAP
+}
+CvStatus CLAHE_GetTilesGridSize(CLAHE c, Size *rval)
+{
+  BEGIN_WRAP
+  auto sz = (*c.ptr)->getTilesGridSize();
+  *rval = {sz.width, sz.height};
+  END_WRAP
+}
+CvStatus CLAHE_SetTilesGridSize(CLAHE c, Size size)
+{
+  BEGIN_WRAP(*c.ptr)->setTilesGridSize(cv::Size(size.width, size.height));
+  END_WRAP
+}
+
 CvStatus InvertAffineTransform(Mat src, Mat dst)
 {
   BEGIN_WRAP

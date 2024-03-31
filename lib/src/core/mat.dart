@@ -809,19 +809,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return List.generate(4, (cn) => toList(cn: cn));
   }
 
-  // Uint8List get data {
-  //   return cvRunArena<Uint8List>((arena) {
-  //     final p = VecChar.fromList([]);
-  //     cvRun(() => CFFI.Mat_ToVecChar(ref, p.ptr));
-  //     final vec = Uint8List.fromList(p.toList());
-  //     return vec;
-  //   });
-  // }
+  Uint8List get data {
+    return cvRunArena<Uint8List>((arena) {
+      final p = arena<cvg.VecUChar>();
+      cvRun(() => CFFI.Mat_Data(ref, p));
+      return VecUChar.fromPointer(p.ref).toU8List(); // TODO: copy 3 times, find a more efficient way
+    });
+  }
 
   @override
   String toString() {
     return "Mat(address=${ptr.address}, type=$type rows=$rows, cols=$cols, channels=$channels)";
   }
+
   @override
   List<int> get props => [ptr.address];
   @override

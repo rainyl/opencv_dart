@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -155,15 +153,14 @@ void main() async {
 
     final (newC, roi) = cv.getOptimalNewCameraMatrix(k, d, (img.cols, img.rows), 1);
     expect(newC.isEmpty, false);
-    print("roi: $roi");
+    expect(roi.width, greaterThan(0));
 
     final r = cv.Mat.empty();
     final (map1, map2) = cv.initUndistortRectifyMap(k, d, r, newC, (img.cols, img.rows), 5);
-    final dst = cv.Mat.empty();
-    // cv.remap(img, dst, map1, map2, cv.INTER_LINEAR);
-    // expect(dst.isEmpty, false);
-    // final success = cv.imwrite("test/images/distortion-correct.png", dst);
-    // expect(success, true);
+    final dst = cv.remap(img, map1, map2, cv.INTER_LINEAR);
+    expect(dst.isEmpty, false);
+    final success = cv.imwrite("test/images/distortion-correct.png", dst);
+    expect(success, true);
   });
 
   test('cv.findChessboardCorners, cv.drawChessboardCorners', () {
@@ -210,7 +207,7 @@ void main() async {
     final img = cv.imread("test/images/chessboard_4x6_distort.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
-    final patternSize = (4, 6);
+    const patternSize = (4, 6);
     final (found, corners) = cv.findChessboardCorners(img, patternSize, flags: 0);
     expect(found, true);
     expect(corners.isEmpty, false);

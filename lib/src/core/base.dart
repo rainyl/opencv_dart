@@ -50,7 +50,8 @@ ffi.DynamicLibrary loadNativeLibrary() {
 
 final CFFI = CvNative(loadNativeLibrary());
 
-abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
+abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
+}
 
 abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
   ICvStruct.fromPointer(this.ptr);
@@ -61,11 +62,6 @@ abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
 
 abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with EquatableMixin {
   CvStruct.fromPointer(super.ptr) : super.fromPointer();
-}
-
-abstract class CvPtrVoid<T extends ffi.Pointer<ffi.Void>> extends CvObject<T> with EquatableMixin {
-  CvPtrVoid.fromPointer(this.ptr);
-  T ptr;
 }
 
 void cvRun(CvStatus Function() func) {

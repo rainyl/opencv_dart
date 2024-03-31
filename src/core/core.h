@@ -83,10 +83,10 @@ extern "C" {
 #define CVD_TYPECAST_CPP(TYPE, value) \
   reinterpret_cast<TYPE##_CPP>(value->ptr)
 
-#define CVD_TYPEDEF(TYPE, NAME)    \
-  typedef TYPE *NAME##_CPP; \
-  typedef struct NAME {            \
-    TYPE *ptr;                     \
+#define CVD_TYPEDEF(TYPE, NAME) \
+  typedef TYPE *NAME##_CPP;     \
+  typedef struct NAME {         \
+    TYPE *ptr;                  \
   } NAME;
 
 CVD_TYPEDEF(cv::Mat, Mat)
@@ -145,12 +145,6 @@ CVD_TYPEDEF_PTR(Mat)
 CVD_TYPEDEF_PTR(InputOutputArray)
 CVD_TYPEDEF_PTR(TermCriteria)
 CVD_TYPEDEF_PTR(RNG)
-
-typedef struct RawData {
-  int     width;
-  int     height;
-  VecChar data;
-} RawData;
 
 // Wrapper for an individual cv::cvPoint
 typedef struct Point {
@@ -306,7 +300,7 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval);
 // CvStatus noArray(InputOutputArray *rval);
 
 // internal use
-VecPoint2f vecPointToVecPoint2f(VecPoint src);
+// VecPoint2f vecPointToVecPoint2f(VecPoint src);
 
 CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval);
 CvStatus TermCriteria_Type(TermCriteria tc, int *rval);
@@ -314,6 +308,19 @@ CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval);
 CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval);
 void     TermCriteria_Close(TermCriteria *tc);
 
+/**
+ * @brief Create empty Mat
+
+ * ALL return values with a type of `Pointer of Struct`,
+ * e.g., Mat, the internal pointer (Mat.ptr) MUST be NULL
+ * otherwise the memory of mat.ptr pointed to will NOT be freed correctly.
+ * Mat* mat = (Mat*)malloc(sizeof(Mat));
+ * CvStatus status = Mat_New(mat);
+ * Mat_Close(mat);
+ *
+ * @param rval Mat*
+ * @return CvStatus
+ */
 CvStatus Mat_New(Mat *rval);
 CvStatus Mat_NewWithSize(int rows, int cols, int type, Mat *rval);
 CvStatus Mat_NewWithSizes(VecInt sizes, int type, Mat *rval);
@@ -352,6 +359,7 @@ CvStatus Mat_Step(Mat m, int *rval);
 CvStatus Mat_Total(Mat m, int *rval);
 CvStatus Mat_Size(Mat m, VecInt *rval);
 CvStatus Mat_ElemSize(Mat m, int *rval);
+CvStatus Mat_Data(Mat m, VecUChar *rval);
 CvStatus Eye(int rows, int cols, int type, Mat *rval);
 CvStatus Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus Ones(int rows, int cols, int type, Mat *rval);

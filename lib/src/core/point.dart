@@ -20,8 +20,8 @@ class Point extends CvStruct<cvg.Point> {
   factory Point.fromPointer(ffi.Pointer<cvg.Point> ptr) => Point._(ptr);
 
   static final finalizer = Finalizer<ffi.Pointer<cvg.Point>>((p0) => calloc.free(p0));
-  int get x => ptr.ref.x;
-  int get y => ptr.ref.y;
+  int get x => ref.x;
+  int get y => ref.y;
 
   @override
   cvg.Point get ref => ptr.ref;
@@ -87,6 +87,7 @@ class VecPoint extends Vec<Point> implements CvStruct<cvg.VecPoint> {
   VecPoint._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  /// Copy data from [cvg.VecPoint.ptr]
   factory VecPoint.fromPointer(cvg.VecPoint ptr) {
     final p = calloc<cvg.VecPoint>();
     cvRun(() => CFFI.VecPoint_NewFromVec(ptr, p));
