@@ -50,6 +50,7 @@ OCV_MODULES = {
     "videoio": True,
     # contrib
     "aruco": True,
+    "img_hash": True,
     # not implemented
     "wechat_qrcode": False,
     "bgsegm": False,
@@ -61,7 +62,6 @@ OCV_MODULES = {
     "face": False,
     "fuzzy": False,
     "hfs": False,
-    "img_hash": False,
     "intensity_transform": False,
     "line_descriptor": False,
     "mcc": False,
