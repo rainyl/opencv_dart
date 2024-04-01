@@ -27,1599 +27,6 @@ class CvNative {
           lookup)
       : _lookup = lookup;
 
-  ArucoDetectorParameters ArucoDetectorParameters_Create() {
-    return _ArucoDetectorParameters_Create();
-  }
-
-  late final _ArucoDetectorParameters_CreatePtr =
-      _lookup<ffi.NativeFunction<ArucoDetectorParameters Function()>>(
-          'ArucoDetectorParameters_Create');
-  late final _ArucoDetectorParameters_Create =
-      _ArucoDetectorParameters_CreatePtr.asFunction<
-          ArucoDetectorParameters Function()>();
-
-  void ArucoDetectorParameters_Close(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_Close(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_Close');
-  late final _ArucoDetectorParameters_Close = _ArucoDetectorParameters_ClosePtr
-      .asFunction<void Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
-    ArucoDetectorParameters ap,
-    int adaptiveThreshWinSizeMin,
-  ) {
-    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
-      ap,
-      adaptiveThreshWinSizeMin,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin');
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin =
-      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin');
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin =
-      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
-    ArucoDetectorParameters ap,
-    int adaptiveThreshWinSizeMax,
-  ) {
-    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
-      ap,
-      adaptiveThreshWinSizeMax,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax');
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax =
-      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax');
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax =
-      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
-    ArucoDetectorParameters ap,
-    int adaptiveThreshWinSizeStep,
-  ) {
-    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
-      ap,
-      adaptiveThreshWinSizeStep,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep');
-  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep =
-      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep');
-  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep =
-      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAdaptiveThreshConstant(
-    ArucoDetectorParameters ap,
-    double adaptiveThreshConstant,
-  ) {
-    return _ArucoDetectorParameters_SetAdaptiveThreshConstant(
-      ap,
-      adaptiveThreshConstant,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-      'ArucoDetectorParameters_SetAdaptiveThreshConstant');
-  late final _ArucoDetectorParameters_SetAdaptiveThreshConstant =
-      _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetAdaptiveThreshConstant(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAdaptiveThreshConstant(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAdaptiveThreshConstant');
-  late final _ArucoDetectorParameters_GetAdaptiveThreshConstant =
-      _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMinMarkerPerimeterRate(
-    ArucoDetectorParameters ap,
-    double minMarkerPerimeterRate,
-  ) {
-    return _ArucoDetectorParameters_SetMinMarkerPerimeterRate(
-      ap,
-      minMarkerPerimeterRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-      'ArucoDetectorParameters_SetMinMarkerPerimeterRate');
-  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRate =
-      _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMinMarkerPerimeterRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMinMarkerPerimeterRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMinMarkerPerimeterRate');
-  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRate =
-      _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
-    ArucoDetectorParameters ap,
-    double maxMarkerPerimeterRate,
-  ) {
-    return _ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
-      ap,
-      maxMarkerPerimeterRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-      'ArucoDetectorParameters_SetMaxMarkerPerimeterRate');
-  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRate =
-      _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMaxMarkerPerimeterRate');
-  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRate =
-      _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
-    ArucoDetectorParameters ap,
-    double polygonalApproxAccuracyRate,
-  ) {
-    return _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
-      ap,
-      polygonalApproxAccuracyRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-          'ArucoDetectorParameters_SetPolygonalApproxAccuracyRate');
-  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate =
-      _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetPolygonalApproxAccuracyRate');
-  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate =
-      _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMinCornerDistanceRate(
-    ArucoDetectorParameters ap,
-    double minCornerDistanceRate,
-  ) {
-    return _ArucoDetectorParameters_SetMinCornerDistanceRate(
-      ap,
-      minCornerDistanceRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMinCornerDistanceRatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Double)>>('ArucoDetectorParameters_SetMinCornerDistanceRate');
-  late final _ArucoDetectorParameters_SetMinCornerDistanceRate =
-      _ArucoDetectorParameters_SetMinCornerDistanceRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMinCornerDistanceRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMinCornerDistanceRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMinCornerDistanceRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMinCornerDistanceRate');
-  late final _ArucoDetectorParameters_GetMinCornerDistanceRate =
-      _ArucoDetectorParameters_GetMinCornerDistanceRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMinDistanceToBorder(
-    ArucoDetectorParameters ap,
-    int minDistanceToBorder,
-  ) {
-    return _ArucoDetectorParameters_SetMinDistanceToBorder(
-      ap,
-      minDistanceToBorder,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMinDistanceToBorderPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetMinDistanceToBorder');
-  late final _ArucoDetectorParameters_SetMinDistanceToBorder =
-      _ArucoDetectorParameters_SetMinDistanceToBorderPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetMinDistanceToBorder(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMinDistanceToBorder(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMinDistanceToBorderPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMinDistanceToBorder');
-  late final _ArucoDetectorParameters_GetMinDistanceToBorder =
-      _ArucoDetectorParameters_GetMinDistanceToBorderPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMinMarkerDistanceRate(
-    ArucoDetectorParameters ap,
-    double minMarkerDistanceRate,
-  ) {
-    return _ArucoDetectorParameters_SetMinMarkerDistanceRate(
-      ap,
-      minMarkerDistanceRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Double)>>('ArucoDetectorParameters_SetMinMarkerDistanceRate');
-  late final _ArucoDetectorParameters_SetMinMarkerDistanceRate =
-      _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMinMarkerDistanceRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMinMarkerDistanceRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMinMarkerDistanceRate');
-  late final _ArucoDetectorParameters_GetMinMarkerDistanceRate =
-      _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetCornerRefinementMethod(
-    ArucoDetectorParameters ap,
-    int cornerRefinementMethod,
-  ) {
-    return _ArucoDetectorParameters_SetCornerRefinementMethod(
-      ap,
-      cornerRefinementMethod,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetCornerRefinementMethodPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetCornerRefinementMethod');
-  late final _ArucoDetectorParameters_SetCornerRefinementMethod =
-      _ArucoDetectorParameters_SetCornerRefinementMethodPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetCornerRefinementMethod(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetCornerRefinementMethod(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetCornerRefinementMethodPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetCornerRefinementMethod');
-  late final _ArucoDetectorParameters_GetCornerRefinementMethod =
-      _ArucoDetectorParameters_GetCornerRefinementMethodPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetCornerRefinementWinSize(
-    ArucoDetectorParameters ap,
-    int cornerRefinementWinSize,
-  ) {
-    return _ArucoDetectorParameters_SetCornerRefinementWinSize(
-      ap,
-      cornerRefinementWinSize,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetCornerRefinementWinSizePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetCornerRefinementWinSize');
-  late final _ArucoDetectorParameters_SetCornerRefinementWinSize =
-      _ArucoDetectorParameters_SetCornerRefinementWinSizePtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetCornerRefinementWinSize(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetCornerRefinementWinSize(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetCornerRefinementWinSizePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetCornerRefinementWinSize');
-  late final _ArucoDetectorParameters_GetCornerRefinementWinSize =
-      _ArucoDetectorParameters_GetCornerRefinementWinSizePtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetCornerRefinementMaxIterations(
-    ArucoDetectorParameters ap,
-    int cornerRefinementMaxIterations,
-  ) {
-    return _ArucoDetectorParameters_SetCornerRefinementMaxIterations(
-      ap,
-      cornerRefinementMaxIterations,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-          'ArucoDetectorParameters_SetCornerRefinementMaxIterations');
-  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterations =
-      _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetCornerRefinementMaxIterations(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetCornerRefinementMaxIterations(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetCornerRefinementMaxIterations');
-  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterations =
-      _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
-    ArucoDetectorParameters ap,
-    double cornerRefinementMinAccuracy,
-  ) {
-    return _ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
-      ap,
-      cornerRefinementMinAccuracy,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-          'ArucoDetectorParameters_SetCornerRefinementMinAccuracy');
-  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracy =
-      _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetCornerRefinementMinAccuracy');
-  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracy =
-      _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMarkerBorderBits(
-    ArucoDetectorParameters ap,
-    int markerBorderBits,
-  ) {
-    return _ArucoDetectorParameters_SetMarkerBorderBits(
-      ap,
-      markerBorderBits,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMarkerBorderBitsPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetMarkerBorderBits');
-  late final _ArucoDetectorParameters_SetMarkerBorderBits =
-      _ArucoDetectorParameters_SetMarkerBorderBitsPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetMarkerBorderBits(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMarkerBorderBits(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMarkerBorderBitsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMarkerBorderBits');
-  late final _ArucoDetectorParameters_GetMarkerBorderBits =
-      _ArucoDetectorParameters_GetMarkerBorderBitsPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
-    ArucoDetectorParameters ap,
-    int perspectiveRemovePixelPerCell,
-  ) {
-    return _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
-      ap,
-      perspectiveRemovePixelPerCell,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-          'ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell');
-  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell =
-      _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell');
-  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell =
-      _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
-    ArucoDetectorParameters ap,
-    double perspectiveRemoveIgnoredMarginPerCell,
-  ) {
-    return _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
-      ap,
-      perspectiveRemoveIgnoredMarginPerCell,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-          'ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell');
-  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell =
-      _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr
-          .asFunction<void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell');
-  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell =
-      _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr
-          .asFunction<double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
-    ArucoDetectorParameters ap,
-    double maxErroneousBitsInBorderRate,
-  ) {
-    return _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
-      ap,
-      maxErroneousBitsInBorderRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
-          'ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate');
-  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate =
-      _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate');
-  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate =
-      _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetMinOtsuStdDev(
-    ArucoDetectorParameters ap,
-    double minOtsuStdDev,
-  ) {
-    return _ArucoDetectorParameters_SetMinOtsuStdDev(
-      ap,
-      minOtsuStdDev,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetMinOtsuStdDevPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Double)>>('ArucoDetectorParameters_SetMinOtsuStdDev');
-  late final _ArucoDetectorParameters_SetMinOtsuStdDev =
-      _ArucoDetectorParameters_SetMinOtsuStdDevPtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetMinOtsuStdDev(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetMinOtsuStdDev(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetMinOtsuStdDevPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetMinOtsuStdDev');
-  late final _ArucoDetectorParameters_GetMinOtsuStdDev =
-      _ArucoDetectorParameters_GetMinOtsuStdDevPtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetErrorCorrectionRate(
-    ArucoDetectorParameters ap,
-    double errorCorrectionRate,
-  ) {
-    return _ArucoDetectorParameters_SetErrorCorrectionRate(
-      ap,
-      errorCorrectionRate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetErrorCorrectionRatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Double)>>('ArucoDetectorParameters_SetErrorCorrectionRate');
-  late final _ArucoDetectorParameters_SetErrorCorrectionRate =
-      _ArucoDetectorParameters_SetErrorCorrectionRatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetErrorCorrectionRate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetErrorCorrectionRate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetErrorCorrectionRatePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetErrorCorrectionRate');
-  late final _ArucoDetectorParameters_GetErrorCorrectionRate =
-      _ArucoDetectorParameters_GetErrorCorrectionRatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagQuadDecimate(
-    ArucoDetectorParameters ap,
-    double aprilTagQuadDecimate,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagQuadDecimate(
-      ap,
-      aprilTagQuadDecimate,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadDecimate');
-  late final _ArucoDetectorParameters_SetAprilTagQuadDecimate =
-      _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetAprilTagQuadDecimate(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagQuadDecimate(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagQuadDecimate');
-  late final _ArucoDetectorParameters_GetAprilTagQuadDecimate =
-      _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagQuadSigma(
-    ArucoDetectorParameters ap,
-    double aprilTagQuadSigma,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagQuadSigma(
-      ap,
-      aprilTagQuadSigma,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadSigma');
-  late final _ArucoDetectorParameters_SetAprilTagQuadSigma =
-      _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetAprilTagQuadSigma(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagQuadSigma(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagQuadSigma');
-  late final _ArucoDetectorParameters_GetAprilTagQuadSigma =
-      _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagMinClusterPixels(
-    ArucoDetectorParameters ap,
-    int aprilTagMinClusterPixels,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagMinClusterPixels(
-      ap,
-      aprilTagMinClusterPixels,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAprilTagMinClusterPixels');
-  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixels =
-      _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAprilTagMinClusterPixels(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagMinClusterPixels(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagMinClusterPixels');
-  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixels =
-      _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagMaxNmaxima(
-    ArucoDetectorParameters ap,
-    int aprilTagMaxNmaxima,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagMaxNmaxima(
-      ap,
-      aprilTagMaxNmaxima,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAprilTagMaxNmaxima');
-  late final _ArucoDetectorParameters_SetAprilTagMaxNmaxima =
-      _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAprilTagMaxNmaxima(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagMaxNmaxima(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagMaxNmaxima');
-  late final _ArucoDetectorParameters_GetAprilTagMaxNmaxima =
-      _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagCriticalRad(
-    ArucoDetectorParameters ap,
-    double aprilTagCriticalRad,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagCriticalRad(
-      ap,
-      aprilTagCriticalRad,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagCriticalRadPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagCriticalRad');
-  late final _ArucoDetectorParameters_SetAprilTagCriticalRad =
-      _ArucoDetectorParameters_SetAprilTagCriticalRadPtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetAprilTagCriticalRad(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagCriticalRad(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagCriticalRadPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagCriticalRad');
-  late final _ArucoDetectorParameters_GetAprilTagCriticalRad =
-      _ArucoDetectorParameters_GetAprilTagCriticalRadPtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
-    ArucoDetectorParameters ap,
-    double aprilTagMaxLineFitMse,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
-      ap,
-      aprilTagMaxLineFitMse,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagMaxLineFitMse');
-  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMse =
-      _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr.asFunction<
-          void Function(ArucoDetectorParameters, double)>();
-
-  double ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagMaxLineFitMse');
-  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMse =
-      _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr.asFunction<
-          double Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
-    ArucoDetectorParameters ap,
-    int aprilTagMinWhiteBlackDiff,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
-      ap,
-      aprilTagMinWhiteBlackDiff,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff');
-  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff =
-      _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff');
-  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff =
-      _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetAprilTagDeglitch(
-    ArucoDetectorParameters ap,
-    int aprilTagDeglitch,
-  ) {
-    return _ArucoDetectorParameters_SetAprilTagDeglitch(
-      ap,
-      aprilTagDeglitch,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetAprilTagDeglitchPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
-      'ArucoDetectorParameters_SetAprilTagDeglitch');
-  late final _ArucoDetectorParameters_SetAprilTagDeglitch =
-      _ArucoDetectorParameters_SetAprilTagDeglitchPtr.asFunction<
-          void Function(ArucoDetectorParameters, int)>();
-
-  int ArucoDetectorParameters_GetAprilTagDeglitch(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetAprilTagDeglitch(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetAprilTagDeglitchPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetAprilTagDeglitch');
-  late final _ArucoDetectorParameters_GetAprilTagDeglitch =
-      _ArucoDetectorParameters_GetAprilTagDeglitchPtr.asFunction<
-          int Function(ArucoDetectorParameters)>();
-
-  void ArucoDetectorParameters_SetDetectInvertedMarker(
-    ArucoDetectorParameters ap,
-    bool detectInvertedMarker,
-  ) {
-    return _ArucoDetectorParameters_SetDetectInvertedMarker(
-      ap,
-      detectInvertedMarker,
-    );
-  }
-
-  late final _ArucoDetectorParameters_SetDetectInvertedMarkerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ArucoDetectorParameters,
-              ffi.Bool)>>('ArucoDetectorParameters_SetDetectInvertedMarker');
-  late final _ArucoDetectorParameters_SetDetectInvertedMarker =
-      _ArucoDetectorParameters_SetDetectInvertedMarkerPtr.asFunction<
-          void Function(ArucoDetectorParameters, bool)>();
-
-  bool ArucoDetectorParameters_GetDetectInvertedMarker(
-    ArucoDetectorParameters ap,
-  ) {
-    return _ArucoDetectorParameters_GetDetectInvertedMarker(
-      ap,
-    );
-  }
-
-  late final _ArucoDetectorParameters_GetDetectInvertedMarkerPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(ArucoDetectorParameters)>>(
-          'ArucoDetectorParameters_GetDetectInvertedMarker');
-  late final _ArucoDetectorParameters_GetDetectInvertedMarker =
-      _ArucoDetectorParameters_GetDetectInvertedMarkerPtr.asFunction<
-          bool Function(ArucoDetectorParameters)>();
-
-  ArucoDictionary getPredefinedDictionary(
-    int dictionaryId,
-  ) {
-    return _getPredefinedDictionary(
-      dictionaryId,
-    );
-  }
-
-  late final _getPredefinedDictionaryPtr =
-      _lookup<ffi.NativeFunction<ArucoDictionary Function(ffi.Int)>>(
-          'getPredefinedDictionary');
-  late final _getPredefinedDictionary =
-      _getPredefinedDictionaryPtr.asFunction<ArucoDictionary Function(int)>();
-
-  ArucoDetector ArucoDetector_New() {
-    return _ArucoDetector_New();
-  }
-
-  late final _ArucoDetector_NewPtr =
-      _lookup<ffi.NativeFunction<ArucoDetector Function()>>(
-          'ArucoDetector_New');
-  late final _ArucoDetector_New =
-      _ArucoDetector_NewPtr.asFunction<ArucoDetector Function()>();
-
-  ArucoDetector ArucoDetector_NewWithParams(
-    ArucoDictionary dictionary,
-    ArucoDetectorParameters params,
-  ) {
-    return _ArucoDetector_NewWithParams(
-      dictionary,
-      params,
-    );
-  }
-
-  late final _ArucoDetector_NewWithParamsPtr = _lookup<
-      ffi.NativeFunction<
-          ArucoDetector Function(ArucoDictionary,
-              ArucoDetectorParameters)>>('ArucoDetector_NewWithParams');
-  late final _ArucoDetector_NewWithParams =
-      _ArucoDetector_NewWithParamsPtr.asFunction<
-          ArucoDetector Function(ArucoDictionary, ArucoDetectorParameters)>();
-
-  void ArucoDetector_Close(
-    ArucoDetector ad,
-  ) {
-    return _ArucoDetector_Close(
-      ad,
-    );
-  }
-
-  late final _ArucoDetector_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetector)>>(
-          'ArucoDetector_Close');
-  late final _ArucoDetector_Close =
-      _ArucoDetector_ClosePtr.asFunction<void Function(ArucoDetector)>();
-
-  void ArucoDetector_DetectMarkers(
-    ArucoDetector ad,
-    Mat inputArr,
-    Points2fVector markerCorners,
-    ffi.Pointer<IntVector> markerIds,
-    Points2fVector rejectedCandidates,
-  ) {
-    return _ArucoDetector_DetectMarkers(
-      ad,
-      inputArr,
-      markerCorners,
-      markerIds,
-      rejectedCandidates,
-    );
-  }
-
-  late final _ArucoDetector_DetectMarkersPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ArucoDetector,
-              Mat,
-              Points2fVector,
-              ffi.Pointer<IntVector>,
-              Points2fVector)>>('ArucoDetector_DetectMarkers');
-  late final _ArucoDetector_DetectMarkers =
-      _ArucoDetector_DetectMarkersPtr.asFunction<
-          void Function(ArucoDetector, Mat, Points2fVector,
-              ffi.Pointer<IntVector>, Points2fVector)>();
-
-  void ArucoDrawDetectedMarkers(
-    Mat image,
-    Points2fVector markerCorners,
-    IntVector markerIds,
-    Scalar borderColor,
-  ) {
-    return _ArucoDrawDetectedMarkers(
-      image,
-      markerCorners,
-      markerIds,
-      borderColor,
-    );
-  }
-
-  late final _ArucoDrawDetectedMarkersPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(Mat, Points2fVector, IntVector,
-              Scalar)>>('ArucoDrawDetectedMarkers');
-  late final _ArucoDrawDetectedMarkers = _ArucoDrawDetectedMarkersPtr
-      .asFunction<void Function(Mat, Points2fVector, IntVector, Scalar)>();
-
-  void ArucoGenerateImageMarker(
-    int dictionaryId,
-    int id,
-    int sidePixels,
-    Mat img,
-    int borderBits,
-  ) {
-    return _ArucoGenerateImageMarker(
-      dictionaryId,
-      id,
-      sidePixels,
-      img,
-      borderBits,
-    );
-  }
-
-  late final _ArucoGenerateImageMarkerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Int, ffi.Int, ffi.Int, Mat,
-              ffi.Int)>>('ArucoGenerateImageMarker');
-  late final _ArucoGenerateImageMarker = _ArucoGenerateImageMarkerPtr
-      .asFunction<void Function(int, int, int, Mat, int)>();
-
-  AsyncArray AsyncArray_New() {
-    return _AsyncArray_New();
-  }
-
-  late final _AsyncArray_NewPtr =
-      _lookup<ffi.NativeFunction<AsyncArray Function()>>('AsyncArray_New');
-  late final _AsyncArray_New =
-      _AsyncArray_NewPtr.asFunction<AsyncArray Function()>();
-
-  ffi.Pointer<ffi.Char> AsyncArray_GetAsync(
-    AsyncArray async_out,
-    Mat out,
-  ) {
-    return _AsyncArray_GetAsync(
-      async_out,
-      out,
-    );
-  }
-
-  late final _AsyncArray_GetAsyncPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>>(
-      'AsyncArray_GetAsync');
-  late final _AsyncArray_GetAsync = _AsyncArray_GetAsyncPtr.asFunction<
-      ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>();
-
-  void AsyncArray_Close(
-    AsyncArray a,
-  ) {
-    return _AsyncArray_Close(
-      a,
-    );
-  }
-
-  late final _AsyncArray_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(AsyncArray)>>(
-          'AsyncArray_Close');
-  late final _AsyncArray_Close =
-      _AsyncArray_ClosePtr.asFunction<void Function(AsyncArray)>();
-
-  AsyncArray Net_forwardAsync(
-    Net net,
-    ffi.Pointer<ffi.Char> outputName,
-  ) {
-    return _Net_forwardAsync(
-      net,
-      outputName,
-    );
-  }
-
-  late final _Net_forwardAsyncPtr = _lookup<
-          ffi.NativeFunction<AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>>(
-      'Net_forwardAsync');
-  late final _Net_forwardAsync = _Net_forwardAsyncPtr.asFunction<
-      AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>();
-
-  /// Calib
-  void Fisheye_UndistortImage(
-    Mat distorted,
-    Mat undistorted,
-    Mat k,
-    Mat d,
-  ) {
-    return _Fisheye_UndistortImage(
-      distorted,
-      undistorted,
-      k,
-      d,
-    );
-  }
-
-  late final _Fisheye_UndistortImagePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>(
-          'Fisheye_UndistortImage');
-  late final _Fisheye_UndistortImage = _Fisheye_UndistortImagePtr.asFunction<
-      void Function(Mat, Mat, Mat, Mat)>();
-
-  void Fisheye_UndistortImageWithParams(
-    Mat distorted,
-    Mat undistorted,
-    Mat k,
-    Mat d,
-    Mat knew,
-    Size size,
-  ) {
-    return _Fisheye_UndistortImageWithParams(
-      distorted,
-      undistorted,
-      k,
-      d,
-      knew,
-      size,
-    );
-  }
-
-  late final _Fisheye_UndistortImageWithParamsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Size)>>(
-      'Fisheye_UndistortImageWithParams');
-  late final _Fisheye_UndistortImageWithParams =
-      _Fisheye_UndistortImageWithParamsPtr.asFunction<
-          void Function(Mat, Mat, Mat, Mat, Mat, Size)>();
-
-  void Fisheye_UndistortPoints(
-    Mat distorted,
-    Mat undistorted,
-    Mat k,
-    Mat d,
-    Mat R,
-    Mat P,
-  ) {
-    return _Fisheye_UndistortPoints(
-      distorted,
-      undistorted,
-      k,
-      d,
-      R,
-      P,
-    );
-  }
-
-  late final _Fisheye_UndistortPointsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>(
-      'Fisheye_UndistortPoints');
-  late final _Fisheye_UndistortPoints = _Fisheye_UndistortPointsPtr.asFunction<
-      void Function(Mat, Mat, Mat, Mat, Mat, Mat)>();
-
-  void Fisheye_EstimateNewCameraMatrixForUndistortRectify(
-    Mat k,
-    Mat d,
-    Size imgSize,
-    Mat r,
-    Mat p,
-    double balance,
-    Size newSize,
-    double fovScale,
-  ) {
-    return _Fisheye_EstimateNewCameraMatrixForUndistortRectify(
-      k,
-      d,
-      imgSize,
-      r,
-      p,
-      balance,
-      newSize,
-      fovScale,
-    );
-  }
-
-  late final _Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>>(
-      'Fisheye_EstimateNewCameraMatrixForUndistortRectify');
-  late final _Fisheye_EstimateNewCameraMatrixForUndistortRectify =
-      _Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr.asFunction<
-          void Function(Mat, Mat, Size, Mat, Mat, double, Size, double)>();
-
-  void InitUndistortRectifyMap(
-    Mat cameraMatrix,
-    Mat distCoeffs,
-    Mat r,
-    Mat newCameraMatrix,
-    Size size,
-    int m1type,
-    Mat map1,
-    Mat map2,
-  ) {
-    return _InitUndistortRectifyMap(
-      cameraMatrix,
-      distCoeffs,
-      r,
-      newCameraMatrix,
-      size,
-      m1type,
-      map1,
-      map2,
-    );
-  }
-
-  late final _InitUndistortRectifyMapPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat,
-              Mat)>>('InitUndistortRectifyMap');
-  late final _InitUndistortRectifyMap = _InitUndistortRectifyMapPtr.asFunction<
-      void Function(Mat, Mat, Mat, Mat, Size, int, Mat, Mat)>();
-
-  Mat GetOptimalNewCameraMatrixWithParams(
-    Mat cameraMatrix,
-    Mat distCoeffs,
-    Size size,
-    double alpha,
-    Size newImgSize,
-    ffi.Pointer<Rect> validPixROI,
-    bool centerPrincipalPoint,
-  ) {
-    return _GetOptimalNewCameraMatrixWithParams(
-      cameraMatrix,
-      distCoeffs,
-      size,
-      alpha,
-      newImgSize,
-      validPixROI,
-      centerPrincipalPoint,
-    );
-  }
-
-  late final _GetOptimalNewCameraMatrixWithParamsPtr = _lookup<
-      ffi.NativeFunction<
-          Mat Function(Mat, Mat, Size, ffi.Double, Size, ffi.Pointer<Rect>,
-              ffi.Bool)>>('GetOptimalNewCameraMatrixWithParams');
-  late final _GetOptimalNewCameraMatrixWithParams =
-      _GetOptimalNewCameraMatrixWithParamsPtr.asFunction<
-          Mat Function(
-              Mat, Mat, Size, double, Size, ffi.Pointer<Rect>, bool)>();
-
-  double CalibrateCamera(
-    Points3fVector objectPoints,
-    Points2fVector imagePoints,
-    Size imageSize,
-    Mat cameraMatrix,
-    Mat distCoeffs,
-    Mat rvecs,
-    Mat tvecs,
-    int flag,
-    TermCriteria criteria,
-  ) {
-    return _CalibrateCamera(
-      objectPoints,
-      imagePoints,
-      imageSize,
-      cameraMatrix,
-      distCoeffs,
-      rvecs,
-      tvecs,
-      flag,
-      criteria,
-    );
-  }
-
-  late final _CalibrateCameraPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Double Function(Points3fVector, Points2fVector, Size, Mat, Mat,
-              Mat, Mat, ffi.Int, TermCriteria)>>('CalibrateCamera');
-  late final _CalibrateCamera = _CalibrateCameraPtr.asFunction<
-      double Function(Points3fVector, Points2fVector, Size, Mat, Mat, Mat, Mat,
-          int, TermCriteria)>();
-
-  void Undistort(
-    Mat src,
-    Mat dst,
-    Mat cameraMatrix,
-    Mat distCoeffs,
-    Mat newCameraMatrix,
-  ) {
-    return _Undistort(
-      src,
-      dst,
-      cameraMatrix,
-      distCoeffs,
-      newCameraMatrix,
-    );
-  }
-
-  late final _UndistortPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat)>>(
-          'Undistort');
-  late final _Undistort =
-      _UndistortPtr.asFunction<void Function(Mat, Mat, Mat, Mat, Mat)>();
-
-  void UndistortPoints(
-    Mat distorted,
-    Mat undistorted,
-    Mat k,
-    Mat d,
-    Mat r,
-    Mat p,
-  ) {
-    return _UndistortPoints(
-      distorted,
-      undistorted,
-      k,
-      d,
-      r,
-      p,
-    );
-  }
-
-  late final _UndistortPointsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>(
-      'UndistortPoints');
-  late final _UndistortPoints = _UndistortPointsPtr.asFunction<
-      void Function(Mat, Mat, Mat, Mat, Mat, Mat)>();
-
-  bool FindChessboardCorners(
-    Mat image,
-    Size patternSize,
-    Mat corners,
-    int flags,
-  ) {
-    return _FindChessboardCorners(
-      image,
-      patternSize,
-      corners,
-      flags,
-    );
-  }
-
-  late final _FindChessboardCornersPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>(
-          'FindChessboardCorners');
-  late final _FindChessboardCorners = _FindChessboardCornersPtr.asFunction<
-      bool Function(Mat, Size, Mat, int)>();
-
-  bool FindChessboardCornersSB(
-    Mat image,
-    Size patternSize,
-    Mat corners,
-    int flags,
-  ) {
-    return _FindChessboardCornersSB(
-      image,
-      patternSize,
-      corners,
-      flags,
-    );
-  }
-
-  late final _FindChessboardCornersSBPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>(
-          'FindChessboardCornersSB');
-  late final _FindChessboardCornersSB = _FindChessboardCornersSBPtr.asFunction<
-      bool Function(Mat, Size, Mat, int)>();
-
-  bool FindChessboardCornersSBWithMeta(
-    Mat image,
-    Size patternSize,
-    Mat corners,
-    int flags,
-    Mat meta,
-  ) {
-    return _FindChessboardCornersSBWithMeta(
-      image,
-      patternSize,
-      corners,
-      flags,
-      meta,
-    );
-  }
-
-  late final _FindChessboardCornersSBWithMetaPtr = _lookup<
-          ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int, Mat)>>(
-      'FindChessboardCornersSBWithMeta');
-  late final _FindChessboardCornersSBWithMeta =
-      _FindChessboardCornersSBWithMetaPtr.asFunction<
-          bool Function(Mat, Size, Mat, int, Mat)>();
-
-  void DrawChessboardCorners(
-    Mat image,
-    Size patternSize,
-    Mat corners,
-    bool patternWasFound,
-  ) {
-    return _DrawChessboardCorners(
-      image,
-      patternSize,
-      corners,
-      patternWasFound,
-    );
-  }
-
-  late final _DrawChessboardCornersPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Size, Mat, ffi.Bool)>>(
-          'DrawChessboardCorners');
-  late final _DrawChessboardCorners = _DrawChessboardCornersPtr.asFunction<
-      void Function(Mat, Size, Mat, bool)>();
-
-  Mat EstimateAffinePartial2D(
-    Point2fVector from,
-    Point2fVector to,
-  ) {
-    return _EstimateAffinePartial2D(
-      from,
-      to,
-    );
-  }
-
-  late final _EstimateAffinePartial2DPtr =
-      _lookup<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>(
-          'EstimateAffinePartial2D');
-  late final _EstimateAffinePartial2D = _EstimateAffinePartial2DPtr.asFunction<
-      Mat Function(Point2fVector, Point2fVector)>();
-
-  Mat EstimateAffinePartial2DWithParams(
-    Point2fVector from,
-    Point2fVector to,
-    Mat inliers,
-    int method,
-    double ransacReprojThreshold,
-    int maxIters,
-    double confidence,
-    int refineIters,
-  ) {
-    return _EstimateAffinePartial2DWithParams(
-      from,
-      to,
-      inliers,
-      method,
-      ransacReprojThreshold,
-      maxIters,
-      confidence,
-      refineIters,
-    );
-  }
-
-  late final _EstimateAffinePartial2DWithParamsPtr = _lookup<
-      ffi.NativeFunction<
-          Mat Function(
-              Point2fVector,
-              Point2fVector,
-              Mat,
-              ffi.Int,
-              ffi.Double,
-              ffi.Size,
-              ffi.Double,
-              ffi.Size)>>('EstimateAffinePartial2DWithParams');
-  late final _EstimateAffinePartial2DWithParams =
-      _EstimateAffinePartial2DWithParamsPtr.asFunction<
-          Mat Function(Point2fVector, Point2fVector, Mat, int, double, int,
-              double, int)>();
-
-  Mat EstimateAffine2D(
-    Point2fVector from,
-    Point2fVector to,
-  ) {
-    return _EstimateAffine2D(
-      from,
-      to,
-    );
-  }
-
-  late final _EstimateAffine2DPtr =
-      _lookup<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>(
-          'EstimateAffine2D');
-  late final _EstimateAffine2D = _EstimateAffine2DPtr.asFunction<
-      Mat Function(Point2fVector, Point2fVector)>();
-
-  Mat EstimateAffine2DWithParams(
-    Point2fVector from,
-    Point2fVector to,
-    Mat inliers,
-    int method,
-    double ransacReprojThreshold,
-    int maxIters,
-    double confidence,
-    int refineIters,
-  ) {
-    return _EstimateAffine2DWithParams(
-      from,
-      to,
-      inliers,
-      method,
-      ransacReprojThreshold,
-      maxIters,
-      confidence,
-      refineIters,
-    );
-  }
-
-  late final _EstimateAffine2DWithParamsPtr = _lookup<
-      ffi.NativeFunction<
-          Mat Function(Point2fVector, Point2fVector, Mat, ffi.Int, ffi.Double,
-              ffi.Size, ffi.Double, ffi.Size)>>('EstimateAffine2DWithParams');
-  late final _EstimateAffine2DWithParams =
-      _EstimateAffine2DWithParamsPtr.asFunction<
-          Mat Function(Point2fVector, Point2fVector, Mat, int, double, int,
-              double, int)>();
-
   InputOutputArray noArray() {
     return _noArray();
   }
@@ -5843,6 +4250,1123 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Int Function()>>('GetNumThreads');
   late final _GetNumThreads = _GetNumThreadsPtr.asFunction<int Function()>();
 
+  ArucoDetectorParameters ArucoDetectorParameters_Create() {
+    return _ArucoDetectorParameters_Create();
+  }
+
+  late final _ArucoDetectorParameters_CreatePtr =
+      _lookup<ffi.NativeFunction<ArucoDetectorParameters Function()>>(
+          'ArucoDetectorParameters_Create');
+  late final _ArucoDetectorParameters_Create =
+      _ArucoDetectorParameters_CreatePtr.asFunction<
+          ArucoDetectorParameters Function()>();
+
+  void ArucoDetectorParameters_Close(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_Close(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_Close');
+  late final _ArucoDetectorParameters_Close = _ArucoDetectorParameters_ClosePtr
+      .asFunction<void Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMin,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
+      ap,
+      adaptiveThreshWinSizeMin,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMax,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
+      ap,
+      adaptiveThreshWinSizeMax,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeStep,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
+      ap,
+      adaptiveThreshWinSizeStep,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAdaptiveThreshConstant(
+    ArucoDetectorParameters ap,
+    double adaptiveThreshConstant,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshConstant(
+      ap,
+      adaptiveThreshConstant,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshConstant');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstant =
+      _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetAdaptiveThreshConstant(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshConstant(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshConstant');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstant =
+      _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMinMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    double minMarkerPerimeterRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerPerimeterRate(
+      ap,
+      minMarkerPerimeterRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetMinMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRate =
+      _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMinMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerPerimeterRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMinMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRate =
+      _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    double maxMarkerPerimeterRate,
+  ) {
+    return _ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
+      ap,
+      maxMarkerPerimeterRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetMaxMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRate =
+      _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMaxMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRate =
+      _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
+    ArucoDetectorParameters ap,
+    double polygonalApproxAccuracyRate,
+  ) {
+    return _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
+      ap,
+      polygonalApproxAccuracyRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetPolygonalApproxAccuracyRate');
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate =
+      _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetPolygonalApproxAccuracyRate');
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate =
+      _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMinCornerDistanceRate(
+    ArucoDetectorParameters ap,
+    double minCornerDistanceRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinCornerDistanceRate(
+      ap,
+      minCornerDistanceRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinCornerDistanceRate');
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRate =
+      _ArucoDetectorParameters_SetMinCornerDistanceRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMinCornerDistanceRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMinCornerDistanceRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMinCornerDistanceRate');
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRate =
+      _ArucoDetectorParameters_GetMinCornerDistanceRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMinDistanceToBorder(
+    ArucoDetectorParameters ap,
+    int minDistanceToBorder,
+  ) {
+    return _ArucoDetectorParameters_SetMinDistanceToBorder(
+      ap,
+      minDistanceToBorder,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinDistanceToBorderPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetMinDistanceToBorder');
+  late final _ArucoDetectorParameters_SetMinDistanceToBorder =
+      _ArucoDetectorParameters_SetMinDistanceToBorderPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetMinDistanceToBorder(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMinDistanceToBorder(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinDistanceToBorderPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMinDistanceToBorder');
+  late final _ArucoDetectorParameters_GetMinDistanceToBorder =
+      _ArucoDetectorParameters_GetMinDistanceToBorderPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMinMarkerDistanceRate(
+    ArucoDetectorParameters ap,
+    double minMarkerDistanceRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerDistanceRate(
+      ap,
+      minMarkerDistanceRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinMarkerDistanceRate');
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRate =
+      _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMinMarkerDistanceRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerDistanceRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMinMarkerDistanceRate');
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRate =
+      _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetCornerRefinementMethod(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMethod,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMethod(
+      ap,
+      cornerRefinementMethod,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMethodPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetCornerRefinementMethod');
+  late final _ArucoDetectorParameters_SetCornerRefinementMethod =
+      _ArucoDetectorParameters_SetCornerRefinementMethodPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetCornerRefinementMethod(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMethod(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMethodPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMethod');
+  late final _ArucoDetectorParameters_GetCornerRefinementMethod =
+      _ArucoDetectorParameters_GetCornerRefinementMethodPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetCornerRefinementWinSize(
+    ArucoDetectorParameters ap,
+    int cornerRefinementWinSize,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementWinSize(
+      ap,
+      cornerRefinementWinSize,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSizePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetCornerRefinementWinSize');
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSize =
+      _ArucoDetectorParameters_SetCornerRefinementWinSizePtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetCornerRefinementWinSize(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementWinSize(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetCornerRefinementWinSize');
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSize =
+      _ArucoDetectorParameters_GetCornerRefinementWinSizePtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetCornerRefinementMaxIterations(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMaxIterations,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMaxIterations(
+      ap,
+      cornerRefinementMaxIterations,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMaxIterations');
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterations =
+      _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetCornerRefinementMaxIterations(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMaxIterations(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMaxIterations');
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterations =
+      _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
+    ArucoDetectorParameters ap,
+    double cornerRefinementMinAccuracy,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
+      ap,
+      cornerRefinementMinAccuracy,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMinAccuracy');
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracy =
+      _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMinAccuracy');
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracy =
+      _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMarkerBorderBits(
+    ArucoDetectorParameters ap,
+    int markerBorderBits,
+  ) {
+    return _ArucoDetectorParameters_SetMarkerBorderBits(
+      ap,
+      markerBorderBits,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMarkerBorderBitsPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetMarkerBorderBits');
+  late final _ArucoDetectorParameters_SetMarkerBorderBits =
+      _ArucoDetectorParameters_SetMarkerBorderBitsPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetMarkerBorderBits(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMarkerBorderBits(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMarkerBorderBitsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMarkerBorderBits');
+  late final _ArucoDetectorParameters_GetMarkerBorderBits =
+      _ArucoDetectorParameters_GetMarkerBorderBitsPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
+    ArucoDetectorParameters ap,
+    int perspectiveRemovePixelPerCell,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
+      ap,
+      perspectiveRemovePixelPerCell,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell');
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell =
+      _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell');
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell =
+      _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
+    ArucoDetectorParameters ap,
+    double perspectiveRemoveIgnoredMarginPerCell,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
+      ap,
+      perspectiveRemoveIgnoredMarginPerCell,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell');
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell =
+      _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr
+          .asFunction<void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell');
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell =
+      _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr
+          .asFunction<double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
+    ArucoDetectorParameters ap,
+    double maxErroneousBitsInBorderRate,
+  ) {
+    return _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
+      ap,
+      maxErroneousBitsInBorderRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate');
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate =
+      _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate');
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate =
+      _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetMinOtsuStdDev(
+    ArucoDetectorParameters ap,
+    double minOtsuStdDev,
+  ) {
+    return _ArucoDetectorParameters_SetMinOtsuStdDev(
+      ap,
+      minOtsuStdDev,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinOtsuStdDevPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinOtsuStdDev');
+  late final _ArucoDetectorParameters_SetMinOtsuStdDev =
+      _ArucoDetectorParameters_SetMinOtsuStdDevPtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetMinOtsuStdDev(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetMinOtsuStdDev(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinOtsuStdDevPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetMinOtsuStdDev');
+  late final _ArucoDetectorParameters_GetMinOtsuStdDev =
+      _ArucoDetectorParameters_GetMinOtsuStdDevPtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetErrorCorrectionRate(
+    ArucoDetectorParameters ap,
+    double errorCorrectionRate,
+  ) {
+    return _ArucoDetectorParameters_SetErrorCorrectionRate(
+      ap,
+      errorCorrectionRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetErrorCorrectionRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetErrorCorrectionRate');
+  late final _ArucoDetectorParameters_SetErrorCorrectionRate =
+      _ArucoDetectorParameters_SetErrorCorrectionRatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetErrorCorrectionRate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetErrorCorrectionRate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetErrorCorrectionRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetErrorCorrectionRate');
+  late final _ArucoDetectorParameters_GetErrorCorrectionRate =
+      _ArucoDetectorParameters_GetErrorCorrectionRatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagQuadDecimate(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadDecimate,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadDecimate(
+      ap,
+      aprilTagQuadDecimate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadDecimate');
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimate =
+      _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetAprilTagQuadDecimate(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadDecimate(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagQuadDecimate');
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimate =
+      _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagQuadSigma(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadSigma,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadSigma(
+      ap,
+      aprilTagQuadSigma,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadSigma');
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigma =
+      _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetAprilTagQuadSigma(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadSigma(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagQuadSigma');
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigma =
+      _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagMinClusterPixels(
+    ArucoDetectorParameters ap,
+    int aprilTagMinClusterPixels,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinClusterPixels(
+      ap,
+      aprilTagMinClusterPixels,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAprilTagMinClusterPixels');
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixels =
+      _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAprilTagMinClusterPixels(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinClusterPixels(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagMinClusterPixels');
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixels =
+      _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagMaxNmaxima(
+    ArucoDetectorParameters ap,
+    int aprilTagMaxNmaxima,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxNmaxima(
+      ap,
+      aprilTagMaxNmaxima,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAprilTagMaxNmaxima');
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaxima =
+      _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAprilTagMaxNmaxima(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxNmaxima(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagMaxNmaxima');
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaxima =
+      _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagCriticalRad(
+    ArucoDetectorParameters ap,
+    double aprilTagCriticalRad,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagCriticalRad(
+      ap,
+      aprilTagCriticalRad,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagCriticalRad');
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRad =
+      _ArucoDetectorParameters_SetAprilTagCriticalRadPtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetAprilTagCriticalRad(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagCriticalRad(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRadPtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagCriticalRad');
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRad =
+      _ArucoDetectorParameters_GetAprilTagCriticalRadPtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
+    ArucoDetectorParameters ap,
+    double aprilTagMaxLineFitMse,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
+      ap,
+      aprilTagMaxLineFitMse,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagMaxLineFitMse');
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMse =
+      _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr.asFunction<
+          void Function(ArucoDetectorParameters, double)>();
+
+  double ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagMaxLineFitMse');
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMse =
+      _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr.asFunction<
+          double Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
+    ArucoDetectorParameters ap,
+    int aprilTagMinWhiteBlackDiff,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
+      ap,
+      aprilTagMinWhiteBlackDiff,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff');
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff =
+      _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff');
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff =
+      _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetAprilTagDeglitch(
+    ArucoDetectorParameters ap,
+    int aprilTagDeglitch,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagDeglitch(
+      ap,
+      aprilTagDeglitch,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagDeglitchPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAprilTagDeglitch');
+  late final _ArucoDetectorParameters_SetAprilTagDeglitch =
+      _ArucoDetectorParameters_SetAprilTagDeglitchPtr.asFunction<
+          void Function(ArucoDetectorParameters, int)>();
+
+  int ArucoDetectorParameters_GetAprilTagDeglitch(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagDeglitch(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagDeglitchPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetAprilTagDeglitch');
+  late final _ArucoDetectorParameters_GetAprilTagDeglitch =
+      _ArucoDetectorParameters_GetAprilTagDeglitchPtr.asFunction<
+          int Function(ArucoDetectorParameters)>();
+
+  void ArucoDetectorParameters_SetDetectInvertedMarker(
+    ArucoDetectorParameters ap,
+    bool detectInvertedMarker,
+  ) {
+    return _ArucoDetectorParameters_SetDetectInvertedMarker(
+      ap,
+      detectInvertedMarker,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetDetectInvertedMarkerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ArucoDetectorParameters,
+              ffi.Bool)>>('ArucoDetectorParameters_SetDetectInvertedMarker');
+  late final _ArucoDetectorParameters_SetDetectInvertedMarker =
+      _ArucoDetectorParameters_SetDetectInvertedMarkerPtr.asFunction<
+          void Function(ArucoDetectorParameters, bool)>();
+
+  bool ArucoDetectorParameters_GetDetectInvertedMarker(
+    ArucoDetectorParameters ap,
+  ) {
+    return _ArucoDetectorParameters_GetDetectInvertedMarker(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetDetectInvertedMarkerPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(ArucoDetectorParameters)>>(
+          'ArucoDetectorParameters_GetDetectInvertedMarker');
+  late final _ArucoDetectorParameters_GetDetectInvertedMarker =
+      _ArucoDetectorParameters_GetDetectInvertedMarkerPtr.asFunction<
+          bool Function(ArucoDetectorParameters)>();
+
+  ArucoDictionary getPredefinedDictionary(
+    int dictionaryId,
+  ) {
+    return _getPredefinedDictionary(
+      dictionaryId,
+    );
+  }
+
+  late final _getPredefinedDictionaryPtr =
+      _lookup<ffi.NativeFunction<ArucoDictionary Function(ffi.Int)>>(
+          'getPredefinedDictionary');
+  late final _getPredefinedDictionary =
+      _getPredefinedDictionaryPtr.asFunction<ArucoDictionary Function(int)>();
+
+  ArucoDetector ArucoDetector_New() {
+    return _ArucoDetector_New();
+  }
+
+  late final _ArucoDetector_NewPtr =
+      _lookup<ffi.NativeFunction<ArucoDetector Function()>>(
+          'ArucoDetector_New');
+  late final _ArucoDetector_New =
+      _ArucoDetector_NewPtr.asFunction<ArucoDetector Function()>();
+
+  ArucoDetector ArucoDetector_NewWithParams(
+    ArucoDictionary dictionary,
+    ArucoDetectorParameters params,
+  ) {
+    return _ArucoDetector_NewWithParams(
+      dictionary,
+      params,
+    );
+  }
+
+  late final _ArucoDetector_NewWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ArucoDetector Function(ArucoDictionary,
+              ArucoDetectorParameters)>>('ArucoDetector_NewWithParams');
+  late final _ArucoDetector_NewWithParams =
+      _ArucoDetector_NewWithParamsPtr.asFunction<
+          ArucoDetector Function(ArucoDictionary, ArucoDetectorParameters)>();
+
+  void ArucoDetector_Close(
+    ArucoDetector ad,
+  ) {
+    return _ArucoDetector_Close(
+      ad,
+    );
+  }
+
+  late final _ArucoDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetector)>>(
+          'ArucoDetector_Close');
+  late final _ArucoDetector_Close =
+      _ArucoDetector_ClosePtr.asFunction<void Function(ArucoDetector)>();
+
+  void ArucoDetector_DetectMarkers(
+    ArucoDetector ad,
+    Mat inputArr,
+    Points2fVector markerCorners,
+    ffi.Pointer<IntVector> markerIds,
+    Points2fVector rejectedCandidates,
+  ) {
+    return _ArucoDetector_DetectMarkers(
+      ad,
+      inputArr,
+      markerCorners,
+      markerIds,
+      rejectedCandidates,
+    );
+  }
+
+  late final _ArucoDetector_DetectMarkersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ArucoDetector,
+              Mat,
+              Points2fVector,
+              ffi.Pointer<IntVector>,
+              Points2fVector)>>('ArucoDetector_DetectMarkers');
+  late final _ArucoDetector_DetectMarkers =
+      _ArucoDetector_DetectMarkersPtr.asFunction<
+          void Function(ArucoDetector, Mat, Points2fVector,
+              ffi.Pointer<IntVector>, Points2fVector)>();
+
+  void ArucoDrawDetectedMarkers(
+    Mat image,
+    Points2fVector markerCorners,
+    IntVector markerIds,
+    Scalar borderColor,
+  ) {
+    return _ArucoDrawDetectedMarkers(
+      image,
+      markerCorners,
+      markerIds,
+      borderColor,
+    );
+  }
+
+  late final _ArucoDrawDetectedMarkersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(Mat, Points2fVector, IntVector,
+              Scalar)>>('ArucoDrawDetectedMarkers');
+  late final _ArucoDrawDetectedMarkers = _ArucoDrawDetectedMarkersPtr
+      .asFunction<void Function(Mat, Points2fVector, IntVector, Scalar)>();
+
+  void ArucoGenerateImageMarker(
+    int dictionaryId,
+    int id,
+    int sidePixels,
+    Mat img,
+    int borderBits,
+  ) {
+    return _ArucoGenerateImageMarker(
+      dictionaryId,
+      id,
+      sidePixels,
+      img,
+      borderBits,
+    );
+  }
+
+  late final _ArucoGenerateImageMarkerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int, ffi.Int, ffi.Int, Mat,
+              ffi.Int)>>('ArucoGenerateImageMarker');
+  late final _ArucoGenerateImageMarker = _ArucoGenerateImageMarkerPtr
+      .asFunction<void Function(int, int, int, Mat, int)>();
+
   Net Net_Create() {
     return _Net_Create();
   }
@@ -6453,6 +5977,482 @@ class CvNative {
   late final _NMSBoxesWithParams = _NMSBoxesWithParamsPtr.asFunction<
       void Function(Rects, FloatVector, double, double, ffi.Pointer<IntVector>,
           double, int)>();
+
+  AsyncArray AsyncArray_New() {
+    return _AsyncArray_New();
+  }
+
+  late final _AsyncArray_NewPtr =
+      _lookup<ffi.NativeFunction<AsyncArray Function()>>('AsyncArray_New');
+  late final _AsyncArray_New =
+      _AsyncArray_NewPtr.asFunction<AsyncArray Function()>();
+
+  ffi.Pointer<ffi.Char> AsyncArray_GetAsync(
+    AsyncArray async_out,
+    Mat out,
+  ) {
+    return _AsyncArray_GetAsync(
+      async_out,
+      out,
+    );
+  }
+
+  late final _AsyncArray_GetAsyncPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>>(
+      'AsyncArray_GetAsync');
+  late final _AsyncArray_GetAsync = _AsyncArray_GetAsyncPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>();
+
+  void AsyncArray_Close(
+    AsyncArray a,
+  ) {
+    return _AsyncArray_Close(
+      a,
+    );
+  }
+
+  late final _AsyncArray_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AsyncArray)>>(
+          'AsyncArray_Close');
+  late final _AsyncArray_Close =
+      _AsyncArray_ClosePtr.asFunction<void Function(AsyncArray)>();
+
+  AsyncArray Net_forwardAsync(
+    Net net,
+    ffi.Pointer<ffi.Char> outputName,
+  ) {
+    return _Net_forwardAsync(
+      net,
+      outputName,
+    );
+  }
+
+  late final _Net_forwardAsyncPtr = _lookup<
+          ffi.NativeFunction<AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>>(
+      'Net_forwardAsync');
+  late final _Net_forwardAsync = _Net_forwardAsyncPtr.asFunction<
+      AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>();
+
+  /// Calib
+  void Fisheye_UndistortImage(
+    Mat distorted,
+    Mat undistorted,
+    Mat k,
+    Mat d,
+  ) {
+    return _Fisheye_UndistortImage(
+      distorted,
+      undistorted,
+      k,
+      d,
+    );
+  }
+
+  late final _Fisheye_UndistortImagePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>(
+          'Fisheye_UndistortImage');
+  late final _Fisheye_UndistortImage = _Fisheye_UndistortImagePtr.asFunction<
+      void Function(Mat, Mat, Mat, Mat)>();
+
+  void Fisheye_UndistortImageWithParams(
+    Mat distorted,
+    Mat undistorted,
+    Mat k,
+    Mat d,
+    Mat knew,
+    Size size,
+  ) {
+    return _Fisheye_UndistortImageWithParams(
+      distorted,
+      undistorted,
+      k,
+      d,
+      knew,
+      size,
+    );
+  }
+
+  late final _Fisheye_UndistortImageWithParamsPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Size)>>(
+      'Fisheye_UndistortImageWithParams');
+  late final _Fisheye_UndistortImageWithParams =
+      _Fisheye_UndistortImageWithParamsPtr.asFunction<
+          void Function(Mat, Mat, Mat, Mat, Mat, Size)>();
+
+  void Fisheye_UndistortPoints(
+    Mat distorted,
+    Mat undistorted,
+    Mat k,
+    Mat d,
+    Mat R,
+    Mat P,
+  ) {
+    return _Fisheye_UndistortPoints(
+      distorted,
+      undistorted,
+      k,
+      d,
+      R,
+      P,
+    );
+  }
+
+  late final _Fisheye_UndistortPointsPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>(
+      'Fisheye_UndistortPoints');
+  late final _Fisheye_UndistortPoints = _Fisheye_UndistortPointsPtr.asFunction<
+      void Function(Mat, Mat, Mat, Mat, Mat, Mat)>();
+
+  void Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+    Mat k,
+    Mat d,
+    Size imgSize,
+    Mat r,
+    Mat p,
+    double balance,
+    Size newSize,
+    double fovScale,
+  ) {
+    return _Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+      k,
+      d,
+      imgSize,
+      r,
+      p,
+      balance,
+      newSize,
+      fovScale,
+    );
+  }
+
+  late final _Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>>(
+      'Fisheye_EstimateNewCameraMatrixForUndistortRectify');
+  late final _Fisheye_EstimateNewCameraMatrixForUndistortRectify =
+      _Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr.asFunction<
+          void Function(Mat, Mat, Size, Mat, Mat, double, Size, double)>();
+
+  void InitUndistortRectifyMap(
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Mat r,
+    Mat newCameraMatrix,
+    Size size,
+    int m1type,
+    Mat map1,
+    Mat map2,
+  ) {
+    return _InitUndistortRectifyMap(
+      cameraMatrix,
+      distCoeffs,
+      r,
+      newCameraMatrix,
+      size,
+      m1type,
+      map1,
+      map2,
+    );
+  }
+
+  late final _InitUndistortRectifyMapPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat,
+              Mat)>>('InitUndistortRectifyMap');
+  late final _InitUndistortRectifyMap = _InitUndistortRectifyMapPtr.asFunction<
+      void Function(Mat, Mat, Mat, Mat, Size, int, Mat, Mat)>();
+
+  Mat GetOptimalNewCameraMatrixWithParams(
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Size size,
+    double alpha,
+    Size newImgSize,
+    ffi.Pointer<Rect> validPixROI,
+    bool centerPrincipalPoint,
+  ) {
+    return _GetOptimalNewCameraMatrixWithParams(
+      cameraMatrix,
+      distCoeffs,
+      size,
+      alpha,
+      newImgSize,
+      validPixROI,
+      centerPrincipalPoint,
+    );
+  }
+
+  late final _GetOptimalNewCameraMatrixWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          Mat Function(Mat, Mat, Size, ffi.Double, Size, ffi.Pointer<Rect>,
+              ffi.Bool)>>('GetOptimalNewCameraMatrixWithParams');
+  late final _GetOptimalNewCameraMatrixWithParams =
+      _GetOptimalNewCameraMatrixWithParamsPtr.asFunction<
+          Mat Function(
+              Mat, Mat, Size, double, Size, ffi.Pointer<Rect>, bool)>();
+
+  double CalibrateCamera(
+    Points3fVector objectPoints,
+    Points2fVector imagePoints,
+    Size imageSize,
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Mat rvecs,
+    Mat tvecs,
+    int flag,
+    TermCriteria criteria,
+  ) {
+    return _CalibrateCamera(
+      objectPoints,
+      imagePoints,
+      imageSize,
+      cameraMatrix,
+      distCoeffs,
+      rvecs,
+      tvecs,
+      flag,
+      criteria,
+    );
+  }
+
+  late final _CalibrateCameraPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Double Function(Points3fVector, Points2fVector, Size, Mat, Mat,
+              Mat, Mat, ffi.Int, TermCriteria)>>('CalibrateCamera');
+  late final _CalibrateCamera = _CalibrateCameraPtr.asFunction<
+      double Function(Points3fVector, Points2fVector, Size, Mat, Mat, Mat, Mat,
+          int, TermCriteria)>();
+
+  void Undistort(
+    Mat src,
+    Mat dst,
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Mat newCameraMatrix,
+  ) {
+    return _Undistort(
+      src,
+      dst,
+      cameraMatrix,
+      distCoeffs,
+      newCameraMatrix,
+    );
+  }
+
+  late final _UndistortPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat)>>(
+          'Undistort');
+  late final _Undistort =
+      _UndistortPtr.asFunction<void Function(Mat, Mat, Mat, Mat, Mat)>();
+
+  void UndistortPoints(
+    Mat distorted,
+    Mat undistorted,
+    Mat k,
+    Mat d,
+    Mat r,
+    Mat p,
+  ) {
+    return _UndistortPoints(
+      distorted,
+      undistorted,
+      k,
+      d,
+      r,
+      p,
+    );
+  }
+
+  late final _UndistortPointsPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>(
+      'UndistortPoints');
+  late final _UndistortPoints = _UndistortPointsPtr.asFunction<
+      void Function(Mat, Mat, Mat, Mat, Mat, Mat)>();
+
+  bool FindChessboardCorners(
+    Mat image,
+    Size patternSize,
+    Mat corners,
+    int flags,
+  ) {
+    return _FindChessboardCorners(
+      image,
+      patternSize,
+      corners,
+      flags,
+    );
+  }
+
+  late final _FindChessboardCornersPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>(
+          'FindChessboardCorners');
+  late final _FindChessboardCorners = _FindChessboardCornersPtr.asFunction<
+      bool Function(Mat, Size, Mat, int)>();
+
+  bool FindChessboardCornersSB(
+    Mat image,
+    Size patternSize,
+    Mat corners,
+    int flags,
+  ) {
+    return _FindChessboardCornersSB(
+      image,
+      patternSize,
+      corners,
+      flags,
+    );
+  }
+
+  late final _FindChessboardCornersSBPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>(
+          'FindChessboardCornersSB');
+  late final _FindChessboardCornersSB = _FindChessboardCornersSBPtr.asFunction<
+      bool Function(Mat, Size, Mat, int)>();
+
+  bool FindChessboardCornersSBWithMeta(
+    Mat image,
+    Size patternSize,
+    Mat corners,
+    int flags,
+    Mat meta,
+  ) {
+    return _FindChessboardCornersSBWithMeta(
+      image,
+      patternSize,
+      corners,
+      flags,
+      meta,
+    );
+  }
+
+  late final _FindChessboardCornersSBWithMetaPtr = _lookup<
+          ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int, Mat)>>(
+      'FindChessboardCornersSBWithMeta');
+  late final _FindChessboardCornersSBWithMeta =
+      _FindChessboardCornersSBWithMetaPtr.asFunction<
+          bool Function(Mat, Size, Mat, int, Mat)>();
+
+  void DrawChessboardCorners(
+    Mat image,
+    Size patternSize,
+    Mat corners,
+    bool patternWasFound,
+  ) {
+    return _DrawChessboardCorners(
+      image,
+      patternSize,
+      corners,
+      patternWasFound,
+    );
+  }
+
+  late final _DrawChessboardCornersPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Size, Mat, ffi.Bool)>>(
+          'DrawChessboardCorners');
+  late final _DrawChessboardCorners = _DrawChessboardCornersPtr.asFunction<
+      void Function(Mat, Size, Mat, bool)>();
+
+  Mat EstimateAffinePartial2D(
+    Point2fVector from,
+    Point2fVector to,
+  ) {
+    return _EstimateAffinePartial2D(
+      from,
+      to,
+    );
+  }
+
+  late final _EstimateAffinePartial2DPtr =
+      _lookup<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>(
+          'EstimateAffinePartial2D');
+  late final _EstimateAffinePartial2D = _EstimateAffinePartial2DPtr.asFunction<
+      Mat Function(Point2fVector, Point2fVector)>();
+
+  Mat EstimateAffinePartial2DWithParams(
+    Point2fVector from,
+    Point2fVector to,
+    Mat inliers,
+    int method,
+    double ransacReprojThreshold,
+    int maxIters,
+    double confidence,
+    int refineIters,
+  ) {
+    return _EstimateAffinePartial2DWithParams(
+      from,
+      to,
+      inliers,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+    );
+  }
+
+  late final _EstimateAffinePartial2DWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          Mat Function(
+              Point2fVector,
+              Point2fVector,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Size,
+              ffi.Double,
+              ffi.Size)>>('EstimateAffinePartial2DWithParams');
+  late final _EstimateAffinePartial2DWithParams =
+      _EstimateAffinePartial2DWithParamsPtr.asFunction<
+          Mat Function(Point2fVector, Point2fVector, Mat, int, double, int,
+              double, int)>();
+
+  Mat EstimateAffine2D(
+    Point2fVector from,
+    Point2fVector to,
+  ) {
+    return _EstimateAffine2D(
+      from,
+      to,
+    );
+  }
+
+  late final _EstimateAffine2DPtr =
+      _lookup<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>(
+          'EstimateAffine2D');
+  late final _EstimateAffine2D = _EstimateAffine2DPtr.asFunction<
+      Mat Function(Point2fVector, Point2fVector)>();
+
+  Mat EstimateAffine2DWithParams(
+    Point2fVector from,
+    Point2fVector to,
+    Mat inliers,
+    int method,
+    double ransacReprojThreshold,
+    int maxIters,
+    double confidence,
+    int refineIters,
+  ) {
+    return _EstimateAffine2DWithParams(
+      from,
+      to,
+      inliers,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+    );
+  }
+
+  late final _EstimateAffine2DWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          Mat Function(Point2fVector, Point2fVector, Mat, ffi.Int, ffi.Double,
+              ffi.Size, ffi.Double, ffi.Size)>>('EstimateAffine2DWithParams');
+  late final _EstimateAffine2DWithParams =
+      _EstimateAffine2DWithParamsPtr.asFunction<
+          Mat Function(Point2fVector, Point2fVector, Mat, int, double, int,
+              double, int)>();
 
   void registerErrorCallback(
     ErrorCallback callback,
@@ -10098,6 +10098,220 @@ class CvNative {
       _Mat_AccumulatedWeightedWithMaskPtr.asFunction<
           void Function(Mat, Mat, double, Mat)>();
 
+  void pHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _pHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _pHashComputePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>('pHashCompute');
+  late final _pHashCompute =
+      _pHashComputePtr.asFunction<void Function(Mat, Mat)>();
+
+  double pHashCompare(
+    Mat a,
+    Mat b,
+  ) {
+    return _pHashCompare(
+      a,
+      b,
+    );
+  }
+
+  late final _pHashComparePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>(
+          'pHashCompare');
+  late final _pHashCompare =
+      _pHashComparePtr.asFunction<double Function(Mat, Mat)>();
+
+  void averageHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _averageHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _averageHashComputePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>(
+          'averageHashCompute');
+  late final _averageHashCompute =
+      _averageHashComputePtr.asFunction<void Function(Mat, Mat)>();
+
+  double averageHashCompare(
+    Mat a,
+    Mat b,
+  ) {
+    return _averageHashCompare(
+      a,
+      b,
+    );
+  }
+
+  late final _averageHashComparePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>(
+          'averageHashCompare');
+  late final _averageHashCompare =
+      _averageHashComparePtr.asFunction<double Function(Mat, Mat)>();
+
+  void blockMeanHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    int mode,
+  ) {
+    return _blockMeanHashCompute(
+      inputArr,
+      outputArr,
+      mode,
+    );
+  }
+
+  late final _blockMeanHashComputePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Int)>>(
+          'blockMeanHashCompute');
+  late final _blockMeanHashCompute =
+      _blockMeanHashComputePtr.asFunction<void Function(Mat, Mat, int)>();
+
+  double blockMeanHashCompare(
+    Mat a,
+    Mat b,
+    int mode,
+  ) {
+    return _blockMeanHashCompare(
+      a,
+      b,
+      mode,
+    );
+  }
+
+  late final _blockMeanHashComparePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(Mat, Mat, ffi.Int)>>(
+          'blockMeanHashCompare');
+  late final _blockMeanHashCompare =
+      _blockMeanHashComparePtr.asFunction<double Function(Mat, Mat, int)>();
+
+  void colorMomentHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _colorMomentHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _colorMomentHashComputePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>(
+          'colorMomentHashCompute');
+  late final _colorMomentHashCompute =
+      _colorMomentHashComputePtr.asFunction<void Function(Mat, Mat)>();
+
+  double colorMomentHashCompare(
+    Mat a,
+    Mat b,
+  ) {
+    return _colorMomentHashCompare(
+      a,
+      b,
+    );
+  }
+
+  late final _colorMomentHashComparePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>(
+          'colorMomentHashCompare');
+  late final _colorMomentHashCompare =
+      _colorMomentHashComparePtr.asFunction<double Function(Mat, Mat)>();
+
+  void marrHildrethHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    double alpha,
+    double scale,
+  ) {
+    return _marrHildrethHashCompute(
+      inputArr,
+      outputArr,
+      alpha,
+      scale,
+    );
+  }
+
+  late final _marrHildrethHashComputePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(Mat, Mat, ffi.Float, ffi.Float)>>(
+      'marrHildrethHashCompute');
+  late final _marrHildrethHashCompute = _marrHildrethHashComputePtr
+      .asFunction<void Function(Mat, Mat, double, double)>();
+
+  double marrHildrethHashCompare(
+    Mat a,
+    Mat b,
+    double alpha,
+    double scale,
+  ) {
+    return _marrHildrethHashCompare(
+      a,
+      b,
+      alpha,
+      scale,
+    );
+  }
+
+  late final _marrHildrethHashComparePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Double Function(Mat, Mat, ffi.Float, ffi.Float)>>(
+      'marrHildrethHashCompare');
+  late final _marrHildrethHashCompare = _marrHildrethHashComparePtr
+      .asFunction<double Function(Mat, Mat, double, double)>();
+
+  void radialVarianceHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    double sigma,
+    int numOfAngleLine,
+  ) {
+    return _radialVarianceHashCompute(
+      inputArr,
+      outputArr,
+      sigma,
+      numOfAngleLine,
+    );
+  }
+
+  late final _radialVarianceHashComputePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Double, ffi.Int)>>(
+      'radialVarianceHashCompute');
+  late final _radialVarianceHashCompute = _radialVarianceHashComputePtr
+      .asFunction<void Function(Mat, Mat, double, int)>();
+
+  double radialVarianceHashCompare(
+    Mat a,
+    Mat b,
+    double sigma,
+    int numOfAngleLine,
+  ) {
+    return _radialVarianceHashCompare(
+      a,
+      b,
+      sigma,
+      numOfAngleLine,
+    );
+  }
+
+  late final _radialVarianceHashComparePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Double Function(Mat, Mat, ffi.Double, ffi.Int)>>(
+      'radialVarianceHashCompare');
+  late final _radialVarianceHashCompare = _radialVarianceHashComparePtr
+      .asFunction<double Function(Mat, Mat, double, int)>();
+
   /// CascadeClassifier
   CascadeClassifier CascadeClassifier_New() {
     return _CascadeClassifier_New();
@@ -12538,364 +12752,6 @@ class CvNative {
 class _SymbolAddresses {
   final CvNative _library;
   _SymbolAddresses(this._library);
-  ffi.Pointer<ffi.NativeFunction<ArucoDetectorParameters Function()>>
-      get ArucoDetectorParameters_Create =>
-          _library._ArucoDetectorParameters_CreatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_Close =>
-          _library._ArucoDetectorParameters_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin =>
-          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin =>
-          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax =>
-          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax =>
-          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep =>
-          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep =>
-          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetAdaptiveThreshConstant =>
-          _library._ArucoDetectorParameters_SetAdaptiveThreshConstantPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAdaptiveThreshConstant =>
-          _library._ArucoDetectorParameters_GetAdaptiveThreshConstantPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMinMarkerPerimeterRate =>
-          _library._ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMinMarkerPerimeterRate =>
-          _library._ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMaxMarkerPerimeterRate =>
-          _library._ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMaxMarkerPerimeterRate =>
-          _library._ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetPolygonalApproxAccuracyRate =>
-          _library._ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetPolygonalApproxAccuracyRate =>
-          _library._ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMinCornerDistanceRate =>
-          _library._ArucoDetectorParameters_SetMinCornerDistanceRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMinCornerDistanceRate =>
-          _library._ArucoDetectorParameters_GetMinCornerDistanceRatePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetMinDistanceToBorder =>
-          _library._ArucoDetectorParameters_SetMinDistanceToBorderPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMinDistanceToBorder =>
-          _library._ArucoDetectorParameters_GetMinDistanceToBorderPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMinMarkerDistanceRate =>
-          _library._ArucoDetectorParameters_SetMinMarkerDistanceRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMinMarkerDistanceRate =>
-          _library._ArucoDetectorParameters_GetMinMarkerDistanceRatePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetCornerRefinementMethod =>
-          _library._ArucoDetectorParameters_SetCornerRefinementMethodPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetCornerRefinementMethod =>
-          _library._ArucoDetectorParameters_GetCornerRefinementMethodPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetCornerRefinementWinSize =>
-          _library._ArucoDetectorParameters_SetCornerRefinementWinSizePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetCornerRefinementWinSize =>
-          _library._ArucoDetectorParameters_GetCornerRefinementWinSizePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetCornerRefinementMaxIterations =>
-          _library._ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetCornerRefinementMaxIterations =>
-          _library._ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetCornerRefinementMinAccuracy =>
-          _library._ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetCornerRefinementMinAccuracy =>
-          _library._ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetMarkerBorderBits =>
-          _library._ArucoDetectorParameters_SetMarkerBorderBitsPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMarkerBorderBits =>
-          _library._ArucoDetectorParameters_GetMarkerBorderBitsPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell =>
-          _library._ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell =>
-          _library._ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell =>
-          _library
-              ._ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell =>
-          _library
-              ._ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate =>
-          _library._ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate =>
-          _library._ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetMinOtsuStdDev =>
-          _library._ArucoDetectorParameters_SetMinOtsuStdDevPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetMinOtsuStdDev =>
-          _library._ArucoDetectorParameters_GetMinOtsuStdDevPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
-      get ArucoDetectorParameters_SetErrorCorrectionRate =>
-          _library._ArucoDetectorParameters_SetErrorCorrectionRatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetErrorCorrectionRate =>
-          _library._ArucoDetectorParameters_GetErrorCorrectionRatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
-      get ArucoDetectorParameters_SetAprilTagQuadDecimate =>
-          _library._ArucoDetectorParameters_SetAprilTagQuadDecimatePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagQuadDecimate =>
-          _library._ArucoDetectorParameters_GetAprilTagQuadDecimatePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
-      get ArucoDetectorParameters_SetAprilTagQuadSigma =>
-          _library._ArucoDetectorParameters_SetAprilTagQuadSigmaPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagQuadSigma =>
-          _library._ArucoDetectorParameters_GetAprilTagQuadSigmaPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAprilTagMinClusterPixels =>
-          _library._ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagMinClusterPixels =>
-          _library._ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAprilTagMaxNmaxima =>
-          _library._ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagMaxNmaxima =>
-          _library._ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
-      get ArucoDetectorParameters_SetAprilTagCriticalRad =>
-          _library._ArucoDetectorParameters_SetAprilTagCriticalRadPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagCriticalRad =>
-          _library._ArucoDetectorParameters_GetAprilTagCriticalRadPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
-      get ArucoDetectorParameters_SetAprilTagMaxLineFitMse =>
-          _library._ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagMaxLineFitMse =>
-          _library._ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff =>
-          _library._ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff =>
-          _library._ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
-      get ArucoDetectorParameters_SetAprilTagDeglitch =>
-          _library._ArucoDetectorParameters_SetAprilTagDeglitchPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetAprilTagDeglitch =>
-          _library._ArucoDetectorParameters_GetAprilTagDeglitchPtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Bool)>>
-      get ArucoDetectorParameters_SetDetectInvertedMarker =>
-          _library._ArucoDetectorParameters_SetDetectInvertedMarkerPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(ArucoDetectorParameters)>>
-      get ArucoDetectorParameters_GetDetectInvertedMarker =>
-          _library._ArucoDetectorParameters_GetDetectInvertedMarkerPtr;
-  ffi.Pointer<ffi.NativeFunction<ArucoDictionary Function(ffi.Int)>>
-      get getPredefinedDictionary => _library._getPredefinedDictionaryPtr;
-  ffi.Pointer<ffi.NativeFunction<ArucoDetector Function()>>
-      get ArucoDetector_New => _library._ArucoDetector_NewPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ArucoDetector Function(ArucoDictionary, ArucoDetectorParameters)>>
-      get ArucoDetector_NewWithParams =>
-          _library._ArucoDetector_NewWithParamsPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetector)>>
-      get ArucoDetector_Close => _library._ArucoDetector_ClosePtr;
-  ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ArucoDetector,
-              Mat,
-              Points2fVector,
-              ffi.Pointer<IntVector>,
-              Points2fVector)>> get ArucoDetector_DetectMarkers =>
-      _library._ArucoDetector_DetectMarkersPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(Mat, Points2fVector, IntVector, Scalar)>>
-      get ArucoDrawDetectedMarkers => _library._ArucoDrawDetectedMarkersPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Int, ffi.Int, ffi.Int, Mat, ffi.Int)>>
-      get ArucoGenerateImageMarker => _library._ArucoGenerateImageMarkerPtr;
-  ffi.Pointer<ffi.NativeFunction<AsyncArray Function()>> get AsyncArray_New =>
-      _library._AsyncArray_NewPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>>
-      get AsyncArray_GetAsync => _library._AsyncArray_GetAsyncPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AsyncArray)>>
-      get AsyncArray_Close => _library._AsyncArray_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>>
-      get Net_forwardAsync => _library._Net_forwardAsyncPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>
-      get Fisheye_UndistortImage => _library._Fisheye_UndistortImagePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Size)>>
-      get Fisheye_UndistortImageWithParams =>
-          _library._Fisheye_UndistortImageWithParamsPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>
-      get Fisheye_UndistortPoints => _library._Fisheye_UndistortPointsPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>>
-      get Fisheye_EstimateNewCameraMatrixForUndistortRectify =>
-          _library._Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat, Mat)>>
-      get InitUndistortRectifyMap => _library._InitUndistortRectifyMapPtr;
-  ffi.Pointer<
-      ffi.NativeFunction<
-          Mat Function(Mat, Mat, Size, ffi.Double, Size, ffi.Pointer<Rect>,
-              ffi.Bool)>> get GetOptimalNewCameraMatrixWithParams =>
-      _library._GetOptimalNewCameraMatrixWithParamsPtr;
-  ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Double Function(
-              Points3fVector,
-              Points2fVector,
-              Size,
-              Mat,
-              Mat,
-              Mat,
-              Mat,
-              ffi.Int,
-              TermCriteria)>> get CalibrateCamera =>
-      _library._CalibrateCameraPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat)>>
-      get Undistort => _library._UndistortPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>
-      get UndistortPoints => _library._UndistortPointsPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>
-      get FindChessboardCorners => _library._FindChessboardCornersPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>
-      get FindChessboardCornersSB => _library._FindChessboardCornersSBPtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int, Mat)>>
-      get FindChessboardCornersSBWithMeta =>
-          _library._FindChessboardCornersSBWithMetaPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Size, Mat, ffi.Bool)>>
-      get DrawChessboardCorners => _library._DrawChessboardCornersPtr;
-  ffi.Pointer<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>
-      get EstimateAffinePartial2D => _library._EstimateAffinePartial2DPtr;
-  ffi.Pointer<
-      ffi.NativeFunction<
-          Mat Function(
-              Point2fVector,
-              Point2fVector,
-              Mat,
-              ffi.Int,
-              ffi.Double,
-              ffi.Size,
-              ffi.Double,
-              ffi.Size)>> get EstimateAffinePartial2DWithParams =>
-      _library._EstimateAffinePartial2DWithParamsPtr;
-  ffi.Pointer<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>
-      get EstimateAffine2D => _library._EstimateAffine2DPtr;
-  ffi.Pointer<
-      ffi.NativeFunction<
-          Mat Function(
-              Point2fVector,
-              Point2fVector,
-              Mat,
-              ffi.Int,
-              ffi.Double,
-              ffi.Size,
-              ffi.Double,
-              ffi.Size)>> get EstimateAffine2DWithParams =>
-      _library._EstimateAffine2DWithParamsPtr;
   ffi.Pointer<ffi.NativeFunction<InputOutputArray Function()>> get noArray =>
       _library._noArrayPtr;
   ffi.Pointer<ffi.NativeFunction<Mats Function()>> get Mats_New =>
@@ -13539,6 +13395,274 @@ class _SymbolAddresses {
       get SetNumThreads => _library._SetNumThreadsPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Int Function()>> get GetNumThreads =>
       _library._GetNumThreadsPtr;
+  ffi.Pointer<ffi.NativeFunction<ArucoDetectorParameters Function()>>
+      get ArucoDetectorParameters_Create =>
+          _library._ArucoDetectorParameters_CreatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_Close =>
+          _library._ArucoDetectorParameters_ClosePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin =>
+          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin =>
+          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax =>
+          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax =>
+          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep =>
+          _library._ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep =>
+          _library._ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetAdaptiveThreshConstant =>
+          _library._ArucoDetectorParameters_SetAdaptiveThreshConstantPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAdaptiveThreshConstant =>
+          _library._ArucoDetectorParameters_GetAdaptiveThreshConstantPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMinMarkerPerimeterRate =>
+          _library._ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMinMarkerPerimeterRate =>
+          _library._ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMaxMarkerPerimeterRate =>
+          _library._ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMaxMarkerPerimeterRate =>
+          _library._ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetPolygonalApproxAccuracyRate =>
+          _library._ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetPolygonalApproxAccuracyRate =>
+          _library._ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMinCornerDistanceRate =>
+          _library._ArucoDetectorParameters_SetMinCornerDistanceRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMinCornerDistanceRate =>
+          _library._ArucoDetectorParameters_GetMinCornerDistanceRatePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetMinDistanceToBorder =>
+          _library._ArucoDetectorParameters_SetMinDistanceToBorderPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMinDistanceToBorder =>
+          _library._ArucoDetectorParameters_GetMinDistanceToBorderPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMinMarkerDistanceRate =>
+          _library._ArucoDetectorParameters_SetMinMarkerDistanceRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMinMarkerDistanceRate =>
+          _library._ArucoDetectorParameters_GetMinMarkerDistanceRatePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetCornerRefinementMethod =>
+          _library._ArucoDetectorParameters_SetCornerRefinementMethodPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetCornerRefinementMethod =>
+          _library._ArucoDetectorParameters_GetCornerRefinementMethodPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetCornerRefinementWinSize =>
+          _library._ArucoDetectorParameters_SetCornerRefinementWinSizePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetCornerRefinementWinSize =>
+          _library._ArucoDetectorParameters_GetCornerRefinementWinSizePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetCornerRefinementMaxIterations =>
+          _library._ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetCornerRefinementMaxIterations =>
+          _library._ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetCornerRefinementMinAccuracy =>
+          _library._ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetCornerRefinementMinAccuracy =>
+          _library._ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetMarkerBorderBits =>
+          _library._ArucoDetectorParameters_SetMarkerBorderBitsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMarkerBorderBits =>
+          _library._ArucoDetectorParameters_GetMarkerBorderBitsPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell =>
+          _library._ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell =>
+          _library._ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell =>
+          _library
+              ._ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell =>
+          _library
+              ._ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate =>
+          _library._ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate =>
+          _library._ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetMinOtsuStdDev =>
+          _library._ArucoDetectorParameters_SetMinOtsuStdDevPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetMinOtsuStdDev =>
+          _library._ArucoDetectorParameters_GetMinOtsuStdDevPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Double)>>
+      get ArucoDetectorParameters_SetErrorCorrectionRate =>
+          _library._ArucoDetectorParameters_SetErrorCorrectionRatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetErrorCorrectionRate =>
+          _library._ArucoDetectorParameters_GetErrorCorrectionRatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
+      get ArucoDetectorParameters_SetAprilTagQuadDecimate =>
+          _library._ArucoDetectorParameters_SetAprilTagQuadDecimatePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagQuadDecimate =>
+          _library._ArucoDetectorParameters_GetAprilTagQuadDecimatePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
+      get ArucoDetectorParameters_SetAprilTagQuadSigma =>
+          _library._ArucoDetectorParameters_SetAprilTagQuadSigmaPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagQuadSigma =>
+          _library._ArucoDetectorParameters_GetAprilTagQuadSigmaPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAprilTagMinClusterPixels =>
+          _library._ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagMinClusterPixels =>
+          _library._ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAprilTagMaxNmaxima =>
+          _library._ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagMaxNmaxima =>
+          _library._ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
+      get ArucoDetectorParameters_SetAprilTagCriticalRad =>
+          _library._ArucoDetectorParameters_SetAprilTagCriticalRadPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagCriticalRad =>
+          _library._ArucoDetectorParameters_GetAprilTagCriticalRadPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ArucoDetectorParameters, ffi.Float)>>
+      get ArucoDetectorParameters_SetAprilTagMaxLineFitMse =>
+          _library._ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Float Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagMaxLineFitMse =>
+          _library._ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff =>
+          _library._ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff =>
+          _library._ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Int)>>
+      get ArucoDetectorParameters_SetAprilTagDeglitch =>
+          _library._ArucoDetectorParameters_SetAprilTagDeglitchPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetAprilTagDeglitch =>
+          _library._ArucoDetectorParameters_GetAprilTagDeglitchPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ArucoDetectorParameters, ffi.Bool)>>
+      get ArucoDetectorParameters_SetDetectInvertedMarker =>
+          _library._ArucoDetectorParameters_SetDetectInvertedMarkerPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(ArucoDetectorParameters)>>
+      get ArucoDetectorParameters_GetDetectInvertedMarker =>
+          _library._ArucoDetectorParameters_GetDetectInvertedMarkerPtr;
+  ffi.Pointer<ffi.NativeFunction<ArucoDictionary Function(ffi.Int)>>
+      get getPredefinedDictionary => _library._getPredefinedDictionaryPtr;
+  ffi.Pointer<ffi.NativeFunction<ArucoDetector Function()>>
+      get ArucoDetector_New => _library._ArucoDetector_NewPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ArucoDetector Function(ArucoDictionary, ArucoDetectorParameters)>>
+      get ArucoDetector_NewWithParams =>
+          _library._ArucoDetector_NewWithParamsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetector)>>
+      get ArucoDetector_Close => _library._ArucoDetector_ClosePtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ArucoDetector,
+              Mat,
+              Points2fVector,
+              ffi.Pointer<IntVector>,
+              Points2fVector)>> get ArucoDetector_DetectMarkers =>
+      _library._ArucoDetector_DetectMarkersPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(Mat, Points2fVector, IntVector, Scalar)>>
+      get ArucoDrawDetectedMarkers => _library._ArucoDrawDetectedMarkersPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Int, ffi.Int, ffi.Int, Mat, ffi.Int)>>
+      get ArucoGenerateImageMarker => _library._ArucoGenerateImageMarkerPtr;
   ffi.Pointer<ffi.NativeFunction<Net Function()>> get Net_Create =>
       _library._Net_CreatePtr;
   ffi.Pointer<
@@ -13658,6 +13782,96 @@ class _SymbolAddresses {
               ffi.Float,
               ffi.Int)>> get NMSBoxesWithParams =>
       _library._NMSBoxesWithParamsPtr;
+  ffi.Pointer<ffi.NativeFunction<AsyncArray Function()>> get AsyncArray_New =>
+      _library._AsyncArray_NewPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(AsyncArray, Mat)>>
+      get AsyncArray_GetAsync => _library._AsyncArray_GetAsyncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AsyncArray)>>
+      get AsyncArray_Close => _library._AsyncArray_ClosePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<AsyncArray Function(Net, ffi.Pointer<ffi.Char>)>>
+      get Net_forwardAsync => _library._Net_forwardAsyncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat)>>
+      get Fisheye_UndistortImage => _library._Fisheye_UndistortImagePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Size)>>
+      get Fisheye_UndistortImageWithParams =>
+          _library._Fisheye_UndistortImageWithParamsPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>
+      get Fisheye_UndistortPoints => _library._Fisheye_UndistortPointsPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>>
+      get Fisheye_EstimateNewCameraMatrixForUndistortRectify =>
+          _library._Fisheye_EstimateNewCameraMatrixForUndistortRectifyPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat, Mat)>>
+      get InitUndistortRectifyMap => _library._InitUndistortRectifyMapPtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          Mat Function(Mat, Mat, Size, ffi.Double, Size, ffi.Pointer<Rect>,
+              ffi.Bool)>> get GetOptimalNewCameraMatrixWithParams =>
+      _library._GetOptimalNewCameraMatrixWithParamsPtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Double Function(
+              Points3fVector,
+              Points2fVector,
+              Size,
+              Mat,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Int,
+              TermCriteria)>> get CalibrateCamera =>
+      _library._CalibrateCameraPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat)>>
+      get Undistort => _library._UndistortPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, Mat, Mat, Mat, Mat)>>
+      get UndistortPoints => _library._UndistortPointsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>
+      get FindChessboardCorners => _library._FindChessboardCornersPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int)>>
+      get FindChessboardCornersSB => _library._FindChessboardCornersSBPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Bool Function(Mat, Size, Mat, ffi.Int, Mat)>>
+      get FindChessboardCornersSBWithMeta =>
+          _library._FindChessboardCornersSBWithMetaPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Size, Mat, ffi.Bool)>>
+      get DrawChessboardCorners => _library._DrawChessboardCornersPtr;
+  ffi.Pointer<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>
+      get EstimateAffinePartial2D => _library._EstimateAffinePartial2DPtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          Mat Function(
+              Point2fVector,
+              Point2fVector,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Size,
+              ffi.Double,
+              ffi.Size)>> get EstimateAffinePartial2DWithParams =>
+      _library._EstimateAffinePartial2DWithParamsPtr;
+  ffi.Pointer<ffi.NativeFunction<Mat Function(Point2fVector, Point2fVector)>>
+      get EstimateAffine2D => _library._EstimateAffine2DPtr;
+  ffi.Pointer<
+      ffi.NativeFunction<
+          Mat Function(
+              Point2fVector,
+              Point2fVector,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Size,
+              ffi.Double,
+              ffi.Size)>> get EstimateAffine2DWithParams =>
+      _library._EstimateAffine2DWithParamsPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>>
       get registerErrorCallback => _library._registerErrorCallbackPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Int Function(CvException)>>
@@ -14330,6 +14544,36 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Double, Mat)>>
       get Mat_AccumulatedWeightedWithMask =>
           _library._Mat_AccumulatedWeightedWithMaskPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>
+      get pHashCompute => _library._pHashComputePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>
+      get pHashCompare => _library._pHashComparePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>
+      get averageHashCompute => _library._averageHashComputePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>
+      get averageHashCompare => _library._averageHashComparePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Int)>>
+      get blockMeanHashCompute => _library._blockMeanHashComputePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(Mat, Mat, ffi.Int)>>
+      get blockMeanHashCompare => _library._blockMeanHashComparePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Mat, Mat)>>
+      get colorMomentHashCompute => _library._colorMomentHashComputePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Double Function(Mat, Mat)>>
+      get colorMomentHashCompare => _library._colorMomentHashComparePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Float, ffi.Float)>>
+      get marrHildrethHashCompute => _library._marrHildrethHashComputePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Double Function(Mat, Mat, ffi.Float, ffi.Float)>>
+      get marrHildrethHashCompare => _library._marrHildrethHashComparePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(Mat, Mat, ffi.Double, ffi.Int)>>
+      get radialVarianceHashCompute => _library._radialVarianceHashComputePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Double Function(Mat, Mat, ffi.Double, ffi.Int)>>
+      get radialVarianceHashCompare => _library._radialVarianceHashComparePtr;
   ffi.Pointer<ffi.NativeFunction<CascadeClassifier Function()>>
       get CascadeClassifier_New => _library._CascadeClassifier_NewPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CascadeClassifier)>>
@@ -14813,66 +15057,6 @@ class _SymbolAddresses {
       get VideoWriter_Fourcc => _library._VideoWriter_FourccPtr;
 }
 
-typedef ArucoDetectorParameters = ffi.Pointer<ffi.Void>;
-typedef ArucoDictionary = ffi.Pointer<ffi.Void>;
-typedef ArucoDetector = ffi.Pointer<ffi.Void>;
-typedef Mat = ffi.Pointer<ffi.Void>;
-typedef Points2fVector = ffi.Pointer<ffi.Void>;
-
-/// Wrapper for std::vector<int>
-final class IntVector extends ffi.Struct {
-  external ffi.Pointer<ffi.Int> val;
-
-  @ffi.Int()
-  external int length;
-}
-
-/// Wrapper for an individual cv::cvScalar
-final class Scalar extends ffi.Struct {
-  @ffi.Double()
-  external double val1;
-
-  @ffi.Double()
-  external double val2;
-
-  @ffi.Double()
-  external double val3;
-
-  @ffi.Double()
-  external double val4;
-}
-
-typedef AsyncArray = ffi.Pointer<ffi.Void>;
-typedef Net = ffi.Pointer<ffi.Void>;
-
-/// Wrapper for an individual cv::cvSize
-final class Size extends ffi.Struct {
-  @ffi.Int()
-  external int width;
-
-  @ffi.Int()
-  external int height;
-}
-
-/// Wrapper for an individual cv::cvRect
-final class Rect extends ffi.Struct {
-  @ffi.Int()
-  external int x;
-
-  @ffi.Int()
-  external int y;
-
-  @ffi.Int()
-  external int width;
-
-  @ffi.Int()
-  external int height;
-}
-
-typedef Points3fVector = ffi.Pointer<ffi.Void>;
-typedef TermCriteria = ffi.Pointer<ffi.Void>;
-typedef Point2fVector = ffi.Pointer<ffi.Void>;
-
 /// Wrapper for std::vector<string>
 final class CStrings extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Char>> strs;
@@ -14883,6 +15067,14 @@ final class CStrings extends ffi.Struct {
 
 final class ByteArray extends ffi.Struct {
   external ffi.Pointer<ffi.Char> data;
+
+  @ffi.Int()
+  external int length;
+}
+
+/// Wrapper for std::vector<int>
+final class IntVector extends ffi.Struct {
+  external ffi.Pointer<ffi.Int> val;
 
   @ffi.Int()
   external int length;
@@ -14990,12 +15182,36 @@ final class Contours extends ffi.Struct {
 /// Contour is alias for Points
 typedef Contour = Points;
 
+/// Wrapper for an individual cv::cvRect
+final class Rect extends ffi.Struct {
+  @ffi.Int()
+  external int x;
+
+  @ffi.Int()
+  external int y;
+
+  @ffi.Int()
+  external int width;
+
+  @ffi.Int()
+  external int height;
+}
+
 /// Wrapper for the vector of Rect struct aka std::vector<Rect>
 final class Rects extends ffi.Struct {
   external ffi.Pointer<Rect> rects;
 
   @ffi.Int()
   external int length;
+}
+
+/// Wrapper for an individual cv::cvSize
+final class Size extends ffi.Struct {
+  @ffi.Int()
+  external int width;
+
+  @ffi.Int()
+  external int height;
 }
 
 /// Wrapper for an individual cv::RotatedRect
@@ -15010,6 +15226,21 @@ final class RotatedRect extends ffi.Struct {
 
   @ffi.Double()
   external double angle;
+}
+
+/// Wrapper for an individual cv::cvScalar
+final class Scalar extends ffi.Struct {
+  @ffi.Double()
+  external double val1;
+
+  @ffi.Double()
+  external double val2;
+
+  @ffi.Double()
+  external double val3;
+
+  @ffi.Double()
+  external double val4;
 }
 
 /// Wrapper for a individual cv::KeyPoint
@@ -15236,18 +15467,28 @@ final class Mats extends ffi.Struct {
   external int length;
 }
 
+typedef Mat = ffi.Pointer<ffi.Void>;
 typedef float_t = ffi.Float;
 typedef Dartfloat_t = double;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
+typedef TermCriteria = ffi.Pointer<ffi.Void>;
 typedef PointVector = ffi.Pointer<ffi.Void>;
 typedef PointsVector = ffi.Pointer<ffi.Void>;
+typedef Point2fVector = ffi.Pointer<ffi.Void>;
 typedef RNG = ffi.Pointer<ffi.Void>;
 typedef UCharVector = ffi.Pointer<ffi.Void>;
 typedef uchar = ffi.UnsignedChar;
 typedef Dartuchar = int;
+typedef Points2fVector = ffi.Pointer<ffi.Void>;
 typedef Point3fVector = ffi.Pointer<ffi.Void>;
+typedef Points3fVector = ffi.Pointer<ffi.Void>;
+typedef ArucoDetectorParameters = ffi.Pointer<ffi.Void>;
+typedef ArucoDictionary = ffi.Pointer<ffi.Void>;
+typedef ArucoDetector = ffi.Pointer<ffi.Void>;
+typedef Net = ffi.Pointer<ffi.Void>;
 typedef Layer = ffi.Pointer<ffi.Void>;
+typedef AsyncArray = ffi.Pointer<ffi.Void>;
 typedef ErrorCallback = ffi.Pointer<ffi.NativeFunction<ErrorCallbackFunction>>;
 typedef ErrorCallbackFunction = ffi.Void Function(
     ffi.Int status,

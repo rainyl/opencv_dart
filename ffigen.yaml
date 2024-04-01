@@ -20,9 +20,10 @@ headers:
     - src/dnn.h
     - src/exception.h
     - src/features2d.h
-    - src/highgui_gocv.h
+    - src/highgui.h
     - src/imgcodecs.h
     - src/imgproc.h
+    - src/img_hash.h
     - src/objdetect.h
     - src/photo.h
     - src/stitching.h
@@ -38,9 +39,10 @@ headers:
     - src/dnn.h
     - src/exception.h
     - src/features2d.h
-    - src/highgui_gocv.h
+    - src/highgui.h
     - src/imgcodecs.h
     - src/imgproc.h
+    - src/img_hash.h
     - src/objdetect.h
     - src/photo.h
     - src/stitching.h

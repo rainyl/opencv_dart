@@ -62,17 +62,18 @@ to download prebuilt binaries.
 
 ### Contrib Modules
 
-| module        | Binding status     | Test status        | description  |
-| ------------- | ------------------ | ------------------ | ------------ |
-| aruco         | :white_check_mark: | :white_check_mark: | ArUco module |
-| cuda          | :x:                | :x:                |              |
-| wechat_qrcode | :x:                | :x:                |              |
-| bgsegm        | :x:                | :x:                |              |
-| superres      | :x:                | :x:                |              |
-| xfeatures2d   | :x:                | :x:                |              |
-| ximgproc      | :x:                | :x:                |              |
-| xobjdetect    | :x:                | :x:                |              |
-| xphoto        | :x:                | :x:                |              |
+| module        | Binding status     | Test status        | description          |
+| ------------- | ------------------ | ------------------ | -------------------- |
+| aruco         | :white_check_mark: | :white_check_mark: | ArUco module         |
+| img_hash      | :white_check_mark: | :white_check_mark: | Image hashing module |
+| cuda          | :x:                | :x:                |                      |
+| wechat_qrcode | :x:                | :x:                |                      |
+| bgsegm        | :x:                | :x:                |                      |
+| superres      | :x:                | :x:                |                      |
+| xfeatures2d   | :x:                | :x:                |                      |
+| ximgproc      | :x:                | :x:                |                      |
+| xobjdetect    | :x:                | :x:                |                      |
+| xphoto        | :x:                | :x:                |                      |
 
 - :x: : not finished
 - :ballot_box_with_check: : partially supported

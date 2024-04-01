@@ -9,7 +9,7 @@ find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS
     opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
-    opencv_features2d opencv_photo opencv_imgproc
+    opencv_features2d opencv_photo opencv_imgproc opencv_img_hash
     opencv_objdetect opencv_video opencv_videoio opencv_stitching
 )
 
