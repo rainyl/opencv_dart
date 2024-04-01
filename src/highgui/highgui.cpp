@@ -5,110 +5,119 @@
     Modified by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
-
 #include "highgui.h"
 
 // Window
-void Window_New(const char *winname, int flags)
+CvStatus Window_New(const char *winname, int flags)
 {
-    cv::namedWindow(winname, flags);
+  BEGIN_WRAP
+  cv::namedWindow(winname, flags);
+  END_WRAP
 }
-
-void Window_Close(const char *winname)
+CvStatus Window_Close(const char *winname)
 {
-    cv::destroyWindow(winname);
+  BEGIN_WRAP
+  cv::destroyWindow(winname);
+  END_WRAP
 }
-
-void Window_IMShow(const char *winname, Mat mat)
+CvStatus Window_IMShow(const char *winname, Mat mat)
 {
-    cv::imshow(winname, *mat);
+  BEGIN_WRAP
+  cv::imshow(winname, *mat.ptr);
+  END_WRAP
 }
-
-double Window_GetProperty(const char *winname, int flag)
+CvStatus Window_GetProperty(const char *winname, int flag, double *rval)
 {
-    return cv::getWindowProperty(winname, flag);
+  BEGIN_WRAP
+  *rval = cv::getWindowProperty(winname, flag);
+  END_WRAP
 }
-
-void Window_SetProperty(const char *winname, int flag, double value)
+CvStatus Window_SetProperty(const char *winname, int flag, double value)
 {
-    cv::setWindowProperty(winname, flag, value);
+  BEGIN_WRAP
+  cv::setWindowProperty(winname, flag, value);
+  END_WRAP
 }
-
-void Window_SetTitle(const char *winname, const char *title)
+CvStatus Window_SetTitle(const char *winname, const char *title)
 {
-    cv::setWindowTitle(winname, title);
+  BEGIN_WRAP
+  cv::setWindowTitle(winname, title);
+  END_WRAP
 }
-
-int Window_WaitKey(int delay = 0)
+CvStatus Window_WaitKey(int delay, int *rval)
 {
-    return cv::waitKey(delay);
+  BEGIN_WRAP
+  *rval = cv::waitKey(delay);
+  END_WRAP
 }
-
-void Window_Move(const char *winname, int x, int y)
+CvStatus Window_Move(const char *winname, int x, int y)
 {
-    cv::moveWindow(winname, x, y);
+  BEGIN_WRAP
+  cv::moveWindow(winname, x, y);
+  END_WRAP
 }
-
-void Window_Resize(const char *winname, int width, int height)
+CvStatus Window_Resize(const char *winname, int width, int height)
 {
-    cv::resizeWindow(winname, width, height);
+  BEGIN_WRAP
+  cv::resizeWindow(winname, width, height);
+  END_WRAP
 }
-
-struct Rect Window_SelectROI(const char *winname, Mat img)
+CvStatus Window_SelectROI(const char *winname, Mat img, Rect *rval)
 {
-    cv::Rect bRect = cv::selectROI(winname, *img);
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
-    return r;
+  BEGIN_WRAP
+  auto rect = cv::selectROI(winname, *img.ptr);
+  *rval = {rect.x, rect.y, rect.width, rect.height};
+  END_WRAP
 }
-
-struct Rects Window_SelectROIs(const char *winname, Mat img)
+CvStatus Window_SelectROIs(const char *winname, Mat img, VecRect *rval)
 {
-    std::vector<cv::Rect> rois;
-    cv::selectROIs(winname, *img, rois);
-    Rect *rects = new Rect[rois.size()];
-
-    for (size_t i = 0; i < rois.size(); ++i)
-    {
-        Rect r = {rois[i].x, rois[i].y, rois[i].width, rois[i].height};
-        rects[i] = r;
-    }
-
-    Rects ret = {rects, (int)rois.size()};
-    return ret;
+  BEGIN_WRAP
+  std::vector<cv::Rect> rects = std::vector<cv::Rect>();
+  cv::selectROIs(winname, *img.ptr, rects);
+  *rval = {new std::vector<cv::Rect>(rects)};
+  END_WRAP
 }
-
-void destroyAllWindows()
+CvStatus destroyAllWindows()
 {
-    cv::destroyAllWindows();
+  BEGIN_WRAP
+  cv::destroyAllWindows();
+  END_WRAP
 }
 
 // Trackbar
-void Trackbar_Create(const char *winname, const char *trackname, int max)
+CvStatus Trackbar_Create(const char *winname, const char *trackname, int max)
 {
-    cv::createTrackbar(trackname, winname, nullptr, max);
+  BEGIN_WRAP
+  cv::createTrackbar(trackname, winname, nullptr, max);
+  END_WRAP
 }
-
-void Trackbar_CreateWithValue(const char *winname, const char *trackname, int *value, int max)
+CvStatus Trackbar_CreateWithValue(const char *winname, const char *trackname, int *value, int max)
 {
-    cv::createTrackbar(trackname, winname, value, max);
+  BEGIN_WRAP
+  cv::createTrackbar(trackname, winname, value, max);
+  END_WRAP
 }
-
-int Trackbar_GetPos(const char *winname, const char *trackname)
+CvStatus Trackbar_GetPos(const char *winname, const char *trackname, int *rval)
 {
-    return cv::getTrackbarPos(trackname, winname);
+  BEGIN_WRAP
+  *rval = cv::getTrackbarPos(trackname, winname);
+  END_WRAP
 }
-
-void Trackbar_SetPos(const char *winname, const char *trackname, int pos)
+CvStatus Trackbar_SetPos(const char *winname, const char *trackname, int pos)
 {
-    cv::setTrackbarPos(trackname, winname, pos);
+  BEGIN_WRAP
+  cv::setTrackbarPos(trackname, winname, pos);
+  END_WRAP
 }
-
-void Trackbar_SetMin(const char *winname, const char *trackname, int pos)
+CvStatus Trackbar_SetMin(const char *winname, const char *trackname, int pos)
 {
-    cv::setTrackbarMin(trackname, winname, pos);
+  BEGIN_WRAP
+  cv::setTrackbarMin(trackname, winname, pos);
+  END_WRAP
 }
-
-void Trackbar_SetMax(const char *winname, const char *trackname, int pos)
+CvStatus Trackbar_SetMax(const char *winname, const char *trackname, int pos)
 {
-    cv::setTrackbarMax(trackname, winname, pos);
+  BEGIN_WRAP
+  cv::setTrackbarMax(trackname, winname, pos);
+  END_WRAP
 }

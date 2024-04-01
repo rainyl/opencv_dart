@@ -7,181 +7,157 @@
 
 CvStatus Stitcher_Create(int mode, PtrStitcher *rval)
 {
-    BEGIN_WRAP
-    const auto ptr = cv::Stitcher::create(static_cast<cv::Stitcher::Mode>(mode));
-    *rval = new cv::Ptr<cv::Stitcher>(ptr);
-    END_WRAP
+  BEGIN_WRAP
+  const auto ptr = cv::Stitcher::create(static_cast<cv::Stitcher::Mode>(mode));
+  *rval = {new cv::Ptr<cv::Stitcher>(ptr)};
+  END_WRAP
 }
 
-void Stitcher_Close(PtrStitcher stitcher)
+void Stitcher_Close(PtrStitcher *stitcher)
 {
-    delete stitcher;
+  delete stitcher->ptr;
+  stitcher->ptr = nullptr;
 }
 
-CvStatus Stitcher_Get(PtrStitcher stitcher, Stitcher *rval)
+CvStatus Stitcher_Get(PtrStitcher self, Stitcher *rval)
 {
-    BEGIN_WRAP
-    *rval = stitcher->get();
-    END_WRAP
+  BEGIN_WRAP
+  *rval = {self.ptr->get()};
+  END_WRAP
 }
 
-CvStatus Stitcher_GetRegistrationResol(Stitcher stitcher, double *rval)
+CvStatus Stitcher_GetRegistrationResol(Stitcher self, double *rval)
 {
-    BEGIN_WRAP
-    *rval = stitcher->registrationResol();
-    END_WRAP
+  BEGIN_WRAP
+  *rval = self.ptr->registrationResol();
+  END_WRAP
 }
 
-CvStatus Stitcher_SetRegistrationResol(Stitcher stitcher, double inval)
+CvStatus Stitcher_SetRegistrationResol(Stitcher self, double inval)
 {
-    BEGIN_WRAP
-    stitcher->setRegistrationResol(inval);
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setRegistrationResol(inval);
+  END_WRAP
 }
 
-CvStatus Stitcher_GetSeamEstimationResol(Stitcher stitcher, double *rval)
+CvStatus Stitcher_GetSeamEstimationResol(Stitcher self, double *rval)
 {
-    BEGIN_WRAP
-    *rval = stitcher->seamEstimationResol();
-    END_WRAP
+  BEGIN_WRAP
+  *rval = self.ptr->seamEstimationResol();
+  END_WRAP
 }
-CvStatus Stitcher_SetSeamEstimationResol(Stitcher stitcher, double inval)
+CvStatus Stitcher_SetSeamEstimationResol(Stitcher self, double inval)
 {
-    BEGIN_WRAP
-    stitcher->setSeamEstimationResol(inval);
-    END_WRAP
-}
-
-CvStatus Stitcher_GetCompositingResol(Stitcher stitcher, double *rval)
-{
-    BEGIN_WRAP
-    *rval = stitcher->compositingResol();
-    END_WRAP
-}
-CvStatus Stitcher_SetCompositingResol(Stitcher stitcher, double inval)
-{
-    BEGIN_WRAP
-    stitcher->setCompositingResol(inval);
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setSeamEstimationResol(inval);
+  END_WRAP
 }
 
-CvStatus Stitcher_GetPanoConfidenceThresh(Stitcher stitcher, double *rval)
+CvStatus Stitcher_GetCompositingResol(Stitcher self, double *rval)
 {
-    BEGIN_WRAP
-    *rval = stitcher->panoConfidenceThresh();
-    END_WRAP
+  BEGIN_WRAP
+  *rval = self.ptr->compositingResol();
+  END_WRAP
 }
-CvStatus Stitcher_SetPanoConfidenceThresh(Stitcher stitcher, double inval)
+CvStatus Stitcher_SetCompositingResol(Stitcher self, double inval)
 {
-    BEGIN_WRAP
-    stitcher->setPanoConfidenceThresh(inval);
-    END_WRAP
-}
-
-CvStatus Stitcher_GetWaveCorrection(Stitcher stitcher, bool *rval)
-{
-    BEGIN_WRAP
-    *rval = stitcher->waveCorrection();
-    END_WRAP
-}
-CvStatus Stitcher_SetWaveCorrection(Stitcher stitcher, bool inval)
-{
-    BEGIN_WRAP
-    stitcher->setWaveCorrection(inval);
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setCompositingResol(inval);
+  END_WRAP
 }
 
-CvStatus Stitcher_GetInterpolationFlags(Stitcher stitcher, int *rval)
+CvStatus Stitcher_GetPanoConfidenceThresh(Stitcher self, double *rval)
 {
-    BEGIN_WRAP
-    *rval = static_cast<int>(stitcher->interpolationFlags());
-    END_WRAP
+  BEGIN_WRAP
+  *rval = self.ptr->panoConfidenceThresh();
+  END_WRAP
 }
-CvStatus Stitcher_SetInterpolationFlags(Stitcher stitcher, int inval)
+CvStatus Stitcher_SetPanoConfidenceThresh(Stitcher self, double inval)
 {
-    BEGIN_WRAP
-    stitcher->setInterpolationFlags(static_cast<cv::InterpolationFlags>(inval));
-    END_WRAP
-}
-
-CvStatus Stitcher_GetWaveCorrectKind(Stitcher stitcher, int *rval)
-{
-    BEGIN_WRAP
-    *rval = static_cast<int>(stitcher->waveCorrectKind());
-    END_WRAP
-}
-CvStatus Stitcher_SetWaveCorrectKind(Stitcher stitcher, int inval)
-{
-    BEGIN_WRAP
-    stitcher->setWaveCorrectKind(static_cast<cv::detail::WaveCorrectKind>(inval));
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setPanoConfidenceThresh(inval);
+  END_WRAP
 }
 
-CvStatus Stitcher_EstimateTransform(Stitcher stitcher, Mats mats, Mats masks, int *rval)
+CvStatus Stitcher_GetWaveCorrection(Stitcher self, bool *rval)
 {
-    BEGIN_WRAP
-    std::vector<cv::Mat> _mats;
-    for (size_t i = 0; i < mats.length; i++)
-        _mats.push_back(*mats.mats[i]);
-    if (masks.length > 0)
-    {
-        std::vector<cv::Mat> _masks;
-        for (size_t i = 0; i < masks.length; i++)
-            _masks.push_back(*masks.mats[i]);
-        *rval = static_cast<int>(stitcher->estimateTransform(_mats, _masks));
-    }
-    else
-        *rval = static_cast<int>(stitcher->estimateTransform(_mats));
-    END_WRAP
+  BEGIN_WRAP
+  *rval = self.ptr->waveCorrection();
+  END_WRAP
+}
+CvStatus Stitcher_SetWaveCorrection(Stitcher self, bool inval)
+{
+  BEGIN_WRAP
+  self.ptr->setWaveCorrection(inval);
+  END_WRAP
 }
 
-CvStatus Stitcher_ComposePanorama(Stitcher stitcher, Mat rpano, int *rval)
+CvStatus Stitcher_GetInterpolationFlags(Stitcher self, int *rval)
 {
-    BEGIN_WRAP
-    *rval = static_cast<int>(stitcher->composePanorama(*rpano));
-    END_WRAP
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->interpolationFlags());
+  END_WRAP
 }
-CvStatus Stitcher_ComposePanorama_1(Stitcher stitcher, Mats mats, Mat rpano, int *rval)
+CvStatus Stitcher_SetInterpolationFlags(Stitcher self, int inval)
 {
-    BEGIN_WRAP
-    std::vector<cv::Mat> _mats;
-    for (size_t i = 0; i < mats.length; i++)
-        _mats.push_back(*mats.mats[i]);
-    *rval = static_cast<int>(stitcher->composePanorama(_mats, *rpano));
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setInterpolationFlags(static_cast<cv::InterpolationFlags>(inval));
+  END_WRAP
 }
 
-CvStatus Stitcher_Stitch(Stitcher stitcher, Mats mats, Mat rpano, int *rval)
+CvStatus Stitcher_GetWaveCorrectKind(Stitcher self, int *rval)
 {
-    BEGIN_WRAP
-    std::vector<cv::Mat> _mats;
-    for (size_t i = 0; i < mats.length; ++i)
-        _mats.push_back(*mats.mats[i]);
-    *rval = static_cast<int>(stitcher->stitch(_mats, *rpano));
-    END_WRAP
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->waveCorrectKind());
+  END_WRAP
 }
-CvStatus Stitcher_Stitch_1(Stitcher stitcher, Mats mats, Mats masks, Mat rpano, int *rval)
+CvStatus Stitcher_SetWaveCorrectKind(Stitcher self, int inval)
 {
-    BEGIN_WRAP
-    std::vector<cv::Mat> _mats;
-    for (size_t i = 0; i < mats.length; i++)
-        _mats.push_back(*mats.mats[i]);
-    std::vector<cv::Mat> _masks;
-    for (size_t i = 0; i < masks.length; i++)
-        _masks.push_back(*masks.mats[i]);
-    *rval = static_cast<int>(stitcher->stitch(_mats, _masks, *rpano));
-    END_WRAP
+  BEGIN_WRAP
+  self.ptr->setWaveCorrectKind(static_cast<cv::detail::WaveCorrectKind>(inval));
+  END_WRAP
 }
 
-CvStatus Stitcher_Component(Stitcher stitcher, IntVector *rval)
+CvStatus Stitcher_EstimateTransform(Stitcher self, VecMat mats, VecMat masks, int *rval)
 {
-    BEGIN_WRAP
-    std::vector<int> _rval = stitcher->component();
+  BEGIN_WRAP
+  if (masks.ptr->size() > 0) {
+    *rval = static_cast<int>(self.ptr->estimateTransform(*mats.ptr, *masks.ptr));
+  } else
+    *rval = static_cast<int>(self.ptr->estimateTransform(*mats.ptr));
+  END_WRAP
+}
 
-    (*rval).length = (int)_rval.size();
-    int *vals = new int[_rval.size()];
-    for (size_t i = 0; i < _rval.size(); i++)
-        vals[i] = _rval.at(i);
-    (*rval).val = vals;
-    END_WRAP
+CvStatus Stitcher_ComposePanorama(Stitcher self, Mat rpano, int *rval)
+{
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->composePanorama(*rpano.ptr));
+  END_WRAP
+}
+CvStatus Stitcher_ComposePanorama_1(Stitcher self, VecMat mats, Mat rpano, int *rval)
+{
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->composePanorama(*mats.ptr, *rpano.ptr));
+  END_WRAP
+}
+
+CvStatus Stitcher_Stitch(Stitcher self, VecMat mats, Mat rpano, int *rval)
+{
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->stitch(*mats.ptr, *rpano.ptr));
+  END_WRAP
+}
+CvStatus Stitcher_Stitch_1(Stitcher self, VecMat mats, VecMat masks, Mat rpano, int *rval)
+{
+  BEGIN_WRAP
+  *rval = static_cast<int>(self.ptr->stitch(*mats.ptr, *masks.ptr, *rpano.ptr));
+  END_WRAP
+}
+
+CvStatus Stitcher_Component(Stitcher self, VecInt *rval)
+{
+  BEGIN_WRAP
+  std::vector<int> _rval = self.ptr->component();
+  *rval = {new std::vector<int>(_rval)};
+  END_WRAP
 }

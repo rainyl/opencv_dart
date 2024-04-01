@@ -11,68 +11,67 @@
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
-    enum
-    {
-        STITCHING_PANORAMA = 0,
-        STITCHING_SCANS = 1
-    };
-    enum
-    {
-        STITCHING_OK = 0,
-        STITCHING_ERR_NEED_MORE_IMGS = 1,
-        STITCHING_ERR_HOMOGRAPHY_EST_FAIL = 2,
-        STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL = 3
-    };
+enum { STITCHING_PANORAMA = 0, STITCHING_SCANS = 1 };
+enum {
+  STITCHING_OK = 0,
+  STITCHING_ERR_NEED_MORE_IMGS = 1,
+  STITCHING_ERR_HOMOGRAPHY_EST_FAIL = 2,
+  STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL = 3
+};
 
 #ifdef __cplusplus
-    typedef cv::Ptr<cv::Stitcher> *PtrStitcher;
-    typedef cv::Stitcher *Stitcher;
+CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, PtrStitcher)
+CVD_TYPEDEF(cv::Stitcher, Stitcher)
 #else
-typedef void **PtrStitcher;
-typedef void *Stitcher;
+CVD_TYPEDEF(void *, PtrStitcher)
+CVD_TYPEDEF(void, Stitcher)
 #endif
 
-    CvStatus Stitcher_Create(int mode, PtrStitcher *rval);
-    void Stitcher_Close(PtrStitcher stitcher);
-    CvStatus Stitcher_Get(PtrStitcher stitcher, Stitcher *rval);
+CVD_TYPEDEF_PTR(PtrStitcher)
+CVD_TYPEDEF_PTR(Stitcher)
+
+CvStatus Stitcher_Create(int mode, PtrStitcher *rval);
+void     Stitcher_Close(PtrStitcher *stitcher);
+CvStatus Stitcher_Get(PtrStitcher self, Stitcher *rval);
 
 #pragma region getter/setter
-    CvStatus Stitcher_GetRegistrationResol(Stitcher stitcher, double *rval);
-    CvStatus Stitcher_SetRegistrationResol(Stitcher stitcher, double inval);
 
-    CvStatus Stitcher_GetSeamEstimationResol(Stitcher stitcher, double *rval);
-    CvStatus Stitcher_SetSeamEstimationResol(Stitcher stitcher, double inval);
+CvStatus Stitcher_GetRegistrationResol(Stitcher self, double *rval);
+CvStatus Stitcher_SetRegistrationResol(Stitcher self, double inval);
 
-    CvStatus Stitcher_GetCompositingResol(Stitcher stitcher, double *rval);
-    CvStatus Stitcher_SetCompositingResol(Stitcher stitcher, double inval);
+CvStatus Stitcher_GetSeamEstimationResol(Stitcher self, double *rval);
+CvStatus Stitcher_SetSeamEstimationResol(Stitcher self, double inval);
 
-    CvStatus Stitcher_GetPanoConfidenceThresh(Stitcher stitcher, double *rval);
-    CvStatus Stitcher_SetPanoConfidenceThresh(Stitcher stitcher, double inval);
+CvStatus Stitcher_GetCompositingResol(Stitcher self, double *rval);
+CvStatus Stitcher_SetCompositingResol(Stitcher self, double inval);
 
-    CvStatus Stitcher_GetWaveCorrection(Stitcher stitcher, bool *rval);
-    CvStatus Stitcher_SetWaveCorrection(Stitcher stitcher, bool inval);
+CvStatus Stitcher_GetPanoConfidenceThresh(Stitcher self, double *rval);
+CvStatus Stitcher_SetPanoConfidenceThresh(Stitcher self, double inval);
 
-    CvStatus Stitcher_GetInterpolationFlags(Stitcher stitcher, int *rval);
-    CvStatus Stitcher_SetInterpolationFlags(Stitcher stitcher, int inval);
+CvStatus Stitcher_GetWaveCorrection(Stitcher self, bool *rval);
+CvStatus Stitcher_SetWaveCorrection(Stitcher self, bool inval);
 
-    CvStatus Stitcher_GetWaveCorrectKind(Stitcher stitcher, int *rval);
-    CvStatus Stitcher_SetWaveCorrectKind(Stitcher stitcher, int inval);
+CvStatus Stitcher_GetInterpolationFlags(Stitcher self, int *rval);
+CvStatus Stitcher_SetInterpolationFlags(Stitcher self, int inval);
+
+CvStatus Stitcher_GetWaveCorrectKind(Stitcher self, int *rval);
+CvStatus Stitcher_SetWaveCorrectKind(Stitcher self, int inval);
 #pragma endregion
 
 #pragma region functions
-    CvStatus Stitcher_EstimateTransform(Stitcher stitcher, Mats mats, Mats masks, int *rval);
 
-    CvStatus Stitcher_ComposePanorama(Stitcher stitcher, Mat rpano, int *rval);
-    CvStatus Stitcher_ComposePanorama_1(Stitcher stitcher, Mats mats, Mat rpano, int *rval);
+CvStatus Stitcher_EstimateTransform(Stitcher self, VecMat mats, VecMat masks, int *rval);
 
-    CvStatus Stitcher_Stitch(Stitcher stitcher, Mats mats, Mat rpano, int *rval);
-    CvStatus Stitcher_Stitch_1(Stitcher stitcher, Mats mats, Mats masks, Mat rpano, int *rval);
+CvStatus Stitcher_ComposePanorama(Stitcher self, Mat rpano, int *rval);
+CvStatus Stitcher_ComposePanorama_1(Stitcher self, VecMat mats, Mat rpano, int *rval);
 
-    CvStatus Stitcher_Component(Stitcher stitcher, IntVector *rval);
+CvStatus Stitcher_Stitch(Stitcher self, VecMat mats, Mat rpano, int *rval);
+CvStatus Stitcher_Stitch_1(Stitcher self, VecMat mats, VecMat masks, Mat rpano, int *rval);
+
+CvStatus Stitcher_Component(Stitcher self, VecInt *rval);
 #pragma endregion
 
 #ifdef __cplusplus

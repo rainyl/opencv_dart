@@ -29,7 +29,10 @@ class Rng extends CvStruct<cvg.RNG> {
     return rng;
   }
 
-  static final finalizer = Finalizer(CFFI.Rng_Close);
+  static final finalizer = Finalizer<cvg.RNGPtr>((p){
+    CFFI.Rng_Close(p);
+    calloc.free(p);
+  });
 
   Mat fill(Mat mat, int distType, double a, double b, bool saturateRange, {bool inplace = false}) {
     if (inplace) {

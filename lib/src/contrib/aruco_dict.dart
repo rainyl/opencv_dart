@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 library cv;
 
 import 'dart:ffi' as ffi;
@@ -6,8 +8,6 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../opencv.g.dart' as cvg;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 enum PredefinedDictionaryType {
   ///< 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
@@ -80,19 +80,24 @@ enum PredefinedDictionaryType {
   final int value;
 }
 
-class ArucoDictionary implements ffi.Finalizable {
-  ArucoDictionary._(this._ptr) {
-    finalizer.attach(this, _ptr);
+class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
+  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr) : super.fromPointer(ptr) {
+    finalizer.attach(this, ptr);
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
-    final _ptr = _bindings.getPredefinedDictionary(type.value);
-    return ArucoDictionary._(_ptr);
+    final p = calloc<cvg.ArucoDictionary>();
+    cvRun(() => CFFI.getPredefinedDictionary(type.value, p));
+    return ArucoDictionary._(p);
   }
 
-  cvg.ArucoDictionary _ptr;
-  cvg.ArucoDictionary get ptr => _ptr;
-  static final finalizer = Finalizer<cvg.ArucoDictionary>((p0) {
+  @override
+  cvg.ArucoDictionary get ref => ptr.ref;
+  static final finalizer = Finalizer<cvg.ArucoDictionaryPtr>((p0) {
+    cvRun(() => CFFI.ArucoDictionary_Close(p0));
     calloc.free(p0);
   });
+
+  @override
+  List<int> get props => [ptr.address];
 }

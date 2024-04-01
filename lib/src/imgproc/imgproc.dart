@@ -28,7 +28,7 @@ VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
   return cvRunArena<VecPoint>((arena) {
     final vec = arena<cvg.VecPoint>();
     cvRun(() => CFFI.ApproxPolyDP(curve.ref, epsilon, closed, vec));
-    return VecPoint.fromPointer(vec.ref);
+    return VecPoint.fromVec(vec.ref);
   });
 }
 
@@ -316,7 +316,7 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
   return cvRunArena<VecPoint2f>((arena) {
     final p = arena<cvg.VecPoint2f>();
     cvRun(() => CFFI.BoxPoints(rect.ref, p));
-    pts = VecPoint2f.fromPointer(p.ref);
+    pts = VecPoint2f.fromVec(p.ref);
     return pts!;
   });
 }
@@ -379,7 +379,7 @@ RotatedRect fitEllipse(VecPoint points) {
   final vec = cvRunArena<Contours>((arena) {
     final v = arena<cvg.VecVecPoint>();
     cvRun(() => CFFI.FindContours(src.ref, hierarchy.ref, mode, method, v));
-    return Contours.fromPointer(v.ref);
+    return Contours.fromVec(v.ref);
   });
   return (vec, hierarchy);
 }
@@ -683,23 +683,22 @@ Mat canny(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga354e0d7c86d0d9da75de9b9701a9a87e
-Mat cornerSubPix(
+VecPoint2f cornerSubPix(
   InputArray image,
-  InputOutputArray corners,
+  VecPoint2f corners,
   Size winSize,
   Size zeroZone,
   cvg.TermCriteria criteria,
 ) {
-  using((arena) {
-    cvRun(
-      () => CFFI.CornerSubPix(
-        image.ref,
-        corners.ref,
-        winSize.toSize(arena).ref,
-        zeroZone.toSize(arena).ref,
-        criteria,
-      ),
-    );
+  cvRunArena((arena) {
+    final size = arena<cvg.Size>()
+      ..ref.width = winSize.$1
+      ..ref.height = winSize.$2;
+    final zone = arena<cvg.Size>()
+      ..ref.width = zeroZone.$1
+      ..ref.height = zeroZone.$2;
+
+    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, criteria));
   });
   return corners;
 }
@@ -709,19 +708,19 @@ Mat cornerSubPix(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/dd/d1a/group__imgproc__feature.html#ga1d6bb77486c8f92d79c8793ad995d541
-Mat goodFeaturesToTrack(
+VecPoint2f goodFeaturesToTrack(
   InputArray image,
   int maxCorners,
   double qualityLevel,
   double minDistance, {
-  OutputArray? corners,
+  VecPoint2f? corners,
   InputArray? mask,
   int blockSize = 3,
   int? gradientSize,
   bool useHarrisDetector = false,
   double k = 0.04,
 }) {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   mask ??= Mat.empty();
   if (gradientSize == null) {
     cvRun(() => CFFI.GoodFeaturesToTrack(image.ref, corners!.ref, maxCorners, qualityLevel, minDistance,

@@ -68,8 +68,6 @@ class Moments extends CvStruct<cvg.Moment> {
 
   @override
   cvg.Moment get ref => ptr.ref;
-  @override
-  cvg.Moment toNative() => ptr.ref;
 
   @override
   List<double> get props => [

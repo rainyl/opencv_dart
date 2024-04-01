@@ -47,7 +47,7 @@ void main() async {
       cv.Rect(10, 10, 35, 35),
     ];
 
-    final res = cv.groupRectangles(rects, 1, 0.2);
+    final res = cv.groupRectangles(rects.ocv, 1, 0.2);
     expect(res.length, 1);
     expect(res.first, cv.Rect(10, 10, 32, 32));
   });
@@ -57,27 +57,28 @@ void main() async {
     expect(img.isEmpty, false);
 
     final detector = cv.QRCodeDetector.empty();
-    final bbox = cv.Mat.empty();
-    final qr = cv.Mat.empty();
-    final res = detector.detect(img, bbox);
+    final (res, bbox) = detector.detect(img);
     expect(res, true);
+    expect(bbox, isNotNull);
 
-    final res2 = detector.decode(img, bbox, straight_code: qr);
-    final res2_1 = detector.decode(img, bbox);
-    final res3 = detector.detectAndDecode(img, bbox, straight_code: qr);
-    final res3_1 = detector.detectAndDecode(img, bbox);
+    final (res2, bbox2, codes2) = detector.decode(img);
+    final (res2_1, bbox2_1, codes2_1) = detector.decode(img);
     expect(res2_1, equals(res2));
+    expect(bbox2_1, bbox2);
+    expect(codes2, codes2_1);
+    final (res3, bbox3, codes3) = detector.detectAndDecode(img);
+    final (res3_1, bbox3_1, codes3_1) = detector.detectAndDecode(img);
+    expect(bbox3_1, bbox3);
+    expect(codes3, codes3_1);
     expect(res2, equals(res3));
     expect(res3_1, equals(res3));
 
     final img2 = cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
     expect(img2.isEmpty, false);
 
-    final multiBox = cv.Mat.empty();
-    final res4 = detector.detectMulti(img2, multiBox);
+    final (res4, multiBox) = detector.detectMulti(img2);
     expect(res4, true);
-    expect(multiBox.rows, 2);
-
-    // final multiBox2 = cv.Mat.empty();
+    expect(multiBox, isNotNull);
+    expect(multiBox?.length, 2);
   });
 }

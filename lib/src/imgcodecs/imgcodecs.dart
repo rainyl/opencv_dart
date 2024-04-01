@@ -72,7 +72,7 @@ Uint8List imencode(
       CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ref, params.ref, buffer);
     }
 
-    return VecUChar.fromPointer(buffer.ref).toU8List();
+    return VecUChar.fromVec(buffer.ref).toU8List();
   });
 }
 

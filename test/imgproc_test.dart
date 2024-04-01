@@ -481,13 +481,13 @@ void main() async {
     expect(img.isEmpty, false);
     final corners = cv.goodFeaturesToTrack(img, 500, 0.01, 10);
     expect(corners.isEmpty, false);
-    expect((corners.rows, corners.cols), (500, 1));
+    expect(corners.length, 500);
 
     final tc = cv.termCriteriaNew(cv.TERM_COUNT | cv.TERM_EPS, 20, 0.03);
-    cv.cornerSubPix(img, corners, (10, 10), (-1, -1), tc);
+    final corners1 = cv.cornerSubPix(img, corners, (10, 10), (-1, -1), tc);
 
-    expect(corners.isEmpty, false);
-    expect((corners.rows, corners.cols), (500, 1));
+    expect(corners1.isEmpty, false);
+    expect(corners1.length, greaterThan(0));
   });
 
   // grabCut

@@ -35,11 +35,18 @@ message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 file(GLOB_RECURSE CPP_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/dnn/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/imgcodecs/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/imgproc/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
+
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/dnn/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/extra/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/highgui/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/imgcodecs/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/imgproc/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/objdetect/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/photo/*.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/src/stitching/*.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
@@ -147,6 +154,7 @@ add_ocv_dart_test(ocv_dart_test_core "src/test/core.cc")
 add_ocv_dart_test(ocv_dart_test_calib3d "src/test/calib3d.cc")
 add_ocv_dart_test(ocv_dart_test_dnn "src/test/dnn.cc")
 add_ocv_dart_test(ocv_dart_test_imgcodecs "src/test/imgcodecs.cc")
+add_ocv_dart_test(ocv_dart_test_imgproc "src/test/imgproc.cc")
 
 include(GoogleTest)
 gtest_discover_tests(ocv_dart_test_vec)
@@ -154,3 +162,4 @@ gtest_discover_tests(ocv_dart_test_core)
 gtest_discover_tests(ocv_dart_test_calib3d)
 gtest_discover_tests(ocv_dart_test_dnn)
 gtest_discover_tests(ocv_dart_test_imgcodecs)
+gtest_discover_tests(ocv_dart_test_imgproc)

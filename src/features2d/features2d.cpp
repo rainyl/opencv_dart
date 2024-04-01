@@ -8,640 +8,401 @@
 
 #include "features2d.h"
 
-AKAZE AKAZE_Create()
+CvStatus AKAZE_Create(AKAZE *rval)
 {
-    // TODO: params
-    return new cv::Ptr<cv::AKAZE>(cv::AKAZE::create());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::AKAZE>(cv::AKAZE::create())};
+  END_WRAP
+}
+void AKAZE_Close(AKAZE *a)
+{
+  delete a->ptr;
+  a->ptr = nullptr;
+}
+CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
+}
+CvStatus AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-void AKAZE_Close(AKAZE a)
+CvStatus AgastFeatureDetector_Create(AgastFeatureDetector *rval)
 {
-    delete a;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create())};
+  END_WRAP
+}
+void AgastFeatureDetector_Close(AgastFeatureDetector *a)
+{
+  delete a->ptr;
+  a->ptr = nullptr;
+}
+CvStatus AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-struct KeyPoints AKAZE_Detect(AKAZE a, Mat src)
+CvStatus BRISK_Create(BRISK *rval)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::BRISK>(cv::BRISK::create())};
+  END_WRAP
+}
+void BRISK_Close(BRISK *b)
+{
+  delete b->ptr;
+  b->ptr = nullptr;
+}
+CvStatus BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*b.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
+}
+CvStatus BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*b.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-struct KeyPoints AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc)
+CvStatus FastFeatureDetector_Create(FastFeatureDetector *rval)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detectAndCompute(*src, *mask, detected, *desc);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::FastFeatureDetector>(cv::FastFeatureDetector::create())};
+  END_WRAP
+}
+CvStatus FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type,
+                                              FastFeatureDetector *rval)
+{
+  BEGIN_WRAP
+  auto type_ = static_cast<cv::FastFeatureDetector::DetectorType>(type);
+  *rval = {new cv::Ptr<cv::FastFeatureDetector>(
+      cv::FastFeatureDetector::create(threshold, nonmaxSuppression, type_))};
+  END_WRAP
+}
+void FastFeatureDetector_Close(FastFeatureDetector *f)
+{
+  delete f->ptr;
+  f->ptr = nullptr;
+}
+CvStatus FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*f.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-AgastFeatureDetector AgastFeatureDetector_Create()
+CvStatus GFTTDetector_Create(GFTTDetector *rval)
 {
-    // TODO: params
-    return new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create())};
+  END_WRAP
+}
+void GFTTDetector_Close(GFTTDetector *a)
+{
+  delete a->ptr;
+  a->ptr = nullptr;
+}
+CvStatus GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-void AgastFeatureDetector_Close(AgastFeatureDetector a)
+CvStatus KAZE_Create(KAZE *rval)
 {
-    delete a;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::KAZE>(cv::KAZE::create())};
+  END_WRAP
+}
+void KAZE_Close(KAZE *a)
+{
+  delete a->ptr;
+  a->ptr = nullptr;
+}
+CvStatus KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
+}
+CvStatus KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-struct KeyPoints AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src)
+CvStatus MSER_Create(MSER *rval)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::MSER>(cv::MSER::create())};
+  END_WRAP
+}
+void MSER_Close(MSER *a)
+{
+  delete a->ptr;
+  a->ptr = nullptr;
+}
+CvStatus MSER_Detect(MSER a, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*a.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-BRISK BRISK_Create()
+CvStatus ORB_Create(ORB *rval)
 {
-    // TODO: params
-    return new cv::Ptr<cv::BRISK>(cv::BRISK::create());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::ORB>(cv::ORB::create())};
+  END_WRAP
 }
-
-void BRISK_Close(BRISK b)
+CvStatus ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
+                              int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
+                              ORB *rval)
 {
-    delete b;
+  BEGIN_WRAP
+  auto type = static_cast<cv::ORB::ScoreType>(scoreType);
+  *rval = {new cv::Ptr<cv::ORB>(cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold, firstLevel,
+                                                WTA_K, type, patchSize, fastThreshold))};
+  END_WRAP
 }
-
-struct KeyPoints BRISK_Detect(BRISK b, Mat src)
+void ORB_Close(ORB *o)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*b)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  delete o->ptr;
+  o->ptr = nullptr;
 }
-
-struct KeyPoints BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc)
+CvStatus ORB_Detect(ORB o, Mat src, VecKeyPoint *rval)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*b)->detectAndCompute(*src, *mask, detected, *desc);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*o.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
-
-GFTTDetector GFTTDetector_Create()
+CvStatus ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval)
 {
-    // TODO: params
-    return new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create());
-}
-
-void GFTTDetector_Close(GFTTDetector a)
-{
-    delete a;
-}
-
-struct KeyPoints GFTTDetector_Detect(GFTTDetector a, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-KAZE KAZE_Create()
-{
-    // TODO: params
-    return new cv::Ptr<cv::KAZE>(cv::KAZE::create());
-}
-
-void KAZE_Close(KAZE a)
-{
-    delete a;
-}
-
-struct KeyPoints KAZE_Detect(KAZE a, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-struct KeyPoints KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detectAndCompute(*src, *mask, detected, *desc);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-MSER MSER_Create()
-{
-    // TODO: params
-    return new cv::Ptr<cv::MSER>(cv::MSER::create());
-}
-
-void MSER_Close(MSER a)
-{
-    delete a;
-}
-
-struct KeyPoints MSER_Detect(MSER a, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*a)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-FastFeatureDetector FastFeatureDetector_Create()
-{
-    return new cv::Ptr<cv::FastFeatureDetector>(cv::FastFeatureDetector::create());
-}
-
-void FastFeatureDetector_Close(FastFeatureDetector f)
-{
-    delete f;
-}
-
-FastFeatureDetector FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type)
-{
-    return new cv::Ptr<cv::FastFeatureDetector>(cv::FastFeatureDetector::create(threshold, nonmaxSuppression, static_cast<cv::FastFeatureDetector::DetectorType>(type)));
-}
-
-struct KeyPoints FastFeatureDetector_Detect(FastFeatureDetector f, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*f)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-ORB ORB_Create()
-{
-    return new cv::Ptr<cv::ORB>(cv::ORB::create());
-}
-
-ORB ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold, int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold)
-{
-    return new cv::Ptr<cv::ORB>(cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, static_cast<cv::ORB::ScoreType>(scoreType), patchSize, fastThreshold));
-}
-
-void ORB_Close(ORB o)
-{
-    delete o;
-}
-
-struct KeyPoints ORB_Detect(ORB o, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*o)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-struct KeyPoints ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*o)->detectAndCompute(*src, *mask, detected, *desc);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*o.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
 cv::SimpleBlobDetector::Params ConvertCParamsToCPPParams(SimpleBlobDetectorParams params)
 {
-    cv::SimpleBlobDetector::Params converted;
+  cv::SimpleBlobDetector::Params converted;
 
-    converted.blobColor = params.blobColor;
-    converted.filterByArea = params.filterByArea;
-    converted.filterByCircularity = params.filterByCircularity;
-    converted.filterByColor = params.filterByColor;
-    converted.filterByConvexity = params.filterByConvexity;
-    converted.filterByInertia = params.filterByInertia;
-    converted.maxArea = params.maxArea;
-    converted.maxCircularity = params.maxCircularity;
-    converted.maxConvexity = params.maxConvexity;
-    converted.maxInertiaRatio = params.maxInertiaRatio;
-    converted.maxThreshold = params.maxThreshold;
-    converted.minArea = params.minArea;
-    converted.minCircularity = params.minCircularity;
-    converted.minConvexity = params.minConvexity;
-    converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
-    converted.minInertiaRatio = params.minInertiaRatio;
-    converted.minRepeatability = params.minRepeatability;
-    converted.minThreshold = params.minThreshold;
-    converted.thresholdStep = params.thresholdStep;
+  converted.blobColor = params.blobColor;
+  converted.filterByArea = params.filterByArea;
+  converted.filterByCircularity = params.filterByCircularity;
+  converted.filterByColor = params.filterByColor;
+  converted.filterByConvexity = params.filterByConvexity;
+  converted.filterByInertia = params.filterByInertia;
+  converted.maxArea = params.maxArea;
+  converted.maxCircularity = params.maxCircularity;
+  converted.maxConvexity = params.maxConvexity;
+  converted.maxInertiaRatio = params.maxInertiaRatio;
+  converted.maxThreshold = params.maxThreshold;
+  converted.minArea = params.minArea;
+  converted.minCircularity = params.minCircularity;
+  converted.minConvexity = params.minConvexity;
+  converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
+  converted.minInertiaRatio = params.minInertiaRatio;
+  converted.minRepeatability = params.minRepeatability;
+  converted.minThreshold = params.minThreshold;
+  converted.thresholdStep = params.thresholdStep;
 
-    return converted;
+  return converted;
 }
 
 SimpleBlobDetectorParams ConvertCPPParamsToCParams(cv::SimpleBlobDetector::Params params)
 {
-    SimpleBlobDetectorParams converted;
+  SimpleBlobDetectorParams converted;
 
-    converted.blobColor = params.blobColor;
-    converted.filterByArea = params.filterByArea;
-    converted.filterByCircularity = params.filterByCircularity;
-    converted.filterByColor = params.filterByColor;
-    converted.filterByConvexity = params.filterByConvexity;
-    converted.filterByInertia = params.filterByInertia;
-    converted.maxArea = params.maxArea;
-    converted.maxCircularity = params.maxCircularity;
-    converted.maxConvexity = params.maxConvexity;
-    converted.maxInertiaRatio = params.maxInertiaRatio;
-    converted.maxThreshold = params.maxThreshold;
-    converted.minArea = params.minArea;
-    converted.minCircularity = params.minCircularity;
-    converted.minConvexity = params.minConvexity;
-    converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
-    converted.minInertiaRatio = params.minInertiaRatio;
-    converted.minRepeatability = params.minRepeatability;
-    converted.minThreshold = params.minThreshold;
-    converted.thresholdStep = params.thresholdStep;
+  converted.blobColor = params.blobColor;
+  converted.filterByArea = params.filterByArea;
+  converted.filterByCircularity = params.filterByCircularity;
+  converted.filterByColor = params.filterByColor;
+  converted.filterByConvexity = params.filterByConvexity;
+  converted.filterByInertia = params.filterByInertia;
+  converted.maxArea = params.maxArea;
+  converted.maxCircularity = params.maxCircularity;
+  converted.maxConvexity = params.maxConvexity;
+  converted.maxInertiaRatio = params.maxInertiaRatio;
+  converted.maxThreshold = params.maxThreshold;
+  converted.minArea = params.minArea;
+  converted.minCircularity = params.minCircularity;
+  converted.minConvexity = params.minConvexity;
+  converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
+  converted.minInertiaRatio = params.minInertiaRatio;
+  converted.minRepeatability = params.minRepeatability;
+  converted.minThreshold = params.minThreshold;
+  converted.thresholdStep = params.thresholdStep;
 
-    return converted;
+  return converted;
 }
 
-SimpleBlobDetector SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params)
+CvStatus SimpleBlobDetector_Create(SimpleBlobDetector *rval)
 {
-    cv::SimpleBlobDetector::Params actualParams;
-    return new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create(ConvertCParamsToCPPParams(params)));
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create())};
+  END_WRAP
+}
+CvStatus SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval)
+{
+  BEGIN_WRAP
+  *rval = {
+      new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create(ConvertCParamsToCPPParams(params)))};
+  END_WRAP
+}
+void SimpleBlobDetector_Close(SimpleBlobDetector *b)
+{
+  delete b->ptr;
+  b->ptr = nullptr;
+}
+CvStatus SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*b.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
+}
+CvStatus SimpleBlobDetectorParams_Create(SimpleBlobDetectorParams *rval)
+{
+  BEGIN_WRAP
+  *rval = ConvertCPPParamsToCParams(cv::SimpleBlobDetector::Params());
+  END_WRAP
 }
 
-SimpleBlobDetector SimpleBlobDetector_Create()
+CvStatus BFMatcher_Create(BFMatcher *rval)
 {
-    return new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create())};
+  END_WRAP
+}
+CvStatus BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create(normType, crossCheck))};
+  END_WRAP
+}
+void BFMatcher_Close(BFMatcher *b)
+{
+  delete b->ptr;
+  b->ptr = nullptr;
+}
+CvStatus BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::DMatch> matches = std::vector<cv::DMatch>();
+  (*b.ptr)->match(*query.ptr, *train.ptr, matches);
+  *rval = {new std::vector<cv::DMatch>(matches)};
+  END_WRAP
+}
+CvStatus BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k, VecVecDMatch *rval)
+{
+  BEGIN_WRAP
+  std::vector<std::vector<cv::DMatch>> matches = std::vector<std::vector<cv::DMatch>>();
+  (*b.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
+  *rval = {new std::vector<std::vector<cv::DMatch>>(matches)};
+  END_WRAP
 }
 
-SimpleBlobDetectorParams SimpleBlobDetectorParams_Create()
+CvStatus FlannBasedMatcher_Create(FlannBasedMatcher *rval)
 {
-    return ConvertCPPParamsToCParams(cv::SimpleBlobDetector::Params());
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create())};
+  END_WRAP
+}
+void FlannBasedMatcher_Close(FlannBasedMatcher *f)
+{
+  delete f->ptr;
+  f->ptr = nullptr;
+}
+CvStatus FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval)
+{
+  BEGIN_WRAP
+  std::vector<std::vector<cv::DMatch>> matches = std::vector<std::vector<cv::DMatch>>();
+  (*f.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
+  *rval = {new std::vector<std::vector<cv::DMatch>>(matches)};
+  END_WRAP
 }
 
-void SimpleBlobDetector_Close(SimpleBlobDetector b)
+CvStatus DrawKeyPoints(Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags)
 {
-    delete b;
+  BEGIN_WRAP
+  auto color_ = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
+  cv::drawKeypoints(*src.ptr, *kp.ptr, *dst.ptr, color_, static_cast<cv::DrawMatchesFlags>(flags));
+  END_WRAP
 }
 
-struct KeyPoints SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src)
+CvStatus SIFT_Create(SIFT *rval)
 {
-    std::vector<cv::KeyPoint> detected;
-    (*b)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::SIFT>(cv::SIFT::create())};
+  END_WRAP
+}
+void SIFT_Close(SIFT *f)
+{
+  delete f->ptr;
+  f->ptr = nullptr;
+}
+CvStatus SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*f.ptr)->detect(*src.ptr, detected);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
+}
+CvStatus SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc, VecKeyPoint *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
+  (*f.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
+  *rval = {new std::vector<cv::KeyPoint>(detected)};
+  END_WRAP
 }
 
-BFMatcher BFMatcher_Create()
+CvStatus DrawMatches(Mat img1, VecKeyPoint kp1, Mat img2, VecKeyPoint kp2, VecDMatch matches1to2, Mat outImg,
+                     const Scalar matchesColor, const Scalar pointColor, VecChar matchesMask, int flags)
 {
-    return new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create());
-}
-
-BFMatcher BFMatcher_CreateWithParams(int normType, bool crossCheck)
-{
-    return new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create(normType, crossCheck));
-}
-
-void BFMatcher_Close(BFMatcher b)
-{
-    delete b;
-}
-
-struct DMatches BFMatcher_Match(BFMatcher b, Mat query, Mat train)
-{
-    std::vector<cv::DMatch> matches;
-    (*b)->match(*query, *train, matches);
-
-    DMatch *dmatches = new DMatch[matches.size()];
-    for (size_t i = 0; i < matches.size(); ++i)
-    {
-        DMatch dmatch = {matches[i].queryIdx, matches[i].trainIdx, matches[i].imgIdx, matches[i].distance};
-        dmatches[i] = dmatch;
-    }
-    DMatches ret = {dmatches, (int)matches.size()};
-    return ret;
-}
-
-struct MultiDMatches BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k)
-{
-    std::vector<std::vector<cv::DMatch>> matches;
-    (*b)->knnMatch(*query, *train, matches, k);
-
-    DMatches *dms = new DMatches[matches.size()];
-    for (size_t i = 0; i < matches.size(); ++i)
-    {
-        DMatch *dmatches = new DMatch[matches[i].size()];
-        for (size_t j = 0; j < matches[i].size(); ++j)
-        {
-            DMatch dmatch = {matches[i][j].queryIdx, matches[i][j].trainIdx, matches[i][j].imgIdx,
-                             matches[i][j].distance};
-            dmatches[j] = dmatch;
-        }
-        dms[i] = {dmatches, (int)matches[i].size()};
-    }
-    MultiDMatches ret = {dms, (int)matches.size()};
-    return ret;
-}
-
-struct MultiDMatches BFMatcher_KnnMatchWithParams(BFMatcher b, Mat query, Mat train, int k, Mat mask, bool compactResult)
-{
-    std::vector<std::vector<cv::DMatch>> matches;
-    (*b)->knnMatch(*query, *train, matches, k, *mask, compactResult);
-
-    DMatches *dms = new DMatches[matches.size()];
-    for (size_t i = 0; i < matches.size(); ++i)
-    {
-        DMatch *dmatches = new DMatch[matches[i].size()];
-        for (size_t j = 0; j < matches[i].size(); ++j)
-        {
-            DMatch dmatch = {matches[i][j].queryIdx, matches[i][j].trainIdx, matches[i][j].imgIdx,
-                             matches[i][j].distance};
-            dmatches[j] = dmatch;
-        }
-        dms[i] = {dmatches, (int)matches[i].size()};
-    }
-    MultiDMatches ret = {dms, (int)matches.size()};
-    return ret;
-}
-
-FlannBasedMatcher FlannBasedMatcher_Create()
-{
-    return new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create());
-}
-
-void FlannBasedMatcher_Close(FlannBasedMatcher f)
-{
-    delete f;
-}
-
-struct MultiDMatches FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k)
-{
-    std::vector<std::vector<cv::DMatch>> matches;
-    (*f)->knnMatch(*query, *train, matches, k);
-
-    DMatches *dms = new DMatches[matches.size()];
-    for (size_t i = 0; i < matches.size(); ++i)
-    {
-        DMatch *dmatches = new DMatch[matches[i].size()];
-        for (size_t j = 0; j < matches[i].size(); ++j)
-        {
-            DMatch dmatch = {matches[i][j].queryIdx, matches[i][j].trainIdx, matches[i][j].imgIdx,
-                             matches[i][j].distance};
-            dmatches[j] = dmatch;
-        }
-        dms[i] = {dmatches, (int)matches[i].size()};
-    }
-    MultiDMatches ret = {dms, (int)matches.size()};
-    return ret;
-}
-
-struct MultiDMatches FlannBasedMatcher_KnnMatchWithParams(FlannBasedMatcher f, Mat query, Mat train, int k, Mat mask, bool compactResult)
-{
-    std::vector<std::vector<cv::DMatch>> matches;
-    (*f)->knnMatch(*query, *train, matches, k, *mask, compactResult);
-
-    DMatches *dms = new DMatches[matches.size()];
-    for (size_t i = 0; i < matches.size(); ++i)
-    {
-        DMatch *dmatches = new DMatch[matches[i].size()];
-        for (size_t j = 0; j < matches[i].size(); ++j)
-        {
-            DMatch dmatch = {matches[i][j].queryIdx, matches[i][j].trainIdx, matches[i][j].imgIdx,
-                             matches[i][j].distance};
-            dmatches[j] = dmatch;
-        }
-        dms[i] = {dmatches, (int)matches[i].size()};
-    }
-    MultiDMatches ret = {dms, (int)matches.size()};
-    return ret;
-}
-
-void DrawKeyPoints(Mat src, struct KeyPoints kp, Mat dst, Scalar s, int flags)
-{
-    std::vector<cv::KeyPoint> keypts;
-    cv::KeyPoint keypt;
-
-    for (int i = 0; i < kp.length; ++i)
-    {
-        keypt = cv::KeyPoint(kp.keypoints[i].x, kp.keypoints[i].y,
-                             kp.keypoints[i].size, kp.keypoints[i].angle, kp.keypoints[i].response,
-                             kp.keypoints[i].octave, kp.keypoints[i].classID);
-        keypts.push_back(keypt);
-    }
-
-    cv::Scalar color = cv::Scalar(s.val1, s.val2, s.val3, s.val4);
-
-    cv::drawKeypoints(*src, keypts, *dst, color, static_cast<cv::DrawMatchesFlags>(flags));
-}
-
-SIFT SIFT_Create()
-{
-    // TODO: params
-    return new cv::Ptr<cv::SIFT>(cv::SIFT::create());
-}
-
-void SIFT_Close(SIFT d)
-{
-    delete d;
-}
-
-struct KeyPoints SIFT_Detect(SIFT d, Mat src)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*d)->detect(*src, detected);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-struct KeyPoints SIFT_DetectAndCompute(SIFT d, Mat src, Mat mask, Mat desc)
-{
-    std::vector<cv::KeyPoint> detected;
-    (*d)->detectAndCompute(*src, *mask, detected, *desc);
-
-    KeyPoint *kps = new KeyPoint[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        KeyPoint k = {detected[i].pt.x, detected[i].pt.y, detected[i].size, detected[i].angle,
-                      detected[i].response, detected[i].octave, detected[i].class_id};
-        kps[i] = k;
-    }
-
-    KeyPoints ret = {kps, (int)detected.size()};
-    return ret;
-}
-
-void DrawMatches(Mat img1, struct KeyPoints kp1, Mat img2, struct KeyPoints kp2, struct DMatches matches1to2, Mat outImg, const Scalar matchesColor, const Scalar pointColor, struct ByteArray matchesMask, int flags)
-{
-    std::vector<cv::KeyPoint> kp1vec, kp2vec;
-    cv::KeyPoint keypt;
-
-    for (int i = 0; i < kp1.length; ++i)
-    {
-        keypt = cv::KeyPoint(kp1.keypoints[i].x, kp1.keypoints[i].y,
-                             kp1.keypoints[i].size, kp1.keypoints[i].angle, kp1.keypoints[i].response,
-                             kp1.keypoints[i].octave, kp1.keypoints[i].classID);
-        kp1vec.push_back(keypt);
-    }
-
-    for (int i = 0; i < kp2.length; ++i)
-    {
-        keypt = cv::KeyPoint(kp2.keypoints[i].x, kp2.keypoints[i].y,
-                             kp2.keypoints[i].size, kp2.keypoints[i].angle, kp2.keypoints[i].response,
-                             kp2.keypoints[i].octave, kp2.keypoints[i].classID);
-        kp2vec.push_back(keypt);
-    }
-
-    cv::Scalar cvmatchescolor = cv::Scalar(matchesColor.val1, matchesColor.val2, matchesColor.val3, matchesColor.val4);
-    cv::Scalar cvpointcolor = cv::Scalar(pointColor.val1, pointColor.val2, pointColor.val3, pointColor.val4);
-
-    std::vector<cv::DMatch> dmatchvec;
-    cv::DMatch dm;
-
-    for (int i = 0; i < matches1to2.length; i++)
-    {
-        dm = cv::DMatch(matches1to2.dmatches[i].queryIdx, matches1to2.dmatches[i].trainIdx,
-                        matches1to2.dmatches[i].imgIdx, matches1to2.dmatches[i].distance);
-        dmatchvec.push_back(dm);
-    }
-
-    std::vector<char> maskvec;
-
-    for (int i = 0; i < matchesMask.length; i++)
-    {
-        maskvec.push_back(matchesMask.data[i]);
-    }
-
-    cv::drawMatches(*img1, kp1vec, *img2, kp2vec, dmatchvec, *outImg, cvmatchescolor, cvpointcolor, maskvec, static_cast<cv::DrawMatchesFlags>(flags));
+  BEGIN_WRAP
+  auto mColor = cv::Scalar(matchesColor.val1, matchesColor.val2, matchesColor.val3, matchesColor.val4);
+  auto pColor = cv::Scalar(pointColor.val1, pointColor.val2, pointColor.val3, pointColor.val4);
+  cv::drawMatches(*img1.ptr, *kp1.ptr, *img2.ptr, *kp2.ptr, *matches1to2.ptr, *outImg.ptr, mColor, pColor,
+                  *matchesMask.ptr, static_cast<cv::DrawMatchesFlags>(flags));
+  END_WRAP
 }

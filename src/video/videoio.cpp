@@ -8,104 +8,124 @@
 
 #include "videoio.h"
 
+// VideoCapture
+CvStatus VideoCapture_New(VideoCapture *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::VideoCapture()};
+  END_WRAP
+}
+CvStatus VideoCapture_Close(VideoCapture *self)
+{
+  BEGIN_WRAP
+  delete self->ptr;
+  self->ptr = nullptr;
+  END_WRAP
+}
+CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->open(uri);
+  END_WRAP
+}
+CvStatus VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->open(uri, apiPreference);
+  END_WRAP
+}
+CvStatus VideoCapture_OpenDevice(VideoCapture self, int device, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->open(device);
+  END_WRAP
+}
+CvStatus VideoCapture_OpenDeviceWithAPI(VideoCapture self, int device, int apiPreference, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->open(device, apiPreference);
+  END_WRAP
+}
+CvStatus VideoCapture_Set(VideoCapture self, int prop, double param)
+{
+  BEGIN_WRAP
+  self.ptr->set(prop, param);
+  END_WRAP
+}
+CvStatus VideoCapture_Get(VideoCapture self, int prop, double *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->get(prop);
+  END_WRAP
+}
+CvStatus VideoCapture_IsOpened(VideoCapture self, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->isOpened();
+  END_WRAP
+}
+CvStatus VideoCapture_Read(VideoCapture self, Mat buf, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->read(*buf.ptr);
+  END_WRAP
+}
+CvStatus VideoCapture_Release(VideoCapture self)
+{
+  BEGIN_WRAP
+  self.ptr->release();
+  END_WRAP
+}
+CvStatus VideoCapture_Grab(VideoCapture self, int skip)
+{
+  BEGIN_WRAP
+  self.ptr->grab();
+  END_WRAP
+}
+
 // VideoWriter
-VideoCapture VideoCapture_New()
+CvStatus VideoWriter_New(VideoWriter *rval)
 {
-    return new cv::VideoCapture();
+  BEGIN_WRAP
+  *rval = {new cv::VideoWriter()};
+  END_WRAP
 }
-
-void VideoCapture_Close(VideoCapture v)
+CvStatus VideoWriter_Close(VideoWriter *self)
 {
-    delete v;
+  BEGIN_WRAP
+  delete self->ptr;
+  self->ptr = NULL;
+  END_WRAP
 }
-
-bool VideoCapture_Open(VideoCapture v, const char *uri)
+CvStatus VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,
+                          int height, bool isColor)
 {
-    return v->open(uri);
+  BEGIN_WRAP
+  int codecCode = cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]);
+  self.ptr->open(name, codecCode, fps, cv::Size(width, height), isColor);
+  END_WRAP
 }
-
-bool VideoCapture_OpenWithAPI(VideoCapture v, const char *uri, int apiPreference)
+CvStatus VideoWriter_IsOpened(VideoWriter self, int *rval)
 {
-    return v->open(uri, apiPreference);
+  BEGIN_WRAP
+  *rval = self.ptr->isOpened();
+  END_WRAP
 }
-
-bool VideoCapture_OpenDevice(VideoCapture v, int device)
+CvStatus VideoWriter_Write(VideoWriter self, Mat img)
 {
-    return v->open(device);
+  BEGIN_WRAP
+  self.ptr->write(*img.ptr);
+  END_WRAP
 }
-
-bool VideoCapture_OpenDeviceWithAPI(VideoCapture v, int device, int apiPreference)
+CvStatus VideoWriter_Release(VideoWriter self)
 {
-    return v->open(device, apiPreference);
+  BEGIN_WRAP
+  self.ptr->release();
+  END_WRAP
 }
-
-void VideoCapture_Set(VideoCapture v, int prop, double param)
+CvStatus VideoWriter_Fourcc(char c1, char c2, char c3, char c4, int *rval)
 {
-    v->set(prop, param);
-}
-
-double VideoCapture_Get(VideoCapture v, int prop)
-{
-    return v->get(prop);
-}
-
-int VideoCapture_IsOpened(VideoCapture v)
-{
-    return v->isOpened();
-}
-
-int VideoCapture_Read(VideoCapture v, Mat buf)
-{
-    return v->read(*buf);
-}
-
-void VideoCapture_Release(VideoCapture v)
-{
-    v->release();
-}
-
-void VideoCapture_Grab(VideoCapture v, int skip)
-{
-    for (int i = 0; i < skip; i++)
-    {
-        v->grab();
-    }
-}
-
-// VideoWriter
-VideoWriter VideoWriter_New()
-{
-    return new cv::VideoWriter();
-}
-
-void VideoWriter_Close(VideoWriter vw)
-{
-    delete vw;
-}
-
-void VideoWriter_Open(VideoWriter vw, const char *name, const char *codec, double fps, int width,
-                      int height, bool isColor)
-{
-    int codecCode = cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]);
-    vw->open(name, codecCode, fps, cv::Size(width, height), isColor);
-}
-
-int VideoWriter_IsOpened(VideoWriter vw)
-{
-    return vw->isOpened();
-}
-
-void VideoWriter_Write(VideoWriter vw, Mat img)
-{
-    *vw << *img;
-}
-
-void VideoWriter_Release(VideoWriter vw)
-{
-    vw->release();
-}
-
-int VideoWriter_Fourcc(char c1, char c2, char c3, char c4)
-{
-    return cv::VideoWriter::fourcc(c1, c2, c3, c4);
+  BEGIN_WRAP
+  *rval = cv::VideoWriter::fourcc(c1, c2, c3, c4);
+  END_WRAP
 }

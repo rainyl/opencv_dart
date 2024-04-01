@@ -5,108 +5,147 @@
     Modified by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
-
+#pragma once
 #ifndef _OPENCV3_FEATURES2D_H_
 #define _OPENCV3_FEATURES2D_H_
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core/core.h"
 
 #ifdef __cplusplus
-    typedef cv::Ptr<cv::AKAZE> *AKAZE;
-    typedef cv::Ptr<cv::AgastFeatureDetector> *AgastFeatureDetector;
-    typedef cv::Ptr<cv::BRISK> *BRISK;
-    typedef cv::Ptr<cv::FastFeatureDetector> *FastFeatureDetector;
-    typedef cv::Ptr<cv::GFTTDetector> *GFTTDetector;
-    typedef cv::Ptr<cv::KAZE> *KAZE;
-    typedef cv::Ptr<cv::MSER> *MSER;
-    typedef cv::Ptr<cv::ORB> *ORB;
-    typedef cv::Ptr<cv::SimpleBlobDetector> *SimpleBlobDetector;
-    typedef cv::Ptr<cv::BFMatcher> *BFMatcher;
-    typedef cv::Ptr<cv::FlannBasedMatcher> *FlannBasedMatcher;
-    typedef cv::Ptr<cv::SIFT> *SIFT;
+CVD_TYPEDEF(cv::Ptr<cv::AKAZE>, AKAZE)
+CVD_TYPEDEF(cv::Ptr<cv::AgastFeatureDetector>, AgastFeatureDetector)
+CVD_TYPEDEF(cv::Ptr<cv::BRISK>, BRISK)
+CVD_TYPEDEF(cv::Ptr<cv::FastFeatureDetector>, FastFeatureDetector)
+CVD_TYPEDEF(cv::Ptr<cv::GFTTDetector>, GFTTDetector)
+CVD_TYPEDEF(cv::Ptr<cv::KAZE>, KAZE)
+CVD_TYPEDEF(cv::Ptr<cv::MSER>, MSER)
+CVD_TYPEDEF(cv::Ptr<cv::ORB>, ORB)
+CVD_TYPEDEF(cv::Ptr<cv::SimpleBlobDetector>, SimpleBlobDetector)
+CVD_TYPEDEF(cv::Ptr<cv::BFMatcher>, BFMatcher)
+CVD_TYPEDEF(cv::Ptr<cv::FlannBasedMatcher>, FlannBasedMatcher)
+CVD_TYPEDEF(cv::Ptr<cv::SIFT>, SIFT)
 #else
-typedef void *AKAZE;
-typedef void *AgastFeatureDetector;
-typedef void *BRISK;
-typedef void *FastFeatureDetector;
-typedef void *GFTTDetector;
-typedef void *KAZE;
-typedef void *MSER;
-typedef void *ORB;
-typedef void *SimpleBlobDetector;
-typedef void *BFMatcher;
-typedef void *FlannBasedMatcher;
-typedef void *SIFT;
+CVD_TYPEDEF(void, AKAZE)
+CVD_TYPEDEF(void, AgastFeatureDetector)
+CVD_TYPEDEF(void, BRISK)
+CVD_TYPEDEF(void, FastFeatureDetector)
+CVD_TYPEDEF(void, GFTTDetector)
+CVD_TYPEDEF(void, KAZE)
+CVD_TYPEDEF(void, MSER)
+CVD_TYPEDEF(void, ORB)
+CVD_TYPEDEF(void, SimpleBlobDetector)
+CVD_TYPEDEF(void, BFMatcher)
+CVD_TYPEDEF(void, FlannBasedMatcher)
+CVD_TYPEDEF(void, SIFT)
 #endif
 
-    AKAZE AKAZE_Create();
-    void AKAZE_Close(AKAZE a);
-    struct KeyPoints AKAZE_Detect(AKAZE a, Mat src);
-    struct KeyPoints AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc);
+CVD_TYPEDEF_PTR(AKAZE)
+CVD_TYPEDEF_PTR(AgastFeatureDetector)
+CVD_TYPEDEF_PTR(BRISK)
+CVD_TYPEDEF_PTR(FastFeatureDetector)
+CVD_TYPEDEF_PTR(GFTTDetector)
+CVD_TYPEDEF_PTR(KAZE)
+CVD_TYPEDEF_PTR(MSER)
+CVD_TYPEDEF_PTR(ORB)
+CVD_TYPEDEF_PTR(SimpleBlobDetector)
+CVD_TYPEDEF_PTR(BFMatcher)
+CVD_TYPEDEF_PTR(FlannBasedMatcher)
+CVD_TYPEDEF_PTR(SIFT)
 
-    AgastFeatureDetector AgastFeatureDetector_Create();
-    void AgastFeatureDetector_Close(AgastFeatureDetector a);
-    struct KeyPoints AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src);
+// Wrapper for SimpleBlobDetectorParams aka SimpleBlobDetector::Params
+typedef struct SimpleBlobDetectorParams {
+  unsigned char blobColor;
+  bool          filterByArea;
+  bool          filterByCircularity;
+  bool          filterByColor;
+  bool          filterByConvexity;
+  bool          filterByInertia;
+  float         maxArea;
+  float         maxCircularity;
+  float         maxConvexity;
+  float         maxInertiaRatio;
+  float         maxThreshold;
+  float         minArea;
+  float         minCircularity;
+  float         minConvexity;
+  float         minDistBetweenBlobs;
+  float         minInertiaRatio;
+  size_t        minRepeatability;
+  float         minThreshold;
+  float         thresholdStep;
+} SimpleBlobDetectorParams;
 
-    BRISK BRISK_Create();
-    void BRISK_Close(BRISK b);
-    struct KeyPoints BRISK_Detect(BRISK b, Mat src);
-    struct KeyPoints BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc);
+CvStatus AKAZE_Create(AKAZE *rval);
+void     AKAZE_Close(AKAZE *a);
+CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval);
+CvStatus AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-    FastFeatureDetector FastFeatureDetector_Create();
-    FastFeatureDetector FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type);
-    void FastFeatureDetector_Close(FastFeatureDetector f);
-    struct KeyPoints FastFeatureDetector_Detect(FastFeatureDetector f, Mat src);
+CvStatus AgastFeatureDetector_Create(AgastFeatureDetector *rval);
+void     AgastFeatureDetector_Close(AgastFeatureDetector *a);
+CvStatus AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval);
 
-    GFTTDetector GFTTDetector_Create();
-    void GFTTDetector_Close(GFTTDetector a);
-    struct KeyPoints GFTTDetector_Detect(GFTTDetector a, Mat src);
+CvStatus BRISK_Create(BRISK *rval);
+void     BRISK_Close(BRISK *b);
+CvStatus BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval);
+CvStatus BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-    KAZE KAZE_Create();
-    void KAZE_Close(KAZE a);
-    struct KeyPoints KAZE_Detect(KAZE a, Mat src);
-    struct KeyPoints KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc);
+CvStatus FastFeatureDetector_Create(FastFeatureDetector *rval);
+CvStatus FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type,
+                                              FastFeatureDetector *rval);
+void     FastFeatureDetector_Close(FastFeatureDetector *f);
+CvStatus FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval);
 
-    MSER MSER_Create();
-    void MSER_Close(MSER a);
-    struct KeyPoints MSER_Detect(MSER a, Mat src);
+CvStatus GFTTDetector_Create(GFTTDetector *rval);
+void     GFTTDetector_Close(GFTTDetector *a);
+CvStatus GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval);
 
-    ORB ORB_Create();
-    ORB ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold, int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold);
-    void ORB_Close(ORB o);
-    struct KeyPoints ORB_Detect(ORB o, Mat src);
-    struct KeyPoints ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc);
+CvStatus KAZE_Create(KAZE *rval);
+void     KAZE_Close(KAZE *a);
+CvStatus KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval);
+CvStatus KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-    SimpleBlobDetector SimpleBlobDetector_Create();
-    SimpleBlobDetector SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params);
-    void SimpleBlobDetector_Close(SimpleBlobDetector b);
-    struct KeyPoints SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src);
-    SimpleBlobDetectorParams SimpleBlobDetectorParams_Create();
+CvStatus MSER_Create(MSER *rval);
+void     MSER_Close(MSER *a);
+CvStatus MSER_Detect(MSER a, Mat src, VecKeyPoint *rval);
 
-    BFMatcher BFMatcher_Create();
-    BFMatcher BFMatcher_CreateWithParams(int normType, bool crossCheck);
-    void BFMatcher_Close(BFMatcher b);
-    struct DMatches BFMatcher_Match(BFMatcher b, Mat query, Mat train);
-    struct MultiDMatches BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k);
+CvStatus ORB_Create(ORB *rval);
+CvStatus ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
+                              int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
+                              ORB *rval);
+void     ORB_Close(ORB *o);
+CvStatus ORB_Detect(ORB o, Mat src, VecKeyPoint *rval);
+CvStatus ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-    FlannBasedMatcher FlannBasedMatcher_Create();
-    void FlannBasedMatcher_Close(FlannBasedMatcher f);
-    struct MultiDMatches FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k);
+CvStatus SimpleBlobDetector_Create(SimpleBlobDetector *rval);
+CvStatus SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval);
+void     SimpleBlobDetector_Close(SimpleBlobDetector *b);
+CvStatus SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval);
+CvStatus SimpleBlobDetectorParams_Create(SimpleBlobDetectorParams *rval);
 
-    void DrawKeyPoints(Mat src, struct KeyPoints kp, Mat dst, const Scalar s, int flags);
+CvStatus BFMatcher_Create(BFMatcher *rval);
+CvStatus BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rval);
+void     BFMatcher_Close(BFMatcher *b);
+CvStatus BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval);
+CvStatus BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k, VecVecDMatch *rval);
 
-    SIFT SIFT_Create();
-    void SIFT_Close(SIFT f);
-    struct KeyPoints SIFT_Detect(SIFT f, Mat src);
-    struct KeyPoints SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc);
+CvStatus FlannBasedMatcher_Create(FlannBasedMatcher *rval);
+void     FlannBasedMatcher_Close(FlannBasedMatcher *f);
+CvStatus FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval);
 
-    void DrawMatches(Mat img1, struct KeyPoints kp1, Mat img2, struct KeyPoints kp2, struct DMatches matches1to2, Mat outImg, const Scalar matchesColor, const Scalar pointColor, struct ByteArray matchesMask, int flags);
+CvStatus DrawKeyPoints(Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags);
+
+CvStatus SIFT_Create(SIFT *rval);
+void     SIFT_Close(SIFT *f);
+CvStatus SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval);
+CvStatus SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+
+CvStatus DrawMatches(Mat img1, VecKeyPoint kp1, Mat img2, VecKeyPoint kp2, VecDMatch matches1to2, Mat outImg,
+                     const Scalar matchesColor, const Scalar pointColor, VecChar matchesMask, int flags);
 
 #ifdef __cplusplus
 }

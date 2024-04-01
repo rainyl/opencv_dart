@@ -9,91 +9,102 @@
 #ifndef _OPENCV3_VIDEO_H_
 #define _OPENCV3_VIDEO_H_
 
-#ifdef __cplusplus
-#include <opencv2/opencv.hpp>
-#include <opencv2/video.hpp>
-extern "C"
-{
-#endif
-
 #include "core/core.h"
 
 #ifdef __cplusplus
-    typedef cv::Ptr<cv::BackgroundSubtractorMOG2> *BackgroundSubtractorMOG2;
-    typedef cv::Ptr<cv::BackgroundSubtractorKNN> *BackgroundSubtractorKNN;
-    typedef cv::Ptr<cv::Tracker> *Tracker;
-    typedef cv::Ptr<cv::TrackerMIL> *TrackerMIL;
-    typedef cv::Ptr<cv::TrackerGOTURN> *TrackerGOTURN;
-    typedef cv::KalmanFilter *KalmanFilter;
-#else
-typedef void *BackgroundSubtractorMOG2;
-typedef void *BackgroundSubtractorKNN;
-typedef void *Tracker;
-typedef void *TrackerMIL;
-typedef void *TrackerGOTURN;
-typedef void *KalmanFilter;
+#include <opencv2/opencv.hpp>
+#include <opencv2/video.hpp>
+extern "C" {
 #endif
 
-    BackgroundSubtractorMOG2 BackgroundSubtractorMOG2_Create();
-    BackgroundSubtractorMOG2 BackgroundSubtractorMOG2_CreateWithParams(int history, double varThreshold, bool detectShadows);
-    void BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2 b);
-    void BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 b, Mat src, Mat dst);
+#ifdef __cplusplus
+CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorMOG2>, BackgroundSubtractorMOG2)
+CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorKNN>, BackgroundSubtractorKNN)
+CVD_TYPEDEF(cv::Ptr<cv::Tracker>, Tracker)
+CVD_TYPEDEF(cv::Ptr<cv::TrackerMIL>, TrackerMIL)
+CVD_TYPEDEF(cv::Ptr<cv::TrackerGOTURN>, TrackerGOTURN)
+CVD_TYPEDEF(cv::KalmanFilter, KalmanFilter)
+#else
+CVD_TYPEDEF(void, BackgroundSubtractorMOG2)
+CVD_TYPEDEF(void, BackgroundSubtractorKNN)
+CVD_TYPEDEF(void, Tracker)
+CVD_TYPEDEF(void, TrackerMIL)
+CVD_TYPEDEF(void, TrackerGOTURN)
+CVD_TYPEDEF(void, KalmanFilter)
+#endif
 
-    BackgroundSubtractorKNN BackgroundSubtractorKNN_Create();
-    BackgroundSubtractorKNN BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Threshold, bool detectShadows);
+CVD_TYPEDEF_PTR(BackgroundSubtractorMOG2)
+CVD_TYPEDEF_PTR(BackgroundSubtractorKNN)
+CVD_TYPEDEF_PTR(Tracker)
+CVD_TYPEDEF_PTR(TrackerMIL)
+CVD_TYPEDEF_PTR(TrackerGOTURN)
+CVD_TYPEDEF_PTR(KalmanFilter)
 
-    void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNN b);
-    void BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN b, Mat src, Mat dst);
+CvStatus BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval);
+CvStatus BackgroundSubtractorMOG2_CreateWithParams(int history, double varThreshold, bool detectShadows,
+                                                   BackgroundSubtractorMOG2 *rval);
+void     BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2 *self);
+CvStatus BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 self, Mat src, Mat dst);
 
-    void CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, Mat prevPts, Mat nextPts, Mat status, Mat err);
-    void CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, Mat prevPts, Mat nextPts, Mat status, Mat err, Size winSize, int maxLevel, TermCriteria criteria, int flags, double minEigThreshold);
-    void CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
+CvStatus BackgroundSubtractorKNN_Create(BackgroundSubtractorKNN *rval);
+CvStatus BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Threshold, bool detectShadows,
+                                                  BackgroundSubtractorKNN *rval);
+void     BackgroundSubtractorKNN_Close(BackgroundSubtractorKNN *self);
+CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst);
+
+CvStatus CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
+                              VecUChar status, VecFloat err);
+CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
+                                        VecUChar status, VecFloat err, Size winSize, int maxLevel,
+                                        TermCriteria criteria, int flags, double minEigThreshold);
+CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
                                   int winsize, int iterations, int polyN, double polySigma, int flags);
 
-    double FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int motionType, TermCriteria criteria, Mat inputMask, int gaussFiltSize);
+CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int motionType,
+                          TermCriteria criteria, Mat inputMask, int gaussFiltSize, double *rval);
 
-    bool Tracker_Init(Tracker self, Mat image, Rect boundingBox);
-    bool Tracker_Update(Tracker self, Mat image, Rect *boundingBox);
+CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect boundingBox);
+CvStatus TrackerMIL_Update(TrackerMIL self, Mat image, Rect *boundingBox, bool *rval);
+CvStatus TrackerMIL_Create(TrackerMIL *rval);
+void     TrackerMIL_Close(TrackerMIL *self);
 
-    TrackerMIL TrackerMIL_Create();
-    void TrackerMIL_Close(TrackerMIL self);
+CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams, int type,
+                          KalmanFilter *rval);
+void     KalmanFilter_Close(KalmanFilter *self);
 
-    KalmanFilter KalmanFilter_New(int dynamParams, int measureParams);
-    KalmanFilter KalmanFilter_NewWithParams(int dynamParams, int measureParams, int controlParams, int type);
-    void KalmanFilter_Close(KalmanFilter kf);
+CvStatus KalmanFilter_Init(KalmanFilter self, int dynamParams, int measureParams);
+CvStatus KalmanFilter_InitWithParams(KalmanFilter self, int dynamParams, int measureParams, int controlParams,
+                                     int type);
+CvStatus KalmanFilter_Predict(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_PredictWithParams(KalmanFilter self, Mat control, Mat *rval);
+CvStatus KalmanFilter_Correct(KalmanFilter self, Mat measurement, Mat *rval);
 
-    void KalmanFilter_Init(KalmanFilter kf, int dynamParams, int measureParams);
-    void KalmanFilter_InitWithParams(KalmanFilter kf, int dynamParams, int measureParams, int controlParams, int type);
-    Mat KalmanFilter_Predict(KalmanFilter kf);
-    Mat KalmanFilter_PredictWithParams(KalmanFilter kf, Mat control);
-    Mat KalmanFilter_Correct(KalmanFilter kf, Mat measurement);
+CvStatus KalmanFilter_GetStatePre(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetStatePost(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTransitionMatrix(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetControlMatrix(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetMeasurementMatrix(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetProcessNoiseCov(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetMeasurementNoiseCov(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetErrorCovPre(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetGain(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetErrorCovPost(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTemp1(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTemp2(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTemp3(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTemp4(KalmanFilter self, Mat *rval);
+CvStatus KalmanFilter_GetTemp5(KalmanFilter self, Mat *rval);
 
-    Mat KalmanFilter_GetStatePre(KalmanFilter kf);
-    Mat KalmanFilter_GetStatePost(KalmanFilter kf);
-    Mat KalmanFilter_GetTransitionMatrix(KalmanFilter kf);
-    Mat KalmanFilter_GetControlMatrix(KalmanFilter kf);
-    Mat KalmanFilter_GetMeasurementMatrix(KalmanFilter kf);
-    Mat KalmanFilter_GetProcessNoiseCov(KalmanFilter kf);
-    Mat KalmanFilter_GetMeasurementNoiseCov(KalmanFilter kf);
-    Mat KalmanFilter_GetErrorCovPre(KalmanFilter kf);
-    Mat KalmanFilter_GetGain(KalmanFilter kf);
-    Mat KalmanFilter_GetErrorCovPost(KalmanFilter kf);
-    Mat KalmanFilter_GetTemp1(KalmanFilter kf);
-    Mat KalmanFilter_GetTemp2(KalmanFilter kf);
-    Mat KalmanFilter_GetTemp3(KalmanFilter kf);
-    Mat KalmanFilter_GetTemp4(KalmanFilter kf);
-    Mat KalmanFilter_GetTemp5(KalmanFilter kf);
-
-    void KalmanFilter_SetStatePre(KalmanFilter kf, Mat statePre);
-    void KalmanFilter_SetStatePost(KalmanFilter kf, Mat statePost);
-    void KalmanFilter_SetTransitionMatrix(KalmanFilter kf, Mat transitionMatrix);
-    void KalmanFilter_SetControlMatrix(KalmanFilter kf, Mat controlMatrix);
-    void KalmanFilter_SetMeasurementMatrix(KalmanFilter kf, Mat measurementMatrix);
-    void KalmanFilter_SetProcessNoiseCov(KalmanFilter kf, Mat processNoiseCov);
-    void KalmanFilter_SetMeasurementNoiseCov(KalmanFilter kf, Mat measurementNoiseCov);
-    void KalmanFilter_SetErrorCovPre(KalmanFilter kf, Mat errorCovPre);
-    void KalmanFilter_SetGain(KalmanFilter kf, Mat gain);
-    void KalmanFilter_SetErrorCovPost(KalmanFilter kf, Mat errorCovPost);
+CvStatus KalmanFilter_SetStatePre(KalmanFilter self, Mat statePre);
+CvStatus KalmanFilter_SetStatePost(KalmanFilter self, Mat statePost);
+CvStatus KalmanFilter_SetTransitionMatrix(KalmanFilter self, Mat transitionMatrix);
+CvStatus KalmanFilter_SetControlMatrix(KalmanFilter self, Mat controlMatrix);
+CvStatus KalmanFilter_SetMeasurementMatrix(KalmanFilter self, Mat measurementMatrix);
+CvStatus KalmanFilter_SetProcessNoiseCov(KalmanFilter self, Mat processNoiseCov);
+CvStatus KalmanFilter_SetMeasurementNoiseCov(KalmanFilter self, Mat measurementNoiseCov);
+CvStatus KalmanFilter_SetErrorCovPre(KalmanFilter self, Mat errorCovPre);
+CvStatus KalmanFilter_SetGain(KalmanFilter self, Mat gain);
+CvStatus KalmanFilter_SetErrorCovPost(KalmanFilter self, Mat errorCovPost);
 
 #ifdef __cplusplus
 }

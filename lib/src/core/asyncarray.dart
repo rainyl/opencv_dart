@@ -22,7 +22,10 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
     return arr;
   }
 
-  static final finalizer = Finalizer(CFFI.AsyncArray_Close);
+  static final finalizer = Finalizer<cvg.AsyncArrayPtr>((p){
+    CFFI.AsyncArray_Close(p);
+    calloc.free(p);
+  });
 
   Mat get() {
     final dst = Mat.empty();

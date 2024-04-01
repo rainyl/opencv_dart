@@ -62,7 +62,8 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   VecKeyPoint._(this.ptr) {
     finalizer.attach(this, ptr);
   }
-  factory VecKeyPoint.fromPointer(cvg.VecKeyPoint ptr) {
+  factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr) => VecKeyPoint._(ptr);
+  factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
     final p = calloc<cvg.VecKeyPoint>();
     cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));
     final vec = VecKeyPoint._(p);
@@ -89,7 +90,10 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
 
   @override
   cvg.VecKeyPointPtr ptr;
-  static final finalizer = Finalizer(CFFI.VecKeyPoint_Close);
+  static final finalizer = Finalizer<cvg.VecKeyPointPtr>((p){
+    CFFI.VecKeyPoint_Close(p);
+    calloc.free(p);
+  });
   @override
   Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
 

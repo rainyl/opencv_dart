@@ -11,43 +11,45 @@
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core/core.h"
 
 #ifdef __cplusplus
-    typedef cv::VideoCapture *VideoCapture;
-    typedef cv::VideoWriter *VideoWriter;
+CVD_TYPEDEF(cv::VideoCapture, VideoCapture)
+CVD_TYPEDEF(cv::VideoWriter, VideoWriter)
 #else
-typedef void *VideoCapture;
-typedef void *VideoWriter;
+CVD_TYPEDEF(void, VideoCapture)
+CVD_TYPEDEF(void, VideoWriter)
 #endif
 
-    // VideoCapture
-    VideoCapture VideoCapture_New();
-    void VideoCapture_Close(VideoCapture v);
-    bool VideoCapture_Open(VideoCapture v, const char *uri);
-    bool VideoCapture_OpenWithAPI(VideoCapture v, const char *uri, int apiPreference);
-    bool VideoCapture_OpenDevice(VideoCapture v, int device);
-    bool VideoCapture_OpenDeviceWithAPI(VideoCapture v, int device, int apiPreference);
-    void VideoCapture_Set(VideoCapture v, int prop, double param);
-    double VideoCapture_Get(VideoCapture v, int prop);
-    int VideoCapture_IsOpened(VideoCapture v);
-    int VideoCapture_Read(VideoCapture v, Mat buf);
-    void VideoCapture_Release(VideoCapture v);
-    void VideoCapture_Grab(VideoCapture v, int skip);
+CVD_TYPEDEF_PTR(VideoCapture)
+CVD_TYPEDEF_PTR(VideoWriter)
 
-    // VideoWriter
-    VideoWriter VideoWriter_New();
-    void VideoWriter_Close(VideoWriter vw);
-    void VideoWriter_Open(VideoWriter vw, const char *name, const char *codec, double fps, int width,
+// VideoCapture
+CvStatus VideoCapture_New(VideoCapture *rval);
+CvStatus VideoCapture_Close(VideoCapture *self);
+CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval);
+CvStatus VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval);
+CvStatus VideoCapture_OpenDevice(VideoCapture self, int device, bool *rval);
+CvStatus VideoCapture_OpenDeviceWithAPI(VideoCapture self, int device, int apiPreference, bool *rval);
+CvStatus VideoCapture_Set(VideoCapture self, int prop, double param);
+CvStatus VideoCapture_Get(VideoCapture self, int prop, double *rval);
+CvStatus VideoCapture_IsOpened(VideoCapture self, int *rval);
+CvStatus VideoCapture_Read(VideoCapture self, Mat buf, int *rval);
+CvStatus VideoCapture_Release(VideoCapture self);
+CvStatus VideoCapture_Grab(VideoCapture self, int skip);
+
+// VideoWriter
+CvStatus VideoWriter_New(VideoWriter *rval);
+CvStatus VideoWriter_Close(VideoWriter *self);
+CvStatus VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,
                           int height, bool isColor);
-    int VideoWriter_IsOpened(VideoWriter vw);
-    void VideoWriter_Write(VideoWriter vw, Mat img);
-    void VideoWriter_Release(VideoWriter vw);
-    int VideoWriter_Fourcc(char c1, char c2, char c3, char c4);
+CvStatus VideoWriter_IsOpened(VideoWriter self, int *rval);
+CvStatus VideoWriter_Write(VideoWriter self, Mat img);
+CvStatus VideoWriter_Release(VideoWriter self);
+CvStatus VideoWriter_Fourcc(char c1, char c2, char c3, char c4, int *rval);
 
 #ifdef __cplusplus
 }

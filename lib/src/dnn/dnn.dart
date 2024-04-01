@@ -23,14 +23,17 @@ class Layer extends CvStruct<cvg.Layer> {
   }
   factory Layer.fromNative(cvg.LayerPtr ptr) => Layer._(ptr);
 
-  static final finalizer = Finalizer<cvg.LayerPtr>(CFFI.Layer_Close);
+  static final finalizer = Finalizer<cvg.LayerPtr>((p0) {
+    CFFI.Layer_Close(p0);
+    calloc.free(p0);
+  });
 
   /// GetName returns name for this layer.
   String get name {
     return cvRunArena<String>((arena) {
       final p = arena<cvg.VecChar>();
       cvRun(() => CFFI.Layer_GetName(ref, p));
-      final vec = VecChar.fromPointer(p.ref);
+      final vec = VecChar.fromVec(p.ref);
       return vec.asString();
     });
   }
@@ -40,7 +43,7 @@ class Layer extends CvStruct<cvg.Layer> {
     return cvRunArena<String>((arena) {
       final p = arena<cvg.VecChar>();
       cvRun(() => CFFI.Layer_GetType(ref, p));
-      final vec = VecChar.fromPointer(p.ref);
+      final vec = VecChar.fromVec(p.ref);
       return vec.asString();
     });
   }
@@ -272,7 +275,7 @@ class Net extends CvStruct<cvg.Net> {
     return cvRunArena<String>((arena) {
       final p = arena<cvg.VecChar>();
       cvRun(() => CFFI.Net_Dump(ref, p));
-      final vec = VecChar.fromPointer(p.ref);
+      final vec = VecChar.fromVec(p.ref);
       return vec.asString();
     });
   }
@@ -323,7 +326,7 @@ class Net extends CvStruct<cvg.Net> {
       final vecName = names.i8;
       final vecMat = arena<cvg.VecMat>();
       cvRun(() => CFFI.Net_ForwardLayers(ref, vecMat, vecName.ref));
-      return VecMat.fromPointer(vecMat.ref);
+      return VecMat.fromVec(vecMat.ref);
     });
   }
 
@@ -358,7 +361,7 @@ class Net extends CvStruct<cvg.Net> {
     return using<List<String>>((arena) {
       final cNames = arena<cvg.VecVecChar>();
       cvRun(() => CFFI.Net_GetLayerNames(ref, cNames));
-      final vec = VecVecChar.fromPointer(cNames.ref);
+      final vec = VecVecChar.fromVec(cNames.ref);
       return vec.asStringList();
     });
   }
@@ -383,7 +386,7 @@ class Net extends CvStruct<cvg.Net> {
     return using<List<int>>((arena) {
       final ids = arena<cvg.VecInt>();
       cvRun(() => CFFI.Net_GetUnconnectedOutLayers(ref, ids));
-      return VecInt.fromPointer(ids.ref).toList();
+      return VecInt.fromVec(ids.ref).toList();
     });
   }
 
@@ -395,13 +398,16 @@ class Net extends CvStruct<cvg.Net> {
       final zp = arena<cvg.VecInt>();
       cvRun(() => CFFI.Net_GetInputDetails(ref, sc, zp));
       return (
-        VecFloat.fromPointer(sc.ref).toList(),
-        VecInt.fromPointer(zp.ref).toList(),
+        VecFloat.fromVec(sc.ref).toList(),
+        VecInt.fromVec(zp.ref).toList(),
       );
     });
   }
 
-  static final finalizer = Finalizer<cvg.NetPtr>(CFFI.Net_Close);
+  static final finalizer = Finalizer<cvg.NetPtr>((p0) {
+    CFFI.Net_Close(p0);
+    calloc.free(p0);
+  });
 
   @override
   List<int> get props => [ptr.address];
@@ -486,7 +492,7 @@ List<Mat> imagesFromBlob(Mat blob) {
   return using<List<Mat>>((arena) {
     final mats = arena<cvg.VecMat>();
     cvRun(() => CFFI.Net_ImagesFromBlob(blob.ref, mats));
-    return VecMat.fromPointer(mats.ref).toList();
+    return VecMat.fromVec(mats.ref).toList();
   });
 }
 

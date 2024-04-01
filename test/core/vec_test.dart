@@ -9,7 +9,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecInt.fromPointer(vec.ref);
+    final vec1 = cv.VecInt.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -20,7 +20,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecUChar.fromPointer(vec.ref);
+    final vec1 = cv.VecUChar.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -31,7 +31,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecChar.fromPointer(vec.ref);
+    final vec1 = cv.VecChar.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -42,7 +42,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecChar.fromPointer(vec.ref);
+    final vec1 = cv.VecVecChar.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -53,7 +53,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecFloat.fromPointer(vec.ref);
+    final vec1 = cv.VecFloat.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -64,7 +64,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecDouble.fromPointer(vec.ref);
+    final vec1 = cv.VecDouble.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -76,7 +76,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "Rect(0, 0, 10, 20)");
 
-    final vec1 = cv.VecRect.fromPointer(vec.ref);
+    final vec1 = cv.VecRect.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -100,7 +100,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "DMatch(0, 0, 0, 0.000)");
 
-    final vec1 = cv.VecDMatch.fromPointer(vec.ref);
+    final vec1 = cv.VecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -112,7 +112,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecDMatch.fromPointer(vec.ref);
+    final vec1 = cv.VecVecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
   });
 
@@ -135,7 +135,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "KeyPoint(0.000, 0.000, 0.000, 0.000, 0.000, 0, 0)");
 
-    final vec1 = cv.VecKeyPoint.fromPointer(vec.ref);
+    final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
     expect(vec1, vec);
   });
 }

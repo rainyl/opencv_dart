@@ -12,19 +12,20 @@
 #include <opencv2/gapi.hpp>
 #include <opencv2/gapi/core.hpp>
 #include <opencv2/gapi/imgproc.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #ifdef __cplusplus
-    typedef cv::GMat *GMat;
+CVD_TYPEDEF(cv::GMat, GMat)
 #else
-typedef void *GMat;
+CVD_TYPEDEF(void, GMat)
 #endif
 
-    CvStatus GMat_New_Empty(GMat *rval);
-    CvStatus GMat_New_FromMat(Mat mat, GMat *rval);
-    CvStatus GMat_Close(GMat mat);
+CVD_TYPEDEF_PTR(GMat)
+
+CvStatus GMat_New_Empty(GMat *rval);
+CvStatus GMat_New_FromMat(Mat mat, GMat *rval);
+CvStatus GMat_Close(GMat *mat);
 
 #ifdef __cplusplus
 }

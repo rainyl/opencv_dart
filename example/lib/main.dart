@@ -113,10 +113,8 @@ class _MyAppState extends State<MyApp> {
                       .load("images/lenna.png");
                   final im =
                       cv.imdecode(data.buffer.asUint8List(), cv.IMREAD_COLOR);
-                  final gray = cv.Mat.empty();
-                  cv.cvtColor(im, gray, cv.COLOR_BGR2GRAY);
-                  final blur = cv.Mat.empty();
-                  cv.gaussianBlur(im, blur, (7, 7), 2, sigmaY: 2);
+                  final gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
+                  final blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
                   setState(() {
                     images = [
                       data.buffer.asUint8List(),

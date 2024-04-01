@@ -10,47 +10,55 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../opencv.g.dart' as cvg;
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
-
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //
 /// For further details, please see:
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
-class MergeMertens implements ffi.Finalizable {
-  MergeMertens._(this.ptr) {
+class MergeMertens extends CvStruct<cvg.MergeMertens> {
+  MergeMertens._(cvg.MergeMertensPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
 
   factory MergeMertens.empty() {
-    final _ptr = _bindings.MergeMertens_Create();
-    return MergeMertens._(_ptr);
+    final p = calloc<cvg.MergeMertens>();
+    cvRun(() => CFFI.MergeMertens_Create(p));
+    return MergeMertens._(p);
   }
 
   factory MergeMertens.create({
-    double contrast_weight = 1.0,
-    double saturation_weight = 1.0,
-    double exposure_weight = 0.0,
+    double contrastWeight = 1.0,
+    double saturationWeight = 1.0,
+    double exposureWeight = 0.0,
   }) {
-    final _ptr = _bindings.MergeMertens_CreateWithParams(contrast_weight, saturation_weight, exposure_weight);
-    return MergeMertens._(_ptr);
+    final p = calloc<cvg.MergeMertens>();
+    cvRun(() => CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p));
+    return MergeMertens._(p);
   }
 
-  final cvg.MergeMertens ptr;
-  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.MergeMertens_Close);
+  static final finalizer = Finalizer<cvg.MergeMertensPtr>((p) {
+    CFFI.MergeMertens_Close(p);
+    calloc.free(p);
+  });
 
   /// BalanceWhite computes merge LDR images using the current MergeMertens.
   /// Return a image MAT : 8bits 3 channel image ( RGB 8 bits )
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
-  Mat process(List<Mat> src) {
+  Mat process(VecMat src) {
     return using<Mat>((arena) {
       final dst = Mat.empty();
-      _bindings.MergeMertens_Process(ptr, src.toMats(arena).ref, dst.ptr);
+      CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
       return dst.convertTo(MatType.CV_8UC3, alpha: 255.0, beta: 0.0);
     });
   }
+
+  @override
+  List<int> get props => [ptr.address];
+
+  @override
+  cvg.MergeMertens get ref => ptr.ref;
 }
 
 /// AlignMTB for converts images to median threshold bitmaps.
@@ -61,8 +69,8 @@ class MergeMertens implements ffi.Finalizable {
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-class AlignMTB implements ffi.Finalizable {
-  AlignMTB._(this.ptr) {
+class AlignMTB extends CvStruct<cvg.AlignMTB> {
+  AlignMTB._(cvg.AlignMTBPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
 
@@ -75,8 +83,9 @@ class AlignMTB implements ffi.Finalizable {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
-    final _ptr = _bindings.AlignMTB_Create();
-    return AlignMTB._(_ptr);
+    final p = calloc<cvg.AlignMTB>();
+    cvRun(() => CFFI.AlignMTB_Create(p));
+    return AlignMTB._(p);
   }
 
   /// returns an AlignMTB for converts images to median threshold bitmaps.
@@ -87,24 +96,30 @@ class AlignMTB implements ffi.Finalizable {
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-  factory AlignMTB.create({int max_bits = 6, int exclude_range = 4, bool cut = true}) {
-    final _ptr = _bindings.AlignMTB_CreateWithParams(max_bits, exclude_range, cut);
-    return AlignMTB._(_ptr);
+  factory AlignMTB.create({int maxBits = 6, int excludeRange = 4, bool cut = true}) {
+    final p = calloc<cvg.AlignMTB>();
+    cvRun(() => CFFI.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
+    return AlignMTB._(p);
   }
 
-  cvg.AlignMTB ptr;
-  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.AlignMTB_Close);
+  static final finalizer = Finalizer<cvg.AlignMTBPtr>((p) {
+    CFFI.AlignMTB_Close(p);
+    calloc.free(p);
+  });
 
-  List<Mat> process(List<Mat> src) {
-    return using<List<Mat>>((arena) {
-      final dst = arena<cvg.Mats>();
-      dst.ref = _bindings.Mats_New();
-      _bindings.AlignMTB_Process(ptr, src.toMats(arena).ref, dst);
-      final res = List.generate(dst.ref.length, (i) => Mat.fromCMat(dst.ref.mats[i]));
-      _bindings.Mats_Close(dst.ref);
-      return res;
+  VecMat process(VecMat src) {
+    return using<VecMat>((arena) {
+      final dst = arena<cvg.VecMat>();
+      CFFI.AlignMTB_Process(ref, src.ref, dst);
+      return VecMat.fromVec(dst.ref);
     });
   }
+
+  @override
+  List<int> get props => [ptr.address];
+
+  @override
+  cvg.AlignMTB get ref => ptr.ref;
 }
 
 /// ColorChange mix two differently colored versions of an image seamlessly.
@@ -114,12 +129,12 @@ class AlignMTB implements ffi.Finalizable {
 Mat colorChange(
   InputArray src,
   InputArray mask, {
-  double red_mul = 1.0,
-  double green_mul = 1.0,
-  double blue_mul = 1.0,
+  double redMul = 1.0,
+  double greenMul = 1.0,
+  double blueMul = 1.0,
 }) {
   final dst = Mat.empty();
-  _bindings.ColorChange(src.ptr, mask.ptr, dst.ptr, red_mul, green_mul, blue_mul);
+  cvRun(() => CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul));
   return dst;
 }
 
@@ -129,7 +144,7 @@ Mat colorChange(
 /// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
 Mat seamlessClone(InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
   final blend = Mat.empty();
-  _bindings.SeamlessClone(src.ptr, dst.ptr, mask.ptr, p.ref, blend.ptr, flags);
+  cvRun(() => CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags));
   return blend;
 }
 
@@ -144,7 +159,7 @@ Mat illuminationChange(
   double beta = 0.4,
 }) {
   final dst = Mat.empty();
-  _bindings.IlluminationChange(src.ptr, mask.ptr, dst.ptr, alpha, beta);
+  cvRun(() => CFFI.IlluminationChange(src.ref, mask.ref, dst.ref, alpha, beta));
   return dst;
 }
 
@@ -155,12 +170,12 @@ Mat illuminationChange(
 Mat textureFlattening(
   InputArray src,
   InputArray mask, {
-  double low_threshold = 30,
-  double high_threshold = 45,
-  int kernel_size = 3,
+  double lowThreshold = 30,
+  double highThreshold = 45,
+  int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  _bindings.TextureFlattening(src.ptr, mask.ptr, dst.ptr, low_threshold, high_threshold, kernel_size);
+  cvRun(() => CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
   return dst;
 }
 
@@ -176,12 +191,14 @@ Mat fastNlMeansDenoising(
   int searchWindowSize = 21,
 }) {
   final dst = Mat.empty();
-  _bindings.FastNlMeansDenoisingWithParams(
-    src.ptr,
-    dst.ptr,
-    h,
-    templateWindowSize,
-    searchWindowSize,
+  cvRun(
+    () => CFFI.FastNlMeansDenoisingWithParams(
+      src.ref,
+      dst.ref,
+      h,
+      templateWindowSize,
+      searchWindowSize,
+    ),
   );
   return dst;
 }
@@ -198,13 +215,15 @@ Mat fastNlMeansDenoisingColored(
   int searchWindowSize = 21,
 }) {
   final dst = Mat.empty();
-  _bindings.FastNlMeansDenoisingColoredWithParams(
-    src.ptr,
-    dst.ptr,
-    h,
-    hColor,
-    templateWindowSize,
-    searchWindowSize,
+  cvRun(
+    () => CFFI.FastNlMeansDenoisingColoredWithParams(
+      src.ref,
+      dst.ref,
+      h,
+      hColor,
+      templateWindowSize,
+      searchWindowSize,
+    ),
   );
   return dst;
 }
@@ -214,7 +233,7 @@ Mat fastNlMeansDenoisingColored(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d1/d79/group__photo__denoise.html#gaa501e71f52fb2dc17ff8ca5e7d2d3619
 Mat fastNlMeansDenoisingColoredMulti(
-  List<Mat> srcImgs,
+  VecMat srcImgs,
   int imgToDenoiseIndex,
   int temporalWindowSize, {
   double h = 3,
@@ -222,29 +241,29 @@ Mat fastNlMeansDenoisingColoredMulti(
   int templateWindowSize = 7,
   int searchWindowSize = 21,
 }) {
-  return using<Mat>((arena) {
-    final dst = Mat.empty();
-    _bindings.FastNlMeansDenoisingColoredMultiWithParams(
-      srcImgs.toMats(arena).ref,
-      dst.ptr,
+  final dst = Mat.empty();
+  cvRun(
+    () => CFFI.FastNlMeansDenoisingColoredMultiWithParams(
+      srcImgs.ref,
+      dst.ref,
       imgToDenoiseIndex,
       temporalWindowSize,
       h,
       hColor,
       templateWindowSize,
       searchWindowSize,
-    );
-    return dst;
-  });
+    ),
+  );
+  return dst;
 }
 
 /// DetailEnhance filter enhances the details of a particular image
 //
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#ga0de660cb6f371a464a74c7b651415975
-Mat detailEnhance(InputArray src, {double sigma_s = 10, double sigma_r = 0.15}) {
+Mat detailEnhance(InputArray src, {double sigmaS = 10, double sigmaR = 0.15}) {
   final dst = Mat.empty();
-  _bindings.DetailEnhance(src.ptr, dst.ptr, sigma_s, sigma_r);
+  cvRun(() => CFFI.DetailEnhance(src.ref, dst.ref, sigmaS, sigmaR));
   return dst;
 }
 
@@ -256,11 +275,11 @@ Mat detailEnhance(InputArray src, {double sigma_s = 10, double sigma_r = 0.15}) 
 Mat edgePreservingFilter(
   InputArray src, {
   int flags = 1,
-  double sigma_s = 60,
-  double sigma_r = 0.4,
+  double sigmaS = 60,
+  double sigmaR = 0.4,
 }) {
   final dst = Mat.empty();
-  _bindings.EdgePreservingFilter(src.ptr, dst.ptr, flags, sigma_s, sigma_r);
+  cvRun(() => CFFI.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR));
   return dst;
 }
 
@@ -270,13 +289,12 @@ Mat edgePreservingFilter(
 /// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gae5930dd822c713b36f8529b21ddebd0c
 (Mat dst1, Mat dst2) pencilSketch(
   InputArray src, {
-  double sigma_s = 60,
-  double sigma_r = 0.07,
-  double shade_factor = 0.02,
+  double sigmaS = 60,
+  double sigmaR = 0.07,
+  double shadeFactor = 0.02,
 }) {
   final dst1 = Mat.empty(), dst2 = Mat.empty();
-
-  _bindings.PencilSketch(src.ptr, dst1.ptr, dst2.ptr, sigma_s, sigma_r, shade_factor);
+  cvRun(() => CFFI.PencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
   return (dst1, dst2);
 }
 
@@ -289,11 +307,11 @@ Mat edgePreservingFilter(
 /// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#gacb0f7324017df153d7b5d095aed53206
 Mat stylization(
   InputArray src, {
-  double sigma_s = 60,
-  double sigma_r = 0.45,
+  double sigmaS = 60,
+  double sigmaR = 0.45,
 }) {
   final dst = Mat.empty();
-  _bindings.Stylization(src.ptr, dst.ptr, sigma_s, sigma_r);
+  cvRun(() => CFFI.Stylization(src.ref, dst.ref, sigmaS, sigmaR));
   return dst;
 }
 
@@ -305,6 +323,6 @@ Mat stylization(
 /// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
 Mat inpaint(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
   final dst = Mat.empty();
-  _bindings.PhotoInpaint(src.ptr, inpaintMask.ptr, dst.ptr, inpaintRadius, flags);
+  cvRun(() => CFFI.PhotoInpaint(src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags));
   return dst;
 }

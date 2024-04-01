@@ -7,209 +7,169 @@
 */
 
 #include "objdetect.h"
+#include <vector>
 
 // CascadeClassifier
-
-CascadeClassifier CascadeClassifier_New()
+CvStatus CascadeClassifier_New(CascadeClassifier *rval)
 {
-    return new cv::CascadeClassifier();
+  BEGIN_WRAP
+  *rval = {new cv::CascadeClassifier()};
+  END_WRAP
+}
+void CascadeClassifier_Close(CascadeClassifier *cs)
+{
+  delete cs->ptr;
+  cs->ptr = nullptr;
+}
+CvStatus CascadeClassifier_Load(CascadeClassifier cs, const char *name, int *rval)
+{
+  BEGIN_WRAP
+  *rval = cs.ptr->load(name);
+  END_WRAP
+}
+CvStatus CascadeClassifier_DetectMultiScale(CascadeClassifier cs, Mat img, VecRect *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::Rect> rects = std::vector<cv::Rect>();
+  cs.ptr->detectMultiScale(*img.ptr, rects);
+  *rval = {new std::vector<cv::Rect>(rects)};
+  END_WRAP
+}
+CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier cs, Mat img, double scale,
+                                                      int minNeighbors, int flags, Size minSize, Size maxSize,
+                                                      VecRect *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::Rect> rects = std::vector<cv::Rect>();
+  auto                  minsize = cv::Size(minSize.width, minSize.height);
+  auto                  maxsize = cv::Size(maxSize.width, maxSize.height);
+  cs.ptr->detectMultiScale(*img.ptr, rects, scale, minNeighbors, flags, minsize, maxsize);
+  *rval = {new std::vector<cv::Rect>(rects)};
+  END_WRAP
 }
 
-void CascadeClassifier_Close(CascadeClassifier cs)
+CvStatus HOGDescriptor_New(HOGDescriptor *rval)
 {
-    delete cs;
+  BEGIN_WRAP
+  *rval = {new cv::HOGDescriptor()};
+  END_WRAP
+}
+void HOGDescriptor_Close(HOGDescriptor *hog)
+{
+  delete hog->ptr;
+  hog->ptr = nullptr;
+}
+CvStatus HOGDescriptor_Load(HOGDescriptor hog, const char *name, int *rval)
+{
+  BEGIN_WRAP
+  *rval = hog.ptr->load(name);
+  END_WRAP
+}
+CvStatus HOGDescriptor_DetectMultiScale(HOGDescriptor hog, Mat img, VecRect *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::Rect> rects = std::vector<cv::Rect>();
+  hog.ptr->detectMultiScale(*img.ptr, rects);
+  *rval = {new std::vector<cv::Rect>(rects)};
+  END_WRAP
+}
+CvStatus HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor hog, Mat img, double hitThresh,
+                                                  Size winStride, Size padding, double scale,
+                                                  double finalThreshold, bool useMeanshiftGrouping,
+                                                  VecRect *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::Rect> rects = std::vector<cv::Rect>();
+  auto                  winstride = cv::Size(winStride.width, winStride.height);
+  auto                  pad = cv::Size(padding.width, padding.height);
+  hog.ptr->detectMultiScale(*img.ptr, rects, hitThresh, winstride, pad, scale, finalThreshold,
+                            useMeanshiftGrouping);
+  END_WRAP
+}
+CvStatus HOG_GetDefaultPeopleDetector(VecFloat *rval)
+{
+  BEGIN_WRAP
+  *rval = {new std::vector<float>(cv::HOGDescriptor::getDefaultPeopleDetector())};
+  END_WRAP
+}
+CvStatus HOGDescriptor_SetSVMDetector(HOGDescriptor hog, VecFloat det)
+{
+  BEGIN_WRAP
+  hog.ptr->setSVMDetector(*det.ptr);
+  END_WRAP
 }
 
-int CascadeClassifier_Load(CascadeClassifier cs, const char *name)
+CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps)
 {
-    return cs->load(name);
+  BEGIN_WRAP
+  cv::groupRectangles(*rects.ptr, groupThreshold, eps);
+  END_WRAP
 }
 
-struct Rects CascadeClassifier_DetectMultiScale(CascadeClassifier cs, Mat img)
+CvStatus QRCodeDetector_New(QRCodeDetector *rval)
 {
-    std::vector<cv::Rect> detected;
-    cs->detectMultiScale(*img, detected); // uses all default parameters
-    Rect *rects = new Rect[detected.size()];
+  BEGIN_WRAP
+  *rval = {new cv::QRCodeDetector()};
+  END_WRAP
+}
+CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector qr, Mat input, VecPoint *points, Mat *straight_qrcode,
+                                        VecChar *rval)
+{
+  BEGIN_WRAP
+  auto points_ = std::vector<cv::Point>();
+  auto mat = cv::Mat();
+  auto info = qr.ptr->detectAndDecode(*input.ptr, points_, mat);
+  *rval = {new std::vector<char>(info.begin(), info.end())};
+  *points = {new std::vector<cv::Point>(points_)};
+  *straight_qrcode = {new cv::Mat(mat)};
+  END_WRAP
+}
+CvStatus QRCodeDetector_Detect(QRCodeDetector qr, Mat input, VecPoint points, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = qr.ptr->detect(*input.ptr, *points.ptr);
+  END_WRAP
+}
+CvStatus QRCodeDetector_Decode(QRCodeDetector qr, Mat input, VecPoint inputPoints, Mat straight_qrcode,
+                               VecChar *rval)
+{
+  BEGIN_WRAP
+  auto info = qr.ptr->decode(*input.ptr, *inputPoints.ptr, *straight_qrcode.ptr);
+  *rval = {new std::vector<char>(info.begin(), info.end())};
+  END_WRAP
+}
+void QRCodeDetector_Close(QRCodeDetector *qr)
+{
+  delete qr->ptr;
+  qr->ptr = nullptr;
+}
+CvStatus QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, VecPoint points, bool *rval)
+{
+  BEGIN_WRAP
+  *rval = qr.ptr->detectMulti(*input.ptr, *points.ptr);
+  END_WRAP
+}
+CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector qr, Mat input, VecVecChar *decoded,
+                                             VecPoint *points, VecMat *straight_code, bool *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::String> decodedCodes;
+  std::vector<cv::Mat>    straightQrCodes;
+  std::vector<cv::Point> points_;
 
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        Rect r = {detected[i].x, detected[i].y, detected[i].width, detected[i].height};
-        rects[i] = r;
+  *rval = qr.ptr->detectAndDecodeMulti(*input.ptr, decodedCodes, points_, straightQrCodes);
+  if (!*rval) {
+    *decoded = {new std::vector<std::vector<char>>()};
+    *straight_code = {new std::vector<cv::Mat>()};
+    *points = {new std::vector<cv::Point>()};
+  } else {
+    auto vecvec = new std::vector<std::vector<char>>();
+    for (int i = 0; i < decodedCodes.size(); i++) {
+      vecvec->push_back(std::vector<char>(decodedCodes[i].begin(), decodedCodes[i].end()));
     }
-
-    Rects ret = {rects, (int)detected.size()};
-    return ret;
-}
-
-struct Rects CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier cs, Mat img,
-                                                          double scale, int minNeighbors, int flags, Size minSize, Size maxSize)
-{
-
-    cv::Size minSz(minSize.width, minSize.height);
-    cv::Size maxSz(maxSize.width, maxSize.height);
-
-    std::vector<cv::Rect> detected;
-    cs->detectMultiScale(*img, detected, scale, minNeighbors, flags, minSz, maxSz);
-    Rect *rects = new Rect[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        Rect r = {detected[i].x, detected[i].y, detected[i].width, detected[i].height};
-        rects[i] = r;
-    }
-
-    Rects ret = {rects, (int)detected.size()};
-    return ret;
-}
-
-// HOGDescriptor
-
-HOGDescriptor HOGDescriptor_New()
-{
-    return new cv::HOGDescriptor();
-}
-
-void HOGDescriptor_Close(HOGDescriptor hog)
-{
-    delete hog;
-}
-
-int HOGDescriptor_Load(HOGDescriptor hog, const char *name)
-{
-    return hog->load(name);
-}
-
-struct Rects HOGDescriptor_DetectMultiScale(HOGDescriptor hog, Mat img)
-{
-    std::vector<cv::Rect> detected;
-    hog->detectMultiScale(*img, detected);
-    Rect *rects = new Rect[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        Rect r = {detected[i].x, detected[i].y, detected[i].width, detected[i].height};
-        rects[i] = r;
-    }
-
-    Rects ret = {rects, (int)detected.size()};
-    return ret;
-}
-
-struct Rects HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor hog, Mat img,
-                                                      double hitThresh, Size winStride, Size padding, double scale, double finalThresh,
-                                                      bool useMeanshiftGrouping)
-{
-
-    cv::Size wSz(winStride.width, winStride.height);
-    cv::Size pSz(padding.width, padding.height);
-
-    std::vector<cv::Rect> detected;
-    hog->detectMultiScale(*img, detected, hitThresh, wSz, pSz, scale, finalThresh,
-                          useMeanshiftGrouping);
-    Rect *rects = new Rect[detected.size()];
-
-    for (size_t i = 0; i < detected.size(); ++i)
-    {
-        Rect r = {detected[i].x, detected[i].y, detected[i].width, detected[i].height};
-        rects[i] = r;
-    }
-
-    Rects ret = {rects, (int)detected.size()};
-    return ret;
-}
-
-Mat HOG_GetDefaultPeopleDetector()
-{
-    return new cv::Mat(cv::HOGDescriptor::getDefaultPeopleDetector());
-}
-
-void HOGDescriptor_SetSVMDetector(HOGDescriptor hog, Mat det)
-{
-    hog->setSVMDetector(*det);
-}
-
-struct Rects GroupRectangles(struct Rects rects, int groupThreshold, double eps)
-{
-    std::vector<cv::Rect> vRect;
-
-    for (int i = 0; i < rects.length; ++i)
-    {
-        cv::Rect r = cv::Rect(rects.rects[i].x, rects.rects[i].y, rects.rects[i].width,
-                              rects.rects[i].height);
-        vRect.push_back(r);
-    }
-
-    cv::groupRectangles(vRect, groupThreshold, eps);
-
-    Rect *results = new Rect[vRect.size()];
-
-    for (size_t i = 0; i < vRect.size(); ++i)
-    {
-        Rect r = {vRect[i].x, vRect[i].y, vRect[i].width, vRect[i].height};
-        results[i] = r;
-    }
-
-    Rects ret = {results, (int)vRect.size()};
-    return ret;
-}
-
-// QRCodeDetector
-
-QRCodeDetector QRCodeDetector_New()
-{
-    return new cv::QRCodeDetector();
-}
-
-void QRCodeDetector_Close(QRCodeDetector qr)
-{
-    delete qr;
-}
-
-const char *QRCodeDetector_DetectAndDecode(QRCodeDetector qr, Mat input, Mat points, Mat straight_qrcode)
-{
-    cv::String *str = new cv::String(qr->detectAndDecode(*input, *points, *straight_qrcode));
-    return str->c_str();
-}
-
-bool QRCodeDetector_Detect(QRCodeDetector qr, Mat input, Mat points)
-{
-    return qr->detect(*input, *points);
-}
-
-const char *QRCodeDetector_Decode(QRCodeDetector qr, Mat input, Mat inputPoints, Mat straight_qrcode)
-{
-    cv::String *str = new cv::String(qr->detectAndDecode(*input, *inputPoints, *straight_qrcode));
-    return str->c_str();
-}
-
-bool QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, Mat points)
-{
-    return qr->detectMulti(*input, *points);
-}
-
-bool QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector qr, Mat input, CStrings *decoded, Mat points, struct Mats *qrCodes)
-{
-    std::vector<cv::String> decodedCodes;
-    std::vector<cv::Mat> straightQrCodes;
-    bool res = qr->detectAndDecodeMulti(*input, decodedCodes, *points, straightQrCodes);
-    if (!res)
-    {
-        return res;
-    }
-
-    qrCodes->mats = new Mat[straightQrCodes.size()];
-    qrCodes->length = straightQrCodes.size();
-    for (size_t i = 0; i < straightQrCodes.size(); i++)
-    {
-        qrCodes->mats[i] = new cv::Mat(straightQrCodes[i]);
-    }
-
-    char **strs = new char *[decodedCodes.size()];
-    for (size_t i = 0; i < decodedCodes.size(); ++i)
-    {
-        strs[i] = strdup(decodedCodes[i].c_str());
-    }
-    decoded->length = decodedCodes.size();
-    decoded->strs = strs;
-    return res;
+    *decoded = {vecvec};
+    *straight_code = {new std::vector<cv::Mat>(straightQrCodes)};
+    *points = {new std::vector<cv::Point>(points_)};
+  }
+  END_WRAP
 }

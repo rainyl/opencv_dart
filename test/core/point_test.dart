@@ -79,6 +79,14 @@ void main() {
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
+
+    final points1 = cv.VecPoint2f(10, 1, 1);
+    expect(points1.length, 10);
+    expect(points1.first, cv.Point2f(1, 1));
+
+    final points2 = cv.VecPoint2f();
+    expect(points2.length, 0);
+    expect(points2.firstOrNull, null);
   });
 
   test('VecPoint2f.fromMat', () {

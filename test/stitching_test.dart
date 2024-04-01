@@ -10,7 +10,7 @@ void main() {
       cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
       cv.imread("test/images/barcode2.png", flags: cv.IMREAD_COLOR),
     ];
-    final (status, pano) = stitcher.stitch(images);
+    final (status, pano) = stitcher.stitch(images.ocv);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
     cv.imwrite('test/images_out/stitcher_test.jpg', pano);
@@ -27,7 +27,7 @@ void main() {
       cv.imread("test/images/barcode_mask1.png", flags: cv.IMREAD_GRAYSCALE),
       cv.imread("test/images/barcode_mask2.png", flags: cv.IMREAD_GRAYSCALE),
     ];
-    final (status, pano) = stitcher.stitch(images, masks: masks);
+    final (status, pano) = stitcher.stitch(images.ocv, masks: masks.ocv);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
     cv.imwrite('test/images_out/stitcher_test_mask.jpg', pano);

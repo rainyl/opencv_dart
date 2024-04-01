@@ -95,7 +95,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
     return using<List<Point2f>>((arena) {
       final pts = arena<cvg.VecPoint2f>();
       cvRun(() => CFFI.RotatedRect_Points(ptr.ref, pts));
-      return VecPoint2f.fromPointer(pts.ref).toList();
+      return VecPoint2f.fromVec(pts.ref).toList();
     });
   }
 
@@ -131,7 +131,8 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   VecRect._(this.ptr) {
     finalizer.attach(this, ptr);
   }
-  factory VecRect.fromPointer(cvg.VecRect ptr) {
+  factory VecRect.fromPointer(cvg.VecRectPtr ptr) => VecRect._(ptr);
+  factory VecRect.fromVec(cvg.VecRect ptr) {
     final p = calloc<cvg.VecRect>();
     cvRun(() => CFFI.VecRect_NewFromVec(ptr, p));
     final vec = VecRect._(p);
@@ -156,7 +157,10 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
     return length;
   }
 
-  static final finalizer = Finalizer<cvg.VecRectPtr>(CFFI.VecRect_Close);
+  static final finalizer = Finalizer<cvg.VecRectPtr>((p){
+    CFFI.VecRect_Close(p);
+    calloc.free(p);
+  });
 
   @override
   cvg.VecRectPtr ptr;

@@ -13,49 +13,57 @@
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "core/core.h"
 
 #ifdef __cplusplus
-        typedef cv::CascadeClassifier *CascadeClassifier;
-        typedef cv::HOGDescriptor *HOGDescriptor;
-        typedef cv::QRCodeDetector *QRCodeDetector;
+CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier)
+CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor)
+CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector)
 #else
-typedef void *CascadeClassifier;
-typedef void *HOGDescriptor;
-typedef void *QRCodeDetector;
+CVD_TYPEDEF(void, CascadeClassifier)
+CVD_TYPEDEF(void, HOGDescriptor)
+CVD_TYPEDEF(void, QRCodeDetector)
 #endif
 
-        // CascadeClassifier
-        CascadeClassifier CascadeClassifier_New();
-        void CascadeClassifier_Close(CascadeClassifier cs);
-        int CascadeClassifier_Load(CascadeClassifier cs, const char *name);
-        struct Rects CascadeClassifier_DetectMultiScale(CascadeClassifier cs, Mat img);
-        struct Rects CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier cs, Mat img,
-                                                                  double scale, int minNeighbors, int flags, Size minSize, Size maxSize);
+CVD_TYPEDEF_PTR(CascadeClassifier)
+CVD_TYPEDEF_PTR(HOGDescriptor)
+CVD_TYPEDEF_PTR(QRCodeDetector)
 
-        HOGDescriptor HOGDescriptor_New();
-        void HOGDescriptor_Close(HOGDescriptor hog);
-        int HOGDescriptor_Load(HOGDescriptor hog, const char *name);
-        struct Rects HOGDescriptor_DetectMultiScale(HOGDescriptor hog, Mat img);
-        struct Rects HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor hog, Mat img,
-                                                              double hitThresh, Size winStride, Size padding, double scale, double finalThreshold,
-                                                              bool useMeanshiftGrouping);
-        Mat HOG_GetDefaultPeopleDetector();
-        void HOGDescriptor_SetSVMDetector(HOGDescriptor hog, Mat det);
+// CascadeClassifier
+CvStatus CascadeClassifier_New(CascadeClassifier *rval);
+void     CascadeClassifier_Close(CascadeClassifier *cs);
+CvStatus CascadeClassifier_Load(CascadeClassifier cs, const char *name, int *rval);
+CvStatus CascadeClassifier_DetectMultiScale(CascadeClassifier cs, Mat img, VecRect *rval);
+CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier cs, Mat img, double scale,
+                                                      int minNeighbors, int flags, Size minSize, Size maxSize,
+                                                      VecRect *rval);
 
-        struct Rects GroupRectangles(struct Rects rects, int groupThreshold, double eps);
+CvStatus HOGDescriptor_New(HOGDescriptor *rval);
+void     HOGDescriptor_Close(HOGDescriptor *hog);
+CvStatus HOGDescriptor_Load(HOGDescriptor hog, const char *name, int *rval);
+CvStatus HOGDescriptor_DetectMultiScale(HOGDescriptor hog, Mat img, VecRect *rval);
+CvStatus HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor hog, Mat img, double hitThresh,
+                                                  Size winStride, Size padding, double scale,
+                                                  double finalThreshold, bool useMeanshiftGrouping,
+                                                  VecRect *rval);
+CvStatus HOG_GetDefaultPeopleDetector(VecFloat *rval);
+CvStatus HOGDescriptor_SetSVMDetector(HOGDescriptor hog, VecFloat det);
 
-        QRCodeDetector QRCodeDetector_New();
-        const char *QRCodeDetector_DetectAndDecode(QRCodeDetector qr, Mat input, Mat points, Mat straight_qrcode);
-        bool QRCodeDetector_Detect(QRCodeDetector qr, Mat input, Mat points);
-        const char *QRCodeDetector_Decode(QRCodeDetector qr, Mat input, Mat inputPoints, Mat straight_qrcode);
-        void QRCodeDetector_Close(QRCodeDetector qr);
-        bool QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, Mat points);
-        bool QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector qr, Mat input, CStrings *decoded, Mat points, struct Mats *mats);
+CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps);
+
+CvStatus QRCodeDetector_New(QRCodeDetector *rval);
+CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector qr, Mat input, VecPoint *points, Mat *straight_qrcode,
+                                        VecChar *rval);
+CvStatus QRCodeDetector_Detect(QRCodeDetector qr, Mat input, VecPoint points, bool *rval);
+CvStatus QRCodeDetector_Decode(QRCodeDetector qr, Mat input, VecPoint inputPoints, Mat straight_qrcode,
+                               VecChar *rval);
+void     QRCodeDetector_Close(QRCodeDetector *qr);
+CvStatus QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, VecPoint points, bool *rval);
+CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector qr, Mat input, VecVecChar *decoded,
+                                             VecPoint *points, VecMat *straight_code, bool *rval);
 
 #ifdef __cplusplus
 }

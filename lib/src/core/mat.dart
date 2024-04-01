@@ -124,7 +124,10 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  static final finalizer = Finalizer(CFFI.Mat_Close);
+  static final finalizer = Finalizer<cvg.MatPtr>((p){
+    CFFI.Mat_Close(p);
+    calloc.free(p);
+  });
   MatType get type => cvRunArena<MatType>((arena) {
         final p = arena<ffi.Int>();
         cvRun(() => CFFI.Mat_Type(ref, p));
@@ -813,7 +816,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return cvRunArena<Uint8List>((arena) {
       final p = arena<cvg.VecUChar>();
       cvRun(() => CFFI.Mat_Data(ref, p));
-      return VecUChar.fromPointer(p.ref).toU8List(); // TODO: copy 3 times, find a more efficient way
+      return VecUChar.fromVec(p.ref).toU8List(); // TODO: copy 3 times, find a more efficient way
     });
   }
 
@@ -836,7 +839,8 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   VecMat._(this.ptr) {
     finalizer.attach(this, ptr);
   }
-  factory VecMat.fromPointer(cvg.VecMat ptr) {
+  factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
+  factory VecMat.fromVec(cvg.VecMat ptr) {
     final p = calloc<cvg.VecMat>();
     cvRun(() => CFFI.VecMat_NewFromVec(ptr, p));
     final vec = VecMat._(p);

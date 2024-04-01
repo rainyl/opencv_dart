@@ -69,9 +69,9 @@ CvStatus MorphologyExWithParams(Mat src, Mat dst, int op, Mat kernel, Point pt, 
 CvStatus MedianBlur(Mat src, Mat dst, int ksize);
 
 CvStatus Canny(Mat src, Mat edges, double t1, double t2, int apertureSize, bool l2gradient);
-CvStatus CornerSubPix(Mat img, Mat corners, Size winSize, Size zeroZone, TermCriteria criteria);
-CvStatus GoodFeaturesToTrack(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, bool useHarrisDetector, double k);
-CvStatus GoodFeaturesToTrackWithGradient(Mat img, Mat corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, int gradientSize, bool useHarrisDetector, double k);
+CvStatus CornerSubPix(Mat img, VecPoint2f corners, Size winSize, Size zeroZone, TermCriteria criteria);
+CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, bool useHarrisDetector, double k);
+CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f corners, int maxCorners, double quality, double minDist, Mat mask, int blockSize, int gradientSize, bool useHarrisDetector, double k);
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode);
 CvStatus HoughCircles(Mat src, Mat circles, int method, double dp, double minDist);
 CvStatus HoughCirclesWithParams(Mat src, Mat circles, int method, double dp, double minDist, double param1, double param2, int minRadius, int maxRadius);
