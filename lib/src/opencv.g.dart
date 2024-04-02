@@ -1991,6 +1991,112 @@ class CvNative {
   late final _BilateralFilter = _BilateralFilterPtr.asFunction<
       CvStatus Function(Mat, Mat, int, double, double)>();
 
+  CvStatus BlockMeanHash_Close(
+    ffi.Pointer<BlockMeanHash> self,
+  ) {
+    return _BlockMeanHash_Close(
+      self,
+    );
+  }
+
+  late final _BlockMeanHash_ClosePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(ffi.Pointer<BlockMeanHash>)>>(
+      'BlockMeanHash_Close');
+  late final _BlockMeanHash_Close = _BlockMeanHash_ClosePtr.asFunction<
+      CvStatus Function(ffi.Pointer<BlockMeanHash>)>();
+
+  CvStatus BlockMeanHash_Compare(
+    BlockMeanHash self,
+    Mat hashOne,
+    Mat hashTwo,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _BlockMeanHash_Compare(
+      self,
+      hashOne,
+      hashTwo,
+      rval,
+    );
+  }
+
+  late final _BlockMeanHash_ComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(BlockMeanHash, Mat, Mat,
+              ffi.Pointer<ffi.Double>)>>('BlockMeanHash_Compare');
+  late final _BlockMeanHash_Compare = _BlockMeanHash_ComparePtr.asFunction<
+      CvStatus Function(BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus BlockMeanHash_Compute(
+    BlockMeanHash self,
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _BlockMeanHash_Compute(
+      self,
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _BlockMeanHash_ComputePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(BlockMeanHash, Mat, Mat)>>(
+          'BlockMeanHash_Compute');
+  late final _BlockMeanHash_Compute = _BlockMeanHash_ComputePtr.asFunction<
+      CvStatus Function(BlockMeanHash, Mat, Mat)>();
+
+  CvStatus BlockMeanHash_Create(
+    int mode,
+    ffi.Pointer<BlockMeanHash> rval,
+  ) {
+    return _BlockMeanHash_Create(
+      mode,
+      rval,
+    );
+  }
+
+  late final _BlockMeanHash_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Int, ffi.Pointer<BlockMeanHash>)>>('BlockMeanHash_Create');
+  late final _BlockMeanHash_Create = _BlockMeanHash_CreatePtr.asFunction<
+      CvStatus Function(int, ffi.Pointer<BlockMeanHash>)>();
+
+  CvStatus BlockMeanHash_GetMean(
+    BlockMeanHash self,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+    ffi.Pointer<ffi.Int> length,
+  ) {
+    return _BlockMeanHash_GetMean(
+      self,
+      rval,
+      length,
+    );
+  }
+
+  late final _BlockMeanHash_GetMeanPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(BlockMeanHash, ffi.Pointer<ffi.Pointer<ffi.Double>>,
+              ffi.Pointer<ffi.Int>)>>('BlockMeanHash_GetMean');
+  late final _BlockMeanHash_GetMean = _BlockMeanHash_GetMeanPtr.asFunction<
+      CvStatus Function(BlockMeanHash, ffi.Pointer<ffi.Pointer<ffi.Double>>,
+          ffi.Pointer<ffi.Int>)>();
+
+  CvStatus BlockMeanHash_SetMode(
+    BlockMeanHash self,
+    int mode,
+  ) {
+    return _BlockMeanHash_SetMode(
+      self,
+      mode,
+    );
+  }
+
+  late final _BlockMeanHash_SetModePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(BlockMeanHash, ffi.Int)>>(
+          'BlockMeanHash_SetMode');
+  late final _BlockMeanHash_SetMode = _BlockMeanHash_SetModePtr.asFunction<
+      CvStatus Function(BlockMeanHash, int)>();
+
   CvStatus Blur(
     Mat src,
     Mat dst,
@@ -14918,6 +15024,115 @@ class CvNative {
   late final _Zeros = _ZerosPtr.asFunction<
       CvStatus Function(int, int, int, ffi.Pointer<Mat>)>();
 
+  CvStatus averageHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _averageHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _averageHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('averageHashCompare');
+  late final _averageHashCompare = _averageHashComparePtr
+      .asFunction<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus averageHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _averageHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _averageHashComputePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat)>>(
+          'averageHashCompute');
+  late final _averageHashCompute =
+      _averageHashComputePtr.asFunction<CvStatus Function(Mat, Mat)>();
+
+  CvStatus blockMeanHashCompare(
+    Mat a,
+    Mat b,
+    int mode,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _blockMeanHashCompare(
+      a,
+      b,
+      mode,
+      rval,
+    );
+  }
+
+  late final _blockMeanHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, Mat, ffi.Int,
+              ffi.Pointer<ffi.Double>)>>('blockMeanHashCompare');
+  late final _blockMeanHashCompare = _blockMeanHashComparePtr
+      .asFunction<CvStatus Function(Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus blockMeanHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    int mode,
+  ) {
+    return _blockMeanHashCompute(
+      inputArr,
+      outputArr,
+      mode,
+    );
+  }
+
+  late final _blockMeanHashComputePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat, ffi.Int)>>(
+          'blockMeanHashCompute');
+  late final _blockMeanHashCompute =
+      _blockMeanHashComputePtr.asFunction<CvStatus Function(Mat, Mat, int)>();
+
+  CvStatus colorMomentHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _colorMomentHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _colorMomentHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('colorMomentHashCompare');
+  late final _colorMomentHashCompare = _colorMomentHashComparePtr
+      .asFunction<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus colorMomentHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _colorMomentHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _colorMomentHashComputePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat)>>(
+          'colorMomentHashCompute');
+  late final _colorMomentHashCompute =
+      _colorMomentHashComputePtr.asFunction<CvStatus Function(Mat, Mat)>();
+
   CvStatus destroyAllWindows() {
     return _destroyAllWindows();
   }
@@ -14959,6 +15174,50 @@ class CvNative {
   late final _getPredefinedDictionary = _getPredefinedDictionaryPtr
       .asFunction<CvStatus Function(int, ffi.Pointer<ArucoDictionary>)>();
 
+  CvStatus marrHildrethHashCompare(
+    Mat a,
+    Mat b,
+    double alpha,
+    double scale,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _marrHildrethHashCompare(
+      a,
+      b,
+      alpha,
+      scale,
+      rval,
+    );
+  }
+
+  late final _marrHildrethHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Pointer<ffi.Double>)>>('marrHildrethHashCompare');
+  late final _marrHildrethHashCompare = _marrHildrethHashComparePtr.asFunction<
+      CvStatus Function(Mat, Mat, double, double, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus marrHildrethHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    double alpha,
+    double scale,
+  ) {
+    return _marrHildrethHashCompute(
+      inputArr,
+      outputArr,
+      alpha,
+      scale,
+    );
+  }
+
+  late final _marrHildrethHashComputePtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Mat, Mat, ffi.Float, ffi.Float)>>(
+      'marrHildrethHashCompute');
+  late final _marrHildrethHashCompute = _marrHildrethHashComputePtr
+      .asFunction<CvStatus Function(Mat, Mat, double, double)>();
+
   CvStatus openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
@@ -14973,6 +15232,84 @@ class CvNative {
               ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('openCVVersion');
   late final _openCVVersion = _openCVVersionPtr
       .asFunction<CvStatus Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  CvStatus pHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _pHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _pHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('pHashCompare');
+  late final _pHashCompare = _pHashComparePtr
+      .asFunction<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus pHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+  ) {
+    return _pHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _pHashComputePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat)>>('pHashCompute');
+  late final _pHashCompute =
+      _pHashComputePtr.asFunction<CvStatus Function(Mat, Mat)>();
+
+  CvStatus radialVarianceHashCompare(
+    Mat a,
+    Mat b,
+    double sigma,
+    int numOfAngleLine,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _radialVarianceHashCompare(
+      a,
+      b,
+      sigma,
+      numOfAngleLine,
+      rval,
+    );
+  }
+
+  late final _radialVarianceHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, Mat, ffi.Double, ffi.Int,
+              ffi.Pointer<ffi.Double>)>>('radialVarianceHashCompare');
+  late final _radialVarianceHashCompare =
+      _radialVarianceHashComparePtr.asFunction<
+          CvStatus Function(Mat, Mat, double, int, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus radialVarianceHashCompute(
+    Mat inputArr,
+    Mat outputArr,
+    double sigma,
+    int numOfAngleLine,
+  ) {
+    return _radialVarianceHashCompute(
+      inputArr,
+      outputArr,
+      sigma,
+      numOfAngleLine,
+    );
+  }
+
+  late final _radialVarianceHashComputePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, Mat, ffi.Double, ffi.Int)>>(
+      'radialVarianceHashCompute');
+  late final _radialVarianceHashCompute = _radialVarianceHashComputePtr
+      .asFunction<CvStatus Function(Mat, Mat, double, int)>();
 
   void registerErrorCallback(
     ErrorCallback callback,
@@ -15036,6 +15373,10 @@ final class BFMatcher extends ffi.Struct {
 
 typedef BFMatcherPtr = ffi.Pointer<BFMatcher>;
 
+const int BLOCK_MEAN_HASH_MODE_0 = 0;
+
+const int BLOCK_MEAN_HASH_MODE_1 = 1;
+
 final class BRISK extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -15053,6 +15394,12 @@ final class BackgroundSubtractorMOG2 extends ffi.Struct {
 }
 
 typedef BackgroundSubtractorMOG2Ptr = ffi.Pointer<BackgroundSubtractorMOG2>;
+
+final class BlockMeanHash extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef BlockMeanHashPtr = ffi.Pointer<BlockMeanHash>;
 
 final class CLAHE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -15350,6 +15697,13 @@ final class NO_USE_BackgroundSubtractorKNNPtr extends ffi.Struct {
 /// so here we confirm they are included                   \
 final class NO_USE_BackgroundSubtractorMOG2Ptr extends ffi.Struct {
   external ffi.Pointer<BackgroundSubtractorMOG2Ptr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred \
+/// so here we confirm they are included                   \
+final class NO_USE_BlockMeanHashPtr extends ffi.Struct {
+  external ffi.Pointer<BlockMeanHashPtr> p;
 }
 
 /// \

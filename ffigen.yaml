@@ -23,6 +23,7 @@ headers:
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
     - src/extra/aruco.h
+    - src/extra/img_hash.h
     - src/features2d/features2d.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
@@ -42,6 +43,7 @@ headers:
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
     - src/extra/aruco.h
+    - src/extra/img_hash.h
     - src/features2d/features2d.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
