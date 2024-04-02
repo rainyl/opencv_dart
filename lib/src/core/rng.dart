@@ -18,9 +18,7 @@ class Rng extends CvStruct<cvg.RNG> {
     return rng;
   }
 
-  // cv::theRNG() is thread safe and will be automatically freed
-  // so, don't attach again or will be double freed
-  factory Rng.fromTheRng(cvg.RNGPtr p) => Rng._(p, attach: false);
+  factory Rng.fromTheRng(cvg.RNGPtr p) => Rng._(p);
 
   factory Rng.fromSeed(int seed) {
     final p = calloc<cvg.RNG>();

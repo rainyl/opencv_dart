@@ -641,7 +641,9 @@ void main() async {
 
   test('cv.theRNG', () {
     final rng = cv.theRNG();
-    expect(rng.next(), isA<int>());
+    for (var i = 0; i < 10000; i++) {
+      expect(rng.next(), isA<int>());
+    }
   });
 
   test('cv.randShuffle', () {

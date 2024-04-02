@@ -1169,11 +1169,9 @@ double getTickFrequency() {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
 /// Disabled: double free
 Rng theRNG() {
-  return cvRunArena<Rng>((arena) {
-    final p = arena<cvg.RNG>();
-    cvRun(() => CFFI.TheRNG(p));
-    return Rng.fromTheRng(p);
-  });
+  final p = calloc<cvg.RNG>();
+  cvRun(() => CFFI.TheRNG(p));
+  return Rng.fromTheRng(p);
 }
 
 /// RandN Fills the array with normally distributed random numbers.
