@@ -108,7 +108,7 @@ jobs:
           name: libopencv_dart-linux-x64.tar.gz
       - name: Run Test
         run: |
-          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/linux:$LD_LIBRARY_PATH
+          export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
           flutter pub get
           flutter test -x skip-workflow,no-local-files
       - name: Release
@@ -186,8 +186,8 @@ jobs:
           channel: "stable"
       - name: Run Test
         run: |
-          ls -alh $GITHUB_WORKSPACE/macos
-          export DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/macos:$DYLD_LIBRARY_PATH
+          ls -alh ${{github.workspace}}/macos
+          export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
           flutter pub get
           flutter test -x no-local-files
       - name: Release
@@ -227,8 +227,8 @@ jobs:
           channel: "stable"
       - name: Run Test
         run: |
-          ls -alh $GITHUB_WORKSPACE/macos
-          export DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/macos:$DYLD_LIBRARY_PATH
+          ls -alh ${{github.workspace}}/macos
+          export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
           flutter pub get
           flutter test -x no-local-files
       - name: Release
