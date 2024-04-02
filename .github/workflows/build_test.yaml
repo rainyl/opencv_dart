@@ -168,8 +168,7 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          brew install --force --overwrite ninja ffmpeg nasm
-          python3 -m pip install conan
+          brew install --force --overwrite ninja ffmpeg nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -209,8 +208,7 @@ jobs:
       - name: setup
         run: |
           # brew update
-          brew install --force --overwrite ninja ffmpeg nasm
-          python3 -m pip install conan
+          brew install --force --overwrite ninja ffmpeg nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -250,8 +248,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja nasm
-            python3 -m pip install conan
+            brew install --force --overwrite ninja nasm conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: build
