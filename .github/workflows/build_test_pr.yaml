@@ -1,8 +1,6 @@
-name: build test release
+name: build test
 
 on:
-  push:
-    # branches: ["conan"]
   pull_request:
     branches: [ "main" ]
 
