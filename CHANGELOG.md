@@ -1,3 +1,7 @@
+## 0.6.7
+
+- add `img_hash` from opencv contrib, contributed by @mdeleau
+
 ## 0.6.6
 
 - add `cv.invertAffineTransform`
