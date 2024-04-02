@@ -77,10 +77,10 @@ CvStatus Undistort(Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCa
   END_WRAP
 }
 
-CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p)
+CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p, TermCriteria criteria)
 {
   BEGIN_WRAP
-  cv::undistortPoints(*distorted.ptr, *undistorted.ptr, *k.ptr, *d.ptr, *r.ptr, *p.ptr);
+  cv::undistortPoints(*distorted.ptr, *undistorted.ptr, *k.ptr, *d.ptr, *r.ptr, *p.ptr, *criteria.ptr);
   END_WRAP
 }
 

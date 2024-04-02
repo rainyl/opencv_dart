@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 /*  Error status codes
     Original codes were from OpenCVSharp
     Original Author: @shimat
@@ -167,5 +169,5 @@ class ErrorCode with EquatableMixin {
   final int code;
 
   @override
-  List<Object?> get props => [code];
+  List<int> get props => [code];
 }

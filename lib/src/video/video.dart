@@ -4,12 +4,14 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
 import '../core/mat_type.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/point.dart';
+import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -178,29 +180,27 @@ Mat calcOpticalFlowFarneback(
   VecFloat? err,
   Size winSize = (21, 21),
   int maxLevel = 3,
-  cvg.TermCriteria? criteria,
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
   int flags = 0,
   double minEigThreshold = 1e-4,
 }) {
   status ??= VecUChar();
   err ??= VecFloat();
   cvRunArena((arena) {
-    if (criteria == null) {
-      final p = arena<cvg.TermCriteria>();
-      criteria = p.ref;
-    }
-    CFFI.CalcOpticalFlowPyrLKWithParams(
-      prevImg.ref,
-      nextImg.ref,
-      prevPts.ref,
-      nextPts.ref,
-      status!.ref,
-      err!.ref,
-      winSize.toSize(arena).ref,
-      maxLevel,
-      criteria!,
-      flags,
-      minEigThreshold,
+    cvRun(
+      () => CFFI.CalcOpticalFlowPyrLKWithParams(
+        prevImg.ref,
+        nextImg.ref,
+        prevPts.ref,
+        nextPts.ref,
+        status!.ref,
+        err!.ref,
+        winSize.toSize(arena).ref,
+        maxLevel,
+        criteria.toTermCriteria(arena).ref,
+        flags,
+        minEigThreshold,
+      ),
     );
   });
   return (nextPts, status, err);
@@ -215,7 +215,7 @@ Mat calcOpticalFlowFarneback(
   InputArray inputImage,
   InputOutputArray warpMatrix,
   int motionType,
-  cvg.TermCriteria criteria,
+  TermCriteria criteria,
   InputArray inputMask,
   int gaussFiltSize,
 ) {
@@ -227,7 +227,7 @@ Mat calcOpticalFlowFarneback(
         inputImage.ref,
         warpMatrix.ref,
         motionType,
-        criteria,
+        criteria.toTermCriteria(arena).ref,
         inputMask.ref,
         gaussFiltSize,
         p,
@@ -251,7 +251,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
     return TrackerMIL(p);
   }
 
-  bool init(InputArray image, Rect boundingBox) {
+  void init(InputArray image, Rect boundingBox) {
     assert(boundingBox.x >= 0, "boundingBox.x must be >= 0");
     assert(boundingBox.y >= 0, "boundingBox.y must be >= 0");
     assert(
@@ -263,11 +263,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
       "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
     );
 
-    return cvRunArena<bool>((arena) {
-      final p = arena<ffi.Bool>();
-      cvRun(() => CFFI.TrackerMIL_Init(ref, image.ref, boundingBox.ref));
-      return p.value;
-    });
+    cvRun(() => CFFI.TrackerMIL_Init(ref, image.ref, boundingBox.ref));
   }
 
   /// Update the tracker, find the new most likely bounding box for the target.

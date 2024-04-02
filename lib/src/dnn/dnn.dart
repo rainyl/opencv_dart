@@ -157,7 +157,7 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga5b1fd56ca658f10c3bd544ea46f57164
   factory Net.fromCaffeBytes(Uint8List bufferProto, Uint8List bufferModel) {
     final p = calloc<cvg.Net>();
-    final bufP = VecUChar.fromList(bufferModel);
+    final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
     cvRun(() => CFFI.Net_ReadNetFromCaffeBytes(bufP.ref, bufM.ref, p));
     final net = Net._(p);
@@ -272,12 +272,9 @@ class Net extends CvStruct<cvg.Net> {
   }
 
   String dump() {
-    return cvRunArena<String>((arena) {
-      final p = arena<cvg.VecChar>();
-      cvRun(() => CFFI.Net_Dump(ref, p));
-      final vec = VecChar.fromVec(p.ref);
-      return vec.asString();
-    });
+    final p = VecChar();
+    cvRun(() => CFFI.Net_Dump(ref, p.ref));
+    return p.asString();
   }
 
   /// SetInput sets the new value for the layer output blob.

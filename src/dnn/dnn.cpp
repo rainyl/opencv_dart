@@ -129,11 +129,11 @@ CvStatus Net_Empty(Net net, bool *rval)
   END_WRAP
 }
 
-CvStatus Net_Dump(Net net, VecChar *rval)
+CvStatus Net_Dump(Net net, VecChar rval)
 {
   BEGIN_WRAP
   auto ss = net.ptr->dump();
-  *rval = {new std::vector<char>(ss.c_str(), ss.c_str() + ss.size())};
+  rval.ptr = new std::vector<char>(ss.c_str(), ss.c_str() + ss.size());
   END_WRAP
 }
 

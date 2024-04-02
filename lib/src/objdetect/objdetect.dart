@@ -95,7 +95,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     bool useMeanshiftGrouping = false,
   }) {
     return using<VecRect>((arena) {
-      final rects = arena<cvg.VecRect>();
+      final rects = VecRect();
       cvRun(
         () => CFFI.HOGDescriptor_DetectMultiScaleWithParams(
           ref,
@@ -106,10 +106,10 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
           scale,
           groupThreshold,
           useMeanshiftGrouping,
-          rects,
+          rects.ptr,
         ),
       );
-      return VecRect.fromVec(rects.ref);
+      return rects;
     });
   }
 
@@ -175,7 +175,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// Returns true as long as some QR code was detected even in case where the decoding failed
   /// For further details, please see:
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a7290bd6a5d59b14a37979c3a14fbf394
-  (String ret, VecPoint points, Mat straightCode) detectAndDecode(
+  (String ret, VecPoint? points, Mat? straightCode) detectAndDecode(
     InputArray img, {
     VecPoint? points,
     OutputArray? straightCode,
@@ -197,10 +197,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a64373f7d877d27473f64fe04bb57d22b
   (bool ret, VecPoint? points) detect(InputArray input, {VecPoint? points}) {
     return cvRunArena<(bool, VecPoint?)>((arena) {
-      final pts = arena<cvg.VecPoint>();
+      final pts = VecPoint();
       final ret = arena<ffi.Bool>();
       cvRun(() => CFFI.QRCodeDetector_Detect(ref, input.ref, pts.ref, ret));
-      return (ret.value, VecPoint.fromVec(pts.ref));
+      return (ret.value, pts);
     });
   }
 
@@ -214,15 +214,11 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     Mat? straightCode,
   }) {
     return cvRunArena<(String, VecPoint?, Mat?)>((arena) {
-      final pts = arena<cvg.VecPoint>();
-      final ret = arena<cvg.VecChar>();
+      points ??= VecPoint();
+      final ret = VecChar();
       straightCode ??= Mat.empty();
-      cvRun(() => CFFI.QRCodeDetector_Decode(ref, img.ref, pts.ref, straightCode!.ref, ret));
-      final s = VecChar.fromVec(ret.ref).toString();
-      if (s.isNotEmpty) {
-        points = VecPoint.fromVec(pts.ref);
-      }
-      return (s, points, straightCode!);
+      cvRun(() => CFFI.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
+      return (ret.toString(), points, straightCode!);
     });
   }
 

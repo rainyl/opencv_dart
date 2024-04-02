@@ -1,4 +1,4 @@
-@Tags(["no-local-files", "not-finished"])
+@Tags(["no-local-files"])
 
 import 'dart:io';
 
@@ -130,8 +130,7 @@ void main() async {
     final bytes = File("test/models/bvlc_googlenet.caffemodel").readAsBytesSync();
     final config = File("test/models/bvlc_googlenet.prototxt").readAsBytesSync();
     final model = cv.Net.fromBytes("caffe", bytes, bufferConfig: config);
-    print(model.dump());
-    // checkCaffeNet(model);
+    checkCaffeNet(model);
   });
 
   test('cv.Net.fromCaffe', () {

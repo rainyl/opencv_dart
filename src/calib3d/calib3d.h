@@ -28,7 +28,7 @@ CvStatus InitUndistortRectifyMap(Mat cameraMatrix, Mat distCoeffs, Mat r, Mat ne
 CvStatus GetOptimalNewCameraMatrixWithParams(Mat cameraMatrix, Mat distCoeffs, Size size, double alpha, Size newImgSize, Rect *validPixROI, bool centerPrincipalPoint, Mat *rval);
 CvStatus CalibrateCamera(VecVecPoint3f objectPoints, VecVecPoint2f imagePoints, Size imageSize, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs, int flag, TermCriteria criteria, double *rval);
 CvStatus Undistort(Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCameraMatrix);
-CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p);
+CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p, TermCriteria criteria);
 CvStatus FindChessboardCorners(Mat image, Size patternSize, Mat corners, int flags, bool *rval);
 CvStatus FindChessboardCornersSB(Mat image, Size patternSize, Mat corners, int flags, bool *rval);
 CvStatus FindChessboardCornersSBWithMeta(Mat image, Size patternSize, Mat corners, int flags, Mat meta, bool *rval);

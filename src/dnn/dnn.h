@@ -49,7 +49,7 @@ CvStatus Net_BlobFromImage(Mat image, CVD_OUT Mat blob, double scalefactor, Size
 CvStatus Net_BlobFromImages(VecMat images, CVD_OUT Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth);
 CvStatus Net_ImagesFromBlob(Mat blob, CVD_OUT VecMat *rval);
 CvStatus Net_Empty(Net net, CVD_OUT bool *rval);
-CvStatus Net_Dump(Net net, CVD_OUT VecChar *rval);
+CvStatus Net_Dump(Net net, CVD_OUT VecChar rval);
 CvStatus Net_SetInput(Net net, Mat blob, const char *name);
 CvStatus Net_Forward(Net net, const char *outputName, CVD_OUT Mat *rval);
 CvStatus Net_ForwardLayers(Net net, CVD_OUT VecMat *outputBlobs, VecVecChar outBlobNames);

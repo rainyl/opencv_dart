@@ -131,6 +131,8 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   VecRect._(this.ptr) {
     finalizer.attach(this, ptr);
   }
+  factory VecRect([int length = 0, int x = 0, int y = 0, int width = 0, int height = 0]) =>
+      VecRect.fromList(List.generate(length, (i) => Rect(x, y, width, height)));
   factory VecRect.fromPointer(cvg.VecRectPtr ptr) => VecRect._(ptr);
   factory VecRect.fromVec(cvg.VecRect ptr) {
     final p = calloc<cvg.VecRect>();
@@ -157,7 +159,7 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
     return length;
   }
 
-  static final finalizer = Finalizer<cvg.VecRectPtr>((p){
+  static final finalizer = Finalizer<cvg.VecRectPtr>((p) {
     CFFI.VecRect_Close(p);
     calloc.free(p);
   });

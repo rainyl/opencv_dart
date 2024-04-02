@@ -44,4 +44,7 @@ TEST(dnn, Create)
   CvStatus status = Net_ReadNetBytes("caffe", bufM, bufC, &net);
   EXPECT_EQ(status.code, 0);
   EXPECT_EQ(net.ptr->empty(), false);
+  VecChar dump = {new std::vector<char>()};
+  Net_Dump(net, dump);
+  std::cout << dump.ptr->size() << std::endl;
 }

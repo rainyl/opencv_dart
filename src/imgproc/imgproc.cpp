@@ -306,6 +306,7 @@ CvStatus CornerSubPix(Mat img, VecPoint2f corners, Size winSize, Size zeroZone, 
   auto size = cv::Size(winSize.width, winSize.height);
   auto zone = cv::Size(zeroZone.width, zeroZone.height);
   cv::cornerSubPix(*img.ptr, *corners.ptr, size, zone, *criteria.ptr);
+  // std::cout << *corners.ptr << std::endl;
   END_WRAP
 }
 CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f corners, int maxCorners, double quality, double minDist,

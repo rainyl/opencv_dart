@@ -134,7 +134,7 @@ CvStatus QRCodeDetector_Decode(QRCodeDetector qr, Mat input, VecPoint inputPoint
                                VecChar *rval)
 {
   BEGIN_WRAP
-  auto info = qr.ptr->decode(*input.ptr, *inputPoints.ptr, *straight_qrcode.ptr);
+  auto info = qr.ptr->detectAndDecode(*input.ptr, *inputPoints.ptr, *straight_qrcode.ptr);
   *rval = {new std::vector<char>(info.begin(), info.end())};
   END_WRAP
 }
@@ -155,7 +155,7 @@ CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector qr, Mat input, VecVe
   BEGIN_WRAP
   std::vector<cv::String> decodedCodes;
   std::vector<cv::Mat>    straightQrCodes;
-  std::vector<cv::Point> points_;
+  std::vector<cv::Point>  points_;
 
   *rval = qr.ptr->detectAndDecodeMulti(*input.ptr, decodedCodes, points_, straightQrCodes);
   if (!*rval) {

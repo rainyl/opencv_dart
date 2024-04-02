@@ -45,27 +45,27 @@ void main() async {
   test('cv.bitwise_and', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
-    final dst = cv.bitwise_and(mat0, mat1);
+    final dst = cv.bitwiseAND(mat0, mat1);
     expect(dst.at<int>(0, 0, cn: 0), equals(100 & 50));
   });
 
   test('cv.bitwise_not', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
-    final dst = cv.bitwise_not(mat0);
+    final dst = cv.bitwiseNOT(mat0);
     expect(dst.at<int>(0, 0, cn: 0), equals(155));
   });
 
   test('cv.bitwise_or', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
-    final dst = cv.bitwise_or(mat0, mat1);
+    final dst = cv.bitwiseOR(mat0, mat1);
     expect(dst.at<int>(0, 0, cn: 0), equals(100 | 50));
   });
 
   test('cv.bitwise_xor', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
-    final dst = cv.bitwise_xor(mat0, mat1);
+    final dst = cv.bitwiseXOR(mat0, mat1);
     expect(dst.at<int>(0, 0, cn: 0), equals(100 ^ 50));
   });
 
@@ -290,7 +290,7 @@ void main() async {
   test('cv.kmeans', () {
     final src = cv.Mat.randu(4, 4, cv.MatType.CV_32FC1);
     final bestLabels = cv.Mat.empty();
-    final criteria = cv.termCriteriaNew(cv.TERM_COUNT, 10, 1.0);
+    const criteria = (cv.TERM_COUNT, 10, 1.0);
     final (_, _, centers) = cv.kmeans(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
     expect(centers.isEmpty, equals(false));
   });
@@ -298,7 +298,7 @@ void main() async {
   test('cv.kmeansByPoints', () {
     final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].ocv;
     final bestLabels = cv.Mat.empty();
-    final criteria = cv.termCriteriaNew(cv.TERM_COUNT, 10, 1.0);
+    const criteria = (cv.TERM_COUNT, 10, 1.0);
     final (_, _, centers) = cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
     expect(centers.isEmpty, equals(false));
   });

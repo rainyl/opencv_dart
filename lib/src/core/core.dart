@@ -3,7 +3,6 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/vec.dart';
 
 import 'rng.dart';
 import 'scalar.dart';
@@ -11,6 +10,8 @@ import 'base.dart';
 import 'point.dart';
 import 'mat_type.dart';
 import 'mat.dart';
+import 'termcriteria.dart';
+import 'vec.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -93,7 +94,7 @@ Mat addWeighted(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga60b4d04b251ba5eb1392c34425497e14
-Mat bitwise_and(
+Mat bitwiseAND(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
@@ -112,7 +113,7 @@ Mat bitwise_and(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
-Mat bitwise_not(InputArray src, {OutputArray? dst, InputArray? mask}) {
+Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
   dst ??= Mat.empty();
   if (mask == null) {
     cvRun(() => CFFI.Mat_BitwiseNot(src.ref, dst!.ref));
@@ -127,7 +128,7 @@ Mat bitwise_not(InputArray src, {OutputArray? dst, InputArray? mask}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gab85523db362a4e26ff0c703793a719b4
-Mat bitwise_or(
+Mat bitwiseOR(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
@@ -147,7 +148,7 @@ Mat bitwise_or(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga84b2d8188ce506593dcc3f8cd00e8e2c
-Mat bitwise_xor(
+Mat bitwiseXOR(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
@@ -662,7 +663,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   InputArray data,
   int K,
   InputOutputArray bestLabels,
-  cvg.TermCriteria criteria,
+  TermCriteria criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -671,7 +672,8 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria, attempts, flags, centers!.ref, p),
+      () => CFFI.KMeans(
+          data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts, flags, centers!.ref, p),
     );
     return p.value;
   });
@@ -686,7 +688,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   VecPoint2f pts,
   int K,
   InputOutputArray bestLabels,
-  cvg.TermCriteria criteria,
+  TermCriteria criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -695,7 +697,8 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria, attempts, flags, centers!.ref, p),
+      () => CFFI.KMeansPoints(
+          pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts, flags, centers!.ref, p),
     );
     return p.value;
   });
@@ -740,7 +743,7 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   InputArray src, {
   OutputArray? mean,
   OutputArray? stddev,
-  InputArray? mask, // TODO
+  // InputArray? mask, // TODO
 }) {
   mean ??= Mat.empty();
   stddev ??= Mat.empty();
@@ -1134,18 +1137,6 @@ Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees =
   angle ??= Mat.empty();
   cvRun(() => CFFI.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
   return angle;
-}
-
-/// TermCriteria is the criteria for iterative algorithms.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d9/d5d/classcv_1_1TermCriteria.html
-cvg.TermCriteria termCriteriaNew(int type, int maxCount, double epsilon) {
-  final p = calloc<cvg.TermCriteria>();
-  cvRun(() => CFFI.TermCriteria_New(type, maxCount, epsilon, p));
-  final t = p.ref;
-  calloc.free(p);
-  return t;
 }
 
 /// GetTickCount returns the number of ticks.

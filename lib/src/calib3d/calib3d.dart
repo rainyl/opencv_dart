@@ -8,9 +8,9 @@ import '../core/contours.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/base.dart';
-import '../core/core.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
+import '../core/termcriteria.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -53,12 +53,10 @@ class Fisheye {
     OutputArray? undistorted,
     InputArray? R,
     InputArray? P,
-    cvg.TermCriteria? criteria,
   }) {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    criteria = termCriteriaNew(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
     cvRun(() => CFFI.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
@@ -173,12 +171,11 @@ class Fisheye {
   Mat? rvecs,
   Mat? tvecs,
   int flags = 0,
-  cvg.TermCriteria? criteria,
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) {
   return using<(double, Mat, Mat, Mat, Mat)>((arena) {
     rvecs ??= Mat.empty();
     tvecs ??= Mat.empty();
-    criteria ??= termCriteriaNew(TERM_COUNT + TERM_EPS, 30, 1e-4);
     final rmsErr = arena<ffi.Double>();
 
     cvRun(
@@ -191,7 +188,7 @@ class Fisheye {
         rvecs!.ref,
         tvecs!.ref,
         flags,
-        criteria!,
+        criteria.toTermCriteria(arena).ref,
         rmsErr,
       ),
     );
@@ -229,11 +226,24 @@ Mat undistortPoints(
   OutputArray? dst,
   InputArray? R,
   InputArray? P,
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) {
   R ??= Mat.empty();
   P ??= Mat.empty();
   dst ??= Mat.empty();
-  cvRun(() => CFFI.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref));
+  cvRunArena(
+    (arena) => cvRun(
+      () => CFFI.UndistortPoints(
+        src.ref,
+        dst!.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        R!.ref,
+        P!.ref,
+        criteria.toTermCriteria(arena).ref,
+      ),
+    ),
+  );
   return dst;
 }
 

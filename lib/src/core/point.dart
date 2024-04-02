@@ -140,7 +140,7 @@ class VecPoint extends Vec<Point> implements CvStruct<cvg.VecPoint> {
 
   @override
   cvg.VecPointPtr ptr;
-  static final finalizer = Finalizer<cvg.VecPointPtr>((p){
+  static final finalizer = Finalizer<cvg.VecPointPtr>((p) {
     CFFI.VecPoint_Close(p);
     calloc.free(p);
   });
@@ -215,7 +215,7 @@ class VecPoint2f extends Vec<Point2f> implements CvStruct<cvg.VecPoint2f> {
 
   @override
   cvg.VecPoint2fPtr ptr;
-  static final finalizer = Finalizer<cvg.VecPoint2fPtr>((p){
+  static final finalizer = Finalizer<cvg.VecPoint2fPtr>((p) {
     CFFI.VecPoint2f_Close(p);
     calloc.free(p);
   });
@@ -293,7 +293,7 @@ class VecPoint3f extends Vec<Point3f> implements CvStruct<cvg.VecPoint3f> {
 
   @override
   cvg.VecPoint3fPtr ptr;
-  static final finalizer = Finalizer<cvg.VecPoint3fPtr>((p){
+  static final finalizer = Finalizer<cvg.VecPoint3fPtr>((p) {
     CFFI.VecPoint3f_Close(p);
     calloc.free(p);
   });
@@ -351,7 +351,7 @@ class VecVecPoint extends Vec<VecPoint> implements CvStruct<cvg.VecVecPoint> {
 
   @override
   cvg.VecVecPointPtr ptr;
-  static final finalizer = Finalizer<cvg.VecVecPointPtr>((p){
+  static final finalizer = Finalizer<cvg.VecVecPointPtr>((p) {
     CFFI.VecVecPoint_Close(p);
     calloc.free(p);
   });
@@ -411,7 +411,7 @@ class VecVecPoint2f extends Vec<Vec<Point2f>> implements CvStruct<cvg.VecVecPoin
 
   @override
   cvg.VecVecPoint2fPtr ptr;
-  static final finalizer = Finalizer<cvg.VecVecPoint2fPtr>((p){
+  static final finalizer = Finalizer<cvg.VecVecPoint2fPtr>((p) {
     CFFI.VecVecPoint2f_Close(p);
     calloc.free(p);
   });
@@ -469,7 +469,7 @@ class VecVecPoint3f extends Vec<Vec<Point3f>> implements CvStruct<cvg.VecVecPoin
 
   @override
   cvg.VecVecPoint3fPtr ptr;
-  static final finalizer = Finalizer<cvg.VecVecPoint3fPtr>((p){
+  static final finalizer = Finalizer<cvg.VecVecPoint3fPtr>((p) {
     CFFI.VecVecPoint3f_Close(p);
     calloc.free(p);
   });

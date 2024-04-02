@@ -51,12 +51,12 @@ headers:
     - src/stitching/stitching.h
     - src/video/video.h
     - src/video/videoio.h
-functions:
-  symbol-address:
-    include:
-      - ".*" # Do this to expose all function pointers.
-    exclude: # If you only use exclude, then everything not excluded is generated.
-      - "dispose"
+# functions:
+#   symbol-address:
+#     include:
+#       - ".*" # Do this to expose all function pointers.
+#     exclude: # If you only use exclude, then everything not excluded is generated.
+#       - "dispose"
 
 # globals:
 #   exclude:
@@ -68,6 +68,7 @@ functions:
 #     'Mat': 'CMat'
 
 preamble: |
+  // coverage:ignore-file
   // opencv_dart - OpenCV bindings for Dart language
   //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
   //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt

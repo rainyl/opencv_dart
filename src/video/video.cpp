@@ -93,10 +93,10 @@ CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int
   END_WRAP
 }
 
-CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect boundingBox)
+CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect bbox)
 {
   BEGIN_WRAP
-  auto rect = cv::Rect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+  auto rect = cv::Rect(bbox.x, bbox.y, bbox.width, bbox.height);
   (*self.ptr)->init(*image.ptr, rect);
   END_WRAP
 }

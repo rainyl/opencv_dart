@@ -63,7 +63,7 @@ CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyr
 CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int motionType,
                           TermCriteria criteria, Mat inputMask, int gaussFiltSize, double *rval);
 
-CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect boundingBox);
+CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect bbox);
 CvStatus TrackerMIL_Update(TrackerMIL self, Mat image, Rect *boundingBox, bool *rval);
 CvStatus TrackerMIL_Create(TrackerMIL *rval);
 void     TrackerMIL_Close(TrackerMIL *self);

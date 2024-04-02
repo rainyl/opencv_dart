@@ -24,9 +24,9 @@ class Window {
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
-  Window(this.name) {
+  Window(this.name, [int flags=0]) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), 0));
+      cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
     });
   }
 
@@ -153,7 +153,7 @@ class Window {
   String name;
   // https://stackoverflow.com/a/48055987/18539998
   bool get isOpen {
-    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_AUTOSIZE);
+    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_AUTOSIZE).toInt();
     return ret != -1;
   }
 }

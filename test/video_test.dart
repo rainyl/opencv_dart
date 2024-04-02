@@ -51,7 +51,7 @@ void main() async {
     expect(img.isEmpty, false);
     final img2 = img.clone();
     final corners = cv.goodFeaturesToTrack(img, 10, 0.01, 10);
-    final tc = cv.termCriteriaNew(cv.TERM_COUNT + cv.TERM_EPS, 40, 0.03);
+    const tc = (cv.TERM_COUNT + cv.TERM_EPS, 40, 0.03);
     cv.cornerSubPix(img, corners, (5, 5), (-1, -1), tc);
     var (next, status, error) = cv.calcOpticalFlowPyrLK(img, img2, corners, cv.VecPoint2f());
     expect(next.isNotEmpty, true);
@@ -77,7 +77,7 @@ void main() async {
     );
 
     final mapTranslation = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
-    final criteria = cv.termCriteriaNew(cv.TERM_COUNT + cv.TERM_EPS, 50, -1);
+    const criteria = (cv.TERM_COUNT + cv.TERM_EPS, 50, 0.01);
     final inputMask = cv.Mat.empty();
     cv.findTransformECC(wrappedImage, testImg, mapTranslation, cv.MOTION_TRANSLATION, criteria, inputMask, 5);
 
@@ -89,8 +89,7 @@ void main() async {
     expect(img.isEmpty, false);
     final rect = cv.Rect(100, 150, 200, 241);
     final tracker = cv.TrackerMIL.create();
-    final init = tracker.init(img, rect);
-    expect(init, true);
+    tracker.init(img, rect);
     final (ok, _) = tracker.update(img);
     expect(ok, true);
   });

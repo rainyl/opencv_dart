@@ -15,6 +15,7 @@ import '../core/rect.dart';
 import '../core/moments.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
+import '../core/termcriteria.dart';
 
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
@@ -687,18 +688,14 @@ VecPoint2f cornerSubPix(
   InputArray image,
   VecPoint2f corners,
   Size winSize,
-  Size zeroZone,
-  cvg.TermCriteria criteria,
-) {
+  Size zeroZone, [
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+]) {
   cvRunArena((arena) {
-    final size = arena<cvg.Size>()
-      ..ref.width = winSize.$1
-      ..ref.height = winSize.$2;
-    final zone = arena<cvg.Size>()
-      ..ref.width = zeroZone.$1
-      ..ref.height = zeroZone.$2;
-
-    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, criteria));
+    final size = winSize.toSize(arena);
+    final zone = zeroZone.toSize(arena);
+    final c = criteria.toTermCriteria(arena);
+    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
   });
   return corners;
 }

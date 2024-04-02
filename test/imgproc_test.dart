@@ -1,4 +1,3 @@
-// @Skip()
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -120,7 +119,7 @@ void main() async {
   test("cv2.findContours, cv.drawContours", () {
     final src = cv.imread("test/images/markers_6x6_250.png", flags: cv.IMREAD_GRAYSCALE);
     expect((src.width, src.height, src.channels), (612, 760, 1));
-    cv.bitwise_not(src, dst: src);
+    cv.bitwiseNOT(src, dst: src);
     expect((src.width, src.height, src.channels), (612, 760, 1));
     var (contours, hierarchy) = cv.findContours(
       src,
@@ -483,7 +482,7 @@ void main() async {
     expect(corners.isEmpty, false);
     expect(corners.length, 500);
 
-    final tc = cv.termCriteriaNew(cv.TERM_COUNT | cv.TERM_EPS, 20, 0.03);
+    const tc = (cv.TERM_COUNT | cv.TERM_EPS, 20, 0.03);
     final corners1 = cv.cornerSubPix(img, corners, (10, 10), (-1, -1), tc);
 
     expect(corners1.isEmpty, false);
