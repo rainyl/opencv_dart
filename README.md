@@ -16,7 +16,7 @@ OpenCV Bindings for Dart Language.
 
 ## BREAKING CHANGES
 
-Currently, the refactor of #13 has almost finished, and I have rewrote most of APIs to
+Currently, the refactor of [#13](https://github.com/rainyl/opencv_dart/issues/13) has almost finished, and I have rewrote most of APIs to
 compitable with **opencv-python**, for example:
 
 ```dart
@@ -34,7 +34,7 @@ final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
 
 I am still considering how to migrate to the new APIs, considering the old versions still have many
 users, maybe release a new package will be a better choice, and once the new APIs are stable, I will
-not fix the old ones actively. You can vote for this in #16
+not fix the old ones actively. You can vote for this in [#16](https://github.com/rainyl/opencv_dart/discussions/16)
 
 ## IMPORTANT
 
