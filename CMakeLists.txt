@@ -120,11 +120,13 @@ file(COPY
     "${CMAKE_CURRENT_SOURCE_DIR}/test/images"
     DESTINATION ${CMAKE_BINARY_DIR}/test
 )
-file(COPY
+# model files for DNN test
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/models")    
+    file(COPY
     "${CMAKE_CURRENT_SOURCE_DIR}/test/models"
     DESTINATION ${CMAKE_BINARY_DIR}/test
-)
-
+    )
+endif()
 
 enable_testing()
 
