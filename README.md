@@ -14,6 +14,28 @@ OpenCV Bindings for Dart Language.
 | Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
 | macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
 
+## BREAKING CHANGES
+
+Currently, the refactor of #13 has almost finished, and I have rewrote most of APIs to
+compitable with **opencv-python**, for example:
+
+```dart
+// old
+void cvtColor(Mat src, Mat dst, int code);
+// new
+Mat cvtColor(Mat src, int code, {Mat? dst});
+// then usage will change from:
+cvtColor(src, dst, cv.COLOR_BGR2GRAY);
+// to:
+cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
+// or:
+final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
+```
+
+I am still considering how to migrate to the new APIs, considering the old versions still have many
+users, maybe release a new package will be a better choice, and once the new APIs are stable, I will
+not fix the old ones actively. You can vote for this in #16
+
 ## IMPORTANT
 
 Please run

@@ -1,5 +1,6 @@
 import os
 from conan import ConanFile
+from conan.api.output import ConanOutput, Color
 from conan.errors import ConanInvalidConfiguration, ConanException
 from conan.tools.cmake import cmake_layout, CMake, CMakeToolchain, CMakeDeps
 from conan.tools.files import chdir, mkdir, copy
@@ -118,6 +119,7 @@ class OcvDartDesktop(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     # generators = "CMakeToolchain", "CMakeDeps"
     options = {
+        "build_opencv": [True, False],
         "shared": [True, False],
         "with_cuda": [True, False],
         "with_cublas": [True, False],
@@ -158,6 +160,7 @@ class OcvDartDesktop(ConanFile):
     }
     options.update({k: [True, False] for k in OCV_MODULES})
     default_options = {
+        "build_opencv": True,
         "shared": False,
         "with_cuda": False,
         "with_cublas": False,
@@ -391,13 +394,16 @@ class OcvDartDesktop(ConanFile):
     def build(self):
         cmake = CMake(self)
 
-        # build opencv
-        cmake.configure(
-            variables={
-                "CMAKE_INSTALL_PREFIX": self.install_folder,
-            }
-        )
-        cmake.build(target="install")
+        if self.get_bool("build_opencv", True):
+            # build opencv
+            cmake.configure(
+                variables={
+                    "CMAKE_INSTALL_PREFIX": self.install_folder,
+                }
+            )
+            cmake.build(target="install")
+        else:
+            ConanOutput().writeln("Skipping opencv build...", fg=Color.YELLOW)
         ocv_install_dir = self.opencv_dir(self.install_folder)
 
         # build opencv_dart
