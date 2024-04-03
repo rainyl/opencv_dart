@@ -24,7 +24,7 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.absDiff(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, cn: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.Add', () {
@@ -32,41 +32,41 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.add(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, cn: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.addWeighted', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.addWeighted(mat0, 0.5, mat1, 0.5, 1);
-    expect(dst.at<int>(0, 0, cn: 0), equals(75 + 1));
+    expect(dst.at<int>(0, 0, 0), equals(75 + 1));
   });
 
   test('cv.bitwise_and', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseAND(mat0, mat1);
-    expect(dst.at<int>(0, 0, cn: 0), equals(100 & 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 & 50));
   });
 
   test('cv.bitwise_not', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final dst = cv.bitwiseNOT(mat0);
-    expect(dst.at<int>(0, 0, cn: 0), equals(155));
+    expect(dst.at<int>(0, 0, 0), equals(155));
   });
 
   test('cv.bitwise_or', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, cn: 0), equals(100 | 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 | 50));
   });
 
   test('cv.bitwise_xor', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseXOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, cn: 0), equals(100 ^ 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 ^ 50));
   });
 
   test('cv.batchDistance', () {
@@ -296,7 +296,7 @@ void main() async {
   });
 
   test('cv.kmeansByPoints', () {
-    final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].ocv;
+    final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].cvd;
     final bestLabels = cv.Mat.empty();
     const criteria = (cv.TERM_COUNT, 10, 1.0);
     final (_, _, centers) = cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
@@ -342,7 +342,7 @@ void main() async {
       cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
       cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
       cv.Mat.randu(101, 102, cv.MatType.CV_8UC1)
-    ].ocv;
+    ].cvd;
     final dst = cv.merge(src);
     expect(dst.isEmpty, equals(false));
     expect(dst.channels, equals(3));
@@ -368,9 +368,9 @@ void main() async {
     final bgra = cv.Mat.fromScalar(cv.Scalar(255, 0, 0, 255), cv.MatType.CV_8UC4, rows: 100, cols: 100);
     final bgr = cv.Mat.create(cols: bgra.cols, rows: bgra.rows, type: cv.MatType.CV_8UC3);
     final alpha = cv.Mat.create(cols: bgra.cols, rows: bgra.rows, type: cv.MatType.CV_8UC1);
-    final out = [bgr, alpha].ocv;
+    final out = [bgr, alpha].cvd;
     final fromTo = [0, 2, 1, 1, 2, 0, 3, 3].i32;
-    final dst = cv.mixChannels([bgra].ocv, out, fromTo);
+    final dst = cv.mixChannels([bgra].cvd, out, fromTo);
     expect(dst.isEmpty, false);
   });
 

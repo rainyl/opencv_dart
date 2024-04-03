@@ -342,7 +342,7 @@ class VecVecPoint extends Vec<VecPoint> implements CvStruct<cvg.VecVecPoint> {
     final ptr = calloc<cvg.VecVecPoint>();
     cvRun(() => CFFI.VecVecPoint_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      final point = pts[i].ocv;
+      final point = pts[i].cvd;
       cvRun(() => CFFI.VecVecPoint_Append(ptr.ref, point.ref));
     }
     final vec = VecVecPoint._(ptr);
@@ -402,7 +402,7 @@ class VecVecPoint2f extends Vec<Vec<Point2f>> implements CvStruct<cvg.VecVecPoin
     final ptr = calloc<cvg.VecVecPoint2f>();
     cvRun(() => CFFI.VecVecPoint2f_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      final point = pts[i].ocv;
+      final point = pts[i].cvd;
       cvRun(() => CFFI.VecVecPoint2f_Append(ptr.ref, point.ref));
     }
     final vec = VecVecPoint2f._(ptr);
@@ -460,7 +460,7 @@ class VecVecPoint3f extends Vec<Vec<Point3f>> implements CvStruct<cvg.VecVecPoin
     final ptr = calloc<cvg.VecVecPoint3f>();
     cvRun(() => CFFI.VecVecPoint3f_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      final point = pts[i].ocv;
+      final point = pts[i].cvd;
       cvRun(() => CFFI.VecVecPoint3f_Append(ptr.ref, point.ref));
     }
     final vec = VecVecPoint3f._(ptr);
@@ -504,27 +504,27 @@ class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
 }
 
 extension ListPointExtension on List<Point> {
-  VecPoint get ocv => VecPoint.fromList(this);
+  VecPoint get cvd => VecPoint.fromList(this);
 }
 
 extension ListPoint2fExtension on List<Point2f> {
-  VecPoint2f get ocv => VecPoint2f.fromList(this);
+  VecPoint2f get cvd => VecPoint2f.fromList(this);
 }
 
 extension ListPoint3fExtension on List<Point3f> {
-  VecPoint3f get ocv => VecPoint3f.fromList(this);
+  VecPoint3f get cvd => VecPoint3f.fromList(this);
 }
 
 extension ListListPointExtension on List<List<Point>> {
-  VecVecPoint get ocv => VecVecPoint.fromList(this);
+  VecVecPoint get cvd => VecVecPoint.fromList(this);
 }
 
 extension ListListPoint2fExtension on List<List<Point2f>> {
-  VecVecPoint2f get ocv => VecVecPoint2f.fromList(this);
+  VecVecPoint2f get cvd => VecVecPoint2f.fromList(this);
 }
 
 extension ListListPoint3fExtension on List<List<Point3f>> {
-  VecVecPoint3f get ocv => VecVecPoint3f.fromList(this);
+  VecVecPoint3f get cvd => VecVecPoint3f.fromList(this);
 }
 
 extension PointRecordExtension on (int x, int y) {

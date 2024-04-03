@@ -22,70 +22,67 @@ extern "C" {
 
 #define CVD_OUT
 
-#define BEGIN_WRAP \
-  try {
-#define END_WRAP                                      \
-  CvStatus s = {.code = 0, .msg = strdup("success")}; \
-  return s;                                           \
-  }                                                   \
-  catch (cv::Exception & e)                           \
-  {                                                   \
-    CvStatus s = {                                    \
-        .code = e.code,                               \
-        .msg = strdup(e.msg.c_str()),                 \
-        .err = strdup(e.err.c_str()),                 \
-        .func = strdup(e.func.c_str()),               \
-        .file = strdup(e.file.c_str()),               \
-        .line = e.line,                               \
-    };                                                \
-    return s;                                         \
-  }                                                   \
-  catch (std::exception & e)                          \
-  {                                                   \
-    CvStatus s = {                                    \
-        .code = 1,                                    \
-        .msg = strdup(e.what()),                      \
-        .err = strdup(e.what()),                      \
-        .func = strdup(__FUNCTION__),                 \
-        .file = strdup(__FILE__),                     \
-        .line = __LINE__,                             \
-    };                                                \
-    return s;                                         \
-  }                                                   \
-  catch (...)                                         \
-  {                                                   \
-    CvStatus s = {                                    \
-        .code = 1,                                    \
-        .msg = strdup("Unknown error"),               \
-        .err = strdup("Unknown error"),               \
-        .func = strdup(__FUNCTION__),                 \
-        .file = strdup(__FILE__),                     \
-        .line = __LINE__,                             \
-    };                                                \
-    return s;                                         \
+#define BEGIN_WRAP try {
+#define END_WRAP                                                                                             \
+  CvStatus s = {.code = 0, .msg = strdup("success")};                                                        \
+  return s;                                                                                                  \
+  }                                                                                                          \
+  catch (cv::Exception & e)                                                                                  \
+  {                                                                                                          \
+    CvStatus s = {                                                                                           \
+        .code = e.code,                                                                                      \
+        .msg = strdup(e.msg.c_str()),                                                                        \
+        .err = strdup(e.err.c_str()),                                                                        \
+        .func = strdup(e.func.c_str()),                                                                      \
+        .file = strdup(e.file.c_str()),                                                                      \
+        .line = e.line,                                                                                      \
+    };                                                                                                       \
+    return s;                                                                                                \
+  }                                                                                                          \
+  catch (std::exception & e)                                                                                 \
+  {                                                                                                          \
+    CvStatus s = {                                                                                           \
+        .code = 1,                                                                                           \
+        .msg = strdup(e.what()),                                                                             \
+        .err = strdup(e.what()),                                                                             \
+        .func = strdup(__FUNCTION__),                                                                        \
+        .file = strdup(__FILE__),                                                                            \
+        .line = __LINE__,                                                                                    \
+    };                                                                                                       \
+    return s;                                                                                                \
+  }                                                                                                          \
+  catch (...)                                                                                                \
+  {                                                                                                          \
+    CvStatus s = {                                                                                           \
+        .code = 1,                                                                                           \
+        .msg = strdup("Unknown error"),                                                                      \
+        .err = strdup("Unknown error"),                                                                      \
+        .func = strdup(__FUNCTION__),                                                                        \
+        .file = strdup(__FILE__),                                                                            \
+        .line = __LINE__,                                                                                    \
+    };                                                                                                       \
+    return s;                                                                                                \
   }
 
-#define CVD_TYPECAST_C(value) \
-  reinterpret_cast<void *>(value);
+#define CVD_TYPECAST_C(value) reinterpret_cast<void *>(value);
 
-#define CVD_TYPEDEF_PTR(TYPE)                               \
-  typedef TYPE *TYPE##Ptr;                                  \
-  /**                                                       \
-   * Dart ffigen will not generate typedefs if not referred \
-   * so here we confirm they are included                   \
-   */                                                       \
-  typedef struct {                                          \
-    TYPE##Ptr *p;                                           \
+#define CVD_TYPEDEF_PTR(TYPE)                                                                                \
+  typedef TYPE *TYPE##Ptr;                                                                                   \
+  /**                                                                                                        \
+   * Dart ffigen will not generate typedefs if not referred                                                  \
+   * so here we confirm they are included                                                                    \
+   */                                                                                                        \
+  typedef struct {                                                                                           \
+    TYPE##Ptr *p;                                                                                            \
   } NO_USE_##TYPE##Ptr;
 
 #ifdef __cplusplus
-#define CVD_TYPECAST_CPP(TYPE, value) \
-  reinterpret_cast<TYPE##_CPP>(value->ptr)
+#define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
 
-#define CVD_TYPEDEF(TYPE, NAME) \
-  typedef TYPE *NAME##_CPP;     \
-  typedef struct NAME {         \
-    TYPE *ptr;                  \
+#define CVD_TYPEDEF(TYPE, NAME)                                                                              \
+  typedef TYPE *NAME##_CPP;                                                                                  \
+  typedef struct NAME {                                                                                      \
+    TYPE *ptr;                                                                                               \
   } NAME;
 
 CVD_TYPEDEF(cv::Mat, Mat)
@@ -110,12 +107,13 @@ CVD_TYPEDEF(std::vector<cv::KeyPoint>, VecKeyPoint)
 CVD_TYPEDEF(std::vector<cv::DMatch>, VecDMatch)
 CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
 #else
-#define CVD_TYPEDEF(TYPE, NAME) \
-  typedef struct NAME {         \
-    TYPE *ptr;                  \
+#define CVD_TYPEDEF(TYPE, NAME)                                                                              \
+  typedef struct NAME {                                                                                      \
+    TYPE *ptr;                                                                                               \
   } NAME;
 
 typedef unsigned char uchar;
+typedef unsigned short ushort;
 
 CVD_TYPEDEF(void, Mat)
 CVD_TYPEDEF(void, InputOutputArray)
@@ -262,6 +260,131 @@ typedef struct CvStatus {
   int   line;
 } CvStatus;
 
+typedef struct Vec2b {
+  uchar val1;
+  uchar val2;
+} Vec2b;
+typedef struct Vec3b {
+  uchar val1;
+  uchar val2;
+  uchar val3;
+} Vec3b;
+typedef struct Vec4b {
+  uchar val1;
+  uchar val2;
+  uchar val3;
+  uchar val4;
+} Vec4b;
+typedef struct Vec2s {
+  short val1;
+  short val2;
+} Vec2s;
+typedef struct Vec3s {
+  short val1;
+  short val2;
+  short val3;
+} Vec3s;
+typedef struct Vec4s {
+  short val1;
+  short val2;
+  short val3;
+  short val4;
+} Vec4s;
+typedef struct Vec2w {
+  ushort val1;
+  ushort val2;
+} Vec2w;
+typedef struct Vec3w {
+  ushort val1;
+  ushort val2;
+  ushort val3;
+} Vec3w;
+typedef struct Vec4w {
+  ushort val1;
+  ushort val2;
+  ushort val3;
+  ushort val4;
+} Vec4w;
+typedef struct Vec2i {
+  int val1;
+  int val2;
+} Vec2i;
+typedef struct Vec3i {
+  int val1;
+  int val2;
+  int val3;
+} Vec3i;
+typedef struct Vec4i {
+  int val1;
+  int val2;
+  int val3;
+  int val4;
+} Vec4i;
+typedef struct Vec6i {
+  int val1;
+  int val2;
+  int val3;
+  int val4;
+  int val5;
+  int val6;
+} Vec6i;
+typedef struct Vec8i {
+  int val1;
+  int val2;
+  int val3;
+  int val4;
+  int val5;
+  int val6;
+  int val7;
+  int val8;
+} Vec8i;
+typedef struct Vec2f {
+  float val1;
+  float val2;
+} Vec2f;
+typedef struct Vec3f {
+  float val1;
+  float val2;
+  float val3;
+} Vec3f;
+typedef struct Vec4f {
+  float val1;
+  float val2;
+  float val3;
+  float val4;
+} Vec4f;
+typedef struct Vec6f {
+  float val1;
+  float val2;
+  float val3;
+  float val4;
+  float val5;
+  float val6;
+} Vec6f;
+typedef struct Vec2d {
+  double val1;
+  double val2;
+} Vec2d;
+typedef struct Vec3d {
+  double val1;
+  double val2;
+  double val3;
+} Vec3d;
+typedef struct Vec4d {
+  double val1;
+  double val2;
+  double val3;
+  double val4;
+} Vec4d;
+typedef struct Vec6d {
+  double val1;
+  double val2;
+  double val3;
+  double val4;
+  double val5;
+  double val6;
+} Vec6d;
+
 // Contour is alias for Points
 typedef VecPoint      Contour;
 typedef VecPoint2f    Contour2f;
@@ -304,7 +427,7 @@ CvStatus Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval
 CvStatus Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval);
 CvStatus Mat_NewFromScalar(const Scalar ar, int type, Mat *rval);
 CvStatus Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
-CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, Mat *rval);
+CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, int step, Mat *rval);
 CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
@@ -414,14 +537,16 @@ CvStatus Mat_BitwiseOrWithMask(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus Mat_BitwiseXor(Mat src1, Mat src2, Mat dst);
 CvStatus Mat_BitwiseXorWithMask(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus Mat_Compare(Mat src1, Mat src2, Mat dst, int ct);
-CvStatus Mat_BatchDistance(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K, Mat mask, int update, bool crosscheck);
+CvStatus Mat_BatchDistance(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K, Mat mask,
+                           int update, bool crosscheck);
 CvStatus Mat_BorderInterpolate(int p, int len, int borderType, int *rval);
 CvStatus Mat_CalcCovarMatrix(Mat samples, Mat covar, Mat mean, int flags, int ctype);
 CvStatus Mat_CartToPolar(Mat x, Mat y, Mat magnitude, Mat angle, bool angleInDegrees);
 CvStatus Mat_CheckRange(Mat m, bool quiet, Point *pos, double minVal, double maxVal, bool *rval);
 CvStatus Mat_CompleteSymm(Mat m, bool lowerToUpper);
 CvStatus Mat_ConvertScaleAbs(Mat src, Mat dst, double alpha, double beta);
-CvStatus Mat_CopyMakeBorder(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType, Scalar value);
+CvStatus Mat_CopyMakeBorder(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType,
+                            Scalar value);
 CvStatus Mat_CountNonZero(Mat src, int *rval);
 CvStatus Mat_DCT(Mat src, Mat dst, int flags);
 CvStatus Mat_Determinant(Mat m, double *rval);
@@ -482,8 +607,10 @@ CvStatus Mat_Sum(Mat src, Scalar *rval);
 CvStatus Mat_rowRange(Mat m, int start, int end, Mat *rval);
 CvStatus Mat_colRange(Mat m, int start, int end, Mat *rval);
 CvStatus LUT(Mat src, Mat lut, Mat dst);
-CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers, double *rval);
-CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers, double *rval);
+CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers,
+                double *rval);
+CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
+                      Mat centers, double *rval);
 CvStatus Rotate(Mat src, Mat dst, int rotateCode);
 CvStatus Norm(Mat src1, int normType, double *rval);
 CvStatus NormWithMats(Mat src1, Mat src2, int normType, double *rval);

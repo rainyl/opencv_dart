@@ -46,7 +46,7 @@ void main() async {
       cv.Rect(10, 10, 35, 35),
     ];
 
-    final res = cv.groupRectangles(rects.ocv, 1, 0.2);
+    final res = cv.groupRectangles(rects.cvd, 1, 0.2);
     expect(res.length, 1);
     expect(res.first, cv.Rect(10, 10, 32, 32));
   });

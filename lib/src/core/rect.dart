@@ -196,5 +196,5 @@ class VecRectIterator extends VecIterator<Rect> {
 }
 
 extension ListRectExtension on List<Rect> {
-  VecRect get ocv => VecRect.fromList(this);
+  VecRect get cvd => VecRect.fromList(this);
 }

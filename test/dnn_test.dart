@@ -196,7 +196,7 @@ void main() async {
     final imgs = [
       cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
       cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
-    ].ocv;
+    ].cvd;
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
@@ -216,7 +216,7 @@ void main() async {
     final imgs = [
       cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
       cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
-    ].ocv;
+    ].cvd;
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
@@ -235,7 +235,7 @@ void main() async {
       cv.Rect(53, 66, 605, 480),
       cv.Rect(111, 65, 630, 480),
       cv.Rect(156, 51, 640, 480),
-    ].ocv;
+    ].cvd;
     final scores = [0.82094115, 0.7998236, 0.9809663, 0.99717456, 0.89628726].f32;
     final indices = cv.NMSBoxes(bboxes, scores, 0.5, 0.4);
     expect(indices.first, 3);

@@ -9,10 +9,11 @@ import 'scalar.dart';
 import 'mat_type.dart';
 import 'point.dart';
 import 'vec.dart';
+import 'array.dart';
 import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr) : super.fromPointer(ptr) {
+  Mat._(cvg.MatPtr ptr, [this.vptr]) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
 
@@ -22,6 +23,33 @@ class Mat extends CvStruct<cvg.Mat> {
     cvRun(() => CFFI.Mat_FromCMat(mat, p));
     final vec = Mat._(p);
     return vec;
+  }
+
+  /// Mat (Size size, int type, void *data, size_t step=AUTO_STEP)
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9fa74fb14362d87cb183453d2441948f
+  factory Mat.fromBytes(int rows, int cols, MatType type, Uint8List data, [int step = 0]) {
+    final p = calloc<cvg.Mat>();
+    // final NativeArray pdata;
+    // switch (type.depth) {
+    //   case MatType.CV_8U:
+    //     pdata = U8Array.fromList(data);
+    //   case MatType.CV_8S:
+    //     pdata = I8Array.fromList(data);
+    //   case MatType.CV_32S:
+    //     pdata = I32Array.fromList(data);
+    //   case MatType.CV_32F:
+    //     pdata = F32Array.fromList(data.cast<double>());
+    //   case MatType.CV_64F:
+    //     pdata = F64Array.fromList(data.cast<double>());
+    //   default:
+    //     throw UnsupportedError("Mat.fromBytes for MatType $type unsupported");
+    // }
+    final vec = VecUChar.fromList(data);
+
+    cvRun(() => CFFI.Mat_NewFromBytes(rows, cols, type.toInt32(), vec.ref, step, p));
+    final mat = Mat._(p, vec);
+    return mat;
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
@@ -56,14 +84,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  factory Mat.create({
-    int cols = 0,
-    int rows = 0,
-    int r = 0,
-    int g = 0,
-    int b = 0,
-    MatType? type,
-  }) {
+  factory Mat.create({int rows = 0, int cols = 0, int r = 0, int g = 0, int b = 0, MatType? type}) {
     type = type ?? MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
     final p = calloc<cvg.Mat>();
@@ -124,10 +145,12 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  static final finalizer = Finalizer<cvg.MatPtr>((p){
+  static final finalizer = Finalizer<cvg.MatPtr>((p) {
     CFFI.Mat_Close(p);
     calloc.free(p);
   });
+  ffi.Pointer<ffi.NativeType>? pdata;
+  Vec? vptr;
   MatType get type => cvRunArena<MatType>((arena) {
         final p = arena<ffi.Int>();
         cvRun(() => CFFI.Mat_Type(ref, p));
@@ -210,7 +233,8 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
-  T at<T extends num>(int row, int col, {int? cn}) {
+  T at<T extends num>(int row, int col, [int? cn]) {
+    assert(cn == null || cn >= 0 && cn < channels, "cn must be null or between 0 and channels");
     Arena arena = Arena();
     num val;
     switch (type.depth) {
@@ -792,24 +816,24 @@ class Mat extends CvStruct<cvg.Mat> {
     return this;
   }
 
-  List<List<T>> toList<T extends num>({int cn = 0}) {
+  List<List<T>> toList<T extends num>([int cn = 0]) {
     return List.generate(
       rows,
       (row) => List.generate(
         cols,
-        (col) => at<T>(row, col, cn: cn),
+        (col) => at<T>(row, col, cn),
       ),
     );
   }
 
   List<List<List<T>>> toList3D<T extends num>() {
     assert(channels == 3, "toList3D() only for 3 channels, but this.channels=$channels");
-    return List.generate(3, (cn) => toList(cn: cn));
+    return List.generate(3, (cn) => toList(cn));
   }
 
   List<List<List<List<T>>>> toList4D<T extends num>() {
     assert(channels == 4, "toList4D() only for 4 channels, but this.channels=$channels");
-    return List.generate(4, (cn) => toList(cn: cn));
+    return List.generate(4, (cn) => toList(cn));
   }
 
   Uint8List get data {
@@ -902,5 +926,5 @@ class VecMatIterator extends VecIterator<Mat> {
 }
 
 extension ListMatExtension on List<Mat> {
-  VecMat get ocv => VecMat.fromList(this);
+  VecMat get cvd => VecMat.fromList(this);
 }

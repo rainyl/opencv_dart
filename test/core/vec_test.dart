@@ -70,7 +70,7 @@ void main() {
 
   test('VecRect', () {
     final points = List.generate(100, (index) => cv.Rect(index, index, index + 10, index + 20));
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
@@ -94,7 +94,7 @@ void main() {
   });
   test('VecDMatch', () {
     final points = List.generate(100, (index) => cv.DMatch(index, index, index, index.toDouble()));
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
@@ -107,7 +107,7 @@ void main() {
   test('VecVecDMatch', () {
     final points = List.generate(
         10, (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())));
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
@@ -129,7 +129,7 @@ void main() {
         index,
       ),
     );
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);

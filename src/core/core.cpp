@@ -1,5 +1,6 @@
 #include "core.h"
 #include <vector>
+#include <iostream>
 
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
 {
@@ -103,10 +104,15 @@ CvStatus Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type
   *rval = {new cv::Mat(rows, cols, type, c)};
   END_WRAP
 }
-CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, Mat *rval)
+CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, int step, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::Mat(rows, cols, type, buf.ptr)};
+  auto v = std::vector<uchar>(buf.ptr->begin(), buf.ptr->end());
+  for(int i = 0; i < v.size(); i++){
+    std::cout << static_cast<int>(v.at(i)) << ", ";
+  }
+  std::cout << std::endl;
+  *rval = {new cv::Mat(rows, cols, type, buf.ptr->data(), step)};
   END_WRAP
 }
 CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval)

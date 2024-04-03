@@ -104,65 +104,67 @@ endif()
 
 install(FILES ${CV_DEPENDENCIES} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
-### test
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/heads/main.zip
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-if(WIN32)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-endif(WIN32)
-FetchContent_MakeAvailable(googletest)
-# copy test images
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test)
-file(COPY
-    "${CMAKE_CURRENT_SOURCE_DIR}/test/images"
-    DESTINATION ${CMAKE_BINARY_DIR}/test
-)
-# model files for DNN test
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/models")    
-    file(COPY
-    "${CMAKE_CURRENT_SOURCE_DIR}/test/models"
-    DESTINATION ${CMAKE_BINARY_DIR}/test
+if(CVD_ENABLE_TEST)
+    ### test
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/heads/main.zip
     )
-endif()
-
-enable_testing()
-
-macro(add_ocv_dart_test executable_name source_file)
-    add_executable(
-        ${executable_name}
-        "${source_file}"
-    )
-
-    target_link_libraries(
-        ${executable_name}
-        PUBLIC
-        ${OpenCV_LIBS}
-        ${LIBRARY_NAME}
-        GTest::gtest_main
-    )
-
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
     if(WIN32)
-        set_target_properties(${executable_name} PROPERTIES
-            COMPILE_FLAGS "/EHsc"
-        )
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     endif(WIN32)
-endmacro()
+    FetchContent_MakeAvailable(googletest)
+    # copy test images
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test)
+    file(COPY
+        "${CMAKE_CURRENT_SOURCE_DIR}/test/images"
+        DESTINATION ${CMAKE_BINARY_DIR}/test
+    )
+    # model files for DNN test
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/models")    
+        file(COPY
+        "${CMAKE_CURRENT_SOURCE_DIR}/test/models"
+        DESTINATION ${CMAKE_BINARY_DIR}/test
+        )
+    endif()
 
-add_ocv_dart_test(ocv_dart_test_vec "src/test/vec.cc")
-add_ocv_dart_test(ocv_dart_test_core "src/test/core.cc")
-add_ocv_dart_test(ocv_dart_test_calib3d "src/test/calib3d.cc")
-add_ocv_dart_test(ocv_dart_test_dnn "src/test/dnn.cc")
-add_ocv_dart_test(ocv_dart_test_imgcodecs "src/test/imgcodecs.cc")
-add_ocv_dart_test(ocv_dart_test_imgproc "src/test/imgproc.cc")
+    enable_testing()
 
-include(GoogleTest)
-gtest_discover_tests(ocv_dart_test_vec)
-gtest_discover_tests(ocv_dart_test_core)
-gtest_discover_tests(ocv_dart_test_calib3d)
-gtest_discover_tests(ocv_dart_test_dnn)
-gtest_discover_tests(ocv_dart_test_imgcodecs)
-gtest_discover_tests(ocv_dart_test_imgproc)
+    macro(add_ocv_dart_test executable_name source_file)
+        add_executable(
+            ${executable_name}
+            "${source_file}"
+        )
+
+        target_link_libraries(
+            ${executable_name}
+            PUBLIC
+            ${OpenCV_LIBS}
+            ${LIBRARY_NAME}
+            GTest::gtest_main
+        )
+
+        if(WIN32)
+            set_target_properties(${executable_name} PROPERTIES
+                COMPILE_FLAGS "/EHsc"
+            )
+        endif(WIN32)
+    endmacro()
+
+    add_ocv_dart_test(ocv_dart_test_vec "src/test/vec.cc")
+    add_ocv_dart_test(ocv_dart_test_core "src/test/core.cc")
+    add_ocv_dart_test(ocv_dart_test_calib3d "src/test/calib3d.cc")
+    add_ocv_dart_test(ocv_dart_test_dnn "src/test/dnn.cc")
+    add_ocv_dart_test(ocv_dart_test_imgcodecs "src/test/imgcodecs.cc")
+    add_ocv_dart_test(ocv_dart_test_imgproc "src/test/imgproc.cc")
+
+    include(GoogleTest)
+    gtest_discover_tests(ocv_dart_test_vec)
+    gtest_discover_tests(ocv_dart_test_core)
+    gtest_discover_tests(ocv_dart_test_calib3d)
+    gtest_discover_tests(ocv_dart_test_dnn)
+    gtest_discover_tests(ocv_dart_test_imgcodecs)
+    gtest_discover_tests(ocv_dart_test_imgproc)
+endif()

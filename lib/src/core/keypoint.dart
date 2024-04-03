@@ -124,5 +124,5 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
 }
 
 extension ListKeyPointExtension on List<KeyPoint> {
-  VecKeyPoint get ocv => VecKeyPoint.fromList(this);
+  VecKeyPoint get cvd => VecKeyPoint.fromList(this);
 }

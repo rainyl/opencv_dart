@@ -159,6 +159,28 @@ TEST(Mat, Create_extra)
   EXPECT_EQ(mat2.ptr->cols, 3);
   EXPECT_EQ(mat2.ptr->type(), CV_8UC3);
   Mat_Close(&mat2);
+
+  std::vector<uchar> data = {0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13,
+                             14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+  VecUChar           buf = {new std::vector<uchar>(data)};
+  Mat                matt = {};
+  s = Mat_NewFromBytes(3, 3, CV_8UC3, buf, 0, &matt);
+  EXPECT_EQ(s.code, 0);
+  EXPECT_NE(matt.ptr, nullptr);
+  EXPECT_EQ(matt.ptr->rows, 3);
+  EXPECT_EQ(matt.ptr->cols, 3);
+  EXPECT_EQ(matt.ptr->channels(), 3);
+  auto v = matt.ptr->at<cv::Vec3b>(0, 0);
+  std::cout << v << std::endl;
+  EXPECT_EQ(v.val[1], 1);
+  for(int i = 0; i < matt.ptr->rows; i++){
+    for(int j = 0; j < matt.ptr->cols; j++){
+      for (int k = 0; k < matt.ptr->channels(); k++){
+        std::cout << static_cast<int>(matt.ptr->at<uchar>(i, j, k)) << " ";
+      }
+    }
+  }
+  std::cout << *matt.ptr->data << std::endl;
 }
 
 TEST(Mat, Property)

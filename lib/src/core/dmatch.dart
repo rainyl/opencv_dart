@@ -116,7 +116,7 @@ class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> 
     final p = calloc<cvg.VecVecDMatch>();
     cvRun(() => CFFI.VecVecDMatch_New(p));
     for (var i = 0; i < pts.length; i++) {
-      final point = pts[i].ocv;
+      final point = pts[i].cvd;
       cvRun(() => CFFI.VecVecDMatch_Append(p.ref, point.ref));
     }
     final vec = VecVecDMatch._(p);
@@ -159,9 +159,9 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
 }
 
 extension ListDMatchExtension on List<DMatch> {
-  VecDMatch get ocv => VecDMatch.fromList(this);
+  VecDMatch get cvd => VecDMatch.fromList(this);
 }
 
 extension ListListDMatchExtension on List<List<DMatch>> {
-  VecVecDMatch get ocv => VecVecDMatch.fromList(this);
+  VecVecDMatch get cvd => VecVecDMatch.fromList(this);
 }

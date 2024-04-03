@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
@@ -15,6 +17,7 @@ void main() async {
     expect(mat1.isContinus, equals(true));
     expect(mat1.step, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
+    expect(mat1.at<int>(0, 0, 0), 255);
 
     final mat2 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC1);
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 1));
@@ -29,6 +32,25 @@ void main() async {
     final mat5 = mat4.convertTo(cv.MatType.CV_8UC1);
     mat5.setTo(cv.Scalar.all(255));
     expect(mat5.at<int>(0, 0), equals(255));
+  });
+
+  test('Mat.fromBytes', () {
+    int rows = 3, cols = 3;
+
+    final data = Uint8List.fromList(List.generate(rows * cols * 3, (i) => i));
+    for (var i = 0; i < 100; i++) {
+      final mat = cv.Mat.fromBytes(rows, cols, cv.MatType.CV_8UC3, data);
+      expect(mat.isEmpty, false);
+      print(mat.toList(1));
+      print(mat.vptr?.toList());
+      // expect(mat.shape, [rows, cols, 1]);
+      //  print(mat.toList(1));
+      //  print(mat.toList(2));
+      //  print("===========");
+      // print(mat.pdata?.toList());
+      // cv.imwrite('test.png', mat);
+      // expect(mat.at<int>(0, 0, 0), 1);
+    }
   });
 
   test('Mat operations Add', () {
@@ -209,7 +231,7 @@ void main() async {
     final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
     final mat1 = mat0.region(cv.Rect(10, 10, 100, 100));
     expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
-    expect(mat1.at<int>(0, 0, cn: 0), equals(mat0.at<int>(10, 10, cn: 0)));
+    expect(mat1.at<int>(0, 0, 0), equals(mat0.at<int>(10, 10, 0)));
   });
 
   test('Mat Rotate', () {

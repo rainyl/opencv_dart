@@ -10,6 +10,8 @@ import tarfile
 from pathlib import Path
 import yaml
 
+OPENCV_VERSION = "4.9.0"
+
 # for compatibility
 arch_map = {
     "windows": {
@@ -152,6 +154,7 @@ class OcvDartDesktop(ConanFile):
         "with_quirc": [True, False],
         # videoio module options
         "with_ffmpeg": [True, False],
+        "with_openni2": [True, False],
         "with_v4l": [True, False],
         # text module options
         "with_tesseract": [True, False],
@@ -193,6 +196,7 @@ class OcvDartDesktop(ConanFile):
         "with_quirc": True,
         # videoio module options
         "with_ffmpeg": True,
+        "with_openni2": False,
         "with_v4l": True,
         # text module options
         "with_tesseract": False,
@@ -288,7 +292,7 @@ class OcvDartDesktop(ConanFile):
         tc.variables["WITH_OPENCL_SVM"] = False
         tc.variables["WITH_OPENGL"] = False
         tc.variables["WITH_OPENNI"] = False
-        tc.variables["WITH_OPENNI2"] = False
+        tc.variables["WITH_OPENNI2"] = self.get_bool("with_openni2", False)
         tc.variables["WITH_OPENVX"] = False
         tc.variables["WITH_CAROTENE"] = False
         tc.variables["WITH_PLAIDML"] = False
@@ -358,11 +362,12 @@ class OcvDartDesktop(ConanFile):
         self.opencv_contrib_repo = os.path.join(root, "build", "opencv_contrib")
         git = Git(self)
         if not os.path.exists(self.opencv_repo):
-            git.clone("https://github.com/opencv/opencv.git", self.opencv_repo)
+            git.clone("https://github.com/opencv/opencv.git", self.opencv_repo, [f"-b {OPENCV_VERSION}"])
         if not os.path.exists(self.opencv_contrib_repo):
             git.clone(
                 "https://github.com/opencv/opencv_contrib.git",
                 self.opencv_contrib_repo,
+                [f"-b {OPENCV_VERSION}"]
             )
 
     def build_requirements(self):
@@ -371,11 +376,6 @@ class OcvDartDesktop(ConanFile):
         # self.tool_requires("ccache/4.9.1")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
-
-    def source(self):
-        git = Git(self)
-        git.clone("https://github.com/opencv/opencv.git", "opencv")
-        git.clone("https://github.com/opencv/opencv_contrib.git", "opencv_contrib")
 
     # def configure(self):
     #     ...

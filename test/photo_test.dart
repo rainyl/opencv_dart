@@ -54,7 +54,7 @@ void main() {
       cv.Mat.zeros(20, 20, cv.MatType.CV_8UC3),
     ];
 
-    final dst = cv.fastNlMeansDenoisingColoredMulti(src.ocv, 1, 1);
+    final dst = cv.fastNlMeansDenoisingColoredMulti(src.cvd, 1, 1);
     expect(dst.isEmpty, false);
     expect((dst.rows, dst.cols), (src[0].rows, src[0].cols));
   });
@@ -116,12 +116,12 @@ void main() {
       cv.Mat.zeros(20, 20, cv.MatType.CV_8UC3),
     ];
     final mertens = cv.MergeMertens.empty();
-    final dst = mertens.process(src.ocv);
+    final dst = mertens.process(src.cvd);
     expect(dst.isEmpty, false);
     expect((dst.rows, dst.cols), (src[0].rows, src[0].cols));
 
     final mertens1 = cv.MergeMertens.create();
-    final dst1 = mertens1.process(src.ocv);
+    final dst1 = mertens1.process(src.cvd);
     expect(dst1.isEmpty, false);
     expect((dst1.rows, dst1.cols), (src[0].rows, src[0].cols));
   });
@@ -134,11 +134,11 @@ void main() {
     ];
 
     final alignwtb = cv.AlignMTB.empty();
-    final dst = alignwtb.process(src.ocv);
+    final dst = alignwtb.process(src.cvd);
     expect(dst.length, greaterThan(0));
 
     final alignwtb1 = cv.AlignMTB.create();
-    final dst1 = alignwtb1.process(src.ocv);
+    final dst1 = alignwtb1.process(src.cvd);
     expect(dst1.length, greaterThan(0));
   });
 }

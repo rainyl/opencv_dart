@@ -50,11 +50,11 @@ void main() {
   });
 
   test('VecPoint', () {
-    final vec = <cv.Point>[].ocv;
+    final vec = <cv.Point>[].cvd;
     expect(vec.length, 0);
 
     final points = [cv.Point(1, 2), cv.Point(3, 4), cv.Point(5, 6), cv.Point(7, 8)];
-    final vec1 = points.ocv;
+    final vec1 = points.cvd;
     expect(vec1.length, 4);
     expect(vec1.first, cv.Point(1, 2));
     expect(vec1.last, cv.Point(7, 8));
@@ -62,7 +62,7 @@ void main() {
 
   test('VecPoint.fromMat', () {
     final points = [cv.Point(1, 2), cv.Point(3, 4), cv.Point(5, 6), cv.Point(7, 8)];
-    final mat = cv.Mat.fromVec(points.ocv);
+    final mat = cv.Mat.fromVec(points.cvd);
 
     final vec = cv.VecPoint.fromMat(mat);
     expect(vec.length, points.length);
@@ -71,11 +71,11 @@ void main() {
   });
 
   test('VecPoint2f', () {
-    final vec = <cv.Point2f>[].ocv;
+    final vec = <cv.Point2f>[].cvd;
     expect(vec.length, 0);
 
     final points = [cv.Point2f(1, 2), cv.Point2f(3, 4), cv.Point2f(5, 6), cv.Point2f(7, 8)];
-    final vec1 = points.ocv;
+    final vec1 = points.cvd;
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
@@ -91,7 +91,7 @@ void main() {
 
   test('VecPoint2f.fromMat', () {
     final points = [cv.Point2f(1, 2), cv.Point2f(3, 4), cv.Point2f(5, 6), cv.Point2f(7, 8)];
-    final mat = cv.Mat.fromVec(points.ocv);
+    final mat = cv.Mat.fromVec(points.cvd);
 
     final vec = cv.VecPoint2f.fromMat(mat);
     expect(vec.length, points.length);
@@ -100,11 +100,11 @@ void main() {
   });
 
   test('VecPoint3f', () {
-    final vec = <cv.Point3f>[].ocv;
+    final vec = <cv.Point3f>[].cvd;
     expect(vec.length, 0);
 
     final points = [cv.Point3f(1, 2, 1), cv.Point3f(3, 4, 3), cv.Point3f(5, 6, 5), cv.Point3f(7, 8, 7)];
-    final vec1 = points.ocv;
+    final vec1 = points.cvd;
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
@@ -112,7 +112,7 @@ void main() {
 
   test('VecPoint3f.fromMat', () {
     final points = [cv.Point3f(1, 2, 1), cv.Point3f(3, 4, 3), cv.Point3f(5, 6, 5), cv.Point3f(7, 8, 7)];
-    final mat = cv.Mat.fromVec(points.ocv);
+    final mat = cv.Mat.fromVec(points.cvd);
 
     final vec = cv.VecPoint3f.fromMat(mat);
     expect(vec.length, points.length);
@@ -126,7 +126,7 @@ void main() {
       [cv.Point(5, 5), cv.Point(6, 6), cv.Point(7, 7), cv.Point(8, 8)],
       [cv.Point(9, 9), cv.Point(0, 0), cv.Point(1, 6), cv.Point(2, 8)]
     ];
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
@@ -139,7 +139,7 @@ void main() {
       [cv.Point2f(5, 5), cv.Point2f(6, 6), cv.Point2f(7, 7), cv.Point2f(8, 8)],
       [cv.Point2f(9, 9), cv.Point2f(0, 0), cv.Point2f(1, 6), cv.Point2f(2, 8)]
     ];
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
@@ -152,7 +152,7 @@ void main() {
       [cv.Point3f(5, 5, 6), cv.Point3f(6, 6, 6), cv.Point3f(7, 7, 8), cv.Point3f(8, 8, 8)],
       [cv.Point3f(9, 9, 8), cv.Point3f(0, 0, 8), cv.Point3f(1, 6, 5), cv.Point3f(2, 8, 6)]
     ];
-    final vec = points.ocv;
+    final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);

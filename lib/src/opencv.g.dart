@@ -8004,6 +8004,7 @@ class CvNative {
     int cols,
     int type,
     VecUChar buf,
+    int step,
     ffi.Pointer<Mat> rval,
   ) {
     return _Mat_NewFromBytes(
@@ -8011,16 +8012,17 @@ class CvNative {
       cols,
       type,
       buf,
+      step,
       rval,
     );
   }
 
   late final _Mat_NewFromBytesPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ffi.Int, ffi.Int, ffi.Int, VecUChar,
+          CvStatus Function(ffi.Int, ffi.Int, ffi.Int, VecUChar, ffi.Int,
               ffi.Pointer<Mat>)>>('Mat_NewFromBytes');
   late final _Mat_NewFromBytes = _Mat_NewFromBytesPtr.asFunction<
-      CvStatus Function(int, int, int, VecUChar, ffi.Pointer<Mat>)>();
+      CvStatus Function(int, int, int, VecUChar, int, ffi.Pointer<Mat>)>();
 
   CvStatus Mat_NewFromScalar(
     Scalar ar,
@@ -15623,393 +15625,393 @@ final class Moment extends ffi.Struct {
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_AKAZEPtr extends ffi.Struct {
   external ffi.Pointer<AKAZEPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_AgastFeatureDetectorPtr extends ffi.Struct {
   external ffi.Pointer<AgastFeatureDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_AlignMTBPtr extends ffi.Struct {
   external ffi.Pointer<AlignMTBPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_ArucoDetectorParametersPtr extends ffi.Struct {
   external ffi.Pointer<ArucoDetectorParametersPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_ArucoDetectorPtr extends ffi.Struct {
   external ffi.Pointer<ArucoDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_ArucoDictionaryPtr extends ffi.Struct {
   external ffi.Pointer<ArucoDictionaryPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_AsyncArrayPtr extends ffi.Struct {
   external ffi.Pointer<AsyncArrayPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_BFMatcherPtr extends ffi.Struct {
   external ffi.Pointer<BFMatcherPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_BRISKPtr extends ffi.Struct {
   external ffi.Pointer<BRISKPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_BackgroundSubtractorKNNPtr extends ffi.Struct {
   external ffi.Pointer<BackgroundSubtractorKNNPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_BackgroundSubtractorMOG2Ptr extends ffi.Struct {
   external ffi.Pointer<BackgroundSubtractorMOG2Ptr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_BlockMeanHashPtr extends ffi.Struct {
   external ffi.Pointer<BlockMeanHashPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_CLAHEPtr extends ffi.Struct {
   external ffi.Pointer<CLAHEPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_CascadeClassifierPtr extends ffi.Struct {
   external ffi.Pointer<CascadeClassifierPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_FastFeatureDetectorPtr extends ffi.Struct {
   external ffi.Pointer<FastFeatureDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_FlannBasedMatcherPtr extends ffi.Struct {
   external ffi.Pointer<FlannBasedMatcherPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_GFTTDetectorPtr extends ffi.Struct {
   external ffi.Pointer<GFTTDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_HOGDescriptorPtr extends ffi.Struct {
   external ffi.Pointer<HOGDescriptorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_InputOutputArrayPtr extends ffi.Struct {
   external ffi.Pointer<InputOutputArrayPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_KAZEPtr extends ffi.Struct {
   external ffi.Pointer<KAZEPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_KalmanFilterPtr extends ffi.Struct {
   external ffi.Pointer<KalmanFilterPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_LayerPtr extends ffi.Struct {
   external ffi.Pointer<LayerPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_MSERPtr extends ffi.Struct {
   external ffi.Pointer<MSERPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_MatPtr extends ffi.Struct {
   external ffi.Pointer<MatPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_MergeMertensPtr extends ffi.Struct {
   external ffi.Pointer<MergeMertensPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_NetPtr extends ffi.Struct {
   external ffi.Pointer<NetPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_ORBPtr extends ffi.Struct {
   external ffi.Pointer<ORBPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_PtrStitcherPtr extends ffi.Struct {
   external ffi.Pointer<PtrStitcherPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_QRCodeDetectorPtr extends ffi.Struct {
   external ffi.Pointer<QRCodeDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_RNGPtr extends ffi.Struct {
   external ffi.Pointer<RNGPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_SIFTPtr extends ffi.Struct {
   external ffi.Pointer<SIFTPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_SimpleBlobDetectorPtr extends ffi.Struct {
   external ffi.Pointer<SimpleBlobDetectorPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_StitcherPtr extends ffi.Struct {
   external ffi.Pointer<StitcherPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_TermCriteriaPtr extends ffi.Struct {
   external ffi.Pointer<TermCriteriaPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerGOTURNPtr extends ffi.Struct {
   external ffi.Pointer<TrackerGOTURNPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerMILPtr extends ffi.Struct {
   external ffi.Pointer<TrackerMILPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerPtr extends ffi.Struct {
   external ffi.Pointer<TrackerPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecCharPtr extends ffi.Struct {
   external ffi.Pointer<VecCharPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecDMatchPtr extends ffi.Struct {
   external ffi.Pointer<VecDMatchPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecDoublePtr extends ffi.Struct {
   external ffi.Pointer<VecDoublePtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecFloatPtr extends ffi.Struct {
   external ffi.Pointer<VecFloatPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecIntPtr extends ffi.Struct {
   external ffi.Pointer<VecIntPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecKeyPointPtr extends ffi.Struct {
   external ffi.Pointer<VecKeyPointPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecMatPtr extends ffi.Struct {
   external ffi.Pointer<VecMatPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecPoint2fPtr extends ffi.Struct {
   external ffi.Pointer<VecPoint2fPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecPoint3fPtr extends ffi.Struct {
   external ffi.Pointer<VecPoint3fPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecPointPtr extends ffi.Struct {
   external ffi.Pointer<VecPointPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecRectPtr extends ffi.Struct {
   external ffi.Pointer<VecRectPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecUCharPtr extends ffi.Struct {
   external ffi.Pointer<VecUCharPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecVecCharPtr extends ffi.Struct {
   external ffi.Pointer<VecVecCharPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecVecDMatchPtr extends ffi.Struct {
   external ffi.Pointer<VecVecDMatchPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecVecPoint2fPtr extends ffi.Struct {
   external ffi.Pointer<VecVecPoint2fPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecVecPoint3fPtr extends ffi.Struct {
   external ffi.Pointer<VecVecPoint3fPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VecVecPointPtr extends ffi.Struct {
   external ffi.Pointer<VecVecPointPtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VideoCapturePtr extends ffi.Struct {
   external ffi.Pointer<VideoCapturePtr> p;
 }
 
 /// \
-/// Dart ffigen will not generate typedefs if not referred \
-/// so here we confirm they are included                   \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_VideoWriterPtr extends ffi.Struct {
   external ffi.Pointer<VideoWriterPtr> p;
 }
@@ -16250,6 +16252,290 @@ final class TrackerMIL extends ffi.Struct {
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
 typedef TrackerPtr = ffi.Pointer<Tracker>;
 
+final class Vec2b extends ffi.Struct {
+  @uchar()
+  external int val1;
+
+  @uchar()
+  external int val2;
+}
+
+final class Vec2d extends ffi.Struct {
+  @ffi.Double()
+  external double val1;
+
+  @ffi.Double()
+  external double val2;
+}
+
+final class Vec2f extends ffi.Struct {
+  @ffi.Float()
+  external double val1;
+
+  @ffi.Float()
+  external double val2;
+}
+
+final class Vec2i extends ffi.Struct {
+  @ffi.Int()
+  external int val1;
+
+  @ffi.Int()
+  external int val2;
+}
+
+final class Vec2s extends ffi.Struct {
+  @ffi.Short()
+  external int val1;
+
+  @ffi.Short()
+  external int val2;
+}
+
+final class Vec2w extends ffi.Struct {
+  @ushort()
+  external int val1;
+
+  @ushort()
+  external int val2;
+}
+
+final class Vec3b extends ffi.Struct {
+  @uchar()
+  external int val1;
+
+  @uchar()
+  external int val2;
+
+  @uchar()
+  external int val3;
+}
+
+final class Vec3d extends ffi.Struct {
+  @ffi.Double()
+  external double val1;
+
+  @ffi.Double()
+  external double val2;
+
+  @ffi.Double()
+  external double val3;
+}
+
+final class Vec3f extends ffi.Struct {
+  @ffi.Float()
+  external double val1;
+
+  @ffi.Float()
+  external double val2;
+
+  @ffi.Float()
+  external double val3;
+}
+
+final class Vec3i extends ffi.Struct {
+  @ffi.Int()
+  external int val1;
+
+  @ffi.Int()
+  external int val2;
+
+  @ffi.Int()
+  external int val3;
+}
+
+final class Vec3s extends ffi.Struct {
+  @ffi.Short()
+  external int val1;
+
+  @ffi.Short()
+  external int val2;
+
+  @ffi.Short()
+  external int val3;
+}
+
+final class Vec3w extends ffi.Struct {
+  @ushort()
+  external int val1;
+
+  @ushort()
+  external int val2;
+
+  @ushort()
+  external int val3;
+}
+
+final class Vec4b extends ffi.Struct {
+  @uchar()
+  external int val1;
+
+  @uchar()
+  external int val2;
+
+  @uchar()
+  external int val3;
+
+  @uchar()
+  external int val4;
+}
+
+final class Vec4d extends ffi.Struct {
+  @ffi.Double()
+  external double val1;
+
+  @ffi.Double()
+  external double val2;
+
+  @ffi.Double()
+  external double val3;
+
+  @ffi.Double()
+  external double val4;
+}
+
+final class Vec4f extends ffi.Struct {
+  @ffi.Float()
+  external double val1;
+
+  @ffi.Float()
+  external double val2;
+
+  @ffi.Float()
+  external double val3;
+
+  @ffi.Float()
+  external double val4;
+}
+
+final class Vec4i extends ffi.Struct {
+  @ffi.Int()
+  external int val1;
+
+  @ffi.Int()
+  external int val2;
+
+  @ffi.Int()
+  external int val3;
+
+  @ffi.Int()
+  external int val4;
+}
+
+final class Vec4s extends ffi.Struct {
+  @ffi.Short()
+  external int val1;
+
+  @ffi.Short()
+  external int val2;
+
+  @ffi.Short()
+  external int val3;
+
+  @ffi.Short()
+  external int val4;
+}
+
+final class Vec4w extends ffi.Struct {
+  @ushort()
+  external int val1;
+
+  @ushort()
+  external int val2;
+
+  @ushort()
+  external int val3;
+
+  @ushort()
+  external int val4;
+}
+
+final class Vec6d extends ffi.Struct {
+  @ffi.Double()
+  external double val1;
+
+  @ffi.Double()
+  external double val2;
+
+  @ffi.Double()
+  external double val3;
+
+  @ffi.Double()
+  external double val4;
+
+  @ffi.Double()
+  external double val5;
+
+  @ffi.Double()
+  external double val6;
+}
+
+final class Vec6f extends ffi.Struct {
+  @ffi.Float()
+  external double val1;
+
+  @ffi.Float()
+  external double val2;
+
+  @ffi.Float()
+  external double val3;
+
+  @ffi.Float()
+  external double val4;
+
+  @ffi.Float()
+  external double val5;
+
+  @ffi.Float()
+  external double val6;
+}
+
+final class Vec6i extends ffi.Struct {
+  @ffi.Int()
+  external int val1;
+
+  @ffi.Int()
+  external int val2;
+
+  @ffi.Int()
+  external int val3;
+
+  @ffi.Int()
+  external int val4;
+
+  @ffi.Int()
+  external int val5;
+
+  @ffi.Int()
+  external int val6;
+}
+
+final class Vec8i extends ffi.Struct {
+  @ffi.Int()
+  external int val1;
+
+  @ffi.Int()
+  external int val2;
+
+  @ffi.Int()
+  external int val3;
+
+  @ffi.Int()
+  external int val4;
+
+  @ffi.Int()
+  external int val5;
+
+  @ffi.Int()
+  external int val6;
+
+  @ffi.Int()
+  external int val7;
+
+  @ffi.Int()
+  external int val8;
+}
+
 final class VecChar extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -16367,3 +16653,5 @@ typedef float_t = ffi.Float;
 typedef Dartfloat_t = double;
 typedef uchar = ffi.UnsignedChar;
 typedef Dartuchar = int;
+typedef ushort = ffi.UnsignedShort;
+typedef Dartushort = int;

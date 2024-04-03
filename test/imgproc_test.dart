@@ -60,8 +60,8 @@ void main() async {
     expect(img.isEmpty, false);
 
     final mask = cv.Mat.empty();
-    final hist = cv.calcHist([img].ocv, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
-    final backProject = cv.calcBackProject([img].ocv, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
+    final hist = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
+    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
     expect(backProject.isEmpty, false);
   });
 
@@ -73,8 +73,8 @@ void main() async {
     cv.Mat.empty();
     final mask = cv.Mat.empty();
 
-    final hist1 = cv.calcHist([img].ocv, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
-    final hist2 = cv.calcHist([img].ocv, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
+    final hist1 = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
+    final hist2 = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
     final dist = cv.compareHist(hist1, hist2, method: cv.HISTCMP_CORREL);
     expect(dist, closeTo(1.0, 1e-4));
   });
@@ -167,7 +167,7 @@ void main() async {
   test("cv2.calcHist", () async {
     final src = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     final mask = cv.Mat.empty();
-    final hist = cv.calcHist([src].ocv, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
+    final hist = cv.calcHist([src].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
     expect(hist.height == 256 && hist.width == 1 && !hist.isEmpty, equals(true));
   });
 
@@ -198,7 +198,7 @@ void main() async {
       cv.Point(100, 0),
       cv.Point(100, 100),
       cv.Point(0, 100),
-    ].ocv;
+    ].cvd;
     expect(cv.contourArea(contour), equals(10000));
   });
 
@@ -216,7 +216,7 @@ void main() async {
     cv.ellipse(src, cv.Point(50, 50), cv.Point(10, 20), 30.0, 0, 360, cv.Scalar.green);
     cv.rectangle(src, cv.Rect(20, 20, 30, 50), cv.Scalar.blue);
     final pts = [(10, 5), (20, 30), (70, 20), (50, 10)].map((e) => cv.Point(e.$1, e.$2)).toList();
-    cv.polylines(src, [pts].ocv, false, cv.Scalar.white, thickness: 2, lineType: cv.LINE_AA);
+    cv.polylines(src, [pts].cvd, false, cv.Scalar.white, thickness: 2, lineType: cv.LINE_AA);
     cv.putText(src, "OpenCv-Dart", cv.Point(1, 90), cv.FONT_HERSHEY_SIMPLEX, 0.4, cv.Scalar.white);
     cv.arrowedLine(src, cv.Point(5, 0), cv.Point(5, 10), cv.Scalar.blue);
     cv.circle(src, cv.Point(50, 50), 10, cv.Scalar.red);
@@ -226,7 +226,7 @@ void main() async {
         src,
         [
           [cv.Point(10, 10), cv.Point(10, 30), cv.Point(30, 30)]
-        ].ocv,
+        ].cvd,
         cv.Scalar.green);
 
     cv.imwrite("test/images_out/basic_drawings.png", src);
@@ -286,7 +286,7 @@ void main() async {
       cv.Point(4, 1),
       cv.Point(0, 3),
       cv.Point(0, 2),
-    ].ocv;
+    ].cvd;
     final rect = cv.fitEllipse(pv);
     expect(rect.center.x, closeTo(1.92, 0.1));
     expect(rect.center.y, closeTo(1.78, 0.1));
@@ -301,7 +301,7 @@ void main() async {
       cv.Point(0, -2),
       cv.Point(-2, 0),
       cv.Point(1, -1),
-    ].ocv;
+    ].cvd;
 
     final (center, radius) = cv.minEnclosingCircle(pts);
     expect(radius, closeTo(2.0, 1e-3));
@@ -326,7 +326,7 @@ void main() async {
       cv.Point(80, 10),
     ];
     for (var t in tests) {
-      var r = cv.pointPolygonTest(pts.ocv, t.$3, t.$5);
+      var r = cv.pointPolygonTest(pts.cvd, t.$3, t.$5);
       expect(r, closeTo(t.$4, 1e-3));
     }
   });
@@ -599,7 +599,7 @@ void main() async {
       cv.Point(0, 10),
     ];
 
-    final m = cv.getPerspectiveTransform(pvs.ocv, pvd.ocv);
+    final m = cv.getPerspectiveTransform(pvs.cvd, pvd.cvd);
     final dst = cv.warpPerspective(img, m, (img.width, img.height));
     expect((dst.rows, dst.cols), (img.rows, img.cols));
   });
@@ -650,7 +650,7 @@ void main() async {
       cv.Point(10, 10),
       cv.Point(0, 10),
     ];
-    final m = cv.getPerspectiveTransform(src.ocv, dst.ocv);
+    final m = cv.getPerspectiveTransform(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (3, 3));
   });
 
@@ -668,7 +668,7 @@ void main() async {
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
     ];
-    final m = cv.getPerspectiveTransform2f(src.ocv, dst.ocv);
+    final m = cv.getPerspectiveTransform2f(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (3, 3));
   });
 
@@ -685,7 +685,7 @@ void main() async {
       cv.Point(10, 0),
       cv.Point(10, 10),
     ];
-    final m = cv.getAffineTransform(src.ocv, dst.ocv);
+    final m = cv.getAffineTransform(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (2, 3));
   });
 
@@ -702,7 +702,7 @@ void main() async {
       cv.Point2f(10, 0),
       cv.Point2f(10, 10),
     ];
-    final m = cv.getAffineTransform2f(src.ocv, dst.ocv);
+    final m = cv.getAffineTransform2f(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (2, 3));
   });
 
@@ -796,7 +796,7 @@ void main() async {
       cv.Point(175, 76),
       cv.Point(176, 25),
     ];
-    final dst = cv.fitLine(pts.ocv, cv.DIST_L2, 0, 0.01, 0.01);
+    final dst = cv.fitLine(pts.cvd, cv.DIST_L2, 0, 0.01, 0.01);
     expect(dst.isEmpty, false);
   });
 
@@ -816,7 +816,7 @@ void main() async {
       cv.Point(3, 3),
       cv.Point(3, 5),
     ];
-    final similarity = cv.matchShapes(pts1.ocv, pts2.ocv, cv.CONTOURS_MATCH_I2, 0);
+    final similarity = cv.matchShapes(pts1.cvd, pts2.cvd, cv.CONTOURS_MATCH_I2, 0);
     expect(2.0 <= similarity && similarity <= 3.0, true);
   });
 
@@ -832,7 +832,7 @@ void main() async {
       cv.Point(10, 0),
       cv.Point(10, 10),
     ];
-    final m = cv.getAffineTransform(src.ocv, dst.ocv);
+    final m = cv.getAffineTransform(src.cvd, dst.cvd);
     final inv = cv.invertAffineTransform(m);
     expect(inv.isEmpty, false);
     expect((inv.rows, inv.cols), (2, 3));
@@ -898,7 +898,7 @@ void main() async {
       cv.Point2f(1167.2201416015625, 693.495068359375),
     ];
 
-    var (affineMatrix, _) = cv.estimateAffinePartial2D(landmarks.ocv, faceTemplate.ocv, method: cv.LMEDS);
+    var (affineMatrix, _) = cv.estimateAffinePartial2D(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
     var invMask = cv.warpAffine(mask, affineMatrix, (2048, 2048));
     for (int i = 0; i < 2047; i++) {

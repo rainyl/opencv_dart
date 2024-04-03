@@ -18,7 +18,7 @@ class MatType extends Equatable {
   int toInt32() => value;
 
   @override
-  List<Object> get props => [value];
+  List<int> get props => [value];
 
   @override
   String toString() {

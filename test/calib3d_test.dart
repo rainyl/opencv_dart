@@ -248,13 +248,13 @@ void main() async {
       cv.Point2f(10, 5),
       cv.Point2f(10, 10),
       cv.Point2f(5, 10),
-    ].ocv;
+    ].cvd;
     final dst = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 0),
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
-    ].ocv;
+    ].cvd;
     final (m, inliers) = cv.estimateAffinePartial2D(
       src,
       dst,
@@ -275,13 +275,13 @@ void main() async {
       cv.Point2f(10, 5),
       cv.Point2f(10, 10),
       cv.Point2f(5, 10),
-    ].ocv;
+    ].cvd;
     final dst = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 0),
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
-    ].ocv;
+    ].cvd;
     final (m, inliers) = cv.estimateAffine2D(
       src,
       dst,
