@@ -10,7 +10,6 @@
 #ifndef _OPENCV3_CORE_H_
 #define _OPENCV3_CORE_H_
 
-#include <corecrt_math.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
