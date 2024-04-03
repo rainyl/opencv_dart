@@ -246,7 +246,7 @@ CvStatus VecPoint3f_New(VecPoint3f *rval)
 void VecPoint3f_Close(VecPoint3f *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecPoint3f, vec);
+  delete CVD_TYPECAST_CPP(VecPoint3f, vec);
   vec->ptr = nullptr;
 }
 

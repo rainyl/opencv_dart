@@ -92,7 +92,7 @@ CvStatus MergeMertens_Process(MergeMertens b, VecMat src, Mat dst)
 }
 void MergeMertens_Close(MergeMertens *b)
 {
-  delete b->ptr;
+  delete CVD_TYPECAST_CPP(MergeMertens, b);
   b->ptr = nullptr;
 }
 

@@ -15,7 +15,7 @@ CvStatus Stitcher_Create(int mode, PtrStitcher *rval)
 
 void Stitcher_Close(PtrStitcher *stitcher)
 {
-  delete stitcher->ptr;
+  delete CVD_TYPECAST_CPP(PtrStitcher, stitcher);
   stitcher->ptr = nullptr;
 }
 

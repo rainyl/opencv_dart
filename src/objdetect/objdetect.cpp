@@ -140,7 +140,7 @@ CvStatus QRCodeDetector_Decode(QRCodeDetector qr, Mat input, VecPoint inputPoint
 }
 void QRCodeDetector_Close(QRCodeDetector *qr)
 {
-  delete qr->ptr;
+  delete CVD_TYPECAST_CPP(QRCodeDetector, qr);
   qr->ptr = nullptr;
 }
 CvStatus QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, VecPoint points, bool *rval)

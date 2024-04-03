@@ -24,7 +24,7 @@ CvStatus BackgroundSubtractorMOG2_CreateWithParams(int history, double varThresh
 }
 void BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2 *self)
 {
-  delete self->ptr;
+  delete CVD_TYPECAST_CPP(BackgroundSubtractorMOG2, self);
   self->ptr = nullptr;
 }
 CvStatus BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 self, Mat src, Mat dst)
@@ -49,7 +49,7 @@ CvStatus BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Thres
 }
 void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNN *self)
 {
-  delete self->ptr;
+  delete CVD_TYPECAST_CPP(BackgroundSubtractorKNN, self);
   self->ptr = nullptr;
 }
 CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst)
@@ -117,7 +117,7 @@ CvStatus TrackerMIL_Create(TrackerMIL *rval)
 }
 void TrackerMIL_Close(TrackerMIL *self)
 {
-  delete self->ptr;
+  delete CVD_TYPECAST_CPP(TrackerMIL, self);
   self->ptr = nullptr;
 }
 
@@ -129,7 +129,7 @@ CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams,
 }
 void KalmanFilter_Close(KalmanFilter *self)
 {
-  delete self->ptr;
+  delete CVD_TYPECAST_CPP(KalmanFilter, self);
   self->ptr = nullptr;
 }
 

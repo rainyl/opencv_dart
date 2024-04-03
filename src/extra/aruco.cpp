@@ -16,7 +16,7 @@ CvStatus ArucoDetectorParameters_Create(ArucoDetectorParameters *rval)
 CvStatus ArucoDetectorParameters_Close(ArucoDetectorParameters *ap)
 {
   BEGIN_WRAP
-  delete ap;
+  delete CVD_TYPECAST_CPP(ArucoDetectorParameters, ap);
   ap = nullptr;
   END_WRAP
 }
@@ -402,7 +402,7 @@ CvStatus getPredefinedDictionary(int dictionaryId, ArucoDictionary *rval)
 CvStatus ArucoDictionary_Close(ArucoDictionary *self)
 {
   BEGIN_WRAP
-  delete self->ptr;
+  delete CVD_TYPECAST_CPP(ArucoDictionary, self);
   self->ptr = nullptr;
   END_WRAP
 }
@@ -422,7 +422,7 @@ CvStatus ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorPa
 }
 void ArucoDetector_Close(ArucoDetector *ad)
 {
-  delete ad->ptr;
+  delete CVD_TYPECAST_CPP(ArucoDetector, ad);
   ad->ptr = nullptr;
 }
 CvStatus ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,

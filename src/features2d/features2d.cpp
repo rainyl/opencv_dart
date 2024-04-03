@@ -16,7 +16,7 @@ CvStatus AKAZE_Create(AKAZE *rval)
 }
 void AKAZE_Close(AKAZE *a)
 {
-  delete a->ptr;
+  delete CVD_TYPECAST_CPP(AKAZE, a);
   a->ptr = nullptr;
 }
 CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval)
