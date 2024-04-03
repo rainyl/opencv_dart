@@ -1,5 +1,5 @@
 #include "../core/core.h"
-#include <corecrt_malloc.h>
+
 #include <gtest/gtest.h>
 #include <stdint.h>
 #include <stdio.h>
