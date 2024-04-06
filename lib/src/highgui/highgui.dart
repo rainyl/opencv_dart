@@ -153,8 +153,8 @@ class Window {
   String name;
   // https://stackoverflow.com/a/48055987/18539998
   bool get isOpen {
-    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_AUTOSIZE).toInt();
-    return ret != -1;
+    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_VISIBLE).toInt();
+    return ret != 0;
   }
 }
 
