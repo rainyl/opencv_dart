@@ -61,7 +61,8 @@ class CvNative {
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
   ) {
-    return _GetRectSubPix(
+    return _AKAZE_Detect(
+      a,
       src,
       rval,
     );
@@ -100,24 +101,24 @@ class CvNative {
   CvStatus AdaptiveThreshold(
     Mat src,
     Mat dst,
-    int dDepth,
-    int kSize,
-    double scale,
-    double delta,
-    int borderType,
+    double maxValue,
+    int adaptiveTyp,
+    int typ,
+    int blockSize,
+    double c,
   ) {
-    return _Laplacian(
+    return _AdaptiveThreshold(
       src,
       dst,
-      dDepth,
-      kSize,
-      scale,
-      delta,
-      borderType,
+      maxValue,
+      adaptiveTyp,
+      typ,
+      blockSize,
+      c,
     );
   }
 
-  late final _LaplacianPtr = _lookup<
+  late final _AdaptiveThresholdPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(Mat, Mat, ffi.Double, ffi.Int, ffi.Int, ffi.Int,
               ffi.Double)>>('AdaptiveThreshold');
@@ -248,8 +249,10 @@ class CvNative {
     Mat dst,
     int colormap,
   ) {
-    return _Window_Close(
-      winname,
+    return _ApplyColorMap(
+      src,
+      dst,
+      colormap,
     );
   }
 
@@ -264,9 +267,10 @@ class CvNative {
     Mat dst,
     Mat colormap,
   ) {
-    return _Window_GetProperty(
-      winname,
-      flag,
+    return _ApplyCustomColorMap(
+      src,
+      dst,
+      colormap,
     );
   }
 

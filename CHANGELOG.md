@@ -1,3 +1,8 @@
+## 1.0.0
+
+- Refactor nearly all APIs, this version is NOT compitable with previous versions!.
+- better exceptions, more concise API
+
 ## 0.6.7
 
 - add `img_hash` from opencv contrib, contributed by @mdeleau

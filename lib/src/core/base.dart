@@ -95,16 +95,6 @@ R cvRunArena<R>(R Function(Arena arena) computation,
   }
 }
 
-void cvRun(CvStatus Function() func) {
-  final status = func();
-  if (status.code != 0) {
-    final msg = status.msg.cast<Utf8>().toDartString();
-    final fname = status.file.cast<Utf8>().toDartString();
-    final func = status.func.cast<Utf8>().toDartString();
-    throw OpenCvException(ErrorCode(status.code), func, msg, fname, status.line);
-  }
-}
-
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)
   bmp(ext: ".bmp"),
