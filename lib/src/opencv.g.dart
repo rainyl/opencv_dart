@@ -7473,6 +7473,468 @@ class CvNative {
   late final _Mat_GetUShort3 = _Mat_GetUShort3Ptr.asFunction<
       CvStatus Function(Mat, int, int, int, ffi.Pointer<ffi.Uint16>)>();
 
+  CvStatus Mat_GetVec2b(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2b> rval,
+  ) {
+    return _Mat_GetVec2b(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2bPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2b>)>>('Mat_GetVec2b');
+  late final _Mat_GetVec2b = _Mat_GetVec2bPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2b>)>();
+
+  CvStatus Mat_GetVec2d(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2d> rval,
+  ) {
+    return _Mat_GetVec2d(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2dPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2d>)>>('Mat_GetVec2d');
+  late final _Mat_GetVec2d = _Mat_GetVec2dPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2d>)>();
+
+  CvStatus Mat_GetVec2f(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2f> rval,
+  ) {
+    return _Mat_GetVec2f(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2fPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2f>)>>('Mat_GetVec2f');
+  late final _Mat_GetVec2f = _Mat_GetVec2fPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2f>)>();
+
+  CvStatus Mat_GetVec2i(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2i> rval,
+  ) {
+    return _Mat_GetVec2i(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2iPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2i>)>>('Mat_GetVec2i');
+  late final _Mat_GetVec2i = _Mat_GetVec2iPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2i>)>();
+
+  CvStatus Mat_GetVec2s(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2s> rval,
+  ) {
+    return _Mat_GetVec2s(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2sPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2s>)>>('Mat_GetVec2s');
+  late final _Mat_GetVec2s = _Mat_GetVec2sPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2s>)>();
+
+  CvStatus Mat_GetVec2w(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec2w> rval,
+  ) {
+    return _Mat_GetVec2w(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec2wPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2w>)>>('Mat_GetVec2w');
+  late final _Mat_GetVec2w = _Mat_GetVec2wPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec2w>)>();
+
+  CvStatus Mat_GetVec3b(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3b> rval,
+  ) {
+    return _Mat_GetVec3b(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3bPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3b>)>>('Mat_GetVec3b');
+  late final _Mat_GetVec3b = _Mat_GetVec3bPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3b>)>();
+
+  CvStatus Mat_GetVec3d(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3d> rval,
+  ) {
+    return _Mat_GetVec3d(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3dPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3d>)>>('Mat_GetVec3d');
+  late final _Mat_GetVec3d = _Mat_GetVec3dPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3d>)>();
+
+  CvStatus Mat_GetVec3f(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3f> rval,
+  ) {
+    return _Mat_GetVec3f(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3fPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3f>)>>('Mat_GetVec3f');
+  late final _Mat_GetVec3f = _Mat_GetVec3fPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3f>)>();
+
+  CvStatus Mat_GetVec3i(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3i> rval,
+  ) {
+    return _Mat_GetVec3i(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3iPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3i>)>>('Mat_GetVec3i');
+  late final _Mat_GetVec3i = _Mat_GetVec3iPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3i>)>();
+
+  CvStatus Mat_GetVec3s(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3s> rval,
+  ) {
+    return _Mat_GetVec3s(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3sPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3s>)>>('Mat_GetVec3s');
+  late final _Mat_GetVec3s = _Mat_GetVec3sPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3s>)>();
+
+  CvStatus Mat_GetVec3w(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec3w> rval,
+  ) {
+    return _Mat_GetVec3w(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec3wPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3w>)>>('Mat_GetVec3w');
+  late final _Mat_GetVec3w = _Mat_GetVec3wPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec3w>)>();
+
+  CvStatus Mat_GetVec4b(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4b> rval,
+  ) {
+    return _Mat_GetVec4b(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4bPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4b>)>>('Mat_GetVec4b');
+  late final _Mat_GetVec4b = _Mat_GetVec4bPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4b>)>();
+
+  CvStatus Mat_GetVec4d(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4d> rval,
+  ) {
+    return _Mat_GetVec4d(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4dPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4d>)>>('Mat_GetVec4d');
+  late final _Mat_GetVec4d = _Mat_GetVec4dPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4d>)>();
+
+  CvStatus Mat_GetVec4f(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4f> rval,
+  ) {
+    return _Mat_GetVec4f(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4fPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4f>)>>('Mat_GetVec4f');
+  late final _Mat_GetVec4f = _Mat_GetVec4fPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4f>)>();
+
+  CvStatus Mat_GetVec4i(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4i> rval,
+  ) {
+    return _Mat_GetVec4i(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4iPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4i>)>>('Mat_GetVec4i');
+  late final _Mat_GetVec4i = _Mat_GetVec4iPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4i>)>();
+
+  CvStatus Mat_GetVec4s(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4s> rval,
+  ) {
+    return _Mat_GetVec4s(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4sPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4s>)>>('Mat_GetVec4s');
+  late final _Mat_GetVec4s = _Mat_GetVec4sPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4s>)>();
+
+  CvStatus Mat_GetVec4w(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec4w> rval,
+  ) {
+    return _Mat_GetVec4w(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec4wPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4w>)>>('Mat_GetVec4w');
+  late final _Mat_GetVec4w = _Mat_GetVec4wPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec4w>)>();
+
+  CvStatus Mat_GetVec6d(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec6d> rval,
+  ) {
+    return _Mat_GetVec6d(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec6dPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6d>)>>('Mat_GetVec6d');
+  late final _Mat_GetVec6d = _Mat_GetVec6dPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec6d>)>();
+
+  CvStatus Mat_GetVec6f(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec6f> rval,
+  ) {
+    return _Mat_GetVec6f(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec6fPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6f>)>>('Mat_GetVec6f');
+  late final _Mat_GetVec6f = _Mat_GetVec6fPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec6f>)>();
+
+  CvStatus Mat_GetVec6i(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec6i> rval,
+  ) {
+    return _Mat_GetVec6i(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec6iPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6i>)>>('Mat_GetVec6i');
+  late final _Mat_GetVec6i = _Mat_GetVec6iPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec6i>)>();
+
+  CvStatus Mat_GetVec8i(
+    Mat m,
+    int row,
+    int col,
+    ffi.Pointer<Vec8i> rval,
+  ) {
+    return _Mat_GetVec8i(
+      m,
+      row,
+      col,
+      rval,
+    );
+  }
+
+  late final _Mat_GetVec8iPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec8i>)>>('Mat_GetVec8i');
+  late final _Mat_GetVec8i = _Mat_GetVec8iPtr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<Vec8i>)>();
+
   CvStatus Mat_Hconcat(
     Mat src1,
     Mat src2,
@@ -8003,7 +8465,7 @@ class CvNative {
     int rows,
     int cols,
     int type,
-    VecUChar buf,
+    ffi.Pointer<ffi.Void> buf,
     int step,
     ffi.Pointer<Mat> rval,
   ) {
@@ -8019,10 +8481,11 @@ class CvNative {
 
   late final _Mat_NewFromBytesPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ffi.Int, ffi.Int, ffi.Int, VecUChar, ffi.Int,
-              ffi.Pointer<Mat>)>>('Mat_NewFromBytes');
+          CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Void>,
+              ffi.Int, ffi.Pointer<Mat>)>>('Mat_NewFromBytes');
   late final _Mat_NewFromBytes = _Mat_NewFromBytesPtr.asFunction<
-      CvStatus Function(int, int, int, VecUChar, int, ffi.Pointer<Mat>)>();
+      CvStatus Function(
+          int, int, int, ffi.Pointer<ffi.Void>, int, ffi.Pointer<Mat>)>();
 
   CvStatus Mat_NewFromScalar(
     Scalar ar,
@@ -8826,6 +9289,446 @@ class CvNative {
               Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>>('Mat_SetUShort3');
   late final _Mat_SetUShort3 = _Mat_SetUShort3Ptr.asFunction<
       CvStatus Function(Mat, int, int, int, int)>();
+
+  CvStatus Mat_SetVec2b(
+    Mat m,
+    int row,
+    int col,
+    Vec2b val,
+  ) {
+    return _Mat_SetVec2b(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2bPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2b)>>(
+      'Mat_SetVec2b');
+  late final _Mat_SetVec2b =
+      _Mat_SetVec2bPtr.asFunction<CvStatus Function(Mat, int, int, Vec2b)>();
+
+  CvStatus Mat_SetVec2d(
+    Mat m,
+    int row,
+    int col,
+    Vec2d val,
+  ) {
+    return _Mat_SetVec2d(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2dPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2d)>>(
+      'Mat_SetVec2d');
+  late final _Mat_SetVec2d =
+      _Mat_SetVec2dPtr.asFunction<CvStatus Function(Mat, int, int, Vec2d)>();
+
+  CvStatus Mat_SetVec2f(
+    Mat m,
+    int row,
+    int col,
+    Vec2f val,
+  ) {
+    return _Mat_SetVec2f(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2fPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2f)>>(
+      'Mat_SetVec2f');
+  late final _Mat_SetVec2f =
+      _Mat_SetVec2fPtr.asFunction<CvStatus Function(Mat, int, int, Vec2f)>();
+
+  CvStatus Mat_SetVec2i(
+    Mat m,
+    int row,
+    int col,
+    Vec2i val,
+  ) {
+    return _Mat_SetVec2i(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2iPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2i)>>(
+      'Mat_SetVec2i');
+  late final _Mat_SetVec2i =
+      _Mat_SetVec2iPtr.asFunction<CvStatus Function(Mat, int, int, Vec2i)>();
+
+  CvStatus Mat_SetVec2s(
+    Mat m,
+    int row,
+    int col,
+    Vec2s val,
+  ) {
+    return _Mat_SetVec2s(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2sPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2s)>>(
+      'Mat_SetVec2s');
+  late final _Mat_SetVec2s =
+      _Mat_SetVec2sPtr.asFunction<CvStatus Function(Mat, int, int, Vec2s)>();
+
+  CvStatus Mat_SetVec2w(
+    Mat m,
+    int row,
+    int col,
+    Vec2w val,
+  ) {
+    return _Mat_SetVec2w(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec2wPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2w)>>(
+      'Mat_SetVec2w');
+  late final _Mat_SetVec2w =
+      _Mat_SetVec2wPtr.asFunction<CvStatus Function(Mat, int, int, Vec2w)>();
+
+  CvStatus Mat_SetVec3b(
+    Mat m,
+    int row,
+    int col,
+    Vec3b val,
+  ) {
+    return _Mat_SetVec3b(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3bPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3b)>>(
+      'Mat_SetVec3b');
+  late final _Mat_SetVec3b =
+      _Mat_SetVec3bPtr.asFunction<CvStatus Function(Mat, int, int, Vec3b)>();
+
+  CvStatus Mat_SetVec3d(
+    Mat m,
+    int row,
+    int col,
+    Vec3d val,
+  ) {
+    return _Mat_SetVec3d(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3dPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3d)>>(
+      'Mat_SetVec3d');
+  late final _Mat_SetVec3d =
+      _Mat_SetVec3dPtr.asFunction<CvStatus Function(Mat, int, int, Vec3d)>();
+
+  CvStatus Mat_SetVec3f(
+    Mat m,
+    int row,
+    int col,
+    Vec3f val,
+  ) {
+    return _Mat_SetVec3f(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3fPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3f)>>(
+      'Mat_SetVec3f');
+  late final _Mat_SetVec3f =
+      _Mat_SetVec3fPtr.asFunction<CvStatus Function(Mat, int, int, Vec3f)>();
+
+  CvStatus Mat_SetVec3i(
+    Mat m,
+    int row,
+    int col,
+    Vec3i val,
+  ) {
+    return _Mat_SetVec3i(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3iPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3i)>>(
+      'Mat_SetVec3i');
+  late final _Mat_SetVec3i =
+      _Mat_SetVec3iPtr.asFunction<CvStatus Function(Mat, int, int, Vec3i)>();
+
+  CvStatus Mat_SetVec3s(
+    Mat m,
+    int row,
+    int col,
+    Vec3s val,
+  ) {
+    return _Mat_SetVec3s(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3sPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3s)>>(
+      'Mat_SetVec3s');
+  late final _Mat_SetVec3s =
+      _Mat_SetVec3sPtr.asFunction<CvStatus Function(Mat, int, int, Vec3s)>();
+
+  CvStatus Mat_SetVec3w(
+    Mat m,
+    int row,
+    int col,
+    Vec3w val,
+  ) {
+    return _Mat_SetVec3w(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec3wPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3w)>>(
+      'Mat_SetVec3w');
+  late final _Mat_SetVec3w =
+      _Mat_SetVec3wPtr.asFunction<CvStatus Function(Mat, int, int, Vec3w)>();
+
+  CvStatus Mat_SetVec4b(
+    Mat m,
+    int row,
+    int col,
+    Vec4b val,
+  ) {
+    return _Mat_SetVec4b(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4bPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4b)>>(
+      'Mat_SetVec4b');
+  late final _Mat_SetVec4b =
+      _Mat_SetVec4bPtr.asFunction<CvStatus Function(Mat, int, int, Vec4b)>();
+
+  CvStatus Mat_SetVec4d(
+    Mat m,
+    int row,
+    int col,
+    Vec4d val,
+  ) {
+    return _Mat_SetVec4d(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4dPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4d)>>(
+      'Mat_SetVec4d');
+  late final _Mat_SetVec4d =
+      _Mat_SetVec4dPtr.asFunction<CvStatus Function(Mat, int, int, Vec4d)>();
+
+  CvStatus Mat_SetVec4f(
+    Mat m,
+    int row,
+    int col,
+    Vec4f val,
+  ) {
+    return _Mat_SetVec4f(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4fPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4f)>>(
+      'Mat_SetVec4f');
+  late final _Mat_SetVec4f =
+      _Mat_SetVec4fPtr.asFunction<CvStatus Function(Mat, int, int, Vec4f)>();
+
+  CvStatus Mat_SetVec4i(
+    Mat m,
+    int row,
+    int col,
+    Vec4i val,
+  ) {
+    return _Mat_SetVec4i(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4iPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4i)>>(
+      'Mat_SetVec4i');
+  late final _Mat_SetVec4i =
+      _Mat_SetVec4iPtr.asFunction<CvStatus Function(Mat, int, int, Vec4i)>();
+
+  CvStatus Mat_SetVec4s(
+    Mat m,
+    int row,
+    int col,
+    Vec4s val,
+  ) {
+    return _Mat_SetVec4s(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4sPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4s)>>(
+      'Mat_SetVec4s');
+  late final _Mat_SetVec4s =
+      _Mat_SetVec4sPtr.asFunction<CvStatus Function(Mat, int, int, Vec4s)>();
+
+  CvStatus Mat_SetVec4w(
+    Mat m,
+    int row,
+    int col,
+    Vec4w val,
+  ) {
+    return _Mat_SetVec4w(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec4wPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4w)>>(
+      'Mat_SetVec4w');
+  late final _Mat_SetVec4w =
+      _Mat_SetVec4wPtr.asFunction<CvStatus Function(Mat, int, int, Vec4w)>();
+
+  CvStatus Mat_SetVec6d(
+    Mat m,
+    int row,
+    int col,
+    Vec6d val,
+  ) {
+    return _Mat_SetVec6d(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec6dPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6d)>>(
+      'Mat_SetVec6d');
+  late final _Mat_SetVec6d =
+      _Mat_SetVec6dPtr.asFunction<CvStatus Function(Mat, int, int, Vec6d)>();
+
+  CvStatus Mat_SetVec6f(
+    Mat m,
+    int row,
+    int col,
+    Vec6f val,
+  ) {
+    return _Mat_SetVec6f(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec6fPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6f)>>(
+      'Mat_SetVec6f');
+  late final _Mat_SetVec6f =
+      _Mat_SetVec6fPtr.asFunction<CvStatus Function(Mat, int, int, Vec6f)>();
+
+  CvStatus Mat_SetVec6i(
+    Mat m,
+    int row,
+    int col,
+    Vec6i val,
+  ) {
+    return _Mat_SetVec6i(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec6iPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6i)>>(
+      'Mat_SetVec6i');
+  late final _Mat_SetVec6i =
+      _Mat_SetVec6iPtr.asFunction<CvStatus Function(Mat, int, int, Vec6i)>();
+
+  CvStatus Mat_SetVec8i(
+    Mat m,
+    int row,
+    int col,
+    Vec8i val,
+  ) {
+    return _Mat_SetVec8i(
+      m,
+      row,
+      col,
+      val,
+    );
+  }
+
+  late final _Mat_SetVec8iPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec8i)>>(
+      'Mat_SetVec8i');
+  late final _Mat_SetVec8i =
+      _Mat_SetVec8iPtr.asFunction<CvStatus Function(Mat, int, int, Vec8i)>();
 
   CvStatus Mat_Size(
     Mat m,

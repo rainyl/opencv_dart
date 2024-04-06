@@ -10,6 +10,7 @@ export 'core/asyncarray.dart';
 export 'core/base.dart';
 export 'core/core.dart';
 export 'core/contours.dart';
+export 'core/cv_vec.dart';
 export 'core/dmatch.dart';
 export 'core/exception.dart';
 export 'core/error_code.dart';

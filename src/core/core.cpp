@@ -1,11 +1,12 @@
 #include "core.h"
-#include <vector>
 #include <iostream>
+#include <vector>
 
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
 {
   BEGIN_WRAP
-  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y), cv::Size2f(rect.size.width, rect.size.height), rect.angle);
+  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y),
+                           cv::Size2f(rect.size.width, rect.size.height), rect.angle);
   auto pts_ = new std::vector<cv::Point2f>();
   r.points(*pts_);
   *pts = {pts_};
@@ -14,7 +15,8 @@ CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
 CvStatus RotatedRect_BoundingRect(RotatedRect rect, Rect *rval)
 {
   BEGIN_WRAP
-  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y), cv::Size2f(rect.size.width, rect.size.height), rect.angle);
+  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y),
+                           cv::Size2f(rect.size.width, rect.size.height), rect.angle);
   auto rr = r.boundingRect();
   *rval = {rr.x, rr.y, rr.width, rr.height};
   END_WRAP
@@ -23,7 +25,8 @@ CvStatus RotatedRect_BoundingRect(RotatedRect rect, Rect *rval)
 CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval)
 {
   BEGIN_WRAP
-  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y), cv::Size2f(rect.size.width, rect.size.height), rect.angle);
+  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y),
+                           cv::Size2f(rect.size.width, rect.size.height), rect.angle);
   auto rr = r.boundingRect2f();
   *rval = {rr.x, rr.y, rr.width, rr.height};
   END_WRAP
@@ -104,15 +107,11 @@ CvStatus Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type
   *rval = {new cv::Mat(rows, cols, type, c)};
   END_WRAP
 }
-CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, int step, Mat *rval)
+CvStatus Mat_NewFromBytes(int rows, int cols, int type, void *buf, int step, Mat *rval)
 {
   BEGIN_WRAP
-  auto v = std::vector<uchar>(buf.ptr->begin(), buf.ptr->end());
-  for(int i = 0; i < v.size(); i++){
-    std::cout << static_cast<int>(v.at(i)) << ", ";
-  }
-  std::cout << std::endl;
-  *rval = {new cv::Mat(rows, cols, type, buf.ptr->data(), step)};
+  auto p = reinterpret_cast<uchar *>(buf);
+  *rval = {new cv::Mat(rows, cols, type, buf, step)};
   END_WRAP
 }
 CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval)
@@ -419,6 +418,161 @@ CvStatus Mat_GetDouble3(Mat m, int x, int y, int z, double *rval)
   END_WRAP
 }
 
+CvStatus Mat_GetVec2b(Mat m, int row, int col, Vec2b *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2b>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3b(Mat m, int row, int col, Vec3b *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3b>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4b(Mat m, int row, int col, Vec4b *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4b>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec2s(Mat m, int row, int col, Vec2s *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2s>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3s(Mat m, int row, int col, Vec3s *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3s>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4s(Mat m, int row, int col, Vec4s *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4s>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec2w(Mat m, int row, int col, Vec2w *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2w>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3w(Mat m, int row, int col, Vec3w *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3w>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4w(Mat m, int row, int col, Vec4w *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4w>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec2i(Mat m, int row, int col, Vec2i *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2i>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3i(Mat m, int row, int col, Vec3i *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3i>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4i(Mat m, int row, int col, Vec4i *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4i>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec6i(Mat m, int row, int col, Vec6i *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec6i>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+  END_WRAP
+}
+CvStatus Mat_GetVec8i(Mat m, int row, int col, Vec8i *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec8i>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5], v.val[6], v.val[7]};
+  END_WRAP
+}
+CvStatus Mat_GetVec2f(Mat m, int row, int col, Vec2f *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2f>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3f(Mat m, int row, int col, Vec3f *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3f>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4f(Mat m, int row, int col, Vec4f *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4f>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec6f(Mat m, int row, int col, Vec6f *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec6f>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+  END_WRAP
+}
+CvStatus Mat_GetVec2d(Mat m, int row, int col, Vec2d *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec2d>(row, col);
+  *rval = {v.val[0], v.val[1]};
+  END_WRAP
+}
+CvStatus Mat_GetVec3d(Mat m, int row, int col, Vec3d *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec3d>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2]};
+  END_WRAP
+}
+CvStatus Mat_GetVec4d(Mat m, int row, int col, Vec4d *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec4d>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval)
+{
+  BEGIN_WRAP
+  auto v = m.ptr->at<cv::Vec6d>(row, col);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+  END_WRAP
+}
+
 #pragma endregion
 
 #pragma region Mat_setter
@@ -529,6 +683,161 @@ CvStatus Mat_SetDouble3(Mat m, int x, int y, int z, double val)
 {
   BEGIN_WRAP
   m.ptr->at<double>(x, y, z) = val;
+  END_WRAP
+}
+
+CvStatus Mat_SetVec2b(Mat m, int row, int col, Vec2b val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2b(val.val1, val.val2);
+  m.ptr->at<cv::Vec2b>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3b(Mat m, int row, int col, Vec3b val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3b(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3b>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4b(Mat m, int row, int col, Vec4b val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4b(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4b>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec2s(Mat m, int row, int col, Vec2s val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2s(val.val1, val.val2);
+  m.ptr->at<cv::Vec2s>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3s(Mat m, int row, int col, Vec3s val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3s(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3s>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4s(Mat m, int row, int col, Vec4s val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4s(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4s>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec2w(Mat m, int row, int col, Vec2w val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2w(val.val1, val.val2);
+  m.ptr->at<cv::Vec2w>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3w(Mat m, int row, int col, Vec3w val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3w(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3w>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4w(Mat m, int row, int col, Vec4w val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4w(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4w>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec2i(Mat m, int row, int col, Vec2i val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2i(val.val1, val.val2);
+  m.ptr->at<cv::Vec2i>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3i(Mat m, int row, int col, Vec3i val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3i(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3i>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4i(Mat m, int row, int col, Vec4i val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4i(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4i>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec6i(Mat m, int row, int col, Vec6i val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec6i(val.val1, val.val2, val.val3, val.val4, val.val5, val.val6);
+  m.ptr->at<cv::Vec6i>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec8i(Mat m, int row, int col, Vec8i val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec8i(val.val1, val.val2, val.val3, val.val4, val.val5, val.val6, val.val7, val.val8);
+  m.ptr->at<cv::Vec8i>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec2f(Mat m, int row, int col, Vec2f val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2f(val.val1, val.val2);
+  m.ptr->at<cv::Vec2f>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3f(Mat m, int row, int col, Vec3f val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3f(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3f>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4f(Mat m, int row, int col, Vec4f val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4f(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4f>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec6f(Mat m, int row, int col, Vec6f val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec6f(val.val1, val.val2, val.val3, val.val4, val.val5, val.val6);
+  m.ptr->at<cv::Vec6f>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec2d(Mat m, int row, int col, Vec2d val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec2d(val.val1, val.val2);
+  m.ptr->at<cv::Vec2d>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec3d(Mat m, int row, int col, Vec3d val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec3d(val.val1, val.val2, val.val3);
+  m.ptr->at<cv::Vec3d>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec4d(Mat m, int row, int col, Vec4d val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec4d(val.val1, val.val2, val.val3, val.val4);
+  m.ptr->at<cv::Vec4d>(row, col) = v;
+  END_WRAP
+}
+CvStatus Mat_SetVec6d(Mat m, int row, int col, Vec6d val)
+{
+  BEGIN_WRAP
+  auto v = cv::Vec6d(val.val1, val.val2, val.val3, val.val4, val.val5, val.val6);
+  m.ptr->at<cv::Vec6d>(row, col) = v;
   END_WRAP
 }
 
@@ -736,10 +1045,12 @@ CvStatus Mat_Compare(Mat src1, Mat src2, Mat dst, int ct)
   cv::compare(*src1.ptr, *src2.ptr, *dst.ptr, ct);
   END_WRAP
 }
-CvStatus Mat_BatchDistance(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K, Mat mask, int update, bool crosscheck)
+CvStatus Mat_BatchDistance(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K, Mat mask,
+                           int update, bool crosscheck)
 {
   BEGIN_WRAP
-  cv::batchDistance(*src1.ptr, *src2.ptr, *dist.ptr, dtype, *nidx.ptr, normType, K, *mask.ptr, update, crosscheck);
+  cv::batchDistance(*src1.ptr, *src2.ptr, *dist.ptr, dtype, *nidx.ptr, normType, K, *mask.ptr, update,
+                    crosscheck);
   END_WRAP
 }
 
@@ -785,7 +1096,8 @@ CvStatus Mat_ConvertScaleAbs(Mat src, Mat dst, double alpha, double beta)
   cv::convertScaleAbs(*src.ptr, *dst.ptr, alpha, beta);
   END_WRAP
 }
-CvStatus Mat_CopyMakeBorder(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType, Scalar value)
+CvStatus Mat_CopyMakeBorder(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType,
+                            Scalar value)
 {
   BEGIN_WRAP
   cv::Scalar c_value(value.val1, value.val2, value.val3, value.val4);
@@ -927,10 +1239,8 @@ CvStatus Mat_InRange(Mat src, Mat lowerb, Mat upperb, Mat dst)
 CvStatus Mat_InRangeWithScalar(Mat src, Scalar lowerb, Scalar upperb, Mat dst)
 {
   BEGIN_WRAP
-  cv::Scalar lb =
-      cv::Scalar(lowerb.val1, lowerb.val2, lowerb.val3, lowerb.val4);
-  cv::Scalar ub =
-      cv::Scalar(upperb.val1, upperb.val2, upperb.val3, upperb.val4);
+  cv::Scalar lb = cv::Scalar(lowerb.val1, lowerb.val2, lowerb.val3, lowerb.val4);
+  cv::Scalar ub = cv::Scalar(upperb.val1, upperb.val2, upperb.val3, upperb.val4);
   cv::inRange(*src.ptr, lb, ub, *dst.ptr);
   END_WRAP
 }
@@ -1205,13 +1515,15 @@ CvStatus LUT(Mat src, Mat lut, Mat dst)
   cv::LUT(*src.ptr, *lut.ptr, *dst.ptr);
   END_WRAP
 }
-CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers, double *rval)
+CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers,
+                double *rval)
 {
   BEGIN_WRAP
   *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);
   END_WRAP
 }
-CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers, double *rval)
+CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
+                      Mat centers, double *rval)
 {
   BEGIN_WRAP
   *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);

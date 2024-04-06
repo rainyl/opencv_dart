@@ -7,17 +7,17 @@ void main() async {
     final img = cv.imread("test/images/fisheye_sample.jpg", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
-    k.setValue<double>(0, 0, 689.21);
-    k.setValue<double>(0, 1, 0);
-    k.setValue<double>(0, 2, 1295.56);
+    k.set<double>(0, 0, 689.21);
+    k.set<double>(0, 1, 0);
+    k.set<double>(0, 2, 1295.56);
 
-    k.setValue<double>(1, 0, 0);
-    k.setValue<double>(1, 1, 690.48);
-    k.setValue<double>(1, 2, 942.17);
+    k.set<double>(1, 0, 0);
+    k.set<double>(1, 1, 690.48);
+    k.set<double>(1, 2, 942.17);
 
-    k.setValue<double>(2, 0, 0);
-    k.setValue<double>(2, 1, 0);
-    k.setValue<double>(2, 2, 1);
+    k.set<double>(2, 0, 0);
+    k.set<double>(2, 1, 0);
+    k.set<double>(2, 2, 1);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
 
@@ -27,23 +27,23 @@ void main() async {
 
   test('cv.undistortPoints', () {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
-    k.setValue<double>(0, 0, 1094.7249578198823);
-    k.setValue<double>(0, 1, 0);
-    k.setValue<double>(0, 2, 1094.7249578198823);
+    k.set<double>(0, 0, 1094.7249578198823);
+    k.set<double>(0, 1, 0);
+    k.set<double>(0, 2, 1094.7249578198823);
 
-    k.setValue<double>(1, 0, 0);
-    k.setValue<double>(1, 1, 1094.9945708128778);
-    k.setValue<double>(1, 2, 536.4566143451868);
+    k.set<double>(1, 0, 0);
+    k.set<double>(1, 1, 1094.9945708128778);
+    k.set<double>(1, 2, 536.4566143451868);
 
-    k.setValue<double>(2, 0, 0);
-    k.setValue<double>(2, 1, 0);
-    k.setValue<double>(2, 2, 1);
+    k.set<double>(2, 0, 0);
+    k.set<double>(2, 1, 0);
+    k.set<double>(2, 2, 1);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
-    d.setValue<double>(0, 0, -0.05207412392075069);
-    d.setValue<double>(0, 1, -0.089168300192224);
-    d.setValue<double>(0, 2, 0.10465607695792184);
-    d.setValue<double>(0, 3, -0.045693446831115585);
+    d.set<double>(0, 0, -0.05207412392075069);
+    d.set<double>(0, 1, -0.089168300192224);
+    d.set<double>(0, 2, 0.10465607695792184);
+    d.set<double>(0, 3, -0.045693446831115585);
 
     final r = cv.Mat.empty();
     final src = cv.Mat.zeros(3, 1, cv.MatType.CV_64FC2);
@@ -57,14 +57,14 @@ void main() async {
     // (0 * 2) + channelNumber
     // so col = 0 is the x coordinate and col = 1 is the y coordinate
 
-    src.setValue<double>(0, 0, 480);
-    src.setValue<double>(0, 1, 270);
+    src.set<double>(0, 0, 480);
+    src.set<double>(0, 1, 270);
 
-    src.setValue<double>(1, 0, 960);
-    src.setValue<double>(1, 1, 540);
+    src.set<double>(1, 0, 960);
+    src.set<double>(1, 1, 540);
 
-    src.setValue<double>(2, 0, 1920);
-    src.setValue<double>(2, 1, 1080);
+    src.set<double>(2, 0, 1920);
+    src.set<double>(2, 1, 1080);
 
     cv.undistortPoints(src, k, d);
     final dst = cv.undistortPoints(src, k, d, R: r, P: k);
@@ -75,40 +75,40 @@ void main() async {
 
   test('cv.Fisheye.undistortPoints', () {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
-    k.setValue<double>(0, 0, 1094.7249578198823);
-    k.setValue<double>(0, 1, 0);
-    k.setValue<double>(0, 2, 959.4907612030962);
+    k.set<double>(0, 0, 1094.7249578198823);
+    k.set<double>(0, 1, 0);
+    k.set<double>(0, 2, 959.4907612030962);
 
-    k.setValue<double>(1, 0, 0);
-    k.setValue<double>(1, 1, 1094.9945708128778);
-    k.setValue<double>(1, 2, 536.4566143451868);
+    k.set<double>(1, 0, 0);
+    k.set<double>(1, 1, 1094.9945708128778);
+    k.set<double>(1, 2, 536.4566143451868);
 
-    k.setValue<double>(2, 0, 0);
-    k.setValue<double>(2, 1, 0);
-    k.setValue<double>(2, 2, 1);
+    k.set<double>(2, 0, 0);
+    k.set<double>(2, 1, 0);
+    k.set<double>(2, 2, 1);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
-    d.setValue<double>(0, 0, -0.05207412392075069);
-    d.setValue<double>(0, 1, -0.089168300192224);
-    d.setValue<double>(0, 2, 0.10465607695792184);
-    d.setValue<double>(0, 3, -0.045693446831115585);
+    d.set<double>(0, 0, -0.05207412392075069);
+    d.set<double>(0, 1, -0.089168300192224);
+    d.set<double>(0, 2, 0.10465607695792184);
+    d.set<double>(0, 3, -0.045693446831115585);
 
     final r = cv.Mat.empty();
     final src = cv.Mat.zeros(3, 1, cv.MatType.CV_64FC2);
     final dst = cv.Mat.zeros(3, 1, cv.MatType.CV_64FC2);
 
-    src.setValue<double>(0, 0, 480);
-    src.setValue<double>(0, 1, 270);
+    src.set<double>(0, 0, 480);
+    src.set<double>(0, 1, 270);
 
-    src.setValue<double>(1, 0, 960);
-    src.setValue<double>(1, 1, 540);
+    src.set<double>(1, 0, 960);
+    src.set<double>(1, 1, 540);
 
-    src.setValue<double>(2, 0, 1440);
-    src.setValue<double>(2, 1, 810);
+    src.set<double>(2, 0, 1440);
+    src.set<double>(2, 1, 810);
 
     final knew = k.clone();
-    knew.setValue<double>(0, 0, 0.4 * k.at<double>(0, 0));
-    knew.setValue<double>(1, 1, 0.4 * k.at<double>(1, 1));
+    knew.set<double>(0, 0, 0.4 * k.at<double>(0, 0));
+    knew.set<double>(1, 1, 0.4 * k.at<double>(1, 1));
 
     cv.Fisheye.estimateNewCameraMatrixForUndistortRectify(
       k,
@@ -132,24 +132,24 @@ void main() async {
     expect(img.isEmpty, false);
 
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
-    k.setValue<double>(0, 0, 842.0261028);
-    k.setValue<double>(0, 1, 0);
-    k.setValue<double>(0, 2, 667.7569792);
+    k.set<double>(0, 0, 842.0261028);
+    k.set<double>(0, 1, 0);
+    k.set<double>(0, 2, 667.7569792);
 
-    k.setValue<double>(1, 0, 0);
-    k.setValue<double>(1, 1, 707.3668897);
-    k.setValue<double>(1, 2, 385.56476464);
+    k.set<double>(1, 0, 0);
+    k.set<double>(1, 1, 707.3668897);
+    k.set<double>(1, 2, 385.56476464);
 
-    k.setValue<double>(2, 0, 0);
-    k.setValue<double>(2, 1, 0);
-    k.setValue<double>(2, 2, 1);
+    k.set<double>(2, 0, 0);
+    k.set<double>(2, 1, 0);
+    k.set<double>(2, 2, 1);
 
     final d = cv.Mat.zeros(1, 5, cv.MatType.CV_64FC1);
-    d.setValue<double>(0, 0, -3.65584802e-01);
-    d.setValue<double>(0, 1, 1.41555815e-01);
-    d.setValue<double>(0, 2, -2.62985819e-03);
-    d.setValue<double>(0, 3, 2.05841873e-04);
-    d.setValue<double>(0, 4, -2.35021914e-02);
+    d.set<double>(0, 0, -3.65584802e-01);
+    d.set<double>(0, 1, 1.41555815e-01);
+    d.set<double>(0, 2, -2.62985819e-03);
+    d.set<double>(0, 3, 2.05841873e-04);
+    d.set<double>(0, 4, -2.35021914e-02);
 
     final (newC, roi) = cv.getOptimalNewCameraMatrix(k, d, (img.cols, img.rows), 1);
     expect(newC.isEmpty, false);

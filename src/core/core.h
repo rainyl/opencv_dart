@@ -112,7 +112,7 @@ CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
     TYPE *ptr;                                                                                               \
   } NAME;
 
-typedef unsigned char uchar;
+typedef unsigned char  uchar;
 typedef unsigned short ushort;
 
 CVD_TYPEDEF(void, Mat)
@@ -427,7 +427,7 @@ CvStatus Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval
 CvStatus Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval);
 CvStatus Mat_NewFromScalar(const Scalar ar, int type, Mat *rval);
 CvStatus Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
-CvStatus Mat_NewFromBytes(int rows, int cols, int type, VecUChar buf, int step, Mat *rval);
+CvStatus Mat_NewFromBytes(int rows, int cols, int type, void *buf, int step, Mat *rval);
 CvStatus Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
@@ -480,6 +480,29 @@ CvStatus Mat_GetFloat3(Mat m, int x, int y, int z, float *rval);
 CvStatus Mat_GetDouble(Mat m, int row, int col, double *rval);
 CvStatus Mat_GetDouble3(Mat m, int x, int y, int z, double *rval);
 
+CvStatus Mat_GetVec2b(Mat m, int row, int col, Vec2b *rval);
+CvStatus Mat_GetVec3b(Mat m, int row, int col, Vec3b *rval);
+CvStatus Mat_GetVec4b(Mat m, int row, int col, Vec4b *rval);
+CvStatus Mat_GetVec2s(Mat m, int row, int col, Vec2s *rval);
+CvStatus Mat_GetVec3s(Mat m, int row, int col, Vec3s *rval);
+CvStatus Mat_GetVec4s(Mat m, int row, int col, Vec4s *rval);
+CvStatus Mat_GetVec2w(Mat m, int row, int col, Vec2w *rval);
+CvStatus Mat_GetVec3w(Mat m, int row, int col, Vec3w *rval);
+CvStatus Mat_GetVec4w(Mat m, int row, int col, Vec4w *rval);
+CvStatus Mat_GetVec2i(Mat m, int row, int col, Vec2i *rval);
+CvStatus Mat_GetVec3i(Mat m, int row, int col, Vec3i *rval);
+CvStatus Mat_GetVec4i(Mat m, int row, int col, Vec4i *rval);
+CvStatus Mat_GetVec6i(Mat m, int row, int col, Vec6i *rval);
+CvStatus Mat_GetVec8i(Mat m, int row, int col, Vec8i *rval);
+CvStatus Mat_GetVec2f(Mat m, int row, int col, Vec2f *rval);
+CvStatus Mat_GetVec3f(Mat m, int row, int col, Vec3f *rval);
+CvStatus Mat_GetVec4f(Mat m, int row, int col, Vec4f *rval);
+CvStatus Mat_GetVec6f(Mat m, int row, int col, Vec6f *rval);
+CvStatus Mat_GetVec2d(Mat m, int row, int col, Vec2d *rval);
+CvStatus Mat_GetVec3d(Mat m, int row, int col, Vec3d *rval);
+CvStatus Mat_GetVec4d(Mat m, int row, int col, Vec4d *rval);
+CvStatus Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval);
+
 #pragma endregion
 
 #pragma region Mat_setter
@@ -499,6 +522,29 @@ CvStatus Mat_SetFloat(Mat m, int row, int col, float val);
 CvStatus Mat_SetFloat3(Mat m, int x, int y, int z, float val);
 CvStatus Mat_SetDouble(Mat m, int row, int col, double val);
 CvStatus Mat_SetDouble3(Mat m, int x, int y, int z, double val);
+
+CvStatus Mat_SetVec2b(Mat m, int row, int col, Vec2b val);
+CvStatus Mat_SetVec3b(Mat m, int row, int col, Vec3b val);
+CvStatus Mat_SetVec4b(Mat m, int row, int col, Vec4b val);
+CvStatus Mat_SetVec2s(Mat m, int row, int col, Vec2s val);
+CvStatus Mat_SetVec3s(Mat m, int row, int col, Vec3s val);
+CvStatus Mat_SetVec4s(Mat m, int row, int col, Vec4s val);
+CvStatus Mat_SetVec2w(Mat m, int row, int col, Vec2w val);
+CvStatus Mat_SetVec3w(Mat m, int row, int col, Vec3w val);
+CvStatus Mat_SetVec4w(Mat m, int row, int col, Vec4w val);
+CvStatus Mat_SetVec2i(Mat m, int row, int col, Vec2i val);
+CvStatus Mat_SetVec3i(Mat m, int row, int col, Vec3i val);
+CvStatus Mat_SetVec4i(Mat m, int row, int col, Vec4i val);
+CvStatus Mat_SetVec6i(Mat m, int row, int col, Vec6i val);
+CvStatus Mat_SetVec8i(Mat m, int row, int col, Vec8i val);
+CvStatus Mat_SetVec2f(Mat m, int row, int col, Vec2f val);
+CvStatus Mat_SetVec3f(Mat m, int row, int col, Vec3f val);
+CvStatus Mat_SetVec4f(Mat m, int row, int col, Vec4f val);
+CvStatus Mat_SetVec6f(Mat m, int row, int col, Vec6f val);
+CvStatus Mat_SetVec2d(Mat m, int row, int col, Vec2d val);
+CvStatus Mat_SetVec3d(Mat m, int row, int col, Vec3d val);
+CvStatus Mat_SetVec4d(Mat m, int row, int col, Vec4d val);
+CvStatus Mat_SetVec6d(Mat m, int row, int col, Vec6d val);
 
 #pragma endregion Mat_setter
 

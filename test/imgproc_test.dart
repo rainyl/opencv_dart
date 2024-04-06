@@ -747,7 +747,7 @@ void main() async {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
     expect(src.isEmpty, false);
     final map1 = cv.Mat.zeros(256, 256, cv.MatType.CV_16SC2);
-    map1.setValue<int>(50, 50, 25);
+    map1.set<int>(50, 50, 25);
     final map2 = cv.Mat.empty();
     final dst = cv.remap(src, map1, map2, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
     expect(dst.isEmpty, false);

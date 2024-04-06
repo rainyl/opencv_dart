@@ -16,10 +16,6 @@ abstract class Vec<T> with IterableMixin<T>, EquatableMixin implements ffi.Final
   List<T> get props => toList();
 }
 
-abstract class Vec3b extends CvStruct<cvg.Vec3b> {
-  Vec3b.fromPointer(super.ptr) : super.fromPointer();
-}
-
 abstract class VecIterator<T> implements Iterator<T> {
   int currentIndex = -1;
   int get length;

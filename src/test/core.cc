@@ -164,7 +164,7 @@ TEST(Mat, Create_extra)
                              14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
   VecUChar           buf = {new std::vector<uchar>(data)};
   Mat                matt = {};
-  s = Mat_NewFromBytes(3, 3, CV_8UC3, buf, 0, &matt);
+  s = Mat_NewFromBytes(3, 3, CV_8UC3, data.data(), 0, &matt);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(matt.ptr, nullptr);
   EXPECT_EQ(matt.ptr->rows, 3);
@@ -173,9 +173,9 @@ TEST(Mat, Create_extra)
   auto v = matt.ptr->at<cv::Vec3b>(0, 0);
   std::cout << v << std::endl;
   EXPECT_EQ(v.val[1], 1);
-  for(int i = 0; i < matt.ptr->rows; i++){
-    for(int j = 0; j < matt.ptr->cols; j++){
-      for (int k = 0; k < matt.ptr->channels(); k++){
+  for (int i = 0; i < matt.ptr->rows; i++) {
+    for (int j = 0; j < matt.ptr->cols; j++) {
+      for (int k = 0; k < matt.ptr->channels(); k++) {
         std::cout << static_cast<int>(matt.ptr->at<uchar>(i, j, k)) << " ";
       }
     }
@@ -396,6 +396,34 @@ TEST(Mat, Getter_Setter_Double)
   s = Mat_GetDouble3(mat, 0, 0, 0, &pix);
   EXPECT_EQ(s.code, 0);
   EXPECT_EQ(pix, 127);
+
+  Mat_Close(&mat);
+}
+
+TEST(Mat, Getter_Vec)
+{
+  auto cvmat = cv::Mat(cv::Mat::ones(30, 30, CV_8UC3));
+  auto expectedVec = cvmat.at<cv::Vec3b>(0, 0);
+
+  auto cvmat1 = cv::Mat(30, 40, CV_8UC3, cv::Scalar(2, 4, 1, 0));
+  auto v = static_cast<int>(cvmat1.at<uchar>(0, 0, 0));
+  auto v1 = static_cast<int>(cvmat1.at<uchar>(0, 1, 0));
+  auto v2 = static_cast<int>(cvmat1.at<uchar>(0, 2, 0));
+  std::cout << v << "," << v1 << "," << v2 << std::endl;
+
+  CvStatus s;
+  Scalar   scalar = {1, 2, 3, 4};
+  Mat      mat;
+  s = Ones(30, 30, CV_8UC3, &mat);
+  EXPECT_EQ(s.code, 0);
+  EXPECT_NE(mat.ptr, nullptr);
+
+  Vec3b pix;
+  s = Mat_GetVec3b(mat, 0, 0, &pix);
+  EXPECT_EQ(s.code, 0);
+  EXPECT_EQ(pix.val1, expectedVec.val[0]);
+  EXPECT_EQ(pix.val2, expectedVec.val[1]);
+  EXPECT_EQ(pix.val3, expectedVec.val[2]);
 
   Mat_Close(&mat);
 }
