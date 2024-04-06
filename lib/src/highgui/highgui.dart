@@ -1,4 +1,8 @@
+// ignore_for_file: constant_identifier_names
+
 library cv;
+
+import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
@@ -6,8 +10,6 @@ import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../opencv.g.dart' as cvg;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 /// [Window] is a wrapper around OpenCV's "HighGUI" named windows.
 /// While OpenCV was designed for use in full-scale applications and can be used
@@ -22,16 +24,15 @@ class Window {
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
-  Window(this.name) : isOpen = true {
-    using((arena) {
-      _bindings.Window_New(name.toNativeUtf8(allocator: arena).cast(), 0);
+  Window(this.name, [int flags=0]) {
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
     });
   }
 
   void close() {
-    using((arena) {
-      _bindings.Window_Close(name.toNativeUtf8(allocator: arena).cast());
-      isOpen = false;
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_Close(name.toNativeUtf8(allocator: arena).cast()));
     });
   }
 
@@ -40,9 +41,10 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gaaf9504b8f9cf19024d9d44a14e461656
   double getWindowProperty(WindowPropertyFlags flag) {
-    return using<double>((arena) {
-      final result = _bindings.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value);
-      return result;
+    return cvRunArena<double>((arena) {
+      final result = arena<ffi.Double>();
+      cvRun(() => CFFI.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
+      return result.value;
     });
   }
 
@@ -51,8 +53,8 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
   void setWindowProperty(WindowPropertyFlags flag, double value) {
-    using((arena) {
-      _bindings.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value);
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
     });
   }
 
@@ -61,9 +63,9 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
   void setWindowTitle(String title) {
-    using((arena) {
-      _bindings.Window_SetTitle(
-          name.toNativeUtf8(allocator: arena).cast(), title.toNativeUtf8(allocator: arena).cast());
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_SetTitle(
+          name.toNativeUtf8(allocator: arena).cast(), title.toNativeUtf8(allocator: arena).cast()));
     });
   }
 
@@ -74,8 +76,8 @@ class Window {
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
   void imshow(Mat img) {
-    using((arena) {
-      _bindings.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
     });
   }
 
@@ -86,15 +88,21 @@ class Window {
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5628525ad33f52eab17feebcfba38bd7
-  int waitKey(int delay) => _bindings.Window_WaitKey(delay);
+  int waitKey(int delay) {
+    return cvRunArena<int>((arena) {
+      final ret = arena<ffi.Int>();
+      cvRun(() => CFFI.Window_WaitKey(delay, ret));
+      return ret.value;
+    });
+  }
 
   /// MoveWindow moves window to the specified position.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
   void moveWindow(int x, int y) {
-    using((arena) {
-      _bindings.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y);
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
     });
   }
 
@@ -103,13 +111,13 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
   void resizeWindow(int width, int height) {
-    using((arena) {
-      _bindings.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height);
+    cvRunArena((arena) {
+      cvRun(() => CFFI.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
     });
   }
 
   /// SelectROI selects a Region Of Interest (ROI) on the given image.
-  /// It creates a window and allows user to select a ROI using mouse.
+  /// It creates a window and allows user to select a ROI cvRunArena mouse.
   ///
   /// Controls:
   /// use space or enter to finish selection,
@@ -118,14 +126,15 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8daf4730d3adf7035b6de9be4c469af5
   Rect selectROI(Mat img) {
-    return using<Rect>((arena) {
-      final result = _bindings.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
-      return Rect.fromNative(result);
+    return cvRunArena<Rect>((arena) {
+      final result = arena<cvg.Rect>();
+      cvRun(() => CFFI.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+      return Rect.fromNative(result.ref);
     });
   }
 
   /// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
-  /// It creates a window and allows user to select ROIs using mouse.
+  /// It creates a window and allows user to select ROIs cvRunArena mouse.
   ///
   /// Controls:
   /// use space or enter to finish current selection and start a new one
@@ -133,28 +142,38 @@ class Window {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga0f11fad74a6432b8055fb21621a0f893
-  List<Rect> selectROIs(Mat img) {
-    return using<List<Rect>>((arena) {
-      final result = _bindings.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ptr);
-      return Rects.toList(result);
+  VecRect selectROIs(Mat img) {
+    return cvRunArena<VecRect>((arena) {
+      final result = arena<cvg.VecRect>();
+      cvRun(() => CFFI.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+      return VecRect.fromVec(result.ref);
     });
   }
 
   String name;
-  bool isOpen;
+  // https://stackoverflow.com/a/48055987/18539998
+  bool get isOpen {
+    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_AUTOSIZE).toInt();
+    return ret != -1;
+  }
 }
 
 /// WaitKey that is not attached to a specific Window.
 /// Only use when no Window exists in your application, e.g. command line app.
-int waitKey(int delay) => _bindings.Window_WaitKey(delay);
+int waitKey(int delay) {
+  return cvRunArena<int>((arena) {
+    final ret = arena<ffi.Int>();
+    cvRun(() => CFFI.Window_WaitKey(delay, ret));
+    return ret.value;
+  });
+}
 
 class Trackbar {
   Trackbar(this.name, this.parent, this.max, {int? value}) {
-    using((arena) {
-      _bindings.Trackbar_Create(
-        parent.name.toNativeUtf8(allocator: arena).cast(),
-        name.toNativeUtf8(allocator: arena).cast(),
-        max,
+    cvRunArena((arena) {
+      cvRun(
+        () => CFFI.Trackbar_Create(parent.name.toNativeUtf8(allocator: arena).cast(),
+            name.toNativeUtf8(allocator: arena).cast(), max),
       );
       if (value != null) {
         pos = value;
@@ -167,12 +186,11 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga122632e9e91b9ec06943472c55d9cda8
   int get pos {
-    return using<int>((arena) {
-      final result = _bindings.Trackbar_GetPos(
-        parent.name.toNativeUtf8(allocator: arena).cast(),
-        name.toNativeUtf8(allocator: arena).cast(),
-      );
-      return result;
+    return cvRunArena<int>((arena) {
+      final result = arena<ffi.Int>();
+      cvRun(() => CFFI.Trackbar_GetPos(parent.name.toNativeUtf8(allocator: arena).cast(),
+          name.toNativeUtf8(allocator: arena).cast(), result));
+      return result.value;
     });
   }
 
@@ -180,12 +198,14 @@ class Trackbar {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga67d73c4c9430f13481fd58410d01bd8d
-  void set pos(int pos) {
-    using((arena) {
-      _bindings.Trackbar_SetPos(
-        parent.name.toNativeUtf8(allocator: arena).cast(),
-        name.toNativeUtf8(allocator: arena).cast(),
-        pos,
+  set pos(int pos) {
+    cvRunArena((arena) {
+      cvRun(
+        () => CFFI.Trackbar_SetPos(
+          parent.name.toNativeUtf8(allocator: arena).cast(),
+          name.toNativeUtf8(allocator: arena).cast(),
+          pos,
+        ),
       );
     });
   }
@@ -195,11 +215,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gabe26ffe8d2b60cc678895595a581b7aa
   set minPos(int pos) {
-    using((arena) {
-      _bindings.Trackbar_SetMin(
-        parent.name.toNativeUtf8(allocator: arena).cast(),
-        name.toNativeUtf8(allocator: arena).cast(),
-        pos,
+    cvRunArena((arena) {
+      cvRun(
+        () => CFFI.Trackbar_SetMin(
+          parent.name.toNativeUtf8(allocator: arena).cast(),
+          name.toNativeUtf8(allocator: arena).cast(),
+          pos,
+        ),
       );
     });
   }
@@ -209,11 +231,13 @@ class Trackbar {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga7e5437ccba37f1154b65210902fc4480
   set maxPos(int pos) {
-    using((arena) {
-      _bindings.Trackbar_SetMax(
-        parent.name.toNativeUtf8(allocator: arena).cast(),
-        name.toNativeUtf8(allocator: arena).cast(),
-        pos,
+    cvRunArena((arena) {
+      cvRun(
+        () => CFFI.Trackbar_SetMax(
+          parent.name.toNativeUtf8(allocator: arena).cast(),
+          name.toNativeUtf8(allocator: arena).cast(),
+          pos,
+        ),
       );
     });
   }
@@ -225,7 +249,7 @@ class Trackbar {
 
 /// destroy all windows.
 void destroyAllWindows() {
-  _bindings.destroyAllWindows();
+  cvRun(() => CFFI.destroyAllWindows());
 }
 
 enum WindowFlag {

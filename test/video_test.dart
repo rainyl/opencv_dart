@@ -50,28 +50,25 @@ void main() async {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
     final img2 = img.clone();
-    final next = cv.Mat.empty(), status = cv.Mat.empty(), err = cv.Mat.empty(), corners = cv.Mat.empty();
-    cv.goodFeaturesToTrack(img, corners, 500, 0.01, 10);
-    final tc = cv.termCriteriaNew(cv.TERM_COUNT | cv.TERM_EPS, 20, 0.03);
-    cv.cornerSubPix(img, corners, (10, 10), (-1, -1), tc);
-    cv.calcOpticalFlowPyrLK(img, img2, corners, next, status, err);
-    expect(status.isEmpty, false);
-    expect((status.rows, status.cols), (500, 1));
+    final corners = cv.goodFeaturesToTrack(img, 10, 0.01, 10);
+    const tc = (cv.TERM_COUNT + cv.TERM_EPS, 40, 0.03);
+    cv.cornerSubPix(img, corners, (5, 5), (-1, -1), tc);
+    var (next, status, error) = cv.calcOpticalFlowPyrLK(img, img2, corners, cv.VecPoint2f());
+    expect(next.isNotEmpty, true);
+    expect(status?.isEmpty, false);
+    expect(error?.isEmpty, false);
   });
 
   test('cv.findTransformECC', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
-    final testImg = cv.Mat.empty();
-    cv.resize(img, testImg, (216, 216));
+    final testImg = cv.resize(img, (216, 216));
     final translationGround = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
-    translationGround.setValue(0, 2, 11.4159);
-    translationGround.setValue(1, 2, 17.1828);
+    translationGround.set(0, 2, 11.4159);
+    translationGround.set(1, 2, 17.1828);
 
-    final wrappedImage = cv.Mat.empty();
-    cv.warpAffine(
+    final wrappedImage = cv.warpAffine(
       testImg,
-      wrappedImage,
       translationGround,
       (200, 200),
       flags: cv.INTER_LINEAR + cv.WARP_INVERSE_MAP,
@@ -80,7 +77,7 @@ void main() async {
     );
 
     final mapTranslation = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
-    final criteria = cv.termCriteriaNew(cv.TERM_COUNT + cv.TERM_EPS, 50, -1);
+    const criteria = (cv.TERM_COUNT + cv.TERM_EPS, 50, 0.01);
     final inputMask = cv.Mat.empty();
     cv.findTransformECC(wrappedImage, testImg, mapTranslation, cv.MOTION_TRANSLATION, criteria, inputMask, 5);
 
@@ -92,9 +89,8 @@ void main() async {
     expect(img.isEmpty, false);
     final rect = cv.Rect(100, 150, 200, 241);
     final tracker = cv.TrackerMIL.create();
-    final init = tracker.init(img, rect);
-    expect(init, true);
-    final (_, ok) = tracker.update(img);
+    tracker.init(img, rect);
+    final (ok, _) = tracker.update(img);
     expect(ok, true);
   });
 
@@ -180,9 +176,9 @@ void main() async {
 
   test('cv.VideoCapture.fromFile', () {
     final vc = cv.VideoCapture.fromFile("test/images/small.mp4", apiPreference: cv.CAP_ANY);
-    final frame = cv.Mat.empty();
-    final success1 = vc.read(frame);
-    expect(success1, true);
+    final (success, frame) = vc.read();
+    expect(success, true);
+    expect(frame.isEmpty, false);
     // cv.imwrite("cv.VideoCapture.fromFile.png", frame);
   });
 
@@ -190,9 +186,9 @@ void main() async {
   test('cv.VideoCapture.fromDevice', skip: true, () {
     final vc = cv.VideoCapture.fromDevice(0);
     expect(vc.isOpened, true);
-    final frame = cv.Mat.empty();
-    final res = vc.read(frame);
+    final (res, frame) = vc.read();
     expect(res, true);
+    expect(frame.isEmpty, false);
     // cv.imwrite("cv.VideoCapture.fromDevice_1.png", frame);
   });
 }

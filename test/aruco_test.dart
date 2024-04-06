@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -32,9 +33,9 @@ void main() async {
     final (corners, ids, _) = detector.detectMarkers(img);
     expect(corners.length, greaterThan(0));
     cv.arucoDrawDetectedMarkers(img, corners, ids, cv.Scalar(200, 0, 0, 0));
-    final diff = cv.Mat.empty();
+    var diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, diff);
-    cv.cvtColor(diff, diff, cv.COLOR_BGR2GRAY);
+    diff = cv.cvtColor(diff, cv.COLOR_BGR2GRAY);
     expect(cv.countNonZero(diff), 0);
   });
 
@@ -51,35 +52,35 @@ void main() async {
   });
 
   test('cv.ArucoDetectorParameters', () {
-    final int adaptiveThreshWinSizeMin = 4;
-    final int adaptiveThreshWinSizeMax = 22;
-    final int adaptiveThreshWinSizeStep = 1;
-    final double adaptiveThreshConstant = 1.0;
-    final double minMarkerPerimeterRate = 0.2;
-    final double maxMarkerPerimeterRate = 0.5;
-    final double polygonalApproxAccuracyRate = 1.0;
-    final double minCornerDistanceRate = 0.1;
-    final int minDistanceToBorder = 0;
-    final double minMarkerDistanceRate = 1.0;
-    final int cornerRefinementMethod = 1;
-    final int cornerRefinementWinSize = 1;
-    final int cornerRefinementMaxIterations = 1;
-    final double cornerRefinementMinAccuracy = 0.5;
-    final int markerBorderBits = 1;
-    final int perspectiveRemovePixelPerCell = 1;
-    final double perspectiveRemoveIgnoredMarginPerCell = 1.0;
-    final double maxErroneousBitsInBorderRate = 0.5;
-    final double minOtsuStdDev = .5;
-    final double errorCorrectionRate = 0.2;
-    final double aprilTagQuadDecimate = 0.5;
-    final double aprilTagQuadSigma = 1;
-    final int aprilTagMinClusterPixels = 1;
-    final int aprilTagMaxNmaxima = 1;
-    final double aprilTagCriticalRad = 0.2;
-    final double aprilTagMaxLineFitMse = 0.2;
-    final int aprilTagMinWhiteBlackDiff = 1;
-    final int aprilTagDeglitch = 1;
-    final bool detectInvertedMarker = false;
+    const int adaptiveThreshWinSizeMin = 4;
+    const int adaptiveThreshWinSizeMax = 22;
+    const int adaptiveThreshWinSizeStep = 1;
+    const double adaptiveThreshConstant = 1.0;
+    const double minMarkerPerimeterRate = 0.2;
+    const double maxMarkerPerimeterRate = 0.5;
+    const double polygonalApproxAccuracyRate = 1.0;
+    const double minCornerDistanceRate = 0.1;
+    const int minDistanceToBorder = 0;
+    const double minMarkerDistanceRate = 1.0;
+    const int cornerRefinementMethod = 1;
+    const int cornerRefinementWinSize = 1;
+    const int cornerRefinementMaxIterations = 1;
+    const double cornerRefinementMinAccuracy = 0.5;
+    const int markerBorderBits = 1;
+    const int perspectiveRemovePixelPerCell = 1;
+    const double perspectiveRemoveIgnoredMarginPerCell = 1.0;
+    const double maxErroneousBitsInBorderRate = 0.5;
+    const double minOtsuStdDev = .5;
+    const double errorCorrectionRate = 0.2;
+    const double aprilTagQuadDecimate = 0.5;
+    const double aprilTagQuadSigma = 1;
+    const int aprilTagMinClusterPixels = 1;
+    const int aprilTagMaxNmaxima = 1;
+    const double aprilTagCriticalRad = 0.2;
+    const double aprilTagMaxLineFitMse = 0.2;
+    const int aprilTagMinWhiteBlackDiff = 1;
+    const int aprilTagDeglitch = 1;
+    const bool detectInvertedMarker = false;
     final params = cv.ArucoDetectorParameters.empty()
       ..adaptiveThreshWinSizeMin = adaptiveThreshWinSizeMin
       ..adaptiveThreshWinSizeMax = adaptiveThreshWinSizeMax

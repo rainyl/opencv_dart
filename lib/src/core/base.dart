@@ -1,15 +1,16 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 library cv;
 
 import 'dart:ffi' as ffi;
+import 'dart:ffi';
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/error_code.dart';
 
-import "../opencv.g.dart" show CvStatus;
-import "exception.dart" show OpenCvException;
+import "../opencv.g.dart" show CvStatus, CvNative;
+import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
 
@@ -47,21 +48,50 @@ ffi.DynamicLibrary loadNativeLibrary() {
   }
 }
 
-/// (width, height)
-typedef Size = (int, int);
+final CFFI = CvNative(loadNativeLibrary());
 
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
-  CvObject(this._ptr);
-  ffi.Pointer<T> _ptr;
-  ffi.Pointer<T> get ptr => _ptr;
+}
 
-  T toNative();
+abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
+  ICvStruct.fromPointer(this.ptr);
+
+  ffi.Pointer<T> ptr;
   T get ref;
 }
 
-void throwIfFailed(CvStatus status) {
+abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with EquatableMixin {
+  CvStruct.fromPointer(super.ptr) : super.fromPointer();
+}
+
+void cvRun(CvStatus Function() func) {
+  final status = func();
   if (status.code != 0) {
-    throw OpenCvException.fromStatus(status);
+    throw CvException(
+      status.code,
+      msg: status.msg.cast<Utf8>().toDartString(),
+      file: status.file.cast<Utf8>().toDartString(),
+      func: status.func.cast<Utf8>().toDartString(),
+      line: status.line,
+    );
+  }
+}
+
+R cvRunArena<R>(R Function(Arena arena) computation,
+    [Allocator wrappedAllocator = calloc, bool keep = false]) {
+  final arena = Arena(wrappedAllocator);
+  bool isAsync = false;
+  try {
+    final result = computation(arena);
+    if (result is Future) {
+      isAsync = true;
+      return (result.whenComplete(arena.releaseAll) as R);
+    }
+    return result;
+  } finally {
+    if (!isAsync && !keep) {
+      arena.releaseAll();
+    }
   }
 }
 

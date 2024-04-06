@@ -21,7 +21,6 @@ void main() async {
     win.resizeWindow(100, 100);
 
     win.close();
-    expect(win.isOpen, false);
   });
 
   test('cv.Window().imshow', () {
@@ -32,7 +31,6 @@ void main() async {
     final val = win.waitKey(1);
     expect(val, -1);
     win.close();
-    expect(win.isOpen, false);
   });
 
   test('cv.Window().selectROI', () {

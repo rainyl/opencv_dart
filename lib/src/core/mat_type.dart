@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
 library cv;
 
 import 'package:equatable/equatable.dart';
@@ -6,8 +8,8 @@ import 'exception.dart';
 class MatType extends Equatable {
   final int value;
 
-  MatType(this.value);
-  MatType.fromInt32(int v) : this(v);
+  const MatType(this.value);
+  const MatType.fromInt32(int v) : this(v);
 
   int get depth => value & (CV_DEPTH_MAX - 1);
   bool get isInteger => depth < CV_32F;
@@ -16,7 +18,7 @@ class MatType extends Equatable {
   int toInt32() => value;
 
   @override
-  List<Object> get props => [value];
+  List<int> get props => [value];
 
   @override
   String toString() {
@@ -47,13 +49,14 @@ class MatType extends Equatable {
         s = "CV_USRTYPE1";
         break;
       default:
-        return "Unsupported type value (${value})";
+        return "Unsupported type value ($value)";
     }
     final ch = channels;
-    if (ch <= 4)
-      return "${s}C${ch}";
-    else
-      return "${s}C(${ch})";
+    if (ch <= 4) {
+      return "${s}C$ch";
+    } else {
+      return "${s}C($ch)";
+    }
   }
 
   static const int CV_CN_MAX = 512,
@@ -155,11 +158,13 @@ class MatType extends Equatable {
   static CV_64FC(int ch) => makeType(CV_64F, ch);
 
   static MatType makeType(int depth, int channels) {
-    if (channels <= 0 || channels >= CV_CN_MAX)
+    if (channels <= 0 || channels >= CV_CN_MAX) {
       throw OpenCvDartException("Channels count should be 1..${CV_CN_MAX - 1}");
-    if (depth < 0 || depth >= CV_DEPTH_MAX)
+    }
+    if (depth < 0 || depth >= CV_DEPTH_MAX) {
       throw OpenCvDartException(
           "Data type depth should be 0..${CV_DEPTH_MAX - 1}");
+    }
     return MatType(
         (depth & (CV_DEPTH_MAX - 1)) + ((channels - 1) << CV_CN_SHIFT));
   }

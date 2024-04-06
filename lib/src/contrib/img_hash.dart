@@ -10,8 +10,6 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../opencv.g.dart' as cvg;
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
-
 abstract class ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo);
   void compute(InputArray inputArr, OutputArray outputArr);
@@ -27,7 +25,7 @@ class PHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.pHashCompare(hashOne.ptr, hashTwo.ptr, p));
+      cvRun(() => CFFI.pHashCompare(hashOne.ref, hashTwo.ref, p));
       return p.value;
     });
   }
@@ -38,7 +36,7 @@ class PHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => _bindings.pHashCompute(inputArr.ptr, outputArr.ptr));
+    cvRun(() => CFFI.pHashCompute(inputArr.ref, outputArr.ref));
   }
 }
 
@@ -52,7 +50,7 @@ class AverageHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.averageHashCompare(hashOne.ptr, hashTwo.ptr, p));
+      cvRun(() => CFFI.averageHashCompare(hashOne.ref, hashTwo.ref, p));
       return p.value;
     });
   }
@@ -63,39 +61,38 @@ class AverageHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => _bindings.averageHashCompute(inputArr.ptr, outputArr.ptr));
+    cvRun(() => CFFI.averageHashCompute(inputArr.ref, outputArr.ref));
   }
 }
 
-enum BlockMeanHashMode {
-  BLOCK_MEAN_HASH_MODE_0, //!< use fewer block and generate 16*16/8 uchar hash value
-  BLOCK_MEAN_HASH_MODE_1, //!< use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
-}
+/// !< use fewer block and generate 16*16/8 uchar hash value
+const int BLOCK_MEAN_HASH_MODE_0 = 0;
+
+/// !< use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
+const int BLOCK_MEAN_HASH_MODE_1 = 1;
 
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
-class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
-  BlockMeanHash._(this.ptr, [this._mode = BlockMeanHashMode.BLOCK_MEAN_HASH_MODE_0]) {
+class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
+  BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0]) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
   static final finalizer = Finalizer<ffi.Pointer<cvg.BlockMeanHash>>((p) {
-    _bindings.BlockMeanHash_Close(p);
+    CFFI.BlockMeanHash_Close(p);
     calloc.free(p);
   });
 
-  factory BlockMeanHash({BlockMeanHashMode mode = BlockMeanHashMode.BLOCK_MEAN_HASH_MODE_0}) {
+  factory BlockMeanHash({int mode = BLOCK_MEAN_HASH_MODE_0}) {
     final p = calloc<cvg.BlockMeanHash>();
-    cvRun(() => _bindings.BlockMeanHash_Create(mode.index, p));
+    cvRun(() => CFFI.BlockMeanHash_Create(mode, p));
     return BlockMeanHash._(p, mode);
   }
 
-  BlockMeanHashMode _mode;
-  BlockMeanHashMode get mode => _mode;
-  set mode(BlockMeanHashMode mode) {
+  int _mode;
+  int get mode => _mode;
+  set mode(int mode) {
     _mode = mode;
-    cvRun(() => _bindings.BlockMeanHash_SetMode(ptr.value, mode.index));
+    cvRun(() => CFFI.BlockMeanHash_SetMode(ref, mode));
   }
-
-  ffi.Pointer<cvg.BlockMeanHash> ptr;
 
   /// Compare compares the hash value between a and b using BlockMeanHash.
   ///
@@ -103,10 +100,10 @@ class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo, [int? mode_]) {
-    mode_ ??= mode.index;
+    mode_ ??= mode;
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.BlockMeanHash_Compare(ptr, hashOne.ptr, hashTwo.ptr, p));
+      cvRun(() => CFFI.BlockMeanHash_Compare(ref, hashOne.ref, hashTwo.ref, p));
       return p.value;
     });
   }
@@ -118,7 +115,7 @@ class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
   static double compareS(InputArray hashOne, InputArray hashTwo, [int mode = 0]) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.blockMeanHashCompare(hashOne.ptr, hashTwo.ptr, mode, p));
+      cvRun(() => CFFI.blockMeanHashCompare(hashOne.ref, hashTwo.ref, mode, p));
       return p.value;
     });
   }
@@ -129,8 +126,8 @@ class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr, [int? mode_]) {
-    mode_ ??= mode.index;
-    cvRun(() => _bindings.BlockMeanHash_Compute(ptr, inputArr.ptr, outputArr.ptr));
+    mode_ ??= mode;
+    cvRun(() => CFFI.BlockMeanHash_Compute(ref, inputArr.ref, outputArr.ref));
   }
 
   /// STATIC Compute computes hash of the input image using BlockMeanHash.
@@ -138,7 +135,7 @@ class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   static void computeS(InputArray inputArr, OutputArray outputArr, [int mode = 0]) {
-    cvRun(() => _bindings.blockMeanHashCompute(inputArr.ptr, outputArr.ptr, mode));
+    cvRun(() => CFFI.blockMeanHashCompute(inputArr.ref, outputArr.ref, mode));
   }
 
   /// https://docs.opencv.org/4.x/df/d55/classcv_1_1img__hash_1_1BlockMeanHash.html#ad5aef85f58315551cac14bcabe05f0c3
@@ -146,11 +143,17 @@ class BlockMeanHash implements ImgHashBase, ffi.Finalizable {
     return using<List<double>>((arena) {
       final ret = arena<ffi.Pointer<ffi.Double>>();
       final length = arena<ffi.Int>();
-      cvRun(() => _bindings.BlockMeanHash_GetMean(ptr.value, ret, length));
+      cvRun(() => CFFI.BlockMeanHash_GetMean(ref, ret, length));
       if (length.value == 0) return List<double>.empty();
       return List.generate(length.value, (i) => ret.value[i]);
     });
   }
+
+  @override
+  List<int> get props => [ptr.address];
+
+  @override
+  cvg.BlockMeanHash get ref => ptr.ref;
 }
 
 /// ColorMomentHash is implementation of the ColorMomentHash algorithm.
@@ -163,7 +166,7 @@ class ColorMomentHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.colorMomentHashCompare(hashOne.ptr, hashTwo.ptr, p));
+      cvRun(() => CFFI.colorMomentHashCompare(hashOne.ref, hashTwo.ref, p));
       return p.value;
     });
   }
@@ -174,7 +177,7 @@ class ColorMomentHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => _bindings.colorMomentHashCompute(inputArr.ptr, outputArr.ptr));
+    cvRun(() => CFFI.colorMomentHashCompute(inputArr.ref, outputArr.ref));
   }
 }
 
@@ -193,7 +196,7 @@ class NewMarrHildrethHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.marrHildrethHashCompare(hashOne.ptr, hashTwo.ptr, alpha, scale, p));
+      cvRun(() => CFFI.marrHildrethHashCompare(hashOne.ref, hashTwo.ref, alpha, scale, p));
       return p.value;
     });
   }
@@ -204,7 +207,7 @@ class NewMarrHildrethHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => _bindings.marrHildrethHashCompute(inputArr.ptr, outputArr.ptr, alpha, scale));
+    cvRun(() => CFFI.marrHildrethHashCompute(inputArr.ref, outputArr.ref, alpha, scale));
   }
 }
 
@@ -223,7 +226,7 @@ class NewRadialVarianceHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => _bindings.radialVarianceHashCompare(hashOne.ptr, hashTwo.ptr, sigma, numOfAngleLine, p));
+      cvRun(() => CFFI.radialVarianceHashCompare(hashOne.ref, hashTwo.ref, sigma, numOfAngleLine, p));
       return p.value;
     });
   }
@@ -234,6 +237,6 @@ class NewRadialVarianceHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => _bindings.radialVarianceHashCompute(inputArr.ptr, outputArr.ptr, sigma, numOfAngleLine));
+    cvRun(() => CFFI.radialVarianceHashCompute(inputArr.ref, outputArr.ref, sigma, numOfAngleLine));
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 library cv;
 
 import 'dart:ffi' as ffi;
@@ -6,9 +8,8 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 /// High level image stitcher.
 ///
@@ -17,165 +18,130 @@ final _bindings = cvg.CvNative(loadNativeLibrary());
 /// stability and quality of the final images at least being familiar
 /// with the theory is recommended.
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#details
-class Stitcher implements ffi.Finalizable {
-  Stitcher._(this.ptr) {
+class Stitcher extends CvStruct<cvg.PtrStitcher> {
+  Stitcher._(cvg.PtrStitcherPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr);
   }
 
-  cvg.PtrStitcher ptr;
   cvg.Stitcher get stitcher {
     final s = calloc<cvg.Stitcher>();
-    final status1 = _bindings.Stitcher_Get(ptr, s);
-    throwIfFailed(status1);
-    return s.value;
+    cvRun(() => CFFI.Stitcher_Get(ptr.ref, s));
+    return s.ref;
   }
-
-  static final finalizer = Finalizer<cvg.PtrStitcher>((p) => _bindings.Stitcher_Close(p));
 
   /// Creates a Stitcher configured in one of the stitching modes.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a308a47865a1f381e4429c8ec5e99549f
   factory Stitcher.create({StitcherMode mode = StitcherMode.PANORAMA}) {
     final ptr_ = calloc<cvg.PtrStitcher>();
-    final status = _bindings.Stitcher_Create(mode.index, ptr_);
-    throwIfFailed(status);
-    return Stitcher._(ptr_.value);
+    cvRun(() => CFFI.Stitcher_Create(mode.index, ptr_));
+    return Stitcher._(ptr_);
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a9b90774eabdf68c9ee864918d620538d
   double get registrationResol {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
-      final status = _bindings.Stitcher_GetRegistrationResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetRegistrationResol(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a9912fe8c095b8385267908e5ef707439
   set registrationResol(double value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetRegistrationResol(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetRegistrationResol(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#ac559c3eb228614f9402ff3eba23a08f5
   double get seamEstimationResol {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
-      final status = _bindings.Stitcher_GetSeamEstimationResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetSeamEstimationResol(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#ad0fcef52b2fedda1dbb90ea780cd7979
   set seamEstimationResol(double value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetSeamEstimationResol(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetSeamEstimationResol(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#ad13d2d50b253e471fbaf041b9a044571
   double get compositingResol {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
-      final status = _bindings.Stitcher_GetCompositingResol(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetCompositingResol(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#afe927e80fcb2ca2061630ddd98eebba8
   set compositingResol(double value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetCompositingResol(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetCompositingResol(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a3755bbeca7f4c80dc42af034f7621568
   double get panoConfidenceThresh {
     return using<double>((arena) {
       final rptr = arena<ffi.Double>();
-      final status = _bindings.Stitcher_GetPanoConfidenceThresh(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetPanoConfidenceThresh(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a6f5e62bc1dd5d7bdb5f9313a2c21c558
   set panoConfidenceThresh(double value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetPanoConfidenceThresh(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetPanoConfidenceThresh(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#af6a51e0b23dac119a3612d57345f9a7f
   bool get waveCorrection {
     return using<bool>((arena) {
       final rptr = arena<ffi.Bool>();
-      final status = _bindings.Stitcher_GetWaveCorrection(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetWaveCorrection(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a968a2f4a1faddfdacbcfce54b44bab70
   set waveCorrection(bool value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetWaveCorrection(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetWaveCorrection(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#abc0c8f54a1d223a1098206654813d973
   int get interpolationFlags {
     return using<int>((arena) {
       final rptr = arena<ffi.Int>();
-      final status = _bindings.Stitcher_GetInterpolationFlags(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetInterpolationFlags(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a253d04b8dcd3c674321b29139c769873
   set interpolationFlags(int value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetInterpolationFlags(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetInterpolationFlags(stitcher, value));
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#ad9c9c9b8a97b686ad3b93f7918c4c6de
   int get waveCorrectKind {
     return using<int>((arena) {
       final rptr = arena<ffi.Int>();
-      final status = _bindings.Stitcher_GetWaveCorrectKind(stitcher, rptr);
-      throwIfFailed(status);
+      cvRun(() => CFFI.Stitcher_GetWaveCorrectKind(stitcher, rptr));
       return rptr.value;
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a17413f5c06e4e569bfd45e01d4e8ff4a
   set waveCorrectKind(int value) {
-    using<void>((arena) {
-      final status = _bindings.Stitcher_SetWaveCorrectKind(stitcher, value);
-      throwIfFailed(status);
-    });
+    cvRun(() => CFFI.Stitcher_SetWaveCorrectKind(stitcher, value));
   }
 
   /// These functions try to match the given images and to estimate rotations of each camera.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a4c25557af4d40a79a4d1f23d9548131d
-  StitcherStatus estimateTransform(List<Mat> images, {List<Mat>? masks}) {
+  StitcherStatus estimateTransform(VecMat images, {VecMat? masks}) {
     return using<StitcherStatus>((arena) {
       final rptr = arena<ffi.Int>();
-      masks ??= [];
-      final status = _bindings.Stitcher_EstimateTransform(
-          stitcher, images.toMats(arena).ref, masks!.toMats(arena).ref, rptr);
-      throwIfFailed(status);
+      masks ??= VecMat.fromList([]);
+      cvRun(() => CFFI.Stitcher_EstimateTransform(stitcher, images.ref, masks!.ref, rptr));
       return StitcherStatus.fromInt(rptr.value);
     });
   }
@@ -184,43 +150,50 @@ class Stitcher implements ffi.Finalizable {
   /// from the other function calls) into the final pano under the assumption
   /// that the image transformations were estimated before.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#acc8409a6b2e548de1653f0dc5c2ccb02
-  (StitcherStatus, Mat) composePanorama({List<Mat>? images}) {
+  (StitcherStatus, Mat pano) composePanorama({VecMat? images}) {
     return using<(StitcherStatus, Mat)>((arena) {
       final rptr = arena<ffi.Int>();
       final rpano = arena<cvg.Mat>();
-      final status = images == null
-          ? _bindings.Stitcher_ComposePanorama(stitcher, rpano.value, rptr)
-          : _bindings.Stitcher_ComposePanorama_1(stitcher, images.toMats(arena).ref, rpano.value, rptr);
-      throwIfFailed(status);
-      return (StitcherStatus.fromInt(rptr.value), Mat.fromCMat(rpano.value));
+      images == null
+          ? cvRun(() => CFFI.Stitcher_ComposePanorama(stitcher, rpano.ref, rptr))
+          : cvRun(() => CFFI.Stitcher_ComposePanorama_1(stitcher, images.ref, rpano.ref, rptr));
+      return (StitcherStatus.fromInt(rptr.value), Mat.fromCMat(rpano.ref));
     });
   }
 
   /// This is an overloaded member function, provided for convenience.
   /// It differs from the above function only in what argument(s) it accepts.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a37ee5bacf229e9d0fb9f97c8f5ed1acd
-  (StitcherStatus, Mat) stitch(List<Mat> images, {List<Mat>? masks}) {
+  (StitcherStatus, Mat pano) stitch(VecMat images, {VecMat? masks}) {
     return using<(StitcherStatus, Mat)>((arena) {
       final rptr = arena<ffi.Int>();
       final rpano = Mat.empty();
-      final status = masks == null
-          ? _bindings.Stitcher_Stitch(stitcher, images.toMats(arena).ref, rpano.ptr, rptr)
-          : _bindings.Stitcher_Stitch_1(
-              stitcher, images.toMats(arena).ref, masks.toMats(arena).ref, rpano.ptr, rptr);
-      throwIfFailed(status);
+      masks == null
+          ? cvRun(() => CFFI.Stitcher_Stitch(stitcher, images.ref, rpano.ref, rptr))
+          : cvRun(() => CFFI.Stitcher_Stitch_1(stitcher, images.ref, masks.ref, rpano.ref, rptr));
       return (StitcherStatus.fromInt(rptr.value), rpano);
     });
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a7fed80561a9b46a1a924ac6cb334ac85
-  List<int> get component {
-    return using<List<int>>((arena) {
-      final rptr = arena<cvg.IntVector>();
-      final status = _bindings.Stitcher_Component(stitcher, rptr);
-      throwIfFailed(status);
-      return List.generate(rptr.ref.length, (i) => rptr.ref.val[i]);
+  VecInt get component {
+    return using<VecInt>((arena) {
+      final rptr = arena<cvg.VecInt>();
+      cvRun(() => CFFI.Stitcher_Component(stitcher, rptr));
+      return VecInt.fromVec(rptr.ref);
     });
   }
+
+  static final finalizer = Finalizer<cvg.PtrStitcherPtr>((p) {
+    CFFI.Stitcher_Close(p);
+    calloc.free(p);
+  });
+
+  @override
+  List<int> get props => [ptr.address];
+
+  @override
+  cvg.PtrStitcher get ref => ptr.ref;
 }
 
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a507409ce9435dd89857469d12ec06b45

@@ -3,29 +3,27 @@ import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 
-import 'error_code.dart';
 import 'base.dart';
+import 'error_code.dart';
 import '../opencv.g.dart' as cvg;
 
-final _bindings = cvg.CvNative(loadNativeLibrary());
+class CvException implements Exception {
+  CvException(
+    int code, {
+    this.msg = "",
+    this.err = "",
+    this.file = "",
+    this.func = "",
+    this.line = -1,
+  }) : code = ErrorCode(code);
 
-class CvException implements ffi.Finalizable {
-  CvException._(this.ptr) {
-    finalizer.attach(this, ptr);
-  }
-
-  cvg.CvException ptr;
-  static final finalizer = ffi.NativeFinalizer(_bindings.addresses.CvException_Close);
-
-  int get code => _bindings.CvException_GetCode(ptr);
-  String get err => _bindings.CvException_GetErr(ptr).cast<Utf8>().toDartString();
-  String get file => _bindings.CvException_GetFile(ptr).cast<Utf8>().toDartString();
-  String get func => _bindings.CvException_GetFunc(ptr).cast<Utf8>().toDartString();
-  int get line => _bindings.CvException_GetLine(ptr);
+  ErrorCode code;
+  String err, msg, file, func;
+  int line;
 
   @override
   String toString() {
-    return "CvException(code: $code, err: $err) in $func of file $file:$line";
+    return "CvException(code: $code, err: $err, msg:$msg) in $func of file $file:$line";
   }
 }
 
@@ -53,51 +51,7 @@ void registerErrorCallback({cvg.DartErrorCallbackFunction? callback}) {
   callback ??= defaultCvErrorCallback;
   // final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.listener(callback);
   final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.isolateLocal(callback);
-  _bindings.registerErrorCallback(fp.nativeFunction);
-}
-
-class OpenCvException implements Exception {
-  /// The numeric code for error status
-  ErrorCode status;
-
-  /// The source func name where error is encountered
-  String funcName;
-
-  /// A description of the error
-  String message;
-
-  /// The source file name where error is encountered
-  String fileName;
-
-  /// The line number in the source where error is encountered
-  int line;
-
-  OpenCvException(
-    this.status,
-    this.funcName,
-    this.message,
-    this.fileName,
-    this.line,
-  ) : super();
-
-  OpenCvException.empty() : this(ErrorCode.StsOk, "", "", "", 0);
-  OpenCvException.message(ErrorCode code, message) : this(code, "", message, "", 0);
-  factory OpenCvException.fromStatus(cvg.CvStatus s) {
-    return using<OpenCvException>((p0) {
-      return OpenCvException(
-        ErrorCode(s.code),
-        s.func.cast<Utf8>().toDartString(),
-        s.msg.cast<Utf8>().toDartString(),
-        s.file.cast<Utf8>().toDartString(),
-        s.line,
-      );
-    });
-  }
-
-  String toString() {
-    if (message.isEmpty) return "OpenCvException";
-    return "OpenCvException: $message";
-  }
+  CFFI.registerErrorCallback(fp.nativeFunction);
 }
 
 class OpenCvDartException implements Exception {

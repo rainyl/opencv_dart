@@ -44,7 +44,7 @@ void main() async {
     final img = cv.Mat.ones(256, 256, cv.MatType.CV_8UC1);
     for (var i = 0; i < img.rows; i++) {
       for (var j = 0; j < img.cols; j++) {
-        img.setValue(i, j, i + j);
+        img.set(i, j, i + j);
       }
     }
     bmh.compute(img, hash);
@@ -84,7 +84,7 @@ void main() async {
     ];
     expect(hash.toList<int>()[0], expectedHash);
     final mean = bmh.getMean();
-    bmh.mode = cv.BlockMeanHashMode.BLOCK_MEAN_HASH_MODE_1;
+    bmh.mode = cv.BLOCK_MEAN_HASH_MODE_1;
     expect(mean.length, greaterThan(0));
   });
 }

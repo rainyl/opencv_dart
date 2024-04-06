@@ -16,10 +16,10 @@ void main() async {
     final resultVt = [-0.32415637, 0.9460035, 0.9460035, -0.32415637];
 
     final src = cv.Mat.zeros(2, 2, cv.MatType.CV_32FC1);
-    src.setValue<double>(0, 0, 3.76956568);
-    src.setValue<double>(0, 1, -0.90478725);
-    src.setValue<double>(1, 0, -0.90478725);
-    src.setValue<double>(1, 1, 6.10002347);
+    src.set<double>(0, 0, 3.76956568);
+    src.set<double>(0, 1, -0.90478725);
+    src.set<double>(1, 0, -0.90478725);
+    src.set<double>(1, 1, 6.10002347);
     expect(src.at<double>(0, 0), closeTo(3.76956568, 1e-4));
 
     final w = cv.Mat.empty();

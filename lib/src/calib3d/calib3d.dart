@@ -7,14 +7,12 @@ import 'package:ffi/ffi.dart';
 import '../core/contours.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
-import '../constants.g.dart';
-import '../core/extensions.dart';
 import '../core/base.dart';
-import '../core/core.dart';
 import '../core/mat.dart';
+import '../core/size.dart';
+import '../core/termcriteria.dart';
+import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
-
-final _bindings = cvg.CvNative(loadNativeLibrary());
 
 class Fisheye {
   /// FisheyeUndistortImage transforms an image to compensate for fisheye lens distortion
@@ -30,13 +28,15 @@ class Fisheye {
     return using<Mat>((arena) {
       knew ??= Mat.empty();
       undistorted ??= Mat.empty();
-      _bindings.Fisheye_UndistortImageWithParams(
-        distorted.ptr,
-        undistorted!.ptr,
-        K.ptr,
-        D.ptr,
-        knew!.ptr,
-        newSize.toSize(arena).ref,
+      cvRun(
+        () => CFFI.Fisheye_UndistortImageWithParams(
+          distorted.ref,
+          undistorted!.ref,
+          K.ref,
+          D.ref,
+          knew!.ref,
+          newSize.toSize(arena).ref,
+        ),
       );
       return undistorted!;
     });
@@ -53,13 +53,11 @@ class Fisheye {
     OutputArray? undistorted,
     InputArray? R,
     InputArray? P,
-    cvg.TermCriteria? criteria,
   }) {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    criteria = termCriteriaNew(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
-    _bindings.Fisheye_UndistortPoints(distorted.ptr, undistorted.ptr, K.ptr, D.ptr, R.ptr, P.ptr);
+    cvRun(() => CFFI.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 
@@ -79,15 +77,17 @@ class Fisheye {
   }) {
     return using<Mat>((arena) {
       P ??= Mat.empty();
-      _bindings.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
-        K.ptr,
-        D.ptr,
-        imageSize.toSize(arena).ref,
-        R.ptr,
-        P!.ptr,
-        balance,
-        newSize.toSize(arena).ref,
-        fovScale,
+      cvRun(
+        () => CFFI.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+          K.ref,
+          D.ref,
+          imageSize.toSize(arena).ref,
+          R.ref,
+          P!.ref,
+          balance,
+          newSize.toSize(arena).ref,
+          fovScale,
+        ),
       );
       return P!;
     });
@@ -111,15 +111,17 @@ class Fisheye {
   return using<(Mat, Mat)>((arena) {
     map1 ??= Mat.empty();
     map2 ??= Mat.empty();
-    _bindings.InitUndistortRectifyMap(
-      cameraMatrix.ptr,
-      distCoeffs.ptr,
-      R.ptr,
-      newCameraMatrix.ptr,
-      size.toSize(arena).ref,
-      m1type,
-      map1!.ptr,
-      map2!.ptr,
+    cvRun(
+      () => CFFI.InitUndistortRectifyMap(
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        R.ref,
+        newCameraMatrix.ref,
+        size.toSize(arena).ref,
+        m1type,
+        map1!.ref,
+        map2!.ref,
+      ),
     );
     return (map1!, map2!);
   });
@@ -129,7 +131,7 @@ class Fisheye {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga7a6c4e032c97f03ba747966e6ad862b1
-(Mat, Rect validPixROI) getOptimalNewCameraMatrix(
+(Mat rval, Rect validPixROI) getOptimalNewCameraMatrix(
   InputArray cameraMatrix,
   InputArray distCoeffs,
   Size imageSize,
@@ -139,16 +141,20 @@ class Fisheye {
 }) {
   return using<(Mat, Rect)>((arena) {
     final validPixROI = arena<cvg.Rect>();
-    final matPtr = _bindings.GetOptimalNewCameraMatrixWithParams(
-      cameraMatrix.ptr,
-      distCoeffs.ptr,
-      imageSize.toSize(arena).ref,
-      alpha,
-      newImgSize.toSize(arena).ref,
-      validPixROI,
-      centerPrincipalPoint,
+    final matPtr = arena<cvg.Mat>();
+    cvRun(
+      () => CFFI.GetOptimalNewCameraMatrixWithParams(
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        imageSize.toSize(arena).ref,
+        alpha,
+        newImgSize.toSize(arena).ref,
+        validPixROI,
+        centerPrincipalPoint,
+        matPtr,
+      ),
     );
-    return (Mat.fromCMat(matPtr), Rect.fromNative(validPixROI.ref));
+    return (Mat.fromCMat(matPtr.ref), Rect.fromNative(validPixROI.ref));
   });
 }
 
@@ -156,7 +162,7 @@ class Fisheye {
 //
 // For further details, please see:
 // https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga3207604e4b1a1758aa66acb6ed5aa65d
-(double, Mat, Mat, Mat, Mat) calibrateCamera(
+(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs) calibrateCamera(
   Contours3f objectPoints,
   Contours2f imagePoints,
   Size imageSize,
@@ -165,37 +171,36 @@ class Fisheye {
   Mat? rvecs,
   Mat? tvecs,
   int flags = 0,
-  cvg.TermCriteria? criteria,
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) {
   return using<(double, Mat, Mat, Mat, Mat)>((arena) {
     rvecs ??= Mat.empty();
     tvecs ??= Mat.empty();
-    criteria ??= termCriteriaNew(TERM_COUNT + TERM_EPS, 30, 1e-4);
-    final rmsErr = _bindings.CalibrateCamera(
-      objectPoints.ptr,
-      imagePoints.ptr,
-      imageSize.toSize(arena).ref,
-      cameraMatrix.ptr,
-      distCoeffs.ptr,
-      rvecs!.ptr,
-      tvecs!.ptr,
-      flags,
-      criteria!,
+    final rmsErr = arena<ffi.Double>();
+
+    cvRun(
+      () => CFFI.CalibrateCamera(
+        objectPoints.ref,
+        imagePoints.ref,
+        imageSize.toSize(arena).ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvecs!.ref,
+        tvecs!.ref,
+        flags,
+        criteria.toTermCriteria(arena).ref,
+        rmsErr,
+      ),
     );
-    return (rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!);
+    return (rmsErr.value, cameraMatrix, distCoeffs, rvecs!, tvecs!);
   });
 }
 
 // Transforms an image to compensate for lens distortion.
-//
 // The function transforms an image to compensate radial and tangential lens distortion.
-//
 // The function is simply a combination of initUndistortRectifyMap (with unity R ) and remap (with bilinear interpolation). See the former function for details of the transformation being performed.
-//
 // Those pixels in the destination image, for which there is no correspondent pixels in the source image, are filled with zeros (black color).
-//
 // A particular subset of the source image that will be visible in the corrected image can be regulated by newCameraMatrix. You can use getOptimalNewCameraMatrix to compute the appropriate newCameraMatrix depending on your requirements.
-//
 // The camera matrix and the distortion parameters can be determined using calibrateCamera. If the resolution of images is different from the resolution used at the calibration stage, fx,fy,cx and cy need to be scaled accordingly, while the distortion coefficients remain the same.
 Mat undistort(
   InputArray src,
@@ -206,7 +211,7 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  _bindings.Undistort(src.ptr, dst.ptr, cameraMatrix.ptr, distCoeffs.ptr, newCameraMatrix.ptr);
+  cvRun(() => CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -221,11 +226,24 @@ Mat undistortPoints(
   OutputArray? dst,
   InputArray? R,
   InputArray? P,
+  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) {
   R ??= Mat.empty();
   P ??= Mat.empty();
   dst ??= Mat.empty();
-  _bindings.UndistortPoints(src.ptr, dst.ptr, cameraMatrix.ptr, distCoeffs.ptr, R.ptr, P.ptr);
+  cvRunArena(
+    (arena) => cvRun(
+      () => CFFI.UndistortPoints(
+        src.ref,
+        dst!.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        R!.ref,
+        P!.ref,
+        criteria.toTermCriteria(arena).ref,
+      ),
+    ),
+  );
   return dst;
 }
 
@@ -233,7 +251,7 @@ Mat undistortPoints(
 //
 // For further details, please see:
 // https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga93efa9b0aa890de240ca32b11253dd4a
-(bool, Mat corners) findChessboardCorners(
+(bool success, Mat corners) findChessboardCorners(
   InputArray image,
   Size patternSize, {
   OutputArray? corners,
@@ -241,37 +259,71 @@ Mat undistortPoints(
 }) {
   return using<(bool, Mat)>((arena) {
     corners ??= Mat.empty();
-    final r = _bindings.FindChessboardCorners(
-      image.ptr,
-      patternSize.toSize(arena).ref,
-      corners!.ptr,
-      flags,
+    final r = arena<ffi.Bool>();
+    cvRun(
+      () => CFFI.FindChessboardCorners(
+        image.ref,
+        patternSize.toSize(arena).ref,
+        corners!.ref,
+        flags,
+        r,
+      ),
     );
-    return (r, corners!);
+    return (r.value, corners!);
   });
 }
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
-(bool, Mat corners, Mat meta) findChessboardCornersSB(
+(bool, Mat corners) findChessboardCornersSB(
+  InputArray image,
+  Size patternSize,
+  int flags, {
+  OutputArray? corners,
+}) {
+  corners ??= Mat.empty();
+  final rval = cvRunArena<bool>((arena) {
+    final b = arena<ffi.Bool>();
+    cvRun(
+      () => CFFI.FindChessboardCornersSB(
+        image.ref,
+        patternSize.toSize(arena).ref,
+        corners!.ref,
+        flags,
+        b,
+      ),
+    );
+    return b.value;
+  });
+  return (rval, corners);
+}
+
+// Finds the positions of internal corners of the chessboard using a sector based approach.
+// https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
+(bool, Mat corners, Mat meta) findChessboardCornersSBWithMeta(
   InputArray image,
   Size patternSize,
   int flags, {
   OutputArray? corners,
   OutputArray? meta,
 }) {
-  return using<(bool, Mat, Mat)>((arena) {
-    corners ??= Mat.empty();
-    meta ??= Mat.empty();
-    final b = _bindings.FindChessboardCornersSBWithMeta(
-      image.ptr,
-      patternSize.toSize(arena).ref,
-      corners!.ptr,
-      flags,
-      meta!.ptr,
+  corners ??= Mat.empty();
+  meta ??= Mat.empty();
+  final rval = cvRunArena<bool>((arena) {
+    final b = arena<ffi.Bool>();
+    cvRun(
+      () => CFFI.FindChessboardCornersSBWithMeta(
+        image.ref,
+        patternSize.toSize(arena).ref,
+        corners!.ref,
+        flags,
+        meta!.ref,
+        b,
+      ),
     );
-    return (b, corners!, meta!);
+    return b.value;
   });
+  return (rval, corners, meta);
 }
 
 // DrawChessboardCorners renders the detected chessboard corners.
@@ -284,8 +336,9 @@ Mat drawChessboardCorners(
   InputArray corners,
   bool patternWasFound,
 ) {
-  return using<Mat>((arena) {
-    _bindings.DrawChessboardCorners(image.ptr, patternSize.toSize(arena).ref, corners.ptr, patternWasFound);
+  return cvRunArena<Mat>((arena) {
+    cvRun(() =>
+        CFFI.DrawChessboardCorners(image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
     return image;
   });
 }
@@ -296,8 +349,8 @@ Mat drawChessboardCorners(
 // For further details, please see:
 // https://docs.opencv.org/master/d9/d0c/group__calib3d.html#gad767faff73e9cbd8b9d92b955b50062d
 (Mat, Mat inliers) estimateAffinePartial2D(
-  List<Point2f> from,
-  List<Point2f> to, {
+  VecPoint2f from,
+  VecPoint2f to, {
   int method = RANSAC,
   double ransacReprojThreshold = 3,
   int maxIters = 2000,
@@ -305,22 +358,24 @@ Mat drawChessboardCorners(
   int refineIters = 10,
   OutputArray? inliers,
 }) {
-  inliers ??= Mat.empty();
-  final vecFrom = from.toNativeVecotr();
-  final vecTo = to.toNativeVecotr();
-  final p = _bindings.EstimateAffinePartial2DWithParams(
-    vecFrom,
-    vecTo,
-    inliers.ptr,
-    method,
-    ransacReprojThreshold,
-    maxIters,
-    confidence,
-    refineIters,
-  );
-  _bindings.Point2fVector_Close(vecFrom);
-  _bindings.Point2fVector_Close(vecTo);
-  return (Mat.fromCMat(p), inliers);
+  return cvRunArena<(Mat, Mat)>((arena) {
+    inliers ??= Mat.empty();
+    final p = arena<cvg.Mat>();
+    cvRun(
+      () => CFFI.EstimateAffinePartial2DWithParams(
+        from.ref,
+        to.ref,
+        inliers!.ref,
+        method,
+        ransacReprojThreshold,
+        maxIters,
+        confidence,
+        refineIters,
+        p,
+      ),
+    );
+    return (Mat.fromCMat(p.ref), inliers!);
+  });
 }
 
 // EstimateAffine2D Computes an optimal affine transformation between two 2D point sets.
@@ -328,8 +383,8 @@ Mat drawChessboardCorners(
 // For further details, please see:
 // https://docs.opencv.org/4.0.0/d9/d0c/group__calib3d.html#ga27865b1d26bac9ce91efaee83e94d4dd
 (Mat, Mat inliers) estimateAffine2D(
-  List<Point2f> from,
-  List<Point2f> to, {
+  VecPoint2f from,
+  VecPoint2f to, {
   int method = RANSAC,
   double ransacReprojThreshold = 3,
   int maxIters = 2000,
@@ -337,20 +392,22 @@ Mat drawChessboardCorners(
   int refineIters = 10,
   OutputArray? inliers,
 }) {
-  inliers ??= Mat.empty();
-  final vecFrom = from.toNativeVecotr();
-  final vecTo = to.toNativeVecotr();
-  final p = _bindings.EstimateAffine2DWithParams(
-    vecFrom,
-    vecTo,
-    inliers.ptr,
-    method,
-    ransacReprojThreshold,
-    maxIters,
-    confidence,
-    refineIters,
-  );
-  _bindings.Point2fVector_Close(vecFrom);
-  _bindings.Point2fVector_Close(vecTo);
-  return (Mat.fromCMat(p), inliers);
+  return cvRunArena<(Mat, Mat)>((arena) {
+    inliers ??= Mat.empty();
+    final p = arena<cvg.Mat>();
+    cvRun(
+      () => CFFI.EstimateAffine2DWithParams(
+        from.ref,
+        to.ref,
+        inliers!.ref,
+        method,
+        ransacReprojThreshold,
+        maxIters,
+        confidence,
+        refineIters,
+        p,
+      ),
+    );
+    return (Mat.fromCMat(p.ref), inliers!);
+  });
 }
