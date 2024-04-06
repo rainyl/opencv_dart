@@ -16,25 +16,29 @@ OpenCV Bindings for Dart Language.
 
 ## BREAKING CHANGES
 
-Currently, the refactor of [#13](https://github.com/rainyl/opencv_dart/issues/13) has almost finished, and I have rewrote most of APIs to
-compitable with **opencv-python**, for example:
+The refactor of [#13](https://github.com/rainyl/opencv_dart/issues/13) bas been finished,
+since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
+for example:
 
 ```dart
-// old
+// old API
 void cvtColor(Mat src, Mat dst, int code);
-// new
+// new API
 Mat cvtColor(Mat src, int code, {Mat? dst});
-// then usage will change from:
+
+// then usage will be changed from:
 cvtColor(src, dst, cv.COLOR_BGR2GRAY);
 // to:
-cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
-// or:
 final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
+// or:
+cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
 ```
 
-I am still considering how to migrate to the new APIs, considering the old versions still have many
-users, maybe release a new package will be a better choice, and once the new APIs are stable, I will
-not fix the old ones actively. You can vote for this in [#16](https://github.com/rainyl/opencv_dart/discussions/16)
+The New APIs will be published in `v1.0.0`, if you are still using the old APIs and
+do not want to upgrade, you can use the old versions less than `v1.0.0`.
+
+The OLD APIs won't get any updates from maintainer since `v0.6.7`,
+if you really need to use the old APIs, you can open PRs.
 
 ## IMPORTANT
 
@@ -127,7 +131,7 @@ More examples are on the way...
 - [x] ~~support for iOS, macOS~~
 - [ ] add more examples
 - [ ] documentation
-- [ ] modify C wrapper to catch exceptions
+- [x] modify C wrapper to catch exceptions
 - [ ] Native Assets
 - [ ] async?
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
