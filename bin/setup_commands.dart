@@ -59,9 +59,8 @@ abstract class BaseSetupCommand extends Command {
     print('Using package:$setupPkgName from ${opencvRoot.toFilePath()}');
 
     final doc = loadYaml(File("${opencvRoot.toFilePath()}/pubspec.yaml").readAsStringSync());
-    final _version = doc["binary_version"] as String;
+    final version = doc["binary_version"] as String;
     final libTarName = "libopencv_dart-$os-$arch.tar.gz";
-    final version = _version.replaceAll(RegExp(r"\-dev.*"), "");
 
     print('Downloading prebuilt binary...');
     String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
