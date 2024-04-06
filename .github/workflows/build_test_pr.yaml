@@ -2,7 +2,7 @@ name: build test
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "v0.6" ]
 
 env:
   ANDROID_NDK_VERSION: r26c
