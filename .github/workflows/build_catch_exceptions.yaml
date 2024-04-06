@@ -3,8 +3,6 @@ name: build for catch exceptions
 on:
   push:
     branches: ["catch-exceptions"]
-    tags:
-      - "v*.*.*"
   pull_request:
     branches: [ "catch-exceptions" ]
 
