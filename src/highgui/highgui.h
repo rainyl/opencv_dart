@@ -18,7 +18,7 @@ extern "C" {
 
 // Window
 CvStatus Window_New(const char *winname, int flags);
-CvStatus Window_Close(const char *winname);
+void     Window_Close(const char *winname);
 CvStatus Window_IMShow(const char *winname, Mat mat);
 CvStatus Window_GetProperty(const char *winname, int flag, double *rval);
 CvStatus Window_SetProperty(const char *winname, int flag, double value);

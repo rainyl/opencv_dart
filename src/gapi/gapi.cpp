@@ -15,10 +15,8 @@ CvStatus GMat_New_Empty(GMat *rval)
 //   END_WRAP
 // }
 
-CvStatus GMat_Close(GMat *mat)
+void GMat_Close(GMat *mat)
 {
-  BEGIN_WRAP
   delete mat->ptr;
   mat->ptr = nullptr;
-  END_WRAP
 }

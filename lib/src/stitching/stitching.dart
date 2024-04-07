@@ -20,7 +20,7 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#details
 class Stitcher extends CvStruct<cvg.PtrStitcher> {
   Stitcher._(cvg.PtrStitcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   cvg.Stitcher get stitcher {
@@ -184,10 +184,7 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
     });
   }
 
-  static final finalizer = Finalizer<cvg.PtrStitcherPtr>((p) {
-    CFFI.Stitcher_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.PtrStitcherPtr>(CFFI.addresses.Stitcher_Close);
 
   @override
   List<int> get props => [ptr.address];

@@ -13,12 +13,8 @@ CvStatus ArucoDetectorParameters_Create(ArucoDetectorParameters *rval)
   *rval = {new cv::aruco::DetectorParameters()};
   END_WRAP
 }
-CvStatus ArucoDetectorParameters_Close(ArucoDetectorParameters *ap)
-{
-  BEGIN_WRAP
-  CVD_FREE(ap)
-  END_WRAP
-}
+void ArucoDetectorParameters_Close(ArucoDetectorParameters *ap){CVD_FREE(ap)}
+
 CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(ArucoDetectorParameters ap,
                                                              int                     adaptiveThreshWinSizeMin)
 {
@@ -398,12 +394,7 @@ CvStatus getPredefinedDictionary(int dictionaryId, ArucoDictionary *rval)
   *rval = {new cv::aruco::Dictionary(cv::aruco::getPredefinedDictionary(dictionaryId))};
   END_WRAP
 }
-CvStatus ArucoDictionary_Close(ArucoDictionary *self)
-{
-  BEGIN_WRAP
-  CVD_FREE(self)
-  END_WRAP
-}
+void ArucoDictionary_Close(ArucoDictionary *self){CVD_FREE(self)}
 
 CvStatus ArucoDetector_New(ArucoDetector *rval)
 {
@@ -418,10 +409,8 @@ CvStatus ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorPa
   *rval = {new cv::aruco::ArucoDetector(*dictionary.ptr, *params.ptr)};
   END_WRAP
 }
-void ArucoDetector_Close(ArucoDetector *ad)
-{
-  CVD_FREE(ad)
-}
+void ArucoDetector_Close(ArucoDetector *ad){CVD_FREE(ad)}
+
 CvStatus ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,
                                      VecInt *markerIds, VecVecPoint2f *rejectedCandidates)
 {

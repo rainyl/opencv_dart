@@ -14,7 +14,7 @@ import '../opencv.g.dart' as cvg;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
   VideoCapture._(cvg.VideoCapturePtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory VideoCapture.empty() {
@@ -58,10 +58,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
   @override
   cvg.VideoCapture get ref => ptr.ref;
-  static final finalizer = Finalizer<cvg.VideoCapturePtr>((p) {
-    CFFI.VideoCapture_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(CFFI.addresses.VideoCapture_Close);
 
   double getProp(int propId) {
     return cvRunArena<double>((arena) {
@@ -129,7 +126,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
 class VideoWriter extends CvStruct<cvg.VideoWriter> {
   VideoWriter._(cvg.VideoWriterPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory VideoWriter.empty() {
@@ -197,10 +194,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
 
   @override
   cvg.VideoWriter get ref => ptr.ref;
-  static final finalizer = Finalizer<cvg.VideoWriterPtr>((p) {
-    CFFI.VideoWriter_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(CFFI.addresses.VideoWriter_Close);
 
   bool get isOpened {
     return cvRunArena<bool>((arena) {

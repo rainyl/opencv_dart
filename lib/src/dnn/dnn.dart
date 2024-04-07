@@ -19,14 +19,11 @@ import '../opencv.g.dart' as cvg;
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
 class Layer extends CvStruct<cvg.Layer> {
   Layer._(cvg.LayerPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
   factory Layer.fromNative(cvg.LayerPtr ptr) => Layer._(ptr);
 
-  static final finalizer = Finalizer<cvg.LayerPtr>((p0) {
-    CFFI.Layer_Close(p0);
-    calloc.free(p0);
-  });
+  static final finalizer = OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
 
   /// GetName returns name for this layer.
   String get name {
@@ -86,7 +83,7 @@ class Layer extends CvStruct<cvg.Layer> {
 /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html
 class Net extends CvStruct<cvg.Net> {
   Net._(cvg.NetPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory Net.empty() {
@@ -401,10 +398,7 @@ class Net extends CvStruct<cvg.Net> {
     });
   }
 
-  static final finalizer = Finalizer<cvg.NetPtr>((p0) {
-    CFFI.Net_Close(p0);
-    calloc.free(p0);
-  });
+  static final finalizer = OcvFinalizer<cvg.NetPtr>(CFFI.addresses.Net_Close);
 
   @override
   List<int> get props => [ptr.address];

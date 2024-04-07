@@ -1605,7 +1605,9 @@ CvStatus Rng_NewWithState(uint64_t state, RNG *rval)
   *rval = {new cv::RNG(state)};
   END_WRAP
 }
-void Rng_Close(RNG *rng){CVD_FREE(rng)} CvStatus TheRNG(RNG *rval)
+void Rng_Close(RNG *rng){CVD_FREE(rng)}
+
+CvStatus TheRNG(RNG *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::RNG(cv::theRNG())};

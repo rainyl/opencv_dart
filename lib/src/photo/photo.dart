@@ -18,7 +18,7 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
 class MergeMertens extends CvStruct<cvg.MergeMertens> {
   MergeMertens._(cvg.MergeMertensPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory MergeMertens.empty() {
@@ -37,10 +37,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     return MergeMertens._(p);
   }
 
-  static final finalizer = Finalizer<cvg.MergeMertensPtr>((p) {
-    CFFI.MergeMertens_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
 
   /// BalanceWhite computes merge LDR images using the current MergeMertens.
   /// Return a image MAT : 8bits 3 channel image ( RGB 8 bits )
@@ -71,7 +68,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
 class AlignMTB extends CvStruct<cvg.AlignMTB> {
   AlignMTB._(cvg.AlignMTBPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   /// AlignMTB for converts images to median threshold bitmaps.
@@ -102,10 +99,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     return AlignMTB._(p);
   }
 
-  static final finalizer = Finalizer<cvg.AlignMTBPtr>((p) {
-    CFFI.AlignMTB_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
 
   VecMat process(VecMat src) {
     return using<VecMat>((arena) {

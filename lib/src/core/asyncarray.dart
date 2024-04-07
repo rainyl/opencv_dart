@@ -10,7 +10,7 @@ import '../opencv.g.dart' as cvg;
 
 class AsyncArray extends CvStruct<cvg.AsyncArray> {
   AsyncArray._(cvg.AsyncArrayPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory AsyncArray.fromPointer(cvg.AsyncArrayPtr ptr) => AsyncArray._(ptr);
@@ -22,10 +22,7 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
     return arr;
   }
 
-  static final finalizer = Finalizer<cvg.AsyncArrayPtr>((p){
-    CFFI.AsyncArray_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(CFFI.addresses.AsyncArray_Close);
 
   Mat get() {
     final dst = Mat.empty();

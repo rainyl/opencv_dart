@@ -56,8 +56,7 @@ headers:
 functions:
   symbol-address:
     include:
-      - "Mat_CloseVoid"
-      # - ".*" # Do this to expose all function pointers.
+      - ".*_Close.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 
