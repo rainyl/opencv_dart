@@ -80,7 +80,9 @@ extern "C" {
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
 #define CVD_FREE(value)                                                                                      \
   delete value->ptr;                                                                                         \
-  value->ptr = nullptr;
+  value->ptr = nullptr;                                                                                      \
+  delete value;                                                                                              \
+  value = nullptr;
 
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef TYPE *NAME##_CPP;                                                                                  \

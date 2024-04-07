@@ -14,12 +14,7 @@ CvStatus Window_New(const char *winname, int flags)
   cv::namedWindow(winname, flags);
   END_WRAP
 }
-CvStatus Window_Close(const char *winname)
-{
-  BEGIN_WRAP
-  cv::destroyWindow(winname);
-  END_WRAP
-}
+void     Window_Close(const char *winname) { cv::destroyWindow(winname); }
 CvStatus Window_IMShow(const char *winname, Mat mat)
 {
   BEGIN_WRAP

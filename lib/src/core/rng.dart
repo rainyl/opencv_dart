@@ -8,7 +8,7 @@ import '../opencv.g.dart' as cvg;
 
 class Rng extends CvStruct<cvg.RNG> {
   Rng._(cvg.RNGPtr ptr, {bool attach = true}) : super.fromPointer(ptr) {
-    if (attach) finalizer.attach(this, ptr);
+    if (attach) finalizer.attach(this, ptr.cast());
   }
 
   factory Rng() {
@@ -27,10 +27,7 @@ class Rng extends CvStruct<cvg.RNG> {
     return rng;
   }
 
-  static final finalizer = Finalizer<cvg.RNGPtr>((p) {
-    CFFI.Rng_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.RNGPtr>(CFFI.addresses.Rng_Close);
 
   /// Fills arrays with random numbers. 
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad26f2b09d9868cf108e84c9814aa682d

@@ -50,8 +50,7 @@ ffi.DynamicLibrary loadNativeLibrary() {
 
 final CFFI = CvNative(loadNativeLibrary());
 
-abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
-}
+abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
 abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
   ICvStruct.fromPointer(this.ptr);
@@ -94,6 +93,12 @@ R cvRunArena<R>(R Function(Arena arena) computation,
     }
   }
 }
+
+typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
+
+ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
+    ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)

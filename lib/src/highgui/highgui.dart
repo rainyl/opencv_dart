@@ -24,7 +24,7 @@ class Window {
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
-  Window(this.name, [int flags=0]) {
+  Window(this.name, [int flags = 0]) {
     cvRunArena((arena) {
       cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
     });
@@ -32,7 +32,7 @@ class Window {
 
   void close() {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_Close(name.toNativeUtf8(allocator: arena).cast()));
+      CFFI.Window_Close(name.toNativeUtf8(allocator: arena).cast());
     });
   }
 

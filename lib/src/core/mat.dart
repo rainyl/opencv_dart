@@ -15,7 +15,7 @@ import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
   Mat._(cvg.MatPtr ptr, [this.xdata]) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   /// This method is very similar to [clone], will copy data from [mat]
@@ -151,11 +151,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  static final finalizer = Finalizer<cvg.MatPtr>((p) {
-    print("Free $p");
-    CFFI.Mat_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.MatPtr>(CFFI.addresses.Mat_Close);
 
   /// external native data array of [Mat], used for [Mat.fromList]
   NativeArray? xdata;
@@ -1169,7 +1165,7 @@ typedef InputOutputArray = Mat;
 
 class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   VecMat._(this.ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
   factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
   factory VecMat.fromVec(cvg.VecMat ptr) {
@@ -1199,10 +1195,7 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
 
   @override
   cvg.VecMatPtr ptr;
-  static final finalizer = Finalizer<cvg.VecMatPtr>((p) {
-    CFFI.VecMat_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.VecMatPtr>(CFFI.addresses.VecMat_Close);
   @override
   Iterator<Mat> get iterator => VecMatIterator(ref);
 

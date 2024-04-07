@@ -27,7 +27,7 @@ abstract class INativeArray<T> {
 class U8Array extends NativeArray<ffi.Uint8, int> {
   U8Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Uint8>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory U8Array.fromList(List<int> data) {
@@ -40,10 +40,10 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
 
   U8Array.fromPointer(ffi.Pointer<ffi.Uint8> ptr, int length) : super(length) {
     this.ptr = ptr;
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Uint8>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, int value) {
@@ -65,7 +65,7 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
 class I8Array extends NativeArray<ffi.Int8, int> {
   I8Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Int8>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory I8Array.fromList(List<int> data) {
@@ -76,7 +76,7 @@ class I8Array extends NativeArray<ffi.Int8, int> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Int8>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, int value) {
@@ -98,7 +98,7 @@ class I8Array extends NativeArray<ffi.Int8, int> {
 class U16Array extends NativeArray<ffi.Uint16, int> {
   U16Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Uint16>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory U16Array.fromList(List<int> data) {
@@ -109,7 +109,7 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Uint16>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, int value) {
@@ -131,7 +131,7 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
 class I16Array extends NativeArray<ffi.Int16, int> {
   I16Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Int16>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory I16Array.fromList(List<int> data) {
@@ -142,7 +142,7 @@ class I16Array extends NativeArray<ffi.Int16, int> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Int16>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, int value) {
@@ -164,7 +164,7 @@ class I16Array extends NativeArray<ffi.Int16, int> {
 class I32Array extends NativeArray<ffi.Int, int> {
   I32Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Int>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory I32Array.fromList(List<int> data) {
@@ -175,7 +175,7 @@ class I32Array extends NativeArray<ffi.Int, int> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Int>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, int value) {
@@ -197,7 +197,7 @@ class I32Array extends NativeArray<ffi.Int, int> {
 class F32Array extends NativeArray<ffi.Float, double> {
   F32Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Float>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory F32Array.fromList(List<double> data) {
@@ -208,7 +208,7 @@ class F32Array extends NativeArray<ffi.Float, double> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Float>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, double value) {
@@ -230,7 +230,7 @@ class F32Array extends NativeArray<ffi.Float, double> {
 class F64Array extends NativeArray<ffi.Double, double> {
   F64Array([int length = 0]) : super(length) {
     ptr = calloc<ffi.Double>(length);
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory F64Array.fromList(List<double> data) {
@@ -241,7 +241,7 @@ class F64Array extends NativeArray<ffi.Double, double> {
     return array;
   }
 
-  static final finalizer = Finalizer<ffi.Pointer<ffi.Double>>((p) => calloc.free(p));
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   void operator []=(int idx, double value) {

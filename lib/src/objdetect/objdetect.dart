@@ -14,7 +14,7 @@ import '../opencv.g.dart' as cvg;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   CascadeClassifier._(cvg.CascadeClassifierPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory CascadeClassifier.empty() {
@@ -59,10 +59,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = Finalizer<cvg.CascadeClassifierPtr>((p) {
-    CFFI.CascadeClassifier_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
   @override
   List<int> get props => [ptr.address];
@@ -70,7 +67,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   HOGDescriptor._(cvg.HOGDescriptorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory HOGDescriptor.empty() {
@@ -135,10 +132,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 
   @override
   cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = Finalizer<cvg.HOGDescriptorPtr>((p) {
-    CFFI.HOGDescriptor_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
 
   @override
   List<int> get props => [ptr.address];
@@ -161,7 +155,7 @@ VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
 // https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html
 class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   QRCodeDetector._(cvg.QRCodeDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr);
+    finalizer.attach(this, ptr.cast());
   }
 
   factory QRCodeDetector.empty() {
@@ -247,10 +241,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a188b63ffa17922b2c65d8a0ab7b70775
   // TODO: (bool, List<String>, Mat, List<Mat>) detectAndDecodeMulti(InputArray img) {}
 
-  static final finalizer = Finalizer<cvg.QRCodeDetectorPtr>((p) {
-    CFFI.QRCodeDetector_Close(p);
-    calloc.free(p);
-  });
+  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
 
   @override
   cvg.QRCodeDetector get ref => ptr.ref;
