@@ -1,9 +1,8 @@
-import 'dart:async';
+import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:camera_universal/camera_universal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
@@ -19,57 +18,33 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var images = <Uint8List>[];
-  Uint8List? videoFrame;
-  CameraController cameraController = CameraController();
 
   @override
   void initState() {
     super.initState();
-    task();
-  }
-
-  Future<void> task() async {
-    await cameraController.initializeCameras();
-    await cameraController.initializeCamera(
-      setState: setState,
-    );
-    await cameraController.activateCamera(
-      setState: setState,
-      mounted: () {
-        return mounted;
-      },
-    );
-  }
-
-  void takePicture() async {
-    var frame = cv.Mat.empty();
-    if (cameraController.is_camera_init) {
-      final im = await cameraController.action_take_picture(
-          onCameraNotInit: () {},
-          onCameraNotSelect: () {},
-          onCameraNotActive: () {});
-      if (im != null) {
-        frame = cv.imread(im.path);
-      }
-    }
-    if (!frame.isEmpty) {
-      setState(() {
-        videoFrame = cv.imencode(cv.ImageFormat.png.ext, frame);
-      });
-    }
   }
 
   @override
   void dispose() {
-    cameraController.dispose();
     super.dispose();
+  }
+
+  // native resources are unsendable for isolate, so use raw data or encoded Uint8List and convert back
+  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async {
+    final ret = Isolate.run(() {
+      final im = cv.imdecode(Uint8List.fromList(buffer), cv.IMREAD_COLOR);
+      cv.Mat gray = cv.Mat.empty(), blur = cv.Mat.empty();
+      for (var i = 0; i < 1000; i++) {
+        cv.cvtColor(im, gray, cv.COLOR_BGR2GRAY);
+        cv.gaussianBlur(im, blur, (7, 7), 2, sigmaY: 2);
+      }
+      return (cv.imencode(cv.ImageFormat.png.ext, gray), cv.imencode(cv.ImageFormat.png.ext, blur));
+    });
+    return ret;
   }
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 25);
-    const spacerSmall = SizedBox(height: 10);
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -79,52 +54,15 @@ class _MyAppState extends State<MyApp> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Camera(
-                        cameraController: cameraController,
-                        onCameraNotInit: (context) {
-                          return const SizedBox.shrink();
-                        },
-                        onCameraNotSelect: (context) {
-                          return const SizedBox.shrink();
-                        },
-                        onCameraNotActive: (context) {
-                          return const SizedBox.shrink();
-                        },
-                        onPlatformNotSupported: (context) {
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    ),
-                    Expanded(
-                        child: videoFrame == null
-                            ? Text("Empty")
-                            : Image.memory(videoFrame!))
-                  ],
-                ),
-              ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context)
-                      .load("images/lenna.png");
-                  final im =
-                      cv.imdecode(data.buffer.asUint8List(), cv.IMREAD_COLOR);
-                  final gray = cv.Mat.empty();
-                  cv.cvtColor(im, gray, cv.COLOR_BGR2GRAY);
-                  final blur = cv.Mat.empty();
-                  cv.gaussianBlur(im, blur, (7, 7), 2, sigmaY: 2);
+                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final bytes = data.buffer.asUint8List();
+                  // heavy computation
+                  final (gray, blur) = await heavyTask(bytes);
                   setState(() {
-                    images = [
-                      data.buffer.asUint8List(),
-                      cv.imencode(cv.ImageFormat.png.ext, gray),
-                      cv.imencode(cv.ImageFormat.png.ext, blur)
-                    ];
+                    images = [bytes, gray, blur];
                   });
-                  takePicture();
                 },
                 child: const Text("Process"),
               ),
