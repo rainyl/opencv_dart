@@ -38,6 +38,11 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
     return array;
   }
 
+  U8Array.fromPointer(ffi.Pointer<ffi.Uint8> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr);
+  }
+
   static final finalizer = Finalizer<ffi.Pointer<ffi.Uint8>>((p) => calloc.free(p));
 
   @override

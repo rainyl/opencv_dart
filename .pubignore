@@ -10,8 +10,8 @@ coverage/
 *.dylib
 *.lib
 pkgs/
-src/*.cpp
-src/*.h
+src/**/*.cpp
+src/**/*.h
 images/
 CMakeUserPresets*
 ffigen*

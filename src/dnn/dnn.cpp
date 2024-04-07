@@ -89,13 +89,10 @@ CvStatus Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
   END_WRAP
 }
 
-void Net_Close(Net *net)
-{
-  delete CVD_TYPECAST_CPP(Net, net);
-  net->ptr = nullptr;
-}
+void Net_Close(Net *net){CVD_FREE(net)}
 
-CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
+CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
+                           bool crop, int ddepth)
 {
   BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
@@ -104,7 +101,8 @@ CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, S
   END_WRAP
 }
 
-CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB, bool crop, int ddepth)
+CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
+                            bool crop, int ddepth)
 {
   BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
@@ -279,13 +277,10 @@ CvStatus Layer_GetType(Layer layer, VecChar *rval)
   END_WRAP
 }
 
-void Layer_Close(Layer *layer)
-{
-  delete CVD_TYPECAST_CPP(Layer, layer);
-  layer->ptr = nullptr;
-}
+void Layer_Close(Layer *layer){CVD_FREE(layer)}
 
-CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices)
+CvStatus
+    NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices)
 {
   BEGIN_WRAP
   VecInt_CPP v = new std::vector<int>();
@@ -294,7 +289,8 @@ CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float 
   END_WRAP
 }
 
-CvStatus NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold, const float nms_threshold, VecInt *indices, const float eta, const int top_k)
+CvStatus NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold,
+                            const float nms_threshold, VecInt *indices, const float eta, const int top_k)
 {
   BEGIN_WRAP
   VecInt_CPP v = new std::vector<int>();

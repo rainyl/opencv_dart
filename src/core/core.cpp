@@ -56,11 +56,7 @@ CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval)
   *rval = tc.ptr->epsilon;
   END_WRAP
 }
-void TermCriteria_Close(TermCriteria *tc)
-{
-  delete CVD_TYPECAST_CPP(TermCriteria, tc);
-  tc->ptr = nullptr;
-}
+void TermCriteria_Close(TermCriteria *tc){CVD_FREE(tc)}
 
 CvStatus Mat_New(Mat *rval)
 {
@@ -146,9 +142,22 @@ CvStatus Mat_FromCMat(Mat m, Mat *rval)
 }
 void Mat_Close(Mat *m)
 {
-  delete CVD_TYPECAST_CPP(Mat, m);
-  m->ptr = nullptr;
+  m->ptr->release();
+  CVD_FREE(m)
 }
+void Mat_CloseVoid(void *m)
+{
+  auto p = reinterpret_cast<Mat *>(m);
+  p->ptr->release();
+  CVD_FREE(p)
+}
+CvStatus Mat_Release(Mat *m)
+{
+  BEGIN_WRAP
+  m->ptr->release();
+  END_WRAP
+}
+
 CvStatus Mat_Empty(Mat m, bool *rval)
 {
   BEGIN_WRAP
@@ -309,6 +318,14 @@ CvStatus Mat_Data(Mat m, VecUChar *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<uchar>(*m.ptr->data)};
+  END_WRAP
+}
+
+CvStatus Mat_DataPtr(Mat m, uchar **data, int *length)
+{
+  BEGIN_WRAP
+  *data = m.ptr->data;
+  *length = static_cast<int>(m.ptr->total() * m.ptr->elemSize());
   END_WRAP
 }
 
@@ -867,6 +884,31 @@ CvStatus Mat_MultiplyUChar(Mat m, uint8_t val)
 }
 
 CvStatus Mat_DivideUChar(Mat m, uint8_t val)
+{
+  BEGIN_WRAP
+  *m.ptr /= val;
+  END_WRAP
+}
+
+CvStatus Mat_AddSChar(Mat m, int8_t val)
+{
+  BEGIN_WRAP
+  *m.ptr += val;
+  END_WRAP
+}
+CvStatus Mat_SubtractSChar(Mat m, int8_t val)
+{
+  BEGIN_WRAP
+  *m.ptr -= val;
+  END_WRAP
+}
+CvStatus Mat_MultiplySChar(Mat m, int8_t val)
+{
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+CvStatus Mat_DivideSChar(Mat m, int8_t val)
 {
   BEGIN_WRAP
   *m.ptr /= val;
@@ -1563,12 +1605,7 @@ CvStatus Rng_NewWithState(uint64_t state, RNG *rval)
   *rval = {new cv::RNG(state)};
   END_WRAP
 }
-void Rng_Close(RNG *rng)
-{
-  delete CVD_TYPECAST_CPP(RNG, rng);
-  rng->ptr = nullptr;
-}
-CvStatus TheRNG(RNG *rval)
+void Rng_Close(RNG *rng){CVD_FREE(rng)} CvStatus TheRNG(RNG *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::RNG(cv::theRNG())};

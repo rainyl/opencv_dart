@@ -29,7 +29,8 @@ CvStatus IlluminationChange(Mat src, Mat mask, Mat dst, float alpha, float beta)
   END_WRAP
 }
 
-CvStatus TextureFlattening(Mat src, Mat mask, Mat dst, float low_threshold, float high_threshold, int kernel_size)
+CvStatus TextureFlattening(Mat src, Mat mask, Mat dst, float low_threshold, float high_threshold,
+                           int kernel_size)
 {
   BEGIN_WRAP
   cv::textureFlattening(*src.ptr, *mask.ptr, *dst.ptr, low_threshold, high_threshold, kernel_size);
@@ -42,10 +43,13 @@ CvStatus FastNlMeansDenoisingColoredMulti(VecMat src, Mat dst, int imgToDenoiseI
   cv::fastNlMeansDenoisingColoredMulti(*src.ptr, *dst.ptr, imgToDenoiseIndex, temporalWindowSize);
   END_WRAP
 }
-CvStatus FastNlMeansDenoisingColoredMultiWithParams(VecMat src, Mat dst, int imgToDenoiseIndex, int temporalWindowSize, float h, float hColor, int templateWindowSize, int searchWindowSize)
+CvStatus FastNlMeansDenoisingColoredMultiWithParams(VecMat src, Mat dst, int imgToDenoiseIndex,
+                                                    int temporalWindowSize, float h, float hColor,
+                                                    int templateWindowSize, int searchWindowSize)
 {
   BEGIN_WRAP
-  cv::fastNlMeansDenoisingColoredMulti(*src.ptr, *dst.ptr, imgToDenoiseIndex, temporalWindowSize, h, hColor, templateWindowSize, searchWindowSize);
+  cv::fastNlMeansDenoisingColoredMulti(*src.ptr, *dst.ptr, imgToDenoiseIndex, temporalWindowSize, h, hColor,
+                                       templateWindowSize, searchWindowSize);
   END_WRAP
 }
 CvStatus FastNlMeansDenoising(Mat src, Mat dst)
@@ -54,7 +58,8 @@ CvStatus FastNlMeansDenoising(Mat src, Mat dst)
   cv::fastNlMeansDenoising(*src.ptr, *dst.ptr);
   END_WRAP
 }
-CvStatus FastNlMeansDenoisingWithParams(Mat src, Mat dst, float h, int templateWindowSize, int searchWindowSize)
+CvStatus FastNlMeansDenoisingWithParams(Mat src, Mat dst, float h, int templateWindowSize,
+                                        int searchWindowSize)
 {
   BEGIN_WRAP
   cv::fastNlMeansDenoising(*src.ptr, *dst.ptr, h, templateWindowSize, searchWindowSize);
@@ -66,7 +71,8 @@ CvStatus FastNlMeansDenoisingColored(Mat src, Mat dst)
   cv::fastNlMeansDenoisingColored(*src.ptr, *dst.ptr);
   END_WRAP
 }
-CvStatus FastNlMeansDenoisingColoredWithParams(Mat src, Mat dst, float h, float hColor, int templateWindowSize, int searchWindowSize)
+CvStatus FastNlMeansDenoisingColoredWithParams(Mat src, Mat dst, float h, float hColor,
+                                               int templateWindowSize, int searchWindowSize)
 {
   BEGIN_WRAP
   cv::fastNlMeansDenoisingColored(*src.ptr, *dst.ptr, h, hColor, templateWindowSize, searchWindowSize);
@@ -79,10 +85,12 @@ CvStatus MergeMertens_Create(MergeMertens *rval)
   *rval = {new cv::Ptr<cv::MergeMertens>(cv::createMergeMertens())};
   END_WRAP
 }
-CvStatus MergeMertens_CreateWithParams(float contrast_weight, float saturation_weight, float exposure_weight, MergeMertens *rval)
+CvStatus MergeMertens_CreateWithParams(float contrast_weight, float saturation_weight, float exposure_weight,
+                                       MergeMertens *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::Ptr<cv::MergeMertens>(cv::createMergeMertens(contrast_weight, saturation_weight, exposure_weight))};
+  *rval = {new cv::Ptr<cv::MergeMertens>(
+      cv::createMergeMertens(contrast_weight, saturation_weight, exposure_weight))};
   END_WRAP
 }
 CvStatus MergeMertens_Process(MergeMertens b, VecMat src, Mat dst)
@@ -90,11 +98,7 @@ CvStatus MergeMertens_Process(MergeMertens b, VecMat src, Mat dst)
   BEGIN_WRAP(*b.ptr)->process(*src.ptr, *dst.ptr);
   END_WRAP
 }
-void MergeMertens_Close(MergeMertens *b)
-{
-  delete CVD_TYPECAST_CPP(MergeMertens, b);
-  b->ptr = nullptr;
-}
+void MergeMertens_Close(MergeMertens *b){CVD_FREE(b)}
 
 CvStatus AlignMTB_Create(AlignMTB *rval)
 {
@@ -116,11 +120,7 @@ CvStatus AlignMTB_Process(AlignMTB b, VecMat src, VecMat *dst)
   *dst = {new std::vector<cv::Mat>(vec)};
   END_WRAP
 }
-void AlignMTB_Close(AlignMTB *b)
-{
-  delete b->ptr;
-  b->ptr = nullptr;
-}
+void AlignMTB_Close(AlignMTB *b){CVD_FREE(b)}
 
 CvStatus DetailEnhance(Mat src, Mat dst, float sigma_s, float sigma_r)
 {

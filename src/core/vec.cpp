@@ -61,8 +61,7 @@ CvStatus VecPoint_Size(VecPoint vec, int *rval)
 void VecPoint_Close(VecPoint *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecPoint, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecVecPoint_New(VecVecPoint *rval)
@@ -115,8 +114,7 @@ CvStatus VecVecPoint_Size(VecVecPoint vec, int *rval)
 void VecVecPoint_Close(VecVecPoint *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecPoint, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecPoint2f_New(VecPoint2f *rval)
@@ -129,8 +127,7 @@ CvStatus VecPoint2f_New(VecPoint2f *rval)
 void VecPoint2f_Close(VecPoint2f *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecPoint2f, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecPoint2f_NewFromPointer(Point2f *points, int length, VecPoint2f *rval)
@@ -232,8 +229,7 @@ CvStatus VecVecPoint2f_Size(VecVecPoint2f vec, int *rval)
 void VecVecPoint2f_Close(VecVecPoint2f *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecPoint2f, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecPoint3f_New(VecPoint3f *rval)
@@ -246,8 +242,7 @@ CvStatus VecPoint3f_New(VecPoint3f *rval)
 void VecPoint3f_Close(VecPoint3f *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecPoint3f, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecPoint3f_NewFromPointer(Point3f *points, int length, VecPoint3f *rval)
@@ -349,8 +344,7 @@ CvStatus VecVecPoint3f_Size(VecVecPoint3f vec, int *rval)
 void VecVecPoint3f_Close(VecVecPoint3f *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecPoint3f, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecUChar_New(VecUChar *rval)
@@ -402,8 +396,7 @@ CvStatus VecUChar_Size(VecUChar vec, int *rval)
 void VecUChar_Close(VecUChar *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecUChar, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecChar_New(VecChar *rval)
@@ -466,8 +459,7 @@ CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
 void VecChar_Close(VecChar *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecChar, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecVecChar_New(VecVecChar *rval)
@@ -523,8 +515,7 @@ CvStatus VecVecChar_Size(VecVecChar vec, int *rval)
 void VecVecChar_Close(VecVecChar *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecChar, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecInt_New(VecInt *rval)
@@ -576,8 +567,7 @@ CvStatus VecInt_Size(VecInt vec, int *rval)
 void VecInt_Close(VecInt *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecInt, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecFloat_New(VecFloat *rval)
@@ -629,8 +619,7 @@ CvStatus VecFloat_Size(VecFloat vec, int *rval)
 void VecFloat_Close(VecFloat *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecFloat, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecDouble_New(VecDouble *rval)
@@ -682,8 +671,7 @@ CvStatus VecDouble_Size(VecDouble vec, int *rval)
 void VecDouble_Close(VecDouble *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecDouble, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecMat_New(VecMat *rval)
@@ -735,8 +723,7 @@ CvStatus VecMat_Size(VecMat vec, int *rval)
 void VecMat_Close(VecMat *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecMat, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecRect_New(VecRect *rval)
@@ -789,8 +776,7 @@ CvStatus VecRect_Size(VecRect vec, int *rval)
 void VecRect_Close(VecRect *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecRect, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecKeyPoint_New(VecKeyPoint *rval)
@@ -844,8 +830,7 @@ CvStatus VecKeyPoint_Size(VecKeyPoint vec, int *rval)
 void VecKeyPoint_Close(VecKeyPoint *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecKeyPoint, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecDMatch_New(VecDMatch *rval)
@@ -899,8 +884,7 @@ CvStatus VecDMatch_Size(VecDMatch vec, int *rval)
 void VecDMatch_Close(VecDMatch *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecDMatch, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }
 
 CvStatus VecVecDMatch_New(VecVecDMatch *rval)
@@ -952,6 +936,5 @@ CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
 void VecVecDMatch_Close(VecVecDMatch *vec)
 {
   vec->ptr->clear();
-  delete CVD_TYPECAST_CPP(VecVecDMatch, vec);
-  vec->ptr = nullptr;
+  CVD_FREE(vec)
 }

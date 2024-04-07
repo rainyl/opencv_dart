@@ -18,8 +18,7 @@ CvStatus VideoCapture_New(VideoCapture *rval)
 CvStatus VideoCapture_Close(VideoCapture *self)
 {
   BEGIN_WRAP
-  delete self->ptr;
-  self->ptr = nullptr;
+  CVD_FREE(self)
   END_WRAP
 }
 CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval)
@@ -93,8 +92,7 @@ CvStatus VideoWriter_New(VideoWriter *rval)
 CvStatus VideoWriter_Close(VideoWriter *self)
 {
   BEGIN_WRAP
-  delete self->ptr;
-  self->ptr = NULL;
+  CVD_FREE(self)
   END_WRAP
 }
 CvStatus VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,

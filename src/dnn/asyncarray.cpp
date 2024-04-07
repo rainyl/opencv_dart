@@ -20,8 +20,7 @@ CvStatus AsyncArray_New(AsyncArray *rval)
 // AsyncArray_Close deletes an existing AsyncArray
 void AsyncArray_Close(AsyncArray *a)
 {
-  delete CVD_TYPECAST_CPP(AsyncArray, a);
-  a->ptr = nullptr;
+  CVD_FREE(a)
 }
 
 CvStatus AsyncArray_Get(AsyncArray async_out, Mat out)

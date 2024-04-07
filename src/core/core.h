@@ -78,6 +78,9 @@ extern "C" {
 
 #ifdef __cplusplus
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
+#define CVD_FREE(value)                                                                                      \
+  delete value->ptr;                                                                                         \
+  value->ptr = nullptr;
 
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef TYPE *NAME##_CPP;                                                                                  \
@@ -434,6 +437,8 @@ CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus Mat_FromCMat(Mat m, Mat *rval);
 void     Mat_Close(Mat *m);
+void     Mat_CloseVoid(void *m);
+CvStatus Mat_Release(Mat *m);
 CvStatus Mat_Empty(Mat m, bool *rval);
 CvStatus Mat_IsContinuous(Mat m, bool *rval);
 CvStatus Mat_Clone(Mat m, Mat *rval);
@@ -459,6 +464,7 @@ CvStatus Mat_Total(Mat m, int *rval);
 CvStatus Mat_Size(Mat m, VecInt *rval);
 CvStatus Mat_ElemSize(Mat m, int *rval);
 CvStatus Mat_Data(Mat m, VecUChar *rval);
+CvStatus Mat_DataPtr(Mat m, uchar **data, int *length);
 CvStatus Eye(int rows, int cols, int type, Mat *rval);
 CvStatus Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus Ones(int rows, int cols, int type, Mat *rval);
@@ -554,6 +560,11 @@ CvStatus Mat_AddUChar(Mat m, uint8_t val);
 CvStatus Mat_SubtractUChar(Mat m, uint8_t val);
 CvStatus Mat_MultiplyUChar(Mat m, uint8_t val);
 CvStatus Mat_DivideUChar(Mat m, uint8_t val);
+
+CvStatus Mat_AddSChar(Mat m, int8_t val);
+CvStatus Mat_SubtractSChar(Mat m, int8_t val);
+CvStatus Mat_MultiplySChar(Mat m, int8_t val);
+CvStatus Mat_DivideSChar(Mat m, int8_t val);
 
 CvStatus Mat_AddI32(Mat m, int32_t val);
 CvStatus Mat_SubtractI32(Mat m, int32_t val);

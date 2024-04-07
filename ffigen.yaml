@@ -53,10 +53,11 @@ headers:
     - src/stitching/stitching.h
     - src/video/video.h
     - src/video/videoio.h
-# functions:
-#   symbol-address:
-#     include:
-#       - ".*" # Do this to expose all function pointers.
+functions:
+  symbol-address:
+    include:
+      - "Mat_CloseVoid"
+      # - ".*" # Do this to expose all function pointers.
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

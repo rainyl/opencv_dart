@@ -59,9 +59,7 @@ class MatType extends Equatable {
     }
   }
 
-  static const int CV_CN_MAX = 512,
-      CV_CN_SHIFT = 3,
-      CV_DEPTH_MAX = (1 << CV_CN_SHIFT);
+  static const int CV_CN_MAX = 512, CV_CN_SHIFT = 3, CV_DEPTH_MAX = (1 << CV_CN_SHIFT);
 
   /// type depth constants
   static const int CV_8U = 0,
@@ -159,13 +157,11 @@ class MatType extends Equatable {
 
   static MatType makeType(int depth, int channels) {
     if (channels <= 0 || channels >= CV_CN_MAX) {
-      throw OpenCvDartException("Channels count should be 1..${CV_CN_MAX - 1}");
+      throw CvdException("Channels count should be 1..${CV_CN_MAX - 1}");
     }
     if (depth < 0 || depth >= CV_DEPTH_MAX) {
-      throw OpenCvDartException(
-          "Data type depth should be 0..${CV_DEPTH_MAX - 1}");
+      throw CvdException("Data type depth should be 0..${CV_DEPTH_MAX - 1}");
     }
-    return MatType(
-        (depth & (CV_DEPTH_MAX - 1)) + ((channels - 1) << CV_CN_SHIFT));
+    return MatType((depth & (CV_DEPTH_MAX - 1)) + ((channels - 1) << CV_CN_SHIFT));
   }
 }

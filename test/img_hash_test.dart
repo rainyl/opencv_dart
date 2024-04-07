@@ -82,7 +82,7 @@ void main() async {
       1,
       254
     ];
-    expect(hash.toList<int>()[0], expectedHash);
+    expect(hash.toList()[0], expectedHash);
     final mean = bmh.getMean();
     bmh.mode = cv.BLOCK_MEAN_HASH_MODE_1;
     expect(mean.length, greaterThan(0));

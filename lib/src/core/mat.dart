@@ -152,6 +152,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   static final finalizer = Finalizer<cvg.MatPtr>((p) {
+    print("Free $p");
     CFFI.Mat_Close(p);
     calloc.free(p);
   });
@@ -214,7 +215,7 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.value;
       });
 
-  /// (rows, cols)
+  /// ([rows], [cols])
   List<int> get size => [rows, cols];
 
   // List<int> get shape {
@@ -226,10 +227,10 @@ class Mat extends CvStruct<cvg.Mat> {
   //   });
   // }
 
-  /// (rows, cols, channels)
+  /// ([rows], [cols], [channels])
   List<int> get shape => [rows, cols, channels];
 
-  /// only for channels == 1
+  /// only for [channels] == 1
   int get countNoneZero {
     assert(channels == 1, "countNoneZero only for channels == 1");
 
@@ -413,7 +414,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return v;
   }
 
-  /// cv::Mat::at<>(i0, i1, [i2]) of cv::Mat
+  /// cv::Mat::at\<T\>(i0, i1, i2) of cv::Mat
   ///
   ///
   /// - If matrix is of type [MatType.CV_8U] then use Mat.at\<uchar\>(y,x).
@@ -428,8 +429,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```dart
   /// var m = cv.Mat.fromScalar(cv.Scalar(2, 4, 1, 0), cv.MatType.CV_32FC3);
   /// m.at<double>(0, 0); // 2
-  /// m.at<double>(0, 0, 1); // 4
-  /// m.at<Vec3f>(0, 0); // cv.Vec3f(2, 4, 1)
+  /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(2, 4, 1)
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
@@ -548,12 +548,17 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
-  /// equilivalent to Mat::at<T>(i0, i1, [i2]) = val;
+  /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;
   /// where T might be basic value types like uchar, char, int.
   /// or cv::Vec<> like cv::Vec3b
-  /// 
+  ///
   /// example
-  /// Mat::at<cv::Vec3b>(0, 0) = val;
+  /// ```dart
+  /// var m = cv.Mat.fromScalar(cv.Scalar(2, 4, 1, 0), cv.MatType.CV_32FC3);
+  /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(2, 4, 1)
+  /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
+  /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
+  /// ```
   void set<T>(int row, int col, T val, [int? i2]) {
     if (T == int || T == double) {
       _setNum<T>(row, col, val, i2);
@@ -567,7 +572,7 @@ class Mat extends CvStruct<cvg.Mat> {
   // https://github.com/dart-lang/sdk/issues/43390#issuecomment-690993957
   bool isSubtype<S, T>() => <S>[] is List<T>;
 
-  // TODO:  for now, dart do not support operator overloading
+  // TODO: for now, dart do not support operator overloading
   // https://github.com/dart-lang/language/issues/2456
   // waiting for it's implementation and add more methods
   // operator +(int v) {
@@ -591,6 +596,8 @@ class Mat extends CvStruct<cvg.Mat> {
       switch (type.depth) {
         case MatType.CV_8U:
           return addU8(val as int, inplace: inplace);
+        case MatType.CV_8S:
+          return addI8(val as int, inplace: inplace);
         case MatType.CV_32S:
           return addI32(val as int, inplace: inplace);
         default:
@@ -621,6 +628,18 @@ class Mat extends CvStruct<cvg.Mat> {
     } else {
       final dst = clone();
       cvRun(() => CFFI.Mat_AddUChar(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat addI8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "addI8() only for CV_8S");
+    if (inplace) {
+      cvRun(() => CFFI.Mat_AddSChar(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => CFFI.Mat_AddSChar(dst.ref, val));
       return dst;
     }
   }
@@ -679,6 +698,8 @@ class Mat extends CvStruct<cvg.Mat> {
       switch (type.depth) {
         case MatType.CV_8U:
           return subtractU8(val as int, inplace: inplace);
+        case MatType.CV_8S:
+          return subtractI8(val as int, inplace: inplace);
         case MatType.CV_32S:
           return subtractI32(val as int, inplace: inplace);
         default:
@@ -710,6 +731,19 @@ class Mat extends CvStruct<cvg.Mat> {
     } else {
       final dst = clone();
       cvRun(() => CFFI.Mat_SubtractUChar(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat subtractI8(int val, {bool inplace = false}) {
+    assert(
+        type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "subtractI8() only for CV_8S");
+    if (inplace) {
+      cvRun(() => CFFI.Mat_SubtractSChar(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => CFFI.Mat_SubtractSChar(dst.ref, val));
       return dst;
     }
   }
@@ -768,6 +802,8 @@ class Mat extends CvStruct<cvg.Mat> {
       switch (type.depth) {
         case MatType.CV_8U:
           return multiplyU8(val as int, inplace: inplace);
+        case MatType.CV_8S:
+          return multiplyI8(val as int, inplace: inplace);
         case MatType.CV_32S:
           return multiplyI32(val as int, inplace: inplace);
         default:
@@ -799,6 +835,19 @@ class Mat extends CvStruct<cvg.Mat> {
     } else {
       final dst = clone();
       cvRun(() => CFFI.Mat_MultiplyUChar(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat multiplyI8(int val, {bool inplace = false}) {
+    assert(
+        type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "multiplyI8() only for CV_8S");
+    if (inplace) {
+      cvRun(() => CFFI.Mat_MultiplySChar(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => CFFI.Mat_MultiplySChar(dst.ref, val));
       return dst;
     }
   }
@@ -857,6 +906,8 @@ class Mat extends CvStruct<cvg.Mat> {
       switch (type.depth) {
         case MatType.CV_8U:
           return divideU8(val as int, inplace: inplace);
+        case MatType.CV_8S:
+          return divideI8(val as int, inplace: inplace);
         case MatType.CV_32S:
           return divideI32(val as int, inplace: inplace);
         default:
@@ -887,6 +938,18 @@ class Mat extends CvStruct<cvg.Mat> {
     } else {
       final dst = clone();
       cvRun(() => CFFI.Mat_DivideUChar(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat divideI8(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "divideI8() only for CV_8S");
+    if (inplace) {
+      cvRun(() => CFFI.Mat_DivideSChar(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => CFFI.Mat_DivideSChar(dst.ref, val));
       return dst;
     }
   }
@@ -1040,31 +1103,52 @@ class Mat extends CvStruct<cvg.Mat> {
     return this;
   }
 
-  List<List<T>> toList<T extends num>([int cn = 0]) {
-    return List.generate(
-      rows,
-      (row) => List.generate(
-        cols,
-        (col) => at<T>(row, col, cn),
-      ),
-    );
+  void release() => cvRun(() => CFFI.Mat_Release(ptr));
+
+  /// This Method converts single-channel Mat to 2D List
+  List<List<num>> toList() {
+    switch (type.depth) {
+      case MatType.CV_8U:
+      case MatType.CV_8S:
+      case MatType.CV_16U:
+      case MatType.CV_16S:
+      case MatType.CV_32S:
+        return List.generate(rows, (row) => List.generate(cols, (col) => at<int>(row, col)));
+      case MatType.CV_32F:
+      case MatType.CV_64F:
+        return List.generate(rows, (row) => List.generate(cols, (col) => at<double>(row, col)));
+      default:
+        throw UnsupportedError("toList() for $type is not supported!");
+    }
   }
 
-  List<List<List<T>>> toList3D<T extends num>() {
-    assert(channels == 3, "toList3D() only for 3 channels, but this.channels=$channels");
-    return List.generate(3, (cn) => toList(cn));
+  /// Returns a 3D list of the mat, only for multi-channel mats.
+  /// The list is ordered as [row][col][channel].
+  ///
+  /// [T]: The type of the elements in the mat.
+  /// [P]: The type of the elements in the list.
+  ///
+  /// Example:
+  /// ```dart
+  /// final mat = Mat.fromBytes(width: 3, height: 3, type: MatType.CV_8UC3, bytes: [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  /// final list = mat.toList3D<Vec3b, int>();
+  /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
+  /// ```
+  List<List<List<P>>> toList3D<T extends CvVec, P extends num>() {
+    assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
+    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val as List<P>));
   }
 
-  List<List<List<List<T>>>> toList4D<T extends num>() {
-    assert(channels == 4, "toList4D() only for 4 channels, but this.channels=$channels");
-    return List.generate(4, (cn) => toList(cn));
-  }
-
+  /// Get the data pointer of the Mat, this getter will reture a view of native
+  /// data, and will be GCed when the Mat is GCed.
   Uint8List get data {
     return cvRunArena<Uint8List>((arena) {
-      final p = arena<cvg.VecUChar>();
-      cvRun(() => CFFI.Mat_Data(ref, p));
-      return VecUChar.fromVec(p.ref).toU8List(); // TODO: copy 3 times, find a more efficient way
+      final p = calloc<ffi.Pointer<cvg.uchar>>();
+      final plen = arena<ffi.Int>();
+      cvRun(() => CFFI.Mat_DataPtr(ref, p, plen));
+      final ret = p.value.cast<ffi.Uint8>().asTypedList(plen.value);
+      calloc.free(p);
+      return ret;
     });
   }
 
@@ -1151,13 +1235,4 @@ class VecMatIterator extends VecIterator<Mat> {
 
 extension ListMatExtension on List<Mat> {
   VecMat get cvd => VecMat.fromList(this);
-}
-
-// https://github.com/dart-lang/sdk/issues/43390#issuecomment-690993957
-class TypeHelper<T> {
-  const TypeHelper();
-  bool operator >=(TypeHelper other) => other is TypeHelper<T>;
-  bool operator <=(TypeHelper other) => other >= this;
-  bool operator >(TypeHelper other) => this >= other && !(other >= this);
-  bool operator <(TypeHelper other) => other >= this && !(this >= other);
 }

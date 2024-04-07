@@ -13,11 +13,7 @@ CvStatus Stitcher_Create(int mode, PtrStitcher *rval)
   END_WRAP
 }
 
-void Stitcher_Close(PtrStitcher *stitcher)
-{
-  delete CVD_TYPECAST_CPP(PtrStitcher, stitcher);
-  stitcher->ptr = nullptr;
-}
+void Stitcher_Close(PtrStitcher *stitcher){CVD_FREE(stitcher)}
 
 CvStatus Stitcher_Get(PtrStitcher self, Stitcher *rval)
 {

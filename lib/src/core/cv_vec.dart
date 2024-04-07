@@ -7,6 +7,7 @@ import '../opencv.g.dart' as cvg;
 
 abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
   CvVec.fromPointer(super.ptr) : super.fromPointer();
+  List<num> get val;
 }
 
 /// uchar

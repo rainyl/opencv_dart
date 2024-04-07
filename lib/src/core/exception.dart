@@ -29,18 +29,21 @@ class CvException implements Exception {
 
 void defaultCvErrorCallback(
   int code,
-  ffi.Pointer<ffi.Char> func_name,
-  ffi.Pointer<ffi.Char> err_msg,
-  ffi.Pointer<ffi.Char> file_name,
+  ffi.Pointer<ffi.Char> funcName,
+  ffi.Pointer<ffi.Char> errMsg,
+  ffi.Pointer<ffi.Char> fileName,
   int line,
   ffi.Pointer<ffi.Void> userdata,
 ) {
-  final err = err_msg.cast<Utf8>();
-  ;
-  final func = func_name.cast<Utf8>();
-  final file = file_name.cast<Utf8>();
-  print(
-      "OpenCV Native Error Occurred (code: $code, err: ${err.toDartString()}) in ${func.toDartString()} of file ${file.toDartString()}:$line");
+  final err = errMsg.cast<Utf8>();
+  final func = funcName.cast<Utf8>();
+  final file = fileName.cast<Utf8>();
+  final msg = "OpenCV Native Error Occurred ("
+      "code: $code, "
+      "err: ${err.toDartString()}) "
+      "func: ${func.toDartString()} "
+      "file: ${file.toDartString()}:$line";
+  print(msg);
   calloc.free(err);
   calloc.free(func);
   calloc.free(file);
@@ -54,9 +57,9 @@ void registerErrorCallback({cvg.DartErrorCallbackFunction? callback}) {
   CFFI.registerErrorCallback(fp.nativeFunction);
 }
 
-class OpenCvDartException implements Exception {
+class CvdException implements Exception {
   final String message;
-  OpenCvDartException(this.message);
+  CvdException(this.message);
 
   @override
   String toString() {

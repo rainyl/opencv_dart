@@ -8,8 +8,7 @@ void main() async {
 
     final mat1 = cv.Mat.create(cols: 100, rows: 100, r: 255, g: 255, b: 255);
     expect(mat1.isEmpty, equals(false));
-    expect((mat1.width, mat1.height), (100, 100));
-    expect(mat1.channels, equals(3));
+    expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
     expect(mat1.type, cv.MatType.CV_8UC3);
     expect(mat1.total, equals(100 * 100));
     expect(mat1.isContinus, equals(true));
@@ -17,12 +16,19 @@ void main() async {
     expect(mat1.elemSize, equals(3));
     expect(mat1.at<int>(0, 0, 0), 255);
 
-    final mat2 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC1);
-    expect((mat2.width, mat2.height, mat2.channels), (100, 100, 1));
+    final mat2 = cv.Mat.zeros(3, 3, cv.MatType.CV_8UC1);
+    expect((mat2.width, mat2.height, mat2.channels), (3, 3, 1));
     expect(mat2.countNoneZero, equals(0));
+    mat2.set<int>(0, 0, 241);
+    expect(mat2.toList()[0][0], 241);
 
-    final mat3 = cv.Mat.eye(100, 100, cv.MatType.CV_8UC3);
-    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
+    final mat3 = cv.Mat.eye(3, 3, cv.MatType.CV_8UC3);
+    expect((mat3.width, mat3.height, mat3.channels), (3, 3, 3));
+    final expected3 = List.generate(
+        mat3.rows,
+        (row) => List.generate(
+            mat3.cols, (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0)));
+    expect(mat3.toList3D<cv.Vec3b, int>(), expected3);
 
     final mat4 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     expect((mat4.width, mat4.height, mat4.channels), (100, 100, 3));

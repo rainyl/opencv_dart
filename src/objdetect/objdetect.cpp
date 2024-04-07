@@ -16,11 +16,8 @@ CvStatus CascadeClassifier_New(CascadeClassifier *rval)
   *rval = {new cv::CascadeClassifier()};
   END_WRAP
 }
-void CascadeClassifier_Close(CascadeClassifier *cs)
-{
-  delete cs->ptr;
-  cs->ptr = nullptr;
-}
+void CascadeClassifier_Close(CascadeClassifier *cs){CVD_FREE(cs)}
+
 CvStatus CascadeClassifier_Load(CascadeClassifier cs, const char *name, int *rval)
 {
   BEGIN_WRAP
@@ -54,11 +51,8 @@ CvStatus HOGDescriptor_New(HOGDescriptor *rval)
   *rval = {new cv::HOGDescriptor()};
   END_WRAP
 }
-void HOGDescriptor_Close(HOGDescriptor *hog)
-{
-  delete hog->ptr;
-  hog->ptr = nullptr;
-}
+void HOGDescriptor_Close(HOGDescriptor *hog){CVD_FREE(hog)}
+
 CvStatus HOGDescriptor_Load(HOGDescriptor hog, const char *name, int *rval)
 {
   BEGIN_WRAP
@@ -138,11 +132,8 @@ CvStatus QRCodeDetector_Decode(QRCodeDetector qr, Mat input, VecPoint inputPoint
   *rval = {new std::vector<char>(info.begin(), info.end())};
   END_WRAP
 }
-void QRCodeDetector_Close(QRCodeDetector *qr)
-{
-  delete CVD_TYPECAST_CPP(QRCodeDetector, qr);
-  qr->ptr = nullptr;
-}
+void QRCodeDetector_Close(QRCodeDetector *qr){CVD_FREE(qr)}
+
 CvStatus QRCodeDetector_DetectMulti(QRCodeDetector qr, Mat input, VecPoint points, bool *rval)
 {
   BEGIN_WRAP

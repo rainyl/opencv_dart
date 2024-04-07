@@ -6224,6 +6224,22 @@ class CvNative {
   late final _Mat_AddI32 =
       _Mat_AddI32Ptr.asFunction<CvStatus Function(Mat, int)>();
 
+  CvStatus Mat_AddSChar(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_AddSChar(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_AddSCharPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, ffi.Int8)>>(
+          'Mat_AddSChar');
+  late final _Mat_AddSChar =
+      _Mat_AddSCharPtr.asFunction<CvStatus Function(Mat, int)>();
+
   CvStatus Mat_AddUChar(
     Mat m,
     int val,
@@ -6584,6 +6600,20 @@ class CvNative {
   late final _Mat_Close =
       _Mat_ClosePtr.asFunction<void Function(ffi.Pointer<Mat>)>();
 
+  void Mat_CloseVoid(
+    ffi.Pointer<ffi.Void> m,
+  ) {
+    return _Mat_CloseVoid(
+      m,
+    );
+  }
+
+  late final _Mat_CloseVoidPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
+          'Mat_CloseVoid');
+  late final _Mat_CloseVoid =
+      _Mat_CloseVoidPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
   CvStatus Mat_Cols(
     Mat m,
     ffi.Pointer<ffi.Int> rval,
@@ -6844,6 +6874,26 @@ class CvNative {
   late final _Mat_Data =
       _Mat_DataPtr.asFunction<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>();
 
+  CvStatus Mat_DataPtr(
+    Mat m,
+    ffi.Pointer<ffi.Pointer<uchar>> data,
+    ffi.Pointer<ffi.Int> length,
+  ) {
+    return _Mat_DataPtr1(
+      m,
+      data,
+      length,
+    );
+  }
+
+  late final _Mat_DataPtrPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<ffi.Pointer<uchar>>,
+              ffi.Pointer<ffi.Int>)>>('Mat_DataPtr');
+  late final _Mat_DataPtr1 = _Mat_DataPtrPtr.asFunction<
+      CvStatus Function(
+          Mat, ffi.Pointer<ffi.Pointer<uchar>>, ffi.Pointer<ffi.Int>)>();
+
   CvStatus Mat_Determinant(
     Mat m,
     ffi.Pointer<ffi.Double> rval,
@@ -6925,6 +6975,22 @@ class CvNative {
           'Mat_DivideI32');
   late final _Mat_DivideI32 =
       _Mat_DivideI32Ptr.asFunction<CvStatus Function(Mat, int)>();
+
+  CvStatus Mat_DivideSChar(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_DivideSChar(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_DivideSCharPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, ffi.Int8)>>(
+          'Mat_DivideSChar');
+  late final _Mat_DivideSChar =
+      _Mat_DivideSCharPtr.asFunction<CvStatus Function(Mat, int)>();
 
   CvStatus Mat_DivideUChar(
     Mat m,
@@ -8397,6 +8463,22 @@ class CvNative {
   late final _Mat_MultiplyMatrix = _Mat_MultiplyMatrixPtr.asFunction<
       CvStatus Function(Mat, Mat, ffi.Pointer<Mat>)>();
 
+  CvStatus Mat_MultiplySChar(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_MultiplySChar(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_MultiplySCharPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, ffi.Int8)>>(
+          'Mat_MultiplySChar');
+  late final _Mat_MultiplySChar =
+      _Mat_MultiplySCharPtr.asFunction<CvStatus Function(Mat, int)>();
+
   CvStatus Mat_MultiplyUChar(
     Mat m,
     int val,
@@ -8878,6 +8960,20 @@ class CvNative {
       'Mat_Region');
   late final _Mat_Region = _Mat_RegionPtr.asFunction<
       CvStatus Function(Mat, Rect, ffi.Pointer<Mat>)>();
+
+  CvStatus Mat_Release(
+    ffi.Pointer<Mat> m,
+  ) {
+    return _Mat_Release(
+      m,
+    );
+  }
+
+  late final _Mat_ReleasePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<Mat>)>>(
+          'Mat_Release');
+  late final _Mat_Release =
+      _Mat_ReleasePtr.asFunction<CvStatus Function(ffi.Pointer<Mat>)>();
 
   CvStatus Mat_Repeat(
     Mat src,
@@ -9957,6 +10053,22 @@ class CvNative {
           'Mat_SubtractI32');
   late final _Mat_SubtractI32 =
       _Mat_SubtractI32Ptr.asFunction<CvStatus Function(Mat, int)>();
+
+  CvStatus Mat_SubtractSChar(
+    Mat m,
+    int val,
+  ) {
+    return _Mat_SubtractSChar(
+      m,
+      val,
+    );
+  }
+
+  late final _Mat_SubtractSCharPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, ffi.Int8)>>(
+          'Mat_SubtractSChar');
+  late final _Mat_SubtractSChar =
+      _Mat_SubtractSCharPtr.asFunction<CvStatus Function(Mat, int)>();
 
   CvStatus Mat_SubtractUChar(
     Mat m,
@@ -16229,6 +16341,15 @@ class CvNative {
           'registerErrorCallback');
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
+
+  late final addresses = _SymbolAddresses(this);
+}
+
+class _SymbolAddresses {
+  final CvNative _library;
+  _SymbolAddresses(this._library);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
+      get Mat_CloseVoid => _library._Mat_CloseVoidPtr;
 }
 
 final class AKAZE extends ffi.Struct {
