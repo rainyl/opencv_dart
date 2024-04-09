@@ -1,5 +1,5 @@
 @Tags(["no-local-files"])
-
+@Skip("DNN models no included in github repo, so skip")
 import 'dart:io';
 
 import 'package:test/test.dart';
