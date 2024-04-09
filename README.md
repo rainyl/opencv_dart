@@ -5,21 +5,30 @@ OpenCV Bindings for Dart Language.
 <p align="center">
 <a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>
 <a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a>
-<a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart
-" alt="License: Apache-2.0"></a>
+<a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
 </p>
 
 **!!!This package is experimental and APIs may change in the future!!!**
 
 *WIP, contributions are welcome!*
 
-| Platform | Supported          | Tested                  | Prebuilt Binaries              |
-| -------- | ------------------ | ----------------------- | ------------------------------ |
-| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :white_check_mark: | :ballot_box_with_check: | arm64, x64(Simulator)          |
-| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
-| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
-| macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
+- [opencv\_dart](#opencv_dart)
+  - [BREAKING CHANGES](#breaking-changes)
+  - [IMPORTANT](#important)
+  - [Example](#example)
+  - [Supported Platforms](#supported-platforms)
+  - [Status](#status)
+    - [Core Modules](#core-modules)
+    - [Contrib Modules](#contrib-modules)
+    - [Usage](#usage)
+    - [TODO](#todo)
+  - [For Developers](#for-developers)
+    - [How to compile](#how-to-compile)
+  - [Acknowledgement](#acknowledgement)
+  - [Star History](#star-history)
+  - [License](#license)
+
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
 ## BREAKING CHANGES
 
@@ -70,6 +79,16 @@ to download prebuilt binaries.
 ## Example
 
 ![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
+
+## Supported Platforms
+
+| Platform | Supported          | Tested                  | Prebuilt Binaries              |
+| -------- | ------------------ | ----------------------- | ------------------------------ |
+| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :white_check_mark: | :ballot_box_with_check: | arm64, x64(Simulator)          |
+| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
+| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
+| macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
 
 ## Status
 
@@ -138,7 +157,7 @@ More examples are on the way...
 - [x] ~~support for iOS, macOS~~
 - [ ] add more examples
 - [ ] documentation
-- [x] modify C wrapper to catch exceptions
+- [x] ~~modify C wrapper to catch exceptions~~
 - [ ] Native Assets
 - [ ] async?
 - [ ] more/full test coverage
