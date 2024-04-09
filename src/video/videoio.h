@@ -29,6 +29,8 @@ CVD_TYPEDEF_PTR(VideoWriter)
 
 // VideoCapture
 CvStatus VideoCapture_New(VideoCapture *rval);
+CvStatus VideoCapture_NewFromFile(const char *filename, int apiPreference, VideoCapture *rval);
+CvStatus VideoCapture_NewFromIndex(int index, int apiPreference, VideoCapture *rval);
 void     VideoCapture_Close(VideoCapture *self);
 CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval);
 CvStatus VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval);

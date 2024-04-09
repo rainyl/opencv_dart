@@ -28,6 +28,7 @@ CMakeUserPresets*
 *.framework
 .clang-format
 CMakePresets.json
+gh-md-toc
 
 # Files and directories created by pub
 .dart_tool/

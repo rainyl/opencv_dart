@@ -5,7 +5,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/exception.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
@@ -23,18 +22,15 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     return VideoCapture._(p);
   }
 
+  /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
   factory VideoCapture.create(String filename, {int apiPreference = CAP_ANY}) {
     return using<VideoCapture>((arena) {
       final p = calloc<cvg.VideoCapture>();
-      cvRun(() => CFFI.VideoCapture_New(p));
       final cname = filename.toNativeUtf8(allocator: arena);
-      final ret = arena<ffi.Bool>();
-      cvRun(() => CFFI.VideoCapture_OpenWithAPI(p.ref, cname.cast(), apiPreference, ret));
-      if (ret.value) {
-        return VideoCapture._(p);
-      } else {
-        throw CvException(-1, msg: "Failed open $filename");
-      }
+      cvRun(() => CFFI.VideoCapture_NewFromFile(cname.cast(), apiPreference, p));
+      return VideoCapture._(p);
     });
   }
 
@@ -45,14 +41,8 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   factory VideoCapture.fromDevice(int device, {int apiPreference = CAP_ANY}) {
     return using<VideoCapture>((arena) {
       final p = calloc<cvg.VideoCapture>();
-      cvRun(() => CFFI.VideoCapture_New(p));
-      final ret = arena<ffi.Bool>();
-      cvRun(() => CFFI.VideoCapture_OpenDeviceWithAPI(p.ref, device, apiPreference, ret));
-      if (ret.value) {
-        return VideoCapture._(p);
-      } else {
-        throw CvException(-1, msg: "Open device $device Failed!");
-      }
+      cvRun(() => CFFI.VideoCapture_NewFromIndex(device, apiPreference, p));
+      return VideoCapture._(p);
     });
   }
 
@@ -60,7 +50,10 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   cvg.VideoCapture get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(CFFI.addresses.VideoCapture_Close);
 
-  double getProp(int propId) {
+  /// Returns the specified [VideoCapture] property.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
+  double get(int propId) {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Double>();
       cvRun(() => CFFI.VideoCapture_Get(ref, propId, p));
@@ -68,10 +61,14 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     });
   }
 
-  void setProp(int prop, double value) {
+  void set(int prop, double value) {
     cvRun(() => CFFI.VideoCapture_Set(ref, prop, value));
   }
 
+  /// Returns true if video capturing has been initialized already.
+  ///
+  /// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns true.
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
   bool get isOpened {
     return cvRunArena<bool>((arena) {
       final p = arena<ffi.Int>();
@@ -81,6 +78,10 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 
   // String getBackendName()=>CFFI.videocapture
+
+  /// Grabs the next frame from video file or capturing device.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
   void grab({int skip = 0}) {
     cvRun(() => CFFI.VideoCapture_Grab(ref, skip));
   }
@@ -94,6 +95,11 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     });
   }
 
+  /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters.
+  ///
+  /// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
   bool open(String filename, {int apiPreference = CAP_ANY}) {
     return using<bool>((arena) {
       final cname = filename.toNativeUtf8(allocator: arena);
@@ -103,13 +109,24 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     });
   }
 
+  /// Opens a camera for video capturing with API Preference and parameters.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a10867868137c2d142aac30a0648d00fe
+  bool openIndex(int index, {int apiPreference = CAP_ANY}) {
+    return using<bool>((arena) {
+      final success = arena<ffi.Bool>();
+      cvRun(() => CFFI.VideoCapture_OpenDeviceWithAPI(ref, index, apiPreference, success));
+      return success.value;
+    });
+  }
+
   String get codec {
-    final hexes = [0xff, 0xff00, 0xff0000, 0xff000000];
-    final res = List.generate(hexes.length, (i) => getProp(CAP_PROP_FOURCC).toInt() & hexes[i] >> i * 8);
+    final cc = get(CAP_PROP_FOURCC).toInt();
+    final res = [cc & 0XFF, (cc & 0XFF00) >> 8, (cc & 0XFF0000) >> 16, (cc & 0XFF000000) >> 24];
     return ascii.decode(res);
   }
 
-  double toCodec(String codec) {
+  static double toCodec(String codec) {
     final codes = ascii.encode(codec);
     if (codes.length != 4) return -1;
     final c1 = codes[0], c2 = codes[1], c3 = codes[2], c4 = codes[3];
@@ -160,17 +177,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     using((arena) {
       final name = filename.toNativeUtf8(allocator: arena);
       final codec_ = codec.toNativeUtf8(allocator: arena);
-      cvRun(
-        () => CFFI.VideoWriter_Open(
-          ref,
-          name.cast(),
-          codec_.cast(),
-          fps,
-          frameSize.$1,
-          frameSize.$2,
-          isColor,
-        ),
-      );
+      cvRun(() =>
+          CFFI.VideoWriter_Open(ref, name.cast(), codec_.cast(), fps, frameSize.$1, frameSize.$2, isColor));
     });
   }
 

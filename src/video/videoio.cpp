@@ -15,6 +15,18 @@ CvStatus VideoCapture_New(VideoCapture *rval)
   *rval = {new cv::VideoCapture()};
   END_WRAP
 }
+CvStatus VideoCapture_NewFromFile(const char *filename, int apiPreference, VideoCapture *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::VideoCapture(filename, apiPreference)};
+  END_WRAP
+}
+CvStatus VideoCapture_NewFromIndex(int index, int apiPreference, VideoCapture *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::VideoCapture(index, apiPreference)};
+  END_WRAP
+}
 void VideoCapture_Close(VideoCapture *self){CVD_FREE(self)}
 
 CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval)

@@ -378,6 +378,8 @@ void main() async {
     expect(img.isEmpty, false);
     final m = cv.moments(img);
     expect(m.m00, greaterThan(0));
+    final m1 = cv.moments(img);
+    expect(m, m1);
   });
 
   // test pyrDown

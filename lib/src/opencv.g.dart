@@ -15450,6 +15450,46 @@ class CvNative {
   late final _VideoCapture_New = _VideoCapture_NewPtr.asFunction<
       CvStatus Function(ffi.Pointer<VideoCapture>)>();
 
+  CvStatus VideoCapture_NewFromFile(
+    ffi.Pointer<ffi.Char> filename,
+    int apiPreference,
+    ffi.Pointer<VideoCapture> rval,
+  ) {
+    return _VideoCapture_NewFromFile(
+      filename,
+      apiPreference,
+      rval,
+    );
+  }
+
+  late final _VideoCapture_NewFromFilePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int,
+              ffi.Pointer<VideoCapture>)>>('VideoCapture_NewFromFile');
+  late final _VideoCapture_NewFromFile =
+      _VideoCapture_NewFromFilePtr.asFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>, int, ffi.Pointer<VideoCapture>)>();
+
+  CvStatus VideoCapture_NewFromIndex(
+    int index,
+    int apiPreference,
+    ffi.Pointer<VideoCapture> rval,
+  ) {
+    return _VideoCapture_NewFromIndex(
+      index,
+      apiPreference,
+      rval,
+    );
+  }
+
+  late final _VideoCapture_NewFromIndexPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Int, ffi.Int,
+              ffi.Pointer<VideoCapture>)>>('VideoCapture_NewFromIndex');
+  late final _VideoCapture_NewFromIndex = _VideoCapture_NewFromIndexPtr
+      .asFunction<CvStatus Function(int, int, ffi.Pointer<VideoCapture>)>();
+
   CvStatus VideoCapture_Open(
     VideoCapture self,
     ffi.Pointer<ffi.Char> uri,
