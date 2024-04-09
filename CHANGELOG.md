@@ -1,3 +1,10 @@
+## 1.0.0+1
+
+- Replace Finalizer with ffi.NativeFinalizer
+- update Mat.toList(), Mat.toList3d<T, P>(), remove Mat.toList4D()
+- update Mat.data, now return a view of data pointer, same as v0.6.*
+- fix memory leak caused by Finalizer, now GC will also be triggered correctly in pure dart
+
 ## 1.0.0
 
 - Refactor nearly all APIs, this version is NOT compitable with previous versions!.

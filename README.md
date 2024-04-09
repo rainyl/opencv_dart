@@ -2,6 +2,13 @@
 
 OpenCV Bindings for Dart Language.
 
+<p align="center">
+<a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>
+<a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a>
+<a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart
+" alt="License: Apache-2.0"></a>
+</p>
+
 **!!!This package is experimental and APIs may change in the future!!!**
 
 *WIP, contributions are welcome!*
@@ -34,11 +41,11 @@ final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
 cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
 ```
 
-The New APIs will be published in `v1.0.0`, if you are still using the old APIs and
+The new APIs have been published in `v1.0.0`, if you are still using the old ones and
 do not want to upgrade, you can use the old versions less than `v1.0.0`.
 
 The OLD APIs won't get any updates from maintainer since `v0.6.7`,
-if you really need to use the old APIs, you can open PRs.
+if you really need updates, open PRs and I will merge it to `v0.6` branch.
 
 ## IMPORTANT
 
@@ -134,6 +141,7 @@ More examples are on the way...
 - [x] modify C wrapper to catch exceptions
 - [ ] Native Assets
 - [ ] async?
+- [ ] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
 ## For Developers
