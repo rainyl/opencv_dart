@@ -25,3 +25,13 @@ jobs:
           $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
           flutter pub get
           flutter test -x no-local-files
+      - name: setup coverage
+        run: |
+          dart pub global activate coverage
+          dart pub global run coverage:test_with_coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rainyl/opencv_dart
+          file: ./coverage/lcov.info
