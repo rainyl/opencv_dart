@@ -27,6 +27,7 @@ jobs:
           flutter test -x no-local-files
       - name: setup coverage
         run: |
+          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage
       - name: Upload coverage reports to Codecov
