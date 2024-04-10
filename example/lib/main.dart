@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,6 +55,24 @@ class _MyAppState extends State<MyApp> {
           alignment: Alignment.center,
           child: Column(
             children: [
+              ElevatedButton(
+                onPressed: () async {
+                  final picker = ImagePicker();
+                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  if (img != null) {
+                    final path = img.path;
+                    final mat = cv.imread(path);
+                    print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                    final bytes = cv.imencode(".png", mat);
+                    // heavy computation
+                    final (gray, blur) = await heavyTask(bytes);
+                    setState(() {
+                      images = [bytes, gray, blur];
+                    });
+                  }
+                },
+                child: const Text("Pick Image"),
+              ),
               ElevatedButton(
                 onPressed: () async {
                   final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
