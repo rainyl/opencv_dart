@@ -194,7 +194,8 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     FastFeatureDetectorType type = FastFeatureDetectorType.TYPE_9_16,
   }) {
     final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(() => CFFI.FastFeatureDetector_CreateWithParams(threshold, nonmaxSuppression, type.value, p));
+    cvRun(() =>
+        CFFI.FastFeatureDetector_CreateWithParams(threshold, nonmaxSuppression, type.value, p));
     return FastFeatureDetector._(p);
   }
 
@@ -210,7 +211,8 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     });
   }
 
-  static final finalizer = OcvFinalizer<cvg.FastFeatureDetectorPtr>(CFFI.addresses.FastFeatureDetector_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.FastFeatureDetectorPtr>(CFFI.addresses.FastFeatureDetector_Close);
   @override
   List<int> get props => [ptr.address];
 
@@ -381,8 +383,8 @@ class ORB extends CvStruct<cvg.ORB> {
     int fastThreshold = 20,
   }) {
     final p = calloc<cvg.ORB>();
-    cvRun(() => CFFI.ORB_CreateWithParams(nFeatures, scaleFactor, nLevels, edgeThreshold, firstLevel, WTA_K,
-        scoreType.value, patchSize, fastThreshold, p));
+    cvRun(() => CFFI.ORB_CreateWithParams(nFeatures, scaleFactor, nLevels, edgeThreshold,
+        firstLevel, WTA_K, scoreType.value, patchSize, fastThreshold, p));
     return ORB._(p);
   }
 
@@ -421,7 +423,8 @@ class ORB extends CvStruct<cvg.ORB> {
 }
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr) : super.fromPointer(ptr) {
+  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr)
+      : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
 
@@ -476,7 +479,8 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     return SimpleBlobDetectorParams._(p);
   }
 
-  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
+  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) =>
+      SimpleBlobDetectorParams(
         blobColor: r.blobColor,
         filterByArea: r.filterByArea,
         filterByCircularity: r.filterByCircularity,
@@ -654,7 +658,8 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
     });
   }
 
-  static final finalizer = OcvFinalizer<cvg.SimpleBlobDetectorPtr>(CFFI.addresses.SimpleBlobDetector_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.SimpleBlobDetectorPtr>(CFFI.addresses.SimpleBlobDetector_Close);
   @override
   List<int> get props => [ptr.address];
 
@@ -744,7 +749,8 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     });
   }
 
-  static final finalizer = OcvFinalizer<cvg.FlannBasedMatcherPtr>(CFFI.addresses.FlannBasedMatcher_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.FlannBasedMatcherPtr>(CFFI.addresses.FlannBasedMatcher_Close);
   @override
   List<int> get props => [ptr.address];
 

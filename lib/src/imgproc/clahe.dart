@@ -30,10 +30,11 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     calloc.free(size);
     return CLAHE._(p);
   }
-/// Apply CLAHE.
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html#a4e92e0e427de21be8d1fae8dcd862c5e
+
+  /// Apply CLAHE.
+  ///
+  /// For further details, please see:
+  /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html#a4e92e0e427de21be8d1fae8dcd862c5e
   Mat apply(Mat src, {Mat? dst}) {
     dst ??= Mat.empty();
     cvRun(() => CFFI.CLAHE_Apply(ref, src.ref, dst!.ref));

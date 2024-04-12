@@ -12,7 +12,8 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   KeyPoint._(ffi.Pointer<cvg.KeyPoint> ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
-  factory KeyPoint(double x, double y, double size, double angle, double response, int octave, int classID) {
+  factory KeyPoint(
+      double x, double y, double size, double angle, double response, int octave, int classID) {
     final ptr = calloc<cvg.KeyPoint>()
       ..ref.x = x
       ..ref.y = y

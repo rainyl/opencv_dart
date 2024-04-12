@@ -167,7 +167,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromOnnx(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_ReadNetFromONNX(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      cvRun(
+          () => CFFI.Net_ReadNetFromONNX(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
       final net = Net._(p);
       return net;
     });
@@ -221,7 +222,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTFLite(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_ReadNetFromTFLite(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      cvRun(() =>
+          CFFI.Net_ReadNetFromTFLite(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
       final net = Net._(p);
       return net;
     });
@@ -328,13 +330,15 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/3.4/db/d30/classcv_1_1dnn_1_1Net.html#a7f767df11386d39374db49cd8df8f59e
-  void setPreferableBackend(int backendId) => cvRun(() => CFFI.Net_SetPreferableBackend(ref, backendId));
+  void setPreferableBackend(int backendId) =>
+      cvRun(() => CFFI.Net_SetPreferableBackend(ref, backendId));
 
   /// SetPreferableTarget ask network to make computations on specific target device.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/3.4/db/d30/classcv_1_1dnn_1_1Net.html#a9dddbefbc7f3defbe3eeb5dc3d3483f4
-  void setPreferableTarget(int targetId) => cvRun(() => CFFI.Net_SetPreferableTarget(ref, targetId));
+  void setPreferableTarget(int targetId) =>
+      cvRun(() => CFFI.Net_SetPreferableTarget(ref, targetId));
 
   /// GetLayer returns pointer to layer with specified id from the network.
   ///

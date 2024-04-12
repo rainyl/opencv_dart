@@ -33,8 +33,14 @@ void main() async {
     expect(vt.size, [2, 2]);
 
     expect(checkFunc([w.at<double>(0, 0), w.at<double>(1, 0)], resultW), true);
-    expect(checkFunc([u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)], resultU), true);
-    expect(checkFunc([vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)], resultVt),
+    expect(
+        checkFunc([u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)],
+            resultU),
+        true);
+    expect(
+        checkFunc(
+            [vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)],
+            resultVt),
         true);
   });
 }

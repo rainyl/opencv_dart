@@ -51,15 +51,16 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     return using<VecRect>((arena) {
       final ret = arena<cvg.VecRect>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, scaleFactor, minNeighbors,
-          flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref, ret));
+      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, scaleFactor,
+          minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref, ret));
       return VecRect.fromVec(ret.ref);
     });
   }
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
   @override
   List<int> get props => [ptr.address];
@@ -178,7 +179,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final points = VecPoint.fromList([]);
     final s = cvRunArena<String>((arena) {
       final v = arena<cvg.VecChar>();
-      cvRun(() => CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points.ptr, straightCode!.ptr, v));
+      cvRun(() =>
+          CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points.ptr, straightCode!.ptr, v));
       if (v == ffi.nullptr) return "";
       return VecChar.fromVec(v.ref).toString();
     });
@@ -211,7 +213,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       points ??= VecPoint();
       final ret = VecChar();
       straightCode ??= Mat.empty();
-      cvRun(() => CFFI.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
+      cvRun(
+          () => CFFI.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
       return (ret.toString(), points, straightCode!);
     });
   }

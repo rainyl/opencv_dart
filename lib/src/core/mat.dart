@@ -68,7 +68,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  factory Mat.fromScalar(Scalar s, MatType type, {int rows = 1, int cols = 1}) {
+  factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.toInt32(), p));
     final mat = Mat._(p);
@@ -617,7 +617,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "addU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
+        "addU8() only for CV_8U");
     if (inplace) {
       cvRun(() => CFFI.Mat_AddUChar(ref, val));
       return this;
@@ -629,7 +630,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "addI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
+        "addI8() only for CV_8S");
     if (inplace) {
       cvRun(() => CFFI.Mat_AddSChar(ref, val));
       return this;
@@ -641,8 +643,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX, "addI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
+        "addI32() only for CV_32S");
     if (inplace) {
       cvRun(() => CFFI.Mat_AddI32(ref, val));
       return this;
@@ -719,8 +721,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractU8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "subtractU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
+        "subtractU8() only for CV_8U");
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractUChar(ref, val));
       return this;
@@ -732,8 +734,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "subtractI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
+        "subtractI8() only for CV_8S");
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractSChar(ref, val));
       return this;
@@ -823,8 +825,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyU8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "multiplyU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
+        "multiplyU8() only for CV_8U");
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyUChar(ref, val));
       return this;
@@ -836,8 +838,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI8(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "multiplyI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
+        "multiplyI8() only for CV_8S");
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplySChar(ref, val));
       return this;
@@ -927,7 +929,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX, "divideU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
+        "divideU8() only for CV_8U");
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideUChar(ref, val));
       return this;
@@ -939,7 +942,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX, "divideI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
+        "divideI8() only for CV_8S");
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideSChar(ref, val));
       return this;
@@ -1075,7 +1079,8 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Calculates a square root of array elements.
   Mat sqrt() {
-    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F, "sqrt() only for CV_32F or CV_64F");
+    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F,
+        "sqrt() only for CV_32F or CV_64F");
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_Sqrt(ref, p));
     final dst = Mat._(p);
@@ -1132,7 +1137,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   List<List<List<P>>> toList3D<T extends CvVec, P extends num>() {
     assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val as List<P>));
+    return List.generate(
+        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val as List<P>));
   }
 
   /// Get the data pointer of the Mat, this getter will reture a view of native

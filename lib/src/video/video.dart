@@ -323,8 +323,10 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     });
   }
 
-  void init(int dynamParams, int measureParams, {int controlParams = 0, int type = MatType.CV_32F}) {
-    cvRun(() => CFFI.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
+  void init(int dynamParams, int measureParams,
+      {int controlParams = 0, int type = MatType.CV_32F}) {
+    cvRun(() =>
+        CFFI.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
   }
 
   @override

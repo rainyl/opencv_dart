@@ -73,10 +73,12 @@ const int BLOCK_MEAN_HASH_MODE_1 = 1;
 
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
 class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
-  BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0]) : super.fromPointer(ptr) {
+  BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0])
+      : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
-  static final finalizer = OcvFinalizer<ffi.Pointer<cvg.BlockMeanHash>>(CFFI.addresses.BlockMeanHash_Close);
+  static final finalizer =
+      OcvFinalizer<ffi.Pointer<cvg.BlockMeanHash>>(CFFI.addresses.BlockMeanHash_Close);
 
   factory BlockMeanHash({int mode = BLOCK_MEAN_HASH_MODE_0}) {
     final p = calloc<cvg.BlockMeanHash>();
@@ -223,7 +225,8 @@ class NewRadialVarianceHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.radialVarianceHashCompare(hashOne.ref, hashTwo.ref, sigma, numOfAngleLine, p));
+      cvRun(
+          () => CFFI.radialVarianceHashCompare(hashOne.ref, hashTwo.ref, sigma, numOfAngleLine, p));
       return p.value;
     });
   }

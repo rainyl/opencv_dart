@@ -57,7 +57,8 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => CFFI.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(() => CFFI.Fisheye_UndistortPoints(
+        distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 
@@ -211,7 +212,8 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() => CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(() =>
+      CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -337,8 +339,8 @@ Mat drawChessboardCorners(
   bool patternWasFound,
 ) {
   return cvRunArena<Mat>((arena) {
-    cvRun(() =>
-        CFFI.DrawChessboardCorners(image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
+    cvRun(() => CFFI.DrawChessboardCorners(
+        image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
     return image;
   });
 }

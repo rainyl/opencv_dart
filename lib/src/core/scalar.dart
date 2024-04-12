@@ -45,7 +45,8 @@ class Scalar extends CvStruct<cvg.Scalar> {
   static final Scalar black = Scalar.fromRgb(0, 0, 0);
   static final Scalar white = Scalar.fromRgb(255, 255, 255);
   static final Scalar zeros = Scalar.fromRgb(0, 0, 0);
-  static final Scalar max = Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
+  static final Scalar max =
+      Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
 }
 
 extension RecordScalarExtension on (double val1, double val2, double val3, double val4) {

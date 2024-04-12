@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
@@ -184,7 +186,8 @@ void main() async {
     final mean = cv.Mat.empty();
     final eigenvectors = cv.Mat.empty();
     final eigenvalues = cv.Mat.empty();
-    cv.PCACompute(src, mean, eigenvalues: eigenvalues, eigenvectors: eigenvectors, maxComponents: 2);
+    cv.PCACompute(src, mean,
+        eigenvalues: eigenvalues, eigenvectors: eigenvectors, maxComponents: 2);
     expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
     expect(eigenvectors.rows, equals(2));
   });
@@ -260,8 +263,8 @@ void main() async {
 
   test('cv.inRange', () {
     final mat1 = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
-    final lb = cv.Mat.fromScalar(cv.Scalar(20, 100, 100, 0), cv.MatType.CV_8UC1);
-    final ub = cv.Mat.fromScalar(cv.Scalar(20, 100, 100, 0), cv.MatType.CV_8UC1);
+    final lb = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
+    final ub = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
     final dst = cv.inRange(mat1, lb, ub);
     expect(dst.isEmpty, equals(false));
   });
@@ -299,7 +302,8 @@ void main() async {
     final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].cvd;
     final bestLabels = cv.Mat.empty();
     const criteria = (cv.TERM_COUNT, 10, 1.0);
-    final (_, _, centers) = cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
+    final (_, _, centers) =
+        cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
     expect(centers.isEmpty, equals(false));
   });
 
@@ -365,7 +369,7 @@ void main() async {
   });
 
   test('cv.mixChannels', () {
-    final bgra = cv.Mat.fromScalar(cv.Scalar(255, 0, 0, 255), cv.MatType.CV_8UC4, rows: 100, cols: 100);
+    final bgra = cv.Mat.fromScalar(100, 100, cv.MatType.CV_8UC4, cv.Scalar(255, 0, 0, 255));
     final bgr = cv.Mat.create(cols: bgra.cols, rows: bgra.rows, type: cv.MatType.CV_8UC3);
     final alpha = cv.Mat.create(cols: bgra.cols, rows: bgra.rows, type: cv.MatType.CV_8UC1);
     final out = [bgr, alpha].cvd;
@@ -445,7 +449,8 @@ void main() async {
 
     final (rootsCount, roots) = cv.solveCubic(coeffs);
     expect(rootsCount, equals(3));
-    expect((roots.at<double>(0, 0), roots.at<double>(0, 1), roots.at<double>(0, 2)), (-3.0, 2.0, -0.5));
+    expect((roots.at<double>(0, 0), roots.at<double>(0, 1), roots.at<double>(0, 2)),
+        (-3.0, 2.0, -0.5));
   });
 
   test('cv.solvePoly', () {
@@ -600,7 +605,7 @@ void main() async {
   });
 
   test('cv.pow', () {
-    final src = cv.Mat.fromScalar(cv.Scalar.all(2), cv.MatType.CV_8UC3, rows: 512, cols: 512);
+    final src = cv.Mat.fromScalar(512, 512, cv.MatType.CV_8UC3, cv.Scalar.all(2));
     final dst = cv.pow(src, 3);
     expect(dst.at<int>(0, 0), 8);
   });
@@ -613,8 +618,8 @@ void main() async {
   });
 
   test('cv.phase', () {
-    final x = cv.Mat.fromScalar(cv.Scalar(1.1, 2.2, 3.3, 4.4), cv.MatType.CV_32FC1);
-    final y = cv.Mat.fromScalar(cv.Scalar(5.5, 6.6, 7.7, 8.8), cv.MatType.CV_32FC1);
+    final x = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC1, cv.Scalar(1.1, 2.2, 3.3, 4.4));
+    final y = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC1, cv.Scalar(5.5, 6.6, 7.7, 8.8));
     final angle = cv.phase(x, y);
     expect(angle.isEmpty, false);
     expect(angle.rows, equals(x.rows));
@@ -655,7 +660,8 @@ void main() async {
   test(
     'cv.setNumThreads',
     onPlatform: {
-      "mac-os": const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150")
+      "mac-os": const Skip(
+          "seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150")
     },
     () {
       cv.setNumThreads(2);

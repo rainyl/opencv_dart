@@ -33,7 +33,8 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double exposureWeight = 0.0,
   }) {
     final p = calloc<cvg.MergeMertens>();
-    cvRun(() => CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p));
+    cvRun(() =>
+        CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p));
     return MergeMertens._(p);
   }
 
@@ -169,7 +170,8 @@ Mat textureFlattening(
   int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  cvRun(() => CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+  cvRun(() =>
+      CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
   return dst;
 }
 

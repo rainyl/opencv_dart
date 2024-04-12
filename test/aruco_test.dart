@@ -128,8 +128,8 @@ void main() async {
     expect(params.cornerRefinementMinAccuracy, closeTo(cornerRefinementMinAccuracy, 1e-4));
     expect(params.markerBorderBits, markerBorderBits);
     expect(params.perspectiveRemovePixelPerCell, perspectiveRemovePixelPerCell);
-    expect(
-        params.perspectiveRemoveIgnoredMarginPerCell, closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4));
+    expect(params.perspectiveRemoveIgnoredMarginPerCell,
+        closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4));
     expect(params.maxErroneousBitsInBorderRate, closeTo(maxErroneousBitsInBorderRate, 1e-4));
     expect(params.minOtsuStdDev, closeTo(minOtsuStdDev, 1e-4));
     expect(params.errorCorrectionRate, closeTo(errorCorrectionRate, 1e-4));

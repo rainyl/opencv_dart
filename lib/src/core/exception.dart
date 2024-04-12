@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:ffi' as ffi;
 import 'dart:io';
 

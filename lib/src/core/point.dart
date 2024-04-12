@@ -78,7 +78,8 @@ class Point3f extends CvStruct<cvg.Point3f> {
   @override
   cvg.Point3f get ref => ptr.ref;
   @override
-  String toString() => 'Point3f(${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)}, ${z.toStringAsFixed(3)})';
+  String toString() =>
+      'Point3f(${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)}, ${z.toStringAsFixed(3)})';
   @override
   List<double> get props => [x, y, z];
 }

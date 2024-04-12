@@ -43,7 +43,8 @@ class Window {
   double getWindowProperty(WindowPropertyFlags flag) {
     return cvRunArena<double>((arena) {
       final result = arena<ffi.Double>();
-      cvRun(() => CFFI.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
+      cvRun(() =>
+          CFFI.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
       return result.value;
     });
   }
@@ -54,7 +55,8 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
   void setWindowProperty(WindowPropertyFlags flag, double value) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
+      cvRun(() =>
+          CFFI.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
     });
   }
 
@@ -128,7 +130,8 @@ class Window {
   Rect selectROI(Mat img) {
     return cvRunArena<Rect>((arena) {
       final result = arena<cvg.Rect>();
-      cvRun(() => CFFI.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+      cvRun(
+          () => CFFI.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
       return Rect.fromNative(result.ref);
     });
   }
@@ -145,7 +148,8 @@ class Window {
   VecRect selectROIs(Mat img) {
     return cvRunArena<VecRect>((arena) {
       final result = arena<cvg.VecRect>();
-      cvRun(() => CFFI.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+      cvRun(() =>
+          CFFI.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
       return VecRect.fromVec(result.ref);
     });
   }

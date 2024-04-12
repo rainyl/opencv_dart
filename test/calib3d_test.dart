@@ -236,7 +236,8 @@ void main() async {
     expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
 
     final dst = cv.undistort(img, cameraMatrix, distCoeffs);
-    final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
+    final target =
+        cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
     final xor = cv.bitwiseXOR(dst, target);
     final sum = xor.sum();
     expect(sum.val1, lessThan(img.rows * img.cols * 0.005));

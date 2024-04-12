@@ -14,7 +14,8 @@ void main() async {
     expect(val, -1);
     expect(win.isOpen, true);
 
-    win.setWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN, cv.WindowFlag.WINDOW_FULLSCREEN.value);
+    win.setWindowProperty(
+        cv.WindowPropertyFlags.WND_PROP_FULLSCREEN, cv.WindowFlag.WINDOW_FULLSCREEN.value);
     expect(win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
         cv.WindowFlag.WINDOW_FULLSCREEN.value);
     win.moveWindow(100, 100);

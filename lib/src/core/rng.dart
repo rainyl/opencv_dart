@@ -29,9 +29,10 @@ class Rng extends CvStruct<cvg.RNG> {
 
   static final finalizer = OcvFinalizer<cvg.RNGPtr>(CFFI.addresses.Rng_Close);
 
-  /// Fills arrays with random numbers. 
+  /// Fills arrays with random numbers.
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad26f2b09d9868cf108e84c9814aa682d
-  Mat fill(Mat mat, int distType, double a, double b, {bool saturateRange = false, bool inplace = false}) {
+  Mat fill(Mat mat, int distType, double a, double b,
+      {bool saturateRange = false, bool inplace = false}) {
     if (inplace) {
       cvRun(() => CFFI.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
       return mat;

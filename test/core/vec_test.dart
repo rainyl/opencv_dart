@@ -105,8 +105,8 @@ void main() {
   });
 
   test('VecVecDMatch', () {
-    final points = List.generate(
-        10, (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())));
+    final points = List.generate(10,
+        (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())));
     final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);

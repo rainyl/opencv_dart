@@ -152,7 +152,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     return VideoWriter._(p);
   }
 
-  factory VideoWriter.open(String filename, String codec, double fps, Size frameSize, {bool isColor = true}) {
+  factory VideoWriter.open(String filename, String codec, double fps, Size frameSize,
+      {bool isColor = true}) {
     return cvRunArena<VideoWriter>((arena) {
       final p = calloc<cvg.VideoWriter>();
       cvRun(() => CFFI.VideoWriter_New(p));
@@ -177,8 +178,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     using((arena) {
       final name = filename.toNativeUtf8(allocator: arena);
       final codec_ = codec.toNativeUtf8(allocator: arena);
-      cvRun(() =>
-          CFFI.VideoWriter_Open(ref, name.cast(), codec_.cast(), fps, frameSize.$1, frameSize.$2, isColor));
+      cvRun(() => CFFI.VideoWriter_Open(
+          ref, name.cast(), codec_.cast(), fps, frameSize.$1, frameSize.$2, isColor));
     });
   }
 

@@ -44,7 +44,8 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     finalizer.attach(this, ptr.cast());
   }
 
-  factory VecInt([int length = 0, int value = 0]) => VecInt.fromList(List.generate(length, (i) => value));
+  factory VecInt([int length = 0, int value = 0]) =>
+      VecInt.fromList(List.generate(length, (i) => value));
   factory VecInt.fromPointer(cvg.VecIntPtr ptr) => VecInt._(ptr);
   factory VecInt.fromVec(cvg.VecInt ptr) {
     final p = calloc<cvg.VecInt>();
@@ -107,7 +108,8 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   VecUChar._(this.ptr) {
     finalizer.attach(this, ptr.cast());
   }
-  factory VecUChar([int length = 0, int value = 0]) => VecUChar.fromList(List.generate(length, (i) => value));
+  factory VecUChar([int length = 0, int value = 0]) =>
+      VecUChar.fromList(List.generate(length, (i) => value));
   factory VecUChar.fromPointer(cvg.VecUCharPtr ptr) => VecUChar._(ptr);
   factory VecUChar.fromVec(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
@@ -173,7 +175,8 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   VecChar._(this.ptr) {
     finalizer.attach(this, ptr.cast());
   }
-  factory VecChar([int length = 0, int value = 0]) => VecChar.fromList(List.generate(length, (i) => value));
+  factory VecChar([int length = 0, int value = 0]) =>
+      VecChar.fromList(List.generate(length, (i) => value));
   factory VecChar.fromPointer(cvg.VecCharPtr ptr) => VecChar._(ptr);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();

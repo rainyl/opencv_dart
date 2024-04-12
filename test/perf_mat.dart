@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
@@ -8,6 +10,7 @@ void main() {
     final mat1 = cv.cvtColor(mat, cv.COLOR_BGR2YCrCb);
   }
   sw.stop();
-  print("All: ${sw.elapsedMicroseconds}μs, counts: $counts, per: ${sw.elapsedMicroseconds / counts} μs");
+  print(
+      "All: ${sw.elapsedMicroseconds}μs, counts: $counts, per: ${sw.elapsedMicroseconds / counts} μs");
   print("Finished");
 }
