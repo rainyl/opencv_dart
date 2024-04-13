@@ -24,7 +24,7 @@ jobs:
           tag: "dnn_test_files"
           fileName: "models.zip"
           zipBall: true
-          out-file-path: "test/models"
+          out-file-path: "test/"
           extract: true
       - name: build-opencv-dart
         run: |
