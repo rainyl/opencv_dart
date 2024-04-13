@@ -2,7 +2,7 @@ name: build and test
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "dnn_test"]
   pull_request:
     branches: [ "main" ]
 
@@ -18,8 +18,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          latest: true
+          preRelease: true
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          zipBall: true
+          out-file-path: "test/models"
+          extract: true
       - name: build-opencv-dart
         run: |
+          ls test/models
           python3 -m pip install conan
           conan profile detect -f
           conan build . -b missing -s compiler.cppstd=20
