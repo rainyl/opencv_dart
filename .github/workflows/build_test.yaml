@@ -23,11 +23,11 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          zipBall: true
           out-file-path: "test/"
           extract: true
       - name: build-opencv-dart
         run: |
+          ls test
           ls test/models
           python3 -m pip install conan
           conan profile detect -f
