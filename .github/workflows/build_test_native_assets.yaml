@@ -1,4 +1,4 @@
-name: build test release
+name: Native-Assets build test
 
 on:
   push:
