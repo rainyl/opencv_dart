@@ -19,7 +19,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   factory CascadeClassifier.empty() {
     final p = calloc<cvg.CascadeClassifier>();
-    cvRun(() => CFFI.CascadeClassifier_New(p));
+    cvRun(() => cvg.CascadeClassifier_New(p));
     return CascadeClassifier._(p);
   }
 
@@ -31,7 +31,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return using<bool>((arena) {
       final cname = name.toNativeUtf8(allocator: arena);
       final p = arena<ffi.Int>();
-      cvRun(() => CFFI.CascadeClassifier_Load(ref, cname.cast(), p));
+      cvRun(() => cvg.CascadeClassifier_Load(ref, cname.cast(), p));
       return p.value != 0;
     });
   }
@@ -51,7 +51,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     return using<VecRect>((arena) {
       final ret = arena<cvg.VecRect>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, scaleFactor,
+      cvRun(() => cvg.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, scaleFactor,
           minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref, ret));
       return VecRect.fromVec(ret.ref);
     });
@@ -60,7 +60,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
   static final finalizer =
-      OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
+      OcvFinalizer<cvg.CascadeClassifierPtr>(ffi.Native.addressOf(cvg.CascadeClassifier_Close));
 
   @override
   List<int> get props => [ptr.address];
@@ -73,7 +73,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 
   factory HOGDescriptor.empty() {
     final p = calloc<cvg.HOGDescriptor>();
-    cvRun(() => CFFI.HOGDescriptor_New(p));
+    cvRun(() => cvg.HOGDescriptor_New(p));
     return HOGDescriptor._(p);
   }
 
@@ -95,7 +95,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     return using<VecRect>((arena) {
       final rects = VecRect();
       cvRun(
-        () => CFFI.HOGDescriptor_DetectMultiScaleWithParams(
+        () => cvg.HOGDescriptor_DetectMultiScaleWithParams(
           ref,
           image.ref,
           hitThreshold,
@@ -118,7 +118,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   static VecFloat getDefaultPeopleDetector() {
     return cvRunArena<VecFloat>((arena) {
       final v = arena<cvg.VecFloat>();
-      cvRun(() => CFFI.HOG_GetDefaultPeopleDetector(v));
+      cvRun(() => cvg.HOG_GetDefaultPeopleDetector(v));
       return VecFloat.fromVec(v.ref);
     });
   }
@@ -128,12 +128,12 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a09e354ad701f56f9c550dc0385dc36f1
   void setSVMDetector(VecFloat det) {
-    cvRun(() => CFFI.HOGDescriptor_SetSVMDetector(ref, det.ref));
+    cvRun(() => cvg.HOGDescriptor_SetSVMDetector(ref, det.ref));
   }
 
   @override
   cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
+  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(ffi.Native.addressOf(cvg.HOGDescriptor_Close));
 
   @override
   List<int> get props => [ptr.address];
@@ -145,7 +145,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
   return using<VecRect>((arena) {
-    cvRun(() => CFFI.GroupRectangles(rects.ref, groupThreshold, eps));
+    cvRun(() => cvg.GroupRectangles(rects.ref, groupThreshold, eps));
     return rects;
   });
 }
@@ -161,7 +161,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 
   factory QRCodeDetector.empty() {
     final p = calloc<cvg.QRCodeDetector>();
-    cvRun(() => CFFI.QRCodeDetector_New(p));
+    cvRun(() => cvg.QRCodeDetector_New(p));
     return QRCodeDetector._(p);
   }
 
@@ -180,7 +180,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final s = cvRunArena<String>((arena) {
       final v = arena<cvg.VecChar>();
       cvRun(() =>
-          CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points.ptr, straightCode!.ptr, v));
+          cvg.QRCodeDetector_DetectAndDecode(ref, img.ref, points.ptr, straightCode!.ptr, v));
       if (v == ffi.nullptr) return "";
       return VecChar.fromVec(v.ref).toString();
     });
@@ -195,7 +195,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     return cvRunArena<(bool, VecPoint?)>((arena) {
       final pts = VecPoint();
       final ret = arena<ffi.Bool>();
-      cvRun(() => CFFI.QRCodeDetector_Detect(ref, input.ref, pts.ref, ret));
+      cvRun(() => cvg.QRCodeDetector_Detect(ref, input.ref, pts.ref, ret));
       return (ret.value, pts);
     });
   }
@@ -214,7 +214,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       final ret = VecChar();
       straightCode ??= Mat.empty();
       cvRun(
-          () => CFFI.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
+          () => cvg.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
       return (ret.toString(), points, straightCode!);
     });
   }
@@ -230,7 +230,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     return cvRunArena<(bool, VecPoint?)>((arena) {
       points ??= VecPoint.fromList([]);
       final ret = arena<ffi.Bool>();
-      cvRun(() => CFFI.QRCodeDetector_DetectMulti(ref, img.ref, points!.ref, ret));
+      cvRun(() => cvg.QRCodeDetector_DetectMulti(ref, img.ref, points!.ref, ret));
       return ret.value ? (ret.value, VecPoint.fromVec(points!.ref)) : (ret.value, null);
     });
   }
@@ -244,7 +244,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a188b63ffa17922b2c65d8a0ab7b70775
   // TODO: (bool, List<String>, Mat, List<Mat>) detectAndDecodeMulti(InputArray img) {}
 
-  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
+  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(ffi.Native.addressOf(cvg.QRCodeDetector_Close));
 
   @override
   cvg.QRCodeDetector get ref => ptr.ref;

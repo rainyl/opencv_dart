@@ -94,7 +94,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   List<Point2f> get points {
     return using<List<Point2f>>((arena) {
       final pts = arena<cvg.VecPoint2f>();
-      cvRun(() => CFFI.RotatedRect_Points(ptr.ref, pts));
+      cvRun(() => cvg.RotatedRect_Points(ptr.ref, pts));
       return VecPoint2f.fromVec(pts.ref).toList();
     });
   }
@@ -102,7 +102,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   Rect get boundingRect {
     return using<Rect>((arena) {
       final rect = arena<cvg.Rect>();
-      cvRun(() => CFFI.RotatedRect_BoundingRect(ptr.ref, rect));
+      cvRun(() => cvg.RotatedRect_BoundingRect(ptr.ref, rect));
       return Rect.fromNative(rect.ref);
     });
   }
@@ -110,7 +110,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   Rect2f get boundingRect2f {
     return using<Rect2f>((arena) {
       final rect = arena<cvg.Rect2f>();
-      cvRun(() => CFFI.RotatedRect_BoundingRect2f(ptr.ref, rect));
+      cvRun(() => cvg.RotatedRect_BoundingRect2f(ptr.ref, rect));
       return Rect2f.fromNative(rect.ref);
     });
   }
@@ -136,15 +136,15 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   factory VecRect.fromPointer(cvg.VecRectPtr ptr) => VecRect._(ptr);
   factory VecRect.fromVec(cvg.VecRect ptr) {
     final p = calloc<cvg.VecRect>();
-    cvRun(() => CFFI.VecRect_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecRect_NewFromVec(ptr, p));
     final vec = VecRect._(p);
     return vec;
   }
   factory VecRect.fromList(List<Rect> pts) {
     final ptr = calloc<cvg.VecRect>();
-    cvRun(() => CFFI.VecRect_New(ptr));
+    cvRun(() => cvg.VecRect_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecRect_Append(ptr.ref, pts[i].ref));
+      cvRun(() => cvg.VecRect_Append(ptr.ref, pts[i].ref));
     }
     final vec = VecRect._(ptr);
     return vec;
@@ -153,13 +153,13 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecRect_Size(ref, ptrlen));
+    cvRun(() => cvg.VecRect_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(CFFI.addresses.VecRect_Close);
+  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ffi.Native.addressOf(cvg.VecRect_Close));
 
   @override
   cvg.VecRectPtr ptr;
@@ -177,7 +177,7 @@ class VecRectIterator extends VecIterator<Rect> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecRect_Size(ptr, p));
+        cvRun(() => cvg.VecRect_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -186,7 +186,7 @@ class VecRectIterator extends VecIterator<Rect> {
   Rect operator [](int idx) {
     return cvRunArena<Rect>((arena) {
       final p = arena<cvg.Rect>();
-      cvRun(() => CFFI.VecRect_At(ptr, idx, p));
+      cvRun(() => cvg.VecRect_At(ptr, idx, p));
       return Rect.fromNative(p.ref);
     });
   }

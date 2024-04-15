@@ -49,7 +49,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
   factory VecInt.fromPointer(cvg.VecIntPtr ptr) => VecInt._(ptr);
   factory VecInt.fromVec(cvg.VecInt ptr) {
     final p = calloc<cvg.VecInt>();
-    cvRun(() => CFFI.VecInt_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecInt_NewFromVec(ptr, p));
     return VecInt._(p);
   }
   factory VecInt.fromList(List<int> pts) {
@@ -58,7 +58,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecInt_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => cvg.VecInt_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecInt._(ptr);
   }
@@ -66,13 +66,13 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecInt_Size(ref, ptrlen));
+    cvRun(() => cvg.VecInt_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecIntPtr>(CFFI.addresses.VecInt_Close);
+  static final finalizer = OcvFinalizer<cvg.VecIntPtr>(ffi.Native.addressOf(cvg.VecInt_Close));
   @override
   cvg.VecIntPtr ptr;
   @override
@@ -89,7 +89,7 @@ class VecIntIterator extends VecIterator<int> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecInt_Size(ptr, p));
+        cvRun(() => cvg.VecInt_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -98,7 +98,7 @@ class VecIntIterator extends VecIterator<int> {
   int operator [](int idx) {
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => CFFI.VecInt_At(ptr, idx, p));
+      cvRun(() => cvg.VecInt_At(ptr, idx, p));
       return p.value;
     });
   }
@@ -113,7 +113,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   factory VecUChar.fromPointer(cvg.VecUCharPtr ptr) => VecUChar._(ptr);
   factory VecUChar.fromVec(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
-    cvRun(() => CFFI.VecUChar_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecUChar_NewFromVec(ptr, p));
     final vec = VecUChar._(p);
     return vec;
   }
@@ -123,7 +123,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecUChar_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => cvg.VecUChar_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecUChar._(ptr);
   }
@@ -131,14 +131,14 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecUChar_Size(ref, ptrlen));
+    cvRun(() => cvg.VecUChar_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
   Uint8List toU8List() => Uint8List.fromList(toList());
-  static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(CFFI.addresses.VecUChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(ffi.Native.addressOf(cvg.VecUChar_Close));
 
   @override
   cvg.VecUCharPtr ptr;
@@ -156,7 +156,7 @@ class VecUCharIterator extends VecIterator<int> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecUChar_Size(ptr, p));
+        cvRun(() => cvg.VecUChar_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -165,7 +165,7 @@ class VecUCharIterator extends VecIterator<int> {
   int operator [](int idx) {
     return cvRunArena<int>((arena) {
       final p = arena<ffi.UnsignedChar>();
-      cvRun(() => CFFI.VecUChar_At(ptr, idx, p));
+      cvRun(() => cvg.VecUChar_At(ptr, idx, p));
       return p.value;
     });
   }
@@ -180,7 +180,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   factory VecChar.fromPointer(cvg.VecCharPtr ptr) => VecChar._(ptr);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
-    cvRun(() => CFFI.VecChar_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecChar_NewFromVec(ptr, p));
     final vec = VecChar._(p);
     return vec;
   }
@@ -190,7 +190,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecChar_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => cvg.VecChar_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecChar._(ptr);
   }
@@ -198,7 +198,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecChar_Size(ref, ptrlen));
+    cvRun(() => cvg.VecChar_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -208,7 +208,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
 
   @override
   cvg.VecCharPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecCharPtr>(CFFI.addresses.VecChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecCharPtr>(ffi.Native.addressOf(cvg.VecChar_Close));
   @override
   Iterator<int> get iterator => VecCharIterator(ref);
 
@@ -223,7 +223,7 @@ class VecCharIterator extends VecIterator<int> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecChar_Size(ptr, p));
+        cvRun(() => cvg.VecChar_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -232,7 +232,7 @@ class VecCharIterator extends VecIterator<int> {
   int operator [](int idx) {
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Char>();
-      cvRun(() => CFFI.VecChar_At(ptr, idx, p));
+      cvRun(() => cvg.VecChar_At(ptr, idx, p));
       return p.value;
     });
   }
@@ -245,16 +245,16 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
   factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr) => VecVecChar._(ptr);
   factory VecVecChar.fromVec(cvg.VecVecChar ptr) {
     final p = calloc<cvg.VecVecChar>();
-    cvRun(() => CFFI.VecVecChar_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecVecChar_NewFromVec(ptr, p));
     final vec = VecVecChar._(p);
     return vec;
   }
   factory VecVecChar.fromList(List<List<int>> pts) {
     final ptr = calloc<cvg.VecVecChar>();
-    cvRun(() => CFFI.VecVecChar_New(ptr));
+    cvRun(() => cvg.VecVecChar_New(ptr));
     for (var i = 0; i < pts.length; i++) {
       final point = pts[i].i8;
-      cvRun(() => CFFI.VecVecChar_Append(ptr.ref, point.ref));
+      cvRun(() => cvg.VecVecChar_Append(ptr.ref, point.ref));
     }
     final vec = VecVecChar._(ptr);
     return vec;
@@ -264,7 +264,7 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
     return map((e) => String.fromCharCodes(e)).toList();
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(CFFI.addresses.VecVecChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(ffi.Native.addressOf(cvg.VecVecChar_Close));
 
   @override
   cvg.VecVecCharPtr ptr;
@@ -281,7 +281,7 @@ class VecVecCharIterator extends VecIterator<VecChar> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecVecChar_Size(ptr, p));
+        cvRun(() => cvg.VecVecChar_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -290,7 +290,7 @@ class VecVecCharIterator extends VecIterator<VecChar> {
   VecChar operator [](int idx) {
     return cvRunArena<VecChar>((arena) {
       final p = arena<cvg.VecChar>();
-      cvRun(() => CFFI.VecVecChar_At(ptr, idx, p));
+      cvRun(() => cvg.VecVecChar_At(ptr, idx, p));
       final vec = VecChar.fromVec(p.ref);
       return vec;
     });
@@ -306,7 +306,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   factory VecFloat.fromPointer(cvg.VecFloatPtr ptr) => VecFloat._(ptr);
   factory VecFloat.fromVec(cvg.VecFloat ptr) {
     final p = calloc<cvg.VecFloat>();
-    cvRun(() => CFFI.VecFloat_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecFloat_NewFromVec(ptr, p));
     final vec = VecFloat._(p);
     return vec;
   }
@@ -316,7 +316,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecFloat_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => cvg.VecFloat_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecFloat._(ptr);
   }
@@ -324,13 +324,13 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecFloat_Size(ref, ptrlen));
+    cvRun(() => cvg.VecFloat_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecFloatPtr>(CFFI.addresses.VecFloat_Close);
+  static final finalizer = OcvFinalizer<cvg.VecFloatPtr>(ffi.Native.addressOf(cvg.VecFloat_Close));
 
   @override
   cvg.VecFloatPtr ptr;
@@ -347,7 +347,7 @@ class VecFloatIterator extends VecIterator<double> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecFloat_Size(ptr, p));
+        cvRun(() => cvg.VecFloat_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -356,7 +356,7 @@ class VecFloatIterator extends VecIterator<double> {
   double operator [](int idx) {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Float>();
-      cvRun(() => CFFI.VecFloat_At(ptr, idx, p));
+      cvRun(() => cvg.VecFloat_At(ptr, idx, p));
       return p.value;
     });
   }
@@ -371,7 +371,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   factory VecDouble.fromPointer(cvg.VecDoublePtr ptr) => VecDouble._(ptr);
   factory VecDouble.fromVec(cvg.VecDouble ptr) {
     final p = calloc<cvg.VecDouble>();
-    cvRun(() => CFFI.VecDouble_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecDouble_NewFromVec(ptr, p));
     final vec = VecDouble._(p);
     return vec;
   }
@@ -381,7 +381,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecDouble_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => cvg.VecDouble_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecDouble._(ptr);
   }
@@ -389,7 +389,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecDouble_Size(ref, ptrlen));
+    cvRun(() => cvg.VecDouble_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -397,7 +397,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
 
   @override
   cvg.VecDoublePtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecDoublePtr>(CFFI.addresses.VecDouble_Close);
+  static final finalizer = OcvFinalizer<cvg.VecDoublePtr>(ffi.Native.addressOf(cvg.VecDouble_Close));
   @override
   Iterator<double> get iterator => VecDoubleIterator(ref);
 
@@ -412,7 +412,7 @@ class VecDoubleIterator extends VecIterator<double> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecDouble_Size(ptr, p));
+        cvRun(() => cvg.VecDouble_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -421,7 +421,7 @@ class VecDoubleIterator extends VecIterator<double> {
   double operator [](int idx) {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.VecDouble_At(ptr, idx, p));
+      cvRun(() => cvg.VecDouble_At(ptr, idx, p));
       return p.value;
     });
   }

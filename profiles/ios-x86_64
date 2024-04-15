@@ -11,3 +11,4 @@ build_type=Release
 tools.apple:enable_arc=False
 tools.apple:enable_visibility=False
 tools.cmake.cmaketoolchain:generator=Xcode
+tools.cmake.cmaketoolchain:user_toolchain=""

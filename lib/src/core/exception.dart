@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 
-import 'base.dart';
 import 'error_code.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -56,7 +55,7 @@ void registerErrorCallback({cvg.DartErrorCallbackFunction? callback}) {
   callback ??= defaultCvErrorCallback;
   // final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.listener(callback);
   final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.isolateLocal(callback);
-  CFFI.registerErrorCallback(fp.nativeFunction);
+  cvg.registerErrorCallback(fp.nativeFunction);
 }
 
 class CvdException implements Exception {

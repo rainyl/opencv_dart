@@ -66,15 +66,15 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr) => VecKeyPoint._(ptr);
   factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
     final p = calloc<cvg.VecKeyPoint>();
-    cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));
+    cvRun(() => cvg.VecKeyPoint_NewFromVec(ptr, p));
     final vec = VecKeyPoint._(p);
     return vec;
   }
   factory VecKeyPoint.fromList(List<KeyPoint> pts) {
     final ptr = calloc<cvg.VecKeyPoint>();
-    cvRun(() => CFFI.VecKeyPoint_New(ptr));
+    cvRun(() => cvg.VecKeyPoint_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecKeyPoint_Append(ptr.ref, pts[i].ref));
+      cvRun(() => cvg.VecKeyPoint_Append(ptr.ref, pts[i].ref));
     }
     final vec = VecKeyPoint._(ptr);
     return vec;
@@ -83,7 +83,7 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecKeyPoint_Size(ref, ptrlen));
+    cvRun(() => cvg.VecKeyPoint_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -91,7 +91,7 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
 
   @override
   cvg.VecKeyPointPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(CFFI.addresses.VecKeyPoint_Close);
+  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(ffi.Native.addressOf(cvg.VecKeyPoint_Close));
   @override
   Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
 
@@ -106,7 +106,7 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecKeyPoint_Size(ptr, p));
+        cvRun(() => cvg.VecKeyPoint_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -115,7 +115,7 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
   KeyPoint operator [](int idx) {
     return cvRunArena<KeyPoint>((arena) {
       final p = arena<cvg.KeyPoint>();
-      cvRun(() => CFFI.VecKeyPoint_At(ptr, idx, p));
+      cvRun(() => cvg.VecKeyPoint_At(ptr, idx, p));
       return KeyPoint.fromNative(p.ref);
     });
   }

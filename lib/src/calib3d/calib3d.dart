@@ -29,7 +29,7 @@ class Fisheye {
       knew ??= Mat.empty();
       undistorted ??= Mat.empty();
       cvRun(
-        () => CFFI.Fisheye_UndistortImageWithParams(
+        () => cvg.Fisheye_UndistortImageWithParams(
           distorted.ref,
           undistorted!.ref,
           K.ref,
@@ -57,7 +57,7 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => CFFI.Fisheye_UndistortPoints(
+    cvRun(() => cvg.Fisheye_UndistortPoints(
         distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
@@ -79,7 +79,7 @@ class Fisheye {
     return using<Mat>((arena) {
       P ??= Mat.empty();
       cvRun(
-        () => CFFI.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+        () => cvg.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
           K.ref,
           D.ref,
           imageSize.toSize(arena).ref,
@@ -113,7 +113,7 @@ class Fisheye {
     map1 ??= Mat.empty();
     map2 ??= Mat.empty();
     cvRun(
-      () => CFFI.InitUndistortRectifyMap(
+      () => cvg.InitUndistortRectifyMap(
         cameraMatrix.ref,
         distCoeffs.ref,
         R.ref,
@@ -144,7 +144,7 @@ class Fisheye {
     final validPixROI = arena<cvg.Rect>();
     final matPtr = arena<cvg.Mat>();
     cvRun(
-      () => CFFI.GetOptimalNewCameraMatrixWithParams(
+      () => cvg.GetOptimalNewCameraMatrixWithParams(
         cameraMatrix.ref,
         distCoeffs.ref,
         imageSize.toSize(arena).ref,
@@ -180,7 +180,7 @@ class Fisheye {
     final rmsErr = arena<ffi.Double>();
 
     cvRun(
-      () => CFFI.CalibrateCamera(
+      () => cvg.CalibrateCamera(
         objectPoints.ref,
         imagePoints.ref,
         imageSize.toSize(arena).ref,
@@ -213,7 +213,7 @@ Mat undistort(
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
   cvRun(() =>
-      CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+      cvg.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -235,7 +235,7 @@ Mat undistortPoints(
   dst ??= Mat.empty();
   cvRunArena(
     (arena) => cvRun(
-      () => CFFI.UndistortPoints(
+      () => cvg.UndistortPoints(
         src.ref,
         dst!.ref,
         cameraMatrix.ref,
@@ -263,7 +263,7 @@ Mat undistortPoints(
     corners ??= Mat.empty();
     final r = arena<ffi.Bool>();
     cvRun(
-      () => CFFI.FindChessboardCorners(
+      () => cvg.FindChessboardCorners(
         image.ref,
         patternSize.toSize(arena).ref,
         corners!.ref,
@@ -287,7 +287,7 @@ Mat undistortPoints(
   final rval = cvRunArena<bool>((arena) {
     final b = arena<ffi.Bool>();
     cvRun(
-      () => CFFI.FindChessboardCornersSB(
+      () => cvg.FindChessboardCornersSB(
         image.ref,
         patternSize.toSize(arena).ref,
         corners!.ref,
@@ -314,7 +314,7 @@ Mat undistortPoints(
   final rval = cvRunArena<bool>((arena) {
     final b = arena<ffi.Bool>();
     cvRun(
-      () => CFFI.FindChessboardCornersSBWithMeta(
+      () => cvg.FindChessboardCornersSBWithMeta(
         image.ref,
         patternSize.toSize(arena).ref,
         corners!.ref,
@@ -339,7 +339,7 @@ Mat drawChessboardCorners(
   bool patternWasFound,
 ) {
   return cvRunArena<Mat>((arena) {
-    cvRun(() => CFFI.DrawChessboardCorners(
+    cvRun(() => cvg.DrawChessboardCorners(
         image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
     return image;
   });
@@ -364,7 +364,7 @@ Mat drawChessboardCorners(
     inliers ??= Mat.empty();
     final p = arena<cvg.Mat>();
     cvRun(
-      () => CFFI.EstimateAffinePartial2DWithParams(
+      () => cvg.EstimateAffinePartial2DWithParams(
         from.ref,
         to.ref,
         inliers!.ref,
@@ -398,7 +398,7 @@ Mat drawChessboardCorners(
     inliers ??= Mat.empty();
     final p = arena<cvg.Mat>();
     cvRun(
-      () => CFFI.EstimateAffine2DWithParams(
+      () => cvg.EstimateAffine2DWithParams(
         from.ref,
         to.ref,
         inliers!.ref,

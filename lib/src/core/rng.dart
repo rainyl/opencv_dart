@@ -13,7 +13,7 @@ class Rng extends CvStruct<cvg.RNG> {
 
   factory Rng() {
     final p = calloc<cvg.RNG>();
-    cvRun(() => CFFI.Rng_New(p));
+    cvRun(() => cvg.Rng_New(p));
     final rng = Rng._(p);
     return rng;
   }
@@ -22,23 +22,23 @@ class Rng extends CvStruct<cvg.RNG> {
 
   factory Rng.fromSeed(int seed) {
     final p = calloc<cvg.RNG>();
-    cvRun(() => CFFI.Rng_NewWithState(seed, p));
+    cvRun(() => cvg.Rng_NewWithState(seed, p));
     final rng = Rng._(p);
     return rng;
   }
 
-  static final finalizer = OcvFinalizer<cvg.RNGPtr>(CFFI.addresses.Rng_Close);
+  static final finalizer = OcvFinalizer<cvg.RNGPtr>(ffi.Native.addressOf(cvg.Rng_Close));
 
   /// Fills arrays with random numbers.
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad26f2b09d9868cf108e84c9814aa682d
   Mat fill(Mat mat, int distType, double a, double b,
       {bool saturateRange = false, bool inplace = false}) {
     if (inplace) {
-      cvRun(() => CFFI.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
+      cvRun(() => cvg.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
       return mat;
     } else {
       final m = mat.clone();
-      cvRun(() => CFFI.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
+      cvRun(() => cvg.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
       return m;
     }
   }
@@ -51,7 +51,7 @@ class Rng extends CvStruct<cvg.RNG> {
   double gaussian(double sigma) {
     return cvRunArena((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.RNG_Gaussian(ref, sigma, p));
+      cvRun(() => cvg.RNG_Gaussian(ref, sigma, p));
       return p.value;
     });
   }
@@ -61,7 +61,7 @@ class Rng extends CvStruct<cvg.RNG> {
   int next() {
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Uint32>();
-      cvRun(() => CFFI.RNG_Next(ref, p));
+      cvRun(() => cvg.RNG_Next(ref, p));
       return p.value;
     });
   }
@@ -75,11 +75,11 @@ class Rng extends CvStruct<cvg.RNG> {
     return cvRunArena<T>((arena) {
       if (T == int) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.RNG_Uniform(ref, a as int, b as int, p));
+        cvRun(() => cvg.RNG_Uniform(ref, a as int, b as int, p));
         return p.value as T;
       } else if (T == double) {
         final p = arena<ffi.Double>();
-        cvRun(() => CFFI.RNG_UniformDouble(ref, a as double, b as double, p));
+        cvRun(() => cvg.RNG_UniformDouble(ref, a as double, b as double, p));
         return p.value as T;
       } else {
         throw UnsupportedError("Unsupported type $T");

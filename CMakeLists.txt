@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 cmake_policy(SET CMP0135 NEW)
 
+set(OpenCV_STATIC ON)
+
 find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS
@@ -37,6 +39,7 @@ message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 file(GLOB_RECURSE CPP_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 
     # "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
     # "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
@@ -125,7 +128,7 @@ if(CVD_ENABLE_TEST)
         DESTINATION ${CMAKE_BINARY_DIR}/test
     )
     # model files for DNN test
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/models")    
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/models")
         file(COPY
         "${CMAKE_CURRENT_SOURCE_DIR}/test/models"
         DESTINATION ${CMAKE_BINARY_DIR}/test

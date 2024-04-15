@@ -16,7 +16,7 @@ extension TermCriteriaExtension on TermCriteria {
   /// https://docs.opencv.org/master/d9/d5d/classcv_1_1TermCriteria.html
   cvg.TermCriteriaPtr toTermCriteria(Arena arena) {
     final p = arena<cvg.TermCriteria>();
-    cvRun(() => CFFI.TermCriteria_New($1, $2, $3, p));
+    cvRun(() => cvg.TermCriteria_New($1, $2, $3, p));
     return p;
   }
 }

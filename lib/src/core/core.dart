@@ -19,7 +19,7 @@ import '../opencv.g.dart' as cvg;
 String openCvVersion() {
   return using<String>((arena) {
     final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.openCVVersion(p));
+    cvRun(() => cvg.openCVVersion(p));
     return p.value.cast<Utf8>().toDartString();
   });
 }
@@ -30,7 +30,7 @@ String openCvVersion() {
 String getBuildInformation() {
   return using<String>((arena) {
     final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.getBuildInfo(p));
+    cvRun(() => cvg.getBuildInfo(p));
     return p.value.cast<Utf8>().toDartString();
   });
 }
@@ -43,7 +43,7 @@ String getBuildInformation() {
 Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
   return cvRunArena<Mat>((arena) {
     dst ??= Mat.empty();
-    cvRun(() => CFFI.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
+    cvRun(() => cvg.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
     return dst!;
   });
 }
@@ -55,7 +55,7 @@ Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
 Mat add(Mat src1, Mat src2, [Mat? dst]) {
   return cvRunArena<Mat>((arena) {
     dst ??= Mat.empty();
-    cvRun(() => CFFI.Mat_Add(src1.ref, src2.ref, dst!.ref));
+    cvRun(() => cvg.Mat_Add(src1.ref, src2.ref, dst!.ref));
     return dst!;
   });
 }
@@ -75,7 +75,7 @@ Mat addWeighted(
 }) {
   dst ??= Mat.empty();
   cvRun(
-    () => CFFI.Mat_AddWeighted(
+    () => cvg.Mat_AddWeighted(
       src1.ref,
       alpha,
       src2.ref,
@@ -102,9 +102,9 @@ Mat bitwiseAND(
 }) {
   dst ??= Mat.empty();
   if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
+    cvRun(() => cvg.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() => CFFI.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => cvg.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -116,9 +116,9 @@ Mat bitwiseAND(
 Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
   dst ??= Mat.empty();
   if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseNot(src.ref, dst!.ref));
+    cvRun(() => cvg.Mat_BitwiseNot(src.ref, dst!.ref));
   } else {
-    cvRun(() => CFFI.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
+    cvRun(() => cvg.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -136,9 +136,9 @@ Mat bitwiseOR(
 }) {
   dst ??= Mat.empty();
   if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
+    cvRun(() => cvg.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() => CFFI.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => cvg.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -156,9 +156,9 @@ Mat bitwiseXOR(
 }) {
   dst ??= Mat.empty();
   if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
+    cvRun(() => cvg.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() => CFFI.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => cvg.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -183,7 +183,7 @@ Mat bitwiseXOR(
   nidx ??= Mat.empty();
   mask ??= Mat.empty();
   cvRun(
-    () => CFFI.Mat_BatchDistance(
+    () => cvg.Mat_BatchDistance(
       src1.ref,
       src2.ref,
       dist!.ref,
@@ -206,7 +206,7 @@ Mat bitwiseXOR(
 int borderInterpolate(int p, int len, int borderType) {
   return cvRunArena<int>((arena) {
     final ptr = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_BorderInterpolate(p, len, borderType, ptr));
+    cvRun(() => cvg.Mat_BorderInterpolate(p, len, borderType, ptr));
     return ptr.value;
   });
 }
@@ -224,7 +224,7 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   covar ??= Mat.empty();
   cvRun(
-    () => CFFI.Mat_CalcCovarMatrix(
+    () => cvg.Mat_CalcCovarMatrix(
       samples.ref,
       covar!.ref,
       mean.ref,
@@ -249,7 +249,7 @@ int borderInterpolate(int p, int len, int borderType) {
   magnitude ??= Mat.empty();
   angle ??= Mat.empty();
   cvRun(
-    () => CFFI.Mat_CartToPolar(
+    () => cvg.Mat_CartToPolar(
       x.ref,
       y.ref,
       magnitude!.ref,
@@ -273,7 +273,7 @@ int borderInterpolate(int p, int len, int borderType) {
   return cvRunArena<(bool, Point)>((arena) {
     final pos = arena<cvg.Point>();
     final rval = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
+    cvRun(() => cvg.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
     return (rval.value, Point.fromNative(pos.ref));
   });
 }
@@ -285,7 +285,7 @@ int borderInterpolate(int p, int len, int borderType) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga303cfb72acf8cbb36d884650c09a3a97
 Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
+  cvRun(() => cvg.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
   return dst;
 }
 
@@ -296,7 +296,7 @@ Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
 int countNonZero(Mat src) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    CFFI.Mat_CountNonZero(src.ref, p);
+    cvg.Mat_CountNonZero(src.ref, p);
     return p.value;
   });
 }
@@ -306,7 +306,7 @@ int countNonZero(Mat src) {
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6847337c0c55769e115a70e0f011b5ca
 Mat completeSymm(InputOutputArray m, {bool lowerToUpper = false}) {
-  cvRun(() => CFFI.Mat_CompleteSymm(m.ref, lowerToUpper));
+  cvRun(() => cvg.Mat_CompleteSymm(m.ref, lowerToUpper));
   return m;
 }
 
@@ -321,7 +321,7 @@ Mat convertScaleAbs(
   double beta = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
+  cvRun(() => cvg.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
   return dst;
 }
 
@@ -342,7 +342,7 @@ Mat copyMakeBorder(
   dst ??= Mat.empty();
   value ??= Scalar.default_();
   cvRun(
-    () => CFFI.Mat_CopyMakeBorder(
+    () => cvg.Mat_CopyMakeBorder(
       src.ref,
       dst!.ref,
       top,
@@ -362,7 +362,7 @@ Mat copyMakeBorder(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga85aad4d668c01fbd64825f589e3696d4
 Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_DCT(src.ref, dst!.ref, flags));
+  cvRun(() => cvg.Mat_DCT(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -373,7 +373,7 @@ Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
 double determinant(InputArray mtx) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_Determinant(mtx.ref, p));
+    cvRun(() => cvg.Mat_Determinant(mtx.ref, p));
     return p.value;
   });
 }
@@ -390,7 +390,7 @@ Mat dft(
   int nonzeroRows = 0, // TODO: add
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_DFT(src.ref, dst!.ref, flags));
+  cvRun(() => cvg.Mat_DFT(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -407,7 +407,7 @@ Mat divide(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Divide(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Divide(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -424,7 +424,7 @@ Mat divide(
   eigenvectors ??= Mat.empty();
   final ret = cvRunArena<bool>((arena) {
     final p = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
+    cvRun(() => cvg.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
     return p.value;
   });
   return (ret, eigenvalues, eigenvectors);
@@ -441,7 +441,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  cvRun(() => CFFI.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
+  cvRun(() => cvg.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
   return (eigenvalues, eigenvectors);
 }
 
@@ -463,7 +463,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  CFFI.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
+  cvg.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
   return (mean, eigenvalues, eigenvectors);
 }
 
@@ -473,7 +473,7 @@ Mat divide(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
 Mat exp(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Exp(src.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Exp(src.ref, dst!.ref));
   return dst;
 }
 
@@ -483,7 +483,7 @@ Mat exp(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc6158574aa1f0281878c955bcf35642
 Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ExtractChannel(src.ref, dst!.ref, coi));
+  cvRun(() => cvg.Mat_ExtractChannel(src.ref, dst!.ref, coi));
   return dst;
 }
 
@@ -493,7 +493,7 @@ Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaed7df59a3539b4cc0fe5c9c8d7586190
 Mat findNonZero(InputArray src, {OutputArray? idx}) {
   idx ??= Mat.empty();
-  cvRun(() => CFFI.Mat_FindNonZero(src.ref, idx!.ref));
+  cvRun(() => cvg.Mat_FindNonZero(src.ref, idx!.ref));
   return idx;
 }
 
@@ -503,7 +503,7 @@ Mat findNonZero(InputArray src, {OutputArray? idx}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaca7be533e3dac7feb70fc60635adf441
 Mat flip(InputArray src, int flipCode, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Flip(src.ref, dst!.ref, flipCode));
+  cvRun(() => cvg.Mat_Flip(src.ref, dst!.ref, flipCode));
   return dst;
 }
 
@@ -521,7 +521,7 @@ Mat gemm(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
+  cvRun(() => cvg.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
   return dst;
 }
 
@@ -533,7 +533,7 @@ Mat gemm(
 int getOptimalDFTSize(int vecsize) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_GetOptimalDFTSize(vecsize, p));
+    cvRun(() => cvg.Mat_GetOptimalDFTSize(vecsize, p));
     return p.value;
   });
 }
@@ -544,7 +544,7 @@ int getOptimalDFTSize(int vecsize) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
 Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -554,7 +554,7 @@ Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
 Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -564,7 +564,7 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
 Mat rotate(InputArray src, int rotateCode, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Rotate(src.ref, dst!.ref, rotateCode));
+  cvRun(() => cvg.Rotate(src.ref, dst!.ref, rotateCode));
   return dst;
 }
 
@@ -578,7 +578,7 @@ Mat idct(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Idct(src.ref, dst!.ref, flags));
+  cvRun(() => cvg.Mat_Idct(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -593,7 +593,7 @@ Mat idft(
   int nonzeroRows = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
+  cvRun(() => cvg.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
   return dst;
 }
 
@@ -608,7 +608,7 @@ Mat inRange(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => cvg.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
   return dst;
 }
 
@@ -623,7 +623,7 @@ Mat inRangebyScalar(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => cvg.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
   return dst;
 }
 
@@ -633,7 +633,7 @@ Mat inRangebyScalar(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1d4bd886d35b00ec0b764cb4ce6eb515
 Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
-  cvRun(() => CFFI.Mat_InsertChannel(src.ref, dst.ref, coi));
+  cvRun(() => cvg.Mat_InsertChannel(src.ref, dst.ref, coi));
   return dst;
 }
 
@@ -649,7 +649,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   dst ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_Invert(src.ref, dst!.ref, flags, p));
+    cvRun(() => cvg.Mat_Invert(src.ref, dst!.ref, flags, p));
     return p.value;
   });
   return (rval, dst);
@@ -672,7 +672,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts,
+      () => cvg.KMeans(data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts,
           flags, centers!.ref, p),
     );
     return p.value;
@@ -697,7 +697,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref,
+      () => cvg.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref,
           attempts, flags, centers!.ref, p),
     );
     return p.value;
@@ -711,7 +711,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga937ecdce4679a77168730830a955bea7
 Mat log(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Log(src.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Log(src.ref, dst!.ref));
   return dst;
 }
 
@@ -721,7 +721,7 @@ Mat log(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6d3b097586bca4409873d64a90fe64c3
 Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
   magnitude ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
+  cvRun(() => cvg.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
   return magnitude;
 }
 
@@ -731,7 +731,7 @@ Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc40fa15eac0fb83f8ca70b7cc0b588d
 Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Max(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Max(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -747,7 +747,7 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 }) {
   mean ??= Mat.empty();
   stddev ??= Mat.empty();
-  cvRun(() => CFFI.Mat_MeanStdDev(src.ref, mean!.ref, stddev!.ref));
+  cvRun(() => cvg.Mat_MeanStdDev(src.ref, mean!.ref, stddev!.ref));
   return (mean, stddev);
 }
 
@@ -757,7 +757,7 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
 Mat merge(VecMat mv, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Merge(mv.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Merge(mv.ref, dst!.ref));
   return dst;
 }
 
@@ -767,7 +767,7 @@ Mat merge(VecMat mv, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
 Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Min(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Min(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -784,7 +784,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
     final maxValP = arena<ffi.Double>();
     final minIdxP = arena<ffi.Int>();
     final maxIdxP = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
+    cvRun(() => cvg.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
     return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
   });
 }
@@ -800,7 +800,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
     final maxValP = arena<ffi.Double>();
     final minLocP = arena<cvg.Point>();
     final maxLocP = arena<cvg.Point>();
-    cvRun(() => CFFI.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
+    cvRun(() => cvg.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
     return (
       minValP.value,
       maxValP.value,
@@ -816,7 +816,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
 VecMat mixChannels(VecMat src, VecMat dst, VecInt fromTo) {
   return cvRunArena<VecMat>((arena) {
-    cvRun(() => CFFI.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
+    cvRun(() => cvg.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
     return dst;
   });
 }
@@ -833,7 +833,7 @@ Mat mulSpectrums(
   bool conjB = false,
 }) {
   c ??= Mat.empty();
-  cvRun(() => CFFI.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
+  cvRun(() => cvg.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
   return c;
 }
 
@@ -850,7 +850,7 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => cvg.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -868,7 +868,7 @@ Mat normalize(
   // int dtype = -1,
   // InputArray? mask,
 }) {
-  cvRun(() => CFFI.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType));
+  cvRun(() => cvg.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType));
   return dst;
 }
 
@@ -883,7 +883,7 @@ double norm(
 }) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Norm(src1.ref, normType, p));
+    cvRun(() => cvg.Norm(src1.ref, normType, p));
     return p.value;
   });
 }
@@ -900,7 +900,7 @@ double norm1(
 }) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.NormWithMats(src1.ref, src2.ref, normType, p));
+    cvRun(() => cvg.NormWithMats(src1.ref, src2.ref, normType, p));
     return p.value;
   });
 }
@@ -911,7 +911,7 @@ double norm1(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
 Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
+  cvRun(() => cvg.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
   return dst;
 }
 
@@ -928,7 +928,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
   final rval = cvRunArena<bool>((arena) {
     final p = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
+    cvRun(() => cvg.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
     return p.value;
   });
   return (rval, dst);
@@ -942,7 +942,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   roots ??= Mat.empty();
   final rval = cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
+    cvRun(() => cvg.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
     return p.value;
   });
   return (rval, roots);
@@ -960,7 +960,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   roots ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
+    cvRun(() => cvg.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
     return p.value;
   });
   return (rval, roots);
@@ -972,7 +972,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
 Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
+  cvRun(() => cvg.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
   return dst;
 }
 
@@ -982,7 +982,7 @@ Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
 Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
+  cvRun(() => cvg.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
   return dst;
 }
 
@@ -992,7 +992,7 @@ Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = f
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
 Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
+  cvRun(() => cvg.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
   return dst;
 }
 
@@ -1002,7 +1002,7 @@ Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = f
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
 Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Repeat(src.ref, ny, nx, dst!.ref));
+  cvRun(() => cvg.Mat_Repeat(src.ref, ny, nx, dst!.ref));
   return dst;
 }
 
@@ -1012,7 +1012,7 @@ Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
 Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -1021,7 +1021,7 @@ Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst})
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
 Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
-  cvRun(() => CFFI.Mat_SetIdentity(mtx.ref, s));
+  cvRun(() => cvg.Mat_SetIdentity(mtx.ref, s));
   return mtx;
 }
 
@@ -1031,7 +1031,7 @@ Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
 Mat sort(InputArray src, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Sort(src.ref, dst!.ref, flags));
+  cvRun(() => cvg.Mat_Sort(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -1042,7 +1042,7 @@ Mat sort(InputArray src, int flags, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
 Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_SortIdx(src.ref, dst!.ref, flags));
+  cvRun(() => cvg.Mat_SortIdx(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -1054,7 +1054,7 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 VecMat split(InputArray m) {
   final p = calloc<cvg.VecMat>();
   final vec = VecMat.fromList([]);
-  cvRun(() => CFFI.Mat_Split(m.ref, vec.ptr));
+  cvRun(() => cvg.Mat_Split(m.ref, vec.ptr));
   calloc.free(p);
   return vec;
 }
@@ -1072,7 +1072,7 @@ Mat subtract(
   //   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -1083,7 +1083,7 @@ Mat subtract(
 Scalar trace(InputArray mtx) {
   return cvRunArena<Scalar>((arena) {
     final ptr = arena<cvg.Scalar>();
-    cvRun(() => CFFI.Mat_Trace(mtx.ref, ptr));
+    cvRun(() => cvg.Mat_Trace(mtx.ref, ptr));
     return Scalar.fromNative(ptr.ref);
   });
 }
@@ -1094,7 +1094,7 @@ Scalar trace(InputArray mtx) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
 Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Transform(src.ref, dst!.ref, m.ref));
+  cvRun(() => cvg.Mat_Transform(src.ref, dst!.ref, m.ref));
   return dst;
 }
 
@@ -1104,7 +1104,7 @@ Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
 Mat transpose(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Transpose(src.ref, dst!.ref));
+  cvRun(() => cvg.Mat_Transpose(src.ref, dst!.ref));
   return dst;
 }
 
@@ -1114,7 +1114,7 @@ Mat transpose(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
 Mat pow(InputArray src, double power, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Pow(src.ref, power, dst!.ref));
+  cvRun(() => cvg.Mat_Pow(src.ref, power, dst!.ref));
   return dst;
 }
 
@@ -1131,7 +1131,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 }) {
   x ??= Mat.empty();
   y ??= Mat.empty();
-  cvRun(() => CFFI.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
+  cvRun(() => cvg.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
   return (x, y);
 }
 
@@ -1141,7 +1141,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
 Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
   angle ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
+  cvRun(() => cvg.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
   return angle;
 }
 
@@ -1152,7 +1152,7 @@ Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees =
 int getTickCount() {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int64>();
-    cvRun(() => CFFI.GetCVTickCount(p));
+    cvRun(() => cvg.GetCVTickCount(p));
     return p.value;
   });
 }
@@ -1164,7 +1164,7 @@ int getTickCount() {
 double getTickFrequency() {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.GetTickFrequency(p));
+    cvRun(() => cvg.GetTickFrequency(p));
     return p.value;
   });
 }
@@ -1176,7 +1176,7 @@ double getTickFrequency() {
 /// Disabled: double free
 Rng theRNG() {
   final p = calloc<cvg.RNG>();
-  cvRun(() => CFFI.TheRNG(p));
+  cvRun(() => cvg.TheRNG(p));
   return Rng.fromTheRng(p);
 }
 
@@ -1185,7 +1185,7 @@ Rng theRNG() {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeff1f61e972d133a04ce3a5f81cf6808
 Mat randn(InputOutputArray dst, Scalar mean, Scalar stddev) {
-  cvRun(() => CFFI.RandN(dst.ref, mean.ref, stddev.ref));
+  cvRun(() => cvg.RandN(dst.ref, mean.ref, stddev.ref));
   return dst;
 }
 
@@ -1199,9 +1199,9 @@ Mat randShuffle(
   Rng? rng,
 }) {
   if (rng == null) {
-    cvRun(() => CFFI.RandShuffle(dst.ref));
+    cvRun(() => cvg.RandShuffle(dst.ref));
   } else {
-    cvRun(() => CFFI.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
+    cvRun(() => cvg.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
   }
   return dst;
 }
@@ -1212,20 +1212,20 @@ Mat randShuffle(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1ba1026dca0807b27057ba6a49d258c0
 Mat randu(InputOutputArray dst, Scalar low, Scalar high) {
-  cvRun(() => CFFI.RandU(dst.ref, low.ref, high.ref));
+  cvRun(() => cvg.RandU(dst.ref, low.ref, high.ref));
   return dst;
 }
 
 /// Set the number of threads for OpenCV.
 void setNumThreads(int n) {
-  cvRun(() => CFFI.SetNumThreads(n));
+  cvRun(() => cvg.SetNumThreads(n));
 }
 
 /// Get the number of threads for OpenCV.
 int getNumThreads() {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.GetNumThreads(p));
+    cvRun(() => cvg.GetNumThreads(p));
     return p.value;
   });
 }

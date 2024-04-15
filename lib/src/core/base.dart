@@ -9,7 +9,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" show CvStatus, CvNative;
+import "../opencv.g.dart" show CvStatus;
 import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
@@ -48,7 +48,7 @@ ffi.DynamicLibrary loadNativeLibrary() {
   }
 }
 
-final CFFI = CvNative(loadNativeLibrary());
+// final CFFI = CvNative(loadNativeLibrary());
 
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 

@@ -17,16 +17,16 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
 
   factory AsyncArray.empty() {
     final p = calloc<cvg.AsyncArray>();
-    cvRun(() => CFFI.AsyncArray_New(p));
+    cvRun(() => cvg.AsyncArray_New(p));
     final arr = AsyncArray._(p);
     return arr;
   }
 
-  static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(CFFI.addresses.AsyncArray_Close);
+  static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(ffi.Native.addressOf(cvg.AsyncArray_Close));
 
   Mat get() {
     final dst = Mat.empty();
-    cvRun(() => CFFI.AsyncArray_Get(ref, dst.ref));
+    cvRun(() => cvg.AsyncArray_Get(ref, dst.ref));
     return dst;
   }
 

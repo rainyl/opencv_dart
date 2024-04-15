@@ -26,13 +26,13 @@ class Window {
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
   Window(this.name, [int flags = 0]) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
+      cvRun(() => cvg.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
     });
   }
 
   void close() {
     cvRunArena((arena) {
-      CFFI.Window_Close(name.toNativeUtf8(allocator: arena).cast());
+      cvg.Window_Close(name.toNativeUtf8(allocator: arena).cast());
     });
   }
 
@@ -44,7 +44,7 @@ class Window {
     return cvRunArena<double>((arena) {
       final result = arena<ffi.Double>();
       cvRun(() =>
-          CFFI.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
+          cvg.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
       return result.value;
     });
   }
@@ -56,7 +56,7 @@ class Window {
   void setWindowProperty(WindowPropertyFlags flag, double value) {
     cvRunArena((arena) {
       cvRun(() =>
-          CFFI.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
+          cvg.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
     });
   }
 
@@ -66,7 +66,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
   void setWindowTitle(String title) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_SetTitle(
+      cvRun(() => cvg.Window_SetTitle(
           name.toNativeUtf8(allocator: arena).cast(), title.toNativeUtf8(allocator: arena).cast()));
     });
   }
@@ -79,7 +79,7 @@ class Window {
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
   void imshow(Mat img) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
+      cvRun(() => cvg.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
     });
   }
 
@@ -93,7 +93,7 @@ class Window {
   int waitKey(int delay) {
     return cvRunArena<int>((arena) {
       final ret = arena<ffi.Int>();
-      cvRun(() => CFFI.Window_WaitKey(delay, ret));
+      cvRun(() => cvg.Window_WaitKey(delay, ret));
       return ret.value;
     });
   }
@@ -104,7 +104,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
   void moveWindow(int x, int y) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
+      cvRun(() => cvg.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
     });
   }
 
@@ -114,7 +114,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
   void resizeWindow(int width, int height) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
+      cvRun(() => cvg.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
     });
   }
 
@@ -131,7 +131,7 @@ class Window {
     return cvRunArena<Rect>((arena) {
       final result = arena<cvg.Rect>();
       cvRun(
-          () => CFFI.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+          () => cvg.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
       return Rect.fromNative(result.ref);
     });
   }
@@ -149,7 +149,7 @@ class Window {
     return cvRunArena<VecRect>((arena) {
       final result = arena<cvg.VecRect>();
       cvRun(() =>
-          CFFI.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
+          cvg.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
       return VecRect.fromVec(result.ref);
     });
   }
@@ -167,7 +167,7 @@ class Window {
 int waitKey(int delay) {
   return cvRunArena<int>((arena) {
     final ret = arena<ffi.Int>();
-    cvRun(() => CFFI.Window_WaitKey(delay, ret));
+    cvRun(() => cvg.Window_WaitKey(delay, ret));
     return ret.value;
   });
 }
@@ -176,7 +176,7 @@ class Trackbar {
   Trackbar(this.name, this.parent, this.max, {int? value}) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_Create(parent.name.toNativeUtf8(allocator: arena).cast(),
+        () => cvg.Trackbar_Create(parent.name.toNativeUtf8(allocator: arena).cast(),
             name.toNativeUtf8(allocator: arena).cast(), max),
       );
       if (value != null) {
@@ -192,7 +192,7 @@ class Trackbar {
   int get pos {
     return cvRunArena<int>((arena) {
       final result = arena<ffi.Int>();
-      cvRun(() => CFFI.Trackbar_GetPos(parent.name.toNativeUtf8(allocator: arena).cast(),
+      cvRun(() => cvg.Trackbar_GetPos(parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(), result));
       return result.value;
     });
@@ -205,7 +205,7 @@ class Trackbar {
   set pos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetPos(
+        () => cvg.Trackbar_SetPos(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -221,7 +221,7 @@ class Trackbar {
   set minPos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetMin(
+        () => cvg.Trackbar_SetMin(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -237,7 +237,7 @@ class Trackbar {
   set maxPos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetMax(
+        () => cvg.Trackbar_SetMax(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -253,7 +253,7 @@ class Trackbar {
 
 /// destroy all windows.
 void destroyAllWindows() {
-  cvRun(() => CFFI.destroyAllWindows());
+  cvRun(() => cvg.destroyAllWindows());
 }
 
 enum WindowFlag {

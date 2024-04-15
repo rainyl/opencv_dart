@@ -8,12 +8,13 @@ output:
   #   # so that other pacakges can use them.
   #   output: 'package:opencv_dart/src/symbols.yaml'
   #   import-path: 'package:opencv_dart/base.dart'
-# ffi-native:
-#   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+ffi-native:
+  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
 compiler-opts: "-Isrc"
 sort: true
 headers:
   entry-points:
+    - src/opencv_dart.h
     - src/calib3d/calib3d.h
     - src/core/core.h
     - src/core/exception.h
@@ -34,6 +35,7 @@ headers:
     - src/video/video.h
     - src/video/videoio.h
   include-directives:
+    - src/opencv_dart.h
     - src/calib3d/calib3d.h
     - src/core/core.h
     - src/core/exception.h
@@ -72,11 +74,9 @@ functions:
 preamble: |
   // coverage:ignore-file
   // opencv_dart - OpenCV bindings for Dart language
-  //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
-  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
   // Author: Rainyl
   // License: Apache-2.0
-  // Date: 2024/01/28
+  // Date: 2024/04/15
 
 comments:
   style: doxygen # Options - doxygen(default) / any.

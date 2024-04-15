@@ -28,7 +28,7 @@ import '../opencv.g.dart' as cvg;
 VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
   return cvRunArena<VecPoint>((arena) {
     final vec = arena<cvg.VecPoint>();
-    cvRun(() => CFFI.ApproxPolyDP(curve.ref, epsilon, closed, vec));
+    cvRun(() => cvg.ApproxPolyDP(curve.ref, epsilon, closed, vec));
     return VecPoint.fromVec(vec.ref);
   });
 }
@@ -41,7 +41,7 @@ VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
 double arcLength(VecPoint curve, bool closed) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => CFFI.ArcLength(curve.ref, closed, p));
+    cvRun(() => cvg.ArcLength(curve.ref, closed, p));
     return p.value;
   });
 }
@@ -52,7 +52,7 @@ double arcLength(VecPoint curve, bool closed) {
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
 Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) {
   hull ??= Mat.empty();
-  cvRun(() => CFFI.ConvexHull(points.ref, hull!.ref, clockwise, returnPoints));
+  cvRun(() => cvg.ConvexHull(points.ref, hull!.ref, clockwise, returnPoints));
   return hull;
 }
 
@@ -62,7 +62,7 @@ Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnP
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
 Mat convexityDefects(VecPoint contour, final Mat hull, {Mat? convexityDefects}) {
   convexityDefects ??= Mat.empty();
-  cvRun(() => CFFI.ConvexityDefects(contour.ref, hull.ref, convexityDefects!.ref));
+  cvRun(() => cvg.ConvexityDefects(contour.ref, hull.ref, convexityDefects!.ref));
   return convexityDefects;
 }
 
@@ -74,7 +74,7 @@ Mat convexityDefects(VecPoint contour, final Mat hull, {Mat? convexityDefects}) 
 /// http:///docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
 Mat cvtColor(Mat src, int code, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.CvtColor(src.ref, dst!.ref, code));
+  cvRun(() => cvg.CvtColor(src.ref, dst!.ref, code));
   return dst;
 }
 
@@ -85,7 +85,7 @@ Mat cvtColor(Mat src, int code, {Mat? dst}) {
 Mat equalizeHist(Mat src, {Mat? dst}) {
   assert(src.channels == 1, "src must be grayscale");
   dst ??= Mat.empty();
-  cvRun(() => CFFI.EqualizeHist(src.ref, dst!.ref));
+  cvRun(() => cvg.EqualizeHist(src.ref, dst!.ref));
   return dst;
 }
 
@@ -104,7 +104,7 @@ Mat calcHist(
 }) {
   hist ??= Mat.empty();
   cvRun(
-    () => CFFI.CalcHist(
+    () => cvg.CalcHist(
       src.ref,
       channels.ref,
       mask.ref,
@@ -131,7 +131,7 @@ Mat calcBackProject(
   bool uniform = true,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.CalcBackProject(
+  cvRun(() => cvg.CalcBackProject(
         src.ref,
         channels.ref,
         hist.ref,
@@ -149,7 +149,7 @@ Mat calcBackProject(
 double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
   return cvRunArena<double>((arena) {
     final p = arena<cvg.double_t>();
-    cvRun(() => CFFI.CompareHist(hist1.ref, hist2.ref, method, p));
+    cvRun(() => cvg.CompareHist(hist1.ref, hist2.ref, method, p));
     return p.value;
   });
 }
@@ -160,7 +160,7 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 (bool, Point, Point) clipLine(Rect imgRect, Point pt1, Point pt2) {
   bool r = using<bool>((arena) {
     final rval = arena<ffi.Bool>();
-    cvRun(() => CFFI.ClipLine(imgRect.ref, pt1.ref, pt2.ref, rval));
+    cvRun(() => cvg.ClipLine(imgRect.ref, pt1.ref, pt2.ref, rval));
     return rval.value;
   });
   return (r, pt1, pt2);
@@ -178,7 +178,7 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
 Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.BilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace));
+  cvRun(() => cvg.BilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace));
   return dst;
 }
 
@@ -189,7 +189,7 @@ Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace,
 Mat blur(Mat src, Size ksize, {Mat? dst}) {
   return using<Mat>((arena) {
     dst ??= Mat.empty();
-    cvRun(() => CFFI.Blur(src.ref, dst!.ref, ksize.toSize(arena).ref));
+    cvRun(() => cvg.Blur(src.ref, dst!.ref, ksize.toSize(arena).ref));
     return dst!;
   });
 }
@@ -201,7 +201,7 @@ Mat blur(Mat src, Size ksize, {Mat? dst}) {
 Mat boxFilter(Mat src, int depth, Size ksize, {Mat? dst}) {
   return using<Mat>((arena) {
     dst ??= Mat.empty();
-    cvRun(() => CFFI.BoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
+    cvRun(() => cvg.BoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
     return dst!;
   });
 }
@@ -213,7 +213,7 @@ Mat boxFilter(Mat src, int depth, Size ksize, {Mat? dst}) {
 Mat sqrBoxFilter(Mat src, int depth, Size ksize, {Mat? dst}) {
   return using<Mat>((arena) {
     dst ??= Mat.empty();
-    cvRun(() => CFFI.SqBoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
+    cvRun(() => cvg.SqBoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
     return dst!;
   });
 }
@@ -235,7 +235,7 @@ Mat dilate(
     borderValue ??= Scalar.default_();
     dst ??= Mat.empty();
     anchor ??= Point(-1, -1);
-    cvRun(() => CFFI.DilateWithParams(
+    cvRun(() => cvg.DilateWithParams(
         src.ref, dst!.ref, kernel.ref, anchor!.ref, iterations, borderType, borderValue!.ref));
     return dst!;
   });
@@ -259,7 +259,7 @@ Mat erode(
     dst ??= Mat.empty();
     anchor ??= Point(-1, -1);
     cvRun(
-      () => CFFI.ErodeWithParams(
+      () => cvg.ErodeWithParams(
         src.ref,
         dst!.ref,
         kernel.ref,
@@ -293,7 +293,7 @@ Mat erode(
   dst ??= Mat.empty();
   labels ??= Mat.empty();
   cvRun(() =>
-      CFFI.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
+      cvg.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
   return (dst, labels);
 }
 
@@ -304,7 +304,7 @@ Mat erode(
 Rect boundingRect(VecPoint points) {
   return cvRunArena<Rect>((arena) {
     final rect = arena<cvg.Rect>();
-    cvRun(() => CFFI.BoundingRect(points.ref, rect));
+    cvRun(() => cvg.BoundingRect(points.ref, rect));
     return Rect.fromNative(rect.ref);
   });
 }
@@ -317,7 +317,7 @@ Rect boundingRect(VecPoint points) {
 VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
   return cvRunArena<VecPoint2f>((arena) {
     final p = arena<cvg.VecPoint2f>();
-    cvRun(() => CFFI.BoxPoints(rect.ref, p));
+    cvRun(() => cvg.BoxPoints(rect.ref, p));
     pts = VecPoint2f.fromVec(p.ref);
     return pts!;
   });
@@ -330,7 +330,7 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
 double contourArea(VecPoint contour) {
   return cvRunArena<double>((arena) {
     final area = arena<cvg.double_t>();
-    cvRun(() => CFFI.ContourArea(contour.ref, area));
+    cvRun(() => cvg.ContourArea(contour.ref, area));
     return area.value;
   });
 }
@@ -342,7 +342,7 @@ double contourArea(VecPoint contour) {
 RotatedRect minAreaRect(VecPoint points) {
   return cvRunArena<RotatedRect>((arena) {
     final p = arena<cvg.RotatedRect>();
-    cvRun(() => CFFI.MinAreaRect(points.ref, p));
+    cvRun(() => cvg.MinAreaRect(points.ref, p));
     return RotatedRect.fromNative(p.ref);
   });
 }
@@ -354,7 +354,7 @@ RotatedRect minAreaRect(VecPoint points) {
 RotatedRect fitEllipse(VecPoint points) {
   return cvRunArena<RotatedRect>((arena) {
     final p = arena<cvg.RotatedRect>();
-    cvRun(() => CFFI.FitEllipse(points.ref, p));
+    cvRun(() => cvg.FitEllipse(points.ref, p));
     return RotatedRect.fromNative(p.ref);
   });
 }
@@ -367,7 +367,7 @@ RotatedRect fitEllipse(VecPoint points) {
   return cvRunArena<(Point2f, double)>((arena) {
     final center = arena<cvg.Point2f>();
     final radius = arena<ffi.Float>();
-    cvRun(() => CFFI.MinEnclosingCircle(points.ref, center, radius));
+    cvRun(() => cvg.MinEnclosingCircle(points.ref, center, radius));
     return (Point2f.fromNative(center.ref), radius.value);
   });
 }
@@ -380,7 +380,7 @@ RotatedRect fitEllipse(VecPoint points) {
   final hierarchy = Mat.empty();
   final vec = cvRunArena<Contours>((arena) {
     final v = arena<cvg.VecVecPoint>();
-    cvRun(() => CFFI.FindContours(src.ref, hierarchy.ref, mode, method, v));
+    cvRun(() => cvg.FindContours(src.ref, hierarchy.ref, mode, method, v));
     return Contours.fromVec(v.ref);
   });
   return (vec, hierarchy);
@@ -393,7 +393,7 @@ RotatedRect fitEllipse(VecPoint points) {
 double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
   return cvRunArena<double>((arena) {
     final r = arena<cvg.double_t>();
-    cvRun(() => CFFI.PointPolygonTest(points.ref, pt.ref, measureDist, r));
+    cvRun(() => cvg.PointPolygonTest(points.ref, pt.ref, measureDist, r));
     return r.value;
   });
 }
@@ -405,7 +405,7 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.ConnectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p));
+    cvRun(() => cvg.ConnectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p));
     return p.value;
   });
 }
@@ -426,7 +426,7 @@ int connectedComponentsWithStats(
 ) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.ConnectedComponentsWithStats(
+    cvRun(() => cvg.ConnectedComponentsWithStats(
         src.ref, labels.ref, stats.ref, centroids.ref, connectivity, ltype, ccltype, p));
     return p.value;
   });
@@ -439,7 +439,7 @@ int connectedComponentsWithStats(
 Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? mask}) {
   mask ??= Mat.empty();
   result ??= Mat.empty();
-  cvRun(() => CFFI.MatchTemplate(image.ref, templ.ref, result!.ref, method, mask!.ref));
+  cvRun(() => cvg.MatchTemplate(image.ref, templ.ref, result!.ref, method, mask!.ref));
   return result;
 }
 
@@ -451,7 +451,7 @@ Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? m
 Moments moments(Mat src, {bool binaryImage = false}) {
   return cvRunArena<Moments>((arena) {
     final m = arena<cvg.Moment>();
-    cvRun(() => CFFI.Moments(src.ref, binaryImage, m));
+    cvRun(() => cvg.Moments(src.ref, binaryImage, m));
     return Moments.fromNative(m.ref);
   });
 }
@@ -468,7 +468,7 @@ Mat pyrDown(
 }) {
   dst ??= Mat.empty();
   using((arena) {
-    cvRun(() => CFFI.PyrDown(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
+    cvRun(() => cvg.PyrDown(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
   });
   return dst;
 }
@@ -485,7 +485,7 @@ Mat pyrUp(
 }) {
   dst ??= Mat.empty();
   using((arena) {
-    cvRun(() => CFFI.PyrUp(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
+    cvRun(() => cvg.PyrUp(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
   });
   return dst;
 }
@@ -498,7 +498,7 @@ Mat pyrUp(
 Scalar morphologyDefaultBorderValue() {
   return cvRunArena<Scalar>((arena) {
     final s = arena<cvg.Scalar>();
-    cvRun(() => CFFI.MorphologyDefaultBorderValue(s));
+    cvRun(() => cvg.MorphologyDefaultBorderValue(s));
     return Scalar.fromNative(s.ref);
   });
 }
@@ -521,7 +521,7 @@ Mat morphologyEx(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => CFFI.MorphologyExWithParams(
+    () => cvg.MorphologyExWithParams(
       src.ref,
       dst!.ref,
       op,
@@ -544,7 +544,7 @@ Mat getStructuringElement(int shape, Size ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
   return cvRunArena<Mat>((arena) {
     final r = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetStructuringElement(shape, ksize.toSize(arena).ref, r));
+    cvRun(() => cvg.GetStructuringElement(shape, ksize.toSize(arena).ref, r));
     return Mat.fromCMat(r.ref);
   });
 }
@@ -566,7 +566,7 @@ Mat gaussianBlur(
   dst ??= Mat.empty();
   cvRunArena((arena) {
     cvRun(() =>
-        CFFI.GaussianBlur(src.ref, dst!.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType));
+        cvg.GaussianBlur(src.ref, dst!.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType));
   });
   return dst;
 }
@@ -578,7 +578,7 @@ Mat gaussianBlur(
 Mat getGaussianKernel(int ksize, double sigma, {int ktype = 6}) {
   return cvRunArena<Mat>((arena) {
     final r = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetGaussianKernel(ksize, sigma, ktype, r));
+    cvRun(() => cvg.GetGaussianKernel(ksize, sigma, ktype, r));
     return Mat.fromCMat(r.ref);
   });
 }
@@ -594,7 +594,7 @@ Mat sobel(Mat src, int ddepth, int dx, int dy,
     double delta = 0,
     int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Sobel(src.ref, dst!.ref, ddepth, dx, dy, ksize, scale, delta, borderType));
+  cvRun(() => cvg.Sobel(src.ref, dst!.ref, ddepth, dx, dy, ksize, scale, delta, borderType));
   return dst;
 }
 
@@ -611,7 +611,7 @@ Mat sobel(Mat src, int ddepth, int dx, int dy,
 }) {
   dx ??= Mat.empty();
   dy ??= Mat.empty();
-  cvRun(() => CFFI.SpatialGradient(src.ref, dx!.ref, dy!.ref, ksize, borderType));
+  cvRun(() => cvg.SpatialGradient(src.ref, dx!.ref, dy!.ref, ksize, borderType));
   return (dx, dy);
 }
 
@@ -629,7 +629,7 @@ Mat laplacian(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Laplacian(src.ref, dst!.ref, ddepth, ksize, scale, delta, borderType));
+  cvRun(() => cvg.Laplacian(src.ref, dst!.ref, ddepth, ksize, scale, delta, borderType));
   return dst;
 }
 
@@ -648,7 +648,7 @@ Mat scharr(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Scharr(src.ref, dst!.ref, ddepth, dx, dy, scale, delta, borderType));
+  cvRun(() => cvg.Scharr(src.ref, dst!.ref, ddepth, dx, dy, scale, delta, borderType));
   return dst;
 }
 
@@ -658,7 +658,7 @@ Mat scharr(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
 Mat medianBlur(Mat src, int ksize, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.MedianBlur(src.ref, dst!.ref, ksize));
+  cvRun(() => cvg.MedianBlur(src.ref, dst!.ref, ksize));
   return dst;
 }
 
@@ -681,7 +681,7 @@ Mat canny(
   bool l2gradient = false,
 }) {
   edges ??= Mat.empty();
-  cvRun(() => CFFI.Canny(image.ref, edges!.ref, threshold1, threshold2, apertureSize, l2gradient));
+  cvRun(() => cvg.Canny(image.ref, edges!.ref, threshold1, threshold2, apertureSize, l2gradient));
   return edges;
 }
 
@@ -701,7 +701,7 @@ VecPoint2f cornerSubPix(
     final size = winSize.toSize(arena);
     final zone = zeroZone.toSize(arena);
     final c = criteria.toTermCriteria(arena);
-    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
+    cvRun(() => cvg.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
   });
   return corners;
 }
@@ -726,10 +726,10 @@ VecPoint2f goodFeaturesToTrack(
   corners ??= VecPoint2f();
   mask ??= Mat.empty();
   if (gradientSize == null) {
-    cvRun(() => CFFI.GoodFeaturesToTrack(image.ref, corners!.ref, maxCorners, qualityLevel,
+    cvRun(() => cvg.GoodFeaturesToTrack(image.ref, corners!.ref, maxCorners, qualityLevel,
         minDistance, mask!.ref, blockSize, useHarrisDetector, k));
   } else {
-    cvRun(() => CFFI.GoodFeaturesToTrackWithGradient(image.ref, corners!.ref, maxCorners,
+    cvRun(() => cvg.GoodFeaturesToTrackWithGradient(image.ref, corners!.ref, maxCorners,
         qualityLevel, minDistance, mask!.ref, blockSize, gradientSize, useHarrisDetector, k));
   }
   return corners;
@@ -749,7 +749,7 @@ VecPoint2f goodFeaturesToTrack(
   int mode = GC_EVAL,
 }) {
   cvRun(
-      () => CFFI.GrabCut(img.ref, mask.ref, rect.ref, bgdModel.ref, fgdModel.ref, iterCount, mode));
+      () => cvg.GrabCut(img.ref, mask.ref, rect.ref, bgdModel.ref, fgdModel.ref, iterCount, mode));
   return (mask, bgdModel, fgdModel);
 }
 
@@ -771,7 +771,7 @@ Mat HoughCircles(
   int maxRadius = 0,
 }) {
   circles ??= Mat.empty();
-  cvRun(() => CFFI.HoughCirclesWithParams(
+  cvRun(() => cvg.HoughCirclesWithParams(
         image.ref,
         circles!.ref,
         method,
@@ -803,7 +803,7 @@ Mat HoughLines(
   double max_theta = CV_PI,
 }) {
   lines ??= Mat.empty();
-  cvRun(() => CFFI.HoughLines(
+  cvRun(() => cvg.HoughLines(
       image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
   return lines;
 }
@@ -825,7 +825,7 @@ Mat HoughLinesP(
 }) {
   lines ??= Mat.empty();
   cvRun(
-    () => CFFI.HoughLinesPWithParams(
+    () => cvg.HoughLinesPWithParams(
       image.ref,
       lines!.ref,
       rho,
@@ -857,7 +857,7 @@ Mat HoughLinesPointSet(
   OutputArray? lines,
 }) {
   lines ??= Mat.empty();
-  cvRun(() => CFFI.HoughLinesPointSet(point.ref, lines!.ref, lines_max, threshold, min_rho, max_rho,
+  cvRun(() => cvg.HoughLinesPointSet(point.ref, lines!.ref, lines_max, threshold, min_rho, max_rho,
       rho_step, min_theta, max_theta, theta_step));
   return lines;
 }
@@ -876,7 +876,7 @@ Mat HoughLinesPointSet(
   sum ??= Mat.empty();
   sqsum ??= Mat.empty();
   tilted ??= Mat.empty();
-  cvRun(() => CFFI.Integral(src.ref, sum!.ref, sqsum!.ref, tilted!.ref, sdepth, sqdepth));
+  cvRun(() => cvg.Integral(src.ref, sum!.ref, sqsum!.ref, tilted!.ref, sdepth, sqdepth));
   return (sum, sqsum, tilted);
 }
 
@@ -894,7 +894,7 @@ Mat HoughLinesPointSet(
   dst ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
     final p = arena<cvg.double_t>();
-    cvRun(() => CFFI.Threshold(src.ref, dst!.ref, thresh, maxval, type, p));
+    cvRun(() => cvg.Threshold(src.ref, dst!.ref, thresh, maxval, type, p));
     return p.value;
   });
   return (rval, dst);
@@ -914,7 +914,7 @@ Mat adaptiveThreshold(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.AdaptiveThreshold(
+  cvRun(() => cvg.AdaptiveThreshold(
       src.ref, dst!.ref, maxValue, adaptiveMethod, thresholdType, blockSize, C));
   return dst;
 }
@@ -934,7 +934,7 @@ Mat arrowedLine(
   int shift = 0,
   double tipLength = 0.1,
 }) {
-  cvRun(() => CFFI.ArrowedLine(
+  cvRun(() => cvg.ArrowedLine(
       img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
   return img;
 }
@@ -953,7 +953,7 @@ Mat circle(
   int shift = 0,
 }) {
   cvRun(() =>
-      CFFI.CircleWithParams(img.ref, center.ref, radius, color.ref, thickness, lineType, shift));
+      cvg.CircleWithParams(img.ref, center.ref, radius, color.ref, thickness, lineType, shift));
   return img;
 }
 
@@ -973,7 +973,7 @@ Mat ellipse(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => CFFI.EllipseWithParams(img.ref, center.ref, axes.ref, angle, startAngle, endAngle,
+  cvRun(() => cvg.EllipseWithParams(img.ref, center.ref, axes.ref, angle, startAngle, endAngle,
       color.ref, thickness, lineType, shift));
   return img;
 }
@@ -991,7 +991,7 @@ Mat line(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => CFFI.Line(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift));
+  cvRun(() => cvg.Line(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift));
   return img;
 }
 
@@ -1008,7 +1008,7 @@ Mat rectangle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => CFFI.RectangleWithParams(img.ref, rect.ref, color.ref, thickness, lineType, shift));
+  cvRun(() => cvg.RectangleWithParams(img.ref, rect.ref, color.ref, thickness, lineType, shift));
   return img;
 }
 
@@ -1025,7 +1025,7 @@ Mat fillPoly(
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  cvRun(() => CFFI.FillPolyWithParams(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref));
+  cvRun(() => cvg.FillPolyWithParams(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref));
   return img;
 }
 
@@ -1042,7 +1042,7 @@ Mat polylines(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => CFFI.Polylines(img.ref, pts.ref, isClosed, color.ref, thickness));
+  cvRun(() => cvg.Polylines(img.ref, pts.ref, isClosed, color.ref, thickness));
   return img;
 }
 
@@ -1062,7 +1062,7 @@ Mat polylines(
     final baseline = arena<ffi.Int>();
     final size = arena<cvg.Size>();
     final textPtr = text.toNativeUtf8(allocator: arena);
-    cvRun(() => CFFI.GetTextSizeWithBaseline(
+    cvRun(() => cvg.GetTextSizeWithBaseline(
         textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
     Size sz = (size.ref.width, size.ref.height);
     return (sz, baseline.value);
@@ -1090,7 +1090,7 @@ Mat putText(
   using((arena) {
     final textPtr = text.toNativeUtf8(allocator: arena);
     cvRun(
-      () => CFFI.PutTextWithParams(img.ref, textPtr.cast(), org.ref, fontFace, fontScale, color.ref,
+      () => cvg.PutTextWithParams(img.ref, textPtr.cast(), org.ref, fontFace, fontScale, color.ref,
           thickness, lineType, bottomLeftOrigin),
     );
   });
@@ -1116,7 +1116,7 @@ Mat resize(
 }) {
   dst ??= Mat.empty();
   using((arena) {
-    cvRun(() => CFFI.Resize(src.ref, dst!.ref, dsize.toSize(arena).ref, fx, fy, interpolation));
+    cvRun(() => cvg.Resize(src.ref, dst!.ref, dsize.toSize(arena).ref, fx, fy, interpolation));
   });
   return dst;
 }
@@ -1135,7 +1135,7 @@ Mat getRectSubPix(
   patch ??= Mat.empty();
   using((arena) {
     cvRun(
-      () => CFFI.GetRectSubPix(
+      () => cvg.GetRectSubPix(
         image.ref,
         patchSize.toSize(arena).ref,
         center.ref,
@@ -1153,7 +1153,7 @@ Mat getRectSubPix(
 Mat getRotationMatrix2D(Point2f center, double angle, double scale) {
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetRotationMatrix2D(center.ref, angle, scale, mat));
+    cvRun(() => cvg.GetRotationMatrix2D(center.ref, angle, scale, mat));
     return Mat.fromCMat(mat.ref);
   });
 }
@@ -1175,7 +1175,7 @@ Mat warpAffine(
   borderValue ??= Scalar.default_();
   using((arena) {
     cvRun(
-      () => CFFI.WarpAffineWithParams(
+      () => cvg.WarpAffineWithParams(
         src.ref,
         dst!.ref,
         M.ref,
@@ -1207,7 +1207,7 @@ Mat warpPerspective(
   borderValue ??= Scalar.default_();
   using((arena) {
     cvRun(
-      () => CFFI.WarpPerspectiveWithParams(
+      () => cvg.WarpPerspectiveWithParams(
         src.ref,
         dst!.ref,
         M.ref,
@@ -1226,7 +1226,7 @@ Mat warpPerspective(
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/d47/group__imgproc__segmentation.html#ga3267243e4d3f95165d55a618c65ac6e1
 Mat watershed(InputArray image, InputOutputArray markers) {
-  cvRun(() => CFFI.Watershed(image.ref, markers.ref));
+  cvRun(() => cvg.Watershed(image.ref, markers.ref));
   return markers;
 }
 
@@ -1236,7 +1236,7 @@ Mat watershed(InputArray image, InputOutputArray markers) {
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gadf478a5e5ff49d8aa24e726ea6f65d15
 Mat applyColorMap(InputArray src, int colormap, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.ApplyColorMap(src.ref, dst!.ref, colormap));
+  cvRun(() => cvg.ApplyColorMap(src.ref, dst!.ref, colormap));
   return dst;
 }
 
@@ -1246,7 +1246,7 @@ Mat applyColorMap(InputArray src, int colormap, {OutputArray? dst}) {
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gacb22288ddccc55f9bd9e6d492b409cae
 Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.ApplyCustomColorMap(src.ref, dst!.ref, userColor.ref));
+  cvRun(() => cvg.ApplyCustomColorMap(src.ref, dst!.ref, userColor.ref));
   return dst;
 }
 
@@ -1258,7 +1258,7 @@ Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}
 Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) {
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetPerspectiveTransform(src.ref, dst.ref, mat, solveMethod));
+    cvRun(() => cvg.GetPerspectiveTransform(src.ref, dst.ref, mat, solveMethod));
     return Mat.fromCMat(mat.ref);
   });
 }
@@ -1271,7 +1271,7 @@ Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOM
 Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) {
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetPerspectiveTransform2f(src.ref, dst.ref, mat, solveMethod));
+    cvRun(() => cvg.GetPerspectiveTransform2f(src.ref, dst.ref, mat, solveMethod));
     return Mat.fromCMat(mat.ref);
   });
 }
@@ -1284,7 +1284,7 @@ Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod =
 Mat getAffineTransform(VecPoint src, VecPoint dst) {
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetAffineTransform(src.ref, dst.ref, mat));
+    cvRun(() => cvg.GetAffineTransform(src.ref, dst.ref, mat));
     return Mat.fromCMat(mat.ref);
   });
 }
@@ -1292,7 +1292,7 @@ Mat getAffineTransform(VecPoint src, VecPoint dst) {
 Mat getAffineTransform2f(VecPoint2f src, VecPoint2f dst) {
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetAffineTransform2f(src.ref, dst.ref, mat));
+    cvRun(() => cvg.GetAffineTransform2f(src.ref, dst.ref, mat));
     return Mat.fromCMat(mat.ref);
   });
 }
@@ -1314,7 +1314,7 @@ Mat findHomography(
   return cvRunArena<Mat>((arena) {
     final mat = arena<cvg.Mat>();
     cvRun(
-      () => CFFI.FindHomography(
+      () => cvg.FindHomography(
         srcPoints.ref,
         dstPoints.ref,
         method,
@@ -1347,7 +1347,7 @@ Mat drawContours(
   offset ??= Point(0, 0);
   hierarchy ??= Mat.empty();
   cvRun(
-    () => CFFI.DrawContoursWithParams(
+    () => cvg.DrawContoursWithParams(
       image.ref,
       contours.ref,
       contourIdx,
@@ -1377,7 +1377,7 @@ Mat remap(
 }) {
   borderValue ??= Scalar.default_();
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Remap(
+  cvRun(() => cvg.Remap(
       src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
   return dst;
 }
@@ -1397,7 +1397,7 @@ Mat filter2D(
 }) {
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
-  cvRun(() => CFFI.Filter2D(src.ref, dst!.ref, ddepth, kernel.ref, anchor!.ref, delta, borderType));
+  cvRun(() => cvg.Filter2D(src.ref, dst!.ref, ddepth, kernel.ref, anchor!.ref, delta, borderType));
   return dst;
 }
 
@@ -1418,7 +1418,7 @@ Mat sepFilter2D(
   anchor ??= Point(-1, -1);
   dst ??= Mat.empty();
   cvRun(
-    () => CFFI.SepFilter2D(
+    () => cvg.SepFilter2D(
       src.ref,
       dst!.ref,
       ddepth,
@@ -1438,7 +1438,7 @@ Mat sepFilter2D(
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaec3a0b126a85b5ca2c667b16e0ae022d
 Mat logPolar(InputArray src, Point2f center, double M, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.LogPolar(src.ref, dst!.ref, center.ref, M, flags));
+  cvRun(() => cvg.LogPolar(src.ref, dst!.ref, center.ref, M, flags));
   return dst;
 }
 
@@ -1448,7 +1448,7 @@ Mat logPolar(InputArray src, Point2f center, double M, int flags, {OutputArray? 
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaa38a6884ac8b6e0b9bed47939b5362f3
 Mat linearPolar(InputArray src, Point2f center, double maxRadius, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.LinearPolar(src.ref, dst!.ref, center.ref, maxRadius, flags));
+  cvRun(() => cvg.LinearPolar(src.ref, dst!.ref, center.ref, maxRadius, flags));
   return dst;
 }
 
@@ -1459,7 +1459,7 @@ Mat linearPolar(InputArray src, Point2f center, double maxRadius, int flags, {Ou
 Mat fitLine(VecPoint points, int distType, double param, double reps, double aeps,
     {OutputArray? line}) {
   line ??= Mat.empty();
-  cvRun(() => CFFI.FitLine(points.ref, line!.ref, distType, param, reps, aeps));
+  cvRun(() => cvg.FitLine(points.ref, line!.ref, distType, param, reps, aeps));
   return line;
 }
 
@@ -1470,7 +1470,7 @@ Mat fitLine(VecPoint points, int distType, double param, double reps, double aep
 double matchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter) {
   return cvRunArena<double>((arena) {
     final r = arena<cvg.double_t>();
-    cvRun(() => CFFI.MatchShapes(contour1.ref, contour2.ref, method, parameter, r));
+    cvRun(() => cvg.MatchShapes(contour1.ref, contour2.ref, method, parameter, r));
     return r.value;
   });
 }
@@ -1483,7 +1483,7 @@ double matchShapes(VecPoint contour1, VecPoint contour2, int method, double para
 /// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga57d3505a878a7e1a636645727ca08f51
 Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
   iM ??= Mat.empty();
-  cvRun(() => CFFI.InvertAffineTransform(M.ref, iM!.ref));
+  cvRun(() => cvg.InvertAffineTransform(M.ref, iM!.ref));
   return iM;
 }
 
@@ -1497,7 +1497,7 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
   return cvRunArena<(Point2f, double)>((arena) {
     final p = arena<cvg.double_t>();
     final pp = arena<cvg.Point2f>();
-    cvRun(() => CFFI.PhaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp));
+    cvRun(() => cvg.PhaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp));
     return (Point2f.fromNative(pp.ref), p.value);
   });
 }
@@ -1509,9 +1509,9 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 ///
 Mat accumulate(InputArray src, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => CFFI.Mat_Accumulate(src.ref, dst.ref));
+    cvRun(() => cvg.Mat_Accumulate(src.ref, dst.ref));
   } else {
-    cvRun(() => CFFI.Mat_AccumulateWithMask(src.ref, dst.ref, mask.ref));
+    cvRun(() => cvg.Mat_AccumulateWithMask(src.ref, dst.ref, mask.ref));
   }
   return dst;
 }
@@ -1522,9 +1522,9 @@ Mat accumulate(InputArray src, InputOutputArray dst, {InputArray? mask}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
 Mat accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => CFFI.Mat_AccumulateSquare(src.ref, dst.ref));
+    cvRun(() => cvg.Mat_AccumulateSquare(src.ref, dst.ref));
   } else {
-    cvRun(() => CFFI.Mat_AccumulateSquareWithMask(src.ref, dst.ref, mask.ref));
+    cvRun(() => cvg.Mat_AccumulateSquareWithMask(src.ref, dst.ref, mask.ref));
   }
   return dst;
 }
@@ -1535,9 +1535,9 @@ Mat accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga82518a940ecfda49460f66117ac82520
 Mat accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => CFFI.Mat_AccumulateProduct(src1.ref, src2.ref, dst.ref));
+    cvRun(() => cvg.Mat_AccumulateProduct(src1.ref, src2.ref, dst.ref));
   } else {
-    cvRun(() => CFFI.Mat_AccumulateProductWithMask(src1.ref, src2.ref, dst.ref, mask.ref));
+    cvRun(() => cvg.Mat_AccumulateProductWithMask(src1.ref, src2.ref, dst.ref, mask.ref));
   }
   return dst;
 }
@@ -1548,9 +1548,9 @@ Mat accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {I
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
 Mat accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => CFFI.Mat_AccumulatedWeighted(src.ref, dst.ref, alpha));
+    cvRun(() => cvg.Mat_AccumulatedWeighted(src.ref, dst.ref, alpha));
   } else {
-    cvRun(() => CFFI.Mat_AccumulatedWeightedWithMask(src.ref, dst.ref, alpha, mask.ref));
+    cvRun(() => cvg.Mat_AccumulatedWeightedWithMask(src.ref, dst.ref, alpha, mask.ref));
   }
   return dst;
 }
