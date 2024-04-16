@@ -1,11 +1,8 @@
 import os
 from conan import ConanFile
-from conan.api.output import ConanOutput, Color
 from conan.errors import ConanInvalidConfiguration, ConanException
 from conan.tools.cmake import cmake_layout, CMake, CMakeToolchain, CMakeDeps
 import conan.tools.files as cfiles
-from conan.tools.scm import Git
-from conan.tools.microsoft import is_msvc, is_msvc_static_runtime
 import tarfile
 from pathlib import Path
 import yaml
@@ -92,11 +89,11 @@ class OcvDartDesktop(ConanFile):
         # self.build_folder: build/{os}/{arch}/opencv
         # base = Path(self.build_folder).parent  # build/{os}/{arch}
         out_dir = Path(os.path.abspath(str(self.options.get_safe("output_dir"))))
+        pkg_dir = Path(os.path.abspath(str(self.options.get_safe("package_root"))))
         self.folders.generators = str((out_dir / "generators").absolute())
         self.folders.build = str(out_dir.absolute())
-        self.folders.source = str(
-            os.path.abspath(str(self.options.get_safe("package_root")))
-        )
+        self.folders.source = str(pkg_dir.absolute())
+        self.folders.set_base_package(str(pkg_dir.absolute()))
 
     def generate(self):
         tc: CMakeToolchain = CMakeToolchain(self)
@@ -167,8 +164,7 @@ class OcvDartDesktop(ConanFile):
 
     @property
     def publish_folder(self) -> Path:
-        p = Path(self.install_folder).absolute().parent.parent.parent
-        return p / "publish"
+        return Path(self.package_folder).absolute() / "publish"
 
     @property
     def opencv_dir(self) -> str:
