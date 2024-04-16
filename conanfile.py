@@ -164,7 +164,7 @@ class OcvDartDesktop(ConanFile):
 
     @property
     def publish_folder(self) -> Path:
-        return Path(self.package_folder).absolute() / "publish"
+        return Path(self.package_folder).absolute() / "build" / "publish"
 
     @property
     def opencv_dir(self) -> str:
