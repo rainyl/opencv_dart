@@ -162,4 +162,5 @@ jobs:
         - name: build
           run: |
             # TODO: use flutter distributor to build
+            cd example
             flutter build ios --release --no-codesign
