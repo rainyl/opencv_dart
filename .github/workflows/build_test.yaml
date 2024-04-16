@@ -2,9 +2,9 @@ name: build and test
 
 on:
   push:
-    branches: ["main", "dnn-test"]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-windows:
