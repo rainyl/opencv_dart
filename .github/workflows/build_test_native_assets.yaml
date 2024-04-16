@@ -158,9 +158,9 @@ jobs:
         - name: Set up Flutter
           uses: subosito/flutter-action@v2
           with:
-            channel: beta # or: beta, master (or main)
+            channel: main # or: beta, master (or main)
         - name: build
           run: |
-            # TODO: use flutter distributor to build
             cd example
+            flutter config --enable-native-assets
             flutter build ios --release --no-codesign
