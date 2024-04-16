@@ -6,6 +6,7 @@ export 'contrib/aruco.dart';
 export 'contrib/aruco_dict.dart';
 export 'contrib/img_hash.dart';
 
+export 'core/array.dart';
 export 'core/asyncarray.dart';
 export 'core/base.dart';
 export 'core/core.dart';
