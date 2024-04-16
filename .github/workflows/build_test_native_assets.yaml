@@ -21,10 +21,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "beta"
       - name: setup
         run: |
           sudo apt-get update
@@ -37,16 +33,15 @@ jobs:
           conan profile detect -f
 
           cd ${{github.workspace}}
-          mkdir -p build/android
-
-          wget -q -O build/android-ndk-$ANDROID_NDK_VERSION-linux.zip \
-            https://dl.google.com/android/repository/android-ndk-$ANDROID_NDK_VERSION-linux.zip
-          unzip -q -o build/android-ndk-$ANDROID_NDK_VERSION-linux.zip -d build/
-      - name: build-android
-        run: |
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "main"
+      - run: |
           cd example
-          flutter pub get
+          flutter --version
           flutter config --enable-native-assets
+          flutter pub get
           flutter build apk --release --target-platform android-arm64,android-arm,android-x64
       # - uses: actions/upload-artifact@v4
       #   name: upload-android-armeabi-v7a
@@ -148,19 +143,23 @@ jobs:
         run: |
           dart pub get
           dart --enable-experiment=native-assets test -x skip-workflow,no-local-files
-  # build-ios:
-  #     name: build-ios
-  #     runs-on: macos-14
-  #     steps:
-  #       - uses: actions/checkout@v4
-  #         with:
-  #           submodules: true
-  #       - name: setup
-  #         run: |
-  #           brew install --force --overwrite ninja ccache nasm conan
-  #           conan profile detect -f
-  #           cd ${{github.workspace}}
-  #       - name: build
-  #         run: |
-  #           # TODO: use flutter distributor to build
-  #           flutter build ios --release --no-codesign
+  build-ios:
+      name: build-ios
+      runs-on: macos-14
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: setup
+          run: |
+            brew install --force --overwrite ninja ccache nasm conan
+            conan profile detect -f
+            cd ${{github.workspace}}
+        - name: Set up Flutter
+          uses: subosito/flutter-action@v2
+          with:
+            channel: beta # or: beta, master (or main)
+        - name: build
+          run: |
+            # TODO: use flutter distributor to build
+            flutter build ios --release --no-codesign

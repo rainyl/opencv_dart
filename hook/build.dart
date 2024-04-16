@@ -198,31 +198,41 @@ class ConanBuilder implements Builder {
       OS.macOS => "dylib",
       OS.android => "so",
       OS.fuchsia => "so",
-      OS.iOS => "dylib",
+      OS.iOS => "framework",
       OS() => throw UnimplementedError(),
     };
     final installDir = Directory.fromUri(outDir.resolve("install"));
     if (!installDir.existsSync()) {
       installDir.createSync(recursive: true);
     }
-    final libUris = installDir.listSync();
+    final libEntities = installDir.listSync();
 
     if (assetName != null) {
       final assets = <Asset>[];
-      for (var uri in libUris) {
-        if (uri is File && uri.path.endsWith(ext)) {
-          final fileName = p.basename(uri.path);
-          assets.add(NativeCodeAsset(
-            package: buildConfig.packageName,
-            name: fileName.contains(buildConfig.packageName)
-                ? assetName!
-                : p.basenameWithoutExtension(fileName),
-            file: uri.absolute.uri,
-            linkMode: linkMode,
-            os: targetOS,
-            architecture: buildConfig.dryRun ? null : buildConfig.targetArchitecture,
-          ));
+      for (var entity in libEntities) {
+        final fileName = p.basename(entity.path);
+        Uri assetUri;
+        // for windows, linux, android, the final lib is a file,
+        // i.e., .dll, .so files
+        if (entity is File && entity.path.endsWith(ext)) {
+          assetUri = entity.uri;
         }
+        // for ios, the final lib is .framework, i.e., a directory,
+        else if (entity is Directory && targetOS == OS.iOS) {
+          assetUri = entity.uri.resolve("opencv_dart");
+        } else {
+          continue;
+        }
+        assets.add(NativeCodeAsset(
+          package: buildConfig.packageName,
+          name: fileName.contains(buildConfig.packageName)
+              ? assetName!
+              : p.basenameWithoutExtension(fileName),
+          file: assetUri,
+          linkMode: linkMode,
+          os: targetOS,
+          architecture: buildConfig.dryRun ? null : buildConfig.targetArchitecture,
+        ));
       }
       buildOutput.addAssets(assets);
     }
