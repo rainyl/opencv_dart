@@ -31,7 +31,7 @@ jobs:
           ls test/models
           python3 -m pip install conan
           conan profile detect -f
-          conan build . -b missing -s compiler.cppstd=20 -o package_root="$PWD" -o output_dir="$PWD/build/windows"
+          conan build . -b missing -s compiler.cppstd=20 -o package_root="$PWD" -o output_dir="$PWD\build\windows"
 
       - uses: actions/upload-artifact@v4
         name: upload-windows-x64
@@ -45,7 +45,8 @@ jobs:
       - name: setup coverage
         run: |
           cd "${{github.workspace}}"
-          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
+          ls windows
+          $env:PATH="${{github.workspace}}\windows;$env:PATH"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name opencv_dart
       - name: Upload coverage reports to Codecov
