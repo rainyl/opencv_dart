@@ -50,7 +50,7 @@ class OcvDartDesktop(ConanFile):
     }
     default_options = {
         "package_root": ".",
-        "output_dir": ".dart_tool/opencv_dart",
+        "output_dir": "build",
         "opencv_overwrite": False,
     }
 
