@@ -125,7 +125,7 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan libiconv
+          brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
@@ -153,7 +153,7 @@ jobs:
       - name: setup
         run: |
           # brew update
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan libiconv
+          brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
@@ -180,7 +180,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja ccache nasm conan
+            brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: Set up Flutter
