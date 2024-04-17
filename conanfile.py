@@ -152,7 +152,7 @@ class OcvDartDesktop(ConanFile):
                 print(f"Adding {file}...")
                 tar.add(file, arcname=file.name)
         print(f"published: {fname}")
-        dst = self.publish_folder.parent.parent / os
+        dst = Path(self.package_folder).absolute() / os
         if os == "android":
             dst = dst / "src" / "main" / "jniLibs" / arch
         print(f"Copying to {dst}")

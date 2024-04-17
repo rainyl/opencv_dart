@@ -12,7 +12,7 @@ void main() {
     expect(points.length, 1);
   });
 
-  test('cv.WeChatQRCode', () {
+  test('cv.WeChatQRCode', tags: ["no-local-files"], () {
     final qr = cv.WeChatQRCode(
       "test/models/detect.prototxt",
       "test/models/detect.caffemodel",

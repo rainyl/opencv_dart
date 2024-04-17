@@ -41,11 +41,14 @@ jobs:
       - name: build-android
         run: |
           conan build . -b missing -pr:h profiles/android-x86_64 \
-            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
+            -o output_dir="build/Android/x86_64"
           conan build . -b missing -pr:h profiles/android-armv8 \
-            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
+            -o output_dir="build/Android/armv8"
           conan build . -b missing -pr:h profiles/android-armv7 \
-            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION"
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
+            -o output_dir="build/Android/armv7"
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
         with:
@@ -96,7 +99,8 @@ jobs:
           submodules: true
       - name: build-opencv-dart
         run: |
-          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja
+          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja \
+          -o output_dir="build/Linux/x64"
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
@@ -135,7 +139,8 @@ jobs:
         run: |
           python3 -m pip install conan
           conan profile detect -f
-          conan build . -b missing -s compiler.cppstd=20
+          conan build . -b missing -s compiler.cppstd=20 \
+          -o output_dir="build/Windows/x64"
 
       - uses: actions/upload-artifact@v4
         name: upload-windows-x64
@@ -173,7 +178,8 @@ jobs:
           cd ${{github.workspace}}
       - name: build
         run: |
-          conan build . -b missing
+          conan build . -b missing \
+          -o output_dir="build/macos/x64"
 
       - uses: actions/upload-artifact@v4
         name: upload-macos-x64
@@ -213,8 +219,8 @@ jobs:
           cd ${{github.workspace}}
       - name: build
         run: |
-          conan build . -b missing
-          ls -alh build/Macos
+          conan build . -b missing \
+          -o output_dir="build/macos/arm64"
 
       - uses: actions/upload-artifact@v4
         name: upload-macos-arm64
@@ -254,10 +260,12 @@ jobs:
         - name: build
           run: |
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-armv8
-            conan build . -b missing -pr:h profiles/ios-armv8
+            conan build . -b missing -pr:h profiles/ios-armv8 \
+            -o output_dir="build/ios/armv8"
 
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-x86_64
-            conan build . -b missing -pr:h profiles/ios-x86_64
+            conan build . -b missing -pr:h profiles/ios-x86_64 \
+            -o output_dir="build/Linux/x86_64"
 
         - uses: actions/upload-artifact@v4
           name: upload
