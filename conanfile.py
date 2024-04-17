@@ -63,25 +63,6 @@ class OcvDartDesktop(ConanFile):
         # self.version = doc["binary_version"]
         self.version = "1.0.0+2"
 
-    def requirements(self):
-        out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
-        if not os.path.exists(out_dir):
-            Path(out_dir).mkdir(parents=True)
-        platform = str(self.settings.os).lower()
-        arch = arch_map[platform][str(self.settings.arch)]
-        filename = f"libopencv-{platform}-{arch}.tar.gz"
-        self.opencv_full = Path(out_dir) / "opencv" / filename.replace(".tar.gz", "")
-        if not self.opencv_full.exists() or self.options.get_safe(
-            "opencv_overwrite", False
-        ):
-            cfiles.get(
-                self,
-                f"{OPENCV_FILES_URL}/{filename}",
-                destination=str(self.opencv_full.absolute()),
-                filename=filename,
-                verify=False,  # TODO: add verify
-            )
-
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")
         self.tool_requires("nasm/2.16.01")
@@ -91,16 +72,6 @@ class OcvDartDesktop(ConanFile):
             self.tool_requires("ninja/1.11.1")
         # if self.settings.os == "Android":
         #     self.tool_requires("android-ndk/r26c")
-
-    def layout(self):
-        # self.build_folder: build/{os}/{arch}/opencv
-        # base = Path(self.build_folder).parent  # build/{os}/{arch}
-        out_dir = Path(os.path.abspath(str(self.options.get_safe("output_dir"))))
-        self.folders.generators = str((out_dir / "generators").absolute())
-        self.folders.build = str(out_dir.absolute())
-        self.folders.source = str(
-            os.path.abspath(str(self.options.get_safe("package_root")))
-        )
 
     def requirements(self):
         out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
@@ -118,14 +89,6 @@ class OcvDartDesktop(ConanFile):
                 filename=filename,
                 verify=False,  # TODO: add verify
             )
-
-    def build_requirements(self):
-        self.tool_requires("cmake/3.28.1")
-        self.tool_requires("nasm/2.16.01")
-        if self.settings.os != "Windows":
-            self.tool_requires("ninja/1.11.1")
-        # if self.settings.os == "Android":
-        #     self.tool_requires("android-ndk/r26c")
 
     def layout(self):
         # self.build_folder: build/{os}/{arch}/opencv
