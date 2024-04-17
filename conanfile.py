@@ -68,7 +68,7 @@ class OcvDartDesktop(ConanFile):
         self.tool_requires("nasm/2.16.01")
         self.tool_requires("libiconv/1.17")
         if self.settings.os != "Windows":
-            self.tool_requires("ffmpeg/4.4.4")
+            # self.tool_requires("ffmpeg/4.4.4")
             self.tool_requires("ninja/1.11.1")
         # if self.settings.os == "Android":
         #     self.tool_requires("android-ndk/r26c")
