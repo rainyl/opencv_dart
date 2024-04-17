@@ -16,7 +16,6 @@ dependencies:
   archive: ^3.4.10
   native_assets_builder: ^0.6.1
   native_assets_cli: ^0.5.4
-  native_toolchain_c: ^0.4.1
   logging: ^1.2.0
 
 dev_dependencies:
