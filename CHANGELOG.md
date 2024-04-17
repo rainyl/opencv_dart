@@ -1,3 +1,11 @@
+## 1.0.1
+
+- API change: cv.Mat.fromScalar(Scalar s, MatType type, {int rows = 1, int cols = 1}) -> (int rows, int cols, MatType type, Scalar s)
+- API change: cv.VideoCapture.getProp(int propId) -> cv.VideoCapture.get(int propId), cv.VideoCapture.setProp(int propId, double value) -> cv.VideoCapture.get(int propId, double value)
+- New API: cv.VideoCapture.openIndex
+- New module: wechat_qrcode
+- Include ffmpeg.dll for windows
+
 ## 1.0.0+1
 
 - Replace Finalizer with ffi.NativeFinalizer
