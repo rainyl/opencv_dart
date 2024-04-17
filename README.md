@@ -121,7 +121,7 @@ to download prebuilt binaries.
 | aruco         | :white_check_mark: | :white_check_mark: | ArUco module         |
 | img_hash      | :white_check_mark: | :white_check_mark: | Image hashing module |
 | cuda          | :x:                | :x:                |                      |
-| wechat_qrcode | :x:                | :x:                |                      |
+| wechat_qrcode | :white_check_mark: | :white_check_mark: |                      |
 | bgsegm        | :x:                | :x:                |                      |
 | superres      | :x:                | :x:                |                      |
 | xfeatures2d   | :x:                | :x:                |                      |
