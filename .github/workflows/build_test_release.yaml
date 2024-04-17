@@ -113,8 +113,8 @@ jobs:
       - name: Run Test
         run: |
           export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
-          flutter pub get
-          flutter test -x skip-workflow,no-local-files
+          dart pub get
+          dart test -x skip-workflow,no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -153,8 +153,8 @@ jobs:
       - name: Run Test
         run: |
           $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
-          flutter pub get
-          flutter test -x no-local-files
+          dart pub get
+          dart test -x no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -193,8 +193,8 @@ jobs:
         run: |
           ls -alh ${{github.workspace}}/macos
           export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
-          flutter pub get
-          flutter test -x no-local-files
+          dart pub get
+          dart test -x no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -234,8 +234,8 @@ jobs:
         run: |
           ls -alh ${{github.workspace}}/macos
           export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
-          flutter pub get
-          flutter test -x no-local-files
+          dart pub get
+          dart test -x no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
