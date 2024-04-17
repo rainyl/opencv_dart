@@ -1,11 +1,8 @@
 import os
 from conan import ConanFile
-from conan.api.output import ConanOutput, Color
 from conan.errors import ConanInvalidConfiguration, ConanException
 from conan.tools.cmake import cmake_layout, CMake, CMakeToolchain, CMakeDeps
 import conan.tools.files as cfiles
-from conan.tools.scm import Git
-from conan.tools.microsoft import is_msvc, is_msvc_static_runtime
 import tarfile
 from pathlib import Path
 import yaml
@@ -50,7 +47,7 @@ class OcvDartDesktop(ConanFile):
     }
     default_options = {
         "package_root": ".",
-        "output_dir": ".dart_tool/opencv_dart",
+        "output_dir": "build",
         "opencv_overwrite": False,
     }
 
@@ -103,6 +100,41 @@ class OcvDartDesktop(ConanFile):
             os.path.abspath(str(self.options.get_safe("package_root")))
         )
 
+    def requirements(self):
+        out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
+        if not os.path.exists(out_dir):
+            Path(out_dir).mkdir(parents=True)
+        platform = str(self.settings.os).lower()
+        arch = arch_map[platform][str(self.settings.arch)]
+        filename = f"libopencv-{platform}-{arch}.tar.gz"
+        self.opencv_full = Path(out_dir) / "opencv" / filename.replace(".tar.gz", "")
+        if not self.opencv_full.exists() or self.options.get_safe("opencv_overwrite", False):
+            cfiles.get(
+                self,
+                f"{OPENCV_FILES_URL}/{filename}",
+                destination=str(self.opencv_full.absolute()),
+                filename=filename,
+                verify=False,  # TODO: add verify
+            )
+
+    def build_requirements(self):
+        self.tool_requires("cmake/3.28.1")
+        self.tool_requires("nasm/2.16.01")
+        if self.settings.os != "Windows":
+            self.tool_requires("ninja/1.11.1")
+        # if self.settings.os == "Android":
+        #     self.tool_requires("android-ndk/r26c")
+
+    def layout(self):
+        # self.build_folder: build/{os}/{arch}/opencv
+        # base = Path(self.build_folder).parent  # build/{os}/{arch}
+        out_dir = Path(os.path.abspath(str(self.options.get_safe("output_dir"))))
+        pkg_dir = Path(os.path.abspath(str(self.options.get_safe("package_root"))))
+        self.folders.generators = str((out_dir / "generators").absolute())
+        self.folders.build = str(out_dir.absolute())
+        self.folders.source = str(pkg_dir.absolute())
+        self.folders.set_base_package(str(pkg_dir.absolute()))
+
     def generate(self):
         tc: CMakeToolchain = CMakeToolchain(self)
         if self.settings.os == "iOS":
@@ -122,7 +154,6 @@ class OcvDartDesktop(ConanFile):
             # tc.variables["CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM"] = "rainyl"
             # tc.variables["CODE_SIGNING_ALLOWED"] = "NO"
         tc.generate()
-
         CMakeDeps(self).generate()
 
     def build(self):
@@ -173,8 +204,7 @@ class OcvDartDesktop(ConanFile):
 
     @property
     def publish_folder(self) -> Path:
-        p = Path(self.install_folder).absolute().parent.parent.parent
-        return p / "publish"
+        return Path(self.package_folder).absolute() / "build" / "publish"
 
     @property
     def opencv_dir(self) -> str:

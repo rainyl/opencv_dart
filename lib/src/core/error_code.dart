@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore_for_file: non_constant_identifier_names
 
 /*  Error status codes
@@ -5,7 +6,7 @@
     Original Author: @shimat
     LICENSE: Apache-2.0
     https://github.com/shimat/opencvsharp/blob/main/src/OpenCvSharp/Modules/core/Enum/ErrorCode.cs
-    
+
     Ported to Dart By: @Rainyl
     LICENSE: Apache-2.0
 */

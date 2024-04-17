@@ -3,6 +3,8 @@ import 'dart:ffi' as ffi;
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
+import 'base.dart';
+
 // Dart does not support multiple upper bounds for T now, if they implement it, this can be simplified.
 // https://github.com/dart-lang/language/issues/2709
 abstract class NativeArray<T extends ffi.NativeType, P extends num>
@@ -25,8 +27,14 @@ abstract class INativeArray<T> {
 }
 
 class U8Array extends NativeArray<ffi.Uint8, int> {
-  U8Array([int length = 0]) : super(length) {
+  U8Array([int length = 0, int value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_U8_MAX && value >= CV_U8_MIN);
     ptr = calloc<ffi.Uint8>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -63,8 +71,14 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
 }
 
 class I8Array extends NativeArray<ffi.Int8, int> {
-  I8Array([int length = 0]) : super(length) {
+  I8Array([int length = 0, int value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_I8_MAX && value >= CV_I8_MIN);
     ptr = calloc<ffi.Int8>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -74,6 +88,11 @@ class I8Array extends NativeArray<ffi.Int8, int> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  I8Array.fromPointer(ffi.Pointer<ffi.Int8> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
@@ -96,8 +115,14 @@ class I8Array extends NativeArray<ffi.Int8, int> {
 }
 
 class U16Array extends NativeArray<ffi.Uint16, int> {
-  U16Array([int length = 0]) : super(length) {
+  U16Array([int length = 0, int value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_U16_MAX && value >= CV_U16_MIN);
     ptr = calloc<ffi.Uint16>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -107,6 +132,11 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  U16Array.fromPointer(ffi.Pointer<ffi.Uint16> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
@@ -129,8 +159,14 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
 }
 
 class I16Array extends NativeArray<ffi.Int16, int> {
-  I16Array([int length = 0]) : super(length) {
+  I16Array([int length = 0, int value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_I16_MAX && value >= CV_I16_MIN);
     ptr = calloc<ffi.Int16>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -140,6 +176,11 @@ class I16Array extends NativeArray<ffi.Int16, int> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  I16Array.fromPointer(ffi.Pointer<ffi.Int16> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
@@ -162,8 +203,14 @@ class I16Array extends NativeArray<ffi.Int16, int> {
 }
 
 class I32Array extends NativeArray<ffi.Int, int> {
-  I32Array([int length = 0]) : super(length) {
+  I32Array([int length = 0, int value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_I32_MAX && value >= CV_I32_MIN);
     ptr = calloc<ffi.Int>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -173,6 +220,11 @@ class I32Array extends NativeArray<ffi.Int, int> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  I32Array.fromPointer(ffi.Pointer<ffi.Int> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
@@ -195,8 +247,14 @@ class I32Array extends NativeArray<ffi.Int, int> {
 }
 
 class F32Array extends NativeArray<ffi.Float, double> {
-  F32Array([int length = 0]) : super(length) {
+  F32Array([int length = 0, double value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_F32_MAX);
     ptr = calloc<ffi.Float>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -206,6 +264,11 @@ class F32Array extends NativeArray<ffi.Float, double> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  F32Array.fromPointer(ffi.Pointer<ffi.Float> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
@@ -228,8 +291,14 @@ class F32Array extends NativeArray<ffi.Float, double> {
 }
 
 class F64Array extends NativeArray<ffi.Double, double> {
-  F64Array([int length = 0]) : super(length) {
+  F64Array([int length = 0, double value = 0]) : super(length) {
+    assert(length >= 0 && value <= CV_F64_MAX);
     ptr = calloc<ffi.Double>(length);
+    if (value != 0) {
+      for (var idx = 0; idx < length; idx++) {
+        ptr[idx] = value;
+      }
+    }
     finalizer.attach(this, ptr.cast());
   }
 
@@ -239,6 +308,11 @@ class F64Array extends NativeArray<ffi.Double, double> {
       array[i] = data[i];
     }
     return array;
+  }
+
+  F64Array.fromPointer(ffi.Pointer<ffi.Double> ptr, int length) : super(length) {
+    this.ptr = ptr;
+    finalizer.attach(this, ptr.cast());
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);

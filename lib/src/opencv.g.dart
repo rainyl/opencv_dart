@@ -7370,6 +7370,65 @@ external CvStatus Watershed(
   Mat markers,
 );
 
+@ffi.Native<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>(
+    symbol: 'WeChatQRCode_Close',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external void WeChatQRCode_Close(
+  ffi.Pointer<WeChatQRCode> self,
+);
+
+@ffi.Native<
+        CvStatus Function(ffi.Pointer<WeChatQRCode>, Mat, ffi.Pointer<VecMat>,
+            ffi.Pointer<VecVecChar>)>(
+    symbol: 'WeChatQRCode_DetectAndDecode',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus WeChatQRCode_DetectAndDecode(
+  ffi.Pointer<WeChatQRCode> self,
+  Mat img,
+  ffi.Pointer<VecMat> points,
+  ffi.Pointer<VecVecChar> rval,
+);
+
+@ffi.Native<
+        CvStatus Function(ffi.Pointer<WeChatQRCode>, ffi.Pointer<ffi.Float>)>(
+    symbol: 'WeChatQRCode_GetScaleFactor',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus WeChatQRCode_GetScaleFactor(
+  ffi.Pointer<WeChatQRCode> self,
+  ffi.Pointer<ffi.Float> rval,
+);
+
+@ffi.Native<CvStatus Function(ffi.Pointer<WeChatQRCode>)>(
+    symbol: 'WeChatQRCode_New', assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus WeChatQRCode_New(
+  ffi.Pointer<WeChatQRCode> qrcode,
+);
+
+@ffi.Native<
+        CvStatus Function(
+            ffi.Pointer<ffi.Char>,
+            ffi.Pointer<ffi.Char>,
+            ffi.Pointer<ffi.Char>,
+            ffi.Pointer<ffi.Char>,
+            ffi.Pointer<WeChatQRCode>)>(
+    symbol: 'WeChatQRCode_NewWithParams',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus WeChatQRCode_NewWithParams(
+  ffi.Pointer<ffi.Char> detector_prototxt_path,
+  ffi.Pointer<ffi.Char> detector_caffe_model_path,
+  ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
+  ffi.Pointer<ffi.Char> super_resolution_caffe_model_path,
+  ffi.Pointer<WeChatQRCode> qrcode,
+);
+
+@ffi.Native<CvStatus Function(ffi.Pointer<WeChatQRCode>, ffi.Float)>(
+    symbol: 'WeChatQRCode_SetScaleFactor',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus WeChatQRCode_SetScaleFactor(
+  ffi.Pointer<WeChatQRCode> self,
+  double scale_factor,
+);
+
 @ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Char>)>(
     symbol: 'Window_Close', assetId: 'package:opencv_dart/opencv_dart.dart')
 external void Window_Close(
@@ -8308,6 +8367,13 @@ final class NO_USE_VideoWriterPtr extends ffi.Struct {
   external ffi.Pointer<VideoWriterPtr> p;
 }
 
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_WeChatQRCodePtr extends ffi.Struct {
+  external ffi.Pointer<WeChatQRCodePtr> p;
+}
+
 final class Net extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -8939,6 +9005,12 @@ final class VideoWriter extends ffi.Struct {
 }
 
 typedef VideoWriterPtr = ffi.Pointer<VideoWriter>;
+
+final class WeChatQRCode extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef WeChatQRCodePtr = ffi.Pointer<WeChatQRCode>;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
 typedef float_t = ffi.Float;

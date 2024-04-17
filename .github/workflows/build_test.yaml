@@ -2,9 +2,9 @@ name: build and test
 
 on:
   push:
-    branches: ["main", "native-assets"]
+    branches: ["native-assets"]
   pull_request:
-    branches: [ "main", "native-assets" ]
+    branches: ["native-assets"]
 
 jobs:
   build-windows:
@@ -40,7 +40,8 @@ jobs:
       - name: setup coverage
         run: |
           cd "${{github.workspace}}"
-          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
+          ls windows
+          $env:PATH="${{github.workspace}}\windows;$env:PATH"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name opencv_dart
       - name: Upload coverage reports to Codecov
