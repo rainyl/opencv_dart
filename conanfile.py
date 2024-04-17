@@ -85,6 +85,7 @@ class OcvDartDesktop(ConanFile):
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")
         self.tool_requires("nasm/2.16.01")
+        self.tool_requires("libiconv/1.17")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
         # if self.settings.os == "Android":

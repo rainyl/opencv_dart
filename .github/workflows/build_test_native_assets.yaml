@@ -25,9 +25,7 @@ jobs:
         run: |
           sudo apt-get update
 
-          sudo apt-get install -y build-essential libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build nasm libavformat-dev libavutil-dev libswscale-dev \
-            libgflags-dev libc6-dev python3 unzip tree python3-pip
+          sudo apt-get install -y build-essential python3 unzip tree python3-pip
 
           python3 -m pip install conan
           conan profile detect -f
@@ -57,11 +55,7 @@ jobs:
       - name: setup
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl git wget python3 unzip build-essential \
-            libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build nasm libavformat-dev libavutil-dev \
-            libswscale-dev libgflags-dev libc6-dev \
-            libjpeg-dev libpng-dev libtiff-dev python3-pip
+          sudo apt-get install -y curl git wget python3 unzip build-essential python3-pip
 
           python3 -m pip install conan
           conan profile detect -f
@@ -125,7 +119,7 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan libiconv
+          brew install --force --overwrite conan
           conan profile detect -f
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
@@ -153,7 +147,7 @@ jobs:
       - name: setup
         run: |
           # brew update
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan libiconv
+          brew install --force --overwrite conan
           conan profile detect -f
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
@@ -180,7 +174,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja ccache nasm conan
+            brew install --force --overwrite conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: Set up Flutter
