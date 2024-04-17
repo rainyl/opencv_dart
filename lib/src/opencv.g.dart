@@ -15867,6 +15867,126 @@ class CvNative {
   late final _Watershed =
       _WatershedPtr.asFunction<CvStatus Function(Mat, Mat)>();
 
+  void WeChatQRCode_Close(
+    ffi.Pointer<WeChatQRCode> self,
+  ) {
+    return _WeChatQRCode_Close(
+      self,
+    );
+  }
+
+  late final _WeChatQRCode_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>>(
+          'WeChatQRCode_Close');
+  late final _WeChatQRCode_Close = _WeChatQRCode_ClosePtr.asFunction<
+      void Function(ffi.Pointer<WeChatQRCode>)>();
+
+  CvStatus WeChatQRCode_DetectAndDecode(
+    ffi.Pointer<WeChatQRCode> self,
+    Mat img,
+    ffi.Pointer<VecMat> points,
+    ffi.Pointer<VecVecChar> rval,
+  ) {
+    return _WeChatQRCode_DetectAndDecode(
+      self,
+      img,
+      points,
+      rval,
+    );
+  }
+
+  late final _WeChatQRCode_DetectAndDecodePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<WeChatQRCode>, Mat, ffi.Pointer<VecMat>,
+              ffi.Pointer<VecVecChar>)>>('WeChatQRCode_DetectAndDecode');
+  late final _WeChatQRCode_DetectAndDecode =
+      _WeChatQRCode_DetectAndDecodePtr.asFunction<
+          CvStatus Function(ffi.Pointer<WeChatQRCode>, Mat, ffi.Pointer<VecMat>,
+              ffi.Pointer<VecVecChar>)>();
+
+  CvStatus WeChatQRCode_GetScaleFactor(
+    ffi.Pointer<WeChatQRCode> self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _WeChatQRCode_GetScaleFactor(
+      self,
+      rval,
+    );
+  }
+
+  late final _WeChatQRCode_GetScaleFactorPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<WeChatQRCode>,
+              ffi.Pointer<ffi.Float>)>>('WeChatQRCode_GetScaleFactor');
+  late final _WeChatQRCode_GetScaleFactor =
+      _WeChatQRCode_GetScaleFactorPtr.asFunction<
+          CvStatus Function(
+              ffi.Pointer<WeChatQRCode>, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus WeChatQRCode_New(
+    ffi.Pointer<WeChatQRCode> qrcode,
+  ) {
+    return _WeChatQRCode_New(
+      qrcode,
+    );
+  }
+
+  late final _WeChatQRCode_NewPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<WeChatQRCode>)>>(
+          'WeChatQRCode_New');
+  late final _WeChatQRCode_New = _WeChatQRCode_NewPtr.asFunction<
+      CvStatus Function(ffi.Pointer<WeChatQRCode>)>();
+
+  CvStatus WeChatQRCode_NewWithParams(
+    ffi.Pointer<ffi.Char> detector_prototxt_path,
+    ffi.Pointer<ffi.Char> detector_caffe_model_path,
+    ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
+    ffi.Pointer<ffi.Char> super_resolution_caffe_model_path,
+    ffi.Pointer<WeChatQRCode> qrcode,
+  ) {
+    return _WeChatQRCode_NewWithParams(
+      detector_prototxt_path,
+      detector_caffe_model_path,
+      super_resolution_prototxt_path,
+      super_resolution_caffe_model_path,
+      qrcode,
+    );
+  }
+
+  late final _WeChatQRCode_NewWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<WeChatQRCode>)>>('WeChatQRCode_NewWithParams');
+  late final _WeChatQRCode_NewWithParams =
+      _WeChatQRCode_NewWithParamsPtr.asFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<WeChatQRCode>)>();
+
+  CvStatus WeChatQRCode_SetScaleFactor(
+    ffi.Pointer<WeChatQRCode> self,
+    double scale_factor,
+  ) {
+    return _WeChatQRCode_SetScaleFactor(
+      self,
+      scale_factor,
+    );
+  }
+
+  late final _WeChatQRCode_SetScaleFactorPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<WeChatQRCode>,
+              ffi.Float)>>('WeChatQRCode_SetScaleFactor');
+  late final _WeChatQRCode_SetScaleFactor = _WeChatQRCode_SetScaleFactorPtr
+      .asFunction<CvStatus Function(ffi.Pointer<WeChatQRCode>, double)>();
+
   void Window_Close(
     ffi.Pointer<ffi.Char> winname,
   ) {
@@ -16513,6 +16633,8 @@ class _SymbolAddresses {
       get VideoCapture_Close => _library._VideoCapture_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoWriter>)>>
       get VideoWriter_Close => _library._VideoWriter_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>>
+      get WeChatQRCode_Close => _library._WeChatQRCode_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>
       get Window_Close => _library._Window_ClosePtr;
 }
@@ -17205,6 +17327,13 @@ final class NO_USE_VideoWriterPtr extends ffi.Struct {
   external ffi.Pointer<VideoWriterPtr> p;
 }
 
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_WeChatQRCodePtr extends ffi.Struct {
+  external ffi.Pointer<WeChatQRCodePtr> p;
+}
+
 final class Net extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -17836,6 +17965,12 @@ final class VideoWriter extends ffi.Struct {
 }
 
 typedef VideoWriterPtr = ffi.Pointer<VideoWriter>;
+
+final class WeChatQRCode extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef WeChatQRCodePtr = ffi.Pointer<WeChatQRCode>;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
 typedef float_t = ffi.Float;
