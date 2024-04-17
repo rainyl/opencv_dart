@@ -10,6 +10,7 @@ cmake_policy(SET CMP0135 NEW)
 
 set(OpenCV_STATIC ON)
 
+find_package(Iconv REQUIRED)
 find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS
