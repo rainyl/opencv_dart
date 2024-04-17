@@ -10,6 +10,9 @@ cmake_policy(SET CMP0135 NEW)
 
 set(OpenCV_STATIC ON)
 
+if(LINUX OR APPLE)
+    find_package(Iconv REQUIRED)
+endif()
 find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS

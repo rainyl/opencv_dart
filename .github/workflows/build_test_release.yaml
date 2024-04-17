@@ -168,7 +168,7 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan
+          brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -208,7 +208,7 @@ jobs:
       - name: setup
         run: |
           # brew update
-          brew install --force --overwrite ninja ccache ffmpeg nasm conan
+          brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -248,7 +248,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja ccache nasm conan
+            brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: build
