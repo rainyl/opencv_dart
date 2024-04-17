@@ -55,22 +55,17 @@ class OcvDartDesktop(ConanFile):
 
     def __init__(self, display_name=""):
         super().__init__(display_name)
-        # pubspec = Path(str(self.options.get_safe("package_root", "."))) / "pubspec.yaml"
-        # output = ConanOutput(Color.YELLOW)
-        # output.info(f"Reading: {self.options.get_safe('package_root', '.')}")
-        # with open(pubspec, "r") as f:
-        #     doc = yaml.safe_load(f)
-        # self.version = doc["binary_version"]
-        self.version = "1.0.0+2"
+        pubspec = Path(__file__).parent / "pubspec.yaml"
+        with open(pubspec, "r") as f:
+            doc = yaml.safe_load(f)
+        self.version = doc["binary_version"]
+        # self.version = "1.0.0+2"
 
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")
         self.tool_requires("nasm/2.16.01")
         if self.settings.os != "Windows":
-            # self.tool_requires("ffmpeg/4.4.4")
             self.tool_requires("ninja/1.11.1")
-        # if self.settings.os == "Android":
-        #     self.tool_requires("android-ndk/r26c")
 
     def requirements(self):
         out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))

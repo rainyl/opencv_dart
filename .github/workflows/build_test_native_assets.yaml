@@ -5,8 +5,8 @@ on:
     branches: ["native-assets"]
     tags:
       - "v*.*.*"
-  # pull_request:
-  #   branches: [ "main" ]
+  pull_request:
+    branches: ["native-assets"]
 
 env:
   ANDROID_NDK_VERSION: r26c
@@ -180,7 +180,7 @@ jobs:
             submodules: true
         - name: setup
           run: |
-            brew install --force --overwrite ninja ccache ffmpeg nasm conan libiconv
+            brew install --force --overwrite ninja ccache nasm conan
             conan profile detect -f
             cd ${{github.workspace}}
         - name: Set up Flutter
