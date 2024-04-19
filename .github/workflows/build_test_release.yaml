@@ -173,6 +173,7 @@ jobs:
       - name: setup
         run: |
           brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
+          brew link --overwrite ffmpeg@6
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -194,7 +195,7 @@ jobs:
           ls -alh ${{github.workspace}}/macos
           export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
           dart pub get
-          dart test -x no-local-files
+          dart test -x skip-workflow,no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -214,6 +215,7 @@ jobs:
         run: |
           # brew update
           brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
+          brew link --overwrite ffmpeg@6
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
@@ -235,7 +237,7 @@ jobs:
           ls -alh ${{github.workspace}}/macos
           export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
           dart pub get
-          dart test -x no-local-files
+          dart test -x skip-workflow,no-local-files
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -254,6 +256,7 @@ jobs:
         - name: setup
           run: |
             brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
+            brew link --overwrite ffmpeg@6
             conan profile detect -f
             cd ${{github.workspace}}
         - name: build
