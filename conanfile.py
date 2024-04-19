@@ -58,7 +58,7 @@ class OcvDartDesktop(ConanFile):
         pubspec = Path(__file__).parent / "pubspec.yaml"
         with open(pubspec, "r") as f:
             doc = yaml.safe_load(f)
-        self.version = doc["binary_version"]
+        self.version = doc["version"]
         # self.version = "1.0.0+2"
 
     def build_requirements(self):
