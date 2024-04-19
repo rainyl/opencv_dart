@@ -1,7 +1,7 @@
-gocv/
-test/
+test/models
+images/
+test/images_out
 bak/
-scripts/
 opencv_dart.iml
 coverage/
 *.a
@@ -10,12 +10,8 @@ coverage/
 *.dylib
 *.lib
 pkgs/
-src/**/*.cpp
-src/**/*.h
-images/
+CMakePresets.json
 CMakeUserPresets*
-ffigen*
-profiles/
 *.framework
 
 .idea/

@@ -13,6 +13,8 @@ OpenCV Bindings for Dart Language.
 
 **!!!This package is experimental and APIs may change in the future!!!**
 
+<h2> v2.x.x is in development and `Native Assets` feature is required, Use only if you know what you are doing! </h2>
+
 *WIP, contributions are welcome!*
 
 - [opencv\_dart](#opencv_dart)
