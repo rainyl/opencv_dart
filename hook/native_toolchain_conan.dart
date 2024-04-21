@@ -14,9 +14,6 @@ abstract class Builder {
 }
 
 class ConanBuilder implements Builder {
-  /// What kind of artifact to build.
-  final _BuilderType _type;
-
   /// Name of the library or executable to build.
   ///
   /// The filename will be decided by [BuildConfig.targetOS] and
@@ -66,7 +63,7 @@ class ConanBuilder implements Builder {
     this.defines = const {},
     this.dartBuildFiles = const [],
     this.std,
-  }) : _type = _BuilderType.library;
+  });
 
   @override
   Future<void> run({
@@ -348,9 +345,4 @@ class RunProcessResult {
 exitCode: $exitCode
 stdout: $stdout
 stderr: $stderr''';
-}
-
-enum _BuilderType {
-  executable,
-  library,
 }
