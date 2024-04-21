@@ -11,75 +11,25 @@ OpenCV Bindings for Dart Language.
 <a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="License: Apache-2.0"></a>
 </p>
 
-**!!!This package is experimental and APIs may change in the future!!!**
-
-<h2> v2.x.x is in development and `Native Assets` feature is required, Use only if you know what you are doing! </h2>
-
-*WIP, contributions are welcome!*
+1. <h2 style="color: red;">v2.x is prepared for <a href="https://github.com/dart-lang/sdk/issues/50565">Native Assets</a> feature, Use only if you know what you are doing!</h2>
+2. This package is experimental and APIs may change in the future!
+3. WIP, contributions are welcome!
 
 - [opencv\_dart](#opencv_dart)
-  - [BREAKING CHANGES](#breaking-changes)
-  - [IMPORTANT](#important)
   - [Example](#example)
   - [Supported Platforms](#supported-platforms)
   - [Status](#status)
     - [Core Modules](#core-modules)
     - [Contrib Modules](#contrib-modules)
     - [Usage](#usage)
+      - [Pure Dart](#pure-dart)
+      - [Flutter](#flutter)
     - [TODO](#todo)
   - [For Developers](#for-developers)
-    - [How to compile](#how-to-compile)
+    - [How to compile manually with conan](#how-to-compile-manually-with-conan)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
   - [License](#license)
-
-<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-
-## BREAKING CHANGES
-
-The refactor of [#13](https://github.com/rainyl/opencv_dart/issues/13) bas been finished,
-since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
-for example:
-
-```dart
-// old API
-void cvtColor(Mat src, Mat dst, int code);
-// new API
-Mat cvtColor(Mat src, int code, {Mat? dst});
-
-// then usage will be changed from:
-cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-// to:
-final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
-// or:
-cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
-```
-
-The new APIs have been published in `v1.0.0`, if you are still using the old ones and
-do not want to upgrade, you can use the old versions less than `v1.0.0`.
-
-The OLD APIs won't get any updates from maintainer since `v0.6.7`,
-if you really need updates, open PRs and I will merge it to `v0.6` branch.
-
-## IMPORTANT
-
-Please run
-
-```bash
-dart run opencv_dart:setup <platform> --arch <arch>
-```
-
-to download prebuilt binaries.
-
-- **platform**: `auto` `android` `linux` `windows` `macos` `ios`
-- for **Windows**, arch: `x64`
-- for **Linux**, arch: `x64`
-- for **macOS**, arch: `x64` `arm64`
-- for **IOS**, arch: `x64` `arm64`
-- for **Android**, arch: `x86_64` `arm64-v8a` `armeabi-v7a`
-- run `dart run opencv_dart:setup -h` to see more options
-
-**Please use v0.3.0 and later version.**
 
 ## Example
 
@@ -124,7 +74,7 @@ to download prebuilt binaries.
 | aruco         | :white_check_mark: | :white_check_mark: | ArUco module         |
 | img_hash      | :white_check_mark: | :white_check_mark: | Image hashing module |
 | cuda          | :x:                | :x:                |                      |
-| wechat_qrcode | :x:                | :x:                |                      |
+| wechat_qrcode | :white_check_mark: | :white_check_mark: |                      |
 | bgsegm        | :x:                | :x:                |                      |
 | superres      | :x:                | :x:                |                      |
 | xfeatures2d   | :x:                | :x:                |                      |
@@ -136,9 +86,10 @@ to download prebuilt binaries.
 - :ballot_box_with_check: : partially supported
 - :white_check_mark: : finished
 - modules not in the above table are not considered, contributions are welcome
-- ~~videoio: `cv.VideoCapture` from file is not supported yet~~ supported now.
 
 ### Usage
+
+#### Pure Dart
 
 ```dart
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -154,6 +105,10 @@ void main() {
 }
 ```
 
+#### Flutter
+
+see [example](https://github.com/rainyl/opencv_dart/tree/native-assets/example)
+
 More examples are on the way...
 
 ### TODO
@@ -163,16 +118,17 @@ More examples are on the way...
 - [ ] add more examples
 - [ ] documentation
 - [x] ~~modify C wrapper to catch exceptions~~
-- [ ] Native Assets
+- [x] ~~Native Assets~~
 - [ ] async?
 - [ ] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
 ## For Developers
 
-This package is in heavy development, dynamic libraries for Windows and linux have been compiled, for other platforms, you need to compile it yourself.
+NOTE: since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
+and this repo will download the prebuilt static libraries from it's release, if you want to compile entirely by yourself, you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the below commands or set `OpenCV_DIR` environment variable.
 
-### How to compile
+### How to compile manually with conan
 
 1. prepare a compiler.
 
@@ -215,7 +171,7 @@ This package is in heavy development, dynamic libraries for Windows and linux ha
     conan build . -b missing
     ```
 
-   for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) ~~and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.~~ NO need for opencv sdk now, will be compiled from source to enable contrib modules
+   for android:
 
    ```bash
    conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"

@@ -44,11 +44,13 @@ class OcvDartDesktop(ConanFile):
         "package_root": ["ANY"],
         "output_dir": ["ANY"],
         "opencv_overwrite": [True, False],
+        "opencv_dir": ["ANY"],
     }
     default_options = {
         "package_root": ".",
         "output_dir": "build",
         "opencv_overwrite": False,
+        "opencv_dir": "",
     }
 
     opencv_full: Path
@@ -71,6 +73,11 @@ class OcvDartDesktop(ConanFile):
         out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
         if not os.path.exists(out_dir):
             Path(out_dir).mkdir(parents=True)
+        p0 = str(self.options.get_safe("opencv_dir", "")) or os.environ.get("OpenCV_DIR", "")
+        if p0:
+            assert os.path.exists(p0), f"explicitly configured opencv_dir/OpenCV_DIR {p0} not exists, check your command or environment variables"
+            self.opencv_full = Path(p0)
+            return
         platform = str(self.settings.os).lower()
         arch = arch_map[platform][str(self.settings.arch)]
         filename = f"libopencv-{platform}-{arch}.tar.gz"
