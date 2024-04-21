@@ -110,7 +110,14 @@ class ConanBuilder implements Builder {
       _ => throw UnimplementedError(),
     };
 
-    if (!buildConfig.dryRun) {
+    if (buildConfig.dryRun) {
+      final result = await runProcess(
+        executable: "conan",
+        arguments: ["--version"],
+        logger: logger,
+      );
+      assert(result.exitCode == 0, "Conan not installed");
+    } else {
       if (targetOS == OS.iOS) {
         var profileStr = await File.fromUri(packageRoot.resolve(profile)).readAsString();
         final lines = profileStr.split("\n");
