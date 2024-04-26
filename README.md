@@ -164,8 +164,12 @@ More examples are on the way...
 
 ## For Developers
 
-NOTE: since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
-and this repo will download the prebuilt static libraries from it's release, if you want to compile entirely by yourself, you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the below commands or set `OpenCV_DIR` environment variable.
+> [!NOTE]
+> since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
+> and this repo will download the prebuilt static libraries from it's release,
+> if you want to compile entirely by yourself,
+> you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the
+> below commands or set `OpenCV_DIR` environment variable.
 
 ### How to compile
 
