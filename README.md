@@ -8,21 +8,58 @@ OpenCV Bindings for Dart Language.
 <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
 <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
 <a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
+<a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a>
 </p>
 
-**!!!This package is experimental and APIs may change in the future!!!**
+> [!IMPORTANT]
+> Please use v0.3.0 and later version, run
+>
+> ```bash
+> dart run opencv_dart:setup <platform> --arch <arch>
+> ```
+>
+> to download prebuilt binaries.
+>
+> - **platform**: `auto` `android` `linux` `windows` `macos` `ios`
+> - for **Windows**, arch: `x64`
+> - for **Linux**, arch: `x64`
+> - for **macOS**, arch: `x64` `arm64`
+> - for **IOS**, arch: `x64` `arm64`
+> - for **Android**, arch: `x86_64` `arm64-v8a` `armeabi-v7a`
+> - run `dart run opencv_dart:setup -h` to see more options
 
-*WIP, contributions are welcome!*
+> [!WARNING]
+> Since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
+> for example:
+>
+> ```dart
+> // old API
+> void cvtColor(Mat src, Mat dst, int code);
+> // new API
+> Mat cvtColor(Mat src, int code, {Mat? dst});
+>
+> // then usage will be changed from:
+> cvtColor(src, dst, cv.COLOR_BGR2GRAY);
+> // to:
+> final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
+> // or:
+> cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
+> ```
+>
+> If you really need updates for `v0.6.x`, open PRs and it will be merged to `v0.6` branch.
+
+> [!NOTE]
+> WIP, contributions are welcome!
 
 - [opencv\_dart](#opencv_dart)
-  - [BREAKING CHANGES](#breaking-changes)
-  - [IMPORTANT](#important)
   - [Example](#example)
   - [Supported Platforms](#supported-platforms)
   - [Status](#status)
     - [Core Modules](#core-modules)
     - [Contrib Modules](#contrib-modules)
     - [Usage](#usage)
+      - [Pure Dart](#pure-dart)
+      - [Flutter](#flutter)
     - [TODO](#todo)
   - [For Developers](#for-developers)
     - [How to compile](#how-to-compile)
@@ -31,52 +68,6 @@ OpenCV Bindings for Dart Language.
   - [License](#license)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-
-## BREAKING CHANGES
-
-The refactor of [#13](https://github.com/rainyl/opencv_dart/issues/13) bas been finished,
-since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
-for example:
-
-```dart
-// old API
-void cvtColor(Mat src, Mat dst, int code);
-// new API
-Mat cvtColor(Mat src, int code, {Mat? dst});
-
-// then usage will be changed from:
-cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-// to:
-final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
-// or:
-cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
-```
-
-The new APIs have been published in `v1.0.0`, if you are still using the old ones and
-do not want to upgrade, you can use the old versions less than `v1.0.0`.
-
-The OLD APIs won't get any updates from maintainer since `v0.6.7`,
-if you really need updates, open PRs and I will merge it to `v0.6` branch.
-
-## IMPORTANT
-
-Please run
-
-```bash
-dart run opencv_dart:setup <platform> --arch <arch>
-```
-
-to download prebuilt binaries.
-
-- **platform**: `auto` `android` `linux` `windows` `macos` `ios`
-- for **Windows**, arch: `x64`
-- for **Linux**, arch: `x64`
-- for **macOS**, arch: `x64` `arm64`
-- for **IOS**, arch: `x64` `arm64`
-- for **Android**, arch: `x86_64` `arm64-v8a` `armeabi-v7a`
-- run `dart run opencv_dart:setup -h` to see more options
-
-**Please use v0.3.0 and later version.**
 
 ## Example
 
@@ -137,17 +128,25 @@ to download prebuilt binaries.
 
 ### Usage
 
+#### Pure Dart
+
 ```dart
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
   final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-  final gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY);
+  final gray = cv.Mat.empty();
+
+  cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
   print("${img.rows}, ${img.cols}");
 
   cv.imwrite("test_cvtcolor.png", gray);
 }
 ```
+
+#### Flutter
+
+see [example](https://github.com/rainyl/opencv_dart/tree/native-assets/example)
 
 More examples are on the way...
 
@@ -158,14 +157,15 @@ More examples are on the way...
 - [ ] add more examples
 - [ ] documentation
 - [x] ~~modify C wrapper to catch exceptions~~
-- [ ] Native Assets
+- [x] Native Assets, see `native-assets` branch
 - [ ] async?
 - [ ] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
 ## For Developers
 
-This package is in heavy development, dynamic libraries for Windows and linux have been compiled, for other platforms, you need to compile it yourself.
+NOTE: since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
+and this repo will download the prebuilt static libraries from it's release, if you want to compile entirely by yourself, you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the below commands or set `OpenCV_DIR` environment variable.
 
 ### How to compile
 
