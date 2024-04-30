@@ -12,21 +12,24 @@ OpenCV Bindings for Dart Language.
 </p>
 
 > [!IMPORTANT]
-> Please use v0.3.0 and later version, run
+> Please use v0.3.0 and later version, usage:
 >
-> ```bash
-> dart run opencv_dart:setup <platform> --arch <arch>
-> ```
+> 1. `flutter pub add opencv_dart` or `dart pub add opencv_dart`
+> 2. `dart run opencv_dart:setup <platform> --arch <arch>`
 >
-> to download prebuilt binaries.
+> | `platform` | `arch` |
+> | ---------- | ------ |
+> | `auto` | `x64` |
+> | `android` | `x86_64` `arm64-v8a` `armeabi-v7a` |
+> | `linux` | `x64` |
+> | `windows` | `x64` |
+> | `macos` | `x64` `arm64` |
+> | `ios` | `x64` `arm64` |
 >
-> - **platform**: `auto` `android` `linux` `windows` `macos` `ios`
-> - for **Windows**, arch: `x64`
-> - for **Linux**, arch: `x64`
-> - for **macOS**, arch: `x64` `arm64`
-> - for **IOS**, arch: `x64` `arm64`
-> - for **Android**, arch: `x86_64` `arm64-v8a` `armeabi-v7a`
-> - run `dart run opencv_dart:setup -h` to see more options
+> 3. run your app as normal
+>
+> - More questions: refer to [#29](https://github.com/rainyl/opencv_dart/issues/29) or open new issues.
+>
 
 > [!WARNING]
 > Since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
@@ -135,9 +138,7 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
   final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-  final gray = cv.Mat.empty();
-
-  cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
+  final gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY);
   print("${img.rows}, ${img.cols}");
 
   cv.imwrite("test_cvtcolor.png", gray);
