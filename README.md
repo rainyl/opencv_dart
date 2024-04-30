@@ -17,18 +17,18 @@ OpenCV Bindings for Dart Language.
 > 1. `flutter pub add opencv_dart` or `dart pub add opencv_dart`
 > 2. `dart run opencv_dart:setup <platform> --arch <arch>`
 >
-> | `platform` | `arch` |
-> | ---------- | ------ |
-> | `auto` | `x64` |
-> | `android` | `x86_64` `arm64-v8a` `armeabi-v7a` |
-> | `linux` | `x64` |
-> | `windows` | `x64` |
-> | `macos` | `x64` `arm64` |
-> | `ios` | `x64` `arm64` |
+> | `platform` | `arch`                             |
+> | ---------- | ---------------------------------- |
+> | `android`  | `x86_64` `arm64-v8a` `armeabi-v7a` |
+> | `linux`    | `x64`                              |
+> | `windows`  | `x64`                              |
+> | `macos`    | `x64` `arm64`                      |
+> | `ios`      | `x64` `arm64`                      |
 >
 > 3. run your app as normal
 >
 > - More questions: refer to [#29](https://github.com/rainyl/opencv_dart/issues/29) or open new issues.
+> - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
 >
 
 > [!WARNING]
@@ -66,6 +66,7 @@ OpenCV Bindings for Dart Language.
     - [TODO](#todo)
   - [For Developers](#for-developers)
     - [How to compile](#how-to-compile)
+      - [Cross-compile for linux aarch64](#cross-compile-for-linux-aarch64)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
   - [License](#license)
@@ -229,6 +230,11 @@ More examples are on the way...
    ```
 
 5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+
+#### Cross-compile for linux aarch64
+
+With proper toolchain, cross-compiling is possible, compiling for linux aarch64 requires GCC 13 and newer,
+conan toolchain for linux arm is located in [opencv.full](https://github.com/rainyl/opencv.full/tree/linux-aarch64/profiles), explore more there.
 
 ## Acknowledgement
 
