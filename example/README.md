@@ -4,13 +4,22 @@ Demonstrates how to use the opencv_dart plugin.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+> [!WARNING]
+> v2.x doesn't need to download the prebuild binaries but requires `Native Assets` feature, which is still experimental, see more here: https://github.com/dart-lang/sdk/issues/50565
+>
+> [conan](https://conan.io/) and cmake are required
 
-A few resources to get you started if this is your first Flutter project:
+To use v2.x:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+for pure dart:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
+2. add to your `pubspec.yaml`
+3. `dart --enable-experiment=native-assets run <path-to-your-code>`
+
+for flutter:
+
+1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
+2. add to your `pubspec.yaml`
+3. `flutter config --enable-native-assets`
+4. `flutter run`

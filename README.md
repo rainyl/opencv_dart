@@ -8,12 +8,16 @@ OpenCV Bindings for Dart Language.
 <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
 <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
 <a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
-<a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="License: Apache-2.0"></a>
+<a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a>
 </p>
 
-1. <h2 style="color: red;">v2.x is prepared for <a href="https://github.com/dart-lang/sdk/issues/50565">Native Assets</a> feature, Use only if you know what you are doing!</h2>
-2. This package is experimental and APIs may change in the future!
-3. WIP, contributions are welcome!
+> [!IMPORTANT]
+> v2.x is prepared for [Native Assets](https://github.com/dart-lang/sdk/issues/50565), Use only if you know what you are doing!
+>
+
+> [!NOTE]
+> WIP, contributions are welcome!
+
 
 - [opencv\_dart](#opencv_dart)
   - [Example](#example)
@@ -96,9 +100,7 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
   final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-  final gray = cv.Mat.empty();
-
-  cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
+  final gray = cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
   print("${img.rows}, ${img.cols}");
 
   cv.imwrite("test_cvtcolor.png", gray);
