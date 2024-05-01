@@ -23,6 +23,19 @@ void main() {
     expect(s5, cv.Scalar.blue);
   });
 
+  test('cv.Scalar operations', () {
+    final s = cv.Scalar(1, 2, 3, 4);
+    final s1 = cv.Scalar(2, 4, 6, 8);
+    final s3 = cv.Scalar(1, 4, 9, 16);
+
+    expect(s + s1, cv.Scalar(3, 6, 9, 12));
+    expect(s - s1, cv.Scalar(-1, -2, -3, -4));
+    expect(s * s1, cv.Scalar(2, 8, 18, 32));
+    expect(s / s1, cv.Scalar(0.5, 0.5, 0.5, 0.5));
+    expect(s3.sqrt(), cv.Scalar(1, 2, 3, 4));
+    expect(s.pow(2), cv.Scalar(1, 4, 9, 16));
+  });
+
   test('cv.Vec6i', () {
     final vec = cv.Vec6i(1, 2, 3, 4, 5, 6);
     expect(vec.val, [1, 2, 3, 4, 5, 6]);
