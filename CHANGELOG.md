@@ -1,3 +1,9 @@
+## 1.0.2
+
+- API change: (Mat mean, Mat stdDev) meanStdDev(InputArray src, {OutputArray? mean, OutputArray? stdDev}) => (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask})
+- New: Mat.stdDev(), Mat.variance()
+- New: Scalar operator +, -, *, /, sqrt(), pow(int n)
+
 ## 1.0.1
 
 - API change: cv.Mat.fromScalar(Scalar s, MatType type, {int rows = 1, int cols = 1}) -> (int rows, int cols, MatType type, Scalar s)
