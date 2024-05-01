@@ -8219,8 +8219,8 @@ class CvNative {
 
   CvStatus Mat_MeanStdDev(
     Mat src,
-    Mat dstMean,
-    Mat dstStdDev,
+    ffi.Pointer<Scalar> dstMean,
+    ffi.Pointer<Scalar> dstStdDev,
   ) {
     return _Mat_MeanStdDev(
       src,
@@ -8229,11 +8229,33 @@ class CvNative {
     );
   }
 
-  late final _Mat_MeanStdDevPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Mat, Mat, Mat)>>(
-          'Mat_MeanStdDev');
-  late final _Mat_MeanStdDev =
-      _Mat_MeanStdDevPtr.asFunction<CvStatus Function(Mat, Mat, Mat)>();
+  late final _Mat_MeanStdDevPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Scalar>,
+              ffi.Pointer<Scalar>)>>('Mat_MeanStdDev');
+  late final _Mat_MeanStdDev = _Mat_MeanStdDevPtr.asFunction<
+      CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>)>();
+
+  CvStatus Mat_MeanStdDevWithMask(
+    Mat src,
+    ffi.Pointer<Scalar> dstMean,
+    ffi.Pointer<Scalar> dstStdDev,
+    Mat mask,
+  ) {
+    return _Mat_MeanStdDevWithMask(
+      src,
+      dstMean,
+      dstStdDev,
+      mask,
+    );
+  }
+
+  late final _Mat_MeanStdDevWithMaskPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>,
+              Mat)>>('Mat_MeanStdDevWithMask');
+  late final _Mat_MeanStdDevWithMask = _Mat_MeanStdDevWithMaskPtr.asFunction<
+      CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>, Mat)>();
 
   CvStatus Mat_MeanWithMask(
     Mat m,

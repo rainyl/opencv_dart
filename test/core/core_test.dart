@@ -335,10 +335,10 @@ void main() async {
   });
 
   test('cv.meanStdDev', () {
-    final src = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
+    final src = cv.Mat.randu(101, 102, cv.MatType.CV_8UC3);
     final (mean, stdDev) = cv.meanStdDev(src);
-    expect(mean.isEmpty, equals(false));
-    expect(stdDev.isEmpty, equals(false));
+    expect(mean.val, isNotEmpty);
+    expect(stdDev.val, isNotEmpty);
   });
 
   test('cv.merge', () {
