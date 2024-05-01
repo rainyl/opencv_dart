@@ -3806,12 +3806,23 @@ external CvStatus Mat_Mean(
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>(
+@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>)>(
     symbol: 'Mat_MeanStdDev', assetId: 'package:opencv_dart/opencv_dart.dart')
 external CvStatus Mat_MeanStdDev(
   Mat src,
-  Mat dstMean,
-  Mat dstStdDev,
+  ffi.Pointer<Scalar> dstMean,
+  ffi.Pointer<Scalar> dstStdDev,
+);
+
+@ffi.Native<
+        CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>, Mat)>(
+    symbol: 'Mat_MeanStdDevWithMask',
+    assetId: 'package:opencv_dart/opencv_dart.dart')
+external CvStatus Mat_MeanStdDevWithMask(
+  Mat src,
+  ffi.Pointer<Scalar> dstMean,
+  ffi.Pointer<Scalar> dstStdDev,
+  Mat mask,
 );
 
 @ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<Scalar>)>(

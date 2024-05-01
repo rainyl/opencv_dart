@@ -1077,6 +1077,20 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
+  /// Calculates standard deviation, per channel.
+  /// [Scalar] order is same as [Mat], i.e., BGR -> BGR
+  Scalar stdDev() {
+    return cvRunArena<Scalar>((arena) {
+      final mean = arena<cvg.Scalar>();
+      final sd = arena<cvg.Scalar>();
+      cvRun(() => cvg.Mat_MeanStdDev(ref, mean, sd));
+      return Scalar.fromNative(sd.ref);
+    });
+  }
+
+  /// Similar to [stdDev]
+  Scalar variance() => stdDev().pow(2);
+
   /// Calculates a square root of array elements.
   Mat sqrt() {
     assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F,

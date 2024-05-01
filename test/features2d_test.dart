@@ -130,6 +130,10 @@ void main() async {
       minThreshold: 200,
       thresholdStep: 2.0,
     );
+
+    final params1 = cv.SimpleBlobDetectorParams.fromNative(params.ref);
+    expect(params1, params);
+
     expect(params.blobColor, 200);
     params.blobColor = 201;
     final blobColor = params.blobColor;

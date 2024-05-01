@@ -739,16 +739,15 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
-(Mat mean, Mat stddev) meanStdDev(
-  InputArray src, {
-  OutputArray? mean,
-  OutputArray? stddev,
-  // InputArray? mask, // TODO
-}) {
-  mean ??= Mat.empty();
-  stddev ??= Mat.empty();
-  cvRun(() => cvg.Mat_MeanStdDev(src.ref, mean!.ref, stddev!.ref));
-  return (mean, stddev);
+(Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
+  return cvRunArena<(Scalar, Scalar)>((arena) {
+    final mean = arena<cvg.Scalar>();
+    final stddev = arena<cvg.Scalar>();
+    mask == null
+        ? cvRun(() => cvg.Mat_MeanStdDev(src.ref, mean, stddev))
+        : cvRun(() => cvg.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
+    return (Scalar.fromNative(mean.ref), Scalar.fromNative(stddev.ref));
+  });
 }
 
 /// Merge creates one multi-channel array out of several single-channel ones.

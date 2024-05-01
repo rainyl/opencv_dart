@@ -1321,10 +1321,23 @@ CvStatus Mat_Max(Mat src1, Mat src2, Mat dst)
   END_WRAP
 }
 
-CvStatus Mat_MeanStdDev(Mat src, Mat dstMean, Mat dstStdDev)
+CvStatus Mat_MeanStdDev(Mat src, Scalar *dstMean, Scalar *dstStdDev)
 {
   BEGIN_WRAP
-  cv::meanStdDev(*src.ptr, *dstMean.ptr, *dstStdDev.ptr);
+  cv::Scalar mean, sd;
+  cv::meanStdDev(*src.ptr, mean, sd);
+  *dstMean = {mean.val[0], mean.val[1], mean.val[2], mean.val[3]};
+  *dstStdDev = {sd.val[0], sd.val[1], sd.val[2], sd.val[3]};
+  END_WRAP
+}
+
+CvStatus Mat_MeanStdDevWithMask(Mat src, Scalar *dstMean, Scalar *dstStdDev, Mat mask)
+{
+  BEGIN_WRAP
+  cv::Scalar mean, sd;
+  cv::meanStdDev(*src.ptr, mean, sd, *mask.ptr);
+  *dstMean = {mean.val[0], mean.val[1], mean.val[2], mean.val[3]};
+  *dstStdDev = {sd.val[0], sd.val[1], sd.val[2], sd.val[3]};
   END_WRAP
 }
 

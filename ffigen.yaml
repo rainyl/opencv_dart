@@ -57,10 +57,10 @@ headers:
     - src/stitching/stitching.h
     - src/video/video.h
     - src/video/videoio.h
-functions:
-  symbol-address:
-    include:
-      - ".*_Close.*"
+# functions:
+#   symbol-address:
+#     include:
+#       - ".*_Close.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 
