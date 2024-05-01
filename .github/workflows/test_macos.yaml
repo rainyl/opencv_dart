@@ -21,9 +21,6 @@ jobs:
         run: |
           brew install --force --overwrite ninja ccache ffmpeg@6 nasm conan
           brew link --overwrite ffmpeg@6
-          echo 'export PATH="/usr/local/opt/ffmpeg@6/bin:$PATH"' >> /Users/runner/.bash_profile
-          export LDFLAGS="-L/usr/local/opt/ffmpeg@6/lib"
-          export CPPFLAGS="-I/usr/local/opt/ffmpeg@6/include"
           conan profile detect -f
           cd ${{github.workspace}}
       - name: build
