@@ -76,6 +76,10 @@ jobs:
             build/publish/libopencv_dart-android-arm64-v8a.tar.gz
             build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
             build/publish/libopencv_dart-android-x86_64.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
       - name: Run build
         run: |
           cd example
@@ -293,6 +297,10 @@ jobs:
             files: |
               build/publish/libopencv_dart-ios-arm64.tar.gz
               build/publish/libopencv_dart-ios-x64.tar.gz
+        - uses: subosito/flutter-action@v2
+          with:
+            # flutter-version: '3.16.9'
+            channel: "stable"
         - name: Run Test
           run: |
             cd example
