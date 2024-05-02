@@ -1,3 +1,7 @@
+## 1.0.2+1
+
+- Fix: setup script will exit before files are really written to disk
+
 ## 1.0.2
 
 - API change: (Mat mean, Mat stdDev) meanStdDev(InputArray src, {OutputArray? mean, OutputArray? stdDev}) => (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask})

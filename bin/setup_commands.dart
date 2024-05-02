@@ -82,7 +82,6 @@ abstract class BaseSetupCommand extends Command {
       exit(1);
     }
 
-    print("Extracting...");
     String extractPath = "";
     switch (os) {
       case OS.windows:
@@ -104,9 +103,10 @@ abstract class BaseSetupCommand extends Command {
     if (!Directory(extractPath).existsSync()) {
       Directory(extractPath).createSync(recursive: true);
     }
+    print("Extracting to $extractPath");
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);
-    extractArchiveToDisk(archive, extractPath, bufferSize: 1024 * 1024 * 10); // 10MB
+    await extractArchiveToDisk(archive, extractPath, bufferSize: 1024 * 1024 * 10); // 10MB
   }
 
   @override
