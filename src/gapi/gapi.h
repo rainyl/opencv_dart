@@ -17,15 +17,23 @@ extern "C" {
 
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::GMat, GMat)
+CVD_TYPEDEF(cv::GScalar, GScalar)
 #else
 CVD_TYPEDEF(void, GMat)
+CVD_TYPEDEF(void, GScalar)
 #endif
 
 CVD_TYPEDEF_PTR(GMat)
+CVD_TYPEDEF_PTR(GScalar)
 
 CvStatus GMat_New_Empty(GMat *rval);
 // CvStatus GMat_New_FromMat(Mat mat, GMat *rval);
 void GMat_Close(GMat *mat);
+
+CvStatus GScalar_New_Empty(GScalar *rval);
+CvStatus GScalar_New_FromScalar(Scalar scalar, GScalar *rval);
+CvStatus GScalar_New_FromDouble(double v0, GScalar *rval);
+void GScalar_Close(GScalar *scalar);
 
 #ifdef __cplusplus
 }
