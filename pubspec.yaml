@@ -17,7 +17,7 @@ dependencies:
   yaml: ^3.1.2
   path: ^1.9.0
   args: ^2.4.2
-  archive: ^3.4.10
+  archive: ^3.5.1
 
 dev_dependencies:
   ffigen: ^11.0.0
