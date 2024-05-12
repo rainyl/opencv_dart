@@ -276,32 +276,109 @@ void main() async {
     expect(meanG.val1, equals(1));
   });
 
-  test('Mat.ptrAt', () {
+  test('Mat.ptrAt.U8', () {
     final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
-    mat.set<int>(0, 0, 99);
-
-    final ptr = mat.ptrU8(0, 0);
-    expect(ptr.address, greaterThan(0));
-    expect(ptr[0], 99);
-
-    ptr[0] = 21;
+    final ptr0 = mat.ptrAt<cv.U8>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
     expect(mat.at<int>(0, 0), 21);
-    expect(ptr[0], 21);
-    final ptr1 = mat.ptrU8(0);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.U8>(0, 0);
     expect(ptr1.address, greaterThan(0));
     expect(ptr1[0], 21);
-    expect(List.generate(mat.cols, (i)=>ptr1[i]), [21, 1, 1]);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
 
-    final mat1 = mat.convertTo(cv.MatType.CV_32FC1);
-    mat1.set<double>(0, 0, 99.0);
-    expect(mat1.at<double>(0, 0), 99.0);
-    final ptr2 = mat1.ptrF32(0);
-    expect(ptr2.address, greaterThan(0));
-    expect(ptr2[0], 99.0);
-    expect(List.generate(mat1.cols, (i)=>ptr2[i]), [99.0, 1.0, 1.0]);
+  test('Mat.ptrAt.I8', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8SC1);
+    final ptr0 = mat.ptrAt<cv.I8>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
 
-    ptr2[1] = 241.0;
-    expect(List.generate(mat1.cols, (i)=>ptr2[i]), [99.0, 241.0, 1.0]);
+    final ptr1 = mat.ptrAt<cv.I8>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.U16', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_16UC1);
+    final ptr0 = mat.ptrAt<cv.U16>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.U16>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.I16', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_16SC1);
+    final ptr0 = mat.ptrAt<cv.I16>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.I16>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.I32', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_32SC1);
+    final ptr0 = mat.ptrAt<cv.I32>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.I32>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.F32', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_32FC1);
+    final ptr0 = mat.ptrAt<cv.F32>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], closeTo(1.0, 1e-6));
+    ptr0[0] = 21.0;
+    expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
+    expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    final ptr1 = mat.ptrAt<cv.F32>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], closeTo(21.0, 1e-6));
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21.0, 1.0, 1.0]);
+  });
+
+  test('Mat.ptrAt.F64', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_64FC1);
+    final ptr0 = mat.ptrAt<cv.F64>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], closeTo(1.0, 1e-6));
+    ptr0[0] = 21.0;
+    expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
+    expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    final ptr1 = mat.ptrAt<cv.F64>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], closeTo(21.0, 1e-6));
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21.0, 1.0, 1.0]);
   });
 
   test('Mat At Set Vec*b(uchar)', () {

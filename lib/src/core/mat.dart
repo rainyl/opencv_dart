@@ -577,7 +577,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
   /// mat.set<int>(0, 0, 99);
   ///
-  /// final ptr = mat.ptrAt(0, 0);
+  /// final ptr = mat.ptrAt<cv.U8>(0, 0);
   /// print(ptr[0]); // 99
   ///
   /// ptr[0] = 21;
@@ -585,7 +585,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// print(mat.at<int>(0, 0)); // 21
   /// print(ptr[0]); // 21
   ///
-  /// final ptr1 = mat.ptrAt(0);
+  /// final ptr1 = mat.ptrAt<cv.U8>(0);
   /// print(ptr1[0]); // 21
   /// print(List.generate(mat.cols, (i)=>ptr1[i]); // [21, 1, 1]
   /// ```
