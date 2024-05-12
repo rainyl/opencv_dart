@@ -1,3 +1,7 @@
+## 1.0.2+2
+
+- Fix: update archive version to 3.5.1
+
 ## 1.0.2+1
 
 - Fix: setup script will exit before files are really written to disk
