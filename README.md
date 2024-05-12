@@ -12,7 +12,26 @@ OpenCV Bindings for Dart Language.
 </p>
 
 > [!IMPORTANT]
-> v2.x is prepared for [Native Assets](https://github.com/dart-lang/sdk/issues/50565), Use only if you know what you are doing!
+> `v2.x` is prepared for [Native Assets](https://github.com/dart-lang/sdk/issues/50565), Use only if you know what you are doing!
+>
+> `v2.x` doesn't need to download the prebuild binaries but requires `Native Assets` feature, which is still experimental, see more here: https://github.com/dart-lang/sdk/issues/50565
+>
+> [conan](https://conan.io/) and cmake are required
+>
+> Usage:
+> 
+> for pure dart:
+>
+> 1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
+> 2. add to your `pubspec.yaml`
+> 3. `dart --enable-experiment=native-assets run <path-to-your-code>`
+> 
+> for flutter:
+> 
+> 1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
+> 2. add to your `pubspec.yaml`
+> 3. `flutter config --enable-native-assets`
+> 4. `flutter run`
 >
 
 > [!NOTE]
@@ -29,8 +48,6 @@ OpenCV Bindings for Dart Language.
       - [Pure Dart](#pure-dart)
       - [Flutter](#flutter)
     - [TODO](#todo)
-  - [For Developers](#for-developers)
-    - [How to compile manually with conan](#how-to-compile-manually-with-conan)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
   - [License](#license)
@@ -124,69 +141,6 @@ More examples are on the way...
 - [ ] async?
 - [ ] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
-
-## For Developers
-
-NOTE: since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
-and this repo will download the prebuilt static libraries from it's release, if you want to compile entirely by yourself, you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the below commands or set `OpenCV_DIR` environment variable.
-
-### How to compile manually with conan
-
-1. prepare a compiler.
-
-   windows: Install Visual Studio 2019 or Later
-
-   ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
-
-   ```bash
-   sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
-      ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev \
-      libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev python3-pip
-   ```
-
-   macos:
-
-   ```bash
-   brew install --force --overwrite ninja ccache ffmpeg nasm cmake
-   ```
-
-   from v0.6.4, build system has been migrated to [conan](https://conan.io/)
-
-   ```bash
-      python3 -m pip install conan
-      conan profile detect -f
-   ```
-
-2. clone this repo, `git clone https://github.com/rainyl/opencv_dart.git`
-3. `cd opencv_dart`
-4. compile
-
-   for windows:
-
-   ```pwsh
-   conan build . -b missing -s compiler.cppstd=20
-   ```
-
-    for linux, macos:
-
-    ```bash
-    conan build . -b missing
-    ```
-
-   for android:
-
-   ```bash
-   conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
-   ```
-
-   for ios:
-
-   ```bash
-   echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-<arch>
-   conan build . -b missing -pr:h profiles/ios-<arch>
-   ```
-
-5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
 ## Acknowledgement
 
