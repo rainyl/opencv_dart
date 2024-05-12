@@ -22,14 +22,14 @@ abstract class BaseSetupCommand extends Command {
     return arch_;
   }
 
+  bool get force => argResults?.flag("force") ?? false;
   String get os => name;
 
   Future<void> downloadAndExtract() async {
     // Detect dependencies
     // Assumed package root
     final root = Directory.current.uri;
-    print('Building with assumed project root in:');
-    print(root.toFilePath());
+    print('Building with assumed project root in: ${root.toFilePath()}');
 
     // Assumed package_config.json
     final packageConfigFile = File.fromUri(
@@ -64,22 +64,25 @@ abstract class BaseSetupCommand extends Command {
     final version = doc["binary_version"] as String;
     final libTarName = "libopencv_dart-$os-$arch.tar.gz";
 
-    print('Downloading prebuilt binary...');
-    String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
-
-    final cacheTarPath = p.join(opencvRoot.toFilePath(), ".cache", libTarName);
+    final cacheTarPath = p.join(opencvRoot.toFilePath(), ".dart_tool", ".cache", libTarName);
     final saveFile = File(cacheTarPath);
-    if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
 
-    print("Downloading $url");
-    final request = await HttpClient().getUrl(Uri.parse(url));
-    final response = await request.close();
-    if (response.statusCode == 200) {
-      await response.pipe(saveFile.openWrite());
-      print("Cached to $cacheTarPath");
+    if (force || !saveFile.existsSync()) {
+      if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
+
+      String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+      print("Downloading $url");
+      final request = await HttpClient().getUrl(Uri.parse(url));
+      final response = await request.close();
+      if (response.statusCode == 200) {
+        await response.pipe(saveFile.openWrite());
+        print("Cached to $cacheTarPath");
+      } else {
+        print("Download Failed with status: ${response.statusCode}");
+        exit(1);
+      }
     } else {
-      print("Download Failed with status: ${response.statusCode}");
-      exit(1);
+      print("Using cached $cacheTarPath");
     }
 
     String extractPath = "";
@@ -132,6 +135,7 @@ class MacOsSetupCommand extends BaseSetupCommand {
       allowed: ["x64", "arm64"],
       mandatory: true,
     );
+    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
   }
 }
 
@@ -144,6 +148,7 @@ class WindowsSetupCommand extends BaseSetupCommand {
 
   WindowsSetupCommand() {
     argParser.addOption("arch", abbr: "a", allowed: ["x64"], mandatory: true);
+    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
   }
 }
 
@@ -156,6 +161,7 @@ class LinuxSetupCommand extends BaseSetupCommand {
 
   LinuxSetupCommand() {
     argParser.addOption("arch", abbr: "a", allowed: ["x64"], mandatory: true);
+    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
   }
 }
 
@@ -173,6 +179,7 @@ class AndroidSetupCommand extends BaseSetupCommand {
       allowed: ["x86_64", "arm64-v8a", "armeabi-v7a"],
       mandatory: true,
     );
+    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
   }
 }
 
@@ -190,6 +197,7 @@ class IosSetupCommand extends BaseSetupCommand {
       allowed: ["x64", "arm64"],
       mandatory: true,
     );
+    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
   }
 }
 

@@ -1,6 +1,8 @@
 ## 1.0.2+2
 
 - Fix: update archive version to 3.5.1
+- Minor change: change cache, .cache -> .dart_tool/.cache
+- Minor change: setup script, use cache, add -f flag to force download
 
 ## 1.0.2+1
 
