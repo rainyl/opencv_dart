@@ -1,3 +1,5 @@
+import 'dart:ffi' as ffi;
+
 import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
@@ -272,6 +274,34 @@ void main() async {
     final matG = cv.extractChannel(mat0, 1);
     final meanG = matG.mean();
     expect(meanG.val1, equals(1));
+  });
+
+  test('Mat.ptrAt', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
+    mat.set<int>(0, 0, 99);
+
+    final ptr = mat.ptrU8(0, 0);
+    expect(ptr.address, greaterThan(0));
+    expect(ptr[0], 99);
+
+    ptr[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr[0], 21);
+    final ptr1 = mat.ptrU8(0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i)=>ptr1[i]), [21, 1, 1]);
+
+    final mat1 = mat.convertTo(cv.MatType.CV_32FC1);
+    mat1.set<double>(0, 0, 99.0);
+    expect(mat1.at<double>(0, 0), 99.0);
+    final ptr2 = mat1.ptrF32(0);
+    expect(ptr2.address, greaterThan(0));
+    expect(ptr2[0], 99.0);
+    expect(List.generate(mat1.cols, (i)=>ptr2[i]), [99.0, 1.0, 1.0]);
+
+    ptr2[1] = 241.0;
+    expect(List.generate(mat1.cols, (i)=>ptr2[i]), [99.0, 241.0, 1.0]);
   });
 
   test('Mat At Set Vec*b(uchar)', () {

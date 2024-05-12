@@ -8902,6 +8902,453 @@ class CvNative {
   late final _Mat_Pow =
       _Mat_PowPtr.asFunction<CvStatus Function(Mat, double, Mat)>();
 
+  CvStatus Mat_Ptr_f32_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
+  ) {
+    return _Mat_Ptr_f32_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f32_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Float>>)>>('Mat_Ptr_f32_1');
+  late final _Mat_Ptr_f32_1 = _Mat_Ptr_f32_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>();
+
+  CvStatus Mat_Ptr_f32_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
+  ) {
+    return _Mat_Ptr_f32_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f32_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Float>>)>>('Mat_Ptr_f32_2');
+  late final _Mat_Ptr_f32_2 = _Mat_Ptr_f32_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>();
+
+  CvStatus Mat_Ptr_f32_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
+  ) {
+    return _Mat_Ptr_f32_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f32_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Float>>)>>('Mat_Ptr_f32_3');
+  late final _Mat_Ptr_f32_3 = _Mat_Ptr_f32_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>();
+
+  CvStatus Mat_Ptr_f64_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+  ) {
+    return _Mat_Ptr_f64_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f64_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Double>>)>>('Mat_Ptr_f64_1');
+  late final _Mat_Ptr_f64_1 = _Mat_Ptr_f64_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>();
+
+  CvStatus Mat_Ptr_f64_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+  ) {
+    return _Mat_Ptr_f64_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f64_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Double>>)>>('Mat_Ptr_f64_2');
+  late final _Mat_Ptr_f64_2 = _Mat_Ptr_f64_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>();
+
+  CvStatus Mat_Ptr_f64_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+  ) {
+    return _Mat_Ptr_f64_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_f64_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Double>>)>>('Mat_Ptr_f64_3');
+  late final _Mat_Ptr_f64_3 = _Mat_Ptr_f64_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>();
+
+  CvStatus Mat_Ptr_i16_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
+  ) {
+    return _Mat_Ptr_i16_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i16_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Short>>)>>('Mat_Ptr_i16_1');
+  late final _Mat_Ptr_i16_1 = _Mat_Ptr_i16_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>();
+
+  CvStatus Mat_Ptr_i16_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
+  ) {
+    return _Mat_Ptr_i16_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i16_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Short>>)>>('Mat_Ptr_i16_2');
+  late final _Mat_Ptr_i16_2 = _Mat_Ptr_i16_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>();
+
+  CvStatus Mat_Ptr_i16_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
+  ) {
+    return _Mat_Ptr_i16_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i16_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Short>>)>>('Mat_Ptr_i16_3');
+  late final _Mat_Ptr_i16_3 = _Mat_Ptr_i16_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>();
+
+  CvStatus Mat_Ptr_i32_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ) {
+    return _Mat_Ptr_i32_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i32_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Int>>)>>('Mat_Ptr_i32_1');
+  late final _Mat_Ptr_i32_1 = _Mat_Ptr_i32_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>();
+
+  CvStatus Mat_Ptr_i32_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ) {
+    return _Mat_Ptr_i32_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i32_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Int>>)>>('Mat_Ptr_i32_2');
+  late final _Mat_Ptr_i32_2 = _Mat_Ptr_i32_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>();
+
+  CvStatus Mat_Ptr_i32_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ) {
+    return _Mat_Ptr_i32_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i32_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Int>>)>>('Mat_Ptr_i32_3');
+  late final _Mat_Ptr_i32_3 = _Mat_Ptr_i32_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>();
+
+  CvStatus Mat_Ptr_i8_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Mat_Ptr_i8_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i8_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Mat_Ptr_i8_1');
+  late final _Mat_Ptr_i8_1 = _Mat_Ptr_i8_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  CvStatus Mat_Ptr_i8_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Mat_Ptr_i8_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i8_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Mat_Ptr_i8_2');
+  late final _Mat_Ptr_i8_2 = _Mat_Ptr_i8_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  CvStatus Mat_Ptr_i8_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Mat_Ptr_i8_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_i8_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Mat_Ptr_i8_3');
+  late final _Mat_Ptr_i8_3 = _Mat_Ptr_i8_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  CvStatus Mat_Ptr_u16_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<ushort>> rval,
+  ) {
+    return _Mat_Ptr_u16_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u16_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ushort>>)>>('Mat_Ptr_u16_1');
+  late final _Mat_Ptr_u16_1 = _Mat_Ptr_u16_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<ushort>>)>();
+
+  CvStatus Mat_Ptr_u16_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<ushort>> rval,
+  ) {
+    return _Mat_Ptr_u16_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u16_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ushort>>)>>('Mat_Ptr_u16_2');
+  late final _Mat_Ptr_u16_2 = _Mat_Ptr_u16_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<ushort>>)>();
+
+  CvStatus Mat_Ptr_u16_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<ushort>> rval,
+  ) {
+    return _Mat_Ptr_u16_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u16_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<ushort>>)>>('Mat_Ptr_u16_3');
+  late final _Mat_Ptr_u16_3 = _Mat_Ptr_u16_3Ptr.asFunction<
+      CvStatus Function(
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ushort>>)>();
+
+  CvStatus Mat_Ptr_u8_1(
+    Mat m,
+    int i,
+    ffi.Pointer<ffi.Pointer<uchar>> rval,
+  ) {
+    return _Mat_Ptr_u8_1(
+      m,
+      i,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u8_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>>('Mat_Ptr_u8_1');
+  late final _Mat_Ptr_u8_1 = _Mat_Ptr_u8_1Ptr.asFunction<
+      CvStatus Function(Mat, int, ffi.Pointer<ffi.Pointer<uchar>>)>();
+
+  CvStatus Mat_Ptr_u8_2(
+    Mat m,
+    int i,
+    int j,
+    ffi.Pointer<ffi.Pointer<uchar>> rval,
+  ) {
+    return _Mat_Ptr_u8_2(
+      m,
+      i,
+      j,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u8_2Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<uchar>>)>>('Mat_Ptr_u8_2');
+  late final _Mat_Ptr_u8_2 = _Mat_Ptr_u8_2Ptr.asFunction<
+      CvStatus Function(Mat, int, int, ffi.Pointer<ffi.Pointer<uchar>>)>();
+
+  CvStatus Mat_Ptr_u8_3(
+    Mat m,
+    int i,
+    int j,
+    int k,
+    ffi.Pointer<ffi.Pointer<uchar>> rval,
+  ) {
+    return _Mat_Ptr_u8_3(
+      m,
+      i,
+      j,
+      k,
+      rval,
+    );
+  }
+
+  late final _Mat_Ptr_u8_3Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Pointer<uchar>>)>>('Mat_Ptr_u8_3');
+  late final _Mat_Ptr_u8_3 = _Mat_Ptr_u8_3Ptr.asFunction<
+      CvStatus Function(Mat, int, int, int, ffi.Pointer<ffi.Pointer<uchar>>)>();
+
   CvStatus Mat_Reduce(
     Mat src,
     Mat dst,
