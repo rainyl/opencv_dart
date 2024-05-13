@@ -12,7 +12,7 @@ void main() {
     final (status, pano) = stitcher.stitch(images.cvd);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
-    cv.imwrite('test/images_out/stitcher_test.jpg', pano);
+    // cv.imwrite('test/images_out/stitcher_test.jpg', pano);
   });
 
   test('cv.Stitcher with mask', () {
@@ -29,7 +29,7 @@ void main() {
     final (status, pano) = stitcher.stitch(images.cvd, masks: masks.cvd);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
-    cv.imwrite('test/images_out/stitcher_test_mask.jpg', pano);
+    // cv.imwrite('test/images_out/stitcher_test_mask.jpg', pano);
   });
 
   test('cv.Stitcher getter/setter', () {
@@ -56,5 +56,27 @@ void main() {
     expect(stitcher.interpolationFlags, cv.INTER_LINEAR);
 
     expect(stitcher.component.length, greaterThanOrEqualTo(0));
+  });
+
+  test('Issue 48', () {
+    final images = [
+      cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
+      cv.imread("test/images/barcode2.png", flags: cv.IMREAD_COLOR),
+    ];
+
+    // Create Stitcher object
+    final cv.Stitcher stitcher = cv.Stitcher.create();
+
+    // Estimate transformations and stitch images
+    final cv.StitcherStatus status = stitcher.estimateTransform(images.cvd);
+    expect(status, cv.StitcherStatus.OK);
+
+    final result = stitcher.composePanorama();
+    expect(result.$1, cv.StitcherStatus.OK);
+    expect(result.$2.isEmpty, false);
+
+    final result1 = stitcher.composePanorama(images: images.cvd);
+    expect(result1.$1, cv.StitcherStatus.OK);
+    expect(result1.$2.isEmpty, false);
   });
 }

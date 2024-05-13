@@ -1,3 +1,7 @@
+## 1.0.3+1
+
+- fix: Stitcher.composePanorama
+
 ## 1.0.3
 
 - New API: Mat::ptr -> Mat.ptrAt
