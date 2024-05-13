@@ -1,3 +1,15 @@
+## 1.0.3
+
+- New API: Mat::ptr -> Mat.ptrAt
+  - ffi.Pointer\<T\> Mat.ptrAt\<T extends ffi.NativeType\>(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.UnsignedChar> Mat.ptrU8(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.Char> ptrI8(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.UnsignedShort> ptrU16(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.Short> ptrI16(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.Int> ptrI32(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.Float> ptrF32(int i0, [int? i1, int? i2])
+  - ffi.Pointer<ffi.Double> ptrF64(int i0, [int? i1, int? i2])
+
 ## 1.0.2+2
 
 - Fix: update archive version to 3.5.1
