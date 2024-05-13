@@ -1,3 +1,5 @@
+import 'dart:ffi' as ffi;
+
 import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
@@ -272,6 +274,115 @@ void main() async {
     final matG = cv.extractChannel(mat0, 1);
     final meanG = matG.mean();
     expect(meanG.val1, equals(1));
+  });
+
+  test('Mat.ptrAt.U8', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
+    final ptr0 = mat.ptrAt<cv.U8>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.U8>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.I8', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8SC1);
+    final ptr0 = mat.ptrAt<cv.I8>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.I8>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.U16', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_16UC1);
+    final ptr0 = mat.ptrAt<cv.U16>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.U16>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.I16', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_16SC1);
+    final ptr0 = mat.ptrAt<cv.I16>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.I16>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.I32', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_32SC1);
+    final ptr0 = mat.ptrAt<cv.I32>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], 1);
+    ptr0[0] = 21;
+    expect(mat.at<int>(0, 0), 21);
+    expect(ptr0[0], 21);
+
+    final ptr1 = mat.ptrAt<cv.I32>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], 21);
+    expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
+  });
+
+  test('Mat.ptrAt.F32', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_32FC1);
+    final ptr0 = mat.ptrAt<cv.F32>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], closeTo(1.0, 1e-6));
+    ptr0[0] = 21.0;
+    expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
+    expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    final ptr1 = mat.ptrAt<cv.F32>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], closeTo(21.0, 1e-6));
+    final expected = [21.0, 1.0, 1.0];
+    final accessed = List.generate(mat.cols, (i) => ptr1[i]);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
+  });
+
+  test('Mat.ptrAt.F64', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_64FC1);
+    final ptr0 = mat.ptrAt<cv.F64>(0);
+    expect(ptr0.address, greaterThan(0));
+    expect(ptr0[0], closeTo(1.0, 1e-6));
+    ptr0[0] = 21.0;
+    expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
+    expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    final ptr1 = mat.ptrAt<cv.F64>(0, 0);
+    expect(ptr1.address, greaterThan(0));
+    expect(ptr1[0], closeTo(21.0, 1e-6));
+    final expected = [21.0, 1.0, 1.0];
+    final accessed = List.generate(mat.cols, (i) => ptr1[i]);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
   test('Mat At Set Vec*b(uchar)', () {
