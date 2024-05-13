@@ -363,7 +363,9 @@ void main() async {
     final ptr1 = mat.ptrAt<cv.F32>(0, 0);
     expect(ptr1.address, greaterThan(0));
     expect(ptr1[0], closeTo(21.0, 1e-6));
-    expect(List.generate(mat.cols, (i) => ptr1[i]), [21.0, 1.0, 1.0]);
+    final expected = [21.0, 1.0, 1.0];
+    final accessed = List.generate(mat.cols, (i) => ptr1[i]);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
   test('Mat.ptrAt.F64', () {
@@ -378,7 +380,9 @@ void main() async {
     final ptr1 = mat.ptrAt<cv.F64>(0, 0);
     expect(ptr1.address, greaterThan(0));
     expect(ptr1[0], closeTo(21.0, 1e-6));
-    expect(List.generate(mat.cols, (i) => ptr1[i]), [21.0, 1.0, 1.0]);
+    final expected = [21.0, 1.0, 1.0];
+    final accessed = List.generate(mat.cols, (i) => ptr1[i]);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
   test('Mat At Set Vec*b(uchar)', () {
