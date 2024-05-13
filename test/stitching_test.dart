@@ -57,4 +57,26 @@ void main() {
 
     expect(stitcher.component.length, greaterThanOrEqualTo(0));
   });
+
+  test('Issue 48', () {
+    final images = [
+      cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
+      cv.imread("test/images/barcode2.png", flags: cv.IMREAD_COLOR),
+    ];
+
+    // Create Stitcher object
+    final cv.Stitcher stitcher = cv.Stitcher.create();
+
+    // Estimate transformations and stitch images
+    final cv.StitcherStatus status = stitcher.estimateTransform(images.cvd);
+    expect(status, cv.StitcherStatus.OK);
+
+    final result = stitcher.composePanorama();
+    expect(result.$1, cv.StitcherStatus.OK);
+    expect(result.$2.isEmpty, false);
+
+    final result1 = stitcher.composePanorama(images: images.cvd);
+    expect(result1.$1, cv.StitcherStatus.OK);
+    expect(result1.$2.isEmpty, false);
+  });
 }

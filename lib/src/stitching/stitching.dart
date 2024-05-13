@@ -153,11 +153,11 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
   (StitcherStatus, Mat pano) composePanorama({VecMat? images}) {
     return using<(StitcherStatus, Mat)>((arena) {
       final rptr = arena<ffi.Int>();
-      final rpano = arena<cvg.Mat>();
+      final rpano = Mat.empty();
       images == null
           ? cvRun(() => cvg.Stitcher_ComposePanorama(stitcher, rpano.ref, rptr))
           : cvRun(() => cvg.Stitcher_ComposePanorama_1(stitcher, images.ref, rpano.ref, rptr));
-      return (StitcherStatus.fromInt(rptr.value), Mat.fromCMat(rpano.ref));
+      return (StitcherStatus.fromInt(rptr.value), rpano);
     });
   }
 
