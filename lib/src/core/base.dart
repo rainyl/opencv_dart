@@ -100,6 +100,15 @@ typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
+typedef U8 = ffi.UnsignedChar;
+typedef I8 = ffi.Char;
+typedef U16 = ffi.UnsignedShort;
+typedef I16 = ffi.Short;
+// typedef U32 = ffi.UnsignedInt;
+typedef I32 = ffi.Int;
+typedef F32 = ffi.Float;
+typedef F64 = ffi.Double;
+
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)
   bmp(ext: ".bmp"),

@@ -568,6 +568,154 @@ class Mat extends CvStruct<cvg.Mat> {
   // https://github.com/dart-lang/sdk/issues/43390#issuecomment-690993957
   bool isSubtype<S, T>() => <S>[] is List<T>;
 
+  /// equivalent to Mat::ptr\<T\>(i0, i1, i2)
+  ///
+  /// **DANGEROUS**
+  ///
+  /// returns a pointer to operate Mat directly and effectively, use with caution!
+  ///
+  /// Example:
+  /// ```dart
+  /// final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
+  /// mat.set<int>(0, 0, 99);
+  ///
+  /// final ptr = mat.ptrAt<cv.U8>(0, 0);
+  /// print(ptr[0]); // 99
+  ///
+  /// ptr[0] = 21;
+  /// // Mat::ptr(i, j)
+  /// print(mat.at<int>(0, 0)); // 21
+  /// print(ptr[0]); // 21
+  ///
+  /// final ptr1 = mat.ptrAt<cv.U8>(0);
+  /// print(ptr1[0]); // 21
+  /// print(List.generate(mat.cols, (i)=>ptr1[i]); // [21, 1, 1]
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
+  ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
+    if (T == ffi.UnsignedChar) return ptrU8(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Char) return ptrI8(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.UnsignedShort) return ptrU16(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Short) return ptrI16(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Int) return ptrI32(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Float) return ptrF32(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Double) return ptrF64(i0, i1, i2) as ffi.Pointer<T>;
+    throw UnsupportedError("ptr<$T>() is not supported!");
+  }
+
+  ffi.Pointer<ffi.UnsignedChar> ptrU8(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_u8_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_u8_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_u8_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrU8($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.UnsignedChar>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Char> ptrI8(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i8_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i8_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_i8_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI8($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Char>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.UnsignedShort> ptrU16(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.UnsignedShort>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_u16_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_u16_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_u16_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrU16($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.UnsignedShort>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Short> ptrI16(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Short>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i16_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i16_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_i16_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI16($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Short>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Int> ptrI32(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Int>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i32_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_i32_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_i32_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI32($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Int>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Float> ptrF32(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Float>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_f32_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_f32_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_f32_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrF32($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Float>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Double> ptrF64(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Double>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_f64_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => cvg.Mat_Ptr_f64_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => cvg.Mat_Ptr_f64_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrF64($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Double>();
+    calloc.free(p);
+    return ret;
+  }
+
   // TODO: for now, dart do not support operator overloading
   // https://github.com/dart-lang/language/issues/2456
   // waiting for it's implementation and add more methods

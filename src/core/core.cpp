@@ -348,6 +348,137 @@ CvStatus Ones(int rows, int cols, int type, Mat *rval)
   END_WRAP
 }
 
+
+CvStatus Mat_Ptr_u8_1(Mat m, int i, uchar **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr(i);
+  END_WRAP
+}
+
+CvStatus Mat_Ptr_u8_2(Mat m, int i, int j, uchar **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr(i, j);
+  END_WRAP
+}
+
+CvStatus Mat_Ptr_u8_3(Mat m, int i, int j, int k, uchar **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr(i, j, k);
+  END_WRAP
+}
+
+CvStatus Mat_Ptr_i8_1(Mat m, int i, char **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<char>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i8_2(Mat m, int i, int j, char **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<char>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i8_3(Mat m, int i, int j, int k, char **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<char>(i, j, k);
+  END_WRAP
+}
+CvStatus Mat_Ptr_u16_1(Mat m, int i, ushort **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<ushort>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_u16_2(Mat m, int i, int j, ushort **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<ushort>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_u16_3(Mat m, int i, int j, int k, ushort **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<ushort>(i, j, k);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i16_1(Mat m, int i, short **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<short>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i16_2(Mat m, int i, int j, short **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<short>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i16_3(Mat m, int i, int j, int k, short **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<short>(i, j, k);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i32_1(Mat m, int i, int **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<int>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i32_2(Mat m, int i, int j, int **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<int>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_i32_3(Mat m, int i, int j, int k, int **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<int>(i, j, k);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f32_1(Mat m, int i, float **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<float>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f32_2(Mat m, int i, int j, float **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<float>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f32_3(Mat m, int i, int j, int k, float **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<float>(i, j, k);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f64_1(Mat m, int i, double **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<double>(i);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f64_2(Mat m, int i, int j, double **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<double>(i, j);
+  END_WRAP
+}
+CvStatus Mat_Ptr_f64_3(Mat m, int i, int j, int k, double **rval)
+{
+  BEGIN_WRAP
+  *rval = m.ptr->ptr<double>(i, j, k);
+  END_WRAP
+}
+
 #pragma region Mat_getter
 
 CvStatus Mat_GetUChar(Mat m, int row, int col, uint8_t *rval)
