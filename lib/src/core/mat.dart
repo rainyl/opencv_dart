@@ -569,8 +569,10 @@ class Mat extends CvStruct<cvg.Mat> {
   bool isSubtype<S, T>() => <S>[] is List<T>;
 
   /// equivalent to Mat::ptr\<T\>(i0, i1, i2)
-  /// DANGEROUS!
-  /// returns a pointer, remember to free
+  ///
+  /// **DANGEROUS**
+  ///
+  /// returns a pointer to operate Mat directly and effectively, use with caution!
   ///
   /// Example:
   /// ```dart
