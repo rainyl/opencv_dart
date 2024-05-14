@@ -464,7 +464,7 @@ Mat pyrDown(
   Mat src, {
   Mat? dst,
   (int, int) dstsize = (0, 0),
-  int borderType = BORDER_CONSTANT,
+  int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
   using((arena) {
@@ -481,7 +481,7 @@ Mat pyrUp(
   Mat src, {
   Mat? dst,
   (int, int) dstsize = (0, 0),
-  int borderType = BORDER_CONSTANT,
+  int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
   using((arena) {
