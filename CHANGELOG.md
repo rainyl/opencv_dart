@@ -1,3 +1,7 @@
+## 1.0.3+2
+
+- fix: change the default border type of pyrDown/pyrUp to BORDER_DEFAULT, same as opencv
+
 ## 1.0.3+1
 
 - fix: Stitcher.composePanorama
