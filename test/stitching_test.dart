@@ -12,7 +12,7 @@ void main() {
     final (status, pano) = stitcher.stitch(images.cvd);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
-    cv.imwrite('test/images_out/stitcher_test.jpg', pano);
+    // cv.imwrite('test/images_out/stitcher_test.jpg', pano);
   });
 
   test('cv.Stitcher with mask', () {
@@ -29,7 +29,7 @@ void main() {
     final (status, pano) = stitcher.stitch(images.cvd, masks: masks.cvd);
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
-    cv.imwrite('test/images_out/stitcher_test_mask.jpg', pano);
+    // cv.imwrite('test/images_out/stitcher_test_mask.jpg', pano);
   });
 
   test('cv.Stitcher getter/setter', () {
