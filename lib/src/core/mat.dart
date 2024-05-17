@@ -237,72 +237,81 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
-  T _atNum<T>(int row, int col, [int? cn]) {
-    return cvRunArena<T>((arena) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          final p = arena<ffi.Uint8>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetUChar(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetUChar3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_8S:
-          final p = arena<ffi.Int8>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetSChar(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetSChar3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_16U:
-          final p = arena<ffi.Uint16>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetUShort(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetUShort3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_16S:
-          final p = arena<ffi.Int16>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetShort(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetShort3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_32S:
-          final p = arena<ffi.Int32>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetInt(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetInt3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_32F:
-          final p = arena<ffi.Float>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetFloat(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetFloat3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_64F:
-          final p = arena<ffi.Double>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => cvg.Mat_GetDouble(ref, row, col, p));
-          } else {
-            cvRun(() => cvg.Mat_GetDouble3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        default:
-          throw UnsupportedError("at() for $type is not supported!");
-      }
+  int atU8(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Uint8>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetUChar(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetUChar3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI8(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int8>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetSChar(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetSChar3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atU16(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Uint16>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetUShort(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetUShort3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI16(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int16>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetShort(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetShort3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI32(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int32>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetInt(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetInt3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  double atF32(int row, int col, [int? i2]) => using<double>((arena) {
+        final p = arena<ffi.Float>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetFloat(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetFloat3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  double atF64(int row, int col, [int? i2]) => using<double>((arena) {
+        final p = arena<ffi.Double>();
+        i2 == null
+            ? cvRun(() => cvg.Mat_GetDouble(ref, row, col, p))
+            : cvRun(() => cvg.Mat_GetDouble3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  num atNum<T extends num>(int row, int col, [int? i2]) {
+    return using<num>((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => cvg.Mat_Type(ref, p));
+      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
+      return switch (depth) {
+        MatType.CV_8U => atU8(row, col, i2),
+        MatType.CV_8S => atI8(row, col, i2),
+        MatType.CV_16U => atU16(row, col, i2),
+        MatType.CV_16S => atI16(row, col, i2),
+        MatType.CV_32S => atI32(row, col, i2),
+        MatType.CV_32F => atF32(row, col, i2),
+        MatType.CV_64F => atF64(row, col, i2),
+        _ => throw UnsupportedError("Unsupported type: $type")
+      };
     });
   }
 
-  T _atVec<T>(int row, int col) {
+  T atVec<T>(int row, int col) {
     final v = cvRunArena<T>((arena) {
       // Vec2b, Vec3b, Vec4b
       if (T == Vec2b) {
@@ -412,76 +421,25 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// cv::Mat::at\<T\>(i0, i1, i2) of cv::Mat
   ///
-  ///
-  /// - If matrix is of type [MatType.CV_8U] then use Mat.at\<uchar\>(y,x).
-  /// - If matrix is of type [MatType.CV_8S] then use Mat.at\<schar\>(y,x).
-  /// - If matrix is of type [MatType.CV_16U] then use Mat.at\<ushort\>(y,x).
-  /// - If matrix is of type [MatType.CV_16S] then use Mat.at\<short\>(y,x).
-  /// - If matrix is of type [MatType.CV_32S] then use Mat.at\<int\>(y,x).
-  /// - If matrix is of type [MatType.CV_32F] then use Mat.at\<float\>(y,x).
-  /// - If matrix is of type [MatType.CV_64F] then use Mat.at\<double\>(y,x).
-  ///
   /// example:
   /// ```dart
   /// var m = cv.Mat.fromScalar(cv.Scalar(2, 4, 1, 0), cv.MatType.CV_32FC3);
-  /// m.at<double>(0, 0); // 2
+  /// m.at<double>(0, 0); // 2.0
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(2, 4, 1)
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
   T at<T>(int row, int col, [int? i2]) {
     if (T == int || T == double) {
-      return _atNum<T>(row, col, i2);
+      return atNum(row, col, i2) as T;
     } else if (isSubtype<T, CvVec>()) {
-      return _atVec<T>(row, col);
+      return atVec<T>(row, col);
     } else {
       throw UnsupportedError("T must be num or CvVec(e.g., Vec3b), but got $T");
     }
   }
 
-  void _setNum<T>(row, col, T val, [int? i2]) {
-    switch (type.depth) {
-      case MatType.CV_8U:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetUChar(ref, row, col, val as int))
-            : cvRun(() => cvg.Mat_SetUChar3(ref, row, col, i2, val as int));
-      case MatType.CV_8S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetSChar(ref, row, col, val as int))
-            : cvRun(() => cvg.Mat_SetSChar3(ref, row, col, i2, val as int));
-      case MatType.CV_16U:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetUShort(ref, row, col, val as int))
-            : cvRun(() => cvg.Mat_SetUShort3(ref, row, col, i2, val as int));
-      case MatType.CV_16S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetShort(ref, row, col, val as int))
-            : cvRun(() => cvg.Mat_SetShort3(ref, row, col, i2, val as int));
-      case MatType.CV_32S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetInt(ref, row, col, val as int))
-            : cvRun(() => cvg.Mat_SetInt3(ref, row, col, i2, val as int));
-      case MatType.CV_32F:
-        assert(T == double, "$type only support double");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetFloat(ref, row, col, val as double))
-            : cvRun(() => cvg.Mat_SetFloat3(ref, row, col, i2, val as double));
-      case MatType.CV_64F:
-        assert(T == double, "$type only support double");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => cvg.Mat_SetDouble(ref, row, col, val as double))
-            : cvRun(() => cvg.Mat_SetDouble3(ref, row, col, i2, val as double));
-      default:
-        throw UnsupportedError("setValue() for $type is not supported!");
-    }
-  }
-
-  void _setVec<T>(int row, int col, T val) {
+  void setVec<T>(int row, int col, T val) {
     cvRunArena((arena) {
       // Vec2b, Vec3b, Vec4b
       if (val is Vec2b) {
@@ -544,8 +502,54 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
+  void setU8(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetUChar(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetUChar3(ref, row, col, i2, val));
+
+  void setI8(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetSChar(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetSChar3(ref, row, col, i2, val));
+
+  void setU16(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetUShort(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetUShort3(ref, row, col, i2, val));
+
+  void setI16(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetShort(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetShort3(ref, row, col, i2, val));
+
+  void setI32(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetInt(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetInt3(ref, row, col, i2, val));
+
+  void setF32(int row, int col, double val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetFloat(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetFloat3(ref, row, col, i2, val));
+
+  void setF64(int row, int col, double val, [int? i2]) => i2 == null
+      ? cvRun(() => cvg.Mat_SetDouble(ref, row, col, val))
+      : cvRun(() => cvg.Mat_SetDouble3(ref, row, col, i2, val));
+
+  void setNum<T extends num>(int row, int col, T val, [int? i2]) {
+    using((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => cvg.Mat_Type(ref, p));
+      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
+      return switch (depth) {
+        MatType.CV_8U => setU8(row, col, val as int, i2),
+        MatType.CV_8S => setI8(row, col, val as int, i2),
+        MatType.CV_16U => setU16(row, col, val as int, i2),
+        MatType.CV_16S => setI16(row, col, val as int, i2),
+        MatType.CV_32S => setI32(row, col, val as int, i2),
+        MatType.CV_32F => setF32(row, col, val as double, i2),
+        MatType.CV_64F => setF64(row, col, val as double, i2),
+        _ => throw UnsupportedError("Unsupported type: $type")
+      };
+    });
+  }
+
   /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;
-  /// where T might be basic value types like uchar, char, int.
+  /// where T might be int, double, [U8], [I8], [U16], [I16], [I32], [F32], [F64].
   /// or cv::Vec<> like cv::Vec3b
   ///
   /// example
@@ -555,13 +559,27 @@ class Mat extends CvStruct<cvg.Mat> {
   /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
   /// ```
-  void set<T>(int row, int col, T val, [int? i2]) {
+  void set<T>(int row, int col, Object val, [int? i2]) {
     if (T == int || T == double) {
-      _setNum<T>(row, col, val, i2);
+      setNum(row, col, val as num, i2);
     } else if (isSubtype<T, CvVec>()) {
-      _setVec<T>(row, col, val);
+      setVec<T>(row, col, val as T);
+    } else if (T == U8) {
+      setU8(row, col, val as int);
+    } else if (T == I8) {
+      setI8(row, col, val as int);
+    } else if (T == U16) {
+      setU16(row, col, val as int);
+    } else if (T == I16) {
+      setI16(row, col, val as int);
+    } else if (T == I32) {
+      setI32(row, col, val as int);
+    } else if (T == F32) {
+      setF32(row, col, val as double);
+    } else if (T == F64) {
+      setF64(row, col, val as double);
     } else {
-      throw UnsupportedError("T must be num or CvVec(e.g., Vec3b), but got $T");
+      throw UnsupportedError("Unsupported type $T");
     }
   }
 

@@ -313,6 +313,47 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.LUT', () {
+    void testOneLUT(cv.Mat src, cv.Mat lut) {
+      expect(lut.channels == src.channels || lut.channels == 1, true);
+      expect(lut.isContinus, true);
+      final sw = Stopwatch();
+      sw.start();
+      final dst = cv.LUT(src, lut);
+      sw.stop();
+      // print('${src.type} -> ${lut.type}(${src.rows}x${src.cols}): ${sw.elapsedMilliseconds}ms');
+      expect(dst.isEmpty, false);
+      expect(src.shape, dst.shape);
+    }
+
+    final depthSrc = [cv.MatType.CV_8U, cv.MatType.CV_8S, cv.MatType.CV_16U, cv.MatType.CV_16S];
+    final depthLut = [
+      cv.MatType.CV_8U,
+      cv.MatType.CV_8S,
+      cv.MatType.CV_16U,
+      cv.MatType.CV_16S,
+      cv.MatType.CV_32S,
+      cv.MatType.CV_32F,
+      cv.MatType.CV_64F,
+    ];
+    for (int channel in [1, 2, 3, 4]) {
+      for (var depth in depthSrc) {
+        final srcType = cv.MatType.makeType(depth, channel);
+        final src = cv.Mat.zeros(3, 3, srcType);
+        final lutSize = switch (depth) {
+          cv.MatType.CV_8U || cv.MatType.CV_8S => 256,
+          cv.MatType.CV_16U || cv.MatType.CV_16S => 65536,
+          _ => throw Exception("Unsupported type"),
+        };
+        for (var lutDepth in depthLut) {
+          final lutType = cv.MatType.makeType(lutDepth, channel);
+          final lut = cv.Mat.fromScalar(1, lutSize, lutType, cv.Scalar(255, 241, 21, 0));
+          testOneLUT(src, lut);
+        }
+      }
+    }
+  });
+
   test('cv.magnitude', () {
     final src1 = cv.Mat.randu(4, 4, cv.MatType.CV_32FC1);
     final src2 = cv.Mat.randu(4, 4, cv.MatType.CV_32FC1);
