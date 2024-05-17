@@ -1,6 +1,5 @@
 #include "core.h"
 #include "lut.hpp"
-#include <cmath>
 #include <iostream>
 #include <vector>
 
