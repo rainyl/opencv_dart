@@ -25,6 +25,7 @@ CVD_TYPEDEF(void, CLAHE)
 
 CVD_TYPEDEF_PTR(CLAHE)
 
+CvStatus GetTriangles(VecPoint points, Vec6f **rval, int *size);
 CvStatus ArcLength(VecPoint curve, bool is_closed, CVD_OUT double *rval);
 CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, CVD_OUT VecPoint *rval);
 CvStatus CvtColor(Mat src, CVD_OUT Mat dst, int code);

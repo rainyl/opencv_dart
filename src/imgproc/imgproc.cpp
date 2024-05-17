@@ -10,6 +10,43 @@
 #include <memory>
 #include <vector>
 
+Vec6f convertToVec6f(const cv::Vec6f& cvVec) {
+    Vec6f vec;
+    vec.val1 = cvVec[0];
+    vec.val2 = cvVec[1];
+    vec.val3 = cvVec[2];
+    vec.val4 = cvVec[3];
+    vec.val5 = cvVec[4];
+    vec.val6 = cvVec[5];
+    return vec;
+}
+
+CvStatus GetTriangles(VecPoint points, Vec6f **rval, int *size)
+{
+    BEGIN_WRAP
+    // get convex hull from potins
+    // cv::convexHull(*points.ptr, *hull.ptr, clockwise, returnPoints);
+    cv::Mat convexHull;
+    cv::convexHull(*points.ptr, convexHull);
+    //    cv::Rect r = cv::boundingRect(*pts.ptr);
+    cv::Rect r = cv::boundingRect(convexHull);
+    cv::Subdiv2D subdiv = cv::Subdiv2D(r);
+    for (int i = 0; i < points.ptr->size(); i++) {
+        //        points.ptr->at(i);
+        cv::Point2f pt = cv::Point2f(points.ptr->at(i).x, points.ptr->at(i).y);
+        subdiv.insert(pt);
+    }
+    std::vector<cv::Vec6f> triangleVec;
+    subdiv.getTriangleList(triangleVec);
+
+    *size = triangleVec.size();
+    // rval에 triangleVec 할당
+    *rval = new Vec6f[triangleVec.size()];
+    for (size_t i = 0; i < triangleVec.size(); i++) {
+        (*rval)[i] = convertToVec6f(triangleVec[i]);
+    }
+    END_WRAP
+}
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
 {
   BEGIN_WRAP

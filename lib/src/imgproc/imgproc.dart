@@ -6,6 +6,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../../opencv_dart.dart';
 import '../core/contours.dart';
 import '../core/scalar.dart';
 import '../core/base.dart';
@@ -19,6 +20,22 @@ import '../core/termcriteria.dart';
 
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
+
+List<Vec6f> getTriangles(List<Point> pts) {
+  final p = calloc<ffi.Pointer<cvg.Vec6f>>();
+  final pSize = malloc<ffi.Int>();
+  cvRun(() => CFFI.GetTriangles(pts.cvd.ref, p, pSize));
+  return List.generate(
+      pSize.value,
+      (index) => Vec6f(
+            p.value[index].val1,
+            p.value[index].val2,
+            p.value[index].val3,
+            p.value[index].val4,
+            p.value[index].val5,
+            p.value[index].val6,
+          ));
+}
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///

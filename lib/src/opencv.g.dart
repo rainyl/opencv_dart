@@ -4406,6 +4406,26 @@ class CvNative {
   late final _GetTickFrequency = _GetTickFrequencyPtr.asFunction<
       CvStatus Function(ffi.Pointer<ffi.Double>)>();
 
+  CvStatus GetTriangles(
+    VecPoint points,
+    ffi.Pointer<ffi.Pointer<Vec6f>> rval,
+    ffi.Pointer<ffi.Int> size,
+  ) {
+    return _GetTriangles(
+      points,
+      rval,
+      size,
+    );
+  }
+
+  late final _GetTrianglesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(VecPoint, ffi.Pointer<ffi.Pointer<Vec6f>>,
+              ffi.Pointer<ffi.Int>)>>('GetTriangles');
+  late final _GetTriangles = _GetTrianglesPtr.asFunction<
+      CvStatus Function(
+          VecPoint, ffi.Pointer<ffi.Pointer<Vec6f>>, ffi.Pointer<ffi.Int>)>();
+
   CvStatus GoodFeaturesToTrack(
     Mat img,
     VecPoint2f corners,
