@@ -1698,12 +1698,13 @@ CvStatus Mat_colRange(Mat m, int start, int end, Mat *rval)
 }
 
 // https://docs.opencv.org/4.x/db/da5/tutorial_how_to_scan_images.html#:~:text=Goal
-void LUT_universal(Mat src, Mat lut, Mat dst)
+CvStatus LUT(Mat src, Mat lut, Mat dst)
 {
+  BEGIN_WRAP
   auto cn = src.ptr->channels(), depth = src.ptr->depth();
-  if (depth == CV_8U || depth == CV_8S)
+  if (depth == CV_8U || depth == CV_8S) {
     cv::LUT(*src.ptr, *lut.ptr, *dst.ptr);
-  else {
+  } else {
     int    lutcn = lut.ptr->channels(), lut_depth = lut.ptr->depth();
     size_t lut_total = lut.ptr->total(), expect_total = 0;
     switch (depth) {
@@ -1719,8 +1720,7 @@ void LUT_universal(Mat src, Mat lut, Mat dst)
     //   expect_total = 4294967296;
     //   break;
     default:
-      throw cv::Exception(cv::Error::StsNotImplemented,
-                          "Unsupported combination of source and destination types", __func__, __FILE__,
+      throw cv::Exception(cv::Error::StsNotImplemented, "source Mat Type not supported", __func__, __FILE__,
                           __LINE__);
     }
 
@@ -1772,12 +1772,6 @@ void LUT_universal(Mat src, Mat lut, Mat dst)
                           "Unsupported combination of source and destination types", __func__, __FILE__,
                           __LINE__);
   }
-}
-
-CvStatus LUT(Mat src, Mat lut, Mat dst)
-{
-  BEGIN_WRAP
-  LUT_universal(src, lut, dst);
   END_WRAP
 }
 
