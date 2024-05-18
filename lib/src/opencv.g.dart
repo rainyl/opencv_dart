@@ -4406,26 +4406,6 @@ class CvNative {
   late final _GetTickFrequency = _GetTickFrequencyPtr.asFunction<
       CvStatus Function(ffi.Pointer<ffi.Double>)>();
 
-  CvStatus GetTriangles(
-    VecPoint points,
-    ffi.Pointer<ffi.Pointer<Vec6f>> rval,
-    ffi.Pointer<ffi.Int> size,
-  ) {
-    return _GetTriangles(
-      points,
-      rval,
-      size,
-    );
-  }
-
-  late final _GetTrianglesPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(VecPoint, ffi.Pointer<ffi.Pointer<Vec6f>>,
-              ffi.Pointer<ffi.Int>)>>('GetTriangles');
-  late final _GetTriangles = _GetTrianglesPtr.asFunction<
-      CvStatus Function(
-          VecPoint, ffi.Pointer<ffi.Pointer<Vec6f>>, ffi.Pointer<ffi.Int>)>();
-
   CvStatus GoodFeaturesToTrack(
     Mat img,
     VecPoint2f corners,
@@ -13399,6 +13379,373 @@ class CvNative {
   late final _Stylization =
       _StylizationPtr.asFunction<CvStatus Function(Mat, Mat, double, double)>();
 
+  void Subdiv2D_Close(
+    ffi.Pointer<Subdiv2D> self,
+  ) {
+    return _Subdiv2D_Close(
+      self,
+    );
+  }
+
+  late final _Subdiv2D_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>(
+          'Subdiv2D_Close');
+  late final _Subdiv2D_Close =
+      _Subdiv2D_ClosePtr.asFunction<void Function(ffi.Pointer<Subdiv2D>)>();
+
+  CvStatus Subdiv2D_EdgeDst(
+    Subdiv2D self,
+    int edge,
+    ffi.Pointer<Point2f> dstpt,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_EdgeDst(
+      self,
+      edge,
+      dstpt,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_EdgeDstPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Int, ffi.Pointer<Point2f>,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_EdgeDst');
+  late final _Subdiv2D_EdgeDst = _Subdiv2D_EdgeDstPtr.asFunction<
+      CvStatus Function(
+          Subdiv2D, int, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_EdgeOrg(
+    Subdiv2D self,
+    int edge,
+    ffi.Pointer<Point2f> orgpt,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_EdgeOrg(
+      self,
+      edge,
+      orgpt,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_EdgeOrgPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Int, ffi.Pointer<Point2f>,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_EdgeOrg');
+  late final _Subdiv2D_EdgeOrg = _Subdiv2D_EdgeOrgPtr.asFunction<
+      CvStatus Function(
+          Subdiv2D, int, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_FindNearest(
+    Subdiv2D self,
+    Point2f pt,
+    ffi.Pointer<Point2f> nearestPt,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_FindNearest(
+      self,
+      pt,
+      nearestPt,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_FindNearestPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<Point2f>,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_FindNearest');
+  late final _Subdiv2D_FindNearest = _Subdiv2D_FindNearestPtr.asFunction<
+      CvStatus Function(
+          Subdiv2D, Point2f, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_GetEdge(
+    Subdiv2D self,
+    int edge,
+    int nextEdgeType,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_GetEdge(
+      self,
+      edge,
+      nextEdgeType,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_GetEdgePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_GetEdge');
+  late final _Subdiv2D_GetEdge = _Subdiv2D_GetEdgePtr.asFunction<
+      CvStatus Function(Subdiv2D, int, int, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_GetEdgeList(
+    Subdiv2D self,
+    ffi.Pointer<ffi.Pointer<Vec4f>> rval,
+    ffi.Pointer<ffi.Int> size,
+  ) {
+    return _Subdiv2D_GetEdgeList(
+      self,
+      rval,
+      size,
+    );
+  }
+
+  late final _Subdiv2D_GetEdgeListPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Pointer<ffi.Pointer<Vec4f>>,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_GetEdgeList');
+  late final _Subdiv2D_GetEdgeList = _Subdiv2D_GetEdgeListPtr.asFunction<
+      CvStatus Function(
+          Subdiv2D, ffi.Pointer<ffi.Pointer<Vec4f>>, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_GetLeadingEdgeList(
+    Subdiv2D self,
+    ffi.Pointer<VecInt> leadingEdgeList,
+  ) {
+    return _Subdiv2D_GetLeadingEdgeList(
+      self,
+      leadingEdgeList,
+    );
+  }
+
+  late final _Subdiv2D_GetLeadingEdgeListPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Subdiv2D, ffi.Pointer<VecInt>)>>(
+      'Subdiv2D_GetLeadingEdgeList');
+  late final _Subdiv2D_GetLeadingEdgeList = _Subdiv2D_GetLeadingEdgeListPtr
+      .asFunction<CvStatus Function(Subdiv2D, ffi.Pointer<VecInt>)>();
+
+  CvStatus Subdiv2D_GetTriangleList(
+    Subdiv2D self,
+    ffi.Pointer<ffi.Pointer<Vec6f>> rval,
+    ffi.Pointer<ffi.Int> size,
+  ) {
+    return _Subdiv2D_GetTriangleList(
+      self,
+      rval,
+      size,
+    );
+  }
+
+  late final _Subdiv2D_GetTriangleListPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Pointer<ffi.Pointer<Vec6f>>,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_GetTriangleList');
+  late final _Subdiv2D_GetTriangleList =
+      _Subdiv2D_GetTriangleListPtr.asFunction<
+          CvStatus Function(Subdiv2D, ffi.Pointer<ffi.Pointer<Vec6f>>,
+              ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_GetVertex(
+    Subdiv2D self,
+    int vertex,
+    ffi.Pointer<ffi.Int> firstEdge,
+    ffi.Pointer<Point2f> rval,
+  ) {
+    return _Subdiv2D_GetVertex(
+      self,
+      vertex,
+      firstEdge,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_GetVertexPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>,
+              ffi.Pointer<Point2f>)>>('Subdiv2D_GetVertex');
+  late final _Subdiv2D_GetVertex = _Subdiv2D_GetVertexPtr.asFunction<
+      CvStatus Function(
+          Subdiv2D, int, ffi.Pointer<ffi.Int>, ffi.Pointer<Point2f>)>();
+
+  CvStatus Subdiv2D_GetVoronoiFacetList(
+    Subdiv2D self,
+    VecInt idx,
+    ffi.Pointer<VecVecPoint2f> facetList,
+    ffi.Pointer<VecPoint2f> facetCenters,
+  ) {
+    return _Subdiv2D_GetVoronoiFacetList(
+      self,
+      idx,
+      facetList,
+      facetCenters,
+    );
+  }
+
+  late final _Subdiv2D_GetVoronoiFacetListPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, VecInt, ffi.Pointer<VecVecPoint2f>,
+              ffi.Pointer<VecPoint2f>)>>('Subdiv2D_GetVoronoiFacetList');
+  late final _Subdiv2D_GetVoronoiFacetList =
+      _Subdiv2D_GetVoronoiFacetListPtr.asFunction<
+          CvStatus Function(Subdiv2D, VecInt, ffi.Pointer<VecVecPoint2f>,
+              ffi.Pointer<VecPoint2f>)>();
+
+  CvStatus Subdiv2D_InitDelaunay(
+    Subdiv2D self,
+    Rect rect,
+  ) {
+    return _Subdiv2D_InitDelaunay(
+      self,
+      rect,
+    );
+  }
+
+  late final _Subdiv2D_InitDelaunayPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Subdiv2D, Rect)>>(
+          'Subdiv2D_InitDelaunay');
+  late final _Subdiv2D_InitDelaunay =
+      _Subdiv2D_InitDelaunayPtr.asFunction<CvStatus Function(Subdiv2D, Rect)>();
+
+  CvStatus Subdiv2D_Insert(
+    Subdiv2D self,
+    Point2f pt,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_Insert(
+      self,
+      pt,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_InsertPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Subdiv2D, Point2f, ffi.Pointer<ffi.Int>)>>('Subdiv2D_Insert');
+  late final _Subdiv2D_Insert = _Subdiv2D_InsertPtr.asFunction<
+      CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_InsertVec(
+    Subdiv2D self,
+    VecPoint2f ptvec,
+  ) {
+    return _Subdiv2D_InsertVec(
+      self,
+      ptvec,
+    );
+  }
+
+  late final _Subdiv2D_InsertVecPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Subdiv2D, VecPoint2f)>>(
+          'Subdiv2D_InsertVec');
+  late final _Subdiv2D_InsertVec = _Subdiv2D_InsertVecPtr.asFunction<
+      CvStatus Function(Subdiv2D, VecPoint2f)>();
+
+  CvStatus Subdiv2D_Locate(
+    Subdiv2D self,
+    Point2f pt,
+    ffi.Pointer<ffi.Int> edge,
+    ffi.Pointer<ffi.Int> vertex,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_Locate(
+      self,
+      pt,
+      edge,
+      vertex,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_LocatePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>,
+              ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>>('Subdiv2D_Locate');
+  late final _Subdiv2D_Locate = _Subdiv2D_LocatePtr.asFunction<
+      CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>,
+          ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_NewEmpty(
+    ffi.Pointer<Subdiv2D> rval,
+  ) {
+    return _Subdiv2D_NewEmpty(
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_NewEmptyPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<Subdiv2D>)>>(
+          'Subdiv2D_NewEmpty');
+  late final _Subdiv2D_NewEmpty = _Subdiv2D_NewEmptyPtr.asFunction<
+      CvStatus Function(ffi.Pointer<Subdiv2D>)>();
+
+  CvStatus Subdiv2D_NewWithRect(
+    Rect rect,
+    ffi.Pointer<Subdiv2D> rval,
+  ) {
+    return _Subdiv2D_NewWithRect(
+      rect,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_NewWithRectPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Rect, ffi.Pointer<Subdiv2D>)>>(
+      'Subdiv2D_NewWithRect');
+  late final _Subdiv2D_NewWithRect = _Subdiv2D_NewWithRectPtr.asFunction<
+      CvStatus Function(Rect, ffi.Pointer<Subdiv2D>)>();
+
+  CvStatus Subdiv2D_NextEdge(
+    Subdiv2D self,
+    int edge,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_NextEdge(
+      self,
+      edge,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_NextEdgePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>>('Subdiv2D_NextEdge');
+  late final _Subdiv2D_NextEdge = _Subdiv2D_NextEdgePtr.asFunction<
+      CvStatus Function(Subdiv2D, int, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_RotateEdge(
+    Subdiv2D self,
+    int edge,
+    int rotate,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_RotateEdge(
+      self,
+      edge,
+      rotate,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_RotateEdgePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Subdiv2D, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Int>)>>('Subdiv2D_RotateEdge');
+  late final _Subdiv2D_RotateEdge = _Subdiv2D_RotateEdgePtr.asFunction<
+      CvStatus Function(Subdiv2D, int, int, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus Subdiv2D_SymEdge(
+    Subdiv2D self,
+    int edge,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Subdiv2D_SymEdge(
+      self,
+      edge,
+      rval,
+    );
+  }
+
+  late final _Subdiv2D_SymEdgePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>>('Subdiv2D_SymEdge');
+  late final _Subdiv2D_SymEdge = _Subdiv2D_SymEdgePtr.asFunction<
+      CvStatus Function(Subdiv2D, int, ffi.Pointer<ffi.Int>)>();
+
   void TermCriteria_Close(
     ffi.Pointer<TermCriteria> tc,
   ) {
@@ -17080,6 +17427,8 @@ class _SymbolAddresses {
       get SimpleBlobDetector_Close => _library._SimpleBlobDetector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrStitcher>)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>
+      get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TermCriteria>)>>
       get TermCriteria_Close => _library._TermCriteria_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>
@@ -17658,6 +18007,13 @@ final class NO_USE_StitcherPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
+final class NO_USE_Subdiv2DPtr extends ffi.Struct {
+  external ffi.Pointer<Subdiv2DPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_TermCriteriaPtr extends ffi.Struct {
   external ffi.Pointer<TermCriteriaPtr> p;
 }
@@ -18035,6 +18391,12 @@ final class Stitcher extends ffi.Struct {
 }
 
 typedef StitcherPtr = ffi.Pointer<Stitcher>;
+
+final class Subdiv2D extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef Subdiv2DPtr = ffi.Pointer<Subdiv2D>;
 
 final class TermCriteria extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

@@ -10,43 +10,6 @@
 #include <memory>
 #include <vector>
 
-Vec6f convertToVec6f(const cv::Vec6f& cvVec) {
-    Vec6f vec;
-    vec.val1 = cvVec[0];
-    vec.val2 = cvVec[1];
-    vec.val3 = cvVec[2];
-    vec.val4 = cvVec[3];
-    vec.val5 = cvVec[4];
-    vec.val6 = cvVec[5];
-    return vec;
-}
-
-CvStatus GetTriangles(VecPoint points, Vec6f **rval, int *size)
-{
-    BEGIN_WRAP
-    // get convex hull from potins
-    // cv::convexHull(*points.ptr, *hull.ptr, clockwise, returnPoints);
-    cv::Mat convexHull;
-    cv::convexHull(*points.ptr, convexHull);
-    //    cv::Rect r = cv::boundingRect(*pts.ptr);
-    cv::Rect r = cv::boundingRect(convexHull);
-    cv::Subdiv2D subdiv = cv::Subdiv2D(r);
-    for (int i = 0; i < points.ptr->size(); i++) {
-        //        points.ptr->at(i);
-        cv::Point2f pt = cv::Point2f(points.ptr->at(i).x, points.ptr->at(i).y);
-        subdiv.insert(pt);
-    }
-    std::vector<cv::Vec6f> triangleVec;
-    subdiv.getTriangleList(triangleVec);
-
-    *size = triangleVec.size();
-    // rval에 triangleVec 할당
-    *rval = new Vec6f[triangleVec.size()];
-    for (size_t i = 0; i < triangleVec.size(); i++) {
-        (*rval)[i] = convertToVec6f(triangleVec[i]);
-    }
-    END_WRAP
-}
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
 {
   BEGIN_WRAP
@@ -782,6 +745,145 @@ CvStatus CLAHE_GetTilesGridSize(CLAHE c, Size *rval)
 CvStatus CLAHE_SetTilesGridSize(CLAHE c, Size size)
 {
   BEGIN_WRAP(*c.ptr)->setTilesGridSize(cv::Size(size.width, size.height));
+  END_WRAP
+}
+
+CvStatus Subdiv2D_NewEmpty(Subdiv2D *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Subdiv2D()};
+  END_WRAP
+}
+CvStatus Subdiv2D_NewWithRect(Rect rect, Subdiv2D *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))};
+  END_WRAP
+}
+void Subdiv2D_Close(Subdiv2D *self){CVD_FREE(self)}
+
+CvStatus Subdiv2D_EdgeDst(Subdiv2D self, int edge, Point2f *dstpt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->edgeDst(edge, &p);
+  *dstpt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_EdgeOrg(Subdiv2D self, int edge, Point2f *orgpt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->edgeOrg(edge, &p);
+  *orgpt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_FindNearest(Subdiv2D self, Point2f pt, Point2f *nearestPt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->findNearest(cv::Point2f(pt.x, pt.y), &p);
+  *nearestPt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetEdge(Subdiv2D self, int edge, int nextEdgeType, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->getEdge(edge, nextEdgeType);
+  END_WRAP
+}
+CvStatus Subdiv2D_GetEdgeList(Subdiv2D self, Vec4f **rval, int *size)
+{
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec4f>();
+  self.ptr->getEdgeList(v);
+  *size = v.size();
+  auto rv = new Vec4f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3]};
+  }
+  *rval = rv;
+  END_WRAP
+}
+CvStatus Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecInt *leadingEdgeList)
+{
+  BEGIN_WRAP
+  auto v = new std::vector<int>();
+  self.ptr->getLeadingEdgeList(*v);
+  *leadingEdgeList = {v};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetTriangleList(Subdiv2D self, Vec6f **rval, int *size)
+{
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec6f>();
+  self.ptr->getTriangleList(v);
+  *size = v.size();
+  auto rv = new Vec6f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3], v[i].val[4], v[i].val[5]};
+  }
+  *rval = rv;
+  END_WRAP
+}
+CvStatus Subdiv2D_GetVertex(Subdiv2D self, int vertex, int *firstEdge, Point2f *rval)
+{
+  BEGIN_WRAP
+  auto p = self.ptr->getVertex(vertex, firstEdge);
+  *rval = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetVoronoiFacetList(Subdiv2D self, VecInt idx, VecVecPoint2f *facetList,
+                                      VecPoint2f *facetCenters)
+{
+  BEGIN_WRAP
+  auto vf = std::vector<std::vector<cv::Point2f>>();
+  auto vfc = std::vector<cv::Point2f>();
+  self.ptr->getVoronoiFacetList(*idx.ptr, vf, vfc);
+  *facetList = {new std::vector<std::vector<cv::Point2f>>(vf)};
+  *facetCenters = {new std::vector<cv::Point2f>(vfc)};
+  END_WRAP;
+}
+CvStatus Subdiv2D_InitDelaunay(Subdiv2D self, Rect rect)
+{
+  BEGIN_WRAP
+  self.ptr->initDelaunay(cv::Rect(rect.x, rect.y, rect.width, rect.height));
+  END_WRAP
+}
+CvStatus Subdiv2D_Insert(Subdiv2D self, Point2f pt, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->insert(cv::Point2f(pt.x, pt.y));
+  END_WRAP
+}
+CvStatus Subdiv2D_InsertVec(Subdiv2D self, VecPoint2f ptvec)
+{
+  BEGIN_WRAP
+  self.ptr->insert(*ptvec.ptr);
+  END_WRAP
+}
+CvStatus Subdiv2D_Locate(Subdiv2D self, Point2f pt, int *edge, int *vertex, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->locate(cv::Point2f(pt.x, pt.y), *edge, *vertex);
+  END_WRAP
+}
+CvStatus Subdiv2D_NextEdge(Subdiv2D self, int edge, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->nextEdge(edge);
+  END_WRAP
+}
+CvStatus Subdiv2D_RotateEdge(Subdiv2D self, int edge, int rotate, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->rotateEdge(edge, rotate);
+  END_WRAP
+}
+CvStatus Subdiv2D_SymEdge(Subdiv2D self, int edge, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->symEdge(edge);
   END_WRAP
 }
 
