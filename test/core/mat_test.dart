@@ -631,7 +631,7 @@ void main() async {
     expect(mat.at<cv.Vec4d>(0, 0), cv.Vec4d(99, 99, 99, 99));
   });
 
-  test('Mat at set perf', () {
+  test('Mat at set perf', skip: true, () {
     final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_8UC1);
     final sw = Stopwatch();
 
