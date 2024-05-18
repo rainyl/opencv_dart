@@ -102,8 +102,8 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
       final psize = arena<ffi.Int>();
       cvRun(() => CFFI.Subdiv2D_GetEdgeList(ref, pv, psize));
       return List.generate(psize.value, (i) {
-        final v = pv[i];
-        return Vec4f(v.ref.val1, v.ref.val2, v.ref.val3, v.ref.val4);
+        final v = pv.value[i];
+        return Vec4f(v.val1, v.val2, v.val3, v.val4);
       });
     });
   }
@@ -131,8 +131,8 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
       final psize = arena<ffi.Int>();
       cvRun(() => CFFI.Subdiv2D_GetTriangleList(ref, pv, psize));
       return List.generate(psize.value, (i) {
-        final v = pv[i];
-        return Vec6f(v.ref.val1, v.ref.val2, v.ref.val3, v.ref.val4, v.ref.val5, v.ref.val6);
+        final v = pv.value[i];
+        return Vec6f(v.val1, v.val2, v.val3, v.val4, v.val5, v.val6);
       });
     });
   }
@@ -194,6 +194,14 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
 
   /// Returns the location of a point within a Delaunay triangulation.
   ///
+  /// [rval] an integer which specify one of the following five cases for point location:
+  ///
+  ///   - The point falls into some facet. The function returns [PTLOC_INSIDE] and edge will contain one of edges of the facet.
+  ///   - The point falls onto the edge. The function returns [PTLOC_ON_EDGE] and edge will contain this edge.
+  ///   - The point coincides with one of the subdivision vertices. The function returns [PTLOC_VERTEX] and vertex will contain a pointer to the vertex.
+  ///   - The point is outside the subdivision reference rectangle. The function returns [PTLOC_OUTSIDE_RECT] and no pointers are filled.
+  ///   - One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error processing mode is selected, [PTLOC_ERROR] is returned.
+  ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aec8f1fd5a802f62faa97520b465897d7
   (int rval, int edge, int vertex) locate(Point2f pt) {
     return using<(int, int, int)>((arena) {
@@ -241,13 +249,19 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
 
   @override
   cvg.Subdiv2D get ref => ptr.ref;
-}
 
-const int NEXT_AROUND_ORG = 0x00;
-const int NEXT_AROUND_DST = 0x22;
-const int PREV_AROUND_ORG = 0x11;
-const int PREV_AROUND_DST = 0x33;
-const int NEXT_AROUND_LEFT = 0x13;
-const int NEXT_AROUND_RIGHT = 0x31;
-const int PREV_AROUND_LEFT = 0x20;
-const int PREV_AROUND_RIGHT = 0x02;
+  static const int NEXT_AROUND_ORG = 0x00;
+  static const int NEXT_AROUND_DST = 0x22;
+  static const int PREV_AROUND_ORG = 0x11;
+  static const int PREV_AROUND_DST = 0x33;
+  static const int NEXT_AROUND_LEFT = 0x13;
+  static const int NEXT_AROUND_RIGHT = 0x31;
+  static const int PREV_AROUND_LEFT = 0x20;
+  static const int PREV_AROUND_RIGHT = 0x02;
+
+  static const int PTLOC_ERROR = -2;
+  static const int PTLOC_OUTSIDE_RECT = -1;
+  static const int PTLOC_INSIDE = 0;
+  static const int PTLOC_VERTEX = 1;
+  static const int PTLOC_ON_EDGE = 2;
+}
