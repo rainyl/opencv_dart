@@ -294,21 +294,16 @@ class Mat extends CvStruct<cvg.Mat> {
       });
 
   num atNum<T extends num>(int row, int col, [int? i2]) {
-    return using<num>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => cvg.Mat_Type(ref, p));
-      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
-      return switch (depth) {
-        MatType.CV_8U => atU8(row, col, i2),
-        MatType.CV_8S => atI8(row, col, i2),
-        MatType.CV_16U => atU16(row, col, i2),
-        MatType.CV_16S => atI16(row, col, i2),
-        MatType.CV_32S => atI32(row, col, i2),
-        MatType.CV_32F => atF32(row, col, i2),
-        MatType.CV_64F => atF64(row, col, i2),
-        _ => throw UnsupportedError("Unsupported type: $type")
-      };
-    });
+    return switch (type.depth) {
+      MatType.CV_8U => atU8(row, col, i2),
+      MatType.CV_8S => atI8(row, col, i2),
+      MatType.CV_16U => atU16(row, col, i2),
+      MatType.CV_16S => atI16(row, col, i2),
+      MatType.CV_32S => atI32(row, col, i2),
+      MatType.CV_32F => atF32(row, col, i2),
+      MatType.CV_64F => atF64(row, col, i2),
+      _ => throw UnsupportedError("Unsupported type: $type")
+    };
   }
 
   T atVec<T>(int row, int col) {
