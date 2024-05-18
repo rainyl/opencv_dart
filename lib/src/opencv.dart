@@ -32,7 +32,11 @@ export 'dnn/dnn.dart';
 export 'features2d/features2d.dart';
 export 'highgui/highgui.dart';
 export 'imgcodecs/imgcodecs.dart';
+
 export 'imgproc/imgproc.dart';
+export 'imgproc/clahe.dart';
+export 'imgproc/subdiv2d.dart';
+
 export 'objdetect/objdetect.dart';
 export 'photo/photo.dart';
 export 'svd/svd.dart';
