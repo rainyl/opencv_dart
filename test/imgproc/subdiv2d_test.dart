@@ -31,10 +31,10 @@ void main() {
       cv.line(src, p2, p3, cv.Scalar.red, thickness: 1);
     }
     // cv.imwrite("subdiv2d.png", src);
-    final win = cv.Window("Subdiv2D");
-    win.imshow(src);
+    // final win = cv.Window("Subdiv2D");
+    // win.imshow(src);
     // win.waitKey(0);
-    cv.destroyAllWindows();
+    // cv.destroyAllWindows();
   });
 
   test('cv.Subdiv2D.empty', () {
