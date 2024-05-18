@@ -1,4 +1,5 @@
 #include "core.h"
+#include "lut.hpp"
 #include <iostream>
 #include <vector>
 
@@ -1694,12 +1695,85 @@ CvStatus Mat_colRange(Mat m, int start, int end, Mat *rval)
   *rval = {new cv::Mat(m.ptr->colRange(start, end))};
   END_WRAP
 }
+
+// https://docs.opencv.org/4.x/db/da5/tutorial_how_to_scan_images.html#:~:text=Goal
 CvStatus LUT(Mat src, Mat lut, Mat dst)
 {
   BEGIN_WRAP
-  cv::LUT(*src.ptr, *lut.ptr, *dst.ptr);
+  auto cn = src.ptr->channels(), depth = src.ptr->depth();
+  if (depth == CV_8U || depth == CV_8S) {
+    cv::LUT(*src.ptr, *lut.ptr, *dst.ptr);
+  } else {
+    int    lutcn = lut.ptr->channels(), lut_depth = lut.ptr->depth();
+    size_t lut_total = lut.ptr->total(), expect_total = 0;
+    switch (depth) {
+    case CV_8U:
+    case CV_8S:
+      expect_total = 256;
+    case CV_16U:
+    case CV_16S:
+      expect_total = 65536;
+      break;
+    // TODO: can't create a mat with 4294967296 rows, maybe use vector instead
+    // case CV_32S:
+    //   expect_total = 4294967296;
+    //   break;
+    default:
+      throw cv::Exception(cv::Error::StsNotImplemented, "source Mat Type not supported", __func__, __FILE__,
+                          __LINE__);
+    }
+
+    CV_Assert((lutcn == cn || lutcn == 1) && lut_total == expect_total && lut.ptr->isContinuous());
+    dst.ptr->create(src.ptr->dims, src.ptr->size, CV_MAKETYPE(lut.ptr->depth(), cn));
+
+    const cv::Mat      *arrays[] = {src.ptr, dst.ptr, 0};
+    uchar              *ptrs[2] = {};
+    cv::NAryMatIterator it(arrays, ptrs);
+    int                 len = (int)it.size;
+    if (depth == CV_16U && lut_depth == CV_8U)
+      cvd::LUT16u_8u(src.ptr->ptr<ushort>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_8S)
+      cvd::LUT16u_8s(src.ptr->ptr<ushort>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_16U)
+      cvd::LUT16u_16u(src.ptr->ptr<ushort>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_16S)
+      cvd::LUT16u_16s(src.ptr->ptr<ushort>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_32S)
+      cvd::LUT16u_32s(src.ptr->ptr<ushort>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_32F)
+      cvd::LUT16u_32f(src.ptr->ptr<ushort>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+    else if (depth == CV_16U && lut_depth == CV_64F)
+      cvd::LUT16u_64f(src.ptr->ptr<ushort>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+    // 16s
+    else if (depth == CV_16S && lut_depth == CV_8U)
+      cvd::LUT16s_8u(src.ptr->ptr<short>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_8S)
+      cvd::LUT16s_8s(src.ptr->ptr<short>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_16U)
+      cvd::LUT16s_16u(src.ptr->ptr<short>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_16S)
+      cvd::LUT16s_16s(src.ptr->ptr<short>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_32S)
+      cvd::LUT16s_32s(src.ptr->ptr<short>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_32F)
+      cvd::LUT16s_32f(src.ptr->ptr<short>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+    else if (depth == CV_16S && lut_depth == CV_64F)
+      cvd::LUT16s_64f(src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+    // 32s
+    else if (depth == CV_32S && lut_depth == CV_32S)
+      cvd::LUT32s_32s(src.ptr->ptr<int>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+    else if (depth == CV_32S && lut_depth == CV_32F)
+      cvd::LUT32s_32f(src.ptr->ptr<int>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+    else if (depth == CV_32S && lut_depth == CV_64F)
+      cvd::LUT32s_64f(src.ptr->ptr<int>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+    else
+      throw cv::Exception(cv::Error::StsNotImplemented,
+                          "Unsupported combination of source and destination types", __func__, __FILE__,
+                          __LINE__);
+  }
   END_WRAP
 }
+
 CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers,
                 double *rval)
 {

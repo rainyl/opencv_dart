@@ -717,6 +717,33 @@ Mat log(InputArray src, {OutputArray? dst}) {
   return dst;
 }
 
+/// Performs a look-up table transform of an array. Support CV_8U, CV_8S, CV_16U, CV_16S
+///
+/// The function LUT fills the output array with values from the look-up table. Indices of the entries
+/// are taken from the input array. That is, the function processes each element of src as follows:
+///
+/// $\texttt{dst} (I)  \leftarrow \texttt{lut(src(I) + d)}$
+///
+/// where
+///
+/// $d =  \fork{0}{if \(\texttt{src}\) has depth \(\texttt{CV_8U}\)}{128}{if \(\texttt{src}\) has depth \(\texttt{CV_8S}\)}$
+///
+/// [src] input array of 8-bit elements.
+/// [lut] look-up table of 256 elements; in case of multi-channel input array, the table should
+/// either have a single channel (in this case the same table is used for all channels) or the same
+/// number of channels as in the input array.
+///
+/// [dst] output array of the same size and number of channels as src, and the same depth as lut.
+///
+/// see also: [convertScaleAbs]
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
+Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.LUT(src.ref, lut.ref, dst!.ref));
+  return dst;
+}
+
 /// Magnitude calculates the magnitude of 2D vectors.
 ///
 /// For further details, please see:

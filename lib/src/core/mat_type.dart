@@ -102,7 +102,7 @@ class MatType extends Equatable {
       CV_64FC4 = CV_64FC(4);
 
   /*
-    static const int 
+    static const int
         CV_8UC1 = 0,
         CV_8SC1 = 1,
         CV_16UC1 = 2,
