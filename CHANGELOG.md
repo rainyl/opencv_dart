@@ -1,6 +1,7 @@
 ## 2.0.0-dev.7
 
 - New API: cv.Subdiv2D
+- New API: cv.LUT
 - improve performance of Mat.at() and Mat.set()
 - Add: Mat.aU8(), Mat.setU8(), etc.
 
