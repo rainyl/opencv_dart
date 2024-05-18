@@ -7,7 +7,7 @@ import tarfile
 from pathlib import Path
 import yaml
 
-OPENCV_VERSION = "4.9.0+1"
+OPENCV_VERSION = "4.9.0+2"
 OPENCV_FILES_URL = (
     f"https://github.com/rainyl/opencv.full/releases/download/{OPENCV_VERSION}"
 )

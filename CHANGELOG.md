@@ -1,3 +1,10 @@
+## 1.0.4
+
+- New API: cv.Subdiv2D
+- New API: cv.LUT
+- improve performance of Mat.at() and Mat.set()
+- Add: Mat.aU8(), Mat.setU8(), etc.
+
 ## 1.0.3+2
 
 - fix: change the default border type of pyrDown/pyrUp to BORDER_DEFAULT, same as opencv
