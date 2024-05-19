@@ -12,8 +12,10 @@ coverage/
 pkgs/
 src/**/*.cpp
 src/**/*.h
+src/**/*.hpp
 images/
 CMakeUserPresets*
+CMakePresets.json
 ffigen*
 profiles/
 *.framework
