@@ -1,5 +1,7 @@
 ## 2.0.0-dev.7
 
+- Fix: Stitcher.composePanorama
+- Fix: pyrDown/Up border type, BORDER_CONSTANT -> BORDER_DEFAULT
 - New API: cv.Subdiv2D
 - New API: cv.LUT
 - improve performance of Mat.at() and Mat.set()
