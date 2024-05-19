@@ -339,7 +339,7 @@ void main() async {
     for (int channel in [1, 2, 3, 4]) {
       for (var depth in depthSrc) {
         final srcType = cv.MatType.makeType(depth, channel);
-        final src = cv.Mat.zeros(3, 3, srcType);
+        final src = cv.Mat.randu(3, 3, srcType, low: cv.Scalar.all(0), high: cv.Scalar.all(255));
         final lutSize = switch (depth) {
           cv.MatType.CV_8U || cv.MatType.CV_8S => 256,
           cv.MatType.CV_16U || cv.MatType.CV_16S => 65536,
@@ -347,11 +347,28 @@ void main() async {
         };
         for (var lutDepth in depthLut) {
           final lutType = cv.MatType.makeType(lutDepth, channel);
-          final lut = cv.Mat.fromScalar(1, lutSize, lutType, cv.Scalar(255, 241, 21, 0));
-          testOneLUT(src, lut);
+          // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
+          final lutData = switch (lutDepth) {
+            cv.MatType.CV_32F || cv.MatType.CV_64F => List.generate(
+                lutSize * lutType.channels, (i) => (lutSize - (i ~/ channel) - 1).toDouble()),
+            _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
+          };
+          final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
+          testOneLUT(src, lutInverse);
         }
       }
     }
+  });
+
+  test('cv.LUT 1', () {
+    final mat = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final src = mat.convertTo(cv.MatType.CV_16UC3, alpha: 65536.0/255.0);
+    final lutData = List.generate(65536 * 3, (i) => 65536 - (i ~/ 3) - 1);
+    final lut = cv.Mat.fromList(1, 65536, cv.MatType.CV_16UC3, lutData);
+    final dst = cv.LUT(src, lut);
+    expect(dst.isEmpty, equals(false));
+    expect(dst.shape, src.shape);
+    // cv.imwrite("lut.png", dst.convertTo(cv.MatType.CV_8UC3, alpha: 255.0/65536.0));
   });
 
   test('cv.magnitude', () {

@@ -32,7 +32,7 @@ void main() async {
         mat3.rows,
         (row) => List.generate(
             mat3.cols, (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0)));
-    expect(mat3.toList3D<cv.Vec3b, int>(), expected3);
+    expect(mat3.toList3D<cv.Vec3b>(), expected3);
 
     final mat4 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     expect((mat4.width, mat4.height, mat4.channels), (100, 100, 3));

@@ -29,7 +29,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Mat (Size size, int type, void *data, size_t step=AUTO_STEP)
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9fa74fb14362d87cb183453d2441948f
-  factory Mat.fromList(int rows, int cols, MatType type, List data, [int step = 0]) {
+  factory Mat.fromList(int rows, int cols, MatType type, List<num> data, [int step = 0]) {
     assert(data is List<int> || data is List<double>, "Only support List<int> or List<double>");
     final p = calloc<cvg.Mat>();
     // 1 copy
@@ -425,7 +425,7 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
   T at<T>(int row, int col, [int? i2]) {
-    if (T == int || T == double) {
+    if (T == int || T == double || T == num) {
       return atNum(row, col, i2) as T;
     } else if (isSubtype<T, CvVec>()) {
       return atVec<T>(row, col);
@@ -1282,21 +1282,21 @@ class Mat extends CvStruct<cvg.Mat> {
   void release() => cvRun(() => CFFI.Mat_Release(ptr));
 
   /// This Method converts single-channel Mat to 2D List
-  List<List<num>> toList() {
-    switch (type.depth) {
-      case MatType.CV_8U:
-      case MatType.CV_8S:
-      case MatType.CV_16U:
-      case MatType.CV_16S:
-      case MatType.CV_32S:
-        return List.generate(rows, (row) => List.generate(cols, (col) => at<int>(row, col)));
-      case MatType.CV_32F:
-      case MatType.CV_64F:
-        return List.generate(rows, (row) => List.generate(cols, (col) => at<double>(row, col)));
-      default:
-        throw UnsupportedError("toList() for $type is not supported!");
-    }
-  }
+  List<List<num>> toList() => switch (type.depth) {
+        MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
+        MatType.CV_8S => List.generate(rows, (row) => List.generate(cols, (col) => atI8(row, col))),
+        MatType.CV_16U =>
+          List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
+        MatType.CV_16S =>
+          List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
+        MatType.CV_32S =>
+          List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
+        MatType.CV_32F =>
+          List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
+        MatType.CV_64F =>
+          List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
+        _ => throw UnsupportedError("toList() for $type is not supported!")
+      };
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
   /// The list is ordered as [row][col][channel].
@@ -1310,10 +1310,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// final list = mat.toList3D<Vec3b, int>();
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
-  List<List<List<P>>> toList3D<T extends CvVec, P extends num>() {
+  List<List<List<num>>> toList3D<T extends CvVec>() {
     assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
     return List.generate(
-        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val as List<P>));
+        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
   /// Get the data pointer of the Mat, this getter will reture a view of native
