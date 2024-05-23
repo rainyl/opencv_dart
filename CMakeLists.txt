@@ -19,7 +19,7 @@ set(OpenCV_LIBS
     opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
     opencv_features2d opencv_gapi opencv_photo opencv_imgproc
     opencv_objdetect opencv_video opencv_videoio opencv_stitching
-    opencv_img_hash opencv_wechat_qrcode
+    opencv_img_hash opencv_wechat_qrcode opencv_ml
 )
 
 if(ANDROID)

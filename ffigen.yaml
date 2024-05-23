@@ -29,6 +29,9 @@ headers:
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
     - src/imgproc/imgproc.h
+    - src/ml/ml.h
+    - src/ml/train_data.h
+    - src/ml/svm.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h
@@ -50,6 +53,9 @@ headers:
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
     - src/imgproc/imgproc.h
+    - src/ml/ml.h
+    - src/ml/train_data.h
+    - src/ml/svm.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h

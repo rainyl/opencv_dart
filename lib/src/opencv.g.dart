@@ -11824,6 +11824,106 @@ class CvNative {
   late final _Ones =
       _OnesPtr.asFunction<CvStatus Function(int, int, int, ffi.Pointer<Mat>)>();
 
+  void ParamGrid_Close(
+    ffi.Pointer<PtrParamGrid> self,
+  ) {
+    return _ParamGrid_Close(
+      self,
+    );
+  }
+
+  late final _ParamGrid_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrParamGrid>)>>(
+          'ParamGrid_Close');
+  late final _ParamGrid_Close = _ParamGrid_ClosePtr.asFunction<
+      void Function(ffi.Pointer<PtrParamGrid>)>();
+
+  CvStatus ParamGrid_Empty(
+    ffi.Pointer<ParamGrid> rval,
+  ) {
+    return _ParamGrid_Empty(
+      rval,
+    );
+  }
+
+  late final _ParamGrid_EmptyPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<ParamGrid>)>>(
+          'ParamGrid_Empty');
+  late final _ParamGrid_Empty = _ParamGrid_EmptyPtr.asFunction<
+      CvStatus Function(ffi.Pointer<ParamGrid>)>();
+
+  CvStatus ParamGrid_GetLogStep(
+    ParamGrid self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ParamGrid_GetLogStep(
+      self,
+      rval,
+    );
+  }
+
+  late final _ParamGrid_GetLogStepPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetLogStep');
+  late final _ParamGrid_GetLogStep = _ParamGrid_GetLogStepPtr.asFunction<
+      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus ParamGrid_GetMaxVal(
+    ParamGrid self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ParamGrid_GetMaxVal(
+      self,
+      rval,
+    );
+  }
+
+  late final _ParamGrid_GetMaxValPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetMaxVal');
+  late final _ParamGrid_GetMaxVal = _ParamGrid_GetMaxValPtr.asFunction<
+      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus ParamGrid_New(
+    double minVal,
+    double maxVal,
+    double logstep,
+    ffi.Pointer<ParamGrid> rval,
+  ) {
+    return _ParamGrid_New(
+      minVal,
+      maxVal,
+      logstep,
+      rval,
+    );
+  }
+
+  late final _ParamGrid_NewPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Double, ffi.Double, ffi.Double,
+              ffi.Pointer<ParamGrid>)>>('ParamGrid_New');
+  late final _ParamGrid_New = _ParamGrid_NewPtr.asFunction<
+      CvStatus Function(double, double, double, ffi.Pointer<ParamGrid>)>();
+
+  CvStatus ParamGrid_getMinVal(
+    ParamGrid self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ParamGrid_getMinVal(
+      self,
+      rval,
+    );
+  }
+
+  late final _ParamGrid_getMinValPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_getMinVal');
+  late final _ParamGrid_getMinVal = _ParamGrid_getMinValPtr.asFunction<
+      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+
   CvStatus PencilSketch(
     Mat src,
     Mat dst1,
@@ -12681,6 +12781,804 @@ class CvNative {
       'SVD_Compute');
   late final _SVD_Compute =
       _SVD_ComputePtr.asFunction<CvStatus Function(Mat, Mat, Mat, Mat, int)>();
+
+  CvStatus SVM_CalcError(
+    SVM self,
+    PtrTrainData data,
+    bool test,
+    Mat resp,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _SVM_CalcError(
+      self,
+      data,
+      test,
+      resp,
+      rval,
+    );
+  }
+
+  late final _SVM_CalcErrorPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(SVM, PtrTrainData, ffi.Bool, Mat,
+              ffi.Pointer<ffi.Float>)>>('SVM_CalcError');
+  late final _SVM_CalcError = _SVM_CalcErrorPtr.asFunction<
+      CvStatus Function(
+          SVM, PtrTrainData, bool, Mat, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus SVM_Clear(
+    SVM self,
+  ) {
+    return _SVM_Clear(
+      self,
+    );
+  }
+
+  late final _SVM_ClearPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM)>>('SVM_Clear');
+  late final _SVM_Clear = _SVM_ClearPtr.asFunction<CvStatus Function(SVM)>();
+
+  void SVM_Close(
+    ffi.Pointer<PtrSVM> self,
+  ) {
+    return _SVM_Close(
+      self,
+    );
+  }
+
+  late final _SVM_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrSVM>)>>(
+          'SVM_Close');
+  late final _SVM_Close =
+      _SVM_ClosePtr.asFunction<void Function(ffi.Pointer<PtrSVM>)>();
+
+  CvStatus SVM_Create(
+    ffi.Pointer<PtrSVM> rval,
+  ) {
+    return _SVM_Create(
+      rval,
+    );
+  }
+
+  late final _SVM_CreatePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrSVM>)>>(
+          'SVM_Create');
+  late final _SVM_Create =
+      _SVM_CreatePtr.asFunction<CvStatus Function(ffi.Pointer<PtrSVM>)>();
+
+  CvStatus SVM_Empty(
+    SVM self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_Empty(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_EmptyPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+      'SVM_Empty');
+  late final _SVM_Empty =
+      _SVM_EmptyPtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_Get(
+    PtrSVM self,
+    ffi.Pointer<SVM> rval,
+  ) {
+    return _SVM_Get(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<SVM>)>>(
+          'SVM_Get');
+  late final _SVM_Get =
+      _SVM_GetPtr.asFunction<CvStatus Function(PtrSVM, ffi.Pointer<SVM>)>();
+
+  CvStatus SVM_GetC(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetC(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetCPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetC');
+  late final _SVM_GetC = _SVM_GetCPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetClassWeights(
+    SVM self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _SVM_GetClassWeights(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetClassWeightsPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+          'SVM_GetClassWeights');
+  late final _SVM_GetClassWeights = _SVM_GetClassWeightsPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+
+  CvStatus SVM_GetCoef0(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetCoef0(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetCoef0Ptr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetCoef0');
+  late final _SVM_GetCoef0 = _SVM_GetCoef0Ptr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetDecisionFunction(
+    SVM self,
+    int i,
+    Mat alpha,
+    Mat svidx,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetDecisionFunction(
+      self,
+      i,
+      alpha,
+      svidx,
+      rval,
+    );
+  }
+
+  late final _SVM_GetDecisionFunctionPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(SVM, ffi.Int, Mat, Mat,
+              ffi.Pointer<ffi.Double>)>>('SVM_GetDecisionFunction');
+  late final _SVM_GetDecisionFunction = _SVM_GetDecisionFunctionPtr.asFunction<
+      CvStatus Function(SVM, int, Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetDefaultGrid(
+    SVM self,
+    ffi.Pointer<ParamGrid> rval,
+  ) {
+    return _SVM_GetDefaultGrid(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetDefaultGridPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ParamGrid>)>>(
+      'SVM_GetDefaultGrid');
+  late final _SVM_GetDefaultGrid = _SVM_GetDefaultGridPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ParamGrid>)>();
+
+  CvStatus SVM_GetDefaultGridPtr(
+    SVM self,
+    ffi.Pointer<PtrParamGrid> rval,
+  ) {
+    return _SVM_GetDefaultGridPtr1(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetDefaultGridPtrPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(SVM, ffi.Pointer<PtrParamGrid>)>>(
+      'SVM_GetDefaultGridPtr');
+  late final _SVM_GetDefaultGridPtr1 = _SVM_GetDefaultGridPtrPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<PtrParamGrid>)>();
+
+  CvStatus SVM_GetDefaultName(
+    SVM self,
+    ffi.Pointer<ffi.Char> rval,
+  ) {
+    return _SVM_GetDefaultName(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetDefaultNamePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
+      'SVM_GetDefaultName');
+  late final _SVM_GetDefaultName = _SVM_GetDefaultNamePtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+
+  CvStatus SVM_GetDegree(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetDegree(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetDegreePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetDegree');
+  late final _SVM_GetDegree = _SVM_GetDegreePtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetGamma(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetGamma(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetGammaPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetGamma');
+  late final _SVM_GetGamma = _SVM_GetGammaPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetKernelType(
+    SVM self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _SVM_GetKernelType(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetKernelTypePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
+          'SVM_GetKernelType');
+  late final _SVM_GetKernelType = _SVM_GetKernelTypePtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus SVM_GetNu(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetNu(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetNuPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetNu');
+  late final _SVM_GetNu = _SVM_GetNuPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetP(
+    SVM self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _SVM_GetP(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetPPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
+      'SVM_GetP');
+  late final _SVM_GetP = _SVM_GetPPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus SVM_GetSupportVectors(
+    SVM self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _SVM_GetSupportVectors(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetSupportVectorsPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+          'SVM_GetSupportVectors');
+  late final _SVM_GetSupportVectors = _SVM_GetSupportVectorsPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+
+  CvStatus SVM_GetTermCriteria(
+    SVM self,
+    ffi.Pointer<TermCriteria> rval,
+  ) {
+    return _SVM_GetTermCriteria(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetTermCriteriaPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(SVM, ffi.Pointer<TermCriteria>)>>(
+      'SVM_GetTermCriteria');
+  late final _SVM_GetTermCriteria = _SVM_GetTermCriteriaPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<TermCriteria>)>();
+
+  CvStatus SVM_GetType(
+    SVM self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _SVM_GetType(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetTypePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
+          'SVM_GetType');
+  late final _SVM_GetType = _SVM_GetTypePtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus SVM_GetUncompressedSupportVectors(
+    SVM self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _SVM_GetUncompressedSupportVectors(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetUncompressedSupportVectorsPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+          'SVM_GetUncompressedSupportVectors');
+  late final _SVM_GetUncompressedSupportVectors =
+      _SVM_GetUncompressedSupportVectorsPtr.asFunction<
+          CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+
+  CvStatus SVM_GetVarCount(
+    SVM self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _SVM_GetVarCount(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_GetVarCountPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
+          'SVM_GetVarCount');
+  late final _SVM_GetVarCount = _SVM_GetVarCountPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus SVM_IsClassifier(
+    SVM self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_IsClassifier(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_IsClassifierPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+      'SVM_IsClassifier');
+  late final _SVM_IsClassifier = _SVM_IsClassifierPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_IsTrained(
+    SVM self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_IsTrained(
+      self,
+      rval,
+    );
+  }
+
+  late final _SVM_IsTrainedPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+      'SVM_IsTrained');
+  late final _SVM_IsTrained = _SVM_IsTrainedPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_Load(
+    SVM self,
+    ffi.Pointer<ffi.Char> filepath,
+  ) {
+    return _SVM_Load(
+      self,
+      filepath,
+    );
+  }
+
+  late final _SVM_LoadPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
+      'SVM_Load');
+  late final _SVM_Load =
+      _SVM_LoadPtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+
+  CvStatus SVM_LoadFromString(
+    SVM self,
+    ffi.Pointer<ffi.Char> strModel,
+    ffi.Pointer<ffi.Char> objname,
+  ) {
+    return _SVM_LoadFromString(
+      self,
+      strModel,
+      objname,
+    );
+  }
+
+  late final _SVM_LoadFromStringPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(SVM, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('SVM_LoadFromString');
+  late final _SVM_LoadFromString = _SVM_LoadFromStringPtr.asFunction<
+      CvStatus Function(SVM, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+
+  CvStatus SVM_Predict(
+    SVM self,
+    Mat samples,
+    Mat results,
+    int flags,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _SVM_Predict(
+      self,
+      samples,
+      results,
+      flags,
+      rval,
+    );
+  }
+
+  late final _SVM_PredictPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>)>>('SVM_Predict');
+  late final _SVM_Predict = _SVM_PredictPtr.asFunction<
+      CvStatus Function(SVM, Mat, Mat, int, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus SVM_Save(
+    SVM self,
+    ffi.Pointer<ffi.Char> filename,
+  ) {
+    return _SVM_Save(
+      self,
+      filename,
+    );
+  }
+
+  late final _SVM_SavePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
+      'SVM_Save');
+  late final _SVM_Save =
+      _SVM_SavePtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+
+  CvStatus SVM_SetC(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetC(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetCPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetC');
+  late final _SVM_SetC =
+      _SVM_SetCPtr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetClassWeights(
+    SVM self,
+    Mat val,
+  ) {
+    return _SVM_SetClassWeights(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetClassWeightsPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, Mat)>>(
+          'SVM_SetClassWeights');
+  late final _SVM_SetClassWeights =
+      _SVM_SetClassWeightsPtr.asFunction<CvStatus Function(SVM, Mat)>();
+
+  CvStatus SVM_SetCoef0(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetCoef0(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetCoef0Ptr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetCoef0');
+  late final _SVM_SetCoef0 =
+      _SVM_SetCoef0Ptr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetDegree(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetDegree(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetDegreePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetDegree');
+  late final _SVM_SetDegree =
+      _SVM_SetDegreePtr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetGamma(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetGamma(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetGammaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetGamma');
+  late final _SVM_SetGamma =
+      _SVM_SetGammaPtr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetKernel(
+    SVM self,
+    int kernelType,
+  ) {
+    return _SVM_SetKernel(
+      self,
+      kernelType,
+    );
+  }
+
+  late final _SVM_SetKernelPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Int)>>(
+          'SVM_SetKernel');
+  late final _SVM_SetKernel =
+      _SVM_SetKernelPtr.asFunction<CvStatus Function(SVM, int)>();
+
+  CvStatus SVM_SetNu(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetNu(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetNuPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetNu');
+  late final _SVM_SetNu =
+      _SVM_SetNuPtr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetP(
+    SVM self,
+    double val,
+  ) {
+    return _SVM_SetP(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetPPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+          'SVM_SetP');
+  late final _SVM_SetP =
+      _SVM_SetPPtr.asFunction<CvStatus Function(SVM, double)>();
+
+  CvStatus SVM_SetTermCriteria(
+    SVM self,
+    TermCriteria val,
+  ) {
+    return _SVM_SetTermCriteria(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetTermCriteriaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, TermCriteria)>>(
+          'SVM_SetTermCriteria');
+  late final _SVM_SetTermCriteria = _SVM_SetTermCriteriaPtr.asFunction<
+      CvStatus Function(SVM, TermCriteria)>();
+
+  CvStatus SVM_SetType(
+    SVM self,
+    int val,
+  ) {
+    return _SVM_SetType(
+      self,
+      val,
+    );
+  }
+
+  late final _SVM_SetTypePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Int)>>(
+          'SVM_SetType');
+  late final _SVM_SetType =
+      _SVM_SetTypePtr.asFunction<CvStatus Function(SVM, int)>();
+
+  CvStatus SVM_Train(
+    SVM self,
+    PtrTrainData trainData,
+    int flags,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_Train(
+      self,
+      trainData,
+      flags,
+      rval,
+    );
+  }
+
+  late final _SVM_TrainPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM, PtrTrainData, ffi.Int, ffi.Pointer<ffi.Bool>)>>('SVM_Train');
+  late final _SVM_Train = _SVM_TrainPtr.asFunction<
+      CvStatus Function(SVM, PtrTrainData, int, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_TrainAuto(
+    SVM self,
+    PtrTrainData data,
+    int kFold,
+    ParamGrid Cgrid,
+    ParamGrid gammaGrid,
+    ParamGrid pGrid,
+    ParamGrid nuGrid,
+    ParamGrid coeffGrid,
+    ParamGrid degreeGrid,
+    bool balanced,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_TrainAuto(
+      self,
+      data,
+      kFold,
+      Cgrid,
+      gammaGrid,
+      pGrid,
+      nuGrid,
+      coeffGrid,
+      degreeGrid,
+      balanced,
+      rval,
+    );
+  }
+
+  late final _SVM_TrainAutoPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM,
+              PtrTrainData,
+              ffi.Int,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ffi.Bool,
+              ffi.Pointer<ffi.Bool>)>>('SVM_TrainAuto');
+  late final _SVM_TrainAuto = _SVM_TrainAutoPtr.asFunction<
+      CvStatus Function(SVM, PtrTrainData, int, ParamGrid, ParamGrid, ParamGrid,
+          ParamGrid, ParamGrid, ParamGrid, bool, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_TrainAuto_1(
+    SVM self,
+    Mat samples,
+    int layout,
+    Mat responses,
+    int kFold,
+    PtrParamGrid Cgrid,
+    ParamGrid gammaGrid,
+    ParamGrid pGrid,
+    ParamGrid nuGrid,
+    ParamGrid coeffGrid,
+    ParamGrid degreeGrid,
+    bool balanced,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_TrainAuto_1(
+      self,
+      samples,
+      layout,
+      responses,
+      kFold,
+      Cgrid,
+      gammaGrid,
+      pGrid,
+      nuGrid,
+      coeffGrid,
+      degreeGrid,
+      balanced,
+      rval,
+    );
+  }
+
+  late final _SVM_TrainAuto_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM,
+              Mat,
+              ffi.Int,
+              Mat,
+              ffi.Int,
+              PtrParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ParamGrid,
+              ffi.Bool,
+              ffi.Pointer<ffi.Bool>)>>('SVM_TrainAuto_1');
+  late final _SVM_TrainAuto_1 = _SVM_TrainAuto_1Ptr.asFunction<
+      CvStatus Function(
+          SVM,
+          Mat,
+          int,
+          Mat,
+          int,
+          PtrParamGrid,
+          ParamGrid,
+          ParamGrid,
+          ParamGrid,
+          ParamGrid,
+          ParamGrid,
+          bool,
+          ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus SVM_Train_1(
+    SVM self,
+    Mat samples,
+    int layout,
+    Mat responses,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _SVM_Train_1(
+      self,
+      samples,
+      layout,
+      responses,
+      rval,
+    );
+  }
+
+  late final _SVM_Train_1Ptr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>)>>('SVM_Train_1');
+  late final _SVM_Train_1 = _SVM_Train_1Ptr.asFunction<
+      CvStatus Function(SVM, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus Scharr(
     Mat src,
@@ -14083,6 +14981,771 @@ class CvNative {
   late final _TrackerMIL_Update = _TrackerMIL_UpdatePtr.asFunction<
       CvStatus Function(
           TrackerMIL, Mat, ffi.Pointer<Rect>, ffi.Pointer<ffi.Bool>)>();
+
+  void TrainData_Close(
+    ffi.Pointer<PtrTrainData> self,
+  ) {
+    return _TrainData_Close(
+      self,
+    );
+  }
+
+  late final _TrainData_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrTrainData>)>>(
+          'TrainData_Close');
+  late final _TrainData_Close = _TrainData_ClosePtr.asFunction<
+      void Function(ffi.Pointer<PtrTrainData>)>();
+
+  CvStatus TrainData_Create(
+    Mat samples,
+    int layout,
+    Mat responses,
+    Mat varIdx,
+    Mat sampleIdx,
+    Mat sampleWeights,
+    Mat varType,
+    ffi.Pointer<PtrTrainData> rval,
+  ) {
+    return _TrainData_Create(
+      samples,
+      layout,
+      responses,
+      varIdx,
+      sampleIdx,
+      sampleWeights,
+      varType,
+      rval,
+    );
+  }
+
+  late final _TrainData_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Int, Mat, Mat, Mat, Mat, Mat,
+              ffi.Pointer<PtrTrainData>)>>('TrainData_Create');
+  late final _TrainData_Create = _TrainData_CreatePtr.asFunction<
+      CvStatus Function(
+          Mat, int, Mat, Mat, Mat, Mat, Mat, ffi.Pointer<PtrTrainData>)>();
+
+  CvStatus TrainData_Get(
+    ffi.Pointer<PtrTrainData> self,
+    ffi.Pointer<TrainData> rval,
+  ) {
+    return _TrainData_Get(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<PtrTrainData>,
+              ffi.Pointer<TrainData>)>>('TrainData_Get');
+  late final _TrainData_Get = _TrainData_GetPtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrTrainData>, ffi.Pointer<TrainData>)>();
+
+  CvStatus TrainData_GetCatCount(
+    TrainData self,
+    int vi,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetCatCount(
+      self,
+      vi,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetCatCountPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(TrainData, ffi.Int,
+              ffi.Pointer<ffi.Int>)>>('TrainData_GetCatCount');
+  late final _TrainData_GetCatCount = _TrainData_GetCatCountPtr.asFunction<
+      CvStatus Function(TrainData, int, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetCatMap(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetCatMap(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetCatMapPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetCatMap');
+  late final _TrainData_GetCatMap = _TrainData_GetCatMapPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetCatOfs(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetCatOfs(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetCatOfsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetCatOfs');
+  late final _TrainData_GetCatOfs = _TrainData_GetCatOfsPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetClassLabels(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetClassLabels(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetClassLabelsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetClassLabels');
+  late final _TrainData_GetClassLabels = _TrainData_GetClassLabelsPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetDefaultSubstValues(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetDefaultSubstValues(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetDefaultSubstValuesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetDefaultSubstValues');
+  late final _TrainData_GetDefaultSubstValues =
+      _TrainData_GetDefaultSubstValuesPtr.asFunction<
+          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetLayout(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetLayout(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetLayoutPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetLayout');
+  late final _TrainData_GetLayout = _TrainData_GetLayoutPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetMissing(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetMissing(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetMissingPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetMissing');
+  late final _TrainData_GetMissing = _TrainData_GetMissingPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetNAllVars(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetNAllVars(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNAllVarsPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetNAllVars');
+  late final _TrainData_GetNAllVars = _TrainData_GetNAllVarsPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetNSamples(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetNSamples(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNSamplesPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetNSamples');
+  late final _TrainData_GetNSamples = _TrainData_GetNSamplesPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetNTestSamples(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetNTestSamples(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNTestSamplesPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetNTestSamples');
+  late final _TrainData_GetNTestSamples = _TrainData_GetNTestSamplesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetNTrainSamples(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetNTrainSamples(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNTrainSamplesPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetNTrainSamples');
+  late final _TrainData_GetNTrainSamples = _TrainData_GetNTrainSamplesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetNVars(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetNVars(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNVarsPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetNVars');
+  late final _TrainData_GetNVars = _TrainData_GetNVarsPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetNames(
+    TrainData self,
+    ffi.Pointer<VecVecChar> names,
+  ) {
+    return _TrainData_GetNames(
+      self,
+      names,
+    );
+  }
+
+  late final _TrainData_GetNamesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              TrainData, ffi.Pointer<VecVecChar>)>>('TrainData_GetNames');
+  late final _TrainData_GetNames = _TrainData_GetNamesPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<VecVecChar>)>();
+
+  CvStatus TrainData_GetNormCatResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetNormCatResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetNormCatResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetNormCatResponses');
+  late final _TrainData_GetNormCatResponses = _TrainData_GetNormCatResponsesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetResponseType(
+    TrainData self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _TrainData_GetResponseType(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetResponseTypePtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
+      'TrainData_GetResponseType');
+  late final _TrainData_GetResponseType = _TrainData_GetResponseTypePtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus TrainData_GetResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetResponses');
+  late final _TrainData_GetResponses = _TrainData_GetResponsesPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetSample(
+    TrainData self,
+    Mat varIdx,
+    int sidx,
+    ffi.Pointer<ffi.Float> buf,
+  ) {
+    return _TrainData_GetSample(
+      self,
+      varIdx,
+      sidx,
+      buf,
+    );
+  }
+
+  late final _TrainData_GetSamplePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(TrainData, Mat, ffi.Int,
+              ffi.Pointer<ffi.Float>)>>('TrainData_GetSample');
+  late final _TrainData_GetSample = _TrainData_GetSamplePtr.asFunction<
+      CvStatus Function(TrainData, Mat, int, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus TrainData_GetSampleWeights(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetSampleWeights(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetSampleWeightsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetSampleWeights');
+  late final _TrainData_GetSampleWeights = _TrainData_GetSampleWeightsPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetSamples(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetSamples(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetSamplesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetSamples');
+  late final _TrainData_GetSamples = _TrainData_GetSamplesPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetSubMatrix(
+    Mat matrix,
+    Mat idx,
+    int layout,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetSubMatrix(
+      matrix,
+      idx,
+      layout,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetSubMatrixPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Mat, Mat, ffi.Int, ffi.Pointer<Mat>)>>('TrainData_GetSubMatrix');
+  late final _TrainData_GetSubMatrix = _TrainData_GetSubMatrixPtr.asFunction<
+      CvStatus Function(Mat, Mat, int, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetSubVector(
+    Mat vec,
+    Mat idx,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetSubVector(
+      vec,
+      idx,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetSubVectorPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(Mat, Mat, ffi.Pointer<Mat>)>>(
+      'TrainData_GetSubVector');
+  late final _TrainData_GetSubVector = _TrainData_GetSubVectorPtr.asFunction<
+      CvStatus Function(Mat, Mat, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTestNormCatResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTestNormCatResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTestNormCatResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTestNormCatResponses');
+  late final _TrainData_GetTestNormCatResponses =
+      _TrainData_GetTestNormCatResponsesPtr.asFunction<
+          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTestResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTestResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTestResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTestResponses');
+  late final _TrainData_GetTestResponses = _TrainData_GetTestResponsesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTestSampleIdx(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTestSampleIdx(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTestSampleIdxPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTestSampleIdx');
+  late final _TrainData_GetTestSampleIdx = _TrainData_GetTestSampleIdxPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTestSampleWeights(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTestSampleWeights(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTestSampleWeightsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTestSampleWeights');
+  late final _TrainData_GetTestSampleWeights =
+      _TrainData_GetTestSampleWeightsPtr.asFunction<
+          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTestSamples(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTestSamples(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTestSamplesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTestSamples');
+  late final _TrainData_GetTestSamples = _TrainData_GetTestSamplesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTrainNormCatResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTrainNormCatResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTrainNormCatResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTrainNormCatResponses');
+  late final _TrainData_GetTrainNormCatResponses =
+      _TrainData_GetTrainNormCatResponsesPtr.asFunction<
+          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTrainResponses(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTrainResponses(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTrainResponsesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTrainResponses');
+  late final _TrainData_GetTrainResponses = _TrainData_GetTrainResponsesPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTrainSampleIdx(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTrainSampleIdx(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTrainSampleIdxPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTrainSampleIdx');
+  late final _TrainData_GetTrainSampleIdx = _TrainData_GetTrainSampleIdxPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTrainSampleWeights(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTrainSampleWeights(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTrainSampleWeightsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetTrainSampleWeights');
+  late final _TrainData_GetTrainSampleWeights =
+      _TrainData_GetTrainSampleWeightsPtr.asFunction<
+          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetTrainSamples(
+    TrainData self,
+    int layout,
+    bool compressSamples,
+    bool compressVars,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetTrainSamples(
+      self,
+      layout,
+      compressSamples,
+      compressVars,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetTrainSamplesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(TrainData, ffi.Int, ffi.Bool, ffi.Bool,
+              ffi.Pointer<Mat>)>>('TrainData_GetTrainSamples');
+  late final _TrainData_GetTrainSamples =
+      _TrainData_GetTrainSamplesPtr.asFunction<
+          CvStatus Function(TrainData, int, bool, bool, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetValues(
+    TrainData self,
+    int vi,
+    Mat sidx,
+    ffi.Pointer<ffi.Float> values,
+  ) {
+    return _TrainData_GetValues(
+      self,
+      vi,
+      sidx,
+      values,
+    );
+  }
+
+  late final _TrainData_GetValuesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(TrainData, ffi.Int, Mat,
+              ffi.Pointer<ffi.Float>)>>('TrainData_GetValues');
+  late final _TrainData_GetValues = _TrainData_GetValuesPtr.asFunction<
+      CvStatus Function(TrainData, int, Mat, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus TrainData_GetVarIdx(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetVarIdx(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetVarIdxPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetVarIdx');
+  late final _TrainData_GetVarIdx = _TrainData_GetVarIdxPtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetVarSymbolFlags(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetVarSymbolFlags(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetVarSymbolFlagsPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetVarSymbolFlags');
+  late final _TrainData_GetVarSymbolFlags = _TrainData_GetVarSymbolFlagsPtr
+      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetVarType(
+    TrainData self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _TrainData_GetVarType(
+      self,
+      rval,
+    );
+  }
+
+  late final _TrainData_GetVarTypePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+      'TrainData_GetVarType');
+  late final _TrainData_GetVarType = _TrainData_GetVarTypePtr.asFunction<
+      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_LoadFromCSV(
+    ffi.Pointer<ffi.Char> filename,
+    int headerLineCount,
+    int responseStartIdx,
+    int responseEndIdx,
+    ffi.Pointer<ffi.Char> varTypeSpec,
+    int delimiter,
+    int missch,
+    ffi.Pointer<PtrTrainData> rval,
+  ) {
+    return _TrainData_LoadFromCSV(
+      filename,
+      headerLineCount,
+      responseStartIdx,
+      responseEndIdx,
+      varTypeSpec,
+      delimiter,
+      missch,
+      rval,
+    );
+  }
+
+  late final _TrainData_LoadFromCSVPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<ffi.Char>,
+              ffi.Char,
+              ffi.Char,
+              ffi.Pointer<PtrTrainData>)>>('TrainData_LoadFromCSV');
+  late final _TrainData_LoadFromCSV = _TrainData_LoadFromCSVPtr.asFunction<
+      CvStatus Function(ffi.Pointer<ffi.Char>, int, int, int,
+          ffi.Pointer<ffi.Char>, int, int, ffi.Pointer<PtrTrainData>)>();
+
+  CvStatus TrainData_MissingValue(
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _TrainData_MissingValue(
+      rval,
+    );
+  }
+
+  late final _TrainData_MissingValuePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<ffi.Float>)>>(
+          'TrainData_MissingValue');
+  late final _TrainData_MissingValue = _TrainData_MissingValuePtr.asFunction<
+      CvStatus Function(ffi.Pointer<ffi.Float>)>();
+
+  CvStatus TrainData_SetTrainTestSplit(
+    TrainData self,
+    int count,
+    bool shuffle,
+  ) {
+    return _TrainData_SetTrainTestSplit(
+      self,
+      count,
+      shuffle,
+    );
+  }
+
+  late final _TrainData_SetTrainTestSplitPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Int, ffi.Bool)>>(
+      'TrainData_SetTrainTestSplit');
+  late final _TrainData_SetTrainTestSplit = _TrainData_SetTrainTestSplitPtr
+      .asFunction<CvStatus Function(TrainData, int, bool)>();
+
+  CvStatus TrainData_SetTrainTestSplitRatio(
+    TrainData self,
+    double ratio,
+    bool shuffle,
+  ) {
+    return _TrainData_SetTrainTestSplitRatio(
+      self,
+      ratio,
+      shuffle,
+    );
+  }
+
+  late final _TrainData_SetTrainTestSplitRatioPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(TrainData, ffi.Double, ffi.Bool)>>(
+      'TrainData_SetTrainTestSplitRatio');
+  late final _TrainData_SetTrainTestSplitRatio =
+      _TrainData_SetTrainTestSplitRatioPtr.asFunction<
+          CvStatus Function(TrainData, double, bool)>();
+
+  CvStatus TrainData_ShuffleTrainTest(
+    TrainData self,
+  ) {
+    return _TrainData_ShuffleTrainTest(
+      self,
+    );
+  }
+
+  late final _TrainData_ShuffleTrainTestPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(TrainData)>>(
+          'TrainData_ShuffleTrainTest');
+  late final _TrainData_ShuffleTrainTest =
+      _TrainData_ShuffleTrainTestPtr.asFunction<CvStatus Function(TrainData)>();
 
   CvStatus Undistort(
     Mat src,
@@ -17414,6 +19077,8 @@ class _SymbolAddresses {
       get Net_Close => _library._Net_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ORB>)>>
       get ORB_Close => _library._ORB_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrParamGrid>)>>
+      get ParamGrid_Close => _library._ParamGrid_ClosePtr;
   ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(ffi.Pointer<QRCodeDetector>)>>
       get QRCodeDetector_Close => _library._QRCodeDetector_ClosePtr;
@@ -17421,6 +19086,8 @@ class _SymbolAddresses {
       get Rng_Close => _library._Rng_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<SIFT>)>>
       get SIFT_Close => _library._SIFT_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrSVM>)>>
+      get SVM_Close => _library._SVM_ClosePtr;
   ffi.Pointer<
           ffi
           .NativeFunction<ffi.Void Function(ffi.Pointer<SimpleBlobDetector>)>>
@@ -17433,6 +19100,8 @@ class _SymbolAddresses {
       get TermCriteria_Close => _library._TermCriteria_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>
       get TrackerMIL_Close => _library._TrackerMIL_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrTrainData>)>>
+      get TrainData_Close => _library._TrainData_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecChar>)>>
       get VecChar_Close => _library._VecChar_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecDMatch>)>>
@@ -17965,8 +19634,29 @@ final class NO_USE_ORBPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
+final class NO_USE_ParamGridPtr extends ffi.Struct {
+  external ffi.Pointer<ParamGridPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrSVMPtr extends ffi.Struct {
+  external ffi.Pointer<PtrSVMPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_PtrStitcherPtr extends ffi.Struct {
   external ffi.Pointer<PtrStitcherPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrTrainDataPtr extends ffi.Struct {
+  external ffi.Pointer<PtrTrainDataPtr> p;
 }
 
 /// \
@@ -17988,6 +19678,13 @@ final class NO_USE_RNGPtr extends ffi.Struct {
 /// so here we confirm they are included                                                                    \
 final class NO_USE_SIFTPtr extends ffi.Struct {
   external ffi.Pointer<SIFTPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_SVMPtr extends ffi.Struct {
+  external ffi.Pointer<SVMPtr> p;
 }
 
 /// \
@@ -18037,6 +19734,13 @@ final class NO_USE_TrackerMILPtr extends ffi.Struct {
 /// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerPtr extends ffi.Struct {
   external ffi.Pointer<TrackerPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_TrainDataPtr extends ffi.Struct {
+  external ffi.Pointer<TrainDataPtr> p;
 }
 
 /// \
@@ -18191,6 +19895,12 @@ final class ORB extends ffi.Struct {
 
 typedef ORBPtr = ffi.Pointer<ORB>;
 
+final class ParamGrid extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef ParamGridPtr = ffi.Pointer<ParamGrid>;
+
 final class Point extends ffi.Struct {
   @ffi.Int()
   external int x;
@@ -18218,11 +19928,27 @@ final class Point3f extends ffi.Struct {
   external double z;
 }
 
+final class PtrParamGrid extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+final class PtrSVM extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrSVMPtr = ffi.Pointer<PtrSVM>;
+
 final class PtrStitcher extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
 
 typedef PtrStitcherPtr = ffi.Pointer<PtrStitcher>;
+
+final class PtrTrainData extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrTrainDataPtr = ffi.Pointer<PtrTrainData>;
 
 final class QRCodeDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -18290,6 +20016,12 @@ const int STITCHING_OK = 0;
 const int STITCHING_PANORAMA = 0;
 
 const int STITCHING_SCANS = 1;
+
+final class SVM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef SVMPtr = ffi.Pointer<SVM>;
 
 final class Scalar extends ffi.Struct {
   @ffi.Double()
@@ -18420,6 +20152,12 @@ final class TrackerMIL extends ffi.Struct {
 
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
 typedef TrackerPtr = ffi.Pointer<Tracker>;
+
+final class TrainData extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef TrainDataPtr = ffi.Pointer<TrainData>;
 
 final class Vec2b extends ffi.Struct {
   @uchar()
