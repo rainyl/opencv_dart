@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #include "core/core.h"
-
+#include <stddef.h>
 // Calib
 CvStatus Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d);
 CvStatus Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size);

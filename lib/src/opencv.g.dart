@@ -12951,36 +12951,41 @@ class CvNative {
 
   CvStatus SVM_GetDefaultGrid(
     SVM self,
+    int param_id,
     ffi.Pointer<ParamGrid> rval,
   ) {
     return _SVM_GetDefaultGrid(
       self,
+      param_id,
       rval,
     );
   }
 
   late final _SVM_GetDefaultGridPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ParamGrid>)>>(
-      'SVM_GetDefaultGrid');
+      ffi.NativeFunction<
+          CvStatus Function(
+              SVM, ffi.Int, ffi.Pointer<ParamGrid>)>>('SVM_GetDefaultGrid');
   late final _SVM_GetDefaultGrid = _SVM_GetDefaultGridPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ParamGrid>)>();
+      CvStatus Function(SVM, int, ffi.Pointer<ParamGrid>)>();
 
   CvStatus SVM_GetDefaultGridPtr(
     SVM self,
+    int param_id,
     ffi.Pointer<PtrParamGrid> rval,
   ) {
     return _SVM_GetDefaultGridPtr1(
       self,
+      param_id,
       rval,
     );
   }
 
   late final _SVM_GetDefaultGridPtrPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(SVM, ffi.Pointer<PtrParamGrid>)>>(
-      'SVM_GetDefaultGridPtr');
+      ffi.NativeFunction<
+          CvStatus Function(SVM, ffi.Int,
+              ffi.Pointer<PtrParamGrid>)>>('SVM_GetDefaultGridPtr');
   late final _SVM_GetDefaultGridPtr1 = _SVM_GetDefaultGridPtrPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<PtrParamGrid>)>();
+      CvStatus Function(SVM, int, ffi.Pointer<PtrParamGrid>)>();
 
   CvStatus SVM_GetDefaultName(
     SVM self,
@@ -13500,11 +13505,11 @@ class CvNative {
     Mat responses,
     int kFold,
     PtrParamGrid Cgrid,
-    ParamGrid gammaGrid,
-    ParamGrid pGrid,
-    ParamGrid nuGrid,
-    ParamGrid coeffGrid,
-    ParamGrid degreeGrid,
+    PtrParamGrid gammaGrid,
+    PtrParamGrid pGrid,
+    PtrParamGrid nuGrid,
+    PtrParamGrid coeffGrid,
+    PtrParamGrid degreeGrid,
     bool balanced,
     ffi.Pointer<ffi.Bool> rval,
   ) {
@@ -13534,11 +13539,11 @@ class CvNative {
               Mat,
               ffi.Int,
               PtrParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
               ffi.Bool,
               ffi.Pointer<ffi.Bool>)>>('SVM_TrainAuto_1');
   late final _SVM_TrainAuto_1 = _SVM_TrainAuto_1Ptr.asFunction<
@@ -13549,11 +13554,11 @@ class CvNative {
           Mat,
           int,
           PtrParamGrid,
-          ParamGrid,
-          ParamGrid,
-          ParamGrid,
-          ParamGrid,
-          ParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
           bool,
           ffi.Pointer<ffi.Bool>)>();
 
