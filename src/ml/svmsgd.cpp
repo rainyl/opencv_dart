@@ -15,6 +15,7 @@ CvStatus SVMSGD_Create(PtrSVMSGD *rval)
 
 void SVMSGD_Close(PtrSVMSGD *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -35,7 +36,7 @@ CvStatus SVMSGD_SetOptimalParameters(SVMSGD self, int svmsgdType, int marginType
 CvStatus SVMSGD_GetWeights(SVMSGD self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getWeights()};
+  *rval = {new cv::Mat(self.ptr->getWeights())};
   END_WRAP
 }
 
@@ -119,28 +120,29 @@ CvStatus SVMSGD_SetStepDecreasingPower(SVMSGD self, float stepDecreasingPower)
 CvStatus SVMSGD_GetTermCriteria(SVMSGD self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
 CvStatus SVMSGD_SetTermCriteria(SVMSGD self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
 CvStatus SVMSGD_Train(SVMSGD self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus SVMSGD_Train_1(SVMSGD self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 

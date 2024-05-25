@@ -19,7 +19,11 @@ CvStatus TrainData_LoadFromCSV(char *filename, int headerLineCount, int response
   *rval = {new cv::Ptr<cv::ml::TrainData>(p)};
   END_WRAP
 }
-void TrainData_Close(PtrTrainData *self){CVD_FREE(self)}
+void TrainData_Close(PtrTrainData *self)
+{
+  *self->ptr = nullptr;
+  CVD_FREE(self)
+}
 
 CvStatus TrainData_Get(PtrTrainData *self, TrainData *rval)
 {

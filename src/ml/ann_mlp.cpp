@@ -9,12 +9,14 @@
 CvStatus ANN_MLP_Create(PtrANN_MLP *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::Ptr<cv::ml::ANN_MLP>()};
+  auto p = cv::ml::ANN_MLP::create();
+  *rval = {new cv::Ptr<cv::ml::ANN_MLP>(p)};
   END_WRAP
 }
 
 void ANN_MLP_Close(PtrANN_MLP *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -49,28 +51,29 @@ CvStatus ANN_MLP_SetActivationFunction(ANN_MLP self, int type, double param1, do
 CvStatus ANN_MLP_SetLayerSizes(ANN_MLP self, Mat _layer_sizes)
 {
   BEGIN_WRAP
-  self.ptr->setLayerSizes(_layer_sizes.ptr);
+  self.ptr->setLayerSizes(*_layer_sizes.ptr);
   END_WRAP
 }
 
 CvStatus ANN_MLP_GetLayerSizes(ANN_MLP self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getLayerSizes()};
+  *rval = {new cv::Mat(self.ptr->getLayerSizes())};
   END_WRAP
 }
 
 CvStatus ANN_MLP_SetTermCriteria(ANN_MLP self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
 CvStatus ANN_MLP_GetTermCriteria(ANN_MLP self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
@@ -231,21 +234,21 @@ CvStatus ANN_MLP_GetAnnealItePerStep(ANN_MLP self, int *rval)
 CvStatus ANN_MLP_Predict(ANN_MLP self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus ANN_MLP_Train(ANN_MLP self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus ANN_MLP_Train_1(ANN_MLP self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 

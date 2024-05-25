@@ -15,6 +15,7 @@ CvStatus DTrees_Create(PtrDTrees *rval)
 
 void DTrees_Close(PtrDTrees *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -140,35 +141,35 @@ CvStatus DTrees_SetRegressionAccuracy(DTrees self, float val)
 CvStatus DTrees_GetPriors(DTrees self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getPriors()};
+  *rval = {new cv::Mat(self.ptr->getPriors())};
   END_WRAP
 }
 
 CvStatus DTrees_SetPriors(DTrees self, Mat val)
 {
   BEGIN_WRAP
-  self.ptr->setPriors(val.ptr);
+  self.ptr->setPriors(*val.ptr);
   END_WRAP
 }
 
 CvStatus DTrees_Predict(DTrees self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus DTrees_Train(DTrees self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus DTrees_Train_1(DTrees self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 

@@ -73,8 +73,8 @@ CvStatus SVM_TrainAuto(SVM self, PtrTrainData data, int kFold, ParamGrid Cgrid, 
                        ParamGrid pGrid, ParamGrid nuGrid, ParamGrid coeffGrid, ParamGrid degreeGrid,
                        bool balanced, bool *rval);
 CvStatus SVM_TrainAuto_1(SVM self, Mat samples, int layout, Mat responses, int kFold, PtrParamGrid Cgrid,
-                         ParamGrid gammaGrid, ParamGrid pGrid, ParamGrid nuGrid, ParamGrid coeffGrid,
-                         ParamGrid degreeGrid, bool balanced, bool *rval);
+                         PtrParamGrid gammaGrid, PtrParamGrid pGrid, PtrParamGrid nuGrid,
+                         PtrParamGrid coeffGrid, PtrParamGrid degreeGrid, bool balanced, bool *rval);
 CvStatus SVM_CalcError(SVM self, PtrTrainData data, bool test, Mat resp, float *rval);
 CvStatus SVM_Empty(SVM self, bool *rval);
 CvStatus SVM_GetVarCount(SVM self, int *rval);
@@ -85,8 +85,8 @@ CvStatus SVM_Train(SVM self, PtrTrainData trainData, int flags, bool *rval);
 CvStatus SVM_Train_1(SVM self, Mat samples, int layout, Mat responses, bool *rval);
 CvStatus SVM_Clear(SVM self);
 CvStatus SVM_GetDefaultName(SVM self, char *rval);
-CvStatus SVM_GetDefaultGrid(SVM self, ParamGrid *rval);
-CvStatus SVM_GetDefaultGridPtr(SVM self, PtrParamGrid *rval);
+CvStatus SVM_GetDefaultGrid(SVM self, int param_id, ParamGrid *rval);
+CvStatus SVM_GetDefaultGridPtr(SVM self, int param_id, PtrParamGrid *rval);
 CvStatus SVM_Save(SVM self, char *filename);
 CvStatus SVM_Load(SVM self, char *filepath);
 CvStatus SVM_LoadFromString(SVM self, const char *strModel, const char *objname);

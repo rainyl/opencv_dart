@@ -15,6 +15,7 @@ CvStatus EM_Create(PtrEM *rval)
 
 void EM_Close(PtrEM *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -56,49 +57,53 @@ CvStatus EM_SetCovarianceMatrixType(EM self, int val)
 CvStatus EM_GetTermCriteria(EM self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
 CvStatus EM_SetTermCriteria(EM self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
 CvStatus EM_Predict(EM self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus EM_Predict2(EM self, Mat sample, Mat probs, Vec2d *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict2(sample.ptr, probs.ptr);
+  auto r = self.ptr->predict2(*sample.ptr, *probs.ptr);
+  *rval = {r.val[0], r.val[1]};
   END_WRAP
 }
 
 CvStatus EM_TrainEM(EM self, Mat samples, Mat logLikelihoods, Mat labels, Mat probs, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->trainEM(samples.ptr, logLikelihoods.ptr, labels.ptr, probs.ptr);
+  *rval = self.ptr->trainEM(*samples.ptr, *logLikelihoods.ptr, *labels.ptr, *probs.ptr);
   END_WRAP
 }
 
-CvStatus EM_TrainE(EM self, Mat samples, Mat means0, Mat covs0, Mat weights0, Mat logLikelihoods, Mat labels, Mat probs, bool *rval)
+CvStatus EM_TrainE(EM self, Mat samples, Mat means0, Mat covs0, Mat weights0, Mat logLikelihoods, Mat labels,
+                   Mat probs, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->trainE(samples.ptr, means0.ptr, covs0.ptr, weights0.ptr, logLikelihoods.ptr, labels.ptr, probs.ptr);
+  *rval = self.ptr->trainE(*samples.ptr, *means0.ptr, *covs0.ptr, *weights0.ptr, *logLikelihoods.ptr,
+                           *labels.ptr, *probs.ptr);
   END_WRAP
 }
 
 CvStatus EM_TrainM(EM self, Mat samples, Mat probs0, Mat logLikelihoods, Mat labels, Mat probs, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->trainM(samples.ptr, probs0.ptr, logLikelihoods.ptr, labels.ptr, probs.ptr);
+  *rval = self.ptr->trainM(*samples.ptr, *probs0.ptr, *logLikelihoods.ptr, *labels.ptr, *probs.ptr);
   END_WRAP
 }
 

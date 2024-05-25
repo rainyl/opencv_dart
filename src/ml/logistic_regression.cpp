@@ -15,6 +15,7 @@ CvStatus LogisticRegression_Create(PtrLogisticRegression *rval)
 
 void LogisticRegression_Close(PtrLogisticRegression *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -98,35 +99,37 @@ CvStatus LogisticRegression_SetMiniBatchSize(LogisticRegression self, int val)
 CvStatus LogisticRegression_GetTermCriteria(LogisticRegression self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
 CvStatus LogisticRegression_SetTermCriteria(LogisticRegression self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
 CvStatus LogisticRegression_Predict(LogisticRegression self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus LogisticRegression_Train(LogisticRegression self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
-CvStatus LogisticRegression_Train_1(LogisticRegression self, Mat samples, int layout, Mat responses, bool *rval)
+CvStatus LogisticRegression_Train_1(LogisticRegression self, Mat samples, int layout, Mat responses,
+                                    bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 
@@ -140,7 +143,7 @@ CvStatus LogisticRegression_Clear(LogisticRegression self)
 CvStatus LogisticRegression_GetLearntThetas(LogisticRegression self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->get_learnt_thetas()};
+  *rval = {new cv::Mat(self.ptr->get_learnt_thetas())};
   END_WRAP
 }
 

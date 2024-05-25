@@ -43,6 +43,7 @@ CvStatus ParamGrid_GetLogStep(ParamGrid self, double *rval)
 
 void ParamGrid_Close(PtrParamGrid *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -56,6 +57,7 @@ CvStatus SVM_Create(PtrSVM *rval)
 
 void SVM_Close(PtrSVM *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -76,7 +78,7 @@ CvStatus SVM_GetC(SVM self, double *rval)
 CvStatus SVM_GetClassWeights(SVM self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getClassWeights()};
+  *rval = {new cv::Mat(self.ptr->getClassWeights())};
   END_WRAP
 }
 
@@ -90,7 +92,7 @@ CvStatus SVM_GetCoef0(SVM self, double *rval)
 CvStatus SVM_GetDecisionFunction(SVM self, int i, Mat alpha, Mat svidx, double *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getDecisionFunction(i, alpha.ptr, svidx.ptr);
+  *rval = self.ptr->getDecisionFunction(i, *alpha.ptr, *svidx.ptr);
   END_WRAP
 }
 
@@ -132,14 +134,15 @@ CvStatus SVM_GetP(SVM self, double *rval)
 CvStatus SVM_GetSupportVectors(SVM self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getSupportVectors()};
+  *rval = {new cv::Mat(self.ptr->getSupportVectors())};
   END_WRAP
 }
 
 CvStatus SVM_GetTermCriteria(SVM self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
@@ -153,7 +156,7 @@ CvStatus SVM_GetType(SVM self, int *rval)
 CvStatus SVM_GetUncompressedSupportVectors(SVM self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getUncompressedSupportVectors()};
+  *rval = {new cv::Mat(self.ptr->getUncompressedSupportVectors())};
   END_WRAP
 }
 
@@ -167,7 +170,7 @@ CvStatus SVM_SetC(SVM self, double val)
 CvStatus SVM_SetClassWeights(SVM self, Mat val)
 {
   BEGIN_WRAP
-  self.ptr->setClassWeights(val.ptr);
+  self.ptr->setClassWeights(*val.ptr);
   END_WRAP
 }
 
@@ -216,7 +219,7 @@ CvStatus SVM_SetP(SVM self, double val)
 CvStatus SVM_SetTermCriteria(SVM self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
@@ -232,23 +235,25 @@ CvStatus SVM_TrainAuto(SVM self, PtrTrainData data, int kFold, ParamGrid Cgrid, 
                        bool balanced, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->trainAuto(data.ptr, kFold, *Cgrid.ptr, *gammaGrid.ptr, *pGrid.ptr, *nuGrid.ptr, *coeffGrid.ptr, *degreeGrid.ptr, balanced);
+  *rval = self.ptr->trainAuto(*data.ptr, kFold, *Cgrid.ptr, *gammaGrid.ptr, *pGrid.ptr, *nuGrid.ptr,
+                              *coeffGrid.ptr, *degreeGrid.ptr, balanced);
   END_WRAP
 }
 
 CvStatus SVM_TrainAuto_1(SVM self, Mat samples, int layout, Mat responses, int kFold, PtrParamGrid Cgrid,
-                         ParamGrid gammaGrid, ParamGrid pGrid, ParamGrid nuGrid, ParamGrid coeffGrid,
-                         ParamGrid degreeGrid, bool balanced, bool *rval)
+                         PtrParamGrid gammaGrid, PtrParamGrid pGrid, PtrParamGrid nuGrid,
+                         PtrParamGrid coeffGrid, PtrParamGrid degreeGrid, bool balanced, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->trainAuto(samples.ptr, layout, responses.ptr, kFold, Cgrid.ptr, *gammaGrid.ptr, *pGrid.ptr, *nuGrid.ptr, *coeffGrid.ptr, *degreeGrid.ptr, balanced);
+  *rval = self.ptr->trainAuto(*samples.ptr, layout, *responses.ptr, kFold, *Cgrid.ptr, *gammaGrid.ptr,
+                              *pGrid.ptr, *nuGrid.ptr, *coeffGrid.ptr, *degreeGrid.ptr, balanced);
   END_WRAP
 }
 
 CvStatus SVM_CalcError(SVM self, PtrTrainData data, bool test, Mat resp, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->calcError(data.ptr, test, resp.ptr);
+  *rval = self.ptr->calcError(*data.ptr, test, *resp.ptr);
   END_WRAP
 }
 
@@ -283,21 +288,21 @@ CvStatus SVM_IsTrained(SVM self, bool *rval)
 CvStatus SVM_Predict(SVM self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus SVM_Train(SVM self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus SVM_Train_1(SVM self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 
@@ -316,17 +321,17 @@ CvStatus SVM_GetDefaultName(SVM self, char *rval)
   END_WRAP
 }
 
-CvStatus SVM_GetDefaultGrid(SVM self, ParamGrid *rval)
+CvStatus SVM_GetDefaultGrid(SVM self, int param_id, ParamGrid *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::ml::ParamGrid(self.ptr->getDefaultGrid())};
+  *rval = {new cv::ml::ParamGrid(self.ptr->getDefaultGrid(param_id))};
   END_WRAP
 }
 
-CvStatus SVM_GetDefaultGridPtr(SVM self, PtrParamGrid *rval)
+CvStatus SVM_GetDefaultGridPtr(SVM self, int param_id, PtrParamGrid *rval)
 {
   BEGIN_WRAP
-  *rval = {new cv::Ptr<cv::ml::ParamGrid>(self.ptr->getDefaultGridPtr())};
+  *rval = {new cv::Ptr<cv::ml::ParamGrid>(self.ptr->getDefaultGridPtr(param_id))};
   END_WRAP
 }
 

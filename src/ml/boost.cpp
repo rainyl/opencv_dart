@@ -15,6 +15,7 @@ CvStatus Boost_Create(PtrBoost *rval)
 
 void Boost_Close(PtrBoost *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -70,21 +71,21 @@ CvStatus Boost_SetWeightTrimRate(Boost self, double val)
 CvStatus Boost_Predict(Boost self, Mat samples, Mat results, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predict(samples.ptr, results.ptr, flags);
+  *rval = self.ptr->predict(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
 CvStatus Boost_Train(Boost self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus Boost_Train_1(Boost self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 

@@ -15,6 +15,7 @@ CvStatus NormalBayesClassifier_Create(PtrNormalBayesClassifier *rval)
 
 void NormalBayesClassifier_Close(PtrNormalBayesClassifier *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -25,24 +26,27 @@ CvStatus NormalBayesClassifier_Get(PtrNormalBayesClassifier self, NormalBayesCla
   END_WRAP
 }
 
-CvStatus NormalBayesClassifier_PredictProb(NormalBayesClassifier self, Mat inputs, Mat outputs, Mat outputProbs, int flags, float *rval)
+CvStatus NormalBayesClassifier_PredictProb(NormalBayesClassifier self, Mat inputs, Mat outputs,
+                                           Mat outputProbs, int flags, float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->predictProb(inputs.ptr, outputs.ptr, outputProbs.ptr, flags);
+  *rval = self.ptr->predictProb(*inputs.ptr, *outputs.ptr, *outputProbs.ptr, flags);
   END_WRAP
 }
 
-CvStatus NormalBayesClassifier_Train(NormalBayesClassifier self, PtrTrainData trainData, int flags, bool *rval)
+CvStatus NormalBayesClassifier_Train(NormalBayesClassifier self, PtrTrainData trainData, int flags,
+                                     bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
-CvStatus NormalBayesClassifier_Train_1(NormalBayesClassifier self, Mat samples, int layout, Mat responses, bool *rval)
+CvStatus NormalBayesClassifier_Train_1(NormalBayesClassifier self, Mat samples, int layout, Mat responses,
+                                       bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 
@@ -67,7 +71,8 @@ CvStatus NormalBayesClassifier_Load(NormalBayesClassifier self, char *filepath)
   END_WRAP
 }
 
-CvStatus NormalBayesClassifier_LoadFromString(NormalBayesClassifier self, const char *strModel, const char *objname)
+CvStatus NormalBayesClassifier_LoadFromString(NormalBayesClassifier self, const char *strModel,
+                                              const char *objname)
 {
   BEGIN_WRAP
   self.ptr = cv::Algorithm::loadFromString<cv::ml::NormalBayesClassifier>(strModel, objname);

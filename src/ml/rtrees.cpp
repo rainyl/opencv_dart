@@ -15,6 +15,7 @@ CvStatus RTrees_Create(PtrRTrees *rval)
 
 void RTrees_Close(PtrRTrees *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -56,28 +57,29 @@ CvStatus RTrees_SetActiveVarCount(RTrees self, int val)
 CvStatus RTrees_GetTermCriteria(RTrees self, TermCriteria *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->getTermCriteria();
+  auto tc = self.ptr->getTermCriteria();
+  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
   END_WRAP
 }
 
 CvStatus RTrees_SetTermCriteria(RTrees self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(val);
+  self.ptr->setTermCriteria(*val.ptr);
   END_WRAP
 }
 
 CvStatus RTrees_GetVarImportance(RTrees self, Mat *rval)
 {
   BEGIN_WRAP
-  *rval = {self.ptr->getVarImportance()};
+  *rval = {new cv::Mat(self.ptr->getVarImportance())};
   END_WRAP
 }
 
 CvStatus RTrees_GetVotes(RTrees self, Mat samples, Mat results, int flags)
 {
   BEGIN_WRAP
-  self.ptr->getVotes(samples.ptr, results.ptr, flags);
+  self.ptr->getVotes(*samples.ptr, *results.ptr, flags);
   END_WRAP
 }
 
@@ -91,14 +93,14 @@ CvStatus RTrees_GetOOBError(RTrees self, double *rval)
 CvStatus RTrees_Train(RTrees self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus RTrees_Train_1(RTrees self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 

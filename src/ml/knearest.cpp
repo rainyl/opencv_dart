@@ -15,6 +15,7 @@ CvStatus KNearest_Create(PtrKNearest *rval)
 
 void KNearest_Close(PtrKNearest *self)
 {
+  *self->ptr = nullptr;
   CVD_FREE(self)
 }
 
@@ -81,24 +82,25 @@ CvStatus KNearest_SetAlgorithmType(KNearest self, int val)
   END_WRAP
 }
 
-CvStatus KNearest_FindNearest(KNearest self, Mat samples, int k, Mat results, Mat neighborResponses, Mat dist, float *rval)
+CvStatus KNearest_FindNearest(KNearest self, Mat samples, int k, Mat results, Mat neighborResponses, Mat dist,
+                              float *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->findNearest(samples.ptr, k, results.ptr, neighborResponses.ptr, dist.ptr);
+  *rval = self.ptr->findNearest(*samples.ptr, k, *results.ptr, *neighborResponses.ptr, *dist.ptr);
   END_WRAP
 }
 
 CvStatus KNearest_Train(KNearest self, PtrTrainData trainData, int flags, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(trainData.ptr, flags);
+  *rval = self.ptr->train(*trainData.ptr, flags);
   END_WRAP
 }
 
 CvStatus KNearest_Train_1(KNearest self, Mat samples, int layout, Mat responses, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->train(samples.ptr, layout, responses.ptr);
+  *rval = self.ptr->train(*samples.ptr, layout, *responses.ptr);
   END_WRAP
 }
 
