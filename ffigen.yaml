@@ -31,7 +31,16 @@ headers:
     - src/imgproc/imgproc.h
     - src/ml/ml.h
     - src/ml/train_data.h
+    - src/ml/ann_mlp.h
+    - src/ml/boost.h
+    - src/ml/dtrees.h
+    - src/ml/em.h
+    - src/ml/knearest.h
+    - src/ml/logistic_regression.h
+    - src/ml/normal_bayes_classifier.h
+    - src/ml/rtrees.h
     - src/ml/svm.h
+    - src/ml/svmsgd.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h
@@ -56,6 +65,15 @@ headers:
     - src/ml/ml.h
     - src/ml/train_data.h
     - src/ml/svm.h
+    - src/ml/ann_mlp.h
+    - src/ml/boost.h
+    - src/ml/dtrees.h
+    - src/ml/em.h
+    - src/ml/knearest.h
+    - src/ml/logistic_regression.h
+    - src/ml/normal_bayes_classifier.h
+    - src/ml/rtrees.h
+    - src/ml/svmsgd.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h
