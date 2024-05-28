@@ -20,10 +20,9 @@ import '../opencv.g.dart' as cvg;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
-    final dst = Mat.fromCMat(p.ref);
-    return dst;
+    return Mat.fromPointer(p);
   });
 }
 
@@ -63,7 +62,7 @@ Uint8List imencode(
   VecInt? params,
 }) {
   return using<Uint8List>((arena) {
-    final buffer = arena<cvg.VecUChar>();
+    final buffer = calloc<cvg.VecUChar>();
     final cExt = ext.toNativeUtf8(allocator: arena);
 
     if (params == null) {
@@ -71,8 +70,7 @@ Uint8List imencode(
     } else {
       CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ref, params.ref, buffer);
     }
-
-    return VecUChar.fromVec(buffer.ref).toU8List();
+    return VecUChar.fromPointer(buffer).toU8List();
   });
 }
 
