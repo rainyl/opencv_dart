@@ -1,9 +1,7 @@
 # Define the platform and architecture
 PLATFORM := $(shell uname)
-ARCH := $(shell uname -m)
-
-# MacOS specific architectures
-MACOS_ARCHS := x64 arm64
+ARCH ?= arm64  # Default architecture is arm64 if not specified
+VALID_ARCHS := x64 arm64
 
 # Dart command
 DART_CMD := dart run opencv_dart:setup
@@ -19,13 +17,15 @@ SETUP_CMD := cd $(PARENT_DIR) && $(DART_CMD)
 
 setup:
 ifeq ($(PLATFORM),Darwin)
-	@echo "Detected macOS platform"
-ifeq ($(call check_in_list,$(ARCH),$(MACOS_ARCHS)),)
-	@echo "Unsupported architecture for macOS: $(ARCH)"
+	@echo "Detected iOS platform"
+	@echo "Auto-selected architecture: arm64"
+	@echo "You can override this by setting the ARCH environment variable. Valid options: x64, arm64"
+ifeq ($(call check_in_list,$(ARCH),$(VALID_ARCHS)),)
+	@echo "Unsupported architecture for iOS: $(ARCH). Valid options are: x64, arm64"
 	@exit 1
 else
-	@echo "Running setup for macOS with architecture: $(ARCH)"
-	@$(SETUP_CMD) macos --arch $(ARCH)
+	@echo "Running setup for iOS with architecture: $(ARCH)"
+	@$(SETUP_CMD) ios --arch $(ARCH)
 endif
 else
 	@echo "This setup only runs on macOS"
