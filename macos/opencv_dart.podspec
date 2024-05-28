@@ -3,6 +3,8 @@
 # Run `pod lib lint opencv_dart.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
+  system("make")
+  
   s.name             = 'opencv_dart'
   s.version          = '0.0.1'
   s.summary          = 'OpenCV bindings for Dart.'
