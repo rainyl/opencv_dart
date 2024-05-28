@@ -8,7 +8,7 @@ void main() async {
     expect(img.isEmpty, false);
 
     final classifier = cv.CascadeClassifier.empty();
-    classifier.load("test/haarcascade_frontalface_default.xml");
+    classifier.load("test/data/haarcascade_frontalface_default.xml");
     final rects = classifier.detectMultiScale(img);
     expect(rects.length, 1);
   });
