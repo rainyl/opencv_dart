@@ -8,6 +8,21 @@ cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME "opencv_dart")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
+# Define default architecture
+set(ARCH "x64")
+
+# Print messages
+message(STATUS "Auto-selected architecture: ${ARCH}")
+message(STATUS "Running setup with architecture: ${ARCH}")
+
+# Get the parent directory of the current working directory
+get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
+
+# Run Dart command
+execute_process(
+    COMMAND dart run opencv_dart:setup windows --arch ${ARCH}
+    WORKING_DIRECTORY ${PARENT_DIR}
+)
 # Invoke the build for native code shared with the other target platforms.
 # This can be changed to accommodate different builds.
 # add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
