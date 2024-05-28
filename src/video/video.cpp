@@ -64,8 +64,9 @@ CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f pre
                                         TermCriteria criteria, int flags, double minEigThreshold)
 {
   BEGIN_WRAP
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
   cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *status.ptr, *err.ptr,
-                           cv::Size(winSize.width, winSize.height), maxLevel, *criteria.ptr, flags,
+                           cv::Size(winSize.width, winSize.height), maxLevel, tc, flags,
                            minEigThreshold);
   END_WRAP
 }
@@ -82,8 +83,9 @@ CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int
                           TermCriteria criteria, Mat inputMask, int gaussFiltSize, double *rval)
 {
   BEGIN_WRAP
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
   *rval = cv::findTransformECC(*templateImage.ptr, *inputImage.ptr, *warpMatrix.ptr, motionType,
-                               *criteria.ptr, *inputMask.ptr, gaussFiltSize);
+                               tc, *inputMask.ptr, gaussFiltSize);
   END_WRAP
 }
 

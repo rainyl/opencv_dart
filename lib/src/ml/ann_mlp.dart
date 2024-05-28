@@ -1,25 +1,44 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, camel_case_types
 
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/termcriteria.dart';
 import '../opencv.g.dart' as cvg;
 
-class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
-  ANN_MLP._(cvg.ANN_MLPPtr ptr) : super.fromPointer(ptr) {
+class ANN_MLP extends CvStruct<cvg.PtrANN_MLP> {
+  ANN_MLP._(cvg.PtrANN_MLPPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
 
   factory ANN_MLP.create() {
-    final p = calloc<cvg.ANN_MLP>();
+    final p = calloc<cvg.PtrANN_MLP>();
     cvRun(() => CFFI.ANN_MLP_Create(p));
     return ANN_MLP._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.ANN_MLPPtr>(CFFI.addresses.ANN_MLP_Close);
+  factory ANN_MLP.load(String filepath) {
+    return using<ANN_MLP>((arena) {
+      final fp = filepath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<cvg.PtrANN_MLP>();
+      cvRun(() => CFFI.ANN_MLP_Load(fp, p));
+      return ANN_MLP._(p);
+    });
+  }
+
+  factory ANN_MLP.loadFromString(String strModel, String objname) {
+    return using<ANN_MLP>((arena) {
+      final sm = strModel.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final on = objname.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<cvg.PtrANN_MLP>();
+      cvRun(() => CFFI.ANN_MLP_LoadFromString(sm, on, p));
+      return ANN_MLP._(p);
+    });
+  }
+
+  static final finalizer = OcvFinalizer<cvg.PtrANN_MLPPtr>(CFFI.addresses.ANN_MLP_Close);
 
   int getTrainMethod() {
     return using<int>((arena) {
@@ -29,7 +48,12 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
     });
   }
 
-  void setTrainMethod(int method, double param1, double param2) {
+  /// Sets training method and common parameters.
+  ///
+  /// [method] Default value is [TRAIN_METHODS_RPROP].
+  ///
+  /// https://docs.opencv.org/4.x/d0/dce/classcv_1_1ml_1_1ANN__MLP.html#a4be093cfd2e743ee2f41e34e50cf3a54
+  void setTrainMethod(int method, [double param1 = 0, double param2 = 0]) {
     return using<void>((arena) {
       cvRun(() => CFFI.ANN_MLP_SetTrainMethod(ref, method, param1, param2));
     });
@@ -37,8 +61,7 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
 
   void setActivationFunction(int type, double param1, double param2) {
     return using<void>((arena) {
-      cvRun(
-          () => CFFI.ANN_MLP_SetActivationFunction(ref, type, param1, param2));
+      cvRun(() => CFFI.ANN_MLP_SetActivationFunction(ref, type, param1, param2));
     });
   }
 
@@ -50,23 +73,23 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
 
   Mat getLayerSizes() {
     return using<Mat>((arena) {
-      final p = arena<ffi.Pointer<cvg.Mat>>();
-      cvRun(() => CFFI.ANN_MLP_GetLayerSizes(ref, p));
-      return Mat.fromPointer(p);
+      final mat = Mat.empty();
+      cvRun(() => CFFI.ANN_MLP_GetLayerSizes(ref, mat.ptr));
+      return mat;
     });
   }
 
   void setTermCriteria(TermCriteria val) {
     return using<void>((arena) {
-      cvRun(() => CFFI.ANN_MLP_SetTermCriteria(ref, val.ref));
+      cvRun(() => CFFI.ANN_MLP_SetTermCriteria(ref, val.toNativePtr(arena).ref));
     });
   }
 
   TermCriteria getTermCriteria() {
     return using<TermCriteria>((arena) {
-      final p = arena<ffi.Pointer<cvg.TermCriteria>>();
+      final p = arena<cvg.TermCriteria>();
       cvRun(() => CFFI.ANN_MLP_GetTermCriteria(ref, p));
-      return TermCriteria.fromPointer(p);
+      return p.ref.toDart();
     });
   }
 
@@ -227,8 +250,7 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
   double predict(Mat samples, Mat results, int flags) {
     return using<double>((arena) {
       final p = arena<ffi.Float>();
-      cvRun(
-          () => CFFI.ANN_MLP_Predict(ref, samples.ref, results.ref, flags, p));
+      cvRun(() => CFFI.ANN_MLP_Predict(ref, samples.ref, results.ref, flags, p));
       return p.value;
     });
   }
@@ -244,8 +266,7 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
   bool trainWithSamples(Mat samples, int layout, Mat responses) {
     return using<bool>((arena) {
       final p = arena<ffi.Bool>();
-      cvRun(() =>
-          CFFI.ANN_MLP_Train_1(ref, samples.ref, layout, responses.ref, p));
+      cvRun(() => CFFI.ANN_MLP_Train_1(ref, samples.ref, layout, responses.ref, p));
       return p.value;
     });
   }
@@ -264,27 +285,28 @@ class ANN_MLP extends CvStruct<cvg.ANN_MLP> {
     });
   }
 
-  void load(String filepath) {
-    return using<void>((arena) {
-      final p = filepath.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => CFFI.ANN_MLP_Load(ref, p));
-      calloc.free(p);
-    });
-  }
-
-  void loadFromString(String strModel, String objname) {
-    return using<void>((arena) {
-      final sm = strModel.toNativeUtf8().cast<ffi.Char>();
-      final on = objname.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => CFFI.ANN_MLP_LoadFromString(ref, sm, on));
-      calloc.free(sm);
-      calloc.free(on);
-    });
-  }
-
   @override
   List<int> get props => [ptr.address];
 
   @override
-  cvg.ANN_MLP get ref => ptr.ref;
+  cvg.PtrANN_MLP get ref => ptr.ref;
+
+  /// The back-propagation algorithm.
+  static const int TRAIN_METHODS_BACKPROP = 0;
+
+  /// The RPROP algorithm. See @cite RPROP93 for details.
+  static const int TRAIN_METHODS_RPROP = 1;
+
+  /// The simulated annealing algorithm. See @cite Kirkpatrick83 for details.
+  static const int TRAIN_METHODS_ANNEAL = 2;
+
+  static const int TRAIN_FLAGS_UPDATE_WEIGHTS = 1;
+  static const int TRAIN_FLAGS_NO_INPUT_SCALE = 2;
+  static const int TRAIN_FLAGS_NO_OUTPUT_SCALE = 4;
+
+  static const int ACTIVATION_IDENTITY = 0;
+  static const int ACTIVATION_SIGMOID_SYM = 1;
+  static const int ACTIVATION_GAUSSIAN = 2;
+  static const int ACTIVATION_RELU = 3;
+  static const int ACTIVATION_LEAKYRELU = 4;
 }

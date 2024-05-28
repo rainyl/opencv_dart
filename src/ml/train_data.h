@@ -35,48 +35,49 @@ void     TrainData_Close(PtrTrainData *self);
 CvStatus TrainData_Get(PtrTrainData *self, TrainData *rval);
 // static functions
 // input matrix (supported types: CV_32S, CV_32F, CV_64F)
-CvStatus TrainData_GetSubMatrix(const Mat matrix, const Mat idx, int layout, Mat *rval);
-CvStatus TrainData_GetSubVector(const Mat vec, const Mat idx, Mat *rval);
+CvStatus TrainData_GetSubMatrix(Mat matrix, Mat idx, int layout, Mat *rval);
+CvStatus TrainData_GetSubVector(Mat vec, Mat idx, Mat *rval);
 CvStatus TrainData_MissingValue(float *rval);
 
 // member functions
-CvStatus TrainData_GetCatCount(TrainData self, int vi, int *rval);
-CvStatus TrainData_GetCatMap(TrainData self, Mat *rval);
-CvStatus TrainData_GetCatOfs(TrainData self, Mat *rval);
-CvStatus TrainData_GetClassLabels(TrainData self, Mat *rval);
-CvStatus TrainData_GetDefaultSubstValues(TrainData self, Mat *rval);
-CvStatus TrainData_GetLayout(TrainData self, int *rval);
-CvStatus TrainData_GetMissing(TrainData self, Mat *rval);
-CvStatus TrainData_GetNAllVars(TrainData self, int *rval);
-CvStatus TrainData_GetNames(TrainData self, VecVecChar *names);
-CvStatus TrainData_GetNormCatResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetNSamples(TrainData self, int *rval);
-CvStatus TrainData_GetNTestSamples(TrainData self, int *rval);
-CvStatus TrainData_GetNTrainSamples(TrainData self, int *rval);
-CvStatus TrainData_GetNVars(TrainData self, int *rval);
-CvStatus TrainData_GetResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetResponseType(TrainData self, int *rval);
-CvStatus TrainData_GetSample(TrainData self, Mat varIdx, int sidx, float *buf);
-CvStatus TrainData_GetSamples(TrainData self, Mat *rval);
-CvStatus TrainData_GetSampleWeights(TrainData self, Mat *rval);
-CvStatus TrainData_GetTestNormCatResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetTestResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetTestSampleIdx(TrainData self, Mat *rval);
-CvStatus TrainData_GetTestSamples(TrainData self, Mat *rval);
-CvStatus TrainData_GetTestSampleWeights(TrainData self, Mat *rval);
-CvStatus TrainData_GetTrainNormCatResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetTrainResponses(TrainData self, Mat *rval);
-CvStatus TrainData_GetTrainSampleIdx(TrainData self, Mat *rval);
-CvStatus TrainData_GetTrainSamples(TrainData self, int layout, bool compressSamples, bool compressVars,
+CvStatus TrainData_GetCatCount(PtrTrainData self, int vi, int *rval);
+CvStatus TrainData_GetCatMap(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetCatOfs(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetClassLabels(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetDefaultSubstValues(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetLayout(PtrTrainData self, int *rval);
+CvStatus TrainData_GetMissing(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetNAllVars(PtrTrainData self, int *rval);
+CvStatus TrainData_GetNames(PtrTrainData self, VecVecChar *names);
+CvStatus TrainData_GetNormCatResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetNormCatValues(PtrTrainData self, int vi, Mat sidx, VecInt *values);
+CvStatus TrainData_GetNSamples(PtrTrainData self, int *rval);
+CvStatus TrainData_GetNTestSamples(PtrTrainData self, int *rval);
+CvStatus TrainData_GetNTrainSamples(PtrTrainData self, int *rval);
+CvStatus TrainData_GetNVars(PtrTrainData self, int *rval);
+CvStatus TrainData_GetResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetResponseType(PtrTrainData self, int *rval);
+CvStatus TrainData_GetSample(PtrTrainData self, Mat varIdx, int sidx, VecFloat *buf);
+CvStatus TrainData_GetSamples(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetSampleWeights(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTestNormCatResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTestResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTestSampleIdx(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTestSamples(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTestSampleWeights(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTrainNormCatResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTrainResponses(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTrainSampleIdx(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetTrainSamples(PtrTrainData self, int layout, bool compressSamples, bool compressVars,
                                    Mat *rval);
-CvStatus TrainData_GetTrainSampleWeights(TrainData self, Mat *rval);
-CvStatus TrainData_GetValues(TrainData self, int vi, Mat sidx, float *values);
-CvStatus TrainData_GetVarIdx(TrainData self, Mat *rval);
-CvStatus TrainData_GetVarSymbolFlags(TrainData self, Mat *rval);
-CvStatus TrainData_GetVarType(TrainData self, Mat *rval);
-CvStatus TrainData_SetTrainTestSplit(TrainData self, int count, bool shuffle);
-CvStatus TrainData_SetTrainTestSplitRatio(TrainData self, double ratio, bool shuffle);
-CvStatus TrainData_ShuffleTrainTest(TrainData self);
+CvStatus TrainData_GetTrainSampleWeights(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetValues(PtrTrainData self, int vi, Mat sidx, VecFloat *values);
+CvStatus TrainData_GetVarIdx(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetVarSymbolFlags(PtrTrainData self, Mat *rval);
+CvStatus TrainData_GetVarType(PtrTrainData self, Mat *rval);
+CvStatus TrainData_SetTrainTestSplit(PtrTrainData self, int count, bool shuffle);
+CvStatus TrainData_SetTrainTestSplitRatio(PtrTrainData self, double ratio, bool shuffle);
+CvStatus TrainData_ShuffleTrainTest(PtrTrainData self);
 
 #ifdef __cplusplus
 }

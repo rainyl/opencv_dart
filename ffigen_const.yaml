@@ -8,9 +8,9 @@ output:
 compiler-opts: ""
 headers:
   entry-points:
-    - src/constants.h
+    - src/core/constants.h
   include-directives:
-    - src/constants.h
+    - src/core/constants.h
 
 preamble: |
   // opencv_dart - OpenCV bindings for Dart language

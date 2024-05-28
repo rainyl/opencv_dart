@@ -100,14 +100,15 @@ CvStatus LogisticRegression_GetTermCriteria(LogisticRegression self, TermCriteri
 {
   BEGIN_WRAP
   auto tc = self.ptr->getTermCriteria();
-  *rval = {new cv::TermCriteria(tc.type, tc.maxCount, tc.epsilon)};
+  *rval = {tc.type, tc.maxCount, tc.epsilon};
   END_WRAP
 }
 
 CvStatus LogisticRegression_SetTermCriteria(LogisticRegression self, TermCriteria val)
 {
   BEGIN_WRAP
-  self.ptr->setTermCriteria(*val.ptr);
+  auto tc = cv::TermCriteria(val.type, val.maxCount, val.epsilon);
+  self.ptr->setTermCriteria(tc);
   END_WRAP
 }
 

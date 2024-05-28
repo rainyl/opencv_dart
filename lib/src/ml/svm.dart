@@ -6,9 +6,9 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/termcriteria.dart';
-import '../core/vec.dart';
 
 import '../opencv.g.dart' as cvg;
+import 'train_data.dart';
 
 /// Support Vector Machines.
 /// https://docs.opencv.org/4.x/d1/d2d/classcv_1_1ml_1_1SVM.html#ab4b93a4c42bbe213ffd9fb3832c6c44f
@@ -23,8 +23,26 @@ class SVM extends CvStruct<cvg.PtrSVM> {
     return SVM._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.PtrSVMPtr>(CFFI.addresses.SVM_Close);
+  factory SVM.load(String filepath) {
+    return using<SVM>((arena) {
+      final fp = filepath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<cvg.PtrSVM>();
+      cvRun(() => CFFI.SVM_Load(fp, p));
+      return SVM._(p);
+    });
+  }
+
+  factory SVM.loadFromString(String strModel, String objname) {
+    return using<SVM>((arena) {
+      final sm = strModel.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final on = objname.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<cvg.PtrSVM>();
+      cvRun(() => CFFI.SVM_LoadFromString(sm, on, p));
+      return SVM._(p);
+    });
+  }
+
+  static final finalizer = OcvFinalizer<cvg.PtrSVMPtr>(CFFI.addresses.SVM_Close);
 
   double getC() {
     return using<double>((arena) {
@@ -53,8 +71,7 @@ class SVM extends CvStruct<cvg.PtrSVM> {
   double getDecisionFunction(int i, Mat alpha, Mat svidx) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(
-          () => CFFI.SVM_GetDecisionFunction(ref, i, alpha.ref, svidx.ref, p));
+      cvRun(() => CFFI.SVM_GetDecisionFunction(ref, i, alpha.ref, svidx.ref, p));
       return p.value;
     });
   }
@@ -100,20 +117,18 @@ class SVM extends CvStruct<cvg.PtrSVM> {
   }
 
   Mat getSupportVectors() {
-    return using<Mat>((arena) {
-      final p = arena<cvg.Mat>();
-      cvRun(() => CFFI.SVM_GetSupportVectors(ref, p));
-      return Mat.fromPointer(p);
+    final p = calloc<cvg.Mat>();
+    cvRun(() => CFFI.SVM_GetSupportVectors(ref, p));
+    return Mat.fromPointer(p);
+  }
+
+  TermCriteria getTermCriteria() {
+    return using<TermCriteria>((arena) {
+      final p = arena<cvg.TermCriteria>();
+      cvRun(() => CFFI.SVM_GetTermCriteria(ref, p));
+      return p.ref.toDart();
     });
   }
-//TODO: from pointer is not found
-  // TermCriteria getTermCriteria() {
-  //   return using<TermCriteria>((arena) {
-  //     final p = arena<cvg.TermCriteria>();
-  //     cvRun(() => CFFI.SVM_GetTermCriteria(ref, p));
-  //     return TermCriteria.fromPointer(p);
-  //   });
-  // }
 
   int getType() {
     return using<int>((arena) {
@@ -181,7 +196,7 @@ class SVM extends CvStruct<cvg.PtrSVM> {
 
   void setTermCriteria(TermCriteria val) {
     return using<void>((arena) {
-      cvRun(() => CFFI.SVM_SetTermCriteria(ref, val.ref));
+      cvRun(() => CFFI.SVM_SetTermCriteria(ref, val.toNativePtr(arena).ref));
     });
   }
 
@@ -191,30 +206,12 @@ class SVM extends CvStruct<cvg.PtrSVM> {
     });
   }
 
-  bool trainAuto(
-      cvg.PtrTrainData data,
-      int kFold,
-      ParamGrid Cgrid,
-      ParamGrid gammaGrid,
-      ParamGrid pGrid,
-      ParamGrid nuGrid,
-      ParamGrid coeffGrid,
-      ParamGrid degreeGrid,
-      bool balanced) {
+  bool trainAuto(TrainData data, int kFold, ParamGrid cGrid, ParamGrid gammaGrid, ParamGrid pGrid,
+      ParamGrid nuGrid, ParamGrid coeffGrid, ParamGrid degreeGrid, bool balanced) {
     return using<bool>((arena) {
       final p = arena<ffi.Bool>();
-      cvRun(() => CFFI.SVM_TrainAuto(
-          ref,
-          data.ref,
-          kFold,
-          Cgrid.ref,
-          gammaGrid.ref,
-          pGrid.ref,
-          nuGrid.ref,
-          coeffGrid.ref,
-          degreeGrid.ref,
-          balanced,
-          p));
+      cvRun(() => CFFI.SVM_TrainAuto(ref, data.ref, kFold, cGrid.ref, gammaGrid.ref, pGrid.ref,
+          nuGrid.ref, coeffGrid.ref, degreeGrid.ref, balanced, p));
       return p.value;
     });
   }
@@ -224,34 +221,22 @@ class SVM extends CvStruct<cvg.PtrSVM> {
       int layout,
       Mat responses,
       int kFold,
-      cvg.PtrParamGrid Cgrid,
-      cvg.PtrParamGrid gammaGrid,
-      cvg.PtrParamGrid pGrid,
-      cvg.PtrParamGrid nuGrid,
-      cvg.PtrParamGrid coeffGrid,
-      cvg.PtrParamGrid degreeGrid,
+      ParamGrid cGrid,
+      ParamGrid gammaGrid,
+      ParamGrid pGrid,
+      ParamGrid nuGrid,
+      ParamGrid coeffGrid,
+      ParamGrid degreeGrid,
       bool balanced) {
     return using<bool>((arena) {
-      final p = arena<ffi.Uint8>();
-      cvRun(() => CFFI.SVM_TrainAuto_1(
-          ref,
-          samples.ref,
-          layout,
-          responses.ref,
-          kFold,
-          Cgrid.ref,
-          gammaGrid.ref,
-          pGrid.ref,
-          nuGrid.ref,
-          coeffGrid.ref,
-          degreeGrid.ref,
-          balanced,
-          p));
-      return p.value != 0;
+      final p = arena<ffi.Bool>();
+      cvRun(() => CFFI.SVM_TrainAuto_1(ref, samples.ref, layout, responses.ref, kFold, cGrid.ref,
+          gammaGrid.ref, pGrid.ref, nuGrid.ref, coeffGrid.ref, degreeGrid.ref, balanced, p));
+      return p.value;
     });
   }
 
-  double calcError(cvg.PtrTrainData data, bool test, Mat resp) {
+  double calcError(TrainData data, bool test, Mat resp) {
     return using<double>((arena) {
       final p = arena<ffi.Float>();
       cvRun(() => CFFI.SVM_CalcError(ref, data.ref, test, resp.ref, p));
@@ -299,7 +284,7 @@ class SVM extends CvStruct<cvg.PtrSVM> {
     });
   }
 
-  bool train(cvg.PtrTrainData trainData, int flags) {
+  bool train(TrainData trainData, int flags) {
     return using<bool>((arena) {
       final p = arena<ffi.Bool>();
       cvRun(() => CFFI.SVM_Train(ref, trainData.ref, flags, p));
@@ -309,65 +294,42 @@ class SVM extends CvStruct<cvg.PtrSVM> {
 
   bool trainWithSamples(Mat samples, int layout, Mat responses) {
     return using<bool>((arena) {
-      final p = arena<ffi.Uint8>();
+      final p = arena<ffi.Bool>();
       cvRun(() => CFFI.SVM_Train_1(ref, samples.ref, layout, responses.ref, p));
-      return p.value != 0;
+      return p.value;
     });
   }
 
-  void clear() {
-    return using<void>((arena) {
-      cvRun(() => CFFI.SVM_Clear(ref));
-    });
-  }
+  void clear() => cvRun(() => CFFI.SVM_Clear(ref));
 
   String getDefaultName() {
     return using<String>((arena) {
-      final p = arena<ffi.Pointer<ffi.Char>>();
+      final p = arena<ffi.Char>();
       cvRun(() => CFFI.SVM_GetDefaultName(ref, p));
       return p.cast<Utf8>().toDartString();
     });
   }
 
-  ParamGrid getDefaultGrid(int param_id) {
-    return using<ParamGrid>((arena) {
-      final p = calloc<cvg.ParamGrid>();
-      cvRun(() => CFFI.SVM_GetDefaultGrid(ref, param_id, p));
-      return ParamGrid.fromPointer(p);
-    });
-  }
+  // ParamGrid getDefaultGrid(int param_id) {
+  //   return using<ParamGrid>((arena) {
+  //     final p = calloc<cvg.ParamGrid>();
+  //     cvRun(() => CFFI.SVM_GetDefaultGrid(ref, param_id, p));
+  //     return ParamGrid.fromPointer(p);
+  //   });
+  // }
 
-  cvg.PtrParamGrid getDefaultGridPtr(int param_id) {
-    return using<cvg.PtrParamGrid>((arena) {
+  ParamGrid getDefaultGridPtr(int paramId) {
+    return using<ParamGrid>((arena) {
       final p = calloc<cvg.PtrParamGrid>();
-      cvRun(() => CFFI.SVM_GetDefaultGridPtr(ref, param_id, p));
-      return cvg.PtrParamGrid.fromPointer(p);
+      cvRun(() => CFFI.SVM_GetDefaultGridPtr(ref, paramId, p));
+      return ParamGrid.fromPointer(p);
     });
   }
 
   void save(String filename) {
     return using<void>((arena) {
-      final p = filename.toNativeUtf8().cast<ffi.Char>();
+      final p = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       cvRun(() => CFFI.SVM_Save(ref, p));
-      calloc.free(p);
-    });
-  }
-
-  void load(String filepath) {
-    return using<void>((arena) {
-      final p = filepath.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => CFFI.SVM_Load(ref, p));
-      calloc.free(p);
-    });
-  }
-
-  void loadFromString(String strModel, String objname) {
-    return using<void>((arena) {
-      final sm = strModel.toNativeUtf8().cast<ffi.Char>();
-      final on = objname.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => CFFI.SVM_LoadFromString(ref, sm, on));
-      calloc.free(sm);
-      calloc.free(on);
     });
   }
 
@@ -375,10 +337,7 @@ class SVM extends CvStruct<cvg.PtrSVM> {
   List<int> get props => [ptr.address];
 
   @override
-  cvg.SVM get ref => ptr.ref;
-
-  // @override
-  // cvg.PtrSVM get ref => ptr.ref;
+  cvg.PtrSVM get ref => ptr.ref;
 
   static const int KERNEL_CUSTOM = -1;
   static const int KERNEL_LINEAR = 0;
@@ -420,17 +379,21 @@ class SVM extends CvStruct<cvg.PtrSVM> {
   static const int NU_SVR = 104;
 }
 
-class ParamGrid extends CvStruct<cvg.ParamGrid> {
-  ParamGrid._(cvg.ParamGridPtr ptr) : super.fromPointer(ptr);
+class ParamGrid extends CvStruct<cvg.PtrParamGrid> {
+  ParamGrid._(cvg.PtrParamGridPtr ptr) : super.fromPointer(ptr) {
+    finalizer.attach(this, ptr.cast());
+  }
+
+  factory ParamGrid.fromPointer(cvg.PtrParamGridPtr ptr) => ParamGrid._(ptr);
 
   factory ParamGrid.empty() {
-    final p = calloc<cvg.ParamGrid>();
+    final p = calloc<cvg.PtrParamGrid>();
     cvRun(() => CFFI.ParamGrid_Empty(p));
     return ParamGrid._(p);
   }
 
-  factory ParamGrid.newGrid(double minVal, double maxVal, double logstep) {
-    final p = calloc<cvg.ParamGrid>();
+  factory ParamGrid.create(double minVal, double maxVal, double logstep) {
+    final p = calloc<cvg.PtrParamGrid>();
     cvRun(() => CFFI.ParamGrid_New(minVal, maxVal, logstep, p));
     return ParamGrid._(p);
   }
@@ -459,12 +422,11 @@ class ParamGrid extends CvStruct<cvg.ParamGrid> {
     });
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.ParamGridPtr>(CFFI.addresses.ParamGrid_Close);
+  static final finalizer = OcvFinalizer<cvg.PtrParamGridPtr>(CFFI.addresses.ParamGrid_Close);
 
   @override
   List<int> get props => [ptr.address];
 
   @override
-  cvg.ParamGrid get ref => ptr.ref;
+  cvg.PtrParamGrid get ref => ptr.ref;
 }

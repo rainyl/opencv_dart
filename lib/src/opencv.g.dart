@@ -99,7 +99,7 @@ class CvNative {
       CvStatus Function(AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
 
   CvStatus ANN_MLP_Clear(
-    ANN_MLP self,
+    PtrANN_MLP self,
   ) {
     return _ANN_MLP_Clear(
       self,
@@ -107,9 +107,10 @@ class CvNative {
   }
 
   late final _ANN_MLP_ClearPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP)>>('ANN_MLP_Clear');
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP)>>(
+          'ANN_MLP_Clear');
   late final _ANN_MLP_Clear =
-      _ANN_MLP_ClearPtr.asFunction<CvStatus Function(ANN_MLP)>();
+      _ANN_MLP_ClearPtr.asFunction<CvStatus Function(PtrANN_MLP)>();
 
   void ANN_MLP_Close(
     ffi.Pointer<PtrANN_MLP> self,
@@ -139,24 +140,8 @@ class CvNative {
   late final _ANN_MLP_Create = _ANN_MLP_CreatePtr.asFunction<
       CvStatus Function(ffi.Pointer<PtrANN_MLP>)>();
 
-  CvStatus ANN_MLP_Get(
-    PtrANN_MLP self,
-    ffi.Pointer<ANN_MLP> rval,
-  ) {
-    return _ANN_MLP_Get(
-      self,
-      rval,
-    );
-  }
-
-  late final _ANN_MLP_GetPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(PtrANN_MLP, ffi.Pointer<ANN_MLP>)>>('ANN_MLP_Get');
-  late final _ANN_MLP_Get = _ANN_MLP_GetPtr.asFunction<
-      CvStatus Function(PtrANN_MLP, ffi.Pointer<ANN_MLP>)>();
-
   CvStatus ANN_MLP_GetAnnealCoolingRatio(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetAnnealCoolingRatio(
@@ -166,14 +151,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetAnnealCoolingRatioPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetAnnealCoolingRatio');
+      ffi.NativeFunction<
+          CvStatus Function(PtrANN_MLP,
+              ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetAnnealCoolingRatio');
   late final _ANN_MLP_GetAnnealCoolingRatio = _ANN_MLP_GetAnnealCoolingRatioPtr
-      .asFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetAnnealFinalT(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetAnnealFinalT(
@@ -183,14 +168,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetAnnealFinalTPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetAnnealFinalT');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetAnnealFinalT');
   late final _ANN_MLP_GetAnnealFinalT = _ANN_MLP_GetAnnealFinalTPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetAnnealInitialT(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetAnnealInitialT(
@@ -200,14 +185,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetAnnealInitialTPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetAnnealInitialT');
+      ffi.NativeFunction<
+          CvStatus Function(PtrANN_MLP,
+              ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetAnnealInitialT');
   late final _ANN_MLP_GetAnnealInitialT = _ANN_MLP_GetAnnealInitialTPtr
-      .asFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetAnnealItePerStep(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _ANN_MLP_GetAnnealItePerStep(
@@ -217,13 +202,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetAnnealItePerStepPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Int>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Int>)>>(
       'ANN_MLP_GetAnnealItePerStep');
   late final _ANN_MLP_GetAnnealItePerStep = _ANN_MLP_GetAnnealItePerStepPtr
-      .asFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Int>)>();
 
   CvStatus ANN_MLP_GetBackpropMomentumScale(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetBackpropMomentumScale(
@@ -233,15 +219,15 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetBackpropMomentumScalePtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetBackpropMomentumScale');
+      ffi.NativeFunction<
+          CvStatus Function(PtrANN_MLP,
+              ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetBackpropMomentumScale');
   late final _ANN_MLP_GetBackpropMomentumScale =
       _ANN_MLP_GetBackpropMomentumScalePtr.asFunction<
-          CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+          CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetBackpropWeightScale(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetBackpropWeightScale(
@@ -251,15 +237,15 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetBackpropWeightScalePtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetBackpropWeightScale');
+      ffi.NativeFunction<
+          CvStatus Function(PtrANN_MLP,
+              ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetBackpropWeightScale');
   late final _ANN_MLP_GetBackpropWeightScale =
       _ANN_MLP_GetBackpropWeightScalePtr.asFunction<
-          CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+          CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetLayerSizes(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<Mat> rval,
   ) {
     return _ANN_MLP_GetLayerSizes(
@@ -268,14 +254,14 @@ class CvNative {
     );
   }
 
-  late final _ANN_MLP_GetLayerSizesPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<Mat>)>>(
-          'ANN_MLP_GetLayerSizes');
+  late final _ANN_MLP_GetLayerSizesPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<Mat>)>>(
+      'ANN_MLP_GetLayerSizes');
   late final _ANN_MLP_GetLayerSizes = _ANN_MLP_GetLayerSizesPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<Mat>)>();
 
   CvStatus ANN_MLP_GetRpropDW0(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetRpropDW0(
@@ -285,14 +271,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetRpropDW0Ptr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetRpropDW0');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetRpropDW0');
   late final _ANN_MLP_GetRpropDW0 = _ANN_MLP_GetRpropDW0Ptr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetRpropDWMax(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetRpropDWMax(
@@ -302,14 +288,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetRpropDWMaxPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetRpropDWMax');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetRpropDWMax');
   late final _ANN_MLP_GetRpropDWMax = _ANN_MLP_GetRpropDWMaxPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetRpropDWMin(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetRpropDWMin(
@@ -319,14 +305,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetRpropDWMinPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetRpropDWMin');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetRpropDWMin');
   late final _ANN_MLP_GetRpropDWMin = _ANN_MLP_GetRpropDWMinPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetRpropDWMinus(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetRpropDWMinus(
@@ -336,14 +322,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetRpropDWMinusPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetRpropDWMinus');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetRpropDWMinus');
   late final _ANN_MLP_GetRpropDWMinus = _ANN_MLP_GetRpropDWMinusPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetRpropDWPlus(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ANN_MLP_GetRpropDWPlus(
@@ -353,14 +339,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetRpropDWPlusPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>>(
-      'ANN_MLP_GetRpropDWPlus');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Double>)>>('ANN_MLP_GetRpropDWPlus');
   late final _ANN_MLP_GetRpropDWPlus = _ANN_MLP_GetRpropDWPlusPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ANN_MLP_GetTermCriteria(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<TermCriteria> rval,
   ) {
     return _ANN_MLP_GetTermCriteria(
@@ -371,13 +357,13 @@ class CvNative {
 
   late final _ANN_MLP_GetTermCriteriaPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              ANN_MLP, ffi.Pointer<TermCriteria>)>>('ANN_MLP_GetTermCriteria');
+          CvStatus Function(PtrANN_MLP,
+              ffi.Pointer<TermCriteria>)>>('ANN_MLP_GetTermCriteria');
   late final _ANN_MLP_GetTermCriteria = _ANN_MLP_GetTermCriteriaPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<TermCriteria>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<TermCriteria>)>();
 
   CvStatus ANN_MLP_GetTrainMethod(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _ANN_MLP_GetTrainMethod(
@@ -387,49 +373,51 @@ class CvNative {
   }
 
   late final _ANN_MLP_GetTrainMethodPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Int>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Int>)>>(
       'ANN_MLP_GetTrainMethod');
   late final _ANN_MLP_GetTrainMethod = _ANN_MLP_GetTrainMethodPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Int>)>();
 
   CvStatus ANN_MLP_Load(
-    ANN_MLP self,
     ffi.Pointer<ffi.Char> filepath,
+    ffi.Pointer<PtrANN_MLP> rval,
   ) {
     return _ANN_MLP_Load(
-      self,
       filepath,
+      rval,
     );
   }
 
   late final _ANN_MLP_LoadPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Char>)>>('ANN_MLP_Load');
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<PtrANN_MLP>)>>('ANN_MLP_Load');
   late final _ANN_MLP_Load = _ANN_MLP_LoadPtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Char>)>();
+      CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<PtrANN_MLP>)>();
 
   CvStatus ANN_MLP_LoadFromString(
-    ANN_MLP self,
     ffi.Pointer<ffi.Char> strModel,
     ffi.Pointer<ffi.Char> objname,
+    ffi.Pointer<PtrANN_MLP> rval,
   ) {
     return _ANN_MLP_LoadFromString(
-      self,
       strModel,
       objname,
+      rval,
     );
   }
 
   late final _ANN_MLP_LoadFromStringPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>)>>('ANN_MLP_LoadFromString');
+          CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<PtrANN_MLP>)>>('ANN_MLP_LoadFromString');
   late final _ANN_MLP_LoadFromString = _ANN_MLP_LoadFromStringPtr.asFunction<
-      CvStatus Function(
-          ANN_MLP, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+      CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+          ffi.Pointer<PtrANN_MLP>)>();
 
   CvStatus ANN_MLP_Predict(
-    ANN_MLP self,
+    PtrANN_MLP self,
     Mat samples,
     Mat results,
     int flags,
@@ -446,13 +434,13 @@ class CvNative {
 
   late final _ANN_MLP_PredictPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, Mat, Mat, ffi.Int,
+          CvStatus Function(PtrANN_MLP, Mat, Mat, ffi.Int,
               ffi.Pointer<ffi.Float>)>>('ANN_MLP_Predict');
   late final _ANN_MLP_Predict = _ANN_MLP_PredictPtr.asFunction<
-      CvStatus Function(ANN_MLP, Mat, Mat, int, ffi.Pointer<ffi.Float>)>();
+      CvStatus Function(PtrANN_MLP, Mat, Mat, int, ffi.Pointer<ffi.Float>)>();
 
   CvStatus ANN_MLP_Save(
-    ANN_MLP self,
+    PtrANN_MLP self,
     ffi.Pointer<ffi.Char> filename,
   ) {
     return _ANN_MLP_Save(
@@ -463,12 +451,13 @@ class CvNative {
 
   late final _ANN_MLP_SavePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Char>)>>('ANN_MLP_Save');
+          CvStatus Function(
+              PtrANN_MLP, ffi.Pointer<ffi.Char>)>>('ANN_MLP_Save');
   late final _ANN_MLP_Save = _ANN_MLP_SavePtr.asFunction<
-      CvStatus Function(ANN_MLP, ffi.Pointer<ffi.Char>)>();
+      CvStatus Function(PtrANN_MLP, ffi.Pointer<ffi.Char>)>();
 
   CvStatus ANN_MLP_SetActivationFunction(
-    ANN_MLP self,
+    PtrANN_MLP self,
     int type,
     double param1,
     double param2,
@@ -483,13 +472,13 @@ class CvNative {
 
   late final _ANN_MLP_SetActivationFunctionPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, ffi.Int, ffi.Double,
+          CvStatus Function(PtrANN_MLP, ffi.Int, ffi.Double,
               ffi.Double)>>('ANN_MLP_SetActivationFunction');
   late final _ANN_MLP_SetActivationFunction = _ANN_MLP_SetActivationFunctionPtr
-      .asFunction<CvStatus Function(ANN_MLP, int, double, double)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, int, double, double)>();
 
   CvStatus ANN_MLP_SetAnnealCoolingRatio(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetAnnealCoolingRatio(
@@ -499,13 +488,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetAnnealCoolingRatioPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetAnnealCoolingRatio');
   late final _ANN_MLP_SetAnnealCoolingRatio = _ANN_MLP_SetAnnealCoolingRatioPtr
-      .asFunction<CvStatus Function(ANN_MLP, double)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetAnnealFinalT(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetAnnealFinalT(
@@ -515,13 +504,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetAnnealFinalTPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetAnnealFinalT');
   late final _ANN_MLP_SetAnnealFinalT = _ANN_MLP_SetAnnealFinalTPtr.asFunction<
-      CvStatus Function(ANN_MLP, double)>();
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetAnnealInitialT(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetAnnealInitialT(
@@ -531,13 +520,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetAnnealInitialTPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetAnnealInitialT');
   late final _ANN_MLP_SetAnnealInitialT = _ANN_MLP_SetAnnealInitialTPtr
-      .asFunction<CvStatus Function(ANN_MLP, double)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetAnnealItePerStep(
-    ANN_MLP self,
+    PtrANN_MLP self,
     int val,
   ) {
     return _ANN_MLP_SetAnnealItePerStep(
@@ -547,13 +536,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetAnnealItePerStepPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Int)>>(
           'ANN_MLP_SetAnnealItePerStep');
   late final _ANN_MLP_SetAnnealItePerStep = _ANN_MLP_SetAnnealItePerStepPtr
-      .asFunction<CvStatus Function(ANN_MLP, int)>();
+      .asFunction<CvStatus Function(PtrANN_MLP, int)>();
 
   CvStatus ANN_MLP_SetBackpropMomentumScale(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetBackpropMomentumScale(
@@ -563,14 +552,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetBackpropMomentumScalePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetBackpropMomentumScale');
   late final _ANN_MLP_SetBackpropMomentumScale =
       _ANN_MLP_SetBackpropMomentumScalePtr.asFunction<
-          CvStatus Function(ANN_MLP, double)>();
+          CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetBackpropWeightScale(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetBackpropWeightScale(
@@ -580,14 +569,14 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetBackpropWeightScalePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetBackpropWeightScale');
   late final _ANN_MLP_SetBackpropWeightScale =
       _ANN_MLP_SetBackpropWeightScalePtr.asFunction<
-          CvStatus Function(ANN_MLP, double)>();
+          CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetLayerSizes(
-    ANN_MLP self,
+    PtrANN_MLP self,
     Mat _layer_sizes,
   ) {
     return _ANN_MLP_SetLayerSizes(
@@ -597,13 +586,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetLayerSizesPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, Mat)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, Mat)>>(
           'ANN_MLP_SetLayerSizes');
-  late final _ANN_MLP_SetLayerSizes =
-      _ANN_MLP_SetLayerSizesPtr.asFunction<CvStatus Function(ANN_MLP, Mat)>();
+  late final _ANN_MLP_SetLayerSizes = _ANN_MLP_SetLayerSizesPtr.asFunction<
+      CvStatus Function(PtrANN_MLP, Mat)>();
 
   CvStatus ANN_MLP_SetRpropDW0(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetRpropDW0(
@@ -613,13 +602,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetRpropDW0Ptr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetRpropDW0');
-  late final _ANN_MLP_SetRpropDW0 =
-      _ANN_MLP_SetRpropDW0Ptr.asFunction<CvStatus Function(ANN_MLP, double)>();
+  late final _ANN_MLP_SetRpropDW0 = _ANN_MLP_SetRpropDW0Ptr.asFunction<
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetRpropDWMax(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetRpropDWMax(
@@ -629,13 +618,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetRpropDWMaxPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetRpropDWMax');
   late final _ANN_MLP_SetRpropDWMax = _ANN_MLP_SetRpropDWMaxPtr.asFunction<
-      CvStatus Function(ANN_MLP, double)>();
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetRpropDWMin(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetRpropDWMin(
@@ -645,13 +634,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetRpropDWMinPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetRpropDWMin');
   late final _ANN_MLP_SetRpropDWMin = _ANN_MLP_SetRpropDWMinPtr.asFunction<
-      CvStatus Function(ANN_MLP, double)>();
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetRpropDWMinus(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetRpropDWMinus(
@@ -661,13 +650,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetRpropDWMinusPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetRpropDWMinus');
   late final _ANN_MLP_SetRpropDWMinus = _ANN_MLP_SetRpropDWMinusPtr.asFunction<
-      CvStatus Function(ANN_MLP, double)>();
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetRpropDWPlus(
-    ANN_MLP self,
+    PtrANN_MLP self,
     double val,
   ) {
     return _ANN_MLP_SetRpropDWPlus(
@@ -677,13 +666,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetRpropDWPlusPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, ffi.Double)>>(
           'ANN_MLP_SetRpropDWPlus');
   late final _ANN_MLP_SetRpropDWPlus = _ANN_MLP_SetRpropDWPlusPtr.asFunction<
-      CvStatus Function(ANN_MLP, double)>();
+      CvStatus Function(PtrANN_MLP, double)>();
 
   CvStatus ANN_MLP_SetTermCriteria(
-    ANN_MLP self,
+    PtrANN_MLP self,
     TermCriteria val,
   ) {
     return _ANN_MLP_SetTermCriteria(
@@ -693,13 +682,13 @@ class CvNative {
   }
 
   late final _ANN_MLP_SetTermCriteriaPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ANN_MLP, TermCriteria)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrANN_MLP, TermCriteria)>>(
           'ANN_MLP_SetTermCriteria');
   late final _ANN_MLP_SetTermCriteria = _ANN_MLP_SetTermCriteriaPtr.asFunction<
-      CvStatus Function(ANN_MLP, TermCriteria)>();
+      CvStatus Function(PtrANN_MLP, TermCriteria)>();
 
   CvStatus ANN_MLP_SetTrainMethod(
-    ANN_MLP self,
+    PtrANN_MLP self,
     int method,
     double param1,
     double param2,
@@ -714,13 +703,13 @@ class CvNative {
 
   late final _ANN_MLP_SetTrainMethodPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, ffi.Int, ffi.Double,
+          CvStatus Function(PtrANN_MLP, ffi.Int, ffi.Double,
               ffi.Double)>>('ANN_MLP_SetTrainMethod');
   late final _ANN_MLP_SetTrainMethod = _ANN_MLP_SetTrainMethodPtr.asFunction<
-      CvStatus Function(ANN_MLP, int, double, double)>();
+      CvStatus Function(PtrANN_MLP, int, double, double)>();
 
   CvStatus ANN_MLP_Train(
-    ANN_MLP self,
+    PtrANN_MLP self,
     PtrTrainData trainData,
     int flags,
     ffi.Pointer<ffi.Bool> rval,
@@ -735,13 +724,14 @@ class CvNative {
 
   late final _ANN_MLP_TrainPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, PtrTrainData, ffi.Int,
+          CvStatus Function(PtrANN_MLP, PtrTrainData, ffi.Int,
               ffi.Pointer<ffi.Bool>)>>('ANN_MLP_Train');
   late final _ANN_MLP_Train = _ANN_MLP_TrainPtr.asFunction<
-      CvStatus Function(ANN_MLP, PtrTrainData, int, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(
+          PtrANN_MLP, PtrTrainData, int, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus ANN_MLP_Train_1(
-    ANN_MLP self,
+    PtrANN_MLP self,
     Mat samples,
     int layout,
     Mat responses,
@@ -758,10 +748,10 @@ class CvNative {
 
   late final _ANN_MLP_Train_1Ptr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ANN_MLP, Mat, ffi.Int, Mat,
+          CvStatus Function(PtrANN_MLP, Mat, ffi.Int, Mat,
               ffi.Pointer<ffi.Bool>)>>('ANN_MLP_Train_1');
   late final _ANN_MLP_Train_1 = _ANN_MLP_Train_1Ptr.asFunction<
-      CvStatus Function(ANN_MLP, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(PtrANN_MLP, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus AdaptiveThreshold(
     Mat src,
@@ -14503,7 +14493,7 @@ class CvNative {
       void Function(ffi.Pointer<PtrParamGrid>)>();
 
   CvStatus ParamGrid_Empty(
-    ffi.Pointer<ParamGrid> rval,
+    ffi.Pointer<PtrParamGrid> rval,
   ) {
     return _ParamGrid_Empty(
       rval,
@@ -14511,13 +14501,13 @@ class CvNative {
   }
 
   late final _ParamGrid_EmptyPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<ParamGrid>)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrParamGrid>)>>(
           'ParamGrid_Empty');
   late final _ParamGrid_Empty = _ParamGrid_EmptyPtr.asFunction<
-      CvStatus Function(ffi.Pointer<ParamGrid>)>();
+      CvStatus Function(ffi.Pointer<PtrParamGrid>)>();
 
   CvStatus ParamGrid_GetLogStep(
-    ParamGrid self,
+    PtrParamGrid self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ParamGrid_GetLogStep(
@@ -14529,12 +14519,12 @@ class CvNative {
   late final _ParamGrid_GetLogStepPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetLogStep');
+              PtrParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetLogStep');
   late final _ParamGrid_GetLogStep = _ParamGrid_GetLogStepPtr.asFunction<
-      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrParamGrid, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ParamGrid_GetMaxVal(
-    ParamGrid self,
+    PtrParamGrid self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ParamGrid_GetMaxVal(
@@ -14546,15 +14536,15 @@ class CvNative {
   late final _ParamGrid_GetMaxValPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetMaxVal');
+              PtrParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_GetMaxVal');
   late final _ParamGrid_GetMaxVal = _ParamGrid_GetMaxValPtr.asFunction<
-      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrParamGrid, ffi.Pointer<ffi.Double>)>();
 
   CvStatus ParamGrid_New(
     double minVal,
     double maxVal,
     double logstep,
-    ffi.Pointer<ParamGrid> rval,
+    ffi.Pointer<PtrParamGrid> rval,
   ) {
     return _ParamGrid_New(
       minVal,
@@ -14567,12 +14557,12 @@ class CvNative {
   late final _ParamGrid_NewPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(ffi.Double, ffi.Double, ffi.Double,
-              ffi.Pointer<ParamGrid>)>>('ParamGrid_New');
+              ffi.Pointer<PtrParamGrid>)>>('ParamGrid_New');
   late final _ParamGrid_New = _ParamGrid_NewPtr.asFunction<
-      CvStatus Function(double, double, double, ffi.Pointer<ParamGrid>)>();
+      CvStatus Function(double, double, double, ffi.Pointer<PtrParamGrid>)>();
 
   CvStatus ParamGrid_getMinVal(
-    ParamGrid self,
+    PtrParamGrid self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _ParamGrid_getMinVal(
@@ -14584,9 +14574,9 @@ class CvNative {
   late final _ParamGrid_getMinValPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              ParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_getMinVal');
+              PtrParamGrid, ffi.Pointer<ffi.Double>)>>('ParamGrid_getMinVal');
   late final _ParamGrid_getMinVal = _ParamGrid_getMinValPtr.asFunction<
-      CvStatus Function(ParamGrid, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrParamGrid, ffi.Pointer<ffi.Double>)>();
 
   CvStatus PencilSketch(
     Mat src,
@@ -16154,7 +16144,7 @@ class CvNative {
       CvStatus Function(SVMSGD, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_CalcError(
-    SVM self,
+    PtrSVM self,
     PtrTrainData data,
     bool test,
     Mat resp,
@@ -16171,14 +16161,14 @@ class CvNative {
 
   late final _SVM_CalcErrorPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(SVM, PtrTrainData, ffi.Bool, Mat,
+          CvStatus Function(PtrSVM, PtrTrainData, ffi.Bool, Mat,
               ffi.Pointer<ffi.Float>)>>('SVM_CalcError');
   late final _SVM_CalcError = _SVM_CalcErrorPtr.asFunction<
       CvStatus Function(
-          SVM, PtrTrainData, bool, Mat, ffi.Pointer<ffi.Float>)>();
+          PtrSVM, PtrTrainData, bool, Mat, ffi.Pointer<ffi.Float>)>();
 
   CvStatus SVM_Clear(
-    SVM self,
+    PtrSVM self,
   ) {
     return _SVM_Clear(
       self,
@@ -16186,8 +16176,8 @@ class CvNative {
   }
 
   late final _SVM_ClearPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM)>>('SVM_Clear');
-  late final _SVM_Clear = _SVM_ClearPtr.asFunction<CvStatus Function(SVM)>();
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM)>>('SVM_Clear');
+  late final _SVM_Clear = _SVM_ClearPtr.asFunction<CvStatus Function(PtrSVM)>();
 
   void SVM_Close(
     ffi.Pointer<PtrSVM> self,
@@ -16218,7 +16208,7 @@ class CvNative {
       _SVM_CreatePtr.asFunction<CvStatus Function(ffi.Pointer<PtrSVM>)>();
 
   CvStatus SVM_Empty(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Bool> rval,
   ) {
     return _SVM_Empty(
@@ -16228,29 +16218,13 @@ class CvNative {
   }
 
   late final _SVM_EmptyPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>>(
       'SVM_Empty');
-  late final _SVM_Empty =
-      _SVM_EmptyPtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
-
-  CvStatus SVM_Get(
-    PtrSVM self,
-    ffi.Pointer<SVM> rval,
-  ) {
-    return _SVM_Get(
-      self,
-      rval,
-    );
-  }
-
-  late final _SVM_GetPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<SVM>)>>(
-          'SVM_Get');
-  late final _SVM_Get =
-      _SVM_GetPtr.asFunction<CvStatus Function(PtrSVM, ffi.Pointer<SVM>)>();
+  late final _SVM_Empty = _SVM_EmptyPtr.asFunction<
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_GetC(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetC(
@@ -16260,13 +16234,13 @@ class CvNative {
   }
 
   late final _SVM_GetCPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetC');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetC');
   late final _SVM_GetC = _SVM_GetCPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetClassWeights(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<Mat> rval,
   ) {
     return _SVM_GetClassWeights(
@@ -16276,13 +16250,13 @@ class CvNative {
   }
 
   late final _SVM_GetClassWeightsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>>(
           'SVM_GetClassWeights');
   late final _SVM_GetClassWeights = _SVM_GetClassWeightsPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>();
 
   CvStatus SVM_GetCoef0(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetCoef0(
@@ -16292,13 +16266,13 @@ class CvNative {
   }
 
   late final _SVM_GetCoef0Ptr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetCoef0');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetCoef0');
   late final _SVM_GetCoef0 = _SVM_GetCoef0Ptr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetDecisionFunction(
-    SVM self,
+    PtrSVM self,
     int i,
     Mat alpha,
     Mat svidx,
@@ -16315,36 +16289,17 @@ class CvNative {
 
   late final _SVM_GetDecisionFunctionPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(SVM, ffi.Int, Mat, Mat,
+          CvStatus Function(PtrSVM, ffi.Int, Mat, Mat,
               ffi.Pointer<ffi.Double>)>>('SVM_GetDecisionFunction');
   late final _SVM_GetDecisionFunction = _SVM_GetDecisionFunctionPtr.asFunction<
-      CvStatus Function(SVM, int, Mat, Mat, ffi.Pointer<ffi.Double>)>();
-
-  CvStatus SVM_GetDefaultGrid(
-    SVM self,
-    int param_id,
-    ffi.Pointer<ParamGrid> rval,
-  ) {
-    return _SVM_GetDefaultGrid(
-      self,
-      param_id,
-      rval,
-    );
-  }
-
-  late final _SVM_GetDefaultGridPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              SVM, ffi.Int, ffi.Pointer<ParamGrid>)>>('SVM_GetDefaultGrid');
-  late final _SVM_GetDefaultGrid = _SVM_GetDefaultGridPtr.asFunction<
-      CvStatus Function(SVM, int, ffi.Pointer<ParamGrid>)>();
+      CvStatus Function(PtrSVM, int, Mat, Mat, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetDefaultGridPtr(
-    SVM self,
+    PtrSVM self,
     int param_id,
     ffi.Pointer<PtrParamGrid> rval,
   ) {
-    return _SVM_GetDefaultGridPtr1(
+    return _SVM_GetDefaultGridPtr(
       self,
       param_id,
       rval,
@@ -16353,13 +16308,13 @@ class CvNative {
 
   late final _SVM_GetDefaultGridPtrPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(SVM, ffi.Int,
+          CvStatus Function(PtrSVM, ffi.Int,
               ffi.Pointer<PtrParamGrid>)>>('SVM_GetDefaultGridPtr');
-  late final _SVM_GetDefaultGridPtr1 = _SVM_GetDefaultGridPtrPtr.asFunction<
-      CvStatus Function(SVM, int, ffi.Pointer<PtrParamGrid>)>();
+  late final _SVM_GetDefaultGridPtr = _SVM_GetDefaultGridPtrPtr.asFunction<
+      CvStatus Function(PtrSVM, int, ffi.Pointer<PtrParamGrid>)>();
 
   CvStatus SVM_GetDefaultName(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Char> rval,
   ) {
     return _SVM_GetDefaultName(
@@ -16369,13 +16324,13 @@ class CvNative {
   }
 
   late final _SVM_GetDefaultNamePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Char>)>>(
       'SVM_GetDefaultName');
   late final _SVM_GetDefaultName = _SVM_GetDefaultNamePtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Char>)>();
 
   CvStatus SVM_GetDegree(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetDegree(
@@ -16385,13 +16340,13 @@ class CvNative {
   }
 
   late final _SVM_GetDegreePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetDegree');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetDegree');
   late final _SVM_GetDegree = _SVM_GetDegreePtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetGamma(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetGamma(
@@ -16401,13 +16356,13 @@ class CvNative {
   }
 
   late final _SVM_GetGammaPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetGamma');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetGamma');
   late final _SVM_GetGamma = _SVM_GetGammaPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetKernelType(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _SVM_GetKernelType(
@@ -16416,14 +16371,14 @@ class CvNative {
     );
   }
 
-  late final _SVM_GetKernelTypePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
-          'SVM_GetKernelType');
+  late final _SVM_GetKernelTypePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>>(
+      'SVM_GetKernelType');
   late final _SVM_GetKernelType = _SVM_GetKernelTypePtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>();
 
   CvStatus SVM_GetNu(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetNu(
@@ -16433,13 +16388,13 @@ class CvNative {
   }
 
   late final _SVM_GetNuPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetNu');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetNu');
   late final _SVM_GetNu = _SVM_GetNuPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetP(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _SVM_GetP(
@@ -16449,13 +16404,13 @@ class CvNative {
   }
 
   late final _SVM_GetPPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>>(
-      'SVM_GetP');
+      ffi.NativeFunction<
+          CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>>('SVM_GetP');
   late final _SVM_GetP = _SVM_GetPPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Double>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Double>)>();
 
   CvStatus SVM_GetSupportVectors(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<Mat> rval,
   ) {
     return _SVM_GetSupportVectors(
@@ -16465,13 +16420,13 @@ class CvNative {
   }
 
   late final _SVM_GetSupportVectorsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>>(
           'SVM_GetSupportVectors');
   late final _SVM_GetSupportVectors = _SVM_GetSupportVectorsPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>();
 
   CvStatus SVM_GetTermCriteria(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<TermCriteria> rval,
   ) {
     return _SVM_GetTermCriteria(
@@ -16481,14 +16436,14 @@ class CvNative {
   }
 
   late final _SVM_GetTermCriteriaPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(SVM, ffi.Pointer<TermCriteria>)>>(
-      'SVM_GetTermCriteria');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrSVM, ffi.Pointer<TermCriteria>)>>('SVM_GetTermCriteria');
   late final _SVM_GetTermCriteria = _SVM_GetTermCriteriaPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<TermCriteria>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<TermCriteria>)>();
 
   CvStatus SVM_GetType(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _SVM_GetType(
@@ -16497,14 +16452,14 @@ class CvNative {
     );
   }
 
-  late final _SVM_GetTypePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
-          'SVM_GetType');
+  late final _SVM_GetTypePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>>(
+      'SVM_GetType');
   late final _SVM_GetType = _SVM_GetTypePtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>();
 
   CvStatus SVM_GetUncompressedSupportVectors(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<Mat> rval,
   ) {
     return _SVM_GetUncompressedSupportVectors(
@@ -16514,14 +16469,14 @@ class CvNative {
   }
 
   late final _SVM_GetUncompressedSupportVectorsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<Mat>)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>>(
           'SVM_GetUncompressedSupportVectors');
   late final _SVM_GetUncompressedSupportVectors =
       _SVM_GetUncompressedSupportVectorsPtr.asFunction<
-          CvStatus Function(SVM, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrSVM, ffi.Pointer<Mat>)>();
 
   CvStatus SVM_GetVarCount(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _SVM_GetVarCount(
@@ -16530,14 +16485,14 @@ class CvNative {
     );
   }
 
-  late final _SVM_GetVarCountPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>>(
-          'SVM_GetVarCount');
+  late final _SVM_GetVarCountPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>>(
+      'SVM_GetVarCount');
   late final _SVM_GetVarCount = _SVM_GetVarCountPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Int>)>();
 
   CvStatus SVM_IsClassifier(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Bool> rval,
   ) {
     return _SVM_IsClassifier(
@@ -16547,13 +16502,13 @@ class CvNative {
   }
 
   late final _SVM_IsClassifierPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>>(
       'SVM_IsClassifier');
   late final _SVM_IsClassifier = _SVM_IsClassifierPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_IsTrained(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Bool> rval,
   ) {
     return _SVM_IsTrained(
@@ -16563,48 +16518,50 @@ class CvNative {
   }
 
   late final _SVM_IsTrainedPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>>(
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>>(
       'SVM_IsTrained');
   late final _SVM_IsTrained = _SVM_IsTrainedPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_Load(
-    SVM self,
     ffi.Pointer<ffi.Char> filepath,
+    ffi.Pointer<PtrSVM> rval,
   ) {
     return _SVM_Load(
-      self,
       filepath,
+      rval,
     );
   }
 
   late final _SVM_LoadPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
-      'SVM_Load');
-  late final _SVM_Load =
-      _SVM_LoadPtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<PtrSVM>)>>('SVM_Load');
+  late final _SVM_Load = _SVM_LoadPtr.asFunction<
+      CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<PtrSVM>)>();
 
   CvStatus SVM_LoadFromString(
-    SVM self,
     ffi.Pointer<ffi.Char> strModel,
     ffi.Pointer<ffi.Char> objname,
+    ffi.Pointer<PtrSVM> rval,
   ) {
     return _SVM_LoadFromString(
-      self,
       strModel,
       objname,
+      rval,
     );
   }
 
   late final _SVM_LoadFromStringPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(SVM, ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>)>>('SVM_LoadFromString');
+          CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<PtrSVM>)>>('SVM_LoadFromString');
   late final _SVM_LoadFromString = _SVM_LoadFromStringPtr.asFunction<
-      CvStatus Function(SVM, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+      CvStatus Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<PtrSVM>)>();
 
   CvStatus SVM_Predict(
-    SVM self,
+    PtrSVM self,
     Mat samples,
     Mat results,
     int flags,
@@ -16621,13 +16578,13 @@ class CvNative {
 
   late final _SVM_PredictPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              SVM, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>)>>('SVM_Predict');
+          CvStatus Function(PtrSVM, Mat, Mat, ffi.Int,
+              ffi.Pointer<ffi.Float>)>>('SVM_Predict');
   late final _SVM_Predict = _SVM_PredictPtr.asFunction<
-      CvStatus Function(SVM, Mat, Mat, int, ffi.Pointer<ffi.Float>)>();
+      CvStatus Function(PtrSVM, Mat, Mat, int, ffi.Pointer<ffi.Float>)>();
 
   CvStatus SVM_Save(
-    SVM self,
+    PtrSVM self,
     ffi.Pointer<ffi.Char> filename,
   ) {
     return _SVM_Save(
@@ -16637,13 +16594,13 @@ class CvNative {
   }
 
   late final _SVM_SavePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>>(
+          ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Pointer<ffi.Char>)>>(
       'SVM_Save');
-  late final _SVM_Save =
-      _SVM_SavePtr.asFunction<CvStatus Function(SVM, ffi.Pointer<ffi.Char>)>();
+  late final _SVM_Save = _SVM_SavePtr.asFunction<
+      CvStatus Function(PtrSVM, ffi.Pointer<ffi.Char>)>();
 
   CvStatus SVM_SetC(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetC(
@@ -16653,13 +16610,13 @@ class CvNative {
   }
 
   late final _SVM_SetCPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetC');
   late final _SVM_SetC =
-      _SVM_SetCPtr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetCPtr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetClassWeights(
-    SVM self,
+    PtrSVM self,
     Mat val,
   ) {
     return _SVM_SetClassWeights(
@@ -16669,13 +16626,13 @@ class CvNative {
   }
 
   late final _SVM_SetClassWeightsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, Mat)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, Mat)>>(
           'SVM_SetClassWeights');
   late final _SVM_SetClassWeights =
-      _SVM_SetClassWeightsPtr.asFunction<CvStatus Function(SVM, Mat)>();
+      _SVM_SetClassWeightsPtr.asFunction<CvStatus Function(PtrSVM, Mat)>();
 
   CvStatus SVM_SetCoef0(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetCoef0(
@@ -16685,13 +16642,13 @@ class CvNative {
   }
 
   late final _SVM_SetCoef0Ptr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetCoef0');
   late final _SVM_SetCoef0 =
-      _SVM_SetCoef0Ptr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetCoef0Ptr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetDegree(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetDegree(
@@ -16701,13 +16658,13 @@ class CvNative {
   }
 
   late final _SVM_SetDegreePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetDegree');
   late final _SVM_SetDegree =
-      _SVM_SetDegreePtr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetDegreePtr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetGamma(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetGamma(
@@ -16717,13 +16674,13 @@ class CvNative {
   }
 
   late final _SVM_SetGammaPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetGamma');
   late final _SVM_SetGamma =
-      _SVM_SetGammaPtr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetGammaPtr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetKernel(
-    SVM self,
+    PtrSVM self,
     int kernelType,
   ) {
     return _SVM_SetKernel(
@@ -16733,13 +16690,13 @@ class CvNative {
   }
 
   late final _SVM_SetKernelPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Int)>>(
           'SVM_SetKernel');
   late final _SVM_SetKernel =
-      _SVM_SetKernelPtr.asFunction<CvStatus Function(SVM, int)>();
+      _SVM_SetKernelPtr.asFunction<CvStatus Function(PtrSVM, int)>();
 
   CvStatus SVM_SetNu(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetNu(
@@ -16749,13 +16706,13 @@ class CvNative {
   }
 
   late final _SVM_SetNuPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetNu');
   late final _SVM_SetNu =
-      _SVM_SetNuPtr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetNuPtr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetP(
-    SVM self,
+    PtrSVM self,
     double val,
   ) {
     return _SVM_SetP(
@@ -16765,13 +16722,13 @@ class CvNative {
   }
 
   late final _SVM_SetPPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Double)>>(
           'SVM_SetP');
   late final _SVM_SetP =
-      _SVM_SetPPtr.asFunction<CvStatus Function(SVM, double)>();
+      _SVM_SetPPtr.asFunction<CvStatus Function(PtrSVM, double)>();
 
   CvStatus SVM_SetTermCriteria(
-    SVM self,
+    PtrSVM self,
     TermCriteria val,
   ) {
     return _SVM_SetTermCriteria(
@@ -16781,13 +16738,13 @@ class CvNative {
   }
 
   late final _SVM_SetTermCriteriaPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, TermCriteria)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, TermCriteria)>>(
           'SVM_SetTermCriteria');
   late final _SVM_SetTermCriteria = _SVM_SetTermCriteriaPtr.asFunction<
-      CvStatus Function(SVM, TermCriteria)>();
+      CvStatus Function(PtrSVM, TermCriteria)>();
 
   CvStatus SVM_SetType(
-    SVM self,
+    PtrSVM self,
     int val,
   ) {
     return _SVM_SetType(
@@ -16797,13 +16754,13 @@ class CvNative {
   }
 
   late final _SVM_SetTypePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(SVM, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrSVM, ffi.Int)>>(
           'SVM_SetType');
   late final _SVM_SetType =
-      _SVM_SetTypePtr.asFunction<CvStatus Function(SVM, int)>();
+      _SVM_SetTypePtr.asFunction<CvStatus Function(PtrSVM, int)>();
 
   CvStatus SVM_Train(
-    SVM self,
+    PtrSVM self,
     PtrTrainData trainData,
     int flags,
     ffi.Pointer<ffi.Bool> rval,
@@ -16818,21 +16775,21 @@ class CvNative {
 
   late final _SVM_TrainPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              SVM, PtrTrainData, ffi.Int, ffi.Pointer<ffi.Bool>)>>('SVM_Train');
+          CvStatus Function(PtrSVM, PtrTrainData, ffi.Int,
+              ffi.Pointer<ffi.Bool>)>>('SVM_Train');
   late final _SVM_Train = _SVM_TrainPtr.asFunction<
-      CvStatus Function(SVM, PtrTrainData, int, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(PtrSVM, PtrTrainData, int, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_TrainAuto(
-    SVM self,
+    PtrSVM self,
     PtrTrainData data,
     int kFold,
-    ParamGrid Cgrid,
-    ParamGrid gammaGrid,
-    ParamGrid pGrid,
-    ParamGrid nuGrid,
-    ParamGrid coeffGrid,
-    ParamGrid degreeGrid,
+    PtrParamGrid Cgrid,
+    PtrParamGrid gammaGrid,
+    PtrParamGrid pGrid,
+    PtrParamGrid nuGrid,
+    PtrParamGrid coeffGrid,
+    PtrParamGrid degreeGrid,
     bool balanced,
     ffi.Pointer<ffi.Bool> rval,
   ) {
@@ -16854,23 +16811,33 @@ class CvNative {
   late final _SVM_TrainAutoPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              SVM,
+              PtrSVM,
               PtrTrainData,
               ffi.Int,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
-              ParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
+              PtrParamGrid,
               ffi.Bool,
               ffi.Pointer<ffi.Bool>)>>('SVM_TrainAuto');
   late final _SVM_TrainAuto = _SVM_TrainAutoPtr.asFunction<
-      CvStatus Function(SVM, PtrTrainData, int, ParamGrid, ParamGrid, ParamGrid,
-          ParamGrid, ParamGrid, ParamGrid, bool, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(
+          PtrSVM,
+          PtrTrainData,
+          int,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          PtrParamGrid,
+          bool,
+          ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_TrainAuto_1(
-    SVM self,
+    PtrSVM self,
     Mat samples,
     int layout,
     Mat responses,
@@ -16904,7 +16871,7 @@ class CvNative {
   late final _SVM_TrainAuto_1Ptr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              SVM,
+              PtrSVM,
               Mat,
               ffi.Int,
               Mat,
@@ -16919,7 +16886,7 @@ class CvNative {
               ffi.Pointer<ffi.Bool>)>>('SVM_TrainAuto_1');
   late final _SVM_TrainAuto_1 = _SVM_TrainAuto_1Ptr.asFunction<
       CvStatus Function(
-          SVM,
+          PtrSVM,
           Mat,
           int,
           Mat,
@@ -16934,7 +16901,7 @@ class CvNative {
           ffi.Pointer<ffi.Bool>)>();
 
   CvStatus SVM_Train_1(
-    SVM self,
+    PtrSVM self,
     Mat samples,
     int layout,
     Mat responses,
@@ -16951,10 +16918,10 @@ class CvNative {
 
   late final _SVM_Train_1Ptr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              SVM, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>)>>('SVM_Train_1');
+          CvStatus Function(PtrSVM, Mat, ffi.Int, Mat,
+              ffi.Pointer<ffi.Bool>)>>('SVM_Train_1');
   late final _SVM_Train_1 = _SVM_Train_1Ptr.asFunction<
-      CvStatus Function(SVM, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
+      CvStatus Function(PtrSVM, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus Scharr(
     Mat src,
@@ -17240,7 +17207,7 @@ class CvNative {
       _Stitcher_ClosePtr.asFunction<void Function(ffi.Pointer<PtrStitcher>)>();
 
   CvStatus Stitcher_Component(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<VecInt> rval,
   ) {
     return _Stitcher_Component(
@@ -17250,13 +17217,14 @@ class CvNative {
   }
 
   late final _Stitcher_ComponentPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<VecInt>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrStitcher, ffi.Pointer<VecInt>)>>(
       'Stitcher_Component');
   late final _Stitcher_Component = _Stitcher_ComponentPtr.asFunction<
-      CvStatus Function(Stitcher, ffi.Pointer<VecInt>)>();
+      CvStatus Function(PtrStitcher, ffi.Pointer<VecInt>)>();
 
   CvStatus Stitcher_ComposePanorama(
-    Stitcher self,
+    PtrStitcher self,
     Mat rpano,
     ffi.Pointer<ffi.Int> rval,
   ) {
@@ -17269,13 +17237,13 @@ class CvNative {
 
   late final _Stitcher_ComposePanoramaPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, Mat,
+          CvStatus Function(PtrStitcher, Mat,
               ffi.Pointer<ffi.Int>)>>('Stitcher_ComposePanorama');
   late final _Stitcher_ComposePanorama = _Stitcher_ComposePanoramaPtr
-      .asFunction<CvStatus Function(Stitcher, Mat, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrStitcher, Mat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_ComposePanorama_1(
-    Stitcher self,
+    PtrStitcher self,
     VecMat mats,
     Mat rpano,
     ffi.Pointer<ffi.Int> rval,
@@ -17290,11 +17258,11 @@ class CvNative {
 
   late final _Stitcher_ComposePanorama_1Ptr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, VecMat, Mat,
+          CvStatus Function(PtrStitcher, VecMat, Mat,
               ffi.Pointer<ffi.Int>)>>('Stitcher_ComposePanorama_1');
   late final _Stitcher_ComposePanorama_1 =
       _Stitcher_ComposePanorama_1Ptr.asFunction<
-          CvStatus Function(Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
+          CvStatus Function(PtrStitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_Create(
     int mode,
@@ -17314,7 +17282,7 @@ class CvNative {
       CvStatus Function(int, ffi.Pointer<PtrStitcher>)>();
 
   CvStatus Stitcher_EstimateTransform(
-    Stitcher self,
+    PtrStitcher self,
     VecMat mats,
     VecMat masks,
     ffi.Pointer<ffi.Int> rval,
@@ -17329,31 +17297,15 @@ class CvNative {
 
   late final _Stitcher_EstimateTransformPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, VecMat, VecMat,
+          CvStatus Function(PtrStitcher, VecMat, VecMat,
               ffi.Pointer<ffi.Int>)>>('Stitcher_EstimateTransform');
   late final _Stitcher_EstimateTransform =
       _Stitcher_EstimateTransformPtr.asFunction<
-          CvStatus Function(Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>)>();
-
-  CvStatus Stitcher_Get(
-    PtrStitcher self,
-    ffi.Pointer<Stitcher> rval,
-  ) {
-    return _Stitcher_Get(
-      self,
-      rval,
-    );
-  }
-
-  late final _Stitcher_GetPtr = _lookup<
-      ffi.NativeFunction<
           CvStatus Function(
-              PtrStitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
-  late final _Stitcher_Get = _Stitcher_GetPtr.asFunction<
-      CvStatus Function(PtrStitcher, ffi.Pointer<Stitcher>)>();
+              PtrStitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_GetCompositingResol(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _Stitcher_GetCompositingResol(
@@ -17364,13 +17316,13 @@ class CvNative {
 
   late final _Stitcher_GetCompositingResolPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher,
+          CvStatus Function(PtrStitcher,
               ffi.Pointer<ffi.Double>)>>('Stitcher_GetCompositingResol');
   late final _Stitcher_GetCompositingResol = _Stitcher_GetCompositingResolPtr
-      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+      .asFunction<CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Double>)>();
 
   CvStatus Stitcher_GetInterpolationFlags(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _Stitcher_GetInterpolationFlags(
@@ -17380,15 +17332,15 @@ class CvNative {
   }
 
   late final _Stitcher_GetInterpolationFlagsPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>(
-      'Stitcher_GetInterpolationFlags');
+      ffi.NativeFunction<
+          CvStatus Function(PtrStitcher,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_GetInterpolationFlags');
   late final _Stitcher_GetInterpolationFlags =
       _Stitcher_GetInterpolationFlagsPtr.asFunction<
-          CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+          CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_GetPanoConfidenceThresh(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _Stitcher_GetPanoConfidenceThresh(
@@ -17399,14 +17351,14 @@ class CvNative {
 
   late final _Stitcher_GetPanoConfidenceThreshPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher,
+          CvStatus Function(PtrStitcher,
               ffi.Pointer<ffi.Double>)>>('Stitcher_GetPanoConfidenceThresh');
   late final _Stitcher_GetPanoConfidenceThresh =
       _Stitcher_GetPanoConfidenceThreshPtr.asFunction<
-          CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+          CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Double>)>();
 
   CvStatus Stitcher_GetRegistrationResol(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _Stitcher_GetRegistrationResol(
@@ -17417,13 +17369,13 @@ class CvNative {
 
   late final _Stitcher_GetRegistrationResolPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher,
+          CvStatus Function(PtrStitcher,
               ffi.Pointer<ffi.Double>)>>('Stitcher_GetRegistrationResol');
   late final _Stitcher_GetRegistrationResol = _Stitcher_GetRegistrationResolPtr
-      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+      .asFunction<CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Double>)>();
 
   CvStatus Stitcher_GetSeamEstimationResol(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Double> rval,
   ) {
     return _Stitcher_GetSeamEstimationResol(
@@ -17434,14 +17386,14 @@ class CvNative {
 
   late final _Stitcher_GetSeamEstimationResolPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher,
+          CvStatus Function(PtrStitcher,
               ffi.Pointer<ffi.Double>)>>('Stitcher_GetSeamEstimationResol');
   late final _Stitcher_GetSeamEstimationResol =
       _Stitcher_GetSeamEstimationResolPtr.asFunction<
-          CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+          CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Double>)>();
 
   CvStatus Stitcher_GetWaveCorrectKind(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _Stitcher_GetWaveCorrectKind(
@@ -17451,14 +17403,14 @@ class CvNative {
   }
 
   late final _Stitcher_GetWaveCorrectKindPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>>(
-      'Stitcher_GetWaveCorrectKind');
+      ffi.NativeFunction<
+          CvStatus Function(PtrStitcher,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_GetWaveCorrectKind');
   late final _Stitcher_GetWaveCorrectKind = _Stitcher_GetWaveCorrectKindPtr
-      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_GetWaveCorrection(
-    Stitcher self,
+    PtrStitcher self,
     ffi.Pointer<ffi.Bool> rval,
   ) {
     return _Stitcher_GetWaveCorrection(
@@ -17468,14 +17420,14 @@ class CvNative {
   }
 
   late final _Stitcher_GetWaveCorrectionPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>>(
-      'Stitcher_GetWaveCorrection');
+      ffi.NativeFunction<
+          CvStatus Function(PtrStitcher,
+              ffi.Pointer<ffi.Bool>)>>('Stitcher_GetWaveCorrection');
   late final _Stitcher_GetWaveCorrection = _Stitcher_GetWaveCorrectionPtr
-      .asFunction<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>();
+      .asFunction<CvStatus Function(PtrStitcher, ffi.Pointer<ffi.Bool>)>();
 
   CvStatus Stitcher_SetCompositingResol(
-    Stitcher self,
+    PtrStitcher self,
     double inval,
   ) {
     return _Stitcher_SetCompositingResol(
@@ -17485,13 +17437,13 @@ class CvNative {
   }
 
   late final _Stitcher_SetCompositingResolPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Double)>>(
           'Stitcher_SetCompositingResol');
   late final _Stitcher_SetCompositingResol = _Stitcher_SetCompositingResolPtr
-      .asFunction<CvStatus Function(Stitcher, double)>();
+      .asFunction<CvStatus Function(PtrStitcher, double)>();
 
   CvStatus Stitcher_SetInterpolationFlags(
-    Stitcher self,
+    PtrStitcher self,
     int inval,
   ) {
     return _Stitcher_SetInterpolationFlags(
@@ -17501,14 +17453,14 @@ class CvNative {
   }
 
   late final _Stitcher_SetInterpolationFlagsPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Int)>>(
           'Stitcher_SetInterpolationFlags');
   late final _Stitcher_SetInterpolationFlags =
       _Stitcher_SetInterpolationFlagsPtr.asFunction<
-          CvStatus Function(Stitcher, int)>();
+          CvStatus Function(PtrStitcher, int)>();
 
   CvStatus Stitcher_SetPanoConfidenceThresh(
-    Stitcher self,
+    PtrStitcher self,
     double inval,
   ) {
     return _Stitcher_SetPanoConfidenceThresh(
@@ -17518,14 +17470,14 @@ class CvNative {
   }
 
   late final _Stitcher_SetPanoConfidenceThreshPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Double)>>(
           'Stitcher_SetPanoConfidenceThresh');
   late final _Stitcher_SetPanoConfidenceThresh =
       _Stitcher_SetPanoConfidenceThreshPtr.asFunction<
-          CvStatus Function(Stitcher, double)>();
+          CvStatus Function(PtrStitcher, double)>();
 
   CvStatus Stitcher_SetRegistrationResol(
-    Stitcher self,
+    PtrStitcher self,
     double inval,
   ) {
     return _Stitcher_SetRegistrationResol(
@@ -17535,13 +17487,13 @@ class CvNative {
   }
 
   late final _Stitcher_SetRegistrationResolPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Double)>>(
           'Stitcher_SetRegistrationResol');
   late final _Stitcher_SetRegistrationResol = _Stitcher_SetRegistrationResolPtr
-      .asFunction<CvStatus Function(Stitcher, double)>();
+      .asFunction<CvStatus Function(PtrStitcher, double)>();
 
   CvStatus Stitcher_SetSeamEstimationResol(
-    Stitcher self,
+    PtrStitcher self,
     double inval,
   ) {
     return _Stitcher_SetSeamEstimationResol(
@@ -17551,14 +17503,14 @@ class CvNative {
   }
 
   late final _Stitcher_SetSeamEstimationResolPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Double)>>(
           'Stitcher_SetSeamEstimationResol');
   late final _Stitcher_SetSeamEstimationResol =
       _Stitcher_SetSeamEstimationResolPtr.asFunction<
-          CvStatus Function(Stitcher, double)>();
+          CvStatus Function(PtrStitcher, double)>();
 
   CvStatus Stitcher_SetWaveCorrectKind(
-    Stitcher self,
+    PtrStitcher self,
     int inval,
   ) {
     return _Stitcher_SetWaveCorrectKind(
@@ -17568,13 +17520,13 @@ class CvNative {
   }
 
   late final _Stitcher_SetWaveCorrectKindPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Int)>>(
           'Stitcher_SetWaveCorrectKind');
   late final _Stitcher_SetWaveCorrectKind = _Stitcher_SetWaveCorrectKindPtr
-      .asFunction<CvStatus Function(Stitcher, int)>();
+      .asFunction<CvStatus Function(PtrStitcher, int)>();
 
   CvStatus Stitcher_SetWaveCorrection(
-    Stitcher self,
+    PtrStitcher self,
     bool inval,
   ) {
     return _Stitcher_SetWaveCorrection(
@@ -17584,13 +17536,13 @@ class CvNative {
   }
 
   late final _Stitcher_SetWaveCorrectionPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Stitcher, ffi.Bool)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrStitcher, ffi.Bool)>>(
           'Stitcher_SetWaveCorrection');
   late final _Stitcher_SetWaveCorrection = _Stitcher_SetWaveCorrectionPtr
-      .asFunction<CvStatus Function(Stitcher, bool)>();
+      .asFunction<CvStatus Function(PtrStitcher, bool)>();
 
   CvStatus Stitcher_Stitch(
-    Stitcher self,
+    PtrStitcher self,
     VecMat mats,
     Mat rpano,
     ffi.Pointer<ffi.Int> rval,
@@ -17605,13 +17557,13 @@ class CvNative {
 
   late final _Stitcher_StitchPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(
-              Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch');
+          CvStatus Function(PtrStitcher, VecMat, Mat,
+              ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch');
   late final _Stitcher_Stitch = _Stitcher_StitchPtr.asFunction<
-      CvStatus Function(Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrStitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stitcher_Stitch_1(
-    Stitcher self,
+    PtrStitcher self,
     VecMat mats,
     VecMat masks,
     Mat rpano,
@@ -17628,10 +17580,11 @@ class CvNative {
 
   late final _Stitcher_Stitch_1Ptr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Stitcher, VecMat, VecMat, Mat,
+          CvStatus Function(PtrStitcher, VecMat, VecMat, Mat,
               ffi.Pointer<ffi.Int>)>>('Stitcher_Stitch_1');
   late final _Stitcher_Stitch_1 = _Stitcher_Stitch_1Ptr.asFunction<
-      CvStatus Function(Stitcher, VecMat, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(
+          PtrStitcher, VecMat, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
 
   CvStatus Stylization(
     Mat src,
@@ -18020,92 +17973,6 @@ class CvNative {
   late final _Subdiv2D_SymEdge = _Subdiv2D_SymEdgePtr.asFunction<
       CvStatus Function(Subdiv2D, int, ffi.Pointer<ffi.Int>)>();
 
-  void TermCriteria_Close(
-    ffi.Pointer<TermCriteria> tc,
-  ) {
-    return _TermCriteria_Close(
-      tc,
-    );
-  }
-
-  late final _TermCriteria_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TermCriteria>)>>(
-          'TermCriteria_Close');
-  late final _TermCriteria_Close = _TermCriteria_ClosePtr.asFunction<
-      void Function(ffi.Pointer<TermCriteria>)>();
-
-  CvStatus TermCriteria_Epsilon(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Double> rval,
-  ) {
-    return _TermCriteria_Epsilon(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_EpsilonPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Double>)>>('TermCriteria_Epsilon');
-  late final _TermCriteria_Epsilon = _TermCriteria_EpsilonPtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Double>)>();
-
-  CvStatus TermCriteria_MaxCount(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _TermCriteria_MaxCount(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_MaxCountPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Int>)>>('TermCriteria_MaxCount');
-  late final _TermCriteria_MaxCount = _TermCriteria_MaxCountPtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>();
-
-  CvStatus TermCriteria_New(
-    int typ,
-    int maxCount,
-    double epsilon,
-    ffi.Pointer<TermCriteria> rval,
-  ) {
-    return _TermCriteria_New(
-      typ,
-      maxCount,
-      epsilon,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_NewPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(ffi.Int, ffi.Int, ffi.Double,
-              ffi.Pointer<TermCriteria>)>>('TermCriteria_New');
-  late final _TermCriteria_New = _TermCriteria_NewPtr.asFunction<
-      CvStatus Function(int, int, double, ffi.Pointer<TermCriteria>)>();
-
-  CvStatus TermCriteria_Type(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _TermCriteria_Type(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_TypePtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Int>)>>('TermCriteria_Type');
-  late final _TermCriteria_Type = _TermCriteria_TypePtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>();
-
   CvStatus TextureFlattening(
     Mat src,
     Mat mask,
@@ -18420,7 +18287,7 @@ class CvNative {
       CvStatus Function(ffi.Pointer<PtrTrainData>, ffi.Pointer<TrainData>)>();
 
   CvStatus TrainData_GetCatCount(
-    TrainData self,
+    PtrTrainData self,
     int vi,
     ffi.Pointer<ffi.Int> rval,
   ) {
@@ -18433,13 +18300,13 @@ class CvNative {
 
   late final _TrainData_GetCatCountPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(TrainData, ffi.Int,
+          CvStatus Function(PtrTrainData, ffi.Int,
               ffi.Pointer<ffi.Int>)>>('TrainData_GetCatCount');
   late final _TrainData_GetCatCount = _TrainData_GetCatCountPtr.asFunction<
-      CvStatus Function(TrainData, int, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrTrainData, int, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetCatMap(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetCatMap(
@@ -18449,13 +18316,14 @@ class CvNative {
   }
 
   late final _TrainData_GetCatMapPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetCatMap');
   late final _TrainData_GetCatMap = _TrainData_GetCatMapPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetCatOfs(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetCatOfs(
@@ -18465,13 +18333,14 @@ class CvNative {
   }
 
   late final _TrainData_GetCatOfsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetCatOfs');
   late final _TrainData_GetCatOfs = _TrainData_GetCatOfsPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetClassLabels(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetClassLabels(
@@ -18481,13 +18350,14 @@ class CvNative {
   }
 
   late final _TrainData_GetClassLabelsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetClassLabels');
   late final _TrainData_GetClassLabels = _TrainData_GetClassLabelsPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetDefaultSubstValues(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetDefaultSubstValues(
@@ -18497,14 +18367,15 @@ class CvNative {
   }
 
   late final _TrainData_GetDefaultSubstValuesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetDefaultSubstValues');
   late final _TrainData_GetDefaultSubstValues =
       _TrainData_GetDefaultSubstValuesPtr.asFunction<
-          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetLayout(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetLayout(
@@ -18514,14 +18385,14 @@ class CvNative {
   }
 
   late final _TrainData_GetLayoutPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetLayout');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrTrainData, ffi.Pointer<ffi.Int>)>>('TrainData_GetLayout');
   late final _TrainData_GetLayout = _TrainData_GetLayoutPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetMissing(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetMissing(
@@ -18531,13 +18402,14 @@ class CvNative {
   }
 
   late final _TrainData_GetMissingPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetMissing');
   late final _TrainData_GetMissing = _TrainData_GetMissingPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetNAllVars(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetNAllVars(
@@ -18547,14 +18419,14 @@ class CvNative {
   }
 
   late final _TrainData_GetNAllVarsPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetNAllVars');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrTrainData, ffi.Pointer<ffi.Int>)>>('TrainData_GetNAllVars');
   late final _TrainData_GetNAllVars = _TrainData_GetNAllVarsPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetNSamples(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetNSamples(
@@ -18564,14 +18436,14 @@ class CvNative {
   }
 
   late final _TrainData_GetNSamplesPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetNSamples');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrTrainData, ffi.Pointer<ffi.Int>)>>('TrainData_GetNSamples');
   late final _TrainData_GetNSamples = _TrainData_GetNSamplesPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetNTestSamples(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetNTestSamples(
@@ -18581,14 +18453,14 @@ class CvNative {
   }
 
   late final _TrainData_GetNTestSamplesPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetNTestSamples');
+      ffi.NativeFunction<
+          CvStatus Function(PtrTrainData,
+              ffi.Pointer<ffi.Int>)>>('TrainData_GetNTestSamples');
   late final _TrainData_GetNTestSamples = _TrainData_GetNTestSamplesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetNTrainSamples(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetNTrainSamples(
@@ -18598,14 +18470,14 @@ class CvNative {
   }
 
   late final _TrainData_GetNTrainSamplesPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetNTrainSamples');
+      ffi.NativeFunction<
+          CvStatus Function(PtrTrainData,
+              ffi.Pointer<ffi.Int>)>>('TrainData_GetNTrainSamples');
   late final _TrainData_GetNTrainSamples = _TrainData_GetNTrainSamplesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetNVars(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetNVars(
@@ -18615,14 +18487,14 @@ class CvNative {
   }
 
   late final _TrainData_GetNVarsPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetNVars');
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrTrainData, ffi.Pointer<ffi.Int>)>>('TrainData_GetNVars');
   late final _TrainData_GetNVars = _TrainData_GetNVarsPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetNames(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<VecVecChar> names,
   ) {
     return _TrainData_GetNames(
@@ -18634,12 +18506,12 @@ class CvNative {
   late final _TrainData_GetNamesPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              TrainData, ffi.Pointer<VecVecChar>)>>('TrainData_GetNames');
+              PtrTrainData, ffi.Pointer<VecVecChar>)>>('TrainData_GetNames');
   late final _TrainData_GetNames = _TrainData_GetNamesPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<VecVecChar>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<VecVecChar>)>();
 
   CvStatus TrainData_GetNormCatResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetNormCatResponses(
@@ -18649,13 +18521,36 @@ class CvNative {
   }
 
   late final _TrainData_GetNormCatResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetNormCatResponses');
   late final _TrainData_GetNormCatResponses = _TrainData_GetNormCatResponsesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
+
+  CvStatus TrainData_GetNormCatValues(
+    PtrTrainData self,
+    int vi,
+    Mat sidx,
+    ffi.Pointer<VecInt> values,
+  ) {
+    return _TrainData_GetNormCatValues(
+      self,
+      vi,
+      sidx,
+      values,
+    );
+  }
+
+  late final _TrainData_GetNormCatValuesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrTrainData, ffi.Int, Mat,
+              ffi.Pointer<VecInt>)>>('TrainData_GetNormCatValues');
+  late final _TrainData_GetNormCatValues =
+      _TrainData_GetNormCatValuesPtr.asFunction<
+          CvStatus Function(PtrTrainData, int, Mat, ffi.Pointer<VecInt>)>();
 
   CvStatus TrainData_GetResponseType(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _TrainData_GetResponseType(
@@ -18665,14 +18560,14 @@ class CvNative {
   }
 
   late final _TrainData_GetResponseTypePtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>>(
-      'TrainData_GetResponseType');
+      ffi.NativeFunction<
+          CvStatus Function(PtrTrainData,
+              ffi.Pointer<ffi.Int>)>>('TrainData_GetResponseType');
   late final _TrainData_GetResponseType = _TrainData_GetResponseTypePtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<ffi.Int>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<ffi.Int>)>();
 
   CvStatus TrainData_GetResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetResponses(
@@ -18682,16 +18577,17 @@ class CvNative {
   }
 
   late final _TrainData_GetResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetResponses');
   late final _TrainData_GetResponses = _TrainData_GetResponsesPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetSample(
-    TrainData self,
+    PtrTrainData self,
     Mat varIdx,
     int sidx,
-    ffi.Pointer<ffi.Float> buf,
+    ffi.Pointer<VecFloat> buf,
   ) {
     return _TrainData_GetSample(
       self,
@@ -18703,13 +18599,13 @@ class CvNative {
 
   late final _TrainData_GetSamplePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(TrainData, Mat, ffi.Int,
-              ffi.Pointer<ffi.Float>)>>('TrainData_GetSample');
+          CvStatus Function(PtrTrainData, Mat, ffi.Int,
+              ffi.Pointer<VecFloat>)>>('TrainData_GetSample');
   late final _TrainData_GetSample = _TrainData_GetSamplePtr.asFunction<
-      CvStatus Function(TrainData, Mat, int, ffi.Pointer<ffi.Float>)>();
+      CvStatus Function(PtrTrainData, Mat, int, ffi.Pointer<VecFloat>)>();
 
   CvStatus TrainData_GetSampleWeights(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetSampleWeights(
@@ -18719,13 +18615,14 @@ class CvNative {
   }
 
   late final _TrainData_GetSampleWeightsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetSampleWeights');
   late final _TrainData_GetSampleWeights = _TrainData_GetSampleWeightsPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetSamples(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetSamples(
@@ -18735,10 +18632,11 @@ class CvNative {
   }
 
   late final _TrainData_GetSamplesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetSamples');
   late final _TrainData_GetSamples = _TrainData_GetSamplesPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetSubMatrix(
     Mat matrix,
@@ -18780,7 +18678,7 @@ class CvNative {
       CvStatus Function(Mat, Mat, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTestNormCatResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTestNormCatResponses(
@@ -18790,14 +18688,15 @@ class CvNative {
   }
 
   late final _TrainData_GetTestNormCatResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTestNormCatResponses');
   late final _TrainData_GetTestNormCatResponses =
       _TrainData_GetTestNormCatResponsesPtr.asFunction<
-          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTestResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTestResponses(
@@ -18807,13 +18706,14 @@ class CvNative {
   }
 
   late final _TrainData_GetTestResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTestResponses');
   late final _TrainData_GetTestResponses = _TrainData_GetTestResponsesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTestSampleIdx(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTestSampleIdx(
@@ -18823,13 +18723,14 @@ class CvNative {
   }
 
   late final _TrainData_GetTestSampleIdxPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTestSampleIdx');
   late final _TrainData_GetTestSampleIdx = _TrainData_GetTestSampleIdxPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTestSampleWeights(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTestSampleWeights(
@@ -18839,14 +18740,15 @@ class CvNative {
   }
 
   late final _TrainData_GetTestSampleWeightsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTestSampleWeights');
   late final _TrainData_GetTestSampleWeights =
       _TrainData_GetTestSampleWeightsPtr.asFunction<
-          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTestSamples(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTestSamples(
@@ -18856,13 +18758,14 @@ class CvNative {
   }
 
   late final _TrainData_GetTestSamplesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTestSamples');
   late final _TrainData_GetTestSamples = _TrainData_GetTestSamplesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTrainNormCatResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTrainNormCatResponses(
@@ -18872,14 +18775,15 @@ class CvNative {
   }
 
   late final _TrainData_GetTrainNormCatResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTrainNormCatResponses');
   late final _TrainData_GetTrainNormCatResponses =
       _TrainData_GetTrainNormCatResponsesPtr.asFunction<
-          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTrainResponses(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTrainResponses(
@@ -18889,13 +18793,14 @@ class CvNative {
   }
 
   late final _TrainData_GetTrainResponsesPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTrainResponses');
   late final _TrainData_GetTrainResponses = _TrainData_GetTrainResponsesPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTrainSampleIdx(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTrainSampleIdx(
@@ -18905,13 +18810,14 @@ class CvNative {
   }
 
   late final _TrainData_GetTrainSampleIdxPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTrainSampleIdx');
   late final _TrainData_GetTrainSampleIdx = _TrainData_GetTrainSampleIdxPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTrainSampleWeights(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetTrainSampleWeights(
@@ -18921,14 +18827,15 @@ class CvNative {
   }
 
   late final _TrainData_GetTrainSampleWeightsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetTrainSampleWeights');
   late final _TrainData_GetTrainSampleWeights =
       _TrainData_GetTrainSampleWeightsPtr.asFunction<
-          CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetTrainSamples(
-    TrainData self,
+    PtrTrainData self,
     int layout,
     bool compressSamples,
     bool compressVars,
@@ -18945,17 +18852,17 @@ class CvNative {
 
   late final _TrainData_GetTrainSamplesPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(TrainData, ffi.Int, ffi.Bool, ffi.Bool,
+          CvStatus Function(PtrTrainData, ffi.Int, ffi.Bool, ffi.Bool,
               ffi.Pointer<Mat>)>>('TrainData_GetTrainSamples');
   late final _TrainData_GetTrainSamples =
       _TrainData_GetTrainSamplesPtr.asFunction<
-          CvStatus Function(TrainData, int, bool, bool, ffi.Pointer<Mat>)>();
+          CvStatus Function(PtrTrainData, int, bool, bool, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetValues(
-    TrainData self,
+    PtrTrainData self,
     int vi,
     Mat sidx,
-    ffi.Pointer<ffi.Float> values,
+    ffi.Pointer<VecFloat> values,
   ) {
     return _TrainData_GetValues(
       self,
@@ -18967,13 +18874,13 @@ class CvNative {
 
   late final _TrainData_GetValuesPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(TrainData, ffi.Int, Mat,
-              ffi.Pointer<ffi.Float>)>>('TrainData_GetValues');
+          CvStatus Function(PtrTrainData, ffi.Int, Mat,
+              ffi.Pointer<VecFloat>)>>('TrainData_GetValues');
   late final _TrainData_GetValues = _TrainData_GetValuesPtr.asFunction<
-      CvStatus Function(TrainData, int, Mat, ffi.Pointer<ffi.Float>)>();
+      CvStatus Function(PtrTrainData, int, Mat, ffi.Pointer<VecFloat>)>();
 
   CvStatus TrainData_GetVarIdx(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetVarIdx(
@@ -18983,13 +18890,14 @@ class CvNative {
   }
 
   late final _TrainData_GetVarIdxPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetVarIdx');
   late final _TrainData_GetVarIdx = _TrainData_GetVarIdxPtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetVarSymbolFlags(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetVarSymbolFlags(
@@ -18999,13 +18907,14 @@ class CvNative {
   }
 
   late final _TrainData_GetVarSymbolFlagsPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetVarSymbolFlags');
   late final _TrainData_GetVarSymbolFlags = _TrainData_GetVarSymbolFlagsPtr
-      .asFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      .asFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_GetVarType(
-    TrainData self,
+    PtrTrainData self,
     ffi.Pointer<Mat> rval,
   ) {
     return _TrainData_GetVarType(
@@ -19015,10 +18924,11 @@ class CvNative {
   }
 
   late final _TrainData_GetVarTypePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Pointer<Mat>)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>>(
       'TrainData_GetVarType');
   late final _TrainData_GetVarType = _TrainData_GetVarTypePtr.asFunction<
-      CvStatus Function(TrainData, ffi.Pointer<Mat>)>();
+      CvStatus Function(PtrTrainData, ffi.Pointer<Mat>)>();
 
   CvStatus TrainData_LoadFromCSV(
     ffi.Pointer<ffi.Char> filename,
@@ -19072,7 +18982,7 @@ class CvNative {
       CvStatus Function(ffi.Pointer<ffi.Float>)>();
 
   CvStatus TrainData_SetTrainTestSplit(
-    TrainData self,
+    PtrTrainData self,
     int count,
     bool shuffle,
   ) {
@@ -19084,13 +18994,14 @@ class CvNative {
   }
 
   late final _TrainData_SetTrainTestSplitPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(TrainData, ffi.Int, ffi.Bool)>>(
+          ffi
+          .NativeFunction<CvStatus Function(PtrTrainData, ffi.Int, ffi.Bool)>>(
       'TrainData_SetTrainTestSplit');
   late final _TrainData_SetTrainTestSplit = _TrainData_SetTrainTestSplitPtr
-      .asFunction<CvStatus Function(TrainData, int, bool)>();
+      .asFunction<CvStatus Function(PtrTrainData, int, bool)>();
 
   CvStatus TrainData_SetTrainTestSplitRatio(
-    TrainData self,
+    PtrTrainData self,
     double ratio,
     bool shuffle,
   ) {
@@ -19102,15 +19013,15 @@ class CvNative {
   }
 
   late final _TrainData_SetTrainTestSplitRatioPtr = _lookup<
-          ffi
-          .NativeFunction<CvStatus Function(TrainData, ffi.Double, ffi.Bool)>>(
-      'TrainData_SetTrainTestSplitRatio');
+      ffi.NativeFunction<
+          CvStatus Function(PtrTrainData, ffi.Double,
+              ffi.Bool)>>('TrainData_SetTrainTestSplitRatio');
   late final _TrainData_SetTrainTestSplitRatio =
       _TrainData_SetTrainTestSplitRatioPtr.asFunction<
-          CvStatus Function(TrainData, double, bool)>();
+          CvStatus Function(PtrTrainData, double, bool)>();
 
   CvStatus TrainData_ShuffleTrainTest(
-    TrainData self,
+    PtrTrainData self,
   ) {
     return _TrainData_ShuffleTrainTest(
       self,
@@ -19118,10 +19029,10 @@ class CvNative {
   }
 
   late final _TrainData_ShuffleTrainTestPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(TrainData)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrTrainData)>>(
           'TrainData_ShuffleTrainTest');
-  late final _TrainData_ShuffleTrainTest =
-      _TrainData_ShuffleTrainTestPtr.asFunction<CvStatus Function(TrainData)>();
+  late final _TrainData_ShuffleTrainTest = _TrainData_ShuffleTrainTestPtr
+      .asFunction<CvStatus Function(PtrTrainData)>();
 
   CvStatus Undistort(
     Mat src,
@@ -22495,8 +22406,6 @@ class _SymbolAddresses {
       get Stitcher_Close => _library._Stitcher_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>
       get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TermCriteria>)>>
-      get TermCriteria_Close => _library._TermCriteria_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>
       get TrackerMIL_Close => _library._TrackerMIL_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrTrainData>)>>
@@ -22550,12 +22459,6 @@ final class AKAZE extends ffi.Struct {
 }
 
 typedef AKAZEPtr = ffi.Pointer<AKAZE>;
-
-final class ANN_MLP extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
-
-typedef ANN_MLPPtr = ffi.Pointer<ANN_MLP>;
 
 final class AgastFeatureDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -22886,13 +22789,6 @@ final class NO_USE_AKAZEPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_ANN_MLPPtr extends ffi.Struct {
-  external ffi.Pointer<ANN_MLPPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_AgastFeatureDetectorPtr extends ffi.Struct {
   external ffi.Pointer<AgastFeatureDetectorPtr> p;
 }
@@ -23117,13 +23013,6 @@ final class NO_USE_ORBPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_ParamGridPtr extends ffi.Struct {
-  external ffi.Pointer<ParamGridPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_PtrANN_MLPPtr extends ffi.Struct {
   external ffi.Pointer<PtrANN_MLPPtr> p;
 }
@@ -23168,6 +23057,13 @@ final class NO_USE_PtrLogisticRegressionPtr extends ffi.Struct {
 /// so here we confirm they are included                                                                    \
 final class NO_USE_PtrNormalBayesClassifierPtr extends ffi.Struct {
   external ffi.Pointer<PtrNormalBayesClassifierPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrParamGridPtr extends ffi.Struct {
+  external ffi.Pointer<PtrParamGridPtr> p;
 }
 
 /// \
@@ -23236,13 +23132,6 @@ final class NO_USE_SIFTPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_SVMPtr extends ffi.Struct {
-  external ffi.Pointer<SVMPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_SVMSGDPtr extends ffi.Struct {
   external ffi.Pointer<SVMSGDPtr> p;
 }
@@ -23257,22 +23146,8 @@ final class NO_USE_SimpleBlobDetectorPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_StitcherPtr extends ffi.Struct {
-  external ffi.Pointer<StitcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_Subdiv2DPtr extends ffi.Struct {
   external ffi.Pointer<Subdiv2DPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TermCriteriaPtr extends ffi.Struct {
-  external ffi.Pointer<TermCriteriaPtr> p;
 }
 
 /// \
@@ -23461,12 +23336,6 @@ final class ORB extends ffi.Struct {
 
 typedef ORBPtr = ffi.Pointer<ORB>;
 
-final class ParamGrid extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
-
-typedef ParamGridPtr = ffi.Pointer<ParamGrid>;
-
 final class Point extends ffi.Struct {
   @ffi.Int()
   external int x;
@@ -23539,6 +23408,8 @@ typedef PtrNormalBayesClassifierPtr = ffi.Pointer<PtrNormalBayesClassifier>;
 final class PtrParamGrid extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
+
+typedef PtrParamGridPtr = ffi.Pointer<PtrParamGrid>;
 
 final class PtrRTrees extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
@@ -23643,12 +23514,6 @@ const int STITCHING_PANORAMA = 0;
 
 const int STITCHING_SCANS = 1;
 
-final class SVM extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
-
-typedef SVMPtr = ffi.Pointer<SVM>;
-
 final class SVMSGD extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -23750,12 +23615,6 @@ final class Size2f extends ffi.Struct {
   external double height;
 }
 
-final class Stitcher extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
-
-typedef StitcherPtr = ffi.Pointer<Stitcher>;
-
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -23763,10 +23622,15 @@ final class Subdiv2D extends ffi.Struct {
 typedef Subdiv2DPtr = ffi.Pointer<Subdiv2D>;
 
 final class TermCriteria extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
+  @ffi.Int()
+  external int type;
 
-typedef TermCriteriaPtr = ffi.Pointer<TermCriteria>;
+  @ffi.Int()
+  external int maxCount;
+
+  @ffi.Double()
+  external double epsilon;
+}
 
 final class Tracker extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

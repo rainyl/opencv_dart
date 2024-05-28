@@ -7,6 +7,7 @@
 */
 
 #include "calib3d.h"
+#include "opencv2/core/types.hpp"
 
 CvStatus Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d)
 {
@@ -66,7 +67,8 @@ CvStatus GetOptimalNewCameraMatrixWithParams(Mat cameraMatrix, Mat distCoeffs, S
 CvStatus CalibrateCamera(VecVecPoint3f objectPoints, VecVecPoint2f imagePoints, Size imageSize, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs, int flag, TermCriteria criteria, double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::calibrateCamera(*objectPoints.ptr, *imagePoints.ptr, cv::Size(imageSize.width, imageSize.height), *cameraMatrix.ptr, *distCoeffs.ptr, *rvecs.ptr, *tvecs.ptr, flag, *criteria.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::calibrateCamera(*objectPoints.ptr, *imagePoints.ptr, cv::Size(imageSize.width, imageSize.height), *cameraMatrix.ptr, *distCoeffs.ptr, *rvecs.ptr, *tvecs.ptr, flag, tc);
   END_WRAP
 }
 
@@ -80,7 +82,8 @@ CvStatus Undistort(Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCa
 CvStatus UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat r, Mat p, TermCriteria criteria)
 {
   BEGIN_WRAP
-  cv::undistortPoints(*distorted.ptr, *undistorted.ptr, *k.ptr, *d.ptr, *r.ptr, *p.ptr, *criteria.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  cv::undistortPoints(*distorted.ptr, *undistorted.ptr, *k.ptr, *d.ptr, *r.ptr, *p.ptr, tc);
   END_WRAP
 }
 

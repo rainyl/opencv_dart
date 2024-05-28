@@ -37,6 +37,10 @@ export 'imgproc/imgproc.dart';
 export 'imgproc/clahe.dart';
 export 'imgproc/subdiv2d.dart';
 
+export 'ml/ann_mlp.dart';
+export 'ml/svm.dart';
+export 'ml/train_data.dart';
+
 export 'objdetect/objdetect.dart';
 export 'photo/photo.dart';
 export 'svd/svd.dart';

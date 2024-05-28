@@ -674,7 +674,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts,
+      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
           flags, centers!.ref, p),
     );
     return p.value;
@@ -699,8 +699,8 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref,
-          attempts, flags, centers!.ref, p),
+      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
+          flags, centers!.ref, p),
     );
     return p.value;
   });
