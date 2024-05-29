@@ -114,9 +114,9 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
   @override
   KeyPoint operator [](int idx) {
     return cvRunArena<KeyPoint>((arena) {
-      final p = arena<cvg.KeyPoint>();
+      final p = calloc<cvg.KeyPoint>();
       cvRun(() => CFFI.VecKeyPoint_At(ptr, idx, p));
-      return KeyPoint.fromNative(p.ref);
+      return KeyPoint.fromPointer(p);
     });
   }
 }

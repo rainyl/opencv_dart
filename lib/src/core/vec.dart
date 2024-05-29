@@ -172,12 +172,14 @@ class VecUCharIterator extends VecIterator<int> {
 }
 
 class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
-  VecChar._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecChar._(this.ptr, [bool attach = false]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
   factory VecChar([int length = 0, int value = 0]) =>
       VecChar.fromList(List.generate(length, (i) => value));
-  factory VecChar.fromPointer(cvg.VecCharPtr ptr) => VecChar._(ptr);
+  factory VecChar.fromPointer(cvg.VecCharPtr ptr, [bool attach = false]) => VecChar._(ptr, attach);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
     cvRun(() => CFFI.VecChar_NewFromVec(ptr, p));
@@ -286,12 +288,13 @@ class VecVecCharIterator extends VecIterator<VecChar> {
         return len;
       });
 
+  /// return the reference
   @override
   VecChar operator [](int idx) {
     return cvRunArena<VecChar>((arena) {
-      final p = arena<cvg.VecChar>();
+      final p = calloc<cvg.VecChar>();
       cvRun(() => CFFI.VecVecChar_At(ptr, idx, p));
-      final vec = VecChar.fromVec(p.ref);
+      final vec = VecChar.fromPointer(p);
       return vec;
     });
   }

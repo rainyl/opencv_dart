@@ -20,6 +20,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
     return Scalar._(p);
   }
   factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);
+  factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr) => Scalar._(ptr);
   factory Scalar.all(double val) => Scalar(val, val, val, val);
   factory Scalar.default_() => Scalar(0.0, 0.0, 0.0, 0.0);
   factory Scalar.fromRgb(int r, int g, int b) {

@@ -13746,92 +13746,6 @@ class CvNative {
   late final _Subdiv2D_SymEdge = _Subdiv2D_SymEdgePtr.asFunction<
       CvStatus Function(Subdiv2D, int, ffi.Pointer<ffi.Int>)>();
 
-  void TermCriteria_Close(
-    ffi.Pointer<TermCriteria> tc,
-  ) {
-    return _TermCriteria_Close(
-      tc,
-    );
-  }
-
-  late final _TermCriteria_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TermCriteria>)>>(
-          'TermCriteria_Close');
-  late final _TermCriteria_Close = _TermCriteria_ClosePtr.asFunction<
-      void Function(ffi.Pointer<TermCriteria>)>();
-
-  CvStatus TermCriteria_Epsilon(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Double> rval,
-  ) {
-    return _TermCriteria_Epsilon(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_EpsilonPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Double>)>>('TermCriteria_Epsilon');
-  late final _TermCriteria_Epsilon = _TermCriteria_EpsilonPtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Double>)>();
-
-  CvStatus TermCriteria_MaxCount(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _TermCriteria_MaxCount(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_MaxCountPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Int>)>>('TermCriteria_MaxCount');
-  late final _TermCriteria_MaxCount = _TermCriteria_MaxCountPtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>();
-
-  CvStatus TermCriteria_New(
-    int typ,
-    int maxCount,
-    double epsilon,
-    ffi.Pointer<TermCriteria> rval,
-  ) {
-    return _TermCriteria_New(
-      typ,
-      maxCount,
-      epsilon,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_NewPtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(ffi.Int, ffi.Int, ffi.Double,
-              ffi.Pointer<TermCriteria>)>>('TermCriteria_New');
-  late final _TermCriteria_New = _TermCriteria_NewPtr.asFunction<
-      CvStatus Function(int, int, double, ffi.Pointer<TermCriteria>)>();
-
-  CvStatus TermCriteria_Type(
-    TermCriteria tc,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _TermCriteria_Type(
-      tc,
-      rval,
-    );
-  }
-
-  late final _TermCriteria_TypePtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              TermCriteria, ffi.Pointer<ffi.Int>)>>('TermCriteria_Type');
-  late final _TermCriteria_Type = _TermCriteria_TypePtr.asFunction<
-      CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>();
-
   CvStatus TextureFlattening(
     Mat src,
     Mat mask,
@@ -17429,8 +17343,6 @@ class _SymbolAddresses {
       get Stitcher_Close => _library._Stitcher_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>
       get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TermCriteria>)>>
-      get TermCriteria_Close => _library._TermCriteria_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>
       get TrackerMIL_Close => _library._TrackerMIL_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecChar>)>>
@@ -18014,13 +17926,6 @@ final class NO_USE_Subdiv2DPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_TermCriteriaPtr extends ffi.Struct {
-  external ffi.Pointer<TermCriteriaPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerGOTURNPtr extends ffi.Struct {
   external ffi.Pointer<TrackerGOTURNPtr> p;
 }
@@ -18399,10 +18304,15 @@ final class Subdiv2D extends ffi.Struct {
 typedef Subdiv2DPtr = ffi.Pointer<Subdiv2D>;
 
 final class TermCriteria extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
+  @ffi.Int()
+  external int type;
 
-typedef TermCriteriaPtr = ffi.Pointer<TermCriteria>;
+  @ffi.Int()
+  external int maxCount;
+
+  @ffi.Double()
+  external double epsilon;
+}
 
 final class Tracker extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

@@ -5,31 +5,6 @@
 #include <stdio.h>
 #include <vector>
 
-TEST(TermCriteria, New_Close)
-{
-  int    typ = cv::TermCriteria::COUNT;
-  int    maxCount = 10;
-  double epsilon = 0.001;
-
-  CvStatus     s;
-  TermCriteria tc;
-  s = TermCriteria_New(typ, maxCount, epsilon, &tc);
-  ASSERT_EQ(s.code, 0);
-  ASSERT_NE(tc.ptr, nullptr);
-
-  int    type, max_count;
-  double eps;
-  s = TermCriteria_Type(tc, &type);
-  EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(type, typ);
-  s = TermCriteria_MaxCount(tc, &max_count);
-  EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(maxCount, maxCount);
-  s = TermCriteria_Epsilon(tc, &eps);
-  EXPECT_EQ(s.code, 0);
-  EXPECT_EQ(eps, epsilon);
-}
-
 TEST(Mat, New_Close)
 {
   Mat     *mat = (Mat *)malloc(sizeof(Mat));

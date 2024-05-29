@@ -177,11 +177,9 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a7fed80561a9b46a1a924ac6cb334ac85
   VecInt get component {
-    return using<VecInt>((arena) {
-      final rptr = arena<cvg.VecInt>();
-      cvRun(() => CFFI.Stitcher_Component(stitcher, rptr));
-      return VecInt.fromVec(rptr.ref);
-    });
+    final rptr = calloc<cvg.VecInt>();
+    cvRun(() => CFFI.Stitcher_Component(stitcher, rptr));
+    return VecInt.fromPointer(rptr);
   }
 
   static final finalizer = OcvFinalizer<cvg.PtrStitcherPtr>(CFFI.addresses.Stitcher_Close);

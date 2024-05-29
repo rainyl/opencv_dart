@@ -91,9 +91,9 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   @override
   DMatch operator [](int idx) {
     return cvRunArena<DMatch>((arena) {
-      final p = arena<cvg.DMatch>();
+      final p = calloc<cvg.DMatch>();
       cvRun(() => CFFI.VecDMatch_At(ptr, idx, p));
-      return DMatch.fromNative(p.ref);
+      return DMatch.fromPointer(p);
     });
   }
 }
@@ -144,9 +144,9 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
   @override
   VecDMatch operator [](int idx) {
     return cvRunArena<VecDMatch>((arena) {
-      final p = arena<cvg.VecDMatch>();
+      final p = calloc<cvg.VecDMatch>();
       cvRun(() => CFFI.VecVecDMatch_At(ptr, idx, p));
-      final vec = VecDMatch.fromVec(p.ref);
+      final vec = VecDMatch.fromPointer(p);
       return vec;
     });
   }

@@ -85,8 +85,10 @@ class Point3f extends CvStruct<cvg.Point3f> {
 }
 
 class VecPoint extends Vec<Point> implements CvStruct<cvg.VecPoint> {
-  VecPoint._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecPoint._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
 
   factory VecPoint([int length = 0, int x = 0, int y = 0]) {
@@ -104,7 +106,8 @@ class VecPoint extends Vec<Point> implements CvStruct<cvg.VecPoint> {
     });
   }
 
-  factory VecPoint.fromPointer(cvg.VecPointPtr ptr) => VecPoint._(ptr);
+  factory VecPoint.fromPointer(cvg.VecPointPtr ptr, [bool attach = true]) =>
+      VecPoint._(ptr, attach);
 
   /// Copy data from [cvg.VecPoint.ptr]
   factory VecPoint.fromVec(cvg.VecPoint ptr) {
@@ -170,8 +173,10 @@ class VecPointIterator extends VecIterator<Point> {
 }
 
 class VecPoint2f extends Vec<Point2f> implements CvStruct<cvg.VecPoint2f> {
-  VecPoint2f._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecPoint2f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
   factory VecPoint2f([int length = 0, double x = 0, double y = 0]) {
     return cvRunArena<VecPoint2f>((arena) {
@@ -187,7 +192,8 @@ class VecPoint2f extends Vec<Point2f> implements CvStruct<cvg.VecPoint2f> {
       return VecPoint2f._(pp);
     });
   }
-  factory VecPoint2f.fromPointer(cvg.VecPoint2fPtr ptr) => VecPoint2f._(ptr);
+  factory VecPoint2f.fromPointer(cvg.VecPoint2fPtr ptr, [bool attach = true]) =>
+      VecPoint2f._(ptr, attach);
   factory VecPoint2f.fromVec(cvg.VecPoint2f ptr) {
     final p = calloc<cvg.VecPoint2f>();
     cvRun(() => CFFI.VecPoint2f_NewFromVec(ptr, p));
@@ -244,8 +250,10 @@ class VecPoint2fIterator extends VecIterator<Point2f> {
 }
 
 class VecPoint3f extends Vec<Point3f> implements CvStruct<cvg.VecPoint3f> {
-  VecPoint3f._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecPoint3f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
   factory VecPoint3f([int length = 0, double x = 0, double y = 0, double z = 0]) {
     return cvRunArena<VecPoint3f>((arena) {
@@ -262,7 +270,8 @@ class VecPoint3f extends Vec<Point3f> implements CvStruct<cvg.VecPoint3f> {
       return VecPoint3f._(pp);
     });
   }
-  factory VecPoint3f.fromPointer(cvg.VecPoint3fPtr ptr) => VecPoint3f._(ptr);
+  factory VecPoint3f.fromPointer(cvg.VecPoint3fPtr ptr, [bool attach = true]) =>
+      VecPoint3f._(ptr, attach);
   factory VecPoint3f.fromVec(cvg.VecPoint3f ptr) {
     final p = calloc<cvg.VecPoint3f>();
     cvRun(() => CFFI.VecPoint3f_NewFromVec(ptr, p));
@@ -320,10 +329,13 @@ class VecPoint3fIterator extends VecIterator<Point3f> {
 
 // VecVecPoint
 class VecVecPoint extends Vec<VecPoint> implements CvStruct<cvg.VecVecPoint> {
-  VecVecPoint._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecVecPoint._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
-  factory VecVecPoint.fromPointer(cvg.VecVecPointPtr ptr) => VecVecPoint._(ptr);
+  factory VecVecPoint.fromPointer(cvg.VecVecPointPtr ptr, [bool attach = true]) =>
+      VecVecPoint._(ptr, attach);
   factory VecVecPoint.fromVec(cvg.VecVecPoint ptr) {
     final p = calloc<cvg.VecVecPoint>();
     cvRun(() => CFFI.VecVecPoint_NewFromVec(ptr, p));
@@ -365,22 +377,26 @@ class VecVecPointIterator extends VecIterator<VecPoint> {
         },
       );
 
+  /// return the reference
   @override
   VecPoint operator [](int idx) {
     return cvRunArena<VecPoint>((arena) {
-      final p = arena<cvg.VecPoint>();
+      final p = calloc<cvg.VecPoint>();
       cvRun(() => CFFI.VecVecPoint_At(ptr, idx, p));
-      final vec = VecPoint.fromVec(p.ref);
+      final vec = VecPoint.fromPointer(p, false);
       return vec;
     });
   }
 }
 
 class VecVecPoint2f extends Vec<Vec<Point2f>> implements CvStruct<cvg.VecVecPoint2f> {
-  VecVecPoint2f._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecVecPoint2f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
-  factory VecVecPoint2f.fromPointer(cvg.VecVecPoint2fPtr ptr) => VecVecPoint2f._(ptr);
+  factory VecVecPoint2f.fromPointer(cvg.VecVecPoint2fPtr ptr, [bool attach = true]) =>
+      VecVecPoint2f._(ptr, attach);
   factory VecVecPoint2f.fromVec(cvg.VecVecPoint2f ptr) {
     final p = calloc<cvg.VecVecPoint2f>();
     cvRun(() => CFFI.VecVecPoint2f_NewFromVec(ptr, p));
@@ -420,22 +436,27 @@ class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
         return len;
       });
 
+  /// return the reference
   @override
   VecPoint2f operator [](int idx) {
     return cvRunArena<VecPoint2f>((arena) {
-      final p = arena<cvg.VecPoint2f>();
+      final p = calloc<cvg.VecPoint2f>();
       cvRun(() => CFFI.VecVecPoint2f_At(ptr, idx, p));
-      final vec = VecPoint2f.fromVec(p.ref);
+      final vec = VecPoint2f.fromPointer(p, false);
       return vec;
     });
   }
 }
 
 class VecVecPoint3f extends Vec<Vec<Point3f>> implements CvStruct<cvg.VecVecPoint3f> {
-  VecVecPoint3f._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecVecPoint3f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast());
+    }
   }
-  factory VecVecPoint3f.fromPointer(cvg.VecVecPoint3fPtr ptr) => VecVecPoint3f._(ptr);
+
+  factory VecVecPoint3f.fromPointer(cvg.VecVecPoint3fPtr ptr, [bool attach = true]) =>
+      VecVecPoint3f._(ptr, attach);
   factory VecVecPoint3f.fromVec(cvg.VecVecPoint3f ptr) {
     final p = calloc<cvg.VecVecPoint3f>();
     cvRun(() => CFFI.VecVecPoint3f_NewFromVec(ptr, p));
@@ -475,12 +496,13 @@ class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
         return len;
       });
 
+  /// return the reference
   @override
   VecPoint3f operator [](int idx) {
     return cvRunArena<VecPoint3f>((arena) {
-      final p = arena<cvg.VecPoint3f>();
+      final p = calloc<cvg.VecPoint3f>();
       cvRun(() => CFFI.VecVecPoint3f_At(ptr, idx, p));
-      final vec = VecPoint3f.fromVec(p.ref);
+      final vec = VecPoint3f.fromPointer(p, false);
       return vec;
     });
   }

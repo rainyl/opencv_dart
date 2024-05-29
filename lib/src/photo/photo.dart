@@ -45,11 +45,9 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
   Mat process(VecMat src) {
-    return using<Mat>((arena) {
-      final dst = Mat.empty();
-      CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
-      return dst.convertTo(MatType.CV_8UC3, alpha: 255.0, beta: 0.0);
-    });
+    final dst = Mat.empty();
+    CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
+    return dst.convertTo(MatType.CV_8UC3, alpha: 255.0, beta: 0.0);
   }
 
   @override
@@ -103,11 +101,9 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
 
   VecMat process(VecMat src) {
-    return using<VecMat>((arena) {
-      final dst = arena<cvg.VecMat>();
-      CFFI.AlignMTB_Process(ref, src.ref, dst);
-      return VecMat.fromVec(dst.ref);
-    });
+    final dst = calloc<cvg.VecMat>();
+    CFFI.AlignMTB_Process(ref, src.ref, dst);
+    return VecMat.fromPointer(dst);
   }
 
   @override

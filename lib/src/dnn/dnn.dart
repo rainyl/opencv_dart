@@ -21,16 +21,19 @@ class Layer extends CvStruct<cvg.Layer> {
   Layer._(cvg.LayerPtr ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
+
+  @Deprecated("Use [Layer.fromPointer] instead.")
   factory Layer.fromNative(cvg.LayerPtr ptr) => Layer._(ptr);
+  factory Layer.fromPointer(cvg.LayerPtr ptr) => Layer._(ptr);
 
   static final finalizer = OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
 
   /// GetName returns name for this layer.
   String get name {
     return cvRunArena<String>((arena) {
-      final p = arena<cvg.VecChar>();
+      final p = calloc<cvg.VecChar>();
       cvRun(() => CFFI.Layer_GetName(ref, p));
-      final vec = VecChar.fromVec(p.ref);
+      final vec = VecChar.fromPointer(p);
       return vec.asString();
     });
   }
@@ -38,9 +41,9 @@ class Layer extends CvStruct<cvg.Layer> {
   /// GetType returns type for this layer.
   String get type {
     return cvRunArena<String>((arena) {
-      final p = arena<cvg.VecChar>();
+      final p = calloc<cvg.VecChar>();
       cvRun(() => CFFI.Layer_GetType(ref, p));
-      final vec = VecChar.fromVec(p.ref);
+      final vec = VecChar.fromPointer(p);
       return vec.asString();
     });
   }
@@ -320,9 +323,9 @@ class Net extends CvStruct<cvg.Net> {
   VecMat forwardLayers(List<String> names) {
     return cvRunArena<VecMat>((arena) {
       final vecName = names.i8;
-      final vecMat = arena<cvg.VecMat>();
+      final vecMat = calloc<cvg.VecMat>();
       cvRun(() => CFFI.Net_ForwardLayers(ref, vecMat, vecName.ref));
-      return VecMat.fromVec(vecMat.ref);
+      return VecMat.fromPointer(vecMat);
     });
   }
 
@@ -347,7 +350,7 @@ class Net extends CvStruct<cvg.Net> {
   Layer getLayer(int index) {
     final p = calloc<cvg.Layer>();
     cvRun(() => CFFI.Net_GetLayer(ref, index, p));
-    final layer = Layer.fromNative(p);
+    final layer = Layer.fromPointer(p);
     return layer;
   }
 
@@ -356,12 +359,10 @@ class Net extends CvStruct<cvg.Net> {
   /// For furtherdetails, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae8be9806024a0d1d41aba687cce99e6b
   List<String> getLayerNames() {
-    return using<List<String>>((arena) {
-      final cNames = arena<cvg.VecVecChar>();
-      cvRun(() => CFFI.Net_GetLayerNames(ref, cNames));
-      final vec = VecVecChar.fromVec(cNames.ref);
-      return vec.asStringList();
-    });
+    final cNames = calloc<cvg.VecVecChar>();
+    cvRun(() => CFFI.Net_GetLayerNames(ref, cNames));
+    final vec = VecVecChar.fromPointer(cNames);
+    return vec.asStringList();
   }
 
   /// GetPerfProfile returns overall time for inference and timings (in ticks) for layers
@@ -382,9 +383,9 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae62a73984f62c49fd3e8e689405b056a
   List<int> getUnconnectedOutLayers() {
     return using<List<int>>((arena) {
-      final ids = arena<cvg.VecInt>();
+      final ids = calloc<cvg.VecInt>();
       cvRun(() => CFFI.Net_GetUnconnectedOutLayers(ref, ids));
-      return VecInt.fromVec(ids.ref).toList();
+      return VecInt.fromPointer(ids).toList();
     });
   }
 
@@ -392,12 +393,12 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
   (List<double>, List<int>) getInputDetails() {
     return using<(List<double>, List<int>)>((arena) {
-      final sc = arena<cvg.VecFloat>();
-      final zp = arena<cvg.VecInt>();
+      final sc = calloc<cvg.VecFloat>();
+      final zp = calloc<cvg.VecInt>();
       cvRun(() => CFFI.Net_GetInputDetails(ref, sc, zp));
       return (
-        VecFloat.fromVec(sc.ref).toList(),
-        VecInt.fromVec(zp.ref).toList(),
+        VecFloat.fromPointer(sc).toList(),
+        VecInt.fromPointer(zp).toList(),
       );
     });
   }
@@ -484,11 +485,9 @@ Mat blobFromImages(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d6/d0f/group__dnn.html#ga4051b5fa2ed5f54b76c059a8625df9f5
 List<Mat> imagesFromBlob(Mat blob) {
-  return using<List<Mat>>((arena) {
-    final mats = arena<cvg.VecMat>();
-    cvRun(() => CFFI.Net_ImagesFromBlob(blob.ref, mats));
-    return VecMat.fromVec(mats.ref).toList();
-  });
+  final mats = calloc<cvg.VecMat>();
+  cvRun(() => CFFI.Net_ImagesFromBlob(blob.ref, mats));
+  return VecMat.fromPointer(mats).toList();
 }
 
 /// GetBlobChannel extracts a single (2d)channel from a 4 dimensional blob structure
@@ -496,20 +495,16 @@ List<Mat> imagesFromBlob(Mat blob) {
 ///
 ///	a bones structure from pose detection, or a color plane from Colorization)
 Mat getBlobChannel(Mat blob, int imgidx, int chnidx) {
-  return using<Mat>((arena) {
-    final m = Mat.empty();
-    cvRun(() => CFFI.Net_GetBlobChannel(blob.ref, imgidx, chnidx, m.ptr));
-    return m;
-  });
+  final m = Mat.empty();
+  cvRun(() => CFFI.Net_GetBlobChannel(blob.ref, imgidx, chnidx, m.ptr));
+  return m;
 }
 
 /// GetBlobSize retrieves the 4 dimensional size information in (N,C,H,W) order
 Scalar getBlobSize(Mat blob) {
-  return using<Scalar>((arena) {
-    final s = arena<cvg.Scalar>();
-    cvRun(() => CFFI.Net_GetBlobSize(blob.ref, s));
-    return Scalar.fromNative(s.ref);
-  });
+  final s = calloc<cvg.Scalar>();
+  cvRun(() => CFFI.Net_GetBlobSize(blob.ref, s));
+  return Scalar.fromPointer(s);
 }
 
 /// NMSBoxes performs non maximum suppression given boxes and corresponding scores.
@@ -524,20 +519,17 @@ List<int> NMSBoxes(
   double eta = 1.0,
   int topK = 0,
 }) {
-  return using<List<int>>((arena) {
-    // final indices = arena<cvg.VecInt>();
-    final indices = VecInt();
-    CFFI.NMSBoxesWithParams(
-      bboxes.ref,
-      scores.ref,
-      scoreThreshold,
-      nmsThreshold,
-      indices.ptr,
-      eta,
-      topK,
-    );
-    return indices.toList();
-  });
+  final indices = calloc<cvg.VecInt>();
+  CFFI.NMSBoxesWithParams(
+    bboxes.ref,
+    scores.ref,
+    scoreThreshold,
+    nmsThreshold,
+    indices,
+    eta,
+    topK,
+  );
+  return VecInt.fromPointer(indices).toList();
 }
 
 // Constants

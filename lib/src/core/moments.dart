@@ -8,6 +8,8 @@ class Moments extends CvStruct<cvg.Moment> {
   Moments._(ffi.Pointer<cvg.Moment> ptr) : super.fromPointer(ptr) {
     finalizer.attach(this, ptr.cast());
   }
+
+  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr) => Moments._(ptr);
   factory Moments.fromNative(cvg.Moment m) {
     final p = calloc<cvg.Moment>()
       ..ref.m00 = m.m00

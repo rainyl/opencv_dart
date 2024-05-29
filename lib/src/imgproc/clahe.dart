@@ -43,7 +43,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
 
   double get clipLimit {
     return cvRunArena<double>((arena) {
-      final p = arena<cvg.double_t>();
+      final p = arena<ffi.Double>();
       cvRun(() => CFFI.CLAHE_GetClipLimit(ref, p));
       return p.value;
     });
