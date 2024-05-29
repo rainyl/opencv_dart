@@ -7,11 +7,33 @@ cmake_minimum_required(VERSION 3.10)
 set(PROJECT_NAME "opencv_dart")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
+# Define default architecture
+set(OPENCV_DART_ARCH "x64")
+
+# Print messages
+message(STATUS "Auto-selected architecture: ${OPENCV_DART_ARCH}")
+message(STATUS "Running setup with architecture: ${OPENCV_DART_ARCH}")
+
+# Get the parent directory of the current working directory
+get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
+
+# Run Dart command
+find_program(DART_PATH dart)
+message(STATUS "${PROJECT_NAME} using dart from: ${DART_PATH}")
+execute_process(
+  COMMAND ${DART_PATH} run opencv_dart:setup linux --arch ${OPENCV_DART_ARCH}
+  TIMEOUT 120
+  WORKING_DIRECTORY ${PARENT_DIR}
+)
+
 # Invoke the build for native code shared with the other target platforms.
 # This can be changed to accommodate different builds.
 # add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
 file(GLOB opencv_dart_libs "${CMAKE_CURRENT_SOURCE_DIR}/*.so")
+if(NOT opencv_dart_libs)
+  message(FATAL_ERROR "${PROJECT_NAME} setup failed: not found any .so in ${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an

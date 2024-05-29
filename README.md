@@ -12,7 +12,18 @@ OpenCV Bindings for Dart Language.
 </p>
 
 > [!IMPORTANT]
-> Please use v0.3.0 and later version, usage:
+> Please use `v0.3.0` and later version
+>
+> For `v1.0.5` and later, setup is no longer needed, the prebuilt libs will be downloaded from releases
+> automatically, some notes:
+>
+> 1. iOS: default target architecture is `arm64`, if you need to run on `x64`(ios simulator), please
+> set `OPENCV_DART_ARCH` to `x64`, e.g., `export OPENCV_DART_ARCH=x64`
+> 2. Android: all supported ABIs (`x86_64` `arm64-v8a` `armeabi-v7a`) will be downloaded, if you want
+> to reduce the app size, please add `--split-per-abi` to the `flutter build` command, e.g., `flutter build apk --release --target-platform android-arm64,android-x64 --split-per-abi`, otherwise, all `.so` will
+> be packaged to app.
+>
+> For `v1.0.4` and below, make sure run the following setup commands before running your app:
 >
 > 1. `flutter pub add opencv_dart` or `dart pub add opencv_dart`
 > 2. `dart run opencv_dart:setup <platform> --arch <arch>`
@@ -148,7 +159,7 @@ void main() {
 
 #### Flutter
 
-see [example](https://github.com/rainyl/opencv_dart/tree/native-assets/example)
+see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
 More examples are on the way...
 
