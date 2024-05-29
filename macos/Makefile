@@ -1,6 +1,6 @@
 # Define the platform and architecture
 PLATFORM := $(shell uname)
-ARCH := $(shell uname -m)
+OPENCV_DART_ARCH := $(shell uname -m)
 
 # MacOS specific architectures
 MACOS_ARCHS := x64 arm64
@@ -20,12 +20,12 @@ SETUP_CMD := cd $(PARENT_DIR) && $(DART_CMD)
 setup:
 ifeq ($(PLATFORM),Darwin)
 	@echo "Detected macOS platform"
-ifeq ($(call check_in_list,$(ARCH),$(MACOS_ARCHS)),)
-	@echo "Unsupported architecture for macOS: $(ARCH)"
+ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(MACOS_ARCHS)),)
+	@echo "Unsupported architecture for macOS: $(OPENCV_DART_ARCH)"
 	@exit 1
 else
-	@echo "Running setup for macOS with architecture: $(ARCH)"
-	@$(SETUP_CMD) macos --arch $(ARCH)
+	@echo "Running setup for macOS with architecture: $(OPENCV_DART_ARCH)"
+	@$(SETUP_CMD) macos --arch $(OPENCV_DART_ARCH)
 endif
 else
 	@echo "This setup only runs on macOS"

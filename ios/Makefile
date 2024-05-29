@@ -1,5 +1,5 @@
 # Define the platform and architecture
-ARCH ?= arm64  # Default architecture is arm64 if not specified
+OPENCV_DART_ARCH ?= arm64  # Default architecture is arm64 if not specified
 VALID_ARCHS := x64 arm64
 
 # Dart command
@@ -15,12 +15,12 @@ SETUP_CMD := cd $(PARENT_DIR) && $(DART_CMD)
 .PHONY: setup
 
 setup:
-	@echo "Auto-selected architecture: $(ARCH)"
-	@echo "You can override this by setting the ARCH environment variable. Valid options: x64, arm64"
-ifeq ($(call check_in_list,$(ARCH),$(VALID_ARCHS)),)
-	@echo "Unsupported architecture: $(ARCH). Valid options are: x64, arm64"
+	@echo "Auto-selected architecture: $(OPENCV_DART_ARCH)"
+	@echo "You can override this by setting the OPENCV_DART_ARCH environment variable. Valid options: x64, arm64"
+ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(VALID_ARCHS)),)
+	@echo "Unsupported architecture: $(OPENCV_DART_ARCH). Valid options are: x64, arm64"
 	@exit 1
 else
-	@echo "Running setup with architecture: $(ARCH)"
-	@$(SETUP_CMD) ios --arch $(ARCH)
+	@echo "Running setup with architecture: $(OPENCV_DART_ARCH)"
+	@$(SETUP_CMD) ios --arch $(OPENCV_DART_ARCH)
 endif
