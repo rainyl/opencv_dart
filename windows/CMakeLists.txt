@@ -9,11 +9,11 @@ set(PROJECT_NAME "opencv_dart")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Define default architecture
-set(ARCH "x64")
+set(OPENCV_DART_ARCH "x64")
 
 # Print messages
-message(STATUS "Auto-selected architecture: ${ARCH}")
-message(STATUS "Running setup with architecture: ${ARCH}")
+message(STATUS "Auto-selected architecture: ${OPENCV_DART_ARCH}")
+message(STATUS "Running setup with architecture: ${OPENCV_DART_ARCH}")
 
 # Get the parent directory of the current working directory
 get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
@@ -22,7 +22,7 @@ get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 find_program(DART_PATH dart.bat)
 
 execute_process(
-  COMMAND ${DART_PATH} run opencv_dart:setup windows -a ${ARCH}
+  COMMAND ${DART_PATH} run opencv_dart:setup windows -a ${OPENCV_DART_ARCH}
   TIMEOUT 120
   WORKING_DIRECTORY ${PARENT_DIR}
 )
