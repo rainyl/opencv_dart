@@ -1,0 +1,77 @@
+name: build examples
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-windows:
+    name: build-windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build
+        run: |
+          cd example
+          flutter build windows
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+  build-ubuntu:
+    name: build-ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build
+        run: |
+          cd example
+          flutter build linux
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+  build-macos:
+    name: build-macos
+    runs-on: macos-13
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build
+        run: |
+          cd example
+          flutter build macos
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+          flutter build ios --release --no-codesign
+  build-macos-arm:
+    name: build-macos
+    runs-on: macos-14
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build
+        run: |
+          cd example
+          flutter build macos
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+          flutter build ios --release --no-codesign

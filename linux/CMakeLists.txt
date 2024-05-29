@@ -32,7 +32,7 @@ execute_process(
 
 file(GLOB opencv_dart_libs "${CMAKE_CURRENT_SOURCE_DIR}/*.so")
 if(NOT opencv_dart_libs)
-  message(FATAL_ERROR "${PROJECT_NAME} setup failed: not found any dll in ${CMAKE_CURRENT_SOURCE_DIR}")
+  message(FATAL_ERROR "${PROJECT_NAME} setup failed: not found any .so in ${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
 # List of absolute paths to libraries that should be bundled with the plugin.
