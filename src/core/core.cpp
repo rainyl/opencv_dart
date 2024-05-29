@@ -1,6 +1,5 @@
 #include "core.h"
 #include "lut.hpp"
-#include <iostream>
 #include <vector>
 
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
@@ -32,32 +31,6 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval)
   *rval = {rr.x, rr.y, rr.width, rr.height};
   END_WRAP
 }
-
-CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval)
-{
-  BEGIN_WRAP
-  *rval = {new cv::TermCriteria(typ, maxCount, epsilon)};
-  END_WRAP
-}
-CvStatus TermCriteria_Type(TermCriteria tc, int *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->type;
-  END_WRAP
-}
-CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->maxCount;
-  END_WRAP
-}
-CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->epsilon;
-  END_WRAP
-}
-void TermCriteria_Close(TermCriteria *tc){CVD_FREE(tc)}
 
 CvStatus Mat_New(Mat *rval)
 {
@@ -1778,14 +1751,16 @@ CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int atte
                 double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
 CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
                       Mat centers, double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
 CvStatus Rotate(Mat src, Mat dst, int rotateCode)

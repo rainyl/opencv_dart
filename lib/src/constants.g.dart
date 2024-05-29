@@ -2090,3 +2090,17 @@ const int CALIB_ZERO_DISPARITY = 1024;
 const int CALIB_USE_LU = 131072;
 
 const int CALIB_USE_EXTRINSIC_GUESS = 4194304;
+
+const int VAR_NUMERICAL = 0;
+
+const int VAR_ORDERED = 0;
+
+const int VAR_CATEGORICAL = 1;
+
+const int TEST_ERROR = 0;
+
+const int TRAIN_ERROR = 1;
+
+const int ROW_SAMPLE = 0;
+
+const int COL_SAMPLE = 1;

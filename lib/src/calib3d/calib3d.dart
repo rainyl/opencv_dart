@@ -10,8 +10,8 @@ import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
-import '../core/termcriteria.dart';
 import '../constants.g.dart';
+import '../core/termcriteria.dart';
 import '../opencv.g.dart' as cvg;
 
 class Fisheye {
@@ -189,7 +189,7 @@ class Fisheye {
         rvecs!.ref,
         tvecs!.ref,
         flags,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
         rmsErr,
       ),
     );
@@ -233,8 +233,8 @@ Mat undistortPoints(
   R ??= Mat.empty();
   P ??= Mat.empty();
   dst ??= Mat.empty();
-  cvRunArena(
-    (arena) => cvRun(
+  cvRunArena((arena) {
+    cvRun(
       () => CFFI.UndistortPoints(
         src.ref,
         dst!.ref,
@@ -242,10 +242,10 @@ Mat undistortPoints(
         distCoeffs.ref,
         R!.ref,
         P!.ref,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
       ),
-    ),
-  );
+    );
+  });
   return dst;
 }
 

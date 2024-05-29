@@ -3,8 +3,8 @@
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
 
-#ifndef OPENCV_DART_LIBRARY_STITCHING_H
-#define OPENCV_DART_LIBRARY_STITCHING_H
+#ifndef OCV_STITCHING_H
+#define OCV_STITCHING_H
 
 #include "core/core.h"
 #include "core/exception.h"
@@ -24,58 +24,54 @@ enum {
 
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, PtrStitcher)
-CVD_TYPEDEF(cv::Stitcher, Stitcher)
 #else
 CVD_TYPEDEF(void *, PtrStitcher)
-CVD_TYPEDEF(void, Stitcher)
 #endif
 
 CVD_TYPEDEF_PTR(PtrStitcher)
-CVD_TYPEDEF_PTR(Stitcher)
 
 CvStatus Stitcher_Create(int mode, PtrStitcher *rval);
 void     Stitcher_Close(PtrStitcher *stitcher);
-CvStatus Stitcher_Get(PtrStitcher self, Stitcher *rval);
 
 #pragma region getter/setter
 
-CvStatus Stitcher_GetRegistrationResol(Stitcher self, double *rval);
-CvStatus Stitcher_SetRegistrationResol(Stitcher self, double inval);
+CvStatus Stitcher_GetRegistrationResol(PtrStitcher self, double *rval);
+CvStatus Stitcher_SetRegistrationResol(PtrStitcher self, double inval);
 
-CvStatus Stitcher_GetSeamEstimationResol(Stitcher self, double *rval);
-CvStatus Stitcher_SetSeamEstimationResol(Stitcher self, double inval);
+CvStatus Stitcher_GetSeamEstimationResol(PtrStitcher self, double *rval);
+CvStatus Stitcher_SetSeamEstimationResol(PtrStitcher self, double inval);
 
-CvStatus Stitcher_GetCompositingResol(Stitcher self, double *rval);
-CvStatus Stitcher_SetCompositingResol(Stitcher self, double inval);
+CvStatus Stitcher_GetCompositingResol(PtrStitcher self, double *rval);
+CvStatus Stitcher_SetCompositingResol(PtrStitcher self, double inval);
 
-CvStatus Stitcher_GetPanoConfidenceThresh(Stitcher self, double *rval);
-CvStatus Stitcher_SetPanoConfidenceThresh(Stitcher self, double inval);
+CvStatus Stitcher_GetPanoConfidenceThresh(PtrStitcher self, double *rval);
+CvStatus Stitcher_SetPanoConfidenceThresh(PtrStitcher self, double inval);
 
-CvStatus Stitcher_GetWaveCorrection(Stitcher self, bool *rval);
-CvStatus Stitcher_SetWaveCorrection(Stitcher self, bool inval);
+CvStatus Stitcher_GetWaveCorrection(PtrStitcher self, bool *rval);
+CvStatus Stitcher_SetWaveCorrection(PtrStitcher self, bool inval);
 
-CvStatus Stitcher_GetInterpolationFlags(Stitcher self, int *rval);
-CvStatus Stitcher_SetInterpolationFlags(Stitcher self, int inval);
+CvStatus Stitcher_GetInterpolationFlags(PtrStitcher self, int *rval);
+CvStatus Stitcher_SetInterpolationFlags(PtrStitcher self, int inval);
 
-CvStatus Stitcher_GetWaveCorrectKind(Stitcher self, int *rval);
-CvStatus Stitcher_SetWaveCorrectKind(Stitcher self, int inval);
+CvStatus Stitcher_GetWaveCorrectKind(PtrStitcher self, int *rval);
+CvStatus Stitcher_SetWaveCorrectKind(PtrStitcher self, int inval);
 #pragma endregion
 
 #pragma region functions
 
-CvStatus Stitcher_EstimateTransform(Stitcher self, VecMat mats, VecMat masks, int *rval);
+CvStatus Stitcher_EstimateTransform(PtrStitcher self, VecMat mats, VecMat masks, int *rval);
 
-CvStatus Stitcher_ComposePanorama(Stitcher self, Mat rpano, int *rval);
-CvStatus Stitcher_ComposePanorama_1(Stitcher self, VecMat mats, Mat rpano, int *rval);
+CvStatus Stitcher_ComposePanorama(PtrStitcher self, Mat rpano, int *rval);
+CvStatus Stitcher_ComposePanorama_1(PtrStitcher self, VecMat mats, Mat rpano, int *rval);
 
-CvStatus Stitcher_Stitch(Stitcher self, VecMat mats, Mat rpano, int *rval);
-CvStatus Stitcher_Stitch_1(Stitcher self, VecMat mats, VecMat masks, Mat rpano, int *rval);
+CvStatus Stitcher_Stitch(PtrStitcher self, VecMat mats, Mat rpano, int *rval);
+CvStatus Stitcher_Stitch_1(PtrStitcher self, VecMat mats, VecMat masks, Mat rpano, int *rval);
 
-CvStatus Stitcher_Component(Stitcher self, VecInt *rval);
+CvStatus Stitcher_Component(PtrStitcher self, VecInt *rval);
 #pragma endregion
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // OPENCV_DART_LIBRARY_STITCHING_H
+#endif // OCV_STITCHING_H

@@ -3,8 +3,8 @@
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
 
-#ifndef OPENCV_DART_LIBRARY_ENUMS_H
-#define OPENCV_DART_LIBRARY_ENUMS_H
+#ifndef OCV_ENUMS_H
+#define OCV_ENUMS_H
 
 /** the color conversion codes
 @see @ref imgproc_color_conversions
@@ -2020,4 +2020,20 @@ enum
     CALIB_USE_EXTRINSIC_GUESS = (1 << 22) //!< for stereoCalibrate
 };
 
-#endif // OPENCV_DART_LIBRARY_ENUMS_H
+/** @brief Variable types */
+enum {
+  VAR_NUMERICAL = 0,  //!< same as VAR_ORDERED
+  VAR_ORDERED = 0,    //!< ordered variables
+  VAR_CATEGORICAL = 1 //!< categorical variables
+};
+
+/** @brief %Error types */
+enum { TEST_ERROR = 0, TRAIN_ERROR = 1 };
+
+/** @brief Sample types */
+enum {
+  ROW_SAMPLE = 0, //!< each training sample is a row of samples
+  COL_SAMPLE = 1  //!< each training sample occupies a column of samples
+};
+
+#endif // OCV_ENUMS_H

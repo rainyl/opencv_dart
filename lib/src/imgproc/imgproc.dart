@@ -700,8 +700,8 @@ VecPoint2f cornerSubPix(
   cvRunArena((arena) {
     final size = winSize.toSize(arena);
     final zone = zeroZone.toSize(arena);
-    final c = criteria.toTermCriteria(arena);
-    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
+    final tc = criteria.toNativePtr(arena);
+    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, tc.ref));
   });
   return corners;
 }
