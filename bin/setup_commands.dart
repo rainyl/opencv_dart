@@ -106,6 +106,18 @@ abstract class BaseSetupCommand extends Command {
     if (!Directory(extractPath).existsSync()) {
       Directory(extractPath).createSync(recursive: true);
     }
+    // Check if libs already existed, avoid double-extract
+    if (Directory(extractPath)
+        .listSync()
+        .map((e) =>
+            e.path.endsWith(".so") ||
+            e.path.endsWith(".dll") ||
+            e.path.endsWith(".dylib") ||
+            e.path.endsWith(".framework"))
+        .any((e) => e)) {
+      print("Libs already exists in $extractPath, Skipping...");
+      return;
+    }
     print("Extracting to $extractPath");
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);
