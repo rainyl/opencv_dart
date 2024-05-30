@@ -11,7 +11,7 @@ import '../opencv.g.dart' as cvg;
 
 class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   WeChatQRCode._(super.ptr) : super.fromPointer() {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory WeChatQRCode.empty() {
@@ -78,6 +78,11 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   }
 
   static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(CFFI.addresses.WeChatQRCode_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.WeChatQRCode_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

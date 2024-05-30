@@ -8,7 +8,7 @@ import '../opencv.g.dart' as cvg;
 
 class Scalar extends CvStruct<cvg.Scalar> {
   Scalar._(ffi.Pointer<cvg.Scalar> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory Scalar(double val1, double val2, double val3, double val4) {
@@ -57,6 +57,12 @@ class Scalar extends CvStruct<cvg.Scalar> {
   }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   double get val1 => ptr.ref.val1;
   double get val2 => ptr.ref.val2;
   double get val3 => ptr.ref.val3;

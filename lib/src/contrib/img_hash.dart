@@ -75,10 +75,14 @@ const int BLOCK_MEAN_HASH_MODE_1 = 1;
 class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0])
       : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
-  static final finalizer =
-      OcvFinalizer<ffi.Pointer<cvg.BlockMeanHash>>(CFFI.addresses.BlockMeanHash_Close);
+  static final finalizer = OcvFinalizer<cvg.BlockMeanHashPtr>(CFFI.addresses.BlockMeanHash_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.BlockMeanHash_Close(ptr);
+  }
 
   factory BlockMeanHash({int mode = BLOCK_MEAN_HASH_MODE_0}) {
     final p = calloc<cvg.BlockMeanHash>();

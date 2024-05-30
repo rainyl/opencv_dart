@@ -14,7 +14,7 @@ import '../opencv.g.dart' as cvg;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   CascadeClassifier._(cvg.CascadeClassifierPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory CascadeClassifier.empty() {
@@ -62,13 +62,18 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   static final finalizer =
       OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.CascadeClassifier_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 }
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   HOGDescriptor._(cvg.HOGDescriptorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory HOGDescriptor.empty() {
@@ -133,6 +138,11 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   cvg.HOGDescriptor get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
 
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.HOGDescriptor_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 }
@@ -152,7 +162,7 @@ VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
 // https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html
 class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   QRCodeDetector._(cvg.QRCodeDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory QRCodeDetector.empty() {
@@ -238,6 +248,11 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   // TODO: (bool, List<String>, Mat, List<Mat>) detectAndDecodeMulti(InputArray img) {}
 
   static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.QRCodeDetector_Close(ptr);
+  }
 
   @override
   cvg.QRCodeDetector get ref => ptr.ref;

@@ -13,7 +13,7 @@ abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
 /// uchar
 class Vec2b extends CvVec<cvg.Vec2b> {
   Vec2b._(ffi.Pointer<cvg.Vec2b> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2b(int v1, int v2) {
     final p = calloc<cvg.Vec2b>()
@@ -37,6 +37,11 @@ class Vec2b extends CvVec<cvg.Vec2b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -49,7 +54,7 @@ class Vec2b extends CvVec<cvg.Vec2b> {
 /// uchar
 class Vec3b extends CvVec<cvg.Vec3b> {
   Vec3b._(ffi.Pointer<cvg.Vec3b> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3b(int v1, int v2, int v3) {
     final p = calloc<cvg.Vec3b>()
@@ -76,6 +81,11 @@ class Vec3b extends CvVec<cvg.Vec3b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -88,7 +98,7 @@ class Vec3b extends CvVec<cvg.Vec3b> {
 /// uchar
 class Vec4b extends CvVec<cvg.Vec4b> {
   Vec4b._(ffi.Pointer<cvg.Vec4b> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4b(int v1, int v2, int v3, int v4) {
     final p = calloc<cvg.Vec4b>()
@@ -118,6 +128,11 @@ class Vec4b extends CvVec<cvg.Vec4b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -130,7 +145,7 @@ class Vec4b extends CvVec<cvg.Vec4b> {
 /// ushort
 class Vec2w extends CvVec<cvg.Vec2w> {
   Vec2w._(ffi.Pointer<cvg.Vec2w> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2w(int v1, int v2) {
     final p = calloc<cvg.Vec2w>()
@@ -154,6 +169,11 @@ class Vec2w extends CvVec<cvg.Vec2w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -166,7 +186,7 @@ class Vec2w extends CvVec<cvg.Vec2w> {
 /// ushort
 class Vec3w extends CvVec<cvg.Vec3w> {
   Vec3w._(ffi.Pointer<cvg.Vec3w> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3w(int v1, int v2, int v3) {
     final p = calloc<cvg.Vec3w>()
@@ -193,6 +213,11 @@ class Vec3w extends CvVec<cvg.Vec3w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -205,7 +230,7 @@ class Vec3w extends CvVec<cvg.Vec3w> {
 /// ushort
 class Vec4w extends CvVec<cvg.Vec4w> {
   Vec4w._(ffi.Pointer<cvg.Vec4w> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4w(int v1, int v2, int v3, int v4) {
     final p = calloc<cvg.Vec4w>()
@@ -235,6 +260,11 @@ class Vec4w extends CvVec<cvg.Vec4w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -247,7 +277,7 @@ class Vec4w extends CvVec<cvg.Vec4w> {
 /// short
 class Vec2s extends CvVec<cvg.Vec2s> {
   Vec2s._(ffi.Pointer<cvg.Vec2s> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2s(int v1, int v2) {
     final p = calloc<cvg.Vec2s>()
@@ -271,6 +301,11 @@ class Vec2s extends CvVec<cvg.Vec2s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -283,7 +318,7 @@ class Vec2s extends CvVec<cvg.Vec2s> {
 /// short
 class Vec3s extends CvVec<cvg.Vec3s> {
   Vec3s._(ffi.Pointer<cvg.Vec3s> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3s(int v1, int v2, int v3) {
     final p = calloc<cvg.Vec3s>()
@@ -310,6 +345,11 @@ class Vec3s extends CvVec<cvg.Vec3s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -322,7 +362,7 @@ class Vec3s extends CvVec<cvg.Vec3s> {
 /// short
 class Vec4s extends CvVec<cvg.Vec4s> {
   Vec4s._(ffi.Pointer<cvg.Vec4s> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4s(int v1, int v2, int v3, int v4) {
     final p = calloc<cvg.Vec4s>()
@@ -352,6 +392,11 @@ class Vec4s extends CvVec<cvg.Vec4s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -364,7 +409,7 @@ class Vec4s extends CvVec<cvg.Vec4s> {
 /// int
 class Vec2i extends CvVec<cvg.Vec2i> {
   Vec2i._(ffi.Pointer<cvg.Vec2i> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2i(int v1, int v2) {
     final p = calloc<cvg.Vec2i>()
@@ -388,6 +433,11 @@ class Vec2i extends CvVec<cvg.Vec2i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -400,7 +450,7 @@ class Vec2i extends CvVec<cvg.Vec2i> {
 /// int
 class Vec3i extends CvVec<cvg.Vec3i> {
   Vec3i._(ffi.Pointer<cvg.Vec3i> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3i(int v1, int v2, int v3) {
     final p = calloc<cvg.Vec3i>()
@@ -427,6 +477,11 @@ class Vec3i extends CvVec<cvg.Vec3i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -439,7 +494,7 @@ class Vec3i extends CvVec<cvg.Vec3i> {
 /// int
 class Vec4i extends CvVec<cvg.Vec4i> {
   Vec4i._(ffi.Pointer<cvg.Vec4i> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4i(int v1, int v2, int v3, int v4) {
     final p = calloc<cvg.Vec4i>()
@@ -469,6 +524,11 @@ class Vec4i extends CvVec<cvg.Vec4i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -481,7 +541,7 @@ class Vec4i extends CvVec<cvg.Vec4i> {
 /// int
 class Vec6i extends CvVec<cvg.Vec6i> {
   Vec6i._(ffi.Pointer<cvg.Vec6i> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec6i(int v1, int v2, int v3, int v4, int v5, int v6) {
     final p = calloc<cvg.Vec6i>()
@@ -517,6 +577,11 @@ class Vec6i extends CvVec<cvg.Vec6i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -529,7 +594,7 @@ class Vec6i extends CvVec<cvg.Vec6i> {
 /// int
 class Vec8i extends CvVec<cvg.Vec8i> {
   Vec8i._(ffi.Pointer<cvg.Vec8i> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec8i(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8) {
     final p = calloc<cvg.Vec8i>()
@@ -571,6 +636,11 @@ class Vec8i extends CvVec<cvg.Vec8i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<int> get props => val;
 
@@ -583,7 +653,7 @@ class Vec8i extends CvVec<cvg.Vec8i> {
 /// float
 class Vec2f extends CvVec<cvg.Vec2f> {
   Vec2f._(ffi.Pointer<cvg.Vec2f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2f(double v1, double v2) {
     final p = calloc<cvg.Vec2f>()
@@ -607,6 +677,11 @@ class Vec2f extends CvVec<cvg.Vec2f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -619,7 +694,7 @@ class Vec2f extends CvVec<cvg.Vec2f> {
 /// float
 class Vec3f extends CvVec<cvg.Vec3f> {
   Vec3f._(ffi.Pointer<cvg.Vec3f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3f(double v1, double v2, double v3) {
     final p = calloc<cvg.Vec3f>()
@@ -646,6 +721,11 @@ class Vec3f extends CvVec<cvg.Vec3f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -659,7 +739,7 @@ class Vec3f extends CvVec<cvg.Vec3f> {
 /// float
 class Vec4f extends CvVec<cvg.Vec4f> {
   Vec4f._(ffi.Pointer<cvg.Vec4f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4f(double v1, double v2, double v3, double v4) {
     final p = calloc<cvg.Vec4f>()
@@ -689,6 +769,11 @@ class Vec4f extends CvVec<cvg.Vec4f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -702,7 +787,7 @@ class Vec4f extends CvVec<cvg.Vec4f> {
 /// float
 class Vec6f extends CvVec<cvg.Vec6f> {
   Vec6f._(ffi.Pointer<cvg.Vec6f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec6f(double v1, double v2, double v3, double v4, double v5, double v6) {
     final p = calloc<cvg.Vec6f>()
@@ -738,6 +823,11 @@ class Vec6f extends CvVec<cvg.Vec6f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -751,7 +841,7 @@ class Vec6f extends CvVec<cvg.Vec6f> {
 /// double
 class Vec2d extends CvVec<cvg.Vec2d> {
   Vec2d._(ffi.Pointer<cvg.Vec2d> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec2d(double v1, double v2) {
     final p = calloc<cvg.Vec2d>()
@@ -775,6 +865,11 @@ class Vec2d extends CvVec<cvg.Vec2d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -787,7 +882,7 @@ class Vec2d extends CvVec<cvg.Vec2d> {
 /// double
 class Vec3d extends CvVec<cvg.Vec3d> {
   Vec3d._(ffi.Pointer<cvg.Vec3d> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec3d(double v1, double v2, double v3) {
     final p = calloc<cvg.Vec3d>()
@@ -814,6 +909,11 @@ class Vec3d extends CvVec<cvg.Vec3d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -827,7 +927,7 @@ class Vec3d extends CvVec<cvg.Vec3d> {
 /// double
 class Vec4d extends CvVec<cvg.Vec4d> {
   Vec4d._(ffi.Pointer<cvg.Vec4d> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec4d(double v1, double v2, double v3, double v4) {
     final p = calloc<cvg.Vec4d>()
@@ -857,6 +957,11 @@ class Vec4d extends CvVec<cvg.Vec4d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   @override
   List<double> get props => val;
 
@@ -870,7 +975,7 @@ class Vec4d extends CvVec<cvg.Vec4d> {
 /// double
 class Vec6d extends CvVec<cvg.Vec6d> {
   Vec6d._(ffi.Pointer<cvg.Vec6d> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory Vec6d(double v1, double v2, double v3, double v4, double v5, double v6) {
     final p = calloc<cvg.Vec6d>()
@@ -905,6 +1010,11 @@ class Vec6d extends CvVec<cvg.Vec6d> {
   List<double> get val => [val1, val2, val3, val4, val5, val6];
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
 
   @override
   List<double> get props => val;

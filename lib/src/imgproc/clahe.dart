@@ -8,7 +8,7 @@ import '../opencv.g.dart' as cvg;
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
   CLAHE._(cvg.CLAHEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory CLAHE.fromNative(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
@@ -71,6 +71,11 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   }
 
   static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(CFFI.addresses.CLAHE_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.CLAHE_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

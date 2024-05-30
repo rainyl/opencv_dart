@@ -10,7 +10,7 @@ import '../opencv.g.dart' as cvg;
 
 class DMatch extends CvStruct<cvg.DMatch> {
   DMatch._(ffi.Pointer<cvg.DMatch> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
     final ptr = calloc<cvg.DMatch>()
@@ -24,6 +24,12 @@ class DMatch extends CvStruct<cvg.DMatch> {
   factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p) => DMatch._(p);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   int get queryIdx => ref.queryIdx;
   int get trainIdx => ref.trainIdx;
   int get imgIdx => ref.imgIdx;
@@ -39,7 +45,7 @@ class DMatch extends CvStruct<cvg.DMatch> {
 
 class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   VecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr) => VecDMatch._(ptr);
   factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
@@ -68,6 +74,11 @@ class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(CFFI.addresses.VecDMatch_Close);
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecDMatch_Close(ptr);
+  }
+
   @override
   Iterator<DMatch> get iterator => VecDMatchIterator(ref);
   @override
@@ -100,7 +111,7 @@ class VecDMatchIterator extends VecIterator<DMatch> {
 
 class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> {
   VecVecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr) => VecVecDMatch._(ptr);
   factory VecVecDMatch.fromVec(cvg.VecVecDMatch ptr) {
@@ -123,6 +134,11 @@ class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> 
   @override
   cvg.VecVecDMatchPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(CFFI.addresses.VecVecDMatch_Close);
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecVecDMatch_Close(ptr);
+  }
+
   @override
   Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
   @override

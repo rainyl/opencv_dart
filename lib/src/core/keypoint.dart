@@ -10,7 +10,7 @@ import '../opencv.g.dart' as cvg;
 
 class KeyPoint extends CvStruct<cvg.KeyPoint> {
   KeyPoint._(ffi.Pointer<cvg.KeyPoint> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory KeyPoint(
       double x, double y, double size, double angle, double response, int octave, int classID) {
@@ -36,6 +36,12 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   factory KeyPoint.fromPointer(ffi.Pointer<cvg.KeyPoint> p) => KeyPoint._(p);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   double get x => ref.x;
   double get y => ref.y;
   double get size => ref.size;
@@ -61,7 +67,7 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
 
 class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   VecKeyPoint._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr) => VecKeyPoint._(ptr);
   factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
@@ -92,6 +98,12 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   @override
   cvg.VecKeyPointPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(CFFI.addresses.VecKeyPoint_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecKeyPoint_Close(ptr);
+  }
+
   @override
   Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
 

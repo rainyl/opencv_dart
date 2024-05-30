@@ -15,7 +15,7 @@ import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
   Mat._(cvg.MatPtr ptr, [this.xdata]) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   /// This method is very similar to [clone], will copy data from [mat]
@@ -152,6 +152,12 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(CFFI.addresses.Mat_Close);
+
+  void release() => cvRun(() => CFFI.Mat_Release(ptr));
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.Mat_Close(ptr);
+  }
 
   /// external native data array of [Mat], used for [Mat.fromList]
   NativeArray? xdata;
@@ -1279,8 +1285,6 @@ class Mat extends CvStruct<cvg.Mat> {
     return this;
   }
 
-  void release() => cvRun(() => CFFI.Mat_Release(ptr));
-
   /// This Method converts single-channel Mat to 2D List
   List<List<num>> toList() => switch (type.depth) {
         MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
@@ -1312,8 +1316,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   List<List<List<num>>> toList3D<T extends CvVec>() {
     assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(
-        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
+    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
   /// Get the data pointer of the Mat, this getter will reture a view of native
@@ -1346,7 +1349,7 @@ typedef InputOutputArray = Mat;
 
 class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   VecMat._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
   factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
   factory VecMat.fromVec(cvg.VecMat ptr) {
@@ -1377,6 +1380,12 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   @override
   cvg.VecMatPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecMatPtr>(CFFI.addresses.VecMat_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecMat_Close(ptr);
+  }
+
   @override
   Iterator<Mat> get iterator => VecMatIterator(ref);
 

@@ -6,7 +6,7 @@ import '../opencv.g.dart' as cvg;
 
 class Moments extends CvStruct<cvg.Moment> {
   Moments._(ffi.Pointer<cvg.Moment> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr) => Moments._(ptr);
@@ -65,6 +65,11 @@ class Moments extends CvStruct<cvg.Moment> {
   double get nu03 => ref.nu03;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
 
   @override
   cvg.Moment get ref => ptr.ref;

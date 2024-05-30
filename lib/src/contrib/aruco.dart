@@ -14,7 +14,7 @@ import '../opencv.g.dart' as cvg;
 
 class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ArucoDetector._(cvg.ArucoDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory ArucoDetector.empty() {
@@ -32,6 +32,11 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   @override
   cvg.ArucoDetector get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(CFFI.addresses.ArucoDetector_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ArucoDetector_Close(ptr);
+  }
 
   /// DetectMarkers does basic marker detection.
   ///
@@ -75,7 +80,7 @@ void arucoGenerateImageMarker(
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
   ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory ArucoDetectorParameters.empty() {
@@ -88,6 +93,11 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
   cvg.ArucoDetectorParameters get ref => ptr.ref;
   static final finalizer =
       OcvFinalizer<cvg.ArucoDetectorParametersPtr>(CFFI.addresses.ArucoDetectorParameters_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ArucoDetectorParameters_Close(ptr);
+  }
 
   int get adaptiveThreshWinSizeMin {
     return cvRunArena<int>((arena) {
