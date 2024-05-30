@@ -100,6 +100,7 @@ void main() async {
     expect(ok, true);
 
     rect.dispose();
+    tracker.dispose();
   });
 
   test('cv.KalmanFilter', () {

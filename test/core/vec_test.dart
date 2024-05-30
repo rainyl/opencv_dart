@@ -158,6 +158,10 @@ void main() {
     final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
     expect(vec1, vec);
 
+    for (var p in points) {
+      p.dispose();
+    }
+
     vec1.dispose();
   });
 }

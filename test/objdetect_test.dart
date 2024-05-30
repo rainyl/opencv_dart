@@ -11,6 +11,8 @@ void main() async {
     classifier.load("test/haarcascade_frontalface_default.xml");
     final rects = classifier.detectMultiScale(img);
     expect(rects.length, 1);
+
+    classifier.dispose();
   });
 
   test('cv.HOGDescriptor', () {
