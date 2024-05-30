@@ -11,6 +11,8 @@ void main() {
 
     final vec1 = cv.VecInt.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecUChar', () {
@@ -22,6 +24,8 @@ void main() {
 
     final vec1 = cv.VecUChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecChar', () {
@@ -33,6 +37,8 @@ void main() {
 
     final vec1 = cv.VecChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecVecChar', () {
@@ -44,6 +50,8 @@ void main() {
 
     final vec1 = cv.VecVecChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecFloat', () {
@@ -55,6 +63,8 @@ void main() {
 
     final vec1 = cv.VecFloat.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecDouble', () {
@@ -66,6 +76,8 @@ void main() {
 
     final vec1 = cv.VecDouble.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecRect', () {
@@ -78,6 +90,8 @@ void main() {
 
     final vec1 = cv.VecRect.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('RotatedRect', () {
@@ -91,6 +105,8 @@ void main() {
 
     final rect2 = cv.RotatedRect.fromNative(rect.ref);
     expect(rect2, rect);
+
+    rect2.dispose();
   });
   test('VecDMatch', () {
     final points = List.generate(100, (index) => cv.DMatch(index, index, index, index.toDouble()));
@@ -102,6 +118,8 @@ void main() {
 
     final vec1 = cv.VecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecVecDMatch', () {
@@ -114,6 +132,8 @@ void main() {
 
     final vec1 = cv.VecVecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecKeyPoint', () {
@@ -137,5 +157,7 @@ void main() {
 
     final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 }

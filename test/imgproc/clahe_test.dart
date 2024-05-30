@@ -13,5 +13,7 @@ void main() {
     clahe.tilesGridSize = (10, 10);
     expect(clahe.tilesGridSize, (10, 10));
     expect(clahe.clipLimit, closeTo(50, 1e-6));
+
+    clahe.dispose();
   });
 }

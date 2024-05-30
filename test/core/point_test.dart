@@ -58,6 +58,8 @@ void main() {
     expect(vec1.length, 4);
     expect(vec1.first, cv.Point(1, 2));
     expect(vec1.last, cv.Point(7, 8));
+
+    vec.dispose();
   });
 
   test('VecPoint.fromMat', () {
@@ -68,6 +70,8 @@ void main() {
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
+
+    vec.dispose();
   });
 
   test('VecPoint2f', () {
@@ -87,6 +91,8 @@ void main() {
     final points2 = cv.VecPoint2f();
     expect(points2.length, 0);
     expect(points2.firstOrNull, null);
+
+    vec.dispose();
   });
 
   test('VecPoint2f.fromMat', () {
@@ -113,6 +119,8 @@ void main() {
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
+
+    vec.dispose();
   });
 
   test('VecPoint3f.fromMat', () {
@@ -141,6 +149,8 @@ void main() {
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
+
+    vec.dispose();
   });
 
   test('VecVecPoint2f', () {
@@ -154,6 +164,8 @@ void main() {
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
+
+    vec.dispose();
   });
 
   test('VecVecPoint3f', () {
@@ -167,5 +179,7 @@ void main() {
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
+
+    vec.dispose();
   });
 }

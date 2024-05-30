@@ -35,6 +35,7 @@ void main() {
     // win.imshow(src);
     // win.waitKey(0);
     // cv.destroyAllWindows();
+    subdiv.dispose();
   });
 
   test('cv.Subdiv2D.empty', () {

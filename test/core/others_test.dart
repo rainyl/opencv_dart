@@ -21,6 +21,8 @@ void main() {
       return cv.Scalar.fromNative(p.ref);
     });
     expect(s5, cv.Scalar.blue);
+
+    s5.dispose();
   });
 
   test('cv.Scalar operations', () {
@@ -42,6 +44,8 @@ void main() {
     final vec1 = cv.Vec6i.fromNative(vec.ref);
     expect(vec1.val, vec.val);
     expect(vec.toString(), "Vec6i(1, 2, 3, 4, 5, 6)");
+
+    vec.dispose();
   });
 
   test('cv.Vec6f', () {
@@ -50,6 +54,8 @@ void main() {
     final vec1 = cv.Vec6f.fromNative(vec.ref);
     expect(vec1.val, vec.val);
     expect(vec.toString(), "Vec6f(1.000, 2.000, 3.000, 4.000, 5.000, 6.000)");
+
+    vec.dispose();
   });
 
   test('cv.Vec6d', () {
@@ -58,6 +64,8 @@ void main() {
     final vec1 = cv.Vec6d.fromNative(vec.ref);
     expect(vec1.val, vec.val);
     expect(vec.toString(), "Vec6d(1.000, 2.000, 3.000, 4.000, 5.000, 6.000)");
+
+    vec.dispose();
   });
 
   test('cv.Vec8i', () {
@@ -66,5 +74,7 @@ void main() {
     final vec1 = cv.Vec8i.fromNative(vec.ref);
     expect(vec1.val, vec.val);
     expect(vec.toString(), "Vec8i(1, 2, 3, 4, 5, 6, 7, 8)");
+
+    vec.dispose();
   });
 }

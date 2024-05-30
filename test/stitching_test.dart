@@ -13,6 +13,8 @@ void main() {
     expect(status, cv.StitcherStatus.OK);
     expect(pano.isEmpty, false);
     // cv.imwrite('test/images_out/stitcher_test.jpg', pano);
+
+    stitcher.dispose();
   });
 
   test('cv.Stitcher with mask', () {

@@ -18,6 +18,8 @@ void main() async {
     );
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
+
+    bgSub1.dispose();
   });
 
   test('cv.BackgroundSubtractorKNN', () {
@@ -34,6 +36,8 @@ void main() async {
     );
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
+
+    bgSubtractor.dispose();
   });
 
   test('cv.calcOpticalFlowFarneback', () {
@@ -94,6 +98,8 @@ void main() async {
     tracker.init(img, rect);
     final (ok, _) = tracker.update(img);
     expect(ok, true);
+
+    rect.dispose();
   });
 
   test('cv.KalmanFilter', () {
@@ -156,6 +162,8 @@ void main() async {
     final controlMatrix = kf.controlMatrix;
     expect(controlMatrix.isEmpty, false);
     kf.controlMatrix = controlMatrix;
+
+    kf.dispose();
   });
 
   // videoio
@@ -166,6 +174,8 @@ void main() async {
     writer.release();
 
     expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
+
+    writer.dispose();
   });
 
   test('cv.VideoWriter.open', () {
@@ -181,6 +191,8 @@ void main() async {
     final success = vc.open("test/images/small.mp4", apiPreference: cv.CAP_ANY);
     expect(success, true);
     vc.release();
+
+    vc.dispose();
   });
 
   test('cv.VideoCapture.fromFile', () {

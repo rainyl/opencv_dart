@@ -18,6 +18,11 @@ void main() async {
 
     final (_, ids, _) = detector.detectMarkers(img);
     expect(ids, isNotEmpty);
+
+    dict.dispose();
+    params.dispose();
+    img.dispose();
+    detector.dispose();
   });
 
   test('cv.arucoDrawDetectedMarkers', () {
