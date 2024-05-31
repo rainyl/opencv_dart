@@ -8,6 +8,8 @@ void main() {
     expect(v, everyElement(greaterThanOrEqualTo(0)));
     final v1 = List.generate(100000, (index) => rng.uniform<double>(2.41, 241.0));
     expect(v1, everyElement(greaterThanOrEqualTo(2.41)));
+
+    rng.dispose();
   });
 
   test("cv.RNG.fromSeed", () {

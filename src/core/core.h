@@ -92,7 +92,6 @@ extern "C" {
 
 CVD_TYPEDEF(cv::Mat, Mat)
 CVD_TYPEDEF(cv::_InputOutputArray, InputOutputArray)
-CVD_TYPEDEF(cv::TermCriteria, TermCriteria)
 CVD_TYPEDEF(cv::RNG, RNG)
 CVD_TYPEDEF(std::vector<cv::Point>, VecPoint)
 CVD_TYPEDEF(std::vector<std::vector<cv::Point>>, VecVecPoint)
@@ -122,7 +121,6 @@ typedef unsigned short ushort;
 
 CVD_TYPEDEF(void, Mat)
 CVD_TYPEDEF(void, InputOutputArray)
-CVD_TYPEDEF(void, TermCriteria)
 CVD_TYPEDEF(void, RNG)
 CVD_TYPEDEF(void, VecPoint)
 CVD_TYPEDEF(void, VecVecPoint)
@@ -145,7 +143,6 @@ CVD_TYPEDEF(void, VecVecDMatch)
 
 CVD_TYPEDEF_PTR(Mat)
 CVD_TYPEDEF_PTR(InputOutputArray)
-CVD_TYPEDEF_PTR(TermCriteria)
 CVD_TYPEDEF_PTR(RNG)
 
 // Wrapper for an individual cv::cvPoint
@@ -406,11 +403,11 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval);
 // internal use
 // VecPoint2f vecPointToVecPoint2f(VecPoint src);
 
-CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval);
-CvStatus TermCriteria_Type(TermCriteria tc, int *rval);
-CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval);
-CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval);
-void     TermCriteria_Close(TermCriteria *tc);
+typedef struct TermCriteria {
+  int type;
+  int maxCount;
+  double epsilon;
+} TermCriteria;
 
 /**
  * @brief Create empty Mat

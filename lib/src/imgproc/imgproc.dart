@@ -26,11 +26,9 @@ import '../opencv.g.dart' as cvg;
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
-  return cvRunArena<VecPoint>((arena) {
-    final vec = arena<cvg.VecPoint>();
-    cvRun(() => CFFI.ApproxPolyDP(curve.ref, epsilon, closed, vec));
-    return VecPoint.fromVec(vec.ref);
-  });
+  final vec = calloc<cvg.VecPoint>();
+  cvRun(() => CFFI.ApproxPolyDP(curve.ref, epsilon, closed, vec));
+  return VecPoint.fromPointer(vec);
 }
 
 /// ArcLength calculates a contour perimeter or a curve length.
@@ -148,7 +146,7 @@ Mat calcBackProject(
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
   return cvRunArena<double>((arena) {
-    final p = arena<cvg.double_t>();
+    final p = arena<ffi.Double>();
     cvRun(() => CFFI.CompareHist(hist1.ref, hist2.ref, method, p));
     return p.value;
   });
@@ -231,14 +229,12 @@ Mat dilate(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  return using<Mat>((arena) {
-    borderValue ??= Scalar.default_();
-    dst ??= Mat.empty();
-    anchor ??= Point(-1, -1);
-    cvRun(() => CFFI.DilateWithParams(
-        src.ref, dst!.ref, kernel.ref, anchor!.ref, iterations, borderType, borderValue!.ref));
-    return dst!;
-  });
+  borderValue ??= Scalar.default_();
+  dst ??= Mat.empty();
+  anchor ??= Point(-1, -1);
+  cvRun(() => CFFI.DilateWithParams(
+      src.ref, dst!.ref, kernel.ref, anchor!.ref, iterations, borderType, borderValue!.ref));
+  return dst;
 }
 
 /// Erode erodes an image by using a specific structuring element.
@@ -254,23 +250,21 @@ Mat erode(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  return using<Mat>((arena) {
-    borderValue ??= Scalar.default_();
-    dst ??= Mat.empty();
-    anchor ??= Point(-1, -1);
-    cvRun(
-      () => CFFI.ErodeWithParams(
-        src.ref,
-        dst!.ref,
-        kernel.ref,
-        anchor!.ref,
-        iterations,
-        borderType,
-        borderValue!.ref,
-      ),
-    );
-    return dst!;
-  });
+  borderValue ??= Scalar.default_();
+  dst ??= Mat.empty();
+  anchor ??= Point(-1, -1);
+  cvRun(
+    () => CFFI.ErodeWithParams(
+      src.ref,
+      dst!.ref,
+      kernel.ref,
+      anchor!.ref,
+      iterations,
+      borderType,
+      borderValue!.ref,
+    ),
+  );
+  return dst;
 }
 
 /// DistanceTransform Calculates the distance to the closest zero pixel for each pixel of the source image.
@@ -302,11 +296,9 @@ Mat erode(
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Rect boundingRect(VecPoint points) {
-  return cvRunArena<Rect>((arena) {
-    final rect = arena<cvg.Rect>();
-    cvRun(() => CFFI.BoundingRect(points.ref, rect));
-    return Rect.fromNative(rect.ref);
-  });
+  final rect = calloc<cvg.Rect>();
+  cvRun(() => CFFI.BoundingRect(points.ref, rect));
+  return Rect.fromPointer(rect);
 }
 
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
@@ -315,12 +307,13 @@ Rect boundingRect(VecPoint points) {
 /// For further Details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
-  return cvRunArena<VecPoint2f>((arena) {
-    final p = arena<cvg.VecPoint2f>();
+  if (pts == null) {
+    final p = calloc<cvg.VecPoint2f>();
     cvRun(() => CFFI.BoxPoints(rect.ref, p));
-    pts = VecPoint2f.fromVec(p.ref);
-    return pts!;
-  });
+    return VecPoint2f.fromPointer(p);
+  }
+  cvRun(() => CFFI.BoxPoints(rect.ref, pts.ptr));
+  return pts;
 }
 
 /// ContourArea calculates a contour area.
@@ -329,7 +322,7 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 double contourArea(VecPoint contour) {
   return cvRunArena<double>((arena) {
-    final area = arena<cvg.double_t>();
+    final area = arena<ffi.Double>();
     cvRun(() => CFFI.ContourArea(contour.ref, area));
     return area.value;
   });
@@ -340,11 +333,9 @@ double contourArea(VecPoint contour) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 RotatedRect minAreaRect(VecPoint points) {
-  return cvRunArena<RotatedRect>((arena) {
-    final p = arena<cvg.RotatedRect>();
-    cvRun(() => CFFI.MinAreaRect(points.ref, p));
-    return RotatedRect.fromNative(p.ref);
-  });
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => CFFI.MinAreaRect(points.ref, p));
+  return RotatedRect.fromPointer(p);
 }
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
@@ -352,11 +343,9 @@ RotatedRect minAreaRect(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 RotatedRect fitEllipse(VecPoint points) {
-  return cvRunArena<RotatedRect>((arena) {
-    final p = arena<cvg.RotatedRect>();
-    cvRun(() => CFFI.FitEllipse(points.ref, p));
-    return RotatedRect.fromNative(p.ref);
-  });
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => CFFI.FitEllipse(points.ref, p));
+  return RotatedRect.fromPointer(p);
 }
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
@@ -365,10 +354,10 @@ RotatedRect fitEllipse(VecPoint points) {
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 (Point2f center, double radius) minEnclosingCircle(VecPoint points) {
   return cvRunArena<(Point2f, double)>((arena) {
-    final center = arena<cvg.Point2f>();
+    final center = calloc<cvg.Point2f>();
     final radius = arena<ffi.Float>();
     cvRun(() => CFFI.MinEnclosingCircle(points.ref, center, radius));
-    return (Point2f.fromNative(center.ref), radius.value);
+    return (Point2f.fromPointer(center), radius.value);
   });
 }
 
@@ -378,12 +367,9 @@ RotatedRect fitEllipse(VecPoint points) {
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
 (Contours contours, Mat hierarchy) findContours(Mat src, int mode, int method) {
   final hierarchy = Mat.empty();
-  final vec = cvRunArena<Contours>((arena) {
-    final v = arena<cvg.VecVecPoint>();
-    cvRun(() => CFFI.FindContours(src.ref, hierarchy.ref, mode, method, v));
-    return Contours.fromVec(v.ref);
-  });
-  return (vec, hierarchy);
+  final v = calloc<cvg.VecVecPoint>();
+  cvRun(() => CFFI.FindContours(src.ref, hierarchy.ref, mode, method, v));
+  return (Contours.fromPointer(v), hierarchy);
 }
 
 /// PointPolygonTest performs a point-in-contour test.
@@ -392,7 +378,7 @@ RotatedRect fitEllipse(VecPoint points) {
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
   return cvRunArena<double>((arena) {
-    final r = arena<cvg.double_t>();
+    final r = arena<ffi.Double>();
     cvRun(() => CFFI.PointPolygonTest(points.ref, pt.ref, measureDist, r));
     return r.value;
   });
@@ -449,11 +435,9 @@ Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? m
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Moments moments(Mat src, {bool binaryImage = false}) {
-  return cvRunArena<Moments>((arena) {
-    final m = arena<cvg.Moment>();
-    cvRun(() => CFFI.Moments(src.ref, binaryImage, m));
-    return Moments.fromNative(m.ref);
-  });
+  final m = calloc<cvg.Moment>();
+  cvRun(() => CFFI.Moments(src.ref, binaryImage, m));
+  return Moments.fromPointer(m);
 }
 
 /// PyrDown blurs an image and downsamples it.
@@ -496,11 +480,9 @@ Mat pyrUp(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Scalar morphologyDefaultBorderValue() {
-  return cvRunArena<Scalar>((arena) {
-    final s = arena<cvg.Scalar>();
-    cvRun(() => CFFI.MorphologyDefaultBorderValue(s));
-    return Scalar.fromNative(s.ref);
-  });
+  final s = calloc<cvg.Scalar>();
+  cvRun(() => CFFI.MorphologyDefaultBorderValue(s));
+  return Scalar.fromPointer(s);
 }
 
 /// MorphologyEx performs advanced morphological transformations.
@@ -543,9 +525,9 @@ Mat morphologyEx(
 Mat getStructuringElement(int shape, Size ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
   return cvRunArena<Mat>((arena) {
-    final r = arena<cvg.Mat>();
+    final r = calloc<cvg.Mat>();
     cvRun(() => CFFI.GetStructuringElement(shape, ksize.toSize(arena).ref, r));
-    return Mat.fromCMat(r.ref);
+    return Mat.fromPointer(r);
   });
 }
 
@@ -576,11 +558,9 @@ Mat gaussianBlur(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa
 Mat getGaussianKernel(int ksize, double sigma, {int ktype = 6}) {
-  return cvRunArena<Mat>((arena) {
-    final r = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetGaussianKernel(ksize, sigma, ktype, r));
-    return Mat.fromCMat(r.ref);
-  });
+  final r = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetGaussianKernel(ksize, sigma, ktype, r));
+  return Mat.fromPointer(r);
 }
 
 /// Sobel calculates the first, second, third, or mixed image derivatives using an extended Sobel operator
@@ -700,7 +680,7 @@ VecPoint2f cornerSubPix(
   cvRunArena((arena) {
     final size = winSize.toSize(arena);
     final zone = zeroZone.toSize(arena);
-    final c = criteria.toTermCriteria(arena);
+    final c = criteria.toNativePtr(arena);
     cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
   });
   return corners;
@@ -893,7 +873,7 @@ Mat HoughLinesPointSet(
 }) {
   dst ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
-    final p = arena<cvg.double_t>();
+    final p = arena<ffi.Double>();
     cvRun(() => CFFI.Threshold(src.ref, dst!.ref, thresh, maxval, type, p));
     return p.value;
   });
@@ -1088,9 +1068,9 @@ Mat putText(
   bool bottomLeftOrigin = false,
 }) {
   using((arena) {
-    final textPtr = text.toNativeUtf8(allocator: arena);
+    final textPtr = text.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     cvRun(
-      () => CFFI.PutTextWithParams(img.ref, textPtr.cast(), org.ref, fontFace, fontScale, color.ref,
+      () => CFFI.PutTextWithParams(img.ref, textPtr, org.ref, fontFace, fontScale, color.ref,
           thickness, lineType, bottomLeftOrigin),
     );
   });
@@ -1151,11 +1131,9 @@ Mat getRectSubPix(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
 Mat getRotationMatrix2D(Point2f center, double angle, double scale) {
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetRotationMatrix2D(center.ref, angle, scale, mat));
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetRotationMatrix2D(center.ref, angle, scale, mat));
+  return Mat.fromPointer(mat);
 }
 
 /// WarpAffine applies an affine transformation to an image.
@@ -1256,11 +1234,9 @@ Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) {
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetPerspectiveTransform(src.ref, dst.ref, mat, solveMethod));
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetPerspectiveTransform(src.ref, dst.ref, mat, solveMethod));
+  return Mat.fromPointer(mat);
 }
 
 /// GetPerspectiveTransform2f returns 3x3 perspective transformation for the
@@ -1269,11 +1245,9 @@ Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOM
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) {
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetPerspectiveTransform2f(src.ref, dst.ref, mat, solveMethod));
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetPerspectiveTransform2f(src.ref, dst.ref, mat, solveMethod));
+  return Mat.fromPointer(mat);
 }
 
 /// GetAffineTransform returns a 2x3 affine transformation matrix for the
@@ -1282,19 +1256,15 @@ Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod =
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999
 Mat getAffineTransform(VecPoint src, VecPoint dst) {
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetAffineTransform(src.ref, dst.ref, mat));
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetAffineTransform(src.ref, dst.ref, mat));
+  return Mat.fromPointer(mat);
 }
 
 Mat getAffineTransform2f(VecPoint2f src, VecPoint2f dst) {
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(() => CFFI.GetAffineTransform2f(src.ref, dst.ref, mat));
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetAffineTransform2f(src.ref, dst.ref, mat));
+  return Mat.fromPointer(mat);
 }
 
 /// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
@@ -1311,22 +1281,20 @@ Mat findHomography(
   double confidence = 0.995,
 }) {
   mask ??= Mat.empty();
-  return cvRunArena<Mat>((arena) {
-    final mat = arena<cvg.Mat>();
-    cvRun(
-      () => CFFI.FindHomography(
-        srcPoints.ref,
-        dstPoints.ref,
-        method,
-        ransacReprojThreshold,
-        mask!.ref,
-        maxIters,
-        confidence,
-        mat,
-      ),
-    );
-    return Mat.fromCMat(mat.ref);
-  });
+  final mat = calloc<cvg.Mat>();
+  cvRun(
+    () => CFFI.FindHomography(
+      srcPoints.ref,
+      dstPoints.ref,
+      method,
+      ransacReprojThreshold,
+      mask!.ref,
+      maxIters,
+      confidence,
+      mat,
+    ),
+  );
+  return Mat.fromPointer(mat);
 }
 
 /// DrawContours draws contours outlines or filled contours.
@@ -1469,7 +1437,7 @@ Mat fitLine(VecPoint points, int distType, double param, double reps, double aep
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
 double matchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter) {
   return cvRunArena<double>((arena) {
-    final r = arena<cvg.double_t>();
+    final r = arena<ffi.Double>();
     cvRun(() => CFFI.MatchShapes(contour1.ref, contour2.ref, method, parameter, r));
     return r.value;
   });
@@ -1495,10 +1463,10 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
     {InputArray? window}) {
   window ??= Mat.empty();
   return cvRunArena<(Point2f, double)>((arena) {
-    final p = arena<cvg.double_t>();
-    final pp = arena<cvg.Point2f>();
+    final p = arena<ffi.Double>();
+    final pp = calloc<cvg.Point2f>();
     cvRun(() => CFFI.PhaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp));
-    return (Point2f.fromNative(pp.ref), p.value);
+    return (Point2f.fromPointer(pp), p.value);
   });
 }
 

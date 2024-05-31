@@ -11,6 +11,8 @@ void main() async {
     classifier.load("test/haarcascade_frontalface_default.xml");
     final rects = classifier.detectMultiScale(img);
     expect(rects.length, 1);
+
+    classifier.dispose();
   });
 
   test('cv.HOGDescriptor', () {
@@ -20,6 +22,8 @@ void main() async {
     hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector());
     final rects = hog.detectMultiScale(img);
     expect(rects.length, greaterThanOrEqualTo(0));
+
+    hog.dispose();
   });
 
   test('cv.groupRectangles', () {
@@ -79,5 +83,7 @@ void main() async {
     expect(res4, true);
     expect(multiBox, isNotNull);
     expect(multiBox?.length, greaterThan(0));
+
+    detector.dispose();
   });
 }

@@ -128,12 +128,11 @@ class Window {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8daf4730d3adf7035b6de9be4c469af5
   Rect selectROI(Mat img) {
-    return cvRunArena<Rect>((arena) {
-      final result = arena<cvg.Rect>();
-      cvRun(
-          () => CFFI.Window_SelectROI(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
-      return Rect.fromNative(result.ref);
-    });
+    final result = calloc<cvg.Rect>();
+    final cname = name.toNativeUtf8().cast<ffi.Char>();
+    cvRun(() => CFFI.Window_SelectROI(cname, img.ref, result));
+    calloc.free(cname);
+    return Rect.fromPointer(result);
   }
 
   /// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
@@ -147,10 +146,11 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga0f11fad74a6432b8055fb21621a0f893
   VecRect selectROIs(Mat img) {
     return cvRunArena<VecRect>((arena) {
-      final result = arena<cvg.VecRect>();
-      cvRun(() =>
-          CFFI.Window_SelectROIs(name.toNativeUtf8(allocator: arena).cast(), img.ref, result));
-      return VecRect.fromVec(result.ref);
+      final result = calloc<cvg.VecRect>();
+      final cname = name.toNativeUtf8().cast<ffi.Char>();
+      cvRun(() => CFFI.Window_SelectROIs(cname, img.ref, result));
+      calloc.free(cname);
+      return VecRect.fromPointer(result);
     });
   }
 
@@ -175,10 +175,9 @@ int waitKey(int delay) {
 class Trackbar {
   Trackbar(this.name, this.parent, this.max, {int? value}) {
     cvRunArena((arena) {
-      cvRun(
-        () => CFFI.Trackbar_Create(parent.name.toNativeUtf8(allocator: arena).cast(),
-            name.toNativeUtf8(allocator: arena).cast(), max),
-      );
+      final ppname = parent.name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cname = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => CFFI.Trackbar_Create(ppname, cname, max));
       if (value != null) {
         pos = value;
       }

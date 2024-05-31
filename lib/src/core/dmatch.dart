@@ -9,8 +9,10 @@ import 'vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class DMatch extends CvStruct<cvg.DMatch> {
-  DMatch._(ffi.Pointer<cvg.DMatch> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  DMatch._(ffi.Pointer<cvg.DMatch> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
     final ptr = calloc<cvg.DMatch>()
@@ -21,9 +23,16 @@ class DMatch extends CvStruct<cvg.DMatch> {
     return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);
-  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p) => DMatch._(p);
+  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, [bool attach = true]) =>
+      DMatch._(p, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   int get queryIdx => ref.queryIdx;
   int get trainIdx => ref.trainIdx;
   int get imgIdx => ref.imgIdx;
@@ -38,10 +47,13 @@ class DMatch extends CvStruct<cvg.DMatch> {
 }
 
 class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
-  VecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecDMatch._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr) => VecDMatch._(ptr);
+  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) =>
+      VecDMatch._(ptr, attach);
   factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
     final p = calloc<cvg.VecDMatch>();
     cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));
@@ -68,6 +80,11 @@ class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(CFFI.addresses.VecDMatch_Close);
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecDMatch_Close(ptr);
+  }
+
   @override
   Iterator<DMatch> get iterator => VecDMatchIterator(ref);
   @override
@@ -91,18 +108,21 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   @override
   DMatch operator [](int idx) {
     return cvRunArena<DMatch>((arena) {
-      final p = arena<cvg.DMatch>();
+      final p = calloc<cvg.DMatch>();
       cvRun(() => CFFI.VecDMatch_At(ptr, idx, p));
-      return DMatch.fromNative(p.ref);
+      return DMatch.fromPointer(p);
     });
   }
 }
 
 class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> {
-  VecVecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecVecDMatch._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr) => VecVecDMatch._(ptr);
+  factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr, [bool attach = true]) =>
+      VecVecDMatch._(ptr, attach);
   factory VecVecDMatch.fromVec(cvg.VecVecDMatch ptr) {
     final p = calloc<cvg.VecVecDMatch>();
     cvRun(() => CFFI.VecVecDMatch_NewFromVec(ptr, p));
@@ -123,6 +143,11 @@ class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> 
   @override
   cvg.VecVecDMatchPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(CFFI.addresses.VecVecDMatch_Close);
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecVecDMatch_Close(ptr);
+  }
+
   @override
   Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
   @override
@@ -144,9 +169,9 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
   @override
   VecDMatch operator [](int idx) {
     return cvRunArena<VecDMatch>((arena) {
-      final p = arena<cvg.VecDMatch>();
+      final p = calloc<cvg.VecDMatch>();
       cvRun(() => CFFI.VecVecDMatch_At(ptr, idx, p));
-      final vec = VecDMatch.fromVec(p.ref);
+      final vec = VecDMatch.fromPointer(p);
       return vec;
     });
   }

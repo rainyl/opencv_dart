@@ -86,5 +86,7 @@ void main() async {
     final mean = bmh.getMean();
     bmh.mode = cv.BLOCK_MEAN_HASH_MODE_1;
     expect(mean.length, greaterThan(0));
+
+    bmh.dispose();
   });
 }
