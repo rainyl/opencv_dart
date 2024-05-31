@@ -11,8 +11,10 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
-  Subdiv2D._(cvg.Subdiv2DPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Subdiv2D._(cvg.Subdiv2DPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory Subdiv2D.empty() {

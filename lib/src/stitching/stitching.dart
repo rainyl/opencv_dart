@@ -19,8 +19,10 @@ import '../opencv.g.dart' as cvg;
 /// with the theory is recommended.
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#details
 class Stitcher extends CvStruct<cvg.PtrStitcher> {
-  Stitcher._(cvg.PtrStitcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Stitcher._(cvg.PtrStitcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   cvg.Stitcher get stitcher {

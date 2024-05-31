@@ -81,8 +81,10 @@ enum PredefinedDictionaryType {
 }
 
 class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
-  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {

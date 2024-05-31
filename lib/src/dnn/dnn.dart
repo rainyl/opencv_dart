@@ -18,13 +18,15 @@ import '../opencv.g.dart' as cvg;
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
 class Layer extends CvStruct<cvg.Layer> {
-  Layer._(cvg.LayerPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Layer._(cvg.LayerPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   @Deprecated("Use [Layer.fromPointer] instead.")
   factory Layer.fromNative(cvg.LayerPtr ptr) => Layer._(ptr);
-  factory Layer.fromPointer(cvg.LayerPtr ptr) => Layer._(ptr);
+  factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
 
   static final finalizer = OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
 
@@ -90,8 +92,10 @@ class Layer extends CvStruct<cvg.Layer> {
 /// For further details, please see:
 /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html
 class Net extends CvStruct<cvg.Net> {
-  Net._(cvg.NetPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Net._(cvg.NetPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory Net.empty() {

@@ -16,8 +16,11 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
-  BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory BackgroundSubtractorMOG2.empty() {
     final p = calloc<cvg.BackgroundSubtractorMOG2>();
@@ -62,8 +65,11 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 }
 
 class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
-  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   static final finalizer =
@@ -248,8 +254,10 @@ Mat calcOpticalFlowFarneback(
 ///
 /// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
 class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
-  TrackerMIL(cvg.TrackerMILPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  TrackerMIL(cvg.TrackerMILPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory TrackerMIL.create() {
     final p = calloc<cvg.TrackerMIL>();
@@ -304,8 +312,10 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
 /// For further details, please see:
 /// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
 class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
-  KalmanFilter(cvg.KalmanFilterPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  KalmanFilter(cvg.KalmanFilterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory KalmanFilter.create(

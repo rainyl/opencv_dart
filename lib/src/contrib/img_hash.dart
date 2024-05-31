@@ -73,9 +73,12 @@ const int BLOCK_MEAN_HASH_MODE_1 = 1;
 
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
 class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
-  BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0])
+  BlockMeanHash._(cvg.BlockMeanHashPtr ptr,
+      [this._mode = BLOCK_MEAN_HASH_MODE_0, bool attach = true])
       : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   static final finalizer = OcvFinalizer<cvg.BlockMeanHashPtr>(CFFI.addresses.BlockMeanHash_Close);
 

@@ -12,8 +12,10 @@ import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
-  VideoCapture._(cvg.VideoCapturePtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  VideoCapture._(cvg.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory VideoCapture.empty() {
@@ -147,8 +149,10 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 }
 
 class VideoWriter extends CvStruct<cvg.VideoWriter> {
-  VideoWriter._(cvg.VideoWriterPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  VideoWriter._(cvg.VideoWriterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory VideoWriter.empty() {

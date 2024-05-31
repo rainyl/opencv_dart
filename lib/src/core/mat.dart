@@ -14,8 +14,10 @@ import 'array.dart';
 import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, [this.xdata]) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Mat._(cvg.MatPtr ptr, [this.xdata, bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// This method is very similar to [clone], will copy data from [mat]
@@ -59,7 +61,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat) => Mat._(mat);
+  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, null, attach);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
@@ -1348,10 +1350,12 @@ typedef InputArray = OutputArray;
 typedef InputOutputArray = Mat;
 
 class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
-  VecMat._(this.ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  VecMat._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
+  factory VecMat.fromPointer(cvg.VecMatPtr ptr, [bool attach = true]) => VecMat._(ptr, attach);
   factory VecMat.fromVec(cvg.VecMat ptr) {
     final p = calloc<cvg.VecMat>();
     cvRun(() => CFFI.VecMat_NewFromVec(ptr, p));

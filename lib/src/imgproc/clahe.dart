@@ -7,8 +7,10 @@ import '../core/size.dart';
 import '../opencv.g.dart' as cvg;
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
-  CLAHE._(cvg.CLAHEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  CLAHE._(cvg.CLAHEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory CLAHE.fromNative(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {

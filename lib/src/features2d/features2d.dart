@@ -17,8 +17,10 @@ import '../opencv.g.dart' as cvg;
 
 /// AKAZE is a wrapper around the cv::AKAZE algorithm.
 class AKAZE extends CvStruct<cvg.AKAZE> {
-  AKAZE._(cvg.AKAZEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  AKAZE._(cvg.AKAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new AKAZE algorithm
@@ -68,8 +70,11 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
 class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
-  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new AgastFeatureDetector algorithm
@@ -109,8 +114,10 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
 
 /// BRISK is a wrapper around the cv::BRISK algorithm.
 class BRISK extends CvStruct<cvg.BRISK> {
-  BRISK._(cvg.BRISKPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  BRISK._(cvg.BRISKPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new BRISK algorithm
@@ -174,8 +181,11 @@ enum FastFeatureDetectorType {
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
 class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
-  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new FastFeatureDetector algorithm
@@ -230,8 +240,10 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
 
 /// GFTTDetector is a wrapper around the cv::GFTTDetector.
 class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
-  GFTTDetector._(cvg.GFTTDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  GFTTDetector._(cvg.GFTTDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new GFTTDetector algorithm
@@ -270,8 +282,10 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
 
 /// KAZE is a wrapper around the cv::KAZE.
 class KAZE extends CvStruct<cvg.KAZE> {
-  KAZE._(cvg.KAZEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  KAZE._(cvg.KAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new KAZE algorithm
@@ -321,8 +335,10 @@ class KAZE extends CvStruct<cvg.KAZE> {
 
 /// MSER is a wrapper around the cv::MSER.
 class MSER extends CvStruct<cvg.MSER> {
-  MSER._(cvg.MSERPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  MSER._(cvg.MSERPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new MSER algorithm
@@ -369,8 +385,10 @@ enum ORBScoreType {
 
 /// ORB is a wrapper around the cv::ORB.
 class ORB extends CvStruct<cvg.ORB> {
-  ORB._(cvg.ORBPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  ORB._(cvg.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new ORB algorithm
@@ -440,9 +458,11 @@ class ORB extends CvStruct<cvg.ORB> {
 }
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr)
+  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
       : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory SimpleBlobDetectorParams.empty() {
@@ -518,8 +538,9 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
         minThreshold: r.minThreshold,
         thresholdStep: r.thresholdStep,
       );
-  factory SimpleBlobDetectorParams.fromPointer(ffi.Pointer<cvg.SimpleBlobDetectorParams> p) =>
-      SimpleBlobDetectorParams._(p);
+  factory SimpleBlobDetectorParams.fromPointer(ffi.Pointer<cvg.SimpleBlobDetectorParams> p,
+          [bool attach = true]) =>
+      SimpleBlobDetectorParams._(p, attach);
 
   @override
   cvg.SimpleBlobDetectorParams get ref => ptr.ref;
@@ -648,8 +669,11 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
 class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
-  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new SimpleBlobDetector algorithm
@@ -695,8 +719,10 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
 
 /// BFMatcher is a wrapper around the cv::BFMatcher.
 class BFMatcher extends CvStruct<cvg.BFMatcher> {
-  BFMatcher._(cvg.BFMatcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  BFMatcher._(cvg.BFMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new BFMatcher algorithm
@@ -751,8 +777,10 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
 
 /// FlannBasedMatcher is a wrapper around the cv::FlannBasedMatcher.
 class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
-  FlannBasedMatcher._(cvg.FlannBasedMatcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  FlannBasedMatcher._(cvg.FlannBasedMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new FlannBasedMatcher algorithm
@@ -813,8 +841,10 @@ void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color, DrawMa
 
 /// SIFT is a wrapper around the cv::SIFT.
 class SIFT extends CvStruct<cvg.SIFT> {
-  SIFT._(cvg.SIFTPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  SIFT._(cvg.SIFTPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new SIFT algorithm

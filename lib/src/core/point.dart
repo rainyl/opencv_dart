@@ -7,8 +7,10 @@ import 'vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class Point extends CvStruct<cvg.Point> {
-  Point._(ffi.Pointer<cvg.Point> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Point._(ffi.Pointer<cvg.Point> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory Point(int x, int y) {
     final ptr = calloc<cvg.Point>()
@@ -17,7 +19,8 @@ class Point extends CvStruct<cvg.Point> {
     return Point._(ptr);
   }
   factory Point.fromNative(cvg.Point p) => Point(p.x, p.y);
-  factory Point.fromPointer(ffi.Pointer<cvg.Point> ptr) => Point._(ptr);
+  factory Point.fromPointer(ffi.Pointer<cvg.Point> ptr, [bool attach = true]) =>
+      Point._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -38,8 +41,10 @@ class Point extends CvStruct<cvg.Point> {
 }
 
 class Point2f extends CvStruct<cvg.Point2f> {
-  Point2f._(ffi.Pointer<cvg.Point2f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Point2f._(ffi.Pointer<cvg.Point2f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory Point2f(double x, double y) {
     final ptr = calloc<cvg.Point2f>()
@@ -48,7 +53,8 @@ class Point2f extends CvStruct<cvg.Point2f> {
     return Point2f._(ptr);
   }
   factory Point2f.fromNative(cvg.Point2f p) => Point2f(p.x, p.y);
-  factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> ptr) => Point2f._(ptr);
+  factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> ptr, [bool attach = true]) =>
+      Point2f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -69,8 +75,10 @@ class Point2f extends CvStruct<cvg.Point2f> {
 }
 
 class Point3f extends CvStruct<cvg.Point3f> {
-  Point3f._(ffi.Pointer<cvg.Point3f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Point3f._(ffi.Pointer<cvg.Point3f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory Point3f(double x, double y, double z) {
     final ptr = calloc<cvg.Point3f>()
@@ -80,7 +88,8 @@ class Point3f extends CvStruct<cvg.Point3f> {
     return Point3f._(ptr);
   }
   factory Point3f.fromNative(cvg.Point3f p) => Point3f(p.x, p.y, p.z);
-  factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> ptr) => Point3f._(ptr);
+  factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> ptr, [bool attach = true]) =>
+      Point3f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 

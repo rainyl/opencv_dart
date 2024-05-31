@@ -7,8 +7,10 @@ import 'base.dart';
 import '../opencv.g.dart' as cvg;
 
 class Scalar extends CvStruct<cvg.Scalar> {
-  Scalar._(ffi.Pointer<cvg.Scalar> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Scalar._(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory Scalar(double val1, double val2, double val3, double val4) {
@@ -20,7 +22,8 @@ class Scalar extends CvStruct<cvg.Scalar> {
     return Scalar._(p);
   }
   factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);
-  factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr) => Scalar._(ptr);
+  factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) =>
+      Scalar._(ptr, attach);
   factory Scalar.all(double val) => Scalar(val, val, val, val);
   factory Scalar.default_() => Scalar(0.0, 0.0, 0.0, 0.0);
   factory Scalar.fromRgb(int r, int g, int b) {

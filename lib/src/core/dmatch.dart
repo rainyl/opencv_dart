@@ -9,8 +9,10 @@ import 'vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class DMatch extends CvStruct<cvg.DMatch> {
-  DMatch._(ffi.Pointer<cvg.DMatch> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  DMatch._(ffi.Pointer<cvg.DMatch> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
     final ptr = calloc<cvg.DMatch>()
@@ -21,7 +23,8 @@ class DMatch extends CvStruct<cvg.DMatch> {
     return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);
-  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p) => DMatch._(p);
+  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, [bool attach = true]) =>
+      DMatch._(p, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -44,10 +47,13 @@ class DMatch extends CvStruct<cvg.DMatch> {
 }
 
 class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
-  VecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  VecDMatch._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr) => VecDMatch._(ptr);
+  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) =>
+      VecDMatch._(ptr, attach);
   factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
     final p = calloc<cvg.VecDMatch>();
     cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));
@@ -110,10 +116,13 @@ class VecDMatchIterator extends VecIterator<DMatch> {
 }
 
 class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> {
-  VecVecDMatch._(this.ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  VecVecDMatch._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr) => VecVecDMatch._(ptr);
+  factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr, [bool attach = true]) =>
+      VecVecDMatch._(ptr, attach);
   factory VecVecDMatch.fromVec(cvg.VecVecDMatch ptr) {
     final p = calloc<cvg.VecVecDMatch>();
     cvRun(() => CFFI.VecVecDMatch_NewFromVec(ptr, p));

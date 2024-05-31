@@ -13,8 +13,10 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
-  ArucoDetector._(cvg.ArucoDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  ArucoDetector._(cvg.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDetector.empty() {
@@ -79,8 +81,10 @@ void arucoGenerateImageMarker(
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
-  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDetectorParameters.empty() {

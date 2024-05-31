@@ -8,11 +8,14 @@ import '../opencv.g.dart' as cvg;
 ///
 /// https://docs.opencv.org/4.x/d8/d23/classcv_1_1Moments.html#details
 class Moments extends CvStruct<cvg.Moment> {
-  Moments._(ffi.Pointer<cvg.Moment> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast(), detach: this);
+  Moments._(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
-  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr) => Moments._(ptr);
+  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) =>
+      Moments._(ptr, attach);
 
   /// spatial moments
   double get m00 => ref.m00;
