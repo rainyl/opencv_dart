@@ -73,6 +73,7 @@ Uint8List imencode(
   if (!success.value) {
     throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
   }
+  calloc.free(cExt);
   return VecUChar.fromPointer(buffer).toU8List();
 }
 
