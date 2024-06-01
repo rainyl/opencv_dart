@@ -16517,6 +16517,113 @@ class CvNative {
   late final _VideoWriter_Write =
       _VideoWriter_WritePtr.asFunction<CvStatus Function(VideoWriter, Mat)>();
 
+  void WBDetector_Close(
+    ffi.Pointer<PtrWBDetector> self,
+  ) {
+    return _WBDetector_Close(
+      self,
+    );
+  }
+
+  late final _WBDetector_ClosePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrWBDetector>)>>(
+      'WBDetector_Close');
+  late final _WBDetector_Close = _WBDetector_ClosePtr.asFunction<
+      void Function(ffi.Pointer<PtrWBDetector>)>();
+
+  CvStatus WBDetector_Create(
+    ffi.Pointer<PtrWBDetector> rval,
+  ) {
+    return _WBDetector_Create(
+      rval,
+    );
+  }
+
+  late final _WBDetector_CreatePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrWBDetector>)>>(
+      'WBDetector_Create');
+  late final _WBDetector_Create = _WBDetector_CreatePtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrWBDetector>)>();
+
+  CvStatus WBDetector_Detect(
+    ffi.Pointer<PtrWBDetector> self,
+    Mat img,
+    ffi.Pointer<VecRect> bbox,
+    ffi.Pointer<VecDouble> confidences,
+  ) {
+    return _WBDetector_Detect(
+      self,
+      img,
+      bbox,
+      confidences,
+    );
+  }
+
+  late final _WBDetector_DetectPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Pointer<PtrWBDetector>,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecDouble>)>>('WBDetector_Detect');
+  late final _WBDetector_Detect = _WBDetector_DetectPtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrWBDetector>, Mat, ffi.Pointer<VecRect>,
+          ffi.Pointer<VecDouble>)>();
+
+  CvStatus WBDetector_Read(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> filename,
+  ) {
+    return _WBDetector_Read(
+      self,
+      filename,
+    );
+  }
+
+  late final _WBDetector_ReadPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<PtrWBDetector>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Read');
+  late final _WBDetector_Read = _WBDetector_ReadPtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>)>();
+
+  CvStatus WBDetector_Train(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> pos_samples,
+    ffi.Pointer<ffi.Char> neg_imgs,
+  ) {
+    return _WBDetector_Train(
+      self,
+      pos_samples,
+      neg_imgs,
+    );
+  }
+
+  late final _WBDetector_TrainPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Train');
+  late final _WBDetector_Train = _WBDetector_TrainPtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>)>();
+
+  CvStatus WBDetector_Write(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> filename,
+  ) {
+    return _WBDetector_Write(
+      self,
+      filename,
+    );
+  }
+
+  late final _WBDetector_WritePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(ffi.Pointer<PtrWBDetector>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Write');
+  late final _WBDetector_Write = _WBDetector_WritePtr.asFunction<
+      CvStatus Function(ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>)>();
+
   CvStatus WarpAffine(
     Mat src,
     Mat dst,
@@ -17261,6 +17368,1071 @@ class CvNative {
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
 
+  CvStatus ximgproc_EdgeBoxes_Close(
+    ffi.Pointer<PtrEdgeBoxes> self,
+  ) {
+    return _ximgproc_EdgeBoxes_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_ClosePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>>(
+          'ximgproc_EdgeBoxes_Close');
+  late final _ximgproc_EdgeBoxes_Close = _ximgproc_EdgeBoxes_ClosePtr
+      .asFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>();
+
+  CvStatus ximgproc_EdgeBoxes_Create(
+    double alpha,
+    double beta,
+    double eta,
+    double minScore,
+    int maxBoxes,
+    double edgeMinMag,
+    double edgeMergeThr,
+    double clusterMinMag,
+    double maxAspectRatio,
+    double minBoxArea,
+    double gamma,
+    double kappa,
+    ffi.Pointer<PtrEdgeBoxes> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_Create(
+      alpha,
+      beta,
+      eta,
+      minScore,
+      maxBoxes,
+      edgeMinMag,
+      edgeMergeThr,
+      clusterMinMag,
+      maxAspectRatio,
+      minBoxArea,
+      gamma,
+      kappa,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Pointer<PtrEdgeBoxes>)>>('ximgproc_EdgeBoxes_Create');
+  late final _ximgproc_EdgeBoxes_Create =
+      _ximgproc_EdgeBoxes_CreatePtr.asFunction<
+          CvStatus Function(
+              double,
+              double,
+              double,
+              double,
+              int,
+              double,
+              double,
+              double,
+              double,
+              double,
+              double,
+              double,
+              ffi.Pointer<PtrEdgeBoxes>)>();
+
+  CvStatus ximgproc_EdgeBoxes_clear(
+    PtrEdgeBoxes self,
+  ) {
+    return _ximgproc_EdgeBoxes_clear(
+      self,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_clearPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes)>>(
+          'ximgproc_EdgeBoxes_clear');
+  late final _ximgproc_EdgeBoxes_clear = _ximgproc_EdgeBoxes_clearPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes)>();
+
+  CvStatus ximgproc_EdgeBoxes_empty(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Bool> val,
+  ) {
+    return _ximgproc_EdgeBoxes_empty(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_emptyPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Bool>)>>('ximgproc_EdgeBoxes_empty');
+  late final _ximgproc_EdgeBoxes_empty = _ximgproc_EdgeBoxes_emptyPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getAlpha(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getAlpha(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getAlphaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getAlpha');
+  late final _ximgproc_EdgeBoxes_getAlpha = _ximgproc_EdgeBoxes_getAlphaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getBeta(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getBeta(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getBetaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getBeta');
+  late final _ximgproc_EdgeBoxes_getBeta = _ximgproc_EdgeBoxes_getBetaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getBoundingBoxes(
+    PtrEdgeBoxes self,
+    Mat edge_map,
+    Mat orientation_map,
+    VecRect boxes,
+    ffi.Pointer<VecFloat> scores,
+  ) {
+    return _ximgproc_EdgeBoxes_getBoundingBoxes(
+      self,
+      edge_map,
+      orientation_map,
+      boxes,
+      scores,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getBoundingBoxesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes, Mat, Mat, VecRect,
+              ffi.Pointer<VecFloat>)>>('ximgproc_EdgeBoxes_getBoundingBoxes');
+  late final _ximgproc_EdgeBoxes_getBoundingBoxes =
+      _ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
+          CvStatus Function(
+              PtrEdgeBoxes, Mat, Mat, VecRect, ffi.Pointer<VecFloat>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getClusterMinMag(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getClusterMinMag(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getClusterMinMagPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getClusterMinMag');
+  late final _ximgproc_EdgeBoxes_getClusterMinMag =
+      _ximgproc_EdgeBoxes_getClusterMinMagPtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getEdgeMergeThr(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getEdgeMergeThr(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getEdgeMergeThrPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getEdgeMergeThr');
+  late final _ximgproc_EdgeBoxes_getEdgeMergeThr =
+      _ximgproc_EdgeBoxes_getEdgeMergeThrPtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getEdgeMinMag(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getEdgeMinMag(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getEdgeMinMagPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getEdgeMinMag');
+  late final _ximgproc_EdgeBoxes_getEdgeMinMag =
+      _ximgproc_EdgeBoxes_getEdgeMinMagPtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getEta(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getEta(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getEtaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getEta');
+  late final _ximgproc_EdgeBoxes_getEta = _ximgproc_EdgeBoxes_getEtaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getGamma(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getGamma(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getGammaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getGamma');
+  late final _ximgproc_EdgeBoxes_getGamma = _ximgproc_EdgeBoxes_getGammaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getKappa(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getKappa(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getKappaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getKappa');
+  late final _ximgproc_EdgeBoxes_getKappa = _ximgproc_EdgeBoxes_getKappaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getMaxAspectRatio(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getMaxAspectRatio(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getMaxAspectRatioPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getMaxAspectRatio');
+  late final _ximgproc_EdgeBoxes_getMaxAspectRatio =
+      _ximgproc_EdgeBoxes_getMaxAspectRatioPtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getMaxBoxes(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getMaxBoxes(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getMaxBoxesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Int>)>>('ximgproc_EdgeBoxes_getMaxBoxes');
+  late final _ximgproc_EdgeBoxes_getMaxBoxes =
+      _ximgproc_EdgeBoxes_getMaxBoxesPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getMinBoxArea(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getMinBoxArea(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getMinBoxAreaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getMinBoxArea');
+  late final _ximgproc_EdgeBoxes_getMinBoxArea =
+      _ximgproc_EdgeBoxes_getMinBoxAreaPtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_getMinScore(
+    PtrEdgeBoxes self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_EdgeBoxes_getMinScore(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getMinScorePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrEdgeBoxes,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_EdgeBoxes_getMinScore');
+  late final _ximgproc_EdgeBoxes_getMinScore =
+      _ximgproc_EdgeBoxes_getMinScorePtr.asFunction<
+          CvStatus Function(PtrEdgeBoxes, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_EdgeBoxes_setAlpha(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setAlpha(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setAlphaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setAlpha');
+  late final _ximgproc_EdgeBoxes_setAlpha = _ximgproc_EdgeBoxes_setAlphaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setBeta(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setBeta(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setBetaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setBeta');
+  late final _ximgproc_EdgeBoxes_setBeta = _ximgproc_EdgeBoxes_setBetaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setClusterMinMag(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setClusterMinMag(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setClusterMinMagPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setClusterMinMag');
+  late final _ximgproc_EdgeBoxes_setClusterMinMag =
+      _ximgproc_EdgeBoxes_setClusterMinMagPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setEdgeMergeThr(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setEdgeMergeThr(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setEdgeMergeThrPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setEdgeMergeThr');
+  late final _ximgproc_EdgeBoxes_setEdgeMergeThr =
+      _ximgproc_EdgeBoxes_setEdgeMergeThrPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setEdgeMinMag(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setEdgeMinMag(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setEdgeMinMagPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setEdgeMinMag');
+  late final _ximgproc_EdgeBoxes_setEdgeMinMag =
+      _ximgproc_EdgeBoxes_setEdgeMinMagPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setEta(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setEta(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setEtaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setEta');
+  late final _ximgproc_EdgeBoxes_setEta = _ximgproc_EdgeBoxes_setEtaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setGamma(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setGamma(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setGammaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setGamma');
+  late final _ximgproc_EdgeBoxes_setGamma = _ximgproc_EdgeBoxes_setGammaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setKappa(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setKappa(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setKappaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setKappa');
+  late final _ximgproc_EdgeBoxes_setKappa = _ximgproc_EdgeBoxes_setKappaPtr
+      .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setMaxAspectRatio(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setMaxAspectRatio(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setMaxAspectRatioPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setMaxAspectRatio');
+  late final _ximgproc_EdgeBoxes_setMaxAspectRatio =
+      _ximgproc_EdgeBoxes_setMaxAspectRatioPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setMaxBoxes(
+    PtrEdgeBoxes self,
+    int val,
+  ) {
+    return _ximgproc_EdgeBoxes_setMaxBoxes(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setMaxBoxesPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Int)>>(
+          'ximgproc_EdgeBoxes_setMaxBoxes');
+  late final _ximgproc_EdgeBoxes_setMaxBoxes =
+      _ximgproc_EdgeBoxes_setMaxBoxesPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, int)>();
+
+  CvStatus ximgproc_EdgeBoxes_setMinBoxArea(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setMinBoxArea(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setMinBoxAreaPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setMinBoxArea');
+  late final _ximgproc_EdgeBoxes_setMinBoxArea =
+      _ximgproc_EdgeBoxes_setMinBoxAreaPtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  CvStatus ximgproc_EdgeBoxes_setMinScore(
+    PtrEdgeBoxes self,
+    double val,
+  ) {
+    return _ximgproc_EdgeBoxes_setMinScore(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_setMinScorePtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxes, ffi.Float)>>(
+          'ximgproc_EdgeBoxes_setMinScore');
+  late final _ximgproc_EdgeBoxes_setMinScore =
+      _ximgproc_EdgeBoxes_setMinScorePtr
+          .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
+
+  void ximgproc_GraphSegmentation_Close(
+    ffi.Pointer<PtrGraphSegmentation> self,
+  ) {
+    return _ximgproc_GraphSegmentation_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_ClosePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<PtrGraphSegmentation>)>>(
+      'ximgproc_GraphSegmentation_Close');
+  late final _ximgproc_GraphSegmentation_Close =
+      _ximgproc_GraphSegmentation_ClosePtr
+          .asFunction<void Function(ffi.Pointer<PtrGraphSegmentation>)>();
+
+  CvStatus ximgproc_GraphSegmentation_Create(
+    double sigma,
+    double k,
+    int min_size,
+    ffi.Pointer<PtrGraphSegmentation> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_Create(
+      sigma,
+      k,
+      min_size,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              CvStatus Function(ffi.Float, ffi.Float, ffi.Int,
+                  ffi.Pointer<PtrGraphSegmentation>)>>(
+      'ximgproc_GraphSegmentation_Create');
+  late final _ximgproc_GraphSegmentation_Create =
+      _ximgproc_GraphSegmentation_CreatePtr.asFunction<
+          CvStatus Function(
+              double, double, int, ffi.Pointer<PtrGraphSegmentation>)>();
+
+  CvStatus ximgproc_GraphSegmentation_getK(
+    PtrGraphSegmentation self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getK(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getKPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrGraphSegmentation,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_GraphSegmentation_getK');
+  late final _ximgproc_GraphSegmentation_getK =
+      _ximgproc_GraphSegmentation_getKPtr.asFunction<
+          CvStatus Function(PtrGraphSegmentation, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus ximgproc_GraphSegmentation_getMinSize(
+    PtrGraphSegmentation self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getMinSize(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getMinSizePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrGraphSegmentation,
+              ffi.Pointer<ffi.Int>)>>('ximgproc_GraphSegmentation_getMinSize');
+  late final _ximgproc_GraphSegmentation_getMinSize =
+      _ximgproc_GraphSegmentation_getMinSizePtr.asFunction<
+          CvStatus Function(PtrGraphSegmentation, ffi.Pointer<ffi.Int>)>();
+
+  CvStatus ximgproc_GraphSegmentation_getSigma(
+    PtrGraphSegmentation self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getSigma(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrGraphSegmentation,
+              ffi.Pointer<ffi.Double>)>>('ximgproc_GraphSegmentation_getSigma');
+  late final _ximgproc_GraphSegmentation_getSigma =
+      _ximgproc_GraphSegmentation_getSigmaPtr.asFunction<
+          CvStatus Function(PtrGraphSegmentation, ffi.Pointer<ffi.Double>)>();
+
+  CvStatus ximgproc_GraphSegmentation_processImage(
+    PtrGraphSegmentation self,
+    Mat src,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_GraphSegmentation_processImage(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_processImagePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrGraphSegmentation, Mat,
+              ffi.Pointer<Mat>)>>('ximgproc_GraphSegmentation_processImage');
+  late final _ximgproc_GraphSegmentation_processImage =
+      _ximgproc_GraphSegmentation_processImagePtr.asFunction<
+          CvStatus Function(PtrGraphSegmentation, Mat, ffi.Pointer<Mat>)>();
+
+  CvStatus ximgproc_GraphSegmentation_setK(
+    PtrGraphSegmentation self,
+    double val,
+  ) {
+    return _ximgproc_GraphSegmentation_setK(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setKPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(PtrGraphSegmentation, ffi.Float)>>(
+      'ximgproc_GraphSegmentation_setK');
+  late final _ximgproc_GraphSegmentation_setK =
+      _ximgproc_GraphSegmentation_setKPtr
+          .asFunction<CvStatus Function(PtrGraphSegmentation, double)>();
+
+  CvStatus ximgproc_GraphSegmentation_setMinSize(
+    PtrGraphSegmentation self,
+    int val,
+  ) {
+    return _ximgproc_GraphSegmentation_setMinSize(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setMinSizePtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(PtrGraphSegmentation, ffi.Int)>>(
+      'ximgproc_GraphSegmentation_setMinSize');
+  late final _ximgproc_GraphSegmentation_setMinSize =
+      _ximgproc_GraphSegmentation_setMinSizePtr
+          .asFunction<CvStatus Function(PtrGraphSegmentation, int)>();
+
+  CvStatus ximgproc_GraphSegmentation_setSigma(
+    PtrGraphSegmentation self,
+    double val,
+  ) {
+    return _ximgproc_GraphSegmentation_setSigma(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setSigmaPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(PtrGraphSegmentation, ffi.Double)>>(
+      'ximgproc_GraphSegmentation_setSigma');
+  late final _ximgproc_GraphSegmentation_setSigma =
+      _ximgproc_GraphSegmentation_setSigmaPtr
+          .asFunction<CvStatus Function(PtrGraphSegmentation, double)>();
+
+  CvStatus ximgproc_PeiLinNormalization(
+    Mat I,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _ximgproc_PeiLinNormalization(
+      I,
+      rval,
+    );
+  }
+
+  late final _ximgproc_PeiLinNormalizationPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(Mat, ffi.Pointer<Mat>)>>(
+          'ximgproc_PeiLinNormalization');
+  late final _ximgproc_PeiLinNormalization = _ximgproc_PeiLinNormalizationPtr
+      .asFunction<CvStatus Function(Mat, ffi.Pointer<Mat>)>();
+
+  CvStatus ximgproc_RFFeatureGetter_Clear(
+    PtrRFFeatureGetter self,
+  ) {
+    return _ximgproc_RFFeatureGetter_Clear(
+      self,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_ClearPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrRFFeatureGetter)>>(
+          'ximgproc_RFFeatureGetter_Clear');
+  late final _ximgproc_RFFeatureGetter_Clear =
+      _ximgproc_RFFeatureGetter_ClearPtr
+          .asFunction<CvStatus Function(PtrRFFeatureGetter)>();
+
+  void ximgproc_RFFeatureGetter_Close(
+    ffi.Pointer<PtrRFFeatureGetter> self,
+  ) {
+    return _ximgproc_RFFeatureGetter_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_ClosePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrRFFeatureGetter>)>>(
+      'ximgproc_RFFeatureGetter_Close');
+  late final _ximgproc_RFFeatureGetter_Close =
+      _ximgproc_RFFeatureGetter_ClosePtr
+          .asFunction<void Function(ffi.Pointer<PtrRFFeatureGetter>)>();
+
+  CvStatus ximgproc_RFFeatureGetter_Create(
+    ffi.Pointer<PtrRFFeatureGetter> rval,
+  ) {
+    return _ximgproc_RFFeatureGetter_Create(
+      rval,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_CreatePtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(ffi.Pointer<PtrRFFeatureGetter>)>>(
+      'ximgproc_RFFeatureGetter_Create');
+  late final _ximgproc_RFFeatureGetter_Create =
+      _ximgproc_RFFeatureGetter_CreatePtr
+          .asFunction<CvStatus Function(ffi.Pointer<PtrRFFeatureGetter>)>();
+
+  CvStatus ximgproc_RFFeatureGetter_Empty(
+    PtrRFFeatureGetter self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _ximgproc_RFFeatureGetter_Empty(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_EmptyPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrRFFeatureGetter,
+              ffi.Pointer<ffi.Bool>)>>('ximgproc_RFFeatureGetter_Empty');
+  late final _ximgproc_RFFeatureGetter_Empty =
+      _ximgproc_RFFeatureGetter_EmptyPtr.asFunction<
+          CvStatus Function(PtrRFFeatureGetter, ffi.Pointer<ffi.Bool>)>();
+
+  CvStatus ximgproc_RFFeatureGetter_getFeatures(
+    PtrRFFeatureGetter self,
+    Mat src,
+    Mat features,
+    int gnrmRad,
+    int gsmthRad,
+    int shrink,
+    int outNum,
+    int gradNum,
+  ) {
+    return _ximgproc_RFFeatureGetter_getFeatures(
+      self,
+      src,
+      features,
+      gnrmRad,
+      gsmthRad,
+      shrink,
+      outNum,
+      gradNum,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_getFeaturesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrRFFeatureGetter,
+              Mat,
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int)>>('ximgproc_RFFeatureGetter_getFeatures');
+  late final _ximgproc_RFFeatureGetter_getFeatures =
+      _ximgproc_RFFeatureGetter_getFeaturesPtr.asFunction<
+          CvStatus Function(
+              PtrRFFeatureGetter, Mat, Mat, int, int, int, int, int)>();
+
+  void ximgproc_StructuredEdgeDetection_Close(
+    ffi.Pointer<PtrStructuredEdgeDetection> self,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_ClosePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>>(
+      'ximgproc_StructuredEdgeDetection_Close');
+  late final _ximgproc_StructuredEdgeDetection_Close =
+      _ximgproc_StructuredEdgeDetection_ClosePtr
+          .asFunction<void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>();
+
+  CvStatus ximgproc_StructuredEdgeDetection_Create(
+    ffi.Pointer<ffi.Char> model,
+    PtrRFFeatureGetter howToGetFeatures,
+    ffi.Pointer<PtrStructuredEdgeDetection> rval,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Create(
+      model,
+      howToGetFeatures,
+      rval,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              CvStatus Function(ffi.Pointer<ffi.Char>, PtrRFFeatureGetter,
+                  ffi.Pointer<PtrStructuredEdgeDetection>)>>(
+      'ximgproc_StructuredEdgeDetection_Create');
+  late final _ximgproc_StructuredEdgeDetection_Create =
+      _ximgproc_StructuredEdgeDetection_CreatePtr.asFunction<
+          CvStatus Function(ffi.Pointer<ffi.Char>, PtrRFFeatureGetter,
+              ffi.Pointer<PtrStructuredEdgeDetection>)>();
+
+  CvStatus ximgproc_StructuredEdgeDetection_computeOrientation(
+    PtrStructuredEdgeDetection self,
+    Mat src,
+    Mat dst,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_computeOrientation(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_computeOrientationPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrStructuredEdgeDetection, Mat,
+              Mat)>>('ximgproc_StructuredEdgeDetection_computeOrientation');
+  late final _ximgproc_StructuredEdgeDetection_computeOrientation =
+      _ximgproc_StructuredEdgeDetection_computeOrientationPtr.asFunction<
+          CvStatus Function(PtrStructuredEdgeDetection, Mat, Mat)>();
+
+  CvStatus ximgproc_StructuredEdgeDetection_detectEdges(
+    PtrStructuredEdgeDetection self,
+    Mat src,
+    Mat dst,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_detectEdges(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_detectEdgesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(PtrStructuredEdgeDetection, Mat,
+              Mat)>>('ximgproc_StructuredEdgeDetection_detectEdges');
+  late final _ximgproc_StructuredEdgeDetection_detectEdges =
+      _ximgproc_StructuredEdgeDetection_detectEdgesPtr.asFunction<
+          CvStatus Function(PtrStructuredEdgeDetection, Mat, Mat)>();
+
+  CvStatus ximgproc_StructuredEdgeDetection_edgesNms(
+    PtrStructuredEdgeDetection self,
+    Mat edge_image,
+    Mat orientation_image,
+    Mat dst,
+    int r,
+    int s,
+    double m,
+    bool isParallel,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_edgesNms(
+      self,
+      edge_image,
+      orientation_image,
+      dst,
+      r,
+      s,
+      m,
+      isParallel,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_edgesNmsPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              PtrStructuredEdgeDetection,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Float,
+              ffi.Bool)>>('ximgproc_StructuredEdgeDetection_edgesNms');
+  late final _ximgproc_StructuredEdgeDetection_edgesNms =
+      _ximgproc_StructuredEdgeDetection_edgesNmsPtr.asFunction<
+          CvStatus Function(PtrStructuredEdgeDetection, Mat, Mat, Mat, int, int,
+              double, bool)>();
+
+  CvStatus ximgproc_anisotropicDiffusion(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    double alpha,
+    double K,
+    int niters,
+  ) {
+    return _ximgproc_anisotropicDiffusion(
+      src,
+      dst,
+      alpha,
+      K,
+      niters,
+    );
+  }
+
+  late final _ximgproc_anisotropicDiffusionPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Mat>, ffi.Float, ffi.Float,
+              ffi.Int)>>('ximgproc_anisotropicDiffusion');
+  late final _ximgproc_anisotropicDiffusion =
+      _ximgproc_anisotropicDiffusionPtr.asFunction<
+          CvStatus Function(Mat, ffi.Pointer<Mat>, double, double, int)>();
+
+  CvStatus ximgproc_edgePreservingFilter(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    int d,
+    double threshold,
+  ) {
+    return _ximgproc_edgePreservingFilter(
+      src,
+      dst,
+      d,
+      threshold,
+    );
+  }
+
+  late final _ximgproc_edgePreservingFilterPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Mat>, ffi.Int,
+              ffi.Double)>>('ximgproc_edgePreservingFilter');
+  late final _ximgproc_edgePreservingFilter = _ximgproc_edgePreservingFilterPtr
+      .asFunction<CvStatus Function(Mat, ffi.Pointer<Mat>, int, double)>();
+
+  CvStatus ximgproc_findEllipses(
+    Mat image,
+    ffi.Pointer<Mat> ellipses,
+    double scoreThreshold,
+    double reliabilityThreshold,
+    double centerDistanceThreshold,
+  ) {
+    return _ximgproc_findEllipses(
+      image,
+      ellipses,
+      scoreThreshold,
+      reliabilityThreshold,
+      centerDistanceThreshold,
+    );
+  }
+
+  late final _ximgproc_findEllipsesPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Mat>, ffi.Float, ffi.Float,
+              ffi.Float)>>('ximgproc_findEllipses');
+  late final _ximgproc_findEllipses = _ximgproc_findEllipsesPtr.asFunction<
+      CvStatus Function(Mat, ffi.Pointer<Mat>, double, double, double)>();
+
+  CvStatus ximgproc_niBlackThreshold(
+    Mat _src,
+    ffi.Pointer<Mat> _dst,
+    double maxValue,
+    int type,
+    int blockSize,
+    double k,
+    int binarizationMethod,
+    double r,
+  ) {
+    return _ximgproc_niBlackThreshold(
+      _src,
+      _dst,
+      maxValue,
+      type,
+      blockSize,
+      k,
+      binarizationMethod,
+      r,
+    );
+  }
+
+  late final _ximgproc_niBlackThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(Mat, ffi.Pointer<Mat>, ffi.Double, ffi.Int, ffi.Int,
+              ffi.Double, ffi.Int, ffi.Double)>>('ximgproc_niBlackThreshold');
+  late final _ximgproc_niBlackThreshold =
+      _ximgproc_niBlackThresholdPtr.asFunction<
+          CvStatus Function(
+              Mat, ffi.Pointer<Mat>, double, int, int, double, int, double)>();
+
+  CvStatus ximgproc_thinning(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    int thinningType,
+  ) {
+    return _ximgproc_thinning(
+      src,
+      dst,
+      thinningType,
+    );
+  }
+
+  late final _ximgproc_thinningPtr = _lookup<
+          ffi
+          .NativeFunction<CvStatus Function(Mat, ffi.Pointer<Mat>, ffi.Int)>>(
+      'ximgproc_thinning');
+  late final _ximgproc_thinning = _ximgproc_thinningPtr
+      .asFunction<CvStatus Function(Mat, ffi.Pointer<Mat>, int)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -17392,10 +18564,29 @@ class _SymbolAddresses {
       get VideoCapture_Close => _library._VideoCapture_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoWriter>)>>
       get VideoWriter_Close => _library._VideoWriter_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrWBDetector>)>>
+      get WBDetector_Close => _library._WBDetector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>>
       get WeChatQRCode_Close => _library._WeChatQRCode_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>
       get Window_Close => _library._Window_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>>
+      get ximgproc_EdgeBoxes_Close => _library._ximgproc_EdgeBoxes_ClosePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrGraphSegmentation>)>>
+      get ximgproc_GraphSegmentation_Close =>
+          _library._ximgproc_GraphSegmentation_ClosePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrRFFeatureGetter>)>>
+      get ximgproc_RFFeatureGetter_Close =>
+          _library._ximgproc_RFFeatureGetter_ClosePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>>
+      get ximgproc_StructuredEdgeDetection_Close =>
+          _library._ximgproc_StructuredEdgeDetection_ClosePtr;
 }
 
 final class AKAZE extends ffi.Struct {
@@ -17472,6 +18663,30 @@ final class BlockMeanHash extends ffi.Struct {
 }
 
 typedef BlockMeanHashPtr = ffi.Pointer<BlockMeanHash>;
+
+final class Box extends ffi.Struct {
+  @ffi.Int()
+  external int h;
+
+  @ffi.Float()
+  external double score;
+
+  @ffi.Int()
+  external int w;
+
+  @ffi.Int()
+  external int x;
+
+  @ffi.Int()
+  external int y;
+}
+
+final class Boxes extends ffi.Struct {
+  external ffi.Pointer<Box> ptr;
+
+  @ffi.Int()
+  external int length;
+}
 
 final class CLAHE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -17601,6 +18816,13 @@ final class Layer extends ffi.Struct {
 }
 
 typedef LayerPtr = ffi.Pointer<Layer>;
+
+abstract class LocalBinarizationMethods {
+  static const int BINARIZATION_NIBLACK = 0;
+  static const int BINARIZATION_SAUVOLA = 1;
+  static const int BINARIZATION_WOLF = 2;
+  static const int BINARIZATION_NICK = 3;
+}
 
 final class MSER extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -17886,8 +19108,43 @@ final class NO_USE_ORBPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
+final class NO_USE_PtrEdgeBoxesPtr extends ffi.Struct {
+  external ffi.Pointer<PtrEdgeBoxesPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrGraphSegmentationPtr extends ffi.Struct {
+  external ffi.Pointer<PtrGraphSegmentationPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrRFFeatureGetterPtr extends ffi.Struct {
+  external ffi.Pointer<PtrRFFeatureGetterPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
 final class NO_USE_PtrStitcherPtr extends ffi.Struct {
   external ffi.Pointer<PtrStitcherPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrStructuredEdgeDetectionPtr extends ffi.Struct {
+  external ffi.Pointer<PtrStructuredEdgeDetectionPtr> p;
+}
+
+/// \
+/// Dart ffigen will not generate typedefs if not referred                                                  \
+/// so here we confirm they are included                                                                    \
+final class NO_USE_PtrWBDetectorPtr extends ffi.Struct {
+  external ffi.Pointer<PtrWBDetectorPtr> p;
 }
 
 /// \
@@ -18132,11 +19389,41 @@ final class Point3f extends ffi.Struct {
   external double z;
 }
 
+final class PtrEdgeBoxes extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrEdgeBoxesPtr = ffi.Pointer<PtrEdgeBoxes>;
+
+final class PtrGraphSegmentation extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrGraphSegmentationPtr = ffi.Pointer<PtrGraphSegmentation>;
+
+final class PtrRFFeatureGetter extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrRFFeatureGetterPtr = ffi.Pointer<PtrRFFeatureGetter>;
+
 final class PtrStitcher extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
 
 typedef PtrStitcherPtr = ffi.Pointer<PtrStitcher>;
+
+final class PtrStructuredEdgeDetection extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrStructuredEdgeDetectionPtr = ffi.Pointer<PtrStructuredEdgeDetection>;
+
+final class PtrWBDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrWBDetectorPtr = ffi.Pointer<PtrWBDetector>;
 
 final class QRCodeDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -18321,6 +19608,11 @@ final class TermCriteria extends ffi.Struct {
 
   @ffi.Double()
   external double epsilon;
+}
+
+abstract class ThinningTypes {
+  static const int THINNING_ZHANGSUEN = 0;
+  static const int THINNING_GUOHALL = 1;
 }
 
 final class Tracker extends ffi.Struct {
