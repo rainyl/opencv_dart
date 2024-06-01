@@ -8,6 +8,8 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
+import '../core/exception.dart';
+import '../core/error_code.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -61,17 +63,18 @@ Uint8List imencode(
   InputArray img, {
   VecInt? params,
 }) {
-  return using<Uint8List>((arena) {
-    final buffer = calloc<cvg.VecUChar>();
-    final cExt = ext.toNativeUtf8(allocator: arena);
+  final buffer = calloc<cvg.VecUChar>();
+  final success = calloc<ffi.Bool>();
+  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
-    if (params == null) {
-      CFFI.Image_IMEncode(cExt.cast(), img.ref, buffer);
-    } else {
-      CFFI.Image_IMEncode_WithParams(cExt.cast(), img.ref, params.ref, buffer);
-    }
-    return VecUChar.fromPointer(buffer).toU8List();
-  });
+  params == null
+      ? cvRun(() => CFFI.Image_IMEncode(cExt, img.ref, success, buffer))
+      : cvRun(() => CFFI.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+  if (!success.value) {
+    throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
+  }
+  calloc.free(cExt);
+  return VecUChar.fromPointer(buffer).toU8List();
 }
 
 /// imdecode reads an image from a buffer in memory.

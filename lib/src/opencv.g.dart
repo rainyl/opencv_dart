@@ -4892,44 +4892,53 @@ class CvNative {
   CvStatus Image_IMEncode(
     ffi.Pointer<ffi.Char> fileExt,
     Mat img,
+    ffi.Pointer<ffi.Bool> success,
     ffi.Pointer<VecUChar> rval,
   ) {
     return _Image_IMEncode(
       fileExt,
       img,
+      success,
       rval,
     );
   }
 
   late final _Image_IMEncodePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ffi.Pointer<ffi.Char>, Mat,
+          CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>,
               ffi.Pointer<VecUChar>)>>('Image_IMEncode');
   late final _Image_IMEncode = _Image_IMEncodePtr.asFunction<
-      CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<VecUChar>)>();
+      CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<VecUChar>)>();
 
   CvStatus Image_IMEncode_WithParams(
     ffi.Pointer<ffi.Char> fileExt,
     Mat img,
     VecInt params,
+    ffi.Pointer<ffi.Bool> success,
     ffi.Pointer<VecUChar> rval,
   ) {
     return _Image_IMEncode_WithParams(
       fileExt,
       img,
       params,
+      success,
       rval,
     );
   }
 
   late final _Image_IMEncode_WithParamsPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>,
+              Mat,
+              VecInt,
+              ffi.Pointer<ffi.Bool>,
               ffi.Pointer<VecUChar>)>>('Image_IMEncode_WithParams');
   late final _Image_IMEncode_WithParams =
       _Image_IMEncode_WithParamsPtr.asFunction<
-          CvStatus Function(
-              ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<VecUChar>)>();
+          CvStatus Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
+              ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>)>();
 
   CvStatus Image_IMRead(
     ffi.Pointer<ffi.Char> filename,

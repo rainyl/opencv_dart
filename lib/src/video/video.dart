@@ -337,11 +337,9 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
 
   Mat predict({Mat? control}) {
     final p = calloc<cvg.Mat>();
-    if (control == null) {
-      cvRun(() => CFFI.KalmanFilter_Predict(ref, p));
-    } else {
-      CFFI.KalmanFilter_PredictWithParams(ref, control.ref, p);
-    }
+    control == null
+        ? cvRun(() => CFFI.KalmanFilter_Predict(ref, p))
+        : cvRun(() => CFFI.KalmanFilter_PredictWithParams(ref, control.ref, p));
     return Mat.fromPointer(p);
   }
 
