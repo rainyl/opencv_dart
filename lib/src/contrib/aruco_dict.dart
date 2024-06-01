@@ -81,8 +81,10 @@ enum PredefinedDictionaryType {
 }
 
 class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
-  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
@@ -95,6 +97,11 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
   cvg.ArucoDictionary get ref => ptr.ref;
   static final finalizer =
       OcvFinalizer<cvg.ArucoDictionaryPtr>(ffi.Native.addressOf(cvg.ArucoDictionary_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.ArucoDictionary_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

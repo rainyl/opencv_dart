@@ -40,13 +40,15 @@ abstract class VecIterator<T> implements Iterator<T> {
 }
 
 class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
-  VecInt._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecInt._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory VecInt([int length = 0, int value = 0]) =>
       VecInt.fromList(List.generate(length, (i) => value));
-  factory VecInt.fromPointer(cvg.VecIntPtr ptr) => VecInt._(ptr);
+  factory VecInt.fromPointer(cvg.VecIntPtr ptr, [bool attach = true]) => VecInt._(ptr, attach);
   factory VecInt.fromVec(cvg.VecInt ptr) {
     final p = calloc<cvg.VecInt>();
     cvRun(() => cvg.VecInt_NewFromVec(ptr, p));
@@ -73,6 +75,12 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecIntPtr>(ffi.Native.addressOf(cvg.VecInt_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecInt_Close(ptr);
+  }
+
   @override
   cvg.VecIntPtr ptr;
   @override
@@ -105,12 +113,15 @@ class VecIntIterator extends VecIterator<int> {
 }
 
 class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
-  VecUChar._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecUChar._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory VecUChar([int length = 0, int value = 0]) =>
       VecUChar.fromList(List.generate(length, (i) => value));
-  factory VecUChar.fromPointer(cvg.VecUCharPtr ptr) => VecUChar._(ptr);
+  factory VecUChar.fromPointer(cvg.VecUCharPtr ptr, [bool attach = true]) =>
+      VecUChar._(ptr, attach);
   factory VecUChar.fromVec(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
     cvRun(() => cvg.VecUChar_NewFromVec(ptr, p));
@@ -139,6 +150,11 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
 
   Uint8List toU8List() => Uint8List.fromList(toList());
   static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(ffi.Native.addressOf(cvg.VecUChar_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecUChar_Close(ptr);
+  }
 
   @override
   cvg.VecUCharPtr ptr;
@@ -172,12 +188,14 @@ class VecUCharIterator extends VecIterator<int> {
 }
 
 class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
-  VecChar._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecChar._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory VecChar([int length = 0, int value = 0]) =>
       VecChar.fromList(List.generate(length, (i) => value));
-  factory VecChar.fromPointer(cvg.VecCharPtr ptr) => VecChar._(ptr);
+  factory VecChar.fromPointer(cvg.VecCharPtr ptr, [bool attach = true]) => VecChar._(ptr, attach);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
     cvRun(() => cvg.VecChar_NewFromVec(ptr, p));
@@ -209,6 +227,12 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   @override
   cvg.VecCharPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecCharPtr>(ffi.Native.addressOf(cvg.VecChar_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecChar_Close(ptr);
+  }
+
   @override
   Iterator<int> get iterator => VecCharIterator(ref);
 
@@ -239,10 +263,13 @@ class VecCharIterator extends VecIterator<int> {
 }
 
 class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
-  VecVecChar._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecVecChar._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr) => VecVecChar._(ptr);
+  factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr, [bool attach = true]) =>
+      VecVecChar._(ptr, attach);
   factory VecVecChar.fromVec(cvg.VecVecChar ptr) {
     final p = calloc<cvg.VecVecChar>();
     cvRun(() => cvg.VecVecChar_NewFromVec(ptr, p));
@@ -264,7 +291,13 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
     return map((e) => String.fromCharCodes(e)).toList();
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(ffi.Native.addressOf(cvg.VecVecChar_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.VecVecCharPtr>(ffi.Native.addressOf(cvg.VecVecChar_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecVecChar_Close(ptr);
+  }
 
   @override
   cvg.VecVecCharPtr ptr;
@@ -286,24 +319,28 @@ class VecVecCharIterator extends VecIterator<VecChar> {
         return len;
       });
 
+  /// return the reference
   @override
   VecChar operator [](int idx) {
     return cvRunArena<VecChar>((arena) {
-      final p = arena<cvg.VecChar>();
+      final p = calloc<cvg.VecChar>();
       cvRun(() => cvg.VecVecChar_At(ptr, idx, p));
-      final vec = VecChar.fromVec(p.ref);
+      final vec = VecChar.fromPointer(p);
       return vec;
     });
   }
 }
 
 class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
-  VecFloat._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecFloat._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory VecFloat([int length = 0, double value = 0]) =>
       VecFloat.fromList(List.generate(length, (i) => value));
-  factory VecFloat.fromPointer(cvg.VecFloatPtr ptr) => VecFloat._(ptr);
+  factory VecFloat.fromPointer(cvg.VecFloatPtr ptr, [bool attach = true]) =>
+      VecFloat._(ptr, attach);
   factory VecFloat.fromVec(cvg.VecFloat ptr) {
     final p = calloc<cvg.VecFloat>();
     cvRun(() => cvg.VecFloat_NewFromVec(ptr, p));
@@ -331,6 +368,11 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecFloatPtr>(ffi.Native.addressOf(cvg.VecFloat_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecFloat_Close(ptr);
+  }
 
   @override
   cvg.VecFloatPtr ptr;
@@ -363,12 +405,15 @@ class VecFloatIterator extends VecIterator<double> {
 }
 
 class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
-  VecDouble._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecDouble._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory VecDouble([int length = 0, double value = 0]) =>
       VecDouble.fromList(List.generate(length, (i) => value));
-  factory VecDouble.fromPointer(cvg.VecDoublePtr ptr) => VecDouble._(ptr);
+  factory VecDouble.fromPointer(cvg.VecDoublePtr ptr, [bool attach = true]) =>
+      VecDouble._(ptr, attach);
   factory VecDouble.fromVec(cvg.VecDouble ptr) {
     final p = calloc<cvg.VecDouble>();
     cvRun(() => cvg.VecDouble_NewFromVec(ptr, p));
@@ -397,7 +442,14 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
 
   @override
   cvg.VecDoublePtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecDoublePtr>(ffi.Native.addressOf(cvg.VecDouble_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.VecDoublePtr>(ffi.Native.addressOf(cvg.VecDouble_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecDouble_Close(ptr);
+  }
+
   @override
   Iterator<double> get iterator => VecDoubleIterator(ref);
 

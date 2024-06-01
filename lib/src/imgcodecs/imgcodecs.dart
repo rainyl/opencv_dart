@@ -8,6 +8,8 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
+import '../core/exception.dart';
+import '../core/error_code.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
@@ -20,10 +22,9 @@ import '../opencv.g.dart' as cvg;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(() => cvg.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
-    final dst = Mat.fromCMat(p.ref);
-    return dst;
+    return Mat.fromPointer(p);
   });
 }
 
@@ -62,18 +63,18 @@ Uint8List imencode(
   InputArray img, {
   VecInt? params,
 }) {
-  return using<Uint8List>((arena) {
-    final buffer = arena<cvg.VecUChar>();
-    final cExt = ext.toNativeUtf8(allocator: arena);
+  final buffer = calloc<cvg.VecUChar>();
+  final success = calloc<ffi.Bool>();
+  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
-    if (params == null) {
-      cvg.Image_IMEncode(cExt.cast(), img.ref, buffer);
-    } else {
-      cvg.Image_IMEncode_WithParams(cExt.cast(), img.ref, params.ref, buffer);
-    }
-
-    return VecUChar.fromVec(buffer.ref).toU8List();
-  });
+  params == null
+      ? cvRun(() => cvg.Image_IMEncode(cExt, img.ref, success, buffer))
+      : cvRun(() => cvg.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+  if (!success.value) {
+    throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
+  }
+  calloc.free(cExt);
+  return VecUChar.fromPointer(buffer).toU8List();
 }
 
 /// imdecode reads an image from a buffer in memory.

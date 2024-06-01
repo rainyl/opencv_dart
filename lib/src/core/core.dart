@@ -273,10 +273,10 @@ int borderInterpolate(int p, int len, int borderType) {
   double maxVal = CV_F64_MAX,
 }) {
   return cvRunArena<(bool, Point)>((arena) {
-    final pos = arena<cvg.Point>();
+    final pos = calloc<cvg.Point>();
     final rval = arena<ffi.Bool>();
     cvRun(() => cvg.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
-    return (rval.value, Point.fromNative(pos.ref));
+    return (rval.value, Point.fromPointer(pos));
   });
 }
 
@@ -674,7 +674,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => cvg.KMeans(data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts,
+      () => cvg.KMeans(data.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
           flags, centers!.ref, p),
     );
     return p.value;
@@ -699,7 +699,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => cvg.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref,
+      () => cvg.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref,
           attempts, flags, centers!.ref, p),
     );
     return p.value;
@@ -770,12 +770,12 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
   return cvRunArena<(Scalar, Scalar)>((arena) {
-    final mean = arena<cvg.Scalar>();
-    final stddev = arena<cvg.Scalar>();
+    final mean = calloc<cvg.Scalar>();
+    final stddev = calloc<cvg.Scalar>();
     mask == null
         ? cvRun(() => cvg.Mat_MeanStdDev(src.ref, mean, stddev))
         : cvRun(() => cvg.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
-    return (Scalar.fromNative(mean.ref), Scalar.fromNative(stddev.ref));
+    return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
   });
 }
 
@@ -826,14 +826,14 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   return using<(double, double, Point, Point)>((arena) {
     final minValP = arena<ffi.Double>();
     final maxValP = arena<ffi.Double>();
-    final minLocP = arena<cvg.Point>();
-    final maxLocP = arena<cvg.Point>();
+    final minLocP = calloc<cvg.Point>();
+    final maxLocP = calloc<cvg.Point>();
     cvRun(() => cvg.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
     return (
       minValP.value,
       maxValP.value,
-      Point.fromNative(minLocP.ref),
-      Point.fromNative(maxLocP.ref)
+      Point.fromPointer(minLocP),
+      Point.fromPointer(maxLocP)
     );
   });
 }
@@ -1110,9 +1110,9 @@ Mat subtract(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
   return cvRunArena<Scalar>((arena) {
-    final ptr = arena<cvg.Scalar>();
+    final ptr = calloc<cvg.Scalar>();
     cvRun(() => cvg.Mat_Trace(mtx.ref, ptr));
-    return Scalar.fromNative(ptr.ref);
+    return Scalar.fromPointer(ptr);
   });
 }
 

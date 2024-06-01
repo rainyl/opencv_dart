@@ -7,8 +7,10 @@ import '../core/size.dart';
 import '../opencv.g.dart' as cvg;
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
-  CLAHE._(cvg.CLAHEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  CLAHE._(cvg.CLAHEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory CLAHE.fromNative(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
@@ -43,7 +45,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
 
   double get clipLimit {
     return cvRunArena<double>((arena) {
-      final p = arena<cvg.double_t>();
+      final p = arena<ffi.Double>();
       cvRun(() => cvg.CLAHE_GetClipLimit(ref, p));
       return p.value;
     });
@@ -71,6 +73,11 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   }
 
   static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(ffi.Native.addressOf(cvg.CLAHE_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.CLAHE_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

@@ -7,7 +7,6 @@
 */
 
 #include "imgproc.h"
-#include <memory>
 #include <vector>
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -305,7 +304,8 @@ CvStatus CornerSubPix(Mat img, VecPoint2f corners, Size winSize, Size zeroZone, 
   BEGIN_WRAP
   auto size = cv::Size(winSize.width, winSize.height);
   auto zone = cv::Size(zeroZone.width, zeroZone.height);
-  cv::cornerSubPix(*img.ptr, *corners.ptr, size, zone, *criteria.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  cv::cornerSubPix(*img.ptr, *corners.ptr, size, zone, tc);
   // std::cout << *corners.ptr << std::endl;
   END_WRAP
 }

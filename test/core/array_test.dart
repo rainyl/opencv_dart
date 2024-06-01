@@ -13,6 +13,8 @@ void main() {
     final array2 = cv.U8Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.I8Array', () {
@@ -26,6 +28,8 @@ void main() {
     final array2 = cv.I8Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.U16Array', () {
@@ -39,6 +43,8 @@ void main() {
     final array2 = cv.U16Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.I16Array', () {
@@ -52,6 +58,8 @@ void main() {
     final array2 = cv.I16Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.I32Array', () {
@@ -65,6 +73,8 @@ void main() {
     final array2 = cv.I32Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.F32Array', () {
@@ -78,6 +88,8 @@ void main() {
     final array2 = cv.F32Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 
   test('cv.F64Array', () {
@@ -91,5 +103,7 @@ void main() {
     final array2 = cv.F64Array.fromList(List.generate(array.length, (i) => 1));
     expect(array2.props, isNotEmpty);
     expect(array2.toList(), array2.toList());
+
+    array.dispose();
   });
 }

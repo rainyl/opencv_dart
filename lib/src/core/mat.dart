@@ -14,8 +14,10 @@ import 'array.dart';
 import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, [this.xdata]) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  Mat._(cvg.MatPtr ptr, [this.xdata, bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// This method is very similar to [clone], will copy data from [mat]
@@ -59,7 +61,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat) => Mat._(mat);
+  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, null, attach);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
@@ -152,6 +154,12 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(ffi.Native.addressOf(cvg.Mat_Close));
+
+  void release() => cvRun(() => cvg.Mat_Release(ptr));
+  void dispose() {
+    finalizer.detach(this);
+    cvg.Mat_Close(ptr);
+  }
 
   /// external native data array of [Mat], used for [Mat.fromList]
   NativeArray? xdata;
@@ -310,103 +318,103 @@ class Mat extends CvStruct<cvg.Mat> {
     final v = cvRunArena<T>((arena) {
       // Vec2b, Vec3b, Vec4b
       if (T == Vec2b) {
-        final p = arena<cvg.Vec2b>();
+        final p = calloc<cvg.Vec2b>();
         cvRun(() => cvg.Mat_GetVec2b(ref, row, col, p));
-        return Vec2b.fromNative(p.ref) as T;
+        return Vec2b.fromPointer(p) as T;
       } else if (T == Vec3b) {
-        final p = arena<cvg.Vec3b>();
+        final p = calloc<cvg.Vec3b>();
         cvRun(() => cvg.Mat_GetVec3b(ref, row, col, p));
-        return Vec3b.fromNative(p.ref) as T;
+        return Vec3b.fromPointer(p) as T;
       } else if (T == Vec4b) {
-        final p = arena<cvg.Vec4b>();
+        final p = calloc<cvg.Vec4b>();
         cvRun(() => cvg.Mat_GetVec4b(ref, row, col, p));
-        return Vec4b.fromNative(p.ref) as T;
+        return Vec4b.fromPointer(p) as T;
       }
       // Vec2w, Vec3w, Vec4w
       else if (T == Vec2w) {
-        final p = arena<cvg.Vec2w>();
+        final p = calloc<cvg.Vec2w>();
         cvRun(() => cvg.Mat_GetVec2w(ref, row, col, p));
-        return Vec2w.fromNative(p.ref) as T;
+        return Vec2w.fromPointer(p) as T;
       } else if (T == Vec3w) {
-        final p = arena<cvg.Vec3w>();
+        final p = calloc<cvg.Vec3w>();
         cvRun(() => cvg.Mat_GetVec3w(ref, row, col, p));
-        return Vec3w.fromNative(p.ref) as T;
+        return Vec3w.fromPointer(p) as T;
       } else if (T == Vec4w) {
-        final p = arena<cvg.Vec4w>();
+        final p = calloc<cvg.Vec4w>();
         cvRun(() => cvg.Mat_GetVec4w(ref, row, col, p));
-        return Vec4w.fromNative(p.ref) as T;
+        return Vec4w.fromPointer(p) as T;
       }
       // Vec2s, Vec3s, Vec4s
       else if (T == Vec2s) {
-        final p = arena<cvg.Vec2s>();
+        final p = calloc<cvg.Vec2s>();
         cvRun(() => cvg.Mat_GetVec2s(ref, row, col, p));
-        return Vec2s.fromNative(p.ref) as T;
+        return Vec2s.fromPointer(p) as T;
       } else if (T == Vec3s) {
-        final p = arena<cvg.Vec3s>();
+        final p = calloc<cvg.Vec3s>();
         cvRun(() => cvg.Mat_GetVec3s(ref, row, col, p));
-        return Vec3s.fromNative(p.ref) as T;
+        return Vec3s.fromPointer(p) as T;
       } else if (T == Vec4s) {
-        final p = arena<cvg.Vec4s>();
+        final p = calloc<cvg.Vec4s>();
         cvRun(() => cvg.Mat_GetVec4s(ref, row, col, p));
-        return Vec4s.fromNative(p.ref) as T;
+        return Vec4s.fromPointer(p) as T;
       }
       // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
       else if (T == Vec2i) {
-        final p = arena<cvg.Vec2i>();
+        final p = calloc<cvg.Vec2i>();
         cvRun(() => cvg.Mat_GetVec2i(ref, row, col, p));
-        return Vec2i.fromNative(p.ref) as T;
+        return Vec2i.fromPointer(p) as T;
       } else if (T == Vec3i) {
-        final p = arena<cvg.Vec3i>();
+        final p = calloc<cvg.Vec3i>();
         cvRun(() => cvg.Mat_GetVec3i(ref, row, col, p));
-        return Vec3i.fromNative(p.ref) as T;
+        return Vec3i.fromPointer(p) as T;
       } else if (T == Vec4i) {
-        final p = arena<cvg.Vec4i>();
+        final p = calloc<cvg.Vec4i>();
         cvRun(() => cvg.Mat_GetVec4i(ref, row, col, p));
-        return Vec4i.fromNative(p.ref) as T;
+        return Vec4i.fromPointer(p) as T;
       } else if (T == Vec6i) {
-        final p = arena<cvg.Vec6i>();
+        final p = calloc<cvg.Vec6i>();
         cvRun(() => cvg.Mat_GetVec6i(ref, row, col, p));
-        return Vec6i.fromNative(p.ref) as T;
+        return Vec6i.fromPointer(p) as T;
       } else if (T == Vec8i) {
-        final p = arena<cvg.Vec8i>();
+        final p = calloc<cvg.Vec8i>();
         cvRun(() => cvg.Mat_GetVec8i(ref, row, col, p));
-        return Vec8i.fromNative(p.ref) as T;
+        return Vec8i.fromPointer(p) as T;
       }
       // Vec2f, Vec3f, Vec4f, Vec6f
       else if (T == Vec2f) {
-        final p = arena<cvg.Vec2f>();
+        final p = calloc<cvg.Vec2f>();
         cvRun(() => cvg.Mat_GetVec2f(ref, row, col, p));
-        return Vec2f.fromNative(p.ref) as T;
+        return Vec2f.fromPointer(p) as T;
       } else if (T == Vec3f) {
-        final p = arena<cvg.Vec3f>();
+        final p = calloc<cvg.Vec3f>();
         cvRun(() => cvg.Mat_GetVec3f(ref, row, col, p));
-        return Vec3f.fromNative(p.ref) as T;
+        return Vec3f.fromPointer(p) as T;
       } else if (T == Vec4f) {
-        final p = arena<cvg.Vec4f>();
+        final p = calloc<cvg.Vec4f>();
         cvRun(() => cvg.Mat_GetVec4f(ref, row, col, p));
-        return Vec4f.fromNative(p.ref) as T;
+        return Vec4f.fromPointer(p) as T;
       } else if (T == Vec6f) {
-        final p = arena<cvg.Vec6f>();
+        final p = calloc<cvg.Vec6f>();
         cvRun(() => cvg.Mat_GetVec6f(ref, row, col, p));
-        return Vec6f.fromNative(p.ref) as T;
+        return Vec6f.fromPointer(p) as T;
       }
       // Vec2d, Vec3d, Vec4d, Vec6d
       else if (T == Vec2d) {
-        final p = arena<cvg.Vec2d>();
+        final p = calloc<cvg.Vec2d>();
         cvRun(() => cvg.Mat_GetVec2d(ref, row, col, p));
-        return Vec2d.fromNative(p.ref) as T;
+        return Vec2d.fromPointer(p) as T;
       } else if (T == Vec3d) {
-        final p = arena<cvg.Vec3d>();
+        final p = calloc<cvg.Vec3d>();
         cvRun(() => cvg.Mat_GetVec3d(ref, row, col, p));
-        return Vec3d.fromNative(p.ref) as T;
+        return Vec3d.fromPointer(p) as T;
       } else if (T == Vec4d) {
-        final p = arena<cvg.Vec4d>();
+        final p = calloc<cvg.Vec4d>();
         cvRun(() => cvg.Mat_GetVec4d(ref, row, col, p));
-        return Vec4d.fromNative(p.ref) as T;
+        return Vec4d.fromPointer(p) as T;
       } else if (T == Vec6d) {
-        final p = arena<cvg.Vec6d>();
+        final p = calloc<cvg.Vec6d>();
         cvRun(() => cvg.Mat_GetVec6d(ref, row, col, p));
-        return Vec6d.fromNative(p.ref) as T;
+        return Vec6d.fromPointer(p) as T;
       } else {
         throw UnsupportedError("at<$T>() for $type is not supported!");
       }
@@ -1228,13 +1236,13 @@ class Mat extends CvStruct<cvg.Mat> {
 
   Scalar mean({Mat? mask}) {
     return cvRunArena<Scalar>((arena) {
-      final s = arena<cvg.Scalar>();
+      final s = calloc<cvg.Scalar>();
       if (mask == null) {
         cvRun(() => cvg.Mat_Mean(ref, s));
       } else {
         cvRun(() => cvg.Mat_MeanWithMask(ref, mask.ref, s));
       }
-      return Scalar.fromNative(s.ref);
+      return Scalar.fromPointer(s);
     });
   }
 
@@ -1242,10 +1250,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [Scalar] order is same as [Mat], i.e., BGR -> BGR
   Scalar stdDev() {
     return cvRunArena<Scalar>((arena) {
-      final mean = arena<cvg.Scalar>();
-      final sd = arena<cvg.Scalar>();
+      final mean = calloc<cvg.Scalar>();
+      final sd = calloc<cvg.Scalar>();
       cvRun(() => cvg.Mat_MeanStdDev(ref, mean, sd));
-      return Scalar.fromNative(sd.ref);
+      return Scalar.fromPointer(sd);
     });
   }
 
@@ -1265,9 +1273,9 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Sum calculates the per-channel pixel sum of an image.
   Scalar sum() {
     return cvRunArena<Scalar>((arena) {
-      final s = arena<cvg.Scalar>();
+      final s = calloc<cvg.Scalar>();
       cvRun(() => cvg.Mat_Sum(ref, s));
-      return Scalar.fromNative(s.ref);
+      return Scalar.fromPointer(s);
     });
   }
 
@@ -1278,8 +1286,6 @@ class Mat extends CvStruct<cvg.Mat> {
     cvRun(() => cvg.Mat_SetTo(ref, s.ref));
     return this;
   }
-
-  void release() => cvRun(() => cvg.Mat_Release(ptr));
 
   /// This Method converts single-channel Mat to 2D List
   List<List<num>> toList() => switch (type.depth) {
@@ -1312,8 +1318,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   List<List<List<num>>> toList3D<T extends CvVec>() {
     assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(
-        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
+    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
   /// Get the data pointer of the Mat, this getter will reture a view of native
@@ -1345,10 +1350,12 @@ typedef InputArray = OutputArray;
 typedef InputOutputArray = Mat;
 
 class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
-  VecMat._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecMat._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
+  factory VecMat.fromPointer(cvg.VecMatPtr ptr, [bool attach = true]) => VecMat._(ptr, attach);
   factory VecMat.fromVec(cvg.VecMat ptr) {
     final p = calloc<cvg.VecMat>();
     cvRun(() => cvg.VecMat_NewFromVec(ptr, p));
@@ -1377,6 +1384,12 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   @override
   cvg.VecMatPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecMatPtr>(ffi.Native.addressOf(cvg.VecMat_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecMat_Close(ptr);
+  }
+
   @override
   Iterator<Mat> get iterator => VecMatIterator(ref);
 

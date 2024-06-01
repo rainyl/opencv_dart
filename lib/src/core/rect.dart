@@ -8,8 +8,10 @@ import 'vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class Rect extends CvStruct<cvg.Rect> {
-  Rect._(ffi.Pointer<cvg.Rect> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  Rect._(ffi.Pointer<cvg.Rect> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory Rect(int x, int y, int width, int height) {
     final ptr = calloc<cvg.Rect>()
@@ -20,9 +22,15 @@ class Rect extends CvStruct<cvg.Rect> {
     return Rect._(ptr);
   }
   factory Rect.fromNative(cvg.Rect p) => Rect(p.x, p.y, p.width, p.height);
-  factory Rect.fromPointer(ffi.Pointer<cvg.Rect> ptr) => Rect._(ptr);
+  factory Rect.fromPointer(ffi.Pointer<cvg.Rect> ptr, [bool attach = true]) => Rect._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   int get x => ptr.ref.x;
   int get y => ptr.ref.y;
   int get width => ptr.ref.width;
@@ -39,8 +47,10 @@ class Rect extends CvStruct<cvg.Rect> {
 }
 
 class Rect2f extends CvStruct<cvg.Rect2f> {
-  Rect2f._(ffi.Pointer<cvg.Rect2f> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  Rect2f._(ffi.Pointer<cvg.Rect2f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory Rect2f(double x, double y, double width, double height) {
     final ptr = calloc<cvg.Rect2f>()
@@ -51,9 +61,16 @@ class Rect2f extends CvStruct<cvg.Rect2f> {
     return Rect2f._(ptr);
   }
   factory Rect2f.fromNative(cvg.Rect2f p) => Rect2f(p.x, p.y, p.width, p.height);
-  factory Rect2f.fromPointer(ffi.Pointer<cvg.Rect2f> ptr) => Rect2f._(ptr);
+  factory Rect2f.fromPointer(ffi.Pointer<cvg.Rect2f> ptr, [bool attach = true]) =>
+      Rect2f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   double get x => ptr.ref.x;
   double get y => ptr.ref.y;
   double get width => ptr.ref.width;
@@ -71,8 +88,10 @@ class Rect2f extends CvStruct<cvg.Rect2f> {
 }
 
 class RotatedRect extends CvStruct<cvg.RotatedRect> {
-  RotatedRect._(ffi.Pointer<cvg.RotatedRect> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  RotatedRect._(ffi.Pointer<cvg.RotatedRect> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory RotatedRect(Point2f center, Size2f size, double angle) {
     final sz = calloc<cvg.Size2f>()
@@ -88,30 +107,37 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   }
   factory RotatedRect.fromNative(cvg.RotatedRect rect) =>
       RotatedRect(Point2f.fromNative(rect.center), (rect.size.width, rect.size.height), rect.angle);
-  factory RotatedRect.fromPointer(ffi.Pointer<cvg.RotatedRect> ptr) => RotatedRect._(ptr);
+  factory RotatedRect.fromPointer(ffi.Pointer<cvg.RotatedRect> ptr, [bool attach = true]) =>
+      RotatedRect._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
   List<Point2f> get points {
     return using<List<Point2f>>((arena) {
-      final pts = arena<cvg.VecPoint2f>();
+      final pts = calloc<cvg.VecPoint2f>();
       cvRun(() => cvg.RotatedRect_Points(ptr.ref, pts));
-      return VecPoint2f.fromVec(pts.ref).toList();
+      return VecPoint2f.fromPointer(pts).toList();
     });
   }
 
   Rect get boundingRect {
     return using<Rect>((arena) {
-      final rect = arena<cvg.Rect>();
+      final rect = calloc<cvg.Rect>();
       cvRun(() => cvg.RotatedRect_BoundingRect(ptr.ref, rect));
-      return Rect.fromNative(rect.ref);
+      return Rect.fromPointer(rect);
     });
   }
 
   Rect2f get boundingRect2f {
     return using<Rect2f>((arena) {
-      final rect = arena<cvg.Rect2f>();
+      final rect = calloc<cvg.Rect2f>();
       cvRun(() => cvg.RotatedRect_BoundingRect2f(ptr.ref, rect));
-      return Rect2f.fromNative(rect.ref);
+      return Rect2f.fromPointer(rect);
     });
   }
 
@@ -128,12 +154,14 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 }
 
 class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
-  VecRect._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecRect._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
   factory VecRect([int length = 0, int x = 0, int y = 0, int width = 0, int height = 0]) =>
       VecRect.fromList(List.generate(length, (i) => Rect(x, y, width, height)));
-  factory VecRect.fromPointer(cvg.VecRectPtr ptr) => VecRect._(ptr);
+  factory VecRect.fromPointer(cvg.VecRectPtr ptr, [bool attach = true]) => VecRect._(ptr, attach);
   factory VecRect.fromVec(cvg.VecRect ptr) {
     final p = calloc<cvg.VecRect>();
     cvRun(() => cvg.VecRect_NewFromVec(ptr, p));
@@ -161,6 +189,11 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
 
   static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ffi.Native.addressOf(cvg.VecRect_Close));
 
+  void dispose() {
+    finalizer.detach(this);
+    cvg.VecRect_Close(ptr);
+  }
+
   @override
   cvg.VecRectPtr ptr;
   @override
@@ -185,9 +218,9 @@ class VecRectIterator extends VecIterator<Rect> {
   @override
   Rect operator [](int idx) {
     return cvRunArena<Rect>((arena) {
-      final p = arena<cvg.Rect>();
+      final p = calloc<cvg.Rect>();
       cvRun(() => cvg.VecRect_At(ptr, idx, p));
-      return Rect.fromNative(p.ref);
+      return Rect.fromPointer(p);
     });
   }
 }

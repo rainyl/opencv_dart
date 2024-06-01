@@ -141,8 +141,8 @@ class Fisheye {
   bool centerPrincipalPoint = false,
 }) {
   return using<(Mat, Rect)>((arena) {
-    final validPixROI = arena<cvg.Rect>();
-    final matPtr = arena<cvg.Mat>();
+    final validPixROI = calloc<cvg.Rect>();
+    final matPtr = calloc<cvg.Mat>();
     cvRun(
       () => cvg.GetOptimalNewCameraMatrixWithParams(
         cameraMatrix.ref,
@@ -155,7 +155,7 @@ class Fisheye {
         matPtr,
       ),
     );
-    return (Mat.fromCMat(matPtr.ref), Rect.fromNative(validPixROI.ref));
+    return (Mat.fromPointer(matPtr), Rect.fromPointer(validPixROI));
   });
 }
 
@@ -189,7 +189,7 @@ class Fisheye {
         rvecs!.ref,
         tvecs!.ref,
         flags,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
         rmsErr,
       ),
     );
@@ -242,7 +242,7 @@ Mat undistortPoints(
         distCoeffs.ref,
         R!.ref,
         P!.ref,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
       ),
     ),
   );
@@ -362,7 +362,7 @@ Mat drawChessboardCorners(
 }) {
   return cvRunArena<(Mat, Mat)>((arena) {
     inliers ??= Mat.empty();
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(
       () => cvg.EstimateAffinePartial2DWithParams(
         from.ref,
@@ -376,7 +376,7 @@ Mat drawChessboardCorners(
         p,
       ),
     );
-    return (Mat.fromCMat(p.ref), inliers!);
+    return (Mat.fromPointer(p), inliers!);
   });
 }
 
@@ -396,7 +396,7 @@ Mat drawChessboardCorners(
 }) {
   return cvRunArena<(Mat, Mat)>((arena) {
     inliers ??= Mat.empty();
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(
       () => cvg.EstimateAffine2DWithParams(
         from.ref,
@@ -410,6 +410,6 @@ Mat drawChessboardCorners(
         p,
       ),
     );
-    return (Mat.fromCMat(p.ref), inliers!);
+    return (Mat.fromPointer(p), inliers!);
   });
 }

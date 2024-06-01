@@ -4,39 +4,20 @@ import 'package:ffi/ffi.dart';
 import 'base.dart';
 import '../opencv.g.dart' as cvg;
 
+/// struct returned by cv::moments
+///
+/// https://docs.opencv.org/4.x/d8/d23/classcv_1_1Moments.html#details
 class Moments extends CvStruct<cvg.Moment> {
-  Moments._(ffi.Pointer<cvg.Moment> ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
-  }
-  factory Moments.fromNative(cvg.Moment m) {
-    final p = calloc<cvg.Moment>()
-      ..ref.m00 = m.m00
-      ..ref.m10 = m.m10
-      ..ref.m01 = m.m01
-      ..ref.m20 = m.m20
-      ..ref.m11 = m.m11
-      ..ref.m02 = m.m02
-      ..ref.m30 = m.m30
-      ..ref.m21 = m.m21
-      ..ref.m12 = m.m12
-      ..ref.m03 = m.m03
-      ..ref.mu20 = m.mu20
-      ..ref.mu11 = m.mu11
-      ..ref.mu02 = m.mu02
-      ..ref.mu30 = m.mu30
-      ..ref.mu21 = m.mu21
-      ..ref.mu12 = m.mu12
-      ..ref.mu03 = m.mu03
-      ..ref.nu20 = m.nu20
-      ..ref.nu11 = m.nu11
-      ..ref.nu02 = m.nu02
-      ..ref.nu30 = m.nu30
-      ..ref.nu21 = m.nu21
-      ..ref.nu12 = m.nu12
-      ..ref.nu03 = m.nu03;
-    return Moments._(p);
+  Moments._(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
+  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) =>
+      Moments._(ptr, attach);
+
+  /// spatial moments
   double get m00 => ref.m00;
   double get m01 => ref.m01;
   double get m02 => ref.m02;
@@ -47,6 +28,8 @@ class Moments extends CvStruct<cvg.Moment> {
   double get m20 => ref.m20;
   double get m21 => ref.m21;
   double get m30 => ref.m30;
+
+  /// central moments
   double get mu20 => ref.mu20;
   double get mu11 => ref.mu11;
   double get mu02 => ref.mu02;
@@ -54,6 +37,8 @@ class Moments extends CvStruct<cvg.Moment> {
   double get mu21 => ref.mu21;
   double get mu12 => ref.mu12;
   double get mu03 => ref.mu03;
+
+  /// central normalized moments
   double get nu20 => ref.nu20;
   double get nu11 => ref.nu11;
   double get nu02 => ref.nu02;
@@ -63,6 +48,11 @@ class Moments extends CvStruct<cvg.Moment> {
   double get nu03 => ref.nu03;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
 
   @override
   cvg.Moment get ref => ptr.ref;

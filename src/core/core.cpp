@@ -1,6 +1,5 @@
 #include "core.h"
 #include "lut.hpp"
-#include <iostream>
 #include <vector>
 
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
@@ -32,32 +31,6 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval)
   *rval = {rr.x, rr.y, rr.width, rr.height};
   END_WRAP
 }
-
-CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval)
-{
-  BEGIN_WRAP
-  *rval = {new cv::TermCriteria(typ, maxCount, epsilon)};
-  END_WRAP
-}
-CvStatus TermCriteria_Type(TermCriteria tc, int *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->type;
-  END_WRAP
-}
-CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->maxCount;
-  END_WRAP
-}
-CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval)
-{
-  BEGIN_WRAP
-  *rval = tc.ptr->epsilon;
-  END_WRAP
-}
-void TermCriteria_Close(TermCriteria *tc){CVD_FREE(tc)}
 
 CvStatus Mat_New(Mat *rval)
 {
@@ -1710,6 +1683,7 @@ CvStatus LUT(Mat src, Mat lut, Mat dst)
     case CV_8U:
     case CV_8S:
       expect_total = 256;
+      break;
     case CV_16U:
     case CV_16S:
       expect_total = 65536;
@@ -1730,46 +1704,87 @@ CvStatus LUT(Mat src, Mat lut, Mat dst)
     uchar              *ptrs[2] = {};
     cv::NAryMatIterator it(arrays, ptrs);
     int                 len = (int)it.size;
-    if (depth == CV_16U && lut_depth == CV_8U)
-      cvd::LUT16u_8u(src.ptr->ptr<ushort>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_8S)
-      cvd::LUT16u_8s(src.ptr->ptr<ushort>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_16U)
-      cvd::LUT16u_16u(src.ptr->ptr<ushort>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_16S)
-      cvd::LUT16u_16s(src.ptr->ptr<ushort>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_32S)
-      cvd::LUT16u_32s(src.ptr->ptr<ushort>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_32F)
-      cvd::LUT16u_32f(src.ptr->ptr<ushort>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
-    else if (depth == CV_16U && lut_depth == CV_64F)
-      cvd::LUT16u_64f(src.ptr->ptr<ushort>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
-    // 16s
-    else if (depth == CV_16S && lut_depth == CV_8U)
-      cvd::LUT16s_8u(src.ptr->ptr<short>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_8S)
-      cvd::LUT16s_8s(src.ptr->ptr<short>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_16U)
-      cvd::LUT16s_16u(src.ptr->ptr<short>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_16S)
-      cvd::LUT16s_16s(src.ptr->ptr<short>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_32S)
-      cvd::LUT16s_32s(src.ptr->ptr<short>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_32F)
-      cvd::LUT16s_32f(src.ptr->ptr<short>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
-    else if (depth == CV_16S && lut_depth == CV_64F)
-      cvd::LUT16s_64f(src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
-    // 32s
-    else if (depth == CV_32S && lut_depth == CV_32S)
-      cvd::LUT32s_32s(src.ptr->ptr<int>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
-    else if (depth == CV_32S && lut_depth == CV_32F)
-      cvd::LUT32s_32f(src.ptr->ptr<int>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
-    else if (depth == CV_32S && lut_depth == CV_64F)
-      cvd::LUT32s_64f(src.ptr->ptr<int>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
-    else
-      throw cv::Exception(cv::Error::StsNotImplemented,
-                          "Unsupported combination of source and destination types", __func__, __FILE__,
-                          __LINE__);
+
+    switch (depth) {
+    case CV_16U:
+      switch (lut_depth) {
+      case CV_8U:
+        cvd::LUT16u_8u(src.ptr->ptr<ushort>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
+        break;
+      case CV_8S:
+        cvd::LUT16u_8s(src.ptr->ptr<ushort>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
+        break;
+      case CV_16U:
+        cvd::LUT16u_16u(src.ptr->ptr<ushort>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn,
+                        lutcn);
+        break;
+      case CV_16S:
+        cvd::LUT16u_16s(src.ptr->ptr<ushort>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
+        break;
+      case CV_32S:
+        cvd::LUT16u_32s(src.ptr->ptr<ushort>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+        break;
+      case CV_32F:
+        cvd::LUT16u_32f(src.ptr->ptr<ushort>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+        break;
+      case CV_64F:
+        cvd::LUT16u_64f(src.ptr->ptr<ushort>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn,
+                        lutcn);
+        break;
+      default:
+        cv::String err = "lut Mat Type not supported for CV_16U";
+        throw cv::Exception(cv::Error::StsNotImplemented, err, __func__, __FILE__, __LINE__);
+      }
+      break;
+    case CV_16S:
+      switch (lut_depth) {
+      case CV_8U:
+        cvd::LUT16s_8u(src.ptr->ptr<short>(), lut.ptr->ptr<uchar>(), dst.ptr->ptr<uchar>(), len, cn, lutcn);
+        break;
+      case CV_8S:
+        cvd::LUT16s_8s(src.ptr->ptr<short>(), lut.ptr->ptr<char>(), dst.ptr->ptr<char>(), len, cn, lutcn);
+        break;
+      case CV_16U:
+        cvd::LUT16s_16u(src.ptr->ptr<short>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn,
+                        lutcn);
+        break;
+      case CV_16S:
+        cvd::LUT16s_16s(src.ptr->ptr<short>(), lut.ptr->ptr<short>(), dst.ptr->ptr<short>(), len, cn, lutcn);
+        break;
+      case CV_32S:
+        cvd::LUT16s_32s(src.ptr->ptr<short>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+        break;
+      case CV_32F:
+        cvd::LUT16s_32f(src.ptr->ptr<short>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+        break;
+      case CV_64F:
+        cvd::LUT16s_64f(src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+        break;
+      default:
+        cv::String err = "lut Mat Type not supported for CV_16S";
+        throw cv::Exception(cv::Error::StsNotImplemented, err, __func__, __FILE__, __LINE__);
+      }
+      break;
+    case CV_32S:
+      switch (lut_depth) {
+      case CV_32S:
+        cvd::LUT32s_32s(src.ptr->ptr<int>(), lut.ptr->ptr<int>(), dst.ptr->ptr<int>(), len, cn, lutcn);
+        break;
+      case CV_32F:
+        cvd::LUT32s_32f(src.ptr->ptr<int>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
+        break;
+      case CV_64F:
+        cvd::LUT32s_64f(src.ptr->ptr<int>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+        break;
+      default:
+        cv::String err = "lut Mat Type not supported for CV_32S";
+        throw cv::Exception(cv::Error::StsNotImplemented, err, __func__, __FILE__, __LINE__);
+      }
+      break;
+    default:
+      cv::String err = "src Mat Type not supported";
+      throw cv::Exception(cv::Error::StsNotImplemented, err, __func__, __FILE__, __LINE__);
+    }
   }
   END_WRAP
 }
@@ -1778,14 +1793,16 @@ CvStatus KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int atte
                 double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
 CvStatus KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
                       Mat centers, double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, *criteria.ptr, attempts, flags, *centers.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
 CvStatus Rotate(Mat src, Mat dst, int rotateCode)

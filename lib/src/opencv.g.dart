@@ -1867,20 +1867,23 @@ external CvStatus Image_IMDecode(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<VecUChar>)>()
+    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>,
+        ffi.Pointer<VecUChar>)>()
 external CvStatus Image_IMEncode(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
+  ffi.Pointer<ffi.Bool> success,
   ffi.Pointer<VecUChar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
-        ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<VecUChar>)>()
+    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<ffi.Bool>,
+        ffi.Pointer<VecUChar>)>()
 external CvStatus Image_IMEncode_WithParams(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
   VecInt params,
+  ffi.Pointer<ffi.Bool> success,
   ffi.Pointer<VecUChar> rval,
 );
 
@@ -5384,39 +5387,6 @@ external CvStatus Subdiv2D_SymEdge(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<TermCriteria>)>()
-external void TermCriteria_Close(
-  ffi.Pointer<TermCriteria> tc,
-);
-
-@ffi.Native<CvStatus Function(TermCriteria, ffi.Pointer<ffi.Double>)>()
-external CvStatus TermCriteria_Epsilon(
-  TermCriteria tc,
-  ffi.Pointer<ffi.Double> rval,
-);
-
-@ffi.Native<CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>()
-external CvStatus TermCriteria_MaxCount(
-  TermCriteria tc,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<
-    CvStatus Function(
-        ffi.Int, ffi.Int, ffi.Double, ffi.Pointer<TermCriteria>)>()
-external CvStatus TermCriteria_New(
-  int typ,
-  int maxCount,
-  double epsilon,
-  ffi.Pointer<TermCriteria> rval,
-);
-
-@ffi.Native<CvStatus Function(TermCriteria, ffi.Pointer<ffi.Int>)>()
-external CvStatus TermCriteria_Type(
-  TermCriteria tc,
-  ffi.Pointer<ffi.Int> rval,
-);
-
 @ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int)>()
 external CvStatus TextureFlattening(
   Mat src,
@@ -6641,12 +6611,6 @@ external CvStatus Zeros(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<ffi.Int32 Function(ffi.Int32, ffi.Int32)>()
-external int addtest(
-  int a,
-  int b,
-);
-
 @ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
 external CvStatus averageHashCompare(
   Mat a,
@@ -7299,13 +7263,6 @@ final class NO_USE_Subdiv2DPtr extends ffi.Struct {
 /// \
 /// Dart ffigen will not generate typedefs if not referred                                                  \
 /// so here we confirm they are included                                                                    \
-final class NO_USE_TermCriteriaPtr extends ffi.Struct {
-  external ffi.Pointer<TermCriteriaPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
 final class NO_USE_TrackerGOTURNPtr extends ffi.Struct {
   external ffi.Pointer<TrackerGOTURNPtr> p;
 }
@@ -7684,10 +7641,15 @@ final class Subdiv2D extends ffi.Struct {
 typedef Subdiv2DPtr = ffi.Pointer<Subdiv2D>;
 
 final class TermCriteria extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
-}
+  @ffi.Int()
+  external int type;
 
-typedef TermCriteriaPtr = ffi.Pointer<TermCriteria>;
+  @ffi.Int()
+  external int maxCount;
+
+  @ffi.Double()
+  external double epsilon;
+}
 
 final class Tracker extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

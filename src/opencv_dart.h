@@ -27,5 +27,3 @@
 #define FFI_PLUGIN_EXPORT
 #endif // __cplusplus
 #endif // _WIN32
-
-FFI_PLUGIN_EXPORT int32_t addtest(int32_t a, int32_t b);

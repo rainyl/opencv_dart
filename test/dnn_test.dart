@@ -123,6 +123,8 @@ void main() async {
     final model = cv.Net.fromFile("test/models/bvlc_googlenet.caffemodel",
         config: "test/models/bvlc_googlenet.prototxt");
     checkCaffeNet(model);
+
+    net.dispose();
   });
 
   test('cv.Net.fromBytes', () {
@@ -130,6 +132,8 @@ void main() async {
     final config = File("test/models/bvlc_googlenet.prototxt").readAsBytesSync();
     final model = cv.Net.fromBytes("caffe", bytes, bufferConfig: config);
     checkCaffeNet(model);
+
+    model.dispose();
   });
 
   test('cv.Net.fromCaffe', () {

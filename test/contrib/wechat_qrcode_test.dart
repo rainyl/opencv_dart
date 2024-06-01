@@ -10,9 +10,11 @@ void main() {
     expect(res.length, 1);
     expect(res.first, "Hello World!");
     expect(points.length, 1);
+
+    qr.dispose();
   });
 
-  test('cv.WeChatQRCode', () {
+  test('cv.WeChatQRCode', tags: ["no-local-files"], () {
     final qr = cv.WeChatQRCode(
       "test/models/detect.prototxt",
       "test/models/detect.caffemodel",

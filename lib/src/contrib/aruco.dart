@@ -13,8 +13,10 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
-  ArucoDetector._(cvg.ArucoDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  ArucoDetector._(cvg.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDetector.empty() {
@@ -31,7 +33,13 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
 
   @override
   cvg.ArucoDetector get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(ffi.Native.addressOf(cvg.ArucoDetector_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.ArucoDetectorPtr>(ffi.Native.addressOf(cvg.ArucoDetector_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.ArucoDetector_Close(ptr);
+  }
 
   /// DetectMarkers does basic marker detection.
   ///
@@ -74,8 +82,11 @@ void arucoGenerateImageMarker(
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
-  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory ArucoDetectorParameters.empty() {
@@ -86,8 +97,13 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
 
   @override
   cvg.ArucoDetectorParameters get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.ArucoDetectorParametersPtr>(ffi.Native.addressOf(cvg.ArucoDetectorParameters_Close));
+  static final finalizer = OcvFinalizer<cvg.ArucoDetectorParametersPtr>(
+      ffi.Native.addressOf(cvg.ArucoDetectorParameters_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.ArucoDetectorParameters_Close(ptr);
+  }
 
   int get adaptiveThreshWinSizeMin {
     return cvRunArena<int>((arena) {

@@ -17,8 +17,10 @@ import '../opencv.g.dart' as cvg;
 
 /// AKAZE is a wrapper around the cv::AKAZE algorithm.
 class AKAZE extends CvStruct<cvg.AKAZE> {
-  AKAZE._(cvg.AKAZEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  AKAZE._(cvg.AKAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new AKAZE algorithm
@@ -36,11 +38,9 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.AKAZE_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.AKAZE_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   /// DetectAndCompute keypoints and compute in an image using AKAZE.
@@ -49,15 +49,17 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint ret, Mat desc) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final points = cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
-    return (points, desc);
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    return (VecKeyPoint.fromPointer(ret), desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.AKAZEPtr>(ffi.Native.addressOf(cvg.AKAZE_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.AKAZE_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];
@@ -68,8 +70,11 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
 class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
-  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new AgastFeatureDetector algorithm
@@ -87,15 +92,18 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.AgastFeatureDetector_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.AgastFeatureDetector_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.AgastFeatureDetectorPtr>(ffi.Native.addressOf(cvg.AgastFeatureDetector_Close));
+  static final finalizer = OcvFinalizer<cvg.AgastFeatureDetectorPtr>(
+      ffi.Native.addressOf(cvg.AgastFeatureDetector_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.AgastFeatureDetector_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];
@@ -106,8 +114,10 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
 
 /// BRISK is a wrapper around the cv::BRISK algorithm.
 class BRISK extends CvStruct<cvg.BRISK> {
-  BRISK._(cvg.BRISKPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  BRISK._(cvg.BRISKPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new BRISK algorithm
@@ -125,11 +135,9 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.BRISK_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.BRISK_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   /// DetectAndCompute keypoints and compute in an image using BRISK.
@@ -138,15 +146,18 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final points = cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
-    return (points, desc);
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    return (VecKeyPoint.fromPointer(ret), desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.BRISKPtr>(ffi.Native.addressOf(cvg.BRISK_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.BRISK_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -170,8 +181,11 @@ enum FastFeatureDetectorType {
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
 class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
-  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new FastFeatureDetector algorithm
@@ -204,15 +218,19 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.FastFeatureDetector_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.FastFeatureDetector_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   static final finalizer =
       OcvFinalizer<cvg.FastFeatureDetectorPtr>(ffi.Native.addressOf(cvg.FastFeatureDetector_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.FastFeatureDetector_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -222,8 +240,10 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
 
 /// GFTTDetector is a wrapper around the cv::GFTTDetector.
 class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
-  GFTTDetector._(cvg.GFTTDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  GFTTDetector._(cvg.GFTTDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new GFTTDetector algorithm
@@ -241,14 +261,18 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.GFTTDetector_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.GFTTDetector_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer = OcvFinalizer<cvg.GFTTDetectorPtr>(ffi.Native.addressOf(cvg.GFTTDetector_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.GFTTDetectorPtr>(ffi.Native.addressOf(cvg.GFTTDetector_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.GFTTDetector_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];
@@ -259,8 +283,10 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
 
 /// KAZE is a wrapper around the cv::KAZE.
 class KAZE extends CvStruct<cvg.KAZE> {
-  KAZE._(cvg.KAZEPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  KAZE._(cvg.KAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new KAZE algorithm
@@ -278,11 +304,9 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.KAZE_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.KAZE_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   /// DetectAndCompute keypoints and compute in an image using KAZE.
@@ -291,15 +315,18 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final points = cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
-    return (points, desc);
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    return (VecKeyPoint.fromPointer(ret), desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.KAZEPtr>(ffi.Native.addressOf(cvg.KAZE_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.KAZE_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -309,8 +336,10 @@ class KAZE extends CvStruct<cvg.KAZE> {
 
 /// MSER is a wrapper around the cv::MSER.
 class MSER extends CvStruct<cvg.MSER> {
-  MSER._(cvg.MSERPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  MSER._(cvg.MSERPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new MSER algorithm
@@ -328,14 +357,18 @@ class MSER extends CvStruct<cvg.MSER> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.MSER_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.MSER_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   static final finalizer = OcvFinalizer<cvg.MSERPtr>(ffi.Native.addressOf(cvg.MSER_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.MSER_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -353,8 +386,10 @@ enum ORBScoreType {
 
 /// ORB is a wrapper around the cv::ORB.
 class ORB extends CvStruct<cvg.ORB> {
-  ORB._(cvg.ORBPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  ORB._(cvg.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new ORB algorithm
@@ -383,8 +418,8 @@ class ORB extends CvStruct<cvg.ORB> {
     int fastThreshold = 20,
   }) {
     final p = calloc<cvg.ORB>();
-    cvRun(() => cvg.ORB_CreateWithParams(nFeatures, scaleFactor, nLevels, edgeThreshold,
-        firstLevel, WTA_K, scoreType.value, patchSize, fastThreshold, p));
+    cvRun(() => cvg.ORB_CreateWithParams(nFeatures, scaleFactor, nLevels, edgeThreshold, firstLevel,
+        WTA_K, scoreType.value, patchSize, fastThreshold, p));
     return ORB._(p);
   }
 
@@ -393,11 +428,9 @@ class ORB extends CvStruct<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.ORB_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.ORB_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   /// DetectAndCompute keypoints and compute in an image using ORB.
@@ -406,15 +439,18 @@ class ORB extends CvStruct<cvg.ORB> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final points = cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
-    return (points, desc);
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    return (VecKeyPoint.fromPointer(ret), desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.ORBPtr>(ffi.Native.addressOf(cvg.ORB_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.ORB_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -423,9 +459,11 @@ class ORB extends CvStruct<cvg.ORB> {
 }
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr)
+  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
       : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory SimpleBlobDetectorParams.empty() {
@@ -501,13 +539,19 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
         minThreshold: r.minThreshold,
         thresholdStep: r.thresholdStep,
       );
-  factory SimpleBlobDetectorParams.fromPointer(ffi.Pointer<cvg.SimpleBlobDetectorParams> p) =>
-      SimpleBlobDetectorParams._(p);
+  factory SimpleBlobDetectorParams.fromPointer(ffi.Pointer<cvg.SimpleBlobDetectorParams> p,
+          [bool attach = true]) =>
+      SimpleBlobDetectorParams._(p, attach);
 
   @override
   cvg.SimpleBlobDetectorParams get ref => ptr.ref;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
 
   int get blobColor => ref.blobColor;
   bool get filterByArea => ref.filterByArea;
@@ -626,8 +670,11 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
 class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
-  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new SimpleBlobDetector algorithm
@@ -651,15 +698,19 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.SimpleBlobDetector_Detect(ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.SimpleBlobDetector_Detect(ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   static final finalizer =
       OcvFinalizer<cvg.SimpleBlobDetectorPtr>(ffi.Native.addressOf(cvg.SimpleBlobDetector_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.SimpleBlobDetector_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -669,8 +720,10 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
 
 /// BFMatcher is a wrapper around the cv::BFMatcher.
 class BFMatcher extends CvStruct<cvg.BFMatcher> {
-  BFMatcher._(cvg.BFMatcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  BFMatcher._(cvg.BFMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new BFMatcher algorithm
@@ -694,11 +747,9 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
   VecDMatch match(Mat query, Mat train) {
-    return cvRunArena<VecDMatch>((arena) {
-      final ret = arena<cvg.VecDMatch>();
-      cvRun(() => cvg.BFMatcher_Match(ptr.ref, query.ref, train.ref, ret));
-      return VecDMatch.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecDMatch>();
+    cvRun(() => cvg.BFMatcher_Match(ptr.ref, query.ref, train.ref, ret));
+    return VecDMatch.fromPointer(ret);
   }
 
   /// KnnMatch Finds the k best matches for each descriptor from a query set.
@@ -706,14 +757,19 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    return cvRunArena<VecVecDMatch>((arena) {
-      final ret = arena<cvg.VecVecDMatch>();
-      cvRun(() => cvg.BFMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
-      return VecVecDMatch.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecVecDMatch>();
+    cvRun(() => cvg.BFMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
+    return VecVecDMatch.fromPointer(ret);
   }
 
-  static final finalizer = OcvFinalizer<cvg.BFMatcherPtr>(ffi.Native.addressOf(cvg.BFMatcher_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.BFMatcherPtr>(ffi.Native.addressOf(cvg.BFMatcher_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.BFMatcher_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -723,8 +779,10 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
 
 /// FlannBasedMatcher is a wrapper around the cv::FlannBasedMatcher.
 class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
-  FlannBasedMatcher._(cvg.FlannBasedMatcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  FlannBasedMatcher._(cvg.FlannBasedMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new FlannBasedMatcher algorithm
@@ -742,15 +800,19 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    return cvRunArena<VecVecDMatch>((arena) {
-      final ret = arena<cvg.VecVecDMatch>();
-      cvRun(() => cvg.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
-      return VecVecDMatch.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecVecDMatch>();
+    cvRun(() => cvg.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
+    return VecVecDMatch.fromPointer(ret);
   }
 
   static final finalizer =
       OcvFinalizer<cvg.FlannBasedMatcherPtr>(ffi.Native.addressOf(cvg.FlannBasedMatcher_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.FlannBasedMatcher_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -781,8 +843,10 @@ void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color, DrawMa
 
 /// SIFT is a wrapper around the cv::SIFT.
 class SIFT extends CvStruct<cvg.SIFT> {
-  SIFT._(cvg.SIFTPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  SIFT._(cvg.SIFTPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// returns a new SIFT algorithm
@@ -800,11 +864,9 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    return cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.SIFT_Detect(ptr.ref, src.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.SIFT_Detect(ptr.ref, src.ref, ret));
+    return VecKeyPoint.fromPointer(ret);
   }
 
   /// DetectAndCompute keypoints and compute in an image using SIFT.
@@ -813,15 +875,18 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final points = cvRunArena<VecKeyPoint>((arena) {
-      final ret = arena<cvg.VecKeyPoint>();
-      cvRun(() => cvg.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-      return VecKeyPoint.fromVec(ret.ref);
-    });
-    return (points, desc);
+    final ret = calloc<cvg.VecKeyPoint>();
+    cvRun(() => cvg.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    return (VecKeyPoint.fromPointer(ret), desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.SIFTPtr>(ffi.Native.addressOf(cvg.SIFT_Close));
+
+  void dispose() {
+    finalizer.detach(this);
+    cvg.SIFT_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -845,23 +910,21 @@ void drawMatches(
   VecChar? matchesMask,
   DrawMatchesFlag flags = DrawMatchesFlag.DEFAULT,
 }) {
-  using((arena) {
-    matchColor ??= Scalar.all(-1);
-    singlePointColor ??= Scalar.all(-1);
-    matchesMask ??= VecChar.fromList([]);
-    cvRun(
-      () => cvg.DrawMatches(
-        img1.ref,
-        keypoints1.ref,
-        img2.ref,
-        keypoints2.ref,
-        matches1to2.ref,
-        outImg.ref,
-        matchColor!.ref,
-        singlePointColor!.ref,
-        matchesMask!.ref,
-        flags.value,
-      ),
-    );
-  });
+  matchColor ??= Scalar.all(-1);
+  singlePointColor ??= Scalar.all(-1);
+  matchesMask ??= VecChar.fromList([]);
+  cvRun(
+    () => cvg.DrawMatches(
+      img1.ref,
+      keypoints1.ref,
+      img2.ref,
+      keypoints2.ref,
+      matches1to2.ref,
+      outImg.ref,
+      matchColor!.ref,
+      singlePointColor!.ref,
+      matchesMask!.ref,
+      flags.value,
+    ),
+  );
 }
