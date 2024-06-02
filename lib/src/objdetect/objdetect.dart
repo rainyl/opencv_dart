@@ -497,9 +497,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }) {
     final code = straightCode?.ptr ?? calloc<cvg.Mat>();
     final points = calloc<cvg.VecPoint>();
-    final v = calloc<cvg.VecChar>();
+    final v = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points, code, v));
-    final s = v == ffi.nullptr ? "" : VecChar.fromPointer(v).toString();
+    final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
+    calloc.free(v);
     return (s, VecPoint.fromPointer(points), Mat.fromPointer(code));
   }
 
@@ -525,14 +526,13 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     VecPoint? points,
     Mat? straightCode,
   }) {
-    return cvRunArena<(String, VecPoint?, Mat?)>((arena) {
-      points ??= VecPoint();
-      final ret = VecChar();
-      straightCode ??= Mat.empty();
-      cvRun(
-          () => CFFI.QRCodeDetector_Decode(ref, img.ref, points!.ref, straightCode!.ref, ret.ptr));
-      return (ret.toString(), points, straightCode!);
-    });
+    final p = points?.ptr ?? calloc<cvg.VecPoint>();
+    final ret = calloc<ffi.Pointer<ffi.Char>>();
+    straightCode ??= Mat.empty();
+    cvRun(() => CFFI.QRCodeDetector_Decode(ref, img.ref, p, straightCode!.ref, ret));
+    final info = ret.value.cast<Utf8>().toDartString();
+    calloc.free(ret);
+    return (info, VecPoint.fromPointer(p), straightCode);
   }
 
   /// Detects QR codes in image and finds of the quadrangles containing the codes.
@@ -542,12 +542,12 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// For usage please see TestQRCodeDetector
   /// For further details, please see:
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#aaf2b6b2115b8e8fbc9acf3a8f68872b6
-  (bool, VecPoint? points) detectMulti(InputArray img, {VecPoint? points}) {
-    return cvRunArena<(bool, VecPoint?)>((arena) {
-      points ??= VecPoint.fromList([]);
+  (bool, VecPoint points) detectMulti(InputArray img, {VecPoint? points}) {
+    return cvRunArena<(bool, VecPoint)>((arena) {
+      final p = points?.ptr ?? calloc<cvg.VecPoint>();
       final ret = arena<ffi.Bool>();
-      cvRun(() => CFFI.QRCodeDetector_DetectMulti(ref, img.ref, points!.ref, ret));
-      return ret.value ? (ret.value, VecPoint.fromVec(points!.ref)) : (ret.value, null);
+      cvRun(() => CFFI.QRCodeDetector_DetectMulti(ref, img.ref, p, ret));
+      return (ret.value, VecPoint.fromPointer(p));
     });
   }
 

@@ -2437,8 +2437,8 @@ class CvNative {
     Mat nextImg,
     VecPoint2f prevPts,
     VecPoint2f nextPts,
-    VecUChar status,
-    VecFloat err,
+    ffi.Pointer<VecUChar> status,
+    ffi.Pointer<VecFloat> err,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
@@ -2467,8 +2467,8 @@ class CvNative {
               Mat,
               VecPoint2f,
               VecPoint2f,
-              VecUChar,
-              VecFloat,
+              ffi.Pointer<VecUChar>,
+              ffi.Pointer<VecFloat>,
               Size,
               ffi.Int,
               TermCriteria,
@@ -2476,8 +2476,18 @@ class CvNative {
               ffi.Double)>>('CalcOpticalFlowPyrLKWithParams');
   late final _CalcOpticalFlowPyrLKWithParams =
       _CalcOpticalFlowPyrLKWithParamsPtr.asFunction<
-          CvStatus Function(Mat, Mat, VecPoint2f, VecPoint2f, VecUChar,
-              VecFloat, Size, int, TermCriteria, int, double)>();
+          CvStatus Function(
+              Mat,
+              Mat,
+              VecPoint2f,
+              VecPoint2f,
+              ffi.Pointer<VecUChar>,
+              ffi.Pointer<VecFloat>,
+              Size,
+              int,
+              TermCriteria,
+              int,
+              double)>();
 
   CvStatus CalibrateCamera(
     VecVecPoint3f objectPoints,
@@ -4603,7 +4613,7 @@ class CvNative {
 
   CvStatus GoodFeaturesToTrack(
     Mat img,
-    VecPoint2f corners,
+    ffi.Pointer<VecPoint2f> corners,
     int maxCorners,
     double quality,
     double minDist,
@@ -4627,15 +4637,23 @@ class CvNative {
 
   late final _GoodFeaturesToTrackPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(Mat, VecPoint2f, ffi.Int, ffi.Double, ffi.Double,
-              Mat, ffi.Int, ffi.Bool, ffi.Double)>>('GoodFeaturesToTrack');
+          CvStatus Function(
+              Mat,
+              ffi.Pointer<VecPoint2f>,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              Mat,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double)>>('GoodFeaturesToTrack');
   late final _GoodFeaturesToTrack = _GoodFeaturesToTrackPtr.asFunction<
-      CvStatus Function(
-          Mat, VecPoint2f, int, double, double, Mat, int, bool, double)>();
+      CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, int, double, double, Mat,
+          int, bool, double)>();
 
   CvStatus GoodFeaturesToTrackWithGradient(
     Mat img,
-    VecPoint2f corners,
+    ffi.Pointer<VecPoint2f> corners,
     int maxCorners,
     double quality,
     double minDist,
@@ -4663,7 +4681,7 @@ class CvNative {
       ffi.NativeFunction<
           CvStatus Function(
               Mat,
-              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
               ffi.Int,
               ffi.Double,
               ffi.Double,
@@ -4674,8 +4692,8 @@ class CvNative {
               ffi.Double)>>('GoodFeaturesToTrackWithGradient');
   late final _GoodFeaturesToTrackWithGradient =
       _GoodFeaturesToTrackWithGradientPtr.asFunction<
-          CvStatus Function(Mat, VecPoint2f, int, double, double, Mat, int, int,
-              bool, double)>();
+          CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, int, double, double,
+              Mat, int, int, bool, double)>();
 
   CvStatus GrabCut(
     Mat img,
@@ -11571,7 +11589,7 @@ class CvNative {
 
   CvStatus Net_Dump(
     Net net,
-    VecChar rval,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
     return _Net_Dump(
       net,
@@ -11579,10 +11597,12 @@ class CvNative {
     );
   }
 
-  late final _Net_DumpPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(Net, VecChar)>>('Net_Dump');
-  late final _Net_Dump =
-      _Net_DumpPtr.asFunction<CvStatus Function(Net, VecChar)>();
+  late final _Net_DumpPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Net_Dump');
+  late final _Net_Dump = _Net_DumpPtr.asFunction<
+      CvStatus Function(Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
   CvStatus Net_Empty(
     Net net,
@@ -12485,14 +12505,14 @@ class CvNative {
   CvStatus QRCodeDetector_Decode(
     QRCodeDetector self,
     Mat input,
-    VecPoint inputPoints,
+    ffi.Pointer<VecPoint> points,
     Mat straight_qrcode,
-    ffi.Pointer<VecChar> rval,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
     return _QRCodeDetector_Decode(
       self,
       input,
-      inputPoints,
+      points,
       straight_qrcode,
       rval,
     );
@@ -12500,11 +12520,11 @@ class CvNative {
 
   late final _QRCodeDetector_DecodePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(QRCodeDetector, Mat, VecPoint, Mat,
-              ffi.Pointer<VecChar>)>>('QRCodeDetector_Decode');
+          CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>, Mat,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('QRCodeDetector_Decode');
   late final _QRCodeDetector_Decode = _QRCodeDetector_DecodePtr.asFunction<
-      CvStatus Function(
-          QRCodeDetector, Mat, VecPoint, Mat, ffi.Pointer<VecChar>)>();
+      CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>, Mat,
+          ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
   CvStatus QRCodeDetector_Detect(
     QRCodeDetector self,
@@ -12533,7 +12553,7 @@ class CvNative {
     Mat input,
     ffi.Pointer<VecPoint> points,
     ffi.Pointer<Mat> straight_qrcode,
-    ffi.Pointer<VecChar> rval,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
     return _QRCodeDetector_DetectAndDecode(
       self,
@@ -12545,17 +12565,14 @@ class CvNative {
   }
 
   late final _QRCodeDetector_DetectAndDecodePtr = _lookup<
-      ffi.NativeFunction<
-          CvStatus Function(
-              QRCodeDetector,
-              Mat,
-              ffi.Pointer<VecPoint>,
-              ffi.Pointer<Mat>,
-              ffi.Pointer<VecChar>)>>('QRCodeDetector_DetectAndDecode');
+          ffi.NativeFunction<
+              CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+                  ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'QRCodeDetector_DetectAndDecode');
   late final _QRCodeDetector_DetectAndDecode =
       _QRCodeDetector_DetectAndDecodePtr.asFunction<
           CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
-              ffi.Pointer<Mat>, ffi.Pointer<VecChar>)>();
+              ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
   CvStatus QRCodeDetector_DetectAndDecodeMulti(
     QRCodeDetector self,
@@ -12597,7 +12614,7 @@ class CvNative {
   CvStatus QRCodeDetector_DetectMulti(
     QRCodeDetector self,
     Mat input,
-    VecPoint points,
+    ffi.Pointer<VecPoint> points,
     ffi.Pointer<ffi.Bool> rval,
   ) {
     return _QRCodeDetector_DetectMulti(
@@ -12610,12 +12627,12 @@ class CvNative {
 
   late final _QRCodeDetector_DetectMultiPtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(QRCodeDetector, Mat, VecPoint,
+          CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
               ffi.Pointer<ffi.Bool>)>>('QRCodeDetector_DetectMulti');
   late final _QRCodeDetector_DetectMulti =
       _QRCodeDetector_DetectMultiPtr.asFunction<
-          CvStatus Function(
-              QRCodeDetector, Mat, VecPoint, ffi.Pointer<ffi.Bool>)>();
+          CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+              ffi.Pointer<ffi.Bool>)>();
 
   CvStatus QRCodeDetector_New(
     ffi.Pointer<QRCodeDetector> rval,

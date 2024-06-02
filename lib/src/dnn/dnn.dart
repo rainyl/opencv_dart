@@ -130,16 +130,6 @@ class Net extends CvStruct<cvg.Net> {
     return using<Net>((arena) {
       bufferConfig ??= Uint8List(0);
       final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      // final bufM = arena<cvg.VecUChar>();
-      // cvRun(() => CFFI.VecUChar_New(bufM));
-      // for (var e in bufferModel) {
-      //   cvRun(() => CFFI.VecUChar_Append(bufM.value, e));
-      // }
-      // final bufC = arena<cvg.VecUChar>();
-      // cvRun(() => CFFI.VecUChar_New(bufC));
-      // for (var e in bufferConfig!) {
-      //   cvRun(() => CFFI.VecUChar_Append(bufC.value, e));
-      // }
       final bufM = VecUChar.fromList(bufferModel);
       final bufC = VecUChar.fromList(bufferConfig!);
       final p = calloc<cvg.Net>();
@@ -283,9 +273,11 @@ class Net extends CvStruct<cvg.Net> {
   }
 
   String dump() {
-    final p = VecChar();
-    cvRun(() => CFFI.Net_Dump(ref, p.ref));
-    return p.asString();
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    cvRun(() => CFFI.Net_Dump(ref, p));
+    final ret = p.value.cast<Utf8>().toDartString();
+    calloc.free(p);
+    return ret;
   }
 
   /// SetInput sets the new value for the layer output blob.
@@ -400,15 +392,12 @@ class Net extends CvStruct<cvg.Net> {
 
   /// Returns input scale and zeropoint for a quantized Net.
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
-  (List<double>, List<int>) getInputDetails() {
-    return using<(List<double>, List<int>)>((arena) {
+  (VecFloat, VecInt) getInputDetails() {
+    return using<(VecFloat, VecInt)>((arena) {
       final sc = calloc<cvg.VecFloat>();
       final zp = calloc<cvg.VecInt>();
       cvRun(() => CFFI.Net_GetInputDetails(ref, sc, zp));
-      return (
-        VecFloat.fromPointer(sc).toList(),
-        VecInt.fromPointer(zp).toList(),
-      );
+      return (VecFloat.fromPointer(sc), VecInt.fromPointer(zp));
     });
   }
 

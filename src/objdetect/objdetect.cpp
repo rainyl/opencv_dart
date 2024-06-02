@@ -7,6 +7,7 @@
 */
 
 #include "objdetect.h"
+#include "opencv2/core/types.hpp"
 #include <vector>
 
 // CascadeClassifier
@@ -279,13 +280,13 @@ CvStatus QRCodeDetector_New(QRCodeDetector *rval)
   END_WRAP
 }
 CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint *points,
-                                        Mat *straight_qrcode, VecChar *rval)
+                                        Mat *straight_qrcode, char **rval)
 {
   BEGIN_WRAP
   auto points_ = new std::vector<cv::Point>();
   auto mat = new cv::Mat();
   auto info = self.ptr->detectAndDecode(*input.ptr, *points_, *mat);
-  *rval = {new std::vector<char>(info.begin(), info.end())};
+  *rval = strdup(info.c_str());
   *points = {points_};
   *straight_qrcode = {mat};
   END_WRAP
@@ -298,12 +299,14 @@ CvStatus QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points,
   *points = {_points};
   END_WRAP
 }
-CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint inputPoints, Mat straight_qrcode,
-                               VecChar *rval)
+CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint *points, Mat straight_qrcode,
+                               char **rval)
 {
   BEGIN_WRAP
-  auto info = self.ptr->detectAndDecode(*input.ptr, *inputPoints.ptr, *straight_qrcode.ptr);
-  *rval = {new std::vector<char>(info.begin(), info.end())};
+  auto _points = new std::vector<cv::Point>();
+  auto info = self.ptr->detectAndDecode(*input.ptr, *_points, *straight_qrcode.ptr);
+  *rval = strdup(info.c_str());
+  *points = {_points};
   END_WRAP
 }
 CvStatus QRCodeDetector_decodeCurved(QRCodeDetector self, Mat img, VecPoint points,
@@ -330,10 +333,12 @@ CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecP
 }
 void QRCodeDetector_Close(QRCodeDetector *self){CVD_FREE(self)}
 
-CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint points, bool *rval)
+CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
   BEGIN_WRAP
-  *rval = self.ptr->detectMulti(*input.ptr, *points.ptr);
+  auto _points = new std::vector<cv::Point>();
+  *rval = self.ptr->detectMulti(*input.ptr, *_points);
+  *points = {_points};
   END_WRAP
 }
 CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, VecVecChar *decoded,

@@ -99,15 +99,15 @@ CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps);
 CvStatus QRCodeDetector_New(QRCodeDetector *rval);
 void     QRCodeDetector_Close(QRCodeDetector *self);
 CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint *points,
-                                        Mat *straight_qrcode, VecChar *rval);
+                                        Mat *straight_qrcode, char **rval);
 CvStatus QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points, bool *rval);
-CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint inputPoints, Mat straight_qrcode,
-                               VecChar *rval);
+CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint *points, Mat straight_qrcode,
+                               char **rval);
 CvStatus QRCodeDetector_decodeCurved(QRCodeDetector self, Mat img, VecPoint points,
                                      CVD_OUT Mat *straight_qrcode, char **rval);
 CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecPoint *points,
                                               CVD_OUT Mat *straight_qrcode, char **rval);
-CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint points, bool *rval);
+CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval);
 CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, VecVecChar *decoded,
                                              VecPoint *points, VecMat *straight_code, bool *rval);
 CvStatus QRCodeDetector_setEpsX(QRCodeDetector self, double epsX);

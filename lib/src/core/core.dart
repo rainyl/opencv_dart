@@ -699,8 +699,8 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref,
-          attempts, flags, centers!.ref, p),
+      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
+          flags, centers!.ref, p),
     );
     return p.value;
   });
@@ -829,12 +829,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
     final minLocP = calloc<cvg.Point>();
     final maxLocP = calloc<cvg.Point>();
     cvRun(() => CFFI.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
-    return (
-      minValP.value,
-      maxValP.value,
-      Point.fromPointer(minLocP),
-      Point.fromPointer(maxLocP)
-    );
+    return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
   });
 }
 
@@ -1081,10 +1076,10 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 VecMat split(InputArray m) {
   final p = calloc<cvg.VecMat>();
-  final vec = VecMat.fromList([]);
-  cvRun(() => CFFI.Mat_Split(m.ref, vec.ptr));
+  final vec = calloc<cvg.VecMat>();
+  cvRun(() => CFFI.Mat_Split(m.ref, vec));
   calloc.free(p);
-  return vec;
+  return VecMat.fromPointer(vec);
 }
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.

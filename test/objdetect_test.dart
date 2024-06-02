@@ -167,7 +167,7 @@ void main() async {
     final (res4, multiBox) = detector.detectMulti(img2);
     expect(res4, true);
     expect(multiBox, isNotNull);
-    expect(multiBox?.length, greaterThan(0));
+    expect(multiBox.length, greaterThan(0));
 
     final (success, strs, pts, mats) = detector.detectAndDecodeMulti(img);
     expect(success, true);
