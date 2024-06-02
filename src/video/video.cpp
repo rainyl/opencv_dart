@@ -7,6 +7,7 @@
 */
 
 #include "video.h"
+#include <vector>
 
 CvStatus BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval)
 {
@@ -60,14 +61,17 @@ CvStatus CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecP
   END_WRAP
 }
 CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
-                                        VecUChar status, VecFloat err, Size winSize, int maxLevel,
+                                        VecUChar *status, VecFloat *err, Size winSize, int maxLevel,
                                         TermCriteria criteria, int flags, double minEigThreshold)
 {
   BEGIN_WRAP
+  auto _status = new std::vector<uchar>();
+  auto _err = new std::vector<float>();
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *status.ptr, *err.ptr,
-                           cv::Size(winSize.width, winSize.height), maxLevel, tc, flags,
-                           minEigThreshold);
+  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *_status, *_err,
+                           cv::Size(winSize.width, winSize.height), maxLevel, tc, flags, minEigThreshold);
+  *status = {_status};
+  *err = {_err};
   END_WRAP
 }
 CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,

@@ -880,15 +880,25 @@ external CvStatus CalcOpticalFlowPyrLK(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, VecPoint2f, VecPoint2f, VecUChar, VecFloat,
-        Size, ffi.Int, TermCriteria, ffi.Int, ffi.Double)>()
+    CvStatus Function(
+        Mat,
+        Mat,
+        VecPoint2f,
+        VecPoint2f,
+        ffi.Pointer<VecUChar>,
+        ffi.Pointer<VecFloat>,
+        Size,
+        ffi.Int,
+        TermCriteria,
+        ffi.Int,
+        ffi.Double)>()
 external CvStatus CalcOpticalFlowPyrLKWithParams(
   Mat prevImg,
   Mat nextImg,
   VecPoint2f prevPts,
   VecPoint2f nextPts,
-  VecUChar status,
-  VecFloat err,
+  ffi.Pointer<VecUChar> status,
+  ffi.Pointer<VecFloat> err,
   Size winSize,
   int maxLevel,
   TermCriteria criteria,
@@ -925,35 +935,83 @@ external CvStatus Canny(
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<CascadeClassifier>)>()
 external void CascadeClassifier_Close(
-  ffi.Pointer<CascadeClassifier> cs,
+  ffi.Pointer<CascadeClassifier> self,
 );
 
 @ffi.Native<CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>)>()
 external CvStatus CascadeClassifier_DetectMultiScale(
-  CascadeClassifier cs,
+  CascadeClassifier self,
   Mat img,
   ffi.Pointer<VecRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(CascadeClassifier, Mat, ffi.Double, ffi.Int, ffi.Int,
-        Size, Size, ffi.Pointer<VecRect>)>()
-external CvStatus CascadeClassifier_DetectMultiScaleWithParams(
-  CascadeClassifier cs,
+    CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>,
+        ffi.Pointer<VecInt>, ffi.Double, ffi.Int, ffi.Int, Size, Size)>()
+external CvStatus CascadeClassifier_DetectMultiScale2(
+  CascadeClassifier self,
   Mat img,
+  ffi.Pointer<VecRect> objects,
+  ffi.Pointer<VecInt> numDetections,
+  double scaleFactor,
+  int minNeighbors,
+  int flags,
+  Size minSize,
+  Size maxSize,
+);
+
+@ffi.Native<
+    CvStatus Function(
+        CascadeClassifier,
+        Mat,
+        ffi.Pointer<VecRect>,
+        ffi.Pointer<VecInt>,
+        ffi.Pointer<VecDouble>,
+        ffi.Double,
+        ffi.Int,
+        ffi.Int,
+        Size,
+        Size,
+        ffi.Bool)>()
+external CvStatus CascadeClassifier_DetectMultiScale3(
+  CascadeClassifier self,
+  Mat img,
+  ffi.Pointer<VecRect> objects,
+  ffi.Pointer<VecInt> rejectLevels,
+  ffi.Pointer<VecDouble> levelWeights,
+  double scaleFactor,
+  int minNeighbors,
+  int flags,
+  Size minSize,
+  Size maxSize,
+  bool outputRejectLevels,
+);
+
+@ffi.Native<
+    CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>, ffi.Double,
+        ffi.Int, ffi.Int, Size, Size)>()
+external CvStatus CascadeClassifier_DetectMultiScaleWithParams(
+  CascadeClassifier self,
+  Mat img,
+  ffi.Pointer<VecRect> objects,
   double scale,
   int minNeighbors,
   int flags,
   Size minSize,
   Size maxSize,
-  ffi.Pointer<VecRect> rval,
+);
+
+@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
+external CvStatus CascadeClassifier_Empty(
+  CascadeClassifier self,
+  ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
     CvStatus Function(
         CascadeClassifier, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
 external CvStatus CascadeClassifier_Load(
-  CascadeClassifier cs,
+  CascadeClassifier self,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Int> rval,
 );
@@ -961,6 +1019,31 @@ external CvStatus CascadeClassifier_Load(
 @ffi.Native<CvStatus Function(ffi.Pointer<CascadeClassifier>)>()
 external CvStatus CascadeClassifier_New(
   ffi.Pointer<CascadeClassifier> rval,
+);
+
+@ffi.Native<
+    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<CascadeClassifier>)>()
+external CvStatus CascadeClassifier_NewFromFile(
+  ffi.Pointer<ffi.Char> filename,
+  ffi.Pointer<CascadeClassifier> rval,
+);
+
+@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Int>)>()
+external CvStatus CascadeClassifier_getFeatureType(
+  CascadeClassifier self,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<Size>)>()
+external CvStatus CascadeClassifier_getOriginalWindowSize(
+  CascadeClassifier self,
+  ffi.Pointer<Size> rval,
+);
+
+@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
+external CvStatus CascadeClassifier_isOldFormatCascade(
+  CascadeClassifier self,
+  ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<CvStatus Function(Mat, Point, ffi.Int, Scalar, ffi.Int)>()
@@ -1673,11 +1756,11 @@ external CvStatus GetTickFrequency(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, VecPoint2f, ffi.Int, ffi.Double, ffi.Double, Mat,
-        ffi.Int, ffi.Bool, ffi.Double)>()
+    CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int, ffi.Double,
+        ffi.Double, Mat, ffi.Int, ffi.Bool, ffi.Double)>()
 external CvStatus GoodFeaturesToTrack(
   Mat img,
-  VecPoint2f corners,
+  ffi.Pointer<VecPoint2f> corners,
   int maxCorners,
   double quality,
   double minDist,
@@ -1688,11 +1771,11 @@ external CvStatus GoodFeaturesToTrack(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, VecPoint2f, ffi.Int, ffi.Double, ffi.Double, Mat,
-        ffi.Int, ffi.Int, ffi.Bool, ffi.Double)>()
+    CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int, ffi.Double,
+        ffi.Double, Mat, ffi.Int, ffi.Int, ffi.Bool, ffi.Double)>()
 external CvStatus GoodFeaturesToTrackWithGradient(
   Mat img,
-  VecPoint2f corners,
+  ffi.Pointer<VecPoint2f> corners,
   int maxCorners,
   double quality,
   double minDist,
@@ -1723,12 +1806,58 @@ external CvStatus GroupRectangles(
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<HOGDescriptor>)>()
 external void HOGDescriptor_Close(
-  ffi.Pointer<HOGDescriptor> hog,
+  ffi.Pointer<HOGDescriptor> self,
+);
+
+@ffi.Native<
+    CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecFloat>, Size, Size,
+        ffi.Pointer<VecPoint>)>()
+external CvStatus HOGDescriptor_Compute(
+  HOGDescriptor self,
+  Mat img,
+  ffi.Pointer<VecFloat> descriptors,
+  Size winStride,
+  Size padding,
+  ffi.Pointer<VecPoint> locations,
+);
+
+@ffi.Native<
+    CvStatus Function(
+        HOGDescriptor,
+        Mat,
+        ffi.Pointer<VecPoint>,
+        ffi.Pointer<VecDouble>,
+        ffi.Double,
+        Size,
+        Size,
+        ffi.Pointer<VecPoint>)>()
+external CvStatus HOGDescriptor_Detect(
+  HOGDescriptor self,
+  Mat img,
+  ffi.Pointer<VecPoint> foundLocations,
+  ffi.Pointer<VecDouble> weights,
+  double hitThresh,
+  Size winStride,
+  Size padding,
+  ffi.Pointer<VecPoint> searchLocations,
+);
+
+@ffi.Native<
+    CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>, ffi.Double,
+        Size, Size, ffi.Pointer<VecPoint>)>()
+external CvStatus HOGDescriptor_Detect2(
+  HOGDescriptor self,
+  Mat img,
+  ffi.Pointer<VecPoint> foundLocations,
+  double hitThresh,
+  Size winStride,
+  Size padding,
+  ffi.Pointer<VecPoint> searchLocations,
 );
 
 @ffi.Native<CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecRect>)>()
 external CvStatus HOGDescriptor_DetectMultiScale(
-  HOGDescriptor hog,
+  HOGDescriptor self,
   Mat img,
   ffi.Pointer<VecRect> rval,
 );
@@ -1737,7 +1866,7 @@ external CvStatus HOGDescriptor_DetectMultiScale(
     CvStatus Function(HOGDescriptor, Mat, ffi.Double, Size, Size, ffi.Double,
         ffi.Double, ffi.Bool, ffi.Pointer<VecRect>)>()
 external CvStatus HOGDescriptor_DetectMultiScaleWithParams(
-  HOGDescriptor hog,
+  HOGDescriptor self,
   Mat img,
   double hitThresh,
   Size winStride,
@@ -1750,11 +1879,11 @@ external CvStatus HOGDescriptor_DetectMultiScaleWithParams(
 
 @ffi.Native<
     CvStatus Function(
-        HOGDescriptor, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
+        HOGDescriptor, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>)>()
 external CvStatus HOGDescriptor_Load(
-  HOGDescriptor hog,
+  HOGDescriptor self,
   ffi.Pointer<ffi.Char> name,
-  ffi.Pointer<ffi.Int> rval,
+  ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<HOGDescriptor>)>()
@@ -1762,10 +1891,54 @@ external CvStatus HOGDescriptor_New(
   ffi.Pointer<HOGDescriptor> rval,
 );
 
+@ffi.Native<
+    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<HOGDescriptor>)>()
+external CvStatus HOGDescriptor_NewFromFile(
+  ffi.Pointer<ffi.Char> filename,
+  ffi.Pointer<HOGDescriptor> rval,
+);
+
 @ffi.Native<CvStatus Function(HOGDescriptor, VecFloat)>()
 external CvStatus HOGDescriptor_SetSVMDetector(
-  HOGDescriptor hog,
+  HOGDescriptor self,
   VecFloat det,
+);
+
+@ffi.Native<CvStatus Function(HOGDescriptor, Mat, Mat, Mat, Size, Size)>()
+external CvStatus HOGDescriptor_computeGradient(
+  HOGDescriptor self,
+  Mat img,
+  Mat grad,
+  Mat angleOfs,
+  Size paddingTL,
+  Size paddingBR,
+);
+
+@ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
+external CvStatus HOGDescriptor_getDaimlerPeopleDetector(
+  ffi.Pointer<VecFloat> rval,
+);
+
+@ffi.Native<CvStatus Function(HOGDescriptor, ffi.Pointer<ffi.Size>)>()
+external CvStatus HOGDescriptor_getDescriptorSize(
+  HOGDescriptor self,
+  ffi.Pointer<ffi.Size> rval,
+);
+
+@ffi.Native<CvStatus Function(HOGDescriptor, ffi.Pointer<ffi.Double>)>()
+external CvStatus HOGDescriptor_getWinSigma(
+  HOGDescriptor self,
+  ffi.Pointer<ffi.Double> rval,
+);
+
+@ffi.Native<
+    CvStatus Function(HOGDescriptor, VecRect, VecDouble, ffi.Int, ffi.Double)>()
+external CvStatus HOGDescriptor_groupRectangles(
+  HOGDescriptor self,
+  VecRect rectList,
+  VecDouble weights,
+  int groupThreshold,
+  double eps,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
@@ -4368,10 +4541,10 @@ external CvStatus Net_Create(
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, VecChar)>()
+@ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external CvStatus Net_Dump(
   Net net,
-  VecChar rval,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Bool>)>()
@@ -4725,45 +4898,46 @@ external CvStatus PyrUp(
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<QRCodeDetector>)>()
 external void QRCodeDetector_Close(
-  ffi.Pointer<QRCodeDetector> qr,
+  ffi.Pointer<QRCodeDetector> self,
+);
+
+@ffi.Native<
+    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>, Mat,
+        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external CvStatus QRCodeDetector_Decode(
+  QRCodeDetector self,
+  Mat input,
+  ffi.Pointer<VecPoint> points,
+  Mat straight_qrcode,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<
     CvStatus Function(
-        QRCodeDetector, Mat, VecPoint, Mat, ffi.Pointer<VecChar>)>()
-external CvStatus QRCodeDetector_Decode(
-  QRCodeDetector qr,
-  Mat input,
-  VecPoint inputPoints,
-  Mat straight_qrcode,
-  ffi.Pointer<VecChar> rval,
-);
-
-@ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, VecPoint, ffi.Pointer<ffi.Bool>)>()
+        QRCodeDetector, Mat, ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>()
 external CvStatus QRCodeDetector_Detect(
-  QRCodeDetector qr,
+  QRCodeDetector self,
   Mat input,
-  VecPoint points,
+  ffi.Pointer<VecPoint> points,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
     CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
-        ffi.Pointer<Mat>, ffi.Pointer<VecChar>)>()
+        ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external CvStatus QRCodeDetector_DetectAndDecode(
-  QRCodeDetector qr,
+  QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecPoint> points,
   ffi.Pointer<Mat> straight_qrcode,
-  ffi.Pointer<VecChar> rval,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<
     CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecVecChar>,
         ffi.Pointer<VecPoint>, ffi.Pointer<VecMat>, ffi.Pointer<ffi.Bool>)>()
 external CvStatus QRCodeDetector_DetectAndDecodeMulti(
-  QRCodeDetector qr,
+  QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecVecChar> decoded,
   ffi.Pointer<VecPoint> points,
@@ -4772,17 +4946,58 @@ external CvStatus QRCodeDetector_DetectAndDecodeMulti(
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, VecPoint, ffi.Pointer<ffi.Bool>)>()
+    CvStatus Function(
+        QRCodeDetector, Mat, ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>()
 external CvStatus QRCodeDetector_DetectMulti(
-  QRCodeDetector qr,
+  QRCodeDetector self,
   Mat input,
-  VecPoint points,
+  ffi.Pointer<VecPoint> points,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<QRCodeDetector>)>()
 external CvStatus QRCodeDetector_New(
   ffi.Pointer<QRCodeDetector> rval,
+);
+
+@ffi.Native<
+    CvStatus Function(QRCodeDetector, Mat, VecPoint, ffi.Pointer<Mat>,
+        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external CvStatus QRCodeDetector_decodeCurved(
+  QRCodeDetector self,
+  Mat img,
+  VecPoint points,
+  ffi.Pointer<Mat> straight_qrcode,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@ffi.Native<
+    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+        ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external CvStatus QRCodeDetector_detectAndDecodeCurved(
+  QRCodeDetector self,
+  Mat img,
+  ffi.Pointer<VecPoint> points,
+  ffi.Pointer<Mat> straight_qrcode,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Double)>()
+external CvStatus QRCodeDetector_setEpsX(
+  QRCodeDetector self,
+  double epsX,
+);
+
+@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Double)>()
+external CvStatus QRCodeDetector_setEpsY(
+  QRCodeDetector self,
+  double epsY,
+);
+
+@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Bool)>()
+external CvStatus QRCodeDetector_setUseAlignmentMarkers(
+  QRCodeDetector self,
+  bool useAlignmentMarkers,
 );
 
 @ffi.Native<

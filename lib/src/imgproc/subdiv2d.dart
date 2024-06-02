@@ -120,9 +120,9 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
   VecInt getLeadingEdgeList() {
     return using<VecInt>((arena) {
-      final pv = VecInt();
-      cvRun(() => cvg.Subdiv2D_GetLeadingEdgeList(ref, pv.ptr));
-      return pv;
+      final pv = calloc<cvg.VecInt>();
+      cvRun(() => cvg.Subdiv2D_GetLeadingEdgeList(ref, pv));
+      return VecInt.fromPointer(pv);
     });
   }
 
@@ -161,10 +161,10 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
   (VecVecPoint2f facetList, VecPoint2f facetCenters) getVoronoiFacetList(VecInt idx) {
     return using<(VecVecPoint2f, VecPoint2f)>((arena) {
-      final pf = VecVecPoint2f.fromList([]);
-      final pfc = VecPoint2f();
-      cvRun(() => cvg.Subdiv2D_GetVoronoiFacetList(ref, idx.ref, pf.ptr, pfc.ptr));
-      return (pf, pfc);
+      final pf = calloc<cvg.VecVecPoint2f>();
+      final pfc = calloc<cvg.VecPoint2f>();
+      cvRun(() => cvg.Subdiv2D_GetVoronoiFacetList(ref, idx.ref, pf, pfc));
+      return (VecVecPoint2f.fromPointer(pf), VecPoint2f.fromPointer(pfc));
     });
   }
 

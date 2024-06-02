@@ -55,7 +55,7 @@ CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Ma
 CvStatus CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
                               VecUChar status, VecFloat err);
 CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
-                                        VecUChar status, VecFloat err, Size winSize, int maxLevel,
+                                        VecUChar *status, VecFloat *err, Size winSize, int maxLevel,
                                         TermCriteria criteria, int flags, double minEigThreshold);
 CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
                                   int winsize, int iterations, int polyN, double polySigma, int flags);

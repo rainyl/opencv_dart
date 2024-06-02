@@ -309,21 +309,25 @@ CvStatus CornerSubPix(Mat img, VecPoint2f corners, Size winSize, Size zeroZone, 
   // std::cout << *corners.ptr << std::endl;
   END_WRAP
 }
-CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f corners, int maxCorners, double quality, double minDist,
+CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f *corners, int maxCorners, double quality, double minDist,
                              Mat mask, int blockSize, bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  auto _corners = new std::vector<cv::Point2f>();
+  cv::goodFeaturesToTrack(*img.ptr, *_corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           useHarrisDetector, k);
+  *corners = {_corners};
   END_WRAP
 }
-CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f corners, int maxCorners, double quality,
+CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f *corners, int maxCorners, double quality,
                                          double minDist, Mat mask, int blockSize, int gradientSize,
                                          bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  auto _corners = new std::vector<cv::Point2f>();
+  cv::goodFeaturesToTrack(*img.ptr, *_corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           gradientSize, useHarrisDetector, k);
+  *corners = {_corners};
   END_WRAP
 }
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
@@ -897,6 +901,7 @@ CvStatus PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response, Point2
 {
   BEGIN_WRAP
   auto p = cv::phaseCorrelate(*src1.ptr, *src2.ptr, *window.ptr, response);
+  // TODO: add Point2d
   *rval = {static_cast<float>(p.x), static_cast<float>(p.y)};
   END_WRAP
 }

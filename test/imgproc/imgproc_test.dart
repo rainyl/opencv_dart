@@ -400,6 +400,11 @@ void main() async {
     expect(dst1.isEmpty, false);
   });
 
+  test('cv.morphologyDefaultBorderValue', () {
+    final value = cv.morphologyDefaultBorderValue();
+    expect(value.val.length, 4);
+  });
+
   // morphologyEx
   test('cv.morphologyEx', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
@@ -532,6 +537,13 @@ void main() async {
   });
 
   // HoughLinesP
+  test('cv.HoughLinesP', () {
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
+    expect(img.isEmpty, false);
+
+    final circles = cv.HoughLinesP(img, 1, cv.CV_PI / 180, 50);
+    expect(circles.isEmpty, false);
+  });
 
   // HoughLinesPointSet
 
@@ -715,40 +727,40 @@ void main() async {
   });
 
   // findHomography
-  // test('cv.findHomography', () {
-  //   final src = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC1);
-  //   final dst = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC2);
-  //   final srcPts = [
-  //     cv.Point(193, 932),
-  //     cv.Point(191, 378),
-  //     cv.Point(1497, 183),
-  //     cv.Point(1889, 681),
-  //   ];
-  //   final dstPts = [
-  //     cv.Point2f(51.51206544281359, -0.10425475260813055),
-  //     cv.Point2f(51.51211051314331, -0.10437947532732306),
-  //     cv.Point2f(51.512222354139325, -0.10437679311830816),
-  //     cv.Point2f(51.51214828037607, -0.1042212249954444),
-  //   ];
-  //   List.generate(srcPts.length, (index) => index).forEach((i) {
-  //     src.setValue<double>(i, 0, srcPts[i].x.toDouble());
-  //     src.setValue<double>(i, 1, srcPts[i].y.toDouble());
-  //   });
-  //   List.generate(dstPts.length, (index) => index).forEach((i) {
-  //     dst.setValue<double>(i, 0, dstPts[i].x.toDouble());
-  //     dst.setValue<double>(i, 1, dstPts[i].y.toDouble());
-  //   });
+  test('cv.findHomography', () {
+    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final srcPts = [
+      cv.Point2f(193, 932),
+      cv.Point2f(191, 378),
+      cv.Point2f(1497, 183),
+      cv.Point2f(1889, 681),
+    ];
+    final dstPts = [
+      cv.Point2f(51.51206544281359, -0.10425475260813055),
+      cv.Point2f(51.51211051314331, -0.10437947532732306),
+      cv.Point2f(51.512222354139325, -0.10437679311830816),
+      cv.Point2f(51.51214828037607, -0.1042212249954444),
+    ];
+    for (var i = 0; i < srcPts.length; i++) {
+      src.setF64(i, 0, srcPts[i].x);
+      src.setF64(i, 1, srcPts[i].y);
+    }
+    for (var i = 0; i < dstPts.length; i++) {
+      dst.setF64(i, 0, dstPts[i].x);
+      dst.setF64(i, 1, dstPts[i].y);
+    }
 
-  //   final mask = cv.Mat.empty();
-  //   final m = cv.findHomography(
-  //     src,
-  //     dst,
-  //     method: cv.HOMOGRAPY_ALL_POINTS,
-  //     ransacReprojThreshold: 3,
-  //     mask: mask,
-  //   );
-  //   expect(m.isEmpty, false);
-  // });
+    final mask = cv.Mat.empty();
+    final m = cv.findHomography(
+      src,
+      dst,
+      method: cv.HOMOGRAPY_ALL_POINTS,
+      ransacReprojThreshold: 3,
+      mask: mask,
+    );
+    expect(m.isEmpty, false);
+  });
 
   // remap
   test('cv.remap', () {
@@ -844,6 +856,26 @@ void main() async {
     final inv = cv.invertAffineTransform(m);
     expect(inv.isEmpty, false);
     expect((inv.rows, inv.cols), (2, 3));
+  });
+
+  test('cv.phaseCorrelate', () {
+    final template = cv.imread("test/images/simple.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final matched = cv.imread("test/images/simple-translated.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final notMatchedOrig = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_GRAYSCALE);
+
+    final notMatched = cv.resize(notMatchedOrig, (matched.size[1], matched.size[0]));
+
+    final template32F = template.convertTo(cv.MatType.CV_32FC1);
+    final matched32F = matched.convertTo(cv.MatType.CV_32FC1);
+    final notMatched32F = notMatched.convertTo(cv.MatType.CV_32FC1);
+
+    final (shiftTranslated, responseTranslated) = cv.phaseCorrelate(template32F, matched32F);
+    final (_, responseDiff) = cv.phaseCorrelate(template32F, notMatched32F);
+    expect(shiftTranslated.x, isA<double>());
+    expect(shiftTranslated.y, isA<double>());
+
+    expect(responseTranslated, greaterThan(0.85));
+    expect(responseDiff, lessThan(0.05));
   });
 
   // accumulate

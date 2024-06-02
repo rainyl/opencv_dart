@@ -196,8 +196,8 @@ Mat calcOpticalFlowFarneback(
   int flags = 0,
   double minEigThreshold = 1e-4,
 }) {
-  status ??= VecUChar();
-  err ??= VecFloat();
+  final s = status?.ptr ?? calloc<cvg.VecUChar>();
+  final e = err?.ptr ?? calloc<cvg.VecFloat>();
   cvRunArena((arena) {
     cvRun(
       () => cvg.CalcOpticalFlowPyrLKWithParams(
@@ -205,8 +205,8 @@ Mat calcOpticalFlowFarneback(
         nextImg.ref,
         prevPts.ref,
         nextPts.ref,
-        status!.ref,
-        err!.ref,
+        s,
+        e,
         winSize.toSize(arena).ref,
         maxLevel,
         criteria.toNativePtr(arena).ref,
@@ -215,7 +215,7 @@ Mat calcOpticalFlowFarneback(
       ),
     );
   });
-  return (nextPts, status, err);
+  return (nextPts, status ?? VecUChar.fromPointer(s), VecFloat.fromPointer(e));
 }
 
 /// FindTransformECC finds the geometric transform (warp) between two images in terms of the ECC criterion.
