@@ -116,13 +116,13 @@ bool checkTflite(cv.Net net) {
 
 void main() async {
   test('cv.Net.fromFile', () async {
-    cv.registerErrorCallback();
     final net = cv.Net.empty();
     expect(net.isEmpty, true);
 
     final model = cv.Net.fromFile("test/models/bvlc_googlenet.caffemodel",
         config: "test/models/bvlc_googlenet.prototxt");
     checkCaffeNet(model);
+    expect(model.dump(), isNotEmpty);
 
     net.dispose();
   });
