@@ -7,7 +7,6 @@
 */
 
 #include "imgproc.h"
-#include <memory>
 #include <vector>
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -902,6 +901,7 @@ CvStatus PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response, Point2
 {
   BEGIN_WRAP
   auto p = cv::phaseCorrelate(*src1.ptr, *src2.ptr, *window.ptr, response);
+  // TODO: add Point2d
   *rval = {static_cast<float>(p.x), static_cast<float>(p.y)};
   END_WRAP
 }
