@@ -1,6 +1,5 @@
 #include "core.h"
 #include "lut.hpp"
-#include "opencv2/core/cvstd.hpp"
 #include <vector>
 
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
