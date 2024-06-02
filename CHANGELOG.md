@@ -1,3 +1,11 @@
+## 2.0.0-dev.8
+
+- Auto setup by @abdelaziz-mahdy, from v1.0.5, libs will be downloaded automatically during build, i.e., no need to run setup commands
+- Improve performance and optimize memory consumption
+- Add `dispose()` methods to allow manual free native resources
+- Better exception for cv.imencode
+- Add more API for objdetect module
+
 ## 2.0.0-dev.7
 
 - Fix: Stitcher.composePanorama
