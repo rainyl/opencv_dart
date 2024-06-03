@@ -703,16 +703,16 @@ VecPoint2f goodFeaturesToTrack(
   bool useHarrisDetector = false,
   double k = 0.04,
 }) {
-  corners ??= VecPoint2f();
+  final c = corners?.ptr ?? calloc<cvg.VecPoint2f>();
   mask ??= Mat.empty();
   if (gradientSize == null) {
-    cvRun(() => CFFI.GoodFeaturesToTrack(image.ref, corners!.ref, maxCorners, qualityLevel,
-        minDistance, mask!.ref, blockSize, useHarrisDetector, k));
+    cvRun(() => CFFI.GoodFeaturesToTrack(image.ref, c, maxCorners, qualityLevel, minDistance,
+        mask!.ref, blockSize, useHarrisDetector, k));
   } else {
-    cvRun(() => CFFI.GoodFeaturesToTrackWithGradient(image.ref, corners!.ref, maxCorners,
-        qualityLevel, minDistance, mask!.ref, blockSize, gradientSize, useHarrisDetector, k));
+    cvRun(() => CFFI.GoodFeaturesToTrackWithGradient(image.ref, c, maxCorners, qualityLevel,
+        minDistance, mask!.ref, blockSize, gradientSize, useHarrisDetector, k));
   }
-  return corners;
+  return corners ?? VecPoint2f.fromPointer(c);
 }
 
 /// Grabcut runs the GrabCut algorithm.
