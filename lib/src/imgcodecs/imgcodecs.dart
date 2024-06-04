@@ -70,10 +70,10 @@ Uint8List imencode(
   params == null
       ? cvRun(() => CFFI.Image_IMEncode(cExt, img.ref, success, buffer))
       : cvRun(() => CFFI.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+  calloc.free(cExt);
   if (!success.value) {
     throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
   }
-  calloc.free(cExt);
   return VecUChar.fromPointer(buffer).toU8List();
 }
 
