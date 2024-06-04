@@ -14634,6 +14634,23 @@ class CvNative {
   late final _VecChar_Close =
       _VecChar_ClosePtr.asFunction<void Function(ffi.Pointer<VecChar>)>();
 
+  CvStatus VecChar_Data(
+    VecChar vec,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _VecChar_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecChar_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('VecChar_Data');
+  late final _VecChar_Data = _VecChar_DataPtr.asFunction<
+      CvStatus Function(VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
   CvStatus VecChar_New(
     ffi.Pointer<VecChar> rval,
   ) {
@@ -14886,6 +14903,23 @@ class CvNative {
   late final _VecDouble_Close =
       _VecDouble_ClosePtr.asFunction<void Function(ffi.Pointer<VecDouble>)>();
 
+  CvStatus VecDouble_Data(
+    VecDouble vec,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+  ) {
+    return _VecDouble_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecDouble_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(VecDouble,
+              ffi.Pointer<ffi.Pointer<ffi.Double>>)>>('VecDouble_Data');
+  late final _VecDouble_Data = _VecDouble_DataPtr.asFunction<
+      CvStatus Function(VecDouble, ffi.Pointer<ffi.Pointer<ffi.Double>>)>();
+
   CvStatus VecDouble_New(
     ffi.Pointer<VecDouble> rval,
   ) {
@@ -15004,6 +15038,23 @@ class CvNative {
   late final _VecFloat_Close =
       _VecFloat_ClosePtr.asFunction<void Function(ffi.Pointer<VecFloat>)>();
 
+  CvStatus VecFloat_Data(
+    VecFloat vec,
+    ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
+  ) {
+    return _VecFloat_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecFloat_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>>('VecFloat_Data');
+  late final _VecFloat_Data = _VecFloat_DataPtr.asFunction<
+      CvStatus Function(VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>();
+
   CvStatus VecFloat_New(
     ffi.Pointer<VecFloat> rval,
   ) {
@@ -15105,6 +15156,25 @@ class CvNative {
   late final _VecInt_At = _VecInt_AtPtr.asFunction<
       CvStatus Function(VecInt, int, ffi.Pointer<ffi.Int>)>();
 
+  CvStatus VecInt_AtNoBoundCheck(
+    VecInt vec,
+    int idx,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _VecInt_AtNoBoundCheck(
+      vec,
+      idx,
+      rval,
+    );
+  }
+
+  late final _VecInt_AtNoBoundCheckPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>>('VecInt_AtNoBoundCheck');
+  late final _VecInt_AtNoBoundCheck = _VecInt_AtNoBoundCheckPtr.asFunction<
+      CvStatus Function(VecInt, int, ffi.Pointer<ffi.Int>)>();
+
   void VecInt_Close(
     ffi.Pointer<VecInt> vec,
   ) {
@@ -15118,6 +15188,23 @@ class CvNative {
           'VecInt_Close');
   late final _VecInt_Close =
       _VecInt_ClosePtr.asFunction<void Function(ffi.Pointer<VecInt>)>();
+
+  CvStatus VecInt_Data(
+    VecInt vec,
+    ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ) {
+    return _VecInt_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecInt_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>>('VecInt_Data');
+  late final _VecInt_Data = _VecInt_DataPtr.asFunction<
+      CvStatus Function(VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>();
 
   CvStatus VecInt_New(
     ffi.Pointer<VecInt> rval,
@@ -15965,6 +16052,25 @@ class CvNative {
   late final _VecUChar_At = _VecUChar_AtPtr.asFunction<
       CvStatus Function(VecUChar, int, ffi.Pointer<uchar>)>();
 
+  CvStatus VecUChar_AtNoBoundCheck(
+    VecUChar vec,
+    int idx,
+    ffi.Pointer<uchar> rval,
+  ) {
+    return _VecUChar_AtNoBoundCheck(
+      vec,
+      idx,
+      rval,
+    );
+  }
+
+  late final _VecUChar_AtNoBoundCheckPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(VecUChar, ffi.Int,
+              ffi.Pointer<uchar>)>>('VecUChar_AtNoBoundCheck');
+  late final _VecUChar_AtNoBoundCheck = _VecUChar_AtNoBoundCheckPtr.asFunction<
+      CvStatus Function(VecUChar, int, ffi.Pointer<uchar>)>();
+
   void VecUChar_Close(
     ffi.Pointer<VecUChar> vec,
   ) {
@@ -15978,6 +16084,23 @@ class CvNative {
           'VecUChar_Close');
   late final _VecUChar_Close =
       _VecUChar_ClosePtr.asFunction<void Function(ffi.Pointer<VecUChar>)>();
+
+  CvStatus VecUChar_Data(
+    VecUChar vec,
+    ffi.Pointer<ffi.Pointer<uchar>> rval,
+  ) {
+    return _VecUChar_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecUChar_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              VecUChar, ffi.Pointer<ffi.Pointer<uchar>>)>>('VecUChar_Data');
+  late final _VecUChar_Data = _VecUChar_DataPtr.asFunction<
+      CvStatus Function(VecUChar, ffi.Pointer<ffi.Pointer<uchar>>)>();
 
   CvStatus VecUChar_New(
     ffi.Pointer<VecUChar> rval,
@@ -16232,6 +16355,23 @@ class CvNative {
           'VecVecDMatch_Close');
   late final _VecVecDMatch_Close = _VecVecDMatch_ClosePtr.asFunction<
       void Function(ffi.Pointer<VecVecDMatch>)>();
+
+  CvStatus VecVecDMatch_Data(
+    VecVecDMatch vec,
+    ffi.Pointer<ffi.Pointer<VecDMatch>> rval,
+  ) {
+    return _VecVecDMatch_Data(
+      vec,
+      rval,
+    );
+  }
+
+  late final _VecVecDMatch_DataPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(VecVecDMatch,
+              ffi.Pointer<ffi.Pointer<VecDMatch>>)>>('VecVecDMatch_Data');
+  late final _VecVecDMatch_Data = _VecVecDMatch_DataPtr.asFunction<
+      CvStatus Function(VecVecDMatch, ffi.Pointer<ffi.Pointer<VecDMatch>>)>();
 
   CvStatus VecVecDMatch_New(
     ffi.Pointer<VecVecDMatch> rval,

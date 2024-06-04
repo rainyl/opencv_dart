@@ -163,11 +163,20 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// external native data array of [Mat], used for [Mat.fromList]
   NativeArray? xdata;
-  MatType get type => cvRunArena<MatType>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => CFFI.Mat_Type(ref, p));
-        return MatType(p.value);
-      });
+
+  /// cached mat type
+  MatType? _type;
+
+  /// here the mat type can't be changed once created, method such as [convertTo] will create a new [Mat]
+  MatType get type {
+    if (_type == null) {
+      final p = calloc<ffi.Int>();
+      cvRun(() => CFFI.Mat_Type(ref, p));
+      _type = MatType(p.value);
+    }
+    return _type!;
+  }
+
   int get width => cvRunArena<int>((arena) {
         final p = arena<ffi.Int>();
         cvRun(() => CFFI.Mat_Cols(ref, p));
