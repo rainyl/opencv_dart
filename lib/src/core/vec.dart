@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
@@ -78,7 +79,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     cvRun(() => CFFI.VecInt_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
-    // VecUChar, so we can't free it by providing `finalizer: calloc.nativeFree`
+    // VecInt, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Int32>().asTypedList(length);
     calloc.free(p);
     return d;
@@ -204,11 +205,9 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   }
   factory VecChar.fromList(List<int> pts) {
     final ptr = calloc<cvg.VecChar>();
-    final intPtr = calloc<ffi.Char>(pts.length);
-    for (var i = 0; i < pts.length; i++) {
-      intPtr[i] = pts[i];
-    }
-    cvRun(() => CFFI.VecChar_NewFromPointer(intPtr, pts.length, ptr));
+    final intPtr = calloc<ffi.Uint8>(pts.length);
+    intPtr.asTypedList(pts.length).setAll(0, pts);
+    cvRun(() => CFFI.VecChar_NewFromPointer(intPtr.cast<ffi.Char>(), pts.length, ptr));
     calloc.free(intPtr);
     return VecChar._(ptr);
   }
@@ -222,18 +221,17 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
     return length;
   }
 
-  Int8List get data {
+  Uint8List get data {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => CFFI.VecChar_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
-    // VecUChar, so we can't free it by providing `finalizer: calloc.nativeFree`
-    // TODO: utf-8 support
-    final d = p.value.cast<ffi.Int8>().asTypedList(length);
+    // VecChar, so we can't free it by providing `finalizer: calloc.nativeFree`
+    final d = p.value.cast<ffi.Uint8>().asTypedList(length);
     calloc.free(p);
     return d;
   }
 
-  String asString() => String.fromCharCodes(this);
+  String asString() => utf8.decode(data);
 
   @override
   cvg.VecCharPtr ptr;
@@ -253,7 +251,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
 
 class VecCharIterator extends VecIterator<int> {
   VecCharIterator(this.data);
-  Int8List data;
+  Uint8List data;
 
   @override
   int get length => data.length;
@@ -370,7 +368,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
     final p = calloc<ffi.Pointer<ffi.Float>>();
     cvRun(() => CFFI.VecFloat_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
-    // VecUChar, so we can't free it by providing `finalizer: calloc.nativeFree`
+    // VecFloat, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Float>().asTypedList(length);
     calloc.free(p);
     return d;
@@ -442,7 +440,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
     final p = calloc<ffi.Pointer<ffi.Double>>();
     cvRun(() => CFFI.VecDouble_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
-    // VecUChar, so we can't free it by providing `finalizer: calloc.nativeFree`
+    // VecDouble, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Double>().asTypedList(length);
     calloc.free(p);
     return d;

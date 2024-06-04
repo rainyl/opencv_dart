@@ -48,6 +48,9 @@ void main() {
     final vec1 = cv.VecChar.fromVec(vec.ref);
     expect(vec1, vec);
 
+    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
+    expect(vec2.asString(), "AAAA你好");
+
     vec1.dispose();
   });
 

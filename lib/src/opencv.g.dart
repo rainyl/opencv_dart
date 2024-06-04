@@ -1,6 +1,6 @@
 // coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
-//    c wrappers were from gocv: https://github.com/hybridgroup/gocv
+//    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
 // Author: Rainyl
 // License: Apache-2.0
@@ -6246,7 +6246,7 @@ class CvNative {
 
   CvStatus Layer_GetName(
     Layer layer,
-    ffi.Pointer<VecChar> rval,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
     return _Layer_GetName(
       layer,
@@ -6255,14 +6255,15 @@ class CvNative {
   }
 
   late final _Layer_GetNamePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(Layer, ffi.Pointer<VecChar>)>>(
-      'Layer_GetName');
+      ffi.NativeFunction<
+          CvStatus Function(
+              Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Layer_GetName');
   late final _Layer_GetName = _Layer_GetNamePtr.asFunction<
-      CvStatus Function(Layer, ffi.Pointer<VecChar>)>();
+      CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
   CvStatus Layer_GetType(
     Layer layer,
-    ffi.Pointer<VecChar> rval,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
     return _Layer_GetType(
       layer,
@@ -6271,10 +6272,11 @@ class CvNative {
   }
 
   late final _Layer_GetTypePtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(Layer, ffi.Pointer<VecChar>)>>(
-      'Layer_GetType');
+      ffi.NativeFunction<
+          CvStatus Function(
+              Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Layer_GetType');
   late final _Layer_GetType = _Layer_GetTypePtr.asFunction<
-      CvStatus Function(Layer, ffi.Pointer<VecChar>)>();
+      CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
   CvStatus Layer_InputNameToIndex(
     Layer layer,

@@ -261,19 +261,19 @@ CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, int *rval)
   END_WRAP
 }
 
-CvStatus Layer_GetName(Layer layer, VecChar *rval)
+CvStatus Layer_GetName(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->name;
-  *rval = {new std::vector<char>(ss.c_str(), ss.c_str() + ss.size())};
+  *rval = strdup(ss.c_str());
   END_WRAP
 }
 
-CvStatus Layer_GetType(Layer layer, VecChar *rval)
+CvStatus Layer_GetType(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->type;
-  *rval = {new std::vector<char>(ss.c_str(), ss.c_str() + ss.size())};
+  *rval = strdup(ss.c_str());
   END_WRAP
 }
 

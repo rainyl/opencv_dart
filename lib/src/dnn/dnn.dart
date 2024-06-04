@@ -38,20 +38,18 @@ class Layer extends CvStruct<cvg.Layer> {
   /// GetName returns name for this layer.
   String get name {
     return cvRunArena<String>((arena) {
-      final p = calloc<cvg.VecChar>();
+      final p = calloc<ffi.Pointer<ffi.Char>>();
       cvRun(() => CFFI.Layer_GetName(ref, p));
-      final vec = VecChar.fromPointer(p);
-      return vec.asString();
+      return p.value.toDartString();
     });
   }
 
   /// GetType returns type for this layer.
   String get type {
     return cvRunArena<String>((arena) {
-      final p = calloc<cvg.VecChar>();
+      final p = calloc<ffi.Pointer<ffi.Char>>();
       cvRun(() => CFFI.Layer_GetType(ref, p));
-      final vec = VecChar.fromPointer(p);
-      return vec.asString();
+      return p.value.toDartString();
     });
   }
 
@@ -169,8 +167,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromOnnx(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-          () => CFFI.Net_ReadNetFromONNX(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => CFFI.Net_ReadNetFromONNX(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -193,13 +191,9 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTensorflow(String path, {String config = ""}) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-        () => CFFI.Net_ReadNetFromTensorflow(
-          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          p,
-        ),
-      );
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cconf = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => CFFI.Net_ReadNetFromTensorflow(cpath, cconf, p));
       final net = Net._(p);
       return net;
     });
@@ -224,8 +218,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTFLite(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(() =>
-          CFFI.Net_ReadNetFromTFLite(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => CFFI.Net_ReadNetFromTFLite(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -247,14 +241,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-        () => CFFI.Net_ReadNetFromTorch(
-          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          isBinary,
-          evaluate,
-          p,
-        ),
-      );
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => CFFI.Net_ReadNetFromTorch(cpath, isBinary, evaluate, p));
       final net = Net._(p);
       return net;
     });
