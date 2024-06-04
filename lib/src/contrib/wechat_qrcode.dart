@@ -33,15 +33,15 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     String superResolutionPrototxtPath = "",
     String superResolutionCaffeModelPath = "",
   ]) {
-    return cvRunArena<WeChatQRCode>((arena) {
-      final p = calloc<cvg.WeChatQRCode>();
-      final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
-      return WeChatQRCode._(p);
-    });
+    final arena = Arena();
+    final p = calloc<cvg.WeChatQRCode>();
+    final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
+    arena.releaseAll();
+    return WeChatQRCode._(p);
   }
 
   /// Both detects and decodes QR code. To simplify the usage, there is a only API: detectAndDecode.

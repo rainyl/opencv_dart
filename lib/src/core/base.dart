@@ -109,6 +109,10 @@ typedef I32 = ffi.Int;
 typedef F32 = ffi.Float;
 typedef F64 = ffi.Double;
 
+extension PointerCharExtension on ffi.Pointer<ffi.Char>{
+  String toDartString() => cast<Utf8>().toDartString();
+}
+
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)
   bmp(ext: ".bmp"),

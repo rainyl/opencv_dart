@@ -19,22 +19,22 @@ import '../opencv.g.dart' as cvg;
 
 /// get version
 String openCvVersion() {
-  return using<String>((arena) {
-    final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.openCVVersion(p));
-    return p.value.cast<Utf8>().toDartString();
-  });
+  final p = calloc<ffi.Pointer<ffi.Char>>();
+  cvRun(() => CFFI.openCVVersion(p));
+  final s = p.value.toDartString();
+  calloc.free(p);
+  return s;
 }
 
 /// Returns full configuration time cmake output.
 ///
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
 String getBuildInformation() {
-  return using<String>((arena) {
-    final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.getBuildInfo(p));
-    return p.value.cast<Utf8>().toDartString();
-  });
+  final p = calloc<ffi.Pointer<ffi.Char>>();
+  cvRun(() => CFFI.getBuildInfo(p));
+  final s = p.value.toDartString();
+  calloc.free(p);
+  return s;
 }
 
 /// AbsDiff calculates the per-element absolute difference between two arrays

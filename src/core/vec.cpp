@@ -386,6 +386,20 @@ CvStatus VecUChar_At(VecUChar vec, int idx, uchar *rval)
   END_WRAP
 }
 
+CvStatus VecUChar_Data(VecUChar vec, uchar **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
+CvStatus VecUChar_AtNoBoundCheck(VecUChar vec, int idx, uchar *rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data()[idx];
+  END_WRAP
+}
+
 CvStatus VecUChar_Size(VecUChar vec, int *rval)
 {
   BEGIN_WRAP
@@ -435,6 +449,13 @@ CvStatus VecChar_At(VecChar vec, int idx, char *rval)
 {
   BEGIN_WRAP
   *rval = vec.ptr->at(idx);
+  END_WRAP
+}
+
+CvStatus VecChar_Data(VecChar vec, char **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
   END_WRAP
 }
 
@@ -557,6 +578,20 @@ CvStatus VecInt_At(VecInt vec, int idx, int *rval)
   END_WRAP
 }
 
+CvStatus VecInt_AtNoBoundCheck(VecInt vec, int idx, int *rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data()[idx];
+  END_WRAP
+}
+
+CvStatus VecInt_Data(VecInt vec, int **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecInt_Size(VecInt vec, int *rval)
 {
   BEGIN_WRAP
@@ -609,6 +644,13 @@ CvStatus VecFloat_At(VecFloat vec, int idx, float *rval)
   END_WRAP
 }
 
+CvStatus VecFloat_Data(VecFloat vec, float **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecFloat_Size(VecFloat vec, int *rval)
 {
   BEGIN_WRAP
@@ -658,6 +700,13 @@ CvStatus VecDouble_At(VecDouble vec, int idx, double *rval)
 {
   BEGIN_WRAP
   *rval = vec.ptr->at(idx);
+  END_WRAP
+}
+
+CvStatus VecDouble_Data(VecDouble vec, double **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
   END_WRAP
 }
 
@@ -916,6 +965,14 @@ CvStatus VecVecDMatch_At(VecVecDMatch vec, int idx, VecDMatch *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<cv::DMatch>(vec.ptr->at(idx))};
+  END_WRAP
+}
+
+CvStatus VecVecDMatch_Data(VecVecDMatch vec, VecDMatch **rval)
+{
+  BEGIN_WRAP
+  VecDMatch *v = new VecDMatch{vec.ptr->data()};
+  *rval = {v};
   END_WRAP
 }
 
