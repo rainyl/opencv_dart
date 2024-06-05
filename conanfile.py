@@ -91,8 +91,10 @@ class OcvDartDesktop(ConanFile):
         self.tool_requires("nasm/2.16.01")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
-        if self.settings.os == "Android":  # TODO: os.environ.get("ANDROID_NDK_HOME", None)
-            self.tool_requires("android-ndk/r26c")
+        if self.settings.os == "Android":
+            ndk_path = os.environ.get("ANDROID_NDK_HOME", None) or os.environ.get("ANDROID_NDK_ROOT", None)
+            if ndk_path is None:
+                self.tool_requires("android-ndk/r26c")
         # if self.settings.os == "iOS":
         #     self.tool_requires("ios_cmake_toolchain/1.0.0")
 
