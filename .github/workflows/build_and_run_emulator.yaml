@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
+          java-version: '17'
       - uses: actions/checkout@v2
         with:
           submodules: true
@@ -52,7 +52,7 @@ jobs:
           cache: true
       - uses: futureware-tech/simulator-action@v2
         with:
-          model: 'iPhone 8'
+          model: 'iPhone 15'
       - run: flutter pub get
       - name: Install on iOS simulator
         run: flutter build ios --release --no-codesign && xcrun simctl install booted build/ios/iphoneos/Runner.app
