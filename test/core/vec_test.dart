@@ -16,8 +16,14 @@ void main() {
   });
 
   test('VecUChar', () {
-    final points = List.generate(100, (index) => index);
+    final points = List.generate(1000, (index) => index % 256);
     final vec = points.u8;
+    final u8List = vec.toU8List();
+    expect(u8List.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
+    final u8 = vec.data;
+    expect(u8.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
@@ -31,12 +37,19 @@ void main() {
   test('VecChar', () {
     final points = List.generate(100, (index) => index);
     final vec = points.i8;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = cv.VecChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
+    expect(vec2.asString(), "AAAA你好");
 
     vec1.dispose();
   });
@@ -57,6 +70,10 @@ void main() {
   test('VecFloat', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f32;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
@@ -70,6 +87,10 @@ void main() {
   test('VecDouble', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f64;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);

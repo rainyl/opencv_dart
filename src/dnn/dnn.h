@@ -68,8 +68,8 @@ CvStatus Net_GetBlobSize(Mat blob, CVD_OUT Scalar *rval);
 CvStatus Net_GetLayer(Net net, int layerid, CVD_OUT Layer *rval);
 CvStatus Layer_InputNameToIndex(Layer layer, const char *name, CVD_OUT int *rval);
 CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, CVD_OUT int *rval);
-CvStatus Layer_GetName(Layer layer, CVD_OUT VecChar *rval);
-CvStatus Layer_GetType(Layer layer, CVD_OUT VecChar *rval);
+CvStatus Layer_GetName(Layer layer, CVD_OUT char **rval);
+CvStatus Layer_GetType(Layer layer, CVD_OUT char **rval);
 void     Layer_Close(Layer *layer);
 
 CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,

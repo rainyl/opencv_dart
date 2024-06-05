@@ -18,7 +18,7 @@ TEST(ImgProc, cornerSubPix)
   Mat          mask = {new cv::Mat()};
   VecPoint2f   corners = {new std::vector<cv::Point2f>()};
   TermCriteria criteria = {cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1};
-  status = GoodFeaturesToTrack(img, corners, 10, 0.01, 10, mask, 3, false, 0.04);
+  status = GoodFeaturesToTrack(img, &corners, 10, 0.01, 10, mask, 3, false, 0.04);
   ASSERT_EQ(status.code, 0);
   status = CornerSubPix(img, corners, {10, 10}, {-1, -1}, criteria);
   ASSERT_EQ(status.code, 0);
