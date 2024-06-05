@@ -64,27 +64,6 @@ abstract class BaseSetupCommand extends Command {
     final version = doc["binary_version"] as String;
     final libTarName = "libopencv_dart-$os-$arch.tar.gz";
 
-    final cacheTarPath = p.join(opencvRoot.toFilePath(), ".dart_tool", ".cache", libTarName);
-    final saveFile = File(cacheTarPath);
-
-    if (force || !saveFile.existsSync()) {
-      if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
-
-      String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
-      print("Downloading $url");
-      final request = await HttpClient().getUrl(Uri.parse(url));
-      final response = await request.close();
-      if (response.statusCode == 200) {
-        await response.pipe(saveFile.openWrite());
-        print("Cached to $cacheTarPath");
-      } else {
-        print("Download Failed with status: ${response.statusCode}");
-        exit(1);
-      }
-    } else {
-      print("Using cached $cacheTarPath");
-    }
-
     String extractPath = "";
     switch (os) {
       case OS.windows:
@@ -106,18 +85,40 @@ abstract class BaseSetupCommand extends Command {
     if (!Directory(extractPath).existsSync()) {
       Directory(extractPath).createSync(recursive: true);
     }
-    // Check if libs already existed, avoid double-extract
-    if (Directory(extractPath)
-        .listSync()
-        .map((e) =>
-            e.path.endsWith(".so") ||
-            e.path.endsWith(".dll") ||
-            e.path.endsWith(".dylib") ||
-            e.path.endsWith(".framework"))
-        .any((e) => e)) {
-      print("Libs already exists in $extractPath, Skipping...");
-      return;
+
+    final cacheTarPath = p.join(opencvRoot.toFilePath(), ".dart_tool", ".cache", libTarName);
+    final saveFile = File(cacheTarPath);
+
+    if (force || !saveFile.existsSync()) {
+      if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
+
+      String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+      print("Downloading $url");
+      final request = await HttpClient().getUrl(Uri.parse(url));
+      final response = await request.close();
+      if (response.statusCode == 200) {
+        await response.pipe(saveFile.openWrite());
+        print("Cached to $cacheTarPath");
+      } else {
+        print("Download Failed with status: ${response.statusCode}");
+        exit(1);
+      }
+    } else {
+      print("Using cached $cacheTarPath");
+      // Check if libs already existed, avoid double-extract
+      if (Directory(extractPath)
+          .listSync()
+          .map((e) =>
+              e.path.endsWith(".so") ||
+              e.path.endsWith(".dll") ||
+              e.path.endsWith(".dylib") ||
+              e.path.endsWith(".framework"))
+          .any((e) => e)) {
+        print("Libs already exists in $extractPath, Skipping...");
+        return;
+      }
     }
+
     print("Extracting to $extractPath");
     final tarBytes = GZipDecoder().decodeBytes(saveFile.readAsBytesSync());
     final archive = TarDecoder().decodeBytes(tarBytes);

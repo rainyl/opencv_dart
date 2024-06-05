@@ -14,12 +14,14 @@ OpenCV Bindings for Dart Language.
 > [!IMPORTANT]
 > Please use `v0.3.0` and later version
 >
-> For `v1.0.5` and later, setup is no longer needed, the prebuilt libs will be downloaded from releases
-> automatically, some notes:
+> For `v1.0.5+1` and later, libs will be built from sources locally. [Conan](https://conan.io/) is required,
 >
-> 1. iOS: default target architecture is `arm64`, if you need to run on `x64`(ios simulator), please
-> set `OPENCV_DART_ARCH` to `x64`, e.g., `export OPENCV_DART_ARCH=x64`
-> 2. Android: all supported ABIs (`x86_64` `arm64-v8a` `armeabi-v7a`) will be downloaded, if you want
+> 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
+> e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
+> or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Windows)
+> 2. iOS: default target architecture is `arm64`, if you need to run on `x64`(ios simulator), please
+> set `OPENCV_DART_ARCH` environment variable to `x64`, e.g., `export OPENCV_DART_ARCH=x64`
+> 3. Android: all supported ABIs (`x86_64` `arm64-v8a` `armeabi-v7a`) will be built, if you want
 > to reduce the app size, please add `--split-per-abi` to the `flutter build` command, e.g., `flutter build apk --release --target-platform android-arm64,android-x64 --split-per-abi`, otherwise, all `.so` will
 > be packaged to app.
 >
@@ -35,8 +37,6 @@ OpenCV Bindings for Dart Language.
 > | `windows`  | `x64`                              |
 > | `macos`    | `x64` `arm64`                      |
 > | `ios`      | `x64` `arm64`                      |
->
-> 3. run your app as normal
 >
 > - More questions: refer to [#29](https://github.com/rainyl/opencv_dart/issues/29) or open new issues.
 > - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
@@ -77,8 +77,12 @@ OpenCV Bindings for Dart Language.
     - [TODO](#todo)
   - [For Developers](#for-developers)
     - [How to compile](#how-to-compile)
-      - [Cross-compile for linux aarch64](#cross-compile-for-linux-aarch64)
+      - [1. Install dependencies](#1-install-dependencies)
+      - [2. clone this repo](#2-clone-this-repo)
+      - [3. compile](#3-compile)
+      - [4. Cross-compile for linux aarch64](#4-cross-compile-for-linux-aarch64)
   - [Acknowledgement](#acknowledgement)
+  - [Contributors](#contributors)
   - [Star History](#star-history)
   - [License](#license)
 
@@ -186,70 +190,91 @@ More examples are on the way...
 
 ### How to compile
 
-1. prepare a compiler.
+#### 1. Install dependencies
 
-   windows: Install Visual Studio 2019 or Later
+- Windows: Install Visual Studio 2019 or Later, install conan
 
-   ubuntu: reference [opencv official build guide](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) to install
+  ```pwsh
+   python3 -m pip install conan
+   conan profile detect -f
+  ```
 
-   ```bash
-   sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
-      ninja-build ccache nasm libavformat-dev libavutil-dev libswscale-dev \
-      libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev python3-pip
-   ```
+  If you are usin [Scoop](https://scoop.sh/):
 
-   macos:
+  ```pwsh
+  scoop install conan
+  ```
 
-   ```bash
-   brew install --force --overwrite ninja ccache ffmpeg nasm cmake
-   ```
+- Linux: Ubuntu as example
 
-   from v0.6.4, build system has been migrated to [conan](https://conan.io/)
+  ```bash
+  sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
+    ninja-build libavformat-dev libavutil-dev libswscale-dev \
+    libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev python3-pip
 
-   ```bash
-      python3 -m pip install conan
-      conan profile detect -f
-   ```
+  python3 -m pip install conan
+  conan profile detect -f
+  ```
 
-2. clone this repo, `git clone https://github.com/rainyl/opencv_dart.git`
-3. `cd opencv_dart`
-4. compile
+- macOS: XCode is required
 
-   for windows:
+  ```bash
+  brew install --force --overwrite ninja ffmpeg@6 conan
+  brew link --overwrite ffmpeg@6
+  conan profile detect -f
+  ```
+
+#### 2. clone this repo
+
+```bash
+git clone https://github.com/rainyl/opencv_dart.git
+cd opencv_dart
+```
+
+#### 3. compile
+
+- Windows:
 
    ```pwsh
    conan build . -b missing -s compiler.cppstd=20
    ```
 
-    for linux, macos:
+- Linux, macos:
 
     ```bash
     conan build . -b missing
     ```
 
-   for android, you need to download [android ndk](https://developer.android.com/ndk/downloads) ~~and [opencv for android sdk](https://opencv.org/releases/), extract opencv sdk and copy and rename `OpenCV-android-sdk` to `build/opencv/android` directory.~~ NO need for opencv sdk now, will be compiled from source to enable contrib modules
+- android
 
-   ```bash
-   conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
-   ```
+If you want to use your own NDK instead of conan maintained one, please set `ANDROID_NDK_HOME`
+or `ANDROID_NDK_ROOT` environment variable, e.g., `export ANDROID_NDK_HOME=/opt/android-ndk-r26c`
 
-   for ios:
+  ```bash
+  conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
+  ```
 
-   ```bash
-   echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-<arch>
-   conan build . -b missing -pr:h profiles/ios-<arch>
-   ```
+- ios:
 
-5. If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+  ```bash
+  conan build . -b missing -pr:h profiles/ios-<arch>
+  ```
 
-#### Cross-compile for linux aarch64
+- If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
 
-With proper toolchain, cross-compiling is possible, compiling for linux aarch64 requires GCC 13 and newer,
+#### 4. Cross-compile for linux aarch64
+
+Compiling for linux aarch64 requires GCC 13 and newer,
 conan toolchain for linux arm is located in [opencv.full](https://github.com/rainyl/opencv.full/tree/linux-aarch64/profiles), explore more there.
 
 ## Acknowledgement
 
 - `gocv` project: <https://github.com/hybridgroup/gocv> License: Apache-2.0
+
+## Contributors
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 ## Star History
 
