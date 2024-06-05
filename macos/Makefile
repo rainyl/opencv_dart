@@ -14,10 +14,11 @@ SETUP_CMD := cd $(PARENT_DIR) && conan build . -b missing
 
 .PHONY: setup
 
-setup:
 ifdef OPENCV_DART_DISABLE_AUTO_BUILD
-	@exit 0
-endif
+setup:
+	@echo "OPENCV_DART_DISABLE_AUTO_BUILD detected, skipping setup..."
+else
+setup:
 ifeq ($(PLATFORM),Darwin)
 	@echo "Detected macOS platform"
 ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(MACOS_ARCHS)),)
@@ -30,4 +31,5 @@ endif
 else
 	@echo "This setup only runs on macOS"
 	@exit 1
+endif
 endif

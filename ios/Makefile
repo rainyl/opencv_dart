@@ -17,6 +17,10 @@ build_arm64:
 build_x64:
 	@$(SETUP_CMD) -pr:h profiles/ios-x86_64 -o output_dir=build/ios/x64
 
+ifdef OPENCV_DART_DISABLE_AUTO_BUILD
+setup:
+	@echo "OPENCV_DART_DISABLE_AUTO_BUILD detected, skipping setup..."
+else
 setup:
 	@echo "Auto-selected architecture: $(OPENCV_DART_ARCH)"
 	@echo "You can override this by setting the OPENCV_DART_ARCH environment variable. Valid options: x64, arm64"
@@ -32,4 +36,5 @@ else ifeq ($(OPENCV_DART_ARCH),arm64)
 else
 	@echo "Unsupported architecture: $(OPENCV_DART_ARCH). Valid options are: x64, arm64"
 	@exit 1
+endif
 endif
