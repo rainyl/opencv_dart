@@ -270,6 +270,40 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
 ## Contributors
 
 <!-- readme: contributors -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/rainyl">
+                    <img src="https://avatars.githubusercontent.com/u/30213663?v=4" width="100;" alt="rainyl"/>
+                    <br />
+                    <sub><b>rainy liu</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/abdelaziz-mahdy">
+                    <img src="https://avatars.githubusercontent.com/u/25157308?v=4" width="100;" alt="abdelaziz-mahdy"/>
+                    <br />
+                    <sub><b>Abdelaziz Mahdy</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Jiinwoo">
+                    <img src="https://avatars.githubusercontent.com/u/46522752?v=4" width="100;" alt="Jiinwoo"/>
+                    <br />
+                    <sub><b>JinWoo Jung</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mdeleau">
+                    <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
+                    <br />
+                    <sub><b>mdeleau</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: contributors -end -->
 
 ## Acknowledgement
