@@ -272,7 +272,7 @@ jobs:
           run: |
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-x86_64
             conan build . -b missing -pr:h profiles/ios-x86_64 \
-            -o output_dir="build/Linux/x86_64"
+            -o output_dir="build/ios/x86_64"
 
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-armv8
             conan build . -b missing -pr:h profiles/ios-armv8 \

@@ -22,5 +22,5 @@ ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(VALID_ARCHS)),)
 	@exit 1
 else
 	@echo "Running setup with architecture: $(OPENCV_DART_ARCH)"
-	@$(SETUP_CMD) build . -b missing -o output_dir=build/ios/$(OPENCV_DART_ARCH)
+	@$(SETUP_CMD) build . -b missing -pr:h profiles/ios-$(OPENCV_DART_ARCH) -o output_dir=build/ios/$(OPENCV_DART_ARCH)
 endif
