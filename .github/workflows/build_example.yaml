@@ -34,7 +34,7 @@ jobs:
         run: |
           cd example
           flutter build windows
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
   build-ubuntu:
     name: build-ubuntu
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
         run: |
           cd example
           flutter build macos
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
   build-macos-arm:
     name: build-macos-arm
@@ -128,5 +128,5 @@ jobs:
         run: |
           cd example
           flutter build macos
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
