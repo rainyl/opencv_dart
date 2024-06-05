@@ -8,7 +8,10 @@ set(PROJECT_NAME "opencv_dart")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Define default architecture
-set(OPENCV_DART_ARCH "x64")
+set(OPENCV_DART_ARCH $ENV{OPENCV_DART_ARCH})
+if(NOT OPENCV_DART_ARCH)
+  set(OPENCV_DART_ARCH "x64")
+endif()
 
 # Print messages
 message(STATUS "Auto-selected architecture: ${OPENCV_DART_ARCH}")
@@ -17,12 +20,8 @@ message(STATUS "Running setup with architecture: ${OPENCV_DART_ARCH}")
 # Get the parent directory of the current working directory
 get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 
-# Run Dart command
-find_program(DART_PATH dart)
-message(STATUS "${PROJECT_NAME} using dart from: ${DART_PATH}")
 execute_process(
-  COMMAND ${DART_PATH} run opencv_dart:setup linux --arch ${OPENCV_DART_ARCH}
-  TIMEOUT 120
+  COMMAND conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja -o output_dir=build/linux/${OPENCV_DART_ARCH}
   WORKING_DIRECTORY ${PARENT_DIR}
 )
 

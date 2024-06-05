@@ -45,12 +45,14 @@ class OcvDartDesktop(ConanFile):
         "output_dir": ["ANY"],
         "opencv_overwrite": [True, False],
         "opencv_dir": ["ANY"],
+        "publish": [True, False],
     }
     default_options = {
         "package_root": ".",
         "output_dir": "build",
         "opencv_overwrite": False,
         "opencv_dir": "",
+        "publish": False,
     }
 
     opencv_full: Path
@@ -89,8 +91,10 @@ class OcvDartDesktop(ConanFile):
         self.tool_requires("nasm/2.16.01")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
-        # if self.settings.os == "Android":
-        #     self.tool_requires("android-ndk/r26c")
+        if self.settings.os == "Android":  # TODO: os.environ.get("ANDROID_NDK_HOME", None)
+            self.tool_requires("android-ndk/r26c")
+        # if self.settings.os == "iOS":
+        #     self.tool_requires("ios_cmake_toolchain/1.0.0")
 
     def layout(self):
         # self.build_folder: build/{os}/{arch}/opencv
@@ -149,21 +153,26 @@ class OcvDartDesktop(ConanFile):
         install_dir = Path(self.install_folder)
         os = str(self.settings.os).lower()
         arch = arch_map[os][str(self.settings.arch)]
-        new_name = f"lib{self.name}-{os}-{arch}.tar.gz"
-        fname = self.publish_folder / new_name
-        print(fname)
-        if not fname.parent.exists():
-            fname.parent.mkdir(parents=True)
-        with tarfile.open(fname, mode="w:gz") as tar:
-            for file in install_dir.glob("*"):
-                print(f"Adding {file}...")
-                tar.add(file, arcname=file.name)
-        print(f"published: {fname}")
+
+        # Copy to platform dir
         dst = Path(self.package_folder).absolute() / os
         if os == "android":
             dst = dst / "src" / "main" / "jniLibs" / arch
         print(f"Copying to {dst}")
         cfiles.copy(self, "*", self.install_folder, dst)
+
+        # Publish to tar.gz
+        if self.get_bool("publish", True):
+            new_name = f"lib{self.name}-{os}-{arch}.tar.gz"
+            fname = self.publish_folder / new_name
+            print(fname)
+            if not fname.parent.exists():
+                fname.parent.mkdir(parents=True)
+            with tarfile.open(fname, mode="w:gz") as tar:
+                for file in install_dir.glob("*"):
+                    print(f"Adding {file}...")
+                    tar.add(file, arcname=file.name)
+            print(f"published: {fname}")
 
     @property
     def install_folder(self) -> Path:

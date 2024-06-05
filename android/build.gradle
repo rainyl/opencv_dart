@@ -61,18 +61,10 @@ android {
     }
 }
 
-// 'dart' and 'dart.bat' both exists on windwos, the former is a bash script and won't work
-// correctly on windows, so use `dart.bat`
-def dartCmd = "dart"
-def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem
-if(currentOS.isWindows()){
-  dartCmd = "dart.bat"
-}
-
 task runOpenCVSetup(type: Exec) {
     // Set working directory to the parent directory of the root directory
-    workingDir rootDir.parentFile
-    commandLine dartCmd, 'run', 'opencv_dart:setup', 'android', '--arch', 'x86_64'
+    workingDir project.buildscript.sourceFile.parentFile.parentFile
+    commandLine 'conan', 'build', '.', '-b', 'missing', '-pr:h', 'profiles/android-x86_64', '-o', 'output_dir=build/android/x86_64'
     doFirst {
         println "Running OpenCV setup for x86_64 in ${workingDir}"
     }
@@ -80,8 +72,8 @@ task runOpenCVSetup(type: Exec) {
 
 task runOpenCVSetupArm64(type: Exec) {
     // Set working directory to the parent directory of the root directory
-    workingDir rootDir.parentFile
-    commandLine dartCmd, 'run', 'opencv_dart:setup', 'android', '--arch', 'arm64-v8a'
+    workingDir project.buildscript.sourceFile.parentFile.parentFile
+    commandLine 'conan', 'build', '.', '-b', 'missing', '-pr:h', 'profiles/android-armv8', '-o', 'output_dir=build/android/arm64-v8a'
     doFirst {
         println "Running OpenCV setup for arm64-v8a in ${workingDir}"
     }
@@ -89,8 +81,8 @@ task runOpenCVSetupArm64(type: Exec) {
 
 task runOpenCVSetupArmeabi(type: Exec) {
     // Set working directory to the parent directory of the root directory
-    workingDir rootDir.parentFile
-    commandLine dartCmd, 'run', 'opencv_dart:setup', 'android', '--arch', 'armeabi-v7a'
+    workingDir project.buildscript.sourceFile.parentFile.parentFile
+    commandLine 'conan', 'build', '.', '-b', 'missing', '-pr:h', 'profiles/android-armv7', '-o', 'output_dir=build/android/armeabi-v7a'
     doFirst {
         println "Running OpenCV setup for armeabi-v7a in ${workingDir}"
     }
