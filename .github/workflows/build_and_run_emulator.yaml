@@ -1,0 +1,58 @@
+name: Run_on_emulator
+on:
+  push:
+    branches: [ main]
+
+  pull_request:
+    branches: [ main ]
+
+defaults:
+  run:
+    working-directory: example
+
+jobs:
+  android_test:
+    name: Android_test
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [33]
+        target: [google_apis]
+    steps:
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Install on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          target: ${{ matrix.target }}
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          profile: Nexus 6
+          script: flutter build apk && adb install build/app/outputs/flutter-apk/app-release.apk
+
+  ios_test:
+    name: iOS_test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: futureware-tech/simulator-action@v2
+        with:
+          model: 'iPhone 8'
+      - run: flutter pub get
+      - name: Install on iOS simulator
+        run: flutter build ios --release --no-codesign && xcrun simctl install booted build/ios/iphoneos/Runner.app
