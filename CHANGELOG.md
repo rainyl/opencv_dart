@@ -1,3 +1,11 @@
+## 1.0.5+1
+
+- Optimize Vectors
+- Fix: free cExt before exception in cv.imencode
+- Add data getter for Vec<int,uchar,chat,float,double>, cache type of Mat
+- Make auto setup build locally, set `OPENCV_DART_DISABLE_AUTO_BUILD` to disable auto setup and run
+setup commands as before, read more in [README](https://github.com/rainyl/opencv_dart/blob/main/README.md)
+
 ## 1.0.5
 
 - Auto setup by @abdelaziz-mahdy, from v1.0.5, libs will be downloaded automatically during build, i.e., no need to run setup commands

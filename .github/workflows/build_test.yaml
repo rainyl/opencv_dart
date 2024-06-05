@@ -55,7 +55,3 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rainyl/opencv_dart
           file: ./coverage/lcov.info
-      # update contributors
-      - uses: akhilmhdh/contributors-readme-action@v2.3.10
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

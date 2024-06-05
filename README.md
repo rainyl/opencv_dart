@@ -81,8 +81,8 @@ OpenCV Bindings for Dart Language.
       - [2. clone this repo](#2-clone-this-repo)
       - [3. compile](#3-compile)
       - [4. Cross-compile for linux aarch64](#4-cross-compile-for-linux-aarch64)
-  - [Acknowledgement](#acknowledgement)
   - [Contributors](#contributors)
+  - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
   - [License](#license)
 
@@ -192,7 +192,7 @@ More examples are on the way...
 
 #### 1. Install dependencies
 
-- Windows: Install Visual Studio 2019 or Later, install conan
+- Windows: Install Visual Studio 2019 or Later, install [Conan](https://conan.io/)
 
   ```pwsh
    python3 -m pip install conan
@@ -267,14 +267,14 @@ or `ANDROID_NDK_ROOT` environment variable, e.g., `export ANDROID_NDK_HOME=/opt/
 Compiling for linux aarch64 requires GCC 13 and newer,
 conan toolchain for linux arm is located in [opencv.full](https://github.com/rainyl/opencv.full/tree/linux-aarch64/profiles), explore more there.
 
-## Acknowledgement
-
-- `gocv` project: <https://github.com/hybridgroup/gocv> License: Apache-2.0
-
 ## Contributors
 
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
+
+## Acknowledgement
+
+- `gocv` project: <https://github.com/hybridgroup/gocv> License: Apache-2.0
 
 ## Star History
 
