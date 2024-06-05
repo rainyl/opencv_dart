@@ -1,5 +1,3 @@
-gocv/
-test/
 bak/
 scripts/
 opencv_dart.iml
@@ -10,14 +8,9 @@ coverage/
 *.dylib
 *.lib
 pkgs/
-src/**/*.cpp
-src/**/*.h
-src/**/*.hpp
 images/
 CMakeUserPresets*
 CMakePresets.json
-ffigen*
-profiles/
 *.framework
 
 .idea/
@@ -25,6 +18,8 @@ profiles/
 .bak/
 .pytest_cache/
 test/_data/
+test/models
+test/data
 ffigen/
 ffigen_test/
 ffigen_contrib.yaml

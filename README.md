@@ -15,6 +15,7 @@ OpenCV Bindings for Dart Language.
 > Please use `v0.3.0` and later version
 >
 > For `v1.0.5+1` and later, libs will be built from sources locally. [Conan](https://conan.io/) is required,
+> to install build dependencies, please refer to [1. Install dependencies](#1-install-dependencies)
 >
 > 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
 > e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
