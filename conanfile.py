@@ -46,6 +46,7 @@ class OcvDartDesktop(ConanFile):
         "opencv_overwrite": [True, False],
         "opencv_dir": ["ANY"],
         "publish": [True, False],
+        "post_install": [True, False],
     }
     default_options = {
         "package_root": ".",
@@ -53,6 +54,7 @@ class OcvDartDesktop(ConanFile):
         "opencv_overwrite": False,
         "opencv_dir": "",
         "publish": False,
+        "post_install": True,
     }
 
     opencv_full: Path
@@ -95,8 +97,8 @@ class OcvDartDesktop(ConanFile):
             ndk_path = os.environ.get("ANDROID_NDK_HOME", None) or os.environ.get("ANDROID_NDK_ROOT", None)
             if ndk_path is None:
                 self.tool_requires("android-ndk/r26c")
-        if self.settings.os == "iOS":
-            self.tool_requires("ios-cmake/4.4.1")
+        # if self.settings.os == "iOS":
+        #     self.tool_requires("ios-cmake/4.4.1")
 
     def layout(self):
         # self.build_folder: build/{os}/{arch}/opencv
@@ -110,22 +112,22 @@ class OcvDartDesktop(ConanFile):
 
     def generate(self):
         tc: CMakeToolchain = CMakeToolchain(self)
-        # if self.settings.os == "iOS":
-        #     platform_map = {
-        #         "armv8": "OS64",
-        #         "x86_64": "SIMULATOR64",
-        #         # TODO: maybe need a conf var to support "SIMULATORARM64" and more
-        #     }
-        #     platform = platform_map[str(self.settings.arch)]
-        #     block = tc.blocks["user_toolchain"]
-        #     block.template = (
-        #         f"set(PLATFORM {platform})\n"
-        #         "set(ENABLE_ARC FALSE)\n"
-        #         "set(ENABLE_BITCODE FALSE)\n"
-        #         f"{block.template}"
-        #     )
-        #     # tc.variables["CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM"] = "rainyl"
-        #     # tc.variables["CODE_SIGNING_ALLOWED"] = "NO"
+        if self.settings.os == "iOS":
+            platform_map = {
+                "armv8": "OS64",
+                "x86_64": "SIMULATOR64",
+                # TODO: maybe need a conf var to support "SIMULATORARM64" and more
+            }
+            platform = platform_map[str(self.settings.arch)]
+            block = tc.blocks["user_toolchain"]
+            block.template = (
+                f"set(PLATFORM {platform})\n"
+                "set(ENABLE_ARC FALSE)\n"
+                "set(ENABLE_BITCODE FALSE)\n"
+                f"{block.template}"
+            )
+            # tc.variables["CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM"] = "rainyl"
+            # tc.variables["CODE_SIGNING_ALLOWED"] = "NO"
         tc.generate()
         CMakeDeps(self).generate()
 
@@ -148,7 +150,8 @@ class OcvDartDesktop(ConanFile):
         # cmake.test()
         cmake.install(cli_args=["--strip"])
 
-        self.post_build()
+        if self.get_bool("post_install", True):
+            self.post_build()
 
     def post_build(self):
         # archive

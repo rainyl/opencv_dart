@@ -2,7 +2,7 @@ include(default)
 
 [settings]
 os=iOS
-os.version=12.0
+os.version=13.0
 os.sdk=iphonesimulator
 arch=x86_64
 build_type=Release
@@ -11,3 +11,4 @@ build_type=Release
 tools.apple:enable_arc=False
 tools.apple:enable_visibility=False
 tools.cmake.cmaketoolchain:generator=Xcode
+tools.cmake.cmaketoolchain:user_toolchain=["/Users/rainy/opencv_dart/profiles/ios.toolchain.cmake"]

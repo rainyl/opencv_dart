@@ -157,9 +157,7 @@ class IosCMakeConan(ConanFile):
         )
         # Note that this, as long as we specify (overwrite) the ARCHS, PLATFORM has just limited effect,
         # but PLATFORM need to be set in the profile so it makes sense, see ios-cmake docs for more info
-        cmake_flags = "-DPLATFORM={} -DDEPLOYMENT_TARGET={} -DARCHS={} {}".format(
-            toolchain_target, target_version, arch_flag, cmake_options
-        )
+        cmake_flags = f"-DPLATFORM={toolchain_target} -DDEPLOYMENT_TARGET={target_version} {cmake_options}"
 
         self.env_info.CONAN_USER_CMAKE_FLAGS = cmake_flags
         self.output.info("Setting toolchain options to: {}".format(cmake_flags))
