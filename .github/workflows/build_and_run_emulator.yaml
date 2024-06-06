@@ -41,7 +41,7 @@ jobs:
 
   ios_test:
     name: iOS_test
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v2
         with:
@@ -56,6 +56,9 @@ jobs:
       - run: flutter pub get
       - name: Install on iOS simulator
         run: |
+          brew install --force --overwrite ninja ffmpeg@6 conan
+          brew link --overwrite ffmpeg@6
+          conan profile detect -f
           export OPENCV_DART_ARCH=x64
           flutter build ios --release --no-codesign -v
           xcrun simctl install booted build/ios/iphoneos/Runner.app
