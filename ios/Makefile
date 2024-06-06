@@ -1,6 +1,6 @@
 # Define the platform and architecture
-# Default architecture is arm64 if not specified
-OPENCV_DART_ARCH ?= arm64
+# Default architecture is x64 if not specified
+OPENCV_DART_ARCH ?= x64
 VALID_ARCHS := x64 arm64
 
 # Function to check if a value is in a list
@@ -13,8 +13,10 @@ SETUP_CMD := cd $(PARENT_DIR) && conan build . -b missing
 .PHONY: setup build_arm64 build_x64
 
 build_arm64:
+	cd $(PARENT_DIR)/profiles/ios-cmake && conan create . -b missing -pr:h ../ios-armv8
 	@$(SETUP_CMD) -pr:h profiles/ios-armv8 -o output_dir=build/ios/arm64
 build_x64:
+	cd $(PARENT_DIR)/profiles/ios-cmake && conan create . -b missing -pr:h ../ios-x86_64
 	@$(SETUP_CMD) -pr:h profiles/ios-x86_64 -o output_dir=build/ios/x64
 
 ifdef OPENCV_DART_DISABLE_AUTO_BUILD
