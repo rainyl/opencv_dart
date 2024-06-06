@@ -41,7 +41,7 @@ jobs:
 
   ios_test:
     name: iOS_test
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v2
         with:
@@ -57,5 +57,5 @@ jobs:
       - name: Install on iOS simulator
         run: |
           export OPENCV_DART_ARCH=x64
-          flutter build ios --release --no-codesign
+          flutter build ios --release --no-codesign -v
           xcrun simctl install booted build/ios/iphoneos/Runner.app
