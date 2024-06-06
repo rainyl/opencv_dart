@@ -1,8 +1,6 @@
 name: build examples
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     branches: ["main"]
 
@@ -96,12 +94,16 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - uses: futureware-tech/simulator-action@v2
+        with:
+          model: 'iPhone 15'
       - name: build
         run: |
           cd example
           flutter build macos
           # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
+          xcrun simctl install booted build/ios/iphoneos/Runner.app
   build-macos-arm:
     name: build-macos-arm
     runs-on: macos-14
@@ -124,9 +126,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - uses: futureware-tech/simulator-action@v2
+        with:
+          model: 'iPhone 15'
       - name: build
         run: |
           cd example
           flutter build macos
           # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # export OPENCV_DART_ARCH=fat default
           flutter build ios --release --no-codesign
+          xcrun simctl install booted build/ios/iphoneos/Runner.app
