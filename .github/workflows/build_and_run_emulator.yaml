@@ -55,4 +55,7 @@ jobs:
           model: 'iPhone 15'
       - run: flutter pub get
       - name: Install on iOS simulator
-        run: flutter build ios --release --no-codesign && xcrun simctl install booted build/ios/iphoneos/Runner.app
+        run: |
+          export OPENCV_DART_ARCH=x64
+          flutter build ios --release --no-codesign
+          xcrun simctl install booted build/ios/iphoneos/Runner.app
