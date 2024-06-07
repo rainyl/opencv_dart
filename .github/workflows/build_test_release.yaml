@@ -14,7 +14,7 @@ env:
 jobs:
   build-android:
     name: build-android
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -44,78 +44,19 @@ jobs:
           conan build . -b missing -pr:h profiles/android-armv8 \
             -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
             -o output_dir="build/Android/armv8"
+          conan build . -b missing -pr:h profiles/android-armv7 \
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
+            -o output_dir="build/Android/armv7"
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
         with:
           path: build/publish/libopencv_dart-android-x86_64.tar.gz
           name: libopencv_dart-android-x86_64.tar.gz
-
       - uses: actions/upload-artifact@v4
         name: upload-android-arm64-v8a
         with:
           path: build/publish/libopencv_dart-android-arm64-v8a.tar.gz
           name: libopencv_dart-android-arm64-v8a.tar.gz
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          draft: true
-          prerelease: false
-          files: |
-            build/publish/libopencv_dart-android-arm64-v8a.tar.gz
-            build/publish/libopencv_dart-android-x86_64.tar.gz
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
-      - name: Run build
-        run: |
-          cd example
-          flutter pub get
-          flutter build apk --release --target-platform android-arm64,android-x64
-
-  build-ubuntu:
-    name: build-ubuntu-android-armv7
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: setup
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl git wget python3 unzip build-essential \
-            libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build nasm libavformat-dev libavutil-dev \
-            libswscale-dev libgflags-dev \
-            libjpeg-dev libpng-dev libtiff-dev python3-pip
-
-          python3 -m pip install conan
-          conan profile detect -f
-
-          mkdir -p build/android
-          wget -q -O build/android-ndk-$ANDROID_NDK_VERSION-linux.zip \
-            https://dl.google.com/android/repository/android-ndk-$ANDROID_NDK_VERSION-linux.zip
-          unzip -q -o build/android-ndk-$ANDROID_NDK_VERSION-linux.zip -d build/
-
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: build-opencv-dart
-        run: |
-          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja \
-          -o output_dir="build/Linux/x64"
-
-          conan build . -b missing -pr:h profiles/android-armv7 \
-            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
-            -o output_dir="build/Android/armv7"
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
-      - uses: actions/upload-artifact@v4
-        name: upload-linux-x64
-        with:
-          path: build/publish/libopencv_dart-linux-x64.tar.gz
-          name: libopencv_dart-linux-x64.tar.gz
       - uses: actions/upload-artifact@v4
         name: upload-android-armeabi-v7a
         with:
@@ -128,8 +69,60 @@ jobs:
           draft: true
           prerelease: false
           files: |
-            build/publish/libopencv_dart-linux-x64.tar.gz
+            build/publish/libopencv_dart-android-x86_64.tar.gz
+            build/publish/libopencv_dart-android-arm64-v8a.tar.gz
             build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - name: Run build
+        run: |
+          cd example
+          flutter pub get
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+
+  build-ubuntu:
+    name: build-ubuntu-android-armv7
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y curl git wget python3 unzip build-essential \
+            libgtk-3-dev ffmpeg libavcodec-dev \
+            cmake ninja-build libavformat-dev libavutil-dev \
+            libswscale-dev libgflags-dev \
+            libjpeg-dev libpng-dev libtiff-dev python3-pip
+
+          python3 -m pip install conan
+          conan profile detect -f
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: build-opencv-dart
+        run: |
+          conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja \
+          -o output_dir="build/Linux/x64"
+      - uses: subosito/flutter-action@v2
+        with:
+          # flutter-version: '3.16.9'
+          channel: "stable"
+      - uses: actions/upload-artifact@v4
+        name: upload-linux-x64
+        with:
+          path: build/publish/libopencv_dart-linux-x64.tar.gz
+          name: libopencv_dart-linux-x64.tar.gz
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            build/publish/libopencv_dart-linux-x64.tar.gz
       - name: Run Test
         run: |
           export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
@@ -138,7 +131,7 @@ jobs:
 
   build-windows:
     name: build-windows
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@v4
