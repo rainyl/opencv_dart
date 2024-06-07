@@ -26,7 +26,7 @@ if(NOT OPENCV_DART_DISABLE_AUTO_BUILD)
   get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 
   execute_process(
-    COMMAND conan build . -b missing -s compiler.cppstd=20 -o output_dir=build/windows/${OPENCV_DART_ARCH}
+    COMMAND dart.bat run opencv_dart:setup windows --arch ${OPENCV_DART_ARCH}
     WORKING_DIRECTORY ${PARENT_DIR}
   )
 endif()

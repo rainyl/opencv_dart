@@ -10,7 +10,7 @@ check_in_list = $(filter $(1),$(2))
 
 # Get the parent directory of the current working directory
 PARENT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))..
-SETUP_CMD := cd $(PARENT_DIR) && conan build . -b missing
+SETUP_CMD := cd $(PARENT_DIR) && dart run opencv_dart:setup
 
 .PHONY: setup
 
@@ -26,7 +26,7 @@ ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(MACOS_ARCHS)),)
 	@exit 1
 else
 	@echo "Running setup for macOS with architecture: $(OPENCV_DART_ARCH)"
-	@$(SETUP_CMD) -o output_dir=build/macos/$(OPENCV_DART_ARCH)
+	@$(SETUP_CMD) macos --arch $(OPENCV_DART_ARCH)
 endif
 else
 	@echo "This setup only runs on macOS"

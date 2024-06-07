@@ -46,9 +46,6 @@ jobs:
           conan build . -b missing -pr:h profiles/android-armv8 \
             -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
             -o output_dir="build/Android/armv8"
-          conan build . -b missing -pr:h profiles/android-armv7 \
-            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
-            -o output_dir="build/Android/armv7"
       - uses: actions/upload-artifact@v4
         name: upload-android-x86_64
         with:
@@ -60,12 +57,6 @@ jobs:
         with:
           path: build/publish/libopencv_dart-android-arm64-v8a.tar.gz
           name: libopencv_dart-android-arm64-v8a.tar.gz
-
-      - uses: actions/upload-artifact@v4
-        name: upload-android-armeabi-v7a
-        with:
-          path: build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
-          name: libopencv_dart-android-armeabi-v7a.tar.gz
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -74,7 +65,6 @@ jobs:
           prerelease: false
           files: |
             build/publish/libopencv_dart-android-arm64-v8a.tar.gz
-            build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
             build/publish/libopencv_dart-android-x86_64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
@@ -84,10 +74,10 @@ jobs:
         run: |
           cd example
           flutter pub get
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+          flutter build apk --release --target-platform android-arm64,android-x64
 
   build-ubuntu:
-    name: build-ubuntu
+    name: build-ubuntu-android-armv7
     runs-on: ubuntu-latest
 
     steps:
@@ -110,6 +100,10 @@ jobs:
         run: |
           conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja \
           -o output_dir="build/Linux/x64"
+
+          conan build . -b missing -pr:h profiles/android-armv7 \
+            -c tools.android:ndk_path="`pwd`/build/android-ndk-$ANDROID_NDK_VERSION" \
+            -o output_dir="build/Android/armv7"
       - uses: subosito/flutter-action@v2
         with:
           # flutter-version: '3.16.9'
@@ -119,6 +113,11 @@ jobs:
         with:
           path: build/publish/libopencv_dart-linux-x64.tar.gz
           name: libopencv_dart-linux-x64.tar.gz
+      - uses: actions/upload-artifact@v4
+        name: upload-android-armeabi-v7a
+        with:
+          path: build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
+          name: libopencv_dart-android-armeabi-v7a.tar.gz
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -127,6 +126,7 @@ jobs:
           prerelease: false
           files: |
             build/publish/libopencv_dart-linux-x64.tar.gz
+            build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
       - name: Run Test
         run: |
           export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
@@ -278,6 +278,12 @@ jobs:
             conan build . -b missing -pr:h profiles/ios-armv8 \
             -o output_dir="build/ios/armv8"
 
+            rm -rf ios/opencv_dart.xcframework
+            xcodebuild -create-xcframework \
+              -framework build/ios/x86_64/install/opencv_dart.framework \
+              -framework build/ios/armv8/install/opencv_dart.framework \
+              -output ios/opencv_dart.xcframework
+            tar -zcvf libopencv_dart-ios-os64.tar.gz -C ios opencv_dart.xcframework
         - uses: actions/upload-artifact@v4
           name: upload
           with:
@@ -288,6 +294,11 @@ jobs:
           with:
             path: build/publish/libopencv_dart-ios-x64.tar.gz
             name: libopencv_dart-ios-x64.tar.gz
+        - uses: actions/upload-artifact@v4
+          name: upload
+          with:
+            path: libopencv_dart-ios-os64.tar.gz
+            name: libopencv_dart-ios-os64.tar.gz
         - name: Release
           uses: softprops/action-gh-release@v1
           if: startsWith(github.ref, 'refs/tags/')
@@ -297,6 +308,7 @@ jobs:
             files: |
               build/publish/libopencv_dart-ios-arm64.tar.gz
               build/publish/libopencv_dart-ios-x64.tar.gz
+              libopencv_dart-ios-os64.tar.gz
         - uses: subosito/flutter-action@v2
           with:
             # flutter-version: '3.16.9'
@@ -306,3 +318,4 @@ jobs:
             cd example
             flutter pub get
             flutter build ios --release --no-codesign
+            flutter build ios --release --no-codesign --simulator

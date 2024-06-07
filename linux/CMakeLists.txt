@@ -25,7 +25,7 @@ if(NOT OPENCV_DART_DISABLE_AUTO_BUILD)
   get_filename_component(PARENT_DIR ${CMAKE_CURRENT_LIST_DIR} DIRECTORY)
 
   execute_process(
-    COMMAND conan build . -b missing -c tools.cmake.cmaketoolchain:generator=Ninja -o output_dir=build/linux/${OPENCV_DART_ARCH}
+    COMMAND dart run opencv_dart:setup linux --arch ${OPENCV_DART_ARCH}
     WORKING_DIRECTORY ${PARENT_DIR}
   )
 endif()
