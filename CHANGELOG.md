@@ -1,3 +1,7 @@
+## 1.0.5+2
+
+- hotfix: update the version of prebuilt libs
+
 ## 1.0.5+1
 
 - Optimize Vectors

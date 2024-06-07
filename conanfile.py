@@ -52,7 +52,7 @@ class OcvDartDesktop(ConanFile):
         "output_dir": "build",
         "opencv_overwrite": False,
         "opencv_dir": "",
-        "publish": False,
+        "publish": True,
     }
 
     opencv_full: Path
