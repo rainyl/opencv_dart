@@ -5,8 +5,8 @@ on:
     # branches: ["conan"]
     tags:
       - "v*.*.*"
-  # pull_request:
-  #   branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 env:
   ANDROID_NDK_VERSION: r26c
