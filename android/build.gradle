@@ -61,7 +61,7 @@ android {
     }
 }
 
-def setupCmd=['dart', 'run', 'opencv:setup', 'android', '--arch']
+def setupCmd=['dart', 'run', 'opencv_dart:setup', 'android', '--arch']
 def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem
 // 'dart' and 'dart.bat' both exists on windwos, the former is a bash script and won't work
 // correctly on windows, so use `dart.bat`

@@ -19,7 +19,7 @@ abstract class BaseSetupCommand extends Command {
 
   String get arch {
     final arch_ = argResults?["arch"] as String;
-    return ARCH_MAP[arch_] ?? arch_;
+    return ARCH_MAP[os]?[arch_] ?? arch_;
   }
 
   String get pkgRoot => Frame.caller(1).uri.resolve("..").toFilePath();
@@ -193,7 +193,19 @@ class IosSetupCommand extends BaseSetupCommand {
 }
 
 const ARCH_MAP = {
-  "x86_64": "x64",
+  OS.windows: {
+    "x86_64": "x64",
+  },
+  OS.linux: {
+    "x86_64": "x64",
+  },
+  OS.macos: {
+    "x86_64": "x64",
+  },
+  OS.ios: {
+    "x86_64": "x64",
+  },
+  OS.android: {},
 };
 
 class OS {

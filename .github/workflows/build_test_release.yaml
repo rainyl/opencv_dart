@@ -321,4 +321,4 @@ jobs:
             cd example
             flutter pub get
             flutter build ios --release --no-codesign
-            flutter build ios --release --no-codesign --simulator
+            flutter build ios --no-codesign --simulator
