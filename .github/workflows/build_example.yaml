@@ -9,8 +9,7 @@ on:
 jobs:
   build-windows:
     name: build-windows
-    runs-on: windows-latest
-
+    runs-on: windows-2022
     steps:
       - uses: subosito/flutter-action@v2
         with:
