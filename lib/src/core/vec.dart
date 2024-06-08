@@ -159,8 +159,12 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
     return d;
   }
 
-  /// alias of data
-  Uint8List toU8List() => data;
+  /// ~~alias of data~~
+  ///
+  /// This method will return a full copy of [data]
+  ///
+  /// https://github.com/rainyl/opencv_dart/issues/85
+  Uint8List toU8List() => Uint8List.fromList(data);
   static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(CFFI.addresses.VecUChar_Close);
 
   void dispose() {
