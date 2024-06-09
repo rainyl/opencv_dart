@@ -1,6 +1,8 @@
-## 1.0.5+2
+## 1.0.6
 
-- hotfix: update the version of prebuilt libs
+- Upgrade to OpenCV 4.10.0
+- VecUChar.toU8List() return a copy of data rather than a view
+- Better Auto setup, support universal ios framework (x86_64 and arm64)
 
 ## 1.0.5+1
 

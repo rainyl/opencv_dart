@@ -33,18 +33,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   // native resources are unsendable for isolate, so use raw data or encoded Uint8List and convert back
-  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async {
-    final ret = Isolate.run(() {
-      final im = cv.imdecode(Uint8List.fromList(buffer), cv.IMREAD_COLOR);
-      late cv.Mat gray, blur;
-      for (var i = 0; i < 1000; i++) {
-        gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
-        blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
-      }
-      return (cv.imencode(cv.ImageFormat.png.ext, gray), cv.imencode(cv.ImageFormat.png.ext, blur));
-    });
-    return ret;
-  }
+  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async => Isolate.run(() {
+        final im = cv.imdecode(buffer, cv.IMREAD_COLOR);
+        late cv.Mat gray, blur;
+        for (var i = 0; i < 1000; i++) {
+          gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
+          blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
+        }
+        return (
+          cv.imencode(cv.ImageFormat.png.ext, gray),
+          cv.imencode(cv.ImageFormat.png.ext, blur)
+        );
+      });
 
   @override
   Widget build(BuildContext context) {

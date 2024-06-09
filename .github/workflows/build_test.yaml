@@ -1,4 +1,4 @@
-name: build and test
+name: Coverage
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   build-windows:
     name: build-windows
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v4

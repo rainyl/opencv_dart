@@ -26,6 +26,7 @@ test/models/
 *.dylib
 CMakeUserPresets*
 *.framework
+*.xcframework
 .clang-format
 CMakePresets.json
 gh-md-toc

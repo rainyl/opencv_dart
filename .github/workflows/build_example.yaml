@@ -1,4 +1,4 @@
-name: build examples
+name: Examples
 
 on:
   push:
@@ -9,12 +9,11 @@ on:
 jobs:
   build-windows:
     name: build-windows
-    runs-on: windows-latest
-
+    runs-on: windows-2019
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -53,7 +52,7 @@ jobs:
           conan profile detect -f
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -87,7 +86,7 @@ jobs:
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -115,7 +114,7 @@ jobs:
           cd ${{github.workspace}}
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:

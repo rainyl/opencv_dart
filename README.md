@@ -14,14 +14,13 @@ OpenCV Bindings for Dart Language.
 > [!IMPORTANT]
 > Please use `v0.3.0` and later version
 >
-> For `v1.0.5+1` and later, libs will be built from sources locally. [Conan](https://conan.io/) is required,
-> to install build dependencies, please refer to [1. Install dependencies](#1-install-dependencies)
+> For `v1.0.6` and later, auto setup is supported, libs will be downloaded from
+> [Releases](https://github.com/rainyl/opencv_dart/releases) automatically.
 >
 > 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
 > e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
 > or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Windows)
-> 2. iOS: default target architecture is `arm64`, if you need to run on `x64`(ios simulator), please
-> set `OPENCV_DART_ARCH` environment variable to `x64`, e.g., `export OPENCV_DART_ARCH=x64`
+> 2. iOS: support universal framework(`os64`, fat lib for x86_64 and arm64)
 > 3. Android: all supported ABIs (`x86_64` `arm64-v8a` `armeabi-v7a`) will be built, if you want
 > to reduce the app size, please add `--split-per-abi` to the `flutter build` command, e.g., `flutter build apk --release --target-platform android-arm64,android-x64 --split-per-abi`, otherwise, all `.so` will
 > be packaged to app.

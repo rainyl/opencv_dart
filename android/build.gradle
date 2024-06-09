@@ -61,19 +61,19 @@ android {
     }
 }
 
-def NDK_PATH=System.env.ANDROID_NDK_HOME ?: System.env.ANDROID_NDK_ROOT
-def BUILD_CMD=['conan', 'build', '.', '-b', 'missing']
-if (NDK_PATH) {
-    BUILD_CMD.addAll(['-c', "tools.android:ndk_path=${NDK_PATH}"])
+def setupCmd=['dart', 'run', 'opencv_dart:setup', 'android', '--arch']
+def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem
+// 'dart' and 'dart.bat' both exists on windwos, the former is a bash script and won't work
+// correctly on windows, so use `dart.bat`
+if(currentOS.isWindows()){
+  setupCmd[0] = "dart.bat"
 }
 
 task runOpenCVSetup(type: Exec) {
     // Set working directory to the parent directory of the root directory
     workingDir project.buildscript.sourceFile.parentFile.parentFile
-    def CMD = BUILD_CMD + ['-pr:h', 'profiles/android-x86_64', '-o', 'output_dir=build/android/x86_64']
-    commandLine CMD
+    commandLine setupCmd + ['x86_64']
     doFirst {
-        println "Using NDK path: ${NDK_PATH}"
         println "Running OpenCV setup for x86_64 in ${workingDir}"
     }
 }
@@ -81,10 +81,8 @@ task runOpenCVSetup(type: Exec) {
 task runOpenCVSetupArm64(type: Exec) {
     // Set working directory to the parent directory of the root directory
     workingDir project.buildscript.sourceFile.parentFile.parentFile
-    def CMD = BUILD_CMD + ['-pr:h', 'profiles/android-armv8', '-o', 'output_dir=build/android/arm64-v8a']
-    commandLine CMD
+    commandLine setupCmd + ['arm64-v8a']
     doFirst {
-        println "Using NDK path: ${NDK_PATH}"
         println "Running OpenCV setup for arm64-v8a in ${workingDir}"
     }
 }
@@ -92,10 +90,8 @@ task runOpenCVSetupArm64(type: Exec) {
 task runOpenCVSetupArmeabi(type: Exec) {
     // Set working directory to the parent directory of the root directory
     workingDir project.buildscript.sourceFile.parentFile.parentFile
-    def CMD = BUILD_CMD + ['-pr:h', 'profiles/android-armv7', '-o', 'output_dir=build/android/armeabi-v7a']
-    commandLine CMD
+    commandLine setupCmd + ['armeabi-v7a']
     doFirst {
-        println "Using NDK path: ${NDK_PATH}"
         println "Running OpenCV setup for armeabi-v7a in ${workingDir}"
     }
 }
