@@ -76,11 +76,6 @@ jobs:
         with:
           flutter-version: '3.19.6'
           channel: "stable"
-      - name: Run build
-        run: |
-          cd example
-          flutter pub get
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
 
   build-ubuntu:
     name: build-ubuntu-android-armv7
