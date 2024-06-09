@@ -1,3 +1,7 @@
+## 1.0.6+1
+
+- Fix: auto setup
+
 ## 1.0.6
 
 - Upgrade to OpenCV 4.10.0

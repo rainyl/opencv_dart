@@ -21,6 +21,7 @@ images/
 CMakeUserPresets*
 CMakePresets.json
 *.framework
+*.xcframework
 *.tar.gz
 *.exe
 
