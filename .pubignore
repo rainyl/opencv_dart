@@ -7,6 +7,15 @@ coverage/
 *.so
 *.dylib
 *.lib
+*.exe
+src/**/*.cpp
+src/**/*.h
+src/**/*.cc
+src/**/*.hpp
+profiles/
+ffigen*.yaml
+conanfile.py
+images_out/
 pkgs/
 images/
 CMakeUserPresets*
