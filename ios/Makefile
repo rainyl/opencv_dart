@@ -14,7 +14,7 @@ setup:
 	@echo "OPENCV_DART_DISABLE_AUTO_BUILD detected, skipping setup..."
 else
 setup:
-ifeq ($(PLATFORM),Linux)
+ifeq ($(PLATFORM),Darwin)
 	@echo "Detected macOS platform"
 ifeq ($(shell test -s $(WORK_DIR)/opencv_dart.xcframework/Info.plist && echo true),true)
 	@echo "Found $(WORK_DIR)/opencv_dart.xcframework/Info.plist, skipping..."
