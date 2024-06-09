@@ -14,3 +14,6 @@ indent_style = tab # "space"、"tab"
 [*.py]
 indent_style = space # "space"、"tab"
 indent_size = 4
+
+[*.version]
+insert_final_newline = false

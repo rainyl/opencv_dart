@@ -5,13 +5,19 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
         // The Android Gradle Plugin knows how to build native code with the NDK.
         classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "de.undercouch:gradle-download-task:5.6.0"
     }
 }
+
+apply plugin: "de.undercouch.download"
 
 rootProject.allprojects {
     repositories {
@@ -61,38 +67,33 @@ android {
     }
 }
 
-def setupCmd=['dart', 'run', 'opencv_dart:setup', 'android', '--arch']
-def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem
-// 'dart' and 'dart.bat' both exists on windwos, the former is a bash script and won't work
-// correctly on windows, so use `dart.bat`
-if(currentOS.isWindows()){
-  setupCmd[0] = "dart.bat"
+def SOURCE_DIR = project.buildscript.sourceFile.parentFile
+def CVD_VERSION = new File("${project.buildscript.sourceFile.parentFile.parentFile}/binary.version").text
+def CVD_LIB_URL_BASE = "https://github.com/rainyl/opencv_dart/releases/download"
+def ARCHS = ['x86_64', 'arm64-v8a', 'armeabi-v7a']
+
+task downloadLibs(type: Download) {
+    println "Downloading opencv_dart libraries..."
+    def SRC_URLS = ARCHS.collect { ARCH ->
+        "${CVD_LIB_URL_BASE}/v${CVD_VERSION}/libopencv_dart-android-${ARCH}.tar.gz"
+    }
+    src(SRC_URLS)
+    dest SOURCE_DIR
+    overwrite false
 }
 
-task runOpenCVSetup(type: Exec) {
-    // Set working directory to the parent directory of the root directory
-    workingDir project.buildscript.sourceFile.parentFile.parentFile
-    commandLine setupCmd + ['x86_64']
-    doFirst {
-        println "Running OpenCV setup for x86_64 in ${workingDir}"
+ARCHS.each { arch ->
+    def extractTaskName = "opencv_dart_extract_libs_${arch}"
+    task(extractTaskName, type: Copy) {
+        from tarTree(resources.gzip("${SOURCE_DIR}/libopencv_dart-android-${arch}.tar.gz"))
+        into "${SOURCE_DIR}/src/main/jniLibs/${arch}"
     }
 }
 
-task runOpenCVSetupArm64(type: Exec) {
-    // Set working directory to the parent directory of the root directory
-    workingDir project.buildscript.sourceFile.parentFile.parentFile
-    commandLine setupCmd + ['arm64-v8a']
-    doFirst {
-        println "Running OpenCV setup for arm64-v8a in ${workingDir}"
-    }
-}
-
-task runOpenCVSetupArmeabi(type: Exec) {
-    // Set working directory to the parent directory of the root directory
-    workingDir project.buildscript.sourceFile.parentFile.parentFile
-    commandLine setupCmd + ['armeabi-v7a']
-    doFirst {
-        println "Running OpenCV setup for armeabi-v7a in ${workingDir}"
+task extractLibs(dependsOn: downloadLibs) {
+    println "Extracting opencv_dart libraries..."
+    ARCHS.each { arch ->
+        finalizedBy "opencv_dart_extract_libs_${arch}"
     }
 }
 
@@ -101,5 +102,5 @@ if (OPENCV_DART_DISABLE_AUTO_BUILD != null) {
     println "Found OPENCV_DART_DISABLE_AUTO_BUILD, skip auto build"
 } else {
     println "OPENCV_DART_DISABLE_AUTO_BUILD is not set, running OpenCV setup"
-    preBuild.dependsOn runOpenCVSetup, runOpenCVSetupArm64, runOpenCVSetupArmeabi
+    preBuild.dependsOn extractLibs
 }
