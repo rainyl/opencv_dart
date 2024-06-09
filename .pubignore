@@ -21,6 +21,8 @@ images/
 CMakeUserPresets*
 CMakePresets.json
 *.framework
+*.tar.gz
+*.exe
 
 .idea/
 .vscode/
