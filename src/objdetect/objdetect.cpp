@@ -10,6 +10,8 @@
 #include "opencv2/core/types.hpp"
 #include <vector>
 
+#include <opencv2/objdetect/face.hpp>
+
 // CascadeClassifier
 CvStatus CascadeClassifier_New(CascadeClassifier *rval)
 {
@@ -383,4 +385,76 @@ CvStatus QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlig
   BEGIN_WRAP
   self.ptr->setUseAlignmentMarkers(useAlignmentMarkers);
   END_WRAP
+}
+
+// FaceDetectorYN
+
+CvStatus FaceDetectorYN_New(FaceDetectorYN *rval, const char* model, const char* config, Size input_size, float score_threshold, float nms_threshold, int top_k, int backend_id, int target_id) {
+    BEGIN_WRAP
+    *rval = cv::FaceDetectorYN::create(model, config, input_size, score_threshold, nms_threshold, top_k, backend_id, target_id);
+    END_WRAP
+}
+
+void FaceDetectorYN_Close(FaceDetectorYNPtr self) {
+    CVD_FREE(self)
+}
+
+CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces) {
+    BEGIN_WRAP
+    self.ptr->detect(img, *faces);
+    END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size) {
+    BEGIN_WRAP
+    self.ptr->setInputSize(input_size);
+    END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold) {
+    BEGIN_WRAP
+    self.ptr->setScoreThreshold(score_threshold);
+    END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold) {
+    BEGIN_WRAP
+    self.ptr->setNMSThreshold(nms_threshold);
+    END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k) {
+    BEGIN_WRAP
+    self.ptr->setTopK(top_k);
+    END_WRAP
+}
+
+// FaceRecognizerSF
+
+CvStatus FaceRecognizerSF_New(FaceRecognizerSF *rval, const char* model, const char* config, int backend_id, int target_id) {
+    BEGIN_WRAP
+    *rval = cv::FaceRecognizerSF::create(model, config, backend_id, target_id);
+    END_WRAP
+}
+
+void FaceRecognizerSF_Close(FaceRecognizerSFPtr self) {
+    CVD_FREE(self)
+}
+
+CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img) {
+    BEGIN_WRAP
+    self.ptr->alignCrop(src_img, face_box, *aligned_img);
+    END_WRAP
+}
+
+CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, Mat *face_feature) {
+    BEGIN_WRAP
+    self.ptr->feature(aligned_img, *face_feature);
+    END_WRAP
+}
+
+CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type, double *distance) {
+    BEGIN_WRAP
+    *distance = self.ptr->match(face_feature1, face_feature2, dis_type);
+    END_WRAP
 }

@@ -22,10 +22,14 @@ extern "C" {
 CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier)
 CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor)
 CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector)
+CVD_TYPEDEF(cv::FaceDetectorYN, FaceDetectorYN)
+CVD_TYPEDEF(cv::FaceRecognizerSF, FaceRecognizerSF)
 #else
 CVD_TYPEDEF(void, CascadeClassifier)
 CVD_TYPEDEF(void, HOGDescriptor)
 CVD_TYPEDEF(void, QRCodeDetector)
+CVD_TYPEDEF(void, FaceDetectorYN)
+CVD_TYPEDEF(void, FaceRecognizerSF)
 #endif
 
 // CascadeClassifier
@@ -109,6 +113,22 @@ CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, Vec
 CvStatus QRCodeDetector_setEpsX(QRCodeDetector self, double epsX);
 CvStatus QRCodeDetector_setEpsY(QRCodeDetector self, double epsY);
 CvStatus QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlignmentMarkers);
+
+// FaceDetectorYN
+CvStatus FaceDetectorYN_New(FaceDetectorYN *rval, const char* model, const char* config, Size input_size, float score_threshold, float nms_threshold, int top_k, int backend_id, int target_id);
+void FaceDetectorYN_Close(FaceDetectorYNPtr self);
+CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces);
+CvStatus FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size);
+CvStatus FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold);
+CvStatus FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold);
+CvStatus FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k);
+
+// FaceRecognizerSF
+CvStatus FaceRecognizerSF_New(FaceRecognizerSF *rval, const char* model, const char* config, int backend_id, int target_id);
+void FaceRecognizerSF_Close(FaceRecognizerSFPtr self);
+CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img);
+CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, Mat *face_feature);
+CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type, double *distance);
 
 #ifdef __cplusplus
 }
