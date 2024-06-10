@@ -11,7 +11,6 @@
 extern "C" {
 #endif
 
-#include "core/core.h"
 #include "dnn.h"
 
 #ifdef __cplusplus
@@ -20,12 +19,10 @@ CVD_TYPEDEF(cv::AsyncArray, AsyncArray);
 CVD_TYPEDEF(void, AsyncArray)
 #endif
 
-CVD_TYPEDEF_PTR(AsyncArray)
-
 CvStatus AsyncArray_New(AsyncArray *rval);
 CvStatus AsyncArray_Get(AsyncArray async_out, Mat out);
 CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
-void     AsyncArray_Close(AsyncArray *a);
+void     AsyncArray_Close(AsyncArrayPtr a);
 
 #ifdef __cplusplus
 }

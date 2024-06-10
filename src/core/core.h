@@ -66,16 +66,6 @@ extern "C" {
 
 #define CVD_TYPECAST_C(value) reinterpret_cast<void *>(value);
 
-#define CVD_TYPEDEF_PTR(TYPE)                                                                                \
-  typedef TYPE *TYPE##Ptr;                                                                                   \
-  /**                                                                                                        \
-   * Dart ffigen will not generate typedefs if not referred                                                  \
-   * so here we confirm they are included                                                                    \
-   */                                                                                                        \
-  typedef struct {                                                                                           \
-    TYPE##Ptr *p;                                                                                            \
-  } NO_USE_##TYPE##Ptr;
-
 #ifdef __cplusplus
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
 #define CVD_FREE(value)                                                                                      \
@@ -88,7 +78,8 @@ extern "C" {
   typedef TYPE *NAME##_CPP;                                                                                  \
   typedef struct NAME {                                                                                      \
     TYPE *ptr;                                                                                               \
-  } NAME;
+  } NAME;                                                                                                    \
+  typedef NAME *NAME##Ptr;
 
 CVD_TYPEDEF(cv::Mat, Mat)
 CVD_TYPEDEF(cv::_InputOutputArray, InputOutputArray)
@@ -114,7 +105,8 @@ CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef struct NAME {                                                                                      \
     TYPE *ptr;                                                                                               \
-  } NAME;
+  } NAME;                                                                                                    \
+  typedef NAME *NAME##Ptr;
 
 typedef unsigned char  uchar;
 typedef unsigned short ushort;
@@ -140,10 +132,6 @@ CVD_TYPEDEF(void, VecKeyPoint)
 CVD_TYPEDEF(void, VecDMatch)
 CVD_TYPEDEF(void, VecVecDMatch)
 #endif
-
-CVD_TYPEDEF_PTR(Mat)
-CVD_TYPEDEF_PTR(InputOutputArray)
-CVD_TYPEDEF_PTR(RNG)
 
 // Wrapper for an individual cv::cvPoint
 typedef struct Point {
@@ -404,8 +392,8 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval);
 // VecPoint2f vecPointToVecPoint2f(VecPoint src);
 
 typedef struct TermCriteria {
-  int type;
-  int maxCount;
+  int    type;
+  int    maxCount;
   double epsilon;
 } TermCriteria;
 
@@ -435,7 +423,7 @@ CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus Mat_FromCMat(Mat m, Mat *rval);
-void     Mat_Close(Mat *m);
+void     Mat_Close(MatPtr m);
 void     Mat_CloseVoid(void *m);
 CvStatus Mat_Release(Mat *m);
 CvStatus Mat_Empty(Mat m, bool *rval);
@@ -699,7 +687,7 @@ CvStatus NormWithMats(Mat src1, Mat src2, int normType, double *rval);
 
 CvStatus Rng_New(RNG *rval);
 CvStatus Rng_NewWithState(uint64_t state, RNG *rval);
-void     Rng_Close(RNG *rng);
+void     Rng_Close(RNGPtr rng);
 CvStatus TheRNG(RNG *rval);
 CvStatus SetRNGSeed(int seed);
 CvStatus RNG_Fill(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange);

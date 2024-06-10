@@ -29,7 +29,7 @@ class CvNative {
       : _lookup = lookup;
 
   void AKAZE_Close(
-    ffi.Pointer<AKAZE> a,
+    AKAZEPtr a,
   ) {
     return _AKAZE_Close(
       a,
@@ -37,10 +37,9 @@ class CvNative {
   }
 
   late final _AKAZE_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AKAZE>)>>(
-          'AKAZE_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZEPtr)>>('AKAZE_Close');
   late final _AKAZE_Close =
-      _AKAZE_ClosePtr.asFunction<void Function(ffi.Pointer<AKAZE>)>();
+      _AKAZE_ClosePtr.asFunction<void Function(AKAZEPtr)>();
 
   CvStatus AKAZE_Create(
     ffi.Pointer<AKAZE> rval,
@@ -126,19 +125,18 @@ class CvNative {
       CvStatus Function(Mat, Mat, double, int, int, int, double)>();
 
   void AgastFeatureDetector_Close(
-    ffi.Pointer<AgastFeatureDetector> a,
+    AgastFeatureDetectorPtr a,
   ) {
     return _AgastFeatureDetector_Close(
       a,
     );
   }
 
-  late final _AgastFeatureDetector_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<AgastFeatureDetector>)>>(
-      'AgastFeatureDetector_Close');
+  late final _AgastFeatureDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AgastFeatureDetectorPtr)>>(
+          'AgastFeatureDetector_Close');
   late final _AgastFeatureDetector_Close = _AgastFeatureDetector_ClosePtr
-      .asFunction<void Function(ffi.Pointer<AgastFeatureDetector>)>();
+      .asFunction<void Function(AgastFeatureDetectorPtr)>();
 
   CvStatus AgastFeatureDetector_Create(
     ffi.Pointer<AgastFeatureDetector> rval,
@@ -177,7 +175,7 @@ class CvNative {
               AgastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>();
 
   void AlignMTB_Close(
-    ffi.Pointer<AlignMTB> b,
+    AlignMTBPtr b,
   ) {
     return _AlignMTB_Close(
       b,
@@ -185,10 +183,10 @@ class CvNative {
   }
 
   late final _AlignMTB_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AlignMTB>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>(
           'AlignMTB_Close');
   late final _AlignMTB_Close =
-      _AlignMTB_ClosePtr.asFunction<void Function(ffi.Pointer<AlignMTB>)>();
+      _AlignMTB_ClosePtr.asFunction<void Function(AlignMTBPtr)>();
 
   CvStatus AlignMTB_Create(
     ffi.Pointer<AlignMTB> rval,
@@ -350,7 +348,7 @@ class CvNative {
       CvStatus Function(Mat, Point, Point, Scalar, int, int, int, double)>();
 
   void ArucoDetectorParameters_Close(
-    ffi.Pointer<ArucoDetectorParameters> ap,
+    ArucoDetectorParametersPtr ap,
   ) {
     return _ArucoDetectorParameters_Close(
       ap,
@@ -358,11 +356,10 @@ class CvNative {
   }
 
   late final _ArucoDetectorParameters_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<ArucoDetectorParameters>)>>(
+          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParametersPtr)>>(
       'ArucoDetectorParameters_Close');
   late final _ArucoDetectorParameters_Close = _ArucoDetectorParameters_ClosePtr
-      .asFunction<void Function(ffi.Pointer<ArucoDetectorParameters>)>();
+      .asFunction<void Function(ArucoDetectorParametersPtr)>();
 
   CvStatus ArucoDetectorParameters_Create(
     ffi.Pointer<ArucoDetectorParameters> rval,
@@ -1478,18 +1475,18 @@ class CvNative {
           CvStatus Function(ArucoDetectorParameters, double)>();
 
   void ArucoDetector_Close(
-    ffi.Pointer<ArucoDetector> ad,
+    ArucoDetectorPtr ad,
   ) {
     return _ArucoDetector_Close(
       ad,
     );
   }
 
-  late final _ArucoDetector_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ArucoDetector>)>>(
-      'ArucoDetector_Close');
-  late final _ArucoDetector_Close = _ArucoDetector_ClosePtr.asFunction<
-      void Function(ffi.Pointer<ArucoDetector>)>();
+  late final _ArucoDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>(
+          'ArucoDetector_Close');
+  late final _ArucoDetector_Close =
+      _ArucoDetector_ClosePtr.asFunction<void Function(ArucoDetectorPtr)>();
 
   CvStatus ArucoDetector_DetectMarkers(
     ArucoDetector ad,
@@ -1556,18 +1553,18 @@ class CvNative {
               ffi.Pointer<ArucoDetector>)>();
 
   void ArucoDictionary_Close(
-    ffi.Pointer<ArucoDictionary> self,
+    ArucoDictionaryPtr self,
   ) {
     return _ArucoDictionary_Close(
       self,
     );
   }
 
-  late final _ArucoDictionary_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ArucoDictionary>)>>(
-      'ArucoDictionary_Close');
-  late final _ArucoDictionary_Close = _ArucoDictionary_ClosePtr.asFunction<
-      void Function(ffi.Pointer<ArucoDictionary>)>();
+  late final _ArucoDictionary_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>(
+          'ArucoDictionary_Close');
+  late final _ArucoDictionary_Close =
+      _ArucoDictionary_ClosePtr.asFunction<void Function(ArucoDictionaryPtr)>();
 
   CvStatus ArucoDrawDetectedMarkers(
     Mat image,
@@ -1614,7 +1611,7 @@ class CvNative {
       .asFunction<CvStatus Function(int, int, int, Mat, int)>();
 
   void AsyncArray_Close(
-    ffi.Pointer<AsyncArray> a,
+    AsyncArrayPtr a,
   ) {
     return _AsyncArray_Close(
       a,
@@ -1622,10 +1619,10 @@ class CvNative {
   }
 
   late final _AsyncArray_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AsyncArray>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(AsyncArrayPtr)>>(
           'AsyncArray_Close');
   late final _AsyncArray_Close =
-      _AsyncArray_ClosePtr.asFunction<void Function(ffi.Pointer<AsyncArray>)>();
+      _AsyncArray_ClosePtr.asFunction<void Function(AsyncArrayPtr)>();
 
   CvStatus AsyncArray_Get(
     AsyncArray async_out,
@@ -1658,7 +1655,7 @@ class CvNative {
       CvStatus Function(ffi.Pointer<AsyncArray>)>();
 
   void BFMatcher_Close(
-    ffi.Pointer<BFMatcher> b,
+    BFMatcherPtr b,
   ) {
     return _BFMatcher_Close(
       b,
@@ -1666,10 +1663,10 @@ class CvNative {
   }
 
   late final _BFMatcher_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BFMatcher>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(BFMatcherPtr)>>(
           'BFMatcher_Close');
   late final _BFMatcher_Close =
-      _BFMatcher_ClosePtr.asFunction<void Function(ffi.Pointer<BFMatcher>)>();
+      _BFMatcher_ClosePtr.asFunction<void Function(BFMatcherPtr)>();
 
   CvStatus BFMatcher_Create(
     ffi.Pointer<BFMatcher> rval,
@@ -1749,7 +1746,7 @@ class CvNative {
       CvStatus Function(BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>)>();
 
   void BRISK_Close(
-    ffi.Pointer<BRISK> b,
+    BRISKPtr b,
   ) {
     return _BRISK_Close(
       b,
@@ -1757,10 +1754,9 @@ class CvNative {
   }
 
   late final _BRISK_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BRISK>)>>(
-          'BRISK_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(BRISKPtr)>>('BRISK_Close');
   late final _BRISK_Close =
-      _BRISK_ClosePtr.asFunction<void Function(ffi.Pointer<BRISK>)>();
+      _BRISK_ClosePtr.asFunction<void Function(BRISKPtr)>();
 
   CvStatus BRISK_Create(
     ffi.Pointer<BRISK> rval,
@@ -1838,7 +1834,7 @@ class CvNative {
       .asFunction<CvStatus Function(BackgroundSubtractorKNN, Mat, Mat)>();
 
   void BackgroundSubtractorKNN_Close(
-    ffi.Pointer<BackgroundSubtractorKNN> self,
+    BackgroundSubtractorKNNPtr self,
   ) {
     return _BackgroundSubtractorKNN_Close(
       self,
@@ -1846,11 +1842,10 @@ class CvNative {
   }
 
   late final _BackgroundSubtractorKNN_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<BackgroundSubtractorKNN>)>>(
+          ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorKNNPtr)>>(
       'BackgroundSubtractorKNN_Close');
   late final _BackgroundSubtractorKNN_Close = _BackgroundSubtractorKNN_ClosePtr
-      .asFunction<void Function(ffi.Pointer<BackgroundSubtractorKNN>)>();
+      .asFunction<void Function(BackgroundSubtractorKNNPtr)>();
 
   CvStatus BackgroundSubtractorKNN_Create(
     ffi.Pointer<BackgroundSubtractorKNN> rval,
@@ -1913,7 +1908,7 @@ class CvNative {
           CvStatus Function(BackgroundSubtractorMOG2, Mat, Mat)>();
 
   void BackgroundSubtractorMOG2_Close(
-    ffi.Pointer<BackgroundSubtractorMOG2> self,
+    BackgroundSubtractorMOG2Ptr self,
   ) {
     return _BackgroundSubtractorMOG2_Close(
       self,
@@ -1921,12 +1916,11 @@ class CvNative {
   }
 
   late final _BackgroundSubtractorMOG2_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<BackgroundSubtractorMOG2>)>>(
+          ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorMOG2Ptr)>>(
       'BackgroundSubtractorMOG2_Close');
   late final _BackgroundSubtractorMOG2_Close =
       _BackgroundSubtractorMOG2_ClosePtr.asFunction<
-          void Function(ffi.Pointer<BackgroundSubtractorMOG2>)>();
+          void Function(BackgroundSubtractorMOG2Ptr)>();
 
   CvStatus BackgroundSubtractorMOG2_Create(
     ffi.Pointer<BackgroundSubtractorMOG2> rval,
@@ -1992,18 +1986,18 @@ class CvNative {
       CvStatus Function(Mat, Mat, int, double, double)>();
 
   void BlockMeanHash_Close(
-    ffi.Pointer<BlockMeanHash> self,
+    BlockMeanHashPtr self,
   ) {
     return _BlockMeanHash_Close(
       self,
     );
   }
 
-  late final _BlockMeanHash_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BlockMeanHash>)>>(
-      'BlockMeanHash_Close');
-  late final _BlockMeanHash_Close = _BlockMeanHash_ClosePtr.asFunction<
-      void Function(ffi.Pointer<BlockMeanHash>)>();
+  late final _BlockMeanHash_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>(
+          'BlockMeanHash_Close');
+  late final _BlockMeanHash_Close =
+      _BlockMeanHash_ClosePtr.asFunction<void Function(BlockMeanHashPtr)>();
 
   CvStatus BlockMeanHash_Compare(
     BlockMeanHash self,
@@ -2185,7 +2179,7 @@ class CvNative {
       _CLAHE_ApplyPtr.asFunction<CvStatus Function(CLAHE, Mat, Mat)>();
 
   void CLAHE_Close(
-    ffi.Pointer<CLAHE> c,
+    CLAHEPtr c,
   ) {
     return _CLAHE_Close(
       c,
@@ -2193,10 +2187,9 @@ class CvNative {
   }
 
   late final _CLAHE_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<CLAHE>)>>(
-          'CLAHE_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(CLAHEPtr)>>('CLAHE_Close');
   late final _CLAHE_Close =
-      _CLAHE_ClosePtr.asFunction<void Function(ffi.Pointer<CLAHE>)>();
+      _CLAHE_ClosePtr.asFunction<void Function(CLAHEPtr)>();
 
   CvStatus CLAHE_CollectGarbage(
     CLAHE c,
@@ -2558,19 +2551,18 @@ class CvNative {
       CvStatus Function(Mat, Mat, double, double, int, bool)>();
 
   void CascadeClassifier_Close(
-    ffi.Pointer<CascadeClassifier> self,
+    CascadeClassifierPtr self,
   ) {
     return _CascadeClassifier_Close(
       self,
     );
   }
 
-  late final _CascadeClassifier_ClosePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<CascadeClassifier>)>>(
-      'CascadeClassifier_Close');
+  late final _CascadeClassifier_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CascadeClassifierPtr)>>(
+          'CascadeClassifier_Close');
   late final _CascadeClassifier_Close = _CascadeClassifier_ClosePtr.asFunction<
-      void Function(ffi.Pointer<CascadeClassifier>)>();
+      void Function(CascadeClassifierPtr)>();
 
   CvStatus CascadeClassifier_DetectMultiScale(
     CascadeClassifier self,
@@ -3638,19 +3630,18 @@ class CvNative {
       _EyePtr.asFunction<CvStatus Function(int, int, int, ffi.Pointer<Mat>)>();
 
   void FastFeatureDetector_Close(
-    ffi.Pointer<FastFeatureDetector> f,
+    FastFeatureDetectorPtr f,
   ) {
     return _FastFeatureDetector_Close(
       f,
     );
   }
 
-  late final _FastFeatureDetector_ClosePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<FastFeatureDetector>)>>(
-      'FastFeatureDetector_Close');
+  late final _FastFeatureDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FastFeatureDetectorPtr)>>(
+          'FastFeatureDetector_Close');
   late final _FastFeatureDetector_Close = _FastFeatureDetector_ClosePtr
-      .asFunction<void Function(ffi.Pointer<FastFeatureDetector>)>();
+      .asFunction<void Function(FastFeatureDetectorPtr)>();
 
   CvStatus FastFeatureDetector_Create(
     ffi.Pointer<FastFeatureDetector> rval,
@@ -4212,19 +4203,18 @@ class CvNative {
       CvStatus Function(VecPoint, Mat, int, double, double, double)>();
 
   void FlannBasedMatcher_Close(
-    ffi.Pointer<FlannBasedMatcher> f,
+    FlannBasedMatcherPtr f,
   ) {
     return _FlannBasedMatcher_Close(
       f,
     );
   }
 
-  late final _FlannBasedMatcher_ClosePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<FlannBasedMatcher>)>>(
-      'FlannBasedMatcher_Close');
+  late final _FlannBasedMatcher_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FlannBasedMatcherPtr)>>(
+          'FlannBasedMatcher_Close');
   late final _FlannBasedMatcher_Close = _FlannBasedMatcher_ClosePtr.asFunction<
-      void Function(ffi.Pointer<FlannBasedMatcher>)>();
+      void Function(FlannBasedMatcherPtr)>();
 
   CvStatus FlannBasedMatcher_Create(
     ffi.Pointer<FlannBasedMatcher> rval,
@@ -4267,7 +4257,7 @@ class CvNative {
               FlannBasedMatcher, Mat, Mat, int, ffi.Pointer<VecVecDMatch>)>();
 
   void GFTTDetector_Close(
-    ffi.Pointer<GFTTDetector> a,
+    GFTTDetectorPtr a,
   ) {
     return _GFTTDetector_Close(
       a,
@@ -4275,10 +4265,10 @@ class CvNative {
   }
 
   late final _GFTTDetector_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<GFTTDetector>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetectorPtr)>>(
           'GFTTDetector_Close');
-  late final _GFTTDetector_Close = _GFTTDetector_ClosePtr.asFunction<
-      void Function(ffi.Pointer<GFTTDetector>)>();
+  late final _GFTTDetector_Close =
+      _GFTTDetector_ClosePtr.asFunction<void Function(GFTTDetectorPtr)>();
 
   CvStatus GFTTDetector_Create(
     ffi.Pointer<GFTTDetector> rval,
@@ -4741,18 +4731,18 @@ class CvNative {
       _GroupRectanglesPtr.asFunction<CvStatus Function(VecRect, int, double)>();
 
   void HOGDescriptor_Close(
-    ffi.Pointer<HOGDescriptor> self,
+    HOGDescriptorPtr self,
   ) {
     return _HOGDescriptor_Close(
       self,
     );
   }
 
-  late final _HOGDescriptor_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<HOGDescriptor>)>>(
-      'HOGDescriptor_Close');
-  late final _HOGDescriptor_Close = _HOGDescriptor_ClosePtr.asFunction<
-      void Function(ffi.Pointer<HOGDescriptor>)>();
+  late final _HOGDescriptor_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(HOGDescriptorPtr)>>(
+          'HOGDescriptor_Close');
+  late final _HOGDescriptor_Close =
+      _HOGDescriptor_ClosePtr.asFunction<void Function(HOGDescriptorPtr)>();
 
   CvStatus HOGDescriptor_Compute(
     HOGDescriptor self,
@@ -5500,7 +5490,7 @@ class CvNative {
       _InvertAffineTransformPtr.asFunction<CvStatus Function(Mat, Mat)>();
 
   void KAZE_Close(
-    ffi.Pointer<KAZE> a,
+    KAZEPtr a,
   ) {
     return _KAZE_Close(
       a,
@@ -5508,10 +5498,8 @@ class CvNative {
   }
 
   late final _KAZE_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<KAZE>)>>(
-          'KAZE_Close');
-  late final _KAZE_Close =
-      _KAZE_ClosePtr.asFunction<void Function(ffi.Pointer<KAZE>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZEPtr)>>('KAZE_Close');
+  late final _KAZE_Close = _KAZE_ClosePtr.asFunction<void Function(KAZEPtr)>();
 
   CvStatus KAZE_Create(
     ffi.Pointer<KAZE> rval,
@@ -5630,7 +5618,7 @@ class CvNative {
           ffi.Pointer<ffi.Double>)>();
 
   void KalmanFilter_Close(
-    ffi.Pointer<KalmanFilter> self,
+    KalmanFilterPtr self,
   ) {
     return _KalmanFilter_Close(
       self,
@@ -5638,10 +5626,10 @@ class CvNative {
   }
 
   late final _KalmanFilter_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<KalmanFilter>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(KalmanFilterPtr)>>(
           'KalmanFilter_Close');
-  late final _KalmanFilter_Close = _KalmanFilter_ClosePtr.asFunction<
-      void Function(ffi.Pointer<KalmanFilter>)>();
+  late final _KalmanFilter_Close =
+      _KalmanFilter_ClosePtr.asFunction<void Function(KalmanFilterPtr)>();
 
   CvStatus KalmanFilter_Correct(
     KalmanFilter self,
@@ -6231,7 +6219,7 @@ class CvNative {
       CvStatus Function(Mat, Mat, int, int, double, double, int)>();
 
   void Layer_Close(
-    ffi.Pointer<Layer> layer,
+    LayerPtr layer,
   ) {
     return _Layer_Close(
       layer,
@@ -6239,10 +6227,9 @@ class CvNative {
   }
 
   late final _Layer_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Layer>)>>(
-          'Layer_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>('Layer_Close');
   late final _Layer_Close =
-      _Layer_ClosePtr.asFunction<void Function(ffi.Pointer<Layer>)>();
+      _Layer_ClosePtr.asFunction<void Function(LayerPtr)>();
 
   CvStatus Layer_GetName(
     Layer layer,
@@ -6390,7 +6377,7 @@ class CvNative {
       CvStatus Function(Mat, Mat, Point2f, double, int)>();
 
   void MSER_Close(
-    ffi.Pointer<MSER> a,
+    MSERPtr a,
   ) {
     return _MSER_Close(
       a,
@@ -6398,10 +6385,8 @@ class CvNative {
   }
 
   late final _MSER_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<MSER>)>>(
-          'MSER_Close');
-  late final _MSER_Close =
-      _MSER_ClosePtr.asFunction<void Function(ffi.Pointer<MSER>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSERPtr)>>('MSER_Close');
+  late final _MSER_Close = _MSER_ClosePtr.asFunction<void Function(MSERPtr)>();
 
   CvStatus MSER_Create(
     ffi.Pointer<MSER> rval,
@@ -7027,7 +7012,7 @@ class CvNative {
       _Mat_ClonePtr.asFunction<CvStatus Function(Mat, ffi.Pointer<Mat>)>();
 
   void Mat_Close(
-    ffi.Pointer<Mat> m,
+    MatPtr m,
   ) {
     return _Mat_Close(
       m,
@@ -7035,10 +7020,8 @@ class CvNative {
   }
 
   late final _Mat_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Mat>)>>(
-          'Mat_Close');
-  late final _Mat_Close =
-      _Mat_ClosePtr.asFunction<void Function(ffi.Pointer<Mat>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(MatPtr)>>('Mat_Close');
+  late final _Mat_Close = _Mat_ClosePtr.asFunction<void Function(MatPtr)>();
 
   void Mat_CloseVoid(
     ffi.Pointer<ffi.Void> m,
@@ -11265,7 +11248,7 @@ class CvNative {
       _MedianBlurPtr.asFunction<CvStatus Function(Mat, Mat, int)>();
 
   void MergeMertens_Close(
-    ffi.Pointer<MergeMertens> b,
+    MergeMertensPtr b,
   ) {
     return _MergeMertens_Close(
       b,
@@ -11273,10 +11256,10 @@ class CvNative {
   }
 
   late final _MergeMertens_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<MergeMertens>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>(
           'MergeMertens_Close');
-  late final _MergeMertens_Close = _MergeMertens_ClosePtr.asFunction<
-      void Function(ffi.Pointer<MergeMertens>)>();
+  late final _MergeMertens_Close =
+      _MergeMertens_ClosePtr.asFunction<void Function(MergeMertensPtr)>();
 
   CvStatus MergeMertens_Create(
     ffi.Pointer<MergeMertens> rval,
@@ -11562,7 +11545,7 @@ class CvNative {
       CvStatus Function(VecMat, Mat, double, Size, Scalar, bool, bool, int)>();
 
   void Net_Close(
-    ffi.Pointer<Net> net,
+    NetPtr net,
   ) {
     return _Net_Close(
       net,
@@ -11570,10 +11553,8 @@ class CvNative {
   }
 
   late final _Net_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Net>)>>(
-          'Net_Close');
-  late final _Net_Close =
-      _Net_ClosePtr.asFunction<void Function(ffi.Pointer<Net>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(NetPtr)>>('Net_Close');
+  late final _Net_Close = _Net_ClosePtr.asFunction<void Function(NetPtr)>();
 
   CvStatus Net_Create(
     ffi.Pointer<Net> rval,
@@ -12134,7 +12115,7 @@ class CvNative {
       CvStatus Function(Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
 
   void ORB_Close(
-    ffi.Pointer<ORB> o,
+    ORBPtr o,
   ) {
     return _ORB_Close(
       o,
@@ -12142,10 +12123,8 @@ class CvNative {
   }
 
   late final _ORB_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ORB>)>>(
-          'ORB_Close');
-  late final _ORB_Close =
-      _ORB_ClosePtr.asFunction<void Function(ffi.Pointer<ORB>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORBPtr)>>('ORB_Close');
+  late final _ORB_Close = _ORB_ClosePtr.asFunction<void Function(ORBPtr)>();
 
   CvStatus ORB_Create(
     ffi.Pointer<ORB> rval,
@@ -12491,18 +12470,18 @@ class CvNative {
       _PyrUpPtr.asFunction<CvStatus Function(Mat, Mat, Size, int)>();
 
   void QRCodeDetector_Close(
-    ffi.Pointer<QRCodeDetector> self,
+    QRCodeDetectorPtr self,
   ) {
     return _QRCodeDetector_Close(
       self,
     );
   }
 
-  late final _QRCodeDetector_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<QRCodeDetector>)>>(
-      'QRCodeDetector_Close');
-  late final _QRCodeDetector_Close = _QRCodeDetector_ClosePtr.asFunction<
-      void Function(ffi.Pointer<QRCodeDetector>)>();
+  late final _QRCodeDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QRCodeDetectorPtr)>>(
+          'QRCodeDetector_Close');
+  late final _QRCodeDetector_Close =
+      _QRCodeDetector_ClosePtr.asFunction<void Function(QRCodeDetectorPtr)>();
 
   CvStatus QRCodeDetector_Decode(
     QRCodeDetector self,
@@ -13018,7 +12997,7 @@ class CvNative {
       CvStatus Function(Mat, Mat, Size, double, double, int)>();
 
   void Rng_Close(
-    ffi.Pointer<RNG> rng,
+    RNGPtr rng,
   ) {
     return _Rng_Close(
       rng,
@@ -13026,10 +13005,8 @@ class CvNative {
   }
 
   late final _Rng_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<RNG>)>>(
-          'Rng_Close');
-  late final _Rng_Close =
-      _Rng_ClosePtr.asFunction<void Function(ffi.Pointer<RNG>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(RNGPtr)>>('Rng_Close');
+  late final _Rng_Close = _Rng_ClosePtr.asFunction<void Function(RNGPtr)>();
 
   CvStatus Rng_New(
     ffi.Pointer<RNG> rval,
@@ -13131,7 +13108,7 @@ class CvNative {
       CvStatus Function(RotatedRect, ffi.Pointer<VecPoint2f>)>();
 
   void SIFT_Close(
-    ffi.Pointer<SIFT> f,
+    SIFTPtr f,
   ) {
     return _SIFT_Close(
       f,
@@ -13139,10 +13116,8 @@ class CvNative {
   }
 
   late final _SIFT_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<SIFT>)>>(
-          'SIFT_Close');
-  late final _SIFT_Close =
-      _SIFT_ClosePtr.asFunction<void Function(ffi.Pointer<SIFT>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFTPtr)>>('SIFT_Close');
+  late final _SIFT_Close = _SIFT_ClosePtr.asFunction<void Function(SIFTPtr)>();
 
   CvStatus SIFT_Create(
     ffi.Pointer<SIFT> rval,
@@ -13347,19 +13322,18 @@ class CvNative {
           CvStatus Function(ffi.Pointer<SimpleBlobDetectorParams>)>();
 
   void SimpleBlobDetector_Close(
-    ffi.Pointer<SimpleBlobDetector> b,
+    SimpleBlobDetectorPtr b,
   ) {
     return _SimpleBlobDetector_Close(
       b,
     );
   }
 
-  late final _SimpleBlobDetector_ClosePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<SimpleBlobDetector>)>>(
-      'SimpleBlobDetector_Close');
+  late final _SimpleBlobDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>(
+          'SimpleBlobDetector_Close');
   late final _SimpleBlobDetector_Close = _SimpleBlobDetector_ClosePtr
-      .asFunction<void Function(ffi.Pointer<SimpleBlobDetector>)>();
+      .asFunction<void Function(SimpleBlobDetectorPtr)>();
 
   CvStatus SimpleBlobDetector_Create(
     ffi.Pointer<SimpleBlobDetector> rval,
@@ -13492,7 +13466,7 @@ class CvNative {
       _SqBoxFilterPtr.asFunction<CvStatus Function(Mat, Mat, int, Size)>();
 
   void Stitcher_Close(
-    ffi.Pointer<PtrStitcher> stitcher,
+    PtrStitcherPtr stitcher,
   ) {
     return _Stitcher_Close(
       stitcher,
@@ -13500,10 +13474,10 @@ class CvNative {
   }
 
   late final _Stitcher_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrStitcher>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>(
           'Stitcher_Close');
   late final _Stitcher_Close =
-      _Stitcher_ClosePtr.asFunction<void Function(ffi.Pointer<PtrStitcher>)>();
+      _Stitcher_ClosePtr.asFunction<void Function(PtrStitcherPtr)>();
 
   CvStatus Stitcher_Component(
     Stitcher self,
@@ -13920,7 +13894,7 @@ class CvNative {
       _StylizationPtr.asFunction<CvStatus Function(Mat, Mat, double, double)>();
 
   void Subdiv2D_Close(
-    ffi.Pointer<Subdiv2D> self,
+    Subdiv2DPtr self,
   ) {
     return _Subdiv2D_Close(
       self,
@@ -13928,10 +13902,10 @@ class CvNative {
   }
 
   late final _Subdiv2D_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>>(
           'Subdiv2D_Close');
   late final _Subdiv2D_Close =
-      _Subdiv2D_ClosePtr.asFunction<void Function(ffi.Pointer<Subdiv2D>)>();
+      _Subdiv2D_ClosePtr.asFunction<void Function(Subdiv2DPtr)>();
 
   CvStatus Subdiv2D_EdgeDst(
     Subdiv2D self,
@@ -14471,7 +14445,7 @@ class CvNative {
       CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, int)>();
 
   void TrackerMIL_Close(
-    ffi.Pointer<TrackerMIL> self,
+    TrackerMILPtr self,
   ) {
     return _TrackerMIL_Close(
       self,
@@ -14479,10 +14453,10 @@ class CvNative {
   }
 
   late final _TrackerMIL_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(TrackerMILPtr)>>(
           'TrackerMIL_Close');
   late final _TrackerMIL_Close =
-      _TrackerMIL_ClosePtr.asFunction<void Function(ffi.Pointer<TrackerMIL>)>();
+      _TrackerMIL_ClosePtr.asFunction<void Function(TrackerMILPtr)>();
 
   CvStatus TrackerMIL_Create(
     ffi.Pointer<TrackerMIL> rval,
@@ -14623,7 +14597,7 @@ class CvNative {
       CvStatus Function(VecChar, int, ffi.Pointer<ffi.Char>)>();
 
   void VecChar_Close(
-    ffi.Pointer<VecChar> vec,
+    VecCharPtr vec,
   ) {
     return _VecChar_Close(
       vec,
@@ -14631,10 +14605,10 @@ class CvNative {
   }
 
   late final _VecChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecChar>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecCharPtr)>>(
           'VecChar_Close');
   late final _VecChar_Close =
-      _VecChar_ClosePtr.asFunction<void Function(ffi.Pointer<VecChar>)>();
+      _VecChar_ClosePtr.asFunction<void Function(VecCharPtr)>();
 
   CvStatus VecChar_Data(
     VecChar vec,
@@ -14774,7 +14748,7 @@ class CvNative {
       CvStatus Function(VecDMatch, int, ffi.Pointer<DMatch>)>();
 
   void VecDMatch_Close(
-    ffi.Pointer<VecDMatch> vec,
+    VecDMatchPtr vec,
   ) {
     return _VecDMatch_Close(
       vec,
@@ -14782,10 +14756,10 @@ class CvNative {
   }
 
   late final _VecDMatch_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecDMatch>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecDMatchPtr)>>(
           'VecDMatch_Close');
   late final _VecDMatch_Close =
-      _VecDMatch_ClosePtr.asFunction<void Function(ffi.Pointer<VecDMatch>)>();
+      _VecDMatch_ClosePtr.asFunction<void Function(VecDMatchPtr)>();
 
   CvStatus VecDMatch_New(
     ffi.Pointer<VecDMatch> rval,
@@ -14892,7 +14866,7 @@ class CvNative {
       CvStatus Function(VecDouble, int, ffi.Pointer<ffi.Double>)>();
 
   void VecDouble_Close(
-    ffi.Pointer<VecDouble> vec,
+    VecDoublePtr vec,
   ) {
     return _VecDouble_Close(
       vec,
@@ -14900,10 +14874,10 @@ class CvNative {
   }
 
   late final _VecDouble_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecDouble>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecDoublePtr)>>(
           'VecDouble_Close');
   late final _VecDouble_Close =
-      _VecDouble_ClosePtr.asFunction<void Function(ffi.Pointer<VecDouble>)>();
+      _VecDouble_ClosePtr.asFunction<void Function(VecDoublePtr)>();
 
   CvStatus VecDouble_Data(
     VecDouble vec,
@@ -15027,7 +15001,7 @@ class CvNative {
       CvStatus Function(VecFloat, int, ffi.Pointer<ffi.Float>)>();
 
   void VecFloat_Close(
-    ffi.Pointer<VecFloat> vec,
+    VecFloatPtr vec,
   ) {
     return _VecFloat_Close(
       vec,
@@ -15035,10 +15009,10 @@ class CvNative {
   }
 
   late final _VecFloat_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecFloat>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecFloatPtr)>>(
           'VecFloat_Close');
   late final _VecFloat_Close =
-      _VecFloat_ClosePtr.asFunction<void Function(ffi.Pointer<VecFloat>)>();
+      _VecFloat_ClosePtr.asFunction<void Function(VecFloatPtr)>();
 
   CvStatus VecFloat_Data(
     VecFloat vec,
@@ -15178,7 +15152,7 @@ class CvNative {
       CvStatus Function(VecInt, int, ffi.Pointer<ffi.Int>)>();
 
   void VecInt_Close(
-    ffi.Pointer<VecInt> vec,
+    VecIntPtr vec,
   ) {
     return _VecInt_Close(
       vec,
@@ -15186,10 +15160,9 @@ class CvNative {
   }
 
   late final _VecInt_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecInt>)>>(
-          'VecInt_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecIntPtr)>>('VecInt_Close');
   late final _VecInt_Close =
-      _VecInt_ClosePtr.asFunction<void Function(ffi.Pointer<VecInt>)>();
+      _VecInt_ClosePtr.asFunction<void Function(VecIntPtr)>();
 
   CvStatus VecInt_Data(
     VecInt vec,
@@ -15310,7 +15283,7 @@ class CvNative {
       CvStatus Function(VecKeyPoint, int, ffi.Pointer<KeyPoint>)>();
 
   void VecKeyPoint_Close(
-    ffi.Pointer<VecKeyPoint> vec,
+    VecKeyPointPtr vec,
   ) {
     return _VecKeyPoint_Close(
       vec,
@@ -15318,10 +15291,10 @@ class CvNative {
   }
 
   late final _VecKeyPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecKeyPoint>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecKeyPointPtr)>>(
           'VecKeyPoint_Close');
-  late final _VecKeyPoint_Close = _VecKeyPoint_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VecKeyPoint>)>();
+  late final _VecKeyPoint_Close =
+      _VecKeyPoint_ClosePtr.asFunction<void Function(VecKeyPointPtr)>();
 
   CvStatus VecKeyPoint_New(
     ffi.Pointer<VecKeyPoint> rval,
@@ -15427,7 +15400,7 @@ class CvNative {
       CvStatus Function(VecMat, int, ffi.Pointer<Mat>)>();
 
   void VecMat_Close(
-    ffi.Pointer<VecMat> vec,
+    VecMatPtr vec,
   ) {
     return _VecMat_Close(
       vec,
@@ -15435,10 +15408,9 @@ class CvNative {
   }
 
   late final _VecMat_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecMat>)>>(
-          'VecMat_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecMatPtr)>>('VecMat_Close');
   late final _VecMat_Close =
-      _VecMat_ClosePtr.asFunction<void Function(ffi.Pointer<VecMat>)>();
+      _VecMat_ClosePtr.asFunction<void Function(VecMatPtr)>();
 
   CvStatus VecMat_New(
     ffi.Pointer<VecMat> rval,
@@ -15541,7 +15513,7 @@ class CvNative {
       CvStatus Function(VecPoint2f, int, ffi.Pointer<Point2f>)>();
 
   void VecPoint2f_Close(
-    ffi.Pointer<VecPoint2f> vec,
+    VecPoint2fPtr vec,
   ) {
     return _VecPoint2f_Close(
       vec,
@@ -15549,10 +15521,10 @@ class CvNative {
   }
 
   late final _VecPoint2f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint2f>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecPoint2fPtr)>>(
           'VecPoint2f_Close');
   late final _VecPoint2f_Close =
-      _VecPoint2f_ClosePtr.asFunction<void Function(ffi.Pointer<VecPoint2f>)>();
+      _VecPoint2f_ClosePtr.asFunction<void Function(VecPoint2fPtr)>();
 
   CvStatus VecPoint2f_New(
     ffi.Pointer<VecPoint2f> rval,
@@ -15675,7 +15647,7 @@ class CvNative {
       CvStatus Function(VecPoint3f, int, ffi.Pointer<Point3f>)>();
 
   void VecPoint3f_Close(
-    ffi.Pointer<VecPoint3f> vec,
+    VecPoint3fPtr vec,
   ) {
     return _VecPoint3f_Close(
       vec,
@@ -15683,10 +15655,10 @@ class CvNative {
   }
 
   late final _VecPoint3f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint3f>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecPoint3fPtr)>>(
           'VecPoint3f_Close');
   late final _VecPoint3f_Close =
-      _VecPoint3f_ClosePtr.asFunction<void Function(ffi.Pointer<VecPoint3f>)>();
+      _VecPoint3f_ClosePtr.asFunction<void Function(VecPoint3fPtr)>();
 
   CvStatus VecPoint3f_New(
     ffi.Pointer<VecPoint3f> rval,
@@ -15809,7 +15781,7 @@ class CvNative {
       CvStatus Function(VecPoint, int, ffi.Pointer<Point>)>();
 
   void VecPoint_Close(
-    ffi.Pointer<VecPoint> vec,
+    VecPointPtr vec,
   ) {
     return _VecPoint_Close(
       vec,
@@ -15817,10 +15789,10 @@ class CvNative {
   }
 
   late final _VecPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecPointPtr)>>(
           'VecPoint_Close');
   late final _VecPoint_Close =
-      _VecPoint_ClosePtr.asFunction<void Function(ffi.Pointer<VecPoint>)>();
+      _VecPoint_ClosePtr.asFunction<void Function(VecPointPtr)>();
 
   CvStatus VecPoint_New(
     ffi.Pointer<VecPoint> rval,
@@ -15941,7 +15913,7 @@ class CvNative {
       CvStatus Function(VecRect, int, ffi.Pointer<Rect>)>();
 
   void VecRect_Close(
-    ffi.Pointer<VecRect> vec,
+    VecRectPtr vec,
   ) {
     return _VecRect_Close(
       vec,
@@ -15949,10 +15921,10 @@ class CvNative {
   }
 
   late final _VecRect_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecRect>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecRectPtr)>>(
           'VecRect_Close');
   late final _VecRect_Close =
-      _VecRect_ClosePtr.asFunction<void Function(ffi.Pointer<VecRect>)>();
+      _VecRect_ClosePtr.asFunction<void Function(VecRectPtr)>();
 
   CvStatus VecRect_New(
     ffi.Pointer<VecRect> rval,
@@ -16074,7 +16046,7 @@ class CvNative {
       CvStatus Function(VecUChar, int, ffi.Pointer<uchar>)>();
 
   void VecUChar_Close(
-    ffi.Pointer<VecUChar> vec,
+    VecUCharPtr vec,
   ) {
     return _VecUChar_Close(
       vec,
@@ -16082,10 +16054,10 @@ class CvNative {
   }
 
   late final _VecUChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecUChar>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecUCharPtr)>>(
           'VecUChar_Close');
   late final _VecUChar_Close =
-      _VecUChar_ClosePtr.asFunction<void Function(ffi.Pointer<VecUChar>)>();
+      _VecUChar_ClosePtr.asFunction<void Function(VecUCharPtr)>();
 
   CvStatus VecUChar_Data(
     VecUChar vec,
@@ -16248,7 +16220,7 @@ class CvNative {
           ffi.Pointer<ffi.Int>)>();
 
   void VecVecChar_Close(
-    ffi.Pointer<VecVecChar> vec,
+    VecVecCharPtr vec,
   ) {
     return _VecVecChar_Close(
       vec,
@@ -16256,10 +16228,10 @@ class CvNative {
   }
 
   late final _VecVecChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecChar>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecVecCharPtr)>>(
           'VecVecChar_Close');
   late final _VecVecChar_Close =
-      _VecVecChar_ClosePtr.asFunction<void Function(ffi.Pointer<VecVecChar>)>();
+      _VecVecChar_ClosePtr.asFunction<void Function(VecVecCharPtr)>();
 
   CvStatus VecVecChar_New(
     ffi.Pointer<VecVecChar> rval,
@@ -16345,7 +16317,7 @@ class CvNative {
       CvStatus Function(VecVecDMatch, int, ffi.Pointer<VecDMatch>)>();
 
   void VecVecDMatch_Close(
-    ffi.Pointer<VecVecDMatch> vec,
+    VecVecDMatchPtr vec,
   ) {
     return _VecVecDMatch_Close(
       vec,
@@ -16353,10 +16325,10 @@ class CvNative {
   }
 
   late final _VecVecDMatch_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecDMatch>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecVecDMatchPtr)>>(
           'VecVecDMatch_Close');
-  late final _VecVecDMatch_Close = _VecVecDMatch_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VecVecDMatch>)>();
+  late final _VecVecDMatch_Close =
+      _VecVecDMatch_ClosePtr.asFunction<void Function(VecVecDMatchPtr)>();
 
   CvStatus VecVecDMatch_Data(
     VecVecDMatch vec,
@@ -16480,18 +16452,18 @@ class CvNative {
       CvStatus Function(VecVecPoint2f, int, ffi.Pointer<VecPoint2f>)>();
 
   void VecVecPoint2f_Close(
-    ffi.Pointer<VecVecPoint2f> vec,
+    VecVecPoint2fPtr vec,
   ) {
     return _VecVecPoint2f_Close(
       vec,
     );
   }
 
-  late final _VecVecPoint2f_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint2f>)>>(
-      'VecVecPoint2f_Close');
-  late final _VecVecPoint2f_Close = _VecVecPoint2f_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VecVecPoint2f>)>();
+  late final _VecVecPoint2f_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecVecPoint2fPtr)>>(
+          'VecVecPoint2f_Close');
+  late final _VecVecPoint2f_Close =
+      _VecVecPoint2f_ClosePtr.asFunction<void Function(VecVecPoint2fPtr)>();
 
   CvStatus VecVecPoint2f_New(
     ffi.Pointer<VecVecPoint2f> rval,
@@ -16599,18 +16571,18 @@ class CvNative {
       CvStatus Function(VecVecPoint3f, int, ffi.Pointer<VecPoint3f>)>();
 
   void VecVecPoint3f_Close(
-    ffi.Pointer<VecVecPoint3f> vec,
+    VecVecPoint3fPtr vec,
   ) {
     return _VecVecPoint3f_Close(
       vec,
     );
   }
 
-  late final _VecVecPoint3f_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint3f>)>>(
-      'VecVecPoint3f_Close');
-  late final _VecVecPoint3f_Close = _VecVecPoint3f_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VecVecPoint3f>)>();
+  late final _VecVecPoint3f_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecVecPoint3fPtr)>>(
+          'VecVecPoint3f_Close');
+  late final _VecVecPoint3f_Close =
+      _VecVecPoint3f_ClosePtr.asFunction<void Function(VecVecPoint3fPtr)>();
 
   CvStatus VecVecPoint3f_New(
     ffi.Pointer<VecVecPoint3f> rval,
@@ -16718,7 +16690,7 @@ class CvNative {
       CvStatus Function(VecVecPoint, int, ffi.Pointer<VecPoint>)>();
 
   void VecVecPoint_Close(
-    ffi.Pointer<VecVecPoint> vec,
+    VecVecPointPtr vec,
   ) {
     return _VecVecPoint_Close(
       vec,
@@ -16726,10 +16698,10 @@ class CvNative {
   }
 
   late final _VecVecPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VecVecPointPtr)>>(
           'VecVecPoint_Close');
-  late final _VecVecPoint_Close = _VecVecPoint_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VecVecPoint>)>();
+  late final _VecVecPoint_Close =
+      _VecVecPoint_ClosePtr.asFunction<void Function(VecVecPointPtr)>();
 
   CvStatus VecVecPoint_New(
     ffi.Pointer<VecVecPoint> rval,
@@ -16801,7 +16773,7 @@ class CvNative {
       CvStatus Function(VecVecPoint, ffi.Pointer<ffi.Int>)>();
 
   void VideoCapture_Close(
-    ffi.Pointer<VideoCapture> self,
+    VideoCapturePtr self,
   ) {
     return _VideoCapture_Close(
       self,
@@ -16809,10 +16781,10 @@ class CvNative {
   }
 
   late final _VideoCapture_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoCapture>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>>(
           'VideoCapture_Close');
-  late final _VideoCapture_Close = _VideoCapture_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VideoCapture>)>();
+  late final _VideoCapture_Close =
+      _VideoCapture_ClosePtr.asFunction<void Function(VideoCapturePtr)>();
 
   CvStatus VideoCapture_Get(
     VideoCapture self,
@@ -17057,7 +17029,7 @@ class CvNative {
       CvStatus Function(VideoCapture, int, double)>();
 
   void VideoWriter_Close(
-    ffi.Pointer<VideoWriter> self,
+    VideoWriterPtr self,
   ) {
     return _VideoWriter_Close(
       self,
@@ -17065,10 +17037,10 @@ class CvNative {
   }
 
   late final _VideoWriter_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoWriter>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>>(
           'VideoWriter_Close');
-  late final _VideoWriter_Close = _VideoWriter_ClosePtr.asFunction<
-      void Function(ffi.Pointer<VideoWriter>)>();
+  late final _VideoWriter_Close =
+      _VideoWriter_ClosePtr.asFunction<void Function(VideoWriterPtr)>();
 
   CvStatus VideoWriter_Fourcc(
     int c1,
@@ -17189,18 +17161,18 @@ class CvNative {
       _VideoWriter_WritePtr.asFunction<CvStatus Function(VideoWriter, Mat)>();
 
   void WBDetector_Close(
-    ffi.Pointer<PtrWBDetector> self,
+    PtrWBDetectorPtr self,
   ) {
     return _WBDetector_Close(
       self,
     );
   }
 
-  late final _WBDetector_ClosePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrWBDetector>)>>(
-      'WBDetector_Close');
-  late final _WBDetector_Close = _WBDetector_ClosePtr.asFunction<
-      void Function(ffi.Pointer<PtrWBDetector>)>();
+  late final _WBDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>(
+          'WBDetector_Close');
+  late final _WBDetector_Close =
+      _WBDetector_ClosePtr.asFunction<void Function(PtrWBDetectorPtr)>();
 
   CvStatus WBDetector_Create(
     ffi.Pointer<PtrWBDetector> rval,
@@ -17405,7 +17377,7 @@ class CvNative {
       _WatershedPtr.asFunction<CvStatus Function(Mat, Mat)>();
 
   void WeChatQRCode_Close(
-    ffi.Pointer<WeChatQRCode> self,
+    WeChatQRCodePtr self,
   ) {
     return _WeChatQRCode_Close(
       self,
@@ -17413,10 +17385,10 @@ class CvNative {
   }
 
   late final _WeChatQRCode_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>(
           'WeChatQRCode_Close');
-  late final _WeChatQRCode_Close = _WeChatQRCode_ClosePtr.asFunction<
-      void Function(ffi.Pointer<WeChatQRCode>)>();
+  late final _WeChatQRCode_Close =
+      _WeChatQRCode_ClosePtr.asFunction<void Function(WeChatQRCodePtr)>();
 
   CvStatus WeChatQRCode_DetectAndDecode(
     ffi.Pointer<WeChatQRCode> self,
@@ -18040,7 +18012,7 @@ class CvNative {
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
 
   CvStatus ximgproc_EdgeBoxes_Close(
-    ffi.Pointer<PtrEdgeBoxes> self,
+    PtrEdgeBoxesPtr self,
   ) {
     return _ximgproc_EdgeBoxes_Close(
       self,
@@ -18048,10 +18020,10 @@ class CvNative {
   }
 
   late final _ximgproc_EdgeBoxes_ClosePtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>>(
+      _lookup<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxesPtr)>>(
           'ximgproc_EdgeBoxes_Close');
   late final _ximgproc_EdgeBoxes_Close = _ximgproc_EdgeBoxes_ClosePtr
-      .asFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>();
+      .asFunction<CvStatus Function(PtrEdgeBoxesPtr)>();
 
   CvStatus ximgproc_EdgeBoxes_Create(
     double alpha,
@@ -18585,20 +18557,19 @@ class CvNative {
           .asFunction<CvStatus Function(PtrEdgeBoxes, double)>();
 
   void ximgproc_GraphSegmentation_Close(
-    ffi.Pointer<PtrGraphSegmentation> self,
+    PtrGraphSegmentationPtr self,
   ) {
     return _ximgproc_GraphSegmentation_Close(
       self,
     );
   }
 
-  late final _ximgproc_GraphSegmentation_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<PtrGraphSegmentation>)>>(
-      'ximgproc_GraphSegmentation_Close');
+  late final _ximgproc_GraphSegmentation_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrGraphSegmentationPtr)>>(
+          'ximgproc_GraphSegmentation_Close');
   late final _ximgproc_GraphSegmentation_Close =
       _ximgproc_GraphSegmentation_ClosePtr
-          .asFunction<void Function(ffi.Pointer<PtrGraphSegmentation>)>();
+          .asFunction<void Function(PtrGraphSegmentationPtr)>();
 
   CvStatus ximgproc_GraphSegmentation_Create(
     double sigma,
@@ -18753,11 +18724,11 @@ class CvNative {
 
   CvStatus ximgproc_PeiLinNormalization(
     Mat I,
-    ffi.Pointer<Mat> rval,
+    ffi.Pointer<Mat> dst,
   ) {
     return _ximgproc_PeiLinNormalization(
       I,
-      rval,
+      dst,
     );
   }
 
@@ -18783,20 +18754,19 @@ class CvNative {
           .asFunction<CvStatus Function(PtrRFFeatureGetter)>();
 
   void ximgproc_RFFeatureGetter_Close(
-    ffi.Pointer<PtrRFFeatureGetter> self,
+    PtrRFFeatureGetterPtr self,
   ) {
     return _ximgproc_RFFeatureGetter_Close(
       self,
     );
   }
 
-  late final _ximgproc_RFFeatureGetter_ClosePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrRFFeatureGetter>)>>(
-      'ximgproc_RFFeatureGetter_Close');
+  late final _ximgproc_RFFeatureGetter_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrRFFeatureGetterPtr)>>(
+          'ximgproc_RFFeatureGetter_Close');
   late final _ximgproc_RFFeatureGetter_Close =
       _ximgproc_RFFeatureGetter_ClosePtr
-          .asFunction<void Function(ffi.Pointer<PtrRFFeatureGetter>)>();
+          .asFunction<void Function(PtrRFFeatureGetterPtr)>();
 
   CvStatus ximgproc_RFFeatureGetter_Create(
     ffi.Pointer<PtrRFFeatureGetter> rval,
@@ -18871,7 +18841,7 @@ class CvNative {
               PtrRFFeatureGetter, Mat, Mat, int, int, int, int, int)>();
 
   void ximgproc_StructuredEdgeDetection_Close(
-    ffi.Pointer<PtrStructuredEdgeDetection> self,
+    PtrStructuredEdgeDetectionPtr self,
   ) {
     return _ximgproc_StructuredEdgeDetection_Close(
       self,
@@ -18879,12 +18849,11 @@ class CvNative {
   }
 
   late final _ximgproc_StructuredEdgeDetection_ClosePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>>(
+          ffi.NativeFunction<ffi.Void Function(PtrStructuredEdgeDetectionPtr)>>(
       'ximgproc_StructuredEdgeDetection_Close');
   late final _ximgproc_StructuredEdgeDetection_Close =
       _ximgproc_StructuredEdgeDetection_ClosePtr
-          .asFunction<void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>();
+          .asFunction<void Function(PtrStructuredEdgeDetectionPtr)>();
 
   CvStatus ximgproc_StructuredEdgeDetection_Create(
     ffi.Pointer<ffi.Char> model,
@@ -19055,8 +19024,8 @@ class CvNative {
       CvStatus Function(Mat, ffi.Pointer<Mat>, double, double, double)>();
 
   CvStatus ximgproc_niBlackThreshold(
-    Mat _src,
-    ffi.Pointer<Mat> _dst,
+    Mat src,
+    ffi.Pointer<Mat> dst,
     double maxValue,
     int type,
     int blockSize,
@@ -19065,8 +19034,8 @@ class CvNative {
     double r,
   ) {
     return _ximgproc_niBlackThreshold(
-      _src,
-      _dst,
+      src,
+      dst,
       maxValue,
       type,
       blockSize,
@@ -19110,152 +19079,132 @@ class CvNative {
 class _SymbolAddresses {
   final CvNative _library;
   _SymbolAddresses(this._library);
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AKAZE>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AKAZEPtr)>>
       get AKAZE_Close => _library._AKAZE_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<AgastFeatureDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AgastFeatureDetectorPtr)>>
       get AgastFeatureDetector_Close => _library._AgastFeatureDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AlignMTB>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>
       get AlignMTB_Close => _library._AlignMTB_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<ArucoDetectorParameters>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParametersPtr)>>
       get ArucoDetectorParameters_Close =>
           _library._ArucoDetectorParameters_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ArucoDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>
       get ArucoDetector_Close => _library._ArucoDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ArucoDictionary>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>
       get ArucoDictionary_Close => _library._ArucoDictionary_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<AsyncArray>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AsyncArrayPtr)>>
       get AsyncArray_Close => _library._AsyncArray_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BFMatcher>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BFMatcherPtr)>>
       get BFMatcher_Close => _library._BFMatcher_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BRISK>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BRISKPtr)>>
       get BRISK_Close => _library._BRISK_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<BackgroundSubtractorKNN>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorKNNPtr)>>
       get BackgroundSubtractorKNN_Close =>
           _library._BackgroundSubtractorKNN_ClosePtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<BackgroundSubtractorMOG2>)>>
+          ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorMOG2Ptr)>>
       get BackgroundSubtractorMOG2_Close =>
           _library._BackgroundSubtractorMOG2_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<BlockMeanHash>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>
       get BlockMeanHash_Close => _library._BlockMeanHash_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<CLAHE>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CLAHEPtr)>>
       get CLAHE_Close => _library._CLAHE_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<CascadeClassifier>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CascadeClassifierPtr)>>
       get CascadeClassifier_Close => _library._CascadeClassifier_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<FastFeatureDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FastFeatureDetectorPtr)>>
       get FastFeatureDetector_Close => _library._FastFeatureDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<FlannBasedMatcher>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FlannBasedMatcherPtr)>>
       get FlannBasedMatcher_Close => _library._FlannBasedMatcher_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<GFTTDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(GFTTDetectorPtr)>>
       get GFTTDetector_Close => _library._GFTTDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<HOGDescriptor>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(HOGDescriptorPtr)>>
       get HOGDescriptor_Close => _library._HOGDescriptor_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<KAZE>)>>
-      get KAZE_Close => _library._KAZE_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<KalmanFilter>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KAZEPtr)>> get KAZE_Close =>
+      _library._KAZE_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KalmanFilterPtr)>>
       get KalmanFilter_Close => _library._KalmanFilter_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Layer>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>
       get Layer_Close => _library._Layer_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<MSER>)>>
-      get MSER_Close => _library._MSER_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Mat>)>>
-      get Mat_Close => _library._Mat_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MSERPtr)>> get MSER_Close =>
+      _library._MSER_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MatPtr)>> get Mat_Close =>
+      _library._Mat_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
       get Mat_CloseVoid => _library._Mat_CloseVoidPtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<MergeMertens>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>
       get MergeMertens_Close => _library._MergeMertens_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Net>)>>
-      get Net_Close => _library._Net_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ORB>)>>
-      get ORB_Close => _library._ORB_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<QRCodeDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(NetPtr)>> get Net_Close =>
+      _library._Net_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ORBPtr)>> get ORB_Close =>
+      _library._ORB_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QRCodeDetectorPtr)>>
       get QRCodeDetector_Close => _library._QRCodeDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<RNG>)>>
-      get Rng_Close => _library._Rng_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<SIFT>)>>
-      get SIFT_Close => _library._SIFT_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<SimpleBlobDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RNGPtr)>> get Rng_Close =>
+      _library._Rng_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SIFTPtr)>> get SIFT_Close =>
+      _library._SIFT_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get SimpleBlobDetector_Close => _library._SimpleBlobDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrStitcher>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Subdiv2D>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>>
       get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<TrackerMIL>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(TrackerMILPtr)>>
       get TrackerMIL_Close => _library._TrackerMIL_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecChar>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecCharPtr)>>
       get VecChar_Close => _library._VecChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecDMatch>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecDMatchPtr)>>
       get VecDMatch_Close => _library._VecDMatch_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecDouble>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecDoublePtr)>>
       get VecDouble_Close => _library._VecDouble_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecFloat>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecFloatPtr)>>
       get VecFloat_Close => _library._VecFloat_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecInt>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecIntPtr)>>
       get VecInt_Close => _library._VecInt_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecKeyPoint>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecKeyPointPtr)>>
       get VecKeyPoint_Close => _library._VecKeyPoint_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecMat>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecMatPtr)>>
       get VecMat_Close => _library._VecMat_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint2f>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecPoint2fPtr)>>
       get VecPoint2f_Close => _library._VecPoint2f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint3f>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecPoint3fPtr)>>
       get VecPoint3f_Close => _library._VecPoint3f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecPointPtr)>>
       get VecPoint_Close => _library._VecPoint_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecRect>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecRectPtr)>>
       get VecRect_Close => _library._VecRect_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecUChar>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecUCharPtr)>>
       get VecUChar_Close => _library._VecUChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecChar>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecVecCharPtr)>>
       get VecVecChar_Close => _library._VecVecChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecDMatch>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecVecDMatchPtr)>>
       get VecVecDMatch_Close => _library._VecVecDMatch_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint2f>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecVecPoint2fPtr)>>
       get VecVecPoint2f_Close => _library._VecVecPoint2f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint3f>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecVecPoint3fPtr)>>
       get VecVecPoint3f_Close => _library._VecVecPoint3f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecVecPoint>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VecVecPointPtr)>>
       get VecVecPoint_Close => _library._VecVecPoint_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoCapture>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>>
       get VideoCapture_Close => _library._VideoCapture_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VideoWriter>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>>
       get VideoWriter_Close => _library._VideoWriter_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<PtrWBDetector>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>
       get WBDetector_Close => _library._WBDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>
       get WeChatQRCode_Close => _library._WeChatQRCode_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>
       get Window_Close => _library._Window_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<CvStatus Function(ffi.Pointer<PtrEdgeBoxes>)>>
+  ffi.Pointer<ffi.NativeFunction<CvStatus Function(PtrEdgeBoxesPtr)>>
       get ximgproc_EdgeBoxes_Close => _library._ximgproc_EdgeBoxes_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrGraphSegmentation>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrGraphSegmentationPtr)>>
       get ximgproc_GraphSegmentation_Close =>
           _library._ximgproc_GraphSegmentation_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<PtrRFFeatureGetter>)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrRFFeatureGetterPtr)>>
       get ximgproc_RFFeatureGetter_Close =>
           _library._ximgproc_RFFeatureGetter_ClosePtr;
   ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<PtrStructuredEdgeDetection>)>>
+          ffi.NativeFunction<ffi.Void Function(PtrStructuredEdgeDetectionPtr)>>
       get ximgproc_StructuredEdgeDetection_Close =>
           _library._ximgproc_StructuredEdgeDetection_ClosePtr;
 }
@@ -19445,8 +19394,6 @@ final class InputOutputArray extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-typedef InputOutputArrayPtr = ffi.Pointer<InputOutputArray>;
-
 final class KAZE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -19487,13 +19434,6 @@ final class Layer extends ffi.Struct {
 }
 
 typedef LayerPtr = ffi.Pointer<Layer>;
-
-abstract class LocalBinarizationMethods {
-  static const int BINARIZATION_NIBLACK = 0;
-  static const int BINARIZATION_SAUVOLA = 1;
-  static const int BINARIZATION_WOLF = 2;
-  static const int BINARIZATION_NICK = 3;
-}
 
 final class MSER extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -19585,440 +19525,6 @@ final class Moment extends ffi.Struct {
 
   @ffi.Double()
   external double nu03;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AKAZEPtr extends ffi.Struct {
-  external ffi.Pointer<AKAZEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AgastFeatureDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<AgastFeatureDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AlignMTBPtr extends ffi.Struct {
-  external ffi.Pointer<AlignMTBPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDetectorParametersPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDetectorParametersPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDictionaryPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDictionaryPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AsyncArrayPtr extends ffi.Struct {
-  external ffi.Pointer<AsyncArrayPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BFMatcherPtr extends ffi.Struct {
-  external ffi.Pointer<BFMatcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BRISKPtr extends ffi.Struct {
-  external ffi.Pointer<BRISKPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BackgroundSubtractorKNNPtr extends ffi.Struct {
-  external ffi.Pointer<BackgroundSubtractorKNNPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BackgroundSubtractorMOG2Ptr extends ffi.Struct {
-  external ffi.Pointer<BackgroundSubtractorMOG2Ptr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BlockMeanHashPtr extends ffi.Struct {
-  external ffi.Pointer<BlockMeanHashPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_CLAHEPtr extends ffi.Struct {
-  external ffi.Pointer<CLAHEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_CascadeClassifierPtr extends ffi.Struct {
-  external ffi.Pointer<CascadeClassifierPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_FastFeatureDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<FastFeatureDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_FlannBasedMatcherPtr extends ffi.Struct {
-  external ffi.Pointer<FlannBasedMatcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_GFTTDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<GFTTDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_HOGDescriptorPtr extends ffi.Struct {
-  external ffi.Pointer<HOGDescriptorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_InputOutputArrayPtr extends ffi.Struct {
-  external ffi.Pointer<InputOutputArrayPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_KAZEPtr extends ffi.Struct {
-  external ffi.Pointer<KAZEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_KalmanFilterPtr extends ffi.Struct {
-  external ffi.Pointer<KalmanFilterPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_LayerPtr extends ffi.Struct {
-  external ffi.Pointer<LayerPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MSERPtr extends ffi.Struct {
-  external ffi.Pointer<MSERPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MatPtr extends ffi.Struct {
-  external ffi.Pointer<MatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MergeMertensPtr extends ffi.Struct {
-  external ffi.Pointer<MergeMertensPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_NetPtr extends ffi.Struct {
-  external ffi.Pointer<NetPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ORBPtr extends ffi.Struct {
-  external ffi.Pointer<ORBPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrEdgeBoxesPtr extends ffi.Struct {
-  external ffi.Pointer<PtrEdgeBoxesPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrGraphSegmentationPtr extends ffi.Struct {
-  external ffi.Pointer<PtrGraphSegmentationPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrRFFeatureGetterPtr extends ffi.Struct {
-  external ffi.Pointer<PtrRFFeatureGetterPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrStitcherPtr extends ffi.Struct {
-  external ffi.Pointer<PtrStitcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrStructuredEdgeDetectionPtr extends ffi.Struct {
-  external ffi.Pointer<PtrStructuredEdgeDetectionPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrWBDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<PtrWBDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_QRCodeDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<QRCodeDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_RNGPtr extends ffi.Struct {
-  external ffi.Pointer<RNGPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_SIFTPtr extends ffi.Struct {
-  external ffi.Pointer<SIFTPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_SimpleBlobDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<SimpleBlobDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_StitcherPtr extends ffi.Struct {
-  external ffi.Pointer<StitcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_Subdiv2DPtr extends ffi.Struct {
-  external ffi.Pointer<Subdiv2DPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerGOTURNPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerGOTURNPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerMILPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerMILPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecDMatchPtr extends ffi.Struct {
-  external ffi.Pointer<VecDMatchPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecDoublePtr extends ffi.Struct {
-  external ffi.Pointer<VecDoublePtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecFloatPtr extends ffi.Struct {
-  external ffi.Pointer<VecFloatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecIntPtr extends ffi.Struct {
-  external ffi.Pointer<VecIntPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecKeyPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecKeyPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecMatPtr extends ffi.Struct {
-  external ffi.Pointer<VecMatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPoint2fPtr extends ffi.Struct {
-  external ffi.Pointer<VecPoint2fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPoint3fPtr extends ffi.Struct {
-  external ffi.Pointer<VecPoint3fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecRectPtr extends ffi.Struct {
-  external ffi.Pointer<VecRectPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecUCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecUCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecDMatchPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecDMatchPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPoint2fPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPoint2fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPoint3fPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPoint3fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VideoCapturePtr extends ffi.Struct {
-  external ffi.Pointer<VideoCapturePtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VideoWriterPtr extends ffi.Struct {
-  external ffi.Pointer<VideoWriterPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_WeChatQRCodePtr extends ffi.Struct {
-  external ffi.Pointer<WeChatQRCodePtr> p;
 }
 
 final class Net extends ffi.Struct {
@@ -20262,8 +19768,6 @@ final class Stitcher extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-typedef StitcherPtr = ffi.Pointer<Stitcher>;
-
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -20281,11 +19785,6 @@ final class TermCriteria extends ffi.Struct {
   external double epsilon;
 }
 
-abstract class ThinningTypes {
-  static const int THINNING_ZHANGSUEN = 0;
-  static const int THINNING_GUOHALL = 1;
-}
-
 final class Tracker extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -20294,14 +19793,11 @@ final class TrackerGOTURN extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-typedef TrackerGOTURNPtr = ffi.Pointer<TrackerGOTURN>;
-
 final class TrackerMIL extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
-typedef TrackerPtr = ffi.Pointer<Tracker>;
 
 final class Vec2b extends ffi.Struct {
   @uchar()

@@ -8,7 +8,7 @@ CvStatus WBDetector_Create(PtrWBDetector *rval)
   *rval = {new cv::Ptr<cv::xobjdetect::WBDetector>(cv::xobjdetect::WBDetector::create())};
   END_WRAP
 }
-void WBDetector_Close(PtrWBDetector *self)
+void WBDetector_Close(PtrWBDetectorPtr self)
 {
   self->ptr = nullptr;
   CVD_FREE(self);

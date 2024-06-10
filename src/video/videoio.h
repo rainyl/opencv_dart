@@ -24,14 +24,11 @@ CVD_TYPEDEF(void, VideoCapture)
 CVD_TYPEDEF(void, VideoWriter)
 #endif
 
-CVD_TYPEDEF_PTR(VideoCapture)
-CVD_TYPEDEF_PTR(VideoWriter)
-
 // VideoCapture
 CvStatus VideoCapture_New(VideoCapture *rval);
 CvStatus VideoCapture_NewFromFile(const char *filename, int apiPreference, VideoCapture *rval);
 CvStatus VideoCapture_NewFromIndex(int index, int apiPreference, VideoCapture *rval);
-void     VideoCapture_Close(VideoCapture *self);
+void     VideoCapture_Close(VideoCapturePtr self);
 CvStatus VideoCapture_Open(VideoCapture self, const char *uri, bool *rval);
 CvStatus VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval);
 CvStatus VideoCapture_OpenDevice(VideoCapture self, int device, bool *rval);
@@ -45,7 +42,7 @@ CvStatus VideoCapture_Grab(VideoCapture self, int skip);
 
 // VideoWriter
 CvStatus VideoWriter_New(VideoWriter *rval);
-void     VideoWriter_Close(VideoWriter *self);
+void     VideoWriter_Close(VideoWriterPtr self);
 CvStatus VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,
                           int height, bool isColor);
 CvStatus VideoWriter_IsOpened(VideoWriter self, int *rval);

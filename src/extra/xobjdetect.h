@@ -18,10 +18,8 @@ CVD_TYPEDEF(cv::Ptr<cv::xobjdetect::WBDetector>, PtrWBDetector)
 CVD_TYPEDEF(void *, PtrWBDetector)
 #endif
 
-CVD_TYPEDEF_PTR(PtrWBDetector)
-
 CvStatus WBDetector_Create(PtrWBDetector *rval);
-void     WBDetector_Close(PtrWBDetector *self);
+void     WBDetector_Close(PtrWBDetectorPtr self);
 CvStatus WBDetector_Detect(PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox,
                            CVD_OUT VecDouble *confidences);
 CvStatus WBDetector_Train(PtrWBDetector *self, char *pos_samples, char *neg_imgs);
