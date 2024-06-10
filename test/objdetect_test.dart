@@ -1,3 +1,4 @@
+import 'package:opencv_dart/src/core/mat_type.dart';
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
@@ -12,11 +13,16 @@ cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
       faces.at<double>(row, 3).toInt(),
     );
     final points = [
-      cv.Point(faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
-      cv.Point(faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
-      cv.Point(faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
-      cv.Point(faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
-      cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
+      cv.Point(
+          faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
+      cv.Point(
+          faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
+      cv.Point(
+          faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
+      cv.Point(
+          faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
+      cv.Point(
+          faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
     ];
     cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
     for (var p in points) {
@@ -38,7 +44,8 @@ void main() async {
 
     classifier.dispose();
 
-    final cls = cv.CascadeClassifier.fromFile("test/data/haarcascade_frontalface_default.xml");
+    final cls = cv.CascadeClassifier.fromFile(
+        "test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
 
     {
@@ -48,7 +55,8 @@ void main() async {
     }
 
     {
-      final (objects, nums, weights) = cls.detectMultiScale3(img, outputRejectLevels: true);
+      final (objects, nums, weights) =
+          cls.detectMultiScale3(img, outputRejectLevels: true);
       expect(objects.length, 1);
       expect(nums.length, 1);
       expect(weights.length, 1);
@@ -185,7 +193,8 @@ void main() async {
     expect(res2, equals(res3));
     expect(res3_1, equals(res3));
 
-    final img2 = cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
+    final img2 =
+        cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
     expect(img2.isEmpty, false);
 
     final (res4, multiBox) = detector.detectMulti(img2);
@@ -219,5 +228,47 @@ void main() async {
     visualizeFaceDetect(img, face);
 
     // cv.imwrite("AAA.png", img);
+  });
+
+  test('FaceRecognizerSF', () {
+    const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
+    final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
+
+    final img = cv.imread("test/images/face.jpg");
+    expect(img.isEmpty, false);
+
+    // Assume face detection already done and we have faceBox (a Mat object)
+    final faceBox =
+        cv.Mat.zeros(1, 4, MatType.CV_32SC1); // Mock data for testing
+    faceBox.set(0, 0, 50); // x
+    faceBox.at<int>(0, 1, 50); // y
+    faceBox.at<int>(0, 2, 100); // width
+    faceBox.at<int>(0, 3, 100); // height
+
+    // Test alignCrop
+    final alignedFace = recognizer.alignCrop(img, faceBox);
+    expect(alignedFace.isEmpty, false);
+
+    // Test feature extraction
+    final faceFeature = recognizer.feature(alignedFace);
+    expect(faceFeature.isEmpty, false);
+
+    // Test matching features
+    final img2 = cv.imread("test/images/lenna.png");
+    expect(img2.isEmpty, false);
+
+    final alignedFace2 = recognizer.alignCrop(img2, faceBox);
+    final faceFeature2 = recognizer.feature(alignedFace2);
+
+    final matchScore = recognizer.match(
+        faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    expect(matchScore, greaterThanOrEqualTo(0));
+
+    // Clean up
+    recognizer.dispose();
+    alignedFace.dispose();
+    faceFeature.dispose();
+    alignedFace2.dispose();
+    faceFeature2.dispose();
   });
 }
