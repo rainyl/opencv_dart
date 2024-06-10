@@ -1,26 +1,34 @@
 # Define the platform and architecture
-OPENCV_DART_ARCH ?= arm64  # Default architecture is arm64 if not specified
-VALID_ARCHS := x64 arm64
+PLATFORM := $(shell uname)
 
-# Dart command
-DART_CMD := dart run opencv_dart:setup
-
-# Function to check if a value is in a list
-check_in_list = $(filter $(1),$(2))
-
-# Get the parent directory of the current working directory
-PARENT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))..
-SETUP_CMD := cd $(PARENT_DIR) && $(DART_CMD)
+# Get the parent directory of the current makefile
+WORK_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+VERSION := $(shell cat $(WORK_DIR)/../binary.version)
+LIB_NAME := "libopencv_dart-ios-os64.tar.gz"
+CVD_LIB_URL := "https://github.com/rainyl/opencv_dart/releases/download/v${VERSION}/$(LIB_NAME)"
 
 .PHONY: setup
 
+ifdef OPENCV_DART_DISABLE_AUTO_BUILD
 setup:
-	@echo "Auto-selected architecture: $(OPENCV_DART_ARCH)"
-	@echo "You can override this by setting the OPENCV_DART_ARCH environment variable. Valid options: x64, arm64"
-ifeq ($(call check_in_list,$(OPENCV_DART_ARCH),$(VALID_ARCHS)),)
-	@echo "Unsupported architecture: $(OPENCV_DART_ARCH). Valid options are: x64, arm64"
-	@exit 1
+	@echo "OPENCV_DART_DISABLE_AUTO_BUILD detected, skipping setup..."
 else
-	@echo "Running setup with architecture: $(OPENCV_DART_ARCH)"
-	@$(SETUP_CMD) ios --arch $(OPENCV_DART_ARCH)
+setup:
+ifeq ($(PLATFORM),Darwin)
+	@echo "Detected macOS platform"
+ifeq ($(shell test -s $(WORK_DIR)/opencv_dart.xcframework/Info.plist && echo true),true)
+	@echo "Found $(WORK_DIR)/opencv_dart.xcframework/Info.plist, skipping..."
+else
+ifeq ($(shell test -s $(WORK_DIR)/$(LIB_NAME) && echo true),true)
+	@echo "Found $(WORK_DIR)/$(LIB_NAME), extracting..."
+	@cd $(WORK_DIR) && tar -xzf $(LIB_NAME)
+else
+	@echo "Running setup for iOS with architecture: $(OPENCV_DART_ARCH)"
+	@cd $(WORK_DIR) && wget -O $(LIB_NAME) $(CVD_LIB_URL) && tar -xzf $(LIB_NAME)
+endif
+endif
+else
+	@echo "This setup only runs on macOS"
+	@exit 1
+endif
 endif

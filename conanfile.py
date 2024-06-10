@@ -1,13 +1,13 @@
 import os
 from conan import ConanFile
-from conan.errors import ConanInvalidConfiguration, ConanException
-from conan.tools.cmake import cmake_layout, CMake, CMakeToolchain, CMakeDeps
+from conan.errors import ConanInvalidConfiguration
+from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
 import conan.tools.files as cfiles
 import tarfile
 from pathlib import Path
 import yaml
 
-OPENCV_VERSION = "4.9.0+2"
+OPENCV_VERSION = "4.10.0+2"
 OPENCV_FILES_URL = (
     f"https://github.com/rainyl/opencv.full/releases/download/{OPENCV_VERSION}"
 )
@@ -45,12 +45,16 @@ class OcvDartDesktop(ConanFile):
         "output_dir": ["ANY"],
         "opencv_overwrite": [True, False],
         "opencv_dir": ["ANY"],
+        "publish": [True, False],
+        "post_build": [True, False],
     }
     default_options = {
         "package_root": ".",
         "output_dir": "build",
         "opencv_overwrite": False,
         "opencv_dir": "",
+        "publish": True,
+        "post_build": True,
     }
 
     opencv_full: Path
@@ -66,16 +70,22 @@ class OcvDartDesktop(ConanFile):
         out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
         if not os.path.exists(out_dir):
             Path(out_dir).mkdir(parents=True)
-        p0 = str(self.options.get_safe("opencv_dir", "")) or os.environ.get("OpenCV_DIR", "")
+        p0 = str(self.options.get_safe("opencv_dir", "")) or os.environ.get(
+            "OpenCV_DIR", ""
+        )
         if p0:
-            assert os.path.exists(p0), f"explicitly configured opencv_dir/OpenCV_DIR {p0} not exists, check your command or environment variables"
+            assert os.path.exists(
+                p0
+            ), f"explicitly configured opencv_dir/OpenCV_DIR {p0} not exists, check your command or environment variables"
             self.opencv_full = Path(p0)
             return
         platform = str(self.settings.os).lower()
         arch = arch_map[platform][str(self.settings.arch)]
         filename = f"libopencv-{platform}-{arch}.tar.gz"
         self.opencv_full = Path(out_dir) / "opencv" / filename.replace(".tar.gz", "")
-        if not self.opencv_full.exists() or self.options.get_safe("opencv_overwrite", False):
+        if not self.opencv_full.exists() or self.options.get_safe(
+            "opencv_overwrite", False
+        ):
             cfiles.get(
                 self,
                 f"{OPENCV_FILES_URL}/{filename}",
@@ -86,11 +96,16 @@ class OcvDartDesktop(ConanFile):
 
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")
-        self.tool_requires("nasm/2.16.01")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
-        # if self.settings.os == "Android":
-        #     self.tool_requires("android-ndk/r26c")
+        if self.settings.os == "Android":
+            ndk_path = os.environ.get("ANDROID_NDK_HOME", None) or os.environ.get(
+                "ANDROID_NDK_ROOT", None
+            )
+            if ndk_path is None:
+                self.tool_requires("android-ndk/r26c")
+        # if self.settings.os == "iOS":
+        #     self.tool_requires("ios_cmake_toolchain/1.0.0")
 
     def layout(self):
         # self.build_folder: build/{os}/{arch}/opencv
@@ -142,28 +157,34 @@ class OcvDartDesktop(ConanFile):
         # cmake.test()
         cmake.install(cli_args=["--strip"])
 
-        self.post_build()
+        if self.get_bool("post_build", True):
+            self.post_build()
 
     def post_build(self):
         # archive
         install_dir = Path(self.install_folder)
-        os = str(self.settings.os).lower()
-        arch = arch_map[os][str(self.settings.arch)]
-        new_name = f"lib{self.name}-{os}-{arch}.tar.gz"
-        fname = self.publish_folder / new_name
-        print(fname)
-        if not fname.parent.exists():
-            fname.parent.mkdir(parents=True)
-        with tarfile.open(fname, mode="w:gz") as tar:
-            for file in install_dir.glob("*"):
-                print(f"Adding {file}...")
-                tar.add(file, arcname=file.name)
-        print(f"published: {fname}")
-        dst = Path(self.package_folder).absolute() / os
-        if os == "android":
+        _os = str(self.settings.os).lower()
+        arch = arch_map[_os][str(self.settings.arch)]
+        # Copy to platform dir
+        dst = Path(self.package_folder).absolute() / _os
+
+        if _os == "android":
             dst = dst / "src" / "main" / "jniLibs" / arch
         print(f"Copying to {dst}")
         cfiles.copy(self, "*", self.install_folder, dst)
+
+        # Publish to tar.gz
+        if self.get_bool("publish", True):
+            new_name = f"lib{self.name}-{_os}-{arch}.tar.gz"
+            fname = self.publish_folder / new_name
+            print(fname)
+            if not fname.parent.exists():
+                fname.parent.mkdir(parents=True)
+            with tarfile.open(fname, mode="w:gz") as tar:
+                for file in install_dir.glob("*"):
+                    print(f"Adding {file}...")
+                    tar.add(file, arcname=file.name)
+            print(f"published: {fname}")
 
     @property
     def install_folder(self) -> Path:

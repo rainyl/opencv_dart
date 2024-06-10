@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(opencv_dart_library VERSION 0.0.1 LANGUAGES C CXX)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/binary.version" PROJECT_VERSION)
+message(STATUS "Project Version: ${PROJECT_VERSION}")
+
+project(opencv_dart_library VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 set(LIBRARY_NAME "opencv_dart")
 
 set(CMAKE_CXX_STANDARD 20)

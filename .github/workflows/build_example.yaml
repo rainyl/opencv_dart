@@ -1,4 +1,4 @@
-name: build examples
+name: Examples
 
 on:
   push:
@@ -9,12 +9,11 @@ on:
 jobs:
   build-windows:
     name: build-windows
-    runs-on: windows-latest
-
+    runs-on: windows-2019
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -27,23 +26,12 @@ jobs:
         run: |
           cd example
           flutter build windows
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
   build-ubuntu:
     name: build-ubuntu
     runs-on: ubuntu-latest
 
     steps:
-      - uses: subosito/flutter-action@v2
-        with:
-          # flutter-version: '3.16.9'
-          channel: "stable"
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
       - name: setup
         run: |
           sudo apt-get update
@@ -52,6 +40,17 @@ jobs:
             cmake ninja-build nasm libavformat-dev libavutil-dev \
             libswscale-dev libgflags-dev \
             libjpeg-dev libpng-dev libtiff-dev python3-pip
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+          channel: "stable"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
       - name: build
         run: |
           cd example
@@ -63,7 +62,7 @@ jobs:
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -76,7 +75,7 @@ jobs:
         run: |
           cd example
           flutter build macos
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
   build-macos-arm:
     name: build-macos-arm
@@ -84,7 +83,7 @@ jobs:
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -97,5 +96,5 @@ jobs:
         run: |
           cd example
           flutter build macos
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign

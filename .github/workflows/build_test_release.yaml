@@ -1,22 +1,20 @@
-name: build test release
+name: Release
 
 on:
   push:
     # branches: ["conan"]
     tags:
       - "v*.*.*"
-  # pull_request:
-  #   branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 env:
   ANDROID_NDK_VERSION: r26c
-  OPENCV_VERSION: 4.9.0
-  LIB_NAME: libopencv_dart
 
 jobs:
   build-android:
     name: build-android
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,13 +52,11 @@ jobs:
         with:
           path: build/publish/libopencv_dart-android-x86_64.tar.gz
           name: libopencv_dart-android-x86_64.tar.gz
-
       - uses: actions/upload-artifact@v4
         name: upload-android-arm64-v8a
         with:
           path: build/publish/libopencv_dart-android-arm64-v8a.tar.gz
           name: libopencv_dart-android-arm64-v8a.tar.gz
-
       - uses: actions/upload-artifact@v4
         name: upload-android-armeabi-v7a
         with:
@@ -73,36 +69,31 @@ jobs:
           draft: true
           prerelease: false
           files: |
+            build/publish/libopencv_dart-android-x86_64.tar.gz
             build/publish/libopencv_dart-android-arm64-v8a.tar.gz
             build/publish/libopencv_dart-android-armeabi-v7a.tar.gz
-            build/publish/libopencv_dart-android-x86_64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
-      - name: Run build
-        run: |
-          cd example
-          flutter pub get
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64
 
   build-ubuntu:
-    name: build-ubuntu
-    runs-on: ubuntu-latest
+    name: build-ubuntu-android-armv7
+    runs-on: ubuntu-22.04
 
     steps:
       - name: setup
         run: |
           sudo apt-get update
+
           sudo apt-get install -y curl git wget python3 unzip build-essential \
             libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build nasm libavformat-dev libavutil-dev \
+            cmake ninja-build libavformat-dev libavutil-dev \
             libswscale-dev libgflags-dev \
             libjpeg-dev libpng-dev libtiff-dev python3-pip
 
           python3 -m pip install conan
           conan profile detect -f
-
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -112,7 +103,7 @@ jobs:
           -o output_dir="build/Linux/x64"
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/upload-artifact@v4
         name: upload-linux-x64
@@ -135,7 +126,7 @@ jobs:
 
   build-windows:
     name: build-windows
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v4
@@ -157,7 +148,7 @@ jobs:
           name: libopencv_dart-windows-x64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -197,7 +188,7 @@ jobs:
           name: libopencv_dart-macos-x64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -239,7 +230,7 @@ jobs:
           name: libopencv_dart-macos-arm64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -272,12 +263,18 @@ jobs:
           run: |
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-x86_64
             conan build . -b missing -pr:h profiles/ios-x86_64 \
-            -o output_dir="build/Linux/x86_64"
+            -o output_dir="build/ios/x86_64"
 
             echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-armv8
             conan build . -b missing -pr:h profiles/ios-armv8 \
             -o output_dir="build/ios/armv8"
 
+            rm -rf ios/opencv_dart.xcframework
+            xcodebuild -create-xcframework \
+              -framework build/ios/x86_64/install/opencv_dart.framework \
+              -framework build/ios/armv8/install/opencv_dart.framework \
+              -output ios/opencv_dart.xcframework
+            tar -zcvf libopencv_dart-ios-os64.tar.gz -C ios opencv_dart.xcframework
         - uses: actions/upload-artifact@v4
           name: upload
           with:
@@ -288,6 +285,11 @@ jobs:
           with:
             path: build/publish/libopencv_dart-ios-x64.tar.gz
             name: libopencv_dart-ios-x64.tar.gz
+        - uses: actions/upload-artifact@v4
+          name: upload
+          with:
+            path: libopencv_dart-ios-os64.tar.gz
+            name: libopencv_dart-ios-os64.tar.gz
         - name: Release
           uses: softprops/action-gh-release@v1
           if: startsWith(github.ref, 'refs/tags/')
@@ -297,12 +299,14 @@ jobs:
             files: |
               build/publish/libopencv_dart-ios-arm64.tar.gz
               build/publish/libopencv_dart-ios-x64.tar.gz
+              libopencv_dart-ios-os64.tar.gz
         - uses: subosito/flutter-action@v2
           with:
-            # flutter-version: '3.16.9'
+            flutter-version: '3.19.6'
             channel: "stable"
         - name: Run Test
           run: |
             cd example
             flutter pub get
             flutter build ios --release --no-codesign
+            flutter build ios --no-codesign --simulator
