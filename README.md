@@ -269,7 +269,7 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
 
 ## Contributors
 
-<!-- readme: contributors,<TotemaT>/- -start -->
+<!-- readme: contributors,<TotemaT> -start -->
 <table>
 	<tbody>
 		<tr>
@@ -304,7 +304,7 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
 		</tr>
 	<tbody>
 </table>
-<!-- readme: contributors,<TotemaT>/- -end -->
+<!-- readme: contributors,<TotemaT> -end -->
 
 ## Acknowledgement
 
