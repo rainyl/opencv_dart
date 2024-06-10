@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #include "core/core.h"
-
+#include <stddef.h>
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier)
 CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor)
