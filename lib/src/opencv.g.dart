@@ -3663,7 +3663,6 @@ class CvNative {
       CvStatus Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>();
 
   CvStatus FaceDetectorYN_New(
-    ffi.Pointer<FaceDetectorYN> rval,
     ffi.Pointer<ffi.Char> model,
     ffi.Pointer<ffi.Char> config,
     Size input_size,
@@ -3672,9 +3671,9 @@ class CvNative {
     int top_k,
     int backend_id,
     int target_id,
+    ffi.Pointer<FaceDetectorYN> rval,
   ) {
     return _FaceDetectorYN_New(
-      rval,
       model,
       config,
       input_size,
@@ -3683,13 +3682,13 @@ class CvNative {
       top_k,
       backend_id,
       target_id,
+      rval,
     );
   }
 
   late final _FaceDetectorYN_NewPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              ffi.Pointer<FaceDetectorYN>,
               ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>,
               Size,
@@ -3697,10 +3696,55 @@ class CvNative {
               ffi.Float,
               ffi.Int,
               ffi.Int,
-              ffi.Int)>>('FaceDetectorYN_New');
+              ffi.Int,
+              ffi.Pointer<FaceDetectorYN>)>>('FaceDetectorYN_New');
   late final _FaceDetectorYN_New = _FaceDetectorYN_NewPtr.asFunction<
-      CvStatus Function(ffi.Pointer<FaceDetectorYN>, ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>, Size, double, double, int, int, int)>();
+      CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, Size,
+          double, double, int, int, int, ffi.Pointer<FaceDetectorYN>)>();
+
+  CvStatus FaceDetectorYN_NewFromBuffer(
+    ffi.Pointer<ffi.Char> framework,
+    VecUChar buffer,
+    VecUChar buffer_config,
+    Size input_size,
+    double score_threshold,
+    double nms_threshold,
+    int top_k,
+    int backend_id,
+    int target_id,
+    ffi.Pointer<FaceDetectorYN> rval,
+  ) {
+    return _FaceDetectorYN_NewFromBuffer(
+      framework,
+      buffer,
+      buffer_config,
+      input_size,
+      score_threshold,
+      nms_threshold,
+      top_k,
+      backend_id,
+      target_id,
+      rval,
+    );
+  }
+
+  late final _FaceDetectorYN_NewFromBufferPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              ffi.Pointer<ffi.Char>,
+              VecUChar,
+              VecUChar,
+              Size,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<FaceDetectorYN>)>>('FaceDetectorYN_NewFromBuffer');
+  late final _FaceDetectorYN_NewFromBuffer =
+      _FaceDetectorYN_NewFromBufferPtr.asFunction<
+          CvStatus Function(ffi.Pointer<ffi.Char>, VecUChar, VecUChar, Size,
+              double, double, int, int, int, ffi.Pointer<FaceDetectorYN>)>();
 
   CvStatus FaceDetectorYN_SetInputSize(
     FaceDetectorYN self,
@@ -3848,32 +3892,32 @@ class CvNative {
           FaceRecognizerSF, Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
 
   CvStatus FaceRecognizerSF_New(
-    ffi.Pointer<FaceRecognizerSF> rval,
     ffi.Pointer<ffi.Char> model,
     ffi.Pointer<ffi.Char> config,
     int backend_id,
     int target_id,
+    ffi.Pointer<FaceRecognizerSF> rval,
   ) {
     return _FaceRecognizerSF_New(
-      rval,
       model,
       config,
       backend_id,
       target_id,
+      rval,
     );
   }
 
   late final _FaceRecognizerSF_NewPtr = _lookup<
       ffi.NativeFunction<
           CvStatus Function(
-              ffi.Pointer<FaceRecognizerSF>,
               ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>,
               ffi.Int,
-              ffi.Int)>>('FaceRecognizerSF_New');
+              ffi.Int,
+              ffi.Pointer<FaceRecognizerSF>)>>('FaceRecognizerSF_New');
   late final _FaceRecognizerSF_New = _FaceRecognizerSF_NewPtr.asFunction<
-      CvStatus Function(ffi.Pointer<FaceRecognizerSF>, ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>, int, int)>();
+      CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, int, int,
+          ffi.Pointer<FaceRecognizerSF>)>();
 
   void FastFeatureDetector_Close(
     FastFeatureDetectorPtr f,
@@ -18410,13 +18454,13 @@ typedef DartErrorCallbackFunction = void Function(
     ffi.Pointer<ffi.Void> userdata);
 
 final class FaceDetectorYN extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
 
 typedef FaceDetectorYNPtr = ffi.Pointer<FaceDetectorYN>;
 
 final class FaceRecognizerSF extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
 
 typedef FaceRecognizerSFPtr = ffi.Pointer<FaceRecognizerSF>;

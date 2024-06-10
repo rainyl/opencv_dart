@@ -2,6 +2,30 @@ import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 
+cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
+  expect(faces.rows, greaterThanOrEqualTo(1));
+  for (int row = 0; row < faces.rows; row++) {
+    final rect = cv.Rect(
+      faces.at<double>(row, 0).toInt(),
+      faces.at<double>(row, 1).toInt(),
+      faces.at<double>(row, 2).toInt(),
+      faces.at<double>(row, 3).toInt(),
+    );
+    final points = [
+      cv.Point(faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
+      cv.Point(faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
+      cv.Point(faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
+      cv.Point(faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
+      cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
+    ];
+    cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
+    for (var p in points) {
+      cv.circle(img, p, 2, cv.Scalar.blue, thickness: 2);
+    }
+  }
+  return img;
+}
+
 void main() async {
   test('cv.CascadeClassifier', () {
     final img = cv.imread("test/images/face.jpg", flags: cv.IMREAD_COLOR);
@@ -180,5 +204,20 @@ void main() async {
     detector.setUseAlignmentMarkers(false);
 
     detector.dispose();
+  });
+
+  // https://docs.opencv.org/4.x/d0/dd4/tutorial_dnn_face.html
+  test('cv.FaceDetectorYN', () {
+    const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
+    final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
+
+    final img = cv.imread("test/images/lenna.png");
+    expect(img.isEmpty, false);
+    detector.setInputSize((img.width, img.height));
+    final face = detector.detect(img);
+    expect(face.rows, greaterThanOrEqualTo(1));
+    visualizeFaceDetect(img, face);
+
+    // cv.imwrite("AAA.png", img);
   });
 }
