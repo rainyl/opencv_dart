@@ -25,9 +25,6 @@ CVD_TYPEDEF(void, CLAHE)
 CVD_TYPEDEF(void, Subdiv2D)
 #endif
 
-CVD_TYPEDEF_PTR(CLAHE)
-CVD_TYPEDEF_PTR(Subdiv2D)
-
 CvStatus ArcLength(VecPoint curve, bool is_closed, CVD_OUT double *rval);
 CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, CVD_OUT VecPoint *rval);
 CvStatus CvtColor(Mat src, CVD_OUT Mat dst, int code);
@@ -157,7 +154,7 @@ CvStatus ClipLine(Rect imgRect, Point pt1, Point pt2, bool *rval);
 
 CvStatus CLAHE_Create(CLAHE *rval);
 CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval);
-void     CLAHE_Close(CLAHE *c);
+void     CLAHE_Close(CLAHEPtr c);
 CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst);
 CvStatus CLAHE_CollectGarbage(CLAHE c);
 CvStatus CLAHE_GetClipLimit(CLAHE c, double *rval);
@@ -167,7 +164,7 @@ CvStatus CLAHE_SetTilesGridSize(CLAHE c, Size size);
 
 CvStatus Subdiv2D_NewEmpty(Subdiv2D *rval);
 CvStatus Subdiv2D_NewWithRect(Rect rect, Subdiv2D *rval);
-void     Subdiv2D_Close(Subdiv2D *self);
+void     Subdiv2D_Close(Subdiv2DPtr self);
 CvStatus Subdiv2D_EdgeDst(Subdiv2D self, int edge, Point2f *dstpt, int *rval);
 CvStatus Subdiv2D_EdgeOrg(Subdiv2D self, int edge, Point2f *orgpt, int *rval);
 CvStatus Subdiv2D_FindNearest(Subdiv2D self, Point2f pt, Point2f *nearestPt, int *rval);

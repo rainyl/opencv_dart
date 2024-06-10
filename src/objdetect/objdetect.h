@@ -28,14 +28,10 @@ CVD_TYPEDEF(void, HOGDescriptor)
 CVD_TYPEDEF(void, QRCodeDetector)
 #endif
 
-CVD_TYPEDEF_PTR(CascadeClassifier)
-CVD_TYPEDEF_PTR(HOGDescriptor)
-CVD_TYPEDEF_PTR(QRCodeDetector)
-
 // CascadeClassifier
 CvStatus CascadeClassifier_New(CascadeClassifier *rval);
 CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval);
-void     CascadeClassifier_Close(CascadeClassifier *self);
+void     CascadeClassifier_Close(CascadeClassifierPtr self);
 CvStatus CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval);
 CvStatus CascadeClassifier_DetectMultiScale(CascadeClassifier self, Mat img, VecRect *rval);
 CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, Mat img, VecRect *objects,
@@ -63,7 +59,7 @@ CvStatus CascadeClassifier_isOldFormatCascade(CascadeClassifier self, bool *rval
 
 CvStatus HOGDescriptor_New(HOGDescriptor *rval);
 CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval);
-void     HOGDescriptor_Close(HOGDescriptor *self);
+void     HOGDescriptor_Close(HOGDescriptorPtr self);
 CvStatus HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval);
 CvStatus HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocations, VecDouble *weights,
                               double hitThresh, Size winStride, Size padding, VecPoint *searchLocations);
@@ -97,7 +93,7 @@ CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps);
 
 // QRCodeDetector
 CvStatus QRCodeDetector_New(QRCodeDetector *rval);
-void     QRCodeDetector_Close(QRCodeDetector *self);
+void     QRCodeDetector_Close(QRCodeDetectorPtr self);
 CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint *points,
                                         Mat *straight_qrcode, char **rval);
 CvStatus QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points, bool *rval);

@@ -114,7 +114,7 @@ CvStatus Mat_FromCMat(Mat m, Mat *rval)
   *rval = {new cv::Mat(m.ptr->clone())};
   END_WRAP
 }
-void Mat_Close(Mat *m)
+void Mat_Close(MatPtr m)
 {
   m->ptr->release();
   CVD_FREE(m)
@@ -1839,7 +1839,7 @@ CvStatus Rng_NewWithState(uint64_t state, RNG *rval)
   *rval = {new cv::RNG(state)};
   END_WRAP
 }
-void Rng_Close(RNG *rng){CVD_FREE(rng)}
+void Rng_Close(RNGPtr rng){CVD_FREE(rng)}
 
 CvStatus TheRNG(RNG *rval)
 {

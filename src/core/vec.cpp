@@ -58,7 +58,7 @@ CvStatus VecPoint_Size(VecPoint vec, int *rval)
   END_WRAP
 }
 
-void VecPoint_Close(VecPoint *vec)
+void VecPoint_Close(VecPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -111,7 +111,7 @@ CvStatus VecVecPoint_Size(VecVecPoint vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint_Close(VecVecPoint *vec)
+void VecVecPoint_Close(VecVecPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -124,7 +124,7 @@ CvStatus VecPoint2f_New(VecPoint2f *rval)
   END_WRAP
 }
 
-void VecPoint2f_Close(VecPoint2f *vec)
+void VecPoint2f_Close(VecPoint2fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -226,7 +226,7 @@ CvStatus VecVecPoint2f_Size(VecVecPoint2f vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint2f_Close(VecVecPoint2f *vec)
+void VecVecPoint2f_Close(VecVecPoint2fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -239,7 +239,7 @@ CvStatus VecPoint3f_New(VecPoint3f *rval)
   END_WRAP
 }
 
-void VecPoint3f_Close(VecPoint3f *vec)
+void VecPoint3f_Close(VecPoint3fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -341,7 +341,7 @@ CvStatus VecVecPoint3f_Size(VecVecPoint3f vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint3f_Close(VecVecPoint3f *vec)
+void VecVecPoint3f_Close(VecVecPoint3fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -407,7 +407,7 @@ CvStatus VecUChar_Size(VecUChar vec, int *rval)
   END_WRAP
 }
 
-void VecUChar_Close(VecUChar *vec)
+void VecUChar_Close(VecUCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -477,7 +477,7 @@ CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
   END_WRAP
 }
 
-void VecChar_Close(VecChar *vec)
+void VecChar_Close(VecCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -533,7 +533,7 @@ CvStatus VecVecChar_Size(VecVecChar vec, int *rval)
   *rval = vec.ptr->size();
   END_WRAP
 }
-void VecVecChar_Close(VecVecChar *vec)
+void VecVecChar_Close(VecVecCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -599,7 +599,7 @@ CvStatus VecInt_Size(VecInt vec, int *rval)
   END_WRAP
 }
 
-void VecInt_Close(VecInt *vec)
+void VecInt_Close(VecIntPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -658,7 +658,7 @@ CvStatus VecFloat_Size(VecFloat vec, int *rval)
   END_WRAP
 }
 
-void VecFloat_Close(VecFloat *vec)
+void VecFloat_Close(VecFloatPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -717,7 +717,7 @@ CvStatus VecDouble_Size(VecDouble vec, int *rval)
   END_WRAP
 }
 
-void VecDouble_Close(VecDouble *vec)
+void VecDouble_Close(VecDoublePtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -769,7 +769,7 @@ CvStatus VecMat_Size(VecMat vec, int *rval)
   END_WRAP
 }
 
-void VecMat_Close(VecMat *vec)
+void VecMat_Close(VecMatPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -822,7 +822,7 @@ CvStatus VecRect_Size(VecRect vec, int *rval)
   END_WRAP
 }
 
-void VecRect_Close(VecRect *vec)
+void VecRect_Close(VecRectPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -876,7 +876,7 @@ CvStatus VecKeyPoint_Size(VecKeyPoint vec, int *rval)
   END_WRAP
 }
 
-void VecKeyPoint_Close(VecKeyPoint *vec)
+void VecKeyPoint_Close(VecKeyPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -930,7 +930,7 @@ CvStatus VecDMatch_Size(VecDMatch vec, int *rval)
   END_WRAP
 }
 
-void VecDMatch_Close(VecDMatch *vec)
+void VecDMatch_Close(VecDMatchPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -990,7 +990,7 @@ CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
   END_WRAP
 }
 
-void VecVecDMatch_Close(VecVecDMatch *vec)
+void VecVecDMatch_Close(VecVecDMatchPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)

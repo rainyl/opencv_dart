@@ -23,7 +23,7 @@ CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
   *rval = {new cv::CascadeClassifier(filename)};
   END_WRAP
 }
-void CascadeClassifier_Close(CascadeClassifier *self){CVD_FREE(self)}
+void CascadeClassifier_Close(CascadeClassifierPtr self){CVD_FREE(self)}
 
 CvStatus CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval)
 {
@@ -123,7 +123,7 @@ CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
   *rval = {new cv::HOGDescriptor(filename)};
   END_WRAP
 }
-void HOGDescriptor_Close(HOGDescriptor *self){CVD_FREE(self)}
+void HOGDescriptor_Close(HOGDescriptorPtr self){CVD_FREE(self)}
 
 CvStatus HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval)
 {
@@ -331,7 +331,7 @@ CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecP
   *straight_qrcode = {_straight_qrcode};
   END_WRAP
 }
-void QRCodeDetector_Close(QRCodeDetector *self){CVD_FREE(self)}
+void QRCodeDetector_Close(QRCodeDetectorPtr self){CVD_FREE(self)}
 
 CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
