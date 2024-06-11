@@ -3662,6 +3662,76 @@ class CvNative {
   late final _FaceDetectorYN_Detect = _FaceDetectorYN_DetectPtr.asFunction<
       CvStatus Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>();
 
+  CvStatus FaceDetectorYN_GetInputSize(
+    FaceDetectorYN self,
+    ffi.Pointer<Size> input_size,
+  ) {
+    return _FaceDetectorYN_GetInputSize(
+      self,
+      input_size,
+    );
+  }
+
+  late final _FaceDetectorYN_GetInputSizePtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(FaceDetectorYN,
+              ffi.Pointer<Size>)>>('FaceDetectorYN_GetInputSize');
+  late final _FaceDetectorYN_GetInputSize = _FaceDetectorYN_GetInputSizePtr
+      .asFunction<CvStatus Function(FaceDetectorYN, ffi.Pointer<Size>)>();
+
+  CvStatus FaceDetectorYN_GetNMSThreshold(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Float> nms_threshold,
+  ) {
+    return _FaceDetectorYN_GetNMSThreshold(
+      self,
+      nms_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_GetNMSThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(FaceDetectorYN,
+              ffi.Pointer<ffi.Float>)>>('FaceDetectorYN_GetNMSThreshold');
+  late final _FaceDetectorYN_GetNMSThreshold =
+      _FaceDetectorYN_GetNMSThresholdPtr.asFunction<
+          CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus FaceDetectorYN_GetScoreThreshold(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Float> score_threshold,
+  ) {
+    return _FaceDetectorYN_GetScoreThreshold(
+      self,
+      score_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_GetScoreThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(FaceDetectorYN,
+              ffi.Pointer<ffi.Float>)>>('FaceDetectorYN_GetScoreThreshold');
+  late final _FaceDetectorYN_GetScoreThreshold =
+      _FaceDetectorYN_GetScoreThresholdPtr.asFunction<
+          CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+
+  CvStatus FaceDetectorYN_GetTopK(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Int> top_k,
+  ) {
+    return _FaceDetectorYN_GetTopK(
+      self,
+      top_k,
+    );
+  }
+
+  late final _FaceDetectorYN_GetTopKPtr = _lookup<
+      ffi.NativeFunction<
+          CvStatus Function(
+              FaceDetectorYN, ffi.Pointer<ffi.Int>)>>('FaceDetectorYN_GetTopK');
+  late final _FaceDetectorYN_GetTopK = _FaceDetectorYN_GetTopKPtr.asFunction<
+      CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Int>)>();
+
   CvStatus FaceDetectorYN_New(
     ffi.Pointer<ffi.Char> model,
     ffi.Pointer<ffi.Char> config,
