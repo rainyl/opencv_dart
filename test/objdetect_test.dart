@@ -16,11 +16,16 @@ cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
       faces.at<double>(row, 3).toInt(),
     );
     final points = [
-      cv.Point(faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
-      cv.Point(faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
-      cv.Point(faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
-      cv.Point(faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
-      cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
+      cv.Point(
+          faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
+      cv.Point(
+          faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
+      cv.Point(
+          faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
+      cv.Point(
+          faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
+      cv.Point(
+          faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
     ];
     cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
     for (var p in points) {
@@ -42,7 +47,8 @@ void main() async {
 
     classifier.dispose();
 
-    final cls = cv.CascadeClassifier.fromFile("test/data/haarcascade_frontalface_default.xml");
+    final cls = cv.CascadeClassifier.fromFile(
+        "test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
 
     {
@@ -52,7 +58,8 @@ void main() async {
     }
 
     {
-      final (objects, nums, weights) = cls.detectMultiScale3(img, outputRejectLevels: true);
+      final (objects, nums, weights) =
+          cls.detectMultiScale3(img, outputRejectLevels: true);
       expect(objects.length, 1);
       expect(nums.length, 1);
       expect(weights.length, 1);
@@ -189,7 +196,8 @@ void main() async {
     expect(res2, equals(res3));
     expect(res3_1, equals(res3));
 
-    final img2 = cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
+    final img2 =
+        cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
     expect(img2.isEmpty, false);
 
     final (res4, multiBox) = detector.detectMulti(img2);
@@ -213,49 +221,69 @@ void main() async {
   // https://docs.opencv.org/4.x/d0/dd4/tutorial_dnn_face.html
   test('cv.FaceDetectorYN', tags: ["no-local-files"], () {
     {
+      // Test loading from file
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
       final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
 
+      // Test loading image and setting input size
       final img = cv.imread("test/images/lenna.png");
       expect(img.isEmpty, false);
       detector.setInputSize((img.width, img.height));
+
+      // Test detection
       final face = detector.detect(img);
       expect(face.rows, greaterThanOrEqualTo(1));
       visualizeFaceDetect(img, face);
 
+      // Test setting parameters
       detector.setScoreThreshold(0.8);
       detector.setNMSThreshold(0.4);
       detector.setTopK(3000);
 
-      // TODO: add getters and compare values
+      // Test getters and compare values
+      expect(detector.getScoreThreshold(), closeTo(0.8, 1e-6));
+      expect(detector.getNmsThreshold(), closeTo(0.4, 1e-6));
+      expect(detector.getTopK(), equals(3000));
+      expect(detector.getInputSize(), equals((img.width, img.height)));
 
+      // Dispose the detector
       detector.dispose();
     }
 
     {
+      // Test loading from buffer
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
       final buf = File(modelPath).readAsBytesSync();
-      final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
+      final detector =
+          cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
 
+      // Test loading image and setting input size
       final img = cv.imread("test/images/lenna.png");
       expect(img.isEmpty, false);
       detector.setInputSize((img.width, img.height));
+
+      // Test detection
       final face = detector.detect(img);
       expect(face.rows, greaterThanOrEqualTo(1));
       visualizeFaceDetect(img, face);
       // cv.imwrite("AAA.png", img);
+
+      // Dispose the detector
+      detector.dispose();
     }
   });
 
+  // Test for cv.FaceRecognizerSF
   test('cv.FaceRecognizerSF', tags: ["no-local-files"], () {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
     final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
 
+    // Test loading image
     final img = cv.imread("test/images/face.jpg");
     expect(img.isEmpty, false);
 
     // Assume face detection already done and we have faceBox (a Mat object)
-    final faceBox = cv.Mat.zeros(1, 4, MatType.CV_32SC1); // Mock data for testing
+    final faceBox = cv.Mat.zeros(1, 4, MatType.CV_32SC1);
     faceBox.set<int>(0, 0, 50); // x
     faceBox.set<int>(0, 1, 50); // y
     faceBox.set<int>(0, 2, 100); // width
@@ -269,15 +297,23 @@ void main() async {
     final faceFeature = recognizer.feature(alignedFace);
     expect(faceFeature.isEmpty, false);
 
-    // Test matching features
+    // Test loading another image for matching
     final img2 = cv.imread("test/images/lenna.png");
     expect(img2.isEmpty, false);
 
+    // Test alignCrop and feature extraction for the second image
     final alignedFace2 = recognizer.alignCrop(img2, faceBox);
     final faceFeature2 = recognizer.feature(alignedFace2);
 
-    final matchScore = recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
-    expect(matchScore, greaterThanOrEqualTo(0));
+    // Test matching features using L2 distance
+    final matchScoreL2 = recognizer.match(
+        faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    expect(matchScoreL2, greaterThanOrEqualTo(0));
+
+    // Test matching features using Cosine distance
+    final matchScoreCosine = recognizer.match(
+        faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPR_FR_COSINE);
+    expect(matchScoreCosine, greaterThanOrEqualTo(0));
 
     // Clean up
     recognizer.dispose();
