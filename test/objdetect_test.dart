@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:opencv_dart/src/core/mat_type.dart';
 import 'package:test/test.dart';
 
@@ -208,21 +211,43 @@ void main() async {
   });
 
   // https://docs.opencv.org/4.x/d0/dd4/tutorial_dnn_face.html
-  test('cv.FaceDetectorYN', () {
-    const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
-    final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
+  test('cv.FaceDetectorYN', tags: ["no-local-files"], () {
+    {
+      const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
+      final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
 
-    final img = cv.imread("test/images/lenna.png");
-    expect(img.isEmpty, false);
-    detector.setInputSize((img.width, img.height));
-    final face = detector.detect(img);
-    expect(face.rows, greaterThanOrEqualTo(1));
-    visualizeFaceDetect(img, face);
+      final img = cv.imread("test/images/lenna.png");
+      expect(img.isEmpty, false);
+      detector.setInputSize((img.width, img.height));
+      final face = detector.detect(img);
+      expect(face.rows, greaterThanOrEqualTo(1));
+      visualizeFaceDetect(img, face);
 
-    // cv.imwrite("AAA.png", img);
+      detector.setScoreThreshold(0.8);
+      detector.setNMSThreshold(0.4);
+      detector.setTopK(3000);
+
+      // TODO: add getters and compare values
+
+      detector.dispose();
+    }
+
+    {
+      const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
+      final buf = File(modelPath).readAsBytesSync();
+      final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
+
+      final img = cv.imread("test/images/lenna.png");
+      expect(img.isEmpty, false);
+      detector.setInputSize((img.width, img.height));
+      final face = detector.detect(img);
+      expect(face.rows, greaterThanOrEqualTo(1));
+      visualizeFaceDetect(img, face);
+      cv.imwrite("AAA.png", img);
+    }
   });
 
-  test('FaceRecognizerSF', () {
+  test('FaceRecognizerSF', tags: ["no-local-files"], () {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
     final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
 

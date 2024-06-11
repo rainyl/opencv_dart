@@ -63,8 +63,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     return using<VecRect>((arena) {
       final ret = calloc<cvg.VecRect>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, ret,
-          scaleFactor, minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
+      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(
+          ref, image.ref, ret, scaleFactor, minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
       return VecRect.fromPointer(ret);
     });
   }
@@ -80,8 +80,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return using<(VecRect, VecInt)>((arena) {
       final ret = calloc<cvg.VecRect>();
       final pnums = calloc<cvg.VecInt>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScale2(ref, image.ref, ret, pnums, scaleFactor,
-          minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
+      cvRun(() => CFFI.CascadeClassifier_DetectMultiScale2(ref, image.ref, ret, pnums, scaleFactor, minNeighbors, flags,
+          minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
       return (VecRect.fromPointer(ret), VecInt.fromPointer(pnums));
     });
   }
@@ -114,11 +114,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
           outputRejectLevels,
         ),
       );
-      return (
-        VecRect.fromPointer(objects),
-        VecInt.fromPointer(rejectLevels),
-        VecDouble.fromPointer(levelWeights)
-      );
+      return (VecRect.fromPointer(objects), VecInt.fromPointer(rejectLevels), VecDouble.fromPointer(levelWeights));
     });
   }
 
@@ -162,8 +158,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
+  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -678,10 +673,6 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
-  void close() {
-    CFFI.FaceDetectorYN_Close(ptr);
-  }
-
   Mat detect(Mat img) {
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.FaceDetectorYN_Detect(ref, img.ref, p));
@@ -764,8 +755,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   double match(Mat faceFeature1, Mat faceFeature2, int disType) {
     return using<double>((arena) {
       final distance = arena<ffi.Double>();
-      cvRun(() =>
-          CFFI.FaceRecognizerSF_Match(ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
+      cvRun(() => CFFI.FaceRecognizerSF_Match(ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
       return distance.value;
     });
   }
@@ -773,8 +763,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   @override
   cvg.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer =
-      OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
+  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
 
   void dispose() {
     finalizer.detach(this);
