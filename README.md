@@ -306,6 +306,13 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
                     <sub><b>mdeleau</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/totemat">
+                    <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
+                    <br />
+                    <sub><b>Matteo T.</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
