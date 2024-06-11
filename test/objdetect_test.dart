@@ -243,11 +243,11 @@ void main() async {
       final face = detector.detect(img);
       expect(face.rows, greaterThanOrEqualTo(1));
       visualizeFaceDetect(img, face);
-      cv.imwrite("AAA.png", img);
+      // cv.imwrite("AAA.png", img);
     }
   });
 
-  test('FaceRecognizerSF', tags: ["no-local-files"], () {
+  test('cv.FaceRecognizerSF', tags: ["no-local-files"], () {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
     final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
 
