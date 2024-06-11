@@ -3,15 +3,15 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import 'cv_vec.dart';
+import '../opencv.g.dart' as cvg;
+import 'array.dart';
 import 'base.dart';
-import 'rect.dart';
-import 'scalar.dart';
+import 'cv_vec.dart';
 import 'mat_type.dart';
 import 'point.dart';
+import 'rect.dart';
+import 'scalar.dart';
 import 'vec.dart';
-import 'array.dart';
-import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
   Mat._(cvg.MatPtr ptr, [this.xdata, bool attach = true]) : super.fromPointer(ptr) {
@@ -795,8 +795,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "addU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddUChar(ref, val));
       return this;
@@ -808,8 +807,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "addI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddSChar(ref, val));
       return this;
@@ -821,8 +819,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "addI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddI32(ref, val));
       return this;
@@ -834,7 +831,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "addF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddFloat(ref, val));
       return this;
@@ -846,7 +843,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "addF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddF64(ref, val));
       return this;
@@ -899,8 +896,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "subtractU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractUChar(ref, val));
       return this;
@@ -912,8 +908,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "subtractI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractSChar(ref, val));
       return this;
@@ -925,8 +920,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "subtractI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractI32(ref, val));
       return this;
@@ -938,7 +932,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "subtractF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractFloat(ref, val));
       return this;
@@ -950,7 +944,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "subtractF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractF64(ref, val));
       return this;
@@ -1003,8 +997,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "multiplyU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyUChar(ref, val));
       return this;
@@ -1016,8 +1009,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "multiplyI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplySChar(ref, val));
       return this;
@@ -1029,8 +1021,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "multiplyI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyI32(ref, val));
       return this;
@@ -1042,7 +1033,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "multiplyF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyFloat(ref, val));
       return this;
@@ -1054,7 +1045,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "multiplyF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyF64(ref, val));
       return this;
@@ -1107,8 +1098,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "divideU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideUChar(ref, val));
       return this;
@@ -1120,8 +1110,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "divideI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideSChar(ref, val));
       return this;
@@ -1133,8 +1122,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "divideI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideI32(ref, val));
       return this;
@@ -1146,7 +1134,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "divideF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideFloat(ref, val));
       return this;
@@ -1158,7 +1146,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "divideF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideF64(ref, val));
       return this;
@@ -1197,7 +1185,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat region(Rect rect) {
-    assert(rect.x + rect.width <= width && rect.y + rect.height <= height, "rect is out of range");
+    assert(rect.x + rect.width <= width && rect.y + rect.height <= height);
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_Region(ref, rect.ref, p));
     final dst = Mat._(p);
@@ -1271,8 +1259,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Calculates a square root of array elements.
   Mat sqrt() {
-    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F,
-        "sqrt() only for CV_32F or CV_64F");
+    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F);
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_Sqrt(ref, p));
     final dst = Mat._(p);
@@ -1300,21 +1287,16 @@ class Mat extends CvStruct<cvg.Mat> {
   List<List<num>> toList() => switch (type.depth) {
         MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
         MatType.CV_8S => List.generate(rows, (row) => List.generate(cols, (col) => atI8(row, col))),
-        MatType.CV_16U =>
-          List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
-        MatType.CV_16S =>
-          List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
-        MatType.CV_32S =>
-          List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
-        MatType.CV_32F =>
-          List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
-        MatType.CV_64F =>
-          List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
+        MatType.CV_16U => List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
+        MatType.CV_16S => List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
+        MatType.CV_32S => List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
+        MatType.CV_32F => List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
+        MatType.CV_64F => List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
         _ => throw UnsupportedError("toList() for $type is not supported!")
       };
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
-  /// The list is ordered as [row][col][channel].
+  /// The list is ordered as [row][col][channels].
   ///
   /// [T]: The type of the elements in the mat.
   /// [P]: The type of the elements in the list.

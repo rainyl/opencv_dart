@@ -4,9 +4,9 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'vec.dart';
-import '../opencv.g.dart' as cvg;
 
 class DMatch extends CvStruct<cvg.DMatch> {
   DMatch._(ffi.Pointer<cvg.DMatch> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -23,8 +23,7 @@ class DMatch extends CvStruct<cvg.DMatch> {
     return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);
-  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, [bool attach = true]) =>
-      DMatch._(p, attach);
+  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, [bool attach = true]) => DMatch._(p, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -52,8 +51,7 @@ class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) =>
-      VecDMatch._(ptr, attach);
+  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) => VecDMatch._(ptr, attach);
   factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
     final p = calloc<cvg.VecDMatch>();
     cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));

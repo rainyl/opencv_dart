@@ -13,6 +13,7 @@ void main() {
   }
   sw.stop();
   print(
-      "All: ${sw.elapsedMicroseconds}μs, counts: $counts, per: ${sw.elapsedMicroseconds / counts} μs");
+    "All: ${sw.elapsedMicroseconds}μs, counts: $counts, per: ${sw.elapsedMicroseconds / counts} μs",
+  );
   print("Finished");
 }

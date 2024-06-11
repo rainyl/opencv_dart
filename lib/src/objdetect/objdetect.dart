@@ -7,12 +7,12 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/point.dart';
+import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../core/point.dart';
 import '../opencv.g.dart' as cvg;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
@@ -63,8 +63,18 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     return using<VecRect>((arena) {
       final ret = calloc<cvg.VecRect>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, ret,
-          scaleFactor, minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
+      cvRun(
+        () => CFFI.CascadeClassifier_DetectMultiScaleWithParams(
+          ref,
+          image.ref,
+          ret,
+          scaleFactor,
+          minNeighbors,
+          flags,
+          minSize.toSize(arena).ref,
+          maxSize.toSize(arena).ref,
+        ),
+      );
       return VecRect.fromPointer(ret);
     });
   }
@@ -80,8 +90,19 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return using<(VecRect, VecInt)>((arena) {
       final ret = calloc<cvg.VecRect>();
       final pnums = calloc<cvg.VecInt>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScale2(ref, image.ref, ret, pnums, scaleFactor,
-          minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
+      cvRun(
+        () => CFFI.CascadeClassifier_DetectMultiScale2(
+          ref,
+          image.ref,
+          ret,
+          pnums,
+          scaleFactor,
+          minNeighbors,
+          flags,
+          minSize.toSize(arena).ref,
+          maxSize.toSize(arena).ref,
+        ),
+      );
       return (VecRect.fromPointer(ret), VecInt.fromPointer(pnums));
     });
   }
@@ -162,8 +183,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
+  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -298,8 +318,12 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Performs object detection without a multi-scale window.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a309829908ffaf4645755729d7aa90627
-  (VecPoint foundLocations, VecPoint searchLocations) detect(InputArray img,
-      {double hitThreshold = 0, Size winStride = (0, 0), Size padding = (0, 0)}) {
+  (VecPoint foundLocations, VecPoint searchLocations) detect(
+    InputArray img, {
+    double hitThreshold = 0,
+    Size winStride = (0, 0),
+    Size padding = (0, 0),
+  }) {
     return using<(VecPoint, VecPoint)>((arena) {
       final foundLocations = calloc<cvg.VecPoint>();
       final searchLocations = calloc<cvg.VecPoint>();
@@ -788,8 +812,15 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   double match(Mat faceFeature1, Mat faceFeature2, int disType) {
     return using<double>((arena) {
       final distance = arena<ffi.Double>();
-      cvRun(() =>
-          CFFI.FaceRecognizerSF_Match(ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
+      cvRun(
+        () => CFFI.FaceRecognizerSF_Match(
+          ref,
+          faceFeature1.ref,
+          faceFeature2.ref,
+          disType,
+          distance,
+        ),
+      );
       return distance.value;
     });
   }
@@ -797,8 +828,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   @override
   cvg.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer =
-      OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
+  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
 
   void dispose() {
     finalizer.detach(this);

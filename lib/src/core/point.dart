@@ -1,10 +1,11 @@
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
 
+import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'mat.dart';
 import 'vec.dart';
-import '../opencv.g.dart' as cvg;
 
 class Point extends CvStruct<cvg.Point> {
   Point._(ffi.Pointer<cvg.Point> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -19,8 +20,7 @@ class Point extends CvStruct<cvg.Point> {
     return Point._(ptr);
   }
   factory Point.fromNative(cvg.Point p) => Point(p.x, p.y);
-  factory Point.fromPointer(ffi.Pointer<cvg.Point> ptr, [bool attach = true]) =>
-      Point._(ptr, attach);
+  factory Point.fromPointer(ffi.Pointer<cvg.Point> ptr, [bool attach = true]) => Point._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -53,8 +53,7 @@ class Point2f extends CvStruct<cvg.Point2f> {
     return Point2f._(ptr);
   }
   factory Point2f.fromNative(cvg.Point2f p) => Point2f(p.x, p.y);
-  factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> ptr, [bool attach = true]) =>
-      Point2f._(ptr, attach);
+  factory Point2f.fromPointer(ffi.Pointer<cvg.Point2f> ptr, [bool attach = true]) => Point2f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -88,8 +87,7 @@ class Point3f extends CvStruct<cvg.Point3f> {
     return Point3f._(ptr);
   }
   factory Point3f.fromNative(cvg.Point3f p) => Point3f(p.x, p.y, p.z);
-  factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> ptr, [bool attach = true]) =>
-      Point3f._(ptr, attach);
+  factory Point3f.fromPointer(ffi.Pointer<cvg.Point3f> ptr, [bool attach = true]) => Point3f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -105,8 +103,7 @@ class Point3f extends CvStruct<cvg.Point3f> {
   @override
   cvg.Point3f get ref => ptr.ref;
   @override
-  String toString() =>
-      'Point3f(${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)}, ${z.toStringAsFixed(3)})';
+  String toString() => 'Point3f(${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)}, ${z.toStringAsFixed(3)})';
   @override
   List<double> get props => [x, y, z];
 }
@@ -133,8 +130,7 @@ class VecPoint extends Vec<Point> implements CvStruct<cvg.VecPoint> {
     });
   }
 
-  factory VecPoint.fromPointer(cvg.VecPointPtr ptr, [bool attach = true]) =>
-      VecPoint._(ptr, attach);
+  factory VecPoint.fromPointer(cvg.VecPointPtr ptr, [bool attach = true]) => VecPoint._(ptr, attach);
 
   /// Copy data from [cvg.VecPoint.ptr]
   factory VecPoint.fromVec(cvg.VecPoint ptr) {
@@ -225,8 +221,7 @@ class VecPoint2f extends Vec<Point2f> implements CvStruct<cvg.VecPoint2f> {
       return VecPoint2f._(pp);
     });
   }
-  factory VecPoint2f.fromPointer(cvg.VecPoint2fPtr ptr, [bool attach = true]) =>
-      VecPoint2f._(ptr, attach);
+  factory VecPoint2f.fromPointer(cvg.VecPoint2fPtr ptr, [bool attach = true]) => VecPoint2f._(ptr, attach);
   factory VecPoint2f.fromVec(cvg.VecPoint2f ptr) {
     final p = calloc<cvg.VecPoint2f>();
     cvRun(() => CFFI.VecPoint2f_NewFromVec(ptr, p));
@@ -309,8 +304,7 @@ class VecPoint3f extends Vec<Point3f> implements CvStruct<cvg.VecPoint3f> {
       return VecPoint3f._(pp);
     });
   }
-  factory VecPoint3f.fromPointer(cvg.VecPoint3fPtr ptr, [bool attach = true]) =>
-      VecPoint3f._(ptr, attach);
+  factory VecPoint3f.fromPointer(cvg.VecPoint3fPtr ptr, [bool attach = true]) => VecPoint3f._(ptr, attach);
   factory VecPoint3f.fromVec(cvg.VecPoint3f ptr) {
     final p = calloc<cvg.VecPoint3f>();
     cvRun(() => CFFI.VecPoint3f_NewFromVec(ptr, p));
@@ -379,8 +373,7 @@ class VecVecPoint extends Vec<VecPoint> implements CvStruct<cvg.VecVecPoint> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecVecPoint.fromPointer(cvg.VecVecPointPtr ptr, [bool attach = true]) =>
-      VecVecPoint._(ptr, attach);
+  factory VecVecPoint.fromPointer(cvg.VecVecPointPtr ptr, [bool attach = true]) => VecVecPoint._(ptr, attach);
   factory VecVecPoint.fromVec(cvg.VecVecPoint ptr) {
     final p = calloc<cvg.VecVecPoint>();
     cvRun(() => CFFI.VecVecPoint_NewFromVec(ptr, p));

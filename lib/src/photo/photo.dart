@@ -4,10 +4,10 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/mat_type.dart';
-import '../core/point.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
+import '../core/point.dart';
 import '../opencv.g.dart' as cvg;
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
@@ -35,8 +35,9 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double exposureWeight = 0.0,
   }) {
     final p = calloc<cvg.MergeMertens>();
-    cvRun(() =>
-        CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p));
+    cvRun(
+      () => CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p),
+    );
     return MergeMertens._(p);
   }
 
@@ -54,7 +55,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   Mat process(VecMat src) {
     final dst = Mat.empty();
     CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
-    return dst.convertTo(MatType.CV_8UC3, alpha: 255.0, beta: 0.0);
+    return dst.convertTo(MatType.CV_8UC3, alpha: 255.0);
   }
 
   @override
@@ -180,8 +181,7 @@ Mat textureFlattening(
   int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  cvRun(() =>
-      CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+  cvRun(() => CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
   return dst;
 }
 
@@ -299,7 +299,8 @@ Mat edgePreservingFilter(
   double sigmaR = 0.07,
   double shadeFactor = 0.02,
 }) {
-  final dst1 = Mat.empty(), dst2 = Mat.empty();
+  final dst1 = Mat.empty();
+  final dst2 = Mat.empty();
   cvRun(() => CFFI.PencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
   return (dst1, dst2);
 }

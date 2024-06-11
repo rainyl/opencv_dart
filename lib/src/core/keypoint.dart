@@ -4,9 +4,9 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'vec.dart';
-import '../opencv.g.dart' as cvg;
 
 class KeyPoint extends CvStruct<cvg.KeyPoint> {
   KeyPoint._(ffi.Pointer<cvg.KeyPoint> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -14,8 +14,7 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory KeyPoint(
-      double x, double y, double size, double angle, double response, int octave, int classID) {
+  factory KeyPoint(double x, double y, double size, double angle, double response, int octave, int classID) {
     final ptr = calloc<cvg.KeyPoint>()
       ..ref.x = x
       ..ref.y = y
@@ -35,8 +34,7 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
         r.octave,
         r.classID,
       );
-  factory KeyPoint.fromPointer(ffi.Pointer<cvg.KeyPoint> p, [bool attach = true]) =>
-      KeyPoint._(p, attach);
+  factory KeyPoint.fromPointer(ffi.Pointer<cvg.KeyPoint> p, [bool attach = true]) => KeyPoint._(p, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -74,8 +72,7 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr, [bool attach = true]) =>
-      VecKeyPoint._(ptr, attach);
+  factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr, [bool attach = true]) => VecKeyPoint._(ptr, attach);
   factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
     final p = calloc<cvg.VecKeyPoint>();
     cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));

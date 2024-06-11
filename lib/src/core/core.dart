@@ -6,16 +6,16 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import 'rng.dart';
-import 'scalar.dart';
-import 'base.dart';
-import 'point.dart';
-import 'mat_type.dart';
-import 'mat.dart';
-import 'termcriteria.dart';
-import 'vec.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
+import 'base.dart';
+import 'mat.dart';
+import 'mat_type.dart';
+import 'point.dart';
+import 'rng.dart';
+import 'scalar.dart';
+import 'termcriteria.dart';
+import 'vec.dart';
 
 /// get version
 String openCvVersion() {
@@ -674,8 +674,16 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
-          flags, centers!.ref, p),
+      () => CFFI.KMeans(
+        data.ref,
+        K,
+        bestLabels.ref,
+        criteria.toNativePtr(arena).ref,
+        attempts,
+        flags,
+        centers!.ref,
+        p,
+      ),
     );
     return p.value;
   });
@@ -699,8 +707,16 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toNativePtr(arena).ref, attempts,
-          flags, centers!.ref, p),
+      () => CFFI.KMeansPoints(
+        pts.ref,
+        K,
+        bestLabels.ref,
+        criteria.toNativePtr(arena).ref,
+        attempts,
+        flags,
+        centers!.ref,
+        p,
+      ),
     );
     return p.value;
   });
@@ -821,8 +837,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
-(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src,
-    {InputArray? mask}) {
+(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
   return using<(double, double, Point, Point)>((arena) {
     final minValP = arena<ffi.Double>();
     final maxValP = arena<ffi.Double>();

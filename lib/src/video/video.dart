@@ -5,12 +5,12 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../constants.g.dart';
-import '../core/mat_type.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
+import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
-import '../core/point.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
@@ -65,8 +65,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 }
 
 class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
-  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -343,10 +342,13 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     return Mat.fromPointer(p);
   }
 
-  void init(int dynamParams, int measureParams,
-      {int controlParams = 0, int type = MatType.CV_32F}) {
-    cvRun(() =>
-        CFFI.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
+  void init(
+    int dynamParams,
+    int measureParams, {
+    int controlParams = 0,
+    int type = MatType.CV_32F,
+  }) {
+    cvRun(() => CFFI.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
   }
 
   @override

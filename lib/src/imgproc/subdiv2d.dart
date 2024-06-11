@@ -201,6 +201,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
 
   /// Returns the location of a point within a Delaunay triangulation.
   ///
+  // ignore: comment_references
   /// [rval] an integer which specify one of the following five cases for point location:
   ///
   ///   - The point falls into some facet. The function returns [PTLOC_INSIDE] and edge will contain one of edges of the facet.
