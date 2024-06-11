@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() {
   final src = cv.Mat.fromScalar(400, 400, cv.MatType.CV_8UC3, cv.Scalar.white);
@@ -12,7 +11,7 @@ void main() {
     cv.Point2f(343, 145),
     cv.Point2f(108, 25),
   ];
-  for (var pt in points) {
+  for (final pt in points) {
     cv.circle(src, cv.Point(pt.x.toInt(), pt.y.toInt()), 1, cv.Scalar.black, thickness: 2);
   }
 
@@ -22,7 +21,7 @@ void main() {
 
     final triangleList = subdiv.getTriangleList();
     expect(triangleList.length, greaterThan(0));
-    for (var tri in triangleList) {
+    for (final tri in triangleList) {
       final p1 = cv.Point(tri.val1.toInt(), tri.val2.toInt());
       final p2 = cv.Point(tri.val3.toInt(), tri.val4.toInt());
       final p3 = cv.Point(tri.val5.toInt(), tri.val6.toInt());

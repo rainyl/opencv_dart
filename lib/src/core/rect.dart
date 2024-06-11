@@ -1,11 +1,12 @@
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
 
+import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'point.dart';
 import 'size.dart';
 import 'vec.dart';
-import '../opencv.g.dart' as cvg;
 
 class Rect extends CvStruct<cvg.Rect> {
   Rect._(ffi.Pointer<cvg.Rect> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -61,8 +62,7 @@ class Rect2f extends CvStruct<cvg.Rect2f> {
     return Rect2f._(ptr);
   }
   factory Rect2f.fromNative(cvg.Rect2f p) => Rect2f(p.x, p.y, p.width, p.height);
-  factory Rect2f.fromPointer(ffi.Pointer<cvg.Rect2f> ptr, [bool attach = true]) =>
-      Rect2f._(ptr, attach);
+  factory Rect2f.fromPointer(ffi.Pointer<cvg.Rect2f> ptr, [bool attach = true]) => Rect2f._(ptr, attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 

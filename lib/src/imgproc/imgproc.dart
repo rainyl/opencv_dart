@@ -6,18 +6,17 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/contours.dart';
-import '../core/scalar.dart';
-import '../core/base.dart';
-import '../core/point.dart';
-import '../core/mat.dart';
-import '../core/rect.dart';
-import '../core/moments.dart';
-import '../core/size.dart';
-import '../core/vec.dart';
-import '../core/termcriteria.dart';
-
 import '../constants.g.dart';
+import '../core/base.dart';
+import '../core/contours.dart';
+import '../core/mat.dart';
+import '../core/moments.dart';
+import '../core/point.dart';
+import '../core/rect.dart';
+import '../core/scalar.dart';
+import '../core/size.dart';
+import '../core/termcriteria.dart';
+import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
@@ -58,7 +57,7 @@ Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnP
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
-Mat convexityDefects(VecPoint contour, final Mat hull, {Mat? convexityDefects}) {
+Mat convexityDefects(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
   convexityDefects ??= Mat.empty();
   cvRun(() => CFFI.ConvexityDefects(contour.ref, hull.ref, convexityDefects!.ref));
   return convexityDefects;
@@ -129,14 +128,16 @@ Mat calcBackProject(
   bool uniform = true,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.CalcBackProject(
-        src.ref,
-        channels.ref,
-        hist.ref,
-        dst!.ref,
-        ranges.ref,
-        uniform,
-      ));
+  cvRun(
+    () => CFFI.CalcBackProject(
+      src.ref,
+      channels.ref,
+      hist.ref,
+      dst!.ref,
+      ranges.ref,
+      uniform,
+    ),
+  );
   return dst;
 }
 
@@ -156,7 +157,7 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 (bool, Point, Point) clipLine(Rect imgRect, Point pt1, Point pt2) {
-  bool r = using<bool>((arena) {
+  final bool r = using<bool>((arena) {
     final rval = arena<ffi.Bool>();
     cvRun(() => CFFI.ClipLine(imgRect.ref, pt1.ref, pt2.ref, rval));
     return rval.value;
@@ -232,8 +233,17 @@ Mat dilate(
   borderValue ??= Scalar.default_();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
-  cvRun(() => CFFI.DilateWithParams(
-      src.ref, dst!.ref, kernel.ref, anchor!.ref, iterations, borderType, borderValue!.ref));
+  cvRun(
+    () => CFFI.DilateWithParams(
+      src.ref,
+      dst!.ref,
+      kernel.ref,
+      anchor!.ref,
+      iterations,
+      borderType,
+      borderValue!.ref,
+    ),
+  );
   return dst;
 }
 
@@ -286,8 +296,7 @@ Mat erode(
 }) {
   dst ??= Mat.empty();
   labels ??= Mat.empty();
-  cvRun(() =>
-      CFFI.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
+  cvRun(() => CFFI.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
   return (dst, labels);
 }
 
@@ -402,7 +411,7 @@ int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int 
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga107a78bf7cd25dec05fb4dfc5c9e765f
 int connectedComponentsWithStats(
-  final Mat src,
+  Mat src,
   Mat labels,
   Mat stats,
   Mat centroids,
@@ -412,8 +421,18 @@ int connectedComponentsWithStats(
 ) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => CFFI.ConnectedComponentsWithStats(
-        src.ref, labels.ref, stats.ref, centroids.ref, connectivity, ltype, ccltype, p));
+    cvRun(
+      () => CFFI.ConnectedComponentsWithStats(
+        src.ref,
+        labels.ref,
+        stats.ref,
+        centroids.ref,
+        connectivity,
+        ltype,
+        ccltype,
+        p,
+      ),
+    );
     return p.value;
   });
 }
@@ -547,8 +566,7 @@ Mat gaussianBlur(
 }) {
   dst ??= Mat.empty();
   cvRunArena((arena) {
-    cvRun(() =>
-        CFFI.GaussianBlur(src.ref, dst!.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType));
+    cvRun(() => CFFI.GaussianBlur(src.ref, dst!.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType));
   });
   return dst;
 }
@@ -567,12 +585,17 @@ Mat getGaussianKernel(int ksize, double sigma, {int ktype = 6}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gacea54f142e81b6758cb6f375ce782c8d
-Mat sobel(Mat src, int ddepth, int dx, int dy,
-    {Mat? dst,
-    int ksize = 3,
-    double scale = 1,
-    double delta = 0,
-    int borderType = BORDER_DEFAULT}) {
+Mat sobel(
+  Mat src,
+  int ddepth,
+  int dx,
+  int dy, {
+  Mat? dst,
+  int ksize = 3,
+  double scale = 1,
+  double delta = 0,
+  int borderType = BORDER_DEFAULT,
+}) {
   dst ??= Mat.empty();
   cvRun(() => CFFI.Sobel(src.ref, dst!.ref, ddepth, dx, dy, ksize, scale, delta, borderType));
   return dst;
@@ -706,11 +729,34 @@ VecPoint2f goodFeaturesToTrack(
   final c = corners?.ptr ?? calloc<cvg.VecPoint2f>();
   mask ??= Mat.empty();
   if (gradientSize == null) {
-    cvRun(() => CFFI.GoodFeaturesToTrack(image.ref, c, maxCorners, qualityLevel, minDistance,
-        mask!.ref, blockSize, useHarrisDetector, k));
+    cvRun(
+      () => CFFI.GoodFeaturesToTrack(
+        image.ref,
+        c,
+        maxCorners,
+        qualityLevel,
+        minDistance,
+        mask!.ref,
+        blockSize,
+        useHarrisDetector,
+        k,
+      ),
+    );
   } else {
-    cvRun(() => CFFI.GoodFeaturesToTrackWithGradient(image.ref, c, maxCorners, qualityLevel,
-        minDistance, mask!.ref, blockSize, gradientSize, useHarrisDetector, k));
+    cvRun(
+      () => CFFI.GoodFeaturesToTrackWithGradient(
+        image.ref,
+        c,
+        maxCorners,
+        qualityLevel,
+        minDistance,
+        mask!.ref,
+        blockSize,
+        gradientSize,
+        useHarrisDetector,
+        k,
+      ),
+    );
   }
   return corners ?? VecPoint2f.fromPointer(c);
 }
@@ -728,8 +774,7 @@ VecPoint2f goodFeaturesToTrack(
   int iterCount, {
   int mode = GC_EVAL,
 }) {
-  cvRun(
-      () => CFFI.GrabCut(img.ref, mask.ref, rect.ref, bgdModel.ref, fgdModel.ref, iterCount, mode));
+  cvRun(() => CFFI.GrabCut(img.ref, mask.ref, rect.ref, bgdModel.ref, fgdModel.ref, iterCount, mode));
   return (mask, bgdModel, fgdModel);
 }
 
@@ -751,17 +796,19 @@ Mat HoughCircles(
   int maxRadius = 0,
 }) {
   circles ??= Mat.empty();
-  cvRun(() => CFFI.HoughCirclesWithParams(
-        image.ref,
-        circles!.ref,
-        method,
-        dp,
-        minDist,
-        param1,
-        param2,
-        minRadius,
-        maxRadius,
-      ));
+  cvRun(
+    () => CFFI.HoughCirclesWithParams(
+      image.ref,
+      circles!.ref,
+      method,
+      dp,
+      minDist,
+      param1,
+      param2,
+      minRadius,
+      maxRadius,
+    ),
+  );
   return circles;
 }
 
@@ -783,8 +830,7 @@ Mat HoughLines(
   double max_theta = CV_PI,
 }) {
   lines ??= Mat.empty();
-  cvRun(() => CFFI.HoughLines(
-      image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
+  cvRun(() => CFFI.HoughLines(image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
   return lines;
 }
 
@@ -837,8 +883,20 @@ Mat HoughLinesPointSet(
   OutputArray? lines,
 }) {
   lines ??= Mat.empty();
-  cvRun(() => CFFI.HoughLinesPointSet(point.ref, lines!.ref, lines_max, threshold, min_rho, max_rho,
-      rho_step, min_theta, max_theta, theta_step));
+  cvRun(
+    () => CFFI.HoughLinesPointSet(
+      point.ref,
+      lines!.ref,
+      lines_max,
+      threshold,
+      min_rho,
+      max_rho,
+      rho_step,
+      min_theta,
+      max_theta,
+      theta_step,
+    ),
+  );
   return lines;
 }
 
@@ -894,8 +952,17 @@ Mat adaptiveThreshold(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => CFFI.AdaptiveThreshold(
-      src.ref, dst!.ref, maxValue, adaptiveMethod, thresholdType, blockSize, C));
+  cvRun(
+    () => CFFI.AdaptiveThreshold(
+      src.ref,
+      dst!.ref,
+      maxValue,
+      adaptiveMethod,
+      thresholdType,
+      blockSize,
+      C,
+    ),
+  );
   return dst;
 }
 
@@ -914,8 +981,7 @@ Mat arrowedLine(
   int shift = 0,
   double tipLength = 0.1,
 }) {
-  cvRun(() => CFFI.ArrowedLine(
-      img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
+  cvRun(() => CFFI.ArrowedLine(img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
   return img;
 }
 
@@ -932,8 +998,7 @@ Mat circle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() =>
-      CFFI.CircleWithParams(img.ref, center.ref, radius, color.ref, thickness, lineType, shift));
+  cvRun(() => CFFI.CircleWithParams(img.ref, center.ref, radius, color.ref, thickness, lineType, shift));
   return img;
 }
 
@@ -953,8 +1018,20 @@ Mat ellipse(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => CFFI.EllipseWithParams(img.ref, center.ref, axes.ref, angle, startAngle, endAngle,
-      color.ref, thickness, lineType, shift));
+  cvRun(
+    () => CFFI.EllipseWithParams(
+      img.ref,
+      center.ref,
+      axes.ref,
+      angle,
+      startAngle,
+      endAngle,
+      color.ref,
+      thickness,
+      lineType,
+      shift,
+    ),
+  );
   return img;
 }
 
@@ -1042,9 +1119,8 @@ Mat polylines(
     final baseline = arena<ffi.Int>();
     final size = arena<cvg.Size>();
     final textPtr = text.toNativeUtf8(allocator: arena);
-    cvRun(() => CFFI.GetTextSizeWithBaseline(
-        textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
-    Size sz = (size.ref.width, size.ref.height);
+    cvRun(() => CFFI.GetTextSizeWithBaseline(textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
+    final Size sz = (size.ref.width, size.ref.height);
     return (sz, baseline.value);
   });
 }
@@ -1070,8 +1146,17 @@ Mat putText(
   using((arena) {
     final textPtr = text.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     cvRun(
-      () => CFFI.PutTextWithParams(img.ref, textPtr, org.ref, fontFace, fontScale, color.ref,
-          thickness, lineType, bottomLeftOrigin),
+      () => CFFI.PutTextWithParams(
+        img.ref,
+        textPtr,
+        org.ref,
+        fontFace,
+        fontScale,
+        color.ref,
+        thickness,
+        lineType,
+        bottomLeftOrigin,
+      ),
     );
   });
   return img;
@@ -1345,8 +1430,7 @@ Mat remap(
 }) {
   borderValue ??= Scalar.default_();
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Remap(
-      src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
+  cvRun(() => CFFI.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
   return dst;
 }
 
@@ -1424,8 +1508,7 @@ Mat linearPolar(InputArray src, Point2f center, double maxRadius, int flags, {Ou
 /// distType: DistanceTypes
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf849da1fdafa67ee84b1e9a23b93f91f
-Mat fitLine(VecPoint points, int distType, double param, double reps, double aeps,
-    {OutputArray? line}) {
+Mat fitLine(VecPoint points, int distType, double param, double reps, double aeps, {OutputArray? line}) {
   line ??= Mat.empty();
   cvRun(() => CFFI.FitLine(points.ref, line!.ref, distType, param, reps, aeps));
   return line;
@@ -1459,8 +1542,7 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga552420a2ace9ef3fb053cd630fdb4952
-(Point2f rval, double response) phaseCorrelate(InputArray src1, InputArray src2,
-    {InputArray? window}) {
+(Point2f rval, double response) phaseCorrelate(InputArray src1, InputArray src2, {InputArray? window}) {
   window ??= Mat.empty();
   return cvRunArena<(Point2f, double)>((arena) {
     final p = arena<ffi.Double>();

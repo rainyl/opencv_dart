@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() {
   test('VecInt', () {
@@ -144,8 +144,10 @@ void main() {
   });
 
   test('VecVecDMatch', () {
-    final points = List.generate(10,
-        (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())));
+    final points = List.generate(
+      10,
+      (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())),
+    );
     final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
@@ -179,7 +181,7 @@ void main() {
     final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
     expect(vec1, vec);
 
-    for (var p in points) {
+    for (final p in points) {
       p.dispose();
     }
 

@@ -75,14 +75,15 @@ void cvRun(CvStatus Function() func) {
   }
 }
 
-R cvRunArena<R>(R Function(Arena arena) computation, [Allocator wrappedAllocator = calloc, bool keep = false]) {
+R cvRunArena<R>(R Function(Arena arena) computation,
+    [Allocator wrappedAllocator = calloc, bool keep = false]) {
   final arena = Arena(wrappedAllocator);
   bool isAsync = false;
   try {
     final result = computation(arena);
     if (result is Future) {
       isAsync = true;
-      return (result.whenComplete(arena.releaseAll) as R);
+      return result.whenComplete(arena.releaseAll) as R;
     }
     return result;
   } finally {

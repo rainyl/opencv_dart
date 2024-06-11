@@ -6,13 +6,13 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/scalar.dart';
-import '../core/base.dart';
-import '../core/mat.dart';
-import '../core/keypoint.dart';
-import '../core/dmatch.dart';
-import '../core/vec.dart';
 import '../constants.g.dart';
+import '../core/base.dart';
+import '../core/dmatch.dart';
+import '../core/keypoint.dart';
+import '../core/mat.dart';
+import '../core/scalar.dart';
+import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 /// AKAZE is a wrapper around the cv::AKAZE algorithm.
@@ -70,8 +70,7 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
 class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
-  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -181,8 +180,7 @@ enum FastFeatureDetectorType {
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
 class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
-  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -208,8 +206,14 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     FastFeatureDetectorType type = FastFeatureDetectorType.TYPE_9_16,
   }) {
     final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(() =>
-        CFFI.FastFeatureDetector_CreateWithParams(threshold, nonmaxSuppression, type.value, p));
+    cvRun(
+      () => CFFI.FastFeatureDetector_CreateWithParams(
+        threshold,
+        nonmaxSuppression,
+        type.value,
+        p,
+      ),
+    );
     return FastFeatureDetector._(p);
   }
 
@@ -223,8 +227,7 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.FastFeatureDetectorPtr>(CFFI.addresses.FastFeatureDetector_Close);
+  static final finalizer = OcvFinalizer<cvg.FastFeatureDetectorPtr>(CFFI.addresses.FastFeatureDetector_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -417,8 +420,20 @@ class ORB extends CvStruct<cvg.ORB> {
     int fastThreshold = 20,
   }) {
     final p = calloc<cvg.ORB>();
-    cvRun(() => CFFI.ORB_CreateWithParams(nFeatures, scaleFactor, nLevels, edgeThreshold,
-        firstLevel, WTA_K, scoreType.value, patchSize, fastThreshold, p));
+    cvRun(
+      () => CFFI.ORB_CreateWithParams(
+        nFeatures,
+        scaleFactor,
+        nLevels,
+        edgeThreshold,
+        firstLevel,
+        WTA_K,
+        scoreType.value,
+        patchSize,
+        fastThreshold,
+        p,
+      ),
+    );
     return ORB._(p);
   }
 
@@ -516,8 +531,7 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     return SimpleBlobDetectorParams._(p);
   }
 
-  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) =>
-      SimpleBlobDetectorParams(
+  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
         blobColor: r.blobColor,
         filterByArea: r.filterByArea,
         filterByCircularity: r.filterByCircularity,
@@ -538,8 +552,10 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
         minThreshold: r.minThreshold,
         thresholdStep: r.thresholdStep,
       );
-  factory SimpleBlobDetectorParams.fromPointer(ffi.Pointer<cvg.SimpleBlobDetectorParams> p,
-          [bool attach = true]) =>
+  factory SimpleBlobDetectorParams.fromPointer(
+    ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
+    bool attach = true,
+  ]) =>
       SimpleBlobDetectorParams._(p, attach);
 
   @override
@@ -669,8 +685,7 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
 class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
-  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -702,8 +717,7 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.SimpleBlobDetectorPtr>(CFFI.addresses.SimpleBlobDetector_Close);
+  static final finalizer = OcvFinalizer<cvg.SimpleBlobDetectorPtr>(CFFI.addresses.SimpleBlobDetector_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -803,8 +817,7 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     return VecVecDMatch.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.FlannBasedMatcherPtr>(CFFI.addresses.FlannBasedMatcher_Close);
+  static final finalizer = OcvFinalizer<cvg.FlannBasedMatcherPtr>(CFFI.addresses.FlannBasedMatcher_Close);
 
   void dispose() {
     finalizer.detach(this);

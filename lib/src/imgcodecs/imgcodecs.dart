@@ -5,12 +5,12 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
 import '../core/base.dart';
+import '../core/error_code.dart';
+import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../core/exception.dart';
-import '../core/error_code.dart';
-import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 /// IMRead reads an image from a file into a Mat.

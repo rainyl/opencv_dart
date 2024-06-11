@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:opencv_dart/src/core/mat_type.dart';
 import 'package:test/test.dart';
-
-import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
   expect(faces.rows, greaterThanOrEqualTo(1));
@@ -23,7 +22,7 @@ cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
       cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
     ];
     cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
-    for (var p in points) {
+    for (final p in points) {
       cv.circle(img, p, 2, cv.Scalar.blue, thickness: 2);
     }
   }
@@ -297,8 +296,7 @@ void main() async {
     final faceFeature2 = recognizer.feature(alignedFace2);
 
     // Test matching features using L2 distance
-    final matchScoreL2 =
-        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    final matchScoreL2 = recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
     expect(matchScoreL2, greaterThanOrEqualTo(0));
 
     // Test matching features using Cosine distance
