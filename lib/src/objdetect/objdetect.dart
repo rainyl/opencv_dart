@@ -773,10 +773,6 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     return FaceRecognizerSF._(p);
   }
 
-  void close() {
-    CFFI.FaceRecognizerSF_Close(ptr);
-  }
-
   Mat alignCrop(Mat srcImg, Mat faceBox) {
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
