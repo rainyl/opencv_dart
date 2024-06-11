@@ -1,3 +1,9 @@
+## 1.0.7
+
+- Add: FaceDetectorYN, FaceDetectorSF
+- Add: Mat.dataPtr to allow get raw data pointer
+- update lint rules and format
+
 ## 1.0.6+1
 
 - Fix: auto setup
