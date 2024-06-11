@@ -2,11 +2,11 @@
 
 import 'dart:io';
 
-import 'package:stack_trace/stack_trace.dart';
 import 'package:archive/archive_io.dart';
 import 'package:args/command_runner.dart';
-import 'package:yaml/yaml.dart';
 import 'package:path/path.dart' as p;
+import 'package:stack_trace/stack_trace.dart';
+import 'package:yaml/yaml.dart';
 
 const setupPkgName = "opencv_dart";
 
@@ -19,10 +19,10 @@ abstract class BaseSetupCommand extends Command {
 
   String get arch {
     final arch_ = argResults?["arch"] as String;
-    return ARCH_MAP[os]?[arch_] ?? arch_;
+    return ARCH_MAP[os]?[arch_] as String? ?? arch_;
   }
 
-  String get pkgRoot => Frame.caller(1).uri.resolve("..").toFilePath();
+  String get pkgRoot => Frame.caller().uri.resolve("..").toFilePath();
 
   bool get force => argResults?.flag("force") ?? false;
   String get os => name;
@@ -32,28 +32,18 @@ abstract class BaseSetupCommand extends Command {
     print(asInfo('Using package:$setupPkgName from $opencvRoot'));
 
     final doc = loadYaml(File(p.join(opencvRoot, "pubspec.yaml")).readAsStringSync());
-    final version = doc["binary_version"] as String;
+    // ignore: avoid_dynamic_calls
+    final String version = doc["binary_version"] as String;
     final libTarName = "libopencv_dart-$os-$downArch.tar.gz";
 
-    if (extractPath == null) {
-      switch (os) {
-        case OS.windows:
-          extractPath = p.join(opencvRoot, "windows");
-          break;
-        case OS.linux:
-          extractPath = p.join(opencvRoot, "linux");
-          break;
-        case OS.android:
-          extractPath = p.join(opencvRoot, "android", "src", "main", "jniLibs", downArch);
-        case OS.macos:
-          extractPath = p.join(opencvRoot, "macos");
-        case OS.ios:
-          extractPath = p.join(opencvRoot, "ios");
-        case OS.fuchsia:
-        default:
-          throw UnsupportedError(asError("Platform $os not supported"));
-      }
-    }
+    extractPath ??= switch (os) {
+      OS.windows => p.join(opencvRoot, "windows"),
+      OS.linux => p.join(opencvRoot, "windows"),
+      OS.android => p.join(opencvRoot, "android", "src", "main", "jniLibs", downArch),
+      OS.macos => p.join(opencvRoot, "macos"),
+      OS.ios => p.join(opencvRoot, "ios"),
+      _ => throw UnsupportedError(asError("Platform $os not supported"))
+    };
 
     if (!Directory(extractPath).existsSync()) {
       Directory(extractPath).createSync(recursive: true);
@@ -65,7 +55,7 @@ abstract class BaseSetupCommand extends Command {
     if (force || !saveFile.existsSync()) {
       if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
 
-      String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+      final String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
       print(asInfo("Downloading $url"));
       try {
         final request = await HttpClient().getUrl(Uri.parse(url));
@@ -86,11 +76,13 @@ abstract class BaseSetupCommand extends Command {
       // Check if libs already existed, avoid double-extract
       if (Directory(extractPath)
           .listSync()
-          .map((e) =>
-              e.path.endsWith(".so") ||
-              e.path.endsWith(".dll") ||
-              e.path.endsWith(".dylib") ||
-              e.path.endsWith(".framework"))
+          .map(
+            (e) =>
+                e.path.endsWith(".so") ||
+                e.path.endsWith(".dll") ||
+                e.path.endsWith(".dylib") ||
+                e.path.endsWith(".framework"),
+          )
           .any((e) => e)) {
         print(asWarning("Libs already exists in $extractPath, Skipping..."));
         return;
@@ -104,7 +96,7 @@ abstract class BaseSetupCommand extends Command {
   }
 
   @override
-  void run() async {
+  Future<void> run() async {
     print(asInfo("opencv_dart: working for $os $arch"));
     await downloadAndExtract(arch);
     print(asInfo("Finished"));
@@ -126,7 +118,7 @@ class MacOsSetupCommand extends BaseSetupCommand {
       allowed: ["x86_64", "x64", "arm64"],
       mandatory: true,
     );
-    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
+    argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
 }
 
@@ -139,7 +131,7 @@ class WindowsSetupCommand extends BaseSetupCommand {
 
   WindowsSetupCommand() {
     argParser.addOption("arch", abbr: "a", allowed: ["x86_64", "x64"], mandatory: true);
-    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
+    argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
 }
 
@@ -152,7 +144,7 @@ class LinuxSetupCommand extends BaseSetupCommand {
 
   LinuxSetupCommand() {
     argParser.addOption("arch", abbr: "a", allowed: ["x86_64", "x64"], mandatory: true);
-    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
+    argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
 }
 
@@ -170,7 +162,7 @@ class AndroidSetupCommand extends BaseSetupCommand {
       allowed: ["x86_64", "arm64-v8a", "armeabi-v7a"],
       mandatory: true,
     );
-    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
+    argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
 }
 
@@ -188,7 +180,7 @@ class IosSetupCommand extends BaseSetupCommand {
       allowed: ["x86_64", "x64", "arm64", "os64"],
       mandatory: true,
     );
-    argParser.addFlag("force", abbr: "f", defaultsTo: false, help: "Force download and extract");
+    argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
 }
 

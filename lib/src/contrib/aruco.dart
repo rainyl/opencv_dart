@@ -4,13 +4,13 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import 'aruco_dict.dart';
-import '../core/point.dart';
-import '../core/scalar.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/point.dart';
+import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
+import 'aruco_dict.dart';
 
 class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ArucoDetector._(cvg.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -44,8 +44,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d9/d6a/group__aruco.html#ga3bc50d61fe4db7bce8d26d56b5a6428a
-  (VecVecPoint2f corners, VecInt ids, VecVecPoint2f rejectedImgPoints) detectMarkers(
-      InputArray image) {
+  (VecVecPoint2f corners, VecInt ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
     return using<(VecVecPoint2f, VecInt, VecVecPoint2f)>((arena) {
       final pCorners = calloc<cvg.VecVecPoint2f>();
       final pRejected = calloc<cvg.VecVecPoint2f>();
@@ -63,10 +62,8 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   List<int> get props => [ptr.address];
 }
 
-void arucoDrawDetectedMarkers(
-    Mat img, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor) {
-  cvRun(() =>
-      CFFI.ArucoDrawDetectedMarkers(img.ref, markerCorners.ref, markerIds.ref, borderColor.ref));
+void arucoDrawDetectedMarkers(Mat img, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor) {
+  cvRun(() => CFFI.ArucoDrawDetectedMarkers(img.ref, markerCorners.ref, markerIds.ref, borderColor.ref));
 }
 
 void arucoGenerateImageMarker(
@@ -76,12 +73,12 @@ void arucoGenerateImageMarker(
   Mat img,
   int borderBits,
 ) {
-  cvRun(
-      () => CFFI.ArucoGenerateImageMarker(dictionaryId.value, id, sidePixels, img.ref, borderBits));
+  cvRun(() => CFFI.ArucoGenerateImageMarker(dictionaryId.value, id, sidePixels, img.ref, borderBits));
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
-  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  ArucoDetectorParameters._(cvg.ArucoDetectorParametersPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -199,8 +196,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set minDistanceToBorder(int value) =>
-      CFFI.ArucoDetectorParameters_SetMinDistanceToBorder(ref, value);
+  set minDistanceToBorder(int value) => CFFI.ArucoDetectorParameters_SetMinDistanceToBorder(ref, value);
 
   double get minMarkerDistanceRate {
     return cvRunArena<double>((arena) {
@@ -221,8 +217,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set cornerRefinementMethod(int value) =>
-      CFFI.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
+  set cornerRefinementMethod(int value) => CFFI.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
 
   int get cornerRefinementWinSize {
     return cvRunArena<int>((arena) {
@@ -318,8 +313,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set errorCorrectionRate(double value) =>
-      CFFI.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
+  set errorCorrectionRate(double value) => CFFI.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
 
   double get aprilTagQuadDecimate {
     return cvRunArena<double>((arena) {
@@ -329,8 +323,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagQuadDecimate(double value) =>
-      CFFI.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
+  set aprilTagQuadDecimate(double value) => CFFI.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
 
   double get aprilTagQuadSigma {
     return cvRunArena<double>((arena) {
@@ -340,8 +333,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagQuadSigma(double value) =>
-      CFFI.ArucoDetectorParameters_SetAprilTagQuadSigma(ref, value);
+  set aprilTagQuadSigma(double value) => CFFI.ArucoDetectorParameters_SetAprilTagQuadSigma(ref, value);
 
   int get aprilTagMinClusterPixels {
     return cvRunArena<int>((arena) {
@@ -362,8 +354,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagMaxNmaxima(int value) =>
-      CFFI.ArucoDetectorParameters_SetAprilTagMaxNmaxima(ref, value);
+  set aprilTagMaxNmaxima(int value) => CFFI.ArucoDetectorParameters_SetAprilTagMaxNmaxima(ref, value);
 
   double get aprilTagCriticalRad {
     return cvRunArena<double>((arena) {
@@ -373,8 +364,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagCriticalRad(double value) =>
-      CFFI.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
+  set aprilTagCriticalRad(double value) => CFFI.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
 
   double get aprilTagMaxLineFitMse {
     return cvRunArena<double>((arena) {

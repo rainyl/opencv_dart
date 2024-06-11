@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('cv.Fisheye.undistortImage', () {
@@ -118,7 +117,6 @@ void main() async {
       P: knew,
       balance: 1,
       newSize: (1920, 1080),
-      fovScale: 1,
     );
 
     cv.Fisheye.undistortPoints(src, k, d);
@@ -223,21 +221,20 @@ void main() async {
       cv.VecPoint2f.fromMat(corners).toList(),
     ]);
 
-    final cameraMatrix = cv.Mat.empty(), distCoeffs = cv.Mat.empty();
+    final cameraMatrix = cv.Mat.empty();
+    final distCoeffs = cv.Mat.empty();
     final (rmsErr, mtx, dist, rvecs, tvecs) = cv.calibrateCamera(
       objectPointsVector,
       imagePointsVector,
       (img.cols, img.rows),
       cameraMatrix,
       distCoeffs,
-      flags: 0,
     );
     expect(rmsErr, greaterThan(0));
     expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
 
     final dst = cv.undistort(img, cameraMatrix, distCoeffs);
-    final target =
-        cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
+    final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
     final xor = cv.bitwiseXOR(dst, target);
     final sum = xor.sum();
     expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
@@ -259,11 +256,6 @@ void main() async {
     final (m, inliers) = cv.estimateAffinePartial2D(
       src,
       dst,
-      method: 8,
-      ransacReprojThreshold: 3.0,
-      maxIters: 2000,
-      confidence: 0.99,
-      refineIters: 10,
     );
     expect(inliers.isEmpty, false);
     expect(m.isEmpty, false);
@@ -286,11 +278,6 @@ void main() async {
     final (m, inliers) = cv.estimateAffine2D(
       src,
       dst,
-      method: 8,
-      ransacReprojThreshold: 3.0,
-      maxIters: 2000,
-      confidence: 0.99,
-      refineIters: 10,
     );
     expect(inliers.isEmpty, false);
     expect(m.isEmpty, false);

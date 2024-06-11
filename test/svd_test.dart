@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 bool checkFunc(List<double> a, List<double> b, {double eps = 1e-4}) {
   if (a.length != b.length) {
@@ -34,13 +33,18 @@ void main() async {
 
     expect(checkFunc([w.at<double>(0, 0), w.at<double>(1, 0)], resultW), true);
     expect(
-        checkFunc([u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)],
-            resultU),
-        true);
+      checkFunc(
+        [u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)],
+        resultU,
+      ),
+      true,
+    );
     expect(
-        checkFunc(
-            [vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)],
-            resultVt),
-        true);
+      checkFunc(
+        [vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)],
+        resultVt,
+      ),
+      true,
+    );
   });
 }

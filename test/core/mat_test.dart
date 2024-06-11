@@ -2,8 +2,8 @@
 
 import 'dart:ffi' as ffi;
 
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('Mat Creation', () {
@@ -29,9 +29,12 @@ void main() async {
     final mat3 = cv.Mat.eye(3, 3, cv.MatType.CV_8UC3);
     expect((mat3.width, mat3.height, mat3.channels), (3, 3, 3));
     final expected3 = List.generate(
-        mat3.rows,
-        (row) => List.generate(
-            mat3.cols, (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0)));
+      mat3.rows,
+      (row) => List.generate(
+        mat3.cols,
+        (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
+      ),
+    );
     expect(mat3.toList3D<cv.Vec3b>(), expected3);
 
     final mat4 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
@@ -43,7 +46,9 @@ void main() async {
   });
 
   test('Mat.fromBytes', () {
-    int rows = 3, cols = 3, channels = 3;
+    const int rows = 3;
+    const int cols = 3;
+    const int channels = 3;
 
     final data = List.generate(rows * cols * channels, (i) => i);
     for (var i = 0; i < 100; i++) {

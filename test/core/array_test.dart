@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() {
   test('cv.U8Array', () {

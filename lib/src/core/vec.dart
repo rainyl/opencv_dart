@@ -2,11 +2,12 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import 'base.dart';
 import '../opencv.g.dart' as cvg;
+import 'base.dart';
 
 abstract class Vec<T> with IterableMixin<T>, EquatableMixin implements ffi.Finalizable {
   @override
@@ -47,8 +48,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     }
   }
 
-  factory VecInt([int length = 0, int value = 0]) =>
-      VecInt.fromList(List.generate(length, (i) => value));
+  factory VecInt([int length = 0, int value = 0]) => VecInt.fromList(List.generate(length, (i) => value));
   factory VecInt.fromPointer(cvg.VecIntPtr ptr, [bool attach = true]) => VecInt._(ptr, attach);
   factory VecInt.fromVec(cvg.VecInt ptr) {
     final p = calloc<cvg.VecInt>();
@@ -118,10 +118,8 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecUChar([int length = 0, int value = 0]) =>
-      VecUChar.fromList(List.generate(length, (i) => value));
-  factory VecUChar.fromPointer(cvg.VecUCharPtr ptr, [bool attach = true]) =>
-      VecUChar._(ptr, attach);
+  factory VecUChar([int length = 0, int value = 0]) => VecUChar.fromList(List.generate(length, (i) => value));
+  factory VecUChar.fromPointer(cvg.VecUCharPtr ptr, [bool attach = true]) => VecUChar._(ptr, attach);
   factory VecUChar.fromVec(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
     cvRun(() => CFFI.VecUChar_NewFromVec(ptr, p));
@@ -198,8 +196,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecChar([int length = 0, int value = 0]) =>
-      VecChar.fromList(List.generate(length, (i) => value));
+  factory VecChar([int length = 0, int value = 0]) => VecChar.fromList(List.generate(length, (i) => value));
   factory VecChar.fromPointer(cvg.VecCharPtr ptr, [bool attach = true]) => VecChar._(ptr, attach);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
@@ -270,8 +267,7 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr, [bool attach = true]) =>
-      VecVecChar._(ptr, attach);
+  factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr, [bool attach = true]) => VecVecChar._(ptr, attach);
   factory VecVecChar.fromVec(cvg.VecVecChar ptr) {
     final p = calloc<cvg.VecVecChar>();
     cvRun(() => CFFI.VecVecChar_NewFromVec(ptr, p));
@@ -290,7 +286,7 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
   }
 
   List<String> asStringList() {
-    return map((e) => String.fromCharCodes(e)).toList();
+    return map(String.fromCharCodes).toList();
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(CFFI.addresses.VecVecChar_Close);
@@ -340,8 +336,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   }
   factory VecFloat([int length = 0, double value = 0]) =>
       VecFloat.fromList(List.generate(length, (i) => value));
-  factory VecFloat.fromPointer(cvg.VecFloatPtr ptr, [bool attach = true]) =>
-      VecFloat._(ptr, attach);
+  factory VecFloat.fromPointer(cvg.VecFloatPtr ptr, [bool attach = true]) => VecFloat._(ptr, attach);
   factory VecFloat.fromVec(cvg.VecFloat ptr) {
     final p = calloc<cvg.VecFloat>();
     cvRun(() => CFFI.VecFloat_NewFromVec(ptr, p));
@@ -412,8 +407,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   }
   factory VecDouble([int length = 0, double value = 0]) =>
       VecDouble.fromList(List.generate(length, (i) => value));
-  factory VecDouble.fromPointer(cvg.VecDoublePtr ptr, [bool attach = true]) =>
-      VecDouble._(ptr, attach);
+  factory VecDouble.fromPointer(cvg.VecDoublePtr ptr, [bool attach = true]) => VecDouble._(ptr, attach);
   factory VecDouble.fromVec(cvg.VecDouble ptr) {
     final p = calloc<cvg.VecDouble>();
     cvRun(() => CFFI.VecDouble_NewFromVec(ptr, p));

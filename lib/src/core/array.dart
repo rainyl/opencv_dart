@@ -27,8 +27,9 @@ abstract class INativeArray<T> {
 }
 
 class U8Array extends NativeArray<ffi.Uint8, int> {
-  U8Array([int length = 0, int value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_U8_MAX && value >= CV_U8_MIN);
+  U8Array([int length = 0, int value = 0])
+      : assert(length >= 0 && value <= CV_U8_MAX && value >= CV_U8_MIN),
+        super(length) {
     ptr = calloc<ffi.Uint8>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -76,8 +77,9 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
 }
 
 class I8Array extends NativeArray<ffi.Int8, int> {
-  I8Array([int length = 0, int value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_I8_MAX && value >= CV_I8_MIN);
+  I8Array([int length = 0, int value = 0])
+      : assert(length >= 0 && value <= CV_I8_MAX && value >= CV_I8_MIN),
+        super(length) {
     ptr = calloc<ffi.Int8>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -125,8 +127,9 @@ class I8Array extends NativeArray<ffi.Int8, int> {
 }
 
 class U16Array extends NativeArray<ffi.Uint16, int> {
-  U16Array([int length = 0, int value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_U16_MAX && value >= CV_U16_MIN);
+  U16Array([int length = 0, int value = 0])
+      : assert(length >= 0 && value <= CV_U16_MAX && value >= CV_U16_MIN),
+        super(length) {
     ptr = calloc<ffi.Uint16>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -174,8 +177,9 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
 }
 
 class I16Array extends NativeArray<ffi.Int16, int> {
-  I16Array([int length = 0, int value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_I16_MAX && value >= CV_I16_MIN);
+  I16Array([int length = 0, int value = 0])
+      : assert(length >= 0 && value <= CV_I16_MAX && value >= CV_I16_MIN),
+        super(length) {
     ptr = calloc<ffi.Int16>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -223,8 +227,9 @@ class I16Array extends NativeArray<ffi.Int16, int> {
 }
 
 class I32Array extends NativeArray<ffi.Int, int> {
-  I32Array([int length = 0, int value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_I32_MAX && value >= CV_I32_MIN);
+  I32Array([int length = 0, int value = 0])
+      : assert(length >= 0 && value <= CV_I32_MAX && value >= CV_I32_MIN),
+        super(length) {
     ptr = calloc<ffi.Int>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -272,8 +277,9 @@ class I32Array extends NativeArray<ffi.Int, int> {
 }
 
 class F32Array extends NativeArray<ffi.Float, double> {
-  F32Array([int length = 0, double value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_F32_MAX);
+  F32Array([int length = 0, double value = 0])
+      : assert(length >= 0 && value <= CV_F32_MAX),
+        super(length) {
     ptr = calloc<ffi.Float>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
@@ -321,8 +327,9 @@ class F32Array extends NativeArray<ffi.Float, double> {
 }
 
 class F64Array extends NativeArray<ffi.Double, double> {
-  F64Array([int length = 0, double value = 0]) : super(length) {
-    assert(length >= 0 && value <= CV_F64_MAX);
+  F64Array([int length = 0, double value = 0])
+      : assert(length >= 0 && value <= CV_F64_MAX),
+        super(length) {
     ptr = calloc<ffi.Double>(length);
     if (value != 0) {
       for (var idx = 0; idx < length; idx++) {
