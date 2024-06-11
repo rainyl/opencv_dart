@@ -232,9 +232,9 @@ void main() async {
     // Assume face detection already done and we have faceBox (a Mat object)
     final faceBox = cv.Mat.zeros(1, 4, MatType.CV_32SC1); // Mock data for testing
     faceBox.set<int>(0, 0, 50); // x
-    faceBox.at<int>(0, 1, 50); // y
-    faceBox.at<int>(0, 2, 100); // width
-    faceBox.at<int>(0, 3, 100); // height
+    faceBox.set<int>(0, 1, 50); // y
+    faceBox.set<int>(0, 2, 100); // width
+    faceBox.set<int>(0, 3, 100); // height
 
     // Test alignCrop
     final alignedFace = recognizer.alignCrop(img, faceBox);

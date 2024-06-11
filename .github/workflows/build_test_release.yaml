@@ -120,7 +120,7 @@ jobs:
             build/publish/libopencv_dart-linux-x64.tar.gz
       - name: Run Test
         run: |
-          export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
+          export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
           dart pub get
           dart test -x skip-workflow,no-local-files
 
@@ -160,7 +160,7 @@ jobs:
             build/publish/libopencv_dart-windows-x64.tar.gz
       - name: Run Test
         run: |
-          $env:PATH = "${{github.workspace}}\windows;${env:PATH}"
+          $env:OPENCV_DART_LIB_PATH = "${{github.workspace}}\windows\opencv_dart.dll"
           dart pub get
           dart test -x no-local-files
   build-macos:
@@ -201,7 +201,7 @@ jobs:
       - name: Run Test
         run: |
           ls -alh ${{github.workspace}}/macos
-          export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
+          export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
           dart pub get
           dart test -x skip-workflow,no-local-files
   build-macos-arm64:
@@ -243,7 +243,7 @@ jobs:
       - name: Run Test
         run: |
           ls -alh ${{github.workspace}}/macos
-          export DYLD_LIBRARY_PATH="${{github.workspace}}/macos:$DYLD_LIBRARY_PATH"
+          export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
           dart pub get
           dart test -x skip-workflow,no-local-files
   build-ios:
