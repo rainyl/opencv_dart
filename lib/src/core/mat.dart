@@ -1330,17 +1330,23 @@ class Mat extends CvStruct<cvg.Mat> {
     return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
-  /// Get the data pointer of the Mat, this getter will reture a view of native
-  /// data, and will be GCed when the Mat is GCed.
+  /// Get  a view of native data, and will be GCed when the Mat is GCed.
   Uint8List get data {
-    return cvRunArena<Uint8List>((arena) {
-      final p = calloc<ffi.Pointer<cvg.uchar>>();
-      final plen = arena<ffi.Int>();
-      cvRun(() => CFFI.Mat_DataPtr(ref, p, plen));
-      final ret = p.value.cast<ffi.Uint8>().asTypedList(plen.value);
-      calloc.free(p);
-      return ret;
-    });
+    final (p, len) = dataPtr;
+    return p.asTypedList(len);
+  }
+
+  /// Get the data pointer of the Mat
+  ///
+  /// DO NOT free the pointer, the native memory is managed by [Mat]
+  (ffi.Pointer<ffi.Uint8> ptr, int len) get dataPtr {
+    final p = calloc<ffi.Pointer<cvg.uchar>>();
+    final plen = calloc<ffi.Int>();
+    cvRun(() => CFFI.Mat_DataPtr(ref, p, plen));
+    final ret = (p.value.cast<ffi.Uint8>(), plen.value);
+    calloc.free(p);
+    calloc.free(plen);
+    return ret;
   }
 
   @override
