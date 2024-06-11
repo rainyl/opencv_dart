@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #include "core/core.h"
-
+#include <stddef.h>
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::Ptr<cv::AKAZE>, AKAZE)
 CVD_TYPEDEF(cv::Ptr<cv::AgastFeatureDetector>, AgastFeatureDetector)

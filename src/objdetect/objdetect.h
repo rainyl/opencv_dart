@@ -10,22 +10,28 @@
 #define _OPENCV3_OBJDETECT_H_
 
 #include <stdbool.h>
-
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
 extern "C" {
 #endif
 
 #include "core/core.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
+// Define types for the C++ classes used
 CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier)
 CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor)
 CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector)
+CVD_TYPEDEF(cv::Ptr<cv::FaceDetectorYN>, FaceDetectorYN)
+CVD_TYPEDEF(cv::Ptr<cv::FaceRecognizerSF>, FaceRecognizerSF)
 #else
+// Define types for the C-compatible interface
 CVD_TYPEDEF(void, CascadeClassifier)
 CVD_TYPEDEF(void, HOGDescriptor)
 CVD_TYPEDEF(void, QRCodeDetector)
+CVD_TYPEDEF(void *, FaceDetectorYN)
+CVD_TYPEDEF(void *, FaceRecognizerSF)
 #endif
 
 // CascadeClassifier
@@ -56,7 +62,6 @@ CvStatus CascadeClassifier_isOldFormatCascade(CascadeClassifier self, bool *rval
 //   VecPoint  locations;
 //   double    scale;
 // } DetectionROI;
-
 CvStatus HOGDescriptor_New(HOGDescriptor *rval);
 CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval);
 void     HOGDescriptor_Close(HOGDescriptorPtr self);
@@ -88,7 +93,6 @@ CvStatus HOGDescriptor_getDescriptorSize(HOGDescriptor self, size_t *rval);
 CvStatus HOGDescriptor_getWinSigma(HOGDescriptor self, double *rval);
 CvStatus HOGDescriptor_groupRectangles(HOGDescriptor self, VecRect rectList, VecDouble weights,
                                        int groupThreshold, double eps);
-
 CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps);
 
 // QRCodeDetector
@@ -109,6 +113,33 @@ CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, Vec
 CvStatus QRCodeDetector_setEpsX(QRCodeDetector self, double epsX);
 CvStatus QRCodeDetector_setEpsY(QRCodeDetector self, double epsY);
 CvStatus QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlignmentMarkers);
+
+// FaceDetectorYN
+CvStatus FaceDetectorYN_New(const char *model, const char *config, Size input_size, float score_threshold,
+                            float nms_threshold, int top_k, int backend_id, int target_id,
+                            FaceDetectorYN *rval);
+CvStatus FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, VecUChar buffer_config,
+                                      Size input_size, float score_threshold, float nms_threshold, int top_k,
+                                      int backend_id, int target_id, FaceDetectorYN *rval);
+void     FaceDetectorYN_Close(FaceDetectorYNPtr self);
+CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces);
+CvStatus FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size);
+CvStatus FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold);
+CvStatus FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold);
+CvStatus FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k);
+CvStatus FaceDetectorYN_GetInputSize(FaceDetectorYN self, Size *input_size);
+CvStatus FaceDetectorYN_GetScoreThreshold(FaceDetectorYN self, float *score_threshold);
+CvStatus FaceDetectorYN_GetNMSThreshold(FaceDetectorYN self, float *nms_threshold);
+CvStatus FaceDetectorYN_GetTopK(FaceDetectorYN self, int *top_k);
+
+// FaceRecognizerSF
+CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend_id, int target_id,
+                              FaceRecognizerSF *rval);
+void     FaceRecognizerSF_Close(FaceRecognizerSFPtr self);
+CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img);
+CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, Mat *face_feature);
+CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type,
+                                double *distance);
 
 #ifdef __cplusplus
 }

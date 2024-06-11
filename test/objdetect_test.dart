@@ -1,6 +1,34 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:opencv_dart/src/core/mat_type.dart';
 import 'package:test/test.dart';
 
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+
+cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
+  expect(faces.rows, greaterThanOrEqualTo(1));
+  for (int row = 0; row < faces.rows; row++) {
+    final rect = cv.Rect(
+      faces.at<double>(row, 0).toInt(),
+      faces.at<double>(row, 1).toInt(),
+      faces.at<double>(row, 2).toInt(),
+      faces.at<double>(row, 3).toInt(),
+    );
+    final points = [
+      cv.Point(faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
+      cv.Point(faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
+      cv.Point(faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
+      cv.Point(faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
+      cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
+    ];
+    cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
+    for (var p in points) {
+      cv.circle(img, p, 2, cv.Scalar.blue, thickness: 2);
+    }
+  }
+  return img;
+}
 
 void main() async {
   test('cv.CascadeClassifier', () {
@@ -180,5 +208,109 @@ void main() async {
     detector.setUseAlignmentMarkers(false);
 
     detector.dispose();
+  });
+
+  // https://docs.opencv.org/4.x/d0/dd4/tutorial_dnn_face.html
+  test('cv.FaceDetectorYN', tags: ["no-local-files"], () {
+    {
+      // Test loading from file
+      const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
+      final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
+
+      // Test loading image and setting input size
+      final img = cv.imread("test/images/lenna.png");
+      expect(img.isEmpty, false);
+      detector.setInputSize((img.width, img.height));
+
+      // Test detection
+      final face = detector.detect(img);
+      expect(face.rows, greaterThanOrEqualTo(1));
+      visualizeFaceDetect(img, face);
+
+      // Test setting parameters
+      detector.setScoreThreshold(0.8);
+      detector.setNMSThreshold(0.4);
+      detector.setTopK(3000);
+
+      // Test getters and compare values
+      expect(detector.getScoreThreshold(), closeTo(0.8, 1e-6));
+      expect(detector.getNmsThreshold(), closeTo(0.4, 1e-6));
+      expect(detector.getTopK(), equals(3000));
+      expect(detector.getInputSize(), equals((img.width, img.height)));
+
+      // Dispose the detector
+      detector.dispose();
+    }
+
+    {
+      // Test loading from buffer
+      const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
+      final buf = File(modelPath).readAsBytesSync();
+      final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
+
+      // Test loading image and setting input size
+      final img = cv.imread("test/images/lenna.png");
+      expect(img.isEmpty, false);
+      detector.setInputSize((img.width, img.height));
+
+      // Test detection
+      final face = detector.detect(img);
+      expect(face.rows, greaterThanOrEqualTo(1));
+      visualizeFaceDetect(img, face);
+      // cv.imwrite("AAA.png", img);
+
+      // Dispose the detector
+      detector.dispose();
+    }
+  });
+
+  // Test for cv.FaceRecognizerSF
+  test('cv.FaceRecognizerSF', tags: ["no-local-files"], () {
+    const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
+    final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
+
+    // Test loading image
+    final img = cv.imread("test/images/face.jpg");
+    expect(img.isEmpty, false);
+
+    // Assume face detection already done and we have faceBox (a Mat object)
+    final faceBox = cv.Mat.zeros(1, 4, MatType.CV_32SC1);
+    faceBox.set<int>(0, 0, 50); // x
+    faceBox.set<int>(0, 1, 50); // y
+    faceBox.set<int>(0, 2, 100); // width
+    faceBox.set<int>(0, 3, 100); // height
+
+    // Test alignCrop
+    final alignedFace = recognizer.alignCrop(img, faceBox);
+    expect(alignedFace.isEmpty, false);
+
+    // Test feature extraction
+    final faceFeature = recognizer.feature(alignedFace);
+    expect(faceFeature.isEmpty, false);
+
+    // Test loading another image for matching
+    final img2 = cv.imread("test/images/lenna.png");
+    expect(img2.isEmpty, false);
+
+    // Test alignCrop and feature extraction for the second image
+    final alignedFace2 = recognizer.alignCrop(img2, faceBox);
+    final faceFeature2 = recognizer.feature(alignedFace2);
+
+    // Test matching features using L2 distance
+    final matchScoreL2 =
+        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    expect(matchScoreL2, greaterThanOrEqualTo(0));
+
+    // Test matching features using Cosine distance
+    final matchScoreCosine =
+        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPR_FR_COSINE);
+    expect(matchScoreCosine, greaterThanOrEqualTo(0));
+
+    // Clean up
+    recognizer.dispose();
+    alignedFace.dispose();
+    faceFeature.dispose();
+    alignedFace2.dispose();
+    faceFeature2.dispose();
   });
 }

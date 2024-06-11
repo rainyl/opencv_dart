@@ -1,6 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 library cv;
 
 import 'dart:ffi' as ffi;
+import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
@@ -597,4 +600,214 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   cvg.QRCodeDetector get ref => ptr.ref;
   @override
   List<int> get props => [ptr.address];
+}
+
+/// DNN-based face detector.
+///
+/// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
+class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
+  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+
+  factory FaceDetectorYN.fromFile(
+    String model,
+    String config,
+    Size inputSize, {
+    double scoreThreshold = 0.9,
+    double nmsThreshold = 0.3,
+    int topK = 5000,
+    int backendId = 0,
+    int targetId = 0,
+  }) {
+    final p = calloc<cvg.FaceDetectorYN>();
+    return using<FaceDetectorYN>((arena) {
+      final cModel = model.toNativeUtf8().cast<ffi.Char>();
+      final cConfig = config.toNativeUtf8().cast<ffi.Char>();
+      cvRun(
+        () => CFFI.FaceDetectorYN_New(
+          cModel,
+          cConfig,
+          inputSize.toSize(arena).ref,
+          scoreThreshold,
+          nmsThreshold,
+          topK,
+          backendId,
+          targetId,
+          p,
+        ),
+      );
+      calloc.free(cModel);
+      calloc.free(cConfig);
+      return FaceDetectorYN._(p);
+    });
+  }
+
+  factory FaceDetectorYN.fromBuffer(
+    String framework,
+    Uint8List bufferModel,
+    Uint8List bufferConfig,
+    Size inputSize, {
+    double scoreThreshold = 0.9,
+    double nmsThreshold = 0.3,
+    int topK = 5000,
+    int backendId = 0,
+    int targetId = 0,
+  }) {
+    final p = calloc<cvg.FaceDetectorYN>();
+    return using<FaceDetectorYN>((arena) {
+      final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
+      cvRun(
+        () => CFFI.FaceDetectorYN_NewFromBuffer(
+          cFramework,
+          VecUChar.fromList(bufferModel).ref,
+          VecUChar.fromList(bufferConfig).ref,
+          inputSize.toSize(arena).ref,
+          scoreThreshold,
+          nmsThreshold,
+          topK,
+          backendId,
+          targetId,
+          p,
+        ),
+      );
+      calloc.free(cFramework);
+      return FaceDetectorYN._(p);
+    });
+  }
+
+  (int, int) getInputSize() {
+    final p = calloc<cvg.Size>();
+    cvRun(() => CFFI.FaceDetectorYN_GetInputSize(ref, p));
+    final ret = (p.ref.width, p.ref.height);
+    calloc.free(p);
+    return ret;
+  }
+
+  double getScoreThreshold() {
+    return using<double>((arena) {
+      final p = arena<ffi.Float>();
+      cvRun(() => CFFI.FaceDetectorYN_GetScoreThreshold(ref, p));
+      return p.value;
+    });
+  }
+
+  double getNmsThreshold() {
+    return using<double>((arena) {
+      final p = arena<ffi.Float>();
+      cvRun(() => CFFI.FaceDetectorYN_GetNMSThreshold(ref, p));
+      return p.value;
+    });
+  }
+
+  int getTopK() {
+    return using<int>((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => CFFI.FaceDetectorYN_GetTopK(ref, p));
+      return p.value;
+    });
+  }
+
+  Mat detect(Mat img) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => CFFI.FaceDetectorYN_Detect(ref, img.ref, p));
+    return Mat.fromPointer(p);
+  }
+
+  void setInputSize(Size inputSize) {
+    using<void>((arena) {
+      cvRun(() => CFFI.FaceDetectorYN_SetInputSize(ref, inputSize.toSize(arena).ref));
+    });
+  }
+
+  void setScoreThreshold(double scoreThreshold) {
+    cvRun(() => CFFI.FaceDetectorYN_SetScoreThreshold(ref, scoreThreshold));
+  }
+
+  void setNMSThreshold(double nmsThreshold) {
+    cvRun(() => CFFI.FaceDetectorYN_SetNMSThreshold(ref, nmsThreshold));
+  }
+
+  void setTopK(int topK) {
+    cvRun(() => CFFI.FaceDetectorYN_SetTopK(ref, topK));
+  }
+
+  @override
+  cvg.FaceDetectorYN get ref => ptr.ref;
+
+  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.FaceDetectorYN_Close(ptr);
+  }
+
+  @override
+  List<int> get props => [ptr.address];
+}
+
+/// DNN-based face recognizer.
+///
+/// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
+class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
+  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+
+  factory FaceRecognizerSF.newRecognizer(
+    String model,
+    String config,
+    int backendId,
+    int targetId,
+  ) {
+    final p = calloc<cvg.FaceRecognizerSF>();
+    final cModel = model.toNativeUtf8().cast<ffi.Char>();
+    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
+    cvRun(() => CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
+    calloc.free(cModel);
+    calloc.free(cConfig);
+    return FaceRecognizerSF._(p);
+  }
+
+  Mat alignCrop(Mat srcImg, Mat faceBox) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => CFFI.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
+    return Mat.fromPointer(p);
+  }
+
+  Mat feature(Mat alignedImg) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => CFFI.FaceRecognizerSF_Feature(ref, alignedImg.ref, p));
+    return Mat.fromPointer(p);
+  }
+
+  double match(Mat faceFeature1, Mat faceFeature2, int disType) {
+    return using<double>((arena) {
+      final distance = arena<ffi.Double>();
+      cvRun(() =>
+          CFFI.FaceRecognizerSF_Match(ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
+      return distance.value;
+    });
+  }
+
+  @override
+  cvg.FaceRecognizerSF get ref => ptr.ref;
+
+  static final finalizer =
+      OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.FaceRecognizerSF_Close(ptr);
+  }
+
+  @override
+  List<int> get props => [ptr.address];
+
+  static const int DIS_TYPR_FR_COSINE = 0;
+  static const int DIS_TYPE_FR_NORM_L2 = 1;
 }
