@@ -16,16 +16,11 @@ cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
       faces.at<double>(row, 3).toInt(),
     );
     final points = [
-      cv.Point(
-          faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
-      cv.Point(
-          faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
-      cv.Point(
-          faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
-      cv.Point(
-          faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
-      cv.Point(
-          faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
+      cv.Point(faces.at<double>(row, 4).toInt(), faces.at<double>(row, 5).toInt()),
+      cv.Point(faces.at<double>(row, 6).toInt(), faces.at<double>(row, 7).toInt()),
+      cv.Point(faces.at<double>(row, 8).toInt(), faces.at<double>(row, 9).toInt()),
+      cv.Point(faces.at<double>(row, 10).toInt(), faces.at<double>(row, 11).toInt()),
+      cv.Point(faces.at<double>(row, 12).toInt(), faces.at<double>(row, 13).toInt()),
     ];
     cv.rectangle(img, rect, cv.Scalar.green, thickness: 2);
     for (var p in points) {
@@ -47,8 +42,7 @@ void main() async {
 
     classifier.dispose();
 
-    final cls = cv.CascadeClassifier.fromFile(
-        "test/data/haarcascade_frontalface_default.xml");
+    final cls = cv.CascadeClassifier.fromFile("test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
 
     {
@@ -58,8 +52,7 @@ void main() async {
     }
 
     {
-      final (objects, nums, weights) =
-          cls.detectMultiScale3(img, outputRejectLevels: true);
+      final (objects, nums, weights) = cls.detectMultiScale3(img, outputRejectLevels: true);
       expect(objects.length, 1);
       expect(nums.length, 1);
       expect(weights.length, 1);
@@ -196,8 +189,7 @@ void main() async {
     expect(res2, equals(res3));
     expect(res3_1, equals(res3));
 
-    final img2 =
-        cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
+    final img2 = cv.imread("test/images/multi_qrcodes.png", flags: cv.IMREAD_COLOR);
     expect(img2.isEmpty, false);
 
     final (res4, multiBox) = detector.detectMulti(img2);
@@ -254,8 +246,7 @@ void main() async {
       // Test loading from buffer
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
       final buf = File(modelPath).readAsBytesSync();
-      final detector =
-          cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
+      final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
 
       // Test loading image and setting input size
       final img = cv.imread("test/images/lenna.png");
@@ -306,13 +297,13 @@ void main() async {
     final faceFeature2 = recognizer.feature(alignedFace2);
 
     // Test matching features using L2 distance
-    final matchScoreL2 = recognizer.match(
-        faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    final matchScoreL2 =
+        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
     expect(matchScoreL2, greaterThanOrEqualTo(0));
 
     // Test matching features using Cosine distance
-    final matchScoreCosine = recognizer.match(
-        faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPR_FR_COSINE);
+    final matchScoreCosine =
+        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPR_FR_COSINE);
     expect(matchScoreCosine, greaterThanOrEqualTo(0));
 
     // Clean up

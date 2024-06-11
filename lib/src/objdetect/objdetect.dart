@@ -16,8 +16,7 @@ import '../core/point.dart';
 import '../opencv.g.dart' as cvg;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
-  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -64,15 +63,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     return using<VecRect>((arena) {
       final ret = calloc<cvg.VecRect>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(
-          ref,
-          image.ref,
-          ret,
-          scaleFactor,
-          minNeighbors,
-          flags,
-          minSize.toSize(arena).ref,
-          maxSize.toSize(arena).ref));
+      cvRun(() => CFFI.CascadeClassifier_DetectMultiScaleWithParams(ref, image.ref, ret,
+          scaleFactor, minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
       return VecRect.fromPointer(ret);
     });
   }
@@ -88,22 +80,13 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return using<(VecRect, VecInt)>((arena) {
       final ret = calloc<cvg.VecRect>();
       final pnums = calloc<cvg.VecInt>();
-      cvRun(() => CFFI.CascadeClassifier_DetectMultiScale2(
-          ref,
-          image.ref,
-          ret,
-          pnums,
-          scaleFactor,
-          minNeighbors,
-          flags,
-          minSize.toSize(arena).ref,
-          maxSize.toSize(arena).ref));
+      cvRun(() => CFFI.CascadeClassifier_DetectMultiScale2(ref, image.ref, ret, pnums, scaleFactor,
+          minNeighbors, flags, minSize.toSize(arena).ref, maxSize.toSize(arena).ref));
       return (VecRect.fromPointer(ret), VecInt.fromPointer(pnums));
     });
   }
 
-  (VecRect objects, VecInt numDetections, VecDouble levelWeights)
-      detectMultiScale3(
+  (VecRect objects, VecInt numDetections, VecDouble levelWeights) detectMultiScale3(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -179,8 +162,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(
-      CFFI.addresses.CascadeClassifier_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.CascadeClassifierPtr>(CFFI.addresses.CascadeClassifier_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -192,8 +175,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 }
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
-  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -283,8 +265,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Performs object detection without a multi-scale window.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a309829908ffaf4645755729d7aa90627
-  (VecPoint foundLocations, VecDouble weights, VecPoint searchLocations)
-      detect2(
+  (VecPoint foundLocations, VecDouble weights, VecPoint searchLocations) detect2(
     InputArray img, {
     double hitThreshold = 0,
     Size winStride = (0, 0),
@@ -318,9 +299,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a309829908ffaf4645755729d7aa90627
   (VecPoint foundLocations, VecPoint searchLocations) detect(InputArray img,
-      {double hitThreshold = 0,
-      Size winStride = (0, 0),
-      Size padding = (0, 0)}) {
+      {double hitThreshold = 0, Size winStride = (0, 0), Size padding = (0, 0)}) {
     return using<(VecPoint, VecPoint)>((arena) {
       final foundLocations = calloc<cvg.VecPoint>();
       final searchLocations = calloc<cvg.VecPoint>();
@@ -335,10 +314,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
           searchLocations,
         ),
       );
-      return (
-        VecPoint.fromPointer(foundLocations),
-        VecPoint.fromPointer(searchLocations)
-      );
+      return (VecPoint.fromPointer(foundLocations), VecPoint.fromPointer(searchLocations));
     });
   }
 
@@ -440,8 +416,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 
   @override
   cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
+  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -466,8 +441,7 @@ VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
 // For further details, please see:
 // https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html
 class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
-  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -491,8 +465,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }) {
     final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-        () => CFFI.QRCodeDetector_decodeCurved(ref, img.ref, points.ref, s, v));
+    cvRun(() => CFFI.QRCodeDetector_decodeCurved(ref, img.ref, points.ref, s, v));
     final ss = v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (ss, Mat.fromPointer(s));
@@ -509,8 +482,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final p = points?.ptr ?? calloc<cvg.VecPoint>();
     final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-        () => CFFI.QRCodeDetector_detectAndDecodeCurved(ref, img.ref, p, s, v));
+    cvRun(() => CFFI.QRCodeDetector_detectAndDecodeCurved(ref, img.ref, p, s, v));
     final ss = v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (ss, points ?? VecPoint.fromPointer(p), Mat.fromPointer(s));
@@ -529,8 +501,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final code = straightCode?.ptr ?? calloc<cvg.Mat>();
     final points = calloc<cvg.VecPoint>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() =>
-        CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points, code, v));
+    cvRun(() => CFFI.QRCodeDetector_DetectAndDecode(ref, img.ref, points, code, v));
     final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (s, VecPoint.fromPointer(points), Mat.fromPointer(code));
@@ -561,8 +532,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final p = points?.ptr ?? calloc<cvg.VecPoint>();
     final ret = calloc<ffi.Pointer<ffi.Char>>();
     straightCode ??= Mat.empty();
-    cvRun(() =>
-        CFFI.QRCodeDetector_Decode(ref, img.ref, p, straightCode!.ref, ret));
+    cvRun(() => CFFI.QRCodeDetector_Decode(ref, img.ref, p, straightCode!.ref, ret));
     final info = ret.value.cast<Utf8>().toDartString();
     calloc.free(ret);
     return (info, VecPoint.fromPointer(p), straightCode);
@@ -596,8 +566,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final points = calloc<cvg.VecPoint>();
     final codes = calloc<cvg.VecMat>();
     final rval = calloc<ffi.Bool>();
-    cvRun(() => CFFI.QRCodeDetector_DetectAndDecodeMulti(
-        ref, img.ref, info, points, codes, rval));
+    cvRun(() => CFFI.QRCodeDetector_DetectAndDecodeMulti(ref, img.ref, info, points, codes, rval));
     final ret = (
       rval.value,
       VecVecChar.fromPointer(info).asStringList(),
@@ -617,12 +586,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }
 
   void setUseAlignmentMarkers(bool useAlignmentMarkers) {
-    cvRun(() =>
-        CFFI.QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers));
+    cvRun(() => CFFI.QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers));
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
+  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -639,8 +606,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 ///
 /// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
 class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
-  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -752,8 +718,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 
   void setInputSize(Size inputSize) {
     using<void>((arena) {
-      cvRun(() =>
-          CFFI.FaceDetectorYN_SetInputSize(ref, inputSize.toSize(arena).ref));
+      cvRun(() => CFFI.FaceDetectorYN_SetInputSize(ref, inputSize.toSize(arena).ref));
     });
   }
 
@@ -772,8 +737,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   @override
   cvg.FaceDetectorYN get ref => ptr.ref;
 
-  static final finalizer =
-      OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
+  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -788,8 +752,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 ///
 /// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
 class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
-  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -804,8 +767,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     final p = calloc<cvg.FaceRecognizerSF>();
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() =>
-        CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
+    cvRun(() => CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
     calloc.free(cModel);
     calloc.free(cConfig);
     return FaceRecognizerSF._(p);
@@ -817,8 +779,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
 
   Mat alignCrop(Mat srcImg, Mat faceBox) {
     final p = calloc<cvg.Mat>();
-    cvRun(
-        () => CFFI.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
+    cvRun(() => CFFI.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
     return Mat.fromPointer(p);
   }
 
@@ -831,8 +792,8 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   double match(Mat faceFeature1, Mat faceFeature2, int disType) {
     return using<double>((arena) {
       final distance = arena<ffi.Double>();
-      cvRun(() => CFFI.FaceRecognizerSF_Match(
-          ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
+      cvRun(() =>
+          CFFI.FaceRecognizerSF_Match(ref, faceFeature1.ref, faceFeature2.ref, disType, distance));
       return distance.value;
     });
   }
@@ -840,8 +801,8 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   @override
   cvg.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(
-      CFFI.addresses.FaceRecognizerSF_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.FaceRecognizerSFPtr>(CFFI.addresses.FaceRecognizerSF_Close);
 
   void dispose() {
     finalizer.detach(this);

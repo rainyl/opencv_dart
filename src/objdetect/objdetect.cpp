@@ -47,8 +47,8 @@ CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, Ma
 {
   BEGIN_WRAP
   std::vector<cv::Rect> *rects = new std::vector<cv::Rect>();
-  auto minsize = cv::Size(minSize.width, minSize.height);
-  auto maxsize = cv::Size(maxSize.width, maxSize.height);
+  auto                   minsize = cv::Size(minSize.width, minSize.height);
+  auto                   maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, *rects, scale, minNeighbors, flags, minsize, maxsize);
   *objects = {rects};
   END_WRAP
@@ -60,9 +60,9 @@ CvStatus CascadeClassifier_DetectMultiScale2(CascadeClassifier self, Mat img, Ve
 {
   BEGIN_WRAP
   std::vector<cv::Rect> *rects = new std::vector<cv::Rect>();
-  std::vector<int> *nums = new std::vector<int>();
-  auto minsize = cv::Size(minSize.width, minSize.height);
-  auto maxsize = cv::Size(maxSize.width, maxSize.height);
+  std::vector<int>      *nums = new std::vector<int>();
+  auto                   minsize = cv::Size(minSize.width, minSize.height);
+  auto                   maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, *rects, *nums, scaleFactor, minNeighbors, flags, minsize, maxsize);
   *objects = {rects};
   *numDetections = {nums};
@@ -76,10 +76,10 @@ CvStatus CascadeClassifier_DetectMultiScale3(CascadeClassifier self, Mat img, Ve
 {
   BEGIN_WRAP
   std::vector<cv::Rect> *rects = new std::vector<cv::Rect>();
-  std::vector<int> *rejects = new std::vector<int>();
-  std::vector<double> *weights = new std::vector<double>();
-  auto minsize = cv::Size(minSize.width, minSize.height);
-  auto maxsize = cv::Size(maxSize.width, maxSize.height);
+  std::vector<int>      *rejects = new std::vector<int>();
+  std::vector<double>   *weights = new std::vector<double>();
+  auto                   minsize = cv::Size(minSize.width, minSize.height);
+  auto                   maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, *rects, *rejects, *weights, scaleFactor, minNeighbors, flags, minsize,
                              maxsize, outputRejectLevels);
   *objects = {rects};
@@ -139,7 +139,7 @@ CvStatus HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocati
   BEGIN_WRAP
   std::vector<cv::Point> *_foundLocations = new std::vector<cv::Point>();
   std::vector<cv::Point> *_searchLocations = new std::vector<cv::Point>();
-  std::vector<double> *_weights = new std::vector<double>();
+  std::vector<double>    *_weights = new std::vector<double>();
   self.ptr->detect(*img.ptr, *_foundLocations, *_weights, hitThresh,
                    cv::Point(winStride.width, winStride.height), cv::Point(padding.width, padding.height),
                    *_searchLocations);
@@ -175,8 +175,8 @@ CvStatus HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor self, Mat img, d
 {
   BEGIN_WRAP
   std::vector<cv::Rect> *rects = new std::vector<cv::Rect>();
-  auto winstride = cv::Size(winStride.width, winStride.height);
-  auto pad = cv::Size(padding.width, padding.height);
+  auto                   winstride = cv::Size(winStride.width, winStride.height);
+  auto                   pad = cv::Size(padding.width, padding.height);
   self.ptr->detectMultiScale(*img.ptr, *rects, hitThresh, winstride, pad, scale, finalThreshold,
                              useMeanshiftGrouping);
   *rval = {rects};
@@ -198,7 +198,7 @@ CvStatus HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecFloat *descriptor
                                Size padding, VecPoint *locations)
 {
   BEGIN_WRAP
-  std::vector<float> *_descriptors = new std::vector<float>();
+  std::vector<float>     *_descriptors = new std::vector<float>();
   std::vector<cv::Point> *_locations = new std::vector<cv::Point>();
   self.ptr->compute(*img.ptr, *_descriptors, cv::Size(winStride.width, winStride.height),
                     cv::Size(padding.width, padding.height), *_locations);
@@ -348,21 +348,17 @@ CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, Vec
 {
   BEGIN_WRAP
   std::vector<cv::String> decodedCodes;
-  std::vector<cv::Mat> straightQrCodes;
-  std::vector<cv::Point> points_;
+  std::vector<cv::Mat>    straightQrCodes;
+  std::vector<cv::Point>  points_;
 
   *rval = self.ptr->detectAndDecodeMulti(*input.ptr, decodedCodes, points_, straightQrCodes);
-  if (!*rval)
-  {
+  if (!*rval) {
     *decoded = {new std::vector<std::vector<char>>()};
     *straight_code = {new std::vector<cv::Mat>()};
     *points = {new std::vector<cv::Point>()};
-  }
-  else
-  {
+  } else {
     auto vecvec = new std::vector<std::vector<char>>();
-    for (int i = 0; i < decodedCodes.size(); i++)
-    {
+    for (int i = 0; i < decodedCodes.size(); i++) {
       vecvec->push_back(std::vector<char>(decodedCodes[i].begin(), decodedCodes[i].end()));
     }
     *decoded = {vecvec};
