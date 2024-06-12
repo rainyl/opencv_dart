@@ -6,9 +6,9 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/rect.dart';
 import '../opencv.g.dart' as cvg;
 
 /// [Window] is a wrapper around OpenCV's "HighGUI" named windows.
@@ -43,8 +43,13 @@ class Window {
   double getWindowProperty(WindowPropertyFlags flag) {
     return cvRunArena<double>((arena) {
       final result = arena<ffi.Double>();
-      cvRun(() =>
-          cvg.Window_GetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, result));
+      cvRun(
+        () => cvg.Window_GetProperty(
+          name.toNativeUtf8(allocator: arena).cast(),
+          flag.value,
+          result,
+        ),
+      );
       return result.value;
     });
   }
@@ -55,8 +60,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
   void setWindowProperty(WindowPropertyFlags flag, double value) {
     cvRunArena((arena) {
-      cvRun(() =>
-          cvg.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
+      cvRun(() => cvg.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
     });
   }
 
@@ -66,8 +70,12 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
   void setWindowTitle(String title) {
     cvRunArena((arena) {
-      cvRun(() => cvg.Window_SetTitle(
-          name.toNativeUtf8(allocator: arena).cast(), title.toNativeUtf8(allocator: arena).cast()));
+      cvRun(
+        () => cvg.Window_SetTitle(
+          name.toNativeUtf8(allocator: arena).cast(),
+          title.toNativeUtf8(allocator: arena).cast(),
+        ),
+      );
     });
   }
 
@@ -191,8 +199,13 @@ class Trackbar {
   int get pos {
     return cvRunArena<int>((arena) {
       final result = arena<ffi.Int>();
-      cvRun(() => cvg.Trackbar_GetPos(parent.name.toNativeUtf8(allocator: arena).cast(),
-          name.toNativeUtf8(allocator: arena).cast(), result));
+      cvRun(
+        () => cvg.Trackbar_GetPos(
+          parent.name.toNativeUtf8(allocator: arena).cast(),
+          name.toNativeUtf8(allocator: arena).cast(),
+          result,
+        ),
+      );
       return result.value;
     });
   }
@@ -217,6 +230,7 @@ class Trackbar {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gabe26ffe8d2b60cc678895595a581b7aa
+  // ignore: avoid_setters_without_getters
   set minPos(int pos) {
     cvRunArena((arena) {
       cvRun(
@@ -233,6 +247,7 @@ class Trackbar {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga7e5437ccba37f1154b65210902fc4480
+  // ignore: avoid_setters_without_getters
   set maxPos(int pos) {
     cvRunArena((arena) {
       cvRun(
@@ -252,7 +267,7 @@ class Trackbar {
 
 /// destroy all windows.
 void destroyAllWindows() {
-  cvRun(() => cvg.destroyAllWindows());
+  cvRun(cvg.destroyAllWindows);
 }
 
 enum WindowFlag {

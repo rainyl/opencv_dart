@@ -184,8 +184,7 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
     return VecInt.fromPointer(rptr);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.PtrStitcherPtr>(ffi.Native.addressOf(cvg.Stitcher_Close));
+  static final finalizer = OcvFinalizer<cvg.PtrStitcherPtr>(ffi.Native.addressOf(cvg.Stitcher_Close));
 
   void dispose() {
     finalizer.detach(this);

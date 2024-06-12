@@ -1,9 +1,9 @@
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:opencv_dart/src/core/termcriteria.dart';
 import 'package:test/test.dart';
-import 'package:opencv_dart/opencv_dart.dart' as cv;
 
 void main() {
   test('cv.Scalar', () {

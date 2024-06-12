@@ -5,12 +5,12 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
 import '../core/base.dart';
+import '../core/error_code.dart';
+import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../core/exception.dart';
-import '../core/error_code.dart';
-import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 /// IMRead reads an image from a file into a Mat.
@@ -70,10 +70,10 @@ Uint8List imencode(
   params == null
       ? cvRun(() => cvg.Image_IMEncode(cExt, img.ref, success, buffer))
       : cvRun(() => cvg.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+  calloc.free(cExt);
   if (!success.value) {
     throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
   }
-  calloc.free(cExt);
   return VecUChar.fromPointer(buffer).toU8List();
 }
 

@@ -5,12 +5,12 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../constants.g.dart';
-import '../core/mat_type.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
+import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
-import '../core/point.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
@@ -52,8 +52,8 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 
   @override
   cvg.BackgroundSubtractorMOG2 get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(
-      ffi.Native.addressOf(cvg.BackgroundSubtractorMOG2_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(ffi.Native.addressOf(cvg.BackgroundSubtractorMOG2_Close));
 
   void dispose() {
     finalizer.detach(this);
@@ -65,15 +65,14 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 }
 
 class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
-  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(
-      ffi.Native.addressOf(cvg.BackgroundSubtractorKNN_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(ffi.Native.addressOf(cvg.BackgroundSubtractorKNN_Close));
 
   void dispose() {
     finalizer.detach(this);
@@ -291,8 +290,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
     });
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.TrackerMILPtr>(ffi.Native.addressOf(cvg.TrackerMIL_Close));
+  static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(ffi.Native.addressOf(cvg.TrackerMIL_Close));
 
   void dispose() {
     finalizer.detach(this);
@@ -344,16 +342,18 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     return Mat.fromPointer(p);
   }
 
-  void init(int dynamParams, int measureParams,
-      {int controlParams = 0, int type = MatType.CV_32F}) {
-    cvRun(() =>
-        cvg.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
+  void init(
+    int dynamParams,
+    int measureParams, {
+    int controlParams = 0,
+    int type = MatType.CV_32F,
+  }) {
+    cvRun(() => cvg.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
   }
 
   @override
   cvg.KalmanFilter get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.KalmanFilterPtr>(ffi.Native.addressOf(cvg.KalmanFilter_Close));
+  static final finalizer = OcvFinalizer<cvg.KalmanFilterPtr>(ffi.Native.addressOf(cvg.KalmanFilter_Close));
 
   void dispose() {
     finalizer.detach(this);

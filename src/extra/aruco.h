@@ -26,12 +26,8 @@ CVD_TYPEDEF(void, ArucoDetectorParameters)
 CVD_TYPEDEF(void, ArucoDetector)
 #endif
 
-CVD_TYPEDEF_PTR(ArucoDictionary)
-CVD_TYPEDEF_PTR(ArucoDetectorParameters)
-CVD_TYPEDEF_PTR(ArucoDetector)
-
 CvStatus ArucoDetectorParameters_Create(ArucoDetectorParameters *rval);
-void     ArucoDetectorParameters_Close(ArucoDetectorParameters *ap);
+void     ArucoDetectorParameters_Close(ArucoDetectorParametersPtr ap);
 CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(ArucoDetectorParameters ap,
                                                              int adaptiveThreshWinSizeMin);
 CvStatus ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(ArucoDetectorParameters ap, int *rval);
@@ -116,12 +112,12 @@ CvStatus ArucoDetectorParameters_SetDetectInvertedMarker(ArucoDetectorParameters
 CvStatus ArucoDetectorParameters_GetDetectInvertedMarker(ArucoDetectorParameters ap, bool *rval);
 
 CvStatus getPredefinedDictionary(int dictionaryId, ArucoDictionary *rval);
-void     ArucoDictionary_Close(ArucoDictionary *self);
+void     ArucoDictionary_Close(ArucoDictionaryPtr self);
 
 CvStatus ArucoDetector_New(ArucoDetector *rval);
 CvStatus ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorParameters params,
                                      ArucoDetector *rval);
-void     ArucoDetector_Close(ArucoDetector *ad);
+void     ArucoDetector_Close(ArucoDetectorPtr ad);
 CvStatus ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,
                                      VecInt *markerIds, VecVecPoint2f *rejectedCandidates);
 

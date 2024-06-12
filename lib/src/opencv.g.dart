@@ -13,9 +13,9 @@ library;
 
 import 'dart:ffi' as ffi;
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<AKAZE>)>()
+@ffi.Native<ffi.Void Function(AKAZEPtr)>()
 external void AKAZE_Close(
-  ffi.Pointer<AKAZE> a,
+  AKAZEPtr a,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<AKAZE>)>()
@@ -52,9 +52,9 @@ external CvStatus AdaptiveThreshold(
   double c,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<AgastFeatureDetector>)>()
+@ffi.Native<ffi.Void Function(AgastFeatureDetectorPtr)>()
 external void AgastFeatureDetector_Close(
-  ffi.Pointer<AgastFeatureDetector> a,
+  AgastFeatureDetectorPtr a,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<AgastFeatureDetector>)>()
@@ -70,9 +70,9 @@ external CvStatus AgastFeatureDetector_Detect(
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<AlignMTB>)>()
+@ffi.Native<ffi.Void Function(AlignMTBPtr)>()
 external void AlignMTB_Close(
-  ffi.Pointer<AlignMTB> b,
+  AlignMTBPtr b,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<AlignMTB>)>()
@@ -140,9 +140,9 @@ external CvStatus ArrowedLine(
   double tipLength,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<ArucoDetectorParameters>)>()
+@ffi.Native<ffi.Void Function(ArucoDetectorParametersPtr)>()
 external void ArucoDetectorParameters_Close(
-  ffi.Pointer<ArucoDetectorParameters> ap,
+  ArucoDetectorParametersPtr ap,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<ArucoDetectorParameters>)>()
@@ -515,9 +515,9 @@ external CvStatus ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
   double polygonalApproxAccuracyRate,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<ArucoDetector>)>()
+@ffi.Native<ffi.Void Function(ArucoDetectorPtr)>()
 external void ArucoDetector_Close(
-  ffi.Pointer<ArucoDetector> ad,
+  ArucoDetectorPtr ad,
 );
 
 @ffi.Native<
@@ -545,9 +545,9 @@ external CvStatus ArucoDetector_NewWithParams(
   ffi.Pointer<ArucoDetector> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<ArucoDictionary>)>()
+@ffi.Native<ffi.Void Function(ArucoDictionaryPtr)>()
 external void ArucoDictionary_Close(
-  ffi.Pointer<ArucoDictionary> self,
+  ArucoDictionaryPtr self,
 );
 
 @ffi.Native<CvStatus Function(Mat, VecVecPoint2f, VecInt, Scalar)>()
@@ -567,9 +567,9 @@ external CvStatus ArucoGenerateImageMarker(
   int borderBits,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<AsyncArray>)>()
+@ffi.Native<ffi.Void Function(AsyncArrayPtr)>()
 external void AsyncArray_Close(
-  ffi.Pointer<AsyncArray> a,
+  AsyncArrayPtr a,
 );
 
 @ffi.Native<CvStatus Function(AsyncArray, Mat)>()
@@ -583,9 +583,9 @@ external CvStatus AsyncArray_New(
   ffi.Pointer<AsyncArray> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<BFMatcher>)>()
+@ffi.Native<ffi.Void Function(BFMatcherPtr)>()
 external void BFMatcher_Close(
-  ffi.Pointer<BFMatcher> b,
+  BFMatcherPtr b,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<BFMatcher>)>()
@@ -619,9 +619,9 @@ external CvStatus BFMatcher_Match(
   ffi.Pointer<VecDMatch> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<BRISK>)>()
+@ffi.Native<ffi.Void Function(BRISKPtr)>()
 external void BRISK_Close(
-  ffi.Pointer<BRISK> b,
+  BRISKPtr b,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<BRISK>)>()
@@ -652,9 +652,9 @@ external CvStatus BackgroundSubtractorKNN_Apply(
   Mat dst,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<BackgroundSubtractorKNN>)>()
+@ffi.Native<ffi.Void Function(BackgroundSubtractorKNNPtr)>()
 external void BackgroundSubtractorKNN_Close(
-  ffi.Pointer<BackgroundSubtractorKNN> self,
+  BackgroundSubtractorKNNPtr self,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<BackgroundSubtractorKNN>)>()
@@ -679,9 +679,9 @@ external CvStatus BackgroundSubtractorMOG2_Apply(
   Mat dst,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<BackgroundSubtractorMOG2>)>()
+@ffi.Native<ffi.Void Function(BackgroundSubtractorMOG2Ptr)>()
 external void BackgroundSubtractorMOG2_Close(
-  ffi.Pointer<BackgroundSubtractorMOG2> self,
+  BackgroundSubtractorMOG2Ptr self,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<BackgroundSubtractorMOG2>)>()
@@ -708,9 +708,9 @@ external CvStatus BilateralFilter(
   double ss,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<BlockMeanHash>)>()
+@ffi.Native<ffi.Void Function(BlockMeanHashPtr)>()
 external void BlockMeanHash_Close(
-  ffi.Pointer<BlockMeanHash> self,
+  BlockMeanHashPtr self,
 );
 
 @ffi.Native<
@@ -784,9 +784,9 @@ external CvStatus CLAHE_Apply(
   Mat dst,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<CLAHE>)>()
+@ffi.Native<ffi.Void Function(CLAHEPtr)>()
 external void CLAHE_Close(
-  ffi.Pointer<CLAHE> c,
+  CLAHEPtr c,
 );
 
 @ffi.Native<CvStatus Function(CLAHE)>()
@@ -933,9 +933,9 @@ external CvStatus Canny(
   bool l2gradient,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<CascadeClassifier>)>()
+@ffi.Native<ffi.Void Function(CascadeClassifierPtr)>()
 external void CascadeClassifier_Close(
-  ffi.Pointer<CascadeClassifier> self,
+  CascadeClassifierPtr self,
 );
 
 @ffi.Native<CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>)>()
@@ -1364,9 +1364,159 @@ external CvStatus Eye(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<FastFeatureDetector>)>()
+@ffi.Native<ffi.Void Function(FaceDetectorYNPtr)>()
+external void FaceDetectorYN_Close(
+  FaceDetectorYNPtr self,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>()
+external CvStatus FaceDetectorYN_Detect(
+  FaceDetectorYN self,
+  Mat img,
+  ffi.Pointer<Mat> faces,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<Size>)>()
+external CvStatus FaceDetectorYN_GetInputSize(
+  FaceDetectorYN self,
+  ffi.Pointer<Size> input_size,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
+external CvStatus FaceDetectorYN_GetNMSThreshold(
+  FaceDetectorYN self,
+  ffi.Pointer<ffi.Float> nms_threshold,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
+external CvStatus FaceDetectorYN_GetScoreThreshold(
+  FaceDetectorYN self,
+  ffi.Pointer<ffi.Float> score_threshold,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Int>)>()
+external CvStatus FaceDetectorYN_GetTopK(
+  FaceDetectorYN self,
+  ffi.Pointer<ffi.Int> top_k,
+);
+
+@ffi.Native<
+    CvStatus Function(
+        ffi.Pointer<ffi.Char>,
+        ffi.Pointer<ffi.Char>,
+        Size,
+        ffi.Float,
+        ffi.Float,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Pointer<FaceDetectorYN>)>()
+external CvStatus FaceDetectorYN_New(
+  ffi.Pointer<ffi.Char> model,
+  ffi.Pointer<ffi.Char> config,
+  Size input_size,
+  double score_threshold,
+  double nms_threshold,
+  int top_k,
+  int backend_id,
+  int target_id,
+  ffi.Pointer<FaceDetectorYN> rval,
+);
+
+@ffi.Native<
+    CvStatus Function(
+        ffi.Pointer<ffi.Char>,
+        VecUChar,
+        VecUChar,
+        Size,
+        ffi.Float,
+        ffi.Float,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Pointer<FaceDetectorYN>)>()
+external CvStatus FaceDetectorYN_NewFromBuffer(
+  ffi.Pointer<ffi.Char> framework,
+  VecUChar buffer,
+  VecUChar buffer_config,
+  Size input_size,
+  double score_threshold,
+  double nms_threshold,
+  int top_k,
+  int backend_id,
+  int target_id,
+  ffi.Pointer<FaceDetectorYN> rval,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, Size)>()
+external CvStatus FaceDetectorYN_SetInputSize(
+  FaceDetectorYN self,
+  Size input_size,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Float)>()
+external CvStatus FaceDetectorYN_SetNMSThreshold(
+  FaceDetectorYN self,
+  double nms_threshold,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Float)>()
+external CvStatus FaceDetectorYN_SetScoreThreshold(
+  FaceDetectorYN self,
+  double score_threshold,
+);
+
+@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Int)>()
+external CvStatus FaceDetectorYN_SetTopK(
+  FaceDetectorYN self,
+  int top_k,
+);
+
+@ffi.Native<CvStatus Function(FaceRecognizerSF, Mat, Mat, ffi.Pointer<Mat>)>()
+external CvStatus FaceRecognizerSF_AlignCrop(
+  FaceRecognizerSF self,
+  Mat src_img,
+  Mat face_box,
+  ffi.Pointer<Mat> aligned_img,
+);
+
+@ffi.Native<ffi.Void Function(FaceRecognizerSFPtr)>()
+external void FaceRecognizerSF_Close(
+  FaceRecognizerSFPtr self,
+);
+
+@ffi.Native<CvStatus Function(FaceRecognizerSF, Mat, ffi.Pointer<Mat>)>()
+external CvStatus FaceRecognizerSF_Feature(
+  FaceRecognizerSF self,
+  Mat aligned_img,
+  ffi.Pointer<Mat> face_feature,
+);
+
+@ffi.Native<
+    CvStatus Function(
+        FaceRecognizerSF, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external CvStatus FaceRecognizerSF_Match(
+  FaceRecognizerSF self,
+  Mat face_feature1,
+  Mat face_feature2,
+  int dis_type,
+  ffi.Pointer<ffi.Double> distance,
+);
+
+@ffi.Native<
+    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int,
+        ffi.Int, ffi.Pointer<FaceRecognizerSF>)>()
+external CvStatus FaceRecognizerSF_New(
+  ffi.Pointer<ffi.Char> model,
+  ffi.Pointer<ffi.Char> config,
+  int backend_id,
+  int target_id,
+  ffi.Pointer<FaceRecognizerSF> rval,
+);
+
+@ffi.Native<ffi.Void Function(FastFeatureDetectorPtr)>()
 external void FastFeatureDetector_Close(
-  ffi.Pointer<FastFeatureDetector> f,
+  FastFeatureDetectorPtr f,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<FastFeatureDetector>)>()
@@ -1602,9 +1752,9 @@ external CvStatus FitLine(
   double aeps,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<FlannBasedMatcher>)>()
+@ffi.Native<ffi.Void Function(FlannBasedMatcherPtr)>()
 external void FlannBasedMatcher_Close(
-  ffi.Pointer<FlannBasedMatcher> f,
+  FlannBasedMatcherPtr f,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<FlannBasedMatcher>)>()
@@ -1623,9 +1773,9 @@ external CvStatus FlannBasedMatcher_KnnMatch(
   ffi.Pointer<VecVecDMatch> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<GFTTDetector>)>()
+@ffi.Native<ffi.Void Function(GFTTDetectorPtr)>()
 external void GFTTDetector_Close(
-  ffi.Pointer<GFTTDetector> a,
+  GFTTDetectorPtr a,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<GFTTDetector>)>()
@@ -1804,9 +1954,9 @@ external CvStatus GroupRectangles(
   double eps,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<HOGDescriptor>)>()
+@ffi.Native<ffi.Void Function(HOGDescriptorPtr)>()
 external void HOGDescriptor_Close(
-  ffi.Pointer<HOGDescriptor> self,
+  HOGDescriptorPtr self,
 );
 
 @ffi.Native<
@@ -2114,9 +2264,9 @@ external CvStatus InvertAffineTransform(
   Mat dst,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<KAZE>)>()
+@ffi.Native<ffi.Void Function(KAZEPtr)>()
 external void KAZE_Close(
-  ffi.Pointer<KAZE> a,
+  KAZEPtr a,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<KAZE>)>()
@@ -2168,9 +2318,9 @@ external CvStatus KMeansPoints(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<KalmanFilter>)>()
+@ffi.Native<ffi.Void Function(KalmanFilterPtr)>()
 external void KalmanFilter_Close(
-  ffi.Pointer<KalmanFilter> self,
+  KalmanFilterPtr self,
 );
 
 @ffi.Native<CvStatus Function(KalmanFilter, Mat, ffi.Pointer<Mat>)>()
@@ -2391,21 +2541,21 @@ external CvStatus Laplacian(
   int borderType,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<Layer>)>()
+@ffi.Native<ffi.Void Function(LayerPtr)>()
 external void Layer_Close(
-  ffi.Pointer<Layer> layer,
+  LayerPtr layer,
 );
 
-@ffi.Native<CvStatus Function(Layer, ffi.Pointer<VecChar>)>()
+@ffi.Native<CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external CvStatus Layer_GetName(
   Layer layer,
-  ffi.Pointer<VecChar> rval,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(Layer, ffi.Pointer<VecChar>)>()
+@ffi.Native<CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external CvStatus Layer_GetType(
   Layer layer,
-  ffi.Pointer<VecChar> rval,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<
@@ -2454,9 +2604,9 @@ external CvStatus LogPolar(
   int flags,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<MSER>)>()
+@ffi.Native<ffi.Void Function(MSERPtr)>()
 external void MSER_Close(
-  ffi.Pointer<MSER> a,
+  MSERPtr a,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<MSER>)>()
@@ -2707,9 +2857,9 @@ external CvStatus Mat_Clone(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<Mat>)>()
+@ffi.Native<ffi.Void Function(MatPtr)>()
 external void Mat_Close(
-  ffi.Pointer<Mat> m,
+  MatPtr m,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>()
@@ -4404,9 +4554,9 @@ external CvStatus MedianBlur(
   int ksize,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<MergeMertens>)>()
+@ffi.Native<ffi.Void Function(MergeMertensPtr)>()
 external void MergeMertens_Close(
-  ffi.Pointer<MergeMertens> b,
+  MergeMertensPtr b,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<MergeMertens>)>()
@@ -4531,9 +4681,9 @@ external CvStatus Net_BlobFromImages(
   int ddepth,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<Net>)>()
+@ffi.Native<ffi.Void Function(NetPtr)>()
 external void Net_Close(
-  ffi.Pointer<Net> net,
+  NetPtr net,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<Net>)>()
@@ -4754,9 +4904,9 @@ external CvStatus NormWithMats(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<ORB>)>()
+@ffi.Native<ffi.Void Function(ORBPtr)>()
 external void ORB_Close(
-  ffi.Pointer<ORB> o,
+  ORBPtr o,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<ORB>)>()
@@ -4896,9 +5046,9 @@ external CvStatus PyrUp(
   int borderType,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<QRCodeDetector>)>()
+@ffi.Native<ffi.Void Function(QRCodeDetectorPtr)>()
 external void QRCodeDetector_Close(
-  ffi.Pointer<QRCodeDetector> self,
+  QRCodeDetectorPtr self,
 );
 
 @ffi.Native<
@@ -5107,9 +5257,9 @@ external CvStatus Resize(
   int interp,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<RNG>)>()
+@ffi.Native<ffi.Void Function(RNGPtr)>()
 external void Rng_Close(
-  ffi.Pointer<RNG> rng,
+  RNGPtr rng,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<RNG>)>()
@@ -5148,9 +5298,9 @@ external CvStatus RotatedRect_Points(
   ffi.Pointer<VecPoint2f> pts,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<SIFT>)>()
+@ffi.Native<ffi.Void Function(SIFTPtr)>()
 external void SIFT_Close(
-  ffi.Pointer<SIFT> f,
+  SIFTPtr f,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<SIFT>)>()
@@ -5236,9 +5386,9 @@ external CvStatus SimpleBlobDetectorParams_Create(
   ffi.Pointer<SimpleBlobDetectorParams> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<SimpleBlobDetector>)>()
+@ffi.Native<ffi.Void Function(SimpleBlobDetectorPtr)>()
 external void SimpleBlobDetector_Close(
-  ffi.Pointer<SimpleBlobDetector> b,
+  SimpleBlobDetectorPtr b,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<SimpleBlobDetector>)>()
@@ -5294,9 +5444,9 @@ external CvStatus SqBoxFilter(
   Size ps,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<PtrStitcher>)>()
+@ffi.Native<ffi.Void Function(PtrStitcherPtr)>()
 external void Stitcher_Close(
-  ffi.Pointer<PtrStitcher> stitcher,
+  PtrStitcherPtr stitcher,
 );
 
 @ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<VecInt>)>()
@@ -5450,9 +5600,9 @@ external CvStatus Stylization(
   double sigma_r,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<Subdiv2D>)>()
+@ffi.Native<ffi.Void Function(Subdiv2DPtr)>()
 external void Subdiv2D_Close(
-  ffi.Pointer<Subdiv2D> self,
+  Subdiv2DPtr self,
 );
 
 @ffi.Native<
@@ -5680,9 +5830,9 @@ external CvStatus Trackbar_SetPos(
   int pos,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<TrackerMIL>)>()
+@ffi.Native<ffi.Void Function(TrackerMILPtr)>()
 external void TrackerMIL_Close(
-  ffi.Pointer<TrackerMIL> self,
+  TrackerMILPtr self,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<TrackerMIL>)>()
@@ -5740,9 +5890,15 @@ external CvStatus VecChar_At(
   ffi.Pointer<ffi.Char> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecChar>)>()
+@ffi.Native<ffi.Void Function(VecCharPtr)>()
 external void VecChar_Close(
-  ffi.Pointer<VecChar> vec,
+  VecCharPtr vec,
+);
+
+@ffi.Native<CvStatus Function(VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external CvStatus VecChar_Data(
+  VecChar vec,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecChar>)>()
@@ -5792,9 +5948,9 @@ external CvStatus VecDMatch_At(
   ffi.Pointer<DMatch> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecDMatch>)>()
+@ffi.Native<ffi.Void Function(VecDMatchPtr)>()
 external void VecDMatch_Close(
-  ffi.Pointer<VecDMatch> vec,
+  VecDMatchPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecDMatch>)>()
@@ -5835,9 +5991,16 @@ external CvStatus VecDouble_At(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecDouble>)>()
+@ffi.Native<ffi.Void Function(VecDoublePtr)>()
 external void VecDouble_Close(
-  ffi.Pointer<VecDouble> vec,
+  VecDoublePtr vec,
+);
+
+@ffi.Native<
+    CvStatus Function(VecDouble, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
+external CvStatus VecDouble_Data(
+  VecDouble vec,
+  ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecDouble>)>()
@@ -5879,9 +6042,15 @@ external CvStatus VecFloat_At(
   ffi.Pointer<ffi.Float> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecFloat>)>()
+@ffi.Native<ffi.Void Function(VecFloatPtr)>()
 external void VecFloat_Close(
-  ffi.Pointer<VecFloat> vec,
+  VecFloatPtr vec,
+);
+
+@ffi.Native<CvStatus Function(VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
+external CvStatus VecFloat_Data(
+  VecFloat vec,
+  ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
@@ -5922,9 +6091,22 @@ external CvStatus VecInt_At(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecInt>)>()
+@ffi.Native<CvStatus Function(VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external CvStatus VecInt_AtNoBoundCheck(
+  VecInt vec,
+  int idx,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<ffi.Void Function(VecIntPtr)>()
 external void VecInt_Close(
-  ffi.Pointer<VecInt> vec,
+  VecIntPtr vec,
+);
+
+@ffi.Native<CvStatus Function(VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
+external CvStatus VecInt_Data(
+  VecInt vec,
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecInt>)>()
@@ -5966,9 +6148,9 @@ external CvStatus VecKeyPoint_At(
   ffi.Pointer<KeyPoint> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecKeyPoint>)>()
+@ffi.Native<ffi.Void Function(VecKeyPointPtr)>()
 external void VecKeyPoint_Close(
-  ffi.Pointer<VecKeyPoint> vec,
+  VecKeyPointPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecKeyPoint>)>()
@@ -6010,9 +6192,9 @@ external CvStatus VecMat_At(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecMat>)>()
+@ffi.Native<ffi.Void Function(VecMatPtr)>()
 external void VecMat_Close(
-  ffi.Pointer<VecMat> vec,
+  VecMatPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecMat>)>()
@@ -6052,9 +6234,9 @@ external CvStatus VecPoint2f_At(
   ffi.Pointer<Point2f> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecPoint2f>)>()
+@ffi.Native<ffi.Void Function(VecPoint2fPtr)>()
 external void VecPoint2f_Close(
-  ffi.Pointer<VecPoint2f> vec,
+  VecPoint2fPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecPoint2f>)>()
@@ -6101,9 +6283,9 @@ external CvStatus VecPoint3f_At(
   ffi.Pointer<Point3f> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecPoint3f>)>()
+@ffi.Native<ffi.Void Function(VecPoint3fPtr)>()
 external void VecPoint3f_Close(
-  ffi.Pointer<VecPoint3f> vec,
+  VecPoint3fPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecPoint3f>)>()
@@ -6150,9 +6332,9 @@ external CvStatus VecPoint_At(
   ffi.Pointer<Point> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecPoint>)>()
+@ffi.Native<ffi.Void Function(VecPointPtr)>()
 external void VecPoint_Close(
-  ffi.Pointer<VecPoint> vec,
+  VecPointPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecPoint>)>()
@@ -6200,9 +6382,9 @@ external CvStatus VecRect_At(
   ffi.Pointer<Rect> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecRect>)>()
+@ffi.Native<ffi.Void Function(VecRectPtr)>()
 external void VecRect_Close(
-  ffi.Pointer<VecRect> vec,
+  VecRectPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecRect>)>()
@@ -6243,9 +6425,22 @@ external CvStatus VecUChar_At(
   ffi.Pointer<uchar> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecUChar>)>()
+@ffi.Native<CvStatus Function(VecUChar, ffi.Int, ffi.Pointer<uchar>)>()
+external CvStatus VecUChar_AtNoBoundCheck(
+  VecUChar vec,
+  int idx,
+  ffi.Pointer<uchar> rval,
+);
+
+@ffi.Native<ffi.Void Function(VecUCharPtr)>()
 external void VecUChar_Close(
-  ffi.Pointer<VecUChar> vec,
+  VecUCharPtr vec,
+);
+
+@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<ffi.Pointer<uchar>>)>()
+external CvStatus VecUChar_Data(
+  VecUChar vec,
+  ffi.Pointer<ffi.Pointer<uchar>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecUChar>)>()
@@ -6302,9 +6497,9 @@ external CvStatus VecVecChar_At_Str(
   ffi.Pointer<ffi.Int> length,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecVecChar>)>()
+@ffi.Native<ffi.Void Function(VecVecCharPtr)>()
 external void VecVecChar_Close(
-  ffi.Pointer<VecVecChar> vec,
+  VecVecCharPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecVecChar>)>()
@@ -6337,9 +6532,16 @@ external CvStatus VecVecDMatch_At(
   ffi.Pointer<VecDMatch> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecVecDMatch>)>()
+@ffi.Native<ffi.Void Function(VecVecDMatchPtr)>()
 external void VecVecDMatch_Close(
-  ffi.Pointer<VecVecDMatch> vec,
+  VecVecDMatchPtr vec,
+);
+
+@ffi.Native<
+    CvStatus Function(VecVecDMatch, ffi.Pointer<ffi.Pointer<VecDMatch>>)>()
+external CvStatus VecVecDMatch_Data(
+  VecVecDMatch vec,
+  ffi.Pointer<ffi.Pointer<VecDMatch>> rval,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecVecDMatch>)>()
@@ -6382,9 +6584,9 @@ external CvStatus VecVecPoint2f_At(
   ffi.Pointer<VecPoint2f> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecVecPoint2f>)>()
+@ffi.Native<ffi.Void Function(VecVecPoint2fPtr)>()
 external void VecVecPoint2f_Close(
-  ffi.Pointer<VecVecPoint2f> vec,
+  VecVecPoint2fPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint2f>)>()
@@ -6427,9 +6629,9 @@ external CvStatus VecVecPoint3f_At(
   ffi.Pointer<VecPoint3f> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecVecPoint3f>)>()
+@ffi.Native<ffi.Void Function(VecVecPoint3fPtr)>()
 external void VecVecPoint3f_Close(
-  ffi.Pointer<VecVecPoint3f> vec,
+  VecVecPoint3fPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint3f>)>()
@@ -6471,9 +6673,9 @@ external CvStatus VecVecPoint_At(
   ffi.Pointer<VecPoint> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VecVecPoint>)>()
+@ffi.Native<ffi.Void Function(VecVecPointPtr)>()
 external void VecVecPoint_Close(
-  ffi.Pointer<VecVecPoint> vec,
+  VecVecPointPtr vec,
 );
 
 @ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint>)>()
@@ -6502,9 +6704,9 @@ external CvStatus VecVecPoint_Size(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VideoCapture>)>()
+@ffi.Native<ffi.Void Function(VideoCapturePtr)>()
 external void VideoCapture_Close(
-  ffi.Pointer<VideoCapture> self,
+  VideoCapturePtr self,
 );
 
 @ffi.Native<CvStatus Function(VideoCapture, ffi.Int, ffi.Pointer<ffi.Double>)>()
@@ -6601,9 +6803,9 @@ external CvStatus VideoCapture_Set(
   double param,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<VideoWriter>)>()
+@ffi.Native<ffi.Void Function(VideoWriterPtr)>()
 external void VideoWriter_Close(
-  ffi.Pointer<VideoWriter> self,
+  VideoWriterPtr self,
 );
 
 @ffi.Native<
@@ -6696,9 +6898,9 @@ external CvStatus Watershed(
   Mat markers,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<WeChatQRCode>)>()
+@ffi.Native<ffi.Void Function(WeChatQRCodePtr)>()
 external void WeChatQRCode_Close(
-  ffi.Pointer<WeChatQRCode> self,
+  WeChatQRCodePtr self,
 );
 
 @ffi.Native<
@@ -7074,6 +7276,18 @@ typedef DartErrorCallbackFunction = void Function(
     int line,
     ffi.Pointer<ffi.Void> userdata);
 
+final class FaceDetectorYN extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef FaceDetectorYNPtr = ffi.Pointer<FaceDetectorYN>;
+
+final class FaceRecognizerSF extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef FaceRecognizerSFPtr = ffi.Pointer<FaceRecognizerSF>;
+
 final class FastFeatureDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -7101,8 +7315,6 @@ typedef HOGDescriptorPtr = ffi.Pointer<HOGDescriptor>;
 final class InputOutputArray extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
-
-typedef InputOutputArrayPtr = ffi.Pointer<InputOutputArray>;
 
 final class KAZE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -7235,405 +7447,6 @@ final class Moment extends ffi.Struct {
 
   @ffi.Double()
   external double nu03;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AKAZEPtr extends ffi.Struct {
-  external ffi.Pointer<AKAZEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AgastFeatureDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<AgastFeatureDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AlignMTBPtr extends ffi.Struct {
-  external ffi.Pointer<AlignMTBPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDetectorParametersPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDetectorParametersPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ArucoDictionaryPtr extends ffi.Struct {
-  external ffi.Pointer<ArucoDictionaryPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_AsyncArrayPtr extends ffi.Struct {
-  external ffi.Pointer<AsyncArrayPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BFMatcherPtr extends ffi.Struct {
-  external ffi.Pointer<BFMatcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BRISKPtr extends ffi.Struct {
-  external ffi.Pointer<BRISKPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BackgroundSubtractorKNNPtr extends ffi.Struct {
-  external ffi.Pointer<BackgroundSubtractorKNNPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BackgroundSubtractorMOG2Ptr extends ffi.Struct {
-  external ffi.Pointer<BackgroundSubtractorMOG2Ptr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_BlockMeanHashPtr extends ffi.Struct {
-  external ffi.Pointer<BlockMeanHashPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_CLAHEPtr extends ffi.Struct {
-  external ffi.Pointer<CLAHEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_CascadeClassifierPtr extends ffi.Struct {
-  external ffi.Pointer<CascadeClassifierPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_FastFeatureDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<FastFeatureDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_FlannBasedMatcherPtr extends ffi.Struct {
-  external ffi.Pointer<FlannBasedMatcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_GFTTDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<GFTTDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_HOGDescriptorPtr extends ffi.Struct {
-  external ffi.Pointer<HOGDescriptorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_InputOutputArrayPtr extends ffi.Struct {
-  external ffi.Pointer<InputOutputArrayPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_KAZEPtr extends ffi.Struct {
-  external ffi.Pointer<KAZEPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_KalmanFilterPtr extends ffi.Struct {
-  external ffi.Pointer<KalmanFilterPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_LayerPtr extends ffi.Struct {
-  external ffi.Pointer<LayerPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MSERPtr extends ffi.Struct {
-  external ffi.Pointer<MSERPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MatPtr extends ffi.Struct {
-  external ffi.Pointer<MatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_MergeMertensPtr extends ffi.Struct {
-  external ffi.Pointer<MergeMertensPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_NetPtr extends ffi.Struct {
-  external ffi.Pointer<NetPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_ORBPtr extends ffi.Struct {
-  external ffi.Pointer<ORBPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_PtrStitcherPtr extends ffi.Struct {
-  external ffi.Pointer<PtrStitcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_QRCodeDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<QRCodeDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_RNGPtr extends ffi.Struct {
-  external ffi.Pointer<RNGPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_SIFTPtr extends ffi.Struct {
-  external ffi.Pointer<SIFTPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_SimpleBlobDetectorPtr extends ffi.Struct {
-  external ffi.Pointer<SimpleBlobDetectorPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_StitcherPtr extends ffi.Struct {
-  external ffi.Pointer<StitcherPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_Subdiv2DPtr extends ffi.Struct {
-  external ffi.Pointer<Subdiv2DPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerGOTURNPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerGOTURNPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerMILPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerMILPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_TrackerPtr extends ffi.Struct {
-  external ffi.Pointer<TrackerPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecDMatchPtr extends ffi.Struct {
-  external ffi.Pointer<VecDMatchPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecDoublePtr extends ffi.Struct {
-  external ffi.Pointer<VecDoublePtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecFloatPtr extends ffi.Struct {
-  external ffi.Pointer<VecFloatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecIntPtr extends ffi.Struct {
-  external ffi.Pointer<VecIntPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecKeyPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecKeyPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecMatPtr extends ffi.Struct {
-  external ffi.Pointer<VecMatPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPoint2fPtr extends ffi.Struct {
-  external ffi.Pointer<VecPoint2fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPoint3fPtr extends ffi.Struct {
-  external ffi.Pointer<VecPoint3fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecRectPtr extends ffi.Struct {
-  external ffi.Pointer<VecRectPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecUCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecUCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecCharPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecCharPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecDMatchPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecDMatchPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPoint2fPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPoint2fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPoint3fPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPoint3fPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VecVecPointPtr extends ffi.Struct {
-  external ffi.Pointer<VecVecPointPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VideoCapturePtr extends ffi.Struct {
-  external ffi.Pointer<VideoCapturePtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_VideoWriterPtr extends ffi.Struct {
-  external ffi.Pointer<VideoWriterPtr> p;
-}
-
-/// \
-/// Dart ffigen will not generate typedefs if not referred                                                  \
-/// so here we confirm they are included                                                                    \
-final class NO_USE_WeChatQRCodePtr extends ffi.Struct {
-  external ffi.Pointer<WeChatQRCodePtr> p;
 }
 
 final class Net extends ffi.Struct {
@@ -7847,8 +7660,6 @@ final class Stitcher extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-typedef StitcherPtr = ffi.Pointer<Stitcher>;
-
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -7874,14 +7685,11 @@ final class TrackerGOTURN extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-typedef TrackerGOTURNPtr = ffi.Pointer<TrackerGOTURN>;
-
 final class TrackerMIL extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
-typedef TrackerPtr = ffi.Pointer<Tracker>;
 
 final class Vec2b extends ffi.Struct {
   @uchar()

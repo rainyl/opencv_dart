@@ -118,13 +118,10 @@ class ConanBuilder implements Builder {
       if (targetOS == OS.iOS) {
         var profileStr = await File.fromUri(packageRoot.resolve(profile)).readAsString();
         final lines = profileStr.split("\n");
-        final toolchainPath =
-            p.normalize(packageRoot.resolve("profiles/ios.toolchain.cmake").toFilePath());
+        final toolchainPath = p.normalize(packageRoot.resolve("profiles/ios.toolchain.cmake").toFilePath());
         const userToolchain = "tools.cmake.cmaketoolchain:user_toolchain";
         final newLines = lines.map(
-          (e) => e.contains("=") && e.startsWith(userToolchain)
-              ? "$userToolchain=[\"$toolchainPath\"]"
-              : e,
+          (e) => e.contains("=") && e.startsWith(userToolchain) ? '$userToolchain=["$toolchainPath"]' : e,
         );
         profileStr = newLines.join("\n");
         await File.fromUri(packageRoot.resolve(profile)).writeAsString(profileStr);
@@ -133,7 +130,7 @@ class ConanBuilder implements Builder {
       final profileOptions = targetOS == OS.android || targetOS == OS.iOS
           ? ["-pr:h", p.normalize("${packageRoot.toFilePath()}/$profile")]
           : <String>[];
-      final ndkOptions = [];
+      final ndkOptions = <String>[];
       if (targetOS == OS.android) {
         final ndkUri = buildConfig.cCompiler.compiler?.resolve("../../../../..");
         if (ndkUri == null) throw p.PathException("Android NDK not found!");
@@ -180,7 +177,7 @@ class ConanBuilder implements Builder {
 
     if (assetName != null) {
       final assets = <Asset>[];
-      for (var entity in libEntities) {
+      for (final entity in libEntities) {
         final fileName = p.basename(entity.path);
         Uri assetUri;
         // for windows, linux, android, the final lib is a file,
@@ -194,16 +191,18 @@ class ConanBuilder implements Builder {
         } else {
           continue;
         }
-        assets.add(NativeCodeAsset(
-          package: buildConfig.packageName,
-          name: fileName.contains(buildConfig.packageName)
-              ? assetName!
-              : p.basenameWithoutExtension(fileName),
-          file: assetUri,
-          linkMode: linkMode,
-          os: targetOS,
-          architecture: buildConfig.dryRun ? null : buildConfig.targetArchitecture,
-        ));
+        assets.add(
+          NativeCodeAsset(
+            package: buildConfig.packageName,
+            name: fileName.contains(buildConfig.packageName)
+                ? assetName!
+                : p.basenameWithoutExtension(fileName),
+            file: assetUri,
+            linkMode: linkMode,
+            os: targetOS,
+            architecture: buildConfig.dryRun ? null : buildConfig.targetArchitecture,
+          ),
+        );
       }
       buildOutput.addAssets(assets);
     }
@@ -242,11 +241,11 @@ LinkMode _linkMode(LinkModePreference preference) {
 /// If [captureOutput], captures stdout and stderr.
 Future<RunProcessResult> runProcess({
   required String executable,
+  required Logger? logger,
   List<String> arguments = const [],
   Uri? workingDirectory,
   Map<String, String>? environment,
   bool includeParentEnvironment = true,
-  required Logger? logger,
   bool captureOutput = true,
   int expectedExitCode = 0,
   bool throwOnUnexpectedExitCode = false,
@@ -284,20 +283,22 @@ Future<RunProcessResult> runProcess({
     runInShell: Platform.isWindows && !includeParentEnvironment,
   );
 
-  final stdoutSub =
-      process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen(captureOutput
-          ? (s) {
-              logger?.fine(s);
-              stdoutBuffer.writeln(s);
-            }
-          : logger?.fine);
-  final stderrSub =
-      process.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen(captureOutput
-          ? (s) {
-              logger?.severe(s);
-              stderrBuffer.writeln(s);
-            }
-          : logger?.severe);
+  final stdoutSub = process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen(
+        captureOutput
+            ? (s) {
+                logger?.fine(s);
+                stdoutBuffer.writeln(s);
+              }
+            : logger?.fine,
+      );
+  final stderrSub = process.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen(
+        captureOutput
+            ? (s) {
+                logger?.severe(s);
+                stderrBuffer.writeln(s);
+              }
+            : logger?.severe,
+      );
 
   final (exitCode, _, _) =
       await (process.exitCode, stdoutSub.asFuture<void>(), stderrSub.asFuture<void>()).wait;
@@ -317,6 +318,8 @@ Future<RunProcessResult> runProcess({
       'For the output of the process check the logger output.',
     );
   }
+  await stdoutSub.cancel();
+  await stderrSub.cancel();
   return result;
 }
 
@@ -341,7 +344,8 @@ class RunProcessResult {
   });
 
   @override
-  String toString() => '''command: $command
+  String toString() => '''
+command: $command
 exitCode: $exitCode
 stdout: $stdout
 stderr: $stderr''';

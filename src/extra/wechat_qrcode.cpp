@@ -17,7 +17,7 @@ CvStatus WeChatQRCode_NewWithParams(const char *detector_prototxt_path, const ch
                                                  super_resolution_caffe_model_path)};
   END_WRAP
 }
-void WeChatQRCode_Close(WeChatQRCode *self)
+void WeChatQRCode_Close(WeChatQRCodePtr self)
 {
   delete self->ptr;
   self->ptr = nullptr;

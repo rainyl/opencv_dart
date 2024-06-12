@@ -7,7 +7,7 @@ import tarfile
 from pathlib import Path
 import yaml
 
-OPENCV_VERSION = "4.9.0+2"
+OPENCV_VERSION = "4.10.0+2"
 OPENCV_FILES_URL = (
     f"https://github.com/rainyl/opencv.full/releases/download/{OPENCV_VERSION}"
 )
@@ -65,8 +65,7 @@ class OcvDartDesktop(ConanFile):
 
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")
-        self.tool_requires("nasm/2.16.01")
-        if self.settings.os != "Windows":
+        if self.settings.os not in ["Windows", "iOS"]:
             self.tool_requires("ninja/1.11.1")
 
     def requirements(self):

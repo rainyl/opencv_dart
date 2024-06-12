@@ -27,9 +27,6 @@ CVD_TYPEDEF(void, Net)
 CVD_TYPEDEF(void, Layer)
 #endif
 
-CVD_TYPEDEF_PTR(Net)
-CVD_TYPEDEF_PTR(Layer)
-
 CvStatus Net_Create(CVD_OUT Net *rval);
 CvStatus Net_FromNet(Net net, CVD_OUT Net *rval);
 CvStatus Net_ReadNet(const char *model, const char *config, const char *framework, CVD_OUT Net *rval);
@@ -43,7 +40,7 @@ CvStatus Net_ReadNetFromTFLiteBytes(VecUChar bufferModel, CVD_OUT Net *rval);
 CvStatus Net_ReadNetFromTorch(const char *model, bool isBinary, bool evaluate, CVD_OUT Net *rval);
 CvStatus Net_ReadNetFromONNX(const char *model, CVD_OUT Net *rval);
 CvStatus Net_ReadNetFromONNXBytes(VecUChar model, CVD_OUT Net *rval);
-void     Net_Close(Net *net);
+void     Net_Close(NetPtr net);
 
 CvStatus Net_BlobFromImage(Mat image, CVD_OUT Mat blob, double scalefactor, Size size, Scalar mean,
                            bool swapRB, bool crop, int ddepth);
@@ -68,9 +65,9 @@ CvStatus Net_GetBlobSize(Mat blob, CVD_OUT Scalar *rval);
 CvStatus Net_GetLayer(Net net, int layerid, CVD_OUT Layer *rval);
 CvStatus Layer_InputNameToIndex(Layer layer, const char *name, CVD_OUT int *rval);
 CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, CVD_OUT int *rval);
-CvStatus Layer_GetName(Layer layer, CVD_OUT VecChar *rval);
-CvStatus Layer_GetType(Layer layer, CVD_OUT VecChar *rval);
-void     Layer_Close(Layer *layer);
+CvStatus Layer_GetName(Layer layer, CVD_OUT char **rval);
+CvStatus Layer_GetType(Layer layer, CVD_OUT char **rval);
+void     Layer_Close(LayerPtr layer);
 
 CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,
                   CVD_OUT VecInt *indices);

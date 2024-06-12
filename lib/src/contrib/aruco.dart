@@ -4,13 +4,13 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import 'aruco_dict.dart';
-import '../core/point.dart';
-import '../core/scalar.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/point.dart';
+import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
+import 'aruco_dict.dart';
 
 class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ArucoDetector._(cvg.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -33,8 +33,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
 
   @override
   cvg.ArucoDetector get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.ArucoDetectorPtr>(ffi.Native.addressOf(cvg.ArucoDetector_Close));
+  static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(ffi.Native.addressOf(cvg.ArucoDetector_Close));
 
   void dispose() {
     finalizer.detach(this);
@@ -45,8 +44,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d9/d6a/group__aruco.html#ga3bc50d61fe4db7bce8d26d56b5a6428a
-  (VecVecPoint2f corners, VecInt ids, VecVecPoint2f rejectedImgPoints) detectMarkers(
-      InputArray image) {
+  (VecVecPoint2f corners, VecInt ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
     return using<(VecVecPoint2f, VecInt, VecVecPoint2f)>((arena) {
       final pCorners = calloc<cvg.VecVecPoint2f>();
       final pRejected = calloc<cvg.VecVecPoint2f>();
@@ -64,10 +62,8 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   List<int> get props => [ptr.address];
 }
 
-void arucoDrawDetectedMarkers(
-    Mat img, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor) {
-  cvRun(() =>
-      cvg.ArucoDrawDetectedMarkers(img.ref, markerCorners.ref, markerIds.ref, borderColor.ref));
+void arucoDrawDetectedMarkers(Mat img, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor) {
+  cvRun(() => cvg.ArucoDrawDetectedMarkers(img.ref, markerCorners.ref, markerIds.ref, borderColor.ref));
 }
 
 void arucoGenerateImageMarker(
@@ -77,8 +73,7 @@ void arucoGenerateImageMarker(
   Mat img,
   int borderBits,
 ) {
-  cvRun(
-      () => cvg.ArucoGenerateImageMarker(dictionaryId.value, id, sidePixels, img.ref, borderBits));
+  cvRun(() => cvg.ArucoGenerateImageMarker(dictionaryId.value, id, sidePixels, img.ref, borderBits));
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
@@ -97,8 +92,8 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
 
   @override
   cvg.ArucoDetectorParameters get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorParametersPtr>(
-      ffi.Native.addressOf(cvg.ArucoDetectorParameters_Close));
+  static final finalizer =
+      OcvFinalizer<cvg.ArucoDetectorParametersPtr>(ffi.Native.addressOf(cvg.ArucoDetectorParameters_Close));
 
   void dispose() {
     finalizer.detach(this);
@@ -190,8 +185,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set minCornerDistanceRate(double value) =>
-      cvg.ArucoDetectorParameters_SetMinCornerDistanceRate(ref, value);
+  set minCornerDistanceRate(double value) => cvg.ArucoDetectorParameters_SetMinCornerDistanceRate(ref, value);
 
   int get minDistanceToBorder {
     return cvRunArena<int>((arena) {
@@ -201,8 +195,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set minDistanceToBorder(int value) =>
-      cvg.ArucoDetectorParameters_SetMinDistanceToBorder(ref, value);
+  set minDistanceToBorder(int value) => cvg.ArucoDetectorParameters_SetMinDistanceToBorder(ref, value);
 
   double get minMarkerDistanceRate {
     return cvRunArena<double>((arena) {
@@ -212,8 +205,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set minMarkerDistanceRate(double value) =>
-      cvg.ArucoDetectorParameters_SetMinMarkerDistanceRate(ref, value);
+  set minMarkerDistanceRate(double value) => cvg.ArucoDetectorParameters_SetMinMarkerDistanceRate(ref, value);
 
   int get cornerRefinementMethod {
     return cvRunArena<int>((arena) {
@@ -223,8 +215,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set cornerRefinementMethod(int value) =>
-      cvg.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
+  set cornerRefinementMethod(int value) => cvg.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
 
   int get cornerRefinementWinSize {
     return cvRunArena<int>((arena) {
@@ -320,8 +311,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set errorCorrectionRate(double value) =>
-      cvg.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
+  set errorCorrectionRate(double value) => cvg.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
 
   double get aprilTagQuadDecimate {
     return cvRunArena<double>((arena) {
@@ -331,8 +321,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagQuadDecimate(double value) =>
-      cvg.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
+  set aprilTagQuadDecimate(double value) => cvg.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
 
   double get aprilTagQuadSigma {
     return cvRunArena<double>((arena) {
@@ -342,8 +331,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagQuadSigma(double value) =>
-      cvg.ArucoDetectorParameters_SetAprilTagQuadSigma(ref, value);
+  set aprilTagQuadSigma(double value) => cvg.ArucoDetectorParameters_SetAprilTagQuadSigma(ref, value);
 
   int get aprilTagMinClusterPixels {
     return cvRunArena<int>((arena) {
@@ -364,8 +352,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagMaxNmaxima(int value) =>
-      cvg.ArucoDetectorParameters_SetAprilTagMaxNmaxima(ref, value);
+  set aprilTagMaxNmaxima(int value) => cvg.ArucoDetectorParameters_SetAprilTagMaxNmaxima(ref, value);
 
   double get aprilTagCriticalRad {
     return cvRunArena<double>((arena) {
@@ -375,8 +362,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagCriticalRad(double value) =>
-      cvg.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
+  set aprilTagCriticalRad(double value) => cvg.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
 
   double get aprilTagMaxLineFitMse {
     return cvRunArena<double>((arena) {
@@ -408,8 +394,7 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagDeglitch(int value) =>
-      cvRun(() => cvg.ArucoDetectorParameters_SetAprilTagDeglitch(ref, value));
+  set aprilTagDeglitch(int value) => cvRun(() => cvg.ArucoDetectorParameters_SetAprilTagDeglitch(ref, value));
 
   bool get detectInvertedMarker {
     return cvRunArena<bool>((arena) {

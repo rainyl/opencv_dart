@@ -12,7 +12,10 @@ class CvException implements Exception {
   }) : code = ErrorCode(code);
 
   ErrorCode code;
-  String err, msg, file, func;
+  String err;
+  String msg;
+  String file;
+  String func;
   int line;
 
   @override

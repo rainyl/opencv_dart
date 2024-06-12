@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 import 'package:ffi/ffi.dart';
 
-import 'base.dart';
 import '../opencv.g.dart' as cvg;
+import 'base.dart';
 
 class Scalar extends CvStruct<cvg.Scalar> {
   Scalar._(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -22,8 +22,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
     return Scalar._(p);
   }
   factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);
-  factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) =>
-      Scalar._(ptr, attach);
+  factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) => Scalar._(ptr, attach);
   factory Scalar.all(double val) => Scalar(val, val, val, val);
   factory Scalar.default_() => Scalar(0.0, 0.0, 0.0, 0.0);
   factory Scalar.fromRgb(int r, int g, int b) {
@@ -88,8 +87,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
   static final Scalar black = Scalar.fromRgb(0, 0, 0);
   static final Scalar white = Scalar.fromRgb(255, 255, 255);
   static final Scalar zeros = Scalar.fromRgb(0, 0, 0);
-  static final Scalar max =
-      Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
+  static final Scalar max = Scalar(double.maxFinite, double.maxFinite, double.maxFinite, double.maxFinite);
 }
 
 extension RecordScalarExtension on (double val1, double val2, double val3, double val4) {

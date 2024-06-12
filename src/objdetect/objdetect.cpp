@@ -10,6 +10,8 @@
 #include "opencv2/core/types.hpp"
 #include <vector>
 
+#include <opencv2/objdetect/face.hpp>
+
 // CascadeClassifier
 CvStatus CascadeClassifier_New(CascadeClassifier *rval)
 {
@@ -23,7 +25,7 @@ CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
   *rval = {new cv::CascadeClassifier(filename)};
   END_WRAP
 }
-void CascadeClassifier_Close(CascadeClassifier *self){CVD_FREE(self)}
+void CascadeClassifier_Close(CascadeClassifierPtr self){CVD_FREE(self)}
 
 CvStatus CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval)
 {
@@ -123,7 +125,7 @@ CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
   *rval = {new cv::HOGDescriptor(filename)};
   END_WRAP
 }
-void HOGDescriptor_Close(HOGDescriptor *self){CVD_FREE(self)}
+void HOGDescriptor_Close(HOGDescriptorPtr self){CVD_FREE(self)}
 
 CvStatus HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval)
 {
@@ -331,7 +333,7 @@ CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecP
   *straight_qrcode = {_straight_qrcode};
   END_WRAP
 }
-void QRCodeDetector_Close(QRCodeDetector *self){CVD_FREE(self)}
+void QRCodeDetector_Close(QRCodeDetectorPtr self){CVD_FREE(self)}
 
 CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
@@ -382,5 +384,134 @@ CvStatus QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlig
 {
   BEGIN_WRAP
   self.ptr->setUseAlignmentMarkers(useAlignmentMarkers);
+  END_WRAP
+}
+// FaceDetectorYN
+CvStatus FaceDetectorYN_New(const char *model, const char *config, Size input_size, float score_threshold,
+                            float nms_threshold, int top_k, int backend_id, int target_id,
+                            FaceDetectorYN *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::FaceDetectorYN>(
+      cv::FaceDetectorYN::create(model, config, cv::Size(input_size.width, input_size.height),
+                                 score_threshold, nms_threshold, top_k, backend_id, target_id))};
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, VecUChar buffer_config,
+                                      Size input_size, float score_threshold, float nms_threshold, int top_k,
+                                      int backend_id, int target_id, FaceDetectorYN *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Ptr<cv::FaceDetectorYN>(cv::FaceDetectorYN::create(
+      framework, *buffer.ptr, *buffer_config.ptr, cv::Size(input_size.width, input_size.height),
+      score_threshold, nms_threshold, top_k, backend_id, target_id))};
+  END_WRAP
+}
+
+void FaceDetectorYN_Close(FaceDetectorYNPtr self)
+{
+  self->ptr = nullptr;
+  CVD_FREE(self)
+}
+
+CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces)
+{
+  BEGIN_WRAP
+  auto _faces = new cv::Mat();
+  (*self.ptr)->detect(*img.ptr, *_faces);
+  *faces = {_faces};
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size)
+{
+  BEGIN_WRAP(*self.ptr)->setInputSize(cv::Size(input_size.width, input_size.height));
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_GetInputSize(FaceDetectorYN self, Size *input_size)
+{
+  BEGIN_WRAP
+  cv::Size sz = (*self.ptr)->getInputSize();
+  *input_size = {sz.width, sz.height};
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold)
+{
+  BEGIN_WRAP(*self.ptr)->setScoreThreshold(score_threshold);
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_GetScoreThreshold(FaceDetectorYN self, float *score_threshold)
+{
+  BEGIN_WRAP
+  *score_threshold = (*self.ptr)->getScoreThreshold();
+  END_WRAP
+}
+CvStatus FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold)
+{
+  BEGIN_WRAP(*self.ptr)->setNMSThreshold(nms_threshold);
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_GetNMSThreshold(FaceDetectorYN self, float *nms_threshold)
+{
+  BEGIN_WRAP
+  *nms_threshold = (*self.ptr)->getNMSThreshold();
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k)
+{
+  BEGIN_WRAP(*self.ptr)->setTopK(top_k);
+  END_WRAP
+}
+
+CvStatus FaceDetectorYN_GetTopK(FaceDetectorYN self, int *top_k)
+{
+  BEGIN_WRAP
+  *top_k = (*self.ptr)->getTopK();
+  END_WRAP
+}
+// FaceRecognizerSF
+CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend_id, int target_id,
+                              FaceRecognizerSF *rval)
+{
+  BEGIN_WRAP
+  *rval = {
+      new cv::Ptr<cv::FaceRecognizerSF>(cv::FaceRecognizerSF::create(model, config, backend_id, target_id))};
+  END_WRAP
+}
+void FaceRecognizerSF_Close(FaceRecognizerSFPtr self)
+{
+  self->ptr = nullptr;
+  CVD_FREE(self)
+}
+
+CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img)
+{
+  BEGIN_WRAP
+  auto _align = new cv::Mat();
+  (*self.ptr)->alignCrop(*src_img.ptr, *face_box.ptr, *_align);
+  *aligned_img = {_align};
+  END_WRAP
+}
+
+CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, Mat *face_feature)
+{
+  BEGIN_WRAP
+  auto _face_feature = new cv::Mat();
+  (*self.ptr)->feature(*aligned_img.ptr, *_face_feature);
+  *face_feature = {_face_feature};
+  END_WRAP
+}
+
+CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type,
+                                double *distance)
+{
+  BEGIN_WRAP
+  *distance = (*self.ptr)->match(*face_feature1.ptr, *face_feature2.ptr, dis_type);
   END_WRAP
 }

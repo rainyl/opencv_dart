@@ -1,3 +1,15 @@
+## 2.0.0-dev.9
+
+- Add: FaceDetectorYN, FaceDetectorSF
+- Add: Mat.dataPtr to allow get raw data pointer
+- update lint rules and format
+- Upgrade to OpenCV 4.10.0
+- VecUChar.toU8List() return a copy of data rather than a view
+- Better Auto setup, support universal ios framework (x86_64 and arm64)
+- Optimize Vectors
+- Fix: free cExt before exception in cv.imencode
+- Add data getter for Vec<int,uchar,chat,float,double>, cache type of Mat
+
 ## 2.0.0-dev.8
 
 - Auto setup by @abdelaziz-mahdy, from v1.0.5, libs will be downloaded automatically during build, i.e., no need to run setup commands

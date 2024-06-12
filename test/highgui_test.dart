@@ -1,7 +1,6 @@
 @Tags(['skip-workflow'])
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('cv.Window', () {
@@ -15,9 +14,13 @@ void main() async {
     expect(win.isOpen, true);
 
     win.setWindowProperty(
-        cv.WindowPropertyFlags.WND_PROP_FULLSCREEN, cv.WindowFlag.WINDOW_FULLSCREEN.value);
-    expect(win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
-        cv.WindowFlag.WINDOW_FULLSCREEN.value);
+      cv.WindowPropertyFlags.WND_PROP_FULLSCREEN,
+      cv.WindowFlag.WINDOW_FULLSCREEN.value,
+    );
+    expect(
+      win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
+      cv.WindowFlag.WINDOW_FULLSCREEN.value,
+    );
     win.moveWindow(100, 100);
     win.resizeWindow(100, 100);
 

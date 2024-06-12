@@ -715,7 +715,7 @@ CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval
       new cv::Ptr<cv::CLAHE>(cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height)))};
   END_WRAP
 }
-void CLAHE_Close(CLAHE *c){CVD_FREE(c)}
+void CLAHE_Close(CLAHEPtr c){CVD_FREE(c)}
 
 CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst)
 {
@@ -764,7 +764,7 @@ CvStatus Subdiv2D_NewWithRect(Rect rect, Subdiv2D *rval)
   *rval = {new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))};
   END_WRAP
 }
-void Subdiv2D_Close(Subdiv2D *self){CVD_FREE(self)}
+void Subdiv2D_Close(Subdiv2DPtr self){CVD_FREE(self)}
 
 CvStatus Subdiv2D_EdgeDst(Subdiv2D self, int edge, Point2f *dstpt, int *rval)
 {

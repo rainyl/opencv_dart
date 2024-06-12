@@ -31,6 +31,9 @@ CMakePresets.json
 gh-md-toc
 .fvm/
 publish/
+*.tar.gz
+*.plist
+*.exe
 
 # Files and directories created by pub
 .dart_tool/

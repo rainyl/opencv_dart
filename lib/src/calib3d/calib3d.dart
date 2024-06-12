@@ -4,14 +4,14 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
+import '../core/base.dart';
 import '../core/contours.dart';
+import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
-import '../core/base.dart';
-import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 class Fisheye {
@@ -57,8 +57,7 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => cvg.Fisheye_UndistortPoints(
-        distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(() => cvg.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 
@@ -212,8 +211,7 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() =>
-      cvg.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(() => cvg.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -339,8 +337,14 @@ Mat drawChessboardCorners(
   bool patternWasFound,
 ) {
   return cvRunArena<Mat>((arena) {
-    cvRun(() => cvg.DrawChessboardCorners(
-        image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
+    cvRun(
+      () => cvg.DrawChessboardCorners(
+        image.ref,
+        patternSize.toSize(arena).ref,
+        corners.ref,
+        patternWasFound,
+      ),
+    );
     return image;
   });
 }

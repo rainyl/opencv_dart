@@ -19,15 +19,15 @@ OpenCV Bindings for Dart Language.
 > [conan](https://conan.io/) and cmake are required
 >
 > Usage:
-> 
+>
 > for pure dart:
 >
 > 1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
 > 2. add to your `pubspec.yaml`
 > 3. `dart --enable-experiment=native-assets run <path-to-your-code>`
-> 
+>
 > for flutter:
-> 
+>
 > 1. take a look at https://pub.dev/packages/opencv_dart/versions and find the latest version, e.g., `2.0.0-dev.2`
 > 2. add to your `pubspec.yaml`
 > 3. `flutter config --enable-native-assets`
@@ -36,7 +36,6 @@ OpenCV Bindings for Dart Language.
 
 > [!NOTE]
 > WIP, contributions are welcome!
-
 
 - [opencv\_dart](#opencv_dart)
   - [Example](#example)
@@ -48,6 +47,7 @@ OpenCV Bindings for Dart Language.
       - [Pure Dart](#pure-dart)
       - [Flutter](#flutter)
     - [TODO](#todo)
+  - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
   - [License](#license)
@@ -128,19 +128,65 @@ void main() {
 
 see [example](https://github.com/rainyl/opencv_dart/tree/native-assets/example)
 
-More examples are on the way...
+~~More examples are on the way...~~ see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
 
 ### TODO
 
 - [x] ~~compile libs for android, linux~~
 - [x] ~~support for iOS, macOS~~
-- [ ] add more examples
+- [x] ~~add more examples~~
 - [ ] documentation
 - [x] ~~modify C wrapper to catch exceptions~~
 - [x] ~~Native Assets~~
 - [ ] async?
-- [ ] more/full test coverage
+- [x] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
+
+## Contributors
+
+<!-- readme: contributors,TotemaT -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/rainyl">
+                    <img src="https://avatars.githubusercontent.com/u/30213663?v=4" width="100;" alt="rainyl"/>
+                    <br />
+                    <sub><b>rainy liu</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/abdelaziz-mahdy">
+                    <img src="https://avatars.githubusercontent.com/u/25157308?v=4" width="100;" alt="abdelaziz-mahdy"/>
+                    <br />
+                    <sub><b>Abdelaziz Mahdy</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Jiinwoo">
+                    <img src="https://avatars.githubusercontent.com/u/46522752?v=4" width="100;" alt="Jiinwoo"/>
+                    <br />
+                    <sub><b>JinWoo Jung</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mdeleau">
+                    <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
+                    <br />
+                    <sub><b>mdeleau</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/totemat">
+                    <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
+                    <br />
+                    <sub><b>Matteo T.</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
+<!-- readme: contributors,TotemaT -end -->
 
 ## Acknowledgement
 

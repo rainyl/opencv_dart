@@ -1,8 +1,9 @@
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
 
-import 'base.dart';
 import '../opencv.g.dart' as cvg;
+import 'base.dart';
 
 /// struct returned by cv::moments
 ///
@@ -14,8 +15,7 @@ class Moments extends CvStruct<cvg.Moment> {
     }
   }
 
-  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) =>
-      Moments._(ptr, attach);
+  factory Moments.fromPointer(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) => Moments._(ptr, attach);
 
   /// spatial moments
   double get m00 => ref.m00;

@@ -7,10 +7,10 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../core/mat_type.dart';
-import '../core/rect.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
+import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
@@ -38,20 +38,18 @@ class Layer extends CvStruct<cvg.Layer> {
   /// GetName returns name for this layer.
   String get name {
     return cvRunArena<String>((arena) {
-      final p = calloc<cvg.VecChar>();
+      final p = calloc<ffi.Pointer<ffi.Char>>();
       cvRun(() => cvg.Layer_GetName(ref, p));
-      final vec = VecChar.fromPointer(p);
-      return vec.asString();
+      return p.value.toDartString();
     });
   }
 
   /// GetType returns type for this layer.
   String get type {
     return cvRunArena<String>((arena) {
-      final p = calloc<cvg.VecChar>();
+      final p = calloc<ffi.Pointer<ffi.Char>>();
       cvRun(() => cvg.Layer_GetType(ref, p));
-      final vec = VecChar.fromPointer(p);
-      return vec.asString();
+      return p.value.toDartString();
     });
   }
 
@@ -169,7 +167,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromOnnx(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(() => cvg.Net_ReadNetFromONNX(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => cvg.Net_ReadNetFromONNX(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -192,13 +191,9 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTensorflow(String path, {String config = ""}) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-        () => cvg.Net_ReadNetFromTensorflow(
-          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          p,
-        ),
-      );
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cconf = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => cvg.Net_ReadNetFromTensorflow(cpath, cconf, p));
       final net = Net._(p);
       return net;
     });
@@ -223,8 +218,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTFLite(String path) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-          () => cvg.Net_ReadNetFromTFLite(path.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p));
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => cvg.Net_ReadNetFromTFLite(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -246,14 +241,8 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
-      cvRun(
-        () => cvg.Net_ReadNetFromTorch(
-          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
-          isBinary,
-          evaluate,
-          p,
-        ),
-      );
+      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => cvg.Net_ReadNetFromTorch(cpath, isBinary, evaluate, p));
       final net = Net._(p);
       return net;
     });
@@ -333,8 +322,7 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/3.4/db/d30/classcv_1_1dnn_1_1Net.html#a7f767df11386d39374db49cd8df8f59e
-  void setPreferableBackend(int backendId) =>
-      cvRun(() => cvg.Net_SetPreferableBackend(ref, backendId));
+  void setPreferableBackend(int backendId) => cvRun(() => cvg.Net_SetPreferableBackend(ref, backendId));
 
   /// SetPreferableTarget ask network to make computations on specific target device.
   ///

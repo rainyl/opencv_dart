@@ -89,7 +89,7 @@ CvStatus Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
   END_WRAP
 }
 
-void Net_Close(Net *net){CVD_FREE(net)}
+void Net_Close(NetPtr net){CVD_FREE(net)}
 
 CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
                            bool crop, int ddepth)
@@ -261,23 +261,23 @@ CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, int *rval)
   END_WRAP
 }
 
-CvStatus Layer_GetName(Layer layer, VecChar *rval)
+CvStatus Layer_GetName(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->name;
-  *rval = {new std::vector<char>(ss.c_str(), ss.c_str() + ss.size())};
+  *rval = strdup(ss.c_str());
   END_WRAP
 }
 
-CvStatus Layer_GetType(Layer layer, VecChar *rval)
+CvStatus Layer_GetType(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->type;
-  *rval = {new std::vector<char>(ss.c_str(), ss.c_str() + ss.size())};
+  *rval = strdup(ss.c_str());
   END_WRAP
 }
 
-void Layer_Close(Layer *layer){CVD_FREE(layer)}
+void Layer_Close(LayerPtr layer){CVD_FREE(layer)}
 
 CvStatus
     NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices)
