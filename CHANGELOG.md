@@ -1,3 +1,14 @@
+## 1.0.8
+
+- API change: `FaceRecognizerSF.feature(Mat alignedImg)` -> `FaceRecognizerSF.feature(Mat alignedImg, {bool clone = false})`
+- Deprecated: `FaceRecognizerSF.newRecognizer` `FaceRecognizerSF.DIS_TYPR_FR_COSINE` `FaceRecognizerSF.DIS_TYPE_FR_NORM_L2`
+
+## 1.0.7
+
+- Add: FaceDetectorYN, FaceDetectorSF
+- Add: Mat.dataPtr to allow get raw data pointer
+- update lint rules and format
+
 ## 1.0.6+1
 
 - Fix: auto setup

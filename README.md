@@ -12,8 +12,6 @@ OpenCV Bindings for Dart Language.
 </p>
 
 > [!IMPORTANT]
-> Please use `v0.3.0` and later version
->
 > For `v1.0.6` and later, auto setup is supported, libs will be downloaded from
 > [Releases](https://github.com/rainyl/opencv_dart/releases) automatically.
 >
@@ -42,26 +40,6 @@ OpenCV Bindings for Dart Language.
 > - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
 >
 
-> [!WARNING]
-> Since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
-> for example:
->
-> ```dart
-> // old API
-> void cvtColor(Mat src, Mat dst, int code);
-> // new API
-> Mat cvtColor(Mat src, int code, {Mat? dst});
->
-> // then usage will be changed from:
-> cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-> // to:
-> final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
-> // or:
-> cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
-> ```
->
-> If you really need updates for `v0.6.x`, open PRs and it will be merged to `v0.6` branch.
-
 > [!NOTE]
 > WIP, contributions are welcome!
 
@@ -80,7 +58,8 @@ OpenCV Bindings for Dart Language.
       - [1. Install dependencies](#1-install-dependencies)
       - [2. clone this repo](#2-clone-this-repo)
       - [3. compile](#3-compile)
-      - [4. Cross-compile for linux aarch64](#4-cross-compile-for-linux-aarch64)
+      - [4. test](#4-test)
+      - [5. Cross-compile for linux aarch64](#5-cross-compile-for-linux-aarch64)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
@@ -147,6 +126,26 @@ OpenCV Bindings for Dart Language.
 
 ### Usage
 
+> [!WARNING]
+> Since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
+> for example:
+>
+> ```dart
+> // old API
+> void cvtColor(Mat src, Mat dst, int code);
+> // new API
+> Mat cvtColor(Mat src, int code, {Mat? dst});
+>
+> // then usage will be changed from:
+> cvtColor(src, dst, cv.COLOR_BGR2GRAY);
+> // to:
+> final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
+> // or:
+> cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
+> ```
+>
+> If you really need updates for `v0.6.x`, open PRs and it will be merged to `v0.6` branch.
+
 #### Pure Dart
 
 ```dart
@@ -165,18 +164,18 @@ void main() {
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
-More examples are on the way...
+~~More examples are on the way...~~see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
 
 ### TODO
 
 - [x] ~~compile libs for android, linux~~
 - [x] ~~support for iOS, macOS~~
-- [ ] add more examples
+- [x] ~~add more examples~~
 - [ ] documentation
 - [x] ~~modify C wrapper to catch exceptions~~
 - [x] Native Assets, see `native-assets` branch
 - [ ] async?
-- [ ] more/full test coverage
+- [x] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
 ## For Developers
@@ -260,16 +259,22 @@ or `ANDROID_NDK_ROOT` environment variable, e.g., `export ANDROID_NDK_HOME=/opt/
   conan build . -b missing -pr:h profiles/ios-<arch>
   ```
 
-- If you want to test using vscode, add dynamic library path to `"dart.env"` in `settings.json`
+#### 4. test
 
-#### 4. Cross-compile for linux aarch64
+- Set `OPENCV_DART_LIB_PATH` environment variable to the path of the compiled dynamic library,
+e.g., `export OPENCV_DART_LIB_PATH=`pwd`/linux/libopencv_dart.so`
+or `$ENV:OPENCV_DART_LIB_PATH=$PWD\windows\opencv_dart.dll`
+- or append the lib path to the library search path of your system
+- If you want to test using vscode, add above variable to `"dart.env"` in `settings.json`
+
+#### 5. Cross-compile for linux aarch64
 
 Compiling for linux aarch64 requires GCC 13 and newer,
 conan toolchain for linux arm is located in [opencv.full](https://github.com/rainyl/opencv.full/tree/linux-aarch64/profiles), explore more there.
 
 ## Contributors
 
-<!-- readme: contributors,<TotemaT> -start -->
+<!-- readme: contributors,TotemaT -start -->
 <table>
 	<tbody>
 		<tr>
@@ -301,10 +306,17 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
                     <sub><b>mdeleau</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/totemat">
+                    <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
+                    <br />
+                    <sub><b>Matteo T.</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
-<!-- readme: contributors,<TotemaT> -end -->
+<!-- readme: contributors,TotemaT -end -->
 
 ## Acknowledgement
 

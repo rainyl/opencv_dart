@@ -18,9 +18,9 @@ CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
 CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, VecPoint *rval)
 {
   BEGIN_WRAP
-  auto approxCurvePts = new std::vector<cv::Point>();
-  cv::approxPolyDP(*curve.ptr, *approxCurvePts, epsilon, closed);
-  *rval = {approxCurvePts};
+  std::vector<cv::Point> approxCurvePts;
+  cv::approxPolyDP(*curve.ptr, approxCurvePts, epsilon, closed);
+  *rval = {new std::vector<cv::Point>(approxCurvePts)};
   END_WRAP
 }
 CvStatus CvtColor(Mat src, Mat dst, int code)
@@ -167,11 +167,11 @@ CvStatus BoxPoints(RotatedRect rect, VecPoint2f *boxPts)
   auto center = cv::Point2f(rect.center.x, rect.center.y);
   auto size = cv::Size2f(rect.size.width, rect.size.height);
   cv::boxPoints(cv::RotatedRect(center, size, rect.angle), mat);
-  std::vector<cv::Point2f> *vec = new std::vector<cv::Point2f>;
+  std::vector<cv::Point2f> vec;
   for (int i = 0; i < mat.rows; i++) {
-    vec->push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
+    vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
   }
-  *boxPts = {vec};
+  *boxPts = {new std::vector<cv::Point2f>(vec)};
   END_WRAP
 }
 CvStatus ContourArea(VecPoint pts, double *rval)
@@ -207,10 +207,10 @@ CvStatus MinEnclosingCircle(VecPoint pts, Point2f *center, float *radius)
 CvStatus FindContours(Mat src, Mat hierarchy, int mode, int method, VecVecPoint *rval)
 {
   BEGIN_WRAP
-  VecVecPoint_CPP contours = new std::vector<std::vector<cv::Point>>();
+  std::vector<std::vector<cv::Point>> contours;
   //   std::vector<cv::Vec4i> hierarchy;
-  cv::findContours(*src.ptr, *contours, *hierarchy.ptr, mode, method);
-  *rval = {contours};
+  cv::findContours(*src.ptr, contours, *hierarchy.ptr, mode, method);
+  *rval = {new std::vector<std::vector<cv::Point>>(contours)};
   END_WRAP
 }
 CvStatus PointPolygonTest(VecPoint pts, Point2f pt, bool measureDist, double *rval)
@@ -313,10 +313,10 @@ CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f *corners, int maxCorners, doubl
                              Mat mask, int blockSize, bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  auto _corners = new std::vector<cv::Point2f>();
-  cv::goodFeaturesToTrack(*img.ptr, *_corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  std::vector<cv::Point2f> _corners;
+  cv::goodFeaturesToTrack(*img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           useHarrisDetector, k);
-  *corners = {_corners};
+  *corners = {new std::vector<cv::Point2f>(_corners)};
   END_WRAP
 }
 CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f *corners, int maxCorners, double quality,
@@ -324,10 +324,10 @@ CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f *corners, int maxCo
                                          bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  auto _corners = new std::vector<cv::Point2f>();
-  cv::goodFeaturesToTrack(*img.ptr, *_corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  std::vector<cv::Point2f> _corners;
+  cv::goodFeaturesToTrack(*img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           gradientSize, useHarrisDetector, k);
-  *corners = {_corners};
+  *corners = {new std::vector<cv::Point2f>(_corners)};
   END_WRAP
 }
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
@@ -812,9 +812,9 @@ CvStatus Subdiv2D_GetEdgeList(Subdiv2D self, Vec4f **rval, int *size)
 CvStatus Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecInt *leadingEdgeList)
 {
   BEGIN_WRAP
-  auto v = new std::vector<int>();
-  self.ptr->getLeadingEdgeList(*v);
-  *leadingEdgeList = {v};
+  std::vector<int> v;
+  self.ptr->getLeadingEdgeList(v);
+  *leadingEdgeList = {new std::vector<int>(v)};
   END_WRAP
 }
 CvStatus Subdiv2D_GetTriangleList(Subdiv2D self, Vec6f **rval, int *size)

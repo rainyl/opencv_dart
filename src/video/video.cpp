@@ -65,13 +65,13 @@ CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f pre
                                         TermCriteria criteria, int flags, double minEigThreshold)
 {
   BEGIN_WRAP
-  auto _status = new std::vector<uchar>();
-  auto _err = new std::vector<float>();
-  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *_status, *_err,
+  std::vector<uchar> _status;
+  std::vector<float> _err;
+  auto               tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, _status, _err,
                            cv::Size(winSize.width, winSize.height), maxLevel, tc, flags, minEigThreshold);
-  *status = {_status};
-  *err = {_err};
+  *status = {new std::vector<uchar>(_status)};
+  *err = {new std::vector<float>(_err)};
   END_WRAP
 }
 CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
