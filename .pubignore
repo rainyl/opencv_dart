@@ -13,6 +13,9 @@ pkgs/
 CMakePresets.json
 CMakeUserPresets*
 *.framework
+*.tar.gz
+*.exe
+test/data/
 
 .idea/
 .vscode/
