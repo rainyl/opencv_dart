@@ -137,7 +137,7 @@ CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend
                               FaceRecognizerSF *rval);
 void     FaceRecognizerSF_Close(FaceRecognizerSFPtr self);
 CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img);
-CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, Mat *face_feature);
+CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, bool clone, Mat *face_feature);
 CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type,
                                 double *distance);
 

@@ -636,6 +636,25 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     }
   }
 
+  /// Creates an instance of face detector class with given parameters.
+  ///
+  /// [model]	the path to the requested model
+  ///
+  /// [config]	the path to the config file for compability, which is not requested for ONNX models
+  ///
+  /// [inputSize]	the size of the input image
+  ///
+  /// [scoreThreshold]	the threshold to filter out bounding boxes of score smaller than the given value
+  ///
+  /// [nmsThreshold]	the threshold to suppress bounding boxes of IoU bigger than the given value
+  ///
+  /// [topK]	keep top K bboxes before NMS
+  ///
+  /// [backendId]	the id of backend
+  ///
+  /// [targetId]	the id of target device
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5f7fb43c60c95ca5ebab78483de02516
   factory FaceDetectorYN.fromFile(
     String model,
     String config,
@@ -669,6 +688,27 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
+  /// Creates an instance of face detector class with given parameters.
+  ///
+  /// [framework]	Name of origin framework
+  ///
+  /// [bufferModel]	A buffer with a content of binary file with weights
+  ///
+  /// [bufferConfig]	A buffer with a content of text file contains network configuration
+  ///
+  /// [inputSize]	the size of the input image
+  ///
+  /// [scoreThreshold]	the threshold to filter out bounding boxes of score smaller than the given value
+  ///
+  /// [nmsThreshold]	the threshold to suppress bounding boxes of IoU bigger than the given value
+  ///
+  /// [topK]	keep top K bboxes before NMS
+  ///
+  /// [backendId]	the id of backend
+  ///
+  /// [targetId]	the id of target device
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#aa0796a4bfe2d4709bef81abbae9a927a
   factory FaceDetectorYN.fromBuffer(
     String framework,
     Uint8List bufferModel,
@@ -702,6 +742,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a68b6fb9bffbed0f3d5c104996113f247
   (int, int) getInputSize() {
     final p = calloc<cvg.Size>();
     cvRun(() => CFFI.FaceDetectorYN_GetInputSize(ref, p));
@@ -710,6 +751,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     return ret;
   }
 
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5329744e10441e1c01526f1ff10b80de
   double getScoreThreshold() {
     return using<double>((arena) {
       final p = arena<ffi.Float>();
@@ -718,6 +760,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a40749dc04b9578631d55122be9ab10c3
   double getNmsThreshold() {
     return using<double>((arena) {
       final p = arena<ffi.Float>();
@@ -726,6 +769,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#acc6139ba763acd67f4aa738cee45b7ec
   int getTopK() {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
@@ -734,26 +778,66 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     });
   }
 
-  Mat detect(Mat img) {
+  /// Detects faces in the input image. Following is an example output.
+  ///
+  /// [image]	an image to detect
+  ///
+  /// detection results stored in a 2D cv::Mat of shape [num_faces, 15]
+  ///
+  /// - 0-1: x, y of bbox top left corner
+  /// - 2-3: width, height of bbox
+  /// - 4-5: x, y of right eye (blue point in the example image)
+  /// - 6-7: x, y of left eye (red point in the example image)
+  /// - 8-9: x, y of nose tip (green point in the example image)
+  /// - 10-11: x, y of right corner of mouth (pink point in the example image)
+  /// - 12-13: x, y of left corner of mouth (yellow point in the example image)
+  /// - 14: face score
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ac05bd075ca3e6edc0e328927aae6f45b
+  Mat detect(Mat image) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.FaceDetectorYN_Detect(ref, img.ref, p));
+    cvRun(() => CFFI.FaceDetectorYN_Detect(ref, image.ref, p));
     return Mat.fromPointer(p);
   }
 
+  /// Set the size for the network input, which overwrites the input size
+  /// of creating model. Call this method when the size of input image does
+  /// not match the input size when creating model.
+  ///
+  /// [inputSize]	the size of the input image
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a072418e5ce7beeb69c41edda75c41d2e
   void setInputSize(Size inputSize) {
     using<void>((arena) {
       cvRun(() => CFFI.FaceDetectorYN_SetInputSize(ref, inputSize.toSize(arena).ref));
     });
   }
 
+  /// Set the score threshold to filter out bounding boxes of score less than
+  /// the given value.
+  ///
+  /// [scoreThreshold]	threshold for filtering out bounding boxes
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a37f3c23b82158fac7fdad967d315f85a
   void setScoreThreshold(double scoreThreshold) {
     cvRun(() => CFFI.FaceDetectorYN_SetScoreThreshold(ref, scoreThreshold));
   }
 
+  /// Set the Non-maximum-suppression threshold to suppress
+  /// bounding boxes that have IoU greater than the given value.
+  ///
+  /// [nmsThreshold]	threshold for NMS operation
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ab6011efee7e12dca3857d82de5269ac5
   void setNMSThreshold(double nmsThreshold) {
     cvRun(() => CFFI.FaceDetectorYN_SetNMSThreshold(ref, nmsThreshold));
   }
 
+  /// Set the number of bounding boxes preserved before NMS.
+  ///
+  /// [topK]	the number of bounding boxes to preserve from top rank based on score
+  ///
+  /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#aa88d20e1e2df75ea36b851534089856a
   void setTopK(int topK) {
     cvRun(() => CFFI.FaceDetectorYN_SetTopK(ref, topK));
   }
@@ -782,6 +866,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     }
   }
 
+  @Deprecated("Use FaceRecognizerSF.fromFile instead, will be removed in 1.1.0")
   factory FaceRecognizerSF.newRecognizer(
     String model,
     String config,
@@ -797,19 +882,63 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     return FaceRecognizerSF._(p);
   }
 
+  /// Creates an instance of this class with given parameters.
+  ///
+  /// [model]	the path of the onnx model used for face recognition
+  /// [config]	the path to the config file for compability, which is not requested for ONNX models
+  /// [backendId]	the id of backend
+  /// [targetId]	the id of target device
+  ///
+  /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
+  factory FaceRecognizerSF.fromFile(
+    String model,
+    String config, {
+    int backendId = 0,
+    int targetId = 0,
+  }) {
+    final p = calloc<cvg.FaceRecognizerSF>();
+    final cModel = model.toNativeUtf8().cast<ffi.Char>();
+    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
+    cvRun(() => CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
+    calloc.free(cModel);
+    calloc.free(cConfig);
+    return FaceRecognizerSF._(p);
+  }
+
+  /// Aligns detected face with the source input image and crops it.
+  ///
+  /// [srcImg]	input image
+  /// [faceBox]	the detected face result from the input image
+  ///
+  /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a84492908abecbc9362b4ddc8d46b8345
   Mat alignCrop(Mat srcImg, Mat faceBox) {
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
     return Mat.fromPointer(p);
   }
 
-  Mat feature(Mat alignedImg) {
+  /// Extracts face feature from aligned image.
+  ///
+  /// [alignedImg]	input aligned image
+  /// [clone] the default implementation of opencv won't clone the returned Mat
+  /// set [clone] to true will return a clone of returned Mat
+  ///
+  /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#ab1b4a3c12213e89091a490c573dc5aba
+  Mat feature(Mat alignedImg, {bool clone = false}) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.FaceRecognizerSF_Feature(ref, alignedImg.ref, p));
+    cvRun(() => CFFI.FaceRecognizerSF_Feature(ref, alignedImg.ref, clone, p));
     return Mat.fromPointer(p);
   }
 
-  double match(Mat faceFeature1, Mat faceFeature2, int disType) {
+  /// Calculates the distance between two face features.
+  ///
+  /// [faceFeature1]	the first input feature
+  /// [faceFeature2]	the second input feature of the same size and the same type as face_feature1
+  /// [disType]	defines how to calculate the distance between two face features
+  /// with optional values "FR_COSINE" or "FR_NORM_L2"
+  ///
+  /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
+  double match(Mat faceFeature1, Mat faceFeature2, {int disType = FR_COSINE}) {
     return using<double>((arena) {
       final distance = arena<ffi.Double>();
       cvRun(
@@ -838,6 +967,14 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   @override
   List<int> get props => [ptr.address];
 
+  @Deprecated("Use [FR_COSINE] instead.")
   static const int DIS_TYPR_FR_COSINE = 0;
+  @Deprecated("Use [FR_NORM_L2] instead.")
   static const int DIS_TYPE_FR_NORM_L2 = 1;
+
+  /// Definition of distance used for calculating the distance between two face features.
+  static const int FR_COSINE = 0;
+
+  /// Definition of distance used for calculating the distance between two face features.
+  static const int FR_NORM_L2 = 1;
 }

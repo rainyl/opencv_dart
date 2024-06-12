@@ -266,7 +266,7 @@ void main() async {
   // Test for cv.FaceRecognizerSF
   test('cv.FaceRecognizerSF', tags: ["no-local-files"], () {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
-    final recognizer = cv.FaceRecognizerSF.newRecognizer(modelPath, "", 0, 0);
+    final recognizer = cv.FaceRecognizerSF.fromFile(modelPath, "");
 
     // Test loading image
     final img = cv.imread("test/images/face.jpg");
@@ -296,12 +296,12 @@ void main() async {
     final faceFeature2 = recognizer.feature(alignedFace2);
 
     // Test matching features using L2 distance
-    final matchScoreL2 = recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPE_FR_NORM_L2);
+    final matchScoreL2 = recognizer.match(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_NORM_L2);
     expect(matchScoreL2, greaterThanOrEqualTo(0));
 
     // Test matching features using Cosine distance
     final matchScoreCosine =
-        recognizer.match(faceFeature, faceFeature2, cv.FaceRecognizerSF.DIS_TYPR_FR_COSINE);
+        recognizer.match(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_COSINE);
     expect(matchScoreCosine, greaterThanOrEqualTo(0));
 
     // Clean up
