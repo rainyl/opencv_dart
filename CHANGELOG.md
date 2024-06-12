@@ -1,3 +1,8 @@
+## 2.0.0-dev.10
+
+- API change: `FaceRecognizerSF.feature(Mat alignedImg)` -> `FaceRecognizerSF.feature(Mat alignedImg, {bool clone = false})`
+- Deprecated: `FaceRecognizerSF.newRecognizer` `FaceRecognizerSF.DIS_TYPR_FR_COSINE` `FaceRecognizerSF.DIS_TYPE_FR_NORM_L2`
+
 ## 2.0.0-dev.9
 
 - Add: FaceDetectorYN, FaceDetectorSF
