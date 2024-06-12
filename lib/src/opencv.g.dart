@@ -1485,10 +1485,12 @@ external void FaceRecognizerSF_Close(
   FaceRecognizerSFPtr self,
 );
 
-@ffi.Native<CvStatus Function(FaceRecognizerSF, Mat, ffi.Pointer<Mat>)>()
+@ffi.Native<
+    CvStatus Function(FaceRecognizerSF, Mat, ffi.Bool, ffi.Pointer<Mat>)>()
 external CvStatus FaceRecognizerSF_Feature(
   FaceRecognizerSF self,
   Mat aligned_img,
+  bool clone,
   ffi.Pointer<Mat> face_feature,
 );
 

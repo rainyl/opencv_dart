@@ -5,11 +5,11 @@
 CvStatus RotatedRect_Points(RotatedRect rect, VecPoint2f *pts)
 {
   BEGIN_WRAP
-  auto r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y),
-                           cv::Size2f(rect.size.width, rect.size.height), rect.angle);
-  auto pts_ = new std::vector<cv::Point2f>();
-  r.points(*pts_);
-  *pts = {pts_};
+  auto                     r = cv::RotatedRect(cv::Point2f(rect.center.x, rect.center.y),
+                                               cv::Size2f(rect.size.width, rect.size.height), rect.angle);
+  std::vector<cv::Point2f> pts_;
+  r.points(pts_);
+  *pts = {new std::vector<cv::Point2f>(pts_)};
   END_WRAP
 }
 CvStatus RotatedRect_BoundingRect(RotatedRect rect, Rect *rval)
@@ -1598,9 +1598,9 @@ CvStatus Mat_SortIdx(Mat src, Mat dst, int flags)
 CvStatus Mat_Split(Mat src, VecMat *rval)
 {
   BEGIN_WRAP
-  std::vector<cv::Mat> *channels = new std::vector<cv::Mat>();
-  cv::split(*src.ptr, *channels);
-  *rval = {channels};
+  std::vector<cv::Mat> channels;
+  cv::split(*src.ptr, channels);
+  *rval = {new std::vector<cv::Mat>(channels)};
   END_WRAP
 }
 
@@ -1758,7 +1758,8 @@ CvStatus LUT(Mat src, Mat lut, Mat dst)
         cvd::LUT16s_32f(src.ptr->ptr<short>(), lut.ptr->ptr<float>(), dst.ptr->ptr<float>(), len, cn, lutcn);
         break;
       case CV_64F:
-        cvd::LUT16s_64f(src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn);
+        cvd::LUT16s_64f(src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn,
+                        lutcn);
         break;
       default:
         cv::String err = "lut Mat Type not supported for CV_16S";
