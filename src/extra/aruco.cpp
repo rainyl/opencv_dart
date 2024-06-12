@@ -415,14 +415,14 @@ CvStatus ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint
                                      VecInt *markerIds, VecVecPoint2f *rejectedCandidates)
 {
   BEGIN_WRAP
-  std::vector<std::vector<cv::Point2f>> *_markerCorners = new std::vector<std::vector<cv::Point2f>>();
-  std::vector<int>                      *_markerIds = new std::vector<int>;
-  std::vector<std::vector<cv::Point2f>> *_rejectedCandidates = new std::vector<std::vector<cv::Point2f>>;
-  ad.ptr->detectMarkers(*inputArr.ptr, *_markerCorners, *_markerIds, *_rejectedCandidates);
-  *markerCorners = {_markerCorners};
-  *markerIds = {_markerIds};
+  std::vector<std::vector<cv::Point2f>> _markerCorners;
+  std::vector<int>                      _markerIds;
+  std::vector<std::vector<cv::Point2f>> _rejectedCandidates;
+  ad.ptr->detectMarkers(*inputArr.ptr, _markerCorners, _markerIds, _rejectedCandidates);
+  *markerCorners = {new std::vector<std::vector<cv::Point2f>>(_markerCorners)};
+  *markerIds = {new std::vector<int>(_markerIds)};
   if (rejectedCandidates != NULL) {
-    *rejectedCandidates = {_rejectedCandidates};
+    *rejectedCandidates = {new std::vector<std::vector<cv::Point2f>>(_rejectedCandidates)};
   }
   END_WRAP
 }

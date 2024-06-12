@@ -114,9 +114,9 @@ CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size si
 CvStatus Net_ImagesFromBlob(Mat blob, VecMat *rval)
 {
   BEGIN_WRAP
-  auto imgs = new std::vector<cv::Mat>();
-  cv::dnn::imagesFromBlob(*blob.ptr, *imgs);
-  *rval = {imgs};
+  std::vector<cv::Mat> imgs;
+  cv::dnn::imagesFromBlob(*blob.ptr, imgs);
+  *rval = {new std::vector<cv::Mat>(imgs)};
   END_WRAP
 }
 
@@ -152,15 +152,15 @@ CvStatus Net_Forward(Net net, const char *outputName, Mat *rval)
 CvStatus Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobNames)
 {
   BEGIN_WRAP
-  auto blobs = new std::vector<cv::Mat>();
+  std::vector<cv::Mat> blobs;
 
   std::vector<cv::String> names;
   for (int i = 0; i < outBlobNames.ptr->size(); ++i) {
     auto n = outBlobNames.ptr->at(i);
     names.push_back(cv::String(n.begin(), n.end()));
   }
-  net.ptr->forward(*blobs, names);
-  *outputBlobs = {blobs};
+  net.ptr->forward(blobs, names);
+  *outputBlobs = {new std::vector<cv::Mat>(blobs)};
   END_WRAP
 }
 
@@ -189,33 +189,32 @@ CvStatus Net_GetPerfProfile(Net net, int64_t *rval)
 CvStatus Net_GetUnconnectedOutLayers(Net net, VecInt *rval)
 {
   BEGIN_WRAP
-  auto cids = new std::vector<int>(net.ptr->getUnconnectedOutLayers());
-  *rval = {cids};
+  *rval = {new std::vector<int>(net.ptr->getUnconnectedOutLayers())};
   END_WRAP
 }
 
 CvStatus Net_GetLayerNames(Net net, VecVecChar *rval)
 {
   BEGIN_WRAP
-  auto vec = new std::vector<std::vector<char>>();
+  std::vector<std::vector<char>> vec;
 
   std::vector<cv::String> cstrs = net.ptr->getLayerNames();
   for (size_t i = 0; i < cstrs.size(); i++) {
     std::vector<char> cstr(cstrs[i].begin(), cstrs[i].end());
-    vec->push_back(cstr);
+    vec.push_back(cstr);
   }
-  *rval = {vec};
+  *rval = {new std::vector<std::vector<char>>(vec)};
   END_WRAP
 }
 
 CvStatus Net_GetInputDetails(Net net, VecFloat *scales, VecInt *zeropoints)
 {
   BEGIN_WRAP
-  auto sc = new std::vector<float>();
-  auto zp = new std::vector<int>();
-  net.ptr->getInputDetails(*sc, *zp);
-  *scales = {sc};
-  *zeropoints = {zp};
+  std::vector<float> sc;
+  std::vector<int>   zp;
+  net.ptr->getInputDetails(sc, zp);
+  *scales = {new std::vector<float>(sc)};
+  *zeropoints = {new std::vector<int>};
   END_WRAP
 }
 
@@ -283,9 +282,9 @@ CvStatus
     NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices)
 {
   BEGIN_WRAP
-  VecInt_CPP v = new std::vector<int>();
-  cv::dnn::NMSBoxes(*bboxes.ptr, *scores.ptr, score_threshold, nms_threshold, *v, 1.f, 0);
-  *indices = {v};
+  std::vector<int> v;
+  cv::dnn::NMSBoxes(*bboxes.ptr, *scores.ptr, score_threshold, nms_threshold, v, 1.f, 0);
+  *indices = {new std::vector<int>(v)};
   END_WRAP
 }
 
@@ -293,8 +292,8 @@ CvStatus NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_t
                             const float nms_threshold, VecInt *indices, const float eta, const int top_k)
 {
   BEGIN_WRAP
-  VecInt_CPP v = new std::vector<int>();
-  cv::dnn::NMSBoxes(*bboxes.ptr, *scores.ptr, score_threshold, nms_threshold, *v, eta, top_k);
-  *indices = {v};
+  std::vector<int> v;
+  cv::dnn::NMSBoxes(*bboxes.ptr, *scores.ptr, score_threshold, nms_threshold, v, eta, top_k);
+  *indices = {new std::vector<int>(v)};
   END_WRAP
 }

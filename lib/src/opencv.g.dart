@@ -3921,21 +3921,24 @@ class CvNative {
   CvStatus FaceRecognizerSF_Feature(
     FaceRecognizerSF self,
     Mat aligned_img,
+    bool clone,
     ffi.Pointer<Mat> face_feature,
   ) {
     return _FaceRecognizerSF_Feature(
       self,
       aligned_img,
+      clone,
       face_feature,
     );
   }
 
   late final _FaceRecognizerSF_FeaturePtr = _lookup<
       ffi.NativeFunction<
-          CvStatus Function(FaceRecognizerSF, Mat,
+          CvStatus Function(FaceRecognizerSF, Mat, ffi.Bool,
               ffi.Pointer<Mat>)>>('FaceRecognizerSF_Feature');
-  late final _FaceRecognizerSF_Feature = _FaceRecognizerSF_FeaturePtr
-      .asFunction<CvStatus Function(FaceRecognizerSF, Mat, ffi.Pointer<Mat>)>();
+  late final _FaceRecognizerSF_Feature =
+      _FaceRecognizerSF_FeaturePtr.asFunction<
+          CvStatus Function(FaceRecognizerSF, Mat, bool, ffi.Pointer<Mat>)>();
 
   CvStatus FaceRecognizerSF_Match(
     FaceRecognizerSF self,

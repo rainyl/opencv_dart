@@ -30,17 +30,17 @@ CvStatus Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, 
 CvStatus Image_IMEncode(const char *fileExt, Mat img, bool *success, VecUChar *rval)
 {
   BEGIN_WRAP
-  auto buf = new std::vector<uchar>();
-  *success = cv::imencode(fileExt, *img.ptr, *buf);
-  *rval = {buf};
+  std::vector<uchar> buf;
+  *success = cv::imencode(fileExt, *img.ptr, buf);
+  *rval = {new std::vector<uchar>(buf)};
   END_WRAP
 }
 CvStatus Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, bool *success, VecUChar *rval)
 {
   BEGIN_WRAP
-  auto buf = new std::vector<uchar>();
-  *success = cv::imencode(fileExt, *img.ptr, *buf, *params.ptr);
-  *rval = {buf};
+  std::vector<uchar> buf;
+  *success = cv::imencode(fileExt, *img.ptr, buf, *params.ptr);
+  *rval = {new std::vector<uchar>(buf)};
   END_WRAP
 }
 CvStatus Image_IMDecode(VecUChar buf, int flags, Mat *rval)
