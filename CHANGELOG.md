@@ -1,3 +1,7 @@
+## 2.0.0-dev.11
+
+- Fix: free smart pointer
+
 ## 2.0.0-dev.10
 
 - API change: `FaceRecognizerSF.feature(Mat alignedImg)` -> `FaceRecognizerSF.feature(Mat alignedImg, {bool clone = false})`
