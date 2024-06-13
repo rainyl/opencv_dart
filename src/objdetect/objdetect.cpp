@@ -411,7 +411,7 @@ CvStatus FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, Ve
 
 void FaceDetectorYN_Close(FaceDetectorYNPtr self)
 {
-  self->ptr = nullptr;
+  self->ptr->reset();
   CVD_FREE(self)
 }
 
@@ -486,7 +486,7 @@ CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend
 }
 void FaceRecognizerSF_Close(FaceRecognizerSFPtr self)
 {
-  self->ptr = nullptr;
+  self->ptr->reset();
   CVD_FREE(self)
 }
 

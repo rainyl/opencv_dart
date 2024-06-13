@@ -715,7 +715,11 @@ CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval
       new cv::Ptr<cv::CLAHE>(cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height)))};
   END_WRAP
 }
-void CLAHE_Close(CLAHEPtr c){CVD_FREE(c)}
+void CLAHE_Close(CLAHEPtr c)
+{
+  c->ptr->reset();
+  CVD_FREE(c)
+}
 
 CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst)
 {

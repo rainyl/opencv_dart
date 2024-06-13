@@ -276,10 +276,14 @@ CvStatus Layer_GetType(Layer layer, char **rval)
   END_WRAP
 }
 
-void Layer_Close(LayerPtr layer){CVD_FREE(layer)}
+void Layer_Close(LayerPtr layer)
+{
+  layer->ptr->reset();
+  CVD_FREE(layer)
+}
 
-CvStatus
-    NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices)
+CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,
+                  VecInt *indices)
 {
   BEGIN_WRAP
   std::vector<int> v;
