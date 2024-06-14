@@ -1,4 +1,4 @@
-name: build and test
+name: Coverage
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   build-windows:
     name: build-windows
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
           name: libopencv_dart-windows-x64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          # flutter-version: '3.16.9'
+          flutter-version: '3.19.6'
           channel: "stable"
       - name: setup coverage
         run: |

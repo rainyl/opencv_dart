@@ -3,6 +3,8 @@
 # Run `pod lib lint opencv_dart.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
+  system("make setup")
+
   s.name             = 'opencv_dart'
   s.version          = '0.0.1'
   s.summary          = 'OpenCV bindings for Dart.'
@@ -21,13 +23,15 @@ Pod::Spec.new do |s|
   # s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.platform = :ios, '12.0'
-  s.preserve_paths = "opencv_dart.framework"
+
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.swift_version = '5.0'
+
+  s.preserve_paths = 'opencv_dart.xcframework'
+  s.vendored_frameworks = 'opencv_dart.xcframework'
   s.xcconfig = { 'OTHER_LDFLAGS' => '-framework opencv_dart' }
-  s.vendored_frameworks = 'opencv_dart.framework'
-  s.frameworks = 'AVFoundation'
+  s.frameworks = ['AVFoundation', 'opencv_dart']
   s.library = 'c++'
   s.static_framework = true
-
-  # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES'}
 end

@@ -30,11 +30,8 @@ CVD_TYPEDEF(void *, PtrStitcher)
 CVD_TYPEDEF(void, Stitcher)
 #endif
 
-CVD_TYPEDEF_PTR(PtrStitcher)
-CVD_TYPEDEF_PTR(Stitcher)
-
 CvStatus Stitcher_Create(int mode, PtrStitcher *rval);
-void     Stitcher_Close(PtrStitcher *stitcher);
+void     Stitcher_Close(PtrStitcherPtr stitcher);
 CvStatus Stitcher_Get(PtrStitcher self, Stitcher *rval);
 
 #pragma region getter/setter

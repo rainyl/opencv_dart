@@ -31,8 +31,6 @@ CVD_TYPEDEF(void, BlockMeanHash)
 // typedef void *RadialVarianceHash;
 #endif
 
-CVD_TYPEDEF_PTR(BlockMeanHash)
-
 enum {
   /** use fewer block and generate 16*16/8 uchar hash value */
   BLOCK_MEAN_HASH_MODE_0 = 0,
@@ -49,7 +47,7 @@ CvStatus averageHashCompare(Mat a, Mat b, double *rval);
 CvStatus BlockMeanHash_Create(int mode, BlockMeanHash *rval);
 CvStatus BlockMeanHash_GetMean(BlockMeanHash self, double **rval, int *length);
 CvStatus BlockMeanHash_SetMode(BlockMeanHash self, int mode);
-void     BlockMeanHash_Close(BlockMeanHash *self);
+void     BlockMeanHash_Close(BlockMeanHashPtr self);
 CvStatus BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat outputArr);
 CvStatus BlockMeanHash_Compare(BlockMeanHash self, Mat hashOne, Mat hashTwo, double *rval);
 CvStatus blockMeanHashCompute(Mat inputArr, Mat outputArr, int mode);

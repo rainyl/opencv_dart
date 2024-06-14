@@ -19,8 +19,10 @@ import '../opencv.g.dart' as cvg;
 /// with the theory is recommended.
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#details
 class Stitcher extends CvStruct<cvg.PtrStitcher> {
-  Stitcher._(cvg.PtrStitcherPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  Stitcher._(cvg.PtrStitcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   cvg.Stitcher get stitcher {
@@ -153,11 +155,11 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
   (StitcherStatus, Mat pano) composePanorama({VecMat? images}) {
     return using<(StitcherStatus, Mat)>((arena) {
       final rptr = arena<ffi.Int>();
-      final rpano = arena<cvg.Mat>();
+      final rpano = Mat.empty();
       images == null
           ? cvRun(() => CFFI.Stitcher_ComposePanorama(stitcher, rpano.ref, rptr))
           : cvRun(() => CFFI.Stitcher_ComposePanorama_1(stitcher, images.ref, rpano.ref, rptr));
-      return (StitcherStatus.fromInt(rptr.value), Mat.fromCMat(rpano.ref));
+      return (StitcherStatus.fromInt(rptr.value), rpano);
     });
   }
 
@@ -177,14 +179,17 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a7fed80561a9b46a1a924ac6cb334ac85
   VecInt get component {
-    return using<VecInt>((arena) {
-      final rptr = arena<cvg.VecInt>();
-      cvRun(() => CFFI.Stitcher_Component(stitcher, rptr));
-      return VecInt.fromVec(rptr.ref);
-    });
+    final rptr = calloc<cvg.VecInt>();
+    cvRun(() => CFFI.Stitcher_Component(stitcher, rptr));
+    return VecInt.fromPointer(rptr);
   }
 
   static final finalizer = OcvFinalizer<cvg.PtrStitcherPtr>(CFFI.addresses.Stitcher_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.Stitcher_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

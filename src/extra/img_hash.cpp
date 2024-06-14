@@ -45,7 +45,11 @@ CvStatus BlockMeanHash_SetMode(BlockMeanHash self, int mode)
   BEGIN_WRAP(*self.ptr)->setMode(mode);
   END_WRAP
 }
-void BlockMeanHash_Close(BlockMeanHash *self){CVD_FREE(self)}
+void BlockMeanHash_Close(BlockMeanHashPtr self)
+{
+  self->ptr->reset();
+  CVD_FREE(self)
+}
 
 CvStatus BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat outputArr)
 {

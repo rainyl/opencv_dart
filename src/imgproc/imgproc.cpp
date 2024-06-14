@@ -7,7 +7,6 @@
 */
 
 #include "imgproc.h"
-#include <memory>
 #include <vector>
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -19,9 +18,9 @@ CvStatus ArcLength(VecPoint curve, bool is_closed, double *rval)
 CvStatus ApproxPolyDP(VecPoint curve, double epsilon, bool closed, VecPoint *rval)
 {
   BEGIN_WRAP
-  auto approxCurvePts = new std::vector<cv::Point>();
-  cv::approxPolyDP(*curve.ptr, *approxCurvePts, epsilon, closed);
-  *rval = {approxCurvePts};
+  std::vector<cv::Point> approxCurvePts;
+  cv::approxPolyDP(*curve.ptr, approxCurvePts, epsilon, closed);
+  *rval = {new std::vector<cv::Point>(approxCurvePts)};
   END_WRAP
 }
 CvStatus CvtColor(Mat src, Mat dst, int code)
@@ -168,11 +167,11 @@ CvStatus BoxPoints(RotatedRect rect, VecPoint2f *boxPts)
   auto center = cv::Point2f(rect.center.x, rect.center.y);
   auto size = cv::Size2f(rect.size.width, rect.size.height);
   cv::boxPoints(cv::RotatedRect(center, size, rect.angle), mat);
-  std::vector<cv::Point2f> *vec = new std::vector<cv::Point2f>;
+  std::vector<cv::Point2f> vec;
   for (int i = 0; i < mat.rows; i++) {
-    vec->push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
+    vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
   }
-  *boxPts = {vec};
+  *boxPts = {new std::vector<cv::Point2f>(vec)};
   END_WRAP
 }
 CvStatus ContourArea(VecPoint pts, double *rval)
@@ -208,10 +207,10 @@ CvStatus MinEnclosingCircle(VecPoint pts, Point2f *center, float *radius)
 CvStatus FindContours(Mat src, Mat hierarchy, int mode, int method, VecVecPoint *rval)
 {
   BEGIN_WRAP
-  VecVecPoint_CPP contours = new std::vector<std::vector<cv::Point>>();
+  std::vector<std::vector<cv::Point>> contours;
   //   std::vector<cv::Vec4i> hierarchy;
-  cv::findContours(*src.ptr, *contours, *hierarchy.ptr, mode, method);
-  *rval = {contours};
+  cv::findContours(*src.ptr, contours, *hierarchy.ptr, mode, method);
+  *rval = {new std::vector<std::vector<cv::Point>>(contours)};
   END_WRAP
 }
 CvStatus PointPolygonTest(VecPoint pts, Point2f pt, bool measureDist, double *rval)
@@ -305,25 +304,30 @@ CvStatus CornerSubPix(Mat img, VecPoint2f corners, Size winSize, Size zeroZone, 
   BEGIN_WRAP
   auto size = cv::Size(winSize.width, winSize.height);
   auto zone = cv::Size(zeroZone.width, zeroZone.height);
-  cv::cornerSubPix(*img.ptr, *corners.ptr, size, zone, *criteria.ptr);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  cv::cornerSubPix(*img.ptr, *corners.ptr, size, zone, tc);
   // std::cout << *corners.ptr << std::endl;
   END_WRAP
 }
-CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f corners, int maxCorners, double quality, double minDist,
+CvStatus GoodFeaturesToTrack(Mat img, VecPoint2f *corners, int maxCorners, double quality, double minDist,
                              Mat mask, int blockSize, bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  std::vector<cv::Point2f> _corners;
+  cv::goodFeaturesToTrack(*img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           useHarrisDetector, k);
+  *corners = {new std::vector<cv::Point2f>(_corners)};
   END_WRAP
 }
-CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f corners, int maxCorners, double quality,
+CvStatus GoodFeaturesToTrackWithGradient(Mat img, VecPoint2f *corners, int maxCorners, double quality,
                                          double minDist, Mat mask, int blockSize, int gradientSize,
                                          bool useHarrisDetector, double k)
 {
   BEGIN_WRAP
-  cv::goodFeaturesToTrack(*img.ptr, *corners.ptr, maxCorners, quality, minDist, *mask.ptr, blockSize,
+  std::vector<cv::Point2f> _corners;
+  cv::goodFeaturesToTrack(*img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize,
                           gradientSize, useHarrisDetector, k);
+  *corners = {new std::vector<cv::Point2f>(_corners)};
   END_WRAP
 }
 CvStatus GrabCut(Mat img, Mat mask, Rect rect, Mat bgdModel, Mat fgdModel, int iterCount, int mode)
@@ -711,7 +715,11 @@ CvStatus CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rval
       new cv::Ptr<cv::CLAHE>(cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height)))};
   END_WRAP
 }
-void CLAHE_Close(CLAHE *c){CVD_FREE(c)}
+void CLAHE_Close(CLAHEPtr c)
+{
+  c->ptr->reset();
+  CVD_FREE(c)
+}
 
 CvStatus CLAHE_Apply(CLAHE c, Mat src, Mat dst)
 {
@@ -748,6 +756,145 @@ CvStatus CLAHE_SetTilesGridSize(CLAHE c, Size size)
   END_WRAP
 }
 
+CvStatus Subdiv2D_NewEmpty(Subdiv2D *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Subdiv2D()};
+  END_WRAP
+}
+CvStatus Subdiv2D_NewWithRect(Rect rect, Subdiv2D *rval)
+{
+  BEGIN_WRAP
+  *rval = {new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))};
+  END_WRAP
+}
+void Subdiv2D_Close(Subdiv2DPtr self){CVD_FREE(self)}
+
+CvStatus Subdiv2D_EdgeDst(Subdiv2D self, int edge, Point2f *dstpt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->edgeDst(edge, &p);
+  *dstpt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_EdgeOrg(Subdiv2D self, int edge, Point2f *orgpt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->edgeOrg(edge, &p);
+  *orgpt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_FindNearest(Subdiv2D self, Point2f pt, Point2f *nearestPt, int *rval)
+{
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  *rval = self.ptr->findNearest(cv::Point2f(pt.x, pt.y), &p);
+  *nearestPt = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetEdge(Subdiv2D self, int edge, int nextEdgeType, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->getEdge(edge, nextEdgeType);
+  END_WRAP
+}
+CvStatus Subdiv2D_GetEdgeList(Subdiv2D self, Vec4f **rval, int *size)
+{
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec4f>();
+  self.ptr->getEdgeList(v);
+  *size = v.size();
+  auto rv = new Vec4f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3]};
+  }
+  *rval = rv;
+  END_WRAP
+}
+CvStatus Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecInt *leadingEdgeList)
+{
+  BEGIN_WRAP
+  std::vector<int> v;
+  self.ptr->getLeadingEdgeList(v);
+  *leadingEdgeList = {new std::vector<int>(v)};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetTriangleList(Subdiv2D self, Vec6f **rval, int *size)
+{
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec6f>();
+  self.ptr->getTriangleList(v);
+  *size = v.size();
+  auto rv = new Vec6f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3], v[i].val[4], v[i].val[5]};
+  }
+  *rval = rv;
+  END_WRAP
+}
+CvStatus Subdiv2D_GetVertex(Subdiv2D self, int vertex, int *firstEdge, Point2f *rval)
+{
+  BEGIN_WRAP
+  auto p = self.ptr->getVertex(vertex, firstEdge);
+  *rval = {p.x, p.y};
+  END_WRAP
+}
+CvStatus Subdiv2D_GetVoronoiFacetList(Subdiv2D self, VecInt idx, VecVecPoint2f *facetList,
+                                      VecPoint2f *facetCenters)
+{
+  BEGIN_WRAP
+  auto vf = std::vector<std::vector<cv::Point2f>>();
+  auto vfc = std::vector<cv::Point2f>();
+  self.ptr->getVoronoiFacetList(*idx.ptr, vf, vfc);
+  *facetList = {new std::vector<std::vector<cv::Point2f>>(vf)};
+  *facetCenters = {new std::vector<cv::Point2f>(vfc)};
+  END_WRAP;
+}
+CvStatus Subdiv2D_InitDelaunay(Subdiv2D self, Rect rect)
+{
+  BEGIN_WRAP
+  self.ptr->initDelaunay(cv::Rect(rect.x, rect.y, rect.width, rect.height));
+  END_WRAP
+}
+CvStatus Subdiv2D_Insert(Subdiv2D self, Point2f pt, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->insert(cv::Point2f(pt.x, pt.y));
+  END_WRAP
+}
+CvStatus Subdiv2D_InsertVec(Subdiv2D self, VecPoint2f ptvec)
+{
+  BEGIN_WRAP
+  self.ptr->insert(*ptvec.ptr);
+  END_WRAP
+}
+CvStatus Subdiv2D_Locate(Subdiv2D self, Point2f pt, int *edge, int *vertex, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->locate(cv::Point2f(pt.x, pt.y), *edge, *vertex);
+  END_WRAP
+}
+CvStatus Subdiv2D_NextEdge(Subdiv2D self, int edge, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->nextEdge(edge);
+  END_WRAP
+}
+CvStatus Subdiv2D_RotateEdge(Subdiv2D self, int edge, int rotate, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->rotateEdge(edge, rotate);
+  END_WRAP
+}
+CvStatus Subdiv2D_SymEdge(Subdiv2D self, int edge, int *rval)
+{
+  BEGIN_WRAP
+  *rval = self.ptr->symEdge(edge);
+  END_WRAP
+}
+
 CvStatus InvertAffineTransform(Mat src, Mat dst)
 {
   BEGIN_WRAP
@@ -758,6 +905,7 @@ CvStatus PhaseCorrelate(Mat src1, Mat src2, Mat window, double *response, Point2
 {
   BEGIN_WRAP
   auto p = cv::phaseCorrelate(*src1.ptr, *src2.ptr, *window.ptr, response);
+  // TODO: add Point2d
   *rval = {static_cast<float>(p.x), static_cast<float>(p.y)};
   END_WRAP
 }

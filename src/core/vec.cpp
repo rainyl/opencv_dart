@@ -12,20 +12,19 @@ CvStatus VecPoint_New(VecPoint *rval)
 CvStatus VecPoint_NewFromPointer(Point *points, int length, VecPoint *rval)
 {
   BEGIN_WRAP
-  auto vec = new std::vector<cv::Point>();
+  std::vector<cv::Point> vec;
   for (int i = 0; i < length; i++) {
-    vec->push_back(cv::Point(points[i].x, points[i].y));
+    vec.push_back(cv::Point(points[i].x, points[i].y));
   }
-  *rval = {vec};
+  *rval = {new std::vector<cv::Point>(vec)};
   END_WRAP
 }
 
 CvStatus VecPoint_NewFromMat(Mat mat, VecPoint *rval)
 {
   BEGIN_WRAP
-  std::vector<cv::Point> *pts = new std::vector<cv::Point>;
-  *pts = (std::vector<cv::Point>)*mat.ptr;
-  *rval = {pts};
+  std::vector<cv::Point> pts = (std::vector<cv::Point>)*mat.ptr;
+  *rval = {new std::vector<cv::Point>(pts)};
   END_WRAP
 }
 
@@ -58,7 +57,7 @@ CvStatus VecPoint_Size(VecPoint vec, int *rval)
   END_WRAP
 }
 
-void VecPoint_Close(VecPoint *vec)
+void VecPoint_Close(VecPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -74,12 +73,12 @@ CvStatus VecVecPoint_New(VecVecPoint *rval)
 CvStatus VecVecPoint_NewFromPointer(VecPoint *points, int length, VecVecPoint *rval)
 {
   BEGIN_WRAP
-  VecVecPoint_CPP v = new std::vector<std::vector<cv::Point>>();
+  std::vector<std::vector<cv::Point>> v;
   for (int i = 0; i < length; i++) {
     auto pv = points[i];
-    v->push_back(*pv.ptr);
+    v.push_back(*pv.ptr);
   }
-  *rval = {v};
+  *rval = {new std::vector<std::vector<cv::Point>>(v)};
   END_WRAP
 }
 
@@ -111,7 +110,7 @@ CvStatus VecVecPoint_Size(VecVecPoint vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint_Close(VecVecPoint *vec)
+void VecVecPoint_Close(VecVecPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -124,7 +123,7 @@ CvStatus VecPoint2f_New(VecPoint2f *rval)
   END_WRAP
 }
 
-void VecPoint2f_Close(VecPoint2f *vec)
+void VecPoint2f_Close(VecPoint2fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -133,20 +132,19 @@ void VecPoint2f_Close(VecPoint2f *vec)
 CvStatus VecPoint2f_NewFromPointer(Point2f *points, int length, VecPoint2f *rval)
 {
   BEGIN_WRAP
-  auto vec = new std::vector<cv::Point2f>();
+  std::vector<cv::Point2f> vec;
   for (int i = 0; i < length; i++) {
-    vec->push_back(cv::Point2f(points[i].x, points[i].y));
+    vec.push_back(cv::Point2f(points[i].x, points[i].y));
   }
-  *rval = {vec};
+  *rval = {new std::vector<cv::Point2f>(vec)};
   END_WRAP
 }
 
 CvStatus VecPoint2f_NewFromMat(Mat mat, VecPoint2f *rval)
 {
   BEGIN_WRAP
-  std::vector<cv::Point2f> *pts = new std::vector<cv::Point2f>;
-  *pts = (std::vector<cv::Point2f>)*mat.ptr;
-  *rval = {pts};
+  std::vector<cv::Point2f> pts = (std::vector<cv::Point2f>)*mat.ptr;
+  *rval = {new std::vector<cv::Point2f>(pts)};
   END_WRAP
 }
 
@@ -189,12 +187,12 @@ CvStatus VecVecPoint2f_New(VecVecPoint2f *rval)
 CvStatus VecVecPoint2f_NewFromPointer(VecPoint2f *points, int length, VecVecPoint2f *rval)
 {
   BEGIN_WRAP
-  VecVecPoint2f_CPP v = new std::vector<std::vector<cv::Point2f>>();
+  std::vector<std::vector<cv::Point2f>> v;
   for (int i = 0; i < length; i++) {
     auto pv = points[i];
-    v->push_back(*pv.ptr);
+    v.push_back(*pv.ptr);
   }
-  *rval = {v};
+  *rval = {new std::vector<std::vector<cv::Point2f>>(v)};
   END_WRAP
 }
 
@@ -226,7 +224,7 @@ CvStatus VecVecPoint2f_Size(VecVecPoint2f vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint2f_Close(VecVecPoint2f *vec)
+void VecVecPoint2f_Close(VecVecPoint2fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -239,7 +237,7 @@ CvStatus VecPoint3f_New(VecPoint3f *rval)
   END_WRAP
 }
 
-void VecPoint3f_Close(VecPoint3f *vec)
+void VecPoint3f_Close(VecPoint3fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -248,20 +246,18 @@ void VecPoint3f_Close(VecPoint3f *vec)
 CvStatus VecPoint3f_NewFromPointer(Point3f *points, int length, VecPoint3f *rval)
 {
   BEGIN_WRAP
-  auto vec = new std::vector<cv::Point3f>();
+  std::vector<cv::Point3f> vec;
   for (int i = 0; i < length; i++) {
-    vec->push_back(cv::Point3f(points[i].x, points[i].y, points[i].z));
+    vec.push_back(cv::Point3f(points[i].x, points[i].y, points[i].z));
   }
-  *rval = {vec};
+  *rval = {new std::vector<cv::Point3f>(vec)};
   END_WRAP
 }
 
 CvStatus VecPoint3f_NewFromMat(Mat mat, VecPoint3f *rval)
 {
   BEGIN_WRAP
-  std::vector<cv::Point3f> *pts = new std::vector<cv::Point3f>;
-  *pts = (std::vector<cv::Point3f>)*mat.ptr;
-  *rval = {pts};
+  *rval = {new std::vector<cv::Point3f>((std::vector<cv::Point3f>)*mat.ptr)};
   END_WRAP
 }
 
@@ -304,12 +300,12 @@ CvStatus VecVecPoint3f_New(VecVecPoint3f *rval)
 CvStatus VecVecPoint3f_NewFromPointer(VecPoint3f *points, int length, VecVecPoint3f *rval)
 {
   BEGIN_WRAP
-  VecVecPoint3f_CPP v = new std::vector<std::vector<cv::Point3f>>();
+  std::vector<std::vector<cv::Point3f>> v;
   for (int i = 0; i < length; i++) {
     auto pv = points[i];
-    v->push_back(*pv.ptr);
+    v.push_back(*pv.ptr);
   }
-  *rval = {v};
+  *rval = {new std::vector<std::vector<cv::Point3f>>(v)};
   END_WRAP
 }
 
@@ -341,7 +337,7 @@ CvStatus VecVecPoint3f_Size(VecVecPoint3f vec, int *rval)
   END_WRAP
 }
 
-void VecVecPoint3f_Close(VecVecPoint3f *vec)
+void VecVecPoint3f_Close(VecVecPoint3fPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -357,11 +353,11 @@ CvStatus VecUChar_New(VecUChar *rval)
 CvStatus VecUChar_NewFromPointer(uchar *p, int length, VecUChar *rval)
 {
   BEGIN_WRAP
-  VecUChar_CPP v = new std::vector<uchar>();
+  std::vector<uchar> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(p[i]);
+    v.push_back(p[i]);
   }
-  *rval = {v};
+  *rval = {new std::vector<uchar>(v)};
   END_WRAP
 }
 
@@ -386,6 +382,20 @@ CvStatus VecUChar_At(VecUChar vec, int idx, uchar *rval)
   END_WRAP
 }
 
+CvStatus VecUChar_Data(VecUChar vec, uchar **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
+CvStatus VecUChar_AtNoBoundCheck(VecUChar vec, int idx, uchar *rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data()[idx];
+  END_WRAP
+}
+
 CvStatus VecUChar_Size(VecUChar vec, int *rval)
 {
   BEGIN_WRAP
@@ -393,7 +403,7 @@ CvStatus VecUChar_Size(VecUChar vec, int *rval)
   END_WRAP
 }
 
-void VecUChar_Close(VecUChar *vec)
+void VecUChar_Close(VecUCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -409,11 +419,11 @@ CvStatus VecChar_New(VecChar *rval)
 CvStatus VecChar_NewFromPointer(const char *p, int length, VecChar *rval)
 {
   BEGIN_WRAP
-  VecChar_CPP v = new std::vector<char>();
+  std::vector<char> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(p[i]);
+    v.push_back(p[i]);
   }
-  *rval = {v};
+  *rval = {new std::vector<char>(v)};
   END_WRAP
 }
 
@@ -438,6 +448,13 @@ CvStatus VecChar_At(VecChar vec, int idx, char *rval)
   END_WRAP
 }
 
+CvStatus VecChar_Data(VecChar vec, char **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecChar_Size(VecChar vec, int *rval)
 {
   BEGIN_WRAP
@@ -456,7 +473,7 @@ CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
   END_WRAP
 }
 
-void VecChar_Close(VecChar *vec)
+void VecChar_Close(VecCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -512,7 +529,7 @@ CvStatus VecVecChar_Size(VecVecChar vec, int *rval)
   *rval = vec.ptr->size();
   END_WRAP
 }
-void VecVecChar_Close(VecVecChar *vec)
+void VecVecChar_Close(VecVecCharPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -528,11 +545,11 @@ CvStatus VecInt_New(VecInt *rval)
 CvStatus VecInt_NewFromPointer(int *p, int length, VecInt *rval)
 {
   BEGIN_WRAP
-  VecInt_CPP v = new std::vector<int>();
+  std::vector<int> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(p[i]);
+    v.push_back(p[i]);
   }
-  *rval = {v};
+  *rval = {new std::vector<int>(v)};
   END_WRAP
 }
 
@@ -557,6 +574,20 @@ CvStatus VecInt_At(VecInt vec, int idx, int *rval)
   END_WRAP
 }
 
+CvStatus VecInt_AtNoBoundCheck(VecInt vec, int idx, int *rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data()[idx];
+  END_WRAP
+}
+
+CvStatus VecInt_Data(VecInt vec, int **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecInt_Size(VecInt vec, int *rval)
 {
   BEGIN_WRAP
@@ -564,7 +595,7 @@ CvStatus VecInt_Size(VecInt vec, int *rval)
   END_WRAP
 }
 
-void VecInt_Close(VecInt *vec)
+void VecInt_Close(VecIntPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -580,11 +611,11 @@ CvStatus VecFloat_New(VecFloat *rval)
 CvStatus VecFloat_NewFromPointer(float *p, int length, VecFloat *rval)
 {
   BEGIN_WRAP
-  VecFloat_CPP v = new std::vector<float>();
+  std::vector<float> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(p[i]);
+    v.push_back(p[i]);
   }
-  *rval = {v};
+  *rval = {new std::vector<float>(v)};
   END_WRAP
 }
 
@@ -609,6 +640,13 @@ CvStatus VecFloat_At(VecFloat vec, int idx, float *rval)
   END_WRAP
 }
 
+CvStatus VecFloat_Data(VecFloat vec, float **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecFloat_Size(VecFloat vec, int *rval)
 {
   BEGIN_WRAP
@@ -616,7 +654,7 @@ CvStatus VecFloat_Size(VecFloat vec, int *rval)
   END_WRAP
 }
 
-void VecFloat_Close(VecFloat *vec)
+void VecFloat_Close(VecFloatPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -632,11 +670,11 @@ CvStatus VecDouble_New(VecDouble *rval)
 CvStatus VecDouble_NewFromPointer(double *p, int length, VecDouble *rval)
 {
   BEGIN_WRAP
-  VecDouble_CPP v = new std::vector<double>();
+  std::vector<double> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(p[i]);
+    v.push_back(p[i]);
   }
-  *rval = {v};
+  *rval = {new std::vector<double>(v)};
   END_WRAP
 }
 
@@ -661,6 +699,13 @@ CvStatus VecDouble_At(VecDouble vec, int idx, double *rval)
   END_WRAP
 }
 
+CvStatus VecDouble_Data(VecDouble vec, double **rval)
+{
+  BEGIN_WRAP
+  *rval = vec.ptr->data();
+  END_WRAP
+}
+
 CvStatus VecDouble_Size(VecDouble vec, int *rval)
 {
   BEGIN_WRAP
@@ -668,7 +713,7 @@ CvStatus VecDouble_Size(VecDouble vec, int *rval)
   END_WRAP
 }
 
-void VecDouble_Close(VecDouble *vec)
+void VecDouble_Close(VecDoublePtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -684,11 +729,11 @@ CvStatus VecMat_New(VecMat *rval)
 CvStatus VecMat_NewFromPointer(Mat *mats, int length, VecMat *rval)
 {
   BEGIN_WRAP
-  VecMat_CPP v = new std::vector<cv::Mat>();
+  std::vector<cv::Mat> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(*(mats[i].ptr));
+    v.push_back(*(mats[i].ptr));
   }
-  *rval = {v};
+  *rval = {new std::vector<cv::Mat>(v)};
   END_WRAP
 }
 
@@ -720,7 +765,7 @@ CvStatus VecMat_Size(VecMat vec, int *rval)
   END_WRAP
 }
 
-void VecMat_Close(VecMat *vec)
+void VecMat_Close(VecMatPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -736,11 +781,11 @@ CvStatus VecRect_New(VecRect *rval)
 CvStatus VecRect_NewFromPointer(Rect *rects, int length, VecRect *rval)
 {
   BEGIN_WRAP
-  VecRect_CPP v = new std::vector<cv::Rect>();
+  std::vector<cv::Rect> v;
   for (int i = 0; i < length; i++) {
-    v->push_back(cv::Rect(rects[i].x, rects[i].y, rects[i].width, rects[i].height));
+    v.push_back(cv::Rect(rects[i].x, rects[i].y, rects[i].width, rects[i].height));
   }
-  *rval = {v};
+  *rval = {new std::vector<cv::Rect>(v)};
   END_WRAP
 }
 
@@ -773,7 +818,7 @@ CvStatus VecRect_Size(VecRect vec, int *rval)
   END_WRAP
 }
 
-void VecRect_Close(VecRect *vec)
+void VecRect_Close(VecRectPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -789,12 +834,12 @@ CvStatus VecKeyPoint_New(VecKeyPoint *rval)
 CvStatus VecKeyPoint_NewFromPointer(KeyPoint *keypoints, int length, VecKeyPoint *rval)
 {
   BEGIN_WRAP
-  VecKeyPoint_CPP v = new std::vector<cv::KeyPoint>();
+  std::vector<cv::KeyPoint> v;
   for (int i = 0; i < length; i++) {
     auto kp = keypoints[i];
-    v->push_back(cv::KeyPoint(kp.x, kp.y, kp.size, kp.angle, kp.response, kp.octave, kp.classID));
+    v.push_back(cv::KeyPoint(kp.x, kp.y, kp.size, kp.angle, kp.response, kp.octave, kp.classID));
   }
-  *rval = {v};
+  *rval = {new std::vector<cv::KeyPoint>(v)};
   END_WRAP
 }
 
@@ -827,7 +872,7 @@ CvStatus VecKeyPoint_Size(VecKeyPoint vec, int *rval)
   END_WRAP
 }
 
-void VecKeyPoint_Close(VecKeyPoint *vec)
+void VecKeyPoint_Close(VecKeyPointPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -843,12 +888,12 @@ CvStatus VecDMatch_New(VecDMatch *rval)
 CvStatus VecDMatch_NewFromPointer(DMatch *matches, int length, VecDMatch *rval)
 {
   BEGIN_WRAP
-  VecDMatch_CPP v = new std::vector<cv::DMatch>();
+  std::vector<cv::DMatch> v;
   for (int i = 0; i < length; i++) {
     auto dm = matches[i];
-    v->push_back(cv::DMatch(dm.queryIdx, dm.trainIdx, dm.imgIdx, dm.distance));
+    v.push_back(cv::DMatch(dm.queryIdx, dm.trainIdx, dm.imgIdx, dm.distance));
   }
-  *rval = {v};
+  *rval = {new std::vector<cv::DMatch>(v)};
   END_WRAP
 }
 
@@ -881,7 +926,7 @@ CvStatus VecDMatch_Size(VecDMatch vec, int *rval)
   END_WRAP
 }
 
-void VecDMatch_Close(VecDMatch *vec)
+void VecDMatch_Close(VecDMatchPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
@@ -897,11 +942,12 @@ CvStatus VecVecDMatch_New(VecVecDMatch *rval)
 CvStatus VecVecDMatch_NewFromPointer(VecDMatch *matches, int length, VecVecDMatch *rval)
 {
   BEGIN_WRAP
-  VecVecDMatch_CPP v = new std::vector<std::vector<cv::DMatch>>();
+  std::vector<std::vector<cv::DMatch>> v;
   for (int i = 0; i < length; i++) {
     auto dm = matches[i];
-    v->push_back(*dm.ptr);
+    v.push_back(*dm.ptr);
   }
+  *rval = {new std::vector<std::vector<cv::DMatch>>(v)};
   END_WRAP
 }
 
@@ -919,6 +965,13 @@ CvStatus VecVecDMatch_At(VecVecDMatch vec, int idx, VecDMatch *rval)
   END_WRAP
 }
 
+CvStatus VecVecDMatch_Data(VecVecDMatch vec, VecDMatch **rval)
+{
+  BEGIN_WRAP
+  *rval = {new VecDMatch{vec.ptr->data()}};
+  END_WRAP
+}
+
 CvStatus VecVecDMatch_Append(VecVecDMatch vec, VecDMatch dm)
 {
   BEGIN_WRAP
@@ -933,7 +986,7 @@ CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
   END_WRAP
 }
 
-void VecVecDMatch_Close(VecVecDMatch *vec)
+void VecVecDMatch_Close(VecVecDMatchPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)

@@ -66,16 +66,6 @@ extern "C" {
 
 #define CVD_TYPECAST_C(value) reinterpret_cast<void *>(value);
 
-#define CVD_TYPEDEF_PTR(TYPE)                                                                                \
-  typedef TYPE *TYPE##Ptr;                                                                                   \
-  /**                                                                                                        \
-   * Dart ffigen will not generate typedefs if not referred                                                  \
-   * so here we confirm they are included                                                                    \
-   */                                                                                                        \
-  typedef struct {                                                                                           \
-    TYPE##Ptr *p;                                                                                            \
-  } NO_USE_##TYPE##Ptr;
-
 #ifdef __cplusplus
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
 #define CVD_FREE(value)                                                                                      \
@@ -88,11 +78,11 @@ extern "C" {
   typedef TYPE *NAME##_CPP;                                                                                  \
   typedef struct NAME {                                                                                      \
     TYPE *ptr;                                                                                               \
-  } NAME;
+  } NAME;                                                                                                    \
+  typedef NAME *NAME##Ptr;
 
 CVD_TYPEDEF(cv::Mat, Mat)
 CVD_TYPEDEF(cv::_InputOutputArray, InputOutputArray)
-CVD_TYPEDEF(cv::TermCriteria, TermCriteria)
 CVD_TYPEDEF(cv::RNG, RNG)
 CVD_TYPEDEF(std::vector<cv::Point>, VecPoint)
 CVD_TYPEDEF(std::vector<std::vector<cv::Point>>, VecVecPoint)
@@ -115,14 +105,14 @@ CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef struct NAME {                                                                                      \
     TYPE *ptr;                                                                                               \
-  } NAME;
+  } NAME;                                                                                                    \
+  typedef NAME *NAME##Ptr;
 
 typedef unsigned char  uchar;
 typedef unsigned short ushort;
 
 CVD_TYPEDEF(void, Mat)
 CVD_TYPEDEF(void, InputOutputArray)
-CVD_TYPEDEF(void, TermCriteria)
 CVD_TYPEDEF(void, RNG)
 CVD_TYPEDEF(void, VecPoint)
 CVD_TYPEDEF(void, VecVecPoint)
@@ -142,11 +132,6 @@ CVD_TYPEDEF(void, VecKeyPoint)
 CVD_TYPEDEF(void, VecDMatch)
 CVD_TYPEDEF(void, VecVecDMatch)
 #endif
-
-CVD_TYPEDEF_PTR(Mat)
-CVD_TYPEDEF_PTR(InputOutputArray)
-CVD_TYPEDEF_PTR(TermCriteria)
-CVD_TYPEDEF_PTR(RNG)
 
 // Wrapper for an individual cv::cvPoint
 typedef struct Point {
@@ -406,11 +391,11 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval);
 // internal use
 // VecPoint2f vecPointToVecPoint2f(VecPoint src);
 
-CvStatus TermCriteria_New(int typ, int maxCount, double epsilon, TermCriteria *rval);
-CvStatus TermCriteria_Type(TermCriteria tc, int *rval);
-CvStatus TermCriteria_MaxCount(TermCriteria tc, int *rval);
-CvStatus TermCriteria_Epsilon(TermCriteria tc, double *rval);
-void     TermCriteria_Close(TermCriteria *tc);
+typedef struct TermCriteria {
+  int    type;
+  int    maxCount;
+  double epsilon;
+} TermCriteria;
 
 /**
  * @brief Create empty Mat
@@ -438,7 +423,7 @@ CvStatus Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus Mat_FromCMat(Mat m, Mat *rval);
-void     Mat_Close(Mat *m);
+void     Mat_Close(MatPtr m);
 void     Mat_CloseVoid(void *m);
 CvStatus Mat_Release(Mat *m);
 CvStatus Mat_Empty(Mat m, bool *rval);
@@ -470,6 +455,28 @@ CvStatus Mat_DataPtr(Mat m, uchar **data, int *length);
 CvStatus Eye(int rows, int cols, int type, Mat *rval);
 CvStatus Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus Ones(int rows, int cols, int type, Mat *rval);
+
+CvStatus Mat_Ptr_u8_1(Mat m, int i, uchar **rval);
+CvStatus Mat_Ptr_u8_2(Mat m, int i, int j, uchar **rval);
+CvStatus Mat_Ptr_u8_3(Mat m, int i, int j, int k, uchar **rval);
+CvStatus Mat_Ptr_i8_1(Mat m, int i, char **rval);
+CvStatus Mat_Ptr_i8_2(Mat m, int i, int j, char **rval);
+CvStatus Mat_Ptr_i8_3(Mat m, int i, int j, int k, char **rval);
+CvStatus Mat_Ptr_u16_1(Mat m, int i, ushort **rval);
+CvStatus Mat_Ptr_u16_2(Mat m, int i, int j, ushort **rval);
+CvStatus Mat_Ptr_u16_3(Mat m, int i, int j, int k, ushort **rval);
+CvStatus Mat_Ptr_i16_1(Mat m, int i, short **rval);
+CvStatus Mat_Ptr_i16_2(Mat m, int i, int j, short **rval);
+CvStatus Mat_Ptr_i16_3(Mat m, int i, int j, int k, short **rval);
+CvStatus Mat_Ptr_i32_1(Mat m, int i, int **rval);
+CvStatus Mat_Ptr_i32_2(Mat m, int i, int j, int **rval);
+CvStatus Mat_Ptr_i32_3(Mat m, int i, int j, int k, int **rval);
+CvStatus Mat_Ptr_f32_1(Mat m, int i, float **rval);
+CvStatus Mat_Ptr_f32_2(Mat m, int i, int j, float **rval);
+CvStatus Mat_Ptr_f32_3(Mat m, int i, int j, int k, float **rval);
+CvStatus Mat_Ptr_f64_1(Mat m, int i, double **rval);
+CvStatus Mat_Ptr_f64_2(Mat m, int i, int j, double **rval);
+CvStatus Mat_Ptr_f64_3(Mat m, int i, int j, int k, double **rval);
 
 #pragma region Mat_getter
 
@@ -680,7 +687,7 @@ CvStatus NormWithMats(Mat src1, Mat src2, int normType, double *rval);
 
 CvStatus Rng_New(RNG *rval);
 CvStatus Rng_NewWithState(uint64_t state, RNG *rval);
-void     Rng_Close(RNG *rng);
+void     Rng_Close(RNGPtr rng);
 CvStatus TheRNG(RNG *rval);
 CvStatus SetRNGSeed(int seed);
 CvStatus RNG_Fill(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange);

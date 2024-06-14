@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('cv.AKAZE', () {
@@ -15,6 +14,8 @@ void main() async {
     final (kp2, desc) = ak.detectAndCompute(img, mask);
     expect(kp2.length, greaterThan(512));
     expect(desc.isEmpty, false);
+
+    ak.dispose();
   });
 
   test('cv.AgastFeatureDetector', () {
@@ -23,6 +24,8 @@ void main() async {
     final ad = cv.AgastFeatureDetector.empty();
     final kp = ad.detect(img);
     expect(kp.length, greaterThan(2800));
+
+    ad.dispose();
   });
 
   test('cv.BRISK', () {
@@ -36,6 +39,8 @@ void main() async {
     final (kp2, desc) = br.detectAndCompute(img, mask);
     expect(kp2.length, greaterThan(512));
     expect(desc.isEmpty, false);
+
+    br.dispose();
   });
 
   test('cv.FastFeatureDetector', () {
@@ -49,6 +54,8 @@ void main() async {
     final fd1 = cv.FastFeatureDetector.create();
     final kp1 = fd1.detect(img);
     expect(kp1.length, greaterThan(2690));
+
+    fd.dispose();
   });
 
   test('cv.GFTTDetector', () {
@@ -58,6 +65,8 @@ void main() async {
     final gf = cv.GFTTDetector.empty();
     final kp = gf.detect(img);
     expect(kp.length, greaterThan(512));
+
+    gf.dispose();
   });
 
   test('cv.KAZE', () {
@@ -72,6 +81,8 @@ void main() async {
     final (kp2, desc) = ka.detectAndCompute(img, mask);
     expect(kp2.length, greaterThan(0));
     expect(desc.isEmpty, false);
+
+    ka.dispose();
   });
 
   test('cv.MSER', () {
@@ -81,6 +92,8 @@ void main() async {
     final gf = cv.MSER.empty();
     final kp = gf.detect(img);
     expect(kp.length, greaterThan(0));
+
+    gf.dispose();
   });
 
   test('cv.ORB', () {
@@ -99,6 +112,8 @@ void main() async {
     final (kp2, desc) = ka.detectAndCompute(img, mask);
     expect(kp2.length, 500);
     expect(desc.isEmpty, false);
+
+    orb.dispose();
   });
 
   test('cv.SimpleBlobDetector', () {
@@ -232,6 +247,9 @@ void main() async {
     final detector1 = cv.SimpleBlobDetector.create(params);
     final kp1 = detector1.detect(img);
     expect(kp1.length, 0);
+
+    detector1.dispose();
+    params.dispose();
   });
 
   test('cv.BFMatcher', () {
@@ -250,6 +268,8 @@ void main() async {
 
     final matches = matcher.match(desc1, desc2);
     expect(matches.length, greaterThan(0));
+
+    matcher.dispose();
   });
 
   test('cv.FlannBasedMatcher', () {
@@ -264,6 +284,8 @@ void main() async {
     final matcher = cv.FlannBasedMatcher.empty();
     final dmatches = matcher.knnMatch(desc11, desc21, 2);
     expect(dmatches.length, greaterThan(0));
+
+    matcher.dispose();
   });
 
   test('cv.SIFT', () {
@@ -278,6 +300,8 @@ void main() async {
     final (kp2, desc) = si.detectAndCompute(img, mask);
     expect(kp2.length, greaterThan(0));
     expect(desc.isEmpty, false);
+
+    si.dispose();
   });
 
   test('cv.drawMatches', () {
@@ -305,5 +329,7 @@ void main() async {
       singlePointColor: cv.Scalar.green,
     );
     expect(out.cols, query.cols + train.cols);
+
+    bf.dispose();
   });
 }

@@ -1,8 +1,8 @@
 @Tags(["no-local-files"])
 import 'dart:io';
 
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 bool checkCaffeNet(cv.Net net) {
   expect(net.isEmpty, false);
@@ -12,8 +12,14 @@ bool checkCaffeNet(cv.Net net) {
   final img = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
-  final blob = cv.blobFromImage(img,
-      scalefactor: 1.0, size: (224, 224), mean: cv.Scalar.all(0), swapRB: false, crop: false);
+  final blob = cv.blobFromImage(
+    img,
+    scalefactor: 1.0,
+    size: (224, 224),
+    mean: cv.Scalar.all(0),
+    swapRB: false,
+    crop: false,
+  );
   expect(blob.isEmpty, false);
 
   net.setInput(blob, name: "data");
@@ -50,8 +56,14 @@ bool checkTensorflow(cv.Net net) {
   final img = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
-  final blob = cv.blobFromImage(img,
-      scalefactor: 1.0, size: (224, 224), mean: cv.Scalar.all(0), swapRB: true, crop: false);
+  final blob = cv.blobFromImage(
+    img,
+    scalefactor: 1.0,
+    size: (224, 224),
+    mean: cv.Scalar.all(0),
+    swapRB: true,
+    crop: false,
+  );
   expect(blob.isEmpty, false);
 
   net.setInput(blob, name: "input");
@@ -75,8 +87,14 @@ bool checkOnnx(cv.Net net) {
   final img = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
-  final blob = cv.blobFromImage(img,
-      scalefactor: 1.0, size: (224, 224), mean: cv.Scalar.all(0), swapRB: true, crop: false);
+  final blob = cv.blobFromImage(
+    img,
+    scalefactor: 1.0,
+    size: (224, 224),
+    mean: cv.Scalar.all(0),
+    swapRB: true,
+    crop: false,
+  );
   expect(blob.isEmpty, false);
 
   net.setInput(blob, name: "data_0");
@@ -103,8 +121,14 @@ bool checkTflite(cv.Net net) {
   final img = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
-  final blob = cv.blobFromImage(img,
-      scalefactor: 1.0, size: (224, 224), mean: cv.Scalar.all(0), swapRB: true, crop: false);
+  final blob = cv.blobFromImage(
+    img,
+    scalefactor: 1.0,
+    size: (224, 224),
+    mean: cv.Scalar.all(0),
+    swapRB: true,
+    crop: false,
+  );
   expect(blob.isEmpty, false);
 
   // TODO: TFLite support of opencv is not complete
@@ -116,13 +140,17 @@ bool checkTflite(cv.Net net) {
 
 void main() async {
   test('cv.Net.fromFile', () async {
-    cv.registerErrorCallback();
     final net = cv.Net.empty();
     expect(net.isEmpty, true);
 
-    final model = cv.Net.fromFile("test/models/bvlc_googlenet.caffemodel",
-        config: "test/models/bvlc_googlenet.prototxt");
+    final model = cv.Net.fromFile(
+      "test/models/bvlc_googlenet.caffemodel",
+      config: "test/models/bvlc_googlenet.prototxt",
+    );
     checkCaffeNet(model);
+    expect(model.dump(), isNotEmpty);
+
+    net.dispose();
   });
 
   test('cv.Net.fromBytes', () {
@@ -130,11 +158,13 @@ void main() async {
     final config = File("test/models/bvlc_googlenet.prototxt").readAsBytesSync();
     final model = cv.Net.fromBytes("caffe", bytes, bufferConfig: config);
     checkCaffeNet(model);
+
+    model.dispose();
   });
 
   test('cv.Net.fromCaffe', () {
-    final model = cv.Net.fromCaffe(
-        "test/models/bvlc_googlenet.prototxt", "test/models/bvlc_googlenet.caffemodel");
+    final model =
+        cv.Net.fromCaffe("test/models/bvlc_googlenet.prototxt", "test/models/bvlc_googlenet.caffemodel");
     checkCaffeNet(model);
   });
 

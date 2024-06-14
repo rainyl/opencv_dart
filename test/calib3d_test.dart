@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('cv.Fisheye.undistortImage', () {
@@ -8,16 +7,16 @@ void main() async {
     expect(img.isEmpty, false);
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 689.21);
-    k.set<double>(0, 1, 0);
+    k.set<double>(0, 1, 0.0);
     k.set<double>(0, 2, 1295.56);
 
-    k.set<double>(1, 0, 0);
+    k.set<double>(1, 0, 0.0);
     k.set<double>(1, 1, 690.48);
     k.set<double>(1, 2, 942.17);
 
-    k.set<double>(2, 0, 0);
-    k.set<double>(2, 1, 0);
-    k.set<double>(2, 2, 1);
+    k.set<double>(2, 0, 0.0);
+    k.set<double>(2, 1, 0.0);
+    k.set<double>(2, 2, 1.0);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
 
@@ -28,16 +27,16 @@ void main() async {
   test('cv.undistortPoints', () {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 1094.7249578198823);
-    k.set<double>(0, 1, 0);
+    k.set<double>(0, 1, 0.0);
     k.set<double>(0, 2, 1094.7249578198823);
 
-    k.set<double>(1, 0, 0);
+    k.set<double>(1, 0, 0.0);
     k.set<double>(1, 1, 1094.9945708128778);
     k.set<double>(1, 2, 536.4566143451868);
 
-    k.set<double>(2, 0, 0);
-    k.set<double>(2, 1, 0);
-    k.set<double>(2, 2, 1);
+    k.set<double>(2, 0, 0.0);
+    k.set<double>(2, 1, 0.0);
+    k.set<double>(2, 2, 1.0);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
     d.set<double>(0, 0, -0.05207412392075069);
@@ -57,14 +56,14 @@ void main() async {
     // (0 * 2) + channelNumber
     // so col = 0 is the x coordinate and col = 1 is the y coordinate
 
-    src.set<double>(0, 0, 480);
-    src.set<double>(0, 1, 270);
+    src.set<double>(0, 0, 480.0);
+    src.set<double>(0, 1, 270.0);
 
-    src.set<double>(1, 0, 960);
-    src.set<double>(1, 1, 540);
+    src.set<double>(1, 0, 960.0);
+    src.set<double>(1, 1, 540.0);
 
-    src.set<double>(2, 0, 1920);
-    src.set<double>(2, 1, 1080);
+    src.set<double>(2, 0, 1920.0);
+    src.set<double>(2, 1, 1080.0);
 
     cv.undistortPoints(src, k, d);
     final dst = cv.undistortPoints(src, k, d, R: r, P: k);
@@ -76,16 +75,16 @@ void main() async {
   test('cv.Fisheye.undistortPoints', () {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 1094.7249578198823);
-    k.set<double>(0, 1, 0);
+    k.set<double>(0, 1, 0.0);
     k.set<double>(0, 2, 959.4907612030962);
 
-    k.set<double>(1, 0, 0);
+    k.set<double>(1, 0, 0.0);
     k.set<double>(1, 1, 1094.9945708128778);
     k.set<double>(1, 2, 536.4566143451868);
 
-    k.set<double>(2, 0, 0);
-    k.set<double>(2, 1, 0);
-    k.set<double>(2, 2, 1);
+    k.set<double>(2, 0, 0.0);
+    k.set<double>(2, 1, 0.0);
+    k.set<double>(2, 2, 1.0);
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
     d.set<double>(0, 0, -0.05207412392075069);
@@ -97,14 +96,14 @@ void main() async {
     final src = cv.Mat.zeros(3, 1, cv.MatType.CV_64FC2);
     final dst = cv.Mat.zeros(3, 1, cv.MatType.CV_64FC2);
 
-    src.set<double>(0, 0, 480);
-    src.set<double>(0, 1, 270);
+    src.set<double>(0, 0, 480.0);
+    src.set<double>(0, 1, 270.0);
 
-    src.set<double>(1, 0, 960);
-    src.set<double>(1, 1, 540);
+    src.set<double>(1, 0, 960.0);
+    src.set<double>(1, 1, 540.0);
 
-    src.set<double>(2, 0, 1440);
-    src.set<double>(2, 1, 810);
+    src.set<double>(2, 0, 1440.0);
+    src.set<double>(2, 1, 810.0);
 
     final knew = k.clone();
     knew.set<double>(0, 0, 0.4 * k.at<double>(0, 0));
@@ -118,7 +117,6 @@ void main() async {
       P: knew,
       balance: 1,
       newSize: (1920, 1080),
-      fovScale: 1,
     );
 
     cv.Fisheye.undistortPoints(src, k, d);
@@ -133,16 +131,16 @@ void main() async {
 
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 842.0261028);
-    k.set<double>(0, 1, 0);
+    k.set<double>(0, 1, 0.0);
     k.set<double>(0, 2, 667.7569792);
 
-    k.set<double>(1, 0, 0);
+    k.set<double>(1, 0, 0.0);
     k.set<double>(1, 1, 707.3668897);
     k.set<double>(1, 2, 385.56476464);
 
-    k.set<double>(2, 0, 0);
-    k.set<double>(2, 1, 0);
-    k.set<double>(2, 2, 1);
+    k.set<double>(2, 0, 0.0);
+    k.set<double>(2, 1, 0.0);
+    k.set<double>(2, 2, 1.0);
 
     final d = cv.Mat.zeros(1, 5, cv.MatType.CV_64FC1);
     d.set<double>(0, 0, -3.65584802e-01);
@@ -223,21 +221,20 @@ void main() async {
       cv.VecPoint2f.fromMat(corners).toList(),
     ]);
 
-    final cameraMatrix = cv.Mat.empty(), distCoeffs = cv.Mat.empty();
+    final cameraMatrix = cv.Mat.empty();
+    final distCoeffs = cv.Mat.empty();
     final (rmsErr, mtx, dist, rvecs, tvecs) = cv.calibrateCamera(
       objectPointsVector,
       imagePointsVector,
       (img.cols, img.rows),
       cameraMatrix,
       distCoeffs,
-      flags: 0,
     );
     expect(rmsErr, greaterThan(0));
     expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
 
     final dst = cv.undistort(img, cameraMatrix, distCoeffs);
-    final target =
-        cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
+    final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
     final xor = cv.bitwiseXOR(dst, target);
     final sum = xor.sum();
     expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
@@ -259,11 +256,6 @@ void main() async {
     final (m, inliers) = cv.estimateAffinePartial2D(
       src,
       dst,
-      method: 8,
-      ransacReprojThreshold: 3.0,
-      maxIters: 2000,
-      confidence: 0.99,
-      refineIters: 10,
     );
     expect(inliers.isEmpty, false);
     expect(m.isEmpty, false);
@@ -286,11 +278,6 @@ void main() async {
     final (m, inliers) = cv.estimateAffine2D(
       src,
       dst,
-      method: 8,
-      ransacReprojThreshold: 3.0,
-      maxIters: 2000,
-      confidence: 0.99,
-      refineIters: 10,
     );
     expect(inliers.isEmpty, false);
     expect(m.isEmpty, false);

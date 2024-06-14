@@ -27,9 +27,6 @@ CVD_TYPEDEF(void, MergeMertens)
 CVD_TYPEDEF(void, AlignMTB)
 #endif
 
-CVD_TYPEDEF_PTR(MergeMertens)
-CVD_TYPEDEF_PTR(AlignMTB)
-
 CvStatus ColorChange(Mat src, Mat mask, Mat dst, float red_mul, float green_mul, float blue_mul);
 
 CvStatus SeamlessClone(Mat src, Mat dst, Mat mask, Point p, Mat blend, int flags);
@@ -54,12 +51,12 @@ CvStatus MergeMertens_Create(MergeMertens *rval);
 CvStatus MergeMertens_CreateWithParams(float contrast_weight, float saturation_weight, float exposure_weight,
                                        MergeMertens *rval);
 CvStatus MergeMertens_Process(MergeMertens b, VecMat src, Mat dst);
-void     MergeMertens_Close(MergeMertens *b);
+void     MergeMertens_Close(MergeMertensPtr b);
 
 CvStatus AlignMTB_Create(AlignMTB *rval);
 CvStatus AlignMTB_CreateWithParams(int max_bits, int exclude_range, bool cut, AlignMTB *rval);
 CvStatus AlignMTB_Process(AlignMTB b, VecMat src, VecMat *dst);
-void     AlignMTB_Close(AlignMTB *b);
+void     AlignMTB_Close(AlignMTBPtr b);
 
 CvStatus DetailEnhance(Mat src, Mat dst, float sigma_s, float sigma_r);
 CvStatus EdgePreservingFilter(Mat src, Mat dst, int filter, float sigma_s, float sigma_r);

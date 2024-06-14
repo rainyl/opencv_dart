@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() {
   test('VecInt', () {
@@ -11,28 +11,47 @@ void main() {
 
     final vec1 = cv.VecInt.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecUChar', () {
-    final points = List.generate(100, (index) => index);
+    final points = List.generate(1000, (index) => index % 256);
     final vec = points.u8;
+    final u8List = vec.toU8List();
+    expect(u8List.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
+    final u8 = vec.data;
+    expect(u8.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = cv.VecUChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecChar', () {
     final points = List.generate(100, (index) => index);
     final vec = points.i8;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = cv.VecChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
+    expect(vec2.asString(), "AAAA你好");
+
+    vec1.dispose();
   });
 
   test('VecVecChar', () {
@@ -44,28 +63,42 @@ void main() {
 
     final vec1 = cv.VecVecChar.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecFloat', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f32;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = cv.VecFloat.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecDouble', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f64;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = cv.VecDouble.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecRect', () {
@@ -78,6 +111,8 @@ void main() {
 
     final vec1 = cv.VecRect.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('RotatedRect', () {
@@ -91,6 +126,8 @@ void main() {
 
     final rect2 = cv.RotatedRect.fromNative(rect.ref);
     expect(rect2, rect);
+
+    rect2.dispose();
   });
   test('VecDMatch', () {
     final points = List.generate(100, (index) => cv.DMatch(index, index, index, index.toDouble()));
@@ -102,11 +139,15 @@ void main() {
 
     final vec1 = cv.VecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecVecDMatch', () {
-    final points = List.generate(10,
-        (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())));
+    final points = List.generate(
+      10,
+      (index) => List.generate(10, (index) => cv.DMatch(index, index, index, index.toDouble())),
+    );
     final vec = points.cvd;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
@@ -114,6 +155,8 @@ void main() {
 
     final vec1 = cv.VecVecDMatch.fromVec(vec.ref);
     expect(vec1, vec);
+
+    vec1.dispose();
   });
 
   test('VecKeyPoint', () {
@@ -137,5 +180,11 @@ void main() {
 
     final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
     expect(vec1, vec);
+
+    for (final p in points) {
+      p.dispose();
+    }
+
+    vec1.dispose();
   });
 }

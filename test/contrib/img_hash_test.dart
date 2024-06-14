@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 const testImage = "test/images/space_shuttle.jpg";
 const testImage2 = "test/images/toy.jpg";
@@ -9,7 +8,7 @@ cv.Mat computeHash(String imagePath, cv.ImgHashBase hashAlgorithm) {
   final img = cv.imread(imagePath, flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
-  cv.Mat dst = cv.Mat.empty();
+  final cv.Mat dst = cv.Mat.empty();
   hashAlgorithm.compute(img, dst);
   expect(dst.isEmpty, false);
 
@@ -44,7 +43,7 @@ void main() async {
     final img = cv.Mat.ones(256, 256, cv.MatType.CV_8UC1);
     for (var i = 0; i < img.rows; i++) {
       for (var j = 0; j < img.cols; j++) {
-        img.set(i, j, i + j);
+        img.set<cv.U8>(i, j, i + j);
       }
     }
     bmh.compute(img, hash);
@@ -80,11 +79,13 @@ void main() async {
       3,
       252,
       1,
-      254
+      254,
     ];
     expect(hash.toList()[0], expectedHash);
     final mean = bmh.getMean();
     bmh.mode = cv.BLOCK_MEAN_HASH_MODE_1;
     expect(mean.length, greaterThan(0));
+
+    bmh.dispose();
   });
 }

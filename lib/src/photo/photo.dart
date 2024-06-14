@@ -4,10 +4,10 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/mat_type.dart';
-import '../core/point.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
+import '../core/point.dart';
 import '../opencv.g.dart' as cvg;
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
@@ -17,8 +17,10 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
 class MergeMertens extends CvStruct<cvg.MergeMertens> {
-  MergeMertens._(cvg.MergeMertensPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory MergeMertens.empty() {
@@ -33,23 +35,27 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double exposureWeight = 0.0,
   }) {
     final p = calloc<cvg.MergeMertens>();
-    cvRun(() =>
-        CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p));
+    cvRun(
+      () => CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p),
+    );
     return MergeMertens._(p);
   }
 
   static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.MergeMertens_Close(ptr);
+  }
 
   /// BalanceWhite computes merge LDR images using the current MergeMertens.
   /// Return a image MAT : 8bits 3 channel image ( RGB 8 bits )
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
   Mat process(VecMat src) {
-    return using<Mat>((arena) {
-      final dst = Mat.empty();
-      CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
-      return dst.convertTo(MatType.CV_8UC3, alpha: 255.0, beta: 0.0);
-    });
+    final dst = Mat.empty();
+    CFFI.MergeMertens_Process(ref, src.ref, dst.ref);
+    return dst.convertTo(MatType.CV_8UC3, alpha: 255.0);
   }
 
   @override
@@ -68,8 +74,10 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
 class AlignMTB extends CvStruct<cvg.AlignMTB> {
-  AlignMTB._(cvg.AlignMTBPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// AlignMTB for converts images to median threshold bitmaps.
@@ -102,12 +110,15 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
 
   static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
 
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.AlignMTB_Close(ptr);
+  }
+
   VecMat process(VecMat src) {
-    return using<VecMat>((arena) {
-      final dst = arena<cvg.VecMat>();
-      CFFI.AlignMTB_Process(ref, src.ref, dst);
-      return VecMat.fromVec(dst.ref);
-    });
+    final dst = calloc<cvg.VecMat>();
+    CFFI.AlignMTB_Process(ref, src.ref, dst);
+    return VecMat.fromPointer(dst);
   }
 
   @override
@@ -170,8 +181,7 @@ Mat textureFlattening(
   int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  cvRun(() =>
-      CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+  cvRun(() => CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
   return dst;
 }
 
@@ -289,7 +299,8 @@ Mat edgePreservingFilter(
   double sigmaR = 0.07,
   double shadeFactor = 0.02,
 }) {
-  final dst1 = Mat.empty(), dst2 = Mat.empty();
+  final dst1 = Mat.empty();
+  final dst2 = Mat.empty();
   cvRun(() => CFFI.PencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
   return (dst1, dst2);
 }

@@ -10,8 +10,10 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
-  WeChatQRCode._(super.ptr) : super.fromPointer() {
-    finalizer.attach(this, ptr.cast());
+  WeChatQRCode._(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory WeChatQRCode.empty() {
@@ -31,15 +33,15 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     String superResolutionPrototxtPath = "",
     String superResolutionCaffeModelPath = "",
   ]) {
-    return cvRunArena<WeChatQRCode>((arena) {
-      final p = calloc<cvg.WeChatQRCode>();
-      final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
-      return WeChatQRCode._(p);
-    });
+    final arena = Arena();
+    final p = calloc<cvg.WeChatQRCode>();
+    final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
+    arena.releaseAll();
+    return WeChatQRCode._(p);
   }
 
   /// Both detects and decodes QR code. To simplify the usage, there is a only API: detectAndDecode.
@@ -78,6 +80,11 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   }
 
   static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(CFFI.addresses.WeChatQRCode_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.WeChatQRCode_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

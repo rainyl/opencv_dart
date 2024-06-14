@@ -13,7 +13,7 @@ CvStatus ArucoDetectorParameters_Create(ArucoDetectorParameters *rval)
   *rval = {new cv::aruco::DetectorParameters()};
   END_WRAP
 }
-void ArucoDetectorParameters_Close(ArucoDetectorParameters *ap){CVD_FREE(ap)}
+void ArucoDetectorParameters_Close(ArucoDetectorParametersPtr ap){CVD_FREE(ap)}
 
 CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(ArucoDetectorParameters ap,
                                                              int                     adaptiveThreshWinSizeMin)
@@ -394,7 +394,7 @@ CvStatus getPredefinedDictionary(int dictionaryId, ArucoDictionary *rval)
   *rval = {new cv::aruco::Dictionary(cv::aruco::getPredefinedDictionary(dictionaryId))};
   END_WRAP
 }
-void ArucoDictionary_Close(ArucoDictionary *self){CVD_FREE(self)}
+void ArucoDictionary_Close(ArucoDictionaryPtr self){CVD_FREE(self)}
 
 CvStatus ArucoDetector_New(ArucoDetector *rval)
 {
@@ -409,20 +409,20 @@ CvStatus ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorPa
   *rval = {new cv::aruco::ArucoDetector(*dictionary.ptr, *params.ptr)};
   END_WRAP
 }
-void ArucoDetector_Close(ArucoDetector *ad){CVD_FREE(ad)}
+void ArucoDetector_Close(ArucoDetectorPtr ad){CVD_FREE(ad)}
 
 CvStatus ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,
                                      VecInt *markerIds, VecVecPoint2f *rejectedCandidates)
 {
   BEGIN_WRAP
-  std::vector<std::vector<cv::Point2f>> *_markerCorners = new std::vector<std::vector<cv::Point2f>>();
-  std::vector<int>                      *_markerIds = new std::vector<int>;
-  std::vector<std::vector<cv::Point2f>> *_rejectedCandidates = new std::vector<std::vector<cv::Point2f>>;
-  ad.ptr->detectMarkers(*inputArr.ptr, *_markerCorners, *_markerIds, *_rejectedCandidates);
-  *markerCorners = {_markerCorners};
-  *markerIds = {_markerIds};
+  std::vector<std::vector<cv::Point2f>> _markerCorners;
+  std::vector<int>                      _markerIds;
+  std::vector<std::vector<cv::Point2f>> _rejectedCandidates;
+  ad.ptr->detectMarkers(*inputArr.ptr, _markerCorners, _markerIds, _rejectedCandidates);
+  *markerCorners = {new std::vector<std::vector<cv::Point2f>>(_markerCorners)};
+  *markerIds = {new std::vector<int>(_markerIds)};
   if (rejectedCandidates != NULL) {
-    *rejectedCandidates = {_rejectedCandidates};
+    *rejectedCandidates = {new std::vector<std::vector<cv::Point2f>>(_rejectedCandidates)};
   }
   END_WRAP
 }

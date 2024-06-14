@@ -6,35 +6,35 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import 'rng.dart';
-import 'scalar.dart';
-import 'base.dart';
-import 'point.dart';
-import 'mat_type.dart';
-import 'mat.dart';
-import 'termcriteria.dart';
-import 'vec.dart';
 import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
+import 'base.dart';
+import 'mat.dart';
+import 'mat_type.dart';
+import 'point.dart';
+import 'rng.dart';
+import 'scalar.dart';
+import 'termcriteria.dart';
+import 'vec.dart';
 
 /// get version
 String openCvVersion() {
-  return using<String>((arena) {
-    final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.openCVVersion(p));
-    return p.value.cast<Utf8>().toDartString();
-  });
+  final p = calloc<ffi.Pointer<ffi.Char>>();
+  cvRun(() => CFFI.openCVVersion(p));
+  final s = p.value.toDartString();
+  calloc.free(p);
+  return s;
 }
 
 /// Returns full configuration time cmake output.
 ///
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
 String getBuildInformation() {
-  return using<String>((arena) {
-    final p = arena<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.getBuildInfo(p));
-    return p.value.cast<Utf8>().toDartString();
-  });
+  final p = calloc<ffi.Pointer<ffi.Char>>();
+  cvRun(() => CFFI.getBuildInfo(p));
+  final s = p.value.toDartString();
+  calloc.free(p);
+  return s;
 }
 
 /// AbsDiff calculates the per-element absolute difference between two arrays
@@ -273,10 +273,10 @@ int borderInterpolate(int p, int len, int borderType) {
   double maxVal = CV_F64_MAX,
 }) {
   return cvRunArena<(bool, Point)>((arena) {
-    final pos = arena<cvg.Point>();
+    final pos = calloc<cvg.Point>();
     final rval = arena<ffi.Bool>();
     cvRun(() => CFFI.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
-    return (rval.value, Point.fromNative(pos.ref));
+    return (rval.value, Point.fromPointer(pos));
   });
 }
 
@@ -674,8 +674,16 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeans(data.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref, attempts,
-          flags, centers!.ref, p),
+      () => CFFI.KMeans(
+        data.ref,
+        K,
+        bestLabels.ref,
+        criteria.toNativePtr(arena).ref,
+        attempts,
+        flags,
+        centers!.ref,
+        p,
+      ),
     );
     return p.value;
   });
@@ -699,8 +707,16 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => CFFI.KMeansPoints(pts.ref, K, bestLabels.ref, criteria.toTermCriteria(arena).ref,
-          attempts, flags, centers!.ref, p),
+      () => CFFI.KMeansPoints(
+        pts.ref,
+        K,
+        bestLabels.ref,
+        criteria.toNativePtr(arena).ref,
+        attempts,
+        flags,
+        centers!.ref,
+        p,
+      ),
     );
     return p.value;
   });
@@ -714,6 +730,33 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
 Mat log(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
   cvRun(() => CFFI.Mat_Log(src.ref, dst!.ref));
+  return dst;
+}
+
+/// Performs a look-up table transform of an array. Support CV_8U, CV_8S, CV_16U, CV_16S
+///
+/// The function LUT fills the output array with values from the look-up table. Indices of the entries
+/// are taken from the input array. That is, the function processes each element of src as follows:
+///
+/// $\texttt{dst} (I)  \leftarrow \texttt{lut(src(I) + d)}$
+///
+/// where
+///
+/// $d =  \fork{0}{if \(\texttt{src}\) has depth \(\texttt{CV_8U}\)}{128}{if \(\texttt{src}\) has depth \(\texttt{CV_8S}\)}$
+///
+/// [src] input array of 8-bit elements.
+/// [lut] look-up table of 256 elements; in case of multi-channel input array, the table should
+/// either have a single channel (in this case the same table is used for all channels) or the same
+/// number of channels as in the input array.
+///
+/// [dst] output array of the same size and number of channels as src, and the same depth as lut.
+///
+/// see also: [convertScaleAbs]
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
+Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.LUT(src.ref, lut.ref, dst!.ref));
   return dst;
 }
 
@@ -743,12 +786,12 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
   return cvRunArena<(Scalar, Scalar)>((arena) {
-    final mean = arena<cvg.Scalar>();
-    final stddev = arena<cvg.Scalar>();
+    final mean = calloc<cvg.Scalar>();
+    final stddev = calloc<cvg.Scalar>();
     mask == null
         ? cvRun(() => CFFI.Mat_MeanStdDev(src.ref, mean, stddev))
         : cvRun(() => CFFI.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
-    return (Scalar.fromNative(mean.ref), Scalar.fromNative(stddev.ref));
+    return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
   });
 }
 
@@ -794,20 +837,14 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
-(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src,
-    {InputArray? mask}) {
+(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
   return using<(double, double, Point, Point)>((arena) {
     final minValP = arena<ffi.Double>();
     final maxValP = arena<ffi.Double>();
-    final minLocP = arena<cvg.Point>();
-    final maxLocP = arena<cvg.Point>();
+    final minLocP = calloc<cvg.Point>();
+    final maxLocP = calloc<cvg.Point>();
     cvRun(() => CFFI.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
-    return (
-      minValP.value,
-      maxValP.value,
-      Point.fromNative(minLocP.ref),
-      Point.fromNative(maxLocP.ref)
-    );
+    return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
   });
 }
 
@@ -1054,10 +1091,10 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 VecMat split(InputArray m) {
   final p = calloc<cvg.VecMat>();
-  final vec = VecMat.fromList([]);
-  cvRun(() => CFFI.Mat_Split(m.ref, vec.ptr));
+  final vec = calloc<cvg.VecMat>();
+  cvRun(() => CFFI.Mat_Split(m.ref, vec));
   calloc.free(p);
-  return vec;
+  return VecMat.fromPointer(vec);
 }
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
@@ -1083,9 +1120,9 @@ Mat subtract(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
   return cvRunArena<Scalar>((arena) {
-    final ptr = arena<cvg.Scalar>();
+    final ptr = calloc<cvg.Scalar>();
     cvRun(() => CFFI.Mat_Trace(mtx.ref, ptr));
-    return Scalar.fromNative(ptr.ref);
+    return Scalar.fromPointer(ptr);
   });
 }
 

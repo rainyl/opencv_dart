@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   // video
@@ -18,6 +17,8 @@ void main() async {
     );
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
+
+    bgSub1.dispose();
   });
 
   test('cv.BackgroundSubtractorKNN', () {
@@ -34,6 +35,8 @@ void main() async {
     );
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
+
+    bgSubtractor.dispose();
   });
 
   test('cv.calcOpticalFlowFarneback', () {
@@ -53,7 +56,7 @@ void main() async {
     final corners = cv.goodFeaturesToTrack(img, 10, 0.01, 10);
     const tc = (cv.TERM_COUNT + cv.TERM_EPS, 40, 0.03);
     cv.cornerSubPix(img, corners, (5, 5), (-1, -1), tc);
-    var (next, status, error) = cv.calcOpticalFlowPyrLK(img, img2, corners, cv.VecPoint2f());
+    final (next, status, error) = cv.calcOpticalFlowPyrLK(img, img2, corners, cv.VecPoint2f());
     expect(next.isNotEmpty, true);
     expect(status?.isEmpty, false);
     expect(error?.isEmpty, false);
@@ -64,8 +67,8 @@ void main() async {
     expect(img.isEmpty, false);
     final testImg = cv.resize(img, (216, 216));
     final translationGround = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
-    translationGround.set(0, 2, 11.4159);
-    translationGround.set(1, 2, 17.1828);
+    translationGround.set<double>(0, 2, 11.4159);
+    translationGround.setF32(1, 2, 17.1828);
 
     final wrappedImage = cv.warpAffine(
       testImg,
@@ -80,10 +83,19 @@ void main() async {
     const criteria = (cv.TERM_COUNT + cv.TERM_EPS, 50, 0.01);
     final inputMask = cv.Mat.empty();
     cv.findTransformECC(
-        wrappedImage, testImg, mapTranslation, cv.MOTION_TRANSLATION, criteria, inputMask, 5);
+      wrappedImage,
+      testImg,
+      mapTranslation,
+      cv.MOTION_TRANSLATION,
+      criteria,
+      inputMask,
+      5,
+    );
 
-    expect((mapTranslation.rows, mapTranslation.cols),
-        (translationGround.rows, translationGround.cols));
+    expect(
+      (mapTranslation.rows, mapTranslation.cols),
+      (translationGround.rows, translationGround.cols),
+    );
   });
 
   test('cv.TrackerMIL', () {
@@ -94,6 +106,9 @@ void main() async {
     tracker.init(img, rect);
     final (ok, _) = tracker.update(img);
     expect(ok, true);
+
+    rect.dispose();
+    tracker.dispose();
   });
 
   test('cv.KalmanFilter', () {
@@ -156,6 +171,8 @@ void main() async {
     final controlMatrix = kf.controlMatrix;
     expect(controlMatrix.isEmpty, false);
     kf.controlMatrix = controlMatrix;
+
+    kf.dispose();
   });
 
   // videoio
@@ -166,6 +183,8 @@ void main() async {
     writer.release();
 
     expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
+
+    writer.dispose();
   });
 
   test('cv.VideoWriter.open', () {
@@ -181,6 +200,8 @@ void main() async {
     final success = vc.open("test/images/small.mp4", apiPreference: cv.CAP_ANY);
     expect(success, true);
     vc.release();
+
+    vc.dispose();
   });
 
   test('cv.VideoCapture.fromFile', () {

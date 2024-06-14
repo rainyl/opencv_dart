@@ -1,4 +1,5 @@
 #include "wechat_qrcode.h"
+#include "core/core.h"
 #include <vector>
 
 CvStatus WeChatQRCode_New(WeChatQRCode *qrcode)
@@ -17,13 +18,8 @@ CvStatus WeChatQRCode_NewWithParams(const char *detector_prototxt_path, const ch
                                                  super_resolution_caffe_model_path)};
   END_WRAP
 }
-void WeChatQRCode_Close(WeChatQRCode *self)
-{
-  delete self->ptr;
-  self->ptr = nullptr;
-  delete self;
-  self = nullptr;
-}
+void WeChatQRCode_Close(WeChatQRCodePtr self){CVD_FREE(self)}
+
 CvStatus WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval)
 {
   BEGIN_WRAP
@@ -32,13 +28,13 @@ CvStatus WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *point
   auto strings = self->ptr->detectAndDecode(*img.ptr, pts);
   *points = {new std::vector<cv::Mat>(pts)};
 
-  auto cstrings = new std::vector<std::vector<char>>();
-  cstrings->reserve(strings.size());
+  std::vector<std::vector<char>> cstrings;
+  cstrings.reserve(strings.size());
   for (int i = 0; i < strings.size(); i++) {
     auto s = strings.at(i);
-    cstrings->push_back(std::vector<char>(s.begin(), s.end()));
+    cstrings.push_back(std::vector<char>(s.begin(), s.end()));
   }
-  *rval = {cstrings};
+  *rval = {new std::vector<std::vector<char>>(cstrings)};
 
   END_WRAP
 }

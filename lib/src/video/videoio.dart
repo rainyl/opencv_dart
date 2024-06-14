@@ -5,15 +5,17 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
-import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
-  VideoCapture._(cvg.VideoCapturePtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  VideoCapture._(cvg.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory VideoCapture.empty() {
@@ -49,6 +51,11 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   @override
   cvg.VideoCapture get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(CFFI.addresses.VideoCapture_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VideoCapture_Close(ptr);
+  }
 
   /// Returns the specified [VideoCapture] property.
   ///
@@ -129,7 +136,10 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   static double toCodec(String codec) {
     final codes = ascii.encode(codec);
     if (codes.length != 4) return -1;
-    final c1 = codes[0], c2 = codes[1], c3 = codes[2], c4 = codes[3];
+    final c1 = codes[0];
+    final c2 = codes[1];
+    final c3 = codes[2];
+    final c4 = codes[3];
     return ((c1 & 255) + ((c2 & 255) << 8) + ((c3 & 255) << 16) + ((c4 & 255) << 24)).toDouble();
   }
 
@@ -142,8 +152,10 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 }
 
 class VideoWriter extends CvStruct<cvg.VideoWriter> {
-  VideoWriter._(cvg.VideoWriterPtr ptr) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  VideoWriter._(cvg.VideoWriterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   factory VideoWriter.empty() {
@@ -152,8 +164,13 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     return VideoWriter._(p);
   }
 
-  factory VideoWriter.open(String filename, String codec, double fps, Size frameSize,
-      {bool isColor = true}) {
+  factory VideoWriter.open(
+    String filename,
+    String codec,
+    double fps,
+    Size frameSize, {
+    bool isColor = true,
+  }) {
     return cvRunArena<VideoWriter>((arena) {
       final p = calloc<cvg.VideoWriter>();
       cvRun(() => CFFI.VideoWriter_New(p));
@@ -178,8 +195,17 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     using((arena) {
       final name = filename.toNativeUtf8(allocator: arena);
       final codec_ = codec.toNativeUtf8(allocator: arena);
-      cvRun(() => CFFI.VideoWriter_Open(
-          ref, name.cast(), codec_.cast(), fps, frameSize.$1, frameSize.$2, isColor));
+      cvRun(
+        () => CFFI.VideoWriter_Open(
+          ref,
+          name.cast(),
+          codec_.cast(),
+          fps,
+          frameSize.$1,
+          frameSize.$2,
+          isColor,
+        ),
+      );
     });
   }
 
@@ -204,6 +230,11 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   @override
   cvg.VideoWriter get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(CFFI.addresses.VideoWriter_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VideoWriter_Close(ptr);
+  }
 
   bool get isOpened {
     return cvRunArena<bool>((arena) {

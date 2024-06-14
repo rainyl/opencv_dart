@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 const arucoImage6x6_250 = "test/images/aruco_6X6_250_6.png";
 const arucoImage6x6_250_contour = "test/images/aruco_6X6_250_6_contour.png";
@@ -9,7 +8,7 @@ const arucoImage6x6_250_1 = "test/images/aruco_6X6_250_1.png";
 
 void main() async {
   test('cv.ArucoDetector', () {
-    final img = cv.imread(arucoImage6x6_250, flags: cv.IMREAD_COLOR);
+    final img = cv.imread(arucoImage6x6_250);
     expect(img.isEmpty, false);
 
     final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
@@ -18,12 +17,17 @@ void main() async {
 
     final (_, ids, _) = detector.detectMarkers(img);
     expect(ids, isNotEmpty);
+
+    dict.dispose();
+    params.dispose();
+    img.dispose();
+    detector.dispose();
   });
 
   test('cv.arucoDrawDetectedMarkers', () {
-    final img = cv.imread(arucoImage6x6_250, flags: cv.IMREAD_COLOR);
+    final img = cv.imread(arucoImage6x6_250);
     expect(img.isEmpty, false);
-    final imgExpected = cv.imread(arucoImage6x6_250_contour, flags: cv.IMREAD_COLOR);
+    final imgExpected = cv.imread(arucoImage6x6_250_contour);
     expect(imgExpected.isEmpty, false);
 
     final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
@@ -128,8 +132,10 @@ void main() async {
     expect(params.cornerRefinementMinAccuracy, closeTo(cornerRefinementMinAccuracy, 1e-4));
     expect(params.markerBorderBits, markerBorderBits);
     expect(params.perspectiveRemovePixelPerCell, perspectiveRemovePixelPerCell);
-    expect(params.perspectiveRemoveIgnoredMarginPerCell,
-        closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4));
+    expect(
+      params.perspectiveRemoveIgnoredMarginPerCell,
+      closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4),
+    );
     expect(params.maxErroneousBitsInBorderRate, closeTo(maxErroneousBitsInBorderRate, 1e-4));
     expect(params.minOtsuStdDev, closeTo(minOtsuStdDev, 1e-4));
     expect(params.errorCorrectionRate, closeTo(errorCorrectionRate, 1e-4));

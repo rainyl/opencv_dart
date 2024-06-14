@@ -26,11 +26,14 @@ test/models/
 *.dylib
 CMakeUserPresets*
 *.framework
+*.xcframework
 .clang-format
 CMakePresets.json
 gh-md-toc
 .fvm/
 publish/
+*.tar.gz
+*.exe
 
 # Files and directories created by pub
 .dart_tool/

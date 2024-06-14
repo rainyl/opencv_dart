@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 library cv;
@@ -35,17 +36,15 @@ const double CV_F32_MAX = 3.4028234663852886e+38;
 const double CV_F64_MAX = 1.7976931348623157e+308;
 
 ffi.DynamicLibrary loadNativeLibrary() {
-  if (Platform.isWindows) {
-    return ffi.DynamicLibrary.open("$_libraryName.dll");
-  } else if (Platform.isAndroid || Platform.isFuchsia || Platform.isLinux) {
-    return ffi.DynamicLibrary.open("lib$_libraryName.so");
-  } else if (Platform.isMacOS) {
-    return ffi.DynamicLibrary.open("lib$_libraryName.dylib");
-  } else if (Platform.isIOS) {
-    return ffi.DynamicLibrary.process();
-  } else {
-    throw UnsupportedError("Platform ${Platform.operatingSystem} not supported");
-  }
+  if (Platform.isIOS) return ffi.DynamicLibrary.process();
+  final defaultLibPath = switch (Platform.operatingSystem) {
+    "windows" => "$_libraryName.dll",
+    "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
+    "macos" => "lib$_libraryName.dylib",
+    _ => throw UnsupportedError("Platform ${Platform.operatingSystem} not supported")
+  };
+  final libPath = Platform.environment["OPENCV_DART_LIB_PATH"] ?? defaultLibPath;
+  return ffi.DynamicLibrary.open(libPath);
 }
 
 final CFFI = CvNative(loadNativeLibrary());
@@ -84,7 +83,7 @@ R cvRunArena<R>(R Function(Arena arena) computation,
     final result = computation(arena);
     if (result is Future) {
       isAsync = true;
-      return (result.whenComplete(arena.releaseAll) as R);
+      return result.whenComplete(arena.releaseAll) as R;
     }
     return result;
   } finally {
@@ -99,6 +98,19 @@ typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
 
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
+
+typedef U8 = ffi.UnsignedChar;
+typedef I8 = ffi.Char;
+typedef U16 = ffi.UnsignedShort;
+typedef I16 = ffi.Short;
+// typedef U32 = ffi.UnsignedInt;
+typedef I32 = ffi.Int;
+typedef F32 = ffi.Float;
+typedef F64 = ffi.Double;
+
+extension PointerCharExtension on ffi.Pointer<ffi.Char> {
+  String toDartString() => cast<Utf8>().toDartString();
+}
 
 enum ImageFormat {
   // Windows bitmaps - *.bmp, *.dib (always supported)

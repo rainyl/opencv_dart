@@ -33,29 +33,22 @@ CVD_TYPEDEF(void, TrackerGOTURN)
 CVD_TYPEDEF(void, KalmanFilter)
 #endif
 
-CVD_TYPEDEF_PTR(BackgroundSubtractorMOG2)
-CVD_TYPEDEF_PTR(BackgroundSubtractorKNN)
-CVD_TYPEDEF_PTR(Tracker)
-CVD_TYPEDEF_PTR(TrackerMIL)
-CVD_TYPEDEF_PTR(TrackerGOTURN)
-CVD_TYPEDEF_PTR(KalmanFilter)
-
 CvStatus BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval);
 CvStatus BackgroundSubtractorMOG2_CreateWithParams(int history, double varThreshold, bool detectShadows,
                                                    BackgroundSubtractorMOG2 *rval);
-void     BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2 *self);
+void     BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2Ptr self);
 CvStatus BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 self, Mat src, Mat dst);
 
 CvStatus BackgroundSubtractorKNN_Create(BackgroundSubtractorKNN *rval);
 CvStatus BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Threshold, bool detectShadows,
                                                   BackgroundSubtractorKNN *rval);
-void     BackgroundSubtractorKNN_Close(BackgroundSubtractorKNN *self);
+void     BackgroundSubtractorKNN_Close(BackgroundSubtractorKNNPtr self);
 CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst);
 
 CvStatus CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
                               VecUChar status, VecFloat err);
 CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
-                                        VecUChar status, VecFloat err, Size winSize, int maxLevel,
+                                        VecUChar *status, VecFloat *err, Size winSize, int maxLevel,
                                         TermCriteria criteria, int flags, double minEigThreshold);
 CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
                                   int winsize, int iterations, int polyN, double polySigma, int flags);
@@ -66,11 +59,11 @@ CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int
 CvStatus TrackerMIL_Init(TrackerMIL self, Mat image, Rect bbox);
 CvStatus TrackerMIL_Update(TrackerMIL self, Mat image, Rect *boundingBox, bool *rval);
 CvStatus TrackerMIL_Create(TrackerMIL *rval);
-void     TrackerMIL_Close(TrackerMIL *self);
+void     TrackerMIL_Close(TrackerMILPtr self);
 
 CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams, int type,
                           KalmanFilter *rval);
-void     KalmanFilter_Close(KalmanFilter *self);
+void     KalmanFilter_Close(KalmanFilterPtr self);
 
 CvStatus KalmanFilter_Init(KalmanFilter self, int dynamParams, int measureParams);
 CvStatus KalmanFilter_InitWithParams(KalmanFilter self, int dynamParams, int measureParams, int controlParams,

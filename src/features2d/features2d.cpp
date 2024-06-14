@@ -14,7 +14,11 @@ CvStatus AKAZE_Create(AKAZE *rval)
   *rval = {new cv::Ptr<cv::AKAZE>(cv::AKAZE::create())};
   END_WRAP
 }
-void AKAZE_Close(AKAZE *a){CVD_FREE(a)}
+void AKAZE_Close(AKAZEPtr a)
+{
+  a->ptr->reset();
+  CVD_FREE(a)
+}
 
 CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval)
 {
@@ -39,7 +43,11 @@ CvStatus AgastFeatureDetector_Create(AgastFeatureDetector *rval)
   *rval = {new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create())};
   END_WRAP
 }
-void AgastFeatureDetector_Close(AgastFeatureDetector *a){CVD_FREE(a)}
+void AgastFeatureDetector_Close(AgastFeatureDetectorPtr a)
+{
+  a->ptr->reset();
+  CVD_FREE(a)
+}
 
 CvStatus AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval)
 {
@@ -56,7 +64,11 @@ CvStatus BRISK_Create(BRISK *rval)
   *rval = {new cv::Ptr<cv::BRISK>(cv::BRISK::create())};
   END_WRAP
 }
-void BRISK_Close(BRISK *b){CVD_FREE(b)}
+void BRISK_Close(BRISKPtr b)
+{
+  b->ptr->reset();
+  CVD_FREE(b)
+}
 
 CvStatus BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval)
 {
@@ -90,7 +102,11 @@ CvStatus FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppress
       cv::FastFeatureDetector::create(threshold, nonmaxSuppression, type_))};
   END_WRAP
 }
-void FastFeatureDetector_Close(FastFeatureDetector *f){CVD_FREE(f)}
+void FastFeatureDetector_Close(FastFeatureDetectorPtr f)
+{
+  f->ptr->reset();
+  CVD_FREE(f)
+}
 
 CvStatus FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval)
 {
@@ -107,7 +123,11 @@ CvStatus GFTTDetector_Create(GFTTDetector *rval)
   *rval = {new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create())};
   END_WRAP
 }
-void GFTTDetector_Close(GFTTDetector *a){CVD_FREE(a)}
+void GFTTDetector_Close(GFTTDetectorPtr a)
+{
+  a->ptr->reset();
+  CVD_FREE(a)
+}
 
 CvStatus GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval)
 {
@@ -124,7 +144,11 @@ CvStatus KAZE_Create(KAZE *rval)
   *rval = {new cv::Ptr<cv::KAZE>(cv::KAZE::create())};
   END_WRAP
 }
-void KAZE_Close(KAZE *a){CVD_FREE(a)}
+void KAZE_Close(KAZEPtr a)
+{
+  a->ptr->reset();
+  CVD_FREE(a)
+}
 
 CvStatus KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval)
 {
@@ -149,7 +173,11 @@ CvStatus MSER_Create(MSER *rval)
   *rval = {new cv::Ptr<cv::MSER>(cv::MSER::create())};
   END_WRAP
 }
-void MSER_Close(MSER *a){CVD_FREE(a)}
+void MSER_Close(MSERPtr a)
+{
+  a->ptr->reset();
+  CVD_FREE(a)
+}
 
 CvStatus MSER_Detect(MSER a, Mat src, VecKeyPoint *rval)
 {
@@ -176,7 +204,11 @@ CvStatus ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int
                                                 WTA_K, type, patchSize, fastThreshold))};
   END_WRAP
 }
-void ORB_Close(ORB *o){CVD_FREE(o)}
+void ORB_Close(ORBPtr o)
+{
+  o->ptr->reset();
+  CVD_FREE(o)
+}
 
 CvStatus ORB_Detect(ORB o, Mat src, VecKeyPoint *rval)
 {
@@ -262,7 +294,11 @@ CvStatus SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, S
       new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create(ConvertCParamsToCPPParams(params)))};
   END_WRAP
 }
-void SimpleBlobDetector_Close(SimpleBlobDetector *b){CVD_FREE(b)}
+void SimpleBlobDetector_Close(SimpleBlobDetectorPtr b)
+{
+  b->ptr->reset();
+  CVD_FREE(b)
+}
 
 CvStatus SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval)
 {
@@ -291,7 +327,11 @@ CvStatus BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rv
   *rval = {new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create(normType, crossCheck))};
   END_WRAP
 }
-void BFMatcher_Close(BFMatcher *b){CVD_FREE(b)}
+void BFMatcher_Close(BFMatcherPtr b)
+{
+  b->ptr->reset();
+  CVD_FREE(b)
+}
 
 CvStatus BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval)
 {
@@ -316,7 +356,11 @@ CvStatus FlannBasedMatcher_Create(FlannBasedMatcher *rval)
   *rval = {new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create())};
   END_WRAP
 }
-void FlannBasedMatcher_Close(FlannBasedMatcher *f){CVD_FREE(f)}
+void FlannBasedMatcher_Close(FlannBasedMatcherPtr f)
+{
+  f->ptr->reset();
+  CVD_FREE(f)
+}
 
 CvStatus FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval)
 {
@@ -341,7 +385,11 @@ CvStatus SIFT_Create(SIFT *rval)
   *rval = {new cv::Ptr<cv::SIFT>(cv::SIFT::create())};
   END_WRAP
 }
-void SIFT_Close(SIFT *f){CVD_FREE(f)}
+void SIFT_Close(SIFTPtr f)
+{
+  f->ptr->reset();
+  CVD_FREE(f)
+}
 
 CvStatus SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval)
 {

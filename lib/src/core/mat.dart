@@ -3,19 +3,21 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import 'cv_vec.dart';
+import '../opencv.g.dart' as cvg;
+import 'array.dart';
 import 'base.dart';
-import 'rect.dart';
-import 'scalar.dart';
+import 'cv_vec.dart';
 import 'mat_type.dart';
 import 'point.dart';
+import 'rect.dart';
+import 'scalar.dart';
 import 'vec.dart';
-import 'array.dart';
-import '../opencv.g.dart' as cvg;
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, [this.xdata]) : super.fromPointer(ptr) {
-    finalizer.attach(this, ptr.cast());
+  Mat._(cvg.MatPtr ptr, [this.xdata, bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
 
   /// This method is very similar to [clone], will copy data from [mat]
@@ -29,7 +31,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Mat (Size size, int type, void *data, size_t step=AUTO_STEP)
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9fa74fb14362d87cb183453d2441948f
-  factory Mat.fromList(int rows, int cols, MatType type, List data, [int step = 0]) {
+  factory Mat.fromList(int rows, int cols, MatType type, List<num> data, [int step = 0]) {
     assert(data is List<int> || data is List<double>, "Only support List<int> or List<double>");
     final p = calloc<cvg.Mat>();
     // 1 copy
@@ -59,7 +61,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat) => Mat._(mat);
+  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, null, attach);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
@@ -153,13 +155,28 @@ class Mat extends CvStruct<cvg.Mat> {
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(CFFI.addresses.Mat_Close);
 
+  void release() => cvRun(() => CFFI.Mat_Release(ptr));
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.Mat_Close(ptr);
+  }
+
   /// external native data array of [Mat], used for [Mat.fromList]
   NativeArray? xdata;
-  MatType get type => cvRunArena<MatType>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => CFFI.Mat_Type(ref, p));
-        return MatType(p.value);
-      });
+
+  /// cached mat type
+  MatType? _type;
+
+  /// here the mat type can't be changed once created, method such as [convertTo] will create a new [Mat]
+  MatType get type {
+    if (_type == null) {
+      final p = calloc<ffi.Int>();
+      cvRun(() => CFFI.Mat_Type(ref, p));
+      _type = MatType(p.value);
+    }
+    return _type!;
+  }
+
   int get width => cvRunArena<int>((arena) {
         final p = arena<ffi.Int>();
         cvRun(() => CFFI.Mat_Cols(ref, p));
@@ -237,172 +254,176 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
-  T _atNum<T>(int row, int col, [int? cn]) {
-    return cvRunArena<T>((arena) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          final p = arena<ffi.Uint8>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetUChar(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetUChar3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_8S:
-          final p = arena<ffi.Int8>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetSChar(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetSChar3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_16U:
-          final p = arena<ffi.Uint16>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetUShort(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetUShort3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_16S:
-          final p = arena<ffi.Int16>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetShort(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetShort3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_32S:
-          final p = arena<ffi.Int32>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetInt(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetInt3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_32F:
-          final p = arena<ffi.Float>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetFloat(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetFloat3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        case MatType.CV_64F:
-          final p = arena<ffi.Double>();
-          if (type.channels == 1 || cn == null) {
-            cvRun(() => CFFI.Mat_GetDouble(ref, row, col, p));
-          } else {
-            cvRun(() => CFFI.Mat_GetDouble3(ref, row, col, cn, p));
-          }
-          return p.value as T;
-        default:
-          throw UnsupportedError("at() for $type is not supported!");
-      }
-    });
+  int atU8(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Uint8>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetUChar(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetUChar3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI8(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int8>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetSChar(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetSChar3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atU16(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Uint16>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetUShort(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetUShort3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI16(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int16>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetShort(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetShort3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  int atI32(int row, int col, [int? i2]) => using<int>((arena) {
+        final p = arena<ffi.Int32>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetInt(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetInt3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  double atF32(int row, int col, [int? i2]) => using<double>((arena) {
+        final p = arena<ffi.Float>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetFloat(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetFloat3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  double atF64(int row, int col, [int? i2]) => using<double>((arena) {
+        final p = arena<ffi.Double>();
+        i2 == null
+            ? cvRun(() => CFFI.Mat_GetDouble(ref, row, col, p))
+            : cvRun(() => CFFI.Mat_GetDouble3(ref, row, col, i2, p));
+        return p.value;
+      });
+
+  num atNum<T extends num>(int row, int col, [int? i2]) {
+    return switch (type.depth) {
+      MatType.CV_8U => atU8(row, col, i2),
+      MatType.CV_8S => atI8(row, col, i2),
+      MatType.CV_16U => atU16(row, col, i2),
+      MatType.CV_16S => atI16(row, col, i2),
+      MatType.CV_32S => atI32(row, col, i2),
+      MatType.CV_32F => atF32(row, col, i2),
+      MatType.CV_64F => atF64(row, col, i2),
+      _ => throw UnsupportedError("Unsupported type: $type")
+    };
   }
 
-  T _atVec<T>(int row, int col) {
+  T atVec<T>(int row, int col) {
     final v = cvRunArena<T>((arena) {
       // Vec2b, Vec3b, Vec4b
       if (T == Vec2b) {
-        final p = arena<cvg.Vec2b>();
+        final p = calloc<cvg.Vec2b>();
         cvRun(() => CFFI.Mat_GetVec2b(ref, row, col, p));
-        return Vec2b.fromNative(p.ref) as T;
+        return Vec2b.fromPointer(p) as T;
       } else if (T == Vec3b) {
-        final p = arena<cvg.Vec3b>();
+        final p = calloc<cvg.Vec3b>();
         cvRun(() => CFFI.Mat_GetVec3b(ref, row, col, p));
-        return Vec3b.fromNative(p.ref) as T;
+        return Vec3b.fromPointer(p) as T;
       } else if (T == Vec4b) {
-        final p = arena<cvg.Vec4b>();
+        final p = calloc<cvg.Vec4b>();
         cvRun(() => CFFI.Mat_GetVec4b(ref, row, col, p));
-        return Vec4b.fromNative(p.ref) as T;
+        return Vec4b.fromPointer(p) as T;
       }
       // Vec2w, Vec3w, Vec4w
       else if (T == Vec2w) {
-        final p = arena<cvg.Vec2w>();
+        final p = calloc<cvg.Vec2w>();
         cvRun(() => CFFI.Mat_GetVec2w(ref, row, col, p));
-        return Vec2w.fromNative(p.ref) as T;
+        return Vec2w.fromPointer(p) as T;
       } else if (T == Vec3w) {
-        final p = arena<cvg.Vec3w>();
+        final p = calloc<cvg.Vec3w>();
         cvRun(() => CFFI.Mat_GetVec3w(ref, row, col, p));
-        return Vec3w.fromNative(p.ref) as T;
+        return Vec3w.fromPointer(p) as T;
       } else if (T == Vec4w) {
-        final p = arena<cvg.Vec4w>();
+        final p = calloc<cvg.Vec4w>();
         cvRun(() => CFFI.Mat_GetVec4w(ref, row, col, p));
-        return Vec4w.fromNative(p.ref) as T;
+        return Vec4w.fromPointer(p) as T;
       }
       // Vec2s, Vec3s, Vec4s
       else if (T == Vec2s) {
-        final p = arena<cvg.Vec2s>();
+        final p = calloc<cvg.Vec2s>();
         cvRun(() => CFFI.Mat_GetVec2s(ref, row, col, p));
-        return Vec2s.fromNative(p.ref) as T;
+        return Vec2s.fromPointer(p) as T;
       } else if (T == Vec3s) {
-        final p = arena<cvg.Vec3s>();
+        final p = calloc<cvg.Vec3s>();
         cvRun(() => CFFI.Mat_GetVec3s(ref, row, col, p));
-        return Vec3s.fromNative(p.ref) as T;
+        return Vec3s.fromPointer(p) as T;
       } else if (T == Vec4s) {
-        final p = arena<cvg.Vec4s>();
+        final p = calloc<cvg.Vec4s>();
         cvRun(() => CFFI.Mat_GetVec4s(ref, row, col, p));
-        return Vec4s.fromNative(p.ref) as T;
+        return Vec4s.fromPointer(p) as T;
       }
       // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
       else if (T == Vec2i) {
-        final p = arena<cvg.Vec2i>();
+        final p = calloc<cvg.Vec2i>();
         cvRun(() => CFFI.Mat_GetVec2i(ref, row, col, p));
-        return Vec2i.fromNative(p.ref) as T;
+        return Vec2i.fromPointer(p) as T;
       } else if (T == Vec3i) {
-        final p = arena<cvg.Vec3i>();
+        final p = calloc<cvg.Vec3i>();
         cvRun(() => CFFI.Mat_GetVec3i(ref, row, col, p));
-        return Vec3i.fromNative(p.ref) as T;
+        return Vec3i.fromPointer(p) as T;
       } else if (T == Vec4i) {
-        final p = arena<cvg.Vec4i>();
+        final p = calloc<cvg.Vec4i>();
         cvRun(() => CFFI.Mat_GetVec4i(ref, row, col, p));
-        return Vec4i.fromNative(p.ref) as T;
+        return Vec4i.fromPointer(p) as T;
       } else if (T == Vec6i) {
-        final p = arena<cvg.Vec6i>();
+        final p = calloc<cvg.Vec6i>();
         cvRun(() => CFFI.Mat_GetVec6i(ref, row, col, p));
-        return Vec6i.fromNative(p.ref) as T;
+        return Vec6i.fromPointer(p) as T;
       } else if (T == Vec8i) {
-        final p = arena<cvg.Vec8i>();
+        final p = calloc<cvg.Vec8i>();
         cvRun(() => CFFI.Mat_GetVec8i(ref, row, col, p));
-        return Vec8i.fromNative(p.ref) as T;
+        return Vec8i.fromPointer(p) as T;
       }
       // Vec2f, Vec3f, Vec4f, Vec6f
       else if (T == Vec2f) {
-        final p = arena<cvg.Vec2f>();
+        final p = calloc<cvg.Vec2f>();
         cvRun(() => CFFI.Mat_GetVec2f(ref, row, col, p));
-        return Vec2f.fromNative(p.ref) as T;
+        return Vec2f.fromPointer(p) as T;
       } else if (T == Vec3f) {
-        final p = arena<cvg.Vec3f>();
+        final p = calloc<cvg.Vec3f>();
         cvRun(() => CFFI.Mat_GetVec3f(ref, row, col, p));
-        return Vec3f.fromNative(p.ref) as T;
+        return Vec3f.fromPointer(p) as T;
       } else if (T == Vec4f) {
-        final p = arena<cvg.Vec4f>();
+        final p = calloc<cvg.Vec4f>();
         cvRun(() => CFFI.Mat_GetVec4f(ref, row, col, p));
-        return Vec4f.fromNative(p.ref) as T;
+        return Vec4f.fromPointer(p) as T;
       } else if (T == Vec6f) {
-        final p = arena<cvg.Vec6f>();
+        final p = calloc<cvg.Vec6f>();
         cvRun(() => CFFI.Mat_GetVec6f(ref, row, col, p));
-        return Vec6f.fromNative(p.ref) as T;
+        return Vec6f.fromPointer(p) as T;
       }
       // Vec2d, Vec3d, Vec4d, Vec6d
       else if (T == Vec2d) {
-        final p = arena<cvg.Vec2d>();
+        final p = calloc<cvg.Vec2d>();
         cvRun(() => CFFI.Mat_GetVec2d(ref, row, col, p));
-        return Vec2d.fromNative(p.ref) as T;
+        return Vec2d.fromPointer(p) as T;
       } else if (T == Vec3d) {
-        final p = arena<cvg.Vec3d>();
+        final p = calloc<cvg.Vec3d>();
         cvRun(() => CFFI.Mat_GetVec3d(ref, row, col, p));
-        return Vec3d.fromNative(p.ref) as T;
+        return Vec3d.fromPointer(p) as T;
       } else if (T == Vec4d) {
-        final p = arena<cvg.Vec4d>();
+        final p = calloc<cvg.Vec4d>();
         cvRun(() => CFFI.Mat_GetVec4d(ref, row, col, p));
-        return Vec4d.fromNative(p.ref) as T;
+        return Vec4d.fromPointer(p) as T;
       } else if (T == Vec6d) {
-        final p = arena<cvg.Vec6d>();
+        final p = calloc<cvg.Vec6d>();
         cvRun(() => CFFI.Mat_GetVec6d(ref, row, col, p));
-        return Vec6d.fromNative(p.ref) as T;
+        return Vec6d.fromPointer(p) as T;
       } else {
         throw UnsupportedError("at<$T>() for $type is not supported!");
       }
@@ -412,76 +433,25 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// cv::Mat::at\<T\>(i0, i1, i2) of cv::Mat
   ///
-  ///
-  /// - If matrix is of type [MatType.CV_8U] then use Mat.at\<uchar\>(y,x).
-  /// - If matrix is of type [MatType.CV_8S] then use Mat.at\<schar\>(y,x).
-  /// - If matrix is of type [MatType.CV_16U] then use Mat.at\<ushort\>(y,x).
-  /// - If matrix is of type [MatType.CV_16S] then use Mat.at\<short\>(y,x).
-  /// - If matrix is of type [MatType.CV_32S] then use Mat.at\<int\>(y,x).
-  /// - If matrix is of type [MatType.CV_32F] then use Mat.at\<float\>(y,x).
-  /// - If matrix is of type [MatType.CV_64F] then use Mat.at\<double\>(y,x).
-  ///
   /// example:
   /// ```dart
   /// var m = cv.Mat.fromScalar(cv.Scalar(2, 4, 1, 0), cv.MatType.CV_32FC3);
-  /// m.at<double>(0, 0); // 2
+  /// m.at<double>(0, 0); // 2.0
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(2, 4, 1)
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
   T at<T>(int row, int col, [int? i2]) {
-    if (T == int || T == double) {
-      return _atNum<T>(row, col, i2);
+    if (T == int || T == double || T == num) {
+      return atNum(row, col, i2) as T;
     } else if (isSubtype<T, CvVec>()) {
-      return _atVec<T>(row, col);
+      return atVec<T>(row, col);
     } else {
       throw UnsupportedError("T must be num or CvVec(e.g., Vec3b), but got $T");
     }
   }
 
-  void _setNum<T>(row, col, T val, [int? i2]) {
-    switch (type.depth) {
-      case MatType.CV_8U:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetUChar(ref, row, col, val as int))
-            : cvRun(() => CFFI.Mat_SetUChar3(ref, row, col, i2, val as int));
-      case MatType.CV_8S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetSChar(ref, row, col, val as int))
-            : cvRun(() => CFFI.Mat_SetSChar3(ref, row, col, i2, val as int));
-      case MatType.CV_16U:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetUShort(ref, row, col, val as int))
-            : cvRun(() => CFFI.Mat_SetUShort3(ref, row, col, i2, val as int));
-      case MatType.CV_16S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetShort(ref, row, col, val as int))
-            : cvRun(() => CFFI.Mat_SetShort3(ref, row, col, i2, val as int));
-      case MatType.CV_32S:
-        assert(T == int, "$type only support int");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetInt(ref, row, col, val as int))
-            : cvRun(() => CFFI.Mat_SetInt3(ref, row, col, i2, val as int));
-      case MatType.CV_32F:
-        assert(T == double, "$type only support double");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetFloat(ref, row, col, val as double))
-            : cvRun(() => CFFI.Mat_SetFloat3(ref, row, col, i2, val as double));
-      case MatType.CV_64F:
-        assert(T == double, "$type only support double");
-        type.channels == 1 || i2 == null
-            ? cvRun(() => CFFI.Mat_SetDouble(ref, row, col, val as double))
-            : cvRun(() => CFFI.Mat_SetDouble3(ref, row, col, i2, val as double));
-      default:
-        throw UnsupportedError("setValue() for $type is not supported!");
-    }
-  }
-
-  void _setVec<T>(int row, int col, T val) {
+  void setVec<T>(int row, int col, T val) {
     cvRunArena((arena) {
       // Vec2b, Vec3b, Vec4b
       if (val is Vec2b) {
@@ -544,8 +514,54 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
+  void setU8(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetUChar(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetUChar3(ref, row, col, i2, val));
+
+  void setI8(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetSChar(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetSChar3(ref, row, col, i2, val));
+
+  void setU16(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetUShort(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetUShort3(ref, row, col, i2, val));
+
+  void setI16(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetShort(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetShort3(ref, row, col, i2, val));
+
+  void setI32(int row, int col, int val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetInt(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetInt3(ref, row, col, i2, val));
+
+  void setF32(int row, int col, double val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetFloat(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetFloat3(ref, row, col, i2, val));
+
+  void setF64(int row, int col, double val, [int? i2]) => i2 == null
+      ? cvRun(() => CFFI.Mat_SetDouble(ref, row, col, val))
+      : cvRun(() => CFFI.Mat_SetDouble3(ref, row, col, i2, val));
+
+  void setNum<T extends num>(int row, int col, T val, [int? i2]) {
+    using((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => CFFI.Mat_Type(ref, p));
+      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
+      return switch (depth) {
+        MatType.CV_8U => setU8(row, col, val as int, i2),
+        MatType.CV_8S => setI8(row, col, val as int, i2),
+        MatType.CV_16U => setU16(row, col, val as int, i2),
+        MatType.CV_16S => setI16(row, col, val as int, i2),
+        MatType.CV_32S => setI32(row, col, val as int, i2),
+        MatType.CV_32F => setF32(row, col, val as double, i2),
+        MatType.CV_64F => setF64(row, col, val as double, i2),
+        _ => throw UnsupportedError("Unsupported type: $type")
+      };
+    });
+  }
+
   /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;
-  /// where T might be basic value types like uchar, char, int.
+  /// where T might be int, double, [U8], [I8], [U16], [I16], [I32], [F32], [F64].
   /// or cv::Vec<> like cv::Vec3b
   ///
   /// example
@@ -555,18 +571,180 @@ class Mat extends CvStruct<cvg.Mat> {
   /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
   /// ```
-  void set<T>(int row, int col, T val, [int? i2]) {
+  void set<T>(int row, int col, Object val, [int? i2]) {
     if (T == int || T == double) {
-      _setNum<T>(row, col, val, i2);
+      setNum(row, col, val as num, i2);
     } else if (isSubtype<T, CvVec>()) {
-      _setVec<T>(row, col, val);
+      setVec<T>(row, col, val as T);
+    } else if (T == U8) {
+      setU8(row, col, val as int);
+    } else if (T == I8) {
+      setI8(row, col, val as int);
+    } else if (T == U16) {
+      setU16(row, col, val as int);
+    } else if (T == I16) {
+      setI16(row, col, val as int);
+    } else if (T == I32) {
+      setI32(row, col, val as int);
+    } else if (T == F32) {
+      setF32(row, col, val as double);
+    } else if (T == F64) {
+      setF64(row, col, val as double);
     } else {
-      throw UnsupportedError("T must be num or CvVec(e.g., Vec3b), but got $T");
+      throw UnsupportedError("Unsupported type $T");
     }
   }
 
   // https://github.com/dart-lang/sdk/issues/43390#issuecomment-690993957
   bool isSubtype<S, T>() => <S>[] is List<T>;
+
+  /// equivalent to Mat::ptr\<T\>(i0, i1, i2)
+  ///
+  /// **DANGEROUS**
+  ///
+  /// returns a pointer to operate Mat directly and effectively, use with caution!
+  ///
+  /// Example:
+  /// ```dart
+  /// final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
+  /// mat.set<int>(0, 0, 99);
+  ///
+  /// final ptr = mat.ptrAt<cv.U8>(0, 0);
+  /// print(ptr[0]); // 99
+  ///
+  /// ptr[0] = 21;
+  /// // Mat::ptr(i, j)
+  /// print(mat.at<int>(0, 0)); // 21
+  /// print(ptr[0]); // 21
+  ///
+  /// final ptr1 = mat.ptrAt<cv.U8>(0);
+  /// print(ptr1[0]); // 21
+  /// print(List.generate(mat.cols, (i)=>ptr1[i]); // [21, 1, 1]
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
+  ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
+    if (T == ffi.UnsignedChar) return ptrU8(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Char) return ptrI8(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.UnsignedShort) return ptrU16(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Short) return ptrI16(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Int) return ptrI32(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Float) return ptrF32(i0, i1, i2) as ffi.Pointer<T>;
+    if (T == ffi.Double) return ptrF64(i0, i1, i2) as ffi.Pointer<T>;
+    throw UnsupportedError("ptr<$T>() is not supported!");
+  }
+
+  ffi.Pointer<ffi.UnsignedChar> ptrU8(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_u8_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_u8_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_u8_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrU8($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.UnsignedChar>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Char> ptrI8(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i8_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i8_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_i8_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI8($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Char>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.UnsignedShort> ptrU16(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.UnsignedShort>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_u16_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_u16_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_u16_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrU16($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.UnsignedShort>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Short> ptrI16(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Short>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i16_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i16_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_i16_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI16($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Short>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Int> ptrI32(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Int>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i32_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_i32_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_i32_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrI32($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Int>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Float> ptrF32(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Float>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_f32_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_f32_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_f32_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrF32($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Float>();
+    calloc.free(p);
+    return ret;
+  }
+
+  ffi.Pointer<ffi.Double> ptrF64(int i0, [int? i1, int? i2]) {
+    final p = calloc<ffi.Pointer<ffi.Double>>();
+    if (i1 == null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_f64_1(ref, i0, p));
+    } else if (i1 != null && i2 == null) {
+      cvRun(() => CFFI.Mat_Ptr_f64_2(ref, i0, i1, p));
+    } else if (i1 != null && i2 != null) {
+      cvRun(() => CFFI.Mat_Ptr_f64_3(ref, i0, i1, i2, p));
+    } else {
+      throw UnsupportedError("ptrF64($i0, $i1, $i2) is not supported!");
+    }
+    final ret = p.value.cast<ffi.Double>();
+    calloc.free(p);
+    return ret;
+  }
 
   // TODO: for now, dart do not support operator overloading
   // https://github.com/dart-lang/language/issues/2456
@@ -617,8 +795,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "addU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddUChar(ref, val));
       return this;
@@ -630,8 +807,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "addI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddSChar(ref, val));
       return this;
@@ -643,8 +819,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "addI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddI32(ref, val));
       return this;
@@ -656,7 +831,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "addF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddFloat(ref, val));
       return this;
@@ -668,7 +843,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "addF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_AddF64(ref, val));
       return this;
@@ -721,8 +896,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "subtractU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractUChar(ref, val));
       return this;
@@ -734,8 +908,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "subtractI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractSChar(ref, val));
       return this;
@@ -747,8 +920,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "subtractI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractI32(ref, val));
       return this;
@@ -760,7 +932,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "subtractF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractFloat(ref, val));
       return this;
@@ -772,7 +944,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "subtractF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_SubtractF64(ref, val));
       return this;
@@ -825,8 +997,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "multiplyU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyUChar(ref, val));
       return this;
@@ -838,8 +1009,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "multiplyI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplySChar(ref, val));
       return this;
@@ -851,8 +1021,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "multiplyI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyI32(ref, val));
       return this;
@@ -864,7 +1033,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "multiplyF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyFloat(ref, val));
       return this;
@@ -876,7 +1045,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "multiplyF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_MultiplyF64(ref, val));
       return this;
@@ -929,8 +1098,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideU8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX,
-        "divideU8() only for CV_8U");
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideUChar(ref, val));
       return this;
@@ -942,8 +1110,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI8(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX,
-        "divideI8() only for CV_8S");
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideSChar(ref, val));
       return this;
@@ -955,8 +1122,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI32(int val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX,
-        "divideI32() only for CV_32S");
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideI32(ref, val));
       return this;
@@ -968,7 +1134,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideF32(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX, "divideF32() only for CV_32F");
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideFloat(ref, val));
       return this;
@@ -980,7 +1146,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideF64(double val, {bool inplace = false}) {
-    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX, "divideF64() only for CV_64F");
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
     if (inplace) {
       cvRun(() => CFFI.Mat_DivideF64(ref, val));
       return this;
@@ -1019,7 +1185,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat region(Rect rect) {
-    assert(rect.x + rect.width <= width && rect.y + rect.height <= height, "rect is out of range");
+    assert(rect.x + rect.width <= width && rect.y + rect.height <= height);
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_Region(ref, rect.ref, p));
     final dst = Mat._(p);
@@ -1067,13 +1233,13 @@ class Mat extends CvStruct<cvg.Mat> {
 
   Scalar mean({Mat? mask}) {
     return cvRunArena<Scalar>((arena) {
-      final s = arena<cvg.Scalar>();
+      final s = calloc<cvg.Scalar>();
       if (mask == null) {
         cvRun(() => CFFI.Mat_Mean(ref, s));
       } else {
         cvRun(() => CFFI.Mat_MeanWithMask(ref, mask.ref, s));
       }
-      return Scalar.fromNative(s.ref);
+      return Scalar.fromPointer(s);
     });
   }
 
@@ -1081,10 +1247,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [Scalar] order is same as [Mat], i.e., BGR -> BGR
   Scalar stdDev() {
     return cvRunArena<Scalar>((arena) {
-      final mean = arena<cvg.Scalar>();
-      final sd = arena<cvg.Scalar>();
+      final mean = calloc<cvg.Scalar>();
+      final sd = calloc<cvg.Scalar>();
       cvRun(() => CFFI.Mat_MeanStdDev(ref, mean, sd));
-      return Scalar.fromNative(sd.ref);
+      return Scalar.fromPointer(sd);
     });
   }
 
@@ -1093,8 +1259,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Calculates a square root of array elements.
   Mat sqrt() {
-    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F,
-        "sqrt() only for CV_32F or CV_64F");
+    assert(type.depth == MatType.CV_32F || type.depth == MatType.CV_64F);
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.Mat_Sqrt(ref, p));
     final dst = Mat._(p);
@@ -1104,9 +1269,9 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Sum calculates the per-channel pixel sum of an image.
   Scalar sum() {
     return cvRunArena<Scalar>((arena) {
-      final s = arena<cvg.Scalar>();
+      final s = calloc<cvg.Scalar>();
       cvRun(() => CFFI.Mat_Sum(ref, s));
-      return Scalar.fromNative(s.ref);
+      return Scalar.fromPointer(s);
     });
   }
 
@@ -1118,27 +1283,20 @@ class Mat extends CvStruct<cvg.Mat> {
     return this;
   }
 
-  void release() => cvRun(() => CFFI.Mat_Release(ptr));
-
   /// This Method converts single-channel Mat to 2D List
-  List<List<num>> toList() {
-    switch (type.depth) {
-      case MatType.CV_8U:
-      case MatType.CV_8S:
-      case MatType.CV_16U:
-      case MatType.CV_16S:
-      case MatType.CV_32S:
-        return List.generate(rows, (row) => List.generate(cols, (col) => at<int>(row, col)));
-      case MatType.CV_32F:
-      case MatType.CV_64F:
-        return List.generate(rows, (row) => List.generate(cols, (col) => at<double>(row, col)));
-      default:
-        throw UnsupportedError("toList() for $type is not supported!");
-    }
-  }
+  List<List<num>> toList() => switch (type.depth) {
+        MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
+        MatType.CV_8S => List.generate(rows, (row) => List.generate(cols, (col) => atI8(row, col))),
+        MatType.CV_16U => List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
+        MatType.CV_16S => List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
+        MatType.CV_32S => List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
+        MatType.CV_32F => List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
+        MatType.CV_64F => List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
+        _ => throw UnsupportedError("toList() for $type is not supported!")
+      };
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
-  /// The list is ordered as [row][col][channel].
+  /// The list is ordered as [row][col][channels].
   ///
   /// [T]: The type of the elements in the mat.
   /// [P]: The type of the elements in the list.
@@ -1149,23 +1307,28 @@ class Mat extends CvStruct<cvg.Mat> {
   /// final list = mat.toList3D<Vec3b, int>();
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
-  List<List<List<P>>> toList3D<T extends CvVec, P extends num>() {
+  List<List<List<num>>> toList3D<T extends CvVec>() {
     assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(
-        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val as List<P>));
+    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
-  /// Get the data pointer of the Mat, this getter will reture a view of native
-  /// data, and will be GCed when the Mat is GCed.
+  /// Get  a view of native data, and will be GCed when the Mat is GCed.
   Uint8List get data {
-    return cvRunArena<Uint8List>((arena) {
-      final p = calloc<ffi.Pointer<cvg.uchar>>();
-      final plen = arena<ffi.Int>();
-      cvRun(() => CFFI.Mat_DataPtr(ref, p, plen));
-      final ret = p.value.cast<ffi.Uint8>().asTypedList(plen.value);
-      calloc.free(p);
-      return ret;
-    });
+    final (p, len) = dataPtr;
+    return p.asTypedList(len);
+  }
+
+  /// Get the data pointer of the Mat
+  ///
+  /// DO NOT free the pointer, the native memory is managed by [Mat]
+  (ffi.Pointer<ffi.Uint8> ptr, int len) get dataPtr {
+    final p = calloc<ffi.Pointer<cvg.uchar>>();
+    final plen = calloc<ffi.Int>();
+    cvRun(() => CFFI.Mat_DataPtr(ref, p, plen));
+    final ret = (p.value.cast<ffi.Uint8>(), plen.value);
+    calloc.free(p);
+    calloc.free(plen);
+    return ret;
   }
 
   @override
@@ -1184,10 +1347,12 @@ typedef InputArray = OutputArray;
 typedef InputOutputArray = Mat;
 
 class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
-  VecMat._(this.ptr) {
-    finalizer.attach(this, ptr.cast());
+  VecMat._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
   }
-  factory VecMat.fromPointer(cvg.VecMatPtr ptr) => VecMat._(ptr);
+  factory VecMat.fromPointer(cvg.VecMatPtr ptr, [bool attach = true]) => VecMat._(ptr, attach);
   factory VecMat.fromVec(cvg.VecMat ptr) {
     final p = calloc<cvg.VecMat>();
     cvRun(() => CFFI.VecMat_NewFromVec(ptr, p));
@@ -1216,6 +1381,12 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
   @override
   cvg.VecMatPtr ptr;
   static final finalizer = OcvFinalizer<cvg.VecMatPtr>(CFFI.addresses.VecMat_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecMat_Close(ptr);
+  }
+
   @override
   Iterator<Mat> get iterator => VecMatIterator(ref);
 

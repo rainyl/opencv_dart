@@ -4,14 +4,14 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../constants.g.dart';
+import '../core/base.dart';
 import '../core/contours.dart';
+import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
-import '../core/base.dart';
-import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../constants.g.dart';
 import '../opencv.g.dart' as cvg;
 
 class Fisheye {
@@ -57,8 +57,7 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => CFFI.Fisheye_UndistortPoints(
-        distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(() => CFFI.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 
@@ -141,8 +140,8 @@ class Fisheye {
   bool centerPrincipalPoint = false,
 }) {
   return using<(Mat, Rect)>((arena) {
-    final validPixROI = arena<cvg.Rect>();
-    final matPtr = arena<cvg.Mat>();
+    final validPixROI = calloc<cvg.Rect>();
+    final matPtr = calloc<cvg.Mat>();
     cvRun(
       () => CFFI.GetOptimalNewCameraMatrixWithParams(
         cameraMatrix.ref,
@@ -155,7 +154,7 @@ class Fisheye {
         matPtr,
       ),
     );
-    return (Mat.fromCMat(matPtr.ref), Rect.fromNative(validPixROI.ref));
+    return (Mat.fromPointer(matPtr), Rect.fromPointer(validPixROI));
   });
 }
 
@@ -189,7 +188,7 @@ class Fisheye {
         rvecs!.ref,
         tvecs!.ref,
         flags,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
         rmsErr,
       ),
     );
@@ -212,8 +211,7 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() =>
-      CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(() => CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -242,7 +240,7 @@ Mat undistortPoints(
         distCoeffs.ref,
         R!.ref,
         P!.ref,
-        criteria.toTermCriteria(arena).ref,
+        criteria.toNativePtr(arena).ref,
       ),
     ),
   );
@@ -339,8 +337,14 @@ Mat drawChessboardCorners(
   bool patternWasFound,
 ) {
   return cvRunArena<Mat>((arena) {
-    cvRun(() => CFFI.DrawChessboardCorners(
-        image.ref, patternSize.toSize(arena).ref, corners.ref, patternWasFound));
+    cvRun(
+      () => CFFI.DrawChessboardCorners(
+        image.ref,
+        patternSize.toSize(arena).ref,
+        corners.ref,
+        patternWasFound,
+      ),
+    );
     return image;
   });
 }
@@ -362,7 +366,7 @@ Mat drawChessboardCorners(
 }) {
   return cvRunArena<(Mat, Mat)>((arena) {
     inliers ??= Mat.empty();
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(
       () => CFFI.EstimateAffinePartial2DWithParams(
         from.ref,
@@ -376,7 +380,7 @@ Mat drawChessboardCorners(
         p,
       ),
     );
-    return (Mat.fromCMat(p.ref), inliers!);
+    return (Mat.fromPointer(p), inliers!);
   });
 }
 
@@ -396,7 +400,7 @@ Mat drawChessboardCorners(
 }) {
   return cvRunArena<(Mat, Mat)>((arena) {
     inliers ??= Mat.empty();
-    final p = arena<cvg.Mat>();
+    final p = calloc<cvg.Mat>();
     cvRun(
       () => CFFI.EstimateAffine2DWithParams(
         from.ref,
@@ -410,6 +414,6 @@ Mat drawChessboardCorners(
         p,
       ),
     );
-    return (Mat.fromCMat(p.ref), inliers!);
+    return (Mat.fromPointer(p), inliers!);
   });
 }

@@ -7,6 +7,7 @@
 */
 
 #include "video.h"
+#include <vector>
 
 CvStatus BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval)
 {
@@ -22,7 +23,11 @@ CvStatus BackgroundSubtractorMOG2_CreateWithParams(int history, double varThresh
       cv::createBackgroundSubtractorMOG2(history, varThreshold, detectShadows))};
   END_WRAP
 }
-void BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2 *self){CVD_FREE(self)}
+void BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2Ptr self)
+{
+  self->ptr->reset();
+  CVD_FREE(self)
+}
 
 CvStatus BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 self, Mat src, Mat dst)
 {
@@ -44,7 +49,11 @@ CvStatus BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Thres
       cv::createBackgroundSubtractorKNN(history, dist2Threshold, detectShadows))};
   END_WRAP
 }
-void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNN *self){CVD_FREE(self)}
+void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNNPtr self)
+{
+  self->ptr->reset();
+  CVD_FREE(self)
+}
 
 CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst)
 {
@@ -60,13 +69,17 @@ CvStatus CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecP
   END_WRAP
 }
 CvStatus CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
-                                        VecUChar status, VecFloat err, Size winSize, int maxLevel,
+                                        VecUChar *status, VecFloat *err, Size winSize, int maxLevel,
                                         TermCriteria criteria, int flags, double minEigThreshold)
 {
   BEGIN_WRAP
-  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *status.ptr, *err.ptr,
-                           cv::Size(winSize.width, winSize.height), maxLevel, *criteria.ptr, flags,
-                           minEigThreshold);
+  std::vector<uchar> _status;
+  std::vector<float> _err;
+  auto               tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, _status, _err,
+                           cv::Size(winSize.width, winSize.height), maxLevel, tc, flags, minEigThreshold);
+  *status = {new std::vector<uchar>(_status)};
+  *err = {new std::vector<float>(_err)};
   END_WRAP
 }
 CvStatus CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,
@@ -82,8 +95,9 @@ CvStatus FindTransformECC(Mat templateImage, Mat inputImage, Mat warpMatrix, int
                           TermCriteria criteria, Mat inputMask, int gaussFiltSize, double *rval)
 {
   BEGIN_WRAP
-  *rval = cv::findTransformECC(*templateImage.ptr, *inputImage.ptr, *warpMatrix.ptr, motionType,
-                               *criteria.ptr, *inputMask.ptr, gaussFiltSize);
+  auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  *rval = cv::findTransformECC(*templateImage.ptr, *inputImage.ptr, *warpMatrix.ptr, motionType, tc,
+                               *inputMask.ptr, gaussFiltSize);
   END_WRAP
 }
 
@@ -109,7 +123,11 @@ CvStatus TrackerMIL_Create(TrackerMIL *rval)
   *rval = {new cv::Ptr<cv::TrackerMIL>(cv::TrackerMIL::create())};
   END_WRAP
 }
-void TrackerMIL_Close(TrackerMIL *self){CVD_FREE(self)}
+void TrackerMIL_Close(TrackerMILPtr self)
+{
+  self->ptr->reset();
+  CVD_FREE(self)
+}
 
 CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams, int type, KalmanFilter *rval)
 {
@@ -117,7 +135,7 @@ CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams,
   *rval = {new cv::KalmanFilter(dynamParams, measureParams, controlParams, type)};
   END_WRAP
 }
-void KalmanFilter_Close(KalmanFilter *self){CVD_FREE(self)}
+void KalmanFilter_Close(KalmanFilterPtr self){CVD_FREE(self)}
 
 CvStatus KalmanFilter_Init(KalmanFilter self, int dynamParams, int measureParams)
 {

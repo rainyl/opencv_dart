@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test("cv2.approxPolyDP, cv.arcLength", () {
@@ -61,8 +60,7 @@ void main() async {
 
     final mask = cv.Mat.empty();
     final hist = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
-    final backProject =
-        cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
+    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
     expect(backProject.isEmpty, false);
   });
 
@@ -122,7 +120,7 @@ void main() async {
     expect((src.width, src.height, src.channels), (612, 760, 1));
     cv.bitwiseNOT(src, dst: src);
     expect((src.width, src.height, src.channels), (612, 760, 1));
-    var (contours, hierarchy) = cv.findContours(
+    final (contours, hierarchy) = cv.findContours(
       src,
       cv.RETR_EXTERNAL,
       cv.CHAIN_APPROX_SIMPLE,
@@ -151,30 +149,32 @@ void main() async {
   });
 
   test("cv2.cvtColor", () {
-    final cvImage = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+    final cvImage = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
     final gray = cv.cvtColor(cvImage, cv.COLOR_BGR2GRAY);
     expect((gray.width, gray.height, gray.channels), (512, 512, 1));
     expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
   });
 
   test("cv2.equalizeHist", () async {
-    final cvImage = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final cvImage = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect((cvImage.width, cvImage.height), (512, 512));
     final imgNew = cv.equalizeHist(cvImage);
-    expect((cvImage.width, cvImage.height, cvImage.channels),
-        (imgNew.width, imgNew.height, imgNew.channels));
+    expect(
+      (cvImage.width, cvImage.height, cvImage.channels),
+      (imgNew.width, imgNew.height, imgNew.channels),
+    );
     expect(cv.imwrite("test/images_out/circles_equalized.jpg", imgNew), equals(true));
   });
 
   test("cv2.calcHist", () async {
-    final src = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     final mask = cv.Mat.empty();
     final hist = cv.calcHist([src].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
     expect(hist.height == 256 && hist.width == 1 && !hist.isEmpty, equals(true));
   });
 
   test('cv.erode', () {
-    final src = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     final kernel = cv.getStructuringElement(
       cv.MORPH_RECT,
       (3, 3),
@@ -184,7 +184,7 @@ void main() async {
   });
 
   test('cv.dilate', () {
-    final src = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     final kernel = cv.getStructuringElement(
       cv.MORPH_RECT,
       (3, 3),
@@ -214,8 +214,14 @@ void main() async {
 
   test('basic drawings', () {
     final src = cv.Mat.create(cols: 100, rows: 100, type: cv.MatType.CV_8UC3);
-    cv.line(src, cv.Point(10, 10), cv.Point(90, 90), cv.Scalar.red,
-        thickness: 2, lineType: cv.LINE_AA);
+    cv.line(
+      src,
+      cv.Point(10, 10),
+      cv.Point(90, 90),
+      cv.Scalar.red,
+      thickness: 2,
+      lineType: cv.LINE_AA,
+    );
     cv.ellipse(src, cv.Point(50, 50), cv.Point(10, 20), 30.0, 0, 360, cv.Scalar.green);
     cv.rectangle(src, cv.Rect(20, 20, 30, 50), cv.Scalar.blue);
     final pts = [(10, 5), (20, 30), (70, 20), (50, 10)].map((e) => cv.Point(e.$1, e.$2)).toList();
@@ -226,17 +232,18 @@ void main() async {
     expect((src.width, src.height, src.channels), (100, 100, 3));
 
     cv.fillPoly(
-        src,
-        [
-          [cv.Point(10, 10), cv.Point(10, 30), cv.Point(30, 30)]
-        ].cvd,
-        cv.Scalar.green);
+      src,
+      [
+        [cv.Point(10, 10), cv.Point(10, 30), cv.Point(30, 30)],
+      ].cvd,
+      cv.Scalar.green,
+    );
 
     cv.imwrite("test/images_out/basic_drawings.png", src);
   });
 
   test('cv.threshold', () {
-    final src = cv.imread(r"test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+    final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
     final (_, dst) = cv.threshold(src, 100, 255, cv.THRESH_BINARY);
     expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
   });
@@ -249,8 +256,7 @@ void main() async {
 
     final (_, thres) = cv.threshold(gray, 25, 255, cv.THRESH_BINARY);
 
-    final (dest, labels) =
-        cv.distanceTransform(thres, cv.DIST_L2, cv.DIST_MASK_3, cv.DIST_LABEL_CCOMP);
+    final (dest, labels) = cv.distanceTransform(thres, cv.DIST_L2, cv.DIST_MASK_3, cv.DIST_LABEL_CCOMP);
     expect(dest.isEmpty || dest.rows != img.rows || dest.cols != img.cols, false);
     expect(labels.isEmpty, false);
   });
@@ -329,8 +335,8 @@ void main() async {
       cv.Point(80, 80),
       cv.Point(80, 10),
     ];
-    for (var t in tests) {
-      var r = cv.pointPolygonTest(pts.cvd, t.$3, t.$5);
+    for (final t in tests) {
+      final r = cv.pointPolygonTest(pts.cvd, t.$3, t.$5);
       expect(r, closeTo(t.$4, 1e-3));
     }
   });
@@ -384,6 +390,8 @@ void main() async {
     expect(m.m00, greaterThan(0));
     final m1 = cv.moments(img);
     expect(m, m1);
+
+    m1.dispose();
   });
 
   // test pyrDown
@@ -396,6 +404,11 @@ void main() async {
 
     final dst1 = cv.pyrUp(dst, borderType: cv.BORDER_DEFAULT);
     expect(dst1.isEmpty, false);
+  });
+
+  test('cv.morphologyDefaultBorderValue', () {
+    final value = cv.morphologyDefaultBorderValue();
+    expect(value.val.length, 4);
   });
 
   // morphologyEx
@@ -439,13 +452,14 @@ void main() async {
 
     final (dx, dy) = cv.spatialGradient(img, borderType: cv.BORDER_DEFAULT);
     expect(
-        dx.isEmpty ||
-            dy.isEmpty ||
-            img.rows != dx.rows ||
-            img.cols != dx.cols ||
-            img.rows != dy.rows ||
-            img.cols != dy.cols,
-        false);
+      dx.isEmpty ||
+          dy.isEmpty ||
+          img.rows != dx.rows ||
+          img.cols != dx.cols ||
+          img.rows != dy.rows ||
+          img.cols != dy.cols,
+      false,
+    );
   });
 
   // Laplacian
@@ -530,6 +544,13 @@ void main() async {
   });
 
   // HoughLinesP
+  test('cv.HoughLinesP', () {
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
+    expect(img.isEmpty, false);
+
+    final circles = cv.HoughLinesP(img, 1, cv.CV_PI / 180, 50);
+    expect(circles.isEmpty, false);
+  });
 
   // HoughLinesPointSet
 
@@ -713,40 +734,40 @@ void main() async {
   });
 
   // findHomography
-  // test('cv.findHomography', () {
-  //   final src = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC1);
-  //   final dst = cv.Mat.zeros(4, 2, cv.MatType.CV_64FC2);
-  //   final srcPts = [
-  //     cv.Point(193, 932),
-  //     cv.Point(191, 378),
-  //     cv.Point(1497, 183),
-  //     cv.Point(1889, 681),
-  //   ];
-  //   final dstPts = [
-  //     cv.Point2f(51.51206544281359, -0.10425475260813055),
-  //     cv.Point2f(51.51211051314331, -0.10437947532732306),
-  //     cv.Point2f(51.512222354139325, -0.10437679311830816),
-  //     cv.Point2f(51.51214828037607, -0.1042212249954444),
-  //   ];
-  //   List.generate(srcPts.length, (index) => index).forEach((i) {
-  //     src.setValue<double>(i, 0, srcPts[i].x.toDouble());
-  //     src.setValue<double>(i, 1, srcPts[i].y.toDouble());
-  //   });
-  //   List.generate(dstPts.length, (index) => index).forEach((i) {
-  //     dst.setValue<double>(i, 0, dstPts[i].x.toDouble());
-  //     dst.setValue<double>(i, 1, dstPts[i].y.toDouble());
-  //   });
+  test('cv.findHomography', () {
+    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final srcPts = [
+      cv.Point2f(193, 932),
+      cv.Point2f(191, 378),
+      cv.Point2f(1497, 183),
+      cv.Point2f(1889, 681),
+    ];
+    final dstPts = [
+      cv.Point2f(51.51206544281359, -0.10425475260813055),
+      cv.Point2f(51.51211051314331, -0.10437947532732306),
+      cv.Point2f(51.512222354139325, -0.10437679311830816),
+      cv.Point2f(51.51214828037607, -0.1042212249954444),
+    ];
+    for (var i = 0; i < srcPts.length; i++) {
+      src.setF64(i, 0, srcPts[i].x);
+      src.setF64(i, 1, srcPts[i].y);
+    }
+    for (var i = 0; i < dstPts.length; i++) {
+      dst.setF64(i, 0, dstPts[i].x);
+      dst.setF64(i, 1, dstPts[i].y);
+    }
 
-  //   final mask = cv.Mat.empty();
-  //   final m = cv.findHomography(
-  //     src,
-  //     dst,
-  //     method: cv.HOMOGRAPY_ALL_POINTS,
-  //     ransacReprojThreshold: 3,
-  //     mask: mask,
-  //   );
-  //   expect(m.isEmpty, false);
-  // });
+    final mask = cv.Mat.empty();
+    final m = cv.findHomography(
+      src,
+      dst,
+      method: cv.HOMOGRAPY_ALL_POINTS,
+      ransacReprojThreshold: 3,
+      mask: mask,
+    );
+    expect(m.isEmpty, false);
+  });
 
   // remap
   test('cv.remap', () {
@@ -844,6 +865,26 @@ void main() async {
     expect((inv.rows, inv.cols), (2, 3));
   });
 
+  test('cv.phaseCorrelate', () {
+    final template = cv.imread("test/images/simple.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final matched = cv.imread("test/images/simple-translated.jpg", flags: cv.IMREAD_GRAYSCALE);
+    final notMatchedOrig = cv.imread("test/images/space_shuttle.jpg", flags: cv.IMREAD_GRAYSCALE);
+
+    final notMatched = cv.resize(notMatchedOrig, (matched.size[1], matched.size[0]));
+
+    final template32F = template.convertTo(cv.MatType.CV_32FC1);
+    final matched32F = matched.convertTo(cv.MatType.CV_32FC1);
+    final notMatched32F = notMatched.convertTo(cv.MatType.CV_32FC1);
+
+    final (shiftTranslated, responseTranslated) = cv.phaseCorrelate(template32F, matched32F);
+    final (_, responseDiff) = cv.phaseCorrelate(template32F, notMatched32F);
+    expect(shiftTranslated.x, isA<double>());
+    expect(shiftTranslated.y, isA<double>());
+
+    expect(responseTranslated, greaterThan(0.85));
+    expect(responseDiff, lessThan(0.05));
+  });
+
   // accumulate
   test('cv.accumulate', () {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
@@ -886,17 +927,17 @@ void main() async {
   });
 
   test("Issue 8", () {
-    cv.Mat mask = cv.Mat.ones(512, 512, cv.MatType.CV_32FC1);
+    final cv.Mat mask = cv.Mat.ones(512, 512, cv.MatType.CV_32FC1);
 
-    List<cv.Point2f> faceTemplate = [
+    final List<cv.Point2f> faceTemplate = [
       cv.Point2f(192.98138, 239.94708),
       cv.Point2f(318.90277, 240.1936),
       cv.Point2f(256.63416, 314.01935),
       cv.Point2f(201.26117, 371.41043),
-      cv.Point2f(314.08905, 371.15118)
+      cv.Point2f(314.08905, 371.15118),
     ];
 
-    List<cv.Point2f> landmarks = [
+    final List<cv.Point2f> landmarks = [
       cv.Point2f(916.1744018554688, 436.8168579101563),
       cv.Point2f(1179.1181030273438, 448.0384765625),
       cv.Point2f(1039.171106147766, 604.8748825073242),
@@ -904,13 +945,12 @@ void main() async {
       cv.Point2f(1167.2201416015625, 693.495068359375),
     ];
 
-    var (affineMatrix, _) =
-        cv.estimateAffinePartial2D(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
+    final (affineMatrix, _) = cv.estimateAffinePartial2D(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
-    var invMask = cv.warpAffine(mask, affineMatrix, (2048, 2048));
+    final invMask = cv.warpAffine(mask, affineMatrix, (2048, 2048));
     for (int i = 0; i < 2047; i++) {
       for (int j = 0; j < 2047; j++) {
-        var val = invMask.at<double>(i, j);
+        final val = invMask.at<double>(i, j);
         expect(val == 0 || val == 1, true);
       }
     }

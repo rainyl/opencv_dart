@@ -22,35 +22,17 @@ class MatType extends Equatable {
 
   @override
   String toString() {
-    String s;
-    switch (depth) {
-      case CV_8U:
-        s = "CV_8U";
-        break;
-      case CV_8S:
-        s = "CV_8S";
-        break;
-      case CV_16U:
-        s = "CV_16U";
-        break;
-      case CV_16S:
-        s = "CV_16S";
-        break;
-      case CV_32S:
-        s = "CV_32S";
-        break;
-      case CV_32F:
-        s = "CV_32F";
-        break;
-      case CV_64F:
-        s = "CV_64F";
-        break;
-      case CV_USRTYPE1:
-        s = "CV_USRTYPE1";
-        break;
-      default:
-        return "Unsupported type value ($value)";
-    }
+    final String s = switch (depth) {
+      CV_8U => "CV_8U",
+      CV_8S => "CV_8S",
+      CV_16U => "CV_16U",
+      CV_16S => "CV_16S",
+      CV_32S => "CV_32S",
+      CV_32F => "CV_32F",
+      CV_64F => "CV_64F",
+      CV_USRTYPE1 => "CV_USRTYPE1",
+      _ => throw CvdException("Unsupported type value ($value)"),
+    };
     final ch = channels;
     if (ch <= 4) {
       return "${s}C$ch";
@@ -59,50 +41,52 @@ class MatType extends Equatable {
     }
   }
 
-  static const int CV_CN_MAX = 512, CV_CN_SHIFT = 3, CV_DEPTH_MAX = (1 << CV_CN_SHIFT);
+  static const int CV_CN_MAX = 512;
+  static const int CV_CN_SHIFT = 3;
+  static const int CV_DEPTH_MAX = 1 << CV_CN_SHIFT;
 
-  /// type depth constants
-  static const int CV_8U = 0,
-      CV_8S = 1,
-      CV_16U = 2,
-      CV_16S = 3,
-      CV_32S = 4,
-      CV_32F = 5,
-      CV_64F = 6,
-      CV_USRTYPE1 = 7;
+  // type depth constants
+  static const int CV_8U = 0;
+  static const int CV_8S = 1;
+  static const int CV_16U = 2;
+  static const int CV_16S = 3;
+  static const int CV_32S = 4;
+  static const int CV_32F = 5;
+  static const int CV_64F = 6;
+  static const int CV_USRTYPE1 = 7;
 
   /// predefined type constants
-  static final MatType CV_8UC1 = CV_8UC(1),
-      CV_8UC2 = CV_8UC(2),
-      CV_8UC3 = CV_8UC(3),
-      CV_8UC4 = CV_8UC(4),
-      CV_8SC1 = CV_8SC(1),
-      CV_8SC2 = CV_8SC(2),
-      CV_8SC3 = CV_8SC(3),
-      CV_8SC4 = CV_8SC(4),
-      CV_16UC1 = CV_16UC(1),
-      CV_16UC2 = CV_16UC(2),
-      CV_16UC3 = CV_16UC(3),
-      CV_16UC4 = CV_16UC(4),
-      CV_16SC1 = CV_16SC(1),
-      CV_16SC2 = CV_16SC(2),
-      CV_16SC3 = CV_16SC(3),
-      CV_16SC4 = CV_16SC(4),
-      CV_32SC1 = CV_32SC(1),
-      CV_32SC2 = CV_32SC(2),
-      CV_32SC3 = CV_32SC(3),
-      CV_32SC4 = CV_32SC(4),
-      CV_32FC1 = CV_32FC(1),
-      CV_32FC2 = CV_32FC(2),
-      CV_32FC3 = CV_32FC(3),
-      CV_32FC4 = CV_32FC(4),
-      CV_64FC1 = CV_64FC(1),
-      CV_64FC2 = CV_64FC(2),
-      CV_64FC3 = CV_64FC(3),
-      CV_64FC4 = CV_64FC(4);
+  static final MatType CV_8UC1 = CV_8UC(1);
+  static final MatType CV_8UC2 = CV_8UC(2);
+  static final MatType CV_8UC3 = CV_8UC(3);
+  static final MatType CV_8UC4 = CV_8UC(4);
+  static final MatType CV_8SC1 = CV_8SC(1);
+  static final MatType CV_8SC2 = CV_8SC(2);
+  static final MatType CV_8SC3 = CV_8SC(3);
+  static final MatType CV_8SC4 = CV_8SC(4);
+  static final MatType CV_16UC1 = CV_16UC(1);
+  static final MatType CV_16UC2 = CV_16UC(2);
+  static final MatType CV_16UC3 = CV_16UC(3);
+  static final MatType CV_16UC4 = CV_16UC(4);
+  static final MatType CV_16SC1 = CV_16SC(1);
+  static final MatType CV_16SC2 = CV_16SC(2);
+  static final MatType CV_16SC3 = CV_16SC(3);
+  static final MatType CV_16SC4 = CV_16SC(4);
+  static final MatType CV_32SC1 = CV_32SC(1);
+  static final MatType CV_32SC2 = CV_32SC(2);
+  static final MatType CV_32SC3 = CV_32SC(3);
+  static final MatType CV_32SC4 = CV_32SC(4);
+  static final MatType CV_32FC1 = CV_32FC(1);
+  static final MatType CV_32FC2 = CV_32FC(2);
+  static final MatType CV_32FC3 = CV_32FC(3);
+  static final MatType CV_32FC4 = CV_32FC(4);
+  static final MatType CV_64FC1 = CV_64FC(1);
+  static final MatType CV_64FC2 = CV_64FC(2);
+  static final MatType CV_64FC3 = CV_64FC(3);
+  static final MatType CV_64FC4 = CV_64FC(4);
 
   /*
-    static const int 
+    static const int
         CV_8UC1 = 0,
         CV_8SC1 = 1,
         CV_16UC1 = 2,
@@ -147,14 +131,15 @@ class MatType extends Equatable {
         CV_64FC6 = 46;
      */
 
-  static CV_8UC(int ch) => makeType(CV_8U, ch);
-  static CV_8SC(int ch) => makeType(CV_8S, ch);
-  static CV_16UC(int ch) => makeType(CV_16U, ch);
-  static CV_16SC(int ch) => makeType(CV_16S, ch);
-  static CV_32SC(int ch) => makeType(CV_32S, ch);
-  static CV_32FC(int ch) => makeType(CV_32F, ch);
-  static CV_64FC(int ch) => makeType(CV_64F, ch);
+  static MatType CV_8UC(int ch) => makeType(CV_8U, ch);
+  static MatType CV_8SC(int ch) => makeType(CV_8S, ch);
+  static MatType CV_16UC(int ch) => makeType(CV_16U, ch);
+  static MatType CV_16SC(int ch) => makeType(CV_16S, ch);
+  static MatType CV_32SC(int ch) => makeType(CV_32S, ch);
+  static MatType CV_32FC(int ch) => makeType(CV_32F, ch);
+  static MatType CV_64FC(int ch) => makeType(CV_64F, ch);
 
+  // ignore: prefer_constructors_over_static_methods
   static MatType makeType(int depth, int channels) {
     if (channels <= 0 || channels >= CV_CN_MAX) {
       throw CvdException("Channels count should be 1..${CV_CN_MAX - 1}");

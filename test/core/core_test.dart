@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'package:test/test.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() async {
   test('openCvVersion', () {
@@ -86,7 +86,7 @@ void main() async {
 
   test('cv.calcCovarMatrix', () {
     final samples = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
-    var mean = cv.Mat.empty();
+    final mean = cv.Mat.empty();
     final (covar, _) = cv.calcCovarMatrix(samples, mean, cv.COVAR_ROWS);
     expect(covar.isEmpty, equals(false));
   });
@@ -186,8 +186,13 @@ void main() async {
     final mean = cv.Mat.empty();
     final eigenvectors = cv.Mat.empty();
     final eigenvalues = cv.Mat.empty();
-    cv.PCACompute(src, mean,
-        eigenvalues: eigenvalues, eigenvectors: eigenvectors, maxComponents: 2);
+    cv.PCACompute(
+      src,
+      mean,
+      eigenvalues: eigenvalues,
+      eigenvectors: eigenvectors,
+      maxComponents: 2,
+    );
     expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
     expect(eigenvectors.rows, equals(2));
   });
@@ -302,8 +307,7 @@ void main() async {
     final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].cvd;
     final bestLabels = cv.Mat.empty();
     const criteria = (cv.TERM_COUNT, 10, 1.0);
-    final (_, _, centers) =
-        cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
+    final (_, _, centers) = cv.kmeansByPoints(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
     expect(centers.isEmpty, equals(false));
   });
 
@@ -311,6 +315,65 @@ void main() async {
     final src = cv.Mat.randu(4, 3, cv.MatType.CV_32FC1);
     final dst = cv.log(src);
     expect(dst.isEmpty, equals(false));
+  });
+
+  test('cv.LUT', () {
+    void testOneLUT(cv.Mat src, cv.Mat lut) {
+      expect(lut.channels == src.channels || lut.channels == 1, true);
+      expect(lut.isContinus, true);
+      final sw = Stopwatch();
+      sw.start();
+      final dst = cv.LUT(src, lut);
+      sw.stop();
+      // print('${src.type} -> ${lut.type}(${src.rows}x${src.cols}): ${sw.elapsedMilliseconds}ms');
+      expect(dst.isEmpty, false);
+      expect(src.shape, dst.shape);
+    }
+
+    final depthSrc = [cv.MatType.CV_8U, cv.MatType.CV_8S, cv.MatType.CV_16U, cv.MatType.CV_16S];
+    final depthLut = [
+      cv.MatType.CV_8U,
+      cv.MatType.CV_8S,
+      cv.MatType.CV_16U,
+      cv.MatType.CV_16S,
+      cv.MatType.CV_32S,
+      cv.MatType.CV_32F,
+      cv.MatType.CV_64F,
+    ];
+    for (final int channel in [1, 2, 3, 4]) {
+      for (final depth in depthSrc) {
+        final srcType = cv.MatType.makeType(depth, channel);
+        final src = cv.Mat.randu(3, 3, srcType, low: cv.Scalar.all(0), high: cv.Scalar.all(255));
+        final lutSize = switch (depth) {
+          cv.MatType.CV_8U || cv.MatType.CV_8S => 256,
+          cv.MatType.CV_16U || cv.MatType.CV_16S => 65536,
+          _ => throw Exception("Unsupported type"),
+        };
+        for (final lutDepth in depthLut) {
+          final lutType = cv.MatType.makeType(lutDepth, channel);
+          // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
+          final lutData = switch (lutDepth) {
+            cv.MatType.CV_32F ||
+            cv.MatType.CV_64F =>
+              List.generate(lutSize * lutType.channels, (i) => (lutSize - (i ~/ channel) - 1).toDouble()),
+            _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
+          };
+          final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
+          testOneLUT(src, lutInverse);
+        }
+      }
+    }
+  });
+
+  test('cv.LUT 1', () {
+    final mat = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final src = mat.convertTo(cv.MatType.CV_16UC3, alpha: 65536.0 / 255.0);
+    final lutData = List.generate(65536 * 3, (i) => 65536 - (i ~/ 3) - 1);
+    final lut = cv.Mat.fromList(1, 65536, cv.MatType.CV_16UC3, lutData);
+    final dst = cv.LUT(src, lut);
+    expect(dst.isEmpty, equals(false));
+    expect(dst.shape, src.shape);
+    // cv.imwrite("lut.png", dst.convertTo(cv.MatType.CV_8UC3, alpha: 255.0/65536.0));
   });
 
   test('cv.magnitude', () {
@@ -345,7 +408,7 @@ void main() async {
     final src = [
       cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
       cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1)
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
     ].cvd;
     final dst = cv.merge(src);
     expect(dst.isEmpty, equals(false));
@@ -449,8 +512,7 @@ void main() async {
 
     final (rootsCount, roots) = cv.solveCubic(coeffs);
     expect(rootsCount, equals(3));
-    expect((roots.at<double>(0, 0), roots.at<double>(0, 1), roots.at<double>(0, 2)),
-        (-3.0, 2.0, -0.5));
+    expect((roots.at<double>(0, 0), roots.at<double>(0, 1), roots.at<double>(0, 2)), (-3.0, 2.0, -0.5));
   });
 
   test('cv.solvePoly', () {
@@ -660,8 +722,8 @@ void main() async {
   test(
     'cv.setNumThreads',
     onPlatform: {
-      "mac-os": const Skip(
-          "seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150")
+      "mac-os":
+          const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
     },
     () {
       cv.setNumThreads(2);

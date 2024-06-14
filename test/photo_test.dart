@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:test/test.dart';
 
 void main() {
   test('cv.colorChange', () {
@@ -124,6 +123,8 @@ void main() {
     final dst1 = mertens1.process(src.cvd);
     expect(dst1.isEmpty, false);
     expect((dst1.rows, dst1.cols), (src[0].rows, src[0].cols));
+
+    mertens1.dispose();
   });
 
   test('cv.AlignMTB', () {
@@ -140,5 +141,7 @@ void main() {
     final alignwtb1 = cv.AlignMTB.create();
     final dst1 = alignwtb1.process(src.cvd);
     expect(dst1.length, greaterThan(0));
+
+    alignwtb1.dispose();
   });
 }
