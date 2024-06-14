@@ -101,6 +101,7 @@ CVD_TYPEDEF(std::vector<cv::Rect>, VecRect)
 CVD_TYPEDEF(std::vector<cv::KeyPoint>, VecKeyPoint)
 CVD_TYPEDEF(std::vector<cv::DMatch>, VecDMatch)
 CVD_TYPEDEF(std::vector<std::vector<cv::DMatch>>, VecVecDMatch)
+CVD_TYPEDEF(std::vector<cv::Vec4i>, VecVec4i)
 #else
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef struct NAME {                                                                                      \
@@ -131,6 +132,7 @@ CVD_TYPEDEF(void, VecRect)
 CVD_TYPEDEF(void, VecKeyPoint)
 CVD_TYPEDEF(void, VecDMatch)
 CVD_TYPEDEF(void, VecVecDMatch)
+CVD_TYPEDEF(void, VecVec4i)
 #endif
 
 // Wrapper for an individual cv::cvPoint

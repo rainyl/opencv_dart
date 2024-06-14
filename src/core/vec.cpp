@@ -1,4 +1,6 @@
 #include "vec.h"
+#include "core/core.h"
+#include "opencv2/core/matx.hpp"
 #include <string.h>
 #include <vector>
 
@@ -987,6 +989,56 @@ CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
 }
 
 void VecVecDMatch_Close(VecVecDMatchPtr vec)
+{
+  vec->ptr->clear();
+  CVD_FREE(vec)
+}
+
+CvStatus VecVec4i_New(VecVec4i *rval)
+{
+  BEGIN_WRAP
+  *rval = {new std::vector<cv::Vec4i>()};
+  END_WRAP
+}
+
+CvStatus VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval)
+{
+  BEGIN_WRAP
+  std::vector<cv::Vec4i> vec;
+  for (int i = 0; i < length; i++) {
+    Vec4i v = data[i];
+    vec.push_back(cv::Vec4i(v.val1, v.val2, v.val3, v.val4));
+  }
+  *rval = {new std::vector<cv::Vec4i>(vec)};
+  END_WRAP
+}
+
+// CvStatus VecVec4i_NewFromVec(VecVec4i vec, VecVec4i *rval)
+// {
+//   BEGIN_WRAP
+//   END_WRAP
+// }
+
+CvStatus VecVec4i_At(VecVec4i vec, int idx, Vec4i *rval)
+{
+  BEGIN_WRAP
+  cv::Vec4i v = vec.ptr->at(idx);
+  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
+  END_WRAP
+}
+CvStatus VecVec4i_Append(VecVec4i vec, Vec4i v)
+{
+  BEGIN_WRAP
+  vec.ptr->push_back(cv::Vec4i(v.val1, v.val2, v.val3, v.val4));
+  END_WRAP
+}
+CvStatus VecVec4i_Size(VecVec4i vec, int *rval)
+{
+  BEGIN_WRAP
+  *rval = static_cast<int>(vec.ptr->size());
+  END_WRAP
+}
+void VecVec4i_Close(VecVec4iPtr vec)
 {
   vec->ptr->clear();
   CVD_FREE(vec)
