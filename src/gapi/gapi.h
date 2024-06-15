@@ -9,12 +9,13 @@
 #include "core/core.h"
 
 #ifdef __cplusplus
-#include "opencv2/gapi/gmat.hpp"
-#include "opencv2/gapi/render/render_types.hpp"
 #include <opencv2/gapi.hpp>
 #include <opencv2/gapi/core.hpp>
+#include <opencv2/gapi/gcomputation.hpp>
+#include <opencv2/gapi/gmat.hpp>
 #include <opencv2/gapi/gopaque.hpp>
 #include <opencv2/gapi/imgproc.hpp>
+#include <opencv2/gapi/render/render_types.hpp>
 #include <vector>
 extern "C" {
 #endif
@@ -23,6 +24,7 @@ extern "C" {
 CVD_TYPEDEF(cv::GMat, GMat)
 CVD_TYPEDEF(cv::GScalar, GScalar)
 CVD_TYPEDEF(cv::GFrame, GFrame)
+CVD_TYPEDEF(cv::GComputation, GComputation)
 CVD_TYPEDEF(cv::GOpaque<cv::Rect>, GOpaqueRect)
 CVD_TYPEDEF(cv::GOpaque<cv::Point>, GOpaquePoint)
 CVD_TYPEDEF(cv::GOpaque<cv::Vec4f>, GOpaqueVec4f)
@@ -45,7 +47,10 @@ CVD_TYPEDEF(cv::GArray<cv::gapi::wip::draw::Prim>, GArrayPrim)
 #else
 CVD_TYPEDEF(void, GMat)
 CVD_TYPEDEF(void, GScalar)
+CVD_TYPEDEF(void, GFrame)
+CVD_TYPEDEF(void, GComputation)
 CVD_TYPEDEF(void, GOpaqueRect)
+CVD_TYPEDEF(void, GOpaquePoint)
 CVD_TYPEDEF(void, GOpaqueVec4f)
 CVD_TYPEDEF(void, GOpaqueVec6f)
 CVD_TYPEDEF(void, VecGMat)
@@ -65,6 +70,8 @@ CVD_TYPEDEF(void, GArrayPrim)
 #endif
 
 typedef VecPrim Prims;
+typedef void (*GMatCallback)(GMat *);
+typedef void (*MatCallback)(void *);
 
 CvStatus gapi_GMat_New_Empty(GMat *rval);
 CvStatus gapi_GMat_New_FromMat(Mat mat, GMat *rval);
@@ -73,15 +80,22 @@ void     gapi_GMat_Close(GMatPtr mat);
 CvStatus gapi_GScalar_New_Empty(GScalar *rval);
 CvStatus gapi_GScalar_New_FromScalar(Scalar scalar, GScalar *rval);
 CvStatus gapi_GScalar_New_FromDouble(double v0, GScalar *rval);
-void     gapi_GScalar_Close(GScalar *scalar);
+void     gapi_GScalar_Close(GScalarPtr scalar);
 
-CvStatus VecGMat_New(VecGMat *rval);
-CvStatus VecGMat_NewFromPointer(GMat *points, int length, VecGMat *rval);
-CvStatus VecGMat_NewFromVec(VecGMat vec, VecGMat *rval);
-CvStatus VecGMat_At(VecGMat vec, int idx, GMat *rval);
-CvStatus VecGMat_Append(VecGMat vec, GMat p);
-CvStatus VecGMat_Size(VecGMat vec, int *rval);
-void     VecGMat_Close(VecGMatPtr vec);
+CvStatus gapi_GComputation_New(GMat in, GMat out, GComputation *rval);
+CvStatus gapi_GComputation_New_1(GMat in, GScalar out, GComputation *rval);
+CvStatus gapi_GComputation_New_2(GMat in1, GMat in2, GMat out, GComputation *rval);
+CvStatus gapi_GComputation_New_3(GMat in1, GMat in2, GScalar out, GComputation *rval);
+void     gapi_GComputation_Close(GComputationPtr self);
+CvStatus gapi_GComputation_apply(GComputation self, Mat in,
+                                 MatCallback callback /*TODO: GCompileArgs &&args={}*/);
+CvStatus gapi_GComputation_apply_1(GComputation self, Mat in, Scalar *out /*TODO: GCompileArgs &&args={}*/);
+CvStatus gapi_GComputation_apply_2(GComputation self, Mat in1, Mat in2,
+                                   Mat *out /*TODO: GCompileArgs &&args={}*/);
+CvStatus gapi_GComputation_apply_3(GComputation self, Mat in1, Mat in2,
+                                   Scalar *out /*TODO: GCompileArgs &&args={}*/);
+
+// CvStatus VecGMat_NewFromVec(VecMat vec, VecGMat *rval);
 
 CvStatus Prim_from_Circle(Point center, Scalar color, int lt, int radius, int shift, int thick, Prim *rval);
 CvStatus Prim_from_FText(char *text, int text_len, Point org, int fh, Scalar color, Prim *rval);
@@ -225,11 +239,11 @@ CvStatus gapi_fitLine3D_4(const GMat src, const int distType, const double param
 
 // Graph API: Image and channel composition functions
 CvStatus gapi_concatHor(const GMat src1, const GMat src2, GMat *rval);
-CvStatus gapi_concatHor_1(const VecGMat v, GMat *rval);
+// CvStatus gapi_concatHor_1(const VecGMat v, GMat *rval);
 CvStatus gapi_concatVert(const GMat src1, const GMat src2, GMat *rval);
-CvStatus gapi_concatVert_2(const VecGMat v, GMat *rval);
+// CvStatus gapi_concatVert_2(const VecGMat v, GMat *rval);
 CvStatus gapi_convertTo(const GMat src, int rdepth, double alpha, double beta, GMat *rval);
-CvStatus gapi_copy(const GFrame in, GFrame *rval);
+// CvStatus gapi_copy(const GFrame in, GFrame *rval);
 CvStatus gapi_copy_1(const GMat in, GMat *rval);
 CvStatus gapi_crop(const GMat src, const Rect rect, GMat *rval);
 CvStatus gapi_flip(const GMat src, int flipCode, GMat *rval);
@@ -251,13 +265,13 @@ CvStatus gapi_warpPerspective(const GMat src, const Mat M, const Size dsize, int
 // G-API Video processing functionality
 
 // G-API Drawing and composition functionality
-CvStatus gapi_wip_draw_render(cv::Mat bgr, const Prims prims /*, cv::GCompileArgs args*/);
-CvStatus gapi_wip_draw_render_1(cv::Mat y_plane, cv::Mat uv_plane,
-                                const Prims prims /*, cv::GCompileArgs args = {}*/);
-CvStatus gapi_wip_draw_render_2(cv::MediaFrame frame, const Prims prims /*, cv::GCompileArgs args = {}*/);
-CvStatus gapi_wip_draw_render3ch(const GMat src, const GArrayPrim prims, GMat *rval);
-CvStatus gapi_wip_draw_renderNV12(const GMat y, const GMat uv, const GArrayPrim prims, GMat *rval,
-                                  GMat *rval1);
+// CvStatus gapi_wip_draw_render(cv::Mat bgr, const Prims prims /*, cv::GCompileArgs args*/);
+// CvStatus gapi_wip_draw_render_1(cv::Mat y_plane, cv::Mat uv_plane,
+//                                 const Prims prims /*, cv::GCompileArgs args = {}*/);
+// CvStatus gapi_wip_draw_render_2(cv::MediaFrame frame, const Prims prims /*, cv::GCompileArgs args = {}*/);
+// CvStatus gapi_wip_draw_render3ch(const GMat src, const GArrayPrim prims, GMat *rval);
+// CvStatus gapi_wip_draw_renderNV12(const GMat y, const GMat uv, const GArrayPrim prims, GMat *rval,
+//                                   GMat *rval1);
 
 #ifdef __cplusplus
 }
