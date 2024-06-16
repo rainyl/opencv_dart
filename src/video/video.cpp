@@ -26,7 +26,7 @@ CvStatus BackgroundSubtractorMOG2_CreateWithParams(int history, double varThresh
 void BackgroundSubtractorMOG2_Close(BackgroundSubtractorMOG2Ptr self)
 {
   self->ptr->reset();
-  CVD_FREE(self)
+  CVD_FREE(self);
 }
 
 CvStatus BackgroundSubtractorMOG2_Apply(BackgroundSubtractorMOG2 self, Mat src, Mat dst)
@@ -52,7 +52,7 @@ CvStatus BackgroundSubtractorKNN_CreateWithParams(int history, double dist2Thres
 void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNNPtr self)
 {
   self->ptr->reset();
-  CVD_FREE(self)
+  CVD_FREE(self);
 }
 
 CvStatus BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst)
@@ -126,7 +126,7 @@ CvStatus TrackerMIL_Create(TrackerMIL *rval)
 void TrackerMIL_Close(TrackerMILPtr self)
 {
   self->ptr->reset();
-  CVD_FREE(self)
+  CVD_FREE(self);
 }
 
 CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams, int type, KalmanFilter *rval)
@@ -135,7 +135,7 @@ CvStatus KalmanFilter_New(int dynamParams, int measureParams, int controlParams,
   *rval = {new cv::KalmanFilter(dynamParams, measureParams, controlParams, type)};
   END_WRAP
 }
-void KalmanFilter_Close(KalmanFilterPtr self){CVD_FREE(self)}
+void KalmanFilter_Close(KalmanFilterPtr self) { CVD_FREE(self); }
 
 CvStatus KalmanFilter_Init(KalmanFilter self, int dynamParams, int measureParams)
 {

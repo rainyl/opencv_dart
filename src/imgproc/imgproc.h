@@ -18,11 +18,11 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::CLAHE>, CLAHE)
-CVD_TYPEDEF(cv::Subdiv2D, Subdiv2D)
+CVD_TYPEDEF(cv::Ptr<cv::CLAHE>, CLAHE);
+CVD_TYPEDEF(cv::Subdiv2D, Subdiv2D);
 #else
-CVD_TYPEDEF(void, CLAHE)
-CVD_TYPEDEF(void, Subdiv2D)
+CVD_TYPEDEF(void, CLAHE);
+CVD_TYPEDEF(void, Subdiv2D);
 #endif
 
 CvStatus ArcLength(VecPoint curve, bool is_closed, CVD_OUT double *rval);

@@ -9510,17 +9510,19 @@ class CvNative {
   /// @return CvStatus
   CvStatus Mat_New(
     ffi.Pointer<Mat> rval,
+    MatCallback callback,
   ) {
     return _Mat_New(
       rval,
+      callback,
     );
   }
 
-  late final _Mat_NewPtr =
-      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<Mat>)>>(
-          'Mat_New');
-  late final _Mat_New =
-      _Mat_NewPtr.asFunction<CvStatus Function(ffi.Pointer<Mat>)>();
+  late final _Mat_NewPtr = _lookup<
+          ffi.NativeFunction<CvStatus Function(ffi.Pointer<Mat>, MatCallback)>>(
+      'Mat_New');
+  late final _Mat_New = _Mat_NewPtr.asFunction<
+      CvStatus Function(ffi.Pointer<Mat>, MatCallback)>();
 
   CvStatus Mat_NewFromBytes(
     int rows,
@@ -21596,8 +21598,8 @@ final class Mat extends ffi.Struct {
 }
 
 typedef MatCallback = ffi.Pointer<ffi.NativeFunction<MatCallbackFunction>>;
-typedef MatCallbackFunction = ffi.Void Function(ffi.Pointer<ffi.Void>);
-typedef DartMatCallbackFunction = void Function(ffi.Pointer<ffi.Void>);
+typedef MatCallbackFunction = ffi.Void Function(ffi.Pointer<Mat>);
+typedef DartMatCallbackFunction = void Function(ffi.Pointer<Mat>);
 typedef MatPtr = ffi.Pointer<Mat>;
 
 final class MergeMertens extends ffi.Struct {

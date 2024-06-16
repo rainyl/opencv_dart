@@ -62,7 +62,8 @@ CvStatus VecPoint_Size(VecPoint vec, int *rval)
 void VecPoint_Close(VecPointPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
+  ;
 }
 
 CvStatus VecVecPoint_New(VecVecPoint *rval)
@@ -115,7 +116,8 @@ CvStatus VecVecPoint_Size(VecVecPoint vec, int *rval)
 void VecVecPoint_Close(VecVecPointPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
+  ;
 }
 
 CvStatus VecPoint2f_New(VecPoint2f *rval)
@@ -128,7 +130,7 @@ CvStatus VecPoint2f_New(VecPoint2f *rval)
 void VecPoint2f_Close(VecPoint2fPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecPoint2f_NewFromPointer(Point2f *points, int length, VecPoint2f *rval)
@@ -229,7 +231,7 @@ CvStatus VecVecPoint2f_Size(VecVecPoint2f vec, int *rval)
 void VecVecPoint2f_Close(VecVecPoint2fPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecPoint3f_New(VecPoint3f *rval)
@@ -242,7 +244,7 @@ CvStatus VecPoint3f_New(VecPoint3f *rval)
 void VecPoint3f_Close(VecPoint3fPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecPoint3f_NewFromPointer(Point3f *points, int length, VecPoint3f *rval)
@@ -342,7 +344,7 @@ CvStatus VecVecPoint3f_Size(VecVecPoint3f vec, int *rval)
 void VecVecPoint3f_Close(VecVecPoint3fPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecUChar_New(VecUChar *rval)
@@ -408,7 +410,7 @@ CvStatus VecUChar_Size(VecUChar vec, int *rval)
 void VecUChar_Close(VecUCharPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecChar_New(VecChar *rval)
@@ -478,7 +480,7 @@ CvStatus VecChar_ToString(VecChar vec, char **rval, int *length)
 void VecChar_Close(VecCharPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecVecChar_New(VecVecChar *rval)
@@ -534,7 +536,7 @@ CvStatus VecVecChar_Size(VecVecChar vec, int *rval)
 void VecVecChar_Close(VecVecCharPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecInt_New(VecInt *rval)
@@ -600,7 +602,7 @@ CvStatus VecInt_Size(VecInt vec, int *rval)
 void VecInt_Close(VecIntPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecFloat_New(VecFloat *rval)
@@ -659,7 +661,7 @@ CvStatus VecFloat_Size(VecFloat vec, int *rval)
 void VecFloat_Close(VecFloatPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecDouble_New(VecDouble *rval)
@@ -718,7 +720,7 @@ CvStatus VecDouble_Size(VecDouble vec, int *rval)
 void VecDouble_Close(VecDoublePtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecMat_New(VecMat *rval)
@@ -770,7 +772,7 @@ CvStatus VecMat_Size(VecMat vec, int *rval)
 void VecMat_Close(VecMatPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecRect_New(VecRect *rval)
@@ -823,7 +825,7 @@ CvStatus VecRect_Size(VecRect vec, int *rval)
 void VecRect_Close(VecRectPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecKeyPoint_New(VecKeyPoint *rval)
@@ -877,7 +879,7 @@ CvStatus VecKeyPoint_Size(VecKeyPoint vec, int *rval)
 void VecKeyPoint_Close(VecKeyPointPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecDMatch_New(VecDMatch *rval)
@@ -931,7 +933,7 @@ CvStatus VecDMatch_Size(VecDMatch vec, int *rval)
 void VecDMatch_Close(VecDMatchPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecVecDMatch_New(VecVecDMatch *rval)
@@ -991,7 +993,7 @@ CvStatus VecVecDMatch_Size(VecVecDMatch vec, int *rval)
 void VecVecDMatch_Close(VecVecDMatchPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }
 
 CvStatus VecVec4i_New(VecVec4i *rval)
@@ -1041,5 +1043,5 @@ CvStatus VecVec4i_Size(VecVec4i vec, int *rval)
 void VecVec4i_Close(VecVec4iPtr vec)
 {
   vec->ptr->clear();
-  CVD_FREE(vec)
+  CVD_FREE(vec);
 }

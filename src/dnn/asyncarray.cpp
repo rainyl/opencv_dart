@@ -18,10 +18,7 @@ CvStatus AsyncArray_New(AsyncArray *rval)
 }
 
 // AsyncArray_Close deletes an existing AsyncArray
-void AsyncArray_Close(AsyncArrayPtr a)
-{
-  CVD_FREE(a)
-}
+void AsyncArray_Close(AsyncArrayPtr a) { CVD_FREE(a); }
 
 CvStatus AsyncArray_Get(AsyncArray async_out, Mat out)
 {

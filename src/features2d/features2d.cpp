@@ -17,7 +17,7 @@ CvStatus AKAZE_Create(AKAZE *rval)
 void AKAZE_Close(AKAZEPtr a)
 {
   a->ptr->reset();
-  CVD_FREE(a)
+  CVD_FREE(a);
 }
 
 CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval)
@@ -46,7 +46,7 @@ CvStatus AgastFeatureDetector_Create(AgastFeatureDetector *rval)
 void AgastFeatureDetector_Close(AgastFeatureDetectorPtr a)
 {
   a->ptr->reset();
-  CVD_FREE(a)
+  CVD_FREE(a);
 }
 
 CvStatus AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval)
@@ -67,7 +67,7 @@ CvStatus BRISK_Create(BRISK *rval)
 void BRISK_Close(BRISKPtr b)
 {
   b->ptr->reset();
-  CVD_FREE(b)
+  CVD_FREE(b);
 }
 
 CvStatus BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval)
@@ -105,7 +105,7 @@ CvStatus FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppress
 void FastFeatureDetector_Close(FastFeatureDetectorPtr f)
 {
   f->ptr->reset();
-  CVD_FREE(f)
+  CVD_FREE(f);
 }
 
 CvStatus FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval)
@@ -126,7 +126,7 @@ CvStatus GFTTDetector_Create(GFTTDetector *rval)
 void GFTTDetector_Close(GFTTDetectorPtr a)
 {
   a->ptr->reset();
-  CVD_FREE(a)
+  CVD_FREE(a);
 }
 
 CvStatus GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval)
@@ -147,7 +147,7 @@ CvStatus KAZE_Create(KAZE *rval)
 void KAZE_Close(KAZEPtr a)
 {
   a->ptr->reset();
-  CVD_FREE(a)
+  CVD_FREE(a);
 }
 
 CvStatus KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval)
@@ -176,7 +176,7 @@ CvStatus MSER_Create(MSER *rval)
 void MSER_Close(MSERPtr a)
 {
   a->ptr->reset();
-  CVD_FREE(a)
+  CVD_FREE(a);
 }
 
 CvStatus MSER_Detect(MSER a, Mat src, VecKeyPoint *rval)
@@ -207,7 +207,7 @@ CvStatus ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int
 void ORB_Close(ORBPtr o)
 {
   o->ptr->reset();
-  CVD_FREE(o)
+  CVD_FREE(o);
 }
 
 CvStatus ORB_Detect(ORB o, Mat src, VecKeyPoint *rval)
@@ -297,7 +297,7 @@ CvStatus SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, S
 void SimpleBlobDetector_Close(SimpleBlobDetectorPtr b)
 {
   b->ptr->reset();
-  CVD_FREE(b)
+  CVD_FREE(b);
 }
 
 CvStatus SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval)
@@ -330,7 +330,7 @@ CvStatus BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rv
 void BFMatcher_Close(BFMatcherPtr b)
 {
   b->ptr->reset();
-  CVD_FREE(b)
+  CVD_FREE(b);
 }
 
 CvStatus BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval)
@@ -359,7 +359,7 @@ CvStatus FlannBasedMatcher_Create(FlannBasedMatcher *rval)
 void FlannBasedMatcher_Close(FlannBasedMatcherPtr f)
 {
   f->ptr->reset();
-  CVD_FREE(f)
+  CVD_FREE(f);
 }
 
 CvStatus FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval)
@@ -388,7 +388,7 @@ CvStatus SIFT_Create(SIFT *rval)
 void SIFT_Close(SIFTPtr f)
 {
   f->ptr->reset();
-  CVD_FREE(f)
+  CVD_FREE(f);
 }
 
 CvStatus SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval)

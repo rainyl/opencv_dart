@@ -20,11 +20,11 @@ extern "C" {
 #include "core/core.h"
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::dnn::Net, Net)
-CVD_TYPEDEF(cv::Ptr<cv::dnn::Layer>, Layer)
+CVD_TYPEDEF(cv::dnn::Net, Net);
+CVD_TYPEDEF(cv::Ptr<cv::dnn::Layer>, Layer);
 #else
-CVD_TYPEDEF(void, Net)
-CVD_TYPEDEF(void, Layer)
+CVD_TYPEDEF(void, Net);
+CVD_TYPEDEF(void, Layer);
 #endif
 
 CvStatus Net_Create(CVD_OUT Net *rval);

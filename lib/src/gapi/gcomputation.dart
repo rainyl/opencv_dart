@@ -47,8 +47,8 @@ class GComputation extends CvStruct<cvg.GComputation> {
   Future<Mat> apply(Mat inMat) async {
     final completer = Completer<Mat>();
     late final NativeCallable<cvg.MatCallbackFunction> callback;
-    void onResponse(ffi.Pointer<ffi.Void> p) {
-      completer.complete(Mat.empty()..ptr.ref.ptr = p);
+    void onResponse(cvg.MatPtr p) {
+      completer.complete(Mat.fromPointer(p));
       callback.close();
     }
 

@@ -18,19 +18,19 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorMOG2>, BackgroundSubtractorMOG2)
-CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorKNN>, BackgroundSubtractorKNN)
-CVD_TYPEDEF(cv::Ptr<cv::Tracker>, Tracker)
-CVD_TYPEDEF(cv::Ptr<cv::TrackerMIL>, TrackerMIL)
-CVD_TYPEDEF(cv::Ptr<cv::TrackerGOTURN>, TrackerGOTURN)
-CVD_TYPEDEF(cv::KalmanFilter, KalmanFilter)
+CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorMOG2>, BackgroundSubtractorMOG2);
+CVD_TYPEDEF(cv::Ptr<cv::BackgroundSubtractorKNN>, BackgroundSubtractorKNN);
+CVD_TYPEDEF(cv::Ptr<cv::Tracker>, Tracker);
+CVD_TYPEDEF(cv::Ptr<cv::TrackerMIL>, TrackerMIL);
+CVD_TYPEDEF(cv::Ptr<cv::TrackerGOTURN>, TrackerGOTURN);
+CVD_TYPEDEF(cv::KalmanFilter, KalmanFilter);
 #else
-CVD_TYPEDEF(void, BackgroundSubtractorMOG2)
-CVD_TYPEDEF(void, BackgroundSubtractorKNN)
-CVD_TYPEDEF(void, Tracker)
-CVD_TYPEDEF(void, TrackerMIL)
-CVD_TYPEDEF(void, TrackerGOTURN)
-CVD_TYPEDEF(void, KalmanFilter)
+CVD_TYPEDEF(void, BackgroundSubtractorMOG2);
+CVD_TYPEDEF(void, BackgroundSubtractorKNN);
+CVD_TYPEDEF(void, Tracker);
+CVD_TYPEDEF(void, TrackerMIL);
+CVD_TYPEDEF(void, TrackerGOTURN);
+CVD_TYPEDEF(void, KalmanFilter);
 #endif
 
 CvStatus BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval);

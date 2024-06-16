@@ -16,7 +16,7 @@ extern "C" {
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::AsyncArray, AsyncArray);
 #else
-CVD_TYPEDEF(void, AsyncArray)
+CVD_TYPEDEF(void, AsyncArray);
 #endif
 
 CvStatus AsyncArray_New(AsyncArray *rval);

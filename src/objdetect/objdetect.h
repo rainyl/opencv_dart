@@ -20,18 +20,18 @@ extern "C" {
 
 #ifdef __cplusplus
 // Define types for the C++ classes used
-CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier)
-CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor)
-CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector)
-CVD_TYPEDEF(cv::Ptr<cv::FaceDetectorYN>, FaceDetectorYN)
-CVD_TYPEDEF(cv::Ptr<cv::FaceRecognizerSF>, FaceRecognizerSF)
+CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier);
+CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor);
+CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector);
+CVD_TYPEDEF(cv::Ptr<cv::FaceDetectorYN>, FaceDetectorYN);
+CVD_TYPEDEF(cv::Ptr<cv::FaceRecognizerSF>, FaceRecognizerSF);
 #else
 // Define types for the C-compatible interface
-CVD_TYPEDEF(void, CascadeClassifier)
-CVD_TYPEDEF(void, HOGDescriptor)
-CVD_TYPEDEF(void, QRCodeDetector)
-CVD_TYPEDEF(void *, FaceDetectorYN)
-CVD_TYPEDEF(void *, FaceRecognizerSF)
+CVD_TYPEDEF(void, CascadeClassifier);
+CVD_TYPEDEF(void, HOGDescriptor);
+CVD_TYPEDEF(void, QRCodeDetector);
+CVD_TYPEDEF(void *, FaceDetectorYN);
+CVD_TYPEDEF(void *, FaceRecognizerSF);
 #endif
 
 // CascadeClassifier

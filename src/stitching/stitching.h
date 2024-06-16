@@ -23,11 +23,11 @@ enum {
 };
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, PtrStitcher)
-CVD_TYPEDEF(cv::Stitcher, Stitcher)
+CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, PtrStitcher);
+CVD_TYPEDEF(cv::Stitcher, Stitcher);
 #else
-CVD_TYPEDEF(void *, PtrStitcher)
-CVD_TYPEDEF(void, Stitcher)
+CVD_TYPEDEF(void *, PtrStitcher);
+CVD_TYPEDEF(void, Stitcher);
 #endif
 
 CvStatus Stitcher_Create(int mode, PtrStitcher *rval);

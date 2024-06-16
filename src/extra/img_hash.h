@@ -18,14 +18,14 @@ extern "C" {
 #ifdef __cplusplus
 // typedef cv::Ptr<cv::img_hash::PHash>              *PHash;
 // typedef cv::Ptr<cv::img_hash::AverageHash>        *AverageHash;
-CVD_TYPEDEF(cv::Ptr<cv::img_hash::BlockMeanHash>, BlockMeanHash)
+CVD_TYPEDEF(cv::Ptr<cv::img_hash::BlockMeanHash>, BlockMeanHash);
 // typedef cv::Ptr<cv::img_hash::ColorMomentHash>    *ColorMomentHash;
 // typedef cv::Ptr<cv::img_hash::MarrHildrethHash>   *MarrHildrethHash;
 // typedef cv::Ptr<cv::img_hash::RadialVarianceHash> *RadialVarianceHash;
 #else
 // typedef void *PHash;
 // typedef void *AverageHash;
-CVD_TYPEDEF(void, BlockMeanHash)
+CVD_TYPEDEF(void, BlockMeanHash);
 // typedef void *ColorMomentHash;
 // typedef void *MarrHildrethHash;
 // typedef void *RadialVarianceHash;

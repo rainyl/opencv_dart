@@ -25,7 +25,7 @@ CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
   *rval = {new cv::CascadeClassifier(filename)};
   END_WRAP
 }
-void CascadeClassifier_Close(CascadeClassifierPtr self){CVD_FREE(self)}
+void CascadeClassifier_Close(CascadeClassifierPtr self) { CVD_FREE(self); }
 
 CvStatus CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval)
 {
@@ -125,7 +125,7 @@ CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
   *rval = {new cv::HOGDescriptor(filename)};
   END_WRAP
 }
-void HOGDescriptor_Close(HOGDescriptorPtr self){CVD_FREE(self)}
+void HOGDescriptor_Close(HOGDescriptorPtr self) { CVD_FREE(self); }
 
 CvStatus HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval)
 {
@@ -333,7 +333,7 @@ CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecP
   *straight_qrcode = {new cv::Mat(_straight_qrcode)};
   END_WRAP
 }
-void QRCodeDetector_Close(QRCodeDetectorPtr self){CVD_FREE(self)}
+void QRCodeDetector_Close(QRCodeDetectorPtr self) { CVD_FREE(self); }
 
 CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
@@ -412,7 +412,7 @@ CvStatus FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, Ve
 void FaceDetectorYN_Close(FaceDetectorYNPtr self)
 {
   self->ptr->reset();
-  CVD_FREE(self)
+  CVD_FREE(self);
 }
 
 CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces)
@@ -487,7 +487,7 @@ CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend
 void FaceRecognizerSF_Close(FaceRecognizerSFPtr self)
 {
   self->ptr->reset();
-  CVD_FREE(self)
+  CVD_FREE(self);
 }
 
 CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img)

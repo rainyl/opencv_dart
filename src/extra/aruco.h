@@ -17,13 +17,13 @@ extern "C" {
 #include "core/core.h"
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::aruco::Dictionary, ArucoDictionary)
-CVD_TYPEDEF(cv::aruco::DetectorParameters, ArucoDetectorParameters)
-CVD_TYPEDEF(cv::aruco::ArucoDetector, ArucoDetector)
+CVD_TYPEDEF(cv::aruco::Dictionary, ArucoDictionary);
+CVD_TYPEDEF(cv::aruco::DetectorParameters, ArucoDetectorParameters);
+CVD_TYPEDEF(cv::aruco::ArucoDetector, ArucoDetector);
 #else
-CVD_TYPEDEF(void, ArucoDictionary)
-CVD_TYPEDEF(void, ArucoDetectorParameters)
-CVD_TYPEDEF(void, ArucoDetector)
+CVD_TYPEDEF(void, ArucoDictionary);
+CVD_TYPEDEF(void, ArucoDetectorParameters);
+CVD_TYPEDEF(void, ArucoDetector);
 #endif
 
 CvStatus ArucoDetectorParameters_Create(ArucoDetectorParameters *rval);

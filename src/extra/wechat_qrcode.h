@@ -16,9 +16,9 @@ extern "C" {
 
 // Main Content Start
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::wechat_qrcode::WeChatQRCode, WeChatQRCode)
+CVD_TYPEDEF(cv::wechat_qrcode::WeChatQRCode, WeChatQRCode);
 #else
-CVD_TYPEDEF(void, WeChatQRCode)
+CVD_TYPEDEF(void, WeChatQRCode);
 #endif
 
 CvStatus WeChatQRCode_New(WeChatQRCode *qrcode);

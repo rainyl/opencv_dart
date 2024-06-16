@@ -32,10 +32,14 @@ CvStatus RotatedRect_BoundingRect2f(RotatedRect rect, Rect2f *rval)
   END_WRAP
 }
 
-CvStatus Mat_New(Mat *rval)
+CvStatus Mat_New(Mat *rval, MatCallback callback)
 {
   BEGIN_WRAP
-  *rval = {new cv::Mat()};
+  if (callback != nullptr) {
+    callback(new Mat{new cv::Mat()});
+  } else {
+    *rval = {new cv::Mat()};
+  }
   END_WRAP
 }
 CvStatus Mat_NewWithSize(int rows, int cols, int type, Mat *rval)
@@ -117,13 +121,13 @@ CvStatus Mat_FromCMat(Mat m, Mat *rval)
 void Mat_Close(MatPtr m)
 {
   m->ptr->release();
-  CVD_FREE(m)
+  CVD_FREE(m);
 }
 void Mat_CloseVoid(void *m)
 {
   auto p = reinterpret_cast<Mat *>(m);
   p->ptr->release();
-  CVD_FREE(p)
+  CVD_FREE(p);
 }
 CvStatus Mat_Release(Mat *m)
 {
@@ -1840,7 +1844,7 @@ CvStatus Rng_NewWithState(uint64_t state, RNG *rval)
   *rval = {new cv::RNG(state)};
   END_WRAP
 }
-void Rng_Close(RNGPtr rng){CVD_FREE(rng)}
+void Rng_Close(RNGPtr rng) { CVD_FREE(rng); }
 
 CvStatus TheRNG(RNG *rval)
 {

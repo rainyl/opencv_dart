@@ -21,57 +21,57 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::GMat, GMat)
-CVD_TYPEDEF(cv::GScalar, GScalar)
-CVD_TYPEDEF(cv::GFrame, GFrame)
-CVD_TYPEDEF(cv::GComputation, GComputation)
-CVD_TYPEDEF(cv::GOpaque<cv::Rect>, GOpaqueRect)
-CVD_TYPEDEF(cv::GOpaque<cv::Point>, GOpaquePoint)
-CVD_TYPEDEF(cv::GOpaque<cv::Vec4f>, GOpaqueVec4f)
-CVD_TYPEDEF(cv::GOpaque<cv::Vec6f>, GOpaqueVec6f)
-CVD_TYPEDEF(std::vector<cv::GMat>, VecGMat)
-CVD_TYPEDEF(cv::gapi::wip::draw::Prim, Prim)
-CVD_TYPEDEF(std::vector<cv::gapi::wip::draw::Prim>, VecPrim)
+CVD_TYPEDEF(cv::GMat, GMat);
+CVD_TYPEDEF(cv::GScalar, GScalar);
+CVD_TYPEDEF(cv::GFrame, GFrame);
+CVD_TYPEDEF(cv::GComputation, GComputation);
+CVD_TYPEDEF(cv::GOpaque<cv::Rect>, GOpaqueRect);
+CVD_TYPEDEF(cv::GOpaque<cv::Point>, GOpaquePoint);
+CVD_TYPEDEF(cv::GOpaque<cv::Vec4f>, GOpaqueVec4f);
+CVD_TYPEDEF(cv::GOpaque<cv::Vec6f>, GOpaqueVec6f);
+CVD_TYPEDEF(std::vector<cv::GMat>, VecGMat);
+CVD_TYPEDEF(cv::gapi::wip::draw::Prim, Prim);
+CVD_TYPEDEF(std::vector<cv::gapi::wip::draw::Prim>, VecPrim);
 
-CVD_TYPEDEF(cv::GArray<cv::GArray<cv::Point>>, GArrayGArrayPoint)
-CVD_TYPEDEF(cv::GArray<cv::Vec4i>, GArrayVec4i)
-CVD_TYPEDEF(cv::GArray<cv::Point>, GArrayPoint)
-CVD_TYPEDEF(cv::GArray<cv::Point2f>, GArrayPoint2f)
-CVD_TYPEDEF(cv::GArray<cv::Point2i>, GArrayPoint2i)
-CVD_TYPEDEF(cv::GArray<cv::Point2d>, GArrayPoint2d)
-CVD_TYPEDEF(cv::GArray<cv::Point3f>, GArrayPoint3f)
-CVD_TYPEDEF(cv::GArray<cv::Point3d>, GArrayPoint3d)
-CVD_TYPEDEF(cv::GArray<cv::Point3i>, GArrayPoint3i)
-CVD_TYPEDEF(cv::GArray<cv::gapi::wip::draw::Prim>, GArrayPrim)
+CVD_TYPEDEF(cv::GArray<cv::GArray<cv::Point>>, GArrayGArrayPoint);
+CVD_TYPEDEF(cv::GArray<cv::Vec4i>, GArrayVec4i);
+CVD_TYPEDEF(cv::GArray<cv::Point>, GArrayPoint);
+CVD_TYPEDEF(cv::GArray<cv::Point2f>, GArrayPoint2f);
+CVD_TYPEDEF(cv::GArray<cv::Point2i>, GArrayPoint2i);
+CVD_TYPEDEF(cv::GArray<cv::Point2d>, GArrayPoint2d);
+CVD_TYPEDEF(cv::GArray<cv::Point3f>, GArrayPoint3f);
+CVD_TYPEDEF(cv::GArray<cv::Point3d>, GArrayPoint3d);
+CVD_TYPEDEF(cv::GArray<cv::Point3i>, GArrayPoint3i);
+CVD_TYPEDEF(cv::GArray<cv::gapi::wip::draw::Prim>, GArrayPrim);
 
 #else
-CVD_TYPEDEF(void, GMat)
-CVD_TYPEDEF(void, GScalar)
-CVD_TYPEDEF(void, GFrame)
-CVD_TYPEDEF(void, GComputation)
-CVD_TYPEDEF(void, GOpaqueRect)
-CVD_TYPEDEF(void, GOpaquePoint)
-CVD_TYPEDEF(void, GOpaqueVec4f)
-CVD_TYPEDEF(void, GOpaqueVec6f)
-CVD_TYPEDEF(void, VecGMat)
-CVD_TYPEDEF(void, Prim)
-CVD_TYPEDEF(void, VecPrim)
+CVD_TYPEDEF(void, GMat);
+CVD_TYPEDEF(void, GScalar);
+CVD_TYPEDEF(void, GFrame);
+CVD_TYPEDEF(void, GComputation);
+CVD_TYPEDEF(void, GOpaqueRect);
+CVD_TYPEDEF(void, GOpaquePoint);
+CVD_TYPEDEF(void, GOpaqueVec4f);
+CVD_TYPEDEF(void, GOpaqueVec6f);
+CVD_TYPEDEF(void, VecGMat);
+CVD_TYPEDEF(void, Prim);
+CVD_TYPEDEF(void, VecPrim);
 
-CVD_TYPEDEF(void, GArrayGArrayPoint)
-CVD_TYPEDEF(void, GArrayVec4i)
-CVD_TYPEDEF(void, GArrayPoint)
-CVD_TYPEDEF(void, GArrayPoint2f)
-CVD_TYPEDEF(void, GArrayPoint2i)
-CVD_TYPEDEF(void, GArrayPoint2d)
-CVD_TYPEDEF(void, GArrayPoint3f)
-CVD_TYPEDEF(void, GArrayPoint3d)
-CVD_TYPEDEF(void, GArrayPoint3i)
-CVD_TYPEDEF(void, GArrayPrim)
+CVD_TYPEDEF(void, GArrayGArrayPoint);
+CVD_TYPEDEF(void, GArrayVec4i);
+CVD_TYPEDEF(void, GArrayPoint);
+CVD_TYPEDEF(void, GArrayPoint2f);
+CVD_TYPEDEF(void, GArrayPoint2i);
+CVD_TYPEDEF(void, GArrayPoint2d);
+CVD_TYPEDEF(void, GArrayPoint3f);
+CVD_TYPEDEF(void, GArrayPoint3d);
+CVD_TYPEDEF(void, GArrayPoint3i);
+CVD_TYPEDEF(void, GArrayPrim);
 #endif
 
 typedef VecPrim Prims;
-typedef void (*GMatCallback)(GMat *);
-typedef void (*MatCallback)(void *);
+// typedef void (*GMatCallback)(GMat *);
+// typedef void (*MatCallback)(void *);
 
 CvStatus gapi_GMat_New_Empty(GMat *rval);
 CvStatus gapi_GMat_New_FromMat(Mat mat, GMat *rval);

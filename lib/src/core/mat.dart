@@ -65,7 +65,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Mat_New(p));
+    cvRun(() => CFFI.Mat_New(p, ffi.nullptr));
     final mat = Mat._(p);
     return mat;
   }

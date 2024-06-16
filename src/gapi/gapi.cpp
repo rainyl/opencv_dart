@@ -72,15 +72,15 @@ CvStatus gapi_GComputation_New_3(GMat in1, GMat in2, GScalar out, GComputation *
   END_WRAP
 }
 
-void gapi_GComputation_Close(GComputationPtr self){CVD_FREE(self)}
+void gapi_GComputation_Close(GComputationPtr self) { CVD_FREE(self); }
 
-CvStatus
-    gapi_GComputation_apply(GComputation self, Mat in, MatCallback callback /*TODO: GCompileArgs &&args={}*/)
+CvStatus gapi_GComputation_apply(GComputation self, Mat in,
+                                 MatCallback callback /*TODO: GCompileArgs &&args={}*/)
 {
   BEGIN_WRAP
   cv::Mat _out;
   (*self.ptr).apply(*in.ptr, _out);
-  callback(new cv::Mat(_out));
+  callback(new Mat{new cv::Mat(_out)});
   END_WRAP
 }
 
