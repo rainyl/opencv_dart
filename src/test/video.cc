@@ -17,7 +17,7 @@ TEST(videoCapture, get)
             << (char)((fourcc >> 24) & 255) << std::endl;
 
   VideoCapture cap = {};
-  CvStatus     s = VideoCapture_New(&cap);
+  CvStatus    *s = VideoCapture_New(&cap);
   EXPECT_EQ(s.code, 0);
 
   bool rval;

@@ -21,14 +21,15 @@ CVD_TYPEDEF(cv::wechat_qrcode::WeChatQRCode, WeChatQRCode)
 CVD_TYPEDEF(void, WeChatQRCode)
 #endif
 
-CvStatus WeChatQRCode_New(WeChatQRCode *qrcode);
-CvStatus WeChatQRCode_NewWithParams(const char *detector_prototxt_path, const char *detector_caffe_model_path,
-                                    const char *super_resolution_prototxt_path,
-                                    const char *super_resolution_caffe_model_path, WeChatQRCode *qrcode);
-void     WeChatQRCode_Close(WeChatQRCodePtr self);
-CvStatus WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval);
-CvStatus WeChatQRCode_GetScaleFactor(WeChatQRCode *self, float *rval);
-CvStatus WeChatQRCode_SetScaleFactor(WeChatQRCode *self, float scale_factor);
+CvStatus *WeChatQRCode_New(WeChatQRCode *qrcode);
+CvStatus *WeChatQRCode_NewWithParams(const char *detector_prototxt_path,
+                                     const char *detector_caffe_model_path,
+                                     const char *super_resolution_prototxt_path,
+                                     const char *super_resolution_caffe_model_path, WeChatQRCode *qrcode);
+void      WeChatQRCode_Close(WeChatQRCodePtr self);
+CvStatus *WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval);
+CvStatus *WeChatQRCode_GetScaleFactor(WeChatQRCode *self, float *rval);
+CvStatus *WeChatQRCode_SetScaleFactor(WeChatQRCode *self, float scale_factor);
 
 // Main Content End
 

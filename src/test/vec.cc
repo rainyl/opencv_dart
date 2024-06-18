@@ -10,7 +10,7 @@ TEST(VecPoint, New)
   VecPoint vecPoint;
 
   // Act
-  CvStatus status = VecPoint_New(&vecPoint);
+  CvStatus *status = VecPoint_New(&vecPoint);
 
   // Assert
   EXPECT_EQ(status.code, 0);
@@ -31,7 +31,7 @@ TEST(VecPoint, NewFromPointerTest)
     points[i].y = i;
   }
   // Call the function to be tested
-  CvStatus status = VecPoint_NewFromPointer(points, length, &rval);
+  CvStatus *status = VecPoint_NewFromPointer(points, length, &rval);
 
   // Assert the return status
   ASSERT_EQ(status.code, 0);
@@ -53,7 +53,7 @@ TEST(VecPoint, ConvertsMatToVecPoint)
   Mat      mat = {new cv::Mat(expectedPts)};
   VecPoint rval;
   // Call the function to be tested
-  CvStatus status = VecPoint_NewFromMat(mat, &rval);
+  CvStatus *status = VecPoint_NewFromMat(mat, &rval);
 
   // Assert the return status
   if (status.code != 0) {
@@ -69,8 +69,8 @@ TEST(VecPoint, ConvertsMatToVecPoint)
 TEST(VecPoint, At_Append_Size)
 {
   // Initialize any required variables or objects for the tests
-  VecPoint vec;
-  CvStatus s;
+  VecPoint  vec;
+  CvStatus *s;
   s = VecPoint_New(&vec);
   EXPECT_EQ(s.code, 0);
   s = VecPoint_Append(vec, {1, 2});
@@ -93,7 +93,7 @@ TEST(VecPoint, At_Append_Size)
 TEST(VecVecPoint, New_Append_At_Size)
 {
   VecVecPoint vec;
-  CvStatus    status = VecVecPoint_New(&vec);
+  CvStatus   *status = VecVecPoint_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   EXPECT_TRUE(vec.ptr->empty()); // Check if the vector is empty
@@ -122,7 +122,7 @@ TEST(VecVecPoint, NewFromPointerTest)
   VecPoint *points = new VecPoint[length];
   for (int i = 0; i < length; i++) {
     std::vector<cv::Point> vp = {{1, 2}, {3, 4}, {5, 6}, {7, 8}};
-    VecPoint v = {.ptr=new std::vector<cv::Point>(vp)};
+    VecPoint               v = {.ptr = new std::vector<cv::Point>(vp)};
     points[i] = v;
   }
 
@@ -130,7 +130,7 @@ TEST(VecVecPoint, NewFromPointerTest)
   VecVecPoint vec;
 
   // Call the function to be tested
-  CvStatus status = VecVecPoint_NewFromPointer(points, length, &vec);
+  CvStatus *status = VecVecPoint_NewFromPointer(points, length, &vec);
 
   // Assertions
   ASSERT_EQ(status.code, 0);
@@ -155,7 +155,7 @@ TEST(VecPoint2f, New)
   VecPoint2f vecPoint;
 
   // Act
-  CvStatus status = VecPoint2f_New(&vecPoint);
+  CvStatus *status = VecPoint2f_New(&vecPoint);
 
   // Assert
   EXPECT_EQ(status.code, 0);
@@ -176,7 +176,7 @@ TEST(VecPoint2f, NewFromPointerTest)
     points[i].y = i;
   }
   // Call the function to be tested
-  CvStatus status = VecPoint2f_NewFromPointer(points, length, &rval);
+  CvStatus *status = VecPoint2f_NewFromPointer(points, length, &rval);
 
   // Assert the return status
   ASSERT_EQ(status.code, 0);
@@ -198,7 +198,7 @@ TEST(VecPoint2f, ConvertsMatToVecPoint2f)
   Mat        mat = Mat{new cv::Mat(expectedPts)};
   VecPoint2f rval;
   // Call the function to be tested
-  CvStatus status = VecPoint2f_NewFromMat(mat, &rval);
+  CvStatus *status = VecPoint2f_NewFromMat(mat, &rval);
 
   // Assert the return status
   if (status.code != 0) {
@@ -215,7 +215,7 @@ TEST(VecPoint2f, At_Append_Size)
 {
   // Initialize any required variables or objects for the tests
   VecPoint2f vec;
-  CvStatus   s;
+  CvStatus  *s;
   s = VecPoint2f_New(&vec);
   EXPECT_EQ(s.code, 0);
   s = VecPoint2f_Append(vec, {1.0, 2.0});
@@ -238,7 +238,7 @@ TEST(VecPoint2f, At_Append_Size)
 TEST(VecVecPoint2f, New_Append_At_Size)
 {
   VecVecPoint2f vec;
-  CvStatus      status = VecVecPoint2f_New(&vec);
+  CvStatus     *status = VecVecPoint2f_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   EXPECT_TRUE(vec.ptr->empty()); // Check if the vector is empty
@@ -274,7 +274,7 @@ TEST(VecVecPoint2f, NewFromPointerTest)
   VecVecPoint2f vec;
 
   // Call the function to be tested
-  CvStatus status = VecVecPoint2f_NewFromPointer(points, length, &vec);
+  CvStatus *status = VecVecPoint2f_NewFromPointer(points, length, &vec);
 
   // Assertions
   ASSERT_EQ(status.code, 0);
@@ -299,7 +299,7 @@ TEST(VecPoint3f, New)
   VecPoint3f vecPoint;
 
   // Act
-  CvStatus status = VecPoint3f_New(&vecPoint);
+  CvStatus *status = VecPoint3f_New(&vecPoint);
 
   // Assert
   EXPECT_EQ(status.code, 0);
@@ -321,7 +321,7 @@ TEST(VecPoint3f, NewFromPointerTest)
     points[i].z = i;
   }
   // Call the function to be tested
-  CvStatus status = VecPoint3f_NewFromPointer(points, length, &rval);
+  CvStatus *status = VecPoint3f_NewFromPointer(points, length, &rval);
 
   // Assert the return status
   ASSERT_EQ(status.code, 0);
@@ -344,7 +344,7 @@ TEST(VecPoint3f, ConvertsMatToVecPoint2f)
   Mat        mat = {new cv::Mat(expectedPts)};
   VecPoint3f rval;
   // Call the function to be tested
-  CvStatus status = VecPoint3f_NewFromMat(mat, &rval);
+  CvStatus *status = VecPoint3f_NewFromMat(mat, &rval);
 
   // Assert the return status
   if (status.code != 0) {
@@ -361,7 +361,7 @@ TEST(VecPoint3f, At_Append_Size)
 {
   // Initialize any required variables or objects for the tests
   VecPoint3f vec;
-  CvStatus   s;
+  CvStatus  *s;
   s = VecPoint3f_New(&vec);
   EXPECT_EQ(s.code, 0);
   s = VecPoint3f_Append(vec, {1.0, 2.0, 1.0});
@@ -385,7 +385,7 @@ TEST(VecPoint3f, At_Append_Size)
 TEST(VecVecPoint3f, New_Append_At_Size)
 {
   VecVecPoint3f vec;
-  CvStatus      status = VecVecPoint3f_New(&vec);
+  CvStatus     *status = VecVecPoint3f_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   EXPECT_TRUE(vec.ptr->empty()); // Check if the vector is empty
@@ -431,7 +431,7 @@ TEST(VecVecPoint3f, NewFromPointerTest)
   }
 
   VecVecPoint3f vec;
-  CvStatus      status = VecVecPoint3f_NewFromPointer(points, length, &vec);
+  CvStatus     *status = VecVecPoint3f_NewFromPointer(points, length, &vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   ASSERT_EQ(vec.ptr->size(), length);
@@ -450,8 +450,8 @@ TEST(VecVecPoint3f, NewFromPointerTest)
 
 TEST(VecUChar, New_Append_At_Size_Close)
 {
-  VecUChar vec;
-  CvStatus status = VecUChar_New(&vec);
+  VecUChar  vec;
+  CvStatus *status = VecUChar_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecUChar_Append(vec, 1);
@@ -479,8 +479,8 @@ TEST(VecUChar, New_Append_At_Size_Close)
 
 TEST(VecChar, New_Append_At_Size_Close)
 {
-  VecChar  vec;
-  CvStatus status = VecChar_New(&vec);
+  VecChar   vec;
+  CvStatus *status = VecChar_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecChar_Append(vec, 1);
@@ -511,7 +511,7 @@ TEST(VecChar, ToString)
 {
   const char *s = "Hello";
   VecChar     vec;
-  CvStatus    status;
+  CvStatus   *status;
   status = VecChar_NewFromPointer(strdup(s), 5, &vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
@@ -528,7 +528,7 @@ TEST(VecChar, ToString)
 TEST(VecVecChar, New_Append_At_Size_Close)
 {
   VecVecChar vec;
-  CvStatus   status;
+  CvStatus  *status;
   status = VecVecChar_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
@@ -570,8 +570,8 @@ TEST(VecVecChar, New_Append_At_Size_Close)
 
 TEST(VecInt, New_Append_At_Size_Close)
 {
-  VecInt   vec;
-  CvStatus status = VecInt_New(&vec);
+  VecInt    vec;
+  CvStatus *status = VecInt_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecInt_Append(vec, 1);
@@ -599,8 +599,8 @@ TEST(VecInt, New_Append_At_Size_Close)
 
 TEST(VecFloat, New_Append_At_Size_Close)
 {
-  VecFloat vec;
-  CvStatus status = VecFloat_New(&vec);
+  VecFloat  vec;
+  CvStatus *status = VecFloat_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecFloat_Append(vec, 1);
@@ -629,7 +629,7 @@ TEST(VecFloat, New_Append_At_Size_Close)
 TEST(VecDouble, New_Append_At_Size_Close)
 {
   VecDouble vec;
-  CvStatus  status = VecDouble_New(&vec);
+  CvStatus *status = VecDouble_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecDouble_Append(vec, 1);
@@ -659,8 +659,8 @@ TEST(VecMat, New_Append_At_Size_Close)
 {
   Mat mat;
   Zeros(3, 3, CV_8UC1, &mat);
-  VecMat   vec;
-  CvStatus status = VecMat_New(&vec);
+  VecMat    vec;
+  CvStatus *status = VecMat_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecMat_Append(vec, mat);
@@ -693,9 +693,9 @@ TEST(VecMat, New_Append_At_Size_Close)
 
 TEST(VecRect, New_Append_At_Size_Close)
 {
-  Rect     rect = {1, 2, 3, 4};
-  VecRect  vec;
-  CvStatus status = VecRect_New(&vec);
+  Rect      rect = {1, 2, 3, 4};
+  VecRect   vec;
+  CvStatus *status = VecRect_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecRect_Append(vec, rect);
@@ -732,7 +732,7 @@ TEST(VecKeyPoint, New_Append_At_Size_Close)
 {
   KeyPoint    kp = {1, 2, 3, 4, 5, 6, 7};
   VecKeyPoint vec;
-  CvStatus    status = VecKeyPoint_New(&vec);
+  CvStatus   *status = VecKeyPoint_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecKeyPoint_Append(vec, kp);
@@ -768,7 +768,7 @@ TEST(VecDMatch, New_Append_At_Size_Close)
 {
   DMatch    kp = {1, 2, 3, 4};
   VecDMatch vec;
-  CvStatus  status = VecDMatch_New(&vec);
+  CvStatus *status = VecDMatch_New(&vec);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vec.ptr, nullptr);
   status = VecDMatch_Append(vec, kp);
@@ -804,7 +804,7 @@ TEST(VecVecDMatch, New_Append_At_Size_Close)
 {
   DMatch    kp = {1, 2, 3, 4};
   VecDMatch vecdm;
-  CvStatus  status = VecDMatch_New(&vecdm);
+  CvStatus *status = VecDMatch_New(&vecdm);
   ASSERT_EQ(status.code, 0);
   ASSERT_NE(vecdm.ptr, nullptr);
   status = VecDMatch_Append(vecdm, kp);
