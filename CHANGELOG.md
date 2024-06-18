@@ -1,4 +1,4 @@
-## 2.0.0-dev.11
+## 2.0.0-dev.12
 
 - Fix: memory leak caused by cvstatus
 
