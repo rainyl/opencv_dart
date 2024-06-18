@@ -10,79 +10,79 @@
 #include <string.h>
 #include <vector>
 
-CvStatus Net_Create(Net *rval)
+CvStatus *Net_Create(Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net()};
   END_WRAP
 }
-CvStatus Net_FromNet(Net net, Net *rval)
+CvStatus *Net_FromNet(Net net, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(*net.ptr)};
   END_WRAP
 }
-CvStatus Net_ReadNet(const char *model, const char *config, const char *framework, Net *rval)
+CvStatus *Net_ReadNet(const char *model, const char *config, const char *framework, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNet(model, config, framework))};
   END_WRAP
 }
-CvStatus Net_ReadNetBytes(const char *framework, VecUChar model, VecUChar config, Net *rval)
+CvStatus *Net_ReadNetBytes(const char *framework, VecUChar model, VecUChar config, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNet(framework, *model.ptr, *config.ptr))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromCaffe(const char *prototxt, const char *caffeModel, Net *rval)
+CvStatus *Net_ReadNetFromCaffe(const char *prototxt, const char *caffeModel, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromCaffe(prototxt, caffeModel))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromCaffeBytes(VecUChar prototxt, VecUChar caffeModel, Net *rval)
+CvStatus *Net_ReadNetFromCaffeBytes(VecUChar prototxt, VecUChar caffeModel, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromCaffe(*prototxt.ptr, *caffeModel.ptr))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromTensorflow(const char *model, const char *config, Net *rval)
+CvStatus *Net_ReadNetFromTensorflow(const char *model, const char *config, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromTensorflow(model, config))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromTensorflowBytes(VecUChar model, VecUChar config, Net *rval)
+CvStatus *Net_ReadNetFromTensorflowBytes(VecUChar model, VecUChar config, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromTensorflow(*model.ptr, *config.ptr))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromTFLite(const char *model, Net *rval)
+CvStatus *Net_ReadNetFromTFLite(const char *model, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromTFLite(model))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromTFLiteBytes(VecUChar bufferModel, Net *rval)
+CvStatus *Net_ReadNetFromTFLiteBytes(VecUChar bufferModel, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromTFLite(*bufferModel.ptr))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromTorch(const char *model, bool isBinary, bool evaluate, Net *rval)
+CvStatus *Net_ReadNetFromTorch(const char *model, bool isBinary, bool evaluate, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromTorch(model, isBinary, evaluate))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromONNX(const char *model, Net *rval)
+CvStatus *Net_ReadNetFromONNX(const char *model, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromONNX(model))};
   END_WRAP
 }
-CvStatus Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
+CvStatus *Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::dnn::Net(cv::dnn::readNetFromONNX(*model.ptr))};
@@ -91,8 +91,8 @@ CvStatus Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
 
 void Net_Close(NetPtr net){CVD_FREE(net)}
 
-CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
-                           bool crop, int ddepth)
+CvStatus *Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
+                            bool crop, int ddepth)
 {
   BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
@@ -101,8 +101,8 @@ CvStatus Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, S
   END_WRAP
 }
 
-CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
-                            bool crop, int ddepth)
+CvStatus *Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
+                             bool crop, int ddepth)
 {
   BEGIN_WRAP
   cv::Size   sz(size.width, size.height);
@@ -111,7 +111,7 @@ CvStatus Net_BlobFromImages(VecMat images, Mat blob, double scalefactor, Size si
   END_WRAP
 }
 
-CvStatus Net_ImagesFromBlob(Mat blob, VecMat *rval)
+CvStatus *Net_ImagesFromBlob(Mat blob, VecMat *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Mat> imgs;
@@ -120,14 +120,14 @@ CvStatus Net_ImagesFromBlob(Mat blob, VecMat *rval)
   END_WRAP
 }
 
-CvStatus Net_Empty(Net net, bool *rval)
+CvStatus *Net_Empty(Net net, bool *rval)
 {
   BEGIN_WRAP
   *rval = net.ptr->empty();
   END_WRAP
 }
 
-CvStatus Net_Dump(Net net, char **rval)
+CvStatus *Net_Dump(Net net, char **rval)
 {
   BEGIN_WRAP
   auto ss = net.ptr->dump();
@@ -135,21 +135,21 @@ CvStatus Net_Dump(Net net, char **rval)
   END_WRAP
 }
 
-CvStatus Net_SetInput(Net net, Mat blob, const char *name)
+CvStatus *Net_SetInput(Net net, Mat blob, const char *name)
 {
   BEGIN_WRAP
   net.ptr->setInput(*blob.ptr, name);
   END_WRAP
 }
 
-CvStatus Net_Forward(Net net, const char *outputName, Mat *rval)
+CvStatus *Net_Forward(Net net, const char *outputName, Mat *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::Mat(net.ptr->forward(outputName))};
   END_WRAP
 }
 
-CvStatus Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobNames)
+CvStatus *Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobNames)
 {
   BEGIN_WRAP
   std::vector<cv::Mat> blobs;
@@ -164,21 +164,21 @@ CvStatus Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobNames
   END_WRAP
 }
 
-CvStatus Net_SetPreferableBackend(Net net, int backend)
+CvStatus *Net_SetPreferableBackend(Net net, int backend)
 {
   BEGIN_WRAP
   net.ptr->setPreferableBackend(backend);
   END_WRAP
 }
 
-CvStatus Net_SetPreferableTarget(Net net, int target)
+CvStatus *Net_SetPreferableTarget(Net net, int target)
 {
   BEGIN_WRAP
   net.ptr->setPreferableTarget(target);
   END_WRAP
 }
 
-CvStatus Net_GetPerfProfile(Net net, int64_t *rval)
+CvStatus *Net_GetPerfProfile(Net net, int64_t *rval)
 {
   BEGIN_WRAP
   std::vector<double> layersTimes;
@@ -186,14 +186,14 @@ CvStatus Net_GetPerfProfile(Net net, int64_t *rval)
   END_WRAP
 }
 
-CvStatus Net_GetUnconnectedOutLayers(Net net, VecInt *rval)
+CvStatus *Net_GetUnconnectedOutLayers(Net net, VecInt *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<int>(net.ptr->getUnconnectedOutLayers())};
   END_WRAP
 }
 
-CvStatus Net_GetLayerNames(Net net, VecVecChar *rval)
+CvStatus *Net_GetLayerNames(Net net, VecVecChar *rval)
 {
   BEGIN_WRAP
   std::vector<std::vector<char>> vec;
@@ -207,7 +207,7 @@ CvStatus Net_GetLayerNames(Net net, VecVecChar *rval)
   END_WRAP
 }
 
-CvStatus Net_GetInputDetails(Net net, VecFloat *scales, VecInt *zeropoints)
+CvStatus *Net_GetInputDetails(Net net, VecFloat *scales, VecInt *zeropoints)
 {
   BEGIN_WRAP
   std::vector<float> sc;
@@ -218,7 +218,7 @@ CvStatus Net_GetInputDetails(Net net, VecFloat *scales, VecInt *zeropoints)
   END_WRAP
 }
 
-CvStatus Net_GetBlobChannel(Mat blob, int imgidx, int chnidx, Mat *rval)
+CvStatus *Net_GetBlobChannel(Mat blob, int imgidx, int chnidx, Mat *rval)
 {
   BEGIN_WRAP
   size_t w = blob.ptr->size[3];
@@ -227,7 +227,7 @@ CvStatus Net_GetBlobChannel(Mat blob, int imgidx, int chnidx, Mat *rval)
   END_WRAP
 }
 
-CvStatus Net_GetBlobSize(Mat blob, Scalar *rval)
+CvStatus *Net_GetBlobSize(Mat blob, Scalar *rval)
 {
   BEGIN_WRAP
   *rval = {
@@ -239,28 +239,28 @@ CvStatus Net_GetBlobSize(Mat blob, Scalar *rval)
   END_WRAP
 }
 
-CvStatus Net_GetLayer(Net net, int layerid, Layer *rval)
+CvStatus *Net_GetLayer(Net net, int layerid, Layer *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::Ptr<cv::dnn::Layer>(net.ptr->getLayer(layerid))};
   END_WRAP
 }
 
-CvStatus Layer_InputNameToIndex(Layer layer, const char *name, int *rval)
+CvStatus *Layer_InputNameToIndex(Layer layer, const char *name, int *rval)
 {
   BEGIN_WRAP
   *rval = (*layer.ptr)->inputNameToIndex(name);
   END_WRAP
 }
 
-CvStatus Layer_OutputNameToIndex(Layer layer, const char *name, int *rval)
+CvStatus *Layer_OutputNameToIndex(Layer layer, const char *name, int *rval)
 {
   BEGIN_WRAP
   *rval = (*layer.ptr)->outputNameToIndex(name);
   END_WRAP
 }
 
-CvStatus Layer_GetName(Layer layer, char **rval)
+CvStatus *Layer_GetName(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->name;
@@ -268,7 +268,7 @@ CvStatus Layer_GetName(Layer layer, char **rval)
   END_WRAP
 }
 
-CvStatus Layer_GetType(Layer layer, char **rval)
+CvStatus *Layer_GetType(Layer layer, char **rval)
 {
   BEGIN_WRAP
   auto ss = (*layer.ptr)->type;
@@ -282,8 +282,8 @@ void Layer_Close(LayerPtr layer)
   CVD_FREE(layer)
 }
 
-CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,
-                  VecInt *indices)
+CvStatus *NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,
+                   VecInt *indices)
 {
   BEGIN_WRAP
   std::vector<int> v;
@@ -292,8 +292,8 @@ CvStatus NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float 
   END_WRAP
 }
 
-CvStatus NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold,
-                            const float nms_threshold, VecInt *indices, const float eta, const int top_k)
+CvStatus *NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold,
+                             const float nms_threshold, VecInt *indices, const float eta, const int top_k)
 {
   BEGIN_WRAP
   std::vector<int> v;

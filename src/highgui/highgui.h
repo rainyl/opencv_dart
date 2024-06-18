@@ -17,26 +17,26 @@ extern "C" {
 #include "core/core.h"
 
 // Window
-CvStatus Window_New(const char *winname, int flags);
-void     Window_Close(const char *winname);
-CvStatus Window_IMShow(const char *winname, Mat mat);
-CvStatus Window_GetProperty(const char *winname, int flag, double *rval);
-CvStatus Window_SetProperty(const char *winname, int flag, double value);
-CvStatus Window_SetTitle(const char *winname, const char *title);
-CvStatus Window_WaitKey(int delay, int *rval);
-CvStatus Window_Move(const char *winname, int x, int y);
-CvStatus Window_Resize(const char *winname, int width, int height);
-CvStatus Window_SelectROI(const char *winname, Mat img, Rect *rval);
-CvStatus Window_SelectROIs(const char *winname, Mat img, VecRect *rval);
-CvStatus destroyAllWindows();
+CvStatus *Window_New(const char *winname, int flags);
+void      Window_Close(const char *winname);
+CvStatus *Window_IMShow(const char *winname, Mat mat);
+CvStatus *Window_GetProperty(const char *winname, int flag, double *rval);
+CvStatus *Window_SetProperty(const char *winname, int flag, double value);
+CvStatus *Window_SetTitle(const char *winname, const char *title);
+CvStatus *Window_WaitKey(int delay, int *rval);
+CvStatus *Window_Move(const char *winname, int x, int y);
+CvStatus *Window_Resize(const char *winname, int width, int height);
+CvStatus *Window_SelectROI(const char *winname, Mat img, Rect *rval);
+CvStatus *Window_SelectROIs(const char *winname, Mat img, VecRect *rval);
+CvStatus *destroyAllWindows();
 
 // Trackbar
-CvStatus Trackbar_Create(const char *winname, const char *trackname, int max);
-CvStatus Trackbar_CreateWithValue(const char *winname, const char *trackname, int *value, int max);
-CvStatus Trackbar_GetPos(const char *winname, const char *trackname, int *rval);
-CvStatus Trackbar_SetPos(const char *winname, const char *trackname, int pos);
-CvStatus Trackbar_SetMin(const char *winname, const char *trackname, int pos);
-CvStatus Trackbar_SetMax(const char *winname, const char *trackname, int pos);
+CvStatus *Trackbar_Create(const char *winname, const char *trackname, int max);
+CvStatus *Trackbar_CreateWithValue(const char *winname, const char *trackname, int *value, int max);
+CvStatus *Trackbar_GetPos(const char *winname, const char *trackname, int *rval);
+CvStatus *Trackbar_SetPos(const char *winname, const char *trackname, int pos);
+CvStatus *Trackbar_SetMin(const char *winname, const char *trackname, int pos);
+CvStatus *Trackbar_SetMax(const char *winname, const char *trackname, int pos);
 
 #ifdef __cplusplus
 }

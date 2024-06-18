@@ -18,20 +18,23 @@ external void AKAZE_Close(
   AKAZEPtr a,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<AKAZE>)>()
-external CvStatus AKAZE_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<AKAZE>)>()
+external ffi.Pointer<CvStatus> AKAZE_Create(
   ffi.Pointer<AKAZE> rval,
 );
 
-@ffi.Native<CvStatus Function(AKAZE, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus AKAZE_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(AKAZE, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> AKAZE_Detect(
   AKAZE a,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus AKAZE_DetectAndCompute(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> AKAZE_DetectAndCompute(
   AKAZE a,
   Mat src,
   Mat mask,
@@ -40,9 +43,9 @@ external CvStatus AKAZE_DetectAndCompute(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Double, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>()
-external CvStatus AdaptiveThreshold(
+external ffi.Pointer<CvStatus> AdaptiveThreshold(
   Mat src,
   Mat dst,
   double maxValue,
@@ -57,14 +60,15 @@ external void AgastFeatureDetector_Close(
   AgastFeatureDetectorPtr a,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<AgastFeatureDetector>)>()
-external CvStatus AgastFeatureDetector_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<AgastFeatureDetector>)>()
+external ffi.Pointer<CvStatus> AgastFeatureDetector_Create(
   ffi.Pointer<AgastFeatureDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(AgastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus AgastFeatureDetector_Detect(
+    ffi.Pointer<CvStatus> Function(
+        AgastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> AgastFeatureDetector_Detect(
   AgastFeatureDetector a,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
@@ -75,61 +79,66 @@ external void AlignMTB_Close(
   AlignMTBPtr b,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<AlignMTB>)>()
-external CvStatus AlignMTB_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<AlignMTB>)>()
+external ffi.Pointer<CvStatus> AlignMTB_Create(
   ffi.Pointer<AlignMTB> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Int, ffi.Int, ffi.Bool, ffi.Pointer<AlignMTB>)>()
-external CvStatus AlignMTB_CreateWithParams(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Bool, ffi.Pointer<AlignMTB>)>()
+external ffi.Pointer<CvStatus> AlignMTB_CreateWithParams(
   int max_bits,
   int exclude_range,
   bool cut,
   ffi.Pointer<AlignMTB> rval,
 );
 
-@ffi.Native<CvStatus Function(AlignMTB, VecMat, ffi.Pointer<VecMat>)>()
-external CvStatus AlignMTB_Process(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(AlignMTB, VecMat, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> AlignMTB_Process(
   AlignMTB b,
   VecMat src,
   ffi.Pointer<VecMat> dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus ApplyColorMap(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> ApplyColorMap(
   Mat src,
   Mat dst,
   int colormap,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus ApplyCustomColorMap(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> ApplyCustomColorMap(
   Mat src,
   Mat dst,
   Mat colormap,
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint, ffi.Double, ffi.Bool, ffi.Pointer<VecPoint>)>()
-external CvStatus ApproxPolyDP(
+    ffi.Pointer<CvStatus> Function(
+        VecPoint, ffi.Double, ffi.Bool, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> ApproxPolyDP(
   VecPoint curve,
   double epsilon,
   bool closed,
   ffi.Pointer<VecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Bool, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArcLength(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecPoint, ffi.Bool, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ArcLength(
   VecPoint curve,
   bool is_closed,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Point, Point, Scalar, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>()
-external CvStatus ArrowedLine(
+external ffi.Pointer<CvStatus> ArrowedLine(
   Mat img,
   Point pt1,
   Point pt2,
@@ -145,372 +154,461 @@ external void ArucoDetectorParameters_Close(
   ArucoDetectorParametersPtr ap,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ArucoDetectorParameters>)>()
-external CvStatus ArucoDetectorParameters_Create(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetectorParameters>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_Create(
   ffi.Pointer<ArucoDetectorParameters> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetAdaptiveThreshConstant(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAdaptiveThreshConstant(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagCriticalRad(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Float> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagDeglitch(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Float> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagMaxNmaxima(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagMinClusterPixels(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagQuadDecimate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagCriticalRad(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Float> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
-external CvStatus ArucoDetectorParameters_GetAprilTagQuadSigma(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Float> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetCornerRefinementMaxIterations(
-  ArucoDetectorParameters ap,
-  ffi.Pointer<ffi.Int> rval,
-);
-
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetCornerRefinementMethod(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagDeglitch(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Float> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxNmaxima(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAprilTagMinClusterPixels(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadDecimate(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Float> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadSigma(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Float> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetCornerRefinementMaxIterations(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetCornerRefinementMethod(
+  ArucoDetectorParameters ap,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetCornerRefinementWinSize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetCornerRefinementWinSize(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Bool>)>()
-external CvStatus ArucoDetectorParameters_GetDetectInvertedMarker(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetDetectInvertedMarker(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetErrorCorrectionRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetErrorCorrectionRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetMarkerBorderBits(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMarkerBorderBits(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMinCornerDistanceRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinCornerDistanceRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetMinDistanceToBorder(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinDistanceToBorder(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMinMarkerDistanceRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinMarkerDistanceRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMinMarkerPerimeterRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetMinMarkerPerimeterRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetMinOtsuStdDev(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinOtsuStdDev(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
     ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
-external CvStatus ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
-external CvStatus ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
   ArucoDetectorParameters ap,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetAdaptiveThreshConstant(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAdaptiveThreshConstant(
   ArucoDetectorParameters ap,
   double adaptiveThreshConstant,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
   ArucoDetectorParameters ap,
   int adaptiveThreshWinSizeMax,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
   ArucoDetectorParameters ap,
   int adaptiveThreshWinSizeMin,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
   ArucoDetectorParameters ap,
   int adaptiveThreshWinSizeStep,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Float)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagCriticalRad(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Float)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagCriticalRad(
   ArucoDetectorParameters ap,
   double aprilTagCriticalRad,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagDeglitch(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagDeglitch(
   ArucoDetectorParameters ap,
   int aprilTagDeglitch,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Float)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Float)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
   ArucoDetectorParameters ap,
   double aprilTagMaxLineFitMse,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagMaxNmaxima(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxNmaxima(
   ArucoDetectorParameters ap,
   int aprilTagMaxNmaxima,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagMinClusterPixels(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAprilTagMinClusterPixels(
   ArucoDetectorParameters ap,
   int aprilTagMinClusterPixels,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
   ArucoDetectorParameters ap,
   int aprilTagMinWhiteBlackDiff,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Float)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagQuadDecimate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Float)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadDecimate(
   ArucoDetectorParameters ap,
   double aprilTagQuadDecimate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Float)>()
-external CvStatus ArucoDetectorParameters_SetAprilTagQuadSigma(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Float)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadSigma(
   ArucoDetectorParameters ap,
   double aprilTagQuadSigma,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetCornerRefinementMaxIterations(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetCornerRefinementMaxIterations(
   ArucoDetectorParameters ap,
   int cornerRefinementMaxIterations,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetCornerRefinementMethod(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetCornerRefinementMethod(
   ArucoDetectorParameters ap,
   int cornerRefinementMethod,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
   ArucoDetectorParameters ap,
   double cornerRefinementMinAccuracy,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetCornerRefinementWinSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetCornerRefinementWinSize(
   ArucoDetectorParameters ap,
   int cornerRefinementWinSize,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Bool)>()
-external CvStatus ArucoDetectorParameters_SetDetectInvertedMarker(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Bool)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetDetectInvertedMarker(
   ArucoDetectorParameters ap,
   bool detectInvertedMarker,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetErrorCorrectionRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetErrorCorrectionRate(
   ArucoDetectorParameters ap,
   double errorCorrectionRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetMarkerBorderBits(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMarkerBorderBits(
   ArucoDetectorParameters ap,
   int markerBorderBits,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
   ArucoDetectorParameters ap,
   double maxErroneousBitsInBorderRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
   ArucoDetectorParameters ap,
   double maxMarkerPerimeterRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMinCornerDistanceRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinCornerDistanceRate(
   ArucoDetectorParameters ap,
   double minCornerDistanceRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetMinDistanceToBorder(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinDistanceToBorder(
   ArucoDetectorParameters ap,
   int minDistanceToBorder,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMinMarkerDistanceRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinMarkerDistanceRate(
   ArucoDetectorParameters ap,
   double minMarkerDistanceRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMinMarkerPerimeterRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetMinMarkerPerimeterRate(
   ArucoDetectorParameters ap,
   double minMarkerPerimeterRate,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetMinOtsuStdDev(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinOtsuStdDev(
   ArucoDetectorParameters ap,
   double minOtsuStdDev,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
     ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
   ArucoDetectorParameters ap,
   double perspectiveRemoveIgnoredMarginPerCell,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Int)>()
-external CvStatus ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Int)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
   ArucoDetectorParameters ap,
   int perspectiveRemovePixelPerCell,
 );
 
-@ffi.Native<CvStatus Function(ArucoDetectorParameters, ffi.Double)>()
-external CvStatus ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
   ArucoDetectorParameters ap,
   double polygonalApproxAccuracyRate,
 );
@@ -521,9 +619,13 @@ external void ArucoDetector_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(ArucoDetector, Mat, ffi.Pointer<VecVecPoint2f>,
-        ffi.Pointer<VecInt>, ffi.Pointer<VecVecPoint2f>)>()
-external CvStatus ArucoDetector_DetectMarkers(
+    ffi.Pointer<CvStatus> Function(
+        ArucoDetector,
+        Mat,
+        ffi.Pointer<VecVecPoint2f>,
+        ffi.Pointer<VecInt>,
+        ffi.Pointer<VecVecPoint2f>)>()
+external ffi.Pointer<CvStatus> ArucoDetector_DetectMarkers(
   ArucoDetector ad,
   Mat inputArr,
   ffi.Pointer<VecVecPoint2f> markerCorners,
@@ -531,15 +633,15 @@ external CvStatus ArucoDetector_DetectMarkers(
   ffi.Pointer<VecVecPoint2f> rejectedCandidates,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ArucoDetector>)>()
-external CvStatus ArucoDetector_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetector>)>()
+external ffi.Pointer<CvStatus> ArucoDetector_New(
   ffi.Pointer<ArucoDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ArucoDictionary, ArucoDetectorParameters, ffi.Pointer<ArucoDetector>)>()
-external CvStatus ArucoDetector_NewWithParams(
+external ffi.Pointer<CvStatus> ArucoDetector_NewWithParams(
   ArucoDictionary dictionary,
   ArucoDetectorParameters params,
   ffi.Pointer<ArucoDetector> rval,
@@ -550,16 +652,18 @@ external void ArucoDictionary_Close(
   ArucoDictionaryPtr self,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecVecPoint2f, VecInt, Scalar)>()
-external CvStatus ArucoDrawDetectedMarkers(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecInt, Scalar)>()
+external ffi.Pointer<CvStatus> ArucoDrawDetectedMarkers(
   Mat image,
   VecVecPoint2f markerCorners,
   VecInt markerIds,
   Scalar borderColor,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Int, Mat, ffi.Int)>()
-external CvStatus ArucoGenerateImageMarker(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> ArucoGenerateImageMarker(
   int dictionaryId,
   int id,
   int sidePixels,
@@ -572,14 +676,14 @@ external void AsyncArray_Close(
   AsyncArrayPtr a,
 );
 
-@ffi.Native<CvStatus Function(AsyncArray, Mat)>()
-external CvStatus AsyncArray_Get(
+@ffi.Native<ffi.Pointer<CvStatus> Function(AsyncArray, Mat)>()
+external ffi.Pointer<CvStatus> AsyncArray_Get(
   AsyncArray async_out,
   Mat out,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<AsyncArray>)>()
-external CvStatus AsyncArray_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<AsyncArray>)>()
+external ffi.Pointer<CvStatus> AsyncArray_New(
   ffi.Pointer<AsyncArray> rval,
 );
 
@@ -588,22 +692,23 @@ external void BFMatcher_Close(
   BFMatcherPtr b,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<BFMatcher>)>()
-external CvStatus BFMatcher_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<BFMatcher>)>()
+external ffi.Pointer<CvStatus> BFMatcher_Create(
   ffi.Pointer<BFMatcher> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Bool, ffi.Pointer<BFMatcher>)>()
-external CvStatus BFMatcher_CreateWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Bool, ffi.Pointer<BFMatcher>)>()
+external ffi.Pointer<CvStatus> BFMatcher_CreateWithParams(
   int normType,
   bool crossCheck,
   ffi.Pointer<BFMatcher> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         BFMatcher, Mat, Mat, ffi.Int, ffi.Pointer<VecVecDMatch>)>()
-external CvStatus BFMatcher_KnnMatch(
+external ffi.Pointer<CvStatus> BFMatcher_KnnMatch(
   BFMatcher b,
   Mat query,
   Mat train,
@@ -611,8 +716,10 @@ external CvStatus BFMatcher_KnnMatch(
   ffi.Pointer<VecVecDMatch> rval,
 );
 
-@ffi.Native<CvStatus Function(BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>)>()
-external CvStatus BFMatcher_Match(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>)>()
+external ffi.Pointer<CvStatus> BFMatcher_Match(
   BFMatcher b,
   Mat query,
   Mat train,
@@ -624,20 +731,23 @@ external void BRISK_Close(
   BRISKPtr b,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<BRISK>)>()
-external CvStatus BRISK_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<BRISK>)>()
+external ffi.Pointer<CvStatus> BRISK_Create(
   ffi.Pointer<BRISK> rval,
 );
 
-@ffi.Native<CvStatus Function(BRISK, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus BRISK_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(BRISK, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> BRISK_Detect(
   BRISK b,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus BRISK_DetectAndCompute(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> BRISK_DetectAndCompute(
   BRISK b,
   Mat src,
   Mat mask,
@@ -645,8 +755,8 @@ external CvStatus BRISK_DetectAndCompute(
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(BackgroundSubtractorKNN, Mat, Mat)>()
-external CvStatus BackgroundSubtractorKNN_Apply(
+@ffi.Native<ffi.Pointer<CvStatus> Function(BackgroundSubtractorKNN, Mat, Mat)>()
+external ffi.Pointer<CvStatus> BackgroundSubtractorKNN_Apply(
   BackgroundSubtractorKNN self,
   Mat src,
   Mat dst,
@@ -657,23 +767,25 @@ external void BackgroundSubtractorKNN_Close(
   BackgroundSubtractorKNNPtr self,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<BackgroundSubtractorKNN>)>()
-external CvStatus BackgroundSubtractorKNN_Create(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<BackgroundSubtractorKNN>)>()
+external ffi.Pointer<CvStatus> BackgroundSubtractorKNN_Create(
   ffi.Pointer<BackgroundSubtractorKNN> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Int, ffi.Double, ffi.Bool, ffi.Pointer<BackgroundSubtractorKNN>)>()
-external CvStatus BackgroundSubtractorKNN_CreateWithParams(
+external ffi.Pointer<CvStatus> BackgroundSubtractorKNN_CreateWithParams(
   int history,
   double dist2Threshold,
   bool detectShadows,
   ffi.Pointer<BackgroundSubtractorKNN> rval,
 );
 
-@ffi.Native<CvStatus Function(BackgroundSubtractorMOG2, Mat, Mat)>()
-external CvStatus BackgroundSubtractorMOG2_Apply(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(BackgroundSubtractorMOG2, Mat, Mat)>()
+external ffi.Pointer<CvStatus> BackgroundSubtractorMOG2_Apply(
   BackgroundSubtractorMOG2 self,
   Mat src,
   Mat dst,
@@ -684,23 +796,25 @@ external void BackgroundSubtractorMOG2_Close(
   BackgroundSubtractorMOG2Ptr self,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<BackgroundSubtractorMOG2>)>()
-external CvStatus BackgroundSubtractorMOG2_Create(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<BackgroundSubtractorMOG2>)>()
+external ffi.Pointer<CvStatus> BackgroundSubtractorMOG2_Create(
   ffi.Pointer<BackgroundSubtractorMOG2> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Int, ffi.Double, ffi.Bool, ffi.Pointer<BackgroundSubtractorMOG2>)>()
-external CvStatus BackgroundSubtractorMOG2_CreateWithParams(
+external ffi.Pointer<CvStatus> BackgroundSubtractorMOG2_CreateWithParams(
   int history,
   double varThreshold,
   bool detectShadows,
   ffi.Pointer<BackgroundSubtractorMOG2> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double)>()
-external CvStatus BilateralFilter(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double)>()
+external ffi.Pointer<CvStatus> BilateralFilter(
   Mat src,
   Mat dst,
   int d,
@@ -714,71 +828,74 @@ external void BlockMeanHash_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus BlockMeanHash_Compare(
+    ffi.Pointer<CvStatus> Function(
+        BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> BlockMeanHash_Compare(
   BlockMeanHash self,
   Mat hashOne,
   Mat hashTwo,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(BlockMeanHash, Mat, Mat)>()
-external CvStatus BlockMeanHash_Compute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat)>()
+external ffi.Pointer<CvStatus> BlockMeanHash_Compute(
   BlockMeanHash self,
   Mat inputArr,
   Mat outputArr,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Pointer<BlockMeanHash>)>()
-external CvStatus BlockMeanHash_Create(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<BlockMeanHash>)>()
+external ffi.Pointer<CvStatus> BlockMeanHash_Create(
   int mode,
   ffi.Pointer<BlockMeanHash> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(BlockMeanHash, ffi.Pointer<ffi.Pointer<ffi.Double>>,
-        ffi.Pointer<ffi.Int>)>()
-external CvStatus BlockMeanHash_GetMean(
+    ffi.Pointer<CvStatus> Function(BlockMeanHash,
+        ffi.Pointer<ffi.Pointer<ffi.Double>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> BlockMeanHash_GetMean(
   BlockMeanHash self,
   ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
   ffi.Pointer<ffi.Int> length,
 );
 
-@ffi.Native<CvStatus Function(BlockMeanHash, ffi.Int)>()
-external CvStatus BlockMeanHash_SetMode(
+@ffi.Native<ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Int)>()
+external ffi.Pointer<CvStatus> BlockMeanHash_SetMode(
   BlockMeanHash self,
   int mode,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Size)>()
-external CvStatus Blur(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Size)>()
+external ffi.Pointer<CvStatus> Blur(
   Mat src,
   Mat dst,
   Size ps,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<Rect>)>()
-external CvStatus BoundingRect(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<Rect>)>()
+external ffi.Pointer<CvStatus> BoundingRect(
   VecPoint pts,
   ffi.Pointer<Rect> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, Size)>()
-external CvStatus BoxFilter(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Size)>()
+external ffi.Pointer<CvStatus> BoxFilter(
   Mat src,
   Mat dst,
   int ddepth,
   Size ps,
 );
 
-@ffi.Native<CvStatus Function(RotatedRect, ffi.Pointer<VecPoint2f>)>()
-external CvStatus BoxPoints(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(RotatedRect, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> BoxPoints(
   RotatedRect rect,
   ffi.Pointer<VecPoint2f> boxPts,
 );
 
-@ffi.Native<CvStatus Function(CLAHE, Mat, Mat)>()
-external CvStatus CLAHE_Apply(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE, Mat, Mat)>()
+external ffi.Pointer<CvStatus> CLAHE_Apply(
   CLAHE c,
   Mat src,
   Mat dst,
@@ -789,49 +906,52 @@ external void CLAHE_Close(
   CLAHEPtr c,
 );
 
-@ffi.Native<CvStatus Function(CLAHE)>()
-external CvStatus CLAHE_CollectGarbage(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE)>()
+external ffi.Pointer<CvStatus> CLAHE_CollectGarbage(
   CLAHE c,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<CLAHE>)>()
-external CvStatus CLAHE_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<CLAHE>)>()
+external ffi.Pointer<CvStatus> CLAHE_Create(
   ffi.Pointer<CLAHE> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Double, Size, ffi.Pointer<CLAHE>)>()
-external CvStatus CLAHE_CreateWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Double, Size, ffi.Pointer<CLAHE>)>()
+external ffi.Pointer<CvStatus> CLAHE_CreateWithParams(
   double clipLimit,
   Size tileGridSize,
   ffi.Pointer<CLAHE> rval,
 );
 
-@ffi.Native<CvStatus Function(CLAHE, ffi.Pointer<ffi.Double>)>()
-external CvStatus CLAHE_GetClipLimit(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> CLAHE_GetClipLimit(
   CLAHE c,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(CLAHE, ffi.Pointer<Size>)>()
-external CvStatus CLAHE_GetTilesGridSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE, ffi.Pointer<Size>)>()
+external ffi.Pointer<CvStatus> CLAHE_GetTilesGridSize(
   CLAHE c,
   ffi.Pointer<Size> rval,
 );
 
-@ffi.Native<CvStatus Function(CLAHE, ffi.Double)>()
-external CvStatus CLAHE_SetClipLimit(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE, ffi.Double)>()
+external ffi.Pointer<CvStatus> CLAHE_SetClipLimit(
   CLAHE c,
   double clipLimit,
 );
 
-@ffi.Native<CvStatus Function(CLAHE, Size)>()
-external CvStatus CLAHE_SetTilesGridSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(CLAHE, Size)>()
+external ffi.Pointer<CvStatus> CLAHE_SetTilesGridSize(
   CLAHE c,
   Size size,
 );
 
-@ffi.Native<CvStatus Function(VecMat, VecInt, Mat, Mat, VecFloat, ffi.Bool)>()
-external CvStatus CalcBackProject(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecMat, VecInt, Mat, Mat, VecFloat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> CalcBackProject(
   VecMat mats,
   VecInt chans,
   Mat hist,
@@ -841,8 +961,9 @@ external CvStatus CalcBackProject(
 );
 
 @ffi.Native<
-    CvStatus Function(VecMat, VecInt, Mat, Mat, VecInt, VecFloat, ffi.Bool)>()
-external CvStatus CalcHist(
+    ffi.Pointer<CvStatus> Function(
+        VecMat, VecInt, Mat, Mat, VecInt, VecFloat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> CalcHist(
   VecMat mats,
   VecInt chans,
   Mat mask,
@@ -853,9 +974,9 @@ external CvStatus CalcHist(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Mat, ffi.Double, ffi.Int, ffi.Int, ffi.Int,
-        ffi.Int, ffi.Double, ffi.Int)>()
-external CvStatus CalcOpticalFlowFarneback(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Double, ffi.Int, ffi.Int,
+        ffi.Int, ffi.Int, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> CalcOpticalFlowFarneback(
   Mat prevImg,
   Mat nextImg,
   Mat flow,
@@ -869,8 +990,9 @@ external CvStatus CalcOpticalFlowFarneback(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, VecPoint2f, VecPoint2f, VecUChar, VecFloat)>()
-external CvStatus CalcOpticalFlowPyrLK(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, VecPoint2f, VecPoint2f, VecUChar, VecFloat)>()
+external ffi.Pointer<CvStatus> CalcOpticalFlowPyrLK(
   Mat prevImg,
   Mat nextImg,
   VecPoint2f prevPts,
@@ -880,7 +1002,7 @@ external CvStatus CalcOpticalFlowPyrLK(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat,
         Mat,
         VecPoint2f,
@@ -892,7 +1014,7 @@ external CvStatus CalcOpticalFlowPyrLK(
         TermCriteria,
         ffi.Int,
         ffi.Double)>()
-external CvStatus CalcOpticalFlowPyrLKWithParams(
+external ffi.Pointer<CvStatus> CalcOpticalFlowPyrLKWithParams(
   Mat prevImg,
   Mat nextImg,
   VecPoint2f prevPts,
@@ -907,9 +1029,9 @@ external CvStatus CalcOpticalFlowPyrLKWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(VecVecPoint3f, VecVecPoint2f, Size, Mat, Mat, Mat, Mat,
-        ffi.Int, TermCriteria, ffi.Pointer<ffi.Double>)>()
-external CvStatus CalibrateCamera(
+    ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecVecPoint2f, Size, Mat, Mat,
+        Mat, Mat, ffi.Int, TermCriteria, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> CalibrateCamera(
   VecVecPoint3f objectPoints,
   VecVecPoint2f imagePoints,
   Size imageSize,
@@ -923,8 +1045,9 @@ external CvStatus CalibrateCamera(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Bool)>()
-external CvStatus Canny(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Canny(
   Mat src,
   Mat edges,
   double t1,
@@ -938,17 +1061,19 @@ external void CascadeClassifier_Close(
   CascadeClassifierPtr self,
 );
 
-@ffi.Native<CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>)>()
-external CvStatus CascadeClassifier_DetectMultiScale(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        CascadeClassifier, Mat, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale(
   CascadeClassifier self,
   Mat img,
   ffi.Pointer<VecRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>,
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>,
         ffi.Pointer<VecInt>, ffi.Double, ffi.Int, ffi.Int, Size, Size)>()
-external CvStatus CascadeClassifier_DetectMultiScale2(
+external ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale2(
   CascadeClassifier self,
   Mat img,
   ffi.Pointer<VecRect> objects,
@@ -961,7 +1086,7 @@ external CvStatus CascadeClassifier_DetectMultiScale2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         CascadeClassifier,
         Mat,
         ffi.Pointer<VecRect>,
@@ -973,7 +1098,7 @@ external CvStatus CascadeClassifier_DetectMultiScale2(
         Size,
         Size,
         ffi.Bool)>()
-external CvStatus CascadeClassifier_DetectMultiScale3(
+external ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale3(
   CascadeClassifier self,
   Mat img,
   ffi.Pointer<VecRect> objects,
@@ -988,9 +1113,9 @@ external CvStatus CascadeClassifier_DetectMultiScale3(
 );
 
 @ffi.Native<
-    CvStatus Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>, ffi.Double,
-        ffi.Int, ffi.Int, Size, Size)>()
-external CvStatus CascadeClassifier_DetectMultiScaleWithParams(
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, ffi.Pointer<VecRect>,
+        ffi.Double, ffi.Int, ffi.Int, Size, Size)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScaleWithParams(
   CascadeClassifier self,
   Mat img,
   ffi.Pointer<VecRect> objects,
@@ -1001,53 +1126,59 @@ external CvStatus CascadeClassifier_DetectMultiScaleWithParams(
   Size maxSize,
 );
 
-@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
-external CvStatus CascadeClassifier_Empty(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_Empty(
   CascadeClassifier self,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         CascadeClassifier, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
-external CvStatus CascadeClassifier_Load(
+external ffi.Pointer<CvStatus> CascadeClassifier_Load(
   CascadeClassifier self,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<CascadeClassifier>)>()
-external CvStatus CascadeClassifier_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<CascadeClassifier>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_New(
   ffi.Pointer<CascadeClassifier> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<CascadeClassifier>)>()
-external CvStatus CascadeClassifier_NewFromFile(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<CascadeClassifier>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_NewFromFile(
   ffi.Pointer<ffi.Char> filename,
   ffi.Pointer<CascadeClassifier> rval,
 );
 
-@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Int>)>()
-external CvStatus CascadeClassifier_getFeatureType(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_getFeatureType(
   CascadeClassifier self,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<Size>)>()
-external CvStatus CascadeClassifier_getOriginalWindowSize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, ffi.Pointer<Size>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_getOriginalWindowSize(
   CascadeClassifier self,
   ffi.Pointer<Size> rval,
 );
 
-@ffi.Native<CvStatus Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
-external CvStatus CascadeClassifier_isOldFormatCascade(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(CascadeClassifier, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> CascadeClassifier_isOldFormatCascade(
   CascadeClassifier self,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Point, ffi.Int, Scalar, ffi.Int)>()
-external CvStatus Circle(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Point, ffi.Int, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> Circle(
   Mat img,
   Point center,
   int radius,
@@ -1056,8 +1187,9 @@ external CvStatus Circle(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Point, ffi.Int, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus CircleWithParams(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Point, ffi.Int, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> CircleWithParams(
   Mat img,
   Point center,
   int radius,
@@ -1067,16 +1199,19 @@ external CvStatus CircleWithParams(
   int shift,
 );
 
-@ffi.Native<CvStatus Function(Rect, Point, Point, ffi.Pointer<ffi.Bool>)>()
-external CvStatus ClipLine(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Rect, Point, Point, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> ClipLine(
   Rect imgRect,
   Point pt1,
   Point pt2,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float)>()
-external CvStatus ColorChange(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> ColorChange(
   Mat src,
   Mat mask,
   Mat dst,
@@ -1085,8 +1220,10 @@ external CvStatus ColorChange(
   double blue_mul,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus CompareHist(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> CompareHist(
   Mat hist1,
   Mat hist2,
   int method,
@@ -1094,9 +1231,9 @@ external CvStatus CompareHist(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus ConnectedComponents(
+external ffi.Pointer<CvStatus> ConnectedComponents(
   Mat src,
   Mat dst,
   int connectivity,
@@ -1106,9 +1243,9 @@ external CvStatus ConnectedComponents(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus ConnectedComponentsWithStats(
+external ffi.Pointer<CvStatus> ConnectedComponentsWithStats(
   Mat src,
   Mat labels,
   Mat stats,
@@ -1119,29 +1256,30 @@ external CvStatus ConnectedComponentsWithStats(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<ffi.Double>)>()
-external CvStatus ContourArea(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> ContourArea(
   VecPoint pts,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, Mat, ffi.Bool, ffi.Bool)>()
-external CvStatus ConvexHull(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, Mat, ffi.Bool, ffi.Bool)>()
+external ffi.Pointer<CvStatus> ConvexHull(
   VecPoint points,
   Mat hull,
   bool clockwise,
   bool returnPoints,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, Mat, Mat)>()
-external CvStatus ConvexityDefects(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, Mat, Mat)>()
+external ffi.Pointer<CvStatus> ConvexityDefects(
   VecPoint points,
   Mat hull,
   Mat result,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecPoint2f, Size, Size, TermCriteria)>()
-external CvStatus CornerSubPix(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, VecPoint2f, Size, Size, TermCriteria)>()
+external ffi.Pointer<CvStatus> CornerSubPix(
   Mat img,
   VecPoint2f corners,
   Size winSize,
@@ -1149,30 +1287,37 @@ external CvStatus CornerSubPix(
   TermCriteria criteria,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus CvtColor(
+@ffi.Native<ffi.Void Function(ffi.Pointer<CvStatus>)>()
+external void CvStatus_Close(
+  ffi.Pointer<CvStatus> self,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> CvtColor(
   Mat src,
   Mat dst,
   int code,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Float, ffi.Float)>()
-external CvStatus DetailEnhance(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> DetailEnhance(
   Mat src,
   Mat dst,
   double sigma_s,
   double sigma_r,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Dilate(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Dilate(
   Mat src,
   Mat dst,
   Mat kernel,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Point, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus DilateWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Point, ffi.Int, ffi.Int, Scalar)>()
+external ffi.Pointer<CvStatus> DilateWithParams(
   Mat src,
   Mat dst,
   Mat kernel,
@@ -1182,8 +1327,9 @@ external CvStatus DilateWithParams(
   Scalar borderValue,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus DistanceTransform(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> DistanceTransform(
   Mat src,
   Mat dst,
   Mat labels,
@@ -1192,16 +1338,18 @@ external CvStatus DistanceTransform(
   int labelType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Size, Mat, ffi.Bool)>()
-external CvStatus DrawChessboardCorners(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Size, Mat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> DrawChessboardCorners(
   Mat image,
   Size patternSize,
   Mat corners,
   bool patternWasFound,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecVecPoint, ffi.Int, Scalar, ffi.Int)>()
-external CvStatus DrawContours(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, VecVecPoint, ffi.Int, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> DrawContours(
   Mat src,
   VecVecPoint contours,
   int contourIdx,
@@ -1210,9 +1358,9 @@ external CvStatus DrawContours(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, VecVecPoint, ffi.Int, Scalar, ffi.Int, ffi.Int, Mat,
-        ffi.Int, Point)>()
-external CvStatus DrawContoursWithParams(
+    ffi.Pointer<CvStatus> Function(Mat, VecVecPoint, ffi.Int, Scalar, ffi.Int,
+        ffi.Int, Mat, ffi.Int, Point)>()
+external ffi.Pointer<CvStatus> DrawContoursWithParams(
   Mat src,
   VecVecPoint contours,
   int contourIdx,
@@ -1224,8 +1372,9 @@ external CvStatus DrawContoursWithParams(
   Point offset,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecKeyPoint, Mat, Scalar, ffi.Int)>()
-external CvStatus DrawKeyPoints(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> DrawKeyPoints(
   Mat src,
   VecKeyPoint kp,
   Mat dst,
@@ -1234,9 +1383,9 @@ external CvStatus DrawKeyPoints(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, VecKeyPoint, Mat, VecKeyPoint, VecDMatch, Mat,
-        Scalar, Scalar, VecChar, ffi.Int)>()
-external CvStatus DrawMatches(
+    ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, VecKeyPoint,
+        VecDMatch, Mat, Scalar, Scalar, VecChar, ffi.Int)>()
+external ffi.Pointer<CvStatus> DrawMatches(
   Mat img1,
   VecKeyPoint kp1,
   Mat img2,
@@ -1249,8 +1398,9 @@ external CvStatus DrawMatches(
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Float, ffi.Float)>()
-external CvStatus EdgePreservingFilter(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> EdgePreservingFilter(
   Mat src,
   Mat dst,
   int filter,
@@ -1259,9 +1409,9 @@ external CvStatus EdgePreservingFilter(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Point, Point, ffi.Double, ffi.Double, ffi.Double,
-        Scalar, ffi.Int)>()
-external CvStatus Ellipse(
+    ffi.Pointer<CvStatus> Function(Mat, Point, Point, ffi.Double, ffi.Double,
+        ffi.Double, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> Ellipse(
   Mat img,
   Point center,
   Point axes,
@@ -1273,9 +1423,9 @@ external CvStatus Ellipse(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Point, Point, ffi.Double, ffi.Double, ffi.Double,
-        Scalar, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus EllipseWithParams(
+    ffi.Pointer<CvStatus> Function(Mat, Point, Point, ffi.Double, ffi.Double,
+        ffi.Double, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> EllipseWithParams(
   Mat img,
   Point center,
   Point axes,
@@ -1288,21 +1438,23 @@ external CvStatus EllipseWithParams(
   int shift,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus EqualizeHist(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> EqualizeHist(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Erode(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Erode(
   Mat src,
   Mat dst,
   Mat kernel,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Point, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus ErodeWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Point, ffi.Int, ffi.Int, Scalar)>()
+external ffi.Pointer<CvStatus> ErodeWithParams(
   Mat src,
   Mat dst,
   Mat kernel,
@@ -1312,17 +1464,18 @@ external CvStatus ErodeWithParams(
   Scalar borderValue,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
-external CvStatus EstimateAffine2D(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> EstimateAffine2D(
   VecPoint2f from,
   VecPoint2f to,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint2f, VecPoint2f, Mat, ffi.Int, ffi.Double,
-        ffi.Size, ffi.Double, ffi.Size, ffi.Pointer<Mat>)>()
-external CvStatus EstimateAffine2DWithParams(
+    ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, ffi.Int,
+        ffi.Double, ffi.Size, ffi.Double, ffi.Size, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> EstimateAffine2DWithParams(
   VecPoint2f from,
   VecPoint2f to,
   Mat inliers,
@@ -1334,17 +1487,18 @@ external CvStatus EstimateAffine2DWithParams(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
-external CvStatus EstimateAffinePartial2D(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> EstimateAffinePartial2D(
   VecPoint2f from,
   VecPoint2f to,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint2f, VecPoint2f, Mat, ffi.Int, ffi.Double,
-        ffi.Size, ffi.Double, ffi.Size, ffi.Pointer<Mat>)>()
-external CvStatus EstimateAffinePartial2DWithParams(
+    ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, ffi.Int,
+        ffi.Double, ffi.Size, ffi.Double, ffi.Size, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> EstimateAffinePartial2DWithParams(
   VecPoint2f from,
   VecPoint2f to,
   Mat inliers,
@@ -1356,8 +1510,10 @@ external CvStatus EstimateAffinePartial2DWithParams(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Eye(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Eye(
   int rows,
   int cols,
   int type,
@@ -1369,39 +1525,43 @@ external void FaceDetectorYN_Close(
   FaceDetectorYNPtr self,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>()
-external CvStatus FaceDetectorYN_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_Detect(
   FaceDetectorYN self,
   Mat img,
   ffi.Pointer<Mat> faces,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<Size>)>()
-external CvStatus FaceDetectorYN_GetInputSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<Size>)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_GetInputSize(
   FaceDetectorYN self,
   ffi.Pointer<Size> input_size,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
-external CvStatus FaceDetectorYN_GetNMSThreshold(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_GetNMSThreshold(
   FaceDetectorYN self,
   ffi.Pointer<ffi.Float> nms_threshold,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
-external CvStatus FaceDetectorYN_GetScoreThreshold(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_GetScoreThreshold(
   FaceDetectorYN self,
   ffi.Pointer<ffi.Float> score_threshold,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Pointer<ffi.Int>)>()
-external CvStatus FaceDetectorYN_GetTopK(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_GetTopK(
   FaceDetectorYN self,
   ffi.Pointer<ffi.Int> top_k,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>,
         Size,
@@ -1411,7 +1571,7 @@ external CvStatus FaceDetectorYN_GetTopK(
         ffi.Int,
         ffi.Int,
         ffi.Pointer<FaceDetectorYN>)>()
-external CvStatus FaceDetectorYN_New(
+external ffi.Pointer<CvStatus> FaceDetectorYN_New(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<ffi.Char> config,
   Size input_size,
@@ -1424,7 +1584,7 @@ external CvStatus FaceDetectorYN_New(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>,
         VecUChar,
         VecUChar,
@@ -1435,7 +1595,7 @@ external CvStatus FaceDetectorYN_New(
         ffi.Int,
         ffi.Int,
         ffi.Pointer<FaceDetectorYN>)>()
-external CvStatus FaceDetectorYN_NewFromBuffer(
+external ffi.Pointer<CvStatus> FaceDetectorYN_NewFromBuffer(
   ffi.Pointer<ffi.Char> framework,
   VecUChar buffer,
   VecUChar buffer_config,
@@ -1448,32 +1608,34 @@ external CvStatus FaceDetectorYN_NewFromBuffer(
   ffi.Pointer<FaceDetectorYN> rval,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, Size)>()
-external CvStatus FaceDetectorYN_SetInputSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(FaceDetectorYN, Size)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_SetInputSize(
   FaceDetectorYN self,
   Size input_size,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Float)>()
-external CvStatus FaceDetectorYN_SetNMSThreshold(
+@ffi.Native<ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Float)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_SetNMSThreshold(
   FaceDetectorYN self,
   double nms_threshold,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Float)>()
-external CvStatus FaceDetectorYN_SetScoreThreshold(
+@ffi.Native<ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Float)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_SetScoreThreshold(
   FaceDetectorYN self,
   double score_threshold,
 );
 
-@ffi.Native<CvStatus Function(FaceDetectorYN, ffi.Int)>()
-external CvStatus FaceDetectorYN_SetTopK(
+@ffi.Native<ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Int)>()
+external ffi.Pointer<CvStatus> FaceDetectorYN_SetTopK(
   FaceDetectorYN self,
   int top_k,
 );
 
-@ffi.Native<CvStatus Function(FaceRecognizerSF, Mat, Mat, ffi.Pointer<Mat>)>()
-external CvStatus FaceRecognizerSF_AlignCrop(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        FaceRecognizerSF, Mat, Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> FaceRecognizerSF_AlignCrop(
   FaceRecognizerSF self,
   Mat src_img,
   Mat face_box,
@@ -1486,8 +1648,9 @@ external void FaceRecognizerSF_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(FaceRecognizerSF, Mat, ffi.Bool, ffi.Pointer<Mat>)>()
-external CvStatus FaceRecognizerSF_Feature(
+    ffi.Pointer<CvStatus> Function(
+        FaceRecognizerSF, Mat, ffi.Bool, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> FaceRecognizerSF_Feature(
   FaceRecognizerSF self,
   Mat aligned_img,
   bool clone,
@@ -1495,9 +1658,9 @@ external CvStatus FaceRecognizerSF_Feature(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         FaceRecognizerSF, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus FaceRecognizerSF_Match(
+external ffi.Pointer<CvStatus> FaceRecognizerSF_Match(
   FaceRecognizerSF self,
   Mat face_feature1,
   Mat face_feature2,
@@ -1506,9 +1669,9 @@ external CvStatus FaceRecognizerSF_Match(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int,
-        ffi.Int, ffi.Pointer<FaceRecognizerSF>)>()
-external CvStatus FaceRecognizerSF_New(
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+        ffi.Int, ffi.Int, ffi.Pointer<FaceRecognizerSF>)>()
+external ffi.Pointer<CvStatus> FaceRecognizerSF_New(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<ffi.Char> config,
   int backend_id,
@@ -1521,15 +1684,15 @@ external void FastFeatureDetector_Close(
   FastFeatureDetectorPtr f,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<FastFeatureDetector>)>()
-external CvStatus FastFeatureDetector_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<FastFeatureDetector>)>()
+external ffi.Pointer<CvStatus> FastFeatureDetector_Create(
   ffi.Pointer<FastFeatureDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Int, ffi.Bool, ffi.Int, ffi.Pointer<FastFeatureDetector>)>()
-external CvStatus FastFeatureDetector_CreateWithParams(
+external ffi.Pointer<CvStatus> FastFeatureDetector_CreateWithParams(
   int threshold,
   bool nonmaxSuppression,
   int type,
@@ -1537,27 +1700,28 @@ external CvStatus FastFeatureDetector_CreateWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(FastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus FastFeatureDetector_Detect(
+    ffi.Pointer<CvStatus> Function(
+        FastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> FastFeatureDetector_Detect(
   FastFeatureDetector f,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus FastNlMeansDenoising(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoising(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus FastNlMeansDenoisingColored(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoisingColored(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(VecMat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus FastNlMeansDenoisingColoredMulti(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMulti(
   VecMat src,
   Mat dst,
   int imgToDenoiseIndex,
@@ -1565,9 +1729,9 @@ external CvStatus FastNlMeansDenoisingColoredMulti(
 );
 
 @ffi.Native<
-    CvStatus Function(VecMat, Mat, ffi.Int, ffi.Int, ffi.Float, ffi.Float,
-        ffi.Int, ffi.Int)>()
-external CvStatus FastNlMeansDenoisingColoredMultiWithParams(
+    ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int, ffi.Float,
+        ffi.Float, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMultiWithParams(
   VecMat src,
   Mat dst,
   int imgToDenoiseIndex,
@@ -1579,8 +1743,9 @@ external CvStatus FastNlMeansDenoisingColoredMultiWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Float, ffi.Float, ffi.Int, ffi.Int)>()
-external CvStatus FastNlMeansDenoisingColoredWithParams(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Float, ffi.Float, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredWithParams(
   Mat src,
   Mat dst,
   double h,
@@ -1589,8 +1754,9 @@ external CvStatus FastNlMeansDenoisingColoredWithParams(
   int searchWindowSize,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Float, ffi.Int, ffi.Int)>()
-external CvStatus FastNlMeansDenoisingWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> FastNlMeansDenoisingWithParams(
   Mat src,
   Mat dst,
   double h,
@@ -1598,16 +1764,17 @@ external CvStatus FastNlMeansDenoisingWithParams(
   int searchWindowSize,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecVecPoint, Scalar)>()
-external CvStatus FillPoly(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, VecVecPoint, Scalar)>()
+external ffi.Pointer<CvStatus> FillPoly(
   Mat img,
   VecVecPoint points,
   Scalar color,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, VecVecPoint, Scalar, ffi.Int, ffi.Int, Point)>()
-external CvStatus FillPolyWithParams(
+    ffi.Pointer<CvStatus> Function(
+        Mat, VecVecPoint, Scalar, ffi.Int, ffi.Int, Point)>()
+external ffi.Pointer<CvStatus> FillPolyWithParams(
   Mat img,
   VecVecPoint points,
   Scalar color,
@@ -1617,8 +1784,9 @@ external CvStatus FillPolyWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, Mat, Point, ffi.Double, ffi.Int)>()
-external CvStatus Filter2D(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, Mat, Point, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> Filter2D(
   Mat src,
   Mat dst,
   int ddepth,
@@ -1628,17 +1796,10 @@ external CvStatus Filter2D(
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Size, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus FindChessboardCorners(
-  Mat image,
-  Size patternSize,
-  Mat corners,
-  int flags,
-  ffi.Pointer<ffi.Bool> rval,
-);
-
-@ffi.Native<CvStatus Function(Mat, Size, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus FindChessboardCornersSB(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Size, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> FindChessboardCorners(
   Mat image,
   Size patternSize,
   Mat corners,
@@ -1647,8 +1808,20 @@ external CvStatus FindChessboardCornersSB(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Size, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>)>()
-external CvStatus FindChessboardCornersSBWithMeta(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Size, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> FindChessboardCornersSB(
+  Mat image,
+  Size patternSize,
+  Mat corners,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Size, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> FindChessboardCornersSBWithMeta(
   Mat image,
   Size patternSize,
   Mat corners,
@@ -1658,8 +1831,9 @@ external CvStatus FindChessboardCornersSBWithMeta(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Pointer<VecVecPoint>)>()
-external CvStatus FindContours(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Int, ffi.Pointer<VecVecPoint>)>()
+external ffi.Pointer<CvStatus> FindContours(
   Mat src,
   Mat hierarchy,
   int mode,
@@ -1668,9 +1842,9 @@ external CvStatus FindContours(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, Mat, ffi.Int, ffi.Double,
-        ffi.Pointer<Mat>)>()
-external CvStatus FindHomography(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, Mat, ffi.Int,
+        ffi.Double, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> FindHomography(
   Mat src,
   Mat dst,
   int method,
@@ -1682,9 +1856,9 @@ external CvStatus FindHomography(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Mat, ffi.Int, TermCriteria, Mat, ffi.Int,
-        ffi.Pointer<ffi.Double>)>()
-external CvStatus FindTransformECC(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, TermCriteria, Mat,
+        ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> FindTransformECC(
   Mat templateImage,
   Mat inputImage,
   Mat warpMatrix,
@@ -1696,8 +1870,10 @@ external CvStatus FindTransformECC(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>()
-external CvStatus Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Size, Mat, Mat, ffi.Double, Size, ffi.Double)>()
+external ffi.Pointer<CvStatus>
+    Fisheye_EstimateNewCameraMatrixForUndistortRectify(
   Mat k,
   Mat d,
   Size imgSize,
@@ -1708,16 +1884,16 @@ external CvStatus Fisheye_EstimateNewCameraMatrixForUndistortRectify(
   double fovScale,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Fisheye_UndistortImage(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Fisheye_UndistortImage(
   Mat distorted,
   Mat undistorted,
   Mat k,
   Mat d,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, Mat, Size)>()
-external CvStatus Fisheye_UndistortImageWithParams(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, Size)>()
+external ffi.Pointer<CvStatus> Fisheye_UndistortImageWithParams(
   Mat distorted,
   Mat undistorted,
   Mat k,
@@ -1726,8 +1902,8 @@ external CvStatus Fisheye_UndistortImageWithParams(
   Size size,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, Mat, Mat)>()
-external CvStatus Fisheye_UndistortPoints(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Fisheye_UndistortPoints(
   Mat distorted,
   Mat undistorted,
   Mat k,
@@ -1736,16 +1912,17 @@ external CvStatus Fisheye_UndistortPoints(
   Mat P,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<RotatedRect>)>()
-external CvStatus FitEllipse(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<RotatedRect>)>()
+external ffi.Pointer<CvStatus> FitEllipse(
   VecPoint pts,
   ffi.Pointer<RotatedRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VecPoint, Mat, ffi.Int, ffi.Double, ffi.Double, ffi.Double)>()
-external CvStatus FitLine(
+external ffi.Pointer<CvStatus> FitLine(
   VecPoint pts,
   Mat line,
   int distType,
@@ -1759,15 +1936,15 @@ external void FlannBasedMatcher_Close(
   FlannBasedMatcherPtr f,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<FlannBasedMatcher>)>()
-external CvStatus FlannBasedMatcher_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannBasedMatcher>)>()
+external ffi.Pointer<CvStatus> FlannBasedMatcher_Create(
   ffi.Pointer<FlannBasedMatcher> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         FlannBasedMatcher, Mat, Mat, ffi.Int, ffi.Pointer<VecVecDMatch>)>()
-external CvStatus FlannBasedMatcher_KnnMatch(
+external ffi.Pointer<CvStatus> FlannBasedMatcher_KnnMatch(
   FlannBasedMatcher f,
   Mat query,
   Mat train,
@@ -1780,21 +1957,24 @@ external void GFTTDetector_Close(
   GFTTDetectorPtr a,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<GFTTDetector>)>()
-external CvStatus GFTTDetector_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<GFTTDetector>)>()
+external ffi.Pointer<CvStatus> GFTTDetector_Create(
   ffi.Pointer<GFTTDetector> rval,
 );
 
-@ffi.Native<CvStatus Function(GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus GFTTDetector_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> GFTTDetector_Detect(
   GFTTDetector a,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Size, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus GaussianBlur(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Size, ffi.Double, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> GaussianBlur(
   Mat src,
   Mat dst,
   Size ps,
@@ -1803,42 +1983,46 @@ external CvStatus GaussianBlur(
   int bt,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>)>()
-external CvStatus GetAffineTransform(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint, VecPoint, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetAffineTransform(
   VecPoint src,
   VecPoint dst,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
-external CvStatus GetAffineTransform2f(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetAffineTransform2f(
   VecPoint2f src,
   VecPoint2f dst,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Int64>)>()
-external CvStatus GetCVTickCount(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int64>)>()
+external ffi.Pointer<CvStatus> GetCVTickCount(
   ffi.Pointer<ffi.Int64> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Double, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus GetGaussianKernel(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Double, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetGaussianKernel(
   int ksize,
   double sigma,
   int ktype,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Int>)>()
-external CvStatus GetNumThreads(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> GetNumThreads(
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Size, ffi.Double, Size, ffi.Pointer<Rect>,
-        ffi.Bool, ffi.Pointer<Mat>)>()
-external CvStatus GetOptimalNewCameraMatrixWithParams(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Size, ffi.Double, Size,
+        ffi.Pointer<Rect>, ffi.Bool, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetOptimalNewCameraMatrixWithParams(
   Mat cameraMatrix,
   Mat distCoeffs,
   Size size,
@@ -1849,8 +2033,10 @@ external CvStatus GetOptimalNewCameraMatrixWithParams(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, VecPoint, ffi.Pointer<Mat>, ffi.Int)>()
-external CvStatus GetPerspectiveTransform(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecPoint, VecPoint, ffi.Pointer<Mat>, ffi.Int)>()
+external ffi.Pointer<CvStatus> GetPerspectiveTransform(
   VecPoint src,
   VecPoint dst,
   ffi.Pointer<Mat> rval,
@@ -1858,16 +2044,17 @@ external CvStatus GetPerspectiveTransform(
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, ffi.Int)>()
-external CvStatus GetPerspectiveTransform2f(
+    ffi.Pointer<CvStatus> Function(
+        VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, ffi.Int)>()
+external ffi.Pointer<CvStatus> GetPerspectiveTransform2f(
   VecPoint2f src,
   VecPoint2f dst,
   ffi.Pointer<Mat> rval,
   int solveMethod,
 );
 
-@ffi.Native<CvStatus Function(Mat, Size, Point2f, Mat)>()
-external CvStatus GetRectSubPix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Size, Point2f, Mat)>()
+external ffi.Pointer<CvStatus> GetRectSubPix(
   Mat src,
   Size patchSize,
   Point2f center,
@@ -1875,25 +2062,26 @@ external CvStatus GetRectSubPix(
 );
 
 @ffi.Native<
-    CvStatus Function(Point2f, ffi.Double, ffi.Double, ffi.Pointer<Mat>)>()
-external CvStatus GetRotationMatrix2D(
+    ffi.Pointer<CvStatus> Function(
+        Point2f, ffi.Double, ffi.Double, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetRotationMatrix2D(
   Point2f center,
   double angle,
   double scale,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, Size, ffi.Pointer<Mat>)>()
-external CvStatus GetStructuringElement(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, Size, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> GetStructuringElement(
   int shape,
   Size ksize,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double, ffi.Int,
-        ffi.Pointer<ffi.Int>, ffi.Pointer<Size>)>()
-external CvStatus GetTextSizeWithBaseline(
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double,
+        ffi.Int, ffi.Pointer<ffi.Int>, ffi.Pointer<Size>)>()
+external ffi.Pointer<CvStatus> GetTextSizeWithBaseline(
   ffi.Pointer<ffi.Char> text,
   int fontFace,
   double fontScale,
@@ -1902,15 +2090,15 @@ external CvStatus GetTextSizeWithBaseline(
   ffi.Pointer<Size> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Double>)>()
-external CvStatus GetTickFrequency(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> GetTickFrequency(
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int, ffi.Double,
-        ffi.Double, Mat, ffi.Int, ffi.Bool, ffi.Double)>()
-external CvStatus GoodFeaturesToTrack(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int,
+        ffi.Double, ffi.Double, Mat, ffi.Int, ffi.Bool, ffi.Double)>()
+external ffi.Pointer<CvStatus> GoodFeaturesToTrack(
   Mat img,
   ffi.Pointer<VecPoint2f> corners,
   int maxCorners,
@@ -1923,9 +2111,9 @@ external CvStatus GoodFeaturesToTrack(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int, ffi.Double,
-        ffi.Double, Mat, ffi.Int, ffi.Int, ffi.Bool, ffi.Double)>()
-external CvStatus GoodFeaturesToTrackWithGradient(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint2f>, ffi.Int,
+        ffi.Double, ffi.Double, Mat, ffi.Int, ffi.Int, ffi.Bool, ffi.Double)>()
+external ffi.Pointer<CvStatus> GoodFeaturesToTrackWithGradient(
   Mat img,
   ffi.Pointer<VecPoint2f> corners,
   int maxCorners,
@@ -1938,8 +2126,10 @@ external CvStatus GoodFeaturesToTrackWithGradient(
   double k,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Rect, Mat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus GrabCut(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Rect, Mat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> GrabCut(
   Mat img,
   Mat mask,
   Rect rect,
@@ -1949,8 +2139,8 @@ external CvStatus GrabCut(
   int mode,
 );
 
-@ffi.Native<CvStatus Function(VecRect, ffi.Int, ffi.Double)>()
-external CvStatus GroupRectangles(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecRect, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> GroupRectangles(
   VecRect rects,
   int groupThreshold,
   double eps,
@@ -1962,9 +2152,9 @@ external void HOGDescriptor_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecFloat>, Size, Size,
-        ffi.Pointer<VecPoint>)>()
-external CvStatus HOGDescriptor_Compute(
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecFloat>,
+        Size, Size, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_Compute(
   HOGDescriptor self,
   Mat img,
   ffi.Pointer<VecFloat> descriptors,
@@ -1974,7 +2164,7 @@ external CvStatus HOGDescriptor_Compute(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         HOGDescriptor,
         Mat,
         ffi.Pointer<VecPoint>,
@@ -1983,7 +2173,7 @@ external CvStatus HOGDescriptor_Compute(
         Size,
         Size,
         ffi.Pointer<VecPoint>)>()
-external CvStatus HOGDescriptor_Detect(
+external ffi.Pointer<CvStatus> HOGDescriptor_Detect(
   HOGDescriptor self,
   Mat img,
   ffi.Pointer<VecPoint> foundLocations,
@@ -1995,9 +2185,9 @@ external CvStatus HOGDescriptor_Detect(
 );
 
 @ffi.Native<
-    CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>, ffi.Double,
-        Size, Size, ffi.Pointer<VecPoint>)>()
-external CvStatus HOGDescriptor_Detect2(
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>,
+        ffi.Double, Size, Size, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_Detect2(
   HOGDescriptor self,
   Mat img,
   ffi.Pointer<VecPoint> foundLocations,
@@ -2007,17 +2197,18 @@ external CvStatus HOGDescriptor_Detect2(
   ffi.Pointer<VecPoint> searchLocations,
 );
 
-@ffi.Native<CvStatus Function(HOGDescriptor, Mat, ffi.Pointer<VecRect>)>()
-external CvStatus HOGDescriptor_DetectMultiScale(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScale(
   HOGDescriptor self,
   Mat img,
   ffi.Pointer<VecRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(HOGDescriptor, Mat, ffi.Double, Size, Size, ffi.Double,
-        ffi.Double, ffi.Bool, ffi.Pointer<VecRect>)>()
-external CvStatus HOGDescriptor_DetectMultiScaleWithParams(
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Double, Size, Size,
+        ffi.Double, ffi.Double, ffi.Bool, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScaleWithParams(
   HOGDescriptor self,
   Mat img,
   double hitThresh,
@@ -2030,34 +2221,36 @@ external CvStatus HOGDescriptor_DetectMultiScaleWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         HOGDescriptor, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus HOGDescriptor_Load(
+external ffi.Pointer<CvStatus> HOGDescriptor_Load(
   HOGDescriptor self,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<HOGDescriptor>)>()
-external CvStatus HOGDescriptor_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<HOGDescriptor>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_New(
   ffi.Pointer<HOGDescriptor> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<HOGDescriptor>)>()
-external CvStatus HOGDescriptor_NewFromFile(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<HOGDescriptor>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_NewFromFile(
   ffi.Pointer<ffi.Char> filename,
   ffi.Pointer<HOGDescriptor> rval,
 );
 
-@ffi.Native<CvStatus Function(HOGDescriptor, VecFloat)>()
-external CvStatus HOGDescriptor_SetSVMDetector(
+@ffi.Native<ffi.Pointer<CvStatus> Function(HOGDescriptor, VecFloat)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_SetSVMDetector(
   HOGDescriptor self,
   VecFloat det,
 );
 
-@ffi.Native<CvStatus Function(HOGDescriptor, Mat, Mat, Mat, Size, Size)>()
-external CvStatus HOGDescriptor_computeGradient(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, Mat, Mat, Size, Size)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_computeGradient(
   HOGDescriptor self,
   Mat img,
   Mat grad,
@@ -2066,26 +2259,29 @@ external CvStatus HOGDescriptor_computeGradient(
   Size paddingBR,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
-external CvStatus HOGDescriptor_getDaimlerPeopleDetector(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_getDaimlerPeopleDetector(
   ffi.Pointer<VecFloat> rval,
 );
 
-@ffi.Native<CvStatus Function(HOGDescriptor, ffi.Pointer<ffi.Size>)>()
-external CvStatus HOGDescriptor_getDescriptorSize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<ffi.Size>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_getDescriptorSize(
   HOGDescriptor self,
   ffi.Pointer<ffi.Size> rval,
 );
 
-@ffi.Native<CvStatus Function(HOGDescriptor, ffi.Pointer<ffi.Double>)>()
-external CvStatus HOGDescriptor_getWinSigma(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_getWinSigma(
   HOGDescriptor self,
   ffi.Pointer<ffi.Double> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(HOGDescriptor, VecRect, VecDouble, ffi.Int, ffi.Double)>()
-external CvStatus HOGDescriptor_groupRectangles(
+    ffi.Pointer<CvStatus> Function(
+        HOGDescriptor, VecRect, VecDouble, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> HOGDescriptor_groupRectangles(
   HOGDescriptor self,
   VecRect rectList,
   VecDouble weights,
@@ -2093,13 +2289,14 @@ external CvStatus HOGDescriptor_groupRectangles(
   double eps,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
-external CvStatus HOG_GetDefaultPeopleDetector(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>()
+external ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector(
   ffi.Pointer<VecFloat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double)>()
-external CvStatus HoughCircles(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double)>()
+external ffi.Pointer<CvStatus> HoughCircles(
   Mat src,
   Mat circles,
   int method,
@@ -2108,9 +2305,9 @@ external CvStatus HoughCircles(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double, ffi.Double,
-        ffi.Double, ffi.Int, ffi.Int)>()
-external CvStatus HoughCirclesWithParams(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Double,
+        ffi.Double, ffi.Double, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> HoughCirclesWithParams(
   Mat src,
   Mat circles,
   int method,
@@ -2123,9 +2320,9 @@ external CvStatus HoughCirclesWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Double,
-        ffi.Double, ffi.Double, ffi.Double)>()
-external CvStatus HoughLines(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int,
+        ffi.Double, ffi.Double, ffi.Double, ffi.Double)>()
+external ffi.Pointer<CvStatus> HoughLines(
   Mat src,
   Mat lines,
   double rho,
@@ -2137,8 +2334,9 @@ external CvStatus HoughLines(
   double max_theta,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus HoughLinesP(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> HoughLinesP(
   Mat src,
   Mat lines,
   double rho,
@@ -2147,9 +2345,9 @@ external CvStatus HoughLinesP(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Double, ffi.Double)>()
-external CvStatus HoughLinesPWithParams(
+external ffi.Pointer<CvStatus> HoughLinesPWithParams(
   Mat src,
   Mat lines,
   double rho,
@@ -2160,9 +2358,9 @@ external CvStatus HoughLinesPWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Double, ffi.Double,
-        ffi.Double, ffi.Double, ffi.Double, ffi.Double)>()
-external CvStatus HoughLinesPointSet(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Double,
+        ffi.Double, ffi.Double, ffi.Double, ffi.Double, ffi.Double)>()
+external ffi.Pointer<CvStatus> HoughLinesPointSet(
   Mat points,
   Mat lines,
   int lines_max,
@@ -2175,8 +2373,9 @@ external CvStatus HoughLinesPointSet(
   double theta_step,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Float)>()
-external CvStatus IlluminationChange(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> IlluminationChange(
   Mat src,
   Mat mask,
   Mat dst,
@@ -2184,17 +2383,18 @@ external CvStatus IlluminationChange(
   double beta,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Image_IMDecode(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Image_IMDecode(
   VecUChar buf,
   int flags,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>,
-        ffi.Pointer<VecUChar>)>()
-external CvStatus Image_IMEncode(
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
+        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> Image_IMEncode(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
   ffi.Pointer<ffi.Bool> success,
@@ -2202,9 +2402,9 @@ external CvStatus Image_IMEncode(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<ffi.Bool>,
-        ffi.Pointer<VecUChar>)>()
-external CvStatus Image_IMEncode_WithParams(
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
+        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> Image_IMEncode_WithParams(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
   VecInt params,
@@ -2213,33 +2413,37 @@ external CvStatus Image_IMEncode_WithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Image_IMRead(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Image_IMRead(
   ffi.Pointer<ffi.Char> filename,
   int flags,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Image_IMWrite(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Image_IMWrite(
   ffi.Pointer<ffi.Char> filename,
   Mat img,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Image_IMWrite_WithParams(
+external ffi.Pointer<CvStatus> Image_IMWrite_WithParams(
   ffi.Pointer<ffi.Char> filename,
   Mat img,
   VecInt params,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat, Mat)>()
-external CvStatus InitUndistortRectifyMap(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Mat, Size, ffi.Int, Mat, Mat)>()
+external ffi.Pointer<CvStatus> InitUndistortRectifyMap(
   Mat cameraMatrix,
   Mat distCoeffs,
   Mat r,
@@ -2250,8 +2454,9 @@ external CvStatus InitUndistortRectifyMap(
   Mat map2,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus Integral(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Integral(
   Mat src,
   Mat sum,
   Mat sqsum,
@@ -2260,8 +2465,8 @@ external CvStatus Integral(
   int sqdepth,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus InvertAffineTransform(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> InvertAffineTransform(
   Mat src,
   Mat dst,
 );
@@ -2271,20 +2476,23 @@ external void KAZE_Close(
   KAZEPtr a,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<KAZE>)>()
-external CvStatus KAZE_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<KAZE>)>()
+external ffi.Pointer<CvStatus> KAZE_Create(
   ffi.Pointer<KAZE> rval,
 );
 
-@ffi.Native<CvStatus Function(KAZE, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus KAZE_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(KAZE, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> KAZE_Detect(
   KAZE a,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus KAZE_DetectAndCompute(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> KAZE_DetectAndCompute(
   KAZE a,
   Mat src,
   Mat mask,
@@ -2293,9 +2501,9 @@ external CvStatus KAZE_DetectAndCompute(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, Mat, TermCriteria, ffi.Int, ffi.Int, Mat,
-        ffi.Pointer<ffi.Double>)>()
-external CvStatus KMeans(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, Mat, TermCriteria, ffi.Int,
+        ffi.Int, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> KMeans(
   Mat data,
   int k,
   Mat bestLabels,
@@ -2307,9 +2515,9 @@ external CvStatus KMeans(
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint2f, ffi.Int, Mat, TermCriteria, ffi.Int, ffi.Int,
-        Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus KMeansPoints(
+    ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Int, Mat, TermCriteria,
+        ffi.Int, ffi.Int, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> KMeansPoints(
   VecPoint2f pts,
   int k,
   Mat bestLabels,
@@ -2325,113 +2533,115 @@ external void KalmanFilter_Close(
   KalmanFilterPtr self,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_Correct(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_Correct(
   KalmanFilter self,
   Mat measurement,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetControlMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetControlMatrix(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetErrorCovPost(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetErrorCovPost(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetErrorCovPre(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetErrorCovPre(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetGain(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetGain(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetMeasurementMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetMeasurementMatrix(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetMeasurementNoiseCov(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetMeasurementNoiseCov(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetProcessNoiseCov(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetProcessNoiseCov(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetStatePost(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetStatePost(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetStatePre(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetStatePre(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTemp1(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTemp1(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTemp2(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTemp2(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTemp3(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTemp3(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTemp4(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTemp4(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTemp5(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTemp5(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_GetTransitionMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_GetTransitionMatrix(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Int, ffi.Int)>()
-external CvStatus KalmanFilter_Init(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> KalmanFilter_Init(
   KalmanFilter self,
   int dynamParams,
   int measureParams,
 );
 
 @ffi.Native<
-    CvStatus Function(KalmanFilter, ffi.Int, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus KalmanFilter_InitWithParams(
+    ffi.Pointer<CvStatus> Function(
+        KalmanFilter, ffi.Int, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> KalmanFilter_InitWithParams(
   KalmanFilter self,
   int dynamParams,
   int measureParams,
@@ -2440,9 +2650,9 @@ external CvStatus KalmanFilter_InitWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<KalmanFilter>)>()
-external CvStatus KalmanFilter_New(
+external ffi.Pointer<CvStatus> KalmanFilter_New(
   int dynamParams,
   int measureParams,
   int controlParams,
@@ -2450,90 +2660,91 @@ external CvStatus KalmanFilter_New(
   ffi.Pointer<KalmanFilter> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_Predict(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_Predict(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat, ffi.Pointer<Mat>)>()
-external CvStatus KalmanFilter_PredictWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> KalmanFilter_PredictWithParams(
   KalmanFilter self,
   Mat control,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetControlMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetControlMatrix(
   KalmanFilter self,
   Mat controlMatrix,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetErrorCovPost(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetErrorCovPost(
   KalmanFilter self,
   Mat errorCovPost,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetErrorCovPre(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetErrorCovPre(
   KalmanFilter self,
   Mat errorCovPre,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetGain(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetGain(
   KalmanFilter self,
   Mat gain,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetMeasurementMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetMeasurementMatrix(
   KalmanFilter self,
   Mat measurementMatrix,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetMeasurementNoiseCov(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetMeasurementNoiseCov(
   KalmanFilter self,
   Mat measurementNoiseCov,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetProcessNoiseCov(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetProcessNoiseCov(
   KalmanFilter self,
   Mat processNoiseCov,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetStatePost(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetStatePost(
   KalmanFilter self,
   Mat statePost,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetStatePre(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetStatePre(
   KalmanFilter self,
   Mat statePre,
 );
 
-@ffi.Native<CvStatus Function(KalmanFilter, Mat)>()
-external CvStatus KalmanFilter_SetTransitionMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
+external ffi.Pointer<CvStatus> KalmanFilter_SetTransitionMatrix(
   KalmanFilter self,
   Mat transitionMatrix,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus LUT(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> LUT(
   Mat src,
   Mat lut,
   Mat dst,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, ffi.Int, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus Laplacian(
+external ffi.Pointer<CvStatus> Laplacian(
   Mat src,
   Mat dst,
   int dDepth,
@@ -2548,37 +2759,42 @@ external void Layer_Close(
   LayerPtr layer,
 );
 
-@ffi.Native<CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Layer_GetName(
-  Layer layer,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-);
-
-@ffi.Native<CvStatus Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Layer_GetType(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> Layer_GetName(
   Layer layer,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Layer_InputNameToIndex(
+    ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> Layer_GetType(
+  Layer layer,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Layer_InputNameToIndex(
   Layer layer,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Layer_OutputNameToIndex(
+    ffi.Pointer<CvStatus> Function(
+        Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Layer_OutputNameToIndex(
   Layer layer,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Point, Point, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus Line(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Point, Point, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Line(
   Mat img,
   Point pt1,
   Point pt2,
@@ -2588,8 +2804,9 @@ external CvStatus Line(
   int shift,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Point2f, ffi.Double, ffi.Int)>()
-external CvStatus LinearPolar(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Point2f, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> LinearPolar(
   Mat src,
   Mat dst,
   Point2f center,
@@ -2597,8 +2814,9 @@ external CvStatus LinearPolar(
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Point2f, ffi.Double, ffi.Int)>()
-external CvStatus LogPolar(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Point2f, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> LogPolar(
   Mat src,
   Mat dst,
   Point2f center,
@@ -2611,121 +2829,123 @@ external void MSER_Close(
   MSERPtr a,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<MSER>)>()
-external CvStatus MSER_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<MSER>)>()
+external ffi.Pointer<CvStatus> MSER_Create(
   ffi.Pointer<MSER> rval,
 );
 
-@ffi.Native<CvStatus Function(MSER, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus MSER_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(MSER, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> MSER_Detect(
   MSER a,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_AbsDiff(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AbsDiff(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_Accumulate(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Accumulate(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_AccumulateProduct(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulateProduct(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Mat_AccumulateProductWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulateProductWithMask(
   Mat src1,
   Mat src2,
   Mat dst,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_AccumulateSquare(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulateSquare(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_AccumulateSquareWithMask(
-  Mat src,
-  Mat dst,
-  Mat mask,
-);
-
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_AccumulateWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulateSquareWithMask(
   Mat src,
   Mat dst,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double)>()
-external CvStatus Mat_AccumulatedWeighted(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulateWithMask(
+  Mat src,
+  Mat dst,
+  Mat mask,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_AccumulatedWeighted(
   Mat src,
   Mat dst,
   double alpha,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double, Mat)>()
-external CvStatus Mat_AccumulatedWeightedWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AccumulatedWeightedWithMask(
   Mat src,
   Mat dst,
   double alpha,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Add(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Add(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, double_t)>()
-external CvStatus Mat_AddF64(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, double_t)>()
+external ffi.Pointer<CvStatus> Mat_AddF64(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, float_t)>()
-external CvStatus Mat_AddFloat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, float_t)>()
+external ffi.Pointer<CvStatus> Mat_AddFloat(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int32)>()
-external CvStatus Mat_AddI32(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_AddI32(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int8)>()
-external CvStatus Mat_AddSChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_AddSChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Uint8)>()
-external CvStatus Mat_AddUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_AddUChar(
   Mat m,
   int val,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Double, Mat, ffi.Double, ffi.Double, Mat)>()
-external CvStatus Mat_AddWeighted(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Double, Mat, ffi.Double, ffi.Double, Mat)>()
+external ffi.Pointer<CvStatus> Mat_AddWeighted(
   Mat src1,
   double alpha,
   Mat src2,
@@ -2735,9 +2955,9 @@ external CvStatus Mat_AddWeighted(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Mat, ffi.Int, Mat, ffi.Int, ffi.Int, Mat,
-        ffi.Int, ffi.Bool)>()
-external CvStatus Mat_BatchDistance(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, Mat, ffi.Int,
+        ffi.Int, Mat, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_BatchDistance(
   Mat src1,
   Mat src2,
   Mat dist,
@@ -2750,58 +2970,58 @@ external CvStatus Mat_BatchDistance(
   bool crosscheck,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseAnd(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseAnd(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseAndWithMask(
-  Mat src1,
-  Mat src2,
-  Mat dst,
-  Mat mask,
-);
-
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_BitwiseNot(
-  Mat src1,
-  Mat dst,
-);
-
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseNotWithMask(
-  Mat src1,
-  Mat dst,
-  Mat mask,
-);
-
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseOr(
-  Mat src1,
-  Mat src2,
-  Mat dst,
-);
-
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseOrWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseAndWithMask(
   Mat src1,
   Mat src2,
   Mat dst,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseXor(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseNot(
+  Mat src1,
+  Mat dst,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseNotWithMask(
+  Mat src1,
+  Mat dst,
+  Mat mask,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseOr(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Mat_BitwiseXorWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseOrWithMask(
+  Mat src1,
+  Mat src2,
+  Mat dst,
+  Mat mask,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseXor(
+  Mat src1,
+  Mat src2,
+  Mat dst,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_BitwiseXorWithMask(
   Mat src1,
   Mat src2,
   Mat dst,
@@ -2809,16 +3029,17 @@ external CvStatus Mat_BitwiseXorWithMask(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_BorderInterpolate(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_BorderInterpolate(
   int p,
   int len,
   int borderType,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus Mat_CalcCovarMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_CalcCovarMatrix(
   Mat samples,
   Mat covar,
   Mat mean,
@@ -2826,8 +3047,8 @@ external CvStatus Mat_CalcCovarMatrix(
   int ctype,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Bool)>()
-external CvStatus Mat_CartToPolar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_CartToPolar(
   Mat x,
   Mat y,
   Mat magnitude,
@@ -2835,16 +3056,16 @@ external CvStatus Mat_CartToPolar(
   bool angleInDegrees,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Channels(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Channels(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Bool, ffi.Pointer<Point>, ffi.Double, ffi.Double,
-        ffi.Pointer<ffi.Bool>)>()
-external CvStatus Mat_CheckRange(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Bool, ffi.Pointer<Point>,
+        ffi.Double, ffi.Double, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Mat_CheckRange(
   Mat m,
   bool quiet,
   ffi.Pointer<Point> pos,
@@ -2853,8 +3074,8 @@ external CvStatus Mat_CheckRange(
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_Clone(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_Clone(
   Mat m,
   ffi.Pointer<Mat> rval,
 );
@@ -2869,49 +3090,50 @@ external void Mat_CloseVoid(
   ffi.Pointer<ffi.Void> m,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Cols(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Cols(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int)>()
-external CvStatus Mat_Compare(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Compare(
   Mat src1,
   Mat src2,
   Mat dst,
   int ct,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Bool)>()
-external CvStatus Mat_CompleteSymm(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_CompleteSymm(
   Mat m,
   bool lowerToUpper,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_ConvertFp16(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_ConvertFp16(
   Mat m,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double, ffi.Double)>()
-external CvStatus Mat_ConvertScaleAbs(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_ConvertScaleAbs(
   Mat src,
   Mat dst,
   double alpha,
   double beta,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_ConvertTo(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_ConvertTo(
   Mat m,
   Mat dst,
   int type,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Float, ffi.Float)>()
-external CvStatus Mat_ConvertToWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> Mat_ConvertToWithParams(
   Mat m,
   Mat dst,
   int type,
@@ -2920,9 +3142,9 @@ external CvStatus Mat_ConvertToWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus Mat_CopyMakeBorder(
+external ffi.Pointer<CvStatus> Mat_CopyMakeBorder(
   Mat src,
   Mat dst,
   int top,
@@ -2933,160 +3155,161 @@ external CvStatus Mat_CopyMakeBorder(
   Scalar value,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_CopyTo(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_CopyTo(
   Mat m,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_CopyToWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_CopyToWithMask(
   Mat m,
   Mat dst,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_CountNonZero(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_CountNonZero(
   Mat src,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_DCT(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_DCT(
   Mat src,
   Mat dst,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_DFT(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_DFT(
   Mat m,
   Mat dst,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>()
-external CvStatus Mat_Data(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> Mat_Data(
   Mat m,
   ffi.Pointer<VecUChar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Pointer<ffi.Pointer<uchar>>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_DataPtr(
+external ffi.Pointer<CvStatus> Mat_DataPtr(
   Mat m,
   ffi.Pointer<ffi.Pointer<uchar>> data,
   ffi.Pointer<ffi.Int> length,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus Mat_Determinant(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Mat_Determinant(
   Mat m,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Divide(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Divide(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, double_t)>()
-external CvStatus Mat_DivideF64(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, double_t)>()
+external ffi.Pointer<CvStatus> Mat_DivideF64(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, float_t)>()
-external CvStatus Mat_DivideFloat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, float_t)>()
+external ffi.Pointer<CvStatus> Mat_DivideFloat(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int32)>()
-external CvStatus Mat_DivideI32(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_DivideI32(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int8)>()
-external CvStatus Mat_DivideSChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_DivideSChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Uint8)>()
-external CvStatus Mat_DivideUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_DivideUChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Mat_Eigen(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Mat_Eigen(
   Mat src,
   Mat eigenvalues,
   Mat eigenvectors,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_EigenNonSymmetric(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_EigenNonSymmetric(
   Mat src,
   Mat eigenvalues,
   Mat eigenvectors,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_ElemSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_ElemSize(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Mat_Empty(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Mat_Empty(
   Mat m,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_Exp(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Exp(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_ExtractChannel(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_ExtractChannel(
   Mat src,
   Mat dst,
   int coi,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_FindNonZero(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_FindNonZero(
   Mat src,
   Mat idx,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_Flip(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Flip(
   Mat src,
   Mat dst,
   int flipCode,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_FromCMat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_FromCMat(
   Mat m,
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_FromPtr(
+external ffi.Pointer<CvStatus> Mat_FromPtr(
   Mat m,
   int rows,
   int cols,
@@ -3097,8 +3320,9 @@ external CvStatus Mat_FromPtr(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Double, Mat, ffi.Double, Mat, ffi.Int)>()
-external CvStatus Mat_Gemm(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Double, Mat, ffi.Double, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Gemm(
   Mat src1,
   Mat src2,
   double alpha,
@@ -3108,8 +3332,10 @@ external CvStatus Mat_Gemm(
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Mat_GetDouble(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Mat_GetDouble(
   Mat m,
   int row,
   int col,
@@ -3117,9 +3343,9 @@ external CvStatus Mat_GetDouble(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Mat_GetDouble3(
+external ffi.Pointer<CvStatus> Mat_GetDouble3(
   Mat m,
   int x,
   int y,
@@ -3127,8 +3353,10 @@ external CvStatus Mat_GetDouble3(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
-external CvStatus Mat_GetFloat(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> Mat_GetFloat(
   Mat m,
   int row,
   int col,
@@ -3136,8 +3364,9 @@ external CvStatus Mat_GetFloat(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
-external CvStatus Mat_GetFloat3(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> Mat_GetFloat3(
   Mat m,
   int x,
   int y,
@@ -3145,8 +3374,10 @@ external CvStatus Mat_GetFloat3(
   ffi.Pointer<ffi.Float> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
-external CvStatus Mat_GetInt(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
+external ffi.Pointer<CvStatus> Mat_GetInt(
   Mat m,
   int row,
   int col,
@@ -3154,8 +3385,9 @@ external CvStatus Mat_GetInt(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
-external CvStatus Mat_GetInt3(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
+external ffi.Pointer<CvStatus> Mat_GetInt3(
   Mat m,
   int x,
   int y,
@@ -3163,14 +3395,16 @@ external CvStatus Mat_GetInt3(
   ffi.Pointer<ffi.Int32> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_GetOptimalDFTSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_GetOptimalDFTSize(
   int vecsize,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
-external CvStatus Mat_GetSChar(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
+external ffi.Pointer<CvStatus> Mat_GetSChar(
   Mat m,
   int row,
   int col,
@@ -3178,8 +3412,9 @@ external CvStatus Mat_GetSChar(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
-external CvStatus Mat_GetSChar3(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
+external ffi.Pointer<CvStatus> Mat_GetSChar3(
   Mat m,
   int x,
   int y,
@@ -3187,8 +3422,10 @@ external CvStatus Mat_GetSChar3(
   ffi.Pointer<ffi.Int8> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
-external CvStatus Mat_GetShort(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
+external ffi.Pointer<CvStatus> Mat_GetShort(
   Mat m,
   int row,
   int col,
@@ -3196,8 +3433,9 @@ external CvStatus Mat_GetShort(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
-external CvStatus Mat_GetShort3(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
+external ffi.Pointer<CvStatus> Mat_GetShort3(
   Mat m,
   int x,
   int y,
@@ -3205,8 +3443,10 @@ external CvStatus Mat_GetShort3(
   ffi.Pointer<ffi.Int16> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
-external CvStatus Mat_GetUChar(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
+external ffi.Pointer<CvStatus> Mat_GetUChar(
   Mat m,
   int row,
   int col,
@@ -3214,8 +3454,9 @@ external CvStatus Mat_GetUChar(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
-external CvStatus Mat_GetUChar3(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
+external ffi.Pointer<CvStatus> Mat_GetUChar3(
   Mat m,
   int x,
   int y,
@@ -3223,8 +3464,10 @@ external CvStatus Mat_GetUChar3(
   ffi.Pointer<ffi.Uint8> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>()
-external CvStatus Mat_GetUShort(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>()
+external ffi.Pointer<CvStatus> Mat_GetUShort(
   Mat m,
   int row,
   int col,
@@ -3232,9 +3475,9 @@ external CvStatus Mat_GetUShort(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>()
-external CvStatus Mat_GetUShort3(
+external ffi.Pointer<CvStatus> Mat_GetUShort3(
   Mat m,
   int x,
   int y,
@@ -3242,307 +3485,334 @@ external CvStatus Mat_GetUShort3(
   ffi.Pointer<ffi.Uint16> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2b>)>()
-external CvStatus Mat_GetVec2b(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2b>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2b(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2b> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2d>)>()
-external CvStatus Mat_GetVec2d(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2d>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2d(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2d> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2f>)>()
-external CvStatus Mat_GetVec2f(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2f>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2f(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2i>)>()
-external CvStatus Mat_GetVec2i(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2i>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2i(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2i> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2s>)>()
-external CvStatus Mat_GetVec2s(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2s>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2s(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2s> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2w>)>()
-external CvStatus Mat_GetVec2w(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2w>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec2w(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec2w> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3b>)>()
-external CvStatus Mat_GetVec3b(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3b>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3b(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3b> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3d>)>()
-external CvStatus Mat_GetVec3d(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3d>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3d(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3d> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3f>)>()
-external CvStatus Mat_GetVec3f(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3f>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3f(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3i>)>()
-external CvStatus Mat_GetVec3i(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3i>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3i(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3i> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3s>)>()
-external CvStatus Mat_GetVec3s(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3s>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3s(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3s> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3w>)>()
-external CvStatus Mat_GetVec3w(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3w>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec3w(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec3w> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4b>)>()
-external CvStatus Mat_GetVec4b(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4b>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4b(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4b> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4d>)>()
-external CvStatus Mat_GetVec4d(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4d>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4d(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4d> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4f>)>()
-external CvStatus Mat_GetVec4f(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4f>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4f(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4i>)>()
-external CvStatus Mat_GetVec4i(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4i>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4i(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4i> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4s>)>()
-external CvStatus Mat_GetVec4s(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4s>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4s(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4s> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4w>)>()
-external CvStatus Mat_GetVec4w(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4w>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec4w(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec4w> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6d>)>()
-external CvStatus Mat_GetVec6d(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6d>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec6d(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec6d> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6f>)>()
-external CvStatus Mat_GetVec6f(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6f>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec6f(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec6f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6i>)>()
-external CvStatus Mat_GetVec6i(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6i>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec6i(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec6i> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec8i>)>()
-external CvStatus Mat_GetVec8i(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec8i>)>()
+external ffi.Pointer<CvStatus> Mat_GetVec8i(
   Mat m,
   int row,
   int col,
   ffi.Pointer<Vec8i> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Hconcat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Hconcat(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_Idct(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Idct(
   Mat src,
   Mat dst,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus Mat_Idft(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Idft(
   Mat src,
   Mat dst,
   int flags,
   int nonzeroRows,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat)>()
-external CvStatus Mat_InRange(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_InRange(
   Mat src,
   Mat lowerb,
   Mat upperb,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Scalar, Scalar, Mat)>()
-external CvStatus Mat_InRangeWithScalar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar, Scalar, Mat)>()
+external ffi.Pointer<CvStatus> Mat_InRangeWithScalar(
   Mat src,
   Scalar lowerb,
   Scalar upperb,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_InsertChannel(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_InsertChannel(
   Mat src,
   Mat dst,
   int coi,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Mat_Invert(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Mat_Invert(
   Mat src,
   Mat dst,
   int flags,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Mat_IsContinuous(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Mat_IsContinuous(
   Mat m,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_Log(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Log(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Magnitude(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Magnitude(
   Mat x,
   Mat y,
   Mat magnitude,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Max(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Max(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>)>()
-external CvStatus Mat_Mean(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Mat_Mean(
   Mat m,
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>)>()
-external CvStatus Mat_MeanStdDev(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Mat_MeanStdDev(
   Mat src,
   ffi.Pointer<Scalar> dstMean,
   ffi.Pointer<Scalar> dstStdDev,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>, Mat)>()
-external CvStatus Mat_MeanStdDevWithMask(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Pointer<Scalar>, ffi.Pointer<Scalar>, Mat)>()
+external ffi.Pointer<CvStatus> Mat_MeanStdDevWithMask(
   Mat src,
   ffi.Pointer<Scalar> dstMean,
   ffi.Pointer<Scalar> dstStdDev,
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<Scalar>)>()
-external CvStatus Mat_MeanWithMask(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Mat_MeanWithMask(
   Mat m,
   Mat mask,
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecMat, Mat)>()
-external CvStatus Mat_Merge(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Merge(
   VecMat mats,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Min(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Min(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
-        ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_MinMaxIdx(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Double>,
+        ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_MinMaxIdx(
   Mat m,
   ffi.Pointer<ffi.Double> minVal,
   ffi.Pointer<ffi.Double> maxVal,
@@ -3551,9 +3821,9 @@ external CvStatus Mat_MinMaxIdx(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
-        ffi.Pointer<Point>, ffi.Pointer<Point>)>()
-external CvStatus Mat_MinMaxLoc(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Double>,
+        ffi.Pointer<ffi.Double>, ffi.Pointer<Point>, ffi.Pointer<Point>)>()
+external ffi.Pointer<CvStatus> Mat_MinMaxLoc(
   Mat m,
   ffi.Pointer<ffi.Double> minVal,
   ffi.Pointer<ffi.Double> maxVal,
@@ -3561,67 +3831,68 @@ external CvStatus Mat_MinMaxLoc(
   ffi.Pointer<Point> maxLoc,
 );
 
-@ffi.Native<CvStatus Function(VecMat, VecMat, VecInt)>()
-external CvStatus Mat_MixChannels(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, VecMat, VecInt)>()
+external ffi.Pointer<CvStatus> Mat_MixChannels(
   VecMat src,
   VecMat dst,
   VecInt fromTo,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int)>()
-external CvStatus Mat_MulSpectrums(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_MulSpectrums(
   Mat a,
   Mat b,
   Mat c,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Multiply(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Multiply(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, double_t)>()
-external CvStatus Mat_MultiplyF64(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, double_t)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyF64(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, float_t)>()
-external CvStatus Mat_MultiplyFloat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, float_t)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyFloat(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int32)>()
-external CvStatus Mat_MultiplyI32(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyI32(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_MultiplyMatrix(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyMatrix(
   Mat x,
   Mat y,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int8)>()
-external CvStatus Mat_MultiplySChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_MultiplySChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Uint8)>()
-external CvStatus Mat_MultiplyUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyUChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Double, ffi.Int)>()
-external CvStatus Mat_MultiplyWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_MultiplyWithParams(
   Mat src1,
   Mat src2,
   Mat dst,
@@ -3635,20 +3906,20 @@ external CvStatus Mat_MultiplyWithParams(
 /// e.g., Mat, the internal pointer (Mat.ptr) MUST be NULL
 /// otherwise the memory of mat.ptr pointed to will NOT be freed correctly.
 /// Mat* mat = (Mat*)malloc(sizeof(Mat));
-/// CvStatus status = Mat_New(mat);
+/// CvStatus *status = Mat_New(mat);
 /// Mat_Close(mat);
 ///
 /// @param rval Mat*
 /// @return CvStatus
-@ffi.Native<CvStatus Function(ffi.Pointer<Mat>)>()
-external CvStatus Mat_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_New(
   ffi.Pointer<Mat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Void>, ffi.Int,
-        ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewFromBytes(
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int,
+        ffi.Pointer<ffi.Void>, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewFromBytes(
   int rows,
   int cols,
   int type,
@@ -3657,33 +3928,35 @@ external CvStatus Mat_NewFromBytes(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Scalar, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewFromScalar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Scalar, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewFromScalar(
   Scalar ar,
   int type,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewFromVecPoint(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewFromVecPoint(
   VecPoint vec,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewFromVecPoint2f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewFromVecPoint2f(
   VecPoint2f vec,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint3f, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewFromVecPoint3f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewFromVecPoint3f(
   VecPoint3f vec,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewWithSize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewWithSize(
   int rows,
   int cols,
   int type,
@@ -3691,8 +3964,9 @@ external CvStatus Mat_NewWithSize(
 );
 
 @ffi.Native<
-    CvStatus Function(Scalar, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewWithSizeFromScalar(
+    ffi.Pointer<CvStatus> Function(
+        Scalar, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewWithSizeFromScalar(
   Scalar ar,
   int rows,
   int cols,
@@ -3700,31 +3974,35 @@ external CvStatus Mat_NewWithSizeFromScalar(
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewWithSizes(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewWithSizes(
   VecInt sizes,
   int type,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int, VecChar, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewWithSizesFromBytes(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecInt, ffi.Int, VecChar, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewWithSizesFromBytes(
   VecInt sizes,
   int type,
   VecChar buf,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int, Scalar, ffi.Pointer<Mat>)>()
-external CvStatus Mat_NewWithSizesFromScalar(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, Scalar, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_NewWithSizesFromScalar(
   VecInt sizes,
   int type,
   Scalar ar,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus Mat_Normalize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Normalize(
   Mat src,
   Mat dst,
   double alpha,
@@ -3732,8 +4010,8 @@ external CvStatus Mat_Normalize(
   int typ,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int)>()
-external CvStatus Mat_PCACompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_PCACompute(
   Mat src,
   Mat mean,
   Mat eigenvectors,
@@ -3741,29 +4019,29 @@ external CvStatus Mat_PCACompute(
   int maxComponents,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Double)>()
-external CvStatus Mat_PatchNaNs(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_PatchNaNs(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_PerspectiveTransform(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_PerspectiveTransform(
   Mat src,
   Mat dst,
   Mat tm,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Bool)>()
-external CvStatus Mat_Phase(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_Phase(
   Mat x,
   Mat y,
   Mat angle,
   bool angleInDegrees,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Bool)>()
-external CvStatus Mat_PolarToCart(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_PolarToCart(
   Mat magnitude,
   Mat degree,
   Mat x,
@@ -3771,25 +4049,26 @@ external CvStatus Mat_PolarToCart(
   bool angleInDegrees,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Double, Mat)>()
-external CvStatus Mat_Pow(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Pow(
   Mat src,
   double power,
   Mat dst,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external CvStatus Mat_Ptr_f32_1(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_f32_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external CvStatus Mat_Ptr_f32_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_f32_2(
   Mat m,
   int i,
   int j,
@@ -3797,9 +4076,9 @@ external CvStatus Mat_Ptr_f32_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external CvStatus Mat_Ptr_f32_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_f32_3(
   Mat m,
   int i,
   int j,
@@ -3808,17 +4087,18 @@ external CvStatus Mat_Ptr_f32_3(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external CvStatus Mat_Ptr_f64_1(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_f64_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external CvStatus Mat_Ptr_f64_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_f64_2(
   Mat m,
   int i,
   int j,
@@ -3826,9 +4106,9 @@ external CvStatus Mat_Ptr_f64_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external CvStatus Mat_Ptr_f64_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_f64_3(
   Mat m,
   int i,
   int j,
@@ -3837,17 +4117,18 @@ external CvStatus Mat_Ptr_f64_3(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external CvStatus Mat_Ptr_i16_1(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_i16_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external CvStatus Mat_Ptr_i16_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_i16_2(
   Mat m,
   int i,
   int j,
@@ -3855,9 +4136,9 @@ external CvStatus Mat_Ptr_i16_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external CvStatus Mat_Ptr_i16_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_i16_3(
   Mat m,
   int i,
   int j,
@@ -3866,17 +4147,18 @@ external CvStatus Mat_Ptr_i16_3(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external CvStatus Mat_Ptr_i32_1(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_i32_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external CvStatus Mat_Ptr_i32_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_i32_2(
   Mat m,
   int i,
   int j,
@@ -3884,9 +4166,9 @@ external CvStatus Mat_Ptr_i32_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external CvStatus Mat_Ptr_i32_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_i32_3(
   Mat m,
   int i,
   int j,
@@ -3895,17 +4177,18 @@ external CvStatus Mat_Ptr_i32_3(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Mat_Ptr_i8_1(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_i8_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Mat_Ptr_i8_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_i8_2(
   Mat m,
   int i,
   int j,
@@ -3913,9 +4196,9 @@ external CvStatus Mat_Ptr_i8_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Mat_Ptr_i8_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_i8_3(
   Mat m,
   int i,
   int j,
@@ -3923,17 +4206,19 @@ external CvStatus Mat_Ptr_i8_3(
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ushort>>)>()
-external CvStatus Mat_Ptr_u16_1(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ushort>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_u16_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<ushort>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ushort>>)>()
-external CvStatus Mat_Ptr_u16_2(
+external ffi.Pointer<CvStatus> Mat_Ptr_u16_2(
   Mat m,
   int i,
   int j,
@@ -3941,9 +4226,9 @@ external CvStatus Mat_Ptr_u16_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ushort>>)>()
-external CvStatus Mat_Ptr_u16_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_u16_3(
   Mat m,
   int i,
   int j,
@@ -3951,16 +4236,19 @@ external CvStatus Mat_Ptr_u16_3(
   ffi.Pointer<ffi.Pointer<ushort>> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>()
-external CvStatus Mat_Ptr_u8_1(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_u8_1(
   Mat m,
   int i,
   ffi.Pointer<ffi.Pointer<uchar>> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>()
-external CvStatus Mat_Ptr_u8_2(
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>()
+external ffi.Pointer<CvStatus> Mat_Ptr_u8_2(
   Mat m,
   int i,
   int j,
@@ -3968,9 +4256,9 @@ external CvStatus Mat_Ptr_u8_2(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<uchar>>)>()
-external CvStatus Mat_Ptr_u8_3(
+external ffi.Pointer<CvStatus> Mat_Ptr_u8_3(
   Mat m,
   int i,
   int j,
@@ -3978,8 +4266,9 @@ external CvStatus Mat_Ptr_u8_3(
   ffi.Pointer<ffi.Pointer<uchar>> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus Mat_Reduce(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Reduce(
   Mat src,
   Mat dst,
   int dim,
@@ -3987,74 +4276,77 @@ external CvStatus Mat_Reduce(
   int dType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Bool)>()
-external CvStatus Mat_ReduceArgMax(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_ReduceArgMax(
   Mat src,
   Mat dst,
   int axis,
   bool lastIndex,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Bool)>()
-external CvStatus Mat_ReduceArgMin(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Mat_ReduceArgMin(
   Mat src,
   Mat dst,
   int axis,
   bool lastIndex,
 );
 
-@ffi.Native<CvStatus Function(Mat, Rect, ffi.Pointer<Mat>)>()
-external CvStatus Mat_Region(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Rect, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_Region(
   Mat m,
   Rect r,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<Mat>)>()
-external CvStatus Mat_Release(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_Release(
   ffi.Pointer<Mat> m,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Mat)>()
-external CvStatus Mat_Repeat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Repeat(
   Mat src,
   int nY,
   int nX,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_Reshape(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_Reshape(
   Mat m,
   int cn,
   int rows,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Rows(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Rows(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Double, Mat, Mat)>()
-external CvStatus Mat_ScaleAdd(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_ScaleAdd(
   Mat src1,
   double alpha,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Double)>()
-external CvStatus Mat_SetDouble(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_SetDouble(
   Mat m,
   int row,
   int col,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>()
-external CvStatus Mat_SetDouble3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_SetDouble3(
   Mat m,
   int x,
   int y,
@@ -4062,16 +4354,17 @@ external CvStatus Mat_SetDouble3(
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Float)>()
-external CvStatus Mat_SetFloat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Float)>()
+external ffi.Pointer<CvStatus> Mat_SetFloat(
   Mat m,
   int row,
   int col,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Float)>()
-external CvStatus Mat_SetFloat3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Float)>()
+external ffi.Pointer<CvStatus> Mat_SetFloat3(
   Mat m,
   int x,
   int y,
@@ -4079,22 +4372,23 @@ external CvStatus Mat_SetFloat3(
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Double)>()
-external CvStatus Mat_SetIdentity(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double)>()
+external ffi.Pointer<CvStatus> Mat_SetIdentity(
   Mat src,
   double scalar,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int32)>()
-external CvStatus Mat_SetInt(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_SetInt(
   Mat m,
   int row,
   int col,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int32)>()
-external CvStatus Mat_SetInt3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_SetInt3(
   Mat m,
   int x,
   int y,
@@ -4102,16 +4396,17 @@ external CvStatus Mat_SetInt3(
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int8)>()
-external CvStatus Mat_SetSChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_SetSChar(
   Mat m,
   int row,
   int col,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int8)>()
-external CvStatus Mat_SetSChar3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_SetSChar3(
   Mat m,
   int x,
   int y,
@@ -4119,16 +4414,17 @@ external CvStatus Mat_SetSChar3(
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int16)>()
-external CvStatus Mat_SetShort(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int16)>()
+external ffi.Pointer<CvStatus> Mat_SetShort(
   Mat m,
   int row,
   int col,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int16)>()
-external CvStatus Mat_SetShort3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int16)>()
+external ffi.Pointer<CvStatus> Mat_SetShort3(
   Mat m,
   int x,
   int y,
@@ -4136,22 +4432,23 @@ external CvStatus Mat_SetShort3(
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, Scalar)>()
-external CvStatus Mat_SetTo(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar)>()
+external ffi.Pointer<CvStatus> Mat_SetTo(
   Mat m,
   Scalar value,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Uint8)>()
-external CvStatus Mat_SetUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_SetUChar(
   Mat m,
   int row,
   int col,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint8)>()
-external CvStatus Mat_SetUChar3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_SetUChar3(
   Mat m,
   int x,
   int y,
@@ -4159,16 +4456,18 @@ external CvStatus Mat_SetUChar3(
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Uint16)>()
-external CvStatus Mat_SetUShort(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint16)>()
+external ffi.Pointer<CvStatus> Mat_SetUShort(
   Mat m,
   int row,
   int col,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>()
-external CvStatus Mat_SetUShort3(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>()
+external ffi.Pointer<CvStatus> Mat_SetUShort3(
   Mat m,
   int x,
   int y,
@@ -4176,190 +4475,192 @@ external CvStatus Mat_SetUShort3(
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2b)>()
-external CvStatus Mat_SetVec2b(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2b)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2b(
   Mat m,
   int row,
   int col,
   Vec2b val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2d)>()
-external CvStatus Mat_SetVec2d(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2d)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2d(
   Mat m,
   int row,
   int col,
   Vec2d val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2f)>()
-external CvStatus Mat_SetVec2f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2f)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2f(
   Mat m,
   int row,
   int col,
   Vec2f val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2i)>()
-external CvStatus Mat_SetVec2i(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2i)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2i(
   Mat m,
   int row,
   int col,
   Vec2i val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2s)>()
-external CvStatus Mat_SetVec2s(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2s)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2s(
   Mat m,
   int row,
   int col,
   Vec2s val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec2w)>()
-external CvStatus Mat_SetVec2w(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2w)>()
+external ffi.Pointer<CvStatus> Mat_SetVec2w(
   Mat m,
   int row,
   int col,
   Vec2w val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3b)>()
-external CvStatus Mat_SetVec3b(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3b)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3b(
   Mat m,
   int row,
   int col,
   Vec3b val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3d)>()
-external CvStatus Mat_SetVec3d(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3d)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3d(
   Mat m,
   int row,
   int col,
   Vec3d val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3f)>()
-external CvStatus Mat_SetVec3f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3f)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3f(
   Mat m,
   int row,
   int col,
   Vec3f val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3i)>()
-external CvStatus Mat_SetVec3i(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3i)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3i(
   Mat m,
   int row,
   int col,
   Vec3i val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3s)>()
-external CvStatus Mat_SetVec3s(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3s)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3s(
   Mat m,
   int row,
   int col,
   Vec3s val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec3w)>()
-external CvStatus Mat_SetVec3w(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3w)>()
+external ffi.Pointer<CvStatus> Mat_SetVec3w(
   Mat m,
   int row,
   int col,
   Vec3w val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4b)>()
-external CvStatus Mat_SetVec4b(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4b)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4b(
   Mat m,
   int row,
   int col,
   Vec4b val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4d)>()
-external CvStatus Mat_SetVec4d(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4d)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4d(
   Mat m,
   int row,
   int col,
   Vec4d val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4f)>()
-external CvStatus Mat_SetVec4f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4f)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4f(
   Mat m,
   int row,
   int col,
   Vec4f val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4i)>()
-external CvStatus Mat_SetVec4i(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4i)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4i(
   Mat m,
   int row,
   int col,
   Vec4i val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4s)>()
-external CvStatus Mat_SetVec4s(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4s)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4s(
   Mat m,
   int row,
   int col,
   Vec4s val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec4w)>()
-external CvStatus Mat_SetVec4w(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4w)>()
+external ffi.Pointer<CvStatus> Mat_SetVec4w(
   Mat m,
   int row,
   int col,
   Vec4w val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6d)>()
-external CvStatus Mat_SetVec6d(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6d)>()
+external ffi.Pointer<CvStatus> Mat_SetVec6d(
   Mat m,
   int row,
   int col,
   Vec6d val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6f)>()
-external CvStatus Mat_SetVec6f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6f)>()
+external ffi.Pointer<CvStatus> Mat_SetVec6f(
   Mat m,
   int row,
   int col,
   Vec6f val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec6i)>()
-external CvStatus Mat_SetVec6i(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6i)>()
+external ffi.Pointer<CvStatus> Mat_SetVec6i(
   Mat m,
   int row,
   int col,
   Vec6i val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, Vec8i)>()
-external CvStatus Mat_SetVec8i(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec8i)>()
+external ffi.Pointer<CvStatus> Mat_SetVec8i(
   Mat m,
   int row,
   int col,
   Vec8i val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecInt>)>()
-external CvStatus Mat_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> Mat_Size(
   Mat m,
   ffi.Pointer<VecInt> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Mat_Solve(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Mat_Solve(
   Mat src1,
   Mat src2,
   Mat dst,
@@ -4367,162 +4668,157 @@ external CvStatus Mat_Solve(
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_SolveCubic(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_SolveCubic(
   Mat coeffs,
   Mat roots,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Mat_SolvePoly(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Mat_SolvePoly(
   Mat coeffs,
   Mat roots,
   int maxIters,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_Sort(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_Sort(
   Mat src,
   Mat dst,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Mat_SortIdx(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Mat_SortIdx(
   Mat src,
   Mat dst,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecMat>)>()
-external CvStatus Mat_Split(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> Mat_Split(
   Mat src,
   ffi.Pointer<VecMat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_Sqrt(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_Sqrt(
   Mat m,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Step(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Step(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Subtract(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Subtract(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, double_t)>()
-external CvStatus Mat_SubtractF64(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, double_t)>()
+external ffi.Pointer<CvStatus> Mat_SubtractF64(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, float_t)>()
-external CvStatus Mat_SubtractFloat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, float_t)>()
+external ffi.Pointer<CvStatus> Mat_SubtractFloat(
   Mat m,
   double val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int32)>()
-external CvStatus Mat_SubtractI32(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int32)>()
+external ffi.Pointer<CvStatus> Mat_SubtractI32(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int8)>()
-external CvStatus Mat_SubtractSChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int8)>()
+external ffi.Pointer<CvStatus> Mat_SubtractSChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Uint8)>()
-external CvStatus Mat_SubtractUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint8)>()
+external ffi.Pointer<CvStatus> Mat_SubtractUChar(
   Mat m,
   int val,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>)>()
-external CvStatus Mat_Sum(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Mat_Sum(
   Mat src,
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Mat>)>()
-external CvStatus Mat_T(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_T(
   Mat x,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecChar>)>()
-external CvStatus Mat_ToVecChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> Mat_ToVecChar(
   Mat m,
   ffi.Pointer<VecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecUChar>)>()
-external CvStatus Mat_ToVecUChar(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> Mat_ToVecUChar(
   Mat m,
   ffi.Pointer<VecUChar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Total(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Total(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>)>()
-external CvStatus Mat_Trace(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Mat_Trace(
   Mat src,
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Transform(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Transform(
   Mat src,
   Mat dst,
   Mat tm,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Mat_Transpose(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Transpose(
   Mat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Mat_Type(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Mat_Type(
   Mat m,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat)>()
-external CvStatus Mat_Vconcat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Mat_Vconcat(
   Mat src1,
   Mat src2,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_colRange(
-  Mat m,
-  int start,
-  int end,
-  ffi.Pointer<Mat> rval,
-);
-
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Mat_rowRange(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_colRange(
   Mat m,
   int start,
   int end,
@@ -4530,9 +4826,18 @@ external CvStatus Mat_rowRange(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Mat_rowRange(
+  Mat m,
+  int start,
+  int end,
+  ffi.Pointer<Mat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
         VecPoint, VecPoint, ffi.Int, ffi.Double, ffi.Pointer<ffi.Double>)>()
-external CvStatus MatchShapes(
+external ffi.Pointer<CvStatus> MatchShapes(
   VecPoint contour1,
   VecPoint contour2,
   int method,
@@ -4540,8 +4845,8 @@ external CvStatus MatchShapes(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int, Mat)>()
-external CvStatus MatchTemplate(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, Mat)>()
+external ffi.Pointer<CvStatus> MatchTemplate(
   Mat image,
   Mat templ,
   Mat result,
@@ -4549,8 +4854,8 @@ external CvStatus MatchTemplate(
   Mat mask,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus MedianBlur(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> MedianBlur(
   Mat src,
   Mat dst,
   int ksize,
@@ -4561,56 +4866,59 @@ external void MergeMertens_Close(
   MergeMertensPtr b,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<MergeMertens>)>()
-external CvStatus MergeMertens_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<MergeMertens>)>()
+external ffi.Pointer<CvStatus> MergeMertens_Create(
   ffi.Pointer<MergeMertens> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Float, ffi.Float, ffi.Float, ffi.Pointer<MergeMertens>)>()
-external CvStatus MergeMertens_CreateWithParams(
+external ffi.Pointer<CvStatus> MergeMertens_CreateWithParams(
   double contrast_weight,
   double saturation_weight,
   double exposure_weight,
   ffi.Pointer<MergeMertens> rval,
 );
 
-@ffi.Native<CvStatus Function(MergeMertens, VecMat, Mat)>()
-external CvStatus MergeMertens_Process(
+@ffi.Native<ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat)>()
+external ffi.Pointer<CvStatus> MergeMertens_Process(
   MergeMertens b,
   VecMat src,
   Mat dst,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<RotatedRect>)>()
-external CvStatus MinAreaRect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<RotatedRect>)>()
+external ffi.Pointer<CvStatus> MinAreaRect(
   VecPoint pts,
   ffi.Pointer<RotatedRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Float>)>()
-external CvStatus MinEnclosingCircle(
+    ffi.Pointer<CvStatus> Function(
+        VecPoint, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> MinEnclosingCircle(
   VecPoint pts,
   ffi.Pointer<Point2f> center,
   ffi.Pointer<ffi.Float> radius,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Bool, ffi.Pointer<Moment>)>()
-external CvStatus Moments(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Bool, ffi.Pointer<Moment>)>()
+external ffi.Pointer<CvStatus> Moments(
   Mat src,
   bool binaryImage,
   ffi.Pointer<Moment> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<Scalar>)>()
-external CvStatus MorphologyDefaultBorderValue(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> MorphologyDefaultBorderValue(
   ffi.Pointer<Scalar> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, Mat)>()
-external CvStatus MorphologyEx(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Mat)>()
+external ffi.Pointer<CvStatus> MorphologyEx(
   Mat src,
   Mat dst,
   int op,
@@ -4618,9 +4926,9 @@ external CvStatus MorphologyEx(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, Mat, Point, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus MorphologyExWithParams(
+external ffi.Pointer<CvStatus> MorphologyExWithParams(
   Mat src,
   Mat dst,
   int op,
@@ -4632,9 +4940,9 @@ external CvStatus MorphologyExWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VecRect, VecFloat, ffi.Float, ffi.Float, ffi.Pointer<VecInt>)>()
-external CvStatus NMSBoxes(
+external ffi.Pointer<CvStatus> NMSBoxes(
   VecRect bboxes,
   VecFloat scores,
   double score_threshold,
@@ -4643,9 +4951,9 @@ external CvStatus NMSBoxes(
 );
 
 @ffi.Native<
-    CvStatus Function(VecRect, VecFloat, ffi.Float, ffi.Float,
+    ffi.Pointer<CvStatus> Function(VecRect, VecFloat, ffi.Float, ffi.Float,
         ffi.Pointer<VecInt>, ffi.Float, ffi.Int)>()
-external CvStatus NMSBoxesWithParams(
+external ffi.Pointer<CvStatus> NMSBoxesWithParams(
   VecRect bboxes,
   VecFloat scores,
   double score_threshold,
@@ -4656,9 +4964,9 @@ external CvStatus NMSBoxesWithParams(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Double, Size, Scalar, ffi.Bool, ffi.Bool, ffi.Int)>()
-external CvStatus Net_BlobFromImage(
+external ffi.Pointer<CvStatus> Net_BlobFromImage(
   Mat image,
   Mat blob,
   double scalefactor,
@@ -4670,9 +4978,9 @@ external CvStatus Net_BlobFromImage(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VecMat, Mat, ffi.Double, Size, Scalar, ffi.Bool, ffi.Bool, ffi.Int)>()
-external CvStatus Net_BlobFromImages(
+external ffi.Pointer<CvStatus> Net_BlobFromImages(
   VecMat images,
   Mat blob,
   double scalefactor,
@@ -4688,100 +4996,106 @@ external void Net_Close(
   NetPtr net,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<Net>)>()
-external CvStatus Net_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_Create(
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus Net_Dump(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> Net_Dump(
   Net net,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Net_Empty(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Net_Empty(
   Net net,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Char>, ffi.Pointer<Mat>)>()
-external CvStatus Net_Forward(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Net, ffi.Pointer<ffi.Char>, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Net_Forward(
   Net net,
   ffi.Pointer<ffi.Char> outputName,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<VecMat>, VecVecChar)>()
-external CvStatus Net_ForwardLayers(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecMat>, VecVecChar)>()
+external ffi.Pointer<CvStatus> Net_ForwardLayers(
   Net net,
   ffi.Pointer<VecMat> outputBlobs,
   VecVecChar outBlobNames,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<Net>)>()
-external CvStatus Net_FromNet(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_FromNet(
   Net net,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Net_GetBlobChannel(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Net_GetBlobChannel(
   Mat blob,
   int imgidx,
   int chnidx,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<Scalar>)>()
-external CvStatus Net_GetBlobSize(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>)>()
+external ffi.Pointer<CvStatus> Net_GetBlobSize(
   Mat blob,
   ffi.Pointer<Scalar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Net, ffi.Pointer<VecFloat>, ffi.Pointer<VecInt>)>()
-external CvStatus Net_GetInputDetails(
+    ffi.Pointer<CvStatus> Function(
+        Net, ffi.Pointer<VecFloat>, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> Net_GetInputDetails(
   Net net,
   ffi.Pointer<VecFloat> scales,
   ffi.Pointer<VecInt> zeropoints,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Int, ffi.Pointer<Layer>)>()
-external CvStatus Net_GetLayer(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Int, ffi.Pointer<Layer>)>()
+external ffi.Pointer<CvStatus> Net_GetLayer(
   Net net,
   int layerid,
   ffi.Pointer<Layer> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<VecVecChar>)>()
-external CvStatus Net_GetLayerNames(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecVecChar>)>()
+external ffi.Pointer<CvStatus> Net_GetLayerNames(
   Net net,
   ffi.Pointer<VecVecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<ffi.Int64>)>()
-external CvStatus Net_GetPerfProfile(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Int64>)>()
+external ffi.Pointer<CvStatus> Net_GetPerfProfile(
   Net net,
   ffi.Pointer<ffi.Int64> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Pointer<VecInt>)>()
-external CvStatus Net_GetUnconnectedOutLayers(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> Net_GetUnconnectedOutLayers(
   Net net,
   ffi.Pointer<VecInt> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecMat>)>()
-external CvStatus Net_ImagesFromBlob(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> Net_ImagesFromBlob(
   Mat blob,
   ffi.Pointer<VecMat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNet(
+external ffi.Pointer<CvStatus> Net_ReadNet(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<ffi.Char> config,
   ffi.Pointer<ffi.Char> framework,
@@ -4789,9 +5103,9 @@ external CvStatus Net_ReadNet(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, VecUChar, VecUChar, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetBytes(
+external ffi.Pointer<CvStatus> Net_ReadNetBytes(
   ffi.Pointer<ffi.Char> framework,
   VecUChar model,
   VecUChar config,
@@ -4799,107 +5113,115 @@ external CvStatus Net_ReadNetBytes(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromCaffe(
+external ffi.Pointer<CvStatus> Net_ReadNetFromCaffe(
   ffi.Pointer<ffi.Char> prototxt,
   ffi.Pointer<ffi.Char> caffeModel,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, VecUChar, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromCaffeBytes(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, VecUChar, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromCaffeBytes(
   VecUChar prototxt,
   VecUChar caffeModel,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromONNX(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromONNX(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromONNXBytes(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromONNXBytes(
   VecUChar model,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromTFLite(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromTFLite(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromTFLiteBytes(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromTFLiteBytes(
   VecUChar bufferModel,
   ffi.Pointer<Net> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromTensorflow(
+external ffi.Pointer<CvStatus> Net_ReadNetFromTensorflow(
   ffi.Pointer<ffi.Char> model,
   ffi.Pointer<ffi.Char> config,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, VecUChar, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromTensorflowBytes(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, VecUChar, ffi.Pointer<Net>)>()
+external ffi.Pointer<CvStatus> Net_ReadNetFromTensorflowBytes(
   VecUChar model,
   VecUChar config,
   ffi.Pointer<Net> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Bool, ffi.Bool, ffi.Pointer<Net>)>()
-external CvStatus Net_ReadNetFromTorch(
+external ffi.Pointer<CvStatus> Net_ReadNetFromTorch(
   ffi.Pointer<ffi.Char> model,
   bool isBinary,
   bool evaluate,
   ffi.Pointer<Net> rval,
 );
 
-@ffi.Native<CvStatus Function(Net, Mat, ffi.Pointer<ffi.Char>)>()
-external CvStatus Net_SetInput(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, Mat, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> Net_SetInput(
   Net net,
   Mat blob,
   ffi.Pointer<ffi.Char> name,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Int)>()
-external CvStatus Net_SetPreferableBackend(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Int)>()
+external ffi.Pointer<CvStatus> Net_SetPreferableBackend(
   Net net,
   int backend,
 );
 
-@ffi.Native<CvStatus Function(Net, ffi.Int)>()
-external CvStatus Net_SetPreferableTarget(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Net, ffi.Int)>()
+external ffi.Pointer<CvStatus> Net_SetPreferableTarget(
   Net net,
   int target,
 );
 
 @ffi.Native<
-    CvStatus Function(Net, ffi.Pointer<ffi.Char>, ffi.Pointer<AsyncArray>)>()
-external CvStatus Net_forwardAsync(
+    ffi.Pointer<CvStatus> Function(
+        Net, ffi.Pointer<ffi.Char>, ffi.Pointer<AsyncArray>)>()
+external ffi.Pointer<CvStatus> Net_forwardAsync(
   Net net,
   ffi.Pointer<ffi.Char> outputName,
   ffi.Pointer<AsyncArray> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Norm(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Norm(
   Mat src1,
   int normType,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus NormWithMats(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> NormWithMats(
   Mat src1,
   Mat src2,
   int normType,
@@ -4911,15 +5233,15 @@ external void ORB_Close(
   ORBPtr o,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ORB>)>()
-external CvStatus ORB_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ORB>)>()
+external ffi.Pointer<CvStatus> ORB_Create(
   ffi.Pointer<ORB> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Int, ffi.Float, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
-        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ORB>)>()
-external CvStatus ORB_CreateWithParams(
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Float, ffi.Int, ffi.Int,
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ORB>)>()
+external ffi.Pointer<CvStatus> ORB_CreateWithParams(
   int nfeatures,
   double scaleFactor,
   int nlevels,
@@ -4932,15 +5254,18 @@ external CvStatus ORB_CreateWithParams(
   ffi.Pointer<ORB> rval,
 );
 
-@ffi.Native<CvStatus Function(ORB, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus ORB_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ORB, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> ORB_Detect(
   ORB o,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(ORB, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus ORB_DetectAndCompute(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ORB, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> ORB_DetectAndCompute(
   ORB o,
   Mat src,
   Mat mask,
@@ -4948,16 +5273,20 @@ external CvStatus ORB_DetectAndCompute(
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Ones(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Ones(
   int rows,
   int cols,
   int type,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float)>()
-external CvStatus PencilSketch(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> PencilSketch(
   Mat src,
   Mat dst1,
   Mat dst2,
@@ -4967,9 +5296,9 @@ external CvStatus PencilSketch(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, Mat, ffi.Pointer<ffi.Double>, ffi.Pointer<Point2f>)>()
-external CvStatus PhaseCorrelate(
+external ffi.Pointer<CvStatus> PhaseCorrelate(
   Mat src1,
   Mat src2,
   Mat window,
@@ -4977,8 +5306,8 @@ external CvStatus PhaseCorrelate(
   ffi.Pointer<Point2f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Int)>()
-external CvStatus PhotoInpaint(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Int)>()
+external ffi.Pointer<CvStatus> PhotoInpaint(
   Mat src,
   Mat mask,
   Mat dst,
@@ -4987,16 +5316,19 @@ external CvStatus PhotoInpaint(
 );
 
 @ffi.Native<
-    CvStatus Function(VecPoint, Point2f, ffi.Bool, ffi.Pointer<ffi.Double>)>()
-external CvStatus PointPolygonTest(
+    ffi.Pointer<CvStatus> Function(
+        VecPoint, Point2f, ffi.Bool, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> PointPolygonTest(
   VecPoint pts,
   Point2f pt,
   bool measureDist,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, VecVecPoint, ffi.Bool, Scalar, ffi.Int)>()
-external CvStatus Polylines(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, VecVecPoint, ffi.Bool, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> Polylines(
   Mat img,
   VecVecPoint points,
   bool isClosed,
@@ -5005,9 +5337,9 @@ external CvStatus Polylines(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<ffi.Char>, Point, ffi.Int, ffi.Double,
-        Scalar, ffi.Int)>()
-external CvStatus PutText(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>, Point, ffi.Int,
+        ffi.Double, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> PutText(
   Mat img,
   ffi.Pointer<ffi.Char> text,
   Point org,
@@ -5018,9 +5350,9 @@ external CvStatus PutText(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, ffi.Pointer<ffi.Char>, Point, ffi.Int, ffi.Double,
-        Scalar, ffi.Int, ffi.Int, ffi.Bool)>()
-external CvStatus PutTextWithParams(
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>, Point, ffi.Int,
+        ffi.Double, Scalar, ffi.Int, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> PutTextWithParams(
   Mat img,
   ffi.Pointer<ffi.Char> text,
   Point org,
@@ -5032,16 +5364,16 @@ external CvStatus PutTextWithParams(
   bool bottomLeftOrigin,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Size, ffi.Int)>()
-external CvStatus PyrDown(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Size, ffi.Int)>()
+external ffi.Pointer<CvStatus> PyrDown(
   Mat src,
   Mat dst,
   Size dstsize,
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Size, ffi.Int)>()
-external CvStatus PyrUp(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Size, ffi.Int)>()
+external ffi.Pointer<CvStatus> PyrUp(
   Mat src,
   Mat dst,
   Size dstsize,
@@ -5054,9 +5386,9 @@ external void QRCodeDetector_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>, Mat,
-        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus QRCodeDetector_Decode(
+    ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+        Mat, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_Decode(
   QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecPoint> points,
@@ -5065,9 +5397,9 @@ external CvStatus QRCodeDetector_Decode(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         QRCodeDetector, Mat, ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus QRCodeDetector_Detect(
+external ffi.Pointer<CvStatus> QRCodeDetector_Detect(
   QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecPoint> points,
@@ -5075,9 +5407,9 @@ external CvStatus QRCodeDetector_Detect(
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+    ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
         ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus QRCodeDetector_DetectAndDecode(
+external ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecode(
   QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecPoint> points,
@@ -5086,9 +5418,9 @@ external CvStatus QRCodeDetector_DetectAndDecode(
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecVecChar>,
+    ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, ffi.Pointer<VecVecChar>,
         ffi.Pointer<VecPoint>, ffi.Pointer<VecMat>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus QRCodeDetector_DetectAndDecodeMulti(
+external ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecodeMulti(
   QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecVecChar> decoded,
@@ -5098,24 +5430,24 @@ external CvStatus QRCodeDetector_DetectAndDecodeMulti(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         QRCodeDetector, Mat, ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus QRCodeDetector_DetectMulti(
+external ffi.Pointer<CvStatus> QRCodeDetector_DetectMulti(
   QRCodeDetector self,
   Mat input,
   ffi.Pointer<VecPoint> points,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<QRCodeDetector>)>()
-external CvStatus QRCodeDetector_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<QRCodeDetector>)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_New(
   ffi.Pointer<QRCodeDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, VecPoint, ffi.Pointer<Mat>,
-        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus QRCodeDetector_decodeCurved(
+    ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, VecPoint,
+        ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_decodeCurved(
   QRCodeDetector self,
   Mat img,
   VecPoint points,
@@ -5124,9 +5456,9 @@ external CvStatus QRCodeDetector_decodeCurved(
 );
 
 @ffi.Native<
-    CvStatus Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+    ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
         ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus QRCodeDetector_detectAndDecodeCurved(
+external ffi.Pointer<CvStatus> QRCodeDetector_detectAndDecodeCurved(
   QRCodeDetector self,
   Mat img,
   ffi.Pointer<VecPoint> points,
@@ -5134,27 +5466,28 @@ external CvStatus QRCodeDetector_detectAndDecodeCurved(
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Double)>()
-external CvStatus QRCodeDetector_setEpsX(
+@ffi.Native<ffi.Pointer<CvStatus> Function(QRCodeDetector, ffi.Double)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_setEpsX(
   QRCodeDetector self,
   double epsX,
 );
 
-@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Double)>()
-external CvStatus QRCodeDetector_setEpsY(
+@ffi.Native<ffi.Pointer<CvStatus> Function(QRCodeDetector, ffi.Double)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_setEpsY(
   QRCodeDetector self,
   double epsY,
 );
 
-@ffi.Native<CvStatus Function(QRCodeDetector, ffi.Bool)>()
-external CvStatus QRCodeDetector_setUseAlignmentMarkers(
+@ffi.Native<ffi.Pointer<CvStatus> Function(QRCodeDetector, ffi.Bool)>()
+external ffi.Pointer<CvStatus> QRCodeDetector_setUseAlignmentMarkers(
   QRCodeDetector self,
   bool useAlignmentMarkers,
 );
 
 @ffi.Native<
-    CvStatus Function(RNG, Mat, ffi.Int, ffi.Double, ffi.Double, ffi.Bool)>()
-external CvStatus RNG_Fill(
+    ffi.Pointer<CvStatus> Function(
+        RNG, Mat, ffi.Int, ffi.Double, ffi.Double, ffi.Bool)>()
+external ffi.Pointer<CvStatus> RNG_Fill(
   RNG rng,
   Mat mat,
   int distType,
@@ -5163,21 +5496,24 @@ external CvStatus RNG_Fill(
   bool saturateRange,
 );
 
-@ffi.Native<CvStatus Function(RNG, ffi.Double, ffi.Pointer<ffi.Double>)>()
-external CvStatus RNG_Gaussian(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(RNG, ffi.Double, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> RNG_Gaussian(
   RNG rng,
   double sigma,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(RNG, ffi.Pointer<ffi.Uint32>)>()
-external CvStatus RNG_Next(
+@ffi.Native<ffi.Pointer<CvStatus> Function(RNG, ffi.Pointer<ffi.Uint32>)>()
+external ffi.Pointer<CvStatus> RNG_Next(
   RNG rng,
   ffi.Pointer<ffi.Uint32> rval,
 );
 
-@ffi.Native<CvStatus Function(RNG, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus RNG_Uniform(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        RNG, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> RNG_Uniform(
   RNG rng,
   int a,
   int b,
@@ -5185,50 +5521,53 @@ external CvStatus RNG_Uniform(
 );
 
 @ffi.Native<
-    CvStatus Function(RNG, ffi.Double, ffi.Double, ffi.Pointer<ffi.Double>)>()
-external CvStatus RNG_UniformDouble(
+    ffi.Pointer<CvStatus> Function(
+        RNG, ffi.Double, ffi.Double, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> RNG_UniformDouble(
   RNG rng,
   double a,
   double b,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Scalar, Scalar)>()
-external CvStatus RandN(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar, Scalar)>()
+external ffi.Pointer<CvStatus> RandN(
   Mat mat,
   Scalar mean,
   Scalar stddev,
 );
 
-@ffi.Native<CvStatus Function(Mat)>()
-external CvStatus RandShuffle(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat)>()
+external ffi.Pointer<CvStatus> RandShuffle(
   Mat mat,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Double, RNG)>()
-external CvStatus RandShuffleWithParams(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double, RNG)>()
+external ffi.Pointer<CvStatus> RandShuffleWithParams(
   Mat mat,
   double iterFactor,
   RNG rng,
 );
 
-@ffi.Native<CvStatus Function(Mat, Scalar, Scalar)>()
-external CvStatus RandU(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar, Scalar)>()
+external ffi.Pointer<CvStatus> RandU(
   Mat mat,
   Scalar low,
   Scalar high,
 );
 
-@ffi.Native<CvStatus Function(Mat, Rect, Scalar, ffi.Int)>()
-external CvStatus Rectangle(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Rect, Scalar, ffi.Int)>()
+external ffi.Pointer<CvStatus> Rectangle(
   Mat img,
   Rect rect,
   Scalar color,
   int thickness,
 );
 
-@ffi.Native<CvStatus Function(Mat, Rect, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
-external CvStatus RectangleWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Rect, Scalar, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> RectangleWithParams(
   Mat img,
   Rect rect,
   Scalar color,
@@ -5237,8 +5576,10 @@ external CvStatus RectangleWithParams(
   int shift,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus Remap(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Mat, ffi.Int, ffi.Int, Scalar)>()
+external ffi.Pointer<CvStatus> Remap(
   Mat src,
   Mat dst,
   Mat map1,
@@ -5249,8 +5590,9 @@ external CvStatus Remap(
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, Size, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus Resize(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Size, ffi.Double, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> Resize(
   Mat src,
   Mat dst,
   Size sz,
@@ -5264,38 +5606,39 @@ external void Rng_Close(
   RNGPtr rng,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<RNG>)>()
-external CvStatus Rng_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<RNG>)>()
+external ffi.Pointer<CvStatus> Rng_New(
   ffi.Pointer<RNG> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Uint64, ffi.Pointer<RNG>)>()
-external CvStatus Rng_NewWithState(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Uint64, ffi.Pointer<RNG>)>()
+external ffi.Pointer<CvStatus> Rng_NewWithState(
   int state,
   ffi.Pointer<RNG> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus Rotate(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> Rotate(
   Mat src,
   Mat dst,
   int rotateCode,
 );
 
-@ffi.Native<CvStatus Function(RotatedRect, ffi.Pointer<Rect>)>()
-external CvStatus RotatedRect_BoundingRect(
+@ffi.Native<ffi.Pointer<CvStatus> Function(RotatedRect, ffi.Pointer<Rect>)>()
+external ffi.Pointer<CvStatus> RotatedRect_BoundingRect(
   RotatedRect rect,
   ffi.Pointer<Rect> rval,
 );
 
-@ffi.Native<CvStatus Function(RotatedRect, ffi.Pointer<Rect2f>)>()
-external CvStatus RotatedRect_BoundingRect2f(
+@ffi.Native<ffi.Pointer<CvStatus> Function(RotatedRect, ffi.Pointer<Rect2f>)>()
+external ffi.Pointer<CvStatus> RotatedRect_BoundingRect2f(
   RotatedRect rect,
   ffi.Pointer<Rect2f> rval,
 );
 
-@ffi.Native<CvStatus Function(RotatedRect, ffi.Pointer<VecPoint2f>)>()
-external CvStatus RotatedRect_Points(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(RotatedRect, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> RotatedRect_Points(
   RotatedRect rect,
   ffi.Pointer<VecPoint2f> pts,
 );
@@ -5305,20 +5648,23 @@ external void SIFT_Close(
   SIFTPtr f,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<SIFT>)>()
-external CvStatus SIFT_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<SIFT>)>()
+external ffi.Pointer<CvStatus> SIFT_Create(
   ffi.Pointer<SIFT> rval,
 );
 
-@ffi.Native<CvStatus Function(SIFT, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus SIFT_Detect(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(SIFT, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> SIFT_Detect(
   SIFT f,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus SIFT_DetectAndCompute(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> SIFT_DetectAndCompute(
   SIFT f,
   Mat src,
   Mat mask,
@@ -5326,8 +5672,8 @@ external CvStatus SIFT_DetectAndCompute(
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, ffi.Int)>()
-external CvStatus SVD_Compute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> SVD_Compute(
   Mat src,
   Mat w,
   Mat u,
@@ -5336,9 +5682,9 @@ external CvStatus SVD_Compute(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Double, ffi.Double, ffi.Int)>()
-external CvStatus Scharr(
+external ffi.Pointer<CvStatus> Scharr(
   Mat src,
   Mat dst,
   int dDepth,
@@ -5349,8 +5695,9 @@ external CvStatus Scharr(
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Point, Mat, ffi.Int)>()
-external CvStatus SeamlessClone(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Point, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> SeamlessClone(
   Mat src,
   Mat dst,
   Mat mask,
@@ -5360,9 +5707,9 @@ external CvStatus SeamlessClone(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Int, Mat, Mat, Point, ffi.Double, ffi.Int)>()
-external CvStatus SepFilter2D(
+external ffi.Pointer<CvStatus> SepFilter2D(
   Mat src,
   Mat dst,
   int ddepth,
@@ -5373,18 +5720,19 @@ external CvStatus SepFilter2D(
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int)>()
-external CvStatus SetNumThreads(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int)>()
+external ffi.Pointer<CvStatus> SetNumThreads(
   int n,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int)>()
-external CvStatus SetRNGSeed(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int)>()
+external ffi.Pointer<CvStatus> SetRNGSeed(
   int seed,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<SimpleBlobDetectorParams>)>()
-external CvStatus SimpleBlobDetectorParams_Create(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<SimpleBlobDetectorParams>)>()
+external ffi.Pointer<CvStatus> SimpleBlobDetectorParams_Create(
   ffi.Pointer<SimpleBlobDetectorParams> rval,
 );
 
@@ -5393,31 +5741,32 @@ external void SimpleBlobDetector_Close(
   SimpleBlobDetectorPtr b,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<SimpleBlobDetector>)>()
-external CvStatus SimpleBlobDetector_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<SimpleBlobDetector>)>()
+external ffi.Pointer<CvStatus> SimpleBlobDetector_Create(
   ffi.Pointer<SimpleBlobDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         SimpleBlobDetectorParams, ffi.Pointer<SimpleBlobDetector>)>()
-external CvStatus SimpleBlobDetector_Create_WithParams(
+external ffi.Pointer<CvStatus> SimpleBlobDetector_Create_WithParams(
   SimpleBlobDetectorParams params,
   ffi.Pointer<SimpleBlobDetector> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(SimpleBlobDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus SimpleBlobDetector_Detect(
+    ffi.Pointer<CvStatus> Function(
+        SimpleBlobDetector, Mat, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> SimpleBlobDetector_Detect(
   SimpleBlobDetector b,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Double,
-        ffi.Double, ffi.Int)>()
-external CvStatus Sobel(
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+        ffi.Double, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> Sobel(
   Mat src,
   Mat dst,
   int ddepth,
@@ -5429,8 +5778,8 @@ external CvStatus Sobel(
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Int, ffi.Int)>()
-external CvStatus SpatialGradient(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> SpatialGradient(
   Mat src,
   Mat dx,
   Mat dy,
@@ -5438,8 +5787,8 @@ external CvStatus SpatialGradient(
   int borderType,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, Size)>()
-external CvStatus SqBoxFilter(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Size)>()
+external ffi.Pointer<CvStatus> SqBoxFilter(
   Mat src,
   Mat dst,
   int ddepth,
@@ -5451,133 +5800,141 @@ external void Stitcher_Close(
   PtrStitcherPtr stitcher,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<VecInt>)>()
-external CvStatus Stitcher_Component(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> Stitcher_Component(
   Stitcher self,
   ffi.Pointer<VecInt> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_ComposePanorama(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Stitcher, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_ComposePanorama(
   Stitcher self,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_ComposePanorama_1(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_ComposePanorama_1(
   Stitcher self,
   VecMat mats,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Pointer<PtrStitcher>)>()
-external CvStatus Stitcher_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<PtrStitcher>)>()
+external ffi.Pointer<CvStatus> Stitcher_Create(
   int mode,
   ffi.Pointer<PtrStitcher> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_EstimateTransform(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_EstimateTransform(
   Stitcher self,
   VecMat mats,
   VecMat masks,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(PtrStitcher, ffi.Pointer<Stitcher>)>()
-external CvStatus Stitcher_Get(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(PtrStitcher, ffi.Pointer<Stitcher>)>()
+external ffi.Pointer<CvStatus> Stitcher_Get(
   PtrStitcher self,
   ffi.Pointer<Stitcher> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>()
-external CvStatus Stitcher_GetCompositingResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetCompositingResol(
   Stitcher self,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_GetInterpolationFlags(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetInterpolationFlags(
   Stitcher self,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>()
-external CvStatus Stitcher_GetPanoConfidenceThresh(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetPanoConfidenceThresh(
   Stitcher self,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>()
-external CvStatus Stitcher_GetRegistrationResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetRegistrationResol(
   Stitcher self,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Double>)>()
-external CvStatus Stitcher_GetSeamEstimationResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetSeamEstimationResol(
   Stitcher self,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_GetWaveCorrectKind(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetWaveCorrectKind(
   Stitcher self,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Pointer<ffi.Bool>)>()
-external CvStatus Stitcher_GetWaveCorrection(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> Stitcher_GetWaveCorrection(
   Stitcher self,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Double)>()
-external CvStatus Stitcher_SetCompositingResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double)>()
+external ffi.Pointer<CvStatus> Stitcher_SetCompositingResol(
   Stitcher self,
   double inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Int)>()
-external CvStatus Stitcher_SetInterpolationFlags(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Int)>()
+external ffi.Pointer<CvStatus> Stitcher_SetInterpolationFlags(
   Stitcher self,
   int inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Double)>()
-external CvStatus Stitcher_SetPanoConfidenceThresh(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double)>()
+external ffi.Pointer<CvStatus> Stitcher_SetPanoConfidenceThresh(
   Stitcher self,
   double inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Double)>()
-external CvStatus Stitcher_SetRegistrationResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double)>()
+external ffi.Pointer<CvStatus> Stitcher_SetRegistrationResol(
   Stitcher self,
   double inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Double)>()
-external CvStatus Stitcher_SetSeamEstimationResol(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double)>()
+external ffi.Pointer<CvStatus> Stitcher_SetSeamEstimationResol(
   Stitcher self,
   double inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Int)>()
-external CvStatus Stitcher_SetWaveCorrectKind(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Int)>()
+external ffi.Pointer<CvStatus> Stitcher_SetWaveCorrectKind(
   Stitcher self,
   int inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, ffi.Bool)>()
-external CvStatus Stitcher_SetWaveCorrection(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Stitcher, ffi.Bool)>()
+external ffi.Pointer<CvStatus> Stitcher_SetWaveCorrection(
   Stitcher self,
   bool inval,
 );
 
-@ffi.Native<CvStatus Function(Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_Stitch(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_Stitch(
   Stitcher self,
   VecMat mats,
   Mat rpano,
@@ -5585,8 +5942,9 @@ external CvStatus Stitcher_Stitch(
 );
 
 @ffi.Native<
-    CvStatus Function(Stitcher, VecMat, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus Stitcher_Stitch_1(
+    ffi.Pointer<CvStatus> Function(
+        Stitcher, VecMat, VecMat, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Stitcher_Stitch_1(
   Stitcher self,
   VecMat mats,
   VecMat masks,
@@ -5594,8 +5952,8 @@ external CvStatus Stitcher_Stitch_1(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Float, ffi.Float)>()
-external CvStatus Stylization(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> Stylization(
   Mat src,
   Mat dst,
   double sigma_s,
@@ -5608,9 +5966,9 @@ external void Subdiv2D_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, ffi.Int, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_EdgeDst(
+external ffi.Pointer<CvStatus> Subdiv2D_EdgeDst(
   Subdiv2D self,
   int edge,
   ffi.Pointer<Point2f> dstpt,
@@ -5618,9 +5976,9 @@ external CvStatus Subdiv2D_EdgeDst(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, ffi.Int, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_EdgeOrg(
+external ffi.Pointer<CvStatus> Subdiv2D_EdgeOrg(
   Subdiv2D self,
   int edge,
   ffi.Pointer<Point2f> orgpt,
@@ -5628,9 +5986,9 @@ external CvStatus Subdiv2D_EdgeOrg(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, Point2f, ffi.Pointer<Point2f>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_FindNearest(
+external ffi.Pointer<CvStatus> Subdiv2D_FindNearest(
   Subdiv2D self,
   Point2f pt,
   ffi.Pointer<Point2f> nearestPt,
@@ -5638,8 +5996,9 @@ external CvStatus Subdiv2D_FindNearest(
 );
 
 @ffi.Native<
-    CvStatus Function(Subdiv2D, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_GetEdge(
+    ffi.Pointer<CvStatus> Function(
+        Subdiv2D, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_GetEdge(
   Subdiv2D self,
   int edge,
   int nextEdgeType,
@@ -5647,33 +6006,33 @@ external CvStatus Subdiv2D_GetEdge(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, ffi.Pointer<ffi.Pointer<Vec4f>>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_GetEdgeList(
+external ffi.Pointer<CvStatus> Subdiv2D_GetEdgeList(
   Subdiv2D self,
   ffi.Pointer<ffi.Pointer<Vec4f>> rval,
   ffi.Pointer<ffi.Int> size,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, ffi.Pointer<VecInt>)>()
-external CvStatus Subdiv2D_GetLeadingEdgeList(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Subdiv2D, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_GetLeadingEdgeList(
   Subdiv2D self,
   ffi.Pointer<VecInt> leadingEdgeList,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, ffi.Pointer<ffi.Pointer<Vec6f>>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_GetTriangleList(
+external ffi.Pointer<CvStatus> Subdiv2D_GetTriangleList(
   Subdiv2D self,
   ffi.Pointer<ffi.Pointer<Vec6f>> rval,
   ffi.Pointer<ffi.Int> size,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>, ffi.Pointer<Point2f>)>()
-external CvStatus Subdiv2D_GetVertex(
+external ffi.Pointer<CvStatus> Subdiv2D_GetVertex(
   Subdiv2D self,
   int vertex,
   ffi.Pointer<ffi.Int> firstEdge,
@@ -5681,38 +6040,39 @@ external CvStatus Subdiv2D_GetVertex(
 );
 
 @ffi.Native<
-    CvStatus Function(Subdiv2D, VecInt, ffi.Pointer<VecVecPoint2f>,
+    ffi.Pointer<CvStatus> Function(Subdiv2D, VecInt, ffi.Pointer<VecVecPoint2f>,
         ffi.Pointer<VecPoint2f>)>()
-external CvStatus Subdiv2D_GetVoronoiFacetList(
+external ffi.Pointer<CvStatus> Subdiv2D_GetVoronoiFacetList(
   Subdiv2D self,
   VecInt idx,
   ffi.Pointer<VecVecPoint2f> facetList,
   ffi.Pointer<VecPoint2f> facetCenters,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, Rect)>()
-external CvStatus Subdiv2D_InitDelaunay(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Subdiv2D, Rect)>()
+external ffi.Pointer<CvStatus> Subdiv2D_InitDelaunay(
   Subdiv2D self,
   Rect rect,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_Insert(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_Insert(
   Subdiv2D self,
   Point2f pt,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, VecPoint2f)>()
-external CvStatus Subdiv2D_InsertVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Subdiv2D, VecPoint2f)>()
+external ffi.Pointer<CvStatus> Subdiv2D_InsertVec(
   Subdiv2D self,
   VecPoint2f ptvec,
 );
 
 @ffi.Native<
-    CvStatus Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>,
+    ffi.Pointer<CvStatus> Function(Subdiv2D, Point2f, ffi.Pointer<ffi.Int>,
         ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_Locate(
+external ffi.Pointer<CvStatus> Subdiv2D_Locate(
   Subdiv2D self,
   Point2f pt,
   ffi.Pointer<ffi.Int> edge,
@@ -5720,42 +6080,47 @@ external CvStatus Subdiv2D_Locate(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<Subdiv2D>)>()
-external CvStatus Subdiv2D_NewEmpty(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Subdiv2D>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_NewEmpty(
   ffi.Pointer<Subdiv2D> rval,
 );
 
-@ffi.Native<CvStatus Function(Rect, ffi.Pointer<Subdiv2D>)>()
-external CvStatus Subdiv2D_NewWithRect(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Rect, ffi.Pointer<Subdiv2D>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_NewWithRect(
   Rect rect,
   ffi.Pointer<Subdiv2D> rval,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_NextEdge(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_NextEdge(
   Subdiv2D self,
   int edge,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(Subdiv2D, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_RotateEdge(
+    ffi.Pointer<CvStatus> Function(
+        Subdiv2D, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_RotateEdge(
   Subdiv2D self,
   int edge,
   int rotate,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Subdiv2D_SymEdge(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Subdiv2D, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Subdiv2D_SymEdge(
   Subdiv2D self,
   int edge,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int)>()
-external CvStatus TextureFlattening(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int)>()
+external ffi.Pointer<CvStatus> TextureFlattening(
   Mat src,
   Mat mask,
   Mat dst,
@@ -5764,15 +6129,15 @@ external CvStatus TextureFlattening(
   int kernel_size,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<RNG>)>()
-external CvStatus TheRNG(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<RNG>)>()
+external ffi.Pointer<CvStatus> TheRNG(
   ffi.Pointer<RNG> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Double, ffi.Double, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Threshold(
+external ffi.Pointer<CvStatus> Threshold(
   Mat src,
   Mat dst,
   double thresh,
@@ -5782,17 +6147,18 @@ external CvStatus Threshold(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
-external CvStatus Trackbar_Create(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
+external ffi.Pointer<CvStatus> Trackbar_Create(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   int max,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Int>, ffi.Int)>()
-external CvStatus Trackbar_CreateWithValue(
+external ffi.Pointer<CvStatus> Trackbar_CreateWithValue(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   ffi.Pointer<ffi.Int> value,
@@ -5800,33 +6166,36 @@ external CvStatus Trackbar_CreateWithValue(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
-external CvStatus Trackbar_GetPos(
+external ffi.Pointer<CvStatus> Trackbar_GetPos(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
-external CvStatus Trackbar_SetMax(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
+external ffi.Pointer<CvStatus> Trackbar_SetMax(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   int pos,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
-external CvStatus Trackbar_SetMin(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
+external ffi.Pointer<CvStatus> Trackbar_SetMin(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   int pos,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
-external CvStatus Trackbar_SetPos(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Int)>()
+external ffi.Pointer<CvStatus> Trackbar_SetPos(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> trackname,
   int pos,
@@ -5837,30 +6206,30 @@ external void TrackerMIL_Close(
   TrackerMILPtr self,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<TrackerMIL>)>()
-external CvStatus TrackerMIL_Create(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<TrackerMIL>)>()
+external ffi.Pointer<CvStatus> TrackerMIL_Create(
   ffi.Pointer<TrackerMIL> rval,
 );
 
-@ffi.Native<CvStatus Function(TrackerMIL, Mat, Rect)>()
-external CvStatus TrackerMIL_Init(
+@ffi.Native<ffi.Pointer<CvStatus> Function(TrackerMIL, Mat, Rect)>()
+external ffi.Pointer<CvStatus> TrackerMIL_Init(
   TrackerMIL self,
   Mat image,
   Rect bbox,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         TrackerMIL, Mat, ffi.Pointer<Rect>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus TrackerMIL_Update(
+external ffi.Pointer<CvStatus> TrackerMIL_Update(
   TrackerMIL self,
   Mat image,
   ffi.Pointer<Rect> boundingBox,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, Mat)>()
-external CvStatus Undistort(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat)>()
+external ffi.Pointer<CvStatus> Undistort(
   Mat src,
   Mat dst,
   Mat cameraMatrix,
@@ -5868,8 +6237,10 @@ external CvStatus Undistort(
   Mat newCameraMatrix,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Mat, Mat, Mat, TermCriteria)>()
-external CvStatus UndistortPoints(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Mat, Mat, Mat, TermCriteria)>()
+external ffi.Pointer<CvStatus> UndistortPoints(
   Mat distorted,
   Mat undistorted,
   Mat k,
@@ -5879,14 +6250,15 @@ external CvStatus UndistortPoints(
   TermCriteria criteria,
 );
 
-@ffi.Native<CvStatus Function(VecChar, ffi.Char)>()
-external CvStatus VecChar_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecChar, ffi.Char)>()
+external ffi.Pointer<CvStatus> VecChar_Append(
   VecChar vec,
   int i,
 );
 
-@ffi.Native<CvStatus Function(VecChar, ffi.Int, ffi.Pointer<ffi.Char>)>()
-external CvStatus VecChar_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecChar, ffi.Int, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> VecChar_At(
   VecChar vec,
   int idx,
   ffi.Pointer<ffi.Char> rval,
@@ -5897,54 +6269,58 @@ external void VecChar_Close(
   VecCharPtr vec,
 );
 
-@ffi.Native<CvStatus Function(VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus VecChar_Data(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> VecChar_Data(
   VecChar vec,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecChar>)>()
-external CvStatus VecChar_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> VecChar_New(
   ffi.Pointer<VecChar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<VecChar>)>()
-external CvStatus VecChar_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> VecChar_NewFromPointer(
   ffi.Pointer<ffi.Char> p,
   int length,
   ffi.Pointer<VecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecChar, ffi.Pointer<VecChar>)>()
-external CvStatus VecChar_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecChar, ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> VecChar_NewFromVec(
   VecChar vec,
   ffi.Pointer<VecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecChar, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecChar_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecChar, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecChar_Size(
   VecChar vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecChar_ToString(
+external ffi.Pointer<CvStatus> VecChar_ToString(
   VecChar vec,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ffi.Pointer<ffi.Int> length,
 );
 
-@ffi.Native<CvStatus Function(VecDMatch, DMatch)>()
-external CvStatus VecDMatch_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDMatch, DMatch)>()
+external ffi.Pointer<CvStatus> VecDMatch_Append(
   VecDMatch vec,
   DMatch dm,
 );
 
-@ffi.Native<CvStatus Function(VecDMatch, ffi.Int, ffi.Pointer<DMatch>)>()
-external CvStatus VecDMatch_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecDMatch, ffi.Int, ffi.Pointer<DMatch>)>()
+external ffi.Pointer<CvStatus> VecDMatch_At(
   VecDMatch vec,
   int idx,
   ffi.Pointer<DMatch> rval,
@@ -5955,39 +6331,42 @@ external void VecDMatch_Close(
   VecDMatchPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecDMatch>)>()
-external CvStatus VecDMatch_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecDMatch>)>()
+external ffi.Pointer<CvStatus> VecDMatch_New(
   ffi.Pointer<VecDMatch> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<DMatch>, ffi.Int, ffi.Pointer<VecDMatch>)>()
-external CvStatus VecDMatch_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<DMatch>, ffi.Int, ffi.Pointer<VecDMatch>)>()
+external ffi.Pointer<CvStatus> VecDMatch_NewFromPointer(
   ffi.Pointer<DMatch> matches,
   int length,
   ffi.Pointer<VecDMatch> rval,
 );
 
-@ffi.Native<CvStatus Function(VecDMatch, ffi.Pointer<VecDMatch>)>()
-external CvStatus VecDMatch_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDMatch, ffi.Pointer<VecDMatch>)>()
+external ffi.Pointer<CvStatus> VecDMatch_NewFromVec(
   VecDMatch vec,
   ffi.Pointer<VecDMatch> rval,
 );
 
-@ffi.Native<CvStatus Function(VecDMatch, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecDMatch_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDMatch, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecDMatch_Size(
   VecDMatch vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecDouble, ffi.Double)>()
-external CvStatus VecDouble_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDouble, ffi.Double)>()
+external ffi.Pointer<CvStatus> VecDouble_Append(
   VecDouble vec,
   double d,
 );
 
-@ffi.Native<CvStatus Function(VecDouble, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus VecDouble_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecDouble, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> VecDouble_At(
   VecDouble vec,
   int idx,
   ffi.Pointer<ffi.Double> rval,
@@ -5999,46 +6378,48 @@ external void VecDouble_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(VecDouble, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external CvStatus VecDouble_Data(
+    ffi.Pointer<CvStatus> Function(
+        VecDouble, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
+external ffi.Pointer<CvStatus> VecDouble_Data(
   VecDouble vec,
   ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecDouble>)>()
-external CvStatus VecDouble_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecDouble>)>()
+external ffi.Pointer<CvStatus> VecDouble_New(
   ffi.Pointer<VecDouble> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Double>, ffi.Int, ffi.Pointer<VecDouble>)>()
-external CvStatus VecDouble_NewFromPointer(
+external ffi.Pointer<CvStatus> VecDouble_NewFromPointer(
   ffi.Pointer<ffi.Double> p,
   int length,
   ffi.Pointer<VecDouble> rval,
 );
 
-@ffi.Native<CvStatus Function(VecDouble, ffi.Pointer<VecDouble>)>()
-external CvStatus VecDouble_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDouble, ffi.Pointer<VecDouble>)>()
+external ffi.Pointer<CvStatus> VecDouble_NewFromVec(
   VecDouble vec,
   ffi.Pointer<VecDouble> rval,
 );
 
-@ffi.Native<CvStatus Function(VecDouble, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecDouble_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecDouble, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecDouble_Size(
   VecDouble vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecFloat, ffi.Float)>()
-external CvStatus VecFloat_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecFloat, ffi.Float)>()
+external ffi.Pointer<CvStatus> VecFloat_Append(
   VecFloat vec,
   double f,
 );
 
-@ffi.Native<CvStatus Function(VecFloat, ffi.Int, ffi.Pointer<ffi.Float>)>()
-external CvStatus VecFloat_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecFloat, ffi.Int, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> VecFloat_At(
   VecFloat vec,
   int idx,
   ffi.Pointer<ffi.Float> rval,
@@ -6049,52 +6430,57 @@ external void VecFloat_Close(
   VecFloatPtr vec,
 );
 
-@ffi.Native<CvStatus Function(VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external CvStatus VecFloat_Data(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
+external ffi.Pointer<CvStatus> VecFloat_Data(
   VecFloat vec,
   ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecFloat>)>()
-external CvStatus VecFloat_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>()
+external ffi.Pointer<CvStatus> VecFloat_New(
   ffi.Pointer<VecFloat> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Float>, ffi.Int, ffi.Pointer<VecFloat>)>()
-external CvStatus VecFloat_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Float>, ffi.Int, ffi.Pointer<VecFloat>)>()
+external ffi.Pointer<CvStatus> VecFloat_NewFromPointer(
   ffi.Pointer<ffi.Float> p,
   int length,
   ffi.Pointer<VecFloat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecFloat, ffi.Pointer<VecFloat>)>()
-external CvStatus VecFloat_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecFloat, ffi.Pointer<VecFloat>)>()
+external ffi.Pointer<CvStatus> VecFloat_NewFromVec(
   VecFloat vec,
   ffi.Pointer<VecFloat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecFloat, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecFloat_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecFloat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecFloat_Size(
   VecFloat vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int)>()
-external CvStatus VecInt_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecInt, ffi.Int)>()
+external ffi.Pointer<CvStatus> VecInt_Append(
   VecInt vec,
   int i,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecInt_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecInt_At(
   VecInt vec,
   int idx,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecInt_AtNoBoundCheck(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecInt_AtNoBoundCheck(
   VecInt vec,
   int idx,
   ffi.Pointer<ffi.Int> rval,
@@ -6105,46 +6491,50 @@ external void VecInt_Close(
   VecIntPtr vec,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external CvStatus VecInt_Data(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
+external ffi.Pointer<CvStatus> VecInt_Data(
   VecInt vec,
   ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecInt>)>()
-external CvStatus VecInt_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> VecInt_New(
   ffi.Pointer<VecInt> rval,
 );
 
 /// Copy from a pointer
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Int>, ffi.Int, ffi.Pointer<VecInt>)>()
-external CvStatus VecInt_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Int>, ffi.Int, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> VecInt_NewFromPointer(
   ffi.Pointer<ffi.Int> p,
   int length,
   ffi.Pointer<VecInt> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Pointer<VecInt>)>()
-external CvStatus VecInt_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecInt, ffi.Pointer<VecInt>)>()
+external ffi.Pointer<CvStatus> VecInt_NewFromVec(
   VecInt vec,
   ffi.Pointer<VecInt> rval,
 );
 
-@ffi.Native<CvStatus Function(VecInt, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecInt_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecInt, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecInt_Size(
   VecInt vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecKeyPoint, KeyPoint)>()
-external CvStatus VecKeyPoint_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecKeyPoint, KeyPoint)>()
+external ffi.Pointer<CvStatus> VecKeyPoint_Append(
   VecKeyPoint vec,
   KeyPoint kp,
 );
 
-@ffi.Native<CvStatus Function(VecKeyPoint, ffi.Int, ffi.Pointer<KeyPoint>)>()
-external CvStatus VecKeyPoint_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecKeyPoint, ffi.Int, ffi.Pointer<KeyPoint>)>()
+external ffi.Pointer<CvStatus> VecKeyPoint_At(
   VecKeyPoint vec,
   int idx,
   ffi.Pointer<KeyPoint> rval,
@@ -6155,40 +6545,41 @@ external void VecKeyPoint_Close(
   VecKeyPointPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecKeyPoint>)>()
-external CvStatus VecKeyPoint_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> VecKeyPoint_New(
   ffi.Pointer<VecKeyPoint> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<KeyPoint>, ffi.Int, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus VecKeyPoint_NewFromPointer(
+external ffi.Pointer<CvStatus> VecKeyPoint_NewFromPointer(
   ffi.Pointer<KeyPoint> keypoints,
   int length,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecKeyPoint, ffi.Pointer<VecKeyPoint>)>()
-external CvStatus VecKeyPoint_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecKeyPoint, ffi.Pointer<VecKeyPoint>)>()
+external ffi.Pointer<CvStatus> VecKeyPoint_NewFromVec(
   VecKeyPoint vec,
   ffi.Pointer<VecKeyPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecKeyPoint, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecKeyPoint_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecKeyPoint, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecKeyPoint_Size(
   VecKeyPoint vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecMat, Mat)>()
-external CvStatus VecMat_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, Mat)>()
+external ffi.Pointer<CvStatus> VecMat_Append(
   VecMat vec,
   Mat mat,
 );
 
-@ffi.Native<CvStatus Function(VecMat, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus VecMat_At(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> VecMat_At(
   VecMat vec,
   int i,
   ffi.Pointer<Mat> rval,
@@ -6199,38 +6590,41 @@ external void VecMat_Close(
   VecMatPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecMat>)>()
-external CvStatus VecMat_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> VecMat_New(
   ffi.Pointer<VecMat> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<Mat>, ffi.Int, ffi.Pointer<VecMat>)>()
-external CvStatus VecMat_NewFromPointer(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<Mat>, ffi.Int, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> VecMat_NewFromPointer(
   ffi.Pointer<Mat> mats,
   int length,
   ffi.Pointer<VecMat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecMat, ffi.Pointer<VecMat>)>()
-external CvStatus VecMat_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> VecMat_NewFromVec(
   VecMat vec,
   ffi.Pointer<VecMat> rval,
 );
 
-@ffi.Native<CvStatus Function(VecMat, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecMat_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecMat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecMat_Size(
   VecMat vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, Point2f)>()
-external CvStatus VecPoint2f_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint2f, Point2f)>()
+external ffi.Pointer<CvStatus> VecPoint2f_Append(
   VecPoint2f vec,
   Point2f p,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, ffi.Int, ffi.Pointer<Point2f>)>()
-external CvStatus VecPoint2f_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Int, ffi.Pointer<Point2f>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_At(
   VecPoint2f vec,
   int idx,
   ffi.Pointer<Point2f> rval,
@@ -6241,45 +6635,48 @@ external void VecPoint2f_Close(
   VecPoint2fPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecPoint2f>)>()
-external CvStatus VecPoint2f_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_New(
   ffi.Pointer<VecPoint2f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecPoint2f>)>()
-external CvStatus VecPoint2f_NewFromMat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_NewFromMat(
   Mat mat,
   ffi.Pointer<VecPoint2f> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<Point2f>, ffi.Int, ffi.Pointer<VecPoint2f>)>()
-external CvStatus VecPoint2f_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<Point2f>, ffi.Int, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_NewFromPointer(
   ffi.Pointer<Point2f> pts,
   int length,
   ffi.Pointer<VecPoint2f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, ffi.Pointer<VecPoint2f>)>()
-external CvStatus VecPoint2f_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_NewFromVec(
   VecPoint2f vec,
   ffi.Pointer<VecPoint2f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint2f, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecPoint2f_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecPoint2f_Size(
   VecPoint2f vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint3f, Point3f)>()
-external CvStatus VecPoint3f_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint3f, Point3f)>()
+external ffi.Pointer<CvStatus> VecPoint3f_Append(
   VecPoint3f vec,
   Point3f point,
 );
 
-@ffi.Native<CvStatus Function(VecPoint3f, ffi.Int, ffi.Pointer<Point3f>)>()
-external CvStatus VecPoint3f_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Int, ffi.Pointer<Point3f>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_At(
   VecPoint3f vec,
   int idx,
   ffi.Pointer<Point3f> rval,
@@ -6290,45 +6687,48 @@ external void VecPoint3f_Close(
   VecPoint3fPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecPoint3f>)>()
-external CvStatus VecPoint3f_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_New(
   ffi.Pointer<VecPoint3f> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecPoint3f>)>()
-external CvStatus VecPoint3f_NewFromMat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_NewFromMat(
   Mat mat,
   ffi.Pointer<VecPoint3f> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<Point3f>, ffi.Int, ffi.Pointer<VecPoint3f>)>()
-external CvStatus VecPoint3f_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<Point3f>, ffi.Int, ffi.Pointer<VecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_NewFromPointer(
   ffi.Pointer<Point3f> points,
   int length,
   ffi.Pointer<VecPoint3f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint3f, ffi.Pointer<VecPoint3f>)>()
-external CvStatus VecPoint3f_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Pointer<VecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_NewFromVec(
   VecPoint3f vec,
   ffi.Pointer<VecPoint3f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint3f, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecPoint3f_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecPoint3f_Size(
   VecPoint3f vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, Point)>()
-external CvStatus VecPoint_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, Point)>()
+external ffi.Pointer<CvStatus> VecPoint_Append(
   VecPoint vec,
   Point p,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Int, ffi.Pointer<Point>)>()
-external CvStatus VecPoint_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecPoint, ffi.Int, ffi.Pointer<Point>)>()
+external ffi.Pointer<CvStatus> VecPoint_At(
   VecPoint vec,
   int idx,
   ffi.Pointer<Point> rval,
@@ -6339,46 +6739,48 @@ external void VecPoint_Close(
   VecPointPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecPoint>)>()
-external CvStatus VecPoint_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> VecPoint_New(
   ffi.Pointer<VecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, ffi.Pointer<VecPoint>)>()
-external CvStatus VecPoint_NewFromMat(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> VecPoint_NewFromMat(
   Mat mat,
   ffi.Pointer<VecPoint> rval,
 );
 
 /// Copy from a pointer
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<Point>, ffi.Int, ffi.Pointer<VecPoint>)>()
-external CvStatus VecPoint_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<Point>, ffi.Int, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> VecPoint_NewFromPointer(
   ffi.Pointer<Point> points,
   int length,
   ffi.Pointer<VecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<VecPoint>)>()
-external CvStatus VecPoint_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> VecPoint_NewFromVec(
   VecPoint vec,
   ffi.Pointer<VecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecPoint, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecPoint_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecPoint_Size(
   VecPoint vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecRect, Rect)>()
-external CvStatus VecRect_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecRect, Rect)>()
+external ffi.Pointer<CvStatus> VecRect_Append(
   VecRect vec,
   Rect rect,
 );
 
-@ffi.Native<CvStatus Function(VecRect, ffi.Int, ffi.Pointer<Rect>)>()
-external CvStatus VecRect_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecRect, ffi.Int, ffi.Pointer<Rect>)>()
+external ffi.Pointer<CvStatus> VecRect_At(
   VecRect vec,
   int idx,
   ffi.Pointer<Rect> rval,
@@ -6389,46 +6791,49 @@ external void VecRect_Close(
   VecRectPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecRect>)>()
-external CvStatus VecRect_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> VecRect_New(
   ffi.Pointer<VecRect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<Rect>, ffi.Int, ffi.Pointer<VecRect>)>()
-external CvStatus VecRect_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<Rect>, ffi.Int, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> VecRect_NewFromPointer(
   ffi.Pointer<Rect> rects,
   int length,
   ffi.Pointer<VecRect> rval,
 );
 
-@ffi.Native<CvStatus Function(VecRect, ffi.Pointer<VecRect>)>()
-external CvStatus VecRect_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecRect, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> VecRect_NewFromVec(
   VecRect vec,
   ffi.Pointer<VecRect> rval,
 );
 
-@ffi.Native<CvStatus Function(VecRect, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecRect_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecRect, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecRect_Size(
   VecRect vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, uchar)>()
-external CvStatus VecUChar_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecUChar, uchar)>()
+external ffi.Pointer<CvStatus> VecUChar_Append(
   VecUChar vec,
   int i,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Int, ffi.Pointer<uchar>)>()
-external CvStatus VecUChar_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int, ffi.Pointer<uchar>)>()
+external ffi.Pointer<CvStatus> VecUChar_At(
   VecUChar vec,
   int idx,
   ffi.Pointer<uchar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Int, ffi.Pointer<uchar>)>()
-external CvStatus VecUChar_AtNoBoundCheck(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int, ffi.Pointer<uchar>)>()
+external ffi.Pointer<CvStatus> VecUChar_AtNoBoundCheck(
   VecUChar vec,
   int idx,
   ffi.Pointer<uchar> rval,
@@ -6439,60 +6844,63 @@ external void VecUChar_Close(
   VecUCharPtr vec,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<ffi.Pointer<uchar>>)>()
-external CvStatus VecUChar_Data(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<ffi.Pointer<uchar>>)>()
+external ffi.Pointer<CvStatus> VecUChar_Data(
   VecUChar vec,
   ffi.Pointer<ffi.Pointer<uchar>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecUChar>)>()
-external CvStatus VecUChar_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> VecUChar_New(
   ffi.Pointer<VecUChar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<uchar>, ffi.Int, ffi.Pointer<VecUChar>)>()
-external CvStatus VecUChar_NewFromPointer(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<uchar>, ffi.Int, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> VecUChar_NewFromPointer(
   ffi.Pointer<uchar> p,
   int length,
   ffi.Pointer<VecUChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<VecUChar>)>()
-external CvStatus VecUChar_NewFromVec(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<VecUChar>)>()
+external ffi.Pointer<CvStatus> VecUChar_NewFromVec(
   VecUChar vec,
   ffi.Pointer<VecUChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecUChar, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecUChar_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecUChar_Size(
   VecUChar vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecChar, VecChar)>()
-external CvStatus VecVecChar_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecChar, VecChar)>()
+external ffi.Pointer<CvStatus> VecVecChar_Append(
   VecVecChar vec,
   VecChar v,
 );
 
-@ffi.Native<CvStatus Function(VecVecChar, ffi.Pointer<ffi.Char>)>()
-external CvStatus VecVecChar_Append_Str(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> VecVecChar_Append_Str(
   VecVecChar vec,
   ffi.Pointer<ffi.Char> str,
 );
 
-@ffi.Native<CvStatus Function(VecVecChar, ffi.Int, ffi.Pointer<VecChar>)>()
-external CvStatus VecVecChar_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Int, ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> VecVecChar_At(
   VecVecChar vec,
   int idx,
   ffi.Pointer<VecChar> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VecVecChar, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>,
-        ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecChar_At_Str(
+    ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Int,
+        ffi.Pointer<ffi.Pointer<ffi.Char>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecChar_At_Str(
   VecVecChar vec,
   int idx,
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
@@ -6504,31 +6912,34 @@ external void VecVecChar_Close(
   VecVecCharPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecVecChar>)>()
-external CvStatus VecVecChar_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecChar>)>()
+external ffi.Pointer<CvStatus> VecVecChar_New(
   ffi.Pointer<VecVecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecChar, ffi.Pointer<VecVecChar>)>()
-external CvStatus VecVecChar_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<VecVecChar>)>()
+external ffi.Pointer<CvStatus> VecVecChar_NewFromVec(
   VecVecChar vec,
   ffi.Pointer<VecVecChar> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecChar, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecChar_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecChar_Size(
   VecVecChar vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecDMatch, VecDMatch)>()
-external CvStatus VecVecDMatch_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecDMatch, VecDMatch)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_Append(
   VecVecDMatch vec,
   VecDMatch dm,
 );
 
-@ffi.Native<CvStatus Function(VecVecDMatch, ffi.Int, ffi.Pointer<VecDMatch>)>()
-external CvStatus VecVecDMatch_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecVecDMatch, ffi.Int, ffi.Pointer<VecDMatch>)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_At(
   VecVecDMatch vec,
   int idx,
   ffi.Pointer<VecDMatch> rval,
@@ -6540,47 +6951,51 @@ external void VecVecDMatch_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(VecVecDMatch, ffi.Pointer<ffi.Pointer<VecDMatch>>)>()
-external CvStatus VecVecDMatch_Data(
+    ffi.Pointer<CvStatus> Function(
+        VecVecDMatch, ffi.Pointer<ffi.Pointer<VecDMatch>>)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_Data(
   VecVecDMatch vec,
   ffi.Pointer<ffi.Pointer<VecDMatch>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecVecDMatch>)>()
-external CvStatus VecVecDMatch_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecDMatch>)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_New(
   ffi.Pointer<VecVecDMatch> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<VecDMatch>, ffi.Int, ffi.Pointer<VecVecDMatch>)>()
-external CvStatus VecVecDMatch_NewFromPointer(
+external ffi.Pointer<CvStatus> VecVecDMatch_NewFromPointer(
   ffi.Pointer<VecDMatch> matches,
   int length,
   ffi.Pointer<VecVecDMatch> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecDMatch, ffi.Pointer<VecVecDMatch>)>()
-external CvStatus VecVecDMatch_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecDMatch, ffi.Pointer<VecVecDMatch>)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_NewFromVec(
   VecVecDMatch vec,
   ffi.Pointer<VecVecDMatch> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecDMatch, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecDMatch_Size(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecDMatch, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecDMatch_Size(
   VecVecDMatch vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint2f, VecPoint2f)>()
-external CvStatus VecVecPoint2f_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecPoint2f, VecPoint2f)>()
+external ffi.Pointer<CvStatus> VecVecPoint2f_Append(
   VecVecPoint2f vec,
   VecPoint2f pv,
 );
 
 @ffi.Native<
-    CvStatus Function(VecVecPoint2f, ffi.Int, ffi.Pointer<VecPoint2f>)>()
-external CvStatus VecVecPoint2f_At(
+    ffi.Pointer<CvStatus> Function(
+        VecVecPoint2f, ffi.Int, ffi.Pointer<VecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint2f_At(
   VecVecPoint2f vec,
   int idx,
   ffi.Pointer<VecPoint2f> rval,
@@ -6591,41 +7006,44 @@ external void VecVecPoint2f_Close(
   VecVecPoint2fPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint2f>)>()
-external CvStatus VecVecPoint2f_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint2f_New(
   ffi.Pointer<VecVecPoint2f> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<VecPoint2f>, ffi.Int, ffi.Pointer<VecVecPoint2f>)>()
-external CvStatus VecVecPoint2f_NewFromPointer(
+external ffi.Pointer<CvStatus> VecVecPoint2f_NewFromPointer(
   ffi.Pointer<VecPoint2f> points,
   int length,
   ffi.Pointer<VecVecPoint2f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint2f, ffi.Pointer<VecVecPoint2f>)>()
-external CvStatus VecVecPoint2f_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecPoint2f, ffi.Pointer<VecVecPoint2f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint2f_NewFromVec(
   VecVecPoint2f vec,
   ffi.Pointer<VecVecPoint2f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint2f, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecPoint2f_Size(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecPoint2f, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecPoint2f_Size(
   VecVecPoint2f vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint3f, VecPoint3f)>()
-external CvStatus VecVecPoint3f_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecPoint3f)>()
+external ffi.Pointer<CvStatus> VecVecPoint3f_Append(
   VecVecPoint3f vec,
   VecPoint3f pv,
 );
 
 @ffi.Native<
-    CvStatus Function(VecVecPoint3f, ffi.Int, ffi.Pointer<VecPoint3f>)>()
-external CvStatus VecVecPoint3f_At(
+    ffi.Pointer<CvStatus> Function(
+        VecVecPoint3f, ffi.Int, ffi.Pointer<VecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint3f_At(
   VecVecPoint3f vec,
   int idx,
   ffi.Pointer<VecPoint3f> rval,
@@ -6636,40 +7054,44 @@ external void VecVecPoint3f_Close(
   VecVecPoint3fPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint3f>)>()
-external CvStatus VecVecPoint3f_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint3f_New(
   ffi.Pointer<VecVecPoint3f> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<VecPoint3f>, ffi.Int, ffi.Pointer<VecVecPoint3f>)>()
-external CvStatus VecVecPoint3f_NewFromPointer(
+external ffi.Pointer<CvStatus> VecVecPoint3f_NewFromPointer(
   ffi.Pointer<VecPoint3f> points,
   int length,
   ffi.Pointer<VecVecPoint3f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint3f, ffi.Pointer<VecVecPoint3f>)>()
-external CvStatus VecVecPoint3f_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecPoint3f, ffi.Pointer<VecVecPoint3f>)>()
+external ffi.Pointer<CvStatus> VecVecPoint3f_NewFromVec(
   VecVecPoint3f vec,
   ffi.Pointer<VecVecPoint3f> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint3f, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecPoint3f_Size(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecPoint3f, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecPoint3f_Size(
   VecVecPoint3f vec,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint, VecPoint)>()
-external CvStatus VecVecPoint_Append(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecPoint, VecPoint)>()
+external ffi.Pointer<CvStatus> VecVecPoint_Append(
   VecVecPoint vec,
   VecPoint pv,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint, ffi.Int, ffi.Pointer<VecPoint>)>()
-external CvStatus VecVecPoint_At(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VecVecPoint, ffi.Int, ffi.Pointer<VecPoint>)>()
+external ffi.Pointer<CvStatus> VecVecPoint_At(
   VecVecPoint vec,
   int idx,
   ffi.Pointer<VecPoint> rval,
@@ -6680,28 +7102,29 @@ external void VecVecPoint_Close(
   VecVecPointPtr vec,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VecVecPoint>)>()
-external CvStatus VecVecPoint_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint>)>()
+external ffi.Pointer<CvStatus> VecVecPoint_New(
   ffi.Pointer<VecVecPoint> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<VecPoint>, ffi.Int, ffi.Pointer<VecVecPoint>)>()
-external CvStatus VecVecPoint_NewFromPointer(
+external ffi.Pointer<CvStatus> VecVecPoint_NewFromPointer(
   ffi.Pointer<VecPoint> points,
   int length,
   ffi.Pointer<VecVecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint, ffi.Pointer<VecVecPoint>)>()
-external CvStatus VecVecPoint_NewFromVec(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VecVecPoint, ffi.Pointer<VecVecPoint>)>()
+external ffi.Pointer<CvStatus> VecVecPoint_NewFromVec(
   VecVecPoint vec,
   ffi.Pointer<VecVecPoint> rval,
 );
 
-@ffi.Native<CvStatus Function(VecVecPoint, ffi.Pointer<ffi.Int>)>()
-external CvStatus VecVecPoint_Size(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VecVecPoint, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VecVecPoint_Size(
   VecVecPoint vec,
   ffi.Pointer<ffi.Int> rval,
 );
@@ -6711,65 +7134,73 @@ external void VideoCapture_Close(
   VideoCapturePtr self,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus VideoCapture_Get(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VideoCapture, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> VideoCapture_Get(
   VideoCapture self,
   int prop,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, ffi.Int)>()
-external CvStatus VideoCapture_Grab(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Int)>()
+external ffi.Pointer<CvStatus> VideoCapture_Grab(
   VideoCapture self,
   int skip,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, ffi.Pointer<ffi.Int>)>()
-external CvStatus VideoCapture_IsOpened(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VideoCapture_IsOpened(
   VideoCapture self,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VideoCapture>)>()
-external CvStatus VideoCapture_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoCapture>)>()
+external ffi.Pointer<CvStatus> VideoCapture_New(
   ffi.Pointer<VideoCapture> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<VideoCapture>)>()
-external CvStatus VideoCapture_NewFromFile(
+external ffi.Pointer<CvStatus> VideoCapture_NewFromFile(
   ffi.Pointer<ffi.Char> filename,
   int apiPreference,
   ffi.Pointer<VideoCapture> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Pointer<VideoCapture>)>()
-external CvStatus VideoCapture_NewFromIndex(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Pointer<VideoCapture>)>()
+external ffi.Pointer<CvStatus> VideoCapture_NewFromIndex(
   int index,
   int apiPreference,
   ffi.Pointer<VideoCapture> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VideoCapture, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>)>()
-external CvStatus VideoCapture_Open(
+external ffi.Pointer<CvStatus> VideoCapture_Open(
   VideoCapture self,
   ffi.Pointer<ffi.Char> uri,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus VideoCapture_OpenDevice(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        VideoCapture, ffi.Int, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> VideoCapture_OpenDevice(
   VideoCapture self,
   int device,
   ffi.Pointer<ffi.Bool> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VideoCapture, ffi.Int, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus VideoCapture_OpenDeviceWithAPI(
+    ffi.Pointer<CvStatus> Function(
+        VideoCapture, ffi.Int, ffi.Int, ffi.Pointer<ffi.Bool>)>()
+external ffi.Pointer<CvStatus> VideoCapture_OpenDeviceWithAPI(
   VideoCapture self,
   int device,
   int apiPreference,
@@ -6777,29 +7208,30 @@ external CvStatus VideoCapture_OpenDeviceWithAPI(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         VideoCapture, ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<ffi.Bool>)>()
-external CvStatus VideoCapture_OpenWithAPI(
+external ffi.Pointer<CvStatus> VideoCapture_OpenWithAPI(
   VideoCapture self,
   ffi.Pointer<ffi.Char> uri,
   int apiPreference,
   ffi.Pointer<ffi.Bool> rval,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, Mat, ffi.Pointer<ffi.Int>)>()
-external CvStatus VideoCapture_Read(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(VideoCapture, Mat, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VideoCapture_Read(
   VideoCapture self,
   Mat buf,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture)>()
-external CvStatus VideoCapture_Release(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture)>()
+external ffi.Pointer<CvStatus> VideoCapture_Release(
   VideoCapture self,
 );
 
-@ffi.Native<CvStatus Function(VideoCapture, ffi.Int, ffi.Double)>()
-external CvStatus VideoCapture_Set(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> VideoCapture_Set(
   VideoCapture self,
   int prop,
   double param,
@@ -6811,9 +7243,9 @@ external void VideoWriter_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Char, ffi.Char, ffi.Char, ffi.Char, ffi.Pointer<ffi.Int>)>()
-external CvStatus VideoWriter_Fourcc(
+external ffi.Pointer<CvStatus> VideoWriter_Fourcc(
   int c1,
   int c2,
   int c3,
@@ -6821,21 +7253,21 @@ external CvStatus VideoWriter_Fourcc(
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(VideoWriter, ffi.Pointer<ffi.Int>)>()
-external CvStatus VideoWriter_IsOpened(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> VideoWriter_IsOpened(
   VideoWriter self,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<VideoWriter>)>()
-external CvStatus VideoWriter_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoWriter>)>()
+external ffi.Pointer<CvStatus> VideoWriter_New(
   ffi.Pointer<VideoWriter> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(VideoWriter, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
-        ffi.Double, ffi.Int, ffi.Int, ffi.Bool)>()
-external CvStatus VideoWriter_Open(
+    ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>,
+        ffi.Pointer<ffi.Char>, ffi.Double, ffi.Int, ffi.Int, ffi.Bool)>()
+external ffi.Pointer<CvStatus> VideoWriter_Open(
   VideoWriter self,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Char> codec,
@@ -6845,27 +7277,29 @@ external CvStatus VideoWriter_Open(
   bool isColor,
 );
 
-@ffi.Native<CvStatus Function(VideoWriter)>()
-external CvStatus VideoWriter_Release(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoWriter)>()
+external ffi.Pointer<CvStatus> VideoWriter_Release(
   VideoWriter self,
 );
 
-@ffi.Native<CvStatus Function(VideoWriter, Mat)>()
-external CvStatus VideoWriter_Write(
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoWriter, Mat)>()
+external ffi.Pointer<CvStatus> VideoWriter_Write(
   VideoWriter self,
   Mat img,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Size)>()
-external CvStatus WarpAffine(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Size)>()
+external ffi.Pointer<CvStatus> WarpAffine(
   Mat src,
   Mat dst,
   Mat rot_mat,
   Size dsize,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Size, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus WarpAffineWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Size, ffi.Int, ffi.Int, Scalar)>()
+external ffi.Pointer<CvStatus> WarpAffineWithParams(
   Mat src,
   Mat dst,
   Mat rot_mat,
@@ -6875,16 +7309,18 @@ external CvStatus WarpAffineWithParams(
   Scalar borderValue,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Size)>()
-external CvStatus WarpPerspective(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Size)>()
+external ffi.Pointer<CvStatus> WarpPerspective(
   Mat src,
   Mat dst,
   Mat m,
   Size dsize,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, Mat, Size, ffi.Int, ffi.Int, Scalar)>()
-external CvStatus WarpPerspectiveWithParams(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, Size, ffi.Int, ffi.Int, Scalar)>()
+external ffi.Pointer<CvStatus> WarpPerspectiveWithParams(
   Mat src,
   Mat dst,
   Mat rot_mat,
@@ -6894,8 +7330,8 @@ external CvStatus WarpPerspectiveWithParams(
   Scalar borderValue,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus Watershed(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> Watershed(
   Mat image,
   Mat markers,
 );
@@ -6906,9 +7342,9 @@ external void WeChatQRCode_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<WeChatQRCode>, Mat, ffi.Pointer<VecMat>,
-        ffi.Pointer<VecVecChar>)>()
-external CvStatus WeChatQRCode_DetectAndDecode(
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, Mat,
+        ffi.Pointer<VecMat>, ffi.Pointer<VecVecChar>)>()
+external ffi.Pointer<CvStatus> WeChatQRCode_DetectAndDecode(
   ffi.Pointer<WeChatQRCode> self,
   Mat img,
   ffi.Pointer<VecMat> points,
@@ -6916,25 +7352,26 @@ external CvStatus WeChatQRCode_DetectAndDecode(
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<WeChatQRCode>, ffi.Pointer<ffi.Float>)>()
-external CvStatus WeChatQRCode_GetScaleFactor(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<WeChatQRCode>, ffi.Pointer<ffi.Float>)>()
+external ffi.Pointer<CvStatus> WeChatQRCode_GetScaleFactor(
   ffi.Pointer<WeChatQRCode> self,
   ffi.Pointer<ffi.Float> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<WeChatQRCode>)>()
-external CvStatus WeChatQRCode_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>()
+external ffi.Pointer<CvStatus> WeChatQRCode_New(
   ffi.Pointer<WeChatQRCode> qrcode,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<WeChatQRCode>)>()
-external CvStatus WeChatQRCode_NewWithParams(
+external ffi.Pointer<CvStatus> WeChatQRCode_NewWithParams(
   ffi.Pointer<ffi.Char> detector_prototxt_path,
   ffi.Pointer<ffi.Char> detector_caffe_model_path,
   ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
@@ -6942,8 +7379,9 @@ external CvStatus WeChatQRCode_NewWithParams(
   ffi.Pointer<WeChatQRCode> qrcode,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<WeChatQRCode>, ffi.Float)>()
-external CvStatus WeChatQRCode_SetScaleFactor(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, ffi.Float)>()
+external ffi.Pointer<CvStatus> WeChatQRCode_SetScaleFactor(
   ffi.Pointer<WeChatQRCode> self,
   double scale_factor,
 );
@@ -6954,141 +7392,156 @@ external void Window_Close(
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus Window_GetProperty(
+external ffi.Pointer<CvStatus> Window_GetProperty(
   ffi.Pointer<ffi.Char> winname,
   int flag,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, Mat)>()
-external CvStatus Window_IMShow(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat)>()
+external ffi.Pointer<CvStatus> Window_IMShow(
   ffi.Pointer<ffi.Char> winname,
   Mat mat,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int)>()
-external CvStatus Window_Move(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Window_Move(
   ffi.Pointer<ffi.Char> winname,
   int x,
   int y,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int)>()
-external CvStatus Window_New(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int)>()
+external ffi.Pointer<CvStatus> Window_New(
   ffi.Pointer<ffi.Char> winname,
   int flags,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int)>()
-external CvStatus Window_Resize(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> Window_Resize(
   ffi.Pointer<ffi.Char> winname,
   int width,
   int height,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<Rect>)>()
-external CvStatus Window_SelectROI(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<Rect>)>()
+external ffi.Pointer<CvStatus> Window_SelectROI(
   ffi.Pointer<ffi.Char> winname,
   Mat img,
   ffi.Pointer<Rect> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<VecRect>)>()
-external CvStatus Window_SelectROIs(
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<VecRect>)>()
+external ffi.Pointer<CvStatus> Window_SelectROIs(
   ffi.Pointer<ffi.Char> winname,
   Mat img,
   ffi.Pointer<VecRect> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double)>()
-external CvStatus Window_SetProperty(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double)>()
+external ffi.Pointer<CvStatus> Window_SetProperty(
   ffi.Pointer<ffi.Char> winname,
   int flag,
   double value,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>()
-external CvStatus Window_SetTitle(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> Window_SetTitle(
   ffi.Pointer<ffi.Char> winname,
   ffi.Pointer<ffi.Char> title,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Pointer<ffi.Int>)>()
-external CvStatus Window_WaitKey(
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> Window_WaitKey(
   int delay,
   ffi.Pointer<ffi.Int> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
-external CvStatus Zeros(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>()
+external ffi.Pointer<CvStatus> Zeros(
   int rows,
   int cols,
   int type,
   ffi.Pointer<Mat> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus averageHashCompare(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> averageHashCompare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus averageHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> averageHashCompute(
   Mat inputArr,
   Mat outputArr,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus blockMeanHashCompare(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> blockMeanHashCompare(
   Mat a,
   Mat b,
   int mode,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Int)>()
-external CvStatus blockMeanHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> blockMeanHashCompute(
   Mat inputArr,
   Mat outputArr,
   int mode,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus colorMomentHashCompare(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> colorMomentHashCompare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus colorMomentHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> colorMomentHashCompute(
   Mat inputArr,
   Mat outputArr,
 );
 
-@ffi.Native<CvStatus Function()>()
-external CvStatus destroyAllWindows();
+@ffi.Native<ffi.Pointer<CvStatus> Function()>()
+external ffi.Pointer<CvStatus> destroyAllWindows();
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus getBuildInfo(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> getBuildInfo(
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(ffi.Int, ffi.Pointer<ArucoDictionary>)>()
-external CvStatus getPredefinedDictionary(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ArucoDictionary>)>()
+external ffi.Pointer<CvStatus> getPredefinedDictionary(
   int dictionaryId,
   ffi.Pointer<ArucoDictionary> rval,
 );
 
 @ffi.Native<
-    CvStatus Function(
+    ffi.Pointer<CvStatus> Function(
         Mat, Mat, ffi.Float, ffi.Float, ffi.Pointer<ffi.Double>)>()
-external CvStatus marrHildrethHashCompare(
+external ffi.Pointer<CvStatus> marrHildrethHashCompare(
   Mat a,
   Mat b,
   double alpha,
@@ -7096,35 +7549,37 @@ external CvStatus marrHildrethHashCompare(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Float, ffi.Float)>()
-external CvStatus marrHildrethHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float)>()
+external ffi.Pointer<CvStatus> marrHildrethHashCompute(
   Mat inputArr,
   Mat outputArr,
   double alpha,
   double scale,
 );
 
-@ffi.Native<CvStatus Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external CvStatus openCVVersion(
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> openCVVersion(
   ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
-external CvStatus pHashCompare(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> pHashCompare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat)>()
-external CvStatus pHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat)>()
+external ffi.Pointer<CvStatus> pHashCompute(
   Mat inputArr,
   Mat outputArr,
 );
 
 @ffi.Native<
-    CvStatus Function(Mat, Mat, ffi.Double, ffi.Int, ffi.Pointer<ffi.Double>)>()
-external CvStatus radialVarianceHashCompare(
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Double, ffi.Int, ffi.Pointer<ffi.Double>)>()
+external ffi.Pointer<CvStatus> radialVarianceHashCompare(
   Mat a,
   Mat b,
   double sigma,
@@ -7132,8 +7587,8 @@ external CvStatus radialVarianceHashCompare(
   ffi.Pointer<ffi.Double> rval,
 );
 
-@ffi.Native<CvStatus Function(Mat, Mat, ffi.Double, ffi.Int)>()
-external CvStatus radialVarianceHashCompute(
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int)>()
+external ffi.Pointer<CvStatus> radialVarianceHashCompute(
   Mat inputArr,
   Mat outputArr,
   double sigma,

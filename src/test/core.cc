@@ -7,8 +7,8 @@
 
 TEST(Mat, New_Close)
 {
-  Mat     *mat = (Mat *)malloc(sizeof(Mat));
-  CvStatus s;
+  Mat      *mat = (Mat *)malloc(sizeof(Mat));
+  CvStatus *s;
   s = Mat_New(mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE((*mat).ptr, nullptr);
@@ -106,8 +106,8 @@ TEST(Mat, New_Close)
 
 TEST(Mat, Create_extra)
 {
-  Mat      mat;
-  CvStatus s;
+  Mat       mat;
+  CvStatus *s;
 
   s = Zeros(3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
@@ -160,9 +160,9 @@ TEST(Mat, Create_extra)
 
 TEST(Mat, Property)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -195,9 +195,9 @@ TEST(Mat, Property)
 
 TEST(Mat, Getter_Setter_UChar)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -221,9 +221,9 @@ TEST(Mat, Getter_Setter_UChar)
 
 TEST(Mat, Getter_Setter_Char)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_8SC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -247,9 +247,9 @@ TEST(Mat, Getter_Setter_Char)
 
 TEST(Mat, Getter_Setter_UShort)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_16UC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -273,9 +273,9 @@ TEST(Mat, Getter_Setter_UShort)
 
 TEST(Mat, Getter_Setter_Short)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_16SC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -299,9 +299,9 @@ TEST(Mat, Getter_Setter_Short)
 
 TEST(Mat, Getter_Setter_Int)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_32SC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -325,9 +325,9 @@ TEST(Mat, Getter_Setter_Int)
 
 TEST(Mat, Getter_Setter_Float)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_32FC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -351,9 +351,9 @@ TEST(Mat, Getter_Setter_Float)
 
 TEST(Mat, Getter_Setter_Double)
 {
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Mat_NewWithSizeFromScalar(scalar, 3, 3, CV_64FC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);
@@ -386,9 +386,9 @@ TEST(Mat, Getter_Vec)
   auto v2 = static_cast<int>(cvmat1.at<uchar>(0, 2, 0));
   std::cout << v << "," << v1 << "," << v2 << std::endl;
 
-  CvStatus s;
-  Scalar   scalar = {1, 2, 3, 4};
-  Mat      mat;
+  CvStatus *s;
+  Scalar    scalar = {1, 2, 3, 4};
+  Mat       mat;
   s = Ones(30, 30, CV_8UC3, &mat);
   EXPECT_EQ(s.code, 0);
   EXPECT_NE(mat.ptr, nullptr);

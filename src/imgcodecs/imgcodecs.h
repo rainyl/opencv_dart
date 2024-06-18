@@ -18,13 +18,13 @@ extern "C" {
 
 #include "core/core.h"
 
-CvStatus Image_IMRead(const char *filename, int flags, CVD_OUT Mat *rval);
-CvStatus Image_IMWrite(const char *filename, Mat img, CVD_OUT bool *rval);
-CvStatus Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, CVD_OUT bool *rval);
-CvStatus Image_IMEncode(const char *fileExt, Mat img, CVD_OUT bool *success, CVD_OUT VecUChar *rval);
-CvStatus Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, CVD_OUT bool *success,
-                                   CVD_OUT VecUChar *rval);
-CvStatus Image_IMDecode(VecUChar buf, int flags, CVD_OUT Mat *rval);
+CvStatus *Image_IMRead(const char *filename, int flags, CVD_OUT Mat *rval);
+CvStatus *Image_IMWrite(const char *filename, Mat img, CVD_OUT bool *rval);
+CvStatus *Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, CVD_OUT bool *rval);
+CvStatus *Image_IMEncode(const char *fileExt, Mat img, CVD_OUT bool *success, CVD_OUT VecUChar *rval);
+CvStatus *Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, CVD_OUT bool *success,
+                                    CVD_OUT VecUChar *rval);
+CvStatus *Image_IMDecode(VecUChar buf, int flags, CVD_OUT Mat *rval);
 
 #ifdef __cplusplus
 }
