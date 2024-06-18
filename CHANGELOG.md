@@ -1,5 +1,9 @@
 ## 2.0.0-dev.11
 
+- Fix: memory leak caused by cvstatus
+
+## 2.0.0-dev.11
+
 - Fix: free smart pointer
 
 ## 2.0.0-dev.10
