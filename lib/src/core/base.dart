@@ -10,7 +10,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" show CvStatus;
+import "../opencv.g.dart" as cvg;
 import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
@@ -62,16 +62,17 @@ abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with Equatabl
   CvStruct.fromPointer(super.ptr) : super.fromPointer();
 }
 
-void cvRun(CvStatus Function() func) {
-  final status = func();
-  if (status.code != 0) {
-    throw CvException(
-      status.code,
-      msg: status.msg.cast<Utf8>().toDartString(),
-      file: status.file.cast<Utf8>().toDartString(),
-      func: status.func.cast<Utf8>().toDartString(),
-      line: status.line,
-    );
+void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) {
+  final s = func();
+  final code = s.ref.code;
+  // String err = s.ref.err.cast<Utf8>().toDartString();
+  final msg = s.ref.msg.cast<Utf8>().toDartString();
+  final file = s.ref.file.cast<Utf8>().toDartString();
+  final funcName = s.ref.func.cast<Utf8>().toDartString();
+  final line = s.ref.line;
+  cvg.CvStatus_Close(s);
+  if (code != 0) {
+    throw CvException(code, msg: msg, file: file, func: funcName, line: line);
   }
 }
 

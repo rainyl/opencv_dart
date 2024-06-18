@@ -2,15 +2,16 @@
 #include "core/core.h"
 #include <vector>
 
-CvStatus WeChatQRCode_New(WeChatQRCode *qrcode)
+CvStatus *WeChatQRCode_New(WeChatQRCode *qrcode)
 {
   BEGIN_WRAP
   *qrcode = {new cv::wechat_qrcode::WeChatQRCode()};
   END_WRAP
 }
-CvStatus WeChatQRCode_NewWithParams(const char *detector_prototxt_path, const char *detector_caffe_model_path,
-                                    const char *super_resolution_prototxt_path,
-                                    const char *super_resolution_caffe_model_path, WeChatQRCode *qrcode)
+CvStatus *WeChatQRCode_NewWithParams(const char *detector_prototxt_path,
+                                     const char *detector_caffe_model_path,
+                                     const char *super_resolution_prototxt_path,
+                                     const char *super_resolution_caffe_model_path, WeChatQRCode *qrcode)
 {
   BEGIN_WRAP
   *qrcode = {new cv::wechat_qrcode::WeChatQRCode(detector_prototxt_path, detector_caffe_model_path,
@@ -20,7 +21,7 @@ CvStatus WeChatQRCode_NewWithParams(const char *detector_prototxt_path, const ch
 }
 void WeChatQRCode_Close(WeChatQRCodePtr self){CVD_FREE(self)}
 
-CvStatus WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval)
+CvStatus *WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Mat> pts;
@@ -38,13 +39,13 @@ CvStatus WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *point
 
   END_WRAP
 }
-CvStatus WeChatQRCode_GetScaleFactor(WeChatQRCode *self, float *rval)
+CvStatus *WeChatQRCode_GetScaleFactor(WeChatQRCode *self, float *rval)
 {
   BEGIN_WRAP
   *rval = self->ptr->getScaleFactor();
   END_WRAP
 }
-CvStatus WeChatQRCode_SetScaleFactor(WeChatQRCode *self, float scale_factor)
+CvStatus *WeChatQRCode_SetScaleFactor(WeChatQRCode *self, float scale_factor)
 {
   BEGIN_WRAP
   self->ptr->setScaleFactor(scale_factor);

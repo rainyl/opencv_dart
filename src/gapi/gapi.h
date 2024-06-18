@@ -21,8 +21,8 @@ CVD_TYPEDEF(cv::GMat, GMat)
 CVD_TYPEDEF(void, GMat)
 #endif
 
-CvStatus GMat_New_Empty(GMat *rval);
-// CvStatus GMat_New_FromMat(Mat mat, GMat *rval);
+CvStatus *GMat_New_Empty(GMat *rval);
+// CvStatus *GMat_New_FromMat(Mat mat, GMat *rval);
 void GMat_Close(GMatPtr mat);
 
 #ifdef __cplusplus

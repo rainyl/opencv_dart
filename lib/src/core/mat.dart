@@ -452,66 +452,64 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   void setVec<T>(int row, int col, T val) {
-    cvRunArena((arena) {
-      // Vec2b, Vec3b, Vec4b
-      if (val is Vec2b) {
-        cvRun(() => cvg.Mat_SetVec2b(ref, row, col, val.ref));
-      } else if (val is Vec3b) {
-        cvRun(() => cvg.Mat_SetVec3b(ref, row, col, val.ref));
-      } else if (val is Vec4b) {
-        cvRun(() => cvg.Mat_SetVec4b(ref, row, col, val.ref));
-      }
-      // Vec2w, Vec3w, Vec4w
-      else if (val is Vec2w) {
-        cvRun(() => cvg.Mat_SetVec2w(ref, row, col, val.ref));
-      } else if (val is Vec3w) {
-        cvRun(() => cvg.Mat_SetVec3w(ref, row, col, val.ref));
-      } else if (val is Vec4w) {
-        cvRun(() => cvg.Mat_SetVec4w(ref, row, col, val.ref));
-      }
-      // Vec2s, Vec3s, Vec4s
-      else if (val is Vec2s) {
-        cvRun(() => cvg.Mat_SetVec2s(ref, row, col, val.ref));
-      } else if (val is Vec3s) {
-        cvRun(() => cvg.Mat_SetVec3s(ref, row, col, val.ref));
-      } else if (val is Vec4s) {
-        cvRun(() => cvg.Mat_SetVec4s(ref, row, col, val.ref));
-      }
-      // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
-      else if (val is Vec2i) {
-        cvRun(() => cvg.Mat_SetVec2i(ref, row, col, val.ref));
-      } else if (val is Vec3i) {
-        cvRun(() => cvg.Mat_SetVec3i(ref, row, col, val.ref));
-      } else if (val is Vec4i) {
-        cvRun(() => cvg.Mat_SetVec4i(ref, row, col, val.ref));
-      } else if (val is Vec6i) {
-        cvRun(() => cvg.Mat_SetVec6i(ref, row, col, val.ref));
-      } else if (val is Vec8i) {
-        cvRun(() => cvg.Mat_SetVec8i(ref, row, col, val.ref));
-      }
-      // Vec2f, Vec3f, Vec4f, Vec6f
-      else if (val is Vec2f) {
-        cvRun(() => cvg.Mat_SetVec2f(ref, row, col, val.ref));
-      } else if (val is Vec3f) {
-        cvRun(() => cvg.Mat_SetVec3f(ref, row, col, val.ref));
-      } else if (val is Vec4f) {
-        cvRun(() => cvg.Mat_SetVec4f(ref, row, col, val.ref));
-      } else if (val is Vec6f) {
-        cvRun(() => cvg.Mat_SetVec6f(ref, row, col, val.ref));
-      }
-      // Vec2d, Vec3d, Vec4d, Vec6d
-      else if (val is Vec2d) {
-        cvRun(() => cvg.Mat_SetVec2d(ref, row, col, val.ref));
-      } else if (val is Vec3d) {
-        cvRun(() => cvg.Mat_SetVec3d(ref, row, col, val.ref));
-      } else if (val is Vec4d) {
-        cvRun(() => cvg.Mat_SetVec4d(ref, row, col, val.ref));
-      } else if (val is Vec6d) {
-        cvRun(() => cvg.Mat_SetVec6d(ref, row, col, val.ref));
-      } else {
-        throw UnsupportedError("at<$T>() for $type is not supported!");
-      }
-    });
+    // Vec2b, Vec3b, Vec4b
+    if (val is Vec2b) {
+      cvRun(() => cvg.Mat_SetVec2b(ref, row, col, val.ref));
+    } else if (val is Vec3b) {
+      cvRun(() => cvg.Mat_SetVec3b(ref, row, col, val.ref));
+    } else if (val is Vec4b) {
+      cvRun(() => cvg.Mat_SetVec4b(ref, row, col, val.ref));
+    }
+    // Vec2w, Vec3w, Vec4w
+    else if (val is Vec2w) {
+      cvRun(() => cvg.Mat_SetVec2w(ref, row, col, val.ref));
+    } else if (val is Vec3w) {
+      cvRun(() => cvg.Mat_SetVec3w(ref, row, col, val.ref));
+    } else if (val is Vec4w) {
+      cvRun(() => cvg.Mat_SetVec4w(ref, row, col, val.ref));
+    }
+    // Vec2s, Vec3s, Vec4s
+    else if (val is Vec2s) {
+      cvRun(() => cvg.Mat_SetVec2s(ref, row, col, val.ref));
+    } else if (val is Vec3s) {
+      cvRun(() => cvg.Mat_SetVec3s(ref, row, col, val.ref));
+    } else if (val is Vec4s) {
+      cvRun(() => cvg.Mat_SetVec4s(ref, row, col, val.ref));
+    }
+    // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
+    else if (val is Vec2i) {
+      cvRun(() => cvg.Mat_SetVec2i(ref, row, col, val.ref));
+    } else if (val is Vec3i) {
+      cvRun(() => cvg.Mat_SetVec3i(ref, row, col, val.ref));
+    } else if (val is Vec4i) {
+      cvRun(() => cvg.Mat_SetVec4i(ref, row, col, val.ref));
+    } else if (val is Vec6i) {
+      cvRun(() => cvg.Mat_SetVec6i(ref, row, col, val.ref));
+    } else if (val is Vec8i) {
+      cvRun(() => cvg.Mat_SetVec8i(ref, row, col, val.ref));
+    }
+    // Vec2f, Vec3f, Vec4f, Vec6f
+    else if (val is Vec2f) {
+      cvRun(() => cvg.Mat_SetVec2f(ref, row, col, val.ref));
+    } else if (val is Vec3f) {
+      cvRun(() => cvg.Mat_SetVec3f(ref, row, col, val.ref));
+    } else if (val is Vec4f) {
+      cvRun(() => cvg.Mat_SetVec4f(ref, row, col, val.ref));
+    } else if (val is Vec6f) {
+      cvRun(() => cvg.Mat_SetVec6f(ref, row, col, val.ref));
+    }
+    // Vec2d, Vec3d, Vec4d, Vec6d
+    else if (val is Vec2d) {
+      cvRun(() => cvg.Mat_SetVec2d(ref, row, col, val.ref));
+    } else if (val is Vec3d) {
+      cvRun(() => cvg.Mat_SetVec3d(ref, row, col, val.ref));
+    } else if (val is Vec4d) {
+      cvRun(() => cvg.Mat_SetVec4d(ref, row, col, val.ref));
+    } else if (val is Vec6d) {
+      cvRun(() => cvg.Mat_SetVec6d(ref, row, col, val.ref));
+    } else {
+      throw UnsupportedError("at<$T>() for $type is not supported!");
+    }
   }
 
   void setU8(int row, int col, int val, [int? i2]) => i2 == null
@@ -543,21 +541,16 @@ class Mat extends CvStruct<cvg.Mat> {
       : cvRun(() => cvg.Mat_SetDouble3(ref, row, col, i2, val));
 
   void setNum<T extends num>(int row, int col, T val, [int? i2]) {
-    using((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => cvg.Mat_Type(ref, p));
-      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
-      return switch (depth) {
-        MatType.CV_8U => setU8(row, col, val as int, i2),
-        MatType.CV_8S => setI8(row, col, val as int, i2),
-        MatType.CV_16U => setU16(row, col, val as int, i2),
-        MatType.CV_16S => setI16(row, col, val as int, i2),
-        MatType.CV_32S => setI32(row, col, val as int, i2),
-        MatType.CV_32F => setF32(row, col, val as double, i2),
-        MatType.CV_64F => setF64(row, col, val as double, i2),
-        _ => throw UnsupportedError("Unsupported type: $type")
-      };
-    });
+    return switch (type.depth) {
+      MatType.CV_8U => setU8(row, col, val as int, i2),
+      MatType.CV_8S => setI8(row, col, val as int, i2),
+      MatType.CV_16U => setU16(row, col, val as int, i2),
+      MatType.CV_16S => setI16(row, col, val as int, i2),
+      MatType.CV_32S => setI32(row, col, val as int, i2),
+      MatType.CV_32F => setF32(row, col, val as double, i2),
+      MatType.CV_64F => setF64(row, col, val as double, i2),
+      _ => throw UnsupportedError("Unsupported type: $type")
+    };
   }
 
   /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;
