@@ -38,29 +38,29 @@ enum {
   BLOCK_MEAN_HASH_MODE_1 = 1
 };
 
-CvStatus pHashCompute(Mat inputArr, Mat outputArr);
-CvStatus pHashCompare(Mat a, Mat b, double *rval);
+CvStatus *pHashCompute(Mat inputArr, Mat outputArr);
+CvStatus *pHashCompare(Mat a, Mat b, double *rval);
 
-CvStatus averageHashCompute(Mat inputArr, Mat outputArr);
-CvStatus averageHashCompare(Mat a, Mat b, double *rval);
+CvStatus *averageHashCompute(Mat inputArr, Mat outputArr);
+CvStatus *averageHashCompare(Mat a, Mat b, double *rval);
 
-CvStatus BlockMeanHash_Create(int mode, BlockMeanHash *rval);
-CvStatus BlockMeanHash_GetMean(BlockMeanHash self, double **rval, int *length);
-CvStatus BlockMeanHash_SetMode(BlockMeanHash self, int mode);
-void     BlockMeanHash_Close(BlockMeanHashPtr self);
-CvStatus BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat outputArr);
-CvStatus BlockMeanHash_Compare(BlockMeanHash self, Mat hashOne, Mat hashTwo, double *rval);
-CvStatus blockMeanHashCompute(Mat inputArr, Mat outputArr, int mode);
-CvStatus blockMeanHashCompare(Mat a, Mat b, int mode, double *rval);
+CvStatus *BlockMeanHash_Create(int mode, BlockMeanHash *rval);
+CvStatus *BlockMeanHash_GetMean(BlockMeanHash self, double **rval, int *length);
+CvStatus *BlockMeanHash_SetMode(BlockMeanHash self, int mode);
+void      BlockMeanHash_Close(BlockMeanHashPtr self);
+CvStatus *BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat outputArr);
+CvStatus *BlockMeanHash_Compare(BlockMeanHash self, Mat hashOne, Mat hashTwo, double *rval);
+CvStatus *blockMeanHashCompute(Mat inputArr, Mat outputArr, int mode);
+CvStatus *blockMeanHashCompare(Mat a, Mat b, int mode, double *rval);
 
-CvStatus colorMomentHashCompute(Mat inputArr, Mat outputArr);
-CvStatus colorMomentHashCompare(Mat a, Mat b, double *rval);
+CvStatus *colorMomentHashCompute(Mat inputArr, Mat outputArr);
+CvStatus *colorMomentHashCompare(Mat a, Mat b, double *rval);
 
-CvStatus marrHildrethHashCompute(Mat inputArr, Mat outputArr, float alpha, float scale);
-CvStatus marrHildrethHashCompare(Mat a, Mat b, float alpha, float scale, double *rval);
+CvStatus *marrHildrethHashCompute(Mat inputArr, Mat outputArr, float alpha, float scale);
+CvStatus *marrHildrethHashCompare(Mat a, Mat b, float alpha, float scale, double *rval);
 
-CvStatus radialVarianceHashCompute(Mat inputArr, Mat outputArr, double sigma, int numOfAngleLine);
-CvStatus radialVarianceHashCompare(Mat a, Mat b, double sigma, int numOfAngleLine, double *rval);
+CvStatus *radialVarianceHashCompute(Mat inputArr, Mat outputArr, double sigma, int numOfAngleLine);
+CvStatus *radialVarianceHashCompare(Mat a, Mat b, double sigma, int numOfAngleLine, double *rval);
 
 #ifdef __cplusplus
 }
