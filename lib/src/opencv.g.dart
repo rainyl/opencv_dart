@@ -9510,19 +9510,17 @@ class CvNative {
   /// @return CvStatus
   CvStatus Mat_New(
     ffi.Pointer<Mat> rval,
-    MatCallback callback,
   ) {
     return _Mat_New(
       rval,
-      callback,
     );
   }
 
-  late final _Mat_NewPtr = _lookup<
-          ffi.NativeFunction<CvStatus Function(ffi.Pointer<Mat>, MatCallback)>>(
-      'Mat_New');
-  late final _Mat_New = _Mat_NewPtr.asFunction<
-      CvStatus Function(ffi.Pointer<Mat>, MatCallback)>();
+  late final _Mat_NewPtr =
+      _lookup<ffi.NativeFunction<CvStatus Function(ffi.Pointer<Mat>)>>(
+          'Mat_New');
+  late final _Mat_New =
+      _Mat_NewPtr.asFunction<CvStatus Function(ffi.Pointer<Mat>)>();
 
   CvStatus Mat_NewFromBytes(
     int rows,
