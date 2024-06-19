@@ -16,8 +16,8 @@ extern "C" {
 
 #include "core.h"
 
-CvStatus openCVVersion(const char **rval);
-CvStatus getBuildInfo(const char **rval);
+CvStatus *openCVVersion(const char **rval);
+CvStatus *getBuildInfo(const char **rval);
 
 #ifdef __cplusplus
 }

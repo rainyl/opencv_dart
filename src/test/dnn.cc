@@ -1,8 +1,8 @@
 #include "../dnn/dnn.h"
 #include "../core/core.h"
 #include <cstdlib>
-#include <gtest/gtest.h>
 #include <fstream>
+#include <gtest/gtest.h>
 // #include <opencv/opencv.hpp>
 #include <stdint.h>
 #include <vector>
@@ -34,12 +34,12 @@ std::vector<uchar> readFile(const char *filename)
 
 TEST(dnn, Create)
 {
-  Net      net;
-  auto     data = readFile("test/models/bvlc_googlenet.caffemodel");
-  auto     conf = readFile("test/models/bvlc_googlenet.prototxt");
-  VecUChar bufM = {&data};
-  VecUChar bufC = {&conf};
-  CvStatus status = Net_ReadNetBytes("caffe", bufM, bufC, &net);
+  Net       net;
+  auto      data = readFile("test/models/bvlc_googlenet.caffemodel");
+  auto      conf = readFile("test/models/bvlc_googlenet.prototxt");
+  VecUChar  bufM = {&data};
+  VecUChar  bufC = {&conf};
+  CvStatus *status = Net_ReadNetBytes("caffe", bufM, bufC, &net);
   EXPECT_EQ(status.code, 0);
   EXPECT_EQ(net.ptr->empty(), false);
   char *dump = (char *)calloc(1000, sizeof(char));

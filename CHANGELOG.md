@@ -1,3 +1,11 @@
+## 1.0.10
+
+- Fix: memory leak caused by cvstatus
+
+## 1.0.9
+
+- Fix: free smart pointer
+
 ## 1.0.8
 
 - API change: `FaceRecognizerSF.feature(Mat alignedImg)` -> `FaceRecognizerSF.feature(Mat alignedImg, {bool clone = false})`

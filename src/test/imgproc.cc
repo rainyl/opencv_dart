@@ -4,15 +4,14 @@
 #include <fstream>
 #include <gtest/gtest.h>
 
-
 #include <stdint.h>
 #include <stdio.h>
 #include <vector>
 
 TEST(ImgProc, cornerSubPix)
 {
-  Mat      img;
-  CvStatus status = Image_IMRead("test/images/circles.jpg", cv::ImreadModes::IMREAD_GRAYSCALE, &img);
+  Mat       img;
+  CvStatus *status = Image_IMRead("test/images/circles.jpg", cv::ImreadModes::IMREAD_GRAYSCALE, &img);
   ASSERT_EQ(status.code, 0);
   ASSERT_EQ(img.ptr->empty(), false);
   Mat          mask = {new cv::Mat()};
