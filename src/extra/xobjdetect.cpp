@@ -2,7 +2,7 @@
 #include "core/core.h"
 #include "opencv2/xobjdetect.hpp"
 
-CvStatus WBDetector_Create(PtrWBDetector *rval)
+CvStatus *WBDetector_Create(PtrWBDetector *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::Ptr<cv::xobjdetect::WBDetector>(cv::xobjdetect::WBDetector::create())};
@@ -13,8 +13,8 @@ void WBDetector_Close(PtrWBDetectorPtr self)
   self->ptr = nullptr;
   CVD_FREE(self);
 }
-CvStatus WBDetector_Detect(PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox,
-                           CVD_OUT VecDouble *confidences)
+CvStatus *WBDetector_Detect(PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox,
+                            CVD_OUT VecDouble *confidences)
 {
 
   BEGIN_WRAP
@@ -25,19 +25,19 @@ CvStatus WBDetector_Detect(PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox,
   *confidences = {_confidences};
   END_WRAP
 }
-CvStatus WBDetector_Train(PtrWBDetector *self, char *pos_samples, char *neg_imgs)
+CvStatus *WBDetector_Train(PtrWBDetector *self, char *pos_samples, char *neg_imgs)
 {
   BEGIN_WRAP(*self->ptr)->train(pos_samples, neg_imgs);
   END_WRAP
 }
-CvStatus WBDetector_Read(PtrWBDetector *self, char *filename)
+CvStatus *WBDetector_Read(PtrWBDetector *self, char *filename)
 {
   BEGIN_WRAP
   auto fs = cv::FileStorage(filename, cv::FileStorage::READ);
   (*self->ptr)->read(fs.root());
   END_WRAP
 }
-CvStatus WBDetector_Write(PtrWBDetector *self, char *filename)
+CvStatus *WBDetector_Write(PtrWBDetector *self, char *filename)
 {
   BEGIN_WRAP
   auto fs = cv::FileStorage(filename, cv::FileStorage::WRITE);

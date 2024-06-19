@@ -1,6 +1,6 @@
 #include "ximgproc.h"
 
-CvStatus ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, float K, int niters)
+CvStatus *ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, float K, int niters)
 {
   BEGIN_WRAP
   cv::Mat *_dst = new cv::Mat();
@@ -8,7 +8,7 @@ CvStatus ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, f
   *dst = {_dst};
   END_WRAP
 }
-CvStatus ximgproc_edgePreservingFilter(Mat src, CVD_OUT Mat *dst, int d, double threshold)
+CvStatus *ximgproc_edgePreservingFilter(Mat src, CVD_OUT Mat *dst, int d, double threshold)
 {
   BEGIN_WRAP
   cv::Mat *_dst = new cv::Mat();
@@ -16,8 +16,8 @@ CvStatus ximgproc_edgePreservingFilter(Mat src, CVD_OUT Mat *dst, int d, double 
   *dst = {_dst};
   END_WRAP
 }
-CvStatus ximgproc_findEllipses(Mat image, CVD_OUT Mat *ellipses, float scoreThreshold,
-                               float reliabilityThreshold, float centerDistanceThreshold)
+CvStatus *ximgproc_findEllipses(Mat image, CVD_OUT Mat *ellipses, float scoreThreshold,
+                                float reliabilityThreshold, float centerDistanceThreshold)
 {
   BEGIN_WRAP
   cv::Mat *_ellipses = new cv::Mat();
@@ -26,8 +26,8 @@ CvStatus ximgproc_findEllipses(Mat image, CVD_OUT Mat *ellipses, float scoreThre
   *ellipses = {_ellipses};
   END_WRAP
 }
-CvStatus ximgproc_niBlackThreshold(Mat src, CVD_OUT Mat *dst, double maxValue, int type, int blockSize,
-                                   double k, int binarizationMethod, double r)
+CvStatus *ximgproc_niBlackThreshold(Mat src, CVD_OUT Mat *dst, double maxValue, int type, int blockSize,
+                                    double k, int binarizationMethod, double r)
 {
   BEGIN_WRAP
   cv::Mat *_dst = new cv::Mat();
@@ -35,7 +35,7 @@ CvStatus ximgproc_niBlackThreshold(Mat src, CVD_OUT Mat *dst, double maxValue, i
   *dst = {_dst};
   END_WRAP
 }
-CvStatus ximgproc_PeiLinNormalization(Mat I, CVD_OUT Mat *dst)
+CvStatus *ximgproc_PeiLinNormalization(Mat I, CVD_OUT Mat *dst)
 {
   BEGIN_WRAP
   cv::Mat *_dst = new cv::Mat();
@@ -43,7 +43,7 @@ CvStatus ximgproc_PeiLinNormalization(Mat I, CVD_OUT Mat *dst)
   *dst = {_dst};
   END_WRAP
 }
-CvStatus ximgproc_thinning(Mat src, Mat *dst, int thinningType)
+CvStatus *ximgproc_thinning(Mat src, Mat *dst, int thinningType)
 {
   BEGIN_WRAP
   cv::Mat *_dst = new cv::Mat();
