@@ -74,11 +74,19 @@ extern "C" {
 
 #ifdef __cplusplus
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
+// for test, value should not be freed here
+#ifdef CVD_ENABLE_TEST
+#define CVD_FREE(value)                                                                                      \
+  delete value->ptr;                                                                                         \
+  value->ptr = nullptr;
+#else
+// for dart ffi, value should be freed here or a memory leak will occur
 #define CVD_FREE(value)                                                                                      \
   delete value->ptr;                                                                                         \
   value->ptr = nullptr;                                                                                      \
   delete value;                                                                                              \
   value = nullptr;
+#endif
 
 #define CVD_TYPEDEF(TYPE, NAME)                                                                              \
   typedef TYPE *NAME##_CPP;                                                                                  \
