@@ -75,7 +75,6 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
     OUTPUT_NAME ${LIBRARY_NAME}
     CXX_VISIBILITY_PRESET default
     C_VISIBILITY_PRESET default
-    LINK_FLAGS_RELEASE -s
 )
 
 if(IOS)
@@ -97,6 +96,10 @@ if(WIN32)
 endif(WIN32)
 
 target_compile_definitions(${LIBRARY_NAME} PUBLIC DART_SHARED_LIB)
+
+if(CVD_ENABLE_TEST)
+  set_target_properties(${LIBRARY_NAME} PROPERTIES COMPILE_DEFINITIONS "CVD_ENABLE_TEST")
+endif()
 
 ### install
 install(TARGETS ${LIBRARY_NAME}

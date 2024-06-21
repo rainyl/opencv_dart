@@ -40,7 +40,7 @@ TEST(dnn, Create)
   VecUChar  bufM = {&data};
   VecUChar  bufC = {&conf};
   CvStatus *status = Net_ReadNetBytes("caffe", bufM, bufC, &net);
-  EXPECT_EQ(status.code, 0);
+  EXPECT_EQ(status->code, 0);
   EXPECT_EQ(net.ptr->empty(), false);
   char *dump = (char *)calloc(1000, sizeof(char));
   Net_Dump(net, &dump);
