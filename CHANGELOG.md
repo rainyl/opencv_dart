@@ -1,3 +1,7 @@
+## 1.0.10+1
+
+- Fix: setup commands error on linux
+
 ## 1.0.10
 
 - Fix: memory leak caused by cvstatus

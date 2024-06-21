@@ -5,7 +5,6 @@ from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
 import conan.tools.files as cfiles
 import tarfile
 from pathlib import Path
-import yaml
 
 OPENCV_VERSION = "4.10.0+2"
 OPENCV_FILES_URL = (
@@ -61,10 +60,10 @@ class OcvDartDesktop(ConanFile):
 
     def __init__(self, display_name=""):
         super().__init__(display_name)
-        pubspec = Path(str(self.options.get_safe("package_root", "."))) / "pubspec.yaml"
-        with open(pubspec, "r") as f:
-            doc = yaml.safe_load(f)
-        self.version = doc["binary_version"]
+        version_file = Path(str(self.options.get_safe("package_root", "."))) / "binary.version"
+        with open(version_file, "r") as f:
+            binary_version = f.read()
+        self.version = binary_version
 
     def requirements(self):
         out_dir = os.path.abspath(str(self.options.get_safe("output_dir")))
