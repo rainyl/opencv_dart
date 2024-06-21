@@ -9,6 +9,7 @@ import 'package:stack_trace/stack_trace.dart';
 import 'package:yaml/yaml.dart';
 
 const setupPkgName = "opencv_dart";
+const baseUrl = "https://github.com/rainyl/opencv_dart/releases/download";
 
 abstract class BaseSetupCommand extends Command {
   @override
@@ -38,7 +39,7 @@ abstract class BaseSetupCommand extends Command {
 
     extractPath ??= switch (os) {
       OS.windows => p.join(opencvRoot, "windows"),
-      OS.linux => p.join(opencvRoot, "windows"),
+      OS.linux => p.join(opencvRoot, "linux"),
       OS.android => p.join(opencvRoot, "android", "src", "main", "jniLibs", downArch),
       OS.macos => p.join(opencvRoot, "macos"),
       OS.ios => p.join(opencvRoot, "ios"),
@@ -55,7 +56,7 @@ abstract class BaseSetupCommand extends Command {
     if (force || !saveFile.existsSync()) {
       if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
 
-      final String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+      final String url = "$baseUrl/v$version/$libTarName";
       print(asInfo("Downloading $url"));
       try {
         final request = await HttpClient().getUrl(Uri.parse(url));
