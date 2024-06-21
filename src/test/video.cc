@@ -2,8 +2,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <stdint.h>
-#include <stdio.h>
-#include <vector>
 
 TEST(videoCapture, get)
 {
@@ -18,14 +16,14 @@ TEST(videoCapture, get)
 
   VideoCapture cap = {};
   CvStatus    *s = VideoCapture_New(&cap);
-  EXPECT_EQ(s.code, 0);
+  EXPECT_EQ(s->code, 0);
 
   bool rval;
   s = VideoCapture_OpenWithAPI(cap, "test/images/small.mp4", 0, &rval);
-  EXPECT_EQ(s.code, 0);
+  EXPECT_EQ(s->code, 0);
 
   double cc = 0;
   s = VideoCapture_Get(cap, 6, &cc);
-  EXPECT_EQ(s.code, 0);
+  EXPECT_EQ(s->code, 0);
   std::cout << cc << std::endl;
 }
