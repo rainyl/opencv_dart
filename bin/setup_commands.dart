@@ -6,9 +6,9 @@ import 'package:archive/archive_io.dart';
 import 'package:args/command_runner.dart';
 import 'package:path/path.dart' as p;
 import 'package:stack_trace/stack_trace.dart';
-import 'package:yaml/yaml.dart';
 
 const setupPkgName = "opencv_dart";
+const baseUrl = "https://github.com/rainyl/opencv_dart/releases/download";
 
 abstract class BaseSetupCommand extends Command {
   @override
@@ -31,14 +31,12 @@ abstract class BaseSetupCommand extends Command {
     final opencvRoot = pkgRoot;
     print(asInfo('Using package:$setupPkgName from $opencvRoot'));
 
-    final doc = loadYaml(File(p.join(opencvRoot, "pubspec.yaml")).readAsStringSync());
-    // ignore: avoid_dynamic_calls
-    final String version = doc["binary_version"] as String;
+    final String version = File(p.join(opencvRoot, "binary.version")).readAsStringSync();
     final libTarName = "libopencv_dart-$os-$downArch.tar.gz";
 
     extractPath ??= switch (os) {
       OS.windows => p.join(opencvRoot, "windows"),
-      OS.linux => p.join(opencvRoot, "windows"),
+      OS.linux => p.join(opencvRoot, "linux"),
       OS.android => p.join(opencvRoot, "android", "src", "main", "jniLibs", downArch),
       OS.macos => p.join(opencvRoot, "macos"),
       OS.ios => p.join(opencvRoot, "ios"),
@@ -55,7 +53,7 @@ abstract class BaseSetupCommand extends Command {
     if (force || !saveFile.existsSync()) {
       if (!saveFile.parent.existsSync()) saveFile.parent.createSync(recursive: true);
 
-      final String url = "https://github.com/rainyl/opencv_dart/releases/download/v$version/$libTarName";
+      final String url = "$baseUrl/v$version/$libTarName";
       print(asInfo("Downloading $url"));
       try {
         final request = await HttpClient().getUrl(Uri.parse(url));
