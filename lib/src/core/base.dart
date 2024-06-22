@@ -3,6 +3,7 @@
 
 library cv;
 
+import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:ffi';
 import 'dart:io';
@@ -10,7 +11,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" show CvStatus, CvNative;
+import "../opencv.g.dart" as cvg;
 import "exception.dart" show CvException;
 
 const _libraryName = "opencv_dart";
@@ -35,6 +36,7 @@ const int CV_I32_MIN = -2147483648;
 const double CV_F32_MAX = 3.4028234663852886e+38;
 const double CV_F64_MAX = 1.7976931348623157e+308;
 
+// load native library
 ffi.DynamicLibrary loadNativeLibrary() {
   if (Platform.isIOS) return ffi.DynamicLibrary.process();
   final defaultLibPath = switch (Platform.operatingSystem) {
@@ -47,8 +49,9 @@ ffi.DynamicLibrary loadNativeLibrary() {
   return ffi.DynamicLibrary.open(libPath);
 }
 
-final CFFI = CvNative(loadNativeLibrary());
+final CFFI = cvg.CvNative(loadNativeLibrary());
 
+// base structures
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
 abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
@@ -62,8 +65,8 @@ abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with Equatabl
   CvStruct.fromPointer(super.ptr) : super.fromPointer();
 }
 
-void cvRun(ffi.Pointer<CvStatus> Function() func) {
-  final s = func();
+// error handler
+void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final code = s.ref.code;
   // String err = s.ref.err.cast<Utf8>().toDartString();
   final msg = s.ref.msg.cast<Utf8>().toDartString();
@@ -76,8 +79,33 @@ void cvRun(ffi.Pointer<CvStatus> Function() func) {
   }
 }
 
-R cvRunArena<R>(R Function(Arena arena) computation,
-    [Allocator wrappedAllocator = calloc, bool keep = false]) {
+// sync runner
+void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) => throwIfFailed(func());
+
+// async runner
+typedef VoidPtr = ffi.Pointer<ffi.Void>;
+Future<T> cvRunAsync<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
+  void Function(Completer<T> completer, VoidPtr p) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_1Function> ccallback;
+  void onResponse(VoidPtr p) {
+    onComplete(completer, p);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+// Arena wrapper
+R cvRunArena<R>(
+  R Function(Arena arena) computation, [
+  Allocator wrappedAllocator = calloc,
+  bool keep = false,
+]) {
   final arena = Arena(wrappedAllocator);
   bool isAsync = false;
   try {
@@ -94,12 +122,14 @@ R cvRunArena<R>(R Function(Arena arena) computation,
   }
 }
 
+// finalizers
 typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
     = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
+// native types
 typedef U8 = ffi.UnsignedChar;
 typedef I8 = ffi.Char;
 typedef U16 = ffi.UnsignedShort;
@@ -109,43 +139,7 @@ typedef I32 = ffi.Int;
 typedef F32 = ffi.Float;
 typedef F64 = ffi.Double;
 
+// others
 extension PointerCharExtension on ffi.Pointer<ffi.Char> {
   String toDartString() => cast<Utf8>().toDartString();
-}
-
-enum ImageFormat {
-  // Windows bitmaps - *.bmp, *.dib (always supported)
-  bmp(ext: ".bmp"),
-  dib(ext: ".dib"),
-  // JPEG files - *.jpeg, *.jpg, *.jpe (see the Note section)
-  jpg(ext: ".jpg"),
-  jpeg(ext: ".jpeg"),
-  jpe(ext: ".jpe"),
-  // JPEG 2000 files - *.jp2 (see the Note section)
-  jp2(ext: ".jp2"),
-  // Portable Network Graphics - *.png (see the Note section)
-  png(ext: ".png"),
-  // WebP - *.webp (see the Note section)
-  webp(ext: ".webp"),
-  // Portable image format - *.pbm, *.pgm, *.ppm *.pxm, *.pnm (always supported)
-  pbm(ext: ".pbm"),
-  pgm(ext: ".pgm"),
-  ppm(ext: ".ppm"),
-  pxm(ext: ".pxm"),
-  pnm(ext: ".pnm"),
-  // Sun rasters - *.sr, *.ras (always supported)
-  sr(ext: ".sr"),
-  ras(ext: ".ras"),
-  // TIFF files - *.tiff, *.tif (see the Note section)
-  tiff(ext: ".tiff"),
-  tif(ext: ".tif"),
-  // OpenEXR Image files - *.exr (see the Note section)
-  exr(ext: ".exr"),
-  // Radiance HDR - *.hdr, *.pic (always supported)
-  hdr(ext: ".hdr"),
-  pic(ext: ".pic");
-  // Raster and Vector geospatial data supported by GDAL (see the Note section)
-
-  const ImageFormat({required this.ext});
-  final String ext;
 }

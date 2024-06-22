@@ -2,7 +2,9 @@
 
 library cv;
 
+import 'dart:async';
 import 'dart:ffi' as ffi;
+import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
@@ -74,6 +76,11 @@ Mat cvtColor(Mat src, int code, {Mat? dst}) {
   cvRun(() => CFFI.CvtColor(src.ref, dst!.ref, code));
   return dst;
 }
+
+Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) async => cvRunAsync<Mat>(
+      (callback) => CFFI.CvtColor_Async(src.ref, code, callback),
+      (completer, p) => completer.complete(Mat.fromPointer(p.cast())),
+    );
 
 /// EqualizeHist Equalizes the histogram of a grayscale image.
 ///
@@ -570,6 +577,22 @@ Mat gaussianBlur(
   });
   return dst;
 }
+
+Future<Mat> gaussianBlurAsync(
+  Mat src,
+  Size ksize,
+  double sigmaX, {
+  Mat? dst,
+  double sigmaY = 0,
+  int borderType = BORDER_DEFAULT,
+}) async =>
+    using<Future<Mat>>(
+      (arena) => cvRunAsync(
+        (callback) =>
+            CFFI.GaussianBlur_Async(src.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType, callback),
+        (completer, p) => completer.complete(Mat.fromPointer(p.cast())),
+      ),
+    );
 
 /// GetGaussianKernel returns Gaussian filter coefficients.
 ///

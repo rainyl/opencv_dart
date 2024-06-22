@@ -177,14 +177,14 @@ CvStatus *VecVecDMatch_Append(VecVecDMatch vec, VecDMatch dm);
 CvStatus *VecVecDMatch_Size(VecVecDMatch vec, int *rval);
 void      VecVecDMatch_Close(VecVecDMatchPtr vec);
 
-CvStatus VecVec4i_New(VecVec4i *rval);
-CvStatus VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval);
+CvStatus *VecVec4i_New(VecVec4i *rval);
+CvStatus *VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval);
 // CvStatus VecVec4i_NewFromVec(VecVec4i vec, VecVec4i *rval);
-CvStatus VecVec4i_At(VecVec4i vec, int idx, Vec4i *rval);
+CvStatus *VecVec4i_At(VecVec4i vec, int idx, Vec4i *rval);
 // CvStatus VecVec4i_Data(VecVec4i vec, Vec4i **rval);
-CvStatus VecVec4i_Append(VecVec4i vec, Vec4i v);
-CvStatus VecVec4i_Size(VecVec4i vec, int *rval);
-void     VecVec4i_Close(VecVec4iPtr vec);
+CvStatus *VecVec4i_Append(VecVec4i vec, Vec4i v);
+CvStatus *VecVec4i_Size(VecVec4i vec, int *rval);
+void      VecVec4i_Close(VecVec4iPtr vec);
 
 #ifdef __cplusplus
 }

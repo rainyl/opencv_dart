@@ -7,6 +7,7 @@
 #define OPENCV_DART_GAPI_H
 
 #include "core/core.h"
+#include "core/types.h"
 
 #ifdef __cplusplus
 #include <opencv2/gapi.hpp>
@@ -75,20 +76,20 @@ typedef VecPrim Prims;
 
 CvStatus *gapi_GMat_New_Empty(GMat *rval);
 CvStatus *gapi_GMat_New_FromMat(Mat mat, GMat *rval);
-void      gapi_GMat_Close(GMatPtr mat);
+void gapi_GMat_Close(GMatPtr mat);
 
 CvStatus *gapi_GScalar_New_Empty(GScalar *rval);
 CvStatus *gapi_GScalar_New_FromScalar(Scalar scalar, GScalar *rval);
 CvStatus *gapi_GScalar_New_FromDouble(double v0, GScalar *rval);
-void      gapi_GScalar_Close(GScalarPtr scalar);
+void gapi_GScalar_Close(GScalarPtr scalar);
 
 CvStatus *gapi_GComputation_New(GMat in, GMat out, GComputation *rval);
 CvStatus *gapi_GComputation_New_1(GMat in, GScalar out, GComputation *rval);
 CvStatus *gapi_GComputation_New_2(GMat in1, GMat in2, GMat out, GComputation *rval);
 CvStatus *gapi_GComputation_New_3(GMat in1, GMat in2, GScalar out, GComputation *rval);
-void      gapi_GComputation_Close(GComputationPtr self);
+void gapi_GComputation_Close(GComputationPtr self);
 CvStatus *gapi_GComputation_apply(GComputation self, Mat in,
-                                  MatCallback callback /*TODO: GCompileArgs &&args={}*/);
+                                  CvCallback_1 callback /*TODO: GCompileArgs &&args={}*/);
 CvStatus *gapi_GComputation_apply_1(GComputation self, Mat in, Scalar *out /*TODO: GCompileArgs &&args={}*/);
 CvStatus *gapi_GComputation_apply_2(GComputation self, Mat in1, Mat in2,
                                     Mat *out /*TODO: GCompileArgs &&args={}*/);
@@ -113,7 +114,7 @@ CvStatus *VecPrim_NewFromVec(VecPrim vec, VecPrim *rval);
 CvStatus *VecPrim_At(VecPrim vec, int idx, Prim *rval);
 CvStatus *VecPrim_Append(VecPrim vec, Prim p);
 CvStatus *VecPrim_Size(VecPrim vec, int *rval);
-void      VecPrim_Close(VecPrimPtr vec);
+void VecPrim_Close(VecPrimPtr vec);
 
 CvStatus *GArrayGArrayPoint_FromVec(VecVecPoint points, GArrayGArrayPoint *rval);
 CvStatus *GArrayVec4i_FromVec(VecVec4i v, GArrayVec4i *rval);

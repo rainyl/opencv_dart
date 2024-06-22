@@ -996,14 +996,14 @@ void VecVecDMatch_Close(VecVecDMatchPtr vec)
   CVD_FREE(vec);
 }
 
-CvStatus VecVec4i_New(VecVec4i *rval)
+CvStatus *VecVec4i_New(VecVec4i *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<cv::Vec4i>()};
   END_WRAP
 }
 
-CvStatus VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval)
+CvStatus *VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Vec4i> vec;
@@ -1015,26 +1015,26 @@ CvStatus VecVec4i_NewFromPointer(Vec4i *data, int length, VecVec4i *rval)
   END_WRAP
 }
 
-// CvStatus VecVec4i_NewFromVec(VecVec4i vec, VecVec4i *rval)
+// CvStatus *VecVec4i_NewFromVec(VecVec4i vec, VecVec4i *rval)
 // {
 //   BEGIN_WRAP
 //   END_WRAP
 // }
 
-CvStatus VecVec4i_At(VecVec4i vec, int idx, Vec4i *rval)
+CvStatus *VecVec4i_At(VecVec4i vec, int idx, Vec4i *rval)
 {
   BEGIN_WRAP
   cv::Vec4i v = vec.ptr->at(idx);
   *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
   END_WRAP
 }
-CvStatus VecVec4i_Append(VecVec4i vec, Vec4i v)
+CvStatus *VecVec4i_Append(VecVec4i vec, Vec4i v)
 {
   BEGIN_WRAP
   vec.ptr->push_back(cv::Vec4i(v.val1, v.val2, v.val3, v.val4));
   END_WRAP
 }
-CvStatus VecVec4i_Size(VecVec4i vec, int *rval)
+CvStatus *VecVec4i_Size(VecVec4i vec, int *rval)
 {
   BEGIN_WRAP
   *rval = static_cast<int>(vec.ptr->size());

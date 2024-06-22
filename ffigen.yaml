@@ -18,6 +18,7 @@ headers:
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
+    - src/core/types.h
     - src/core/vec.h
     - src/core/version.h
     - src/dnn/asyncarray.h
@@ -30,6 +31,7 @@ headers:
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
     - src/imgproc/imgproc.h
+    - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h
@@ -52,6 +54,7 @@ headers:
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
     - src/imgproc/imgproc.h
+    - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
     - src/photo/photo.h
     - src/stitching/stitching.h

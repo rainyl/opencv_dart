@@ -44,18 +44,18 @@ class GComputation extends CvStruct<cvg.GComputation> {
     return GComputation.fromPointer(p);
   }
 
-  Future<Mat> apply(Mat inMat) async {
-    final completer = Completer<Mat>();
-    late final NativeCallable<cvg.MatCallbackFunction> callback;
-    void onResponse(cvg.MatPtr p) {
-      completer.complete(Mat.fromPointer(p));
-      callback.close();
-    }
+  // Future<Mat> apply(Mat inMat) async {
+  //   final completer = Completer<Mat>();
+  //   late final NativeCallable<cvg.MatCallbackFunction> callback;
+  //   void onResponse(cvg.MatPtr p) {
+  //     completer.complete(Mat.fromPointer(p));
+  //     callback.close();
+  //   }
 
-    callback = ffi.NativeCallable.listener(onResponse);
-    cvRun(() => CFFI.gapi_GComputation_apply(ref, inMat.ref, callback.nativeFunction));
-    return completer.future;
-  }
+  //   callback = ffi.NativeCallable.listener(onResponse);
+  //   cvRun(() => CFFI.gapi_GComputation_apply(ref, inMat.ref, callback.nativeFunction));
+  //   return completer.future;
+  // }
 
   // Mat applyMIMO(Mat inMat) => apply(inMat);
 

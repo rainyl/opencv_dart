@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
@@ -153,6 +155,31 @@ void main() async {
     final gray = cv.cvtColor(cvImage, cv.COLOR_BGR2GRAY);
     expect((gray.width, gray.height, gray.channels), (512, 512, 1));
     expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
+  });
+
+  test('cv.cvtColorAsync', () async {
+    final m = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+    for (var i = 0; i < 10; i++) {
+      print("$i start");
+      final gray = await cv.cvtColorAsync(m, cv.COLOR_BGR2GRAY);
+      expect((gray.width, gray.height, gray.channels), (512, 512, 1));
+      // expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
+      final sleep = Random().nextInt(1000);
+      await Future.delayed(Duration(seconds: 2));
+      print("$i finished, sleep: $sleep");
+    }
+  });
+
+  test('test name', () async {
+    Future<void> asyncFunction() async {
+      // 模拟耗时操作
+      await Future.delayed(Duration(seconds: 2));
+      print('Inside async function');
+    }
+
+    print('Before calling async function');
+    await asyncFunction();
+    print('After calling async function');
   });
 
   test("cv2.equalizeHist", () async {

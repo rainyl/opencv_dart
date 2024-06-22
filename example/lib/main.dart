@@ -40,11 +40,17 @@ class _MyAppState extends State<MyApp> {
           gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
           blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
         }
-        return (
-          cv.imencode(cv.ImageFormat.png.ext, gray),
-          cv.imencode(cv.ImageFormat.png.ext, blur)
-        );
+        return (cv.imencode(".png", gray), cv.imencode(".png", blur));
       });
+
+  Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
+    late cv.Mat gray, blur;
+    for (var i = 0; i < 1000; i++) {
+      gray = await cv.cvtColorAsync(im, cv.COLOR_BGR2GRAY);
+      blur = await cv.gaussianBlurAsync(im, (7, 7), 2, sigmaY: 2);
+    }
+    return (gray, blur);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +86,13 @@ class _MyAppState extends State<MyApp> {
                   final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   // heavy computation
-                  final (gray, blur) = await heavyTask(bytes);
+                  // final (gray, blur) = await heavyTask(bytes);
+                  // setState(() {
+                  //   images = [bytes, gray, blur];
+                  // });
+                  final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
                   setState(() {
-                    images = [bytes, gray, blur];
+                    images = [bytes, cv.imencode(".png", gray), cv.imencode(".png", blur)];
                   });
                 },
                 child: const Text("Process"),

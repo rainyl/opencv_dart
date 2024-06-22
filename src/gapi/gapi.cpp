@@ -1,4 +1,5 @@
 #include "gapi.h"
+#include "core/types.h"
 
 CvStatus *gapi_GMat_New_Empty(GMat *rval)
 {
@@ -75,7 +76,7 @@ CvStatus *gapi_GComputation_New_3(GMat in1, GMat in2, GScalar out, GComputation 
 void gapi_GComputation_Close(GComputationPtr self) { CVD_FREE(self); }
 
 CvStatus *gapi_GComputation_apply(GComputation self, Mat in,
-                                  MatCallback callback /*TODO: GCompileArgs &&args={}*/)
+                                  CvCallback_1 callback /*TODO: GCompileArgs &&args={}*/)
 {
   BEGIN_WRAP
   cv::Mat _out;
