@@ -13,13 +13,13 @@
 #include <opencv2/objdetect/face.hpp>
 
 // CascadeClassifier
-CvStatus CascadeClassifier_New(CascadeClassifier *rval)
+CvStatus *CascadeClassifier_New(CascadeClassifier *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::CascadeClassifier()};
   END_WRAP
 }
-CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
+CvStatus *CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::CascadeClassifier(filename)};
@@ -27,13 +27,13 @@ CvStatus CascadeClassifier_NewFromFile(char *filename, CascadeClassifier *rval)
 }
 void CascadeClassifier_Close(CascadeClassifierPtr self) { CVD_FREE(self); }
 
-CvStatus CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval)
+CvStatus *CascadeClassifier_Load(CascadeClassifier self, const char *name, int *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->load(name);
   END_WRAP
 }
-CvStatus CascadeClassifier_DetectMultiScale(CascadeClassifier self, Mat img, VecRect *rval)
+CvStatus *CascadeClassifier_DetectMultiScale(CascadeClassifier self, Mat img, VecRect *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects = std::vector<cv::Rect>();
@@ -41,9 +41,9 @@ CvStatus CascadeClassifier_DetectMultiScale(CascadeClassifier self, Mat img, Vec
   *rval = {new std::vector<cv::Rect>(rects)};
   END_WRAP
 }
-CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, Mat img, VecRect *objects,
-                                                      double scale, int minNeighbors, int flags, Size minSize,
-                                                      Size maxSize)
+CvStatus *CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, Mat img, VecRect *objects,
+                                                       double scale, int minNeighbors, int flags,
+                                                       Size minSize, Size maxSize)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
@@ -54,9 +54,9 @@ CvStatus CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, Ma
   END_WRAP
 }
 
-CvStatus CascadeClassifier_DetectMultiScale2(CascadeClassifier self, Mat img, VecRect *objects,
-                                             VecInt *numDetections, double scaleFactor, int minNeighbors,
-                                             int flags, Size minSize, Size maxSize)
+CvStatus *CascadeClassifier_DetectMultiScale2(CascadeClassifier self, Mat img, VecRect *objects,
+                                              VecInt *numDetections, double scaleFactor, int minNeighbors,
+                                              int flags, Size minSize, Size maxSize)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
@@ -69,10 +69,10 @@ CvStatus CascadeClassifier_DetectMultiScale2(CascadeClassifier self, Mat img, Ve
   END_WRAP
 }
 
-CvStatus CascadeClassifier_DetectMultiScale3(CascadeClassifier self, Mat img, VecRect *objects,
-                                             VecInt *rejectLevels, VecDouble *levelWeights,
-                                             double scaleFactor, int minNeighbors, int flags, Size minSize,
-                                             Size maxSize, bool outputRejectLevels)
+CvStatus *CascadeClassifier_DetectMultiScale3(CascadeClassifier self, Mat img, VecRect *objects,
+                                              VecInt *rejectLevels, VecDouble *levelWeights,
+                                              double scaleFactor, int minNeighbors, int flags, Size minSize,
+                                              Size maxSize, bool outputRejectLevels)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
@@ -87,39 +87,39 @@ CvStatus CascadeClassifier_DetectMultiScale3(CascadeClassifier self, Mat img, Ve
   *levelWeights = {new std::vector<double>(weights)};
   END_WRAP
 }
-CvStatus CascadeClassifier_Empty(CascadeClassifier self, bool *rval)
+CvStatus *CascadeClassifier_Empty(CascadeClassifier self, bool *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->empty();
   END_WRAP
 }
-CvStatus CascadeClassifier_getFeatureType(CascadeClassifier self, int *rval)
+CvStatus *CascadeClassifier_getFeatureType(CascadeClassifier self, int *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->getFeatureType();
   END_WRAP
 }
-CvStatus CascadeClassifier_getOriginalWindowSize(CascadeClassifier self, Size *rval)
+CvStatus *CascadeClassifier_getOriginalWindowSize(CascadeClassifier self, Size *rval)
 {
   BEGIN_WRAP
   auto sz = self.ptr->getOriginalWindowSize();
   *rval = {sz.width, sz.height};
   END_WRAP
 }
-CvStatus CascadeClassifier_isOldFormatCascade(CascadeClassifier self, bool *rval)
+CvStatus *CascadeClassifier_isOldFormatCascade(CascadeClassifier self, bool *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->isOldFormatCascade();
   END_WRAP
 }
 
-CvStatus HOGDescriptor_New(HOGDescriptor *rval)
+CvStatus *HOGDescriptor_New(HOGDescriptor *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::HOGDescriptor()};
   END_WRAP
 }
-CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
+CvStatus *HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::HOGDescriptor(filename)};
@@ -127,14 +127,14 @@ CvStatus HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval)
 }
 void HOGDescriptor_Close(HOGDescriptorPtr self) { CVD_FREE(self); }
 
-CvStatus HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval)
+CvStatus *HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->load(name);
   END_WRAP
 }
-CvStatus HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocations, VecDouble *weights,
-                              double hitThresh, Size winStride, Size padding, VecPoint *searchLocations)
+CvStatus *HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocations, VecDouble *weights,
+                               double hitThresh, Size winStride, Size padding, VecPoint *searchLocations)
 {
   BEGIN_WRAP
   std::vector<cv::Point> _foundLocations;
@@ -148,8 +148,8 @@ CvStatus HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocati
   *searchLocations = {new std::vector<cv::Point>(_searchLocations)};
   END_WRAP
 }
-CvStatus HOGDescriptor_Detect2(HOGDescriptor self, Mat img, VecPoint *foundLocations, double hitThresh,
-                               Size winStride, Size padding, VecPoint *searchLocations)
+CvStatus *HOGDescriptor_Detect2(HOGDescriptor self, Mat img, VecPoint *foundLocations, double hitThresh,
+                                Size winStride, Size padding, VecPoint *searchLocations)
 {
   BEGIN_WRAP
   std::vector<cv::Point> _foundLocations;
@@ -160,7 +160,7 @@ CvStatus HOGDescriptor_Detect2(HOGDescriptor self, Mat img, VecPoint *foundLocat
   *searchLocations = {new std::vector<cv::Point>(_searchLocations)};
   END_WRAP
 }
-CvStatus HOGDescriptor_DetectMultiScale(HOGDescriptor self, Mat img, VecRect *rval)
+CvStatus *HOGDescriptor_DetectMultiScale(HOGDescriptor self, Mat img, VecRect *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects = std::vector<cv::Rect>();
@@ -168,10 +168,10 @@ CvStatus HOGDescriptor_DetectMultiScale(HOGDescriptor self, Mat img, VecRect *rv
   *rval = {new std::vector<cv::Rect>(rects)};
   END_WRAP
 }
-CvStatus HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor self, Mat img, double hitThresh,
-                                                  Size winStride, Size padding, double scale,
-                                                  double finalThreshold, bool useMeanshiftGrouping,
-                                                  VecRect *rval)
+CvStatus *HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor self, Mat img, double hitThresh,
+                                                   Size winStride, Size padding, double scale,
+                                                   double finalThreshold, bool useMeanshiftGrouping,
+                                                   VecRect *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
@@ -182,20 +182,20 @@ CvStatus HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor self, Mat img, d
   *rval = {new std::vector<cv::Rect>(rects)};
   END_WRAP
 }
-CvStatus HOG_GetDefaultPeopleDetector(VecFloat *rval)
+CvStatus *HOG_GetDefaultPeopleDetector(VecFloat *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<float>(cv::HOGDescriptor::getDefaultPeopleDetector())};
   END_WRAP
 }
-CvStatus HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecFloat det)
+CvStatus *HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecFloat det)
 {
   BEGIN_WRAP
   self.ptr->setSVMDetector(*det.ptr);
   END_WRAP
 }
-CvStatus HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecFloat *descriptors, Size winStride,
-                               Size padding, VecPoint *locations)
+CvStatus *HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecFloat *descriptors, Size winStride,
+                                Size padding, VecPoint *locations)
 {
   BEGIN_WRAP
   std::vector<float>     _descriptors;
@@ -206,15 +206,15 @@ CvStatus HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecFloat *descriptor
   *locations = {new std::vector<cv::Point>(_locations)};
   END_WRAP
 }
-CvStatus HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL,
-                                       Size paddingBR)
+CvStatus *HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL,
+                                        Size paddingBR)
 {
   BEGIN_WRAP
   self.ptr->computeGradient(*img.ptr, *grad.ptr, *angleOfs.ptr, cv::Size(paddingTL.width, paddingTL.height),
                             cv::Size(paddingBR.width, paddingBR.height));
   END_WRAP
 }
-// CvStatus HOGDescriptor_detectMultiScaleROI(HOGDescriptor self, Mat img, VecRect *foundLocations,
+// CvStatus *HOGDescriptor_detectMultiScaleROI(HOGDescriptor self, Mat img, VecRect *foundLocations,
 //                                            DetectionROI *locations, int *lenLocations, double hitThreshold,
 //                                            int groupThreshold)
 // {
@@ -226,7 +226,7 @@ CvStatus HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, Ma
 //   locations = _locations->data();
 //   END_WRAP
 // }
-// CvStatus HOGDescriptor_detectROI(HOGDescriptor self, Mat img, VecPoint *locations, VecPoint
+// CvStatus *HOGDescriptor_detectROI(HOGDescriptor self, Mat img, VecPoint *locations, VecPoint
 // *foundLocations,
 //                                  VecDouble *confidences, double hitThreshold, Size winStride, Size padding)
 // {
@@ -242,47 +242,47 @@ CvStatus HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, Ma
 //   *confidences = {_confidences};
 //   END_WRAP
 // }
-CvStatus HOGDescriptor_getDaimlerPeopleDetector(VecFloat *rval)
+CvStatus *HOGDescriptor_getDaimlerPeopleDetector(VecFloat *rval)
 {
   BEGIN_WRAP
   *rval = {new std::vector<float>(cv::HOGDescriptor::getDaimlerPeopleDetector())};
   END_WRAP
 }
-CvStatus HOGDescriptor_getDescriptorSize(HOGDescriptor self, size_t *rval)
+CvStatus *HOGDescriptor_getDescriptorSize(HOGDescriptor self, size_t *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->getDescriptorSize();
   END_WRAP
 }
-CvStatus HOGDescriptor_getWinSigma(HOGDescriptor self, double *rval)
+CvStatus *HOGDescriptor_getWinSigma(HOGDescriptor self, double *rval)
 {
   BEGIN_WRAP
   *rval = self.ptr->getWinSigma();
   END_WRAP
 }
-CvStatus HOGDescriptor_groupRectangles(HOGDescriptor self, VecRect rectList, VecDouble weights,
-                                       int groupThreshold, double eps)
+CvStatus *HOGDescriptor_groupRectangles(HOGDescriptor self, VecRect rectList, VecDouble weights,
+                                        int groupThreshold, double eps)
 {
   BEGIN_WRAP
   self.ptr->groupRectangles(*rectList.ptr, *weights.ptr, groupThreshold, eps);
   END_WRAP
 }
 
-CvStatus GroupRectangles(VecRect rects, int groupThreshold, double eps)
+CvStatus *GroupRectangles(VecRect rects, int groupThreshold, double eps)
 {
   BEGIN_WRAP
   cv::groupRectangles(*rects.ptr, groupThreshold, eps);
   END_WRAP
 }
 
-CvStatus QRCodeDetector_New(QRCodeDetector *rval)
+CvStatus *QRCodeDetector_New(QRCodeDetector *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::QRCodeDetector()};
   END_WRAP
 }
-CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint *points,
-                                        Mat *straight_qrcode, char **rval)
+CvStatus *QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint *points,
+                                         Mat *straight_qrcode, char **rval)
 {
   BEGIN_WRAP
   std::vector<cv::Point> points_;
@@ -293,7 +293,7 @@ CvStatus QRCodeDetector_DetectAndDecode(QRCodeDetector self, Mat input, VecPoint
   *straight_qrcode = {new cv::Mat(mat)};
   END_WRAP
 }
-CvStatus QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
+CvStatus *QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Point> _points;
@@ -301,8 +301,8 @@ CvStatus QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points,
   *points = {new std::vector<cv::Point>(_points)};
   END_WRAP
 }
-CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint *points, Mat straight_qrcode,
-                               char **rval)
+CvStatus *QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint *points, Mat straight_qrcode,
+                                char **rval)
 {
   BEGIN_WRAP
   std::vector<cv::Point> _points;
@@ -311,8 +311,8 @@ CvStatus QRCodeDetector_Decode(QRCodeDetector self, Mat input, VecPoint *points,
   *points = {new std::vector<cv::Point>(_points)};
   END_WRAP
 }
-CvStatus QRCodeDetector_decodeCurved(QRCodeDetector self, Mat img, VecPoint points,
-                                     CVD_OUT Mat *straight_qrcode, char **rval)
+CvStatus *QRCodeDetector_decodeCurved(QRCodeDetector self, Mat img, VecPoint points,
+                                      CVD_OUT Mat *straight_qrcode, char **rval)
 {
   BEGIN_WRAP
   cv::Mat _straight_qrcode;
@@ -321,8 +321,8 @@ CvStatus QRCodeDetector_decodeCurved(QRCodeDetector self, Mat img, VecPoint poin
   *straight_qrcode = {new cv::Mat(_straight_qrcode)};
   END_WRAP
 }
-CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecPoint *points,
-                                              CVD_OUT Mat *straight_qrcode, char **rval)
+CvStatus *QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecPoint *points,
+                                               CVD_OUT Mat *straight_qrcode, char **rval)
 {
   BEGIN_WRAP
   cv::Mat                _straight_qrcode;
@@ -335,7 +335,7 @@ CvStatus QRCodeDetector_detectAndDecodeCurved(QRCodeDetector self, Mat img, VecP
 }
 void QRCodeDetector_Close(QRCodeDetectorPtr self) { CVD_FREE(self); }
 
-CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
+CvStatus *QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *points, bool *rval)
 {
   BEGIN_WRAP
   std::vector<cv::Point> _points;
@@ -343,8 +343,8 @@ CvStatus QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *po
   *points = {new std::vector<cv::Point>(_points)};
   END_WRAP
 }
-CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, VecVecChar *decoded,
-                                             VecPoint *points, VecMat *straight_code, bool *rval)
+CvStatus *QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, VecVecChar *decoded,
+                                              VecPoint *points, VecMat *straight_code, bool *rval)
 {
   BEGIN_WRAP
   std::vector<cv::String> decodedCodes;
@@ -368,28 +368,28 @@ CvStatus QRCodeDetector_DetectAndDecodeMulti(QRCodeDetector self, Mat input, Vec
   END_WRAP
 }
 
-CvStatus QRCodeDetector_setEpsX(QRCodeDetector self, double epsX)
+CvStatus *QRCodeDetector_setEpsX(QRCodeDetector self, double epsX)
 {
   BEGIN_WRAP
   self.ptr->setEpsX(epsX);
   END_WRAP
 }
-CvStatus QRCodeDetector_setEpsY(QRCodeDetector self, double epsY)
+CvStatus *QRCodeDetector_setEpsY(QRCodeDetector self, double epsY)
 {
   BEGIN_WRAP
   self.ptr->setEpsY(epsY);
   END_WRAP
 }
-CvStatus QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlignmentMarkers)
+CvStatus *QRCodeDetector_setUseAlignmentMarkers(QRCodeDetector self, bool useAlignmentMarkers)
 {
   BEGIN_WRAP
   self.ptr->setUseAlignmentMarkers(useAlignmentMarkers);
   END_WRAP
 }
 // FaceDetectorYN
-CvStatus FaceDetectorYN_New(const char *model, const char *config, Size input_size, float score_threshold,
-                            float nms_threshold, int top_k, int backend_id, int target_id,
-                            FaceDetectorYN *rval)
+CvStatus *FaceDetectorYN_New(const char *model, const char *config, Size input_size, float score_threshold,
+                             float nms_threshold, int top_k, int backend_id, int target_id,
+                             FaceDetectorYN *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::Ptr<cv::FaceDetectorYN>(
@@ -398,9 +398,9 @@ CvStatus FaceDetectorYN_New(const char *model, const char *config, Size input_si
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, VecUChar buffer_config,
-                                      Size input_size, float score_threshold, float nms_threshold, int top_k,
-                                      int backend_id, int target_id, FaceDetectorYN *rval)
+CvStatus *FaceDetectorYN_NewFromBuffer(const char *framework, VecUChar buffer, VecUChar buffer_config,
+                                       Size input_size, float score_threshold, float nms_threshold, int top_k,
+                                       int backend_id, int target_id, FaceDetectorYN *rval)
 {
   BEGIN_WRAP
   *rval = {new cv::Ptr<cv::FaceDetectorYN>(cv::FaceDetectorYN::create(
@@ -415,7 +415,7 @@ void FaceDetectorYN_Close(FaceDetectorYNPtr self)
   CVD_FREE(self);
 }
 
-CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces)
+CvStatus *FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces)
 {
   BEGIN_WRAP
   cv::Mat _faces;
@@ -424,13 +424,13 @@ CvStatus FaceDetectorYN_Detect(FaceDetectorYN self, Mat img, Mat *faces)
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size)
+CvStatus *FaceDetectorYN_SetInputSize(FaceDetectorYN self, Size input_size)
 {
   BEGIN_WRAP(*self.ptr)->setInputSize(cv::Size(input_size.width, input_size.height));
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_GetInputSize(FaceDetectorYN self, Size *input_size)
+CvStatus *FaceDetectorYN_GetInputSize(FaceDetectorYN self, Size *input_size)
 {
   BEGIN_WRAP
   cv::Size sz = (*self.ptr)->getInputSize();
@@ -438,46 +438,46 @@ CvStatus FaceDetectorYN_GetInputSize(FaceDetectorYN self, Size *input_size)
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold)
+CvStatus *FaceDetectorYN_SetScoreThreshold(FaceDetectorYN self, float score_threshold)
 {
   BEGIN_WRAP(*self.ptr)->setScoreThreshold(score_threshold);
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_GetScoreThreshold(FaceDetectorYN self, float *score_threshold)
+CvStatus *FaceDetectorYN_GetScoreThreshold(FaceDetectorYN self, float *score_threshold)
 {
   BEGIN_WRAP
   *score_threshold = (*self.ptr)->getScoreThreshold();
   END_WRAP
 }
-CvStatus FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold)
+CvStatus *FaceDetectorYN_SetNMSThreshold(FaceDetectorYN self, float nms_threshold)
 {
   BEGIN_WRAP(*self.ptr)->setNMSThreshold(nms_threshold);
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_GetNMSThreshold(FaceDetectorYN self, float *nms_threshold)
+CvStatus *FaceDetectorYN_GetNMSThreshold(FaceDetectorYN self, float *nms_threshold)
 {
   BEGIN_WRAP
   *nms_threshold = (*self.ptr)->getNMSThreshold();
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k)
+CvStatus *FaceDetectorYN_SetTopK(FaceDetectorYN self, int top_k)
 {
   BEGIN_WRAP(*self.ptr)->setTopK(top_k);
   END_WRAP
 }
 
-CvStatus FaceDetectorYN_GetTopK(FaceDetectorYN self, int *top_k)
+CvStatus *FaceDetectorYN_GetTopK(FaceDetectorYN self, int *top_k)
 {
   BEGIN_WRAP
   *top_k = (*self.ptr)->getTopK();
   END_WRAP
 }
 // FaceRecognizerSF
-CvStatus FaceRecognizerSF_New(const char *model, const char *config, int backend_id, int target_id,
-                              FaceRecognizerSF *rval)
+CvStatus *FaceRecognizerSF_New(const char *model, const char *config, int backend_id, int target_id,
+                               FaceRecognizerSF *rval)
 {
   BEGIN_WRAP
   *rval = {
@@ -490,7 +490,7 @@ void FaceRecognizerSF_Close(FaceRecognizerSFPtr self)
   CVD_FREE(self);
 }
 
-CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img)
+CvStatus *FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face_box, Mat *aligned_img)
 {
   BEGIN_WRAP
   cv::Mat _align;
@@ -499,7 +499,7 @@ CvStatus FaceRecognizerSF_AlignCrop(FaceRecognizerSF self, Mat src_img, Mat face
   END_WRAP
 }
 
-CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, bool clone, Mat *face_feature)
+CvStatus *FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, bool clone, Mat *face_feature)
 {
   BEGIN_WRAP
   cv::Mat _face_feature;
@@ -512,8 +512,8 @@ CvStatus FaceRecognizerSF_Feature(FaceRecognizerSF self, Mat aligned_img, bool c
   END_WRAP
 }
 
-CvStatus FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type,
-                                double *distance)
+CvStatus *FaceRecognizerSF_Match(FaceRecognizerSF self, Mat face_feature1, Mat face_feature2, int dis_type,
+                                 double *distance)
 {
   BEGIN_WRAP
   *distance = (*self.ptr)->match(*face_feature1.ptr, *face_feature2.ptr, dis_type);

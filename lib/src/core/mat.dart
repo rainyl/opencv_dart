@@ -324,111 +324,108 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   T atVec<T>(int row, int col) {
-    final v = cvRunArena<T>((arena) {
-      // Vec2b, Vec3b, Vec4b
-      if (T == Vec2b) {
-        final p = calloc<cvg.Vec2b>();
-        cvRun(() => CFFI.Mat_GetVec2b(ref, row, col, p));
-        return Vec2b.fromPointer(p) as T;
-      } else if (T == Vec3b) {
-        final p = calloc<cvg.Vec3b>();
-        cvRun(() => CFFI.Mat_GetVec3b(ref, row, col, p));
-        return Vec3b.fromPointer(p) as T;
-      } else if (T == Vec4b) {
-        final p = calloc<cvg.Vec4b>();
-        cvRun(() => CFFI.Mat_GetVec4b(ref, row, col, p));
-        return Vec4b.fromPointer(p) as T;
-      }
-      // Vec2w, Vec3w, Vec4w
-      else if (T == Vec2w) {
-        final p = calloc<cvg.Vec2w>();
-        cvRun(() => CFFI.Mat_GetVec2w(ref, row, col, p));
-        return Vec2w.fromPointer(p) as T;
-      } else if (T == Vec3w) {
-        final p = calloc<cvg.Vec3w>();
-        cvRun(() => CFFI.Mat_GetVec3w(ref, row, col, p));
-        return Vec3w.fromPointer(p) as T;
-      } else if (T == Vec4w) {
-        final p = calloc<cvg.Vec4w>();
-        cvRun(() => CFFI.Mat_GetVec4w(ref, row, col, p));
-        return Vec4w.fromPointer(p) as T;
-      }
-      // Vec2s, Vec3s, Vec4s
-      else if (T == Vec2s) {
-        final p = calloc<cvg.Vec2s>();
-        cvRun(() => CFFI.Mat_GetVec2s(ref, row, col, p));
-        return Vec2s.fromPointer(p) as T;
-      } else if (T == Vec3s) {
-        final p = calloc<cvg.Vec3s>();
-        cvRun(() => CFFI.Mat_GetVec3s(ref, row, col, p));
-        return Vec3s.fromPointer(p) as T;
-      } else if (T == Vec4s) {
-        final p = calloc<cvg.Vec4s>();
-        cvRun(() => CFFI.Mat_GetVec4s(ref, row, col, p));
-        return Vec4s.fromPointer(p) as T;
-      }
-      // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
-      else if (T == Vec2i) {
-        final p = calloc<cvg.Vec2i>();
-        cvRun(() => CFFI.Mat_GetVec2i(ref, row, col, p));
-        return Vec2i.fromPointer(p) as T;
-      } else if (T == Vec3i) {
-        final p = calloc<cvg.Vec3i>();
-        cvRun(() => CFFI.Mat_GetVec3i(ref, row, col, p));
-        return Vec3i.fromPointer(p) as T;
-      } else if (T == Vec4i) {
-        final p = calloc<cvg.Vec4i>();
-        cvRun(() => CFFI.Mat_GetVec4i(ref, row, col, p));
-        return Vec4i.fromPointer(p) as T;
-      } else if (T == Vec6i) {
-        final p = calloc<cvg.Vec6i>();
-        cvRun(() => CFFI.Mat_GetVec6i(ref, row, col, p));
-        return Vec6i.fromPointer(p) as T;
-      } else if (T == Vec8i) {
-        final p = calloc<cvg.Vec8i>();
-        cvRun(() => CFFI.Mat_GetVec8i(ref, row, col, p));
-        return Vec8i.fromPointer(p) as T;
-      }
-      // Vec2f, Vec3f, Vec4f, Vec6f
-      else if (T == Vec2f) {
-        final p = calloc<cvg.Vec2f>();
-        cvRun(() => CFFI.Mat_GetVec2f(ref, row, col, p));
-        return Vec2f.fromPointer(p) as T;
-      } else if (T == Vec3f) {
-        final p = calloc<cvg.Vec3f>();
-        cvRun(() => CFFI.Mat_GetVec3f(ref, row, col, p));
-        return Vec3f.fromPointer(p) as T;
-      } else if (T == Vec4f) {
-        final p = calloc<cvg.Vec4f>();
-        cvRun(() => CFFI.Mat_GetVec4f(ref, row, col, p));
-        return Vec4f.fromPointer(p) as T;
-      } else if (T == Vec6f) {
-        final p = calloc<cvg.Vec6f>();
-        cvRun(() => CFFI.Mat_GetVec6f(ref, row, col, p));
-        return Vec6f.fromPointer(p) as T;
-      }
-      // Vec2d, Vec3d, Vec4d, Vec6d
-      else if (T == Vec2d) {
-        final p = calloc<cvg.Vec2d>();
-        cvRun(() => CFFI.Mat_GetVec2d(ref, row, col, p));
-        return Vec2d.fromPointer(p) as T;
-      } else if (T == Vec3d) {
-        final p = calloc<cvg.Vec3d>();
-        cvRun(() => CFFI.Mat_GetVec3d(ref, row, col, p));
-        return Vec3d.fromPointer(p) as T;
-      } else if (T == Vec4d) {
-        final p = calloc<cvg.Vec4d>();
-        cvRun(() => CFFI.Mat_GetVec4d(ref, row, col, p));
-        return Vec4d.fromPointer(p) as T;
-      } else if (T == Vec6d) {
-        final p = calloc<cvg.Vec6d>();
-        cvRun(() => CFFI.Mat_GetVec6d(ref, row, col, p));
-        return Vec6d.fromPointer(p) as T;
-      } else {
-        throw UnsupportedError("at<$T>() for $type is not supported!");
-      }
-    });
-    return v;
+    // Vec2b, Vec3b, Vec4b
+    if (T == Vec2b) {
+      final p = calloc<cvg.Vec2b>();
+      cvRun(() => CFFI.Mat_GetVec2b(ref, row, col, p));
+      return Vec2b.fromPointer(p) as T;
+    } else if (T == Vec3b) {
+      final p = calloc<cvg.Vec3b>();
+      cvRun(() => CFFI.Mat_GetVec3b(ref, row, col, p));
+      return Vec3b.fromPointer(p) as T;
+    } else if (T == Vec4b) {
+      final p = calloc<cvg.Vec4b>();
+      cvRun(() => CFFI.Mat_GetVec4b(ref, row, col, p));
+      return Vec4b.fromPointer(p) as T;
+    }
+    // Vec2w, Vec3w, Vec4w
+    else if (T == Vec2w) {
+      final p = calloc<cvg.Vec2w>();
+      cvRun(() => CFFI.Mat_GetVec2w(ref, row, col, p));
+      return Vec2w.fromPointer(p) as T;
+    } else if (T == Vec3w) {
+      final p = calloc<cvg.Vec3w>();
+      cvRun(() => CFFI.Mat_GetVec3w(ref, row, col, p));
+      return Vec3w.fromPointer(p) as T;
+    } else if (T == Vec4w) {
+      final p = calloc<cvg.Vec4w>();
+      cvRun(() => CFFI.Mat_GetVec4w(ref, row, col, p));
+      return Vec4w.fromPointer(p) as T;
+    }
+    // Vec2s, Vec3s, Vec4s
+    else if (T == Vec2s) {
+      final p = calloc<cvg.Vec2s>();
+      cvRun(() => CFFI.Mat_GetVec2s(ref, row, col, p));
+      return Vec2s.fromPointer(p) as T;
+    } else if (T == Vec3s) {
+      final p = calloc<cvg.Vec3s>();
+      cvRun(() => CFFI.Mat_GetVec3s(ref, row, col, p));
+      return Vec3s.fromPointer(p) as T;
+    } else if (T == Vec4s) {
+      final p = calloc<cvg.Vec4s>();
+      cvRun(() => CFFI.Mat_GetVec4s(ref, row, col, p));
+      return Vec4s.fromPointer(p) as T;
+    }
+    // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
+    else if (T == Vec2i) {
+      final p = calloc<cvg.Vec2i>();
+      cvRun(() => CFFI.Mat_GetVec2i(ref, row, col, p));
+      return Vec2i.fromPointer(p) as T;
+    } else if (T == Vec3i) {
+      final p = calloc<cvg.Vec3i>();
+      cvRun(() => CFFI.Mat_GetVec3i(ref, row, col, p));
+      return Vec3i.fromPointer(p) as T;
+    } else if (T == Vec4i) {
+      final p = calloc<cvg.Vec4i>();
+      cvRun(() => CFFI.Mat_GetVec4i(ref, row, col, p));
+      return Vec4i.fromPointer(p) as T;
+    } else if (T == Vec6i) {
+      final p = calloc<cvg.Vec6i>();
+      cvRun(() => CFFI.Mat_GetVec6i(ref, row, col, p));
+      return Vec6i.fromPointer(p) as T;
+    } else if (T == Vec8i) {
+      final p = calloc<cvg.Vec8i>();
+      cvRun(() => CFFI.Mat_GetVec8i(ref, row, col, p));
+      return Vec8i.fromPointer(p) as T;
+    }
+    // Vec2f, Vec3f, Vec4f, Vec6f
+    else if (T == Vec2f) {
+      final p = calloc<cvg.Vec2f>();
+      cvRun(() => CFFI.Mat_GetVec2f(ref, row, col, p));
+      return Vec2f.fromPointer(p) as T;
+    } else if (T == Vec3f) {
+      final p = calloc<cvg.Vec3f>();
+      cvRun(() => CFFI.Mat_GetVec3f(ref, row, col, p));
+      return Vec3f.fromPointer(p) as T;
+    } else if (T == Vec4f) {
+      final p = calloc<cvg.Vec4f>();
+      cvRun(() => CFFI.Mat_GetVec4f(ref, row, col, p));
+      return Vec4f.fromPointer(p) as T;
+    } else if (T == Vec6f) {
+      final p = calloc<cvg.Vec6f>();
+      cvRun(() => CFFI.Mat_GetVec6f(ref, row, col, p));
+      return Vec6f.fromPointer(p) as T;
+    }
+    // Vec2d, Vec3d, Vec4d, Vec6d
+    else if (T == Vec2d) {
+      final p = calloc<cvg.Vec2d>();
+      cvRun(() => CFFI.Mat_GetVec2d(ref, row, col, p));
+      return Vec2d.fromPointer(p) as T;
+    } else if (T == Vec3d) {
+      final p = calloc<cvg.Vec3d>();
+      cvRun(() => CFFI.Mat_GetVec3d(ref, row, col, p));
+      return Vec3d.fromPointer(p) as T;
+    } else if (T == Vec4d) {
+      final p = calloc<cvg.Vec4d>();
+      cvRun(() => CFFI.Mat_GetVec4d(ref, row, col, p));
+      return Vec4d.fromPointer(p) as T;
+    } else if (T == Vec6d) {
+      final p = calloc<cvg.Vec6d>();
+      cvRun(() => CFFI.Mat_GetVec6d(ref, row, col, p));
+      return Vec6d.fromPointer(p) as T;
+    } else {
+      throw UnsupportedError("at<$T>() for $type is not supported!");
+    }
   }
 
   /// cv::Mat::at\<T\>(i0, i1, i2) of cv::Mat
@@ -452,66 +449,64 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   void setVec<T>(int row, int col, T val) {
-    cvRunArena((arena) {
-      // Vec2b, Vec3b, Vec4b
-      if (val is Vec2b) {
-        cvRun(() => CFFI.Mat_SetVec2b(ref, row, col, val.ref));
-      } else if (val is Vec3b) {
-        cvRun(() => CFFI.Mat_SetVec3b(ref, row, col, val.ref));
-      } else if (val is Vec4b) {
-        cvRun(() => CFFI.Mat_SetVec4b(ref, row, col, val.ref));
-      }
-      // Vec2w, Vec3w, Vec4w
-      else if (val is Vec2w) {
-        cvRun(() => CFFI.Mat_SetVec2w(ref, row, col, val.ref));
-      } else if (val is Vec3w) {
-        cvRun(() => CFFI.Mat_SetVec3w(ref, row, col, val.ref));
-      } else if (val is Vec4w) {
-        cvRun(() => CFFI.Mat_SetVec4w(ref, row, col, val.ref));
-      }
-      // Vec2s, Vec3s, Vec4s
-      else if (val is Vec2s) {
-        cvRun(() => CFFI.Mat_SetVec2s(ref, row, col, val.ref));
-      } else if (val is Vec3s) {
-        cvRun(() => CFFI.Mat_SetVec3s(ref, row, col, val.ref));
-      } else if (val is Vec4s) {
-        cvRun(() => CFFI.Mat_SetVec4s(ref, row, col, val.ref));
-      }
-      // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
-      else if (val is Vec2i) {
-        cvRun(() => CFFI.Mat_SetVec2i(ref, row, col, val.ref));
-      } else if (val is Vec3i) {
-        cvRun(() => CFFI.Mat_SetVec3i(ref, row, col, val.ref));
-      } else if (val is Vec4i) {
-        cvRun(() => CFFI.Mat_SetVec4i(ref, row, col, val.ref));
-      } else if (val is Vec6i) {
-        cvRun(() => CFFI.Mat_SetVec6i(ref, row, col, val.ref));
-      } else if (val is Vec8i) {
-        cvRun(() => CFFI.Mat_SetVec8i(ref, row, col, val.ref));
-      }
-      // Vec2f, Vec3f, Vec4f, Vec6f
-      else if (val is Vec2f) {
-        cvRun(() => CFFI.Mat_SetVec2f(ref, row, col, val.ref));
-      } else if (val is Vec3f) {
-        cvRun(() => CFFI.Mat_SetVec3f(ref, row, col, val.ref));
-      } else if (val is Vec4f) {
-        cvRun(() => CFFI.Mat_SetVec4f(ref, row, col, val.ref));
-      } else if (val is Vec6f) {
-        cvRun(() => CFFI.Mat_SetVec6f(ref, row, col, val.ref));
-      }
-      // Vec2d, Vec3d, Vec4d, Vec6d
-      else if (val is Vec2d) {
-        cvRun(() => CFFI.Mat_SetVec2d(ref, row, col, val.ref));
-      } else if (val is Vec3d) {
-        cvRun(() => CFFI.Mat_SetVec3d(ref, row, col, val.ref));
-      } else if (val is Vec4d) {
-        cvRun(() => CFFI.Mat_SetVec4d(ref, row, col, val.ref));
-      } else if (val is Vec6d) {
-        cvRun(() => CFFI.Mat_SetVec6d(ref, row, col, val.ref));
-      } else {
-        throw UnsupportedError("at<$T>() for $type is not supported!");
-      }
-    });
+    // Vec2b, Vec3b, Vec4b
+    if (val is Vec2b) {
+      cvRun(() => CFFI.Mat_SetVec2b(ref, row, col, val.ref));
+    } else if (val is Vec3b) {
+      cvRun(() => CFFI.Mat_SetVec3b(ref, row, col, val.ref));
+    } else if (val is Vec4b) {
+      cvRun(() => CFFI.Mat_SetVec4b(ref, row, col, val.ref));
+    }
+    // Vec2w, Vec3w, Vec4w
+    else if (val is Vec2w) {
+      cvRun(() => CFFI.Mat_SetVec2w(ref, row, col, val.ref));
+    } else if (val is Vec3w) {
+      cvRun(() => CFFI.Mat_SetVec3w(ref, row, col, val.ref));
+    } else if (val is Vec4w) {
+      cvRun(() => CFFI.Mat_SetVec4w(ref, row, col, val.ref));
+    }
+    // Vec2s, Vec3s, Vec4s
+    else if (val is Vec2s) {
+      cvRun(() => CFFI.Mat_SetVec2s(ref, row, col, val.ref));
+    } else if (val is Vec3s) {
+      cvRun(() => CFFI.Mat_SetVec3s(ref, row, col, val.ref));
+    } else if (val is Vec4s) {
+      cvRun(() => CFFI.Mat_SetVec4s(ref, row, col, val.ref));
+    }
+    // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
+    else if (val is Vec2i) {
+      cvRun(() => CFFI.Mat_SetVec2i(ref, row, col, val.ref));
+    } else if (val is Vec3i) {
+      cvRun(() => CFFI.Mat_SetVec3i(ref, row, col, val.ref));
+    } else if (val is Vec4i) {
+      cvRun(() => CFFI.Mat_SetVec4i(ref, row, col, val.ref));
+    } else if (val is Vec6i) {
+      cvRun(() => CFFI.Mat_SetVec6i(ref, row, col, val.ref));
+    } else if (val is Vec8i) {
+      cvRun(() => CFFI.Mat_SetVec8i(ref, row, col, val.ref));
+    }
+    // Vec2f, Vec3f, Vec4f, Vec6f
+    else if (val is Vec2f) {
+      cvRun(() => CFFI.Mat_SetVec2f(ref, row, col, val.ref));
+    } else if (val is Vec3f) {
+      cvRun(() => CFFI.Mat_SetVec3f(ref, row, col, val.ref));
+    } else if (val is Vec4f) {
+      cvRun(() => CFFI.Mat_SetVec4f(ref, row, col, val.ref));
+    } else if (val is Vec6f) {
+      cvRun(() => CFFI.Mat_SetVec6f(ref, row, col, val.ref));
+    }
+    // Vec2d, Vec3d, Vec4d, Vec6d
+    else if (val is Vec2d) {
+      cvRun(() => CFFI.Mat_SetVec2d(ref, row, col, val.ref));
+    } else if (val is Vec3d) {
+      cvRun(() => CFFI.Mat_SetVec3d(ref, row, col, val.ref));
+    } else if (val is Vec4d) {
+      cvRun(() => CFFI.Mat_SetVec4d(ref, row, col, val.ref));
+    } else if (val is Vec6d) {
+      cvRun(() => CFFI.Mat_SetVec6d(ref, row, col, val.ref));
+    } else {
+      throw UnsupportedError("at<$T>() for $type is not supported!");
+    }
   }
 
   void setU8(int row, int col, int val, [int? i2]) => i2 == null
@@ -543,21 +538,16 @@ class Mat extends CvStruct<cvg.Mat> {
       : cvRun(() => CFFI.Mat_SetDouble3(ref, row, col, i2, val));
 
   void setNum<T extends num>(int row, int col, T val, [int? i2]) {
-    using((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => CFFI.Mat_Type(ref, p));
-      final depth = p.value & (MatType.CV_DEPTH_MAX - 1);
-      return switch (depth) {
-        MatType.CV_8U => setU8(row, col, val as int, i2),
-        MatType.CV_8S => setI8(row, col, val as int, i2),
-        MatType.CV_16U => setU16(row, col, val as int, i2),
-        MatType.CV_16S => setI16(row, col, val as int, i2),
-        MatType.CV_32S => setI32(row, col, val as int, i2),
-        MatType.CV_32F => setF32(row, col, val as double, i2),
-        MatType.CV_64F => setF64(row, col, val as double, i2),
-        _ => throw UnsupportedError("Unsupported type: $type")
-      };
-    });
+    return switch (type.depth) {
+      MatType.CV_8U => setU8(row, col, val as int, i2),
+      MatType.CV_8S => setI8(row, col, val as int, i2),
+      MatType.CV_16U => setU16(row, col, val as int, i2),
+      MatType.CV_16S => setI16(row, col, val as int, i2),
+      MatType.CV_32S => setI32(row, col, val as int, i2),
+      MatType.CV_32F => setF32(row, col, val as double, i2),
+      MatType.CV_64F => setF64(row, col, val as double, i2),
+      _ => throw UnsupportedError("Unsupported type: $type")
+    };
   }
 
   /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;

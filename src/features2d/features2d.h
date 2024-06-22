@@ -67,72 +67,72 @@ typedef struct SimpleBlobDetectorParams {
   float         thresholdStep;
 } SimpleBlobDetectorParams;
 
-CvStatus AKAZE_Create(AKAZE *rval);
-void     AKAZE_Close(AKAZEPtr a);
-CvStatus AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval);
-CvStatus AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+CvStatus *AKAZE_Create(AKAZE *rval);
+void      AKAZE_Close(AKAZEPtr a);
+CvStatus *AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval);
+CvStatus *AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-CvStatus AgastFeatureDetector_Create(AgastFeatureDetector *rval);
-void     AgastFeatureDetector_Close(AgastFeatureDetectorPtr a);
-CvStatus AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval);
+CvStatus *AgastFeatureDetector_Create(AgastFeatureDetector *rval);
+void      AgastFeatureDetector_Close(AgastFeatureDetectorPtr a);
+CvStatus *AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoint *rval);
 
-CvStatus BRISK_Create(BRISK *rval);
-void     BRISK_Close(BRISKPtr b);
-CvStatus BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval);
-CvStatus BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+CvStatus *BRISK_Create(BRISK *rval);
+void      BRISK_Close(BRISKPtr b);
+CvStatus *BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval);
+CvStatus *BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-CvStatus FastFeatureDetector_Create(FastFeatureDetector *rval);
-CvStatus FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type,
-                                              FastFeatureDetector *rval);
-void     FastFeatureDetector_Close(FastFeatureDetectorPtr f);
-CvStatus FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval);
+CvStatus *FastFeatureDetector_Create(FastFeatureDetector *rval);
+CvStatus *FastFeatureDetector_CreateWithParams(int threshold, bool nonmaxSuppression, int type,
+                                               FastFeatureDetector *rval);
+void      FastFeatureDetector_Close(FastFeatureDetectorPtr f);
+CvStatus *FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint *rval);
 
-CvStatus GFTTDetector_Create(GFTTDetector *rval);
-void     GFTTDetector_Close(GFTTDetectorPtr a);
-CvStatus GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval);
+CvStatus *GFTTDetector_Create(GFTTDetector *rval);
+void      GFTTDetector_Close(GFTTDetectorPtr a);
+CvStatus *GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval);
 
-CvStatus KAZE_Create(KAZE *rval);
-void     KAZE_Close(KAZEPtr a);
-CvStatus KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval);
-CvStatus KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+CvStatus *KAZE_Create(KAZE *rval);
+void      KAZE_Close(KAZEPtr a);
+CvStatus *KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval);
+CvStatus *KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-CvStatus MSER_Create(MSER *rval);
-void     MSER_Close(MSERPtr a);
-CvStatus MSER_Detect(MSER a, Mat src, VecKeyPoint *rval);
+CvStatus *MSER_Create(MSER *rval);
+void      MSER_Close(MSERPtr a);
+CvStatus *MSER_Detect(MSER a, Mat src, VecKeyPoint *rval);
 
-CvStatus ORB_Create(ORB *rval);
-CvStatus ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
-                              int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
-                              ORB *rval);
-void     ORB_Close(ORBPtr o);
-CvStatus ORB_Detect(ORB o, Mat src, VecKeyPoint *rval);
-CvStatus ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+CvStatus *ORB_Create(ORB *rval);
+CvStatus *ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
+                               int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
+                               ORB *rval);
+void      ORB_Close(ORBPtr o);
+CvStatus *ORB_Detect(ORB o, Mat src, VecKeyPoint *rval);
+CvStatus *ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-CvStatus SimpleBlobDetector_Create(SimpleBlobDetector *rval);
-CvStatus SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval);
-void     SimpleBlobDetector_Close(SimpleBlobDetectorPtr b);
-CvStatus SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval);
-CvStatus SimpleBlobDetectorParams_Create(SimpleBlobDetectorParams *rval);
+CvStatus *SimpleBlobDetector_Create(SimpleBlobDetector *rval);
+CvStatus *SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval);
+void      SimpleBlobDetector_Close(SimpleBlobDetectorPtr b);
+CvStatus *SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *rval);
+CvStatus *SimpleBlobDetectorParams_Create(SimpleBlobDetectorParams *rval);
 
-CvStatus BFMatcher_Create(BFMatcher *rval);
-CvStatus BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rval);
-void     BFMatcher_Close(BFMatcherPtr b);
-CvStatus BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval);
-CvStatus BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k, VecVecDMatch *rval);
+CvStatus *BFMatcher_Create(BFMatcher *rval);
+CvStatus *BFMatcher_CreateWithParams(int normType, bool crossCheck, BFMatcher *rval);
+void      BFMatcher_Close(BFMatcherPtr b);
+CvStatus *BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval);
+CvStatus *BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k, VecVecDMatch *rval);
 
-CvStatus FlannBasedMatcher_Create(FlannBasedMatcher *rval);
-void     FlannBasedMatcher_Close(FlannBasedMatcherPtr f);
-CvStatus FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval);
+CvStatus *FlannBasedMatcher_Create(FlannBasedMatcher *rval);
+void      FlannBasedMatcher_Close(FlannBasedMatcherPtr f);
+CvStatus *FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, VecVecDMatch *rval);
 
-CvStatus DrawKeyPoints(Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags);
+CvStatus *DrawKeyPoints(Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags);
 
-CvStatus SIFT_Create(SIFT *rval);
-void     SIFT_Close(SIFTPtr f);
-CvStatus SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval);
-CvStatus SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+CvStatus *SIFT_Create(SIFT *rval);
+void      SIFT_Close(SIFTPtr f);
+CvStatus *SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval);
+CvStatus *SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
 
-CvStatus DrawMatches(Mat img1, VecKeyPoint kp1, Mat img2, VecKeyPoint kp2, VecDMatch matches1to2, Mat outImg,
-                     const Scalar matchesColor, const Scalar pointColor, VecChar matchesMask, int flags);
+CvStatus *DrawMatches(Mat img1, VecKeyPoint kp1, Mat img2, VecKeyPoint kp2, VecDMatch matches1to2, Mat outImg,
+                      const Scalar matchesColor, const Scalar pointColor, VecChar matchesMask, int flags);
 
 #ifdef __cplusplus
 }

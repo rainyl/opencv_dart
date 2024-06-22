@@ -19,10 +19,10 @@ CVD_TYPEDEF(cv::AsyncArray, AsyncArray);
 CVD_TYPEDEF(void, AsyncArray);
 #endif
 
-CvStatus AsyncArray_New(AsyncArray *rval);
-CvStatus AsyncArray_Get(AsyncArray async_out, Mat out);
-CvStatus Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
-void     AsyncArray_Close(AsyncArrayPtr a);
+CvStatus *AsyncArray_New(AsyncArray *rval);
+CvStatus *AsyncArray_Get(AsyncArray async_out, Mat out);
+CvStatus *Net_forwardAsync(Net net, const char *outputName, AsyncArray *rval);
+void      AsyncArray_Close(AsyncArrayPtr a);
 
 #ifdef __cplusplus
 }
