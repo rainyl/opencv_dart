@@ -13,6 +13,7 @@ import 'package:ffi/ffi.dart';
 
 import "../opencv.g.dart" as cvg;
 import "exception.dart" show CvException;
+import 'mat.dart';
 
 const _libraryName = "opencv_dart";
 
@@ -99,6 +100,9 @@ Future<T> cvRunAsync<T>(
   throwIfFailed(func(ccallback.nativeFunction));
   return completer.future;
 }
+
+// Completers for async
+void matCompleter(Completer<Mat> completer, VoidPtr p) => completer.complete(Mat.fromPointer(p.cast()));
 
 // Arena wrapper
 R cvRunArena<R>(

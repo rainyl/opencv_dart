@@ -77,10 +77,8 @@ Mat cvtColor(Mat src, int code, {Mat? dst}) {
   return dst;
 }
 
-Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) async => cvRunAsync<Mat>(
-      (callback) => CFFI.CvtColor_Async(src.ref, code, callback),
-      (completer, p) => completer.complete(Mat.fromPointer(p.cast())),
-    );
+Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) async =>
+    cvRunAsync<Mat>((callback) => CFFI.CvtColor_Async(src.ref, code, callback), matCompleter);
 
 /// EqualizeHist Equalizes the histogram of a grayscale image.
 ///
@@ -192,36 +190,30 @@ Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace,
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
-Mat blur(Mat src, Size ksize, {Mat? dst}) {
-  return using<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => CFFI.Blur(src.ref, dst!.ref, ksize.toSize(arena).ref));
-    return dst!;
-  });
+Mat blur(Mat src, (int, int) ksize, {Mat? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.Blur(src.ref, dst!.ref, ksize.cvd.ref));
+  return dst;
 }
 
 /// BoxFilter blurs an image using the box filter.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
-Mat boxFilter(Mat src, int depth, Size ksize, {Mat? dst}) {
-  return using<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => CFFI.BoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
-    return dst!;
-  });
+Mat boxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  return dst;
 }
 
 /// SqBoxFilter calculates the normalized sum of squares of the pixel values overlapping the filter.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
-Mat sqrBoxFilter(Mat src, int depth, Size ksize, {Mat? dst}) {
-  return using<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => CFFI.SqBoxFilter(src.ref, dst!.ref, depth, ksize.toSize(arena).ref));
-    return dst!;
-  });
+Mat sqrBoxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  return dst;
 }
 
 /// Dilate dilates an image by using a specific structuring element.
@@ -477,9 +469,7 @@ Mat pyrDown(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  using((arena) {
-    cvRun(() => CFFI.PyrDown(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
-  });
+  cvRun(() => CFFI.PyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType));
   return dst;
 }
 
@@ -494,9 +484,7 @@ Mat pyrUp(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  using((arena) {
-    cvRun(() => CFFI.PyrUp(src.ref, dst!.ref, dstsize.toSize(arena).ref, borderType));
-  });
+  cvRun(() => CFFI.PyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType));
   return dst;
 }
 
@@ -548,13 +536,11 @@ Mat morphologyEx(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
-Mat getStructuringElement(int shape, Size ksize, {Point? anchor}) {
+Mat getStructuringElement(int shape, (int, int) ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
-  return cvRunArena<Mat>((arena) {
-    final r = calloc<cvg.Mat>();
-    cvRun(() => CFFI.GetStructuringElement(shape, ksize.toSize(arena).ref, r));
-    return Mat.fromPointer(r);
-  });
+  final r = calloc<cvg.Mat>();
+  cvRun(() => CFFI.GetStructuringElement(shape, ksize.cvd.ref, r));
+  return Mat.fromPointer(r);
 }
 
 /// GaussianBlur blurs an image Mat using a Gaussian filter.
@@ -565,33 +551,28 @@ Mat getStructuringElement(int shape, Size ksize, {Point? anchor}) {
 /// http:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1
 Mat gaussianBlur(
   Mat src,
-  Size ksize,
+  (int, int) ksize,
   double sigmaX, {
   Mat? dst,
   double sigmaY = 0,
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRunArena((arena) {
-    cvRun(() => CFFI.GaussianBlur(src.ref, dst!.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType));
-  });
+  cvRun(() => CFFI.GaussianBlur(src.ref, dst!.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType));
   return dst;
 }
 
 Future<Mat> gaussianBlurAsync(
   Mat src,
-  Size ksize,
+  (int, int) ksize,
   double sigmaX, {
   Mat? dst,
   double sigmaY = 0,
   int borderType = BORDER_DEFAULT,
 }) async =>
-    using<Future<Mat>>(
-      (arena) => cvRunAsync(
-        (callback) =>
-            CFFI.GaussianBlur_Async(src.ref, ksize.toSize(arena).ref, sigmaX, sigmaY, borderType, callback),
-        (completer, p) => completer.complete(Mat.fromPointer(p.cast())),
-      ),
+    cvRunAsync(
+      (callback) => CFFI.GaussianBlur_Async(src.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, callback),
+      matCompleter,
     );
 
 /// GetGaussianKernel returns Gaussian filter coefficients.
@@ -719,16 +700,14 @@ Mat canny(
 VecPoint2f cornerSubPix(
   InputArray image,
   VecPoint2f corners,
-  Size winSize,
-  Size zeroZone, [
-  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+  (int, int) winSize,
+  (int, int) zeroZone, [
+  (int, int, double) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 ]) {
-  cvRunArena((arena) {
-    final size = winSize.toSize(arena);
-    final zone = zeroZone.toSize(arena);
-    final c = criteria.toNativePtr(arena);
-    cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
-  });
+  final size = winSize.cvd;
+  final zone = zeroZone.cvd;
+  final c = criteria.toTermCriteria();
+  cvRun(() => CFFI.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
   return corners;
 }
 
@@ -1140,11 +1119,10 @@ Mat polylines(
 ) {
   return using<(Size, int)>((arena) {
     final baseline = arena<ffi.Int>();
-    final size = arena<cvg.Size>();
+    final size = calloc<cvg.Size>();
     final textPtr = text.toNativeUtf8(allocator: arena);
     cvRun(() => CFFI.GetTextSizeWithBaseline(textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
-    final Size sz = (size.ref.width, size.ref.height);
-    return (sz, baseline.value);
+    return (Size.fromPointer(size), baseline.value);
   });
 }
 
@@ -1166,22 +1144,21 @@ Mat putText(
   int lineType = LINE_8,
   bool bottomLeftOrigin = false,
 }) {
-  using((arena) {
-    final textPtr = text.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    cvRun(
-      () => CFFI.PutTextWithParams(
-        img.ref,
-        textPtr,
-        org.ref,
-        fontFace,
-        fontScale,
-        color.ref,
-        thickness,
-        lineType,
-        bottomLeftOrigin,
-      ),
-    );
-  });
+  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
+  cvRun(
+    () => CFFI.PutTextWithParams(
+      img.ref,
+      textPtr,
+      org.ref,
+      fontFace,
+      fontScale,
+      color.ref,
+      thickness,
+      lineType,
+      bottomLeftOrigin,
+    ),
+  );
+  calloc.free(textPtr);
   return img;
 }
 
@@ -1196,16 +1173,14 @@ Mat putText(
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga47a974309e9102f5f08231edc7e7529d
 Mat resize(
   InputArray src,
-  Size dsize, {
+  (int, int) dsize, {
   OutputArray? dst,
   double fx = 0,
   double fy = 0,
   int interpolation = INTER_LINEAR,
 }) {
   dst ??= Mat.empty();
-  using((arena) {
-    cvRun(() => CFFI.Resize(src.ref, dst!.ref, dsize.toSize(arena).ref, fx, fy, interpolation));
-  });
+  cvRun(() => CFFI.Resize(src.ref, dst!.ref, dsize.cvd.ref, fx, fy, interpolation));
   return dst;
 }
 
@@ -1215,22 +1190,13 @@ Mat resize(
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga77576d06075c1a4b6ba1a608850cd614
 Mat getRectSubPix(
   InputArray image,
-  Size patchSize,
+  (int, int) patchSize,
   Point2f center, {
   OutputArray? patch,
   int patchType = -1,
 }) {
   patch ??= Mat.empty();
-  using((arena) {
-    cvRun(
-      () => CFFI.GetRectSubPix(
-        image.ref,
-        patchSize.toSize(arena).ref,
-        center.ref,
-        patch!.ref,
-      ),
-    );
-  });
+  cvRun(() => CFFI.GetRectSubPix(image.ref, patchSize.cvd.ref, center.ref, patch!.ref));
   return patch;
 }
 
@@ -1251,7 +1217,7 @@ Mat getRotationMatrix2D(Point2f center, double angle, double scale) {
 Mat warpAffine(
   InputArray src,
   InputArray M,
-  Size dsize, {
+  (int, int) dsize, {
   OutputArray? dst,
   int flags = INTER_LINEAR,
   int borderMode = BORDER_CONSTANT,
@@ -1259,19 +1225,17 @@ Mat warpAffine(
 }) {
   dst ??= Mat.empty();
   borderValue ??= Scalar.default_();
-  using((arena) {
-    cvRun(
-      () => CFFI.WarpAffineWithParams(
-        src.ref,
-        dst!.ref,
-        M.ref,
-        dsize.toSize(arena).ref,
-        flags,
-        borderMode,
-        borderValue!.ref,
-      ),
-    );
-  });
+  cvRun(
+    () => CFFI.WarpAffineWithParams(
+      src.ref,
+      dst!.ref,
+      M.ref,
+      dsize.cvd.ref,
+      flags,
+      borderMode,
+      borderValue!.ref,
+    ),
+  );
   return dst;
 }
 
@@ -1283,7 +1247,7 @@ Mat warpAffine(
 Mat warpPerspective(
   InputArray src,
   InputArray M,
-  Size dsize, {
+  (int, int) dsize, {
   OutputArray? dst,
   int flags = INTER_LINEAR,
   int borderMode = BORDER_CONSTANT,
@@ -1291,19 +1255,17 @@ Mat warpPerspective(
 }) {
   dst ??= Mat.empty();
   borderValue ??= Scalar.default_();
-  using((arena) {
-    cvRun(
-      () => CFFI.WarpPerspectiveWithParams(
-        src.ref,
-        dst!.ref,
-        M.ref,
-        dsize.toSize(arena).ref,
-        flags,
-        borderMode,
-        borderValue!.ref,
-      ),
-    );
-  });
+  cvRun(
+    () => CFFI.WarpPerspectiveWithParams(
+      src.ref,
+      dst!.ref,
+      M.ref,
+      dsize.cvd.ref,
+      flags,
+      borderMode,
+      borderValue!.ref,
+    ),
+  );
   return dst;
 }
 

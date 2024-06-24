@@ -15,6 +15,7 @@ sort: true
 headers:
   entry-points:
     - src/calib3d/calib3d.h
+    - src/calib3d/calib3d_async.h
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
@@ -39,6 +40,7 @@ headers:
     - src/video/videoio.h
   include-directives:
     - src/calib3d/calib3d.h
+    - src/calib3d/calib3d_async.h
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h

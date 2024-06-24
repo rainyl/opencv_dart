@@ -19336,6 +19336,32 @@ class CvNative {
   late final _blockMeanHashCompute = _blockMeanHashComputePtr
       .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int)>();
 
+  ffi.Pointer<CvStatus> calibrateCamera_Async(
+    VecVecPoint3f objectPoints,
+    VecVecPoint2f imagePoints,
+    Size imageSize,
+    int flag,
+    TermCriteria criteria,
+    CvCallback_5 callback,
+  ) {
+    return _calibrateCamera_Async(
+      objectPoints,
+      imagePoints,
+      imageSize,
+      flag,
+      criteria,
+      callback,
+    );
+  }
+
+  late final _calibrateCamera_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecVecPoint2f, Size,
+              ffi.Int, TermCriteria, CvCallback_5)>>('calibrateCamera_Async');
+  late final _calibrateCamera_Async = _calibrateCamera_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecVecPoint2f, Size, int,
+          TermCriteria, CvCallback_5)>();
+
   ffi.Pointer<CvStatus> colorMomentHashCompare(
     Mat a,
     Mat b,
@@ -19380,6 +19406,322 @@ class CvNative {
           'destroyAllWindows');
   late final _destroyAllWindows =
       _destroyAllWindowsPtr.asFunction<ffi.Pointer<CvStatus> Function()>();
+
+  ffi.Pointer<CvStatus> drawChessboardCorners_Async(
+    Mat image,
+    Size patternSize,
+    bool patternWasFound,
+    CvCallback_0 callback,
+  ) {
+    return _drawChessboardCorners_Async(
+      image,
+      patternSize,
+      patternWasFound,
+      callback,
+    );
+  }
+
+  late final _drawChessboardCorners_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, ffi.Bool,
+              CvCallback_0)>>('drawChessboardCorners_Async');
+  late final _drawChessboardCorners_Async =
+      _drawChessboardCorners_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, bool, CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> estimateAffine2DWithParams_Async(
+    VecPoint2f from,
+    VecPoint2f to,
+    Mat inliers,
+    int method,
+    double ransacReprojThreshold,
+    int maxIters,
+    double confidence,
+    int refineIters,
+    CvCallback_1 callback,
+  ) {
+    return _estimateAffine2DWithParams_Async(
+      from,
+      to,
+      inliers,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+      callback,
+    );
+  }
+
+  late final _estimateAffine2DWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f,
+              VecPoint2f,
+              Mat,
+              ffi.Int,
+              ffi.Double,
+              ffi.Size,
+              ffi.Double,
+              ffi.Size,
+              CvCallback_1)>>('estimateAffine2DWithParams_Async');
+  late final _estimateAffine2DWithParams_Async =
+      _estimateAffine2DWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, int,
+              double, int, double, int, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> estimateAffine2D_Async(
+    VecPoint2f from,
+    VecPoint2f to,
+    CvCallback_1 callback,
+  ) {
+    return _estimateAffine2D_Async(
+      from,
+      to,
+      callback,
+    );
+  }
+
+  late final _estimateAffine2D_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f, VecPoint2f, CvCallback_1)>>('estimateAffine2D_Async');
+  late final _estimateAffine2D_Async = _estimateAffine2D_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> estimateAffinePartial2DWithParams_Async(
+    VecPoint2f from,
+    VecPoint2f to,
+    int method,
+    double ransacReprojThreshold,
+    int maxIters,
+    double confidence,
+    int refineIters,
+    CvCallback_1 callback,
+  ) {
+    return _estimateAffinePartial2DWithParams_Async(
+      from,
+      to,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+      callback,
+    );
+  }
+
+  late final _estimateAffinePartial2DWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f,
+              VecPoint2f,
+              ffi.Int,
+              ffi.Double,
+              ffi.Size,
+              ffi.Double,
+              ffi.Size,
+              CvCallback_1)>>('estimateAffinePartial2DWithParams_Async');
+  late final _estimateAffinePartial2DWithParams_Async =
+      _estimateAffinePartial2DWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, int, double,
+              int, double, int, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> estimateAffinePartial2D_Async(
+    VecPoint2f from,
+    VecPoint2f to,
+    CvCallback_1 callback,
+  ) {
+    return _estimateAffinePartial2D_Async(
+      from,
+      to,
+      callback,
+    );
+  }
+
+  late final _estimateAffinePartial2D_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f,
+              CvCallback_1)>>('estimateAffinePartial2D_Async');
+  late final _estimateAffinePartial2D_Async =
+      _estimateAffinePartial2D_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f, VecPoint2f, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> findChessboardCornersSBWithMeta_Async(
+    Mat image,
+    Size patternSize,
+    int flags,
+    Mat meta,
+    CvCallback_2 callback,
+  ) {
+    return _findChessboardCornersSBWithMeta_Async(
+      image,
+      patternSize,
+      flags,
+      meta,
+      callback,
+    );
+  }
+
+  late final _findChessboardCornersSBWithMeta_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, ffi.Int, Mat,
+              CvCallback_2)>>('findChessboardCornersSBWithMeta_Async');
+  late final _findChessboardCornersSBWithMeta_Async =
+      _findChessboardCornersSBWithMeta_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, int, Mat, CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> findChessboardCornersSB_Async(
+    Mat image,
+    Size patternSize,
+    int flags,
+  ) {
+    return _findChessboardCornersSB_Async(
+      image,
+      patternSize,
+      flags,
+    );
+  }
+
+  late final _findChessboardCornersSB_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Size, ffi.Int)>>(
+      'findChessboardCornersSB_Async');
+  late final _findChessboardCornersSB_Async = _findChessboardCornersSB_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Size, int)>();
+
+  ffi.Pointer<CvStatus> findChessboardCorners_Async(
+    Mat image,
+    Size patternSize,
+    int flags,
+    CvCallback_2 callback,
+  ) {
+    return _findChessboardCorners_Async(
+      image,
+      patternSize,
+      flags,
+      callback,
+    );
+  }
+
+  late final _findChessboardCorners_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, ffi.Int,
+              CvCallback_2)>>('findChessboardCorners_Async');
+  late final _findChessboardCorners_Async =
+      _findChessboardCorners_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Size, int, CvCallback_2)>();
+
+  ffi.Pointer<CvStatus>
+      fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
+    Mat k,
+    Mat d,
+    Size imgSize,
+    Mat r,
+    double balance,
+    Size newSize,
+    double fovScale,
+    CvCallback_1 p,
+  ) {
+    return _fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
+      k,
+      d,
+      imgSize,
+      r,
+      balance,
+      newSize,
+      fovScale,
+      p,
+    );
+  }
+
+  late final _fisheye_estimateNewCameraMatrixForUndistortRectify_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(Mat, Mat, Size, Mat,
+                      ffi.Double, Size, ffi.Double, CvCallback_1)>>(
+          'fisheye_estimateNewCameraMatrixForUndistortRectify_Async');
+  late final _fisheye_estimateNewCameraMatrixForUndistortRectify_Async =
+      _fisheye_estimateNewCameraMatrixForUndistortRectify_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Size, Mat, double, Size, double, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> fisheye_undistortImageWithParams_Async(
+    Mat distorted,
+    Mat k,
+    Mat d,
+    Mat knew,
+    Size size,
+    CvCallback_1 callback,
+  ) {
+    return _fisheye_undistortImageWithParams_Async(
+      distorted,
+      k,
+      d,
+      knew,
+      size,
+      callback,
+    );
+  }
+
+  late final _fisheye_undistortImageWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Size,
+              CvCallback_1)>>('fisheye_undistortImageWithParams_Async');
+  late final _fisheye_undistortImageWithParams_Async =
+      _fisheye_undistortImageWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, Size, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> fisheye_undistortImage_Async(
+    Mat distorted,
+    Mat k,
+    Mat d,
+    CvCallback_1 callback,
+  ) {
+    return _fisheye_undistortImage_Async(
+      distorted,
+      k,
+      d,
+      callback,
+    );
+  }
+
+  late final _fisheye_undistortImage_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, CvCallback_1)>>('fisheye_undistortImage_Async');
+  late final _fisheye_undistortImage_Async =
+      _fisheye_undistortImage_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> fisheye_undistortPoints_Async(
+    Mat distorted,
+    Mat k,
+    Mat d,
+    Mat R,
+    Mat P,
+    CvCallback_1 callback,
+  ) {
+    return _fisheye_undistortPoints_Async(
+      distorted,
+      k,
+      d,
+      R,
+      P,
+      callback,
+    );
+  }
+
+  late final _fisheye_undistortPoints_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat,
+              CvCallback_1)>>('fisheye_undistortPoints_Async');
+  late final _fisheye_undistortPoints_Async =
+      _fisheye_undistortPoints_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> gapi_BGR2Gray(
     GMat src,
@@ -21782,6 +22124,35 @@ class CvNative {
   late final _getBuildInfo = _getBuildInfoPtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
 
+  ffi.Pointer<CvStatus> getOptimalNewCameraMatrix_Async(
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Size size,
+    double alpha,
+    Size newImgSize,
+    bool centerPrincipalPoint,
+    CvCallback_2 callback,
+  ) {
+    return _getOptimalNewCameraMatrix_Async(
+      cameraMatrix,
+      distCoeffs,
+      size,
+      alpha,
+      newImgSize,
+      centerPrincipalPoint,
+      callback,
+    );
+  }
+
+  late final _getOptimalNewCameraMatrix_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Size, ffi.Double, Size,
+              ffi.Bool, CvCallback_2)>>('getOptimalNewCameraMatrix_Async');
+  late final _getOptimalNewCameraMatrix_Async =
+      _getOptimalNewCameraMatrix_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Size, double, Size, bool, CvCallback_2)>();
+
   ffi.Pointer<CvStatus> getPredefinedDictionary(
     int dictionaryId,
     ffi.Pointer<ArucoDictionary> rval,
@@ -21798,6 +22169,35 @@ class CvNative {
               ffi.Pointer<ArucoDictionary>)>>('getPredefinedDictionary');
   late final _getPredefinedDictionary = _getPredefinedDictionaryPtr.asFunction<
       ffi.Pointer<CvStatus> Function(int, ffi.Pointer<ArucoDictionary>)>();
+
+  ffi.Pointer<CvStatus> initUndistortRectifyMap_Async(
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Mat r,
+    Mat newCameraMatrix,
+    Size size,
+    int m1type,
+    CvCallback_2 callback,
+  ) {
+    return _initUndistortRectifyMap_Async(
+      cameraMatrix,
+      distCoeffs,
+      r,
+      newCameraMatrix,
+      size,
+      m1type,
+      callback,
+    );
+  }
+
+  late final _initUndistortRectifyMap_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Size, ffi.Int,
+              CvCallback_2)>>('initUndistortRectifyMap_Async');
+  late final _initUndistortRectifyMap_Async =
+      _initUndistortRectifyMap_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, Size, int, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> marrHildrethHashCompare(
     Mat a,
@@ -21953,6 +22353,57 @@ class CvNative {
           'registerErrorCallback');
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
+
+  ffi.Pointer<CvStatus> undistortPoints_Async(
+    Mat distorted,
+    Mat k,
+    Mat d,
+    Mat r,
+    Mat p,
+    TermCriteria criteria,
+    CvCallback_1 callback,
+  ) {
+    return _undistortPoints_Async(
+      distorted,
+      k,
+      d,
+      r,
+      p,
+      criteria,
+      callback,
+    );
+  }
+
+  late final _undistortPoints_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, TermCriteria,
+              CvCallback_1)>>('undistortPoints_Async');
+  late final _undistortPoints_Async = _undistortPoints_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Mat, Mat, TermCriteria, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> undistort_Async(
+    Mat src,
+    Mat cameraMatrix,
+    Mat distCoeffs,
+    Mat newCameraMatrix,
+    CvCallback_1 callback,
+  ) {
+    return _undistort_Async(
+      src,
+      cameraMatrix,
+      distCoeffs,
+      newCameraMatrix,
+      callback,
+    );
+  }
+
+  late final _undistort_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, CvCallback_1)>>('undistort_Async');
+  late final _undistort_Async = _undistort_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, CvCallback_1)>();
 
   late final addresses = _SymbolAddresses(this);
 }
@@ -22178,9 +22629,30 @@ final class CascadeClassifier extends ffi.Struct {
 }
 
 typedef CascadeClassifierPtr = ffi.Pointer<CascadeClassifier>;
+typedef CvCallback_0 = ffi.Pointer<ffi.NativeFunction<CvCallback_0Function>>;
+typedef CvCallback_0Function = ffi.Void Function();
+typedef DartCvCallback_0Function = void Function();
 typedef CvCallback_1 = ffi.Pointer<ffi.NativeFunction<CvCallback_1Function>>;
 typedef CvCallback_1Function = ffi.Void Function(ffi.Pointer<ffi.Void>);
 typedef DartCvCallback_1Function = void Function(ffi.Pointer<ffi.Void>);
+typedef CvCallback_2 = ffi.Pointer<ffi.NativeFunction<CvCallback_2Function>>;
+typedef CvCallback_2Function = ffi.Void Function(
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_2Function = void Function(
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef CvCallback_5 = ffi.Pointer<ffi.NativeFunction<CvCallback_5Function>>;
+typedef CvCallback_5Function = ffi.Void Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_5Function = void Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>);
 
 final class CvStatus extends ffi.Struct {
   @ffi.Int()

@@ -56,21 +56,12 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   }
 
   Size get tilesGridSize {
-    return cvRunArena<Size>((arena) {
-      final p = arena<cvg.Size>();
-      cvRun(() => CFFI.CLAHE_GetTilesGridSize(ref, p));
-      return (p.ref.width, p.ref.height);
-    });
+    final p = calloc<cvg.Size>();
+    cvRun(() => CFFI.CLAHE_GetTilesGridSize(ref, p));
+    return Size.fromPointer(p);
   }
 
-  set tilesGridSize(Size value) {
-    cvRunArena((arena) {
-      final p = arena<cvg.Size>()
-        ..ref.width = value.$1
-        ..ref.height = value.$2;
-      cvRun(() => CFFI.CLAHE_SetTilesGridSize(ref, p.ref));
-    });
-  }
+  set tilesGridSize(Size value) => cvRun(() => CFFI.CLAHE_SetTilesGridSize(ref, value.ref));
 
   static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(CFFI.addresses.CLAHE_Close);
 
