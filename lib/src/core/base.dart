@@ -171,6 +171,8 @@ Future<T> cvRunAsync5<T>(
 void matCompleter(Completer<Mat> completer, VoidPtr p) => completer.complete(Mat.fromPointer(p.cast()));
 void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
     completer.complete((Mat.fromPointer(p.cast()), Mat.fromPointer(p1.cast())));
+void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
+    completer.complete((Mat.fromPointer(p.cast()), Mat.fromPointer(p1.cast()), Mat.fromPointer(p2.cast())));
 
 // Arena wrapper
 R cvRunArena<R>(
