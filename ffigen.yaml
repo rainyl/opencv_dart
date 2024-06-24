@@ -19,6 +19,7 @@ headers:
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
+    - src/core/svd_async.h
     - src/core/types.h
     - src/core/vec.h
     - src/core/version.h
@@ -45,6 +46,7 @@ headers:
     - src/core/core.h
     - src/core/exception.h
     - src/core/svd.h
+    - src/core/svd_async.h
     - src/core/vec.h
     - src/core/version.h
     - src/dnn/asyncarray.h

@@ -14587,9 +14587,9 @@ class CvNative {
 
   ffi.Pointer<CvStatus> SVD_Compute(
     Mat src,
-    Mat w,
-    Mat u,
-    Mat vt,
+    ffi.Pointer<Mat> w,
+    ffi.Pointer<Mat> u,
+    ffi.Pointer<Mat> vt,
     int flags,
   ) {
     return _SVD_Compute(
@@ -14603,10 +14603,76 @@ class CvNative {
 
   late final _SVD_ComputePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, Mat, ffi.Int)>>('SVD_Compute');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>,
+              ffi.Pointer<Mat>, ffi.Pointer<Mat>, ffi.Int)>>('SVD_Compute');
   late final _SVD_Compute = _SVD_ComputePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, int)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Mat>, ffi.Pointer<Mat>, ffi.Pointer<Mat>, int)>();
+
+  ffi.Pointer<CvStatus> SVD_Compute_Async(
+    Mat src,
+    int flags,
+    CvCallback_3 callback,
+  ) {
+    return _SVD_Compute_Async(
+      src,
+      flags,
+      callback,
+    );
+  }
+
+  late final _SVD_Compute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, CvCallback_3)>>('SVD_Compute_Async');
+  late final _SVD_Compute_Async = _SVD_Compute_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> SVD_backSubst(
+    Mat w,
+    Mat u,
+    Mat vt,
+    Mat rhs,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _SVD_backSubst(
+      w,
+      u,
+      vt,
+      rhs,
+      dst,
+    );
+  }
+
+  late final _SVD_backSubstPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, ffi.Pointer<Mat>)>>('SVD_backSubst');
+  late final _SVD_backSubst = _SVD_backSubstPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> SVD_backSubst_Async(
+    Mat w,
+    Mat u,
+    Mat vt,
+    Mat rhs,
+    CvCallback_1 callback,
+  ) {
+    return _SVD_backSubst_Async(
+      w,
+      u,
+      vt,
+      rhs,
+      callback,
+    );
+  }
+
+  late final _SVD_backSubst_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, CvCallback_1)>>('SVD_backSubst_Async');
+  late final _SVD_backSubst_Async = _SVD_backSubst_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Scharr(
     Mat src,
