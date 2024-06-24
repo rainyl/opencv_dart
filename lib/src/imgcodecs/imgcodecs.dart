@@ -28,6 +28,13 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   });
 }
 
+Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
+  final cname = filename.toNativeUtf8().cast<ffi.Char>();
+  final rval = cvRunAsync((callback) => CFFI.Image_IMRead_Async(cname, flags, callback), matCompleter);
+  calloc.free(cname);
+  return rval;
+}
+
 /// IMWrite writes a Mat to an image file.
 ///
 /// For further details, please see:
@@ -50,6 +57,22 @@ bool imwrite(String filename, InputArray img, {VecInt? params}) {
     }
     return p.value;
   });
+}
+
+Future<bool> imwriteAsync(String filename, InputArray img, {VecInt? params}) async {
+  final cname = filename.toNativeUtf8().cast<ffi.Char>();
+  final rval = cvRunAsync<bool>(
+    (callback) => params == null
+        ? CFFI.Image_IMWrite_Async(cname, img.ref, callback)
+        : CFFI.Image_IMWrite_WithParams_Async(cname, img.ref, params.ref, callback),
+    (c, p) {
+      final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+  calloc.free(cname);
+  return rval;
 }
 
 /// IMEncode encodes an image Mat into a memory buffer.
@@ -77,6 +100,28 @@ Uint8List imencode(
   return VecUChar.fromPointer(buffer).toU8List();
 }
 
+Future<(bool, Uint8List)> imencodeAsync(
+  String ext,
+  InputArray img, {
+  VecInt? params,
+}) async {
+  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
+  final rval = cvRunAsync2<(bool, Uint8List)>(
+    (callback) => params == null
+        ? CFFI.Image_IMEncode_Async(cExt, img.ref, callback)
+        : CFFI.Image_IMEncode_WithParams_Async(cExt, img.ref, params.ref, callback),
+    (c, p, p1) {
+      final v = p.cast<ffi.Bool>().value;
+      calloc.free(p);
+      final vec = VecUChar.fromPointer(p1.cast());
+      final data = vec.toU8List();
+      vec.dispose();
+      return c.complete((v, data));
+    },
+  );
+  return rval;
+}
+
 /// imdecode reads an image from a buffer in memory.
 /// The function imdecode reads an image from the specified buffer in memory.
 /// If the buffer is too short or contains invalid data, the function
@@ -90,4 +135,11 @@ Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   dst ??= Mat.empty();
   cvRun(() => CFFI.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;
+}
+
+Future<Mat> imdecodeAsync(Uint8List buf, int flags) async {
+  final vec = VecUChar.fromList(buf);
+  final rval = cvRunAsync((callback) => CFFI.Image_IMDecode_Async(vec.ref, flags, callback), matCompleter);
+  vec.dispose();
+  return rval;
 }

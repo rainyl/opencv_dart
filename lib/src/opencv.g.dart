@@ -6122,6 +6122,25 @@ class CvNative {
   late final _Image_IMDecode = _Image_IMDecodePtr.asFunction<
       ffi.Pointer<CvStatus> Function(VecUChar, int, ffi.Pointer<Mat>)>();
 
+  ffi.Pointer<CvStatus> Image_IMDecode_Async(
+    VecUChar buf,
+    int flags,
+    CvCallback_1 callback,
+  ) {
+    return _Image_IMDecode_Async(
+      buf,
+      flags,
+      callback,
+    );
+  }
+
+  late final _Image_IMDecode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, ffi.Int, CvCallback_1)>>('Image_IMDecode_Async');
+  late final _Image_IMDecode_Async = _Image_IMDecode_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecUChar, int, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Image_IMEncode(
     ffi.Pointer<ffi.Char> fileExt,
     Mat img,
@@ -6143,6 +6162,26 @@ class CvNative {
   late final _Image_IMEncode = _Image_IMEncodePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
           ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>)>();
+
+  ffi.Pointer<CvStatus> Image_IMEncode_Async(
+    ffi.Pointer<ffi.Char> fileExt,
+    Mat img,
+    CvCallback_2 callback,
+  ) {
+    return _Image_IMEncode_Async(
+      fileExt,
+      img,
+      callback,
+    );
+  }
+
+  late final _Image_IMEncode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
+              CvCallback_2)>>('Image_IMEncode_Async');
+  late final _Image_IMEncode_Async = _Image_IMEncode_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, Mat, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Image_IMEncode_WithParams(
     ffi.Pointer<ffi.Char> fileExt,
@@ -6173,6 +6212,29 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
               ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>)>();
 
+  ffi.Pointer<CvStatus> Image_IMEncode_WithParams_Async(
+    ffi.Pointer<ffi.Char> fileExt,
+    Mat img,
+    VecInt params,
+    CvCallback_2 callback,
+  ) {
+    return _Image_IMEncode_WithParams_Async(
+      fileExt,
+      img,
+      params,
+      callback,
+    );
+  }
+
+  late final _Image_IMEncode_WithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
+              CvCallback_2)>>('Image_IMEncode_WithParams_Async');
+  late final _Image_IMEncode_WithParams_Async =
+      _Image_IMEncode_WithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, Mat, VecInt, CvCallback_2)>();
+
   ffi.Pointer<CvStatus> Image_IMRead(
     ffi.Pointer<ffi.Char> filename,
     int flags,
@@ -6193,6 +6255,26 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           ffi.Pointer<ffi.Char>, int, ffi.Pointer<Mat>)>();
 
+  ffi.Pointer<CvStatus> Image_IMRead_Async(
+    ffi.Pointer<ffi.Char> filename,
+    int flags,
+    CvCallback_1 callback,
+  ) {
+    return _Image_IMRead_Async(
+      filename,
+      flags,
+      callback,
+    );
+  }
+
+  late final _Image_IMRead_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
+              CvCallback_1)>>('Image_IMRead_Async');
+  late final _Image_IMRead_Async = _Image_IMRead_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, int, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Image_IMWrite(
     ffi.Pointer<ffi.Char> filename,
     Mat img,
@@ -6212,6 +6294,26 @@ class CvNative {
   late final _Image_IMWrite = _Image_IMWritePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> Image_IMWrite_Async(
+    ffi.Pointer<ffi.Char> filename,
+    Mat img,
+    CvCallback_1 callback,
+  ) {
+    return _Image_IMWrite_Async(
+      filename,
+      img,
+      callback,
+    );
+  }
+
+  late final _Image_IMWrite_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
+              CvCallback_1)>>('Image_IMWrite_Async');
+  late final _Image_IMWrite_Async = _Image_IMWrite_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Image_IMWrite_WithParams(
     ffi.Pointer<ffi.Char> filename,
@@ -6235,6 +6337,29 @@ class CvNative {
       _Image_IMWrite_WithParamsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               ffi.Pointer<ffi.Char>, Mat, VecInt, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> Image_IMWrite_WithParams_Async(
+    ffi.Pointer<ffi.Char> filename,
+    Mat img,
+    VecInt params,
+    CvCallback_1 callback,
+  ) {
+    return _Image_IMWrite_WithParams_Async(
+      filename,
+      img,
+      params,
+      callback,
+    );
+  }
+
+  late final _Image_IMWrite_WithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecInt,
+              CvCallback_1)>>('Image_IMWrite_WithParams_Async');
+  late final _Image_IMWrite_WithParams_Async =
+      _Image_IMWrite_WithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, Mat, VecInt, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> InitUndistortRectifyMap(
     Mat cameraMatrix,

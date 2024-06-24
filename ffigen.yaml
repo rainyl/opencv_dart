@@ -31,6 +31,7 @@ headers:
     - src/gapi/gapi.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs_async.h
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
@@ -55,6 +56,7 @@ headers:
     - src/gapi/gapi.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs_async.h
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
