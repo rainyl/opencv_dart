@@ -78,6 +78,25 @@ class Fisheye {
     return undistorted;
   }
 
+  static Future<Mat> undistortPointsAsync(
+    InputArray distorted,
+    InputArray K,
+    InputArray D, {
+    InputArray? R,
+    InputArray? P,
+  }) async =>
+      cvRunAsync(
+        (callback) => CFFI.fisheye_undistortPoints_Async(
+          distorted.ref,
+          K.ref,
+          D.ref,
+          R?.ref ?? Mat.empty().ref,
+          P?.ref ?? Mat.empty().ref,
+          callback,
+        ),
+        matCompleter,
+      );
+
   /// EstimateNewCameraMatrixForUndistortRectify estimates new camera matrix for undistortion or rectification.
   ///
   /// For further details, please see:
@@ -107,6 +126,29 @@ class Fisheye {
     );
     return P;
   }
+
+  static Future<Mat> estimateNewCameraMatrixForUndistortRectifyAsync(
+    InputArray K,
+    InputArray D,
+    (int, int) imageSize,
+    InputArray R, {
+    double balance = 0.0,
+    (int, int) newSize = (0, 0),
+    double fovScale = 1.0,
+  }) async =>
+      cvRunAsync(
+        (callback) => CFFI.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
+          K.ref,
+          D.ref,
+          imageSize.cvd.ref,
+          R.ref,
+          balance,
+          newSize.cvd.ref,
+          fovScale,
+          callback,
+        ),
+        matCompleter,
+      );
 }
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
@@ -140,6 +182,27 @@ class Fisheye {
   return (map1, map2);
 }
 
+Future<(Mat, Mat)> initUndistortRectifyMapAsync(
+  InputArray cameraMatrix,
+  InputArray distCoeffs,
+  InputArray R,
+  InputArray newCameraMatrix,
+  (int, int) size,
+  int m1type,
+) async =>
+    cvRunAsync2<(Mat, Mat)>(
+      (callback) => CFFI.initUndistortRectifyMap_Async(
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        R.ref,
+        newCameraMatrix.ref,
+        size.cvd.ref,
+        m1type,
+        callback,
+      ),
+      matCompleter2,
+    );
+
 /// GetOptimalNewCameraMatrixWithParams computes and returns the optimal new camera matrix based on the free scaling parameter.
 ///
 /// For further details, please see:
@@ -168,6 +231,27 @@ class Fisheye {
   );
   return (Mat.fromPointer(matPtr), Rect.fromPointer(validPixROI));
 }
+
+Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
+  InputArray cameraMatrix,
+  InputArray distCoeffs,
+  (int, int) imageSize,
+  double alpha, {
+  (int, int) newImgSize = (0, 0),
+  bool centerPrincipalPoint = false,
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.getOptimalNewCameraMatrix_Async(
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        imageSize.cvd.ref,
+        alpha,
+        newImgSize.cvd.ref,
+        centerPrincipalPoint,
+        callback,
+      ),
+      (c, p, p1) => c.complete((Mat.fromPointer(p.cast()), Rect.fromPointer(p1.cast()))),
+    );
 
 // CalibrateCamera finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 //
@@ -198,7 +282,7 @@ class Fisheye {
       rvecs!.ref,
       tvecs!.ref,
       flags,
-      TermCriteria.fromRecord(criteria).ref,
+      criteria.cvd.ref,
       cRmsErr,
     ),
   );
@@ -206,6 +290,39 @@ class Fisheye {
   calloc.free(cRmsErr);
   return (rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs);
 }
+
+Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> calibrateCameraAsync(
+  Contours3f objectPoints,
+  Contours2f imagePoints,
+  (int, int) imageSize,
+  InputOutputArray cameraMatrix,
+  InputOutputArray distCoeffs, {
+  Mat? rvecs,
+  Mat? tvecs,
+  int flags = 0,
+  (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+}) async =>
+    cvRunAsync5(
+      (callback) => CFFI.calibrateCamera_Async(
+        objectPoints.ref,
+        imagePoints.ref,
+        imageSize.cvd.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        flags,
+        criteria.cvd.ref,
+        callback,
+      ),
+      (c, p, p1, p2, p3, p4) {
+        final rmsErr = p.cast<ffi.Double>().value;
+        calloc.free(p);
+        final cameraMatrix = Mat.fromPointer(p1.cast());
+        final distCoeffs = Mat.fromPointer(p2.cast());
+        final rvecs = Mat.fromPointer(p3.cast());
+        final tvecs = Mat.fromPointer(p4.cast());
+        return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs));
+      },
+    );
 
 // Transforms an image to compensate for lens distortion.
 // The function transforms an image to compensate radial and tangential lens distortion.
@@ -226,6 +343,23 @@ Mat undistort(
   return dst;
 }
 
+Future<Mat> undistortAsync(
+  InputArray src,
+  InputArray cameraMatrix,
+  InputArray distCoeffs, {
+  InputArray? newCameraMatrix,
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.undistort_Async(
+        src.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        newCameraMatrix?.ref ?? Mat.empty().ref,
+        callback,
+      ),
+      matCompleter,
+    );
+
 // UndistortPoints transforms points to compensate for lens distortion
 //
 // For further details, please see:
@@ -242,12 +376,33 @@ Mat undistortPoints(
   R ??= Mat.empty();
   P ??= Mat.empty();
   dst ??= Mat.empty();
-  final tc = TermCriteria.fromRecord(criteria);
+  final tc = criteria.cvd;
   cvRun(
     () => CFFI.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
   );
   return dst;
 }
+
+Future<Mat> undistortPointsAsync(
+  InputArray src,
+  InputArray cameraMatrix,
+  InputArray distCoeffs, {
+  InputArray? R,
+  InputArray? P,
+  (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.undistortPoints_Async(
+        src.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        R?.ref ?? Mat.empty().ref,
+        P?.ref ?? Mat.empty().ref,
+        criteria.cvd.ref,
+        callback,
+      ),
+      matCompleter,
+    );
 
 // FindChessboardCorners finds the positions of internal corners of the chessboard.
 //
@@ -267,6 +422,26 @@ Mat undistortPoints(
   return (rval, corners);
 }
 
+Future<(bool success, Mat corners)> findChessboardCornersAsync(
+  InputArray image,
+  (int, int) patternSize, {
+  int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.findChessboardCorners_Async(
+        image.ref,
+        patternSize.cvd.ref,
+        flags,
+        callback,
+      ),
+      (c, p, p1) {
+        final rval = p.cast<ffi.Bool>().value;
+        calloc.free(p);
+        final corners = Mat.fromPointer(p1.cast());
+        return c.complete((rval, corners));
+      },
+    );
+
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
 (bool, Mat corners) findChessboardCornersSB(
@@ -282,6 +457,26 @@ Mat undistortPoints(
   calloc.free(b);
   return (rval, corners);
 }
+
+Future<(bool, Mat corners)> findChessboardCornersSBAsync(
+  InputArray image,
+  (int, int) patternSize,
+  int flags,
+) async =>
+    cvRunAsync2(
+      (callback) => CFFI.findChessboardCornersSB_Async(
+        image.ref,
+        patternSize.cvd.ref,
+        flags,
+        callback,
+      ),
+      (c, p, p1) {
+        final rval = p.cast<ffi.Bool>().value;
+        calloc.free(p);
+        final corners = Mat.fromPointer(p1.cast());
+        return c.complete((rval, corners));
+      },
+    );
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
@@ -310,6 +505,23 @@ Mat undistortPoints(
   return (rval, corners, meta);
 }
 
+Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
+  InputArray image,
+  (int, int) patternSize,
+  int flags,
+) async =>
+    cvRunAsync3(
+      (callback) =>
+          CFFI.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
+      (c, p, p1, p2) {
+        final rval = p.cast<ffi.Bool>().value;
+        calloc.free(p);
+        final corners = Mat.fromPointer(p1.cast());
+        final meta = Mat.fromPointer(p2.cast());
+        return c.complete((rval, corners, meta));
+      },
+    );
+
 // DrawChessboardCorners renders the detected chessboard corners.
 //
 // For further details, please see:
@@ -323,6 +535,18 @@ Mat drawChessboardCorners(
   cvRun(() => CFFI.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
   return image;
 }
+
+Future<Mat> drawChessboardCornersAsync(
+  InputOutputArray image,
+  (int, int) patternSize,
+  InputArray corners,
+  bool patternWasFound,
+) async =>
+    cvRunAsync0<Mat>(
+      (callback) =>
+          CFFI.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
+      (c) => c.complete(image),
+    );
 
 // EstimateAffinePartial2D computes an optimal limited affine transformation
 // with 4 degrees of freedom between two 2D point sets.
@@ -357,6 +581,29 @@ Mat drawChessboardCorners(
   return (Mat.fromPointer(p), inliers);
 }
 
+Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
+  VecPoint2f from,
+  VecPoint2f to, {
+  int method = RANSAC,
+  double ransacReprojThreshold = 3,
+  int maxIters = 2000,
+  double confidence = 0.99,
+  int refineIters = 10,
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.estimateAffinePartial2DWithParams_Async(
+        from.ref,
+        to.ref,
+        method,
+        ransacReprojThreshold,
+        maxIters,
+        confidence,
+        refineIters,
+        callback,
+      ),
+      matCompleter2,
+    );
+
 // EstimateAffine2D Computes an optimal affine transformation between two 2D point sets.
 //
 // For further details, please see:
@@ -388,3 +635,26 @@ Mat drawChessboardCorners(
   );
   return (Mat.fromPointer(p), inliers);
 }
+
+Future<(Mat, Mat inliers)> estimateAffine2DAsync(
+  VecPoint2f from,
+  VecPoint2f to, {
+  int method = RANSAC,
+  double ransacReprojThreshold = 3,
+  int maxIters = 2000,
+  double confidence = 0.99,
+  int refineIters = 10,
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.estimateAffine2DWithParams_Async(
+        from.ref,
+        to.ref,
+        method,
+        ransacReprojThreshold,
+        maxIters,
+        confidence,
+        refineIters,
+        callback,
+      ),
+      matCompleter2,
+    );

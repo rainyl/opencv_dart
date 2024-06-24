@@ -63,33 +63,33 @@ CvStatus *calibrateCamera_Async(
     VecVecPoint3f objectPoints,
     VecVecPoint2f imagePoints,
     Size imageSize,
+    Mat cameraMatrix,
+    Mat distCoeffs,
     int flag,
     TermCriteria criteria,
     CVD_OUT CvCallback_5 callback
 ) {
   BEGIN_WRAP
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-  cv::Mat dst;
-  cv::Mat distCoeffs;
   cv::Mat rvecs;
   cv::Mat tvecs;
   auto rval = cv::calibrateCamera(
       *objectPoints.ptr,
       *imagePoints.ptr,
       cv::Size(imageSize.width, imageSize.height),
-      dst,
-      distCoeffs,
+      *cameraMatrix.ptr,
+      *distCoeffs.ptr,
       rvecs,
       tvecs,
       flag,
       tc
   );
   callback(
-      new Mat{new cv::Mat(dst)},
-      new Mat{new cv::Mat(distCoeffs)},
+      new double(rval),
+      new Mat{new cv::Mat(*cameraMatrix.ptr)},
+      new Mat{new cv::Mat(*distCoeffs.ptr)},
       new Mat{new cv::Mat(rvecs)},
-      new Mat{new cv::Mat(tvecs)},
-      &rval
+      new Mat{new cv::Mat(tvecs)}
   );
   END_WRAP
 }
@@ -119,14 +119,14 @@ CvStatus *estimateAffinePartial2DWithParams_Async(
     size_t maxIters,
     double confidence,
     size_t refineIters,
-    CVD_OUT CvCallback_1 callback
+    CVD_OUT CvCallback_2 callback
 ) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::estimateAffinePartial2D(
-      *from.ptr, *to.ptr, dst, method, ransacReprojThreshold, maxIters, confidence, refineIters
+  cv::Mat inliers;
+  cv::Mat dst = cv::estimateAffinePartial2D(
+      *from.ptr, *to.ptr, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
   );
-  callback(new Mat{new cv::Mat(dst)});
+  callback(new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(inliers)});
   END_WRAP
 }
 CvStatus *estimateAffine2D_Async(VecPoint2f from, VecPoint2f to, CVD_OUT CvCallback_1 callback) {
@@ -144,14 +144,14 @@ CvStatus *estimateAffine2DWithParams_Async(
     size_t maxIters,
     double confidence,
     size_t refineIters,
-    CVD_OUT CvCallback_1 callback
+    CVD_OUT CvCallback_2 callback
 ) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::estimateAffine2D(
-      *from.ptr, *to.ptr, dst, method, ransacReprojThreshold, maxIters, confidence, refineIters
+  cv::Mat inliers;
+  cv::Mat dst = cv::estimateAffine2D(
+      *from.ptr, *to.ptr, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
   );
-  callback(new Mat{new cv::Mat(dst)});
+  callback(new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(inliers)});
   END_WRAP
 }
 CvStatus *
@@ -162,7 +162,7 @@ findChessboardCorners_Async(Mat image, Size patternSize, int flags, CvCallback_2
   auto rval = cv::findChessboardCorners(
       *image.ptr, cv::Size(patternSize.width, patternSize.height), dst, flags
   );
-  callback(new Mat{new cv::Mat(dst)}, &rval);
+  callback(new bool(rval), new Mat{new cv::Mat(dst)});
   END_WRAP
 }
 CvStatus *
@@ -173,19 +173,19 @@ findChessboardCornersSB_Async(Mat image, Size patternSize, int flags, CvCallback
   auto rval = cv::findChessboardCornersSB(
       *image.ptr, cv::Size(patternSize.width, patternSize.height), dst, flags
   );
-  callback(new Mat{new cv::Mat(dst)}, &rval);
+  callback(new bool(rval), new Mat{new cv::Mat(dst)});
   END_WRAP
 }
 CvStatus *findChessboardCornersSBWithMeta_Async(
-    Mat image, Size patternSize, int flags, Mat meta, CVD_OUT CvCallback_2 callback
+    Mat image, Size patternSize, int flags, CVD_OUT CvCallback_3 callback
 ) {
   BEGIN_WRAP
   cv::Mat dst;
   cv::Mat dst2;
   auto rval = cv::findChessboardCornersSB(
-      *image.ptr, cv::Size(patternSize.width, patternSize.height), dst, flags, *meta.ptr
+      *image.ptr, cv::Size(patternSize.width, patternSize.height), dst, flags, dst2
   );
-  callback(new Mat{new cv::Mat(dst)}, &rval);
+  callback(new bool(rval), new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(dst2)});
   END_WRAP
 }
 CvStatus *getOptimalNewCameraMatrix_Async(

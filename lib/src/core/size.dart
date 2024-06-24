@@ -87,6 +87,11 @@ class Size2f extends CvStruct<cvg.Size2f> {
 
   @override
   cvg.Size2f get ref => ptr.ref;
+
+  @override
+  String toString() {
+    return "Size2f(${width.toStringAsFixed(3)}, ${height.toStringAsFixed(3)})";
+  }
 }
 
 extension RecordSizeExtension1 on (int, int) {

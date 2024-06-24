@@ -85,6 +85,22 @@ void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) => throwIfFailed(func());
 
 // async runner
 typedef VoidPtr = ffi.Pointer<ffi.Void>;
+Future<T> cvRunAsync0<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
+  void Function(Completer<T> completer) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_0Function> ccallback;
+  void onResponse() {
+    onComplete(completer);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
 Future<T> cvRunAsync<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
   void Function(Completer<T> completer, VoidPtr p) onComplete,
@@ -101,8 +117,60 @@ Future<T> cvRunAsync<T>(
   return completer.future;
 }
 
+const cvRunAsync1 = cvRunAsync;
+
+Future<T> cvRunAsync2<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_2 callback) func,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_2Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1) {
+    onComplete(completer, p, p1);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync3<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_3 callback) func,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_3Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2) {
+    onComplete(completer, p, p1, p2);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync5<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_5Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) {
+    onComplete(completer, p, p1, p2, p3, p4);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
 // Completers for async
 void matCompleter(Completer<Mat> completer, VoidPtr p) => completer.complete(Mat.fromPointer(p.cast()));
+void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
+    completer.complete((Mat.fromPointer(p.cast()), Mat.fromPointer(p1.cast())));
 
 // Arena wrapper
 R cvRunArena<R>(

@@ -9,8 +9,8 @@ void main() {
     expect(dst.isEmpty, false);
 
     clahe.clipLimit = 50;
-    clahe.tilesGridSize = (10, 10);
-    expect(clahe.tilesGridSize, (10, 10));
+    clahe.tilesGridSize = (10, 10).cvd;
+    expect(clahe.tilesGridSize, cv.Size(10, 10));
     expect(clahe.clipLimit, closeTo(50, 1e-6));
 
     clahe.dispose();

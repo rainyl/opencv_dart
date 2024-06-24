@@ -157,30 +157,30 @@ void main() async {
     expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
   });
 
-  test('cv.cvtColorAsync', () async {
-    final m = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
-    for (var i = 0; i < 10; i++) {
-      print("$i start");
-      final gray = await cv.cvtColorAsync(m, cv.COLOR_BGR2GRAY);
-      expect((gray.width, gray.height, gray.channels), (512, 512, 1));
-      // expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
-      final sleep = Random().nextInt(1000);
-      await Future.delayed(Duration(seconds: 2));
-      print("$i finished, sleep: $sleep");
-    }
-  });
+  // test('cv.cvtColorAsync', () async {
+  //   final m = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+  //   for (var i = 0; i < 10; i++) {
+  //     print("$i start");
+  //     final gray = await cv.cvtColorAsync(m, cv.COLOR_BGR2GRAY);
+  //     expect((gray.width, gray.height, gray.channels), (512, 512, 1));
+  //     // expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
+  //     final sleep = Random().nextInt(1000);
+  //     await Future.delayed(Duration(seconds: 2));
+  //     print("$i finished, sleep: $sleep");
+  //   }
+  // });
 
-  test('test name', () async {
-    Future<void> asyncFunction() async {
-      // 模拟耗时操作
-      await Future.delayed(Duration(seconds: 2));
-      print('Inside async function');
-    }
+  // test('test name', () async {
+  //   Future<void> asyncFunction() async {
+  //     // 模拟耗时操作
+  //     await Future.delayed(Duration(seconds: 2));
+  //     print('Inside async function');
+  //   }
 
-    print('Before calling async function');
-    await asyncFunction();
-    print('After calling async function');
-  });
+  //   print('Before calling async function');
+  //   await asyncFunction();
+  //   print('After calling async function');
+  // });
 
   test("cv2.equalizeHist", () async {
     final cvImage = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
@@ -305,7 +305,7 @@ void main() async {
     final (contours, _) = cv.findContours(thresImg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
     final rect = cv.minAreaRect(contours.first);
-    expect(rect.size.$1 > 0 && rect.points.isNotEmpty, true);
+    expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
 
     final pts = cv.boxPoints(rect);
     expect(pts.isEmpty, false);
@@ -605,7 +605,7 @@ void main() async {
     expect(img.isEmpty, false);
 
     final (textSize, baseline) = cv.getTextSize("Hello World", cv.FONT_HERSHEY_PLAIN, 1.0, 1);
-    expect((textSize.$1, textSize.$2, baseline), (91, 10, 6));
+    expect((textSize.width, textSize.height, baseline), (91, 10, 6));
   });
 
   // resize

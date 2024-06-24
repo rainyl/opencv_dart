@@ -145,6 +145,8 @@ CvStatus *calibrateCamera_Async(
     VecVecPoint3f objectPoints,
     VecVecPoint2f imagePoints,
     Size imageSize,
+    Mat cameraMatrix,
+    Mat distCoeffs,
     int flag,
     TermCriteria criteria,
     CVD_OUT CvCallback_5 callback
@@ -161,25 +163,25 @@ CvStatus *estimateAffinePartial2DWithParams_Async(
     size_t maxIters,
     double confidence,
     size_t refineIters,
-    CVD_OUT CvCallback_1 callback
+    CVD_OUT CvCallback_2 callback
 );
 CvStatus *estimateAffine2D_Async(VecPoint2f from, VecPoint2f to, CVD_OUT CvCallback_1 callback);
 CvStatus *estimateAffine2DWithParams_Async(
     VecPoint2f from,
     VecPoint2f to,
-    Mat inliers,
     int method,
     double ransacReprojThreshold,
     size_t maxIters,
     double confidence,
     size_t refineIters,
-    CVD_OUT CvCallback_1 callback
+    CVD_OUT CvCallback_2 callback
 );
 CvStatus *
 findChessboardCorners_Async(Mat image, Size patternSize, int flags, CvCallback_2 callback);
-CvStatus *findChessboardCornersSB_Async(Mat image, Size patternSize, int flags);
+CvStatus *
+findChessboardCornersSB_Async(Mat image, Size patternSize, int flags, CvCallback_2 callback);
 CvStatus *findChessboardCornersSBWithMeta_Async(
-    Mat image, Size patternSize, int flags, Mat meta, CVD_OUT CvCallback_2 callback
+    Mat image, Size patternSize, int flags, CVD_OUT CvCallback_3 callback
 );
 CvStatus *getOptimalNewCameraMatrix_Async(
     Mat cameraMatrix,

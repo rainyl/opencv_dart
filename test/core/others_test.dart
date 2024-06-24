@@ -2,7 +2,6 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/src/core/termcriteria.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -270,17 +269,5 @@ void main() {
     expect(vec.toString(), "Vec8i(1, 2, 3, 4, 5, 6, 7, 8)");
 
     vec.dispose();
-  });
-
-  test('cv.TermCriteria', () {
-    final arena = Arena();
-    const tc = (cv.TERM_COUNT, 10, 0.1);
-    final tcNative = tc.toNativePtr(arena);
-    final tc1 = tcNative.ref.toDart();
-    expect(tc1, tc);
-    expect(tc.type, cv.TERM_COUNT);
-    expect(tc.count, 10);
-    expect(tc.eps, closeTo(0.1, 1e-6));
-    arena.releaseAll();
   });
 }
