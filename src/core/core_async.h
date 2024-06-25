@@ -11,28 +11,34 @@
 extern "C" {
 #endif
 // CvStatus *RotatedRect_Points_Async(RotatedRect rect, CvCallback1 callback);
-// CvStatus *RotatedRect_BoundingRect_Async(RotatedRect rect, CvCallback1 callback);
-// CvStatus *RotatedRect_BoundingRect2f_Async(RotatedRect rect, CvCallback1 callback);
+// CvStatus *RotatedRect_BoundingRect_Async(RotatedRect rect, CvCallback1
+// callback); CvStatus *RotatedRect_BoundingRect2f_Async(RotatedRect rect,
+// CvCallback1 callback);
 
 CvStatus *Mat_New_Async(CvCallback_1 callback);
 CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callback);
 CvStatus *Mat_NewWithSizes_Async(VecInt sizes, int type, CvCallback_1 callback);
-CvStatus *Mat_NewWithSizesFromScalar_Async(VecInt sizes, int type, Scalar ar, CvCallback_1 callback);
-CvStatus *Mat_NewWithSizesFromBytes_Async(VecInt sizes, int type, VecChar buf, CvCallback_1 callback);
+CvStatus *
+Mat_NewWithSizesFromScalar_Async(VecInt sizes, int type, Scalar ar, CvCallback_1 callback);
+CvStatus *
+Mat_NewWithSizesFromBytes_Async(VecInt sizes, int type, VecChar buf, CvCallback_1 callback);
 CvStatus *Mat_NewFromScalar_Async(const Scalar ar, int type, CvCallback_1 callback);
-CvStatus *Mat_NewWithSizeFromScalar_Async(const Scalar ar, int rows, int cols, int type,
-                                          CvCallback_1 callback);
-CvStatus *Mat_NewFromBytes_Async(int rows, int cols, int type, void *buf, int step, CvCallback_1 callback);
+CvStatus *Mat_NewWithSizeFromScalar_Async(
+    const Scalar ar, int rows, int cols, int type, CvCallback_1 callback
+);
+CvStatus *
+Mat_NewFromBytes_Async(int rows, int cols, int type, void *buf, int step, CvCallback_1 callback);
 CvStatus *Mat_NewFromVecPoint_Async(VecPoint vec, CvCallback_1 callback);
 CvStatus *Mat_NewFromVecPoint2f_Async(VecPoint2f vec, CvCallback_1 callback);
 CvStatus *Mat_NewFromVecPoint3f_Async(VecPoint3f vec, CvCallback_1 callback);
-CvStatus *Mat_FromPtr_Async(Mat m, int rows, int cols, int type, int prows, int pcols, CvCallback_1 callback);
+CvStatus *
+Mat_FromPtr_Async(Mat m, int rows, int cols, int type, int prows, int pcols, CvCallback_1 callback);
 CvStatus *Mat_FromCMat_Async(Mat m, CvCallback_1 callback);
 
 // functions without return values shouldn't have callbacks?
 void Mat_Close_Async(MatPtr m, CvCallback_0 callback);
 // TODO
-CvStatus *Mat_Release_Async(Mat *m);
+CvStatus *Mat_Release_Async(MatPtr self, CvCallback_0 callback);
 CvStatus *Mat_Empty_Async(Mat m, bool *rval);
 CvStatus *Mat_IsContinuous_Async(Mat m, bool *rval);
 CvStatus *Mat_Clone_Async(Mat m, CvCallback_1 callback);
@@ -200,7 +206,8 @@ CvStatus *Mat_MultiplyMatrix_Async(Mat x, Mat y, CvCallback_1 callback);
 
 CvStatus *Mat_AbsDiff_Async(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_Add_Async(Mat src1, Mat src2, Mat dst);
-CvStatus *Mat_AddWeighted_Async(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst);
+CvStatus *
+Mat_AddWeighted_Async(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst);
 CvStatus *Mat_BitwiseAnd_Async(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_BitwiseAndWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_BitwiseNot_Async(Mat src1, Mat dst);
@@ -210,16 +217,28 @@ CvStatus *Mat_BitwiseOrWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_BitwiseXor_Async(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_BitwiseXorWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_Compare_Async(Mat src1, Mat src2, Mat dst, int ct);
-CvStatus *Mat_BatchDistance_Async(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K,
-                                  Mat mask, int update, bool crosscheck);
+CvStatus *Mat_BatchDistance_Async(
+    Mat src1,
+    Mat src2,
+    Mat dist,
+    int dtype,
+    Mat nidx,
+    int normType,
+    int K,
+    Mat mask,
+    int update,
+    bool crosscheck
+);
 CvStatus *Mat_BorderInterpolate_Async(int p, int len, int borderType, int *rval);
 CvStatus *Mat_CalcCovarMatrix_Async(Mat samples, Mat covar, Mat mean, int flags, int ctype);
 CvStatus *Mat_CartToPolar_Async(Mat x, Mat y, Mat magnitude, Mat angle, bool angleInDegrees);
-CvStatus *Mat_CheckRange_Async(Mat m, bool quiet, Point *pos, double minVal, double maxVal, bool *rval);
+CvStatus *
+Mat_CheckRange_Async(Mat m, bool quiet, Point *pos, double minVal, double maxVal, bool *rval);
 CvStatus *Mat_CompleteSymm_Async(Mat m, bool lowerToUpper);
 CvStatus *Mat_ConvertScaleAbs_Async(Mat src, Mat dst, double alpha, double beta);
-CvStatus *Mat_CopyMakeBorder_Async(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType,
-                                   Scalar value);
+CvStatus *Mat_CopyMakeBorder_Async(
+    Mat src, Mat dst, int top, int bottom, int left, int right, int borderType, Scalar value
+);
 CvStatus *Mat_CountNonZero_Async(Mat src, int *rval);
 CvStatus *Mat_DCT_Async(Mat src, Mat dst, int flags);
 CvStatus *Mat_Determinant_Async(Mat m, double *rval);
@@ -227,12 +246,14 @@ CvStatus *Mat_DFT_Async(Mat m, Mat dst, int flags);
 CvStatus *Mat_Divide_Async(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_Eigen_Async(Mat src, Mat eigenvalues, Mat eigenvectors, bool *rval);
 CvStatus *Mat_EigenNonSymmetric_Async(Mat src, Mat eigenvalues, Mat eigenvectors);
-CvStatus *Mat_PCACompute_Async(Mat src, Mat mean, Mat eigenvectors, Mat eigenvalues, int maxComponents);
+CvStatus *
+Mat_PCACompute_Async(Mat src, Mat mean, Mat eigenvectors, Mat eigenvalues, int maxComponents);
 CvStatus *Mat_Exp_Async(Mat src, Mat dst);
 CvStatus *Mat_ExtractChannel_Async(Mat src, Mat dst, int coi);
 CvStatus *Mat_FindNonZero_Async(Mat src, Mat idx);
 CvStatus *Mat_Flip_Async(Mat src, Mat dst, int flipCode);
-CvStatus *Mat_Gemm_Async(Mat src1, Mat src2, double alpha, Mat src3, double beta, Mat dst, int flags);
+CvStatus *
+Mat_Gemm_Async(Mat src1, Mat src2, double alpha, Mat src3, double beta, Mat dst, int flags);
 CvStatus *Mat_GetOptimalDFTSize_Async(int vecsize, int *rval);
 CvStatus *Mat_Hconcat_Async(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_Vconcat_Async(Mat src1, Mat src2, Mat dst);
@@ -281,10 +302,26 @@ CvStatus *Mat_Sum_Async(Mat src, Scalar *rval);
 CvStatus *Mat_rowRange_Async(Mat m, int start, int end, CvCallback_1 callback);
 CvStatus *Mat_colRange_Async(Mat m, int start, int end, CvCallback_1 callback);
 CvStatus *LUT_Async(Mat src, Mat lut, Mat dst);
-CvStatus *KMeans_Async(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
-                       Mat centers, double *rval);
-CvStatus *KMeansPoints_Async(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts,
-                             int flags, Mat centers, double *rval);
+CvStatus *KMeans_Async(
+    Mat data,
+    int k,
+    Mat bestLabels,
+    TermCriteria criteria,
+    int attempts,
+    int flags,
+    Mat centers,
+    double *rval
+);
+CvStatus *KMeansPoints_Async(
+    VecPoint2f pts,
+    int k,
+    Mat bestLabels,
+    TermCriteria criteria,
+    int attempts,
+    int flags,
+    Mat centers,
+    double *rval
+);
 CvStatus *Rotate_Async(Mat src, Mat dst, int rotateCode);
 CvStatus *Norm_Async(Mat src1, int normType, double *rval);
 CvStatus *NormWithMats_Async(Mat src1, Mat src2, int normType, double *rval);

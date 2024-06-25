@@ -1,4 +1,4 @@
-library cv;
+library cv.svd;
 
 import 'dart:ffi' as ffi;
 
@@ -12,6 +12,10 @@ import '../opencv.g.dart' as cvg;
 ///
 /// https://docs.opencv.org/4.1.2/df/df7/classcv_1_1SVD.html#a76f0b2044df458160292045a3d3714c6
 class SVD {
+  ///   decomposes matrix and stores the results to user-provided matrices
+  /// The methods/functions perform SVD of matrix.
+  ///
+  /// https://docs.opencv.org/4.1.2/df/df7/classcv_1_1SVD.html#a76f0b2044df458160292045a3d3714c6
   static (Mat w, Mat u, Mat vt) compute(Mat src, {Mat? w, Mat? u, Mat? vt, int flags = 0}) {
     final pw = w?.ptr ?? calloc<cvg.Mat>();
     final pu = u?.ptr ?? calloc<cvg.Mat>();
@@ -20,6 +24,7 @@ class SVD {
     return (w ?? Mat.fromPointer(pw), u ?? Mat.fromPointer(pu), vt ?? Mat.fromPointer(pvt));
   }
 
+  /// async version of [compute]
   static Future<(Mat w, Mat u, Mat vt)> computeAsync(Mat src, {int flags = 0}) async =>
       cvRunAsync3((callback) => CFFI.SVD_Compute_Async(src.ref, flags, callback), matCompleter3);
 
