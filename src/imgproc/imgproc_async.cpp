@@ -1277,79 +1277,296 @@ CvStatus *ClipLine_Async(Rect imgRect, Point pt1, Point pt2, CvCallback_1 callba
   END_WRAP
 }
 
-CvStatus *CLAHE_Create_Async(CvCallback_1 callback);
+CvStatus *CLAHE_Create_Async(CvCallback_1 callback) {
+  BEGIN_WRAP
+  callback(new CLAHE{new cv::Ptr<cv::CLAHE>(cv::createCLAHE())});
+  END_WRAP
+}
 
-CvStatus *CLAHE_CreateWithParams_Async(double clipLimit, Size tileGridSize, CvCallback_1 callback);
+CvStatus *CLAHE_CreateWithParams_Async(double clipLimit, Size tileGridSize, CvCallback_1 callback) {
+  BEGIN_WRAP
+  callback(new CLAHE{new cv::Ptr<cv::CLAHE>(
+      cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height))
+  )});
+  END_WRAP
+}
 
-void CLAHE_Close_Async(CLAHEPtr self, CvCallback_0 callback);
+void CLAHE_Close_Async(CLAHEPtr self, CvCallback_0 callback) {
+  self->ptr->reset();
+  CVD_FREE(self);
+  callback();
+}
 
-CvStatus *CLAHE_Apply_Async(CLAHE self, Mat src, CvCallback_1 callback);
+CvStatus *CLAHE_Apply_Async(CLAHE self, Mat src, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  (*self.ptr)->apply(*src.ptr, dst);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *CLAHE_CollectGarbage_Async(CLAHE self, CvCallback_0 callback);
+CvStatus *CLAHE_CollectGarbage_Async(CLAHE self, CvCallback_0 callback) {
+  BEGIN_WRAP(*self.ptr)->collectGarbage();
+  callback();
+  END_WRAP
+}
 
-CvStatus *CLAHE_GetClipLimit_Async(CLAHE self, CvCallback_1 callback);
+CvStatus *CLAHE_GetClipLimit_Async(CLAHE self, CvCallback_1 callback) {
+  BEGIN_WRAP
+  callback(new double((*self.ptr)->getClipLimit()));
+  END_WRAP
+}
 
-CvStatus *CLAHE_SetClipLimit_Async(CLAHE self, double clipLimit, CvCallback_0 callback);
+CvStatus *CLAHE_SetClipLimit_Async(CLAHE self, double clipLimit, CvCallback_0 callback) {
+  BEGIN_WRAP(*self.ptr)->setClipLimit(clipLimit);
+  callback();
+  END_WRAP
+}
 
-CvStatus *CLAHE_GetTilesGridSize_Async(CLAHE self, CvCallback_1 callback);
+CvStatus *CLAHE_GetTilesGridSize_Async(CLAHE self, CvCallback_1 callback) {
+  BEGIN_WRAP
+  auto sz = (*self.ptr)->getTilesGridSize();
+  callback(new Size{sz.width, sz.height});
+  END_WRAP
+}
 
-CvStatus *CLAHE_SetTilesGridSize_Async(CLAHE self, Size size, CvCallback_0 callback);
+CvStatus *CLAHE_SetTilesGridSize_Async(CLAHE self, Size size, CvCallback_0 callback) {
+  BEGIN_WRAP(*self.ptr)->setTilesGridSize(cv::Size(size.width, size.height));
+  callback();
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_NewEmpty_Async(CvCallback_1 callback);
+CvStatus *Subdiv2D_NewEmpty_Async(CvCallback_1 callback) {
+  BEGIN_WRAP
+  callback(new Subdiv2D{new cv::Subdiv2D()});
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_NewWithRect_Async(Rect rect, CvCallback_1 callback);
+CvStatus *Subdiv2D_NewWithRect_Async(Rect rect, CvCallback_1 callback) {
+  BEGIN_WRAP
+  callback(new Subdiv2D{new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))});
+  END_WRAP
+}
 
-void Subdiv2D_Close_Async(Subdiv2DPtr self);
+void Subdiv2D_Close_Async(Subdiv2DPtr self, CvCallback_0 callback) {
+  CVD_FREE(self);
+  callback();
+}
 
-CvStatus *Subdiv2D_EdgeDst_Async(Subdiv2D self, int edge, CvCallback_2 callback);
+CvStatus *Subdiv2D_EdgeDst_Async(Subdiv2D self, int edge, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  auto rval = self.ptr->edgeDst(edge, &p);
+  callback(new int(rval), new Point2f{p.x, p.y});
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_EdgeOrg_Async(Subdiv2D self, int edge, CvCallback_2 callback);
+CvStatus *Subdiv2D_EdgeOrg_Async(Subdiv2D self, int edge, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  auto rval = self.ptr->edgeOrg(edge, &p);
+  callback(new int(rval), new Point2f{p.x, p.y});
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_FindNearest_Async(Subdiv2D self, Point2f pt, CvCallback_2 callback);
+CvStatus *Subdiv2D_FindNearest_Async(Subdiv2D self, Point2f pt, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto p = cv::Point2f();
+  int rval = self.ptr->findNearest(cv::Point2f(pt.x, pt.y), &p);
+  callback(new int(rval), new Point2f{p.x, p.y});
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetEdge_Async(Subdiv2D self, int edge, int nextEdgeType, CvCallback_1 callback);
+CvStatus *Subdiv2D_GetEdge_Async(Subdiv2D self, int edge, int nextEdgeType, CvCallback_1 callback) {
+  BEGIN_WRAP
+  int rval = self.ptr->getEdge(edge, nextEdgeType);
+  callback(new int(rval));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec4f>();
+  self.ptr->getEdgeList(v);
+  auto rv = new Vec4f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3]};
+  }
+  // TODO: maybe wrong, need testing
+  callback(&rv, new int(v.size()));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback);
+CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback) {
+  BEGIN_WRAP
+  std::vector<int> v;
+  self.ptr->getLeadingEdgeList(v);
+  callback(new VecInt{new std::vector<int>(v)});
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto v = std::vector<cv::Vec6f>();
+  self.ptr->getTriangleList(v);
+  auto rv = new Vec6f[v.size()];
+  for (int i = 0; i < v.size(); i++) {
+    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3], v[i].val[4], v[i].val[5]};
+  }
+  // TODO: maybe wrong, need testing
+  callback(&rv, new int(v.size()));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetVertex_Async(Subdiv2D self, int vertex, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetVertex_Async(Subdiv2D self, int vertex, CvCallback_2 callback) {
+  BEGIN_WRAP
+  int firstEdge;
+  cv::Point2f p = self.ptr->getVertex(vertex, &firstEdge);
+  callback(new Point2f{p.x, p.y}, new int(firstEdge));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecInt idx, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecInt idx, CvCallback_2 callback) {
+  BEGIN_WRAP
+  auto vf = std::vector<std::vector<cv::Point2f>>();
+  auto vfc = std::vector<cv::Point2f>();
+  self.ptr->getVoronoiFacetList(*idx.ptr, vf, vfc);
+  callback(
+      new VecVecPoint2f{new std::vector<std::vector<cv::Point2f>>(vf)},
+      new VecPoint2f{new std::vector<cv::Point2f>(vfc)}
+  );
+  END_WRAP;
+}
 
-CvStatus *Subdiv2D_InitDelaunay_Async(Subdiv2D self, Rect rect, CvCallback_0 callback);
+CvStatus *Subdiv2D_InitDelaunay_Async(Subdiv2D self, Rect rect, CvCallback_0 callback) {
+  BEGIN_WRAP
+  self.ptr->initDelaunay(cv::Rect(rect.x, rect.y, rect.width, rect.height));
+  callback();
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_Insert_Async(Subdiv2D self, Point2f pt, CvCallback_1 callback);
+CvStatus *Subdiv2D_Insert_Async(Subdiv2D self, Point2f pt, CvCallback_1 callback) {
+  BEGIN_WRAP
+  int rval = self.ptr->insert(cv::Point2f(pt.x, pt.y));
+  callback(new int(rval));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_InsertVec_Async(Subdiv2D self, VecPoint2f ptvec, CvCallback_0 callback);
+CvStatus *Subdiv2D_InsertVec_Async(Subdiv2D self, VecPoint2f ptvec, CvCallback_0 callback) {
+  BEGIN_WRAP
+  self.ptr->insert(*ptvec.ptr);
+  callback();
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_Locate_Async(Subdiv2D self, Point2f pt, CvCallback_3 callback);
+CvStatus *Subdiv2D_Locate_Async(Subdiv2D self, Point2f pt, CvCallback_3 callback) {
+  BEGIN_WRAP
+  int edge;
+  int vertex;
+  int rval = self.ptr->locate(cv::Point2f(pt.x, pt.y), edge, vertex);
+  callback(new int(rval), new int(edge), new int(vertex));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_NextEdge_Async(Subdiv2D self, int edge, CvCallback_1 callback);
+CvStatus *Subdiv2D_NextEdge_Async(Subdiv2D self, int edge, CvCallback_1 callback) {
+  BEGIN_WRAP
+  int rval = self.ptr->nextEdge(edge);
+  callback(new int(rval));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_RotateEdge_Async(Subdiv2D self, int edge, int rotate, CvCallback_1 callback);
+CvStatus *Subdiv2D_RotateEdge_Async(Subdiv2D self, int edge, int rotate, CvCallback_1 callback) {
+  BEGIN_WRAP
+  int rval = self.ptr->rotateEdge(edge, rotate);
+  callback(new int(rval));
+  END_WRAP
+}
 
-CvStatus *Subdiv2D_SymEdge_Async(Subdiv2D self, int edge, CvCallback_1 callback);
+CvStatus *Subdiv2D_SymEdge_Async(Subdiv2D self, int edge, CvCallback_1 callback) {
+  BEGIN_WRAP
+  int rval = self.ptr->symEdge(edge);
+  callback(new int(rval));
+  END_WRAP
+}
 
-CvStatus *InvertAffineTransform_Async(Mat src, CvCallback_1 callback);
+CvStatus *InvertAffineTransform_Async(Mat src, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::invertAffineTransform(*src.ptr, dst);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *PhaseCorrelate_Async(Mat src1, Mat src2, Mat window, CvCallback_2 callback);
+CvStatus *PhaseCorrelate_Async(Mat src1, Mat src2, Mat window, CvCallback_2 callback) {
+  BEGIN_WRAP
+  double response;
+  auto p = cv::phaseCorrelate(*src1.ptr, *src2.ptr, *window.ptr, &response);
+  // TODO: add Point2d
+  callback(new Point2f{static_cast<float>(p.x), static_cast<float>(p.y)}, new double(response));
+  END_WRAP
+}
 
-CvStatus *Mat_Accumulate_Async(Mat src, CvCallback_1 callback);
+CvStatus *Mat_Accumulate_Async(Mat src, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulate(*src.ptr, dst);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
+CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat mask, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulate(*src.ptr, dst, *mask.ptr);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulateSquare_Async(Mat src, CvCallback_1 callback);
+CvStatus *Mat_AccumulateSquare_Async(Mat src, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateSquare(*src.ptr, dst);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
+CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateSquare(*src.ptr, dst, *mask.ptr);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, CvCallback_1 callback);
+CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, dst);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback);
+CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, dst, *mask.ptr);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
-CvStatus *Mat_AccumulatedWeighted_Async(Mat src, double alpha, CvCallback_1 callback);
+CvStatus *Mat_AccumulatedWeighted_Async(Mat src, double alpha, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateWeighted(*src.ptr, dst, alpha);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}
 
 CvStatus *
-Mat_AccumulatedWeightedWithMask_Async(Mat src, double alpha, Mat mask, CvCallback_1 callback);
+Mat_AccumulatedWeightedWithMask_Async(Mat src, double alpha, Mat mask, CvCallback_1 callback) {
+  BEGIN_WRAP
+  cv::Mat dst;
+  cv::accumulateWeighted(*src.ptr, dst, alpha, *mask.ptr);
+  callback(new Mat{new cv::Mat(dst)});
+  END_WRAP
+}

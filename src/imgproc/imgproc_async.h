@@ -445,7 +445,7 @@ CvStatus *CLAHE_SetTilesGridSize_Async(CLAHE self, Size size, CvCallback_0 callb
 
 CvStatus *Subdiv2D_NewEmpty_Async(CvCallback_1 callback);
 CvStatus *Subdiv2D_NewWithRect_Async(Rect rect, CvCallback_1 callback);
-void Subdiv2D_Close_Async(Subdiv2DPtr self);
+void Subdiv2D_Close_Async(Subdiv2DPtr self, CvCallback_0 callback);
 CvStatus *Subdiv2D_EdgeDst_Async(Subdiv2D self, int edge, CvCallback_2 callback);
 CvStatus *Subdiv2D_EdgeOrg_Async(Subdiv2D self, int edge, CvCallback_2 callback);
 CvStatus *Subdiv2D_FindNearest_Async(Subdiv2D self, Point2f pt, CvCallback_2 callback);
