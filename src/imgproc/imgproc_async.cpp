@@ -1,6 +1,7 @@
 #include "imgproc_async.h"
+#include "utils.hpp"
 #include "core/types.h"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/imgproc.hpp>
 
 CvStatus *ArcLength_Async(VecPoint curve, bool is_closed, CVD_OUT CvCallback_1 callback) {
   BEGIN_WRAP callback(new double(cv::arcLength(*curve.ptr, is_closed)));
@@ -1033,12 +1034,6 @@ CvStatus *ApplyCustomColorMap_Async(Mat src, Mat colormap, CvCallback_1 callback
   cv::applyColorMap(*src.ptr, dst, *colormap.ptr);
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
-}
-
-std::vector<cv::Point2f> vecPointToVecPoint2f(std::vector<cv::Point> src) {
-  std::vector<cv::Point2f> v;
-  for (int i = 0; i < src.size(); i++) { v.push_back(cv::Point2f(src.at(i).x, src.at(i).y)); }
-  return v;
 }
 
 CvStatus *
