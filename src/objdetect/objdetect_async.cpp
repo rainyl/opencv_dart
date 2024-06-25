@@ -156,10 +156,10 @@ CvStatus *HOGDescriptor_Compute_Async(HOGDescriptor self, Mat img, Size winStrid
     END_WRAP
 }
 
-CvStatus *HOGDescriptor_computeGradient_Async(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL, Size paddingBR, CvCallback_1 callback) {
+CvStatus *HOGDescriptor_computeGradient_Async(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL, Size paddingBR, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->computeGradient(*img.ptr, *grad.ptr, *angleOfs.ptr, cv::Size(paddingTL.width, paddingTL.height), cv::Size(paddingBR.width, paddingBR.height));
-    callback(grad, angleOfs);
+    callback();
     END_WRAP
 }
 
@@ -234,7 +234,7 @@ CvStatus *QRCodeDetector_Detect_Async(QRCodeDetector self, Mat input, CvCallback
     END_WRAP
 }
 
-CvStatus *QRCodeDetector_Decode_Async(QRCodeDetector self, Mat input, CvCallback_2 callback) {
+CvStatus *QRCodeDetector_Decode_Async(QRCodeDetector self, Mat input, CvCallback_3 callback) {
     BEGIN_WRAP
     std::vector<cv::Point> _points;
     cv::Mat straight_qrcode;
@@ -307,7 +307,7 @@ CvStatus *QRCodeDetector_setUseAlignmentMarkers_Async(QRCodeDetector self, bool 
     END_WRAP
 }
 
-// Asynchronous function for FaceDetectorYN
+// Asynchronous functions for FaceDetectorYN
 CvStatus *FaceDetectorYN_New_Async(const char *model, const char *config, Size input_size, float score_threshold, float nms_threshold, int top_k, int backend_id, int target_id, CvCallback_1 callback) {
     BEGIN_WRAP
     callback(new FaceDetectorYN{new cv::Ptr<cv::FaceDetectorYN>(cv::FaceDetectorYN::create(model, config, cv::Size(input_size.width, input_size.height), score_threshold, nms_threshold, top_k, backend_id, target_id))});
