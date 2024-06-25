@@ -7,6 +7,8 @@
 #define CVD_ASYNC_CALIB3D_H
 
 #include "core/types.h"
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

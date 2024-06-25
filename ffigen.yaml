@@ -36,6 +36,7 @@ headers:
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
     - src/stitching/stitching.h
     - src/video/video.h
@@ -62,6 +63,7 @@ headers:
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
     - src/stitching/stitching.h
     - src/video/video.h
