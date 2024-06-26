@@ -25,6 +25,7 @@ headers:
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
     - src/extra/img_hash.h
     - src/extra/wechat_qrcode.h
@@ -52,6 +53,7 @@ headers:
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
     - src/extra/img_hash.h
     - src/extra/wechat_qrcode.h
