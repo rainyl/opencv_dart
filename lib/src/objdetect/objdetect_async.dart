@@ -40,6 +40,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         (c, p) {
       final rval = p.cast<ffi.Int>().value != 0;
       calloc.free(cname);
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -53,7 +54,6 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
   }) async {
-    final ret = calloc<cvg.VecRect>();
     final rval = cvRunAsync<VecRect>(
         (callback) => CFFI.CascadeClassifier_DetectMultiScaleWithParams_Async(
               ref,
@@ -64,8 +64,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
               minSize.cvd.ref,
               maxSize.cvd.ref,
               callback,
-            ), (c, _) {
-      return c.complete(VecRect.fromPointer(ret));
+            ), (c, ret) {
+      return c.complete(VecRect.fromPointer(ret.cast<cvg.VecRect>()));
     });
     return rval;
   }
@@ -137,6 +137,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         (callback) => CFFI.CascadeClassifier_Empty_Async(ref, callback),
         (c, p) {
       final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -147,19 +148,20 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         (callback) =>
             CFFI.CascadeClassifier_getFeatureType_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
+      calloc.free(p);
+
       return c.complete(rval);
     });
     return rval;
   }
 
   Future<(int, int)> getOriginalWindowSizeAsync() async {
-    final p = calloc<cvg.Size>();
     final rval = cvRunAsync<(int, int)>(
         (callback) =>
             CFFI.CascadeClassifier_getOriginalWindowSize_Async(ref, callback),
-        (c, _) {
-      final ret = (p.ref.width, p.ref.height);
-      calloc.free(p);
+        (c, p) {
+      final size = p.cast<cvg.Size>().ref;
+      final ret = (size.width, size.height);
       return c.complete(ret);
     });
     return rval;
@@ -171,6 +173,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
             CFFI.CascadeClassifier_isOldFormatCascade_Async(ref, callback),
         (c, p) {
       final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -220,6 +223,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(cname);
+      calloc.free(p);
+
       return c.complete(rval);
     });
     return rval;
@@ -230,8 +235,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) async {
-    final descriptors = calloc<cvg.VecFloat>();
-    final locations = calloc<cvg.VecPoint>();
     final rval = cvRunAsync2<(VecFloat, VecPoint)>(
         (callback) => CFFI.HOGDescriptor_Compute_Async(
               ref,
@@ -239,21 +242,24 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
               winStride.cvd.ref,
               padding.cvd.ref,
               callback,
-            ), (c, _, __) {
+            ), (c, descriptors, locations) {
       return c.complete(
-        (VecFloat.fromPointer(descriptors), VecPoint.fromPointer(locations)),
+        (
+          VecFloat.fromPointer(descriptors.cast<cvg.VecFloat>()),
+          VecPoint.fromPointer(locations.cast<cvg.VecPoint>())
+        ),
       );
     });
     return rval;
   }
 
   Future<(Mat grad, Mat angleOfs)> computeGradientAsync(
-    InputArray img, {
+    InputArray img,
+    Mat grad,
+    Mat angleOfs, {
     (int, int) paddingTL = (0, 0),
     (int, int) paddingBR = (0, 0),
   }) async {
-    final grad = Mat.empty();
-    final angleOfs = Mat.empty();
     final rval = cvRunAsync0<(Mat, Mat)>(
         (callback) => CFFI.HOGDescriptor_computeGradient_Async(
               ref,
@@ -331,7 +337,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     double groupThreshold = 2.0,
     bool useMeanshiftGrouping = false,
   }) async {
-    final rects = calloc<cvg.VecRect>();
     final rval = cvRunAsync<VecRect>(
         (callback) => CFFI.HOGDescriptor_DetectMultiScaleWithParams_Async(
               ref,
@@ -343,29 +348,24 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
               groupThreshold,
               useMeanshiftGrouping,
               callback,
-            ), (c, _) {
-      return c.complete(VecRect.fromPointer(rects));
+            ), (c, rects) {
+      return c.complete(VecRect.fromPointer(rects.cast<cvg.VecRect>()));
     });
     return rval;
   }
 
   static Future<VecFloat> getDefaultPeopleDetectorAsync() async {
-    final v = calloc<cvg.VecFloat>();
-    final rval = cvRunAsync<VecFloat>(
-        (callback) => CFFI.HOG_GetDefaultPeopleDetector_Async(callback),
-        (c, _) {
-      return c.complete(VecFloat.fromPointer(v));
+    final rval =
+        cvRunAsync<VecFloat>(CFFI.HOG_GetDefaultPeopleDetector_Async, (c, v) {
+      return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
     });
     return rval;
   }
 
   static Future<VecFloat> getDaimlerPeopleDetectorAsync() async {
-    final v = calloc<cvg.VecFloat>();
     final rval = cvRunAsync<VecFloat>(
-        (callback) =>
-            CFFI.HOGDescriptor_getDaimlerPeopleDetector_Async(callback),
-        (c, _) {
-      return c.complete(VecFloat.fromPointer(v));
+        CFFI.HOGDescriptor_getDaimlerPeopleDetector_Async, (c, v) {
+      return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
     });
     return rval;
   }
@@ -375,6 +375,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         (callback) => CFFI.HOGDescriptor_getDescriptorSize_Async(ref, callback),
         (c, p) {
       final rval = p.cast<ffi.Size>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -385,6 +386,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         (callback) => CFFI.HOGDescriptor_getWinSigma_Async(ref, callback),
         (c, p) {
       final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -534,11 +536,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         (callback) =>
             CFFI.QRCodeDetector_Detect_Async(ref, input.ref, callback),
         (c, ret, points) {
+      final retValue = ret.cast<ffi.Bool>().value;
+      calloc.free(ret);
       return c.complete(
-        (
-          ret.cast<ffi.Bool>().value,
-          VecPoint.fromPointer(points.cast<cvg.VecPoint>())
-        ),
+        (retValue, VecPoint.fromPointer(points.cast<cvg.VecPoint>())),
       );
     });
     return rval;
@@ -571,8 +572,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         (callback) =>
             CFFI.QRCodeDetector_DetectMulti_Async(ref, img.ref, callback),
         (c, ret, points) {
+      final retValue = ret.cast<ffi.Bool>().value;
+      calloc.free(ret);
       return c.complete((
-        ret.cast<ffi.Bool>().value,
+        retValue,
         VecPoint.fromPointer(points.cast<cvg.VecPoint>())
       ));
     });
@@ -588,8 +591,10 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
               img.ref,
               callback,
             ), (c, info, points, codes, rval) {
+      final rvalValue=rval.cast<ffi.Bool>().value;
+      calloc.free(rval);
       final ret = (
-        rval.cast<ffi.Bool>().value,
+        rvalValue,
         VecVecChar.fromPointer(info.cast<cvg.VecVecChar>()).asStringList(),
         VecPoint.fromPointer(points.cast<cvg.VecPoint>()),
         VecMat.fromPointer(codes.cast<cvg.VecMat>())
@@ -711,12 +716,11 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<(int, int)> getInputSizeAsync() async {
-    final p = calloc<cvg.Size>();
     final rval = cvRunAsync<(int, int)>(
         (callback) => CFFI.FaceDetectorYN_GetInputSize_Async(ref, callback),
-        (c, _) {
-      final ret = (p.ref.width, p.ref.height);
-      calloc.free(p);
+        (c, p) {
+      final size = p.cast<cvg.Size>().ref;
+      final ret = (size.width, size.height);
       return c.complete(ret);
     });
     return rval;
@@ -727,6 +731,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
         (callback) =>
             CFFI.FaceDetectorYN_GetScoreThreshold_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Float>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -737,6 +742,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
         (callback) => CFFI.FaceDetectorYN_GetNMSThreshold_Async(ref, callback),
         (c, p) {
       final rval = p.cast<ffi.Float>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
@@ -746,17 +752,17 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     final rval = cvRunAsync<int>(
         (callback) => CFFI.FaceDetectorYN_GetTopK_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
   }
 
   Future<Mat> detectAsync(Mat image) async {
-    final p = calloc<cvg.Mat>();
     final rval = cvRunAsync<Mat>(
         (callback) =>
-            CFFI.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, _) {
-      return c.complete(Mat.fromPointer(p));
+            CFFI.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, p) {
+      return c.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
     });
     return rval;
   }
@@ -842,29 +848,27 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   }
 
   Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) async {
-    final p = calloc<cvg.Mat>();
     final rval = cvRunAsync<Mat>(
         (callback) => CFFI.FaceRecognizerSF_AlignCrop_Async(
               ref,
               srcImg.ref,
               faceBox.ref,
               callback,
-            ), (c, _) {
-      return c.complete(Mat.fromPointer(p));
+            ), (c, p) {
+      return c.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
     });
     return rval;
   }
 
   Future<Mat> featureAsync(Mat alignedImg, {bool clone = false}) async {
-    final p = calloc<cvg.Mat>();
     final rval = cvRunAsync<Mat>(
         (callback) => CFFI.FaceRecognizerSF_Feature_Async(
               ref,
               alignedImg.ref,
               clone,
               callback,
-            ), (c, _) {
-      return c.complete(Mat.fromPointer(p));
+            ), (c, p) {
+      return c.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
     });
     return rval;
   }
@@ -883,6 +887,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
               callback,
             ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
       return c.complete(rval);
     });
     return rval;
