@@ -93,37 +93,35 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return rval;
   }
 
-  Future<(VecRect objects, VecInt numDetections, VecDouble levelWeights)>
-      detectMultiScale3Async(InputArray image,
-          {double scaleFactor = 1.1,
-          int minNeighbors = 3,
-          int flags = 0,
-          (int, int) minSize = (0, 0),
-          (int, int) maxSize = (0, 0),
-          bool outputRejectLevels = false}) async {
-    final objects = calloc<cvg.VecRect>();
-    final rejectLevels = calloc<cvg.VecInt>();
-    final levelWeights = calloc<cvg.VecDouble>();
-    final rval = cvRunAsync<(VecRect, VecInt, VecDouble)>(
-        (callback) => CFFI.CascadeClassifier_DetectMultiScale3_Async(
-            ref,
-            image.ref,
-            objects,
-            rejectLevels,
-            levelWeights,
-            scaleFactor,
-            minNeighbors,
-            flags,
-            minSize.cvd.ref,
-            maxSize.cvd.ref,
-            outputRejectLevels,
-            callback), (c, _) {
-      return c.complete((
-        VecRect.fromPointer(objects),
-        VecInt.fromPointer(rejectLevels),
-        VecDouble.fromPointer(levelWeights)
-      ));
-    });
+    Future<(VecRect objects, VecInt numDetections, VecDouble levelWeights)> detectMultiScale3Async(
+    InputArray image, {
+    double scaleFactor = 1.1,
+    int minNeighbors = 3,
+    int flags = 0,
+    (int, int) minSize = (0, 0),
+    (int, int) maxSize = (0, 0),
+    bool outputRejectLevels = false,
+  }) async {
+    final rval = cvRunAsync3<(VecRect, VecInt, VecDouble)>(
+      (callback) => CFFI.CascadeClassifier_DetectMultiScale3_Async(
+        ref,
+        image.ref,
+        scaleFactor,
+        minNeighbors,
+        flags,
+        minSize.cvd.ref,
+        maxSize.cvd.ref,
+        outputRejectLevels,
+        callback,
+      ),
+      (c, p1, p2, p3) => c.complete(
+          (
+            VecRect.fromPointer(p1.cast<cvg.VecRect>()),
+            VecInt.fromPointer(p2.cast<cvg.VecInt>()),
+            VecDouble.fromPointer(p3.cast<cvg.VecDouble>())
+          ),
+        ),
+    );
     return rval;
   }
 
