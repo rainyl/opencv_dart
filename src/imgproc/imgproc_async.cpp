@@ -1,6 +1,7 @@
 #include "imgproc_async.h"
-#include "utils.hpp"
 #include "core/types.h"
+#include "opencv2/core/mat.hpp"
+#include "utils.hpp"
 #include <opencv2/imgproc.hpp>
 
 CvStatus *ArcLength_Async(VecPoint curve, bool is_closed, CVD_OUT CvCallback_1 callback) {
@@ -132,12 +133,13 @@ CvStatus *DilateWithParams_Async(
 }
 
 CvStatus *DistanceTransform_Async(
-    Mat src, Mat labels, int distanceType, int maskSize, int labelType, CvCallback_1 callback
+    Mat src, int distanceType, int maskSize, int labelType, CvCallback_2 callback
 ) {
   BEGIN_WRAP
   cv::Mat dst;
-  cv::distanceTransform(*src.ptr, dst, *labels.ptr, distanceType, maskSize, labelType);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::Mat labels;
+  cv::distanceTransform(*src.ptr, dst, labels, distanceType, maskSize, labelType);
+  callback(new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(labels)});
   END_WRAP
 }
 
@@ -288,27 +290,29 @@ PointPolygonTest_Async(VecPoint pts, Point2f pt, bool measureDist, CvCallback_1 
 }
 
 CvStatus *ConnectedComponents_Async(
-    Mat src, Mat dst, int connectivity, int ltype, int ccltype, CvCallback_1 callback
+    Mat src, int connectivity, int ltype, int ccltype, CvCallback_2 callback
 ) {
   BEGIN_WRAP
-  callback(new int(cv::connectedComponents(*src.ptr, *dst.ptr, connectivity, ltype, ccltype)));
+  cv::Mat dst;
+  int rval = cv::connectedComponents(*src.ptr, dst, connectivity, ltype, ccltype);
+  callback(new int(rval), new Mat{new cv::Mat(dst)});
   END_WRAP
 }
 
 CvStatus *ConnectedComponentsWithStats_Async(
-    Mat src,
-    Mat labels,
-    Mat stats,
-    Mat centroids,
-    int connectivity,
-    int ltype,
-    int ccltype,
-    CvCallback_1 callback
+    Mat src, int connectivity, int ltype, int ccltype, CvCallback_4 callback
 ) {
   BEGIN_WRAP
-  callback(new int(cv::connectedComponentsWithStats(
-      *src.ptr, *labels.ptr, *stats.ptr, *centroids.ptr, connectivity, ltype, ccltype
-  )));
+  cv::Mat labels, stats, centroids;
+  int rval = cv::connectedComponentsWithStats(
+      *src.ptr, labels, stats, centroids, connectivity, ltype, ccltype
+  );
+  callback(
+      new int(rval),
+      new Mat{new cv::Mat(labels)},
+      new Mat{new cv::Mat(stats)},
+      new Mat{new cv::Mat(centroids)}
+  );
   END_WRAP
 }
 
@@ -360,9 +364,11 @@ CvStatus *Scharr_Async(
   END_WRAP
 }
 
-CvStatus *GetStructuringElement_Async(int shape, Size ksize, CvCallback_1 callback) {
+CvStatus *GetStructuringElement_Async(int shape, Size ksize, Point anchor, CvCallback_1 callback) {
   BEGIN_WRAP
-  cv::Mat element = cv::getStructuringElement(shape, cv::Size(ksize.width, ksize.height));
+  cv::Mat element = cv::getStructuringElement(
+      shape, cv::Size(ksize.width, ksize.height), cv::Point(anchor.x, anchor.y)
+  );
   callback(new Mat{new cv::Mat(element)});
   END_WRAP
 }
@@ -867,7 +873,7 @@ CvStatus *GetTextSizeWithBaseline_Async(
   BEGIN_WRAP
   int baseline;
   cv::Size r = cv::getTextSize(text, fontFace, fontScale, thickness, &baseline);
-  callback(new int(baseline), new Size{r.width, r.height});
+  callback(new Size{r.width, r.height}, new int(baseline));
   END_WRAP
 }
 
@@ -1072,15 +1078,16 @@ CvStatus *FindHomography_Async(
     Mat dst,
     int method,
     double ransacReprojThreshold,
-    Mat mask,
     const int maxIters,
     const double confidence,
-    CvCallback_1 callback
+    CvCallback_2 callback
 ) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(cv::findHomography(
-      *src.ptr, *dst.ptr, method, ransacReprojThreshold, *mask.ptr, maxIters, confidence
-  ))});
+  cv::Mat mask;
+  cv::Mat out = cv::findHomography(
+      *src.ptr, *dst.ptr, method, ransacReprojThreshold, mask, maxIters, confidence
+  );
+  callback(new Mat{new cv::Mat(out)}, new Mat{new cv::Mat(mask)});
   END_WRAP
 }
 
@@ -1533,35 +1540,33 @@ CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 cal
   END_WRAP
 }
 
-CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, CvCallback_1 callback) {
+CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, Mat dst, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateProduct(*src1.ptr, *src2.ptr, dst);
-  callback(new Mat{new cv::Mat(dst)});
-  END_WRAP
-}
-
-CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback) {
-  BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateProduct(*src1.ptr, *src2.ptr, dst, *mask.ptr);
-  callback(new Mat{new cv::Mat(dst)});
-  END_WRAP
-}
-
-CvStatus *Mat_AccumulatedWeighted_Async(Mat src, double alpha, CvCallback_1 callback) {
-  BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateWeighted(*src.ptr, dst, alpha);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, *dst.ptr);
+  callback();
   END_WRAP
 }
 
 CvStatus *
-Mat_AccumulatedWeightedWithMask_Async(Mat src, double alpha, Mat mask, CvCallback_1 callback) {
+Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateWeighted(*src.ptr, dst, alpha, *mask.ptr);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulateProduct(*src1.ptr, *src2.ptr, *dst.ptr, *mask.ptr);
+  callback();
+  END_WRAP
+}
+
+CvStatus *Mat_AccumulatedWeighted_Async(Mat src, Mat dst, double alpha, CvCallback_0 callback) {
+  BEGIN_WRAP
+  cv::accumulateWeighted(*src.ptr, *dst.ptr, alpha);
+  callback();
+  END_WRAP
+}
+
+CvStatus *Mat_AccumulatedWeightedWithMask_Async(
+    Mat src, Mat dst, double alpha, Mat mask, CvCallback_0 callback
+) {
+  BEGIN_WRAP
+  cv::accumulateWeighted(*src.ptr, *dst.ptr, alpha, *mask.ptr);
+  callback();
   END_WRAP
 }

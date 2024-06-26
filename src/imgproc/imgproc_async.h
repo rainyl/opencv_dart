@@ -42,7 +42,7 @@ CvStatus *DilateWithParams_Async(
     CvCallback_1 callback
 );
 CvStatus *DistanceTransform_Async(
-    Mat src, Mat labels, int distanceType, int maskSize, int labelType, CvCallback_1 callback
+    Mat src, int distanceType, int maskSize, int labelType, CvCallback_2 callback
 );
 CvStatus *EqualizeHist_Async(Mat src, CVD_OUT CvCallback_1 callback);
 CvStatus *Erode_Async(Mat src, Mat kernel, CvCallback_1 callback);
@@ -67,18 +67,10 @@ CvStatus *FitEllipse_Async(VecPoint pts, CvCallback_1 callback);
 CvStatus *MinEnclosingCircle_Async(VecPoint pts, CvCallback_2 callback);
 CvStatus *FindContours_Async(Mat src, int mode, int method, CvCallback_2 callback);
 CvStatus *PointPolygonTest_Async(VecPoint pts, Point2f pt, bool measureDist, CvCallback_1 callback);
-CvStatus *ConnectedComponents_Async(
-    Mat src, Mat dst, int connectivity, int ltype, int ccltype, CvCallback_1 callback
-);
+CvStatus *
+ConnectedComponents_Async(Mat src, int connectivity, int ltype, int ccltype, CvCallback_2 callback);
 CvStatus *ConnectedComponentsWithStats_Async(
-    Mat src,
-    Mat labels,
-    Mat stats,
-    Mat centroids,
-    int connectivity,
-    int ltype,
-    int ccltype,
-    CvCallback_1 callback
+    Mat src, int connectivity, int ltype, int ccltype, CvCallback_4 callback
 );
 
 CvStatus *GaussianBlur_Async(Mat src, Size ps, double sX, double sY, int bt, CvCallback_1 callback);
@@ -102,7 +94,7 @@ CvStatus *Scharr_Async(
     int borderType,
     CvCallback_1 callback
 );
-CvStatus *GetStructuringElement_Async(int shape, Size ksize, CvCallback_1 callback);
+CvStatus *GetStructuringElement_Async(int shape, Size ksize, Point anchor, CvCallback_1 callback);
 CvStatus *MorphologyDefaultBorderValue_Async(CvCallback_1 callback);
 CvStatus *MorphologyEx_Async(Mat src, int op, Mat kernel, CvCallback_1 callback);
 CvStatus *MorphologyExWithParams_Async(
@@ -357,10 +349,9 @@ CvStatus *FindHomography_Async(
     Mat dst,
     int method,
     double ransacReprojThreshold,
-    Mat mask,
     const int maxIters,
     const double confidence,
-    CvCallback_1 callback
+    CvCallback_2 callback
 );
 CvStatus *DrawContours_Async(
     Mat src,
@@ -470,11 +461,11 @@ CvStatus *Mat_Accumulate_Async(Mat src, CvCallback_1 callback);
 CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
 CvStatus *Mat_AccumulateSquare_Async(Mat src, CvCallback_1 callback);
 CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
-CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, CvCallback_1 callback);
-CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback);
-CvStatus *Mat_AccumulatedWeighted_Async(Mat src, double alpha, CvCallback_1 callback);
+CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, Mat dst, CvCallback_0 callback);
+CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask, CvCallback_0 callback);
+CvStatus *Mat_AccumulatedWeighted_Async(Mat src, Mat dst, double alpha, CvCallback_0 callback);
 CvStatus *
-Mat_AccumulatedWeightedWithMask_Async(Mat src, double alpha, Mat mask, CvCallback_1 callback);
+Mat_AccumulatedWeightedWithMask_Async(Mat src, Mat dst, double alpha, Mat mask, CvCallback_0 callback);
 
 #ifdef __cplusplus
 }

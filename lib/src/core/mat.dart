@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
@@ -1410,3 +1411,17 @@ class VecMatIterator extends VecIterator<Mat> {
 extension ListMatExtension on List<Mat> {
   VecMat get cvd => VecMat.fromList(this);
 }
+
+// Completers for async
+void matCompleter(Completer<Mat> completer, VoidPtr p) =>
+    completer.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
+void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
+    completer.complete((Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>())));
+void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
+    completer.complete(
+      (
+        Mat.fromPointer(p.cast<cvg.Mat>()),
+        Mat.fromPointer(p1.cast<cvg.Mat>()),
+        Mat.fromPointer(p2.cast<cvg.Mat>())
+      ),
+    );
