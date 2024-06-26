@@ -582,23 +582,18 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   Future<(bool, List<String>, VecPoint, VecMat)> detectAndDecodeMultiAsync(
     InputArray img,
   ) async {
-    final info = calloc<cvg.VecVecChar>();
-    final points = calloc<cvg.VecPoint>();
-    final codes = calloc<cvg.VecMat>();
-    final rval = calloc<ffi.Bool>();
-    final ret = cvRunAsync<(bool, List<String>, VecPoint, VecMat)>(
+    final ret = cvRunAsync4<(bool, List<String>, VecPoint, VecMat)>(
         (callback) => CFFI.QRCodeDetector_DetectAndDecodeMulti_Async(
               ref,
               img.ref,
               callback,
-            ), (c, _) {
+            ), (c, info, points, codes, rval) {
       final ret = (
-        rval.value,
-        VecVecChar.fromPointer(info).asStringList(),
-        VecPoint.fromPointer(points),
-        VecMat.fromPointer(codes)
+        rval.cast<ffi.Bool>().value,
+        VecVecChar.fromPointer(info.cast<cvg.VecVecChar>()).asStringList(),
+        VecPoint.fromPointer(points.cast<cvg.VecPoint>()),
+        VecMat.fromPointer(codes.cast<cvg.VecMat>())
       );
-      calloc.free(rval);
       return c.complete(ret);
     });
     return ret;
