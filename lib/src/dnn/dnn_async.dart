@@ -20,11 +20,9 @@ class Layer extends CvStruct<cvg.Layer> {
     }
   }
 
-  factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) =>
-      Layer._(ptr, attach);
+  factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
 
-  static final finalizer =
-      OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
+  static final finalizer = OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -104,25 +102,21 @@ class Net extends CvStruct<cvg.Net> {
     return Net._(p);
   }
 
-  factory Net.fromFile(String path,
-      {String config = "", String framework = ""}) {
+  factory Net.fromFile(String path, {String config = "", String framework = ""}) {
     return using<Net>((arena) {
       final cPath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final cConfig = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cFramework =
-          framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final p = calloc<cvg.Net>();
       cvRun(() => CFFI.Net_ReadNet(cPath, cConfig, cFramework, p));
       return Net._(p);
     });
   }
 
-  factory Net.fromBytes(String framework, Uint8List bufferModel,
-      {Uint8List? bufferConfig}) {
+  factory Net.fromBytes(String framework, Uint8List bufferModel, {Uint8List? bufferConfig}) {
     return using<Net>((arena) {
       bufferConfig ??= Uint8List(0);
-      final cFramework =
-          framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final bufM = VecUChar.fromList(bufferModel);
       final bufC = VecUChar.fromList(bufferConfig!);
       final p = calloc<cvg.Net>();
@@ -175,8 +169,7 @@ class Net extends CvStruct<cvg.Net> {
     });
   }
 
-  factory Net.fromTensorflowBytes(Uint8List bufferModel,
-      {Uint8List? bufferConfig}) {
+  factory Net.fromTensorflowBytes(Uint8List bufferModel, {Uint8List? bufferConfig}) {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
@@ -201,8 +194,7 @@ class Net extends CvStruct<cvg.Net> {
     return Net._(p);
   }
 
-  factory Net.fromTorch(String path,
-      {bool isBinary = true, bool evaluate = true}) {
+  factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
       final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
@@ -249,8 +241,7 @@ class Net extends CvStruct<cvg.Net> {
 
   Future<Mat> forwardAsync({String outputName = ""}) async {
     final rval = cvRunAsync<Mat>(
-      (callback) => CFFI.Net_Forward_Async(
-          ref, outputName.toNativeUtf8().cast<ffi.Char>(), callback),
+      (callback) => CFFI.Net_Forward_Async(ref, outputName.toNativeUtf8().cast<ffi.Char>(), callback),
       (c, result) => c.complete(Mat.fromPointer(result.cast<cvg.Mat>())),
     );
     return rval;
@@ -267,8 +258,7 @@ class Net extends CvStruct<cvg.Net> {
 
   Future<void> setPreferableBackendAsync(int backendId) async {
     await cvRunAsync0<void>(
-      (callback) =>
-          CFFI.Net_SetPreferableBackend_Async(ref, backendId, callback),
+      (callback) => CFFI.Net_SetPreferableBackend_Async(ref, backendId, callback),
       (c) => c.complete(),
     );
   }
@@ -303,8 +293,7 @@ class Net extends CvStruct<cvg.Net> {
   Future<List<String>> getLayerNamesAsync() async {
     final rval = cvRunAsync<List<String>>(
       (callback) => CFFI.Net_GetLayerNames_Async(ref, callback),
-      (c, result) => c.complete(
-          VecVecChar.fromPointer(result.cast<cvg.VecVecChar>()).asStringList()),
+      (c, result) => c.complete(VecVecChar.fromPointer(result.cast<cvg.VecVecChar>()).asStringList()),
     );
     return rval;
   }
@@ -312,18 +301,15 @@ class Net extends CvStruct<cvg.Net> {
   Future<(VecFloat, VecInt)> getInputDetailsAsync() async {
     final rval = cvRunAsync2<(VecFloat, VecInt)>(
       (callback) => CFFI.Net_GetInputDetails_Async(ref, callback),
-      (c, sc, zp) => c.complete((
-        VecFloat.fromPointer(sc.cast<cvg.VecFloat>()),
-        VecInt.fromPointer(zp.cast<cvg.VecInt>())
-      )),
+      (c, sc, zp) => c.complete(
+          (VecFloat.fromPointer(sc.cast<cvg.VecFloat>()), VecInt.fromPointer(zp.cast<cvg.VecInt>()))),
     );
     return rval;
   }
 
   Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
     final rval = cvRunAsync<Mat>(
-      (callback) =>
-          CFFI.Net_GetBlobChannel_Async(blob.ref, imgidx, chnidx, callback),
+      (callback) => CFFI.Net_GetBlobChannel_Async(blob.ref, imgidx, chnidx, callback),
       (c, result) => c.complete(Mat.fromPointer(result.cast<cvg.Mat>())),
     );
     return rval;
@@ -400,8 +386,7 @@ class Net extends CvStruct<cvg.Net> {
   static Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
     final rval = cvRunAsync<List<Mat>>(
       (callback) => CFFI.Net_ImagesFromBlob_Async(blob.ref, callback),
-      (c, result) =>
-          c.complete(VecMat.fromPointer(result.cast<cvg.VecMat>()).toList()),
+      (c, result) => c.complete(VecMat.fromPointer(result.cast<cvg.VecMat>()).toList()),
     );
     return rval;
   }
@@ -424,8 +409,7 @@ class Net extends CvStruct<cvg.Net> {
         topK,
         callback,
       ),
-      (c, result) =>
-          c.complete(VecInt.fromPointer(result.cast<cvg.VecInt>()).toList()),
+      (c, result) => c.complete(VecInt.fromPointer(result.cast<cvg.VecInt>()).toList()),
     );
     return rval;
   }
