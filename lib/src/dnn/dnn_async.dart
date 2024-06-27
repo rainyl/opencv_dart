@@ -3,6 +3,7 @@ library cv;
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
+import './dnn.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -13,22 +14,7 @@ import '../core/size.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
-class Layer extends CvStruct<cvg.Layer> {
-  Layer._(cvg.LayerPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
-
-  factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
-
-  static final finalizer = OcvFinalizer<cvg.LayerPtr>(CFFI.addresses.Layer_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.Layer_Close(ptr);
-  }
-
+extension LayerAsync on Layer {
   Future<String> getNameAsync() async {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     final rval = cvRunAsync<String>(
@@ -83,125 +69,141 @@ class Layer extends CvStruct<cvg.Layer> {
     calloc.free(cName);
     return rval;
   }
-
-  @override
-  List<int> get props => [ptr.address];
-  @override
-  cvg.Layer get ref => ptr.ref;
 }
 
-class Net extends CvStruct<cvg.Net> {
-  Net._(cvg.NetPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
-
-  factory Net.empty() {
-    final p = calloc<cvg.Net>();
-    cvRun(() => CFFI.Net_Create(p));
-    return Net._(p);
-  }
-
-  factory Net.fromFile(String path, {String config = "", String framework = ""}) {
-    return using<Net>((arena) {
-      final cPath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cConfig = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_ReadNet(cPath, cConfig, cFramework, p));
-      return Net._(p);
+extension NetAsync on Net {
+  static Future<Net> emptyAsync() async {
+    final rval = await cvRunAsync<Net>((callback) => CFFI.Net_Create_Async(callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+
+    return rval;
   }
 
-  factory Net.fromBytes(String framework, Uint8List bufferModel, {Uint8List? bufferConfig}) {
-    return using<Net>((arena) {
-      bufferConfig ??= Uint8List(0);
-      final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final bufM = VecUChar.fromList(bufferModel);
-      final bufC = VecUChar.fromList(bufferConfig!);
-      final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_ReadNetBytes(cFramework, bufM.ref, bufC.ref, p));
-      return Net._(p);
+  static Future<Net> fromFileAsync(String path, {String config = "", String framework = ""}) async {
+    final cPath = path.toNativeUtf8().cast<ffi.Char>();
+    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
+    final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNet_Async(cPath, cConfig, cFramework, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+    calloc.free(cPath);
+    calloc.free(cConfig);
+    calloc.free(cFramework);
+
+    return rval;
   }
 
-  factory Net.fromCaffe(String prototxt, String caffeModel) {
-    return using<Net>((arena) {
-      final cProto = prototxt.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cCaffe = caffeModel.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_ReadNetFromCaffe(cProto, cCaffe, p));
-      return Net._(p);
+  static Future<Net> fromBytesAsync(String framework, Uint8List bufferModel,
+      {Uint8List? bufferConfig}) async {
+    bufferConfig ??= Uint8List(0);
+    final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
+    final bufM = VecUChar.fromList(bufferModel);
+    final bufC = VecUChar.fromList(bufferConfig);
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetBytes_Async(cFramework, bufM.ref, bufC.ref, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+
+    calloc.free(cFramework);
+
+    return rval;
   }
 
-  factory Net.fromCaffeBytes(Uint8List bufferProto, Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
+  static Future<Net> fromCaffeAsync(String prototxt, String caffeModel) async {
+    final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
+    final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromCaffe_Async(cProto, cCaffe, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
+    });
+    calloc.free(cProto);
+    calloc.free(cCaffe);
+
+    return rval;
+  }
+
+  static Future<Net> fromCaffeBytesAsync(Uint8List bufferProto, Uint8List bufferModel) async {
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => CFFI.Net_ReadNetFromCaffeBytes(bufP.ref, bufM.ref, p));
-    return Net._(p);
-  }
-
-  factory Net.fromOnnx(String path) {
-    return using<Net>((arena) {
-      final p = calloc<cvg.Net>();
-      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.Net_ReadNetFromONNX(cpath, p));
-      return Net._(p);
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromCaffeBytes_Async(bufP.ref, bufM.ref, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+    return rval;
   }
 
-  factory Net.fromOnnxBytes(Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
+  static Future<Net> fromOnnxAsync(String path) async {
+    final cpath = path.toNativeUtf8().cast<ffi.Char>();
+    final rval = await cvRunAsync<Net>((callback) => CFFI.Net_ReadNetFromONNX_Async(cpath, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
+    });
+    calloc.free(cpath);
+
+    return rval;
+  }
+
+  static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => CFFI.Net_ReadNetFromONNXBytes(bufM.ref, p));
-    return Net._(p);
-  }
-
-  factory Net.fromTensorflow(String path, {String config = ""}) {
-    return using<Net>((arena) {
-      final p = calloc<cvg.Net>();
-      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cconf = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.Net_ReadNetFromTensorflow(cpath, cconf, p));
-      return Net._(p);
+    final rval =
+        await cvRunAsync<Net>((callback) => CFFI.Net_ReadNetFromONNXBytes_Async(bufM.ref, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+    return rval;
   }
 
-  factory Net.fromTensorflowBytes(Uint8List bufferModel, {Uint8List? bufferConfig}) {
+  static Future<Net> fromTensorflowAsync(String path, {String config = ""}) async {
+    final cpath = path.toNativeUtf8().cast<ffi.Char>();
+    final cconf = config.toNativeUtf8().cast<ffi.Char>();
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromTensorflow_Async(cpath, cconf, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
+    });
+    calloc.free(cpath);
+    calloc.free(cconf);
+
+    return rval;
+  }
+
+  static Future<Net> fromTensorflowBytesAsync(Uint8List bufferModel, {Uint8List? bufferConfig}) async {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
-    cvRun(() => CFFI.Net_ReadNetFromTensorflowBytes(bufM.ref, bufC.ref, p));
-    return Net._(p);
-  }
-
-  factory Net.fromTFLite(String path) {
-    return using<Net>((arena) {
-      final p = calloc<cvg.Net>();
-      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.Net_ReadNetFromTFLite(cpath, p));
-      return Net._(p);
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromTensorflowBytes_Async(bufM.ref, bufC.ref, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+    return rval;
   }
 
-  factory Net.fromTFLiteBytes(Uint8List bufferModel) {
+  static Future<Net> fromTFLiteAsync(String path) async {
+    final cpath = path.toNativeUtf8().cast<ffi.Char>();
+    final rval =
+        await cvRunAsync<Net>((callback) => CFFI.Net_ReadNetFromTFLite_Async(cpath, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
+    });
+    calloc.free(cpath);
+    return rval;
+  }
+
+  static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
-    final p = calloc<cvg.Net>();
-    cvRun(() => CFFI.Net_ReadNetFromTFLiteBytes(bufM.ref, p));
-    return Net._(p);
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromTFLiteBytes_Async(bufM.ref, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
+    });
+    return rval;
   }
 
-  factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
-    return using<Net>((arena) {
-      final p = calloc<cvg.Net>();
-      final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.Net_ReadNetFromTorch(cpath, isBinary, evaluate, p));
-      return Net._(p);
+  static Future<Net> fromTorchAsync(String path, {bool isBinary = true, bool evaluate = true}) async {
+    final cpath = path.toNativeUtf8().cast<ffi.Char>();
+    final rval = await cvRunAsync<Net>(
+        (callback) => CFFI.Net_ReadNetFromTorch_Async(cpath, isBinary, evaluate, callback), (c, p) {
+      return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
+    calloc.free(cpath);
+    return rval;
   }
 
   Future<bool> isEmptyAsync() async {

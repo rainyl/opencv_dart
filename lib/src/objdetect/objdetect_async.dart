@@ -396,9 +396,8 @@ extension QRCodeDetectorAsync on QRCodeDetector {
 
   Future<(String rval, Mat straightQRcode)> decodeCurvedAsync(
     InputArray img,
-    VecPoint points, {
-    OutputArray? straightQRcode,
-  }) async {
+    VecPoint points,
+  ) async {
     final rval = cvRunAsync2<(String, Mat)>(
         (callback) => CFFI.QRCodeDetector_decodeCurved_Async(
               ref,
@@ -414,10 +413,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   }
 
   Future<(String rval, VecPoint points, Mat straightQRcode)> detectAndDecodeCurvedAsync(
-    InputArray img, {
-    VecPoint? points,
-    Mat? straightQRcode,
-  }) async {
+      InputArray img) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_detectAndDecodeCurved_Async(
               ref,
@@ -435,11 +431,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     return rval;
   }
 
-  Future<(String ret, VecPoint points, Mat straightCode)> detectAndDecodeAsync(
-    InputArray img, {
-    VecPoint? points,
-    OutputArray? straightCode,
-  }) async {
+  Future<(String ret, VecPoint points, Mat straightCode)> detectAndDecodeAsync(InputArray img) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_DetectAndDecode_Async(ref, img.ref, callback),
         (c, ret, points, straightCode) {
@@ -470,10 +462,8 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   }
 
   Future<(String ret, VecPoint? points, Mat? straightCode)> decodeAsync(
-    InputArray img, {
-    VecPoint? points,
-    Mat? straightCode,
-  }) async {
+    InputArray img,
+  ) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_Decode_Async(ref, img.ref, callback),
         (c, ret, points, straightCode) {
@@ -489,9 +479,8 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   }
 
   Future<(bool ret, VecPoint points)> detectMultiAsync(
-    InputArray img, {
-    VecPoint? points,
-  }) async {
+    InputArray img,
+  ) async {
     final rval = cvRunAsync2<(bool, VecPoint)>(
         (callback) => CFFI.QRCodeDetector_DetectMulti_Async(ref, img.ref, callback), (c, ret, points) {
       final retValue = ret.cast<ffi.Bool>().value;
