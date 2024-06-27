@@ -39,10 +39,11 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         (callback) => CFFI.CascadeClassifier_Load_Async(ref, cname, callback),
         (c, p) {
       final rval = p.cast<ffi.Int>().value != 0;
-      calloc.free(cname);
       calloc.free(p);
       return c.complete(rval);
     });
+    calloc.free(cname);
+
     return rval;
   }
 
@@ -222,11 +223,11 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         (callback) => CFFI.HOGDescriptor_Load_Async(ref, cname, callback),
         (c, p) {
       final rval = p.cast<ffi.Bool>().value;
-      calloc.free(cname);
       calloc.free(p);
 
       return c.complete(rval);
     });
+    calloc.free(cname);
     return rval;
   }
 
@@ -398,7 +399,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     int groupThreshold,
     double eps,
   ) async {
-    final rval = cvRunAsync<(VecRect, VecDouble)>(
+    final rval = cvRunAsync0<(VecRect, VecDouble)>(
         (callback) => CFFI.HOGDescriptor_groupRectangles_Async(
               ref,
               rectList.ref,
@@ -406,7 +407,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
               groupThreshold,
               eps,
               callback,
-            ), (c, _) {
+            ), (c) {
       return c.complete((rectList, weights));
     });
     return rval;
@@ -440,10 +441,10 @@ Future<VecRect> groupRectanglesAsync(
   int groupThreshold,
   double eps,
 ) async {
-  final rval = cvRunAsync<VecRect>(
+  final rval = cvRunAsync0<VecRect>(
       (callback) =>
           CFFI.GroupRectangles_Async(rects.ref, groupThreshold, eps, callback),
-      (c, _) {
+      (c) {
     return c.complete(rects);
   });
   return rval;
@@ -574,10 +575,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         (c, ret, points) {
       final retValue = ret.cast<ffi.Bool>().value;
       calloc.free(ret);
-      return c.complete((
-        retValue,
-        VecPoint.fromPointer(points.cast<cvg.VecPoint>())
-      ));
+      return c.complete(
+          (retValue, VecPoint.fromPointer(points.cast<cvg.VecPoint>())));
     });
     return rval;
   }
@@ -591,7 +590,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
               img.ref,
               callback,
             ), (c, info, points, codes, rval) {
-      final rvalValue=rval.cast<ffi.Bool>().value;
+      final rvalValue = rval.cast<ffi.Bool>().value;
       calloc.free(rval);
       final ret = (
         rvalValue,

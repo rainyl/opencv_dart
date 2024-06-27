@@ -196,17 +196,17 @@ CvStatus *HOGDescriptor_getWinSigma_Async(HOGDescriptor self, CvCallback_1 callb
     END_WRAP
 }
 
-CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps, CvCallback_1 callback) {
+CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->groupRectangles(*rectList.ptr, *weights.ptr, groupThreshold, eps);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
-CvStatus *GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_1 callback) {
+CvStatus *GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_0 callback) {
     BEGIN_WRAP
     cv::groupRectangles(*rects.ptr, groupThreshold, eps);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 

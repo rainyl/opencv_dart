@@ -6143,7 +6143,7 @@ class CvNative {
     VecRect rects,
     int groupThreshold,
     double eps,
-    CvCallback_1 callback,
+    CvCallback_0 callback,
   ) {
     return _GroupRectangles_Async(
       rects,
@@ -6156,9 +6156,9 @@ class CvNative {
   late final _GroupRectangles_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(VecRect, ffi.Int, ffi.Double,
-              CvCallback_1)>>('GroupRectangles_Async');
+              CvCallback_0)>>('GroupRectangles_Async');
   late final _GroupRectangles_Async = _GroupRectangles_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, int, double, CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(VecRect, int, double, CvCallback_0)>();
 
   void HOGDescriptor_Close(
     HOGDescriptorPtr self,
@@ -6817,7 +6817,7 @@ class CvNative {
     VecDouble weights,
     int groupThreshold,
     double eps,
-    CvCallback_1 callback,
+    CvCallback_0 callback,
   ) {
     return _HOGDescriptor_groupRectangles_Async(
       self,
@@ -6837,11 +6837,11 @@ class CvNative {
               VecDouble,
               ffi.Int,
               ffi.Double,
-              CvCallback_1)>>('HOGDescriptor_groupRectangles_Async');
+              CvCallback_0)>>('HOGDescriptor_groupRectangles_Async');
   late final _HOGDescriptor_groupRectangles_Async =
       _HOGDescriptor_groupRectangles_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, VecRect, VecDouble, int, double, CvCallback_1)>();
+              HOGDescriptor, VecRect, VecDouble, int, double, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector(
     ffi.Pointer<VecFloat> rval,
@@ -8173,7 +8173,7 @@ class CvNative {
           Mat, Mat, int, int, double, double, int)>();
 
   void Layer_Close(
-    LayerPtr layer,
+    LayerPtr1 layer,
   ) {
     return _Layer_Close(
       layer,
@@ -8181,12 +8181,12 @@ class CvNative {
   }
 
   late final _Layer_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>('Layer_Close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr1)>>('Layer_Close');
   late final _Layer_Close =
-      _Layer_ClosePtr.asFunction<void Function(LayerPtr)>();
+      _Layer_ClosePtr.asFunction<void Function(LayerPtr1)>();
 
   void Layer_Close_Async(
-    LayerPtr1 layer,
+    LayerPtr layer,
     CvCallback_0 callback,
   ) {
     return _Layer_Close_Async(
@@ -8196,10 +8196,10 @@ class CvNative {
   }
 
   late final _Layer_Close_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr1, CvCallback_0)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr, CvCallback_0)>>(
           'Layer_Close_Async');
-  late final _Layer_Close_Async = _Layer_Close_AsyncPtr.asFunction<
-      void Function(LayerPtr1, CvCallback_0)>();
+  late final _Layer_Close_Async =
+      _Layer_Close_AsyncPtr.asFunction<void Function(LayerPtr, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Layer_GetName(
     Layer layer,
@@ -24650,9 +24650,9 @@ class _SymbolAddresses {
       _library._KAZE_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KalmanFilterPtr)>>
       get KalmanFilter_Close => _library._KalmanFilter_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr1)>>
       get Layer_Close => _library._Layer_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr1, CvCallback_0)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr, CvCallback_0)>>
       get Layer_Close_Async => _library._Layer_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MSERPtr)>> get MSER_Close =>
       _library._MSER_ClosePtr;

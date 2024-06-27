@@ -54,8 +54,8 @@ CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, C
 CvStatus *HOGDescriptor_getDaimlerPeopleDetector_Async(CvCallback_1 callback);
 CvStatus *HOGDescriptor_getDescriptorSize_Async(HOGDescriptor self, CvCallback_1 callback);
 CvStatus *HOGDescriptor_getWinSigma_Async(HOGDescriptor self, CvCallback_1 callback);
-CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps, CvCallback_1 callback);
-CvStatus *GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_1 callback);
+CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps, CvCallback_0 callback);
+CvStatus *GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_0 callback);
 
 // QRCodeDetector
 CvStatus *QRCodeDetector_New_Async(CvCallback_1 callback);

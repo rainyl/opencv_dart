@@ -59,15 +59,16 @@ class Layer extends CvStruct<cvg.Layer> {
 
   Future<int> inputNameToIndexAsync(String name) async {
     final cName = name.toNativeUtf8().cast<ffi.Char>();
-    final rval = cvRunAsync<int>(
+    final rval = await cvRunAsync<int>(
       (callback) => CFFI.Layer_InputNameToIndex_Async(ref, cName, callback),
       (c, p) {
         final rval = p.cast<ffi.Int>().value;
-        calloc.free(cName);
         calloc.free(p);
         return c.complete(rval);
       },
     );
+    calloc.free(cName);
+
     return rval;
   }
 
@@ -77,11 +78,11 @@ class Layer extends CvStruct<cvg.Layer> {
       (callback) => CFFI.Layer_OutputNameToIndex_Async(ref, cName, callback),
       (c, p) {
         final rval = p.cast<ffi.Int>().value;
-        calloc.free(cName);
         calloc.free(p);
         return c.complete(rval);
       },
     );
+    calloc.free(cName);
     return rval;
   }
 
@@ -241,10 +242,10 @@ class Net extends CvStruct<cvg.Net> {
     await cvRunAsync0<void>(
       (callback) => CFFI.Net_SetInput_Async(ref, blob.ref, cname, callback),
       (c) {
-        calloc.free(cname);
         return c.complete();
       },
     );
+    calloc.free(cname);
   }
 
   Future<Mat> forwardAsync({String outputName = ""}) async {
