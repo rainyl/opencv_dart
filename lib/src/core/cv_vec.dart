@@ -4,6 +4,7 @@ import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'base.dart';
+import 'vec.dart';
 
 abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
   CvVec.fromPointer(super.ptr) : super.fromPointer();
@@ -1068,4 +1069,178 @@ class Vec6d extends CvVec<cvg.Vec6d> {
   @override
   String toString() =>
       "Vec6d(${val1.toStringAsFixed(3)}, ${val2.toStringAsFixed(3)}, ${val3.toStringAsFixed(3)}, ${val4.toStringAsFixed(3)}, ${val5.toStringAsFixed(3)}, ${val6.toStringAsFixed(3)})";
+}
+
+class VecVec4i extends Vec<Vec4i> implements CvStruct<cvg.VecVec4i> {
+  VecVec4i._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+
+  factory VecVec4i.fromPointer(cvg.VecVec4iPtr ptr, [bool attach = true]) => VecVec4i._(ptr, attach);
+
+  factory VecVec4i.fromList(List<Vec4i> pts) {
+    final ptr = calloc<cvg.VecVec4i>();
+    cvRun(() => CFFI.VecVec4i_New(ptr));
+    for (var i = 0; i < pts.length; i++) {
+      final p = pts[i];
+      cvRun(() => CFFI.VecVec4i_Append(ptr.ref, p.ref));
+    }
+    final vec = VecVec4i._(ptr);
+    return vec;
+  }
+
+  @override
+  cvg.VecVec4iPtr ptr;
+  static final finalizer = OcvFinalizer<cvg.VecVec4iPtr>(CFFI.addresses.VecVec4i_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecVec4i_Close(ptr);
+  }
+
+  @override
+  Iterator<Vec4i> get iterator => VecVec4iIterator(ref);
+
+  @override
+  cvg.VecVec4i get ref => ptr.ref;
+}
+
+class VecVec4iIterator extends VecIterator<Vec4i> {
+  VecVec4iIterator(this.ptr);
+  cvg.VecVec4i ptr;
+
+  @override
+  int get length {
+    return using<int>((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => CFFI.VecVec4i_Size(ptr, p));
+      final len = p.value;
+      return len;
+    });
+  }
+
+  @override
+  Vec4i operator [](int idx) {
+    final p = calloc<cvg.Vec4i>();
+    cvRun(() => CFFI.VecVec4i_At(ptr, idx, p));
+    return Vec4i.fromPointer(p);
+  }
+}
+
+class VecVec4f extends Vec<Vec4f> implements CvStruct<cvg.VecVec4f> {
+  VecVec4f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+
+  factory VecVec4f.fromPointer(cvg.VecVec4fPtr ptr, [bool attach = true]) => VecVec4f._(ptr, attach);
+
+  factory VecVec4f.fromList(List<Vec4f> pts) {
+    final ptr = calloc<cvg.VecVec4f>();
+    cvRun(() => CFFI.VecVec4f_New(ptr));
+    for (var i = 0; i < pts.length; i++) {
+      final p = pts[i];
+      cvRun(() => CFFI.VecVec4f_Append(ptr.ref, p.ref));
+    }
+    final vec = VecVec4f._(ptr);
+    return vec;
+  }
+
+  @override
+  cvg.VecVec4fPtr ptr;
+  static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(CFFI.addresses.VecVec4f_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecVec4f_Close(ptr);
+  }
+
+  @override
+  Iterator<Vec4f> get iterator => VecVec4fIterator(ref);
+
+  @override
+  cvg.VecVec4f get ref => ptr.ref;
+}
+
+class VecVec4fIterator extends VecIterator<Vec4f> {
+  VecVec4fIterator(this.ptr);
+  cvg.VecVec4f ptr;
+
+  @override
+  int get length {
+    return using<int>((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => CFFI.VecVec4f_Size(ptr, p));
+      final len = p.value;
+      return len;
+    });
+  }
+
+  @override
+  Vec4f operator [](int idx) {
+    final p = calloc<cvg.Vec4f>();
+    cvRun(() => CFFI.VecVec4f_At(ptr, idx, p));
+    return Vec4f.fromPointer(p);
+  }
+}
+
+class VecVec6f extends Vec<Vec6f> implements CvStruct<cvg.VecVec6f> {
+  VecVec6f._(this.ptr, [bool attach = true]) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+
+  factory VecVec6f.fromPointer(cvg.VecVec6fPtr ptr, [bool attach = true]) => VecVec6f._(ptr, attach);
+
+  factory VecVec6f.fromList(List<Vec6f> pts) {
+    final ptr = calloc<cvg.VecVec6f>();
+    cvRun(() => CFFI.VecVec6f_New(ptr));
+    for (var i = 0; i < pts.length; i++) {
+      final p = pts[i];
+      cvRun(() => CFFI.VecVec6f_Append(ptr.ref, p.ref));
+    }
+    final vec = VecVec6f._(ptr);
+    return vec;
+  }
+
+  @override
+  cvg.VecVec6fPtr ptr;
+  static final finalizer = OcvFinalizer<cvg.VecVec6fPtr>(CFFI.addresses.VecVec6f_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.VecVec6f_Close(ptr);
+  }
+
+  @override
+  Iterator<Vec6f> get iterator => VecVec6fIterator(ref);
+
+  @override
+  cvg.VecVec6f get ref => ptr.ref;
+}
+
+class VecVec6fIterator extends VecIterator<Vec6f> {
+  VecVec6fIterator(this.ptr);
+  cvg.VecVec6f ptr;
+
+  @override
+  int get length {
+    return using<int>((arena) {
+      final p = arena<ffi.Int>();
+      cvRun(() => CFFI.VecVec6f_Size(ptr, p));
+      final len = p.value;
+      return len;
+    });
+  }
+
+  @override
+  Vec6f operator [](int idx) {
+    final p = calloc<cvg.Vec6f>();
+    cvRun(() => CFFI.VecVec6f_At(ptr, idx, p));
+    return Vec6f.fromPointer(p);
+  }
 }

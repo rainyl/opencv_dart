@@ -441,9 +441,9 @@ CvStatus *Subdiv2D_EdgeDst_Async(Subdiv2D self, int edge, CvCallback_2 callback)
 CvStatus *Subdiv2D_EdgeOrg_Async(Subdiv2D self, int edge, CvCallback_2 callback);
 CvStatus *Subdiv2D_FindNearest_Async(Subdiv2D self, Point2f pt, CvCallback_2 callback);
 CvStatus *Subdiv2D_GetEdge_Async(Subdiv2D self, int edge, int nextEdgeType, CvCallback_1 callback);
-CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_1 callback);
 CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback);
-CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_1 callback);
 CvStatus *Subdiv2D_GetVertex_Async(Subdiv2D self, int vertex, CvCallback_2 callback);
 CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecInt idx, CvCallback_2 callback);
 CvStatus *Subdiv2D_InitDelaunay_Async(Subdiv2D self, Rect rect, CvCallback_0 callback);

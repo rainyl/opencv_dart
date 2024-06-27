@@ -1,8 +1,10 @@
 #include "imgproc_async.h"
 #include "core/types.h"
 #include "opencv2/core/mat.hpp"
+#include "opencv2/core/matx.hpp"
 #include "utils.hpp"
 #include <opencv2/imgproc.hpp>
+#include <vector>
 
 CvStatus *ArcLength_Async(VecPoint curve, bool is_closed, CVD_OUT CvCallback_1 callback) {
   BEGIN_WRAP callback(new double(cv::arcLength(*curve.ptr, is_closed)));
@@ -1386,16 +1388,11 @@ CvStatus *Subdiv2D_GetEdge_Async(Subdiv2D self, int edge, int nextEdgeType, CvCa
   END_WRAP
 }
 
-CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_2 callback) {
+CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = std::vector<cv::Vec4f>();
   self.ptr->getEdgeList(v);
-  auto rv = new Vec4f[v.size()];
-  for (int i = 0; i < v.size(); i++) {
-    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3]};
-  }
-  // TODO: maybe wrong, need testing
-  callback(&rv, new int(v.size()));
+  callback(new VecVec4f{new std::vector<cv::Vec4f>(v)});
   END_WRAP
 }
 
@@ -1407,16 +1404,11 @@ CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback
   END_WRAP
 }
 
-CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_2 callback) {
+CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = std::vector<cv::Vec6f>();
   self.ptr->getTriangleList(v);
-  auto rv = new Vec6f[v.size()];
-  for (int i = 0; i < v.size(); i++) {
-    rv[i] = {v[i].val[0], v[i].val[1], v[i].val[2], v[i].val[3], v[i].val[4], v[i].val[5]};
-  }
-  // TODO: maybe wrong, need testing
-  callback(&rv, new int(v.size()));
+  callback(new VecVec6f{new std::vector<cv::Vec6f>(v)});
   END_WRAP
 }
 

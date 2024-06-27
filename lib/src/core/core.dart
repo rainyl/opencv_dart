@@ -43,8 +43,7 @@ String getBuildInformation() {
   return s;
 }
 
-Future<String> getBuildInformationAsync() async =>
-    cvRunAsync(CFFI.getBuildInfo_Async, (c, p) {
+Future<String> getBuildInformationAsync() async => cvRunAsync(CFFI.getBuildInfo_Async, (c, p) {
       final s = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
       calloc.free(p);
       c.complete(s);
