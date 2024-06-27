@@ -2789,7 +2789,7 @@ class CvNative {
     Mat hist,
     Mat backProject,
     VecFloat rng,
-    bool uniform,
+    double scale,
   ) {
     return _CalcBackProject(
       mats,
@@ -2797,24 +2797,24 @@ class CvNative {
       hist,
       backProject,
       rng,
-      uniform,
+      scale,
     );
   }
 
   late final _CalcBackProjectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, Mat, VecFloat,
-              ffi.Bool)>>('CalcBackProject');
+              ffi.Double)>>('CalcBackProject');
   late final _CalcBackProject = _CalcBackProjectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, Mat, VecFloat, bool)>();
+          VecMat, VecInt, Mat, Mat, VecFloat, double)>();
 
   ffi.Pointer<CvStatus> CalcBackProject_Async(
     VecMat mats,
     VecInt chans,
     Mat backProject,
     VecFloat rng,
-    bool uniform,
+    double scale,
     CvCallback_1 callback,
   ) {
     return _CalcBackProject_Async(
@@ -2822,7 +2822,7 @@ class CvNative {
       chans,
       backProject,
       rng,
-      uniform,
+      scale,
       callback,
     );
   }
@@ -2830,10 +2830,10 @@ class CvNative {
   late final _CalcBackProject_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, VecFloat,
-              ffi.Bool, CvCallback_1)>>('CalcBackProject_Async');
+              ffi.Double, CvCallback_1)>>('CalcBackProject_Async');
   late final _CalcBackProject_Async = _CalcBackProject_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, VecFloat, bool, CvCallback_1)>();
+          VecMat, VecInt, Mat, VecFloat, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> CalcHist(
     VecMat mats,
@@ -9383,11 +9383,13 @@ class CvNative {
 
   ffi.Pointer<CvStatus> Mat_AccumulateSquareWithMask_Async(
     Mat src,
+    Mat dst,
     Mat mask,
-    CvCallback_1 callback,
+    CvCallback_0 callback,
   ) {
     return _Mat_AccumulateSquareWithMask_Async(
       src,
+      dst,
       mask,
       callback,
     );
@@ -9395,28 +9397,30 @@ class CvNative {
 
   late final _Mat_AccumulateSquareWithMask_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_1)>>('Mat_AccumulateSquareWithMask_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              CvCallback_0)>>('Mat_AccumulateSquareWithMask_Async');
   late final _Mat_AccumulateSquareWithMask_Async =
       _Mat_AccumulateSquareWithMask_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_1)>();
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Mat_AccumulateSquare_Async(
     Mat src,
-    CvCallback_1 callback,
+    Mat dst,
+    CvCallback_0 callback,
   ) {
     return _Mat_AccumulateSquare_Async(
       src,
+      dst,
       callback,
     );
   }
 
   late final _Mat_AccumulateSquare_AsyncPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
-      'Mat_AccumulateSquare_Async');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, CvCallback_0)>>('Mat_AccumulateSquare_Async');
   late final _Mat_AccumulateSquare_Async = _Mat_AccumulateSquare_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Mat_AccumulateWithMask(
     Mat src,
@@ -9438,11 +9442,13 @@ class CvNative {
 
   ffi.Pointer<CvStatus> Mat_AccumulateWithMask_Async(
     Mat src,
+    Mat dst,
     Mat mask,
-    CvCallback_1 callback,
+    CvCallback_0 callback,
   ) {
     return _Mat_AccumulateWithMask_Async(
       src,
+      dst,
       mask,
       callback,
     );
@@ -9451,26 +9457,29 @@ class CvNative {
   late final _Mat_AccumulateWithMask_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_1)>>('Mat_AccumulateWithMask_Async');
-  late final _Mat_AccumulateWithMask_Async = _Mat_AccumulateWithMask_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_1)>();
+              Mat, Mat, Mat, CvCallback_0)>>('Mat_AccumulateWithMask_Async');
+  late final _Mat_AccumulateWithMask_Async =
+      _Mat_AccumulateWithMask_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Mat_Accumulate_Async(
     Mat src,
-    CvCallback_1 callback,
+    Mat dst,
+    CvCallback_0 callback,
   ) {
     return _Mat_Accumulate_Async(
       src,
+      dst,
       callback,
     );
   }
 
   late final _Mat_Accumulate_AsyncPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
-      'Mat_Accumulate_Async');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, CvCallback_0)>>('Mat_Accumulate_Async');
   late final _Mat_Accumulate_Async = _Mat_Accumulate_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Mat_AccumulatedWeighted(
     Mat src,

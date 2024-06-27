@@ -36,8 +36,8 @@ Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) 
 /// For further details, please see:
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
-Future<VecPoint> arcLengthAsync(VecPoint curve, bool closed) async =>
-    cvRunAsync((callback) => CFFI.ArcLength_Async(curve.ref, closed, callback), vecPointCompleter);
+Future<double> arcLengthAsync(VecPoint curve, bool closed) async =>
+    cvRunAsync((callback) => CFFI.ArcLength_Async(curve.ref, closed, callback), doubleCompleter);
 
 /// ConvexHull finds the convex hull of a point set.
 ///
@@ -107,18 +107,16 @@ Future<Mat> calcHistAsync(
 /// CalcBackProject calculates the back projection of a histogram.
 ///
 /// For futher details, please see:
-/// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
+/// https://docs.opencv.org/4.10.0/d6/dc7/group__imgproc__hist.html#gab644bc90e7475cc047aa1b25dbcbd8df
 Future<Mat> calcBackProjectAsync(
   VecMat src,
   VecInt channels,
   Mat hist,
   VecFloat ranges, {
-  Mat? dst,
-  bool uniform = true,
+  double scale = 1.0,
 }) async =>
     cvRunAsync(
-      (callback) =>
-          CFFI.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, uniform, callback),
+      (callback) => CFFI.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, scale, callback),
       matCompleter,
     );
 
@@ -126,9 +124,9 @@ Future<Mat> calcBackProjectAsync(
 /// mode: HistCompMethods
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
-Future<VecPoint> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async => cvRunAsync(
+Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async => cvRunAsync(
       (callback) => CFFI.CompareHist_Async(hist1.ref, hist2.ref, method, callback),
-      vecPointCompleter,
+      doubleCompleter,
     );
 
 /// ClipLine clips the line against the image rectangle.
@@ -260,7 +258,7 @@ Future<Rect> boundingRectAsync(VecPoint points) async =>
 ///
 /// return: [bottom left, top left, top right, bottom right]
 /// For further Details, please see:
-/// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
+/// https://docs.opencv.org/4.10.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 Future<VecPoint2f> boxPointsAsync(RotatedRect rect) async =>
     cvRunAsync((callback) => CFFI.BoxPoints_Async(rect.ref, callback), vecPoint2fCompleter);
 
@@ -268,8 +266,8 @@ Future<VecPoint2f> boxPointsAsync(RotatedRect rect) async =>
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
-Future<VecPoint> contourAreaAsync(VecPoint contour) async =>
-    cvRunAsync((callback) => CFFI.ContourArea_Async(contour.ref, callback), vecPointCompleter);
+Future<double> contourAreaAsync(VecPoint contour) async =>
+    cvRunAsync((callback) => CFFI.ContourArea_Async(contour.ref, callback), doubleCompleter);
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
 ///
@@ -311,9 +309,9 @@ Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, 
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
-Future<VecPoint> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDist) async => cvRunAsync(
+Future<double> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDist) async => cvRunAsync(
       (callback) => CFFI.PointPolygonTest_Async(points.ref, pt.ref, measureDist, callback),
-      vecPointCompleter,
+      doubleCompleter,
     );
 
 /// ConnectedComponents computes the connected components labeled image of boolean image.
@@ -1400,10 +1398,10 @@ Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double rep
 /// method: ShapeMatchModes
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
-Future<VecPoint> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async =>
+Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async =>
     cvRunAsync(
       (callback) => CFFI.MatchShapes_Async(contour1.ref, contour2.ref, method, parameter, callback),
-      vecPointCompleter,
+      doubleCompleter,
     );
 
 /// Inverts an affine transformation.
@@ -1441,8 +1439,11 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga1a567a79901513811ff3b9976923b199
 ///
 Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async => mask == null
-    ? cvRunAsync((callback) => CFFI.Mat_Accumulate_Async(src.ref, callback), matCompleter)
-    : cvRunAsync((callback) => CFFI.Mat_AccumulateWithMask_Async(src.ref, mask.ref, callback), matCompleter);
+    ? cvRunAsync0((callback) => CFFI.Mat_Accumulate_Async(src.ref, dst.ref, callback), (c) => c.complete(dst))
+    : cvRunAsync0(
+        (callback) => CFFI.Mat_AccumulateWithMask_Async(src.ref, dst.ref, mask.ref, callback),
+        (c) => c.complete(dst),
+      );
 
 /// Adds the square of a source image to the accumulator image.
 ///
@@ -1450,10 +1451,13 @@ Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? m
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
 Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async =>
     mask == null
-        ? cvRunAsync((callback) => CFFI.Mat_AccumulateSquare_Async(src.ref, callback), matCompleter)
-        : cvRunAsync(
-            (callback) => CFFI.Mat_AccumulateSquareWithMask_Async(src.ref, mask.ref, callback),
-            matCompleter,
+        ? cvRunAsync0(
+            (callback) => CFFI.Mat_AccumulateSquare_Async(src.ref, dst.ref, callback),
+            (c) => c.complete(dst),
+          )
+        : cvRunAsync0(
+            (callback) => CFFI.Mat_AccumulateSquareWithMask_Async(src.ref, dst.ref, mask.ref, callback),
+            (c) => c.complete(dst),
           );
 
 /// Adds the per-element product of two input images to the accumulator image.

@@ -23,7 +23,7 @@ CvStatus *CalcHist_Async(
     VecMat mats, VecInt chans, Mat mask, VecInt sz, VecFloat rng, bool acc, CvCallback_1 callback
 );
 CvStatus *CalcBackProject_Async(
-    VecMat mats, VecInt chans, Mat backProject, VecFloat rng, bool uniform, CvCallback_1 callback
+    VecMat mats, VecInt chans, Mat backProject, VecFloat rng, double scale, CvCallback_1 callback
 );
 CvStatus *CompareHist_Async(Mat hist1, Mat hist2, int method, CVD_OUT CvCallback_1 callback);
 CvStatus *
@@ -457,15 +457,17 @@ CvStatus *Subdiv2D_SymEdge_Async(Subdiv2D self, int edge, CvCallback_1 callback)
 CvStatus *InvertAffineTransform_Async(Mat src, CvCallback_1 callback);
 CvStatus *PhaseCorrelate_Async(Mat src1, Mat src2, Mat window, CvCallback_2 callback);
 
-CvStatus *Mat_Accumulate_Async(Mat src, CvCallback_1 callback);
-CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
-CvStatus *Mat_AccumulateSquare_Async(Mat src, CvCallback_1 callback);
-CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 callback);
+CvStatus *Mat_Accumulate_Async(Mat src, Mat dst, CvCallback_0 callback);
+CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat dst, Mat mask, CvCallback_0 callback);
+CvStatus *Mat_AccumulateSquare_Async(Mat src, Mat dst, CvCallback_0 callback);
+CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat dst, Mat mask, CvCallback_0 callback);
 CvStatus *Mat_AccumulateProduct_Async(Mat src1, Mat src2, Mat dst, CvCallback_0 callback);
-CvStatus *Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask, CvCallback_0 callback);
-CvStatus *Mat_AccumulatedWeighted_Async(Mat src, Mat dst, double alpha, CvCallback_0 callback);
 CvStatus *
-Mat_AccumulatedWeightedWithMask_Async(Mat src, Mat dst, double alpha, Mat mask, CvCallback_0 callback);
+Mat_AccumulateProductWithMask_Async(Mat src1, Mat src2, Mat dst, Mat mask, CvCallback_0 callback);
+CvStatus *Mat_AccumulatedWeighted_Async(Mat src, Mat dst, double alpha, CvCallback_0 callback);
+CvStatus *Mat_AccumulatedWeightedWithMask_Async(
+    Mat src, Mat dst, double alpha, Mat mask, CvCallback_0 callback
+);
 
 #ifdef __cplusplus
 }

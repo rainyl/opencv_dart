@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
@@ -62,7 +60,7 @@ void main() async {
 
     final mask = cv.Mat.empty();
     final hist = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
-    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
+    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32);
     expect(backProject.isEmpty, false);
   });
 

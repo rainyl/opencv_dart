@@ -126,7 +126,7 @@ Mat calcBackProject(
   Mat hist,
   VecFloat ranges, {
   Mat? dst,
-  bool uniform = true,
+  double scale = 1.0,
 }) {
   dst ??= Mat.empty();
   cvRun(
@@ -136,7 +136,7 @@ Mat calcBackProject(
       hist.ref,
       dst!.ref,
       ranges.ref,
-      uniform,
+      scale,
     ),
   );
   return dst;

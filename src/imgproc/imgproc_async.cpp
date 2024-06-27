@@ -62,12 +62,12 @@ CvStatus *CalcHist_Async(
 }
 
 CvStatus *CalcBackProject_Async(
-    VecMat mats, VecInt chans, Mat backProject, VecFloat rng, bool uniform, CvCallback_1 callback
+    VecMat mats, VecInt chans, Mat hist, VecFloat rng, double scale, CvCallback_1 callback
 ) {
   BEGIN_WRAP
-  cv::Mat hist;
-  cv::calcBackProject(*mats.ptr, *chans.ptr, hist, *backProject.ptr, *rng.ptr, uniform);
-  callback(new Mat{new cv::Mat(hist)});
+  cv::Mat backProject;
+  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, backProject, *rng.ptr, scale);
+  callback(new Mat{new cv::Mat(backProject)});
   END_WRAP
 }
 
@@ -230,14 +230,14 @@ CvStatus *BoundingRect_Async(VecPoint pts, CvCallback_1 callback) {
 CvStatus *BoxPoints_Async(RotatedRect rect, CvCallback_1 callback) {
   BEGIN_WRAP
   /// bottom left, top left, top right, bottom right
-  // auto mat = cv::Mat();
+  auto mat = cv::Mat();
   std::vector<cv::Point2f> vec;
   auto center = cv::Point2f(rect.center.x, rect.center.y);
   auto size = cv::Size2f(rect.size.width, rect.size.height);
-  cv::boxPoints(cv::RotatedRect(center, size, rect.angle), vec);
-  // for (int i = 0; i < mat.rows; i++) {
-  //   vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
-  // }
+  cv::boxPoints(cv::RotatedRect(center, size, rect.angle), mat);
+  for (int i = 0; i < mat.rows; i++) {
+    vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
+  }
   callback(new VecPoint2f{new std::vector<cv::Point2f>(vec)});
   END_WRAP
 }
@@ -1500,35 +1500,31 @@ CvStatus *PhaseCorrelate_Async(Mat src1, Mat src2, Mat window, CvCallback_2 call
   END_WRAP
 }
 
-CvStatus *Mat_Accumulate_Async(Mat src, CvCallback_1 callback) {
+CvStatus *Mat_Accumulate_Async(Mat src, Mat dst, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulate(*src.ptr, dst);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulate(*src.ptr, *dst.ptr);
+  callback();
   END_WRAP
 }
 
-CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat mask, CvCallback_1 callback) {
+CvStatus *Mat_AccumulateWithMask_Async(Mat src, Mat dst, Mat mask, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulate(*src.ptr, dst, *mask.ptr);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulate(*src.ptr, *dst.ptr, *mask.ptr);
+  callback();
   END_WRAP
 }
 
-CvStatus *Mat_AccumulateSquare_Async(Mat src, CvCallback_1 callback) {
+CvStatus *Mat_AccumulateSquare_Async(Mat src, Mat dst, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateSquare(*src.ptr, dst);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulateSquare(*src.ptr, *dst.ptr);
+  callback();
   END_WRAP
 }
 
-CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat mask, CvCallback_1 callback) {
+CvStatus *Mat_AccumulateSquareWithMask_Async(Mat src, Mat dst, Mat mask, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::accumulateSquare(*src.ptr, dst, *mask.ptr);
-  callback(new Mat{new cv::Mat(dst)});
+  cv::accumulateSquare(*src.ptr, *dst.ptr, *mask.ptr);
+  callback();
   END_WRAP
 }
 

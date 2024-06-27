@@ -42,10 +42,10 @@ CvStatus *CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, Vec
   cv::calcHist(*mats.ptr, *chans.ptr, *mask.ptr, *hist.ptr, *sz.ptr, *rng.ptr, acc);
   END_WRAP
 }
-CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, bool uniform)
+CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, double scale)
 {
   BEGIN_WRAP
-  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, uniform);
+  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, scale);
   END_WRAP
 }
 CvStatus *CompareHist(Mat hist1, Mat hist2, int method, double *rval)
