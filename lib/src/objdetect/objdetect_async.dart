@@ -12,7 +12,8 @@ import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
-  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -34,8 +35,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   Future<bool> loadAsync(String name) async {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
-    final rval =
-        cvRunAsync<bool>((callback) => CFFI.CascadeClassifier_Load_Async(ref, cname, callback), (c, p) {
+    final rval = cvRunAsync<bool>(
+        (callback) => CFFI.CascadeClassifier_Load_Async(ref, cname, callback),
+        (c, p) {
       final rval = p.cast<ffi.Int>().value != 0;
       calloc.free(p);
       return c.complete(rval);
@@ -89,13 +91,17 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
               callback,
             ), (c, ret, pnums) {
       return c.complete(
-        (VecRect.fromPointer(ret.cast<cvg.VecRect>()), VecInt.fromPointer(pnums.cast<cvg.VecInt>())),
+        (
+          VecRect.fromPointer(ret.cast<cvg.VecRect>()),
+          VecInt.fromPointer(pnums.cast<cvg.VecInt>())
+        ),
       );
     });
     return rval;
   }
 
-  Future<(VecRect objects, VecInt rejectLevels, VecDouble levelWeights)> detectMultiScale3Async(
+  Future<(VecRect objects, VecInt rejectLevels, VecDouble levelWeights)>
+      detectMultiScale3Async(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -128,7 +134,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }
 
   Future<bool> emptyAsync() async {
-    final rval = cvRunAsync<bool>((callback) => CFFI.CascadeClassifier_Empty_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<bool>(
+        (callback) => CFFI.CascadeClassifier_Empty_Async(ref, callback),
+        (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -137,8 +145,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }
 
   Future<int> getFeatureTypeAsync() async {
-    final rval =
-        cvRunAsync<int>((callback) => CFFI.CascadeClassifier_getFeatureType_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<int>(
+        (callback) =>
+            CFFI.CascadeClassifier_getFeatureType_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
 
@@ -149,7 +158,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   Future<(int, int)> getOriginalWindowSizeAsync() async {
     final rval = cvRunAsync<(int, int)>(
-        (callback) => CFFI.CascadeClassifier_getOriginalWindowSize_Async(ref, callback), (c, p) {
+        (callback) =>
+            CFFI.CascadeClassifier_getOriginalWindowSize_Async(ref, callback),
+        (c, p) {
       final size = p.cast<cvg.Size>().ref;
       final ret = (size.width, size.height);
       return c.complete(ret);
@@ -159,7 +170,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   Future<bool> isOldFormatCascadeAsync() async {
     final rval = cvRunAsync<bool>(
-        (callback) => CFFI.CascadeClassifier_isOldFormatCascade_Async(ref, callback), (c, p) {
+        (callback) =>
+            CFFI.CascadeClassifier_isOldFormatCascade_Async(ref, callback),
+        (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -183,7 +196,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 }
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
-  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -205,7 +219,9 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 
   Future<bool> loadAsync(String name) async {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
-    final rval = cvRunAsync<bool>((callback) => CFFI.HOGDescriptor_Load_Async(ref, cname, callback), (c, p) {
+    final rval = cvRunAsync<bool>(
+        (callback) => CFFI.HOGDescriptor_Load_Async(ref, cname, callback),
+        (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
 
@@ -260,7 +276,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     return rval;
   }
 
-  Future<(VecPoint foundLocations, VecDouble weights, VecPoint searchLocations)> detect2Async(
+  Future<(VecPoint foundLocations, VecDouble weights, VecPoint searchLocations)>
+      detect2Async(
     InputArray img, {
     double hitThreshold = 0,
     (int, int) winStride = (0, 0),
@@ -339,22 +356,25 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }
 
   static Future<VecFloat> getDefaultPeopleDetectorAsync() async {
-    final rval = cvRunAsync<VecFloat>(CFFI.HOG_GetDefaultPeopleDetector_Async, (c, v) {
+    final rval =
+        cvRunAsync<VecFloat>(CFFI.HOG_GetDefaultPeopleDetector_Async, (c, v) {
       return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
     });
     return rval;
   }
 
   static Future<VecFloat> getDaimlerPeopleDetectorAsync() async {
-    final rval = cvRunAsync<VecFloat>(CFFI.HOGDescriptor_getDaimlerPeopleDetector_Async, (c, v) {
+    final rval = cvRunAsync<VecFloat>(
+        CFFI.HOGDescriptor_getDaimlerPeopleDetector_Async, (c, v) {
       return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
     });
     return rval;
   }
 
   Future<int> getDescriptorSizeAsync() async {
-    final rval =
-        cvRunAsync<int>((callback) => CFFI.HOGDescriptor_getDescriptorSize_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<int>(
+        (callback) => CFFI.HOGDescriptor_getDescriptorSize_Async(ref, callback),
+        (c, p) {
       final rval = p.cast<ffi.Size>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -363,8 +383,9 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }
 
   Future<double> getWinSigmaAsync() async {
-    final rval =
-        cvRunAsync<double>((callback) => CFFI.HOGDescriptor_getWinSigma_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<double>(
+        (callback) => CFFI.HOGDescriptor_getWinSigma_Async(ref, callback),
+        (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -393,15 +414,18 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }
 
   Future<void> setSVMDetectorAsync(VecFloat det) async {
-    await cvRunAsync<void>((callback) => CFFI.HOGDescriptor_SetSVMDetector_Async(ref, det.ref, callback),
-        (c, _) {
+    await cvRunAsync0<void>(
+        (callback) =>
+            CFFI.HOGDescriptor_SetSVMDetector_Async(ref, det.ref, callback),
+        (c) {
       return c.complete();
     });
   }
 
   @override
   cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -427,7 +451,8 @@ Future<VecRect> groupRectanglesAsync(
 }
 
 class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
-  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -452,13 +477,17 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
               callback,
             ), (c, rval, straightQRcode) {
       return c.complete(
-        (rval.cast<Utf8>().toDartString(), Mat.fromPointer(straightQRcode.cast<cvg.Mat>())),
+        (
+          rval.cast<Utf8>().toDartString(),
+          Mat.fromPointer(straightQRcode.cast<cvg.Mat>())
+        ),
       );
     });
     return rval;
   }
 
-  Future<(String rval, VecPoint points, Mat straightQRcode)> detectAndDecodeCurvedAsync(
+  Future<(String rval, VecPoint points, Mat straightQRcode)>
+      detectAndDecodeCurvedAsync(
     InputArray img, {
     VecPoint? points,
     Mat? straightQRcode,
@@ -486,7 +515,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     OutputArray? straightCode,
   }) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
-        (callback) => CFFI.QRCodeDetector_DetectAndDecode_Async(ref, img.ref, callback),
+        (callback) =>
+            CFFI.QRCodeDetector_DetectAndDecode_Async(ref, img.ref, callback),
         (c, ret, points, straightCode) {
       return c.complete(
         (
@@ -504,7 +534,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     VecPoint? points,
   }) async {
     final rval = cvRunAsync2<(bool, VecPoint)>(
-        (callback) => CFFI.QRCodeDetector_Detect_Async(ref, input.ref, callback), (c, ret, points) {
+        (callback) =>
+            CFFI.QRCodeDetector_Detect_Async(ref, input.ref, callback),
+        (c, ret, points) {
       final retValue = ret.cast<ffi.Bool>().value;
       calloc.free(ret);
       return c.complete(
@@ -538,7 +570,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     VecPoint? points,
   }) async {
     final rval = cvRunAsync2<(bool, VecPoint)>(
-        (callback) => CFFI.QRCodeDetector_DetectMulti_Async(ref, img.ref, callback), (c, ret, points) {
+        (callback) =>
+            CFFI.QRCodeDetector_DetectMulti_Async(ref, img.ref, callback),
+        (c, ret, points) {
       final retValue = ret.cast<ffi.Bool>().value;
       calloc.free(ret);
       return c.complete(
@@ -570,31 +604,36 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }
 
   Future<void> setEpsXAsync(double epsX) async {
-    await cvRunAsync<void>((callback) => CFFI.QRCodeDetector_setEpsX_Async(ref, epsX, callback), (c, _) {
+    await cvRunAsync0<void>(
+        (callback) => CFFI.QRCodeDetector_setEpsX_Async(ref, epsX, callback),
+        (c) {
       return c.complete();
     });
   }
 
   Future<void> setEpsYAsync(double epsY) async {
-    await cvRunAsync<void>((callback) => CFFI.QRCodeDetector_setEpsY_Async(ref, epsY, callback), (c, _) {
+    await cvRunAsync0<void>(
+        (callback) => CFFI.QRCodeDetector_setEpsY_Async(ref, epsY, callback),
+        (c) {
       return c.complete();
     });
   }
 
   Future<void> setUseAlignmentMarkersAsync(bool useAlignmentMarkers) async {
-    await cvRunAsync<void>(
+    await cvRunAsync0<void>(
         (callback) => CFFI.QRCodeDetector_setUseAlignmentMarkers_Async(
               ref,
               useAlignmentMarkers,
               callback,
-            ), (c, _) {
+            ), (c) {
       return c.complete();
     });
   }
 
   @override
   cvg.QRCodeDetector get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -606,7 +645,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 }
 
 class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
-  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -675,8 +715,9 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<(int, int)> getInputSizeAsync() async {
-    final rval =
-        cvRunAsync<(int, int)>((callback) => CFFI.FaceDetectorYN_GetInputSize_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<(int, int)>(
+        (callback) => CFFI.FaceDetectorYN_GetInputSize_Async(ref, callback),
+        (c, p) {
       final size = p.cast<cvg.Size>().ref;
       final ret = (size.width, size.height);
       return c.complete(ret);
@@ -685,8 +726,9 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<double> getScoreThresholdAsync() async {
-    final rval =
-        cvRunAsync<double>((callback) => CFFI.FaceDetectorYN_GetScoreThreshold_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<double>(
+        (callback) =>
+            CFFI.FaceDetectorYN_GetScoreThreshold_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Float>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -695,8 +737,9 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<double> getNmsThresholdAsync() async {
-    final rval =
-        cvRunAsync<double>((callback) => CFFI.FaceDetectorYN_GetNMSThreshold_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<double>(
+        (callback) => CFFI.FaceDetectorYN_GetNMSThreshold_Async(ref, callback),
+        (c, p) {
       final rval = p.cast<ffi.Float>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -705,7 +748,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<int> getTopKAsync() async {
-    final rval = cvRunAsync<int>((callback) => CFFI.FaceDetectorYN_GetTopK_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<int>(
+        (callback) => CFFI.FaceDetectorYN_GetTopK_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -714,55 +758,59 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }
 
   Future<Mat> detectAsync(Mat image) async {
-    final rval =
-        cvRunAsync<Mat>((callback) => CFFI.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, p) {
+    final rval = cvRunAsync<Mat>(
+        (callback) =>
+            CFFI.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, p) {
       return c.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
     });
     return rval;
   }
 
   Future<void> setInputSizeAsync((int, int) inputSize) async {
-    await cvRunAsync<void>(
+    await cvRunAsync0<void>(
         (callback) => CFFI.FaceDetectorYN_SetInputSize_Async(
               ref,
               inputSize.cvd.ref,
               callback,
-            ), (c, _) {
+            ), (c) {
       return c.complete();
     });
   }
 
   Future<void> setScoreThresholdAsync(double scoreThreshold) async {
-    await cvRunAsync<void>(
+    await cvRunAsync0<void>(
         (callback) => CFFI.FaceDetectorYN_SetScoreThreshold_Async(
               ref,
               scoreThreshold,
               callback,
-            ), (c, _) {
+            ), (c) {
       return c.complete();
     });
   }
 
   Future<void> setNMSThresholdAsync(double nmsThreshold) async {
-    await cvRunAsync<void>(
+    await cvRunAsync0<void>(
         (callback) => CFFI.FaceDetectorYN_SetNMSThreshold_Async(
               ref,
               nmsThreshold,
               callback,
-            ), (c, _) {
+            ), (c) {
       return c.complete();
     });
   }
 
   Future<void> setTopKAsync(int topK) async {
-    await cvRunAsync<void>((callback) => CFFI.FaceDetectorYN_SetTopK_Async(ref, topK, callback), (c, _) {
+    await cvRunAsync0<void>(
+        (callback) => CFFI.FaceDetectorYN_SetTopK_Async(ref, topK, callback),
+        (c) {
       return c.complete();
     });
   }
 
   @override
   cvg.FaceDetectorYN get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -774,7 +822,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 }
 
 class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
-  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true])
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }

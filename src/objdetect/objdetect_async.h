@@ -50,7 +50,7 @@ CvStatus *HOGDescriptor_DetectMultiScaleWithParams_Async(HOGDescriptor self, Mat
 CvStatus *HOGDescriptor_Compute_Async(HOGDescriptor self, Mat img, Size winStride, Size padding, CvCallback_2 callback);
 CvStatus *HOGDescriptor_computeGradient_Async(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL, Size paddingBR, CvCallback_0 callback);
 CvStatus *HOG_GetDefaultPeopleDetector_Async(CvCallback_1 callback);
-CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_1 callback);
+CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_0 callback);
 CvStatus *HOGDescriptor_getDaimlerPeopleDetector_Async(CvCallback_1 callback);
 CvStatus *HOGDescriptor_getDescriptorSize_Async(HOGDescriptor self, CvCallback_1 callback);
 CvStatus *HOGDescriptor_getWinSigma_Async(HOGDescriptor self, CvCallback_1 callback);
@@ -66,21 +66,21 @@ CvStatus *QRCodeDetector_decodeCurved_Async(QRCodeDetector self, Mat img, VecPoi
 CvStatus *QRCodeDetector_detectAndDecodeCurved_Async(QRCodeDetector self, Mat img, CvCallback_3 callback);
 CvStatus *QRCodeDetector_DetectMulti_Async(QRCodeDetector self, Mat input, CvCallback_2 callback);
 CvStatus *QRCodeDetector_DetectAndDecodeMulti_Async(QRCodeDetector self, Mat input, CvCallback_4 callback);
-CvStatus *QRCodeDetector_setEpsX_Async(QRCodeDetector self, double epsX, CvCallback_1 callback);
-CvStatus *QRCodeDetector_setEpsY_Async(QRCodeDetector self, double epsY, CvCallback_1 callback);
-CvStatus *QRCodeDetector_setUseAlignmentMarkers_Async(QRCodeDetector self, bool useAlignmentMarkers, CvCallback_1 callback);
+CvStatus *QRCodeDetector_setEpsX_Async(QRCodeDetector self, double epsX, CvCallback_0 callback);
+CvStatus *QRCodeDetector_setEpsY_Async(QRCodeDetector self, double epsY, CvCallback_0 callback);
+CvStatus *QRCodeDetector_setUseAlignmentMarkers_Async(QRCodeDetector self, bool useAlignmentMarkers, CvCallback_0 callback);
 
 // FaceDetectorYN
 CvStatus *FaceDetectorYN_New_Async(const char *model, const char *config, Size input_size, float score_threshold, float nms_threshold, int top_k, int backend_id, int target_id, CvCallback_1 callback);
 CvStatus *FaceDetectorYN_NewFromBuffer_Async(const char *framework, VecUChar buffer, VecUChar buffer_config, Size input_size, float score_threshold, float nms_threshold, int top_k, int backend_id, int target_id, CvCallback_1 callback);
 CvStatus *FaceDetectorYN_Detect_Async(FaceDetectorYN self, Mat img, CvCallback_1 callback);
-CvStatus *FaceDetectorYN_SetInputSize_Async(FaceDetectorYN self, Size input_size, CvCallback_1 callback);
+CvStatus *FaceDetectorYN_SetInputSize_Async(FaceDetectorYN self, Size input_size, CvCallback_0 callback);
 CvStatus *FaceDetectorYN_GetInputSize_Async(FaceDetectorYN self, CvCallback_1 callback);
-CvStatus *FaceDetectorYN_SetScoreThreshold_Async(FaceDetectorYN self, float score_threshold, CvCallback_1 callback);
+CvStatus *FaceDetectorYN_SetScoreThreshold_Async(FaceDetectorYN self, float score_threshold, CvCallback_0 callback);
 CvStatus *FaceDetectorYN_GetScoreThreshold_Async(FaceDetectorYN self, CvCallback_1 callback);
-CvStatus *FaceDetectorYN_SetNMSThreshold_Async(FaceDetectorYN self, float nms_threshold, CvCallback_1 callback);
+CvStatus *FaceDetectorYN_SetNMSThreshold_Async(FaceDetectorYN self, float nms_threshold, CvCallback_0 callback);
 CvStatus *FaceDetectorYN_GetNMSThreshold_Async(FaceDetectorYN self, CvCallback_1 callback);
-CvStatus *FaceDetectorYN_SetTopK_Async(FaceDetectorYN self, int top_k, CvCallback_1 callback);
+CvStatus *FaceDetectorYN_SetTopK_Async(FaceDetectorYN self, int top_k, CvCallback_0 callback);
 CvStatus *FaceDetectorYN_GetTopK_Async(FaceDetectorYN self, CvCallback_1 callback);
 
 // FaceRecognizerSF

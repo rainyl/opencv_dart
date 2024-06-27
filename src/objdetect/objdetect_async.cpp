@@ -169,10 +169,10 @@ CvStatus *HOG_GetDefaultPeopleDetector_Async(CvCallback_1 callback) {
     END_WRAP
 }
 
-CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_1 callback) {
+CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->setSVMDetector(*det.ptr);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
@@ -286,24 +286,24 @@ CvStatus *QRCodeDetector_DetectAndDecodeMulti_Async(QRCodeDetector self, Mat inp
     END_WRAP
 }
 
-CvStatus *QRCodeDetector_setEpsX_Async(QRCodeDetector self, double epsX, CvCallback_1 callback) {
+CvStatus *QRCodeDetector_setEpsX_Async(QRCodeDetector self, double epsX, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->setEpsX(epsX);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
-CvStatus *QRCodeDetector_setEpsY_Async(QRCodeDetector self, double epsY, CvCallback_1 callback) {
+CvStatus *QRCodeDetector_setEpsY_Async(QRCodeDetector self, double epsY, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->setEpsY(epsY);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
-CvStatus *QRCodeDetector_setUseAlignmentMarkers_Async(QRCodeDetector self, bool useAlignmentMarkers, CvCallback_1 callback) {
+CvStatus *QRCodeDetector_setUseAlignmentMarkers_Async(QRCodeDetector self, bool useAlignmentMarkers, CvCallback_0 callback) {
     BEGIN_WRAP
     self.ptr->setUseAlignmentMarkers(useAlignmentMarkers);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
@@ -328,10 +328,10 @@ CvStatus *FaceDetectorYN_Detect_Async(FaceDetectorYN self, Mat img, CvCallback_1
     END_WRAP
 }
 
-CvStatus *FaceDetectorYN_SetInputSize_Async(FaceDetectorYN self, Size input_size, CvCallback_1 callback) {
+CvStatus *FaceDetectorYN_SetInputSize_Async(FaceDetectorYN self, Size input_size, CvCallback_0 callback) {
     BEGIN_WRAP
     (*self.ptr)->setInputSize(cv::Size(input_size.width, input_size.height));
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
@@ -342,10 +342,10 @@ CvStatus *FaceDetectorYN_GetInputSize_Async(FaceDetectorYN self, CvCallback_1 ca
     END_WRAP
 }
 
-CvStatus *FaceDetectorYN_SetScoreThreshold_Async(FaceDetectorYN self, float score_threshold, CvCallback_1 callback) {
+CvStatus *FaceDetectorYN_SetScoreThreshold_Async(FaceDetectorYN self, float score_threshold, CvCallback_0 callback) {
     BEGIN_WRAP
     (*self.ptr)->setScoreThreshold(score_threshold);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
@@ -356,10 +356,10 @@ CvStatus *FaceDetectorYN_GetScoreThreshold_Async(FaceDetectorYN self, CvCallback
     END_WRAP
 }
 
-CvStatus *FaceDetectorYN_SetNMSThreshold_Async(FaceDetectorYN self, float nms_threshold, CvCallback_1 callback) {
+CvStatus *FaceDetectorYN_SetNMSThreshold_Async(FaceDetectorYN self, float nms_threshold, CvCallback_0 callback) {
     BEGIN_WRAP
     (*self.ptr)->setNMSThreshold(nms_threshold);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
@@ -370,10 +370,10 @@ CvStatus *FaceDetectorYN_GetNMSThreshold_Async(FaceDetectorYN self, CvCallback_1
     END_WRAP
 }
 
-CvStatus *FaceDetectorYN_SetTopK_Async(FaceDetectorYN self, int top_k, CvCallback_1 callback) {
+CvStatus *FaceDetectorYN_SetTopK_Async(FaceDetectorYN self, int top_k, CvCallback_0 callback) {
     BEGIN_WRAP
     (*self.ptr)->setTopK(top_k);
-    callback(new int(0));
+    callback();
     END_WRAP
 }
 
