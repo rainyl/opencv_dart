@@ -1,0 +1,20 @@
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+name: Format Code
+
+jobs:
+  build:
+    name: format code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: |
+          dart format --line-length 110 --set-exit-if-changed \
+            $(find lib test -name '*.dart' -not -name '*.g.dart' -and -not -name '*.freezed.dart')
