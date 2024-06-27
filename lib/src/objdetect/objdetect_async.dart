@@ -2,7 +2,9 @@ library cv;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
+
 import 'package:ffi/ffi.dart';
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
@@ -10,26 +12,21 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
+import './objdetect.dart';
 
-class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
-  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
+extension CascadeClassifierAsync on CascadeClassifier {
+  static Future<CascadeClassifier> emptyNewAsync() async => cvRunAsync(
+      (callback) => CFFI.CascadeClassifier_New_Async(callback),
+      (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())));
 
-  factory CascadeClassifier.empty() {
-    final p = calloc<cvg.CascadeClassifier>();
-    cvRun(() => CFFI.CascadeClassifier_New(p));
-    return CascadeClassifier._(p);
-  }
-
-  factory CascadeClassifier.fromFile(String filename) {
-    final p = calloc<cvg.CascadeClassifier>();
+  static Future<CascadeClassifier> fromFileAsync(String filename) async {
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => CFFI.CascadeClassifier_NewFromFile(cp, p));
+    final rval = await cvRunAsync<CascadeClassifier>(
+        (callback) => CFFI.CascadeClassifier_NewFromFile_Async(cp, callback), (c, p) {
+      return c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>()));
+    });
     calloc.free(cp);
-    return CascadeClassifier._(p);
+    return rval;
   }
 
   Future<bool> loadAsync(String name) async {
@@ -166,41 +163,21 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     });
     return rval;
   }
-
-  @override
-  cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(
-    CFFI.addresses.CascadeClassifier_Close,
-  );
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.CascadeClassifier_Close(ptr);
-  }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
-class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
-  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
+extension HOGDescriptorAsync on HOGDescriptor {
+  static Future<HOGDescriptor> emptyNewAsync() async => cvRunAsync(
+      (callback) => CFFI.HOGDescriptor_New_Async(callback),
+      (c, p) => c.complete(HOGDescriptor.fromPointer(p.cast<cvg.HOGDescriptor>())));
 
-  factory HOGDescriptor.empty() {
-    final p = calloc<cvg.HOGDescriptor>();
-    cvRun(() => CFFI.HOGDescriptor_New(p));
-    return HOGDescriptor._(p);
-  }
-
-  factory HOGDescriptor.fromFile(String filename) {
-    final p = calloc<cvg.HOGDescriptor>();
+  static Future<HOGDescriptor> fromFileAsync(String filename) async {
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => CFFI.HOGDescriptor_NewFromFile(cp, p));
+    final rval = await cvRunAsync<HOGDescriptor>(
+        (callback) => CFFI.HOGDescriptor_NewFromFile_Async(cp, callback), (c, p) {
+      return c.complete(HOGDescriptor.fromPointer(p.cast<cvg.HOGDescriptor>()));
+    });
     calloc.free(cp);
-    return HOGDescriptor._(p);
+    return rval;
   }
 
   Future<bool> loadAsync(String name) async {
@@ -398,18 +375,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
       return c.complete();
     });
   }
-
-  @override
-  cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(CFFI.addresses.HOGDescriptor_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.HOGDescriptor_Close(ptr);
-  }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
 Future<VecRect> groupRectanglesAsync(
@@ -424,18 +389,10 @@ Future<VecRect> groupRectanglesAsync(
   return rval;
 }
 
-class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
-  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
-
-  factory QRCodeDetector.empty() {
-    final p = calloc<cvg.QRCodeDetector>();
-    cvRun(() => CFFI.QRCodeDetector_New(p));
-    return QRCodeDetector._(p);
-  }
+extension QRCodeDetectorAsync on QRCodeDetector {
+  static Future<QRCodeDetector> emptyNewAsync() async => cvRunAsync(
+      (callback) => CFFI.QRCodeDetector_New_Async(callback),
+      (c, p) => c.complete(QRCodeDetector.fromPointer(p.cast<cvg.QRCodeDetector>())));
 
   Future<(String rval, Mat straightQRcode)> decodeCurvedAsync(
     InputArray img,
@@ -588,28 +545,14 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       return c.complete();
     });
   }
-
-  @override
-  cvg.QRCodeDetector get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(CFFI.addresses.QRCodeDetector_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.QRCodeDetector_Close(ptr);
-  }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
-class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
-  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
+extension FaceDetectorYNAsync on FaceDetectorYN {
+  static Future<CascadeClassifier> emptyNewAsync() async => cvRunAsync(
+      (callback) => CFFI.CascadeClassifier_New_Async(callback),
+      (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())));
 
-  factory FaceDetectorYN.fromFile(
+  static Future<FaceDetectorYN> fromFileAsync(
     String model,
     String config,
     (int, int) inputSize, {
@@ -618,29 +561,20 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int topK = 5000,
     int backendId = 0,
     int targetId = 0,
-  }) {
-    final p = calloc<cvg.FaceDetectorYN>();
+  }) async {
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => CFFI.FaceDetectorYN_New(
-        cModel,
-        cConfig,
-        inputSize.cvd.ref,
-        scoreThreshold,
-        nmsThreshold,
-        topK,
-        backendId,
-        targetId,
-        p,
-      ),
-    );
+    final rval = await cvRunAsync<FaceDetectorYN>(
+        (callback) => CFFI.FaceDetectorYN_New_Async(cModel, cConfig, inputSize.cvd.ref, scoreThreshold,
+            nmsThreshold, topK, backendId, targetId, callback), (c, p) {
+      return c.complete(FaceDetectorYN.fromPointer(p.cast<cvg.FaceDetectorYN>()));
+    });
     calloc.free(cModel);
     calloc.free(cConfig);
-    return FaceDetectorYN._(p);
+    return rval;
   }
 
-  factory FaceDetectorYN.fromBuffer(
+  static Future<FaceDetectorYN> fromBufferAsync(
     String framework,
     Uint8List bufferModel,
     Uint8List bufferConfig,
@@ -650,25 +584,26 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int topK = 5000,
     int backendId = 0,
     int targetId = 0,
-  }) {
-    final p = calloc<cvg.FaceDetectorYN>();
+  }) async {
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => CFFI.FaceDetectorYN_NewFromBuffer(
-        cFramework,
-        VecUChar.fromList(bufferModel).ref,
-        VecUChar.fromList(bufferConfig).ref,
-        inputSize.cvd.ref,
-        scoreThreshold,
-        nmsThreshold,
-        topK,
-        backendId,
-        targetId,
-        p,
-      ),
-    );
+
+    final rval = await cvRunAsync<FaceDetectorYN>(
+        (callback) => CFFI.FaceDetectorYN_NewFromBuffer_Async(
+            cFramework,
+            VecUChar.fromList(bufferModel).ref,
+            VecUChar.fromList(bufferConfig).ref,
+            inputSize.cvd.ref,
+            scoreThreshold,
+            nmsThreshold,
+            topK,
+            backendId,
+            targetId,
+            callback), (c, p) {
+      return c.complete(FaceDetectorYN.fromPointer(p.cast<cvg.FaceDetectorYN>()));
+    });
     calloc.free(cFramework);
-    return FaceDetectorYN._(p);
+
+    return rval;
   }
 
   Future<(int, int)> getInputSizeAsync() async {
@@ -756,42 +691,30 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
       return c.complete();
     });
   }
-
-  @override
-  cvg.FaceDetectorYN get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(CFFI.addresses.FaceDetectorYN_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.FaceDetectorYN_Close(ptr);
-  }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
-class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
-  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
-
-  factory FaceRecognizerSF.fromFile(
+extension FaceRecognizerSFAsync on FaceRecognizerSF {
+  static Future<FaceRecognizerSF> fromFileAsync(
     String model,
     String config, {
     int backendId = 0,
     int targetId = 0,
-  }) {
-    final p = calloc<cvg.FaceRecognizerSF>();
+  }) async {
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p),
-    );
+    final rval = await cvRunAsync<FaceRecognizerSF>(
+        (callback) => CFFI.FaceRecognizerSF_New_Async(
+              cModel,
+              cConfig,
+              backendId,
+              targetId,
+              callback,
+            ), (c, p) {
+      return c.complete(FaceRecognizerSF.fromPointer(p.cast<cvg.FaceRecognizerSF>()));
+    });
     calloc.free(cModel);
     calloc.free(cConfig);
-    return FaceRecognizerSF._(p);
+    return rval;
   }
 
   Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) async {
@@ -839,26 +762,4 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     });
     return rval;
   }
-
-  @override
-  cvg.FaceRecognizerSF get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(
-    CFFI.addresses.FaceRecognizerSF_Close,
-  );
-
-  void dispose() {
-    finalizer.detach(this);
-    CFFI.FaceRecognizerSF_Close(ptr);
-  }
-
-  @override
-  List<int> get props => [ptr.address];
-
-  @Deprecated("Use [FR_COSINE] instead.")
-  static const int DIS_TYPR_FR_COSINE = 0;
-  @Deprecated("Use [FR_NORM_L2] instead.")
-  static const int DIS_TYPE_FR_NORM_L2 = 1;
-
-  static const int FR_COSINE = 0;
-  static const int FR_NORM_L2 = 1;
 }

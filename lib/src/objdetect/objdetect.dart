@@ -21,6 +21,11 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory CascadeClassifier.fromPointer(
+    cvg.CascadeClassifierPtr ptr, [
+    bool attach = true,
+  ]) =>
+      CascadeClassifier._(ptr, attach);
 
   factory CascadeClassifier.empty() {
     final p = calloc<cvg.CascadeClassifier>();
@@ -194,6 +199,11 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory HOGDescriptor.fromPointer(
+    cvg.HOGDescriptorPtr ptr, [
+    bool attach = true,
+  ]) =>
+      HOGDescriptor._(ptr, attach);
 
   factory HOGDescriptor.empty() {
     final p = calloc<cvg.HOGDescriptor>();
@@ -454,6 +464,11 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory QRCodeDetector.fromPointer(
+    cvg.QRCodeDetectorPtr ptr, [
+    bool attach = true,
+  ]) =>
+      QRCodeDetector._(ptr, attach);
 
   factory QRCodeDetector.empty() {
     final p = calloc<cvg.QRCodeDetector>();
@@ -619,6 +634,11 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory FaceDetectorYN.fromPointer(
+    cvg.FaceDetectorYNPtr ptr, [
+    bool attach = true,
+  ]) =>
+      FaceDetectorYN._(ptr, attach);
 
   /// Creates an instance of face detector class with given parameters.
   ///
@@ -843,6 +863,11 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory FaceRecognizerSF.fromPointer(
+    cvg.FaceRecognizerSFPtr ptr, [
+    bool attach = true,
+  ]) =>
+      FaceRecognizerSF._(ptr, attach);
 
   @Deprecated("Use FaceRecognizerSF.fromFile instead, will be removed in 1.1.0")
   factory FaceRecognizerSF.newRecognizer(
