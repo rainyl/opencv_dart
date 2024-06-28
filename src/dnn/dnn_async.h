@@ -1,6 +1,7 @@
 #ifndef CVD_DNN_ASYNC_H_
 #define CVD_DNN_ASYNC_H_
 
+#include "dnn.h"
 #include "core/types.h"
 #include <stdbool.h>
 
@@ -8,16 +9,6 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
 extern "C" {
-#endif
-
-#ifdef __cplusplus
-// Define types for the C++ classes used
-CVD_TYPEDEF(cv::dnn::Net, Net);
-CVD_TYPEDEF(cv::Ptr<cv::dnn::Layer>, Layer);
-#else
-// Define types for the C-compatible interface
-CVD_TYPEDEF(void, Net);
-CVD_TYPEDEF(void, Layer);
 #endif
 
 // Asynchronous functions for Net

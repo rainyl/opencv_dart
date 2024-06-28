@@ -1,29 +1,14 @@
-/* Created by Rainyl. Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl. */ 
+/* Created by Rainyl. Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl. */
 #ifndef CVD_OBJDETECT_ASYNC_H_
 #define CVD_OBJDETECT_ASYNC_H_
 
 #include "core/types.h"
+#include "objdetect.h"
 #include <stdbool.h>
 
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
 extern "C" {
-#endif
-
-#ifdef __cplusplus
-// Define types for the C++ classes used
-CVD_TYPEDEF(cv::CascadeClassifier, CascadeClassifier);
-CVD_TYPEDEF(cv::HOGDescriptor, HOGDescriptor);
-CVD_TYPEDEF(cv::QRCodeDetector, QRCodeDetector);
-CVD_TYPEDEF(cv::Ptr<cv::FaceDetectorYN>, FaceDetectorYN);
-CVD_TYPEDEF(cv::Ptr<cv::FaceRecognizerSF>, FaceRecognizerSF);
-#else
-// Define types for the C-compatible interface
-CVD_TYPEDEF(void, CascadeClassifier);
-CVD_TYPEDEF(void, HOGDescriptor);
-CVD_TYPEDEF(void, QRCodeDetector);
-CVD_TYPEDEF(void *, FaceDetectorYN);
-CVD_TYPEDEF(void *, FaceRecognizerSF);
 #endif
 
 // CascadeClassifier
