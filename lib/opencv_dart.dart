@@ -28,6 +28,7 @@ export 'src/core/scalar.dart';
 export 'src/core/size.dart';
 export 'src/core/vec.dart';
 export 'src/dnn/dnn.dart';
+export 'src/dnn/dnn_async.dart';
 export 'src/features2d/features2d.dart';
 export 'src/highgui/highgui.dart';
 export 'src/imgcodecs/imgcodecs.dart';
