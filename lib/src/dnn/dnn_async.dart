@@ -2,8 +2,8 @@ library cv;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
+
 import 'package:ffi/ffi.dart';
-import './dnn.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -13,6 +13,7 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
+import './dnn.dart';
 
 extension LayerAsync on Layer {
   Future<String> get nameAsync async {
@@ -93,8 +94,11 @@ extension NetAsync on Net {
     return rval;
   }
 
-  static Future<Net> fromBytesAsync(String framework, Uint8List bufferModel,
-      {Uint8List? bufferConfig}) async {
+  static Future<Net> fromBytesAsync(
+    String framework,
+    Uint8List bufferModel, {
+    Uint8List? bufferConfig,
+  }) async {
     bufferConfig ??= Uint8List(0);
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
@@ -302,7 +306,8 @@ extension NetAsync on Net {
     final rval = cvRunAsync2<(VecFloat, VecInt)>(
       (callback) => CFFI.Net_GetInputDetails_Async(ref, callback),
       (c, sc, zp) => c.complete(
-          (VecFloat.fromPointer(sc.cast<cvg.VecFloat>()), VecInt.fromPointer(zp.cast<cvg.VecInt>()))),
+        (VecFloat.fromPointer(sc.cast<cvg.VecFloat>()), VecInt.fromPointer(zp.cast<cvg.VecInt>())),
+      ),
     );
     return rval;
   }
