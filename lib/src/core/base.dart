@@ -151,6 +151,28 @@ Future<T> cvRunAsync3<T>(
   return completer.future;
 }
 
+Future<T> cvRunAsync4<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
+  void Function(
+    Completer<T> completer,
+    VoidPtr p,
+    VoidPtr p1,
+    VoidPtr p2,
+    VoidPtr p3,
+  ) onComplete,
+) {
+  final completer = Completer<T>();
+  late final NativeCallable<cvg.CvCallback_4Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) {
+    onComplete(completer, p, p1, p2, p3);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
 Future<T> cvRunAsync5<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
   void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) onComplete,

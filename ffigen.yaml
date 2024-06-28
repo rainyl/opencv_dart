@@ -25,6 +25,7 @@ headers:
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
     - src/extra/img_hash.h
     - src/extra/wechat_qrcode.h
@@ -36,6 +37,7 @@ headers:
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
     - src/stitching/stitching.h
     - src/video/video.h
@@ -51,6 +53,7 @@ headers:
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
     - src/extra/img_hash.h
     - src/extra/wechat_qrcode.h
@@ -62,6 +65,7 @@ headers:
     - src/imgproc/imgproc.h
     - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
     - src/stitching/stitching.h
     - src/video/video.h

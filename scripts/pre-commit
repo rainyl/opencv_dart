@@ -1,0 +1,2 @@
+#!/bin/sh
+exec dart format --fix --set-exit-if-changed -l 110 .
