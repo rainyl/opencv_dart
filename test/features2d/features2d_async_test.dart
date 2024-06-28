@@ -3,8 +3,7 @@ import 'package:test/test.dart';
 
 void main() async {
   test('cv.AKAZEAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ak = await cv.AKAZEAsync.emptyAsync();
@@ -20,8 +19,7 @@ void main() async {
   });
 
   test('cv.AgastFeatureDetectorAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ad = await cv.AgastFeatureDetectorAsync.emptyAsync();
@@ -32,8 +30,7 @@ void main() async {
   });
 
   test('cv.BRISKAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final br = await cv.BRISKAsync.emptyAsync();
@@ -49,8 +46,7 @@ void main() async {
   });
 
   test('cv.FastFeatureDetectorAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final fd = await cv.FastFeatureDetectorAsync.emptyAsync();
@@ -65,8 +61,7 @@ void main() async {
   });
 
   test('cv.GFTTDetectorAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final gf = await cv.GFTTDetectorAsync.emptyAsync();
@@ -77,8 +72,7 @@ void main() async {
   });
 
   test('cv.KAZEAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ka = await cv.KAZEAsync.emptyAsync();
@@ -94,8 +88,7 @@ void main() async {
   });
 
   test('cv.MSERAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final gf = await cv.MSERAsync.emptyAsync();
@@ -106,8 +99,7 @@ void main() async {
   });
 
   test('cv.ORBAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ka = await cv.ORBAsync.emptyAsync();
@@ -127,8 +119,7 @@ void main() async {
   });
 
   test('cv.SimpleBlobDetectorAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final detector = await cv.SimpleBlobDetectorAsync.emptyAsync();
@@ -264,11 +255,15 @@ void main() async {
   });
 
   test('cv.BFMatcherAsync', () async {
-    final desc1 = await cv.imreadAsync("test/images/sift_descriptor.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final desc1 = await cv.imreadAsync(
+      "test/images/sift_descriptor.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(desc1.isEmpty, false);
-    final desc2 = await cv.imreadAsync("test/images/sift_descriptor.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final desc2 = await cv.imreadAsync(
+      "test/images/sift_descriptor.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(desc2.isEmpty, false);
 
     final matcher = await cv.BFMatcherAsync.emptyAsync();
@@ -286,11 +281,15 @@ void main() async {
   });
 
   test('cv.FlannBasedMatcherAsync', () async {
-    final desc1 = await cv.imreadAsync("test/images/sift_descriptor.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final desc1 = await cv.imreadAsync(
+      "test/images/sift_descriptor.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(desc1.isEmpty, false);
-    final desc2 = await cv.imreadAsync("test/images/sift_descriptor.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final desc2 = await cv.imreadAsync(
+      "test/images/sift_descriptor.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(desc2.isEmpty, false);
 
     final desc11 = desc1.convertTo(cv.MatType.CV_32FC1);
@@ -304,8 +303,10 @@ void main() async {
   });
 
   test('cv.SIFTAsync', () async {
-    final img = await cv.imreadAsync("test/images/lenna.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final img = await cv.imreadAsync(
+      "test/images/lenna.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(img.isEmpty, false);
 
     final si = await cv.SIFTAsync.emptyAsync();
@@ -321,18 +322,17 @@ void main() async {
   });
 
   test('cv.drawMatchesAsync', () async {
-    final query =
-        await cv.imreadAsync("test/images/box.png", flags: cv.IMREAD_GRAYSCALE);
-    final train = await cv.imreadAsync("test/images/box_in_scene.png",
-        flags: cv.IMREAD_GRAYSCALE,);
+    final query = await cv.imreadAsync("test/images/box.png", flags: cv.IMREAD_GRAYSCALE);
+    final train = await cv.imreadAsync(
+      "test/images/box_in_scene.png",
+      flags: cv.IMREAD_GRAYSCALE,
+    );
     expect(query.isEmpty, false);
     expect(train.isEmpty, false);
 
     final m1 = cv.Mat.empty(), m2 = cv.Mat.empty();
-    final (kp1, des1) = await (await cv.SIFTAsync.emptyAsync())
-        .detectAndComputeAsync(query, m1);
-    final (kp2, des2) = await (await cv.SIFTAsync.emptyAsync())
-        .detectAndComputeAsync(train, m2);
+    final (kp1, des1) = await (await cv.SIFTAsync.emptyAsync()).detectAndComputeAsync(query, m1);
+    final (kp2, des2) = await (await cv.SIFTAsync.emptyAsync()).detectAndComputeAsync(train, m2);
 
     final bf = await cv.BFMatcherAsync.emptyAsync();
     final dmatches = await bf.knnMatchAsync(des1, des2, 2);
