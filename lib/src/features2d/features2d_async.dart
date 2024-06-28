@@ -1,15 +1,5 @@
 library cv;
 
-import 'dart:ffi' as ffi;
-import 'package:ffi/ffi.dart';
-import '../core/base.dart';
-import '../core/mat.dart';
-import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
-import './features2d.dart';
-import 'package:ffi/ffi.dart';
-
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/dmatch.dart';
 import '../core/keypoint.dart';
@@ -17,17 +7,18 @@ import '../core/mat.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
+import './features2d.dart';
 
 extension AKAZEAsync on AKAZE {
   static Future<AKAZE> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.AKAZE_Create_Async(callback),
-      (c, p) => c.complete(AKAZE.fromPointer(p.cast<cvg.AKAZE>())));
+      CFFI.AKAZE_Create_Async,
+      (c, p) => c.complete(AKAZE.fromPointer(p.cast<cvg.AKAZE>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.AKAZE_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 
@@ -35,41 +26,41 @@ extension AKAZEAsync on AKAZE {
     final desc = Mat.empty();
     final rval = cvRunAsync<(VecKeyPoint, Mat)>(
         (callback) => CFFI.AKAZE_DetectAndCompute_Async(
-            ref, src.ref, mask.ref, desc.ref, callback),
+            ref, src.ref, mask.ref, desc.ref, callback,),
         (c, keypoints) => c.complete((
               VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
               desc
-            )));
+            ),),);
     return rval;
   }
 }
 
 extension AgastFeatureDetectorAsync on AgastFeatureDetector {
   static Future<AgastFeatureDetector> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.AgastFeatureDetector_Create_Async(callback),
+      CFFI.AgastFeatureDetector_Create_Async,
       (c, p) => c.complete(AgastFeatureDetector.fromPointer(
-          p.cast<cvg.AgastFeatureDetector>())));
+          p.cast<cvg.AgastFeatureDetector>(),),),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) =>
             CFFI.AgastFeatureDetector_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 }
 
 extension BRISKAsync on BRISK {
   static Future<BRISK> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.BRISK_Create_Async(callback),
-      (c, p) => c.complete(BRISK.fromPointer(p.cast<cvg.BRISK>())));
+      CFFI.BRISK_Create_Async,
+      (c, p) => c.complete(BRISK.fromPointer(p.cast<cvg.BRISK>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.BRISK_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 
@@ -77,64 +68,64 @@ extension BRISKAsync on BRISK {
     final desc = Mat.empty();
     final rval = cvRunAsync<(VecKeyPoint, Mat)>(
         (callback) => CFFI.BRISK_DetectAndCompute_Async(
-            ref, src.ref, mask.ref, desc.ref, callback),
+            ref, src.ref, mask.ref, desc.ref, callback,),
         (c, keypoints) => c.complete((
               VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
               desc
-            )));
+            ),),);
     return rval;
   }
 }
 
 extension FastFeatureDetectorAsync on FastFeatureDetector {
   static Future<FastFeatureDetector> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.FastFeatureDetector_Create_Async(callback),
+      CFFI.FastFeatureDetector_Create_Async,
       (c, p) => c.complete(
-          FastFeatureDetector.fromPointer(p.cast<cvg.FastFeatureDetector>())));
+          FastFeatureDetector.fromPointer(p.cast<cvg.FastFeatureDetector>()),),);
 
   static Future<FastFeatureDetector> createAsync(int threshold,
-          bool nonmaxSuppression, FastFeatureDetectorType type) async =>
+          bool nonmaxSuppression, FastFeatureDetectorType type,) async =>
       cvRunAsync(
           (callback) => CFFI.FastFeatureDetector_CreateWithParams_Async(
-              threshold, nonmaxSuppression, type.value, callback),
+              threshold, nonmaxSuppression, type.value, callback,),
           (c, p) => c.complete(FastFeatureDetector.fromPointer(
-              p.cast<cvg.FastFeatureDetector>())));
+              p.cast<cvg.FastFeatureDetector>(),),),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) =>
             CFFI.FastFeatureDetector_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 }
 
 extension GFTTDetectorAsync on GFTTDetector {
   static Future<GFTTDetector> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.GFTTDetector_Create_Async(callback),
+      CFFI.GFTTDetector_Create_Async,
       (c, p) =>
-          c.complete(GFTTDetector.fromPointer(p.cast<cvg.GFTTDetector>())));
+          c.complete(GFTTDetector.fromPointer(p.cast<cvg.GFTTDetector>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.GFTTDetector_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 }
 
 extension KAZEAsync on KAZE {
   static Future<KAZE> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.KAZE_Create_Async(callback),
-      (c, p) => c.complete(KAZE.fromPointer(p.cast<cvg.KAZE>())));
+      CFFI.KAZE_Create_Async,
+      (c, p) => c.complete(KAZE.fromPointer(p.cast<cvg.KAZE>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.KAZE_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 
@@ -142,33 +133,33 @@ extension KAZEAsync on KAZE {
     final desc = Mat.empty();
     final rval = cvRunAsync<(VecKeyPoint, Mat)>(
         (callback) => CFFI.KAZE_DetectAndCompute_Async(
-            ref, src.ref, mask.ref, desc.ref, callback),
+            ref, src.ref, mask.ref, desc.ref, callback,),
         (c, keypoints) => c.complete((
               VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
               desc
-            )));
+            ),),);
     return rval;
   }
 }
 
 extension MSERAsync on MSER {
   static Future<MSER> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.MSER_Create_Async(callback),
-      (c, p) => c.complete(MSER.fromPointer(p.cast<cvg.MSER>())));
+      CFFI.MSER_Create_Async,
+      (c, p) => c.complete(MSER.fromPointer(p.cast<cvg.MSER>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.MSER_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 }
 
 extension ORBAsync on ORB {
   static Future<ORB> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.ORB_Create_Async(callback),
-      (c, p) => c.complete(ORB.fromPointer(p.cast<cvg.ORB>())));
+      CFFI.ORB_Create_Async,
+      (c, p) => c.complete(ORB.fromPointer(p.cast<cvg.ORB>())),);
 
   static Future<ORB> createAsync(
           int nFeatures,
@@ -176,10 +167,10 @@ extension ORBAsync on ORB {
           int nLevels,
           int edgeThreshold,
           int firstLevel,
-          int WTA_K,
+          int wtaK,
           ORBScoreType scoreType,
           int patchSize,
-          int fastThreshold) async =>
+          int fastThreshold,) async =>
       cvRunAsync(
           (callback) => CFFI.ORB_CreateWithParams_Async(
               nFeatures,
@@ -187,18 +178,18 @@ extension ORBAsync on ORB {
               nLevels,
               edgeThreshold,
               firstLevel,
-              WTA_K,
+              wtaK,
               scoreType.value,
               patchSize,
               fastThreshold,
-              callback),
-          (c, p) => c.complete(ORB.fromPointer(p.cast<cvg.ORB>())));
+              callback,),
+          (c, p) => c.complete(ORB.fromPointer(p.cast<cvg.ORB>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.ORB_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 
@@ -206,95 +197,95 @@ extension ORBAsync on ORB {
     final desc = Mat.empty();
     final rval = cvRunAsync<(VecKeyPoint, Mat)>(
         (callback) => CFFI.ORB_DetectAndCompute_Async(
-            ref, src.ref, mask.ref, desc.ref, callback),
+            ref, src.ref, mask.ref, desc.ref, callback,),
         (c, keypoints) => c.complete((
               VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
               desc
-            )));
+            ),),);
     return rval;
   }
 }
 
 extension SimpleBlobDetectorAsync on SimpleBlobDetector {
   static Future<SimpleBlobDetector> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.SimpleBlobDetector_Create_Async(callback),
+      CFFI.SimpleBlobDetector_Create_Async,
       (c, p) => c.complete(
-          SimpleBlobDetector.fromPointer(p.cast<cvg.SimpleBlobDetector>())));
+          SimpleBlobDetector.fromPointer(p.cast<cvg.SimpleBlobDetector>()),),);
 
   static Future<SimpleBlobDetector> createWithParamsAsync(
-          SimpleBlobDetectorParams params) async =>
+          SimpleBlobDetectorParams params,) async =>
       cvRunAsync(
           (callback) => CFFI.SimpleBlobDetector_Create_WithParams_Async(
-              params.ref, callback),
+              params.ref, callback,),
           (c, p) => c.complete(SimpleBlobDetector.fromPointer(
-              p.cast<cvg.SimpleBlobDetector>())));
+              p.cast<cvg.SimpleBlobDetector>(),),),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) =>
             CFFI.SimpleBlobDetector_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 }
 
 extension BFMatcherAsync on BFMatcher {
   static Future<BFMatcher> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.BFMatcher_Create_Async(callback),
-      (c, p) => c.complete(BFMatcher.fromPointer(p.cast<cvg.BFMatcher>())));
+      CFFI.BFMatcher_Create_Async,
+      (c, p) => c.complete(BFMatcher.fromPointer(p.cast<cvg.BFMatcher>())),);
 
   static Future<BFMatcher> createAsync(int type, bool crossCheck) async =>
       cvRunAsync(
           (callback) =>
               CFFI.BFMatcher_CreateWithParams_Async(type, crossCheck, callback),
-          (c, p) => c.complete(BFMatcher.fromPointer(p.cast<cvg.BFMatcher>())));
+          (c, p) => c.complete(BFMatcher.fromPointer(p.cast<cvg.BFMatcher>())),);
 
   Future<VecDMatch> matchAsync(Mat query, Mat train) async {
     final rval = cvRunAsync<VecDMatch>(
         (callback) =>
             CFFI.BFMatcher_Match_Async(ref, query.ref, train.ref, callback),
         (c, ret) =>
-            c.complete(VecDMatch.fromPointer(ret.cast<cvg.VecDMatch>())));
+            c.complete(VecDMatch.fromPointer(ret.cast<cvg.VecDMatch>())),);
     return rval;
   }
 
   Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
     final rval = cvRunAsync<VecVecDMatch>(
         (callback) => CFFI.BFMatcher_KnnMatch_Async(
-            ref, query.ref, train.ref, k, callback),
+            ref, query.ref, train.ref, k, callback,),
         (c, ret) =>
-            c.complete(VecVecDMatch.fromPointer(ret.cast<cvg.VecVecDMatch>())));
+            c.complete(VecVecDMatch.fromPointer(ret.cast<cvg.VecVecDMatch>())),);
     return rval;
   }
 }
 
 extension FlannBasedMatcherAsync on FlannBasedMatcher {
   static Future<FlannBasedMatcher> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.FlannBasedMatcher_Create_Async(callback),
+      CFFI.FlannBasedMatcher_Create_Async,
       (c, p) => c.complete(
-          FlannBasedMatcher.fromPointer(p.cast<cvg.FlannBasedMatcher>())));
+          FlannBasedMatcher.fromPointer(p.cast<cvg.FlannBasedMatcher>()),),);
 
   Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
     final rval = cvRunAsync<VecVecDMatch>(
         (callback) => CFFI.FlannBasedMatcher_KnnMatch_Async(
-            ref, query.ref, train.ref, k, callback),
+            ref, query.ref, train.ref, k, callback,),
         (c, ret) =>
-            c.complete(VecVecDMatch.fromPointer(ret.cast<cvg.VecVecDMatch>())));
+            c.complete(VecVecDMatch.fromPointer(ret.cast<cvg.VecVecDMatch>())),);
     return rval;
   }
 }
 
 extension SIFTAsync on SIFT {
   static Future<SIFT> emptyNewAsync() async => cvRunAsync(
-      (callback) => CFFI.SIFT_Create_Async(callback),
-      (c, p) => c.complete(SIFT.fromPointer(p.cast<cvg.SIFT>())));
+      CFFI.SIFT_Create_Async,
+      (c, p) => c.complete(SIFT.fromPointer(p.cast<cvg.SIFT>())),);
 
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final rval = cvRunAsync<VecKeyPoint>(
         (callback) => CFFI.SIFT_Detect_Async(ref, src.ref, callback),
         (c, ret) =>
-            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())));
+            c.complete(VecKeyPoint.fromPointer(ret.cast<cvg.VecKeyPoint>())),);
     return rval;
   }
 
@@ -302,7 +293,7 @@ extension SIFTAsync on SIFT {
     final desc = Mat.empty();
     final rval = cvRunAsync<(VecKeyPoint, Mat)>(
         (callback) => CFFI.SIFT_DetectAndCompute_Async(
-            ref, src.ref, mask.ref, desc.ref, callback),
+            ref, src.ref, mask.ref, desc.ref, callback,),
         (
           c,
           keypoints,
@@ -310,17 +301,17 @@ extension SIFTAsync on SIFT {
             c.complete((
               VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
               desc
-            )));
+            ),),);
     return rval;
   }
 }
 
 Future<void> drawKeyPointsAsync(Mat src, VecKeyPoint keypoints, Mat dst,
-    Scalar color, DrawMatchesFlag flag) async {
+    Scalar color, DrawMatchesFlag flag,) async {
   await cvRunAsync0<void>(
       (callback) => CFFI.DrawKeyPoints_Async(
-          src.ref, keypoints.ref, dst.ref, color.ref, flag.value, callback),
-      (c) => c.complete());
+          src.ref, keypoints.ref, dst.ref, color.ref, flag.value, callback,),
+      (c) => c.complete(),);
 }
 
 Future<void> drawMatchesAsync(
@@ -333,7 +324,7 @@ Future<void> drawMatchesAsync(
     {Scalar? matchColor,
     Scalar? singlePointColor,
     VecChar? matchesMask,
-    DrawMatchesFlag flags = DrawMatchesFlag.DEFAULT}) async {
+    DrawMatchesFlag flags = DrawMatchesFlag.DEFAULT,}) async {
   matchColor ??= Scalar.all(-1);
   singlePointColor ??= Scalar.all(-1);
   matchesMask ??= VecChar.fromList([]);
@@ -349,6 +340,6 @@ Future<void> drawMatchesAsync(
           singlePointColor!.ref,
           matchesMask!.ref,
           flags.value,
-          callback),
-      (c) => c.complete());
+          callback,),
+      (c) => c.complete(),);
 }

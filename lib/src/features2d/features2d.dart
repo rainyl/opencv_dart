@@ -53,7 +53,7 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
     final desc = Mat.empty();
     final ret = calloc<cvg.VecKeyPoint>();
     cvRun(() =>
-        CFFI.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+        CFFI.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),);
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
@@ -81,7 +81,7 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
     }
   }
   factory AgastFeatureDetector.fromPointer(cvg.AgastFeatureDetectorPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       AgastFeatureDetector._(ptr.cast(), attach);
 
   /// returns a new AgastFeatureDetector algorithm
@@ -105,7 +105,7 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
   }
 
   static final finalizer = OcvFinalizer<cvg.AgastFeatureDetectorPtr>(
-      CFFI.addresses.AgastFeatureDetector_Close);
+      CFFI.addresses.AgastFeatureDetector_Close,);
 
   void dispose() {
     finalizer.detach(this);
@@ -157,7 +157,7 @@ class BRISK extends CvStruct<cvg.BRISK> {
     final desc = Mat.empty();
     final ret = calloc<cvg.VecKeyPoint>();
     cvRun(() =>
-        CFFI.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+        CFFI.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),);
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
@@ -199,7 +199,7 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     }
   }
   factory FastFeatureDetector.fromPointer(cvg.FastFeatureDetectorPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       FastFeatureDetector._(ptr.cast(), attach);
 
   /// returns a new FastFeatureDetector algorithm
@@ -244,7 +244,7 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   }
 
   static final finalizer = OcvFinalizer<cvg.FastFeatureDetectorPtr>(
-      CFFI.addresses.FastFeatureDetector_Close);
+      CFFI.addresses.FastFeatureDetector_Close,);
 
   void dispose() {
     finalizer.detach(this);
@@ -267,7 +267,7 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
     }
   }
   factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       GFTTDetector._(ptr.cast(), attach);
 
   /// returns a new GFTTDetector algorithm
@@ -343,7 +343,7 @@ class KAZE extends CvStruct<cvg.KAZE> {
     final desc = Mat.empty();
     final ret = calloc<cvg.VecKeyPoint>();
     cvRun(() =>
-        CFFI.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+        CFFI.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),);
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
@@ -484,7 +484,7 @@ class ORB extends CvStruct<cvg.ORB> {
     final desc = Mat.empty();
     final ret = calloc<cvg.VecKeyPoint>();
     cvRun(() =>
-        CFFI.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+        CFFI.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),);
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
@@ -504,7 +504,7 @@ class ORB extends CvStruct<cvg.ORB> {
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr,
-      [bool attach = true])
+      [bool attach = true,])
       : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -541,8 +541,9 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     final p = calloc<cvg.SimpleBlobDetectorParams>();
     if (blobColor != null) p.ref.blobColor = blobColor;
     if (filterByArea != null) p.ref.filterByArea = filterByArea;
-    if (filterByCircularity != null)
+    if (filterByCircularity != null) {
       p.ref.filterByCircularity = filterByCircularity;
+    }
     if (filterByColor != null) p.ref.filterByColor = filterByColor;
     if (filterByConvexity != null) p.ref.filterByConvexity = filterByConvexity;
     if (filterByInertia != null) p.ref.filterByInertia = filterByInertia;
@@ -554,8 +555,9 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     if (minArea != null) p.ref.minArea = minArea;
     if (minCircularity != null) p.ref.minCircularity = minCircularity;
     if (minConvexity != null) p.ref.minConvexity = minConvexity;
-    if (minDistBetweenBlobs != null)
+    if (minDistBetweenBlobs != null) {
       p.ref.minDistBetweenBlobs = minDistBetweenBlobs;
+    }
     if (minInertiaRatio != null) p.ref.minInertiaRatio = minInertiaRatio;
     if (minRepeatability != null) p.ref.minRepeatability = minRepeatability;
     if (minThreshold != null) p.ref.minThreshold = minThreshold;
@@ -727,7 +729,7 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   }
 
   factory SimpleBlobDetector.fromPointer(cvg.SimpleBlobDetectorPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       SimpleBlobDetector._(ptr.cast(), attach);
 
   /// returns a new SimpleBlobDetector algorithm
@@ -757,7 +759,7 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   }
 
   static final finalizer = OcvFinalizer<cvg.SimpleBlobDetectorPtr>(
-      CFFI.addresses.SimpleBlobDetector_Close);
+      CFFI.addresses.SimpleBlobDetector_Close,);
 
   void dispose() {
     finalizer.detach(this);
@@ -842,7 +844,7 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     }
   }
   factory FlannBasedMatcher.fromPointer(cvg.FlannBasedMatcherPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       FlannBasedMatcher._(ptr.cast(), attach);
 
   /// returns a new FlannBasedMatcher algorithm
@@ -862,12 +864,12 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
     final ret = calloc<cvg.VecVecDMatch>();
     cvRun(() =>
-        CFFI.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
+        CFFI.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret),);
     return VecVecDMatch.fromPointer(ret);
   }
 
   static final finalizer = OcvFinalizer<cvg.FlannBasedMatcherPtr>(
-      CFFI.addresses.FlannBasedMatcher_Close);
+      CFFI.addresses.FlannBasedMatcher_Close,);
 
   void dispose() {
     finalizer.detach(this);
@@ -899,9 +901,9 @@ enum DrawMatchesFlag {
 }
 
 void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color,
-    DrawMatchesFlag flag) {
+    DrawMatchesFlag flag,) {
   cvRun(() => CFFI.DrawKeyPoints(
-      src.ref, keypoints.ref, dst.ref, color.ref, flag.value));
+      src.ref, keypoints.ref, dst.ref, color.ref, flag.value,),);
 }
 
 /// SIFT is a wrapper around the cv::SIFT.
@@ -942,7 +944,7 @@ class SIFT extends CvStruct<cvg.SIFT> {
     final desc = Mat.empty();
     final ret = calloc<cvg.VecKeyPoint>();
     cvRun(() =>
-        CFFI.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+        CFFI.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),);
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
