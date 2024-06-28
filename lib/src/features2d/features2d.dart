@@ -22,7 +22,7 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory AKAZE.fromPointer(cvg.AKAZEPtr ptr, [bool attach = true]) => AKAZE._(ptr.cast(), attach);
+  factory AKAZE.fromPointer(cvg.AKAZEPtr ptr, [bool attach = true]) => AKAZE._(ptr, attach);
 
   /// returns a new AKAZE algorithm
   ///
@@ -78,11 +78,8 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory AgastFeatureDetector.fromPointer(
-    cvg.AgastFeatureDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
-      AgastFeatureDetector._(ptr.cast(), attach);
+  factory AgastFeatureDetector.fromPointer(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true]) =>
+      AgastFeatureDetector._(ptr, attach);
 
   /// returns a new AgastFeatureDetector algorithm
   ///
@@ -127,7 +124,7 @@ class BRISK extends CvStruct<cvg.BRISK> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory BRISK.fromPointer(cvg.BRISKPtr ptr, [bool attach = true]) => BRISK._(ptr.cast(), attach);
+  factory BRISK.fromPointer(cvg.BRISKPtr ptr, [bool attach = true]) => BRISK._(ptr, attach);
 
   /// returns a new BRISK algorithm
   ///
@@ -197,11 +194,8 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FastFeatureDetector.fromPointer(
-    cvg.FastFeatureDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
-      FastFeatureDetector._(ptr.cast(), attach);
+  factory FastFeatureDetector.fromPointer(cvg.FastFeatureDetectorPtr ptr, [bool attach = true]) =>
+      FastFeatureDetector._(ptr, attach);
 
   /// returns a new FastFeatureDetector algorithm
   ///
@@ -267,11 +261,8 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory GFTTDetector.fromPointer(
-    cvg.GFTTDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
-      GFTTDetector._(ptr.cast(), attach);
+  factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr, [bool attach = true]) =>
+      GFTTDetector._(ptr, attach);
 
   /// returns a new GFTTDetector algorithm
   ///
@@ -314,7 +305,7 @@ class KAZE extends CvStruct<cvg.KAZE> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory KAZE.fromPointer(cvg.KAZEPtr ptr, [bool attach = true]) => KAZE._(ptr.cast(), attach);
+  factory KAZE.fromPointer(cvg.KAZEPtr ptr, [bool attach = true]) => KAZE._(ptr, attach);
 
   /// returns a new KAZE algorithm
   ///
@@ -370,7 +361,7 @@ class MSER extends CvStruct<cvg.MSER> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory MSER.fromPointer(cvg.MSERPtr ptr, [bool attach = true]) => MSER._(ptr.cast(), attach);
+  factory MSER.fromPointer(cvg.MSERPtr ptr, [bool attach = true]) => MSER._(ptr, attach);
 
   /// returns a new MSER algorithm
   ///
@@ -421,7 +412,7 @@ class ORB extends CvStruct<cvg.ORB> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory ORB.fromPointer(cvg.ORBPtr ptr, [bool attach = true]) => ORB._(ptr.cast(), attach);
+  factory ORB.fromPointer(cvg.ORBPtr ptr, [bool attach = true]) => ORB._(ptr, attach);
 
   /// returns a new ORB algorithm
   ///
@@ -728,11 +719,8 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
     }
   }
 
-  factory SimpleBlobDetector.fromPointer(
-    cvg.SimpleBlobDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
-      SimpleBlobDetector._(ptr.cast(), attach);
+  factory SimpleBlobDetector.fromPointer(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true]) =>
+      SimpleBlobDetector._(ptr, attach);
 
   /// returns a new SimpleBlobDetector algorithm
   ///
@@ -783,8 +771,7 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory BFMatcher.fromPointer(cvg.BFMatcherPtr ptr, [bool attach = true]) =>
-      BFMatcher._(ptr.cast(), attach);
+  factory BFMatcher.fromPointer(cvg.BFMatcherPtr ptr, [bool attach = true]) => BFMatcher._(ptr, attach);
 
   /// returns a new BFMatcher algorithm
   ///
@@ -843,11 +830,8 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FlannBasedMatcher.fromPointer(
-    cvg.FlannBasedMatcherPtr ptr, [
-    bool attach = true,
-  ]) =>
-      FlannBasedMatcher._(ptr.cast(), attach);
+  factory FlannBasedMatcher.fromPointer(cvg.FlannBasedMatcherPtr ptr, [bool attach = true]) =>
+      FlannBasedMatcher._(ptr, attach);
 
   /// returns a new FlannBasedMatcher algorithm
   ///
@@ -929,7 +913,7 @@ class SIFT extends CvStruct<cvg.SIFT> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory SIFT.fromPointer(cvg.SIFTPtr ptr, [bool attach = true]) => SIFT._(ptr.cast(), attach);
+  factory SIFT.fromPointer(cvg.SIFTPtr ptr, [bool attach = true]) => SIFT._(ptr, attach);
 
   /// returns a new SIFT algorithm
   ///
@@ -978,10 +962,10 @@ class SIFT extends CvStruct<cvg.SIFT> {
   cvg.SIFT get ref => ptr.ref;
 }
 
-// DrawMatches draws matches on combined train and querry images.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/d4/d5d/group__features2d__draw.html#gad8f463ccaf0dc6f61083abd8717c261a
+/// DrawMatches draws matches on combined train and querry images.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d4/d5d/group__features2d__draw.html#gad8f463ccaf0dc6f61083abd8717c261a
 void drawMatches(
   InputArray img1,
   VecKeyPoint keypoints1,
