@@ -92,7 +92,7 @@ jobs:
             libswscale-dev libgflags-dev \
             libjpeg-dev libpng-dev libtiff-dev python3-pip
 
-          python3 -m pip install conan
+          python3 -m pip install conan --break-system-packages
           conan profile detect -f
       - uses: actions/checkout@v4
         with:
