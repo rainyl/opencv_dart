@@ -30,6 +30,7 @@ export 'src/core/vec.dart';
 export 'src/dnn/dnn.dart';
 export 'src/dnn/dnn_async.dart';
 export 'src/features2d/features2d.dart';
+export 'src/features2d/features2d_async.dart';
 export 'src/highgui/highgui.dart';
 export 'src/imgcodecs/imgcodecs.dart';
 export 'src/imgcodecs/imgcodecs_async.dart';
