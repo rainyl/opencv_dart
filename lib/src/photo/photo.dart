@@ -17,14 +17,12 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
 class MergeMertens extends CvStruct<cvg.MergeMertens> {
-  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory MergeMertens.fromPointer(cvg.MergeMertensPtr ptr,
-          [bool attach = true]) =>
+  factory MergeMertens.fromPointer(cvg.MergeMertensPtr ptr, [bool attach = true]) =>
       MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
     final p = calloc<cvg.MergeMertens>();
@@ -39,14 +37,12 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   }) {
     final p = calloc<cvg.MergeMertens>();
     cvRun(
-      () => CFFI.MergeMertens_CreateWithParams(
-          contrastWeight, saturationWeight, exposureWeight, p),
+      () => CFFI.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p),
     );
     return MergeMertens._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
+  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -79,15 +75,13 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
 class AlignMTB extends CvStruct<cvg.AlignMTB> {
-  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory AlignMTB.fromPointer(cvg.AlignMTBPtr ptr,
-          [bool attach = true]) =>
-      AlignMTB._(ptr.cast(), attach);
+  factory AlignMTB.fromPointer(cvg.AlignMTBPtr ptr, [bool attach = true]) => AlignMTB._(ptr.cast(), attach);
+
   /// AlignMTB for converts images to median threshold bitmaps.
   /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
   /// brighter than median luminance and 0 otherwise) and than aligns the resulting
@@ -110,15 +104,13 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-  factory AlignMTB.create(
-      {int maxBits = 6, int excludeRange = 4, bool cut = true}) {
+  factory AlignMTB.create({int maxBits = 6, int excludeRange = 4, bool cut = true}) {
     final p = calloc<cvg.AlignMTB>();
     cvRun(() => CFFI.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
     return AlignMTB._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
+  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -150,8 +142,7 @@ Mat colorChange(
   double blueMul = 1.0,
 }) {
   final dst = Mat.empty();
-  cvRun(() =>
-      CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul));
+  cvRun(() => CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul));
   return dst;
 }
 
@@ -159,11 +150,9 @@ Mat colorChange(
 //
 /// For further details, please see:
 /// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
-Mat seamlessClone(
-    InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
+Mat seamlessClone(InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
   final blend = Mat.empty();
-  cvRun(() =>
-      CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags));
+  cvRun(() => CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags));
   return blend;
 }
 
@@ -194,8 +183,7 @@ Mat textureFlattening(
   int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  cvRun(() => CFFI.TextureFlattening(
-      src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+  cvRun(() => CFFI.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
   return dst;
 }
 
@@ -299,8 +287,7 @@ Mat edgePreservingFilter(
   double sigmaR = 0.4,
 }) {
   final dst = Mat.empty();
-  cvRun(
-      () => CFFI.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR));
+  cvRun(() => CFFI.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR));
   return dst;
 }
 
@@ -316,8 +303,7 @@ Mat edgePreservingFilter(
 }) {
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
-  cvRun(() => CFFI.PencilSketch(
-      src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
+  cvRun(() => CFFI.PencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
   return (dst1, dst2);
 }
 
@@ -344,10 +330,8 @@ Mat stylization(
 //
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
-Mat inpaint(
-    InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
+Mat inpaint(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
   final dst = Mat.empty();
-  cvRun(() => CFFI.PhotoInpaint(
-      src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags));
+  cvRun(() => CFFI.PhotoInpaint(src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags));
   return dst;
 }
