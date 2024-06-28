@@ -39,7 +39,8 @@ Future<bool> checkCaffeNetAsync(cv.Net net) async {
   expect(prob.first.isEmpty, false);
 
   final probMat = prob.first.reshape(1, 1);
-  final (_, maxVal, minLoc, maxLoc) = await cv.minMaxLocAsync(probMat);
+  //TODO: Migrate to async
+  final (_, maxVal, minLoc, maxLoc) = cv.minMaxLoc(probMat);
   expect(maxVal, closeTo(0.9998, 5e-5));
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
@@ -71,7 +72,8 @@ Future<bool> checkTensorflowAsync(cv.Net net) async {
   expect(prob.isEmpty, false);
 
   final probMat = prob.first.reshape(1, 1);
-  final (_, maxVal, minLoc, maxLoc) = await cv.minMaxLocAsync(probMat);
+  //TODO: Migrate to async
+  final (_, maxVal, minLoc, maxLoc) = cv.minMaxLoc(probMat);
   expect(maxVal, closeTo(1.0, 5e-5));
   expect((minLoc.x, minLoc.y), (481, 0));
   expect((maxLoc.x, maxLoc.y), (234, 0));
@@ -103,7 +105,8 @@ Future<bool> checkOnnxAsync(cv.Net net) async {
   expect(prob.isEmpty, false);
 
   final probMat = prob.first.reshape(1, 1);
-  final (_, maxVal, minLoc, maxLoc) = await cv.minMaxLocAsync(probMat);
+  //TODO: Migrate to async
+  final (_, maxVal, minLoc, maxLoc) = cv.minMaxLoc(probMat);
   expect(maxVal, closeTo(0.9965, 5e-3));
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
@@ -271,8 +274,8 @@ void main() async {
     final img =
         await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
-
-    await img.convertToAsync(cv.MatType.CV_32FC1);
+    //TODO: Migrate to async
+    img.convertTo(cv.MatType.CV_32FC1);
 
     final bboxes = [
       cv.Rect(53, 47, 589, 451),
