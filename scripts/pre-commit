@@ -1,2 +1,0 @@
-#!/bin/bash
-dart format --line-length 110 --set-exit-if-changed $(find lib test -name '*.dart' -not -name 'job.dart' -and -not -name '*.freezed.dart')
