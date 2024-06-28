@@ -1,4 +1,4 @@
-/* Created by Rainyl. Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl. */
+/* Created by Abdelaziz Mahdy. Licensed: Apache 2.0 license. Copyright (c) 2024 Abdelaziz Mahdy. */
 #include "stitching_async.h"
 #include "core/types.h"
 

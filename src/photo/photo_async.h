@@ -1,4 +1,4 @@
-/* Created by Rainyl. Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl. */
+/* Created by Abdelaziz Mahdy. Licensed: Apache 2.0 license. Copyright (c) 2024 Abdelaziz Mahdy. */
 #ifndef CVD_PHOTO_ASYNC_H_
 #define CVD_PHOTO_ASYNC_H_
 
