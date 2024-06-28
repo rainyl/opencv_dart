@@ -36,6 +36,7 @@ export 'src/imgproc/clahe.dart';
 export 'src/imgproc/imgproc.dart';
 export 'src/imgproc/subdiv2d.dart';
 export 'src/objdetect/objdetect.dart';
+export 'src/objdetect/objdetect_async.dart';
 export 'src/photo/photo.dart';
 export 'src/stitching/stitching.dart';
 export 'src/svd/svd.dart';

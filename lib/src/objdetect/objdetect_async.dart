@@ -404,25 +404,32 @@ extension QRCodeDetectorAsync on QRCodeDetector {
               img.ref,
               points.ref,
               callback,
-            ), (c, rval, straightQRcode) {
+            ), (c, prval, pstraightQRcode) {
+      // prval is a char ** pointer
+      final rval = prval.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(prval);
       return c.complete(
-        (rval.cast<Utf8>().toDartString(), Mat.fromPointer(straightQRcode.cast<cvg.Mat>())),
+        (rval, Mat.fromPointer(pstraightQRcode.cast<cvg.Mat>())),
       );
     });
     return rval;
   }
 
   Future<(String rval, VecPoint points, Mat straightQRcode)> detectAndDecodeCurvedAsync(
-      InputArray img) async {
+    InputArray img,
+  ) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_detectAndDecodeCurved_Async(
               ref,
               img.ref,
               callback,
-            ), (c, rval, points, straightQRcode) {
+            ), (c, prval, points, straightQRcode) {
+      // prval is a char ** pointer
+      final rval = prval.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(prval);
       return c.complete(
         (
-          rval.cast<Utf8>().toDartString(),
+          rval,
           VecPoint.fromPointer(points.cast<cvg.VecPoint>()),
           Mat.fromPointer(straightQRcode.cast<cvg.Mat>()),
         ),
@@ -434,10 +441,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   Future<(String ret, VecPoint points, Mat straightCode)> detectAndDecodeAsync(InputArray img) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_DetectAndDecode_Async(ref, img.ref, callback),
-        (c, ret, points, straightCode) {
+        (c, prval, points, straightCode) {
+      // prval is a char ** pointer
+      final rval = prval.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(prval);
       return c.complete(
         (
-          ret.cast<Utf8>().toDartString(),
+          rval,
           VecPoint.fromPointer(points.cast<cvg.VecPoint>()),
           Mat.fromPointer(straightCode.cast<cvg.Mat>()),
         ),
@@ -466,10 +476,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   ) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
         (callback) => CFFI.QRCodeDetector_Decode_Async(ref, img.ref, callback),
-        (c, ret, points, straightCode) {
+        (c, prval, points, straightCode) {
+      // prval is a char ** pointer
+      final rval = prval.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(prval);
       return c.complete(
         (
-          ret.cast<Utf8>().toDartString(),
+          rval,
           VecPoint.fromPointer(points.cast<cvg.VecPoint>()),
           Mat.fromPointer(straightCode.cast<cvg.Mat>()),
         ),
@@ -498,7 +511,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
               ref,
               img.ref,
               callback,
-            ), (c, info, points, codes, rval) {
+            ), (c, rval, info, points, codes) {
       final rvalValue = rval.cast<ffi.Bool>().value;
       calloc.free(rval);
       final ret = (
