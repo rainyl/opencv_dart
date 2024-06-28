@@ -16,11 +16,10 @@ import '../opencv.g.dart' as cvg;
 
 extension LayerAsync on Layer {
   Future<String> get nameAsync async {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
     final rval = cvRunAsync<String>(
       (callback) => CFFI.Layer_GetName_Async(ref, callback),
-      (c, result) {
-        final rval = result.cast<Utf8>().toDartString();
+      (c, p) {
+        final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
         calloc.free(p);
         return c.complete(rval);
       },
@@ -29,11 +28,10 @@ extension LayerAsync on Layer {
   }
 
   Future<String> get typeAsync async {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
     final rval = cvRunAsync<String>(
       (callback) => CFFI.Layer_GetType_Async(ref, callback),
-      (c, result) {
-        final rval = result.cast<Utf8>().toDartString();
+      (c, p) {
+        final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
         calloc.free(p);
         return c.complete(rval);
       },
@@ -73,7 +71,7 @@ extension LayerAsync on Layer {
 
 extension NetAsync on Net {
   static Future<Net> emptyAsync() async {
-    final rval = await cvRunAsync<Net>((callback) => CFFI.Net_Create_Async(callback), (c, p) {
+    final rval = await cvRunAsync<Net>(CFFI.Net_Create_Async, (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
 
@@ -219,11 +217,10 @@ extension NetAsync on Net {
   }
 
   Future<String> dumpAsync() async {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
     final rval = cvRunAsync<String>(
       (callback) => CFFI.Net_Dump_Async(ref, callback),
-      (c, result) {
-        final rval = result.cast<Utf8>().toDartString();
+      (c, p) {
+        final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
         calloc.free(p);
         return c.complete(rval);
       },
