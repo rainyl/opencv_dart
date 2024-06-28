@@ -1,3 +1,5 @@
+@Tags(["no-local-files"])
+
 import 'dart:io';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
