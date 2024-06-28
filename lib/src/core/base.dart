@@ -13,7 +13,6 @@ import 'package:ffi/ffi.dart';
 
 import "../opencv.g.dart" as cvg;
 import "exception.dart" show CvException;
-import 'mat.dart';
 
 const _libraryName = "opencv_dart";
 
@@ -153,13 +152,7 @@ Future<T> cvRunAsync3<T>(
 
 Future<T> cvRunAsync4<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
-  void Function(
-    Completer<T> completer,
-    VoidPtr p,
-    VoidPtr p1,
-    VoidPtr p2,
-    VoidPtr p3,
-  ) onComplete,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) onComplete,
 ) {
   final completer = Completer<T>();
   late final NativeCallable<cvg.CvCallback_4Function> ccallback;
@@ -189,12 +182,24 @@ Future<T> cvRunAsync5<T>(
   return completer.future;
 }
 
-// Completers for async
-void matCompleter(Completer<Mat> completer, VoidPtr p) => completer.complete(Mat.fromPointer(p.cast()));
-void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
-    completer.complete((Mat.fromPointer(p.cast()), Mat.fromPointer(p1.cast())));
-void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
-    completer.complete((Mat.fromPointer(p.cast()), Mat.fromPointer(p1.cast()), Mat.fromPointer(p2.cast())));
+// async completers
+void intCompleter(Completer<int> completer, VoidPtr p) {
+  final value = p.cast<ffi.Int>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void doubleCompleter(Completer<double> completer, VoidPtr p) {
+  final value = p.cast<ffi.Double>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void floatCompleter(Completer<double> completer, VoidPtr p) {
+  final value = p.cast<ffi.Float>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
 
 // Arena wrapper
 R cvRunArena<R>(

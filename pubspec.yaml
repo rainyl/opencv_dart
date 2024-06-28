@@ -4,7 +4,7 @@ version: 1.0.10+1
 homepage: https://github.com/rainyl/opencv_dart
 
 environment:
-  sdk: ">=3.2.4 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
   flutter: ">=3.0.0"
 
 dependencies:

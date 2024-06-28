@@ -7,6 +7,7 @@
 */
 
 #include "imgproc.h"
+#include "utils.hpp"
 #include <vector>
 
 CvStatus *ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -41,10 +42,10 @@ CvStatus *CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, Vec
   cv::calcHist(*mats.ptr, *chans.ptr, *mask.ptr, *hist.ptr, *sz.ptr, *rng.ptr, acc);
   END_WRAP
 }
-CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, bool uniform)
+CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, double scale)
 {
   BEGIN_WRAP
-  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, uniform);
+  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, scale);
   END_WRAP
 }
 CvStatus *CompareHist(Mat hist1, Mat hist2, int method, double *rval)
@@ -571,15 +572,6 @@ CvStatus *ApplyCustomColorMap(Mat src, Mat dst, Mat colormap)
   BEGIN_WRAP
   cv::applyColorMap(*src.ptr, *dst.ptr, *colormap.ptr);
   END_WRAP
-}
-
-std::vector<cv::Point2f> vecPointToVecPoint2f(std::vector<cv::Point> src)
-{
-  std::vector<cv::Point2f> v;
-  for (int i = 0; i < src.size(); i++) {
-    v.push_back(cv::Point2f(src.at(i).x, src.at(i).y));
-  }
-  return v;
 }
 
 CvStatus *GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval, int solveMethod)

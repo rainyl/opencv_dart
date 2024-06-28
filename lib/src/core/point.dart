@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -615,3 +616,10 @@ extension Point3fRecordExtension on (double x, double y, double z) {
     return point;
   }
 }
+
+// completers
+void vecPointCompleter(Completer<VecPoint> completer, VoidPtr p) =>
+    completer.complete(VecPoint.fromPointer(p.cast<cvg.VecPoint>()));
+
+void vecPoint2fCompleter(Completer<VecPoint2f> completer, VoidPtr p) =>
+    completer.complete(VecPoint2f.fromPointer(p.cast<cvg.VecPoint2f>()));

@@ -4,13 +4,13 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
+// import '../constants.g.dart';
 import '../core/base.dart';
-import '../core/dmatch.dart';
-import '../core/keypoint.dart';
+// import '../core/dmatch.dart';
+// import '../core/keypoint.dart';
 import '../core/mat.dart';
-import '../core/scalar.dart';
-import '../core/vec.dart';
+// import '../core/scalar.dart';
+// import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 class GMat extends CvStruct<cvg.GMat> {

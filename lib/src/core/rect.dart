@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -220,3 +221,10 @@ class VecRectIterator extends VecIterator<Rect> {
 extension ListRectExtension on List<Rect> {
   VecRect get cvd => VecRect.fromList(this);
 }
+
+// Completers for async
+void rectCompleter(Completer<Rect> completer, VoidPtr p) =>
+    completer.complete(Rect.fromPointer(p.cast<cvg.Rect>()));
+
+void rotatedRectCompleter(Completer<RotatedRect> completer, VoidPtr p) =>
+    completer.complete(RotatedRect.fromPointer(p.cast<cvg.RotatedRect>()));

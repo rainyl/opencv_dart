@@ -12,18 +12,21 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory CLAHE.fromNative(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
+  factory CLAHE.fromPointer(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
     final p = calloc<cvg.CLAHE>();
     CFFI.CLAHE_Create(p);
     return CLAHE._(p);
   }
 
+  factory CLAHE([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) =>
+      CLAHE.create(clipLimit, tileGridSize);
+
   /// NewCLAHE returns a new CLAHE algorithm
   ///
   /// For further details, please see:
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html
-  factory CLAHE([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
+  factory CLAHE.create([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
     final p = calloc<cvg.CLAHE>();
     final size = calloc<cvg.Size>()
       ..ref.width = tileGridSize.$1
