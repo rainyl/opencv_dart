@@ -7,8 +7,7 @@ Future<bool> checkCaffeNetAsync(cv.Net net) async {
   await net.setPreferableBackendAsync(cv.DNN_BACKEND_DEFAULT);
   await net.setPreferableTargetAsync(cv.DNN_TARGET_CPU);
 
-  final img = await cv.imreadAsync("test/images/space_shuttle.jpg",
-      flags: cv.IMREAD_COLOR);
+  final img = await cv.imreadAsync("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
   final blob = await cv.blobFromImageAsync(
@@ -53,8 +52,7 @@ Future<bool> checkCaffeNetAsync(cv.Net net) async {
 
 Future<bool> checkTensorflowAsync(cv.Net net) async {
   expect(net.isEmpty, false);
-  final img = await cv.imreadAsync("test/images/space_shuttle.jpg",
-      flags: cv.IMREAD_COLOR);
+  final img = await cv.imreadAsync("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
   final blob = await cv.blobFromImageAsync(
@@ -86,8 +84,7 @@ Future<bool> checkTensorflowAsync(cv.Net net) async {
 
 Future<bool> checkOnnxAsync(cv.Net net) async {
   expect(net.isEmpty, false);
-  final img = await cv.imreadAsync("test/images/space_shuttle.jpg",
-      flags: cv.IMREAD_COLOR);
+  final img = await cv.imreadAsync("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
   final blob = await cv.blobFromImageAsync(
@@ -119,8 +116,7 @@ Future<bool> checkOnnxAsync(cv.Net net) async {
 
 Future<bool> checkTfliteAsync(cv.Net net) async {
   expect(net.isEmpty, false);
-  final img = await cv.imreadAsync("test/images/space_shuttle.jpg",
-      flags: cv.IMREAD_COLOR);
+  final img = await cv.imreadAsync("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
 
   final blob = await cv.blobFromImageAsync(
@@ -156,12 +152,9 @@ void main() async {
   });
 
   test('cv.NetAsync.fromBytesAsync', () async {
-    final bytes =
-        await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
-    final config =
-        await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
-    final model =
-        await cv.NetAsync.fromBytesAsync("caffe", bytes, bufferConfig: config);
+    final bytes = await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
+    final config = await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
+    final model = await cv.NetAsync.fromBytesAsync("caffe", bytes, bufferConfig: config);
     await checkCaffeNetAsync(model);
 
     model.dispose();
@@ -176,17 +169,14 @@ void main() async {
   });
 
   test('cv.NetAsync.fromCaffeBytesAsync', () async {
-    final bytes =
-        await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
-    final config =
-        await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
+    final bytes = await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
+    final config = await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
     final model = await cv.NetAsync.fromCaffeBytesAsync(config, bytes);
     await checkCaffeNetAsync(model);
   });
 
   test('cv.NetAsync.fromOnnxAsync', () async {
-    final model =
-        await cv.NetAsync.fromOnnxAsync("test/models/googlenet-9.onnx");
+    final model = await cv.NetAsync.fromOnnxAsync("test/models/googlenet-9.onnx");
     await checkOnnxAsync(model);
   });
 
@@ -197,32 +187,27 @@ void main() async {
   });
 
   test('cv.NetAsync.fromTensorflowAsync', () async {
-    final model = await cv.NetAsync.fromTensorflowAsync(
-        "test/models/tensorflow_inception_graph.pb");
+    final model = await cv.NetAsync.fromTensorflowAsync("test/models/tensorflow_inception_graph.pb");
     expect(model.isEmpty, false);
     await checkTensorflowAsync(model);
   });
 
   test('cv.NetAsync.fromTensorflowBytesAsync', () async {
-    final bytes =
-        await File("test/models/tensorflow_inception_graph.pb").readAsBytes();
+    final bytes = await File("test/models/tensorflow_inception_graph.pb").readAsBytes();
     final model = await cv.NetAsync.fromTensorflowBytesAsync(bytes);
     expect(model.isEmpty, false);
     await checkTensorflowAsync(model);
   });
 
   test('cv.NetAsync.fromTFLiteAsync', skip: true, () async {
-    final model = await cv.NetAsync.fromTFLiteAsync(
-        "test/models/googlenet_float32.tflite");
+    final model = await cv.NetAsync.fromTFLiteAsync("test/models/googlenet_float32.tflite");
     await checkTfliteAsync(model);
   });
 
   test('cv.NetAsync.fromTorchAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
-    final model = await cv.NetAsync.fromTorchAsync(
-        "test/models/openface.nn4.small2.v1.t7");
+    final model = await cv.NetAsync.fromTorchAsync("test/models/openface.nn4.small2.v1.t7");
     expect(model.isEmpty, false);
 
     final blob = await cv.blobFromImageAsync(
@@ -236,8 +221,7 @@ void main() async {
     expect(blob.isEmpty, false);
   });
 
-  test('cv.blobFromImagesAsync, cv.imagesFromBlobAsync, cv.getBlobChannelAsync',
-      () async {
+  test('cv.blobFromImagesAsync, cv.imagesFromBlobAsync, cv.getBlobChannelAsync', () async {
     final imgs = [
       await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
       await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
@@ -249,10 +233,8 @@ void main() async {
 
     final images = await cv.imagesFromBlobAsync(blob);
     expect(images.length, 2);
-    expect((images.first.rows, images.first.cols),
-        (imgs.first.rows, imgs.first.cols));
-    expect(
-        (images.last.rows, images.last.cols), (imgs.last.rows, imgs.last.cols));
+    expect((images.first.rows, images.first.cols), (imgs.first.rows, imgs.first.cols));
+    expect((images.last.rows, images.last.cols), (imgs.last.rows, imgs.last.cols));
 
     final ch2 = await cv.getBlobChannelAsync(blob, 0, 1);
     expect(ch2.isEmpty, false);
@@ -271,8 +253,7 @@ void main() async {
   });
 
   test('cv.NMSBoxesAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
     //TODO: Migrate to async
     img.convertTo(cv.MatType.CV_32FC1);
@@ -284,8 +265,7 @@ void main() async {
       cv.Rect(111, 65, 630, 480),
       cv.Rect(156, 51, 640, 480),
     ].cvd;
-    final scores =
-        [0.82094115, 0.7998236, 0.9809663, 0.99717456, 0.89628726].f32;
+    final scores = [0.82094115, 0.7998236, 0.9809663, 0.99717456, 0.89628726].f32;
     final indices = await cv.NMSBoxesAsync(bboxes, scores, 0.5, 0.4);
     expect(indices.first, 3);
   });
