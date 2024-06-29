@@ -25,8 +25,7 @@ extension MergeMertensAsync on MergeMertens {
         exposureWeight,
         callback,
       ),
-      (c, p) =>
-          c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
+      (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
     );
   }
 
