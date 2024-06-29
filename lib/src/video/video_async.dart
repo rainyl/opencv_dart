@@ -44,12 +44,12 @@ extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
 }
 
 extension BackgroundSubtractorKNNAsync on BackgroundSubtractorKNN {
-  Future<BackgroundSubtractorKNN> emptyAsync() async => cvRunAsync(
+  static Future<BackgroundSubtractorKNN> emptyAsync() async => cvRunAsync(
         CFFI.BackgroundSubtractorMOG2_Create_Async,
         (c, p) => c.complete(BackgroundSubtractorKNN(p.cast<cvg.BackgroundSubtractorKNN>())),
       );
 
-  Future<BackgroundSubtractorKNN> createAsync({
+  static Future<BackgroundSubtractorKNN> createAsync({
     int history = 500,
     double varThreshold = 16,
     bool detectShadows = true,

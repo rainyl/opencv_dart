@@ -6,15 +6,13 @@
 #ifndef CVD_VIDEOIO_ASYNC_H_
 #define CVD_VIDEOIO_ASYNC_H_
 
+#include "core/core.h"
 #include "core/types.h"
 #include "videoio.h"
 
 #ifdef __cplusplus
-#include <opencv2/opencv.hpp>
 extern "C" {
 #endif
-
-#include "core/core.h"
 
 // VideoCapture
 CvStatus *VideoCapture_New_Async(CvCallback_1 callback);

@@ -45,4 +45,6 @@ export 'src/photo/photo.dart';
 export 'src/stitching/stitching.dart';
 export 'src/svd/svd.dart';
 export 'src/video/video.dart';
+export 'src/video/video_async.dart';
 export 'src/video/videoio.dart';
+export 'src/video/videoio_async.dart';

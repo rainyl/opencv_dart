@@ -17,6 +17,8 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     }
   }
 
+  factory VideoCapture.fromPointer(cvg.VideoCapturePtr ptr) => VideoCapture._(ptr, false);
+
   factory VideoCapture.empty() {
     final p = calloc<cvg.VideoCapture>();
     cvRun(() => CFFI.VideoCapture_New(p));
@@ -154,6 +156,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+
+  factory VideoWriter.fromPointer(cvg.VideoWriterPtr ptr) => VideoWriter._(ptr, false);
 
   factory VideoWriter.empty() {
     final p = calloc<cvg.VideoWriter>();

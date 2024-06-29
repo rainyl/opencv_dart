@@ -1,21 +1,15 @@
 /*
-    This file is originally from gocv project
-    Licensed: Apache 2.0 license. Copyright _Async(c) 2017-2021 The Hybrid Group.
-
-    Modified by Rainyl.
+    Created by Rainyl.
     Licensed: Apache 2.0 license. Copyright _Async(c) 2024 Rainyl.
 */
 
 #ifndef CVD_VIDEO_ASYNC_H_
 #define CVD_VIDEO_ASYNC_H_
 
-#include "core/core.h"
 #include "core/types.h"
 #include "video.h"
 
 #ifdef __cplusplus
-#include <opencv2/opencv.hpp>
-#include <opencv2/video.hpp>
 extern "C" {
 #endif
 

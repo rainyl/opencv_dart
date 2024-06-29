@@ -1,12 +1,9 @@
 /*
-    This file is originally from gocv project
-    Licensed: Apache 2.0 license. Copyright (c) 2017-2021 The Hybrid Group.
-
-    Modified by Rainyl.
+    Created by Rainyl.
     Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 */
 
-#include "video.h"
+#include "video_async.h"
 #include <vector>
 
 CvStatus *BackgroundSubtractorMOG2_Create_Async(CvCallback_1 callback) {
