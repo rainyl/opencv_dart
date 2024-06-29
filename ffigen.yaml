@@ -17,6 +17,7 @@ headers:
     - src/calib3d/calib3d.h
     - src/calib3d/calib3d_async.h
     - src/core/core.h
+    - src/core/core_async.h
     - src/core/exception.h
     - src/core/svd.h
     - src/core/svd_async.h
@@ -51,6 +52,7 @@ headers:
     - src/calib3d/calib3d.h
     - src/calib3d/calib3d_async.h
     - src/core/core.h
+    - src/core/core_async.h
     - src/core/exception.h
     - src/core/svd.h
     - src/core/svd_async.h

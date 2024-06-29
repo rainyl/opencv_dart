@@ -13,6 +13,7 @@ export 'src/core/asyncarray.dart';
 export 'src/core/base.dart';
 export 'src/core/contours.dart';
 export 'src/core/core.dart';
+export 'src/core/core_async.dart';
 export 'src/core/cv_vec.dart';
 export 'src/core/dmatch.dart';
 export 'src/core/error_code.dart';
