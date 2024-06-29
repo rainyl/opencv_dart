@@ -24,8 +24,10 @@ class Stitcher extends CvStruct<cvg.PtrStitcher> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory Stitcher.fromPointer(cvg.PtrStitcherPtr ptr,
-          [bool attach = true,]) =>
+  factory Stitcher.fromPointer(
+    cvg.PtrStitcherPtr ptr, [
+    bool attach = true,
+  ]) =>
       Stitcher._(ptr.cast(), attach);
   cvg.Stitcher get stitcher {
     final s = calloc<cvg.Stitcher>();

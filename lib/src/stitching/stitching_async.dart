@@ -28,32 +28,28 @@ extension StitcherAsync on Stitcher {
 
   Future<double> getRegistrationResolAsync() async {
     return cvRunAsync(
-      (callback) =>
-          CFFI.Stitcher_GetRegistrationResol_Async(stitcher, callback),
+      (callback) => CFFI.Stitcher_GetRegistrationResol_Async(stitcher, callback),
       (c, p) => doubleCompleter,
     );
   }
 
   Future<void> setRegistrationResolAsync(double value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetRegistrationResol_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetRegistrationResol_Async(stitcher, value, callback),
       (c) => c.complete(),
     );
   }
 
   Future<double> getSeamEstimationResolAsync() async {
     return cvRunAsync(
-      (callback) =>
-          CFFI.Stitcher_GetSeamEstimationResol_Async(stitcher, callback),
+      (callback) => CFFI.Stitcher_GetSeamEstimationResol_Async(stitcher, callback),
       (c, p) => doubleCompleter,
     );
   }
 
   Future<void> setSeamEstimationResolAsync(double value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetSeamEstimationResol_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetSeamEstimationResol_Async(stitcher, value, callback),
       (c) => c.complete(),
     );
   }
@@ -67,16 +63,14 @@ extension StitcherAsync on Stitcher {
 
   Future<void> setCompositingResolAsync(double value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetCompositingResol_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetCompositingResol_Async(stitcher, value, callback),
       (c) => c.complete(),
     );
   }
 
   Future<double> getPanoConfidenceThreshAsync() async {
     return cvRunAsync(
-      (callback) =>
-          CFFI.Stitcher_GetPanoConfidenceThresh_Async(stitcher, callback),
+      (callback) => CFFI.Stitcher_GetPanoConfidenceThresh_Async(stitcher, callback),
       (c, p) => intCompleter,
     );
   }
@@ -101,8 +95,7 @@ extension StitcherAsync on Stitcher {
 
   Future<void> setWaveCorrectionAsync(bool value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetWaveCorrection_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetWaveCorrection_Async(stitcher, value, callback),
       (
         c,
       ) =>
@@ -112,16 +105,14 @@ extension StitcherAsync on Stitcher {
 
   Future<int> getInterpolationFlagsAsync() async {
     return cvRunAsync(
-      (callback) =>
-          CFFI.Stitcher_GetInterpolationFlags_Async(stitcher, callback),
+      (callback) => CFFI.Stitcher_GetInterpolationFlags_Async(stitcher, callback),
       (c, p) => intCompleter,
     );
   }
 
   Future<void> setInterpolationFlagsAsync(int value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetInterpolationFlags_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetInterpolationFlags_Async(stitcher, value, callback),
       (c) => c.complete(),
     );
   }
@@ -135,8 +126,7 @@ extension StitcherAsync on Stitcher {
 
   Future<void> setWaveCorrectKindAsync(int value) async {
     await cvRunAsync0(
-      (callback) =>
-          CFFI.Stitcher_SetWaveCorrectKind_Async(stitcher, value, callback),
+      (callback) => CFFI.Stitcher_SetWaveCorrectKind_Async(stitcher, value, callback),
       (
         c,
       ) =>

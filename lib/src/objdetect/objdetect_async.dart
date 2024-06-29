@@ -16,8 +16,9 @@ import './objdetect.dart';
 
 extension CascadeClassifierAsync on CascadeClassifier {
   static Future<CascadeClassifier> emptyNewAsync() async => cvRunAsync(
-      CFFI.CascadeClassifier_New_Async,
-      (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())),);
+        CFFI.CascadeClassifier_New_Async,
+        (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())),
+      );
 
   static Future<CascadeClassifier> fromFileAsync(String filename) async {
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
@@ -167,8 +168,9 @@ extension CascadeClassifierAsync on CascadeClassifier {
 
 extension HOGDescriptorAsync on HOGDescriptor {
   static Future<HOGDescriptor> emptyNewAsync() async => cvRunAsync(
-      CFFI.HOGDescriptor_New_Async,
-      (c, p) => c.complete(HOGDescriptor.fromPointer(p.cast<cvg.HOGDescriptor>())),);
+        CFFI.HOGDescriptor_New_Async,
+        (c, p) => c.complete(HOGDescriptor.fromPointer(p.cast<cvg.HOGDescriptor>())),
+      );
 
   static Future<HOGDescriptor> fromFileAsync(String filename) async {
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
@@ -391,8 +393,9 @@ Future<VecRect> groupRectanglesAsync(
 
 extension QRCodeDetectorAsync on QRCodeDetector {
   static Future<QRCodeDetector> emptyNewAsync() async => cvRunAsync(
-      CFFI.QRCodeDetector_New_Async,
-      (c, p) => c.complete(QRCodeDetector.fromPointer(p.cast<cvg.QRCodeDetector>())),);
+        CFFI.QRCodeDetector_New_Async,
+        (c, p) => c.complete(QRCodeDetector.fromPointer(p.cast<cvg.QRCodeDetector>())),
+      );
 
   Future<(String rval, Mat straightQRcode)> decodeCurvedAsync(
     InputArray img,
@@ -551,8 +554,9 @@ extension QRCodeDetectorAsync on QRCodeDetector {
 
 extension FaceDetectorYNAsync on FaceDetectorYN {
   static Future<CascadeClassifier> emptyNewAsync() async => cvRunAsync(
-      CFFI.CascadeClassifier_New_Async,
-      (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())),);
+        CFFI.CascadeClassifier_New_Async,
+        (c, p) => c.complete(CascadeClassifier.fromPointer(p.cast<cvg.CascadeClassifier>())),
+      );
 
   static Future<FaceDetectorYN> fromFileAsync(
     String model,
@@ -567,8 +571,17 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<FaceDetectorYN>(
-        (callback) => CFFI.FaceDetectorYN_New_Async(cModel, cConfig, inputSize.cvd.ref, scoreThreshold,
-            nmsThreshold, topK, backendId, targetId, callback,), (c, p) {
+        (callback) => CFFI.FaceDetectorYN_New_Async(
+              cModel,
+              cConfig,
+              inputSize.cvd.ref,
+              scoreThreshold,
+              nmsThreshold,
+              topK,
+              backendId,
+              targetId,
+              callback,
+            ), (c, p) {
       return c.complete(FaceDetectorYN.fromPointer(p.cast<cvg.FaceDetectorYN>()));
     });
     calloc.free(cModel);
@@ -591,16 +604,17 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
 
     final rval = await cvRunAsync<FaceDetectorYN>(
         (callback) => CFFI.FaceDetectorYN_NewFromBuffer_Async(
-            cFramework,
-            VecUChar.fromList(bufferModel).ref,
-            VecUChar.fromList(bufferConfig).ref,
-            inputSize.cvd.ref,
-            scoreThreshold,
-            nmsThreshold,
-            topK,
-            backendId,
-            targetId,
-            callback,), (c, p) {
+              cFramework,
+              VecUChar.fromList(bufferModel).ref,
+              VecUChar.fromList(bufferConfig).ref,
+              inputSize.cvd.ref,
+              scoreThreshold,
+              nmsThreshold,
+              topK,
+              backendId,
+              targetId,
+              callback,
+            ), (c, p) {
       return c.complete(FaceDetectorYN.fromPointer(p.cast<cvg.FaceDetectorYN>()));
     });
     calloc.free(cFramework);
