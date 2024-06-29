@@ -24,7 +24,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     }
   }
   factory MergeMertens.fromPointer(cvg.MergeMertensPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
     final p = calloc<cvg.MergeMertens>();
@@ -40,7 +40,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     final p = calloc<cvg.MergeMertens>();
     cvRun(
       () => CFFI.MergeMertens_CreateWithParams(
-          contrastWeight, saturationWeight, exposureWeight, p),
+          contrastWeight, saturationWeight, exposureWeight, p,),
     );
     return MergeMertens._(p);
   }
@@ -86,7 +86,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     }
   }
   factory AlignMTB.fromPointer(cvg.AlignMTBPtr ptr,
-          [bool attach = true]) =>
+          [bool attach = true,]) =>
       AlignMTB._(ptr.cast(), attach);
   /// AlignMTB for converts images to median threshold bitmaps.
   /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
@@ -111,7 +111,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.create(
-      {int maxBits = 6, int excludeRange = 4, bool cut = true}) {
+      {int maxBits = 6, int excludeRange = 4, bool cut = true,}) {
     final p = calloc<cvg.AlignMTB>();
     cvRun(() => CFFI.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
     return AlignMTB._(p);
@@ -151,7 +151,7 @@ Mat colorChange(
 }) {
   final dst = Mat.empty();
   cvRun(() =>
-      CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul));
+      CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul),);
   return dst;
 }
 
@@ -160,10 +160,10 @@ Mat colorChange(
 /// For further details, please see:
 /// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
 Mat seamlessClone(
-    InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
+    InputArray src, InputArray dst, InputArray mask, Point p, int flags,) {
   final blend = Mat.empty();
   cvRun(() =>
-      CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags));
+      CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags),);
   return blend;
 }
 
@@ -195,7 +195,7 @@ Mat textureFlattening(
 }) {
   final dst = Mat.empty();
   cvRun(() => CFFI.TextureFlattening(
-      src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+      src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize,),);
   return dst;
 }
 
@@ -300,7 +300,7 @@ Mat edgePreservingFilter(
 }) {
   final dst = Mat.empty();
   cvRun(
-      () => CFFI.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR));
+      () => CFFI.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR),);
   return dst;
 }
 
@@ -317,7 +317,7 @@ Mat edgePreservingFilter(
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
   cvRun(() => CFFI.PencilSketch(
-      src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
+      src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor,),);
   return (dst1, dst2);
 }
 
@@ -345,9 +345,9 @@ Mat stylization(
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
 Mat inpaint(
-    InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
+    InputArray src, InputArray inpaintMask, double inpaintRadius, int flags,) {
   final dst = Mat.empty();
   cvRun(() => CFFI.PhotoInpaint(
-      src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags));
+      src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags,),);
   return dst;
 }

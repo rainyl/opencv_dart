@@ -20114,34 +20114,29 @@ class CvNative {
   ffi.Pointer<CvStatus> Stitcher_ComposePanorama_1_Async(
     Stitcher self,
     VecMat mats,
-    Mat rpano,
-    CvCallback_1 callback,
+    CvCallback_2 callback,
   ) {
     return _Stitcher_ComposePanorama_1_Async(
       self,
       mats,
-      rpano,
       callback,
     );
   }
 
   late final _Stitcher_ComposePanorama_1_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat,
-              CvCallback_1)>>('Stitcher_ComposePanorama_1_Async');
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat,
+              CvCallback_2)>>('Stitcher_ComposePanorama_1_Async');
   late final _Stitcher_ComposePanorama_1_Async =
       _Stitcher_ComposePanorama_1_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Stitcher, VecMat, Mat, CvCallback_1)>();
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Stitcher_ComposePanorama_Async(
     Stitcher self,
-    Mat rpano,
-    CvCallback_1 callback,
+    CvCallback_2 callback,
   ) {
     return _Stitcher_ComposePanorama_Async(
       self,
-      rpano,
       callback,
     );
   }
@@ -20149,10 +20144,10 @@ class CvNative {
   late final _Stitcher_ComposePanorama_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Stitcher, Mat, CvCallback_1)>>('Stitcher_ComposePanorama_Async');
+              Stitcher, CvCallback_2)>>('Stitcher_ComposePanorama_Async');
   late final _Stitcher_ComposePanorama_Async =
       _Stitcher_ComposePanorama_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, Mat, CvCallback_1)>();
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Stitcher_Create(
     int mode,
@@ -20832,36 +20827,31 @@ class CvNative {
     Stitcher self,
     VecMat mats,
     VecMat masks,
-    Mat rpano,
-    CvCallback_1 callback,
+    CvCallback_2 callback,
   ) {
     return _Stitcher_Stitch_1_Async(
       self,
       mats,
       masks,
-      rpano,
       callback,
     );
   }
 
   late final _Stitcher_Stitch_1_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, Mat,
-              CvCallback_1)>>('Stitcher_Stitch_1_Async');
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat,
+              CvCallback_2)>>('Stitcher_Stitch_1_Async');
   late final _Stitcher_Stitch_1_Async = _Stitcher_Stitch_1_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Stitcher, VecMat, VecMat, Mat, CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Stitcher_Stitch_Async(
     Stitcher self,
     VecMat mats,
-    Mat rpano,
-    CvCallback_1 callback,
+    CvCallback_2 callback,
   ) {
     return _Stitcher_Stitch_Async(
       self,
       mats,
-      rpano,
       callback,
     );
   }
@@ -20869,9 +20859,9 @@ class CvNative {
   late final _Stitcher_Stitch_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Stitcher, VecMat, Mat, CvCallback_1)>>('Stitcher_Stitch_Async');
+              Stitcher, VecMat, CvCallback_2)>>('Stitcher_Stitch_Async');
   late final _Stitcher_Stitch_Async = _Stitcher_Stitch_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat, CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Stylization(
     Mat src,

@@ -1,18 +1,14 @@
 library cv;
 
-import 'dart:ffi' as ffi;
-import 'dart:typed_data';
-import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../core/mat_type.dart';
 import '../core/point.dart';
 import '../opencv.g.dart' as cvg;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {
   static Future<MergeMertens> emptyNewAsync() async => cvRunAsync(
-        (callback) => CFFI.MergeMertens_Create_Async(callback),
+        CFFI.MergeMertens_Create_Async,
         (c, p) =>
             c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
       );
@@ -44,12 +40,12 @@ extension MergeMertensAsync on MergeMertens {
 
 extension AlignMTBAsync on AlignMTB {
   static Future<AlignMTB> emptyNewAsync() async => cvRunAsync(
-        (callback) => CFFI.AlignMTB_Create_Async(callback),
+        CFFI.AlignMTB_Create_Async,
         (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
       );
 
   static Future<AlignMTB> createAsync(
-      {int maxBits = 6, int excludeRange = 4, bool cut = true}) async {
+      {int maxBits = 6, int excludeRange = 4, bool cut = true,}) async {
     return cvRunAsync(
       (callback) => CFFI.AlignMTB_CreateWithParams_Async(
         maxBits,

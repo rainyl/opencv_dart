@@ -37,10 +37,10 @@ CvStatus *Stitcher_SetWaveCorrectKind_Async(Stitcher self, int inval, CvCallback
 
 // Asynchronous functions
 CvStatus *Stitcher_EstimateTransform_Async(Stitcher self, VecMat mats, VecMat masks, CvCallback_1 callback);
-CvStatus *Stitcher_ComposePanorama_Async(Stitcher self, Mat rpano, CvCallback_1 callback);
-CvStatus *Stitcher_ComposePanorama_1_Async(Stitcher self, VecMat mats, Mat rpano, CvCallback_1 callback);
-CvStatus *Stitcher_Stitch_Async(Stitcher self, VecMat mats, Mat rpano, CvCallback_1 callback);
-CvStatus *Stitcher_Stitch_1_Async(Stitcher self, VecMat mats, VecMat masks, Mat rpano, CvCallback_1 callback);
+CvStatus *Stitcher_ComposePanorama_Async(Stitcher self, CvCallback_2 callback);
+CvStatus *Stitcher_ComposePanorama_1_Async(Stitcher self, VecMat mats, CvCallback_2 callback);
+CvStatus *Stitcher_Stitch_Async(Stitcher self, VecMat mats, CvCallback_2 callback);
+CvStatus *Stitcher_Stitch_1_Async(Stitcher self, VecMat mats, VecMat masks, CvCallback_2 callback);
 CvStatus *Stitcher_Component_Async(Stitcher self, CvCallback_1 callback);
 
 #ifdef __cplusplus
