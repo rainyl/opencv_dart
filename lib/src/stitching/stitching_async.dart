@@ -1,6 +1,8 @@
 library cv;
 
 import 'dart:ffi' as ffi;
+import 'package:ffi/ffi.dart';
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
@@ -28,7 +30,7 @@ extension StitcherAsync on Stitcher {
     return cvRunAsync(
       (callback) =>
           CFFI.Stitcher_GetRegistrationResol_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => doubleCompleter,
     );
   }
 
@@ -44,7 +46,7 @@ extension StitcherAsync on Stitcher {
     return cvRunAsync(
       (callback) =>
           CFFI.Stitcher_GetSeamEstimationResol_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => doubleCompleter,
     );
   }
 
@@ -59,7 +61,7 @@ extension StitcherAsync on Stitcher {
   Future<double> getCompositingResolAsync() async {
     return cvRunAsync(
       (callback) => CFFI.Stitcher_GetCompositingResol_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => doubleCompleter,
     );
   }
 
@@ -75,7 +77,7 @@ extension StitcherAsync on Stitcher {
     return cvRunAsync(
       (callback) =>
           CFFI.Stitcher_GetPanoConfidenceThresh_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => intCompleter,
     );
   }
 
@@ -93,7 +95,7 @@ extension StitcherAsync on Stitcher {
   Future<bool> getWaveCorrectionAsync() async {
     return cvRunAsync(
       (callback) => CFFI.Stitcher_GetWaveCorrection_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => boolCompleter,
     );
   }
 
@@ -112,7 +114,7 @@ extension StitcherAsync on Stitcher {
     return cvRunAsync(
       (callback) =>
           CFFI.Stitcher_GetInterpolationFlags_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => intCompleter,
     );
   }
 
@@ -127,7 +129,7 @@ extension StitcherAsync on Stitcher {
   Future<int> getWaveCorrectKindAsync() async {
     return cvRunAsync(
       (callback) => CFFI.Stitcher_GetWaveCorrectKind_Async(stitcher, callback),
-      (c, p) => c.complete(p.value),
+      (c, p) => intCompleter,
     );
   }
 
@@ -148,35 +150,36 @@ extension StitcherAsync on Stitcher {
   }) async {
     masks ??= VecMat.fromList([]);
     return cvRunAsync(
-      (callback) => CFFI.Stitcher_EstimateTransform_Async(
-        stitcher,
-        images.ref,
-        masks!.ref,
-        callback,
-      ),
-      (c, p) => c.complete(StitcherStatus.fromInt(p.value)),
-    );
+        (callback) => CFFI.Stitcher_EstimateTransform_Async(
+              stitcher,
+              images.ref,
+              masks!.ref,
+              callback,
+            ), (c, p) {
+      final value = p.cast<ffi.Int>().value;
+      calloc.free(p);
+      return c.complete(StitcherStatus.fromInt(value));
+    });
   }
 
   Future<(StitcherStatus, Mat)> composePanoramaAsync({VecMat? images}) async {
     return cvRunAsync2(
-      (callback) => images == null
-          ? CFFI.Stitcher_ComposePanorama_Async(
-              stitcher,
-              callback,
-            )
-          : CFFI.Stitcher_ComposePanorama_1_Async(
-              stitcher,
-              images.ref,
-              callback,
-            ),
-      (c, status, pano) => c.complete(
-        (
-          StitcherStatus.fromInt(status.value),
-          Mat.fromPointer(pano.cast<cvg.Mat>())
-        ),
-      ),
-    );
+        (callback) => images == null
+            ? CFFI.Stitcher_ComposePanorama_Async(
+                stitcher,
+                callback,
+              )
+            : CFFI.Stitcher_ComposePanorama_1_Async(
+                stitcher,
+                images.ref,
+                callback,
+              ), (c, status, pano) {
+      final value = status.cast<ffi.Int>().value;
+      calloc.free(status);
+      return c.complete(
+        (StitcherStatus.fromInt(value), Mat.fromPointer(pano.cast<cvg.Mat>())),
+      );
+    });
   }
 
   Future<(StitcherStatus, Mat)> stitchAsync(
@@ -184,25 +187,24 @@ extension StitcherAsync on Stitcher {
     VecMat? masks,
   }) async {
     return cvRunAsync2(
-      (callback) => masks == null
-          ? CFFI.Stitcher_Stitch_Async(
-              stitcher,
-              images.ref,
-              callback,
-            )
-          : CFFI.Stitcher_Stitch_1_Async(
-              stitcher,
-              images.ref,
-              masks.ref,
-              callback,
-            ),
-      (c, status, pano) => c.complete(
-        (
-          StitcherStatus.fromInt(status.value),
-          Mat.fromPointer(pano.cast<cvg.Mat>())
-        ),
-      ),
-    );
+        (callback) => masks == null
+            ? CFFI.Stitcher_Stitch_Async(
+                stitcher,
+                images.ref,
+                callback,
+              )
+            : CFFI.Stitcher_Stitch_1_Async(
+                stitcher,
+                images.ref,
+                masks.ref,
+                callback,
+              ), (c, status, pano) {
+      final value = status.cast<ffi.Int>().value;
+      calloc.free(status);
+      return c.complete(
+        (StitcherStatus.fromInt(value), Mat.fromPointer(pano.cast<cvg.Mat>())),
+      );
+    });
   }
 
   Future<VecInt> getComponentAsync() async {
