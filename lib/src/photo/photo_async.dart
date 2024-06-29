@@ -13,7 +13,8 @@ import './photo.dart';
 extension MergeMertensAsync on MergeMertens {
   static Future<MergeMertens> emptyNewAsync() async => cvRunAsync(
         (callback) => CFFI.MergeMertens_Create_Async(callback),
-        (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
+        (c, p) =>
+            c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
       );
 
   static Future<MergeMertens> createAsync({
@@ -28,7 +29,8 @@ extension MergeMertensAsync on MergeMertens {
         exposureWeight,
         callback,
       ),
-      (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
+      (c, p) =>
+          c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
     );
   }
 
@@ -46,7 +48,8 @@ extension AlignMTBAsync on AlignMTB {
         (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
       );
 
-  static Future<AlignMTB> createAsync({int maxBits = 6, int excludeRange = 4, bool cut = true}) async {
+  static Future<AlignMTB> createAsync(
+      {int maxBits = 6, int excludeRange = 4, bool cut = true}) async {
     return cvRunAsync(
       (callback) => CFFI.AlignMTB_CreateWithParams_Async(
         maxBits,
@@ -88,7 +91,6 @@ Future<Mat> colorChangeAsync(
 
 Future<Mat> seamlessCloneAsync(
   InputArray src,
-  InputArray dst,
   InputArray mask,
   Point p,
   int flags,
@@ -96,7 +98,6 @@ Future<Mat> seamlessCloneAsync(
   return cvRunAsync(
     (callback) => CFFI.SeamlessClone_Async(
       src.ref,
-      dst.ref,
       mask.ref,
       p.ref,
       flags,
@@ -246,7 +247,7 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
   double sigmaR = 0.07,
   double shadeFactor = 0.02,
 }) async {
-  return cvRunAsync(
+  return cvRunAsync2(
     (callback) => CFFI.PencilSketch_Async(
       src.ref,
       sigmaS,

@@ -3915,16 +3915,14 @@ class CvNative {
   ffi.Pointer<CvStatus> ColorChange_Async(
     Mat src,
     Mat mask,
-    Mat dst,
     double red_mul,
     double green_mul,
     double blue_mul,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _ColorChange_Async(
       src,
       mask,
-      dst,
       red_mul,
       green_mul,
       blue_mul,
@@ -3934,11 +3932,11 @@ class CvNative {
 
   late final _ColorChange_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Float, CvCallback_0)>>('ColorChange_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Float, CvCallback_1)>>('ColorChange_Async');
   late final _ColorChange_Async = _ColorChange_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, double, CvCallback_0)>();
+          Mat, Mat, double, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> CompareHist(
     Mat hist1,
@@ -4325,14 +4323,12 @@ class CvNative {
 
   ffi.Pointer<CvStatus> DetailEnhance_Async(
     Mat src,
-    Mat dst,
     double sigma_s,
     double sigma_r,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _DetailEnhance_Async(
       src,
-      dst,
       sigma_s,
       sigma_r,
       callback,
@@ -4341,10 +4337,10 @@ class CvNative {
 
   late final _DetailEnhance_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              CvCallback_0)>>('DetailEnhance_Async');
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Float, ffi.Float, CvCallback_1)>>('DetailEnhance_Async');
   late final _DetailEnhance_Async = _DetailEnhance_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Dilate(
     Mat src,
@@ -4731,15 +4727,13 @@ class CvNative {
 
   ffi.Pointer<CvStatus> EdgePreservingFilter_Async(
     Mat src,
-    Mat dst,
     int filter,
     double sigma_s,
     double sigma_r,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _EdgePreservingFilter_Async(
       src,
-      dst,
       filter,
       sigma_s,
       sigma_r,
@@ -4749,12 +4743,12 @@ class CvNative {
 
   late final _EdgePreservingFilter_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Float,
-              ffi.Float, CvCallback_0)>>('EdgePreservingFilter_Async');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Float, ffi.Float,
+              CvCallback_1)>>('EdgePreservingFilter_Async');
   late final _EdgePreservingFilter_Async =
       _EdgePreservingFilter_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, int, double, double, CvCallback_0)>();
+              Mat, int, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Ellipse(
     Mat img,
@@ -6108,18 +6102,16 @@ class CvNative {
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMultiWithParams_Async(
     VecMat src,
-    Mat dst,
     int imgToDenoiseIndex,
     int temporalWindowSize,
     double h,
     double hColor,
     int templateWindowSize,
     int searchWindowSize,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoisingColoredMultiWithParams_Async(
       src,
-      dst,
       imgToDenoiseIndex,
       temporalWindowSize,
       h,
@@ -6132,24 +6124,22 @@ class CvNative {
 
   late final _FastNlMeansDenoisingColoredMultiWithParams_AsyncPtr = _lookup<
           ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int,
-                  ffi.Float, ffi.Float, ffi.Int, ffi.Int, CvCallback_0)>>(
+              ffi.Pointer<CvStatus> Function(VecMat, ffi.Int, ffi.Int,
+                  ffi.Float, ffi.Float, ffi.Int, ffi.Int, CvCallback_1)>>(
       'FastNlMeansDenoisingColoredMultiWithParams_Async');
   late final _FastNlMeansDenoisingColoredMultiWithParams_Async =
       _FastNlMeansDenoisingColoredMultiWithParams_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecMat, Mat, int, int, double, double, int, int, CvCallback_0)>();
+              VecMat, int, int, double, double, int, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMulti_Async(
     VecMat src,
-    Mat dst,
     int imgToDenoiseIndex,
     int temporalWindowSize,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoisingColoredMulti_Async(
       src,
-      dst,
       imgToDenoiseIndex,
       temporalWindowSize,
       callback,
@@ -6158,12 +6148,11 @@ class CvNative {
 
   late final _FastNlMeansDenoisingColoredMulti_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int,
-              CvCallback_0)>>('FastNlMeansDenoisingColoredMulti_Async');
+          ffi.Pointer<CvStatus> Function(VecMat, ffi.Int, ffi.Int,
+              CvCallback_1)>>('FastNlMeansDenoisingColoredMulti_Async');
   late final _FastNlMeansDenoisingColoredMulti_Async =
       _FastNlMeansDenoisingColoredMulti_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat, Mat, int, int, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(VecMat, int, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredWithParams(
     Mat src,
@@ -6193,16 +6182,14 @@ class CvNative {
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredWithParams_Async(
     Mat src,
-    Mat dst,
     double h,
     double hColor,
     int templateWindowSize,
     int searchWindowSize,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoisingColoredWithParams_Async(
       src,
-      dst,
       h,
       hColor,
       templateWindowSize,
@@ -6215,36 +6202,33 @@ class CvNative {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               Mat,
-              Mat,
               ffi.Float,
               ffi.Float,
               ffi.Int,
               ffi.Int,
-              CvCallback_0)>>('FastNlMeansDenoisingColoredWithParams_Async');
+              CvCallback_1)>>('FastNlMeansDenoisingColoredWithParams_Async');
   late final _FastNlMeansDenoisingColoredWithParams_Async =
       _FastNlMeansDenoisingColoredWithParams_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, int, int, CvCallback_0)>();
+              Mat, double, double, int, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColored_Async(
     Mat src,
-    Mat dst,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoisingColored_Async(
       src,
-      dst,
       callback,
     );
   }
 
   late final _FastNlMeansDenoisingColored_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_0)>>('FastNlMeansDenoisingColored_Async');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'FastNlMeansDenoisingColored_Async');
   late final _FastNlMeansDenoisingColored_Async =
       _FastNlMeansDenoisingColored_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingWithParams(
     Mat src,
@@ -6272,15 +6256,13 @@ class CvNative {
 
   ffi.Pointer<CvStatus> FastNlMeansDenoisingWithParams_Async(
     Mat src,
-    Mat dst,
     double h,
     int templateWindowSize,
     int searchWindowSize,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoisingWithParams_Async(
       src,
-      dst,
       h,
       templateWindowSize,
       searchWindowSize,
@@ -6290,31 +6272,29 @@ class CvNative {
 
   late final _FastNlMeansDenoisingWithParams_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Int, ffi.Int,
-              CvCallback_0)>>('FastNlMeansDenoisingWithParams_Async');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Int, ffi.Int,
+              CvCallback_1)>>('FastNlMeansDenoisingWithParams_Async');
   late final _FastNlMeansDenoisingWithParams_Async =
       _FastNlMeansDenoisingWithParams_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, int, int, CvCallback_0)>();
+              Mat, double, int, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoising_Async(
     Mat src,
-    Mat dst,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _FastNlMeansDenoising_Async(
       src,
-      dst,
       callback,
     );
   }
 
   late final _FastNlMeansDenoising_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_0)>>('FastNlMeansDenoising_Async');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'FastNlMeansDenoising_Async');
   late final _FastNlMeansDenoising_Async = _FastNlMeansDenoising_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FillPoly(
     Mat img,
@@ -9083,15 +9063,13 @@ class CvNative {
   ffi.Pointer<CvStatus> IlluminationChange_Async(
     Mat src,
     Mat mask,
-    Mat dst,
     double alpha,
     double beta,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _IlluminationChange_Async(
       src,
       mask,
-      dst,
       alpha,
       beta,
       callback,
@@ -9100,12 +9078,12 @@ class CvNative {
 
   late final _IlluminationChange_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              CvCallback_0)>>('IlluminationChange_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              CvCallback_1)>>('IlluminationChange_Async');
   late final _IlluminationChange_Async =
       _IlluminationChange_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, double, double, CvCallback_0)>();
+              Mat, Mat, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Image_IMDecode(
     VecUChar buf,
@@ -15945,25 +15923,22 @@ class CvNative {
   ffi.Pointer<CvStatus> MergeMertens_Process_Async(
     MergeMertens b,
     VecMat src,
-    Mat dst,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _MergeMertens_Process_Async(
       b,
       src,
-      dst,
       callback,
     );
   }
 
   late final _MergeMertens_Process_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat,
-              CvCallback_0)>>('MergeMertens_Process_Async');
+          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat,
+              CvCallback_1)>>('MergeMertens_Process_Async');
   late final _MergeMertens_Process_Async =
       _MergeMertens_Process_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              MergeMertens, VecMat, Mat, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> MinAreaRect(
     VecPoint pts,
@@ -17772,17 +17747,13 @@ class CvNative {
 
   ffi.Pointer<CvStatus> PencilSketch_Async(
     Mat src,
-    Mat dst1,
-    Mat dst2,
     double sigma_s,
     double sigma_r,
     double shade_factor,
-    CvCallback_0 callback,
+    CvCallback_2 callback,
   ) {
     return _PencilSketch_Async(
       src,
-      dst1,
-      dst2,
       sigma_s,
       sigma_r,
       shade_factor,
@@ -17792,11 +17763,11 @@ class CvNative {
 
   late final _PencilSketch_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Float, CvCallback_0)>>('PencilSketch_Async');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float, ffi.Float,
+              CvCallback_2)>>('PencilSketch_Async');
   late final _PencilSketch_Async = _PencilSketch_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, double, CvCallback_0)>();
+          Mat, double, double, double, CvCallback_2)>();
 
   ffi.Pointer<CvStatus> PhaseCorrelate(
     Mat src1,
@@ -17869,15 +17840,13 @@ class CvNative {
   ffi.Pointer<CvStatus> PhotoInpaint_Async(
     Mat src,
     Mat mask,
-    Mat dst,
     double inpaint_radius,
     int algorithm_type,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _PhotoInpaint_Async(
       src,
       mask,
-      dst,
       inpaint_radius,
       algorithm_type,
       callback,
@@ -17886,11 +17855,10 @@ class CvNative {
 
   late final _PhotoInpaint_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Int,
-              CvCallback_0)>>('PhotoInpaint_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Int,
+              CvCallback_1)>>('PhotoInpaint_Async');
   late final _PhotoInpaint_Async = _PhotoInpaint_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, int, CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> PointPolygonTest(
     VecPoint pts,
@@ -19679,19 +19647,15 @@ class CvNative {
 
   ffi.Pointer<CvStatus> SeamlessClone_Async(
     Mat src,
-    Mat dst,
     Mat mask,
     Point p,
-    Mat blend,
     int flags,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _SeamlessClone_Async(
       src,
-      dst,
       mask,
       p,
-      blend,
       flags,
       callback,
     );
@@ -19699,11 +19663,10 @@ class CvNative {
 
   late final _SeamlessClone_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Point, Mat, ffi.Int,
-              CvCallback_0)>>('SeamlessClone_Async');
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Point, ffi.Int, CvCallback_1)>>('SeamlessClone_Async');
   late final _SeamlessClone_Async = _SeamlessClone_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, Point, Mat, int, CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Point, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> SepFilter2D(
     Mat src,
@@ -20933,14 +20896,12 @@ class CvNative {
 
   ffi.Pointer<CvStatus> Stylization_Async(
     Mat src,
-    Mat dst,
     double sigma_s,
     double sigma_r,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _Stylization_Async(
       src,
-      dst,
       sigma_s,
       sigma_r,
       callback,
@@ -20949,10 +20910,10 @@ class CvNative {
 
   late final _Stylization_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              CvCallback_0)>>('Stylization_Async');
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Float, ffi.Float, CvCallback_1)>>('Stylization_Async');
   late final _Stylization_Async = _Stylization_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, double, double, CvCallback_1)>();
 
   void Subdiv2D_Close(
     Subdiv2DPtr self,
@@ -21731,16 +21692,14 @@ class CvNative {
   ffi.Pointer<CvStatus> TextureFlattening_Async(
     Mat src,
     Mat mask,
-    Mat dst,
     double low_threshold,
     double high_threshold,
     int kernel_size,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _TextureFlattening_Async(
       src,
       mask,
-      dst,
       low_threshold,
       high_threshold,
       kernel_size,
@@ -21750,11 +21709,11 @@ class CvNative {
 
   late final _TextureFlattening_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Int, CvCallback_0)>>('TextureFlattening_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Int, CvCallback_1)>>('TextureFlattening_Async');
   late final _TextureFlattening_Async = _TextureFlattening_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, int, CvCallback_0)>();
+          Mat, Mat, double, double, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> TheRNG(
     ffi.Pointer<RNG> rval,
