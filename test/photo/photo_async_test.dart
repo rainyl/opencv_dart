@@ -37,8 +37,7 @@ void main() {
   });
 
   test('cv.fastNlMeansDenoisingAsync', () async {
-    final img = await cv.imreadAsync("test/images/lenna.png",
-        flags: cv.IMREAD_GRAYSCALE);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
     final dst = await cv.fastNlMeansDenoisingAsync(img);
@@ -59,8 +58,7 @@ void main() {
   });
 
   test('cv.fastNlMeansDenoisingColoredAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final dst = await cv.fastNlMeansDenoisingColoredAsync(img);
@@ -99,11 +97,9 @@ void main() {
   });
 
   test('cv.inpaintAsync', () async {
-    final src = await cv.imreadAsync("test/images/inpaint-src.jpg",
-        flags: cv.IMREAD_COLOR);
+    final src = await cv.imreadAsync("test/images/inpaint-src.jpg", flags: cv.IMREAD_COLOR);
     expect(src.isEmpty, false);
-    final mask = await cv.imreadAsync("test/images/inpaint-mask.jpg",
-        flags: cv.IMREAD_GRAYSCALE);
+    final mask = await cv.imreadAsync("test/images/inpaint-mask.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect(mask.isEmpty, false);
     final dst = await cv.inpaintAsync(src, mask, 10, cv.INPAINT_TELEA);
     expect(dst.channels, greaterThan(1));
