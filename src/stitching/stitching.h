@@ -23,16 +23,14 @@ enum {
 };
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, PtrStitcher);
-CVD_TYPEDEF(cv::Stitcher, Stitcher);
+CVD_TYPEDEF(cv::Ptr<cv::Stitcher>, Stitcher);
 #else
-CVD_TYPEDEF(void *, PtrStitcher);
-CVD_TYPEDEF(void, Stitcher);
+CVD_TYPEDEF(void *, Stitcher);
 #endif
 
-CvStatus *Stitcher_Create(int mode, PtrStitcher *rval);
-void      Stitcher_Close(PtrStitcherPtr stitcher);
-CvStatus *Stitcher_Get(PtrStitcher self, Stitcher *rval);
+CvStatus *Stitcher_Create(int mode, Stitcher *rval);
+void      Stitcher_Close(StitcherPtr stitcher);
+CvStatus *Stitcher_Get(Stitcher self, Stitcher *rval);
 
 #pragma region getter/setter
 

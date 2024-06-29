@@ -43,7 +43,9 @@ ffi.DynamicLibrary loadNativeLibrary() {
     "windows" => "$_libraryName.dll",
     "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
     "macos" => "lib$_libraryName.dylib",
-    _ => throw UnsupportedError("Platform ${Platform.operatingSystem} not supported")
+    _ => throw UnsupportedError(
+        "Platform ${Platform.operatingSystem} not supported",
+      )
   };
   final libPath = Platform.environment["OPENCV_DART_LIB_PATH"] ?? defaultLibPath;
   return ffi.DynamicLibrary.open(libPath);
@@ -152,7 +154,13 @@ Future<T> cvRunAsync3<T>(
 
 Future<T> cvRunAsync4<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) onComplete,
+  void Function(
+    Completer<T> completer,
+    VoidPtr p,
+    VoidPtr p1,
+    VoidPtr p2,
+    VoidPtr p3,
+  ) onComplete,
 ) {
   final completer = Completer<T>();
   late final NativeCallable<cvg.CvCallback_4Function> ccallback;
@@ -168,7 +176,14 @@ Future<T> cvRunAsync4<T>(
 
 Future<T> cvRunAsync5<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) onComplete,
+  void Function(
+    Completer<T> completer,
+    VoidPtr p,
+    VoidPtr p1,
+    VoidPtr p2,
+    VoidPtr p3,
+    VoidPtr p4,
+  ) onComplete,
 ) {
   final completer = Completer<T>();
   late final NativeCallable<cvg.CvCallback_5Function> ccallback;
@@ -185,6 +200,12 @@ Future<T> cvRunAsync5<T>(
 // async completers
 void intCompleter(Completer<int> completer, VoidPtr p) {
   final value = p.cast<ffi.Int>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void boolCompleter(Completer<bool> completer, VoidPtr p) {
+  final value = p.cast<ffi.Bool>().value;
   calloc.free(p);
   completer.complete(value);
 }
@@ -227,7 +248,9 @@ R cvRunArena<R>(
 typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
     = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
-ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
+ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(
+  NativeFinalizerFunctionT<T> func,
+) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
 // native types
