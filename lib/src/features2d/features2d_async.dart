@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 library cv;
 
 import '../constants.g.dart';
@@ -36,20 +38,21 @@ extension AKAZEAsync on AKAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final rval = cvRunAsync<(VecKeyPoint, Mat)>(
-      (callback) => CFFI.AKAZE_DetectAndCompute_Async(
-        ref,
-        src.ref,
-        mask.ref,
-        desc.ref,
-        callback,
-      ),
-      (c, keypoints) => c.complete((VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()), desc)),
-    );
-    return rval;
-  }
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
+        (callback) => CFFI.AKAZE_DetectAndCompute_Async(
+          ref,
+          src.ref,
+          mask.ref,
+          callback,
+        ),
+        (c, keypoints, desc) => c.complete(
+          (
+            VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
+            Mat.fromPointer(desc.cast<cvg.Mat>()),
+          ),
+        ),
+      );
 }
 
 extension AgastFeatureDetectorAsync on AgastFeatureDetector {
@@ -101,20 +104,21 @@ extension BRISKAsync on BRISK {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final rval = cvRunAsync<(VecKeyPoint, Mat)>(
-      (callback) => CFFI.BRISK_DetectAndCompute_Async(
-        ref,
-        src.ref,
-        mask.ref,
-        desc.ref,
-        callback,
-      ),
-      (c, keypoints) => c.complete((VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()), desc)),
-    );
-    return rval;
-  }
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
+        (callback) => CFFI.BRISK_DetectAndCompute_Async(
+          ref,
+          src.ref,
+          mask.ref,
+          callback,
+        ),
+        (c, keypoints, desc) => c.complete(
+          (
+            VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
+            Mat.fromPointer(desc.cast<cvg.Mat>()),
+          ),
+        ),
+      );
 }
 
 extension FastFeatureDetectorAsync on FastFeatureDetector {
@@ -208,22 +212,21 @@ extension KAZEAsync on KAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final rval = cvRunAsync<(VecKeyPoint, Mat)>(
-      (callback) => CFFI.KAZE_DetectAndCompute_Async(
-        ref,
-        src.ref,
-        mask.ref,
-        desc.ref,
-        callback,
-      ),
-      (c, keypoints) => c.complete(
-        (VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()), desc),
-      ),
-    );
-    return rval;
-  }
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
+        (callback) => CFFI.KAZE_DetectAndCompute_Async(
+          ref,
+          src.ref,
+          mask.ref,
+          callback,
+        ),
+        (c, keypoints, desc) => c.complete(
+          (
+            VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
+            Mat.fromPointer(desc.cast<cvg.Mat>()),
+          ),
+        ),
+      );
 }
 
 extension MSERAsync on MSER {
@@ -304,20 +307,21 @@ extension ORBAsync on ORB {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final rval = cvRunAsync<(VecKeyPoint, Mat)>(
-      (callback) => CFFI.ORB_DetectAndCompute_Async(
-        ref,
-        src.ref,
-        mask.ref,
-        desc.ref,
-        callback,
-      ),
-      (c, keypoints) => c.complete((VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()), desc)),
-    );
-    return rval;
-  }
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
+        (callback) => CFFI.ORB_DetectAndCompute_Async(
+          ref,
+          src.ref,
+          mask.ref,
+          callback,
+        ),
+        (c, keypoints, desc) => c.complete(
+          (
+            VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
+            Mat.fromPointer(desc.cast<cvg.Mat>()),
+          ),
+        ),
+      );
 }
 
 extension SimpleBlobDetectorAsync on SimpleBlobDetector {
@@ -459,20 +463,21 @@ extension SIFTAsync on SIFT {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final rval = cvRunAsync<(VecKeyPoint, Mat)>(
-      (callback) => CFFI.SIFT_DetectAndCompute_Async(
-        ref,
-        src.ref,
-        mask.ref,
-        desc.ref,
-        callback,
-      ),
-      (c, keypoints) => c.complete((VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()), desc)),
-    );
-    return rval;
-  }
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
+        (callback) => CFFI.SIFT_DetectAndCompute_Async(
+          ref,
+          src.ref,
+          mask.ref,
+          callback,
+        ),
+        (c, keypoints, desc) => c.complete(
+          (
+            VecKeyPoint.fromPointer(keypoints.cast<cvg.VecKeyPoint>()),
+            Mat.fromPointer(desc.cast<cvg.Mat>()),
+          ),
+        ),
+      );
 }
 
 Future<void> drawKeyPointsAsync(
@@ -513,7 +518,7 @@ Future<void> drawMatchesAsync(
 }) async {
   matchColor ??= Scalar.all(-1);
   singlePointColor ??= Scalar.all(-1);
-  matchesMask ??= VecChar.fromList([]);
+  matchesMask ??= VecChar();
   await cvRunAsync0<void>(
     (callback) => CFFI.DrawMatches_Async(
       img1.ref,
