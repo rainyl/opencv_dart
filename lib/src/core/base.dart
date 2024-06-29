@@ -212,12 +212,6 @@ void intCompleter(Completer<int> completer, VoidPtr p) {
   completer.complete(value);
 }
 
-void boolCompleter(Completer<bool> completer, VoidPtr p) {
-  final value = p.cast<ffi.Bool>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
 void doubleCompleter(Completer<double> completer, VoidPtr p) {
   final value = p.cast<ffi.Double>().value;
   calloc.free(p);
