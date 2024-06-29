@@ -7,7 +7,6 @@
 */
 
 #include "features2d.h"
-#include "utils.hpp"
 
 CvStatus *AKAZE_Create(AKAZE *rval)
 {
@@ -226,6 +225,60 @@ CvStatus *ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *
   (*o.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
   *rval = {new std::vector<cv::KeyPoint>(detected)};
   END_WRAP
+}
+
+cv::SimpleBlobDetector::Params ConvertCParamsToCPPParams(SimpleBlobDetectorParams params)
+{
+  cv::SimpleBlobDetector::Params converted;
+
+  converted.blobColor = params.blobColor;
+  converted.filterByArea = params.filterByArea;
+  converted.filterByCircularity = params.filterByCircularity;
+  converted.filterByColor = params.filterByColor;
+  converted.filterByConvexity = params.filterByConvexity;
+  converted.filterByInertia = params.filterByInertia;
+  converted.maxArea = params.maxArea;
+  converted.maxCircularity = params.maxCircularity;
+  converted.maxConvexity = params.maxConvexity;
+  converted.maxInertiaRatio = params.maxInertiaRatio;
+  converted.maxThreshold = params.maxThreshold;
+  converted.minArea = params.minArea;
+  converted.minCircularity = params.minCircularity;
+  converted.minConvexity = params.minConvexity;
+  converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
+  converted.minInertiaRatio = params.minInertiaRatio;
+  converted.minRepeatability = params.minRepeatability;
+  converted.minThreshold = params.minThreshold;
+  converted.thresholdStep = params.thresholdStep;
+
+  return converted;
+}
+
+SimpleBlobDetectorParams ConvertCPPParamsToCParams(cv::SimpleBlobDetector::Params params)
+{
+  SimpleBlobDetectorParams converted;
+
+  converted.blobColor = params.blobColor;
+  converted.filterByArea = params.filterByArea;
+  converted.filterByCircularity = params.filterByCircularity;
+  converted.filterByColor = params.filterByColor;
+  converted.filterByConvexity = params.filterByConvexity;
+  converted.filterByInertia = params.filterByInertia;
+  converted.maxArea = params.maxArea;
+  converted.maxCircularity = params.maxCircularity;
+  converted.maxConvexity = params.maxConvexity;
+  converted.maxInertiaRatio = params.maxInertiaRatio;
+  converted.maxThreshold = params.maxThreshold;
+  converted.minArea = params.minArea;
+  converted.minCircularity = params.minCircularity;
+  converted.minConvexity = params.minConvexity;
+  converted.minDistBetweenBlobs = params.minDistBetweenBlobs;
+  converted.minInertiaRatio = params.minInertiaRatio;
+  converted.minRepeatability = params.minRepeatability;
+  converted.minThreshold = params.minThreshold;
+  converted.thresholdStep = params.thresholdStep;
+
+  return converted;
 }
 
 CvStatus *SimpleBlobDetector_Create(SimpleBlobDetector *rval)

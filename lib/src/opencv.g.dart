@@ -41,23 +41,6 @@ class CvNative {
   late final _AKAZE_Close =
       _AKAZE_ClosePtr.asFunction<void Function(AKAZEPtr)>();
 
-  ffi.Pointer<CvStatus> AKAZE_Close_Async(
-    AKAZEPtr a,
-    CvCallback_0 callback,
-  ) {
-    return _AKAZE_Close_Async(
-      a,
-      callback,
-    );
-  }
-
-  late final _AKAZE_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              AKAZEPtr, CvCallback_0)>>('AKAZE_Close_Async');
-  late final _AKAZE_Close_Async = _AKAZE_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(AKAZEPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> AKAZE_Create(
     ffi.Pointer<AKAZE> rval,
   ) {
@@ -71,20 +54,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<AKAZE>)>>('AKAZE_Create');
   late final _AKAZE_Create = _AKAZE_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<AKAZE>)>();
-
-  ffi.Pointer<CvStatus> AKAZE_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _AKAZE_Create_Async(
-      callback,
-    );
-  }
-
-  late final _AKAZE_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'AKAZE_Create_Async');
-  late final _AKAZE_Create_Async = _AKAZE_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> AKAZE_Detect(
     AKAZE a,
@@ -128,49 +97,6 @@ class CvNative {
   late final _AKAZE_DetectAndCompute = _AKAZE_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> AKAZE_DetectAndCompute_Async(
-    AKAZE a,
-    Mat src,
-    Mat mask,
-    Mat desc,
-    CvCallback_1 callback,
-  ) {
-    return _AKAZE_DetectAndCompute_Async(
-      a,
-      src,
-      mask,
-      desc,
-      callback,
-    );
-  }
-
-  late final _AKAZE_DetectAndCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(AKAZE, Mat, Mat, Mat,
-              CvCallback_1)>>('AKAZE_DetectAndCompute_Async');
-  late final _AKAZE_DetectAndCompute_Async =
-      _AKAZE_DetectAndCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(AKAZE, Mat, Mat, Mat, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> AKAZE_Detect_Async(
-    AKAZE a,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _AKAZE_Detect_Async(
-      a,
-      src,
-      callback,
-    );
-  }
-
-  late final _AKAZE_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              AKAZE, Mat, CvCallback_1)>>('AKAZE_Detect_Async');
-  late final _AKAZE_Detect_Async = _AKAZE_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(AKAZE, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> AdaptiveThreshold(
     Mat src,
@@ -242,25 +168,6 @@ class CvNative {
   late final _AgastFeatureDetector_Close = _AgastFeatureDetector_ClosePtr
       .asFunction<void Function(AgastFeatureDetectorPtr)>();
 
-  ffi.Pointer<CvStatus> AgastFeatureDetector_Close_Async(
-    AgastFeatureDetectorPtr a,
-    CvCallback_0 callback,
-  ) {
-    return _AgastFeatureDetector_Close_Async(
-      a,
-      callback,
-    );
-  }
-
-  late final _AgastFeatureDetector_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(AgastFeatureDetectorPtr,
-              CvCallback_0)>>('AgastFeatureDetector_Close_Async');
-  late final _AgastFeatureDetector_Close_Async =
-      _AgastFeatureDetector_Close_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              AgastFeatureDetectorPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> AgastFeatureDetector_Create(
     ffi.Pointer<AgastFeatureDetector> rval,
   ) {
@@ -277,21 +184,6 @@ class CvNative {
   late final _AgastFeatureDetector_Create =
       _AgastFeatureDetector_CreatePtr.asFunction<
           ffi.Pointer<CvStatus> Function(ffi.Pointer<AgastFeatureDetector>)>();
-
-  ffi.Pointer<CvStatus> AgastFeatureDetector_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _AgastFeatureDetector_Create_Async(
-      callback,
-    );
-  }
-
-  late final _AgastFeatureDetector_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'AgastFeatureDetector_Create_Async');
-  late final _AgastFeatureDetector_Create_Async =
-      _AgastFeatureDetector_Create_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> AgastFeatureDetector_Detect(
     AgastFeatureDetector a,
@@ -313,27 +205,6 @@ class CvNative {
       _AgastFeatureDetector_DetectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               AgastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> AgastFeatureDetector_Detect_Async(
-    AgastFeatureDetector a,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _AgastFeatureDetector_Detect_Async(
-      a,
-      src,
-      callback,
-    );
-  }
-
-  late final _AgastFeatureDetector_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat,
-              CvCallback_1)>>('AgastFeatureDetector_Detect_Async');
-  late final _AgastFeatureDetector_Detect_Async =
-      _AgastFeatureDetector_Detect_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              AgastFeatureDetector, Mat, CvCallback_1)>();
 
   void AlignMTB_Close(
     AlignMTBPtr b,
@@ -2001,23 +1872,6 @@ class CvNative {
   late final _BFMatcher_Close =
       _BFMatcher_ClosePtr.asFunction<void Function(BFMatcherPtr)>();
 
-  ffi.Pointer<CvStatus> BFMatcher_Close_Async(
-    BFMatcherPtr b,
-    CvCallback_0 callback,
-  ) {
-    return _BFMatcher_Close_Async(
-      b,
-      callback,
-    );
-  }
-
-  late final _BFMatcher_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              BFMatcherPtr, CvCallback_0)>>('BFMatcher_Close_Async');
-  late final _BFMatcher_Close_Async = _BFMatcher_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(BFMatcherPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> BFMatcher_Create(
     ffi.Pointer<BFMatcher> rval,
   ) {
@@ -2053,40 +1907,6 @@ class CvNative {
       _BFMatcher_CreateWithParamsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(int, bool, ffi.Pointer<BFMatcher>)>();
 
-  ffi.Pointer<CvStatus> BFMatcher_CreateWithParams_Async(
-    int normType,
-    bool crossCheck,
-    CvCallback_1 callback,
-  ) {
-    return _BFMatcher_CreateWithParams_Async(
-      normType,
-      crossCheck,
-      callback,
-    );
-  }
-
-  late final _BFMatcher_CreateWithParams_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Bool,
-              CvCallback_1)>>('BFMatcher_CreateWithParams_Async');
-  late final _BFMatcher_CreateWithParams_Async =
-      _BFMatcher_CreateWithParams_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(int, bool, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> BFMatcher_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _BFMatcher_Create_Async(
-      callback,
-    );
-  }
-
-  late final _BFMatcher_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'BFMatcher_Create_Async');
-  late final _BFMatcher_Create_Async = _BFMatcher_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
-
   ffi.Pointer<CvStatus> BFMatcher_KnnMatch(
     BFMatcher b,
     Mat query,
@@ -2111,31 +1931,6 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           BFMatcher, Mat, Mat, int, ffi.Pointer<VecVecDMatch>)>();
 
-  ffi.Pointer<CvStatus> BFMatcher_KnnMatch_Async(
-    BFMatcher b,
-    Mat query,
-    Mat train,
-    int k,
-    CvCallback_1 callback,
-  ) {
-    return _BFMatcher_KnnMatch_Async(
-      b,
-      query,
-      train,
-      k,
-      callback,
-    );
-  }
-
-  late final _BFMatcher_KnnMatch_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BFMatcher, Mat, Mat, ffi.Int,
-              CvCallback_1)>>('BFMatcher_KnnMatch_Async');
-  late final _BFMatcher_KnnMatch_Async =
-      _BFMatcher_KnnMatch_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              BFMatcher, Mat, Mat, int, CvCallback_1)>();
-
   ffi.Pointer<CvStatus> BFMatcher_Match(
     BFMatcher b,
     Mat query,
@@ -2158,27 +1953,6 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>)>();
 
-  ffi.Pointer<CvStatus> BFMatcher_Match_Async(
-    BFMatcher b,
-    Mat query,
-    Mat train,
-    CvCallback_1 callback,
-  ) {
-    return _BFMatcher_Match_Async(
-      b,
-      query,
-      train,
-      callback,
-    );
-  }
-
-  late final _BFMatcher_Match_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              BFMatcher, Mat, Mat, CvCallback_1)>>('BFMatcher_Match_Async');
-  late final _BFMatcher_Match_Async = _BFMatcher_Match_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(BFMatcher, Mat, Mat, CvCallback_1)>();
-
   void BRISK_Close(
     BRISKPtr b,
   ) {
@@ -2191,23 +1965,6 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Void Function(BRISKPtr)>>('BRISK_Close');
   late final _BRISK_Close =
       _BRISK_ClosePtr.asFunction<void Function(BRISKPtr)>();
-
-  ffi.Pointer<CvStatus> BRISK_Close_Async(
-    BRISKPtr b,
-    CvCallback_0 callback,
-  ) {
-    return _BRISK_Close_Async(
-      b,
-      callback,
-    );
-  }
-
-  late final _BRISK_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              BRISKPtr, CvCallback_0)>>('BRISK_Close_Async');
-  late final _BRISK_Close_Async = _BRISK_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(BRISKPtr, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> BRISK_Create(
     ffi.Pointer<BRISK> rval,
@@ -2222,20 +1979,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<BRISK>)>>('BRISK_Create');
   late final _BRISK_Create = _BRISK_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<BRISK>)>();
-
-  ffi.Pointer<CvStatus> BRISK_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _BRISK_Create_Async(
-      callback,
-    );
-  }
-
-  late final _BRISK_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'BRISK_Create_Async');
-  late final _BRISK_Create_Async = _BRISK_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> BRISK_Detect(
     BRISK b,
@@ -2279,49 +2022,6 @@ class CvNative {
   late final _BRISK_DetectAndCompute = _BRISK_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> BRISK_DetectAndCompute_Async(
-    BRISK b,
-    Mat src,
-    Mat mask,
-    Mat desc,
-    CvCallback_1 callback,
-  ) {
-    return _BRISK_DetectAndCompute_Async(
-      b,
-      src,
-      mask,
-      desc,
-      callback,
-    );
-  }
-
-  late final _BRISK_DetectAndCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BRISK, Mat, Mat, Mat,
-              CvCallback_1)>>('BRISK_DetectAndCompute_Async');
-  late final _BRISK_DetectAndCompute_Async =
-      _BRISK_DetectAndCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(BRISK, Mat, Mat, Mat, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> BRISK_Detect_Async(
-    BRISK b,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _BRISK_Detect_Async(
-      b,
-      src,
-      callback,
-    );
-  }
-
-  late final _BRISK_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              BRISK, Mat, CvCallback_1)>>('BRISK_Detect_Async');
-  late final _BRISK_Detect_Async = _BRISK_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(BRISK, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> BackgroundSubtractorKNN_Apply(
     BackgroundSubtractorKNN self,
@@ -4857,32 +4557,6 @@ class CvNative {
   late final _DrawKeyPoints = _DrawKeyPointsPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, Scalar, int)>();
 
-  ffi.Pointer<CvStatus> DrawKeyPoints_Async(
-    Mat src,
-    VecKeyPoint kp,
-    Mat dst,
-    Scalar color,
-    int flags,
-    CvCallback_0 callback,
-  ) {
-    return _DrawKeyPoints_Async(
-      src,
-      kp,
-      dst,
-      color,
-      flags,
-      callback,
-    );
-  }
-
-  late final _DrawKeyPoints_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, Scalar, ffi.Int,
-              CvCallback_0)>>('DrawKeyPoints_Async');
-  late final _DrawKeyPoints_Async = _DrawKeyPoints_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, VecKeyPoint, Mat, Scalar, int, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> DrawMatches(
     Mat img1,
     VecKeyPoint kp1,
@@ -4925,52 +4599,6 @@ class CvNative {
   late final _DrawMatches = _DrawMatchesPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, VecKeyPoint,
           VecDMatch, Mat, Scalar, Scalar, VecChar, int)>();
-
-  ffi.Pointer<CvStatus> DrawMatches_Async(
-    Mat img1,
-    VecKeyPoint kp1,
-    Mat img2,
-    VecKeyPoint kp2,
-    VecDMatch matches1to2,
-    Mat outImg,
-    Scalar matchesColor,
-    Scalar pointColor,
-    VecChar matchesMask,
-    int flags,
-    CvCallback_0 callback,
-  ) {
-    return _DrawMatches_Async(
-      img1,
-      kp1,
-      img2,
-      kp2,
-      matches1to2,
-      outImg,
-      matchesColor,
-      pointColor,
-      matchesMask,
-      flags,
-      callback,
-    );
-  }
-
-  late final _DrawMatches_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              VecKeyPoint,
-              Mat,
-              VecKeyPoint,
-              VecDMatch,
-              Mat,
-              Scalar,
-              Scalar,
-              VecChar,
-              ffi.Int,
-              CvCallback_0)>>('DrawMatches_Async');
-  late final _DrawMatches_Async = _DrawMatches_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, VecKeyPoint,
-          VecDMatch, Mat, Scalar, Scalar, VecChar, int, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> EdgePreservingFilter(
     Mat src,
@@ -6192,25 +5820,6 @@ class CvNative {
   late final _FastFeatureDetector_Close = _FastFeatureDetector_ClosePtr
       .asFunction<void Function(FastFeatureDetectorPtr)>();
 
-  ffi.Pointer<CvStatus> FastFeatureDetector_Close_Async(
-    FastFeatureDetectorPtr f,
-    CvCallback_0 callback,
-  ) {
-    return _FastFeatureDetector_Close_Async(
-      f,
-      callback,
-    );
-  }
-
-  late final _FastFeatureDetector_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FastFeatureDetectorPtr,
-              CvCallback_0)>>('FastFeatureDetector_Close_Async');
-  late final _FastFeatureDetector_Close_Async =
-      _FastFeatureDetector_Close_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FastFeatureDetectorPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> FastFeatureDetector_Create(
     ffi.Pointer<FastFeatureDetector> rval,
   ) {
@@ -6251,43 +5860,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               int, bool, int, ffi.Pointer<FastFeatureDetector>)>();
 
-  ffi.Pointer<CvStatus> FastFeatureDetector_CreateWithParams_Async(
-    int threshold,
-    bool nonmaxSuppression,
-    int type,
-    CvCallback_1 callback,
-  ) {
-    return _FastFeatureDetector_CreateWithParams_Async(
-      threshold,
-      nonmaxSuppression,
-      type,
-      callback,
-    );
-  }
-
-  late final _FastFeatureDetector_CreateWithParams_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Bool, ffi.Int,
-              CvCallback_1)>>('FastFeatureDetector_CreateWithParams_Async');
-  late final _FastFeatureDetector_CreateWithParams_Async =
-      _FastFeatureDetector_CreateWithParams_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(int, bool, int, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> FastFeatureDetector_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _FastFeatureDetector_Create_Async(
-      callback,
-    );
-  }
-
-  late final _FastFeatureDetector_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'FastFeatureDetector_Create_Async');
-  late final _FastFeatureDetector_Create_Async =
-      _FastFeatureDetector_Create_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(CvCallback_1)>();
-
   ffi.Pointer<CvStatus> FastFeatureDetector_Detect(
     FastFeatureDetector f,
     Mat src,
@@ -6308,27 +5880,6 @@ class CvNative {
       _FastFeatureDetector_DetectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               FastFeatureDetector, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> FastFeatureDetector_Detect_Async(
-    FastFeatureDetector f,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _FastFeatureDetector_Detect_Async(
-      f,
-      src,
-      callback,
-    );
-  }
-
-  late final _FastFeatureDetector_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat,
-              CvCallback_1)>>('FastFeatureDetector_Detect_Async');
-  late final _FastFeatureDetector_Detect_Async =
-      _FastFeatureDetector_Detect_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FastFeatureDetector, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FastNlMeansDenoising(
     Mat src,
@@ -7034,24 +6585,6 @@ class CvNative {
   late final _FlannBasedMatcher_Close = _FlannBasedMatcher_ClosePtr.asFunction<
       void Function(FlannBasedMatcherPtr)>();
 
-  ffi.Pointer<CvStatus> FlannBasedMatcher_Close_Async(
-    FlannBasedMatcherPtr f,
-    CvCallback_0 callback,
-  ) {
-    return _FlannBasedMatcher_Close_Async(
-      f,
-      callback,
-    );
-  }
-
-  late final _FlannBasedMatcher_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FlannBasedMatcherPtr,
-              CvCallback_0)>>('FlannBasedMatcher_Close_Async');
-  late final _FlannBasedMatcher_Close_Async =
-      _FlannBasedMatcher_Close_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(FlannBasedMatcherPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> FlannBasedMatcher_Create(
     ffi.Pointer<FlannBasedMatcher> rval,
   ) {
@@ -7067,21 +6600,6 @@ class CvNative {
   late final _FlannBasedMatcher_Create =
       _FlannBasedMatcher_CreatePtr.asFunction<
           ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannBasedMatcher>)>();
-
-  ffi.Pointer<CvStatus> FlannBasedMatcher_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _FlannBasedMatcher_Create_Async(
-      callback,
-    );
-  }
-
-  late final _FlannBasedMatcher_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'FlannBasedMatcher_Create_Async');
-  late final _FlannBasedMatcher_Create_Async =
-      _FlannBasedMatcher_Create_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FlannBasedMatcher_KnnMatch(
     FlannBasedMatcher f,
@@ -7107,31 +6625,6 @@ class CvNative {
       _FlannBasedMatcher_KnnMatchPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               FlannBasedMatcher, Mat, Mat, int, ffi.Pointer<VecVecDMatch>)>();
-
-  ffi.Pointer<CvStatus> FlannBasedMatcher_KnnMatch_Async(
-    FlannBasedMatcher f,
-    Mat query,
-    Mat train,
-    int k,
-    CvCallback_1 callback,
-  ) {
-    return _FlannBasedMatcher_KnnMatch_Async(
-      f,
-      query,
-      train,
-      k,
-      callback,
-    );
-  }
-
-  late final _FlannBasedMatcher_KnnMatch_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FlannBasedMatcher, Mat, Mat, ffi.Int,
-              CvCallback_1)>>('FlannBasedMatcher_KnnMatch_Async');
-  late final _FlannBasedMatcher_KnnMatch_Async =
-      _FlannBasedMatcher_KnnMatch_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FlannBasedMatcher, Mat, Mat, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> GArrayGArrayPoint_FromVec(
     VecVecPoint points,
@@ -7319,24 +6812,6 @@ class CvNative {
   late final _GFTTDetector_Close =
       _GFTTDetector_ClosePtr.asFunction<void Function(GFTTDetectorPtr)>();
 
-  ffi.Pointer<CvStatus> GFTTDetector_Close_Async(
-    GFTTDetectorPtr a,
-    CvCallback_0 callback,
-  ) {
-    return _GFTTDetector_Close_Async(
-      a,
-      callback,
-    );
-  }
-
-  late final _GFTTDetector_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              GFTTDetectorPtr, CvCallback_0)>>('GFTTDetector_Close_Async');
-  late final _GFTTDetector_Close_Async =
-      _GFTTDetector_Close_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(GFTTDetectorPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> GFTTDetector_Create(
     ffi.Pointer<GFTTDetector> rval,
   ) {
@@ -7351,20 +6826,6 @@ class CvNative {
               ffi.Pointer<GFTTDetector>)>>('GFTTDetector_Create');
   late final _GFTTDetector_Create = _GFTTDetector_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<GFTTDetector>)>();
-
-  ffi.Pointer<CvStatus> GFTTDetector_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _GFTTDetector_Create_Async(
-      callback,
-    );
-  }
-
-  late final _GFTTDetector_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'GFTTDetector_Create_Async');
-  late final _GFTTDetector_Create_Async = _GFTTDetector_Create_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> GFTTDetector_Detect(
     GFTTDetector a,
@@ -7385,26 +6846,6 @@ class CvNative {
   late final _GFTTDetector_Detect = _GFTTDetector_DetectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> GFTTDetector_Detect_Async(
-    GFTTDetector a,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _GFTTDetector_Detect_Async(
-      a,
-      src,
-      callback,
-    );
-  }
-
-  late final _GFTTDetector_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              GFTTDetector, Mat, CvCallback_1)>>('GFTTDetector_Detect_Async');
-  late final _GFTTDetector_Detect_Async =
-      _GFTTDetector_Detect_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(GFTTDetector, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> GaussianBlur(
     Mat src,
@@ -9725,23 +9166,6 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Void Function(KAZEPtr)>>('KAZE_Close');
   late final _KAZE_Close = _KAZE_ClosePtr.asFunction<void Function(KAZEPtr)>();
 
-  ffi.Pointer<CvStatus> KAZE_Close_Async(
-    KAZEPtr a,
-    CvCallback_0 callback,
-  ) {
-    return _KAZE_Close_Async(
-      a,
-      callback,
-    );
-  }
-
-  late final _KAZE_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              KAZEPtr, CvCallback_0)>>('KAZE_Close_Async');
-  late final _KAZE_Close_Async = _KAZE_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(KAZEPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> KAZE_Create(
     ffi.Pointer<KAZE> rval,
   ) {
@@ -9755,20 +9179,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<KAZE>)>>('KAZE_Create');
   late final _KAZE_Create = _KAZE_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<KAZE>)>();
-
-  ffi.Pointer<CvStatus> KAZE_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _KAZE_Create_Async(
-      callback,
-    );
-  }
-
-  late final _KAZE_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'KAZE_Create_Async');
-  late final _KAZE_Create_Async = _KAZE_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> KAZE_Detect(
     KAZE a,
@@ -9812,49 +9222,6 @@ class CvNative {
   late final _KAZE_DetectAndCompute = _KAZE_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> KAZE_DetectAndCompute_Async(
-    KAZE a,
-    Mat src,
-    Mat mask,
-    Mat desc,
-    CvCallback_1 callback,
-  ) {
-    return _KAZE_DetectAndCompute_Async(
-      a,
-      src,
-      mask,
-      desc,
-      callback,
-    );
-  }
-
-  late final _KAZE_DetectAndCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(KAZE, Mat, Mat, Mat,
-              CvCallback_1)>>('KAZE_DetectAndCompute_Async');
-  late final _KAZE_DetectAndCompute_Async =
-      _KAZE_DetectAndCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(KAZE, Mat, Mat, Mat, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> KAZE_Detect_Async(
-    KAZE a,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _KAZE_Detect_Async(
-      a,
-      src,
-      callback,
-    );
-  }
-
-  late final _KAZE_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              KAZE, Mat, CvCallback_1)>>('KAZE_Detect_Async');
-  late final _KAZE_Detect_Async = _KAZE_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(KAZE, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> KMeans(
     Mat data,
@@ -10910,23 +10277,6 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Void Function(MSERPtr)>>('MSER_Close');
   late final _MSER_Close = _MSER_ClosePtr.asFunction<void Function(MSERPtr)>();
 
-  ffi.Pointer<CvStatus> MSER_Close_Async(
-    MSERPtr a,
-    CvCallback_0 callback,
-  ) {
-    return _MSER_Close_Async(
-      a,
-      callback,
-    );
-  }
-
-  late final _MSER_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              MSERPtr, CvCallback_0)>>('MSER_Close_Async');
-  late final _MSER_Close_Async = _MSER_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(MSERPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> MSER_Create(
     ffi.Pointer<MSER> rval,
   ) {
@@ -10940,20 +10290,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<MSER>)>>('MSER_Create');
   late final _MSER_Create = _MSER_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<MSER>)>();
-
-  ffi.Pointer<CvStatus> MSER_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _MSER_Create_Async(
-      callback,
-    );
-  }
-
-  late final _MSER_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'MSER_Create_Async');
-  late final _MSER_Create_Async = _MSER_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> MSER_Detect(
     MSER a,
@@ -10973,25 +10309,6 @@ class CvNative {
               MSER, Mat, ffi.Pointer<VecKeyPoint>)>>('MSER_Detect');
   late final _MSER_Detect = _MSER_DetectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(MSER, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> MSER_Detect_Async(
-    MSER a,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _MSER_Detect_Async(
-      a,
-      src,
-      callback,
-    );
-  }
-
-  late final _MSER_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              MSER, Mat, CvCallback_1)>>('MSER_Detect_Async');
-  late final _MSER_Detect_Async = _MSER_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(MSER, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Mat_AbsDiff(
     Mat src1,
@@ -17927,23 +17244,6 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Void Function(ORBPtr)>>('ORB_Close');
   late final _ORB_Close = _ORB_ClosePtr.asFunction<void Function(ORBPtr)>();
 
-  ffi.Pointer<CvStatus> ORB_Close_Async(
-    ORBPtr o,
-    CvCallback_0 callback,
-  ) {
-    return _ORB_Close_Async(
-      o,
-      callback,
-    );
-  }
-
-  late final _ORB_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ORBPtr, CvCallback_0)>>('ORB_Close_Async');
-  late final _ORB_Close_Async = _ORB_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ORBPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> ORB_Create(
     ffi.Pointer<ORB> rval,
   ) {
@@ -18001,64 +17301,6 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           int, double, int, int, int, int, int, int, int, ffi.Pointer<ORB>)>();
 
-  ffi.Pointer<CvStatus> ORB_CreateWithParams_Async(
-    int nfeatures,
-    double scaleFactor,
-    int nlevels,
-    int edgeThreshold,
-    int firstLevel,
-    int WTA_K,
-    int scoreType,
-    int patchSize,
-    int fastThreshold,
-    CvCallback_1 callback,
-  ) {
-    return _ORB_CreateWithParams_Async(
-      nfeatures,
-      scaleFactor,
-      nlevels,
-      edgeThreshold,
-      firstLevel,
-      WTA_K,
-      scoreType,
-      patchSize,
-      fastThreshold,
-      callback,
-    );
-  }
-
-  late final _ORB_CreateWithParams_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Int,
-              ffi.Float,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              CvCallback_1)>>('ORB_CreateWithParams_Async');
-  late final _ORB_CreateWithParams_Async =
-      _ORB_CreateWithParams_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              int, double, int, int, int, int, int, int, int, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> ORB_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _ORB_Create_Async(
-      callback,
-    );
-  }
-
-  late final _ORB_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'ORB_Create_Async');
-  late final _ORB_Create_Async = _ORB_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
-
   ffi.Pointer<CvStatus> ORB_Detect(
     ORB o,
     Mat src,
@@ -18101,49 +17343,6 @@ class CvNative {
   late final _ORB_DetectAndCompute = _ORB_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           ORB, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> ORB_DetectAndCompute_Async(
-    ORB o,
-    Mat src,
-    Mat mask,
-    Mat desc,
-    CvCallback_1 callback,
-  ) {
-    return _ORB_DetectAndCompute_Async(
-      o,
-      src,
-      mask,
-      desc,
-      callback,
-    );
-  }
-
-  late final _ORB_DetectAndCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ORB, Mat, Mat, Mat, CvCallback_1)>>('ORB_DetectAndCompute_Async');
-  late final _ORB_DetectAndCompute_Async =
-      _ORB_DetectAndCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, Mat, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> ORB_Detect_Async(
-    ORB o,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _ORB_Detect_Async(
-      o,
-      src,
-      callback,
-    );
-  }
-
-  late final _ORB_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ORB, Mat, CvCallback_1)>>('ORB_Detect_Async');
-  late final _ORB_Detect_Async = _ORB_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ORB, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Ones(
     int rows,
@@ -19813,23 +19012,6 @@ class CvNative {
       _lookup<ffi.NativeFunction<ffi.Void Function(SIFTPtr)>>('SIFT_Close');
   late final _SIFT_Close = _SIFT_ClosePtr.asFunction<void Function(SIFTPtr)>();
 
-  ffi.Pointer<CvStatus> SIFT_Close_Async(
-    SIFTPtr f,
-    CvCallback_0 callback,
-  ) {
-    return _SIFT_Close_Async(
-      f,
-      callback,
-    );
-  }
-
-  late final _SIFT_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              SIFTPtr, CvCallback_0)>>('SIFT_Close_Async');
-  late final _SIFT_Close_Async = _SIFT_Close_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(SIFTPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> SIFT_Create(
     ffi.Pointer<SIFT> rval,
   ) {
@@ -19843,20 +19025,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(ffi.Pointer<SIFT>)>>('SIFT_Create');
   late final _SIFT_Create = _SIFT_CreatePtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<SIFT>)>();
-
-  ffi.Pointer<CvStatus> SIFT_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _SIFT_Create_Async(
-      callback,
-    );
-  }
-
-  late final _SIFT_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'SIFT_Create_Async');
-  late final _SIFT_Create_Async = _SIFT_Create_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> SIFT_Detect(
     SIFT f,
@@ -19900,49 +19068,6 @@ class CvNative {
   late final _SIFT_DetectAndCompute = _SIFT_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> SIFT_DetectAndCompute_Async(
-    SIFT f,
-    Mat src,
-    Mat mask,
-    Mat desc,
-    CvCallback_1 callback,
-  ) {
-    return _SIFT_DetectAndCompute_Async(
-      f,
-      src,
-      mask,
-      desc,
-      callback,
-    );
-  }
-
-  late final _SIFT_DetectAndCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(SIFT, Mat, Mat, Mat,
-              CvCallback_1)>>('SIFT_DetectAndCompute_Async');
-  late final _SIFT_DetectAndCompute_Async =
-      _SIFT_DetectAndCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(SIFT, Mat, Mat, Mat, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> SIFT_Detect_Async(
-    SIFT f,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _SIFT_Detect_Async(
-      f,
-      src,
-      callback,
-    );
-  }
-
-  late final _SIFT_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              SIFT, Mat, CvCallback_1)>>('SIFT_Detect_Async');
-  late final _SIFT_Detect_Async = _SIFT_Detect_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(SIFT, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> SVD_Compute(
     Mat src,
@@ -20238,25 +19363,6 @@ class CvNative {
   late final _SimpleBlobDetector_Close = _SimpleBlobDetector_ClosePtr
       .asFunction<void Function(SimpleBlobDetectorPtr)>();
 
-  ffi.Pointer<CvStatus> SimpleBlobDetector_Close_Async(
-    SimpleBlobDetectorPtr b,
-    CvCallback_0 callback,
-  ) {
-    return _SimpleBlobDetector_Close_Async(
-      b,
-      callback,
-    );
-  }
-
-  late final _SimpleBlobDetector_Close_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(SimpleBlobDetectorPtr,
-              CvCallback_0)>>('SimpleBlobDetector_Close_Async');
-  late final _SimpleBlobDetector_Close_Async =
-      _SimpleBlobDetector_Close_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              SimpleBlobDetectorPtr, CvCallback_0)>();
-
   ffi.Pointer<CvStatus> SimpleBlobDetector_Create(
     ffi.Pointer<SimpleBlobDetector> rval,
   ) {
@@ -20272,21 +19378,6 @@ class CvNative {
   late final _SimpleBlobDetector_Create =
       _SimpleBlobDetector_CreatePtr.asFunction<
           ffi.Pointer<CvStatus> Function(ffi.Pointer<SimpleBlobDetector>)>();
-
-  ffi.Pointer<CvStatus> SimpleBlobDetector_Create_Async(
-    CvCallback_1 callback,
-  ) {
-    return _SimpleBlobDetector_Create_Async(
-      callback,
-    );
-  }
-
-  late final _SimpleBlobDetector_Create_AsyncPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
-          'SimpleBlobDetector_Create_Async');
-  late final _SimpleBlobDetector_Create_Async =
-      _SimpleBlobDetector_Create_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(CvCallback_1)>();
 
   ffi.Pointer<CvStatus> SimpleBlobDetector_Create_WithParams(
     SimpleBlobDetectorParams params,
@@ -20308,25 +19399,6 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               SimpleBlobDetectorParams, ffi.Pointer<SimpleBlobDetector>)>();
 
-  ffi.Pointer<CvStatus> SimpleBlobDetector_Create_WithParams_Async(
-    SimpleBlobDetectorParams params,
-    CvCallback_1 callback,
-  ) {
-    return _SimpleBlobDetector_Create_WithParams_Async(
-      params,
-      callback,
-    );
-  }
-
-  late final _SimpleBlobDetector_Create_WithParams_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(SimpleBlobDetectorParams,
-              CvCallback_1)>>('SimpleBlobDetector_Create_WithParams_Async');
-  late final _SimpleBlobDetector_Create_WithParams_Async =
-      _SimpleBlobDetector_Create_WithParams_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              SimpleBlobDetectorParams, CvCallback_1)>();
-
   ffi.Pointer<CvStatus> SimpleBlobDetector_Detect(
     SimpleBlobDetector b,
     Mat src,
@@ -20347,27 +19419,6 @@ class CvNative {
       _SimpleBlobDetector_DetectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               SimpleBlobDetector, Mat, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> SimpleBlobDetector_Detect_Async(
-    SimpleBlobDetector b,
-    Mat src,
-    CvCallback_1 callback,
-  ) {
-    return _SimpleBlobDetector_Detect_Async(
-      b,
-      src,
-      callback,
-    );
-  }
-
-  late final _SimpleBlobDetector_Detect_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat,
-              CvCallback_1)>>('SimpleBlobDetector_Detect_Async');
-  late final _SimpleBlobDetector_Detect_Async =
-      _SimpleBlobDetector_Detect_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              SimpleBlobDetector, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Sobel(
     Mat src,
@@ -28917,18 +27968,8 @@ class _SymbolAddresses {
   _SymbolAddresses(this._library);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AKAZEPtr)>>
       get AKAZE_Close => _library._AKAZE_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(AKAZEPtr, CvCallback_0)>>
-      get AKAZE_Close_Async => _library._AKAZE_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AgastFeatureDetectorPtr)>>
       get AgastFeatureDetector_Close => _library._AgastFeatureDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  AgastFeatureDetectorPtr, CvCallback_0)>>
-      get AgastFeatureDetector_Close_Async =>
-          _library._AgastFeatureDetector_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>
       get AlignMTB_Close => _library._AlignMTB_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParametersPtr)>>
@@ -28942,16 +27983,8 @@ class _SymbolAddresses {
       get AsyncArray_Close => _library._AsyncArray_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BFMatcherPtr)>>
       get BFMatcher_Close => _library._BFMatcher_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(BFMatcherPtr, CvCallback_0)>>
-      get BFMatcher_Close_Async => _library._BFMatcher_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BRISKPtr)>>
       get BRISK_Close => _library._BRISK_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(BRISKPtr, CvCallback_0)>>
-      get BRISK_Close_Async => _library._BRISK_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorKNNPtr)>>
       get BackgroundSubtractorKNN_Close =>
           _library._BackgroundSubtractorKNN_ClosePtr;
@@ -28975,34 +28008,14 @@ class _SymbolAddresses {
       get FaceRecognizerSF_Close => _library._FaceRecognizerSF_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FastFeatureDetectorPtr)>>
       get FastFeatureDetector_Close => _library._FastFeatureDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  FastFeatureDetectorPtr, CvCallback_0)>>
-      get FastFeatureDetector_Close_Async =>
-          _library._FastFeatureDetector_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FlannBasedMatcherPtr)>>
       get FlannBasedMatcher_Close => _library._FlannBasedMatcher_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  FlannBasedMatcherPtr, CvCallback_0)>>
-      get FlannBasedMatcher_Close_Async =>
-          _library._FlannBasedMatcher_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(GFTTDetectorPtr)>>
       get GFTTDetector_Close => _library._GFTTDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(GFTTDetectorPtr, CvCallback_0)>>
-      get GFTTDetector_Close_Async => _library._GFTTDetector_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(HOGDescriptorPtr)>>
       get HOGDescriptor_Close => _library._HOGDescriptor_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KAZEPtr)>> get KAZE_Close =>
       _library._KAZE_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(KAZEPtr, CvCallback_0)>>
-      get KAZE_Close_Async => _library._KAZE_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KalmanFilterPtr)>>
       get KalmanFilter_Close => _library._KalmanFilter_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>
@@ -29011,10 +28024,6 @@ class _SymbolAddresses {
       get Layer_Close_Async => _library._Layer_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MSERPtr)>> get MSER_Close =>
       _library._MSER_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(MSERPtr, CvCallback_0)>>
-      get MSER_Close_Async => _library._MSER_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MatPtr)>> get Mat_Close =>
       _library._Mat_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
@@ -29027,28 +28036,14 @@ class _SymbolAddresses {
       get Net_Close_Async => _library._Net_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ORBPtr)>> get ORB_Close =>
       _library._ORB_ClosePtr;
-  ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(ORBPtr, CvCallback_0)>>
-      get ORB_Close_Async => _library._ORB_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QRCodeDetectorPtr)>>
       get QRCodeDetector_Close => _library._QRCodeDetector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RNGPtr)>> get Rng_Close =>
       _library._Rng_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SIFTPtr)>> get SIFT_Close =>
       _library._SIFT_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(SIFTPtr, CvCallback_0)>>
-      get SIFT_Close_Async => _library._SIFT_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get SimpleBlobDetector_Close => _library._SimpleBlobDetector_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  SimpleBlobDetectorPtr, CvCallback_0)>>
-      get SimpleBlobDetector_Close_Async =>
-          _library._SimpleBlobDetector_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>>
