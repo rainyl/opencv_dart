@@ -59,8 +59,7 @@ void main() {
   });
 
   test('cv.fastNlMeansDenoisingColoredAsync', () async {
-    final img =
-        await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final dst = await cv.fastNlMeansDenoisingColoredAsync(img);
