@@ -44,7 +44,7 @@ ffi.DynamicLibrary loadNativeLibrary() {
     "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
     "macos" => "lib$_libraryName.dylib",
     _ => throw UnsupportedError(
-        "Platform ${Platform.operatingSystem} not supported")
+        "Platform ${Platform.operatingSystem} not supported",)
   };
   final libPath =
       Platform.environment["OPENCV_DART_LIB_PATH"] ?? defaultLibPath;
@@ -157,7 +157,7 @@ Future<T> cvRunAsync3<T>(
 Future<T> cvRunAsync4<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
   void Function(
-          Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3)
+          Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3,)
       onComplete,
 ) {
   final completer = Completer<T>();
@@ -175,7 +175,7 @@ Future<T> cvRunAsync4<T>(
 Future<T> cvRunAsync5<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
   void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2,
-          VoidPtr p3, VoidPtr p4)
+          VoidPtr p3, VoidPtr p4,)
       onComplete,
 ) {
   final completer = Completer<T>();
@@ -242,7 +242,7 @@ typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
     = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(
-        NativeFinalizerFunctionT<T> func) =>
+        NativeFinalizerFunctionT<T> func,) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
 // native types
