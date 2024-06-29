@@ -14,10 +14,7 @@ extern "C" {
 CvStatus *Stitcher_Create_Async(int mode, CvCallback_1 callback);
 
 // Asynchronous functions for Stitcher_Close
-void Stitcher_Close_Async(PtrStitcherPtr stitcher, CvCallback_0 callback);
-
-// Asynchronous functions for Stitcher_Get
-CvStatus *Stitcher_Get_Async(PtrStitcher self, CvCallback_1 callback);
+void Stitcher_Close_Async(StitcherPtr stitcher, CvCallback_0 callback);
 
 // Asynchronous getter/setter functions
 CvStatus *Stitcher_GetRegistrationResol_Async(Stitcher self, CvCallback_1 callback);

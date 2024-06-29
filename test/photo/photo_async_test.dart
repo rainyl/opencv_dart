@@ -15,7 +15,7 @@ void main() {
     final mask = src.clone();
     final dst = src.clone();
     final p = cv.Point(dst.cols ~/ 2, dst.rows ~/ 2);
-    final blend = await cv.seamlessCloneAsync(src, mask, p, cv.NORMAL_CLONE);
+    final blend = await cv.seamlessCloneAsync(src, dst, mask, p, cv.NORMAL_CLONE);
     expect(blend.isEmpty, false);
     expect((blend.rows, blend.cols), (dst.rows, dst.cols));
   });

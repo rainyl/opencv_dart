@@ -19647,6 +19647,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> SeamlessClone_Async(
     Mat src,
+    Mat dst,
     Mat mask,
     Point p,
     int flags,
@@ -19654,6 +19655,7 @@ class CvNative {
   ) {
     return _SeamlessClone_Async(
       src,
+      dst,
       mask,
       p,
       flags,
@@ -19663,10 +19665,11 @@ class CvNative {
 
   late final _SeamlessClone_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Point, ffi.Int, CvCallback_1)>>('SeamlessClone_Async');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Point, ffi.Int,
+              CvCallback_1)>>('SeamlessClone_Async');
   late final _SeamlessClone_Async = _SeamlessClone_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Point, int, CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Point, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> SepFilter2D(
     Mat src,
@@ -20004,7 +20007,7 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(Mat, int, Size, CvCallback_1)>();
 
   void Stitcher_Close(
-    PtrStitcherPtr stitcher,
+    StitcherPtr stitcher,
   ) {
     return _Stitcher_Close(
       stitcher,
@@ -20012,13 +20015,13 @@ class CvNative {
   }
 
   late final _Stitcher_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(StitcherPtr)>>(
           'Stitcher_Close');
   late final _Stitcher_Close =
-      _Stitcher_ClosePtr.asFunction<void Function(PtrStitcherPtr)>();
+      _Stitcher_ClosePtr.asFunction<void Function(StitcherPtr)>();
 
   void Stitcher_Close_Async(
-    PtrStitcherPtr stitcher,
+    StitcherPtr stitcher,
     CvCallback_0 callback,
   ) {
     return _Stitcher_Close_Async(
@@ -20027,11 +20030,11 @@ class CvNative {
     );
   }
 
-  late final _Stitcher_Close_AsyncPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr, CvCallback_0)>>(
-      'Stitcher_Close_Async');
+  late final _Stitcher_Close_AsyncPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StitcherPtr, CvCallback_0)>>(
+          'Stitcher_Close_Async');
   late final _Stitcher_Close_Async = _Stitcher_Close_AsyncPtr.asFunction<
-      void Function(PtrStitcherPtr, CvCallback_0)>();
+      void Function(StitcherPtr, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Stitcher_Component(
     Stitcher self,
@@ -20151,7 +20154,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> Stitcher_Create(
     int mode,
-    ffi.Pointer<PtrStitcher> rval,
+    ffi.Pointer<Stitcher> rval,
   ) {
     return _Stitcher_Create(
       mode,
@@ -20162,9 +20165,9 @@ class CvNative {
   late final _Stitcher_CreatePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              ffi.Int, ffi.Pointer<PtrStitcher>)>>('Stitcher_Create');
+              ffi.Int, ffi.Pointer<Stitcher>)>>('Stitcher_Create');
   late final _Stitcher_Create = _Stitcher_CreatePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<PtrStitcher>)>();
+      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<Stitcher>)>();
 
   ffi.Pointer<CvStatus> Stitcher_Create_Async(
     int mode,
@@ -20230,7 +20233,7 @@ class CvNative {
               Stitcher, VecMat, VecMat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_Get(
-    PtrStitcher self,
+    Stitcher self,
     ffi.Pointer<Stitcher> rval,
   ) {
     return _Stitcher_Get(
@@ -20242,9 +20245,9 @@ class CvNative {
   late final _Stitcher_GetPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              PtrStitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
+              Stitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
   late final _Stitcher_Get = _Stitcher_GetPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(PtrStitcher, ffi.Pointer<Stitcher>)>();
+      ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<Stitcher>)>();
 
   ffi.Pointer<CvStatus> Stitcher_GetCompositingResol(
     Stitcher self,
@@ -20497,23 +20500,6 @@ class CvNative {
   late final _Stitcher_GetWaveCorrection_Async =
       _Stitcher_GetWaveCorrection_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
-
-  ffi.Pointer<CvStatus> Stitcher_Get_Async(
-    PtrStitcher self,
-    CvCallback_1 callback,
-  ) {
-    return _Stitcher_Get_Async(
-      self,
-      callback,
-    );
-  }
-
-  late final _Stitcher_Get_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrStitcher, CvCallback_1)>>('Stitcher_Get_Async');
-  late final _Stitcher_Get_Async = _Stitcher_Get_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(PtrStitcher, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_SetCompositingResol(
     Stitcher self,
@@ -28950,10 +28936,9 @@ class _SymbolAddresses {
       _library._SIFT_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get SimpleBlobDetector_Close => _library._SimpleBlobDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StitcherPtr)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
-  ffi.Pointer<
-          ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr, CvCallback_0)>>
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StitcherPtr, CvCallback_0)>>
       get Stitcher_Close_Async => _library._Stitcher_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>>
       get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
@@ -29476,12 +29461,6 @@ final class Prim extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-final class PtrStitcher extends ffi.Struct {
-  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
-}
-
-typedef PtrStitcherPtr = ffi.Pointer<PtrStitcher>;
-
 final class QRCodeDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -29645,8 +29624,10 @@ final class Size2f extends ffi.Struct {
 }
 
 final class Stitcher extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
+
+typedef StitcherPtr = ffi.Pointer<Stitcher>;
 
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

@@ -88,6 +88,7 @@ Future<Mat> colorChangeAsync(
 
 Future<Mat> seamlessCloneAsync(
   InputArray src,
+  InputArray dst,
   InputArray mask,
   Point p,
   int flags,
@@ -95,12 +96,13 @@ Future<Mat> seamlessCloneAsync(
   return cvRunAsync(
     (callback) => CFFI.SeamlessClone_Async(
       src.ref,
+      dst.ref,
       mask.ref,
       p.ref,
       flags,
       callback,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    matCompleter,
   );
 }
 

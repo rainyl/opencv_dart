@@ -13,13 +13,12 @@ CvStatus *ColorChange_Async(Mat src, Mat mask, float red_mul, float green_mul, f
 }
 
 // Asynchronous functions for SeamlessClone
-CvStatus *SeamlessClone_Async(Mat src, Mat mask, Point p, int flags, CvCallback_2 callback)
+CvStatus *SeamlessClone_Async(Mat src, Mat dst, Mat mask, Point p, int flags, CvCallback_1 callback)
 {
     BEGIN_WRAP
     cv::Mat _blend;
-    cv::Mat _dst;
-    cv::seamlessClone(*src.ptr, _dst, *mask.ptr, cv::Point(p.x, p.y), _blend, flags);
-    callback(new Mat{new cv::Mat(_blend)}, new Mat{new cv::Mat(_blend)});
+    cv::seamlessClone(*src.ptr, *dst.ptr, *mask.ptr, cv::Point(p.x, p.y), _blend, flags);
+    callback(new Mat{new cv::Mat(_blend)});
     END_WRAP
 }
 
