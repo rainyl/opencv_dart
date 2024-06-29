@@ -9,8 +9,7 @@ import './photo.dart';
 extension MergeMertensAsync on MergeMertens {
   static Future<MergeMertens> emptyNewAsync() async => cvRunAsync(
         CFFI.MergeMertens_Create_Async,
-        (c, p) =>
-            c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
+        (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
       );
 
   static Future<MergeMertens> createAsync({
@@ -43,8 +42,11 @@ extension AlignMTBAsync on AlignMTB {
         (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
       );
 
-  static Future<AlignMTB> createAsync(
-      {int maxBits = 6, int excludeRange = 4, bool cut = true,}) async {
+  static Future<AlignMTB> createAsync({
+    int maxBits = 6,
+    int excludeRange = 4,
+    bool cut = true,
+  }) async {
     return cvRunAsync(
       (callback) => CFFI.AlignMTB_CreateWithParams_Async(
         maxBits,
@@ -251,10 +253,7 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
       callback,
     ),
     (c, pdst1, pdst2) => c.complete(
-      (
-        Mat.fromPointer(pdst1.cast<cvg.Mat>()),
-        Mat.fromPointer(pdst2.cast<cvg.Mat>())
-      ),
+      (Mat.fromPointer(pdst1.cast<cvg.Mat>()), Mat.fromPointer(pdst2.cast<cvg.Mat>())),
     ),
   );
 }

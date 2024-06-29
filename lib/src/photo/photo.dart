@@ -17,8 +17,7 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
 class MergeMertens extends CvStruct<cvg.MergeMertens> {
-  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -51,8 +50,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     return MergeMertens._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
+  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(CFFI.addresses.MergeMertens_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -85,8 +83,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
 class AlignMTB extends CvStruct<cvg.AlignMTB> {
-  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -129,8 +126,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     return AlignMTB._(p);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
+  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(CFFI.addresses.AlignMTB_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -163,8 +159,7 @@ Mat colorChange(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () =>
-        CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul),
+    () => CFFI.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul),
   );
   return dst;
 }
@@ -182,8 +177,7 @@ Mat seamlessClone(
 ) {
   final blend = Mat.empty();
   cvRun(
-    () =>
-        CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags),
+    () => CFFI.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags),
   );
   return blend;
 }
