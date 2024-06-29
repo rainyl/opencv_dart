@@ -44,7 +44,9 @@ headers:
     - src/stitching/stitching.h
     - src/stitching/stitching_async.h
     - src/video/video.h
+    - src/video/video_async.h
     - src/video/videoio.h
+    - src/video/videoio_async.h
   include-directives:
     - src/calib3d/calib3d.h
     - src/calib3d/calib3d_async.h
@@ -75,7 +77,10 @@ headers:
     - src/stitching/stitching.h
     - src/stitching/stitching_async.h
     - src/video/video.h
+    - src/video/video_async.h
     - src/video/videoio.h
+    - src/video/videoio_async.h
+
 functions:
   symbol-address:
     include:

@@ -198,6 +198,14 @@ Future<T> cvRunAsync5<T>(
 }
 
 // async completers
+void voidCompleter(Completer<void> completer) => completer.complete();
+
+void boolCompleter(Completer<bool> completer, VoidPtr p) {
+  final value = p.cast<ffi.Bool>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
 void intCompleter(Completer<int> completer, VoidPtr p) {
   final value = p.cast<ffi.Int>().value;
   calloc.free(p);
