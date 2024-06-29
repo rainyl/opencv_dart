@@ -39,7 +39,9 @@ headers:
     - src/objdetect/objdetect.h
     - src/objdetect/objdetect_async.h
     - src/photo/photo.h
+    - src/photo/photo_async.h
     - src/stitching/stitching.h
+    - src/stitching/stitching_async.h
     - src/video/video.h
     - src/video/video_async.h
     - src/video/videoio.h
@@ -69,7 +71,9 @@ headers:
     - src/objdetect/objdetect.h
     - src/objdetect/objdetect_async.h
     - src/photo/photo.h
+    - src/photo/photo_async.h
     - src/stitching/stitching.h
+    - src/stitching/stitching_async.h
     - src/video/video.h
     - src/video/video_async.h
     - src/video/videoio.h

@@ -258,6 +258,42 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               int, int, bool, ffi.Pointer<AlignMTB>)>();
 
+  ffi.Pointer<CvStatus> AlignMTB_CreateWithParams_Async(
+    int max_bits,
+    int exclude_range,
+    bool cut,
+    CvCallback_1 callback,
+  ) {
+    return _AlignMTB_CreateWithParams_Async(
+      max_bits,
+      exclude_range,
+      cut,
+      callback,
+    );
+  }
+
+  late final _AlignMTB_CreateWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Bool,
+              CvCallback_1)>>('AlignMTB_CreateWithParams_Async');
+  late final _AlignMTB_CreateWithParams_Async =
+      _AlignMTB_CreateWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(int, int, bool, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> AlignMTB_Create_Async(
+    CvCallback_1 callback,
+  ) {
+    return _AlignMTB_Create_Async(
+      callback,
+    );
+  }
+
+  late final _AlignMTB_Create_AsyncPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
+          'AlignMTB_Create_Async');
+  late final _AlignMTB_Create_Async = _AlignMTB_Create_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(CvCallback_1)>();
+
   ffi.Pointer<CvStatus> AlignMTB_Process(
     AlignMTB b,
     VecMat src,
@@ -276,6 +312,25 @@ class CvNative {
               AlignMTB, VecMat, ffi.Pointer<VecMat>)>>('AlignMTB_Process');
   late final _AlignMTB_Process = _AlignMTB_ProcessPtr.asFunction<
       ffi.Pointer<CvStatus> Function(AlignMTB, VecMat, ffi.Pointer<VecMat>)>();
+
+  ffi.Pointer<CvStatus> AlignMTB_Process_Async(
+    AlignMTB b,
+    VecMat src,
+    CvCallback_1 callback,
+  ) {
+    return _AlignMTB_Process_Async(
+      b,
+      src,
+      callback,
+    );
+  }
+
+  late final _AlignMTB_Process_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              AlignMTB, VecMat, CvCallback_1)>>('AlignMTB_Process_Async');
+  late final _AlignMTB_Process_Async = _AlignMTB_Process_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(AlignMTB, VecMat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> ApplyColorMap(
     Mat src,
@@ -4065,6 +4120,32 @@ class CvNative {
   late final _ColorChange = _ColorChangePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, double)>();
 
+  ffi.Pointer<CvStatus> ColorChange_Async(
+    Mat src,
+    Mat mask,
+    double red_mul,
+    double green_mul,
+    double blue_mul,
+    CvCallback_1 callback,
+  ) {
+    return _ColorChange_Async(
+      src,
+      mask,
+      red_mul,
+      green_mul,
+      blue_mul,
+      callback,
+    );
+  }
+
+  late final _ColorChange_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Float, CvCallback_1)>>('ColorChange_Async');
+  late final _ColorChange_Async = _ColorChange_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, double, double, double, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> CompareHist(
     Mat hist1,
     Mat hist2,
@@ -4448,6 +4529,27 @@ class CvNative {
   late final _DetailEnhance = _DetailEnhancePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, double, double)>();
 
+  ffi.Pointer<CvStatus> DetailEnhance_Async(
+    Mat src,
+    double sigma_s,
+    double sigma_r,
+    CvCallback_1 callback,
+  ) {
+    return _DetailEnhance_Async(
+      src,
+      sigma_s,
+      sigma_r,
+      callback,
+    );
+  }
+
+  late final _DetailEnhance_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Float, ffi.Float, CvCallback_1)>>('DetailEnhance_Async');
+  late final _DetailEnhance_Async = _DetailEnhance_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, double, double, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Dilate(
     Mat src,
     Mat dst,
@@ -4830,6 +4932,31 @@ class CvNative {
               ffi.Float)>>('EdgePreservingFilter');
   late final _EdgePreservingFilter = _EdgePreservingFilterPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, int, double, double)>();
+
+  ffi.Pointer<CvStatus> EdgePreservingFilter_Async(
+    Mat src,
+    int filter,
+    double sigma_s,
+    double sigma_r,
+    CvCallback_1 callback,
+  ) {
+    return _EdgePreservingFilter_Async(
+      src,
+      filter,
+      sigma_s,
+      sigma_r,
+      callback,
+    );
+  }
+
+  late final _EdgePreservingFilter_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Float, ffi.Float,
+              CvCallback_1)>>('EdgePreservingFilter_Async');
+  late final _EdgePreservingFilter_Async =
+      _EdgePreservingFilter_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, int, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Ellipse(
     Mat img,
@@ -6181,6 +6308,60 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               VecMat, Mat, int, int, double, double, int, int)>();
 
+  ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMultiWithParams_Async(
+    VecMat src,
+    int imgToDenoiseIndex,
+    int temporalWindowSize,
+    double h,
+    double hColor,
+    int templateWindowSize,
+    int searchWindowSize,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoisingColoredMultiWithParams_Async(
+      src,
+      imgToDenoiseIndex,
+      temporalWindowSize,
+      h,
+      hColor,
+      templateWindowSize,
+      searchWindowSize,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoisingColoredMultiWithParams_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(VecMat, ffi.Int, ffi.Int,
+                  ffi.Float, ffi.Float, ffi.Int, ffi.Int, CvCallback_1)>>(
+      'FastNlMeansDenoisingColoredMultiWithParams_Async');
+  late final _FastNlMeansDenoisingColoredMultiWithParams_Async =
+      _FastNlMeansDenoisingColoredMultiWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecMat, int, int, double, double, int, int, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredMulti_Async(
+    VecMat src,
+    int imgToDenoiseIndex,
+    int temporalWindowSize,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoisingColoredMulti_Async(
+      src,
+      imgToDenoiseIndex,
+      temporalWindowSize,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoisingColoredMulti_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecMat, ffi.Int, ffi.Int,
+              CvCallback_1)>>('FastNlMeansDenoisingColoredMulti_Async');
+  late final _FastNlMeansDenoisingColoredMulti_Async =
+      _FastNlMeansDenoisingColoredMulti_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecMat, int, int, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredWithParams(
     Mat src,
     Mat dst,
@@ -6207,6 +6388,56 @@ class CvNative {
       _FastNlMeansDenoisingColoredWithParamsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, int, int)>();
 
+  ffi.Pointer<CvStatus> FastNlMeansDenoisingColoredWithParams_Async(
+    Mat src,
+    double h,
+    double hColor,
+    int templateWindowSize,
+    int searchWindowSize,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoisingColoredWithParams_Async(
+      src,
+      h,
+      hColor,
+      templateWindowSize,
+      searchWindowSize,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoisingColoredWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              CvCallback_1)>>('FastNlMeansDenoisingColoredWithParams_Async');
+  late final _FastNlMeansDenoisingColoredWithParams_Async =
+      _FastNlMeansDenoisingColoredWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, double, int, int, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FastNlMeansDenoisingColored_Async(
+    Mat src,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoisingColored_Async(
+      src,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoisingColored_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'FastNlMeansDenoisingColored_Async');
+  late final _FastNlMeansDenoisingColored_Async =
+      _FastNlMeansDenoisingColored_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> FastNlMeansDenoisingWithParams(
     Mat src,
     Mat dst,
@@ -6230,6 +6461,48 @@ class CvNative {
   late final _FastNlMeansDenoisingWithParams =
       _FastNlMeansDenoisingWithParamsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, int)>();
+
+  ffi.Pointer<CvStatus> FastNlMeansDenoisingWithParams_Async(
+    Mat src,
+    double h,
+    int templateWindowSize,
+    int searchWindowSize,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoisingWithParams_Async(
+      src,
+      h,
+      templateWindowSize,
+      searchWindowSize,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoisingWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Int, ffi.Int,
+              CvCallback_1)>>('FastNlMeansDenoisingWithParams_Async');
+  late final _FastNlMeansDenoisingWithParams_Async =
+      _FastNlMeansDenoisingWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, int, int, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FastNlMeansDenoising_Async(
+    Mat src,
+    CvCallback_1 callback,
+  ) {
+    return _FastNlMeansDenoising_Async(
+      src,
+      callback,
+    );
+  }
+
+  late final _FastNlMeansDenoising_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'FastNlMeansDenoising_Async');
+  late final _FastNlMeansDenoising_Async = _FastNlMeansDenoising_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> FillPoly(
     Mat img,
@@ -9024,6 +9297,31 @@ class CvNative {
               Mat, Mat, Mat, ffi.Float, ffi.Float)>>('IlluminationChange');
   late final _IlluminationChange = _IlluminationChangePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double)>();
+
+  ffi.Pointer<CvStatus> IlluminationChange_Async(
+    Mat src,
+    Mat mask,
+    double alpha,
+    double beta,
+    CvCallback_1 callback,
+  ) {
+    return _IlluminationChange_Async(
+      src,
+      mask,
+      alpha,
+      beta,
+      callback,
+    );
+  }
+
+  late final _IlluminationChange_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              CvCallback_1)>>('IlluminationChange_Async');
+  late final _IlluminationChange_Async =
+      _IlluminationChange_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Image_IMDecode(
     VecUChar buf,
@@ -16401,6 +16699,43 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               double, double, double, ffi.Pointer<MergeMertens>)>();
 
+  ffi.Pointer<CvStatus> MergeMertens_CreateWithParams_Async(
+    double contrast_weight,
+    double saturation_weight,
+    double exposure_weight,
+    CvCallback_1 callback,
+  ) {
+    return _MergeMertens_CreateWithParams_Async(
+      contrast_weight,
+      saturation_weight,
+      exposure_weight,
+      callback,
+    );
+  }
+
+  late final _MergeMertens_CreateWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Float,
+              CvCallback_1)>>('MergeMertens_CreateWithParams_Async');
+  late final _MergeMertens_CreateWithParams_Async =
+      _MergeMertens_CreateWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              double, double, double, CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> MergeMertens_Create_Async(
+    CvCallback_1 callback,
+  ) {
+    return _MergeMertens_Create_Async(
+      callback,
+    );
+  }
+
+  late final _MergeMertens_Create_AsyncPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>>(
+          'MergeMertens_Create_Async');
+  late final _MergeMertens_Create_Async = _MergeMertens_Create_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(CvCallback_1)>();
+
   ffi.Pointer<CvStatus> MergeMertens_Process(
     MergeMertens b,
     VecMat src,
@@ -16419,6 +16754,26 @@ class CvNative {
               MergeMertens, VecMat, Mat)>>('MergeMertens_Process');
   late final _MergeMertens_Process = _MergeMertens_ProcessPtr.asFunction<
       ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat)>();
+
+  ffi.Pointer<CvStatus> MergeMertens_Process_Async(
+    MergeMertens b,
+    VecMat src,
+    CvCallback_1 callback,
+  ) {
+    return _MergeMertens_Process_Async(
+      b,
+      src,
+      callback,
+    );
+  }
+
+  late final _MergeMertens_Process_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat,
+              CvCallback_1)>>('MergeMertens_Process_Async');
+  late final _MergeMertens_Process_Async =
+      _MergeMertens_Process_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> MinAreaRect(
     VecPoint pts,
@@ -18225,6 +18580,30 @@ class CvNative {
   late final _PencilSketch = _PencilSketchPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, double)>();
 
+  ffi.Pointer<CvStatus> PencilSketch_Async(
+    Mat src,
+    double sigma_s,
+    double sigma_r,
+    double shade_factor,
+    CvCallback_2 callback,
+  ) {
+    return _PencilSketch_Async(
+      src,
+      sigma_s,
+      sigma_r,
+      shade_factor,
+      callback,
+    );
+  }
+
+  late final _PencilSketch_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float, ffi.Float,
+              CvCallback_2)>>('PencilSketch_Async');
+  late final _PencilSketch_Async = _PencilSketch_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, double, double, double, CvCallback_2)>();
+
   ffi.Pointer<CvStatus> PhaseCorrelate(
     Mat src1,
     Mat src2,
@@ -18292,6 +18671,29 @@ class CvNative {
               Mat, Mat, Mat, ffi.Float, ffi.Int)>>('PhotoInpaint');
   late final _PhotoInpaint = _PhotoInpaintPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, int)>();
+
+  ffi.Pointer<CvStatus> PhotoInpaint_Async(
+    Mat src,
+    Mat mask,
+    double inpaint_radius,
+    int algorithm_type,
+    CvCallback_1 callback,
+  ) {
+    return _PhotoInpaint_Async(
+      src,
+      mask,
+      inpaint_radius,
+      algorithm_type,
+      callback,
+    );
+  }
+
+  late final _PhotoInpaint_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Int,
+              CvCallback_1)>>('PhotoInpaint_Async');
+  late final _PhotoInpaint_Async = _PhotoInpaint_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> PointPolygonTest(
     VecPoint pts,
@@ -20078,6 +20480,32 @@ class CvNative {
   late final _SeamlessClone = _SeamlessClonePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Point, Mat, int)>();
 
+  ffi.Pointer<CvStatus> SeamlessClone_Async(
+    Mat src,
+    Mat dst,
+    Mat mask,
+    Point p,
+    int flags,
+    CvCallback_1 callback,
+  ) {
+    return _SeamlessClone_Async(
+      src,
+      dst,
+      mask,
+      p,
+      flags,
+      callback,
+    );
+  }
+
+  late final _SeamlessClone_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Point, ffi.Int,
+              CvCallback_1)>>('SeamlessClone_Async');
+  late final _SeamlessClone_Async = _SeamlessClone_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Point, int, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> SepFilter2D(
     Mat src,
     Mat dst,
@@ -20414,7 +20842,7 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(Mat, int, Size, CvCallback_1)>();
 
   void Stitcher_Close(
-    PtrStitcherPtr stitcher,
+    StitcherPtr stitcher,
   ) {
     return _Stitcher_Close(
       stitcher,
@@ -20422,10 +20850,26 @@ class CvNative {
   }
 
   late final _Stitcher_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(StitcherPtr)>>(
           'Stitcher_Close');
   late final _Stitcher_Close =
-      _Stitcher_ClosePtr.asFunction<void Function(PtrStitcherPtr)>();
+      _Stitcher_ClosePtr.asFunction<void Function(StitcherPtr)>();
+
+  void Stitcher_Close_Async(
+    StitcherPtr stitcher,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_Close_Async(
+      stitcher,
+      callback,
+    );
+  }
+
+  late final _Stitcher_Close_AsyncPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StitcherPtr, CvCallback_0)>>(
+          'Stitcher_Close_Async');
+  late final _Stitcher_Close_Async = _Stitcher_Close_AsyncPtr.asFunction<
+      void Function(StitcherPtr, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Stitcher_Component(
     Stitcher self,
@@ -20443,6 +20887,23 @@ class CvNative {
               Stitcher, ffi.Pointer<VecInt>)>>('Stitcher_Component');
   late final _Stitcher_Component = _Stitcher_ComponentPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecInt>)>();
+
+  ffi.Pointer<CvStatus> Stitcher_Component_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_Component_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_Component_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_Component_Async');
+  late final _Stitcher_Component_Async = _Stitcher_Component_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_ComposePanorama(
     Stitcher self,
@@ -20488,9 +20949,47 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_ComposePanorama_1_Async(
+    Stitcher self,
+    VecMat mats,
+    CvCallback_2 callback,
+  ) {
+    return _Stitcher_ComposePanorama_1_Async(
+      self,
+      mats,
+      callback,
+    );
+  }
+
+  late final _Stitcher_ComposePanorama_1_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat,
+              CvCallback_2)>>('Stitcher_ComposePanorama_1_Async');
+  late final _Stitcher_ComposePanorama_1_Async =
+      _Stitcher_ComposePanorama_1_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> Stitcher_ComposePanorama_Async(
+    Stitcher self,
+    CvCallback_2 callback,
+  ) {
+    return _Stitcher_ComposePanorama_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_ComposePanorama_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_2)>>('Stitcher_ComposePanorama_Async');
+  late final _Stitcher_ComposePanorama_Async =
+      _Stitcher_ComposePanorama_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_2)>();
+
   ffi.Pointer<CvStatus> Stitcher_Create(
     int mode,
-    ffi.Pointer<PtrStitcher> rval,
+    ffi.Pointer<Stitcher> rval,
   ) {
     return _Stitcher_Create(
       mode,
@@ -20501,9 +21000,26 @@ class CvNative {
   late final _Stitcher_CreatePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              ffi.Int, ffi.Pointer<PtrStitcher>)>>('Stitcher_Create');
+              ffi.Int, ffi.Pointer<Stitcher>)>>('Stitcher_Create');
   late final _Stitcher_Create = _Stitcher_CreatePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<PtrStitcher>)>();
+      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<Stitcher>)>();
+
+  ffi.Pointer<CvStatus> Stitcher_Create_Async(
+    int mode,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_Create_Async(
+      mode,
+      callback,
+    );
+  }
+
+  late final _Stitcher_Create_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int, CvCallback_1)>>('Stitcher_Create_Async');
+  late final _Stitcher_Create_Async = _Stitcher_Create_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_EstimateTransform(
     Stitcher self,
@@ -20528,8 +21044,31 @@ class CvNative {
           ffi.Pointer<CvStatus> Function(
               Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_EstimateTransform_Async(
+    Stitcher self,
+    VecMat mats,
+    VecMat masks,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_EstimateTransform_Async(
+      self,
+      mats,
+      masks,
+      callback,
+    );
+  }
+
+  late final _Stitcher_EstimateTransform_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat,
+              CvCallback_1)>>('Stitcher_EstimateTransform_Async');
+  late final _Stitcher_EstimateTransform_Async =
+      _Stitcher_EstimateTransform_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, VecMat, VecMat, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Stitcher_Get(
-    PtrStitcher self,
+    Stitcher self,
     ffi.Pointer<Stitcher> rval,
   ) {
     return _Stitcher_Get(
@@ -20541,9 +21080,9 @@ class CvNative {
   late final _Stitcher_GetPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              PtrStitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
+              Stitcher, ffi.Pointer<Stitcher>)>>('Stitcher_Get');
   late final _Stitcher_Get = _Stitcher_GetPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(PtrStitcher, ffi.Pointer<Stitcher>)>();
+      ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<Stitcher>)>();
 
   ffi.Pointer<CvStatus> Stitcher_GetCompositingResol(
     Stitcher self,
@@ -20563,6 +21102,24 @@ class CvNative {
       _Stitcher_GetCompositingResolPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_GetCompositingResol_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetCompositingResol_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetCompositingResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_GetCompositingResol_Async');
+  late final _Stitcher_GetCompositingResol_Async =
+      _Stitcher_GetCompositingResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Stitcher_GetInterpolationFlags(
     Stitcher self,
     ffi.Pointer<ffi.Int> rval,
@@ -20580,6 +21137,24 @@ class CvNative {
   late final _Stitcher_GetInterpolationFlags =
       _Stitcher_GetInterpolationFlagsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> Stitcher_GetInterpolationFlags_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetInterpolationFlags_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetInterpolationFlags_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_GetInterpolationFlags_Async');
+  late final _Stitcher_GetInterpolationFlags_Async =
+      _Stitcher_GetInterpolationFlags_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_GetPanoConfidenceThresh(
     Stitcher self,
@@ -20599,6 +21174,24 @@ class CvNative {
       _Stitcher_GetPanoConfidenceThreshPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_GetPanoConfidenceThresh_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetPanoConfidenceThresh_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetPanoConfidenceThresh_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher,
+              CvCallback_1)>>('Stitcher_GetPanoConfidenceThresh_Async');
+  late final _Stitcher_GetPanoConfidenceThresh_Async =
+      _Stitcher_GetPanoConfidenceThresh_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Stitcher_GetRegistrationResol(
     Stitcher self,
     ffi.Pointer<ffi.Double> rval,
@@ -20616,6 +21209,24 @@ class CvNative {
   late final _Stitcher_GetRegistrationResol =
       _Stitcher_GetRegistrationResolPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> Stitcher_GetRegistrationResol_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetRegistrationResol_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetRegistrationResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_GetRegistrationResol_Async');
+  late final _Stitcher_GetRegistrationResol_Async =
+      _Stitcher_GetRegistrationResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_GetSeamEstimationResol(
     Stitcher self,
@@ -20635,6 +21246,24 @@ class CvNative {
       _Stitcher_GetSeamEstimationResolPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Double>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_GetSeamEstimationResol_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetSeamEstimationResol_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetSeamEstimationResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher,
+              CvCallback_1)>>('Stitcher_GetSeamEstimationResol_Async');
+  late final _Stitcher_GetSeamEstimationResol_Async =
+      _Stitcher_GetSeamEstimationResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Stitcher_GetWaveCorrectKind(
     Stitcher self,
     ffi.Pointer<ffi.Int> rval,
@@ -20652,6 +21281,24 @@ class CvNative {
   late final _Stitcher_GetWaveCorrectKind =
       _Stitcher_GetWaveCorrectKindPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> Stitcher_GetWaveCorrectKind_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetWaveCorrectKind_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetWaveCorrectKind_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_GetWaveCorrectKind_Async');
+  late final _Stitcher_GetWaveCorrectKind_Async =
+      _Stitcher_GetWaveCorrectKind_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Stitcher_GetWaveCorrection(
     Stitcher self,
@@ -20671,6 +21318,24 @@ class CvNative {
       _Stitcher_GetWaveCorrectionPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<ffi.Bool>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_GetWaveCorrection_Async(
+    Stitcher self,
+    CvCallback_1 callback,
+  ) {
+    return _Stitcher_GetWaveCorrection_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _Stitcher_GetWaveCorrection_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, CvCallback_1)>>('Stitcher_GetWaveCorrection_Async');
+  late final _Stitcher_GetWaveCorrection_Async =
+      _Stitcher_GetWaveCorrection_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, CvCallback_1)>();
+
   ffi.Pointer<CvStatus> Stitcher_SetCompositingResol(
     Stitcher self,
     double inval,
@@ -20687,6 +21352,26 @@ class CvNative {
               Stitcher, ffi.Double)>>('Stitcher_SetCompositingResol');
   late final _Stitcher_SetCompositingResol = _Stitcher_SetCompositingResolPtr
       .asFunction<ffi.Pointer<CvStatus> Function(Stitcher, double)>();
+
+  ffi.Pointer<CvStatus> Stitcher_SetCompositingResol_Async(
+    Stitcher self,
+    double inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetCompositingResol_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetCompositingResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double,
+              CvCallback_0)>>('Stitcher_SetCompositingResol_Async');
+  late final _Stitcher_SetCompositingResol_Async =
+      _Stitcher_SetCompositingResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, double, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Stitcher_SetInterpolationFlags(
     Stitcher self,
@@ -20706,6 +21391,26 @@ class CvNative {
       _Stitcher_SetInterpolationFlagsPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, int)>();
 
+  ffi.Pointer<CvStatus> Stitcher_SetInterpolationFlags_Async(
+    Stitcher self,
+    int inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetInterpolationFlags_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetInterpolationFlags_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Int,
+              CvCallback_0)>>('Stitcher_SetInterpolationFlags_Async');
+  late final _Stitcher_SetInterpolationFlags_Async =
+      _Stitcher_SetInterpolationFlags_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, int, CvCallback_0)>();
+
   ffi.Pointer<CvStatus> Stitcher_SetPanoConfidenceThresh(
     Stitcher self,
     double inval,
@@ -20724,6 +21429,26 @@ class CvNative {
       _Stitcher_SetPanoConfidenceThreshPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, double)>();
 
+  ffi.Pointer<CvStatus> Stitcher_SetPanoConfidenceThresh_Async(
+    Stitcher self,
+    double inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetPanoConfidenceThresh_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetPanoConfidenceThresh_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double,
+              CvCallback_0)>>('Stitcher_SetPanoConfidenceThresh_Async');
+  late final _Stitcher_SetPanoConfidenceThresh_Async =
+      _Stitcher_SetPanoConfidenceThresh_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, double, CvCallback_0)>();
+
   ffi.Pointer<CvStatus> Stitcher_SetRegistrationResol(
     Stitcher self,
     double inval,
@@ -20740,6 +21465,26 @@ class CvNative {
               Stitcher, ffi.Double)>>('Stitcher_SetRegistrationResol');
   late final _Stitcher_SetRegistrationResol = _Stitcher_SetRegistrationResolPtr
       .asFunction<ffi.Pointer<CvStatus> Function(Stitcher, double)>();
+
+  ffi.Pointer<CvStatus> Stitcher_SetRegistrationResol_Async(
+    Stitcher self,
+    double inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetRegistrationResol_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetRegistrationResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double,
+              CvCallback_0)>>('Stitcher_SetRegistrationResol_Async');
+  late final _Stitcher_SetRegistrationResol_Async =
+      _Stitcher_SetRegistrationResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, double, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Stitcher_SetSeamEstimationResol(
     Stitcher self,
@@ -20759,6 +21504,26 @@ class CvNative {
       _Stitcher_SetSeamEstimationResolPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Stitcher, double)>();
 
+  ffi.Pointer<CvStatus> Stitcher_SetSeamEstimationResol_Async(
+    Stitcher self,
+    double inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetSeamEstimationResol_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetSeamEstimationResol_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Double,
+              CvCallback_0)>>('Stitcher_SetSeamEstimationResol_Async');
+  late final _Stitcher_SetSeamEstimationResol_Async =
+      _Stitcher_SetSeamEstimationResol_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, double, CvCallback_0)>();
+
   ffi.Pointer<CvStatus> Stitcher_SetWaveCorrectKind(
     Stitcher self,
     int inval,
@@ -20776,6 +21541,26 @@ class CvNative {
   late final _Stitcher_SetWaveCorrectKind = _Stitcher_SetWaveCorrectKindPtr
       .asFunction<ffi.Pointer<CvStatus> Function(Stitcher, int)>();
 
+  ffi.Pointer<CvStatus> Stitcher_SetWaveCorrectKind_Async(
+    Stitcher self,
+    int inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetWaveCorrectKind_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetWaveCorrectKind_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Int,
+              CvCallback_0)>>('Stitcher_SetWaveCorrectKind_Async');
+  late final _Stitcher_SetWaveCorrectKind_Async =
+      _Stitcher_SetWaveCorrectKind_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, int, CvCallback_0)>();
+
   ffi.Pointer<CvStatus> Stitcher_SetWaveCorrection(
     Stitcher self,
     bool inval,
@@ -20792,6 +21577,26 @@ class CvNative {
       'Stitcher_SetWaveCorrection');
   late final _Stitcher_SetWaveCorrection = _Stitcher_SetWaveCorrectionPtr
       .asFunction<ffi.Pointer<CvStatus> Function(Stitcher, bool)>();
+
+  ffi.Pointer<CvStatus> Stitcher_SetWaveCorrection_Async(
+    Stitcher self,
+    bool inval,
+    CvCallback_0 callback,
+  ) {
+    return _Stitcher_SetWaveCorrection_Async(
+      self,
+      inval,
+      callback,
+    );
+  }
+
+  late final _Stitcher_SetWaveCorrection_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Bool,
+              CvCallback_0)>>('Stitcher_SetWaveCorrection_Async');
+  late final _Stitcher_SetWaveCorrection_Async =
+      _Stitcher_SetWaveCorrection_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, bool, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Stitcher_Stitch(
     Stitcher self,
@@ -20839,6 +21644,46 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           Stitcher, VecMat, VecMat, Mat, ffi.Pointer<ffi.Int>)>();
 
+  ffi.Pointer<CvStatus> Stitcher_Stitch_1_Async(
+    Stitcher self,
+    VecMat mats,
+    VecMat masks,
+    CvCallback_2 callback,
+  ) {
+    return _Stitcher_Stitch_1_Async(
+      self,
+      mats,
+      masks,
+      callback,
+    );
+  }
+
+  late final _Stitcher_Stitch_1_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat,
+              CvCallback_2)>>('Stitcher_Stitch_1_Async');
+  late final _Stitcher_Stitch_1_Async = _Stitcher_Stitch_1_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> Stitcher_Stitch_Async(
+    Stitcher self,
+    VecMat mats,
+    CvCallback_2 callback,
+  ) {
+    return _Stitcher_Stitch_Async(
+      self,
+      mats,
+      callback,
+    );
+  }
+
+  late final _Stitcher_Stitch_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, VecMat, CvCallback_2)>>('Stitcher_Stitch_Async');
+  late final _Stitcher_Stitch_Async = _Stitcher_Stitch_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, CvCallback_2)>();
+
   ffi.Pointer<CvStatus> Stylization(
     Mat src,
     Mat dst,
@@ -20859,6 +21704,27 @@ class CvNative {
               Mat, Mat, ffi.Float, ffi.Float)>>('Stylization');
   late final _Stylization = _StylizationPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, double, double)>();
+
+  ffi.Pointer<CvStatus> Stylization_Async(
+    Mat src,
+    double sigma_s,
+    double sigma_r,
+    CvCallback_1 callback,
+  ) {
+    return _Stylization_Async(
+      src,
+      sigma_s,
+      sigma_r,
+      callback,
+    );
+  }
+
+  late final _Stylization_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Float, ffi.Float, CvCallback_1)>>('Stylization_Async');
+  late final _Stylization_Async = _Stylization_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, double, double, CvCallback_1)>();
 
   void Subdiv2D_Close(
     Subdiv2DPtr self,
@@ -21633,6 +22499,32 @@ class CvNative {
               ffi.Int)>>('TextureFlattening');
   late final _TextureFlattening = _TextureFlatteningPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, int)>();
+
+  ffi.Pointer<CvStatus> TextureFlattening_Async(
+    Mat src,
+    Mat mask,
+    double low_threshold,
+    double high_threshold,
+    int kernel_size,
+    CvCallback_1 callback,
+  ) {
+    return _TextureFlattening_Async(
+      src,
+      mask,
+      low_threshold,
+      high_threshold,
+      kernel_size,
+      callback,
+    );
+  }
+
+  late final _TextureFlattening_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Int, CvCallback_1)>>('TextureFlattening_Async');
+  late final _TextureFlattening_Async = _TextureFlattening_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, double, double, int, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> TheRNG(
     ffi.Pointer<RNG> rval,
@@ -29311,8 +30203,9 @@ class _SymbolAddresses {
       _library._SIFT_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get SimpleBlobDetector_Close => _library._SimpleBlobDetector_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrStitcherPtr)>>
       get Stitcher_Close => _library._Stitcher_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StitcherPtr, CvCallback_0)>>
+      get Stitcher_Close_Async => _library._Stitcher_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>>
       get Subdiv2D_Close => _library._Subdiv2D_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr, CvCallback_0)>>
@@ -29834,12 +30727,6 @@ final class Prim extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
-final class PtrStitcher extends ffi.Struct {
-  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
-}
-
-typedef PtrStitcherPtr = ffi.Pointer<PtrStitcher>;
-
 final class QRCodeDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -30003,8 +30890,10 @@ final class Size2f extends ffi.Struct {
 }
 
 final class Stitcher extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
+
+typedef StitcherPtr = ffi.Pointer<Stitcher>;
 
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
