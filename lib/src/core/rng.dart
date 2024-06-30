@@ -59,22 +59,34 @@ class Rng extends CvStruct<cvg.RNG> {
   /// That is, the mean value of the returned random numbers is zero and
   /// the standard deviation is the specified sigma .
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8df8ce4dc7d15916cee743e5a884639d
-  double gaussian(double sigma) {
-    return cvRunArena((arena) {
-      final p = arena<ffi.Double>();
+  Stream<double> gaussian(double sigma, {int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      final p = calloc<ffi.Double>();
       cvRun(() => CFFI.RNG_Gaussian(ref, sigma, p));
-      return p.value;
-    });
+      final v = p.value;
+      calloc.free(p);
+      yield v;
+
+      count++;
+      if (count == maxCount) break;
+    }
   }
 
   /// The method updates the state using the MWC algorithm and returns the next 32-bit random number.
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad8d035897a5e31e7fc3e1e6c378c32f5
-  int next() {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Uint32>();
+  Stream<int> next({int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      final p = calloc<ffi.Uint32>();
       cvRun(() => CFFI.RNG_Next(ref, p));
-      return p.value;
-    });
+      final v = p.value;
+      calloc.free(p);
+      yield v;
+
+      count++;
+      if (count == maxCount) break;
+    }
   }
 
   /// returns uniformly distributed integer random number from [a,b) range
@@ -82,20 +94,26 @@ class Rng extends CvStruct<cvg.RNG> {
   /// uniformly-distributed random number of the specified type, deduced from
   /// the input parameter type, from the range [a, b) .
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8325cc562269b47bcac2343639b6fafc
-  T uniform<T>(T a, T b) {
-    return cvRunArena<T>((arena) {
-      if (T == int) {
-        final p = arena<ffi.Int>();
-        cvRun(() => CFFI.RNG_Uniform(ref, a as int, b as int, p));
-        return p.value as T;
-      } else if (T == double) {
-        final p = arena<ffi.Double>();
-        cvRun(() => CFFI.RNG_UniformDouble(ref, a as double, b as double, p));
-        return p.value as T;
+  Stream<num> uniform(num a, num b, {int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      if (a is int && b is int) {
+        final p = calloc<ffi.Int>();
+        cvRun(() => CFFI.RNG_Uniform(ref, a, b, p));
+        final v = p.value;
+        calloc.free(p);
+        yield v;
       } else {
-        throw UnsupportedError("Unsupported type $T");
+        final p = calloc<ffi.Double>();
+        cvRun(() => CFFI.RNG_UniformDouble(ref, a.toDouble(), b.toDouble(), p));
+        final v = p.value;
+        calloc.free(p);
+        yield v;
       }
-    });
+
+      count++;
+      if (count == maxCount) break;
+    }
   }
 
   @override

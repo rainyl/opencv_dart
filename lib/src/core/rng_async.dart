@@ -48,14 +48,26 @@ extension RngAsync on Rng {
   /// That is, the mean value of the returned random numbers is zero and
   /// the standard deviation is the specified sigma .
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8df8ce4dc7d15916cee743e5a884639d
-  Future<double> gaussianAsync(double sigma) async => cvRunAsync(
+  Stream<double> gaussianAsync(double sigma, {int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      final v = await cvRunAsync<double>(
         (callback) => CFFI.RNG_Gaussian_Async(ref, sigma, callback),
         doubleCompleter,
       );
+      yield v;
+
+      count++;
+      if (count == maxCount) break;
+    }
+  }
 
   /// The method updates the state using the MWC algorithm and returns the next 32-bit random number.
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad8d035897a5e31e7fc3e1e6c378c32f5
-  Future<int> nextAsync() async => cvRunAsync(
+  Stream<int> nextAsync({int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      final v = await cvRunAsync<int>(
         (callback) => CFFI.RNG_Next_Async(ref, callback),
         (c, p) {
           final rval = p.cast<ffi.Uint32>().value;
@@ -63,25 +75,35 @@ extension RngAsync on Rng {
           c.complete(rval);
         },
       );
+      yield v;
+
+      count++;
+      if (count == maxCount) break;
+    }
+  }
 
   /// returns uniformly distributed integer random number from [a,b) range
   /// The methods transform the state using the MWC algorithm and return the next
   /// uniformly-distributed random number of the specified type, deduced from
   /// the input parameter type, from the range [a, b) .
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8325cc562269b47bcac2343639b6fafc
-  Future<T> uniformAsync<T>(T a, T b) async {
-    if (T == int) {
-      final rval =
-          cvRunAsync((callback) => CFFI.RNG_Uniform_Async(ref, a as int, b as int, callback), intCompleter);
-      return rval as Future<T>;
-    } else if (T == double) {
-      final rval = cvRunAsync(
-        (callback) => CFFI.RNG_UniformDouble_Async(ref, a as double, b as double, callback),
-        doubleCompleter,
-      );
-      return rval as Future<T>;
-    } else {
-      throw UnsupportedError("Unsupported type $T");
+  Stream<num> uniformAsync(num a, num b, {int? maxCount}) async* {
+    int count = 0;
+    while (true) {
+      if (a is int && b is int) {
+        final rval =
+            await cvRunAsync<int>((callback) => CFFI.RNG_Uniform_Async(ref, a, b, callback), intCompleter);
+        yield rval;
+      } else {
+        final rval = await cvRunAsync<double>(
+          (callback) => CFFI.RNG_UniformDouble_Async(ref, a.toDouble(), b.toDouble(), callback),
+          doubleCompleter,
+        );
+        yield rval;
+      }
+
+      count++;
+      if (count == maxCount) break;
     }
   }
 }

@@ -2,22 +2,22 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() {
-  test("cv.RNG", () {
+  test("cv.RNG", () async {
     final rng = cv.Rng();
-    final v = List.generate(100000, (index) => rng.uniform(0, 241));
+    final v = await rng.uniformAsync(0, 241, maxCount: 100000).take(10000).toList();
     expect(v, everyElement(greaterThanOrEqualTo(0)));
-    final v1 = List.generate(100000, (index) => rng.uniform<double>(2.41, 241.0));
+    final v1 = await rng.uniformAsync(2.41, 241.0).take(100000).toList();
     expect(v1, everyElement(greaterThanOrEqualTo(2.41)));
 
     rng.dispose();
   });
 
-  test("cv.RNG.fromSeed", () {
+  test("cv.RNG.fromSeed", () async {
     final rng = cv.Rng.fromSeed(241);
-    final v = List.generate(100000, (index) => rng.gaussian(2.41));
+    final v = await rng.gaussian(2.41).take(100000).toList();
     expect(v.length, equals(100000));
 
-    final v1 = rng.next();
+    final v1 = await rng.next().first;
     expect(v1, isA<int>());
 
     final rng1 = cv.Rng.fromSeed(241);
