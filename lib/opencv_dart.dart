@@ -25,6 +25,7 @@ export 'src/core/moments.dart';
 export 'src/core/point.dart';
 export 'src/core/rect.dart';
 export 'src/core/rng.dart';
+export 'src/core/rng_async.dart';
 export 'src/core/scalar.dart';
 export 'src/core/size.dart';
 export 'src/core/vec.dart';

@@ -1143,9 +1143,12 @@ CvStatus *Rng_NewWithState_Async(uint64_t state, CvCallback_1 callback) {
   END_WRAP
 }
 
-CvStatus *RNG_Fill_Async(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange) {
+CvStatus *RNG_Fill_Async(
+    RNG rng, Mat mat, int distType, double a, double b, bool saturateRange, CvCallback_0 callback
+) {
   BEGIN_WRAP
   rng.ptr->fill(*mat.ptr, distType, a, b, saturateRange);
+  callback();
   END_WRAP
 }
 

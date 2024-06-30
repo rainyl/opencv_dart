@@ -899,7 +899,7 @@ Future<Mat> scaleAddAsync(InputArray src1, double alpha, InputArray src2) async 
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
 Future<Mat> setIdentityAsync(InputOutputArray mtx, {Scalar? s}) async => cvRunAsync0(
-      (callback) => CFFI.core_SetIdentity_Async(mtx.ref, s?.ref ?? Scalar.default_().ref, callback),
+      (callback) => CFFI.core_SetIdentity_Async(mtx.ref, s?.ref ?? Scalar.all(1).ref, callback),
       (c) => c.complete(mtx),
     );
 

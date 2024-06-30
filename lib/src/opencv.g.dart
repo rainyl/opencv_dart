@@ -21013,6 +21013,7 @@ class CvNative {
     double a,
     double b,
     bool saturateRange,
+    CvCallback_0 callback,
   ) {
     return _RNG_Fill_Async(
       rng,
@@ -21021,15 +21022,17 @@ class CvNative {
       a,
       b,
       saturateRange,
+      callback,
     );
   }
 
   late final _RNG_Fill_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(RNG, Mat, ffi.Int, ffi.Double,
-              ffi.Double, ffi.Bool)>>('RNG_Fill_Async');
+              ffi.Double, ffi.Bool, CvCallback_0)>>('RNG_Fill_Async');
   late final _RNG_Fill_Async = _RNG_Fill_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(RNG, Mat, int, double, double, bool)>();
+      ffi.Pointer<CvStatus> Function(
+          RNG, Mat, int, double, double, bool, CvCallback_0)>();
 
   ffi.Pointer<CvStatus> RNG_Gaussian(
     RNG rng,

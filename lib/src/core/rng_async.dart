@@ -5,9 +5,15 @@ import 'package:ffi/ffi.dart';
 import '../opencv.g.dart' as cvg;
 import 'base.dart';
 import 'mat.dart';
+import 'mat_async.dart';
 import 'rng.dart';
 
 extension RngAsync on Rng {
+  static Future<Rng> createAsync() async => cvRunAsync(
+        CFFI.Rng_New_Async,
+        (completer, p) => completer.complete(Rng.fromTheRng(p.cast<cvg.RNG>())),
+      );
+
   static Future<Rng> fromSeedAsync(int seed) async => cvRunAsync(
         (callback) => CFFI.Rng_NewWithState_Async(seed, callback),
         (completer, p) => completer.complete(Rng.fromTheRng(p.cast<cvg.RNG>())),
@@ -24,12 +30,16 @@ extension RngAsync on Rng {
     bool inplace = false,
   }) async {
     if (inplace) {
-      cvRun(() => CFFI.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
-      return mat;
+      return cvRunAsync0<Mat>(
+        (callback) => CFFI.RNG_Fill_Async(ref, mat.ref, distType, a, b, saturateRange, callback),
+        (c) => c.complete(mat),
+      );
     } else {
-      final m = mat.clone();
-      cvRun(() => CFFI.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
-      return m;
+      final m = await mat.cloneAsync();
+      return cvRunAsync0<Mat>(
+        (callback) => CFFI.RNG_Fill_Async(ref, m.ref, distType, a, b, saturateRange, callback),
+        (c) => c.complete(m),
+      );
     }
   }
 

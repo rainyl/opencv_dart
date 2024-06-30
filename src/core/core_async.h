@@ -374,7 +374,7 @@ CvStatus *core_NormWithMats_Async(Mat src1, Mat src2, int normType, CvCallback_1
 
 CvStatus *Rng_New_Async(CvCallback_1 callback);
 CvStatus *Rng_NewWithState_Async(uint64_t state, CvCallback_1 callback);
-CvStatus *RNG_Fill_Async(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange);
+CvStatus *RNG_Fill_Async(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange, CvCallback_0 callback);
 CvStatus *RNG_Gaussian_Async(RNG rng, double sigma, CvCallback_1 callback);
 CvStatus *RNG_Uniform_Async(RNG rng, int a, int b, CvCallback_1 callback);
 CvStatus *RNG_UniformDouble_Async(RNG rng, double a, double b, CvCallback_1 callback);
