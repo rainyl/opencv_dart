@@ -718,10 +718,10 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test('cv.theRNG', () {
+  test('cv.theRNG', () async{
     final rng = cv.theRNG();
     for (var i = 0; i < 10000; i++) {
-      expect(rng.next(), isA<int>());
+      expect(await rng.next().first, isA<int>());
     }
   });
 
