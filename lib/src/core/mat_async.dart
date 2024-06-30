@@ -71,7 +71,7 @@ extension MatAsync on Mat {
         matCompleter,
       );
 
-  Future<Mat> rotateAsync(int rotationCode, {bool inplace = false}) async => cvRunAsync<Mat>(
+  Future<Mat> rotateAsync(int rotationCode) async => cvRunAsync<Mat>(
         (callback) => CFFI.core_Rotate_Async(ref, rotationCode, callback),
         matCompleter,
       );

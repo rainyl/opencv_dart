@@ -20,6 +20,7 @@ export 'src/core/error_code.dart';
 export 'src/core/exception.dart';
 export 'src/core/keypoint.dart';
 export 'src/core/mat.dart';
+export 'src/core/mat_async.dart';
 export 'src/core/mat_type.dart';
 export 'src/core/moments.dart';
 export 'src/core/point.dart';

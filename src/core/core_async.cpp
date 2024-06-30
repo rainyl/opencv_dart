@@ -62,7 +62,7 @@ CvStatus *Mat_NewFromVecPoint3f_Async(VecPoint3f vec, CvCallback_1 callback) {
 
 CvStatus *Mat_Eye_Async(int rows, int cols, int type, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(rows, cols, type, cv::Scalar(0))});
+  callback(new Mat{new cv::Mat(cv::Mat::eye(rows, cols, type))});
   END_WRAP
 }
 CvStatus *Mat_Zeros_Async(int rows, int cols, int type, CvCallback_1 callback) {
