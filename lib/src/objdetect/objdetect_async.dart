@@ -601,12 +601,14 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
     int targetId = 0,
   }) async {
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
+    final bufM = VecUChar.fromList(bufferModel);
+    final bufC = VecUChar.fromList(bufferConfig);
 
     final rval = await cvRunAsync<FaceDetectorYN>(
         (callback) => CFFI.FaceDetectorYN_NewFromBuffer_Async(
               cFramework,
-              VecUChar.fromList(bufferModel).ref,
-              VecUChar.fromList(bufferConfig).ref,
+              bufM.ref,
+              bufC.ref,
               inputSize.cvd.ref,
               scoreThreshold,
               nmsThreshold,
@@ -618,6 +620,8 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
       return c.complete(FaceDetectorYN.fromPointer(p.cast<cvg.FaceDetectorYN>()));
     });
     calloc.free(cFramework);
+    bufM.dispose();
+    bufC.dispose();
 
     return rval;
   }
