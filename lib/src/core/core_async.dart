@@ -18,73 +18,56 @@ import 'termcriteria.dart';
 import 'vec.dart';
 
 /// get version
-String openCvVersion() {
-  final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => CFFI.openCVVersion(p));
-  final s = p.value.toDartString();
-  calloc.free(p);
-  return s;
-}
+Future<String> openCvVersionAsync() async => cvRunAsync(CFFI.openCVVersion_Async, (c, p) {
+      final s = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(p);
+      c.complete(s);
+    });
 
 /// Returns full configuration time cmake output.
 ///
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
-String getBuildInformation() {
-  final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => CFFI.getBuildInfo(p));
-  final s = p.value.toDartString();
-  calloc.free(p);
-  return s;
-}
+Future<String> getBuildInformationAsync() async => cvRunAsync(CFFI.getBuildInfo_Async, (c, p) {
+      final s = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
+      calloc.free(p);
+      c.complete(s);
+    });
 
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6fef31bc8c4071cbc114a758a2b79c14
-Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> absDiffAsync(Mat src1, Mat src2) async => cvRunAsync(
+      (callback) => CFFI.core_AbsDiff_Async(src1.ref, src2.ref, callback),
+      matCompleter,
+    );
 
 /// Add calculates the per-element sum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
-Mat add(Mat src1, Mat src2, [Mat? dst]) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Add(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> addAsync(Mat src1, Mat src2, {Mat? mask, int dtype = -1}) async => cvRunAsync(
+      (callback) => CFFI.core_Add_Async(src1.ref, src2.ref, mask?.ref ?? Mat.empty().ref, dtype, callback),
+      matCompleter,
+    );
 
 /// AddWeighted calculates the weighted sum of two arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gafafb2513349db3bcff51f54ee5592a19
-Mat addWeighted(
+Future<Mat> addWeightedAsync(
   InputArray src1,
   double alpha,
   InputArray src2,
   double beta,
   double gamma, {
-  OutputArray? dst,
-  int dtype = -1, // TODO: Add this
-}) {
-  dst ??= Mat.empty();
-  cvRun(
-    () => CFFI.Mat_AddWeighted(
-      src1.ref,
-      alpha,
-      src2.ref,
-      beta,
-      gamma,
-      dst!.ref,
-      // dtype,
-    ),
-  );
-  return dst;
-}
+  int dtype = -1,
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_AddWeighted_Async(src1.ref, alpha, src2.ref, beta, gamma, dtype, callback),
+      matCompleter,
+    );
 
 /// BitwiseAnd computes bitwise conjunction of the two arrays (dst = src1 & src2).
 /// Calculates the per-element bit-wise conjunction of two arrays
@@ -92,356 +75,276 @@ Mat addWeighted(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga60b4d04b251ba5eb1392c34425497e14
-Mat bitwiseAND(
+Future<Mat> bitwiseANDAsync(
   InputArray src1,
   InputArray src2, {
-  OutputArray? dst,
   InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => CFFI.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
-  return dst;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => mask == null
+          ? CFFI.core_BitwiseAnd_Async(src1.ref, src2.ref, callback)
+          : CFFI.core_BitwiseAndWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
+      matCompleter,
+    );
 
 /// BitwiseNot inverts every bit of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
-Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
-  dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseNot(src.ref, dst!.ref));
-  } else {
-    cvRun(() => CFFI.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
-  }
-  return dst;
-}
+Future<Mat> bitwiseNOTAsync(InputArray src, {InputArray? mask}) async => cvRunAsync(
+      (callback) => mask == null
+          ? CFFI.core_BitwiseNot_Async(src.ref, callback)
+          : CFFI.core_BitwiseNotWithMask_Async(src.ref, mask.ref, callback),
+      matCompleter,
+    );
 
 /// BitwiseOr calculates the per-element bit-wise disjunction of two arrays
 /// or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gab85523db362a4e26ff0c703793a719b4
-Mat bitwiseOR(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => CFFI.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
-  return dst;
-}
+Future<Mat> bitwiseORAsync(InputArray src1, InputArray src2, {InputArray? mask}) async => cvRunAsync(
+      (callback) => mask == null
+          ? CFFI.core_BitwiseOr_Async(src1.ref, src2.ref, callback)
+          : CFFI.core_BitwiseOrWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
+      matCompleter,
+    );
 
 /// BitwiseXor calculates the per-element bit-wise "exclusive or" operation
 /// on two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga84b2d8188ce506593dcc3f8cd00e8e2c
-Mat bitwiseXOR(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => CFFI.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => CFFI.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
-  return dst;
-}
+Future<Mat> bitwiseXORAsync(InputArray src1, InputArray src2, {InputArray? mask}) async => cvRunAsync(
+      (callback) => mask == null
+          ? CFFI.core_BitwiseXor_Async(src1.ref, src2.ref, callback)
+          : CFFI.core_BitwiseXorWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
+      matCompleter,
+    );
 
 /// BatchDistance is a naive nearest neighbor finder.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ba778a1c57f83233b1d851c83f5a622
-(Mat dist, Mat nidx) batchDistance(
+Future<(Mat dist, Mat nidx)> batchDistanceAsync(
   InputArray src1,
   InputArray src2,
   int dtype, {
-  OutputArray? dist,
-  OutputArray? nidx,
   int normType = NORM_L2,
   int K = 0,
   InputArray? mask,
   int update = 0,
   bool crosscheck = false,
-}) {
-  dist ??= Mat.empty();
-  nidx ??= Mat.empty();
-  mask ??= Mat.empty();
-  cvRun(
-    () => CFFI.Mat_BatchDistance(
-      src1.ref,
-      src2.ref,
-      dist!.ref,
-      dtype,
-      nidx!.ref,
-      normType,
-      K,
-      mask!.ref,
-      update,
-      crosscheck,
-    ),
-  );
-  return (dist, nidx);
-}
+}) async =>
+    cvRunAsync2<(Mat, Mat)>(
+      (callback) => CFFI.core_BatchDistance_Async(
+        src1.ref,
+        src2.ref,
+        dtype,
+        normType,
+        K,
+        mask?.ref ?? Mat.empty().ref,
+        update,
+        crosscheck,
+        callback,
+      ),
+      matCompleter2,
+    );
 
 /// BorderInterpolate computes the source location of an extrapolated pixel.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
-int borderInterpolate(int p, int len, int borderType) {
-  final ptr = calloc<ffi.Int>();
-  cvRun(() => CFFI.Mat_BorderInterpolate(p, len, borderType, ptr));
-  final v = ptr.value;
-  calloc.free(ptr);
-  return v;
-}
+Future<int> borderInterpolateAsync(int p, int len, int borderType) async => cvRunAsync(
+      (callback) => CFFI.core_BorderInterpolate_Async(p, len, borderType, callback),
+      intCompleter,
+    );
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga017122d912af19d7d0d2cccc2d63819f
-(Mat covar, Mat mean) calcCovarMatrix(
+Future<(Mat covar, Mat mean)> calcCovarMatrixAsync(
   InputArray samples,
   InputOutputArray mean,
   int flags, {
-  OutputArray? covar,
   int ctype = MatType.CV_64F,
-}) {
-  covar ??= Mat.empty();
-  cvRun(
-    () => CFFI.Mat_CalcCovarMatrix(
-      samples.ref,
-      covar!.ref,
-      mean.ref,
-      flags,
-      ctype,
-    ),
-  );
-  return (covar, mean);
-}
+}) async =>
+    cvRunAsync<(Mat, Mat)>(
+      (callback) => CFFI.core_CalcCovarMatrix_Async(
+        samples.ref,
+        mean.ref,
+        flags,
+        ctype,
+        callback,
+      ),
+      (c, p) => c.complete((Mat.fromPointer(p.cast<cvg.Mat>()), mean)),
+    );
 
 /// CartToPolar calculates the magnitude and angle of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac5f92f48ec32cacf5275969c33ee837d
-(Mat magnitude, Mat angle) cartToPolar(
+Future<(Mat magnitude, Mat angle)> cartToPolarAsync(
   InputArray x,
   InputArray y, {
-  OutputArray? magnitude,
-  OutputArray? angle,
   bool angleInDegrees = false,
-}) {
-  magnitude ??= Mat.empty();
-  angle ??= Mat.empty();
-  cvRun(
-    () => CFFI.Mat_CartToPolar(
-      x.ref,
-      y.ref,
-      magnitude!.ref,
-      angle!.ref,
-      angleInDegrees,
-    ),
-  );
-  return (magnitude, angle);
-}
+}) async =>
+    cvRunAsync2<(Mat, Mat)>(
+      (callback) => CFFI.core_CartToPolar_Async(
+        x.ref,
+        y.ref,
+        angleInDegrees,
+        callback,
+      ),
+      matCompleter2,
+    );
 
 /// CheckRange checks every element of an input array for invalid values.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga2bd19d89cae59361416736f87e3c7a64
-(bool, Point) checkRange(
+Future<(bool, Point)> checkRangeAsync(
   InputArray a, {
   bool quiet = true,
   double minVal = -CV_F64_MAX,
   double maxVal = CV_F64_MAX,
-}) {
-  return cvRunArena<(bool, Point)>((arena) {
-    final pos = calloc<cvg.Point>();
-    final rval = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
-    return (rval.value, Point.fromPointer(pos));
-  });
-}
+}) async =>
+    cvRunAsync2((callback) => CFFI.core_CheckRange_Async(a.ref, quiet, minVal, maxVal, callback),
+        (completer, p, p1) {
+      final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
+      completer.complete((rval, Point.fromPointer(p1.cast<cvg.Point>())));
+    });
 
 /// Compare performs the per-element comparison of two arrays
 /// or an array and scalar value.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga303cfb72acf8cbb36d884650c09a3a97
-Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
-  return dst;
-}
+Future<Mat> compareAsync(InputArray src1, InputArray src2, int cmpop) async =>
+    cvRunAsync((callback) => CFFI.core_Compare_Async(src1.ref, src2.ref, cmpop, callback), matCompleter);
 
 /// CountNonZero counts non-zero array elements.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa4b89393263bb4d604e0fe5986723914
-int countNonZero(Mat src) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    CFFI.Mat_CountNonZero(src.ref, p);
-    return p.value;
-  });
-}
+Future<int> countNonZeroAsync(Mat src) async =>
+    cvRunAsync((callback) => CFFI.core_CountNonZero_Async(src.ref, callback), intCompleter);
 
 /// CompleteSymm copies the lower or the upper half of a square matrix to its another half.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6847337c0c55769e115a70e0f011b5ca
-Mat completeSymm(InputOutputArray m, {bool lowerToUpper = false}) {
-  cvRun(() => CFFI.Mat_CompleteSymm(m.ref, lowerToUpper));
-  return m;
-}
+Future<Mat> completeSymmAsync(InputOutputArray m, {bool lowerToUpper = false}) async => cvRunAsync0(
+      (callback) => CFFI.core_CompleteSymm_Async(m.ref, lowerToUpper, callback),
+      (c) => c.complete(m),
+    );
 
 /// ConvertScaleAbs scales, calculates absolute values, and converts the result to 8-bit.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3460e9c9f37b563ab9dd550c4d8c4e7d
-Mat convertScaleAbs(
+Future<Mat> convertScaleAbsAsync(
   InputArray src, {
-  OutputArray? dst,
   double alpha = 1,
   double beta = 0,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
-  return dst;
-}
+}) async =>
+    cvRunAsync((callback) => CFFI.core_ConvertScaleAbs_Async(src.ref, alpha, beta, callback), matCompleter);
 
 /// CopyMakeBorder forms a border around an image (applies padding).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga2ac1049c2c3dd25c2b41bffe17658a36
-Mat copyMakeBorder(
+Future<Mat> copyMakeBorderAsync(
   InputArray src,
   int top,
   int bottom,
   int left,
   int right,
   int borderType, {
-  OutputArray? dst,
   Scalar? value,
-}) {
-  dst ??= Mat.empty();
-  value ??= Scalar.default_();
-  cvRun(
-    () => CFFI.Mat_CopyMakeBorder(
-      src.ref,
-      dst!.ref,
-      top,
-      bottom,
-      left,
-      right,
-      borderType,
-      value!.ref,
-    ),
-  );
-  return dst;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_CopyMakeBorder_Async(
+        src.ref,
+        top,
+        bottom,
+        left,
+        right,
+        borderType,
+        value?.ref ?? Scalar.default_().ref,
+        callback,
+      ),
+      matCompleter,
+    );
 
 /// DCT performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga85aad4d668c01fbd64825f589e3696d4
-Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_DCT(src.ref, dst!.ref, flags));
-  return dst;
-}
+Future<Mat> dctAsync(InputArray src, {int flags = 0}) async =>
+    cvRunAsync((callback) => CFFI.core_DCT_Async(src.ref, flags, callback), matCompleter);
 
 /// Determinant returns the determinant of a square floating-point matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf802bd9ca3e07b8b6170645ef0611d0c
-double determinant(InputArray mtx) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_Determinant(mtx.ref, p));
-    return p.value;
-  });
-}
+Future<double> determinantAsync(InputArray mtx) async =>
+    cvRunAsync((callback) => CFFI.core_Determinant_Async(mtx.ref, callback), doubleCompleter);
 
 /// DFT performs a forward or inverse Discrete Fourier Transform (DFT)
 /// of a 1D or 2D floating-point array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadd6cf9baf2b8b704a11b5f04aaf4f39d
-Mat dft(
+Future<Mat> dftAsync(
   InputArray src, {
-  OutputArray? dst,
   int flags = 0,
-  int nonzeroRows = 0, // TODO: add
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_DFT(src.ref, dst!.ref, flags));
-  return dst;
-}
+  int nonzeroRows = 0,
+}) async =>
+    cvRunAsync((callback) => CFFI.core_DFT_Async(src.ref, flags, nonzeroRows, callback), matCompleter);
 
 /// Divide performs the per-element division
 /// on two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6db555d30115642fedae0cda05604874
-Mat divide(
+Future<Mat> divideAsync(
   InputArray src1,
   InputArray src2, {
-  OutputArray? dst,
   double scale = 1,
   int dtype = -1,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Divide(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_Divide_Async(src1.ref, src2.ref, scale, dtype, callback),
+      matCompleter,
+    );
 
 /// Eigen calculates eigenvalues and eigenvectors of a symmetric matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9fa0d58657f60eaa6c71f6fbb40456e3
-(bool ret, Mat eigenvalues, Mat eigenvectors) eigen(
-  InputArray src, {
-  OutputArray? eigenvalues,
-  OutputArray? eigenvectors,
-}) {
-  eigenvalues ??= Mat.empty();
-  eigenvectors ??= Mat.empty();
-  final ret = cvRunArena<bool>((arena) {
-    final p = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
-    return p.value;
-  });
-  return (ret, eigenvalues, eigenvectors);
-}
+Future<(bool ret, Mat eigenvalues, Mat eigenvectors)> eigenAsync(InputArray src) async =>
+    cvRunAsync3((callback) => CFFI.core_Eigen_Async(src.ref, callback), (completer, p, p1, p2) {
+      final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
+      completer.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>()), Mat.fromPointer(p2.cast<cvg.Mat>())));
+    });
 
 /// EigenNonSymmetric calculates eigenvalues and eigenvectors of a non-symmetric matrix (real eigenvalues only).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf51987e03cac8d171fbd2b327cf966f6
-(Mat eigenvalues, Mat eigenvectors) eigenNonSymmetric(
-  InputArray src, {
-  OutputArray? eigenvalues,
-  OutputArray? eigenvectors,
-}) {
-  eigenvalues ??= Mat.empty();
-  eigenvectors ??= Mat.empty();
-  cvRun(() => CFFI.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
-  return (eigenvalues, eigenvectors);
-}
+Future<(Mat eigenvalues, Mat eigenvectors)> eigenNonSymmetricAsync(InputArray src) async => cvRunAsync2(
+      (callback) => CFFI.core_EigenNonSymmetric_Async(src.ref, callback),
+      matCompleter2,
+    );
+
+Future<(Mat mean, Mat result)> PCABackProjectAsync(Mat src, Mat mean, Mat eigenVectors) async => cvRunAsync(
+      (callback) => CFFI.core_PCABackProject_Async(src.ref, mean.ref, eigenVectors.ref, callback),
+      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<cvg.Mat>()))),
+    );
 
 /// PCACompute performs PCA.
 ///
@@ -452,282 +355,260 @@ Mat divide(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga27a565b31d820b05dcbcd47112176b6e
-(Mat mean, Mat eigenvalues, Mat eigenvectors) PCACompute(
+Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCAComputeAsync(
   InputArray data,
   InputOutputArray mean, {
-  OutputArray? eigenvectors,
-  OutputArray? eigenvalues,
   int maxComponents = 0,
-}) {
-  eigenvalues ??= Mat.empty();
-  eigenvectors ??= Mat.empty();
-  CFFI.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
-  return (mean, eigenvalues, eigenvectors);
-}
+}) async =>
+    cvRunAsync2((callback) => CFFI.core_PCACompute_Async(data.ref, mean.ref, maxComponents, callback),
+        (completer, p, p1) {
+      completer.complete(
+        (
+          mean,
+          Mat.fromPointer(p.cast<cvg.Mat>()),
+          Mat.fromPointer(p1.cast<cvg.Mat>()),
+        ),
+      );
+    });
+
+Future<(Mat mean, Mat eigenvectors)> PCACompute1Async(
+  InputArray data,
+  InputOutputArray mean, {
+  int maxComponents = 0,
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_PCACompute_1_Async(data.ref, mean.ref, maxComponents, callback),
+      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<cvg.Mat>()))),
+    );
+
+Future<(Mat mean, Mat eigenvectors)> PCACompute2Async(
+  InputArray data,
+  InputOutputArray mean, {
+  double retainedVariance = 0,
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_PCACompute_3_Async(data.ref, mean.ref, retainedVariance, callback),
+      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<cvg.Mat>()))),
+    );
+
+Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCACompute3Async(
+  InputArray data,
+  InputOutputArray mean, {
+  double retainedVariance = 0,
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.core_PCACompute_2_Async(data.ref, mean.ref, retainedVariance, callback),
+      (completer, p, p1) =>
+          completer.complete((mean, Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>()))),
+    );
+
+Future<(Mat mean, Mat result)> PCAProjectAsync(InputArray src, InputArray mean, InputArray eigenVectors) =>
+    cvRunAsync((callback) => CFFI.core_PCAProject_Async(src.ref, mean.ref, eigenVectors.ref, callback),
+        (completer, p) {
+      completer.complete((mean, Mat.fromPointer(p.cast<cvg.Mat>())));
+    });
 
 /// Exp calculates the exponent of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
-Mat exp(InputArray src, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Exp(src.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> expAsync(InputArray src) async =>
+    cvRunAsync((callback) => CFFI.core_Exp_Async(src.ref, callback), matCompleter);
 
 /// ExtractChannel extracts a single channel from src (coi is 0-based index).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc6158574aa1f0281878c955bcf35642
-Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ExtractChannel(src.ref, dst!.ref, coi));
-  return dst;
-}
+Future<Mat> extractChannelAsync(InputArray src, int coi) async =>
+    cvRunAsync((callback) => CFFI.core_ExtractChannel_Async(src.ref, coi, callback), matCompleter);
 
 /// FindNonZero returns the list of locations of non-zero pixels.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaed7df59a3539b4cc0fe5c9c8d7586190
-Mat findNonZero(InputArray src, {OutputArray? idx}) {
-  idx ??= Mat.empty();
-  cvRun(() => CFFI.Mat_FindNonZero(src.ref, idx!.ref));
-  return idx;
-}
+Future<Mat> findNonZeroAsync(InputArray src) async =>
+    cvRunAsync((callback) => CFFI.core_FindNonZero_Async(src.ref, callback), matCompleter);
 
 /// Flip flips a 2D array around horizontal(0), vertical(1), or both axes(-1).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaca7be533e3dac7feb70fc60635adf441
-Mat flip(InputArray src, int flipCode, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Flip(src.ref, dst!.ref, flipCode));
-  return dst;
-}
+Future<Mat> flipAsync(InputArray src, int flipCode) async =>
+    cvRunAsync((callback) => CFFI.core_Flip_Async(src.ref, flipCode, callback), matCompleter);
 
 /// Gemm performs generalized matrix multiplication.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacb6e64071dffe36434e1e7ee79e7cb35
-Mat gemm(
+Future<Mat> gemmAsync(
   InputArray src1,
   InputArray src2,
   double alpha,
   InputArray src3,
   double beta, {
-  OutputArray? dst,
   int flags = 0,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
-  return dst;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_Gemm_Async(src1.ref, src2.ref, alpha, src3.ref, beta, flags, callback),
+      matCompleter,
+    );
 
 /// GetOptimalDFTSize returns the optimal Discrete Fourier Transform (DFT) size
 /// for a given vector size.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6577a2e59968936ae02eb2edde5de299
-int getOptimalDFTSize(int vecsize) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_GetOptimalDFTSize(vecsize, p));
-    return p.value;
-  });
-}
+Future<int> getOptimalDFTSizeAsync(int vecsize) async =>
+    cvRunAsync((callback) => CFFI.core_GetOptimalDFTSize_Async(vecsize, callback), intCompleter);
 
 /// Hconcat applies horizontal concatenation to given matrices.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
-Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> hconcatAsync(InputArray src1, InputArray src2) async =>
+    cvRunAsync((callback) => CFFI.core_Hconcat_Async(src1.ref, src2.ref, callback), matCompleter);
 
 /// Vconcat applies vertical concatenation to given matrices.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
-Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> vconcatAsync(InputArray src1, InputArray src2) async =>
+    cvRunAsync((callback) => CFFI.core_Vconcat_Async(src1.ref, src2.ref, callback), matCompleter);
 
 /// Rotate rotates a 2D array in multiples of 90 degrees
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
-Mat rotate(InputArray src, int rotateCode, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Rotate(src.ref, dst!.ref, rotateCode));
-  return dst;
-}
+Future<Mat> rotateAsync(InputArray src, int rotateCode) async =>
+    cvRunAsync((callback) => CFFI.core_Rotate_Async(src.ref, rotateCode, callback), matCompleter);
 
 /// IDCT calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga77b168d84e564c50228b69730a227ef2
-Mat idct(
+Future<Mat> idctAsync(
   InputArray src, {
-  OutputArray? dst,
   int flags = 0,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Idct(src.ref, dst!.ref, flags));
-  return dst;
-}
+}) async =>
+    cvRunAsync((callback) => CFFI.core_Idct_Async(src.ref, flags, callback), matCompleter);
 
 /// IDFT calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa708aa2d2e57a508f968eb0f69aa5ff1
-Mat idft(
+Future<Mat> idftAsync(
   InputArray src, {
-  OutputArray? dst,
   int flags = 0,
   int nonzeroRows = 0,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
-  return dst;
-}
+}) async =>
+    cvRunAsync((callback) => CFFI.core_Idft_Async(src.ref, flags, nonzeroRows, callback), matCompleter);
 
 /// InRange checks if array elements lie between the elements of two Mat arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga48af0ab51e36436c5d04340e036ce981
-Mat inRange(
+Future<Mat> inRangeAsync(
   InputArray src,
   InputArray lowerb,
-  InputArray upperb, {
-  OutputArray? dst,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
-  return dst;
-}
+  InputArray upperb,
+) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_InRange_Async(src.ref, lowerb.ref, upperb.ref, callback),
+      matCompleter,
+    );
 
 /// InRangeWithScalar checks if array elements lie between the elements of two Scalars
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga48af0ab51e36436c5d04340e036ce981
-Mat inRangebyScalar(
+Future<Mat> inRangebyScalarAsync(
   InputArray src,
   Scalar lowerb,
-  Scalar upperb, {
-  OutputArray? dst,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
-  return dst;
-}
+  Scalar upperb,
+) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_InRangeWithScalar_Async(src.ref, lowerb.ref, upperb.ref, callback),
+      matCompleter,
+    );
 
 /// InsertChannel inserts a single channel to dst (coi is 0-based index)
 /// (it replaces channel i with another in dst).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1d4bd886d35b00ec0b764cb4ce6eb515
-Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
-  cvRun(() => CFFI.Mat_InsertChannel(src.ref, dst.ref, coi));
-  return dst;
-}
+Future<Mat> insertChannelAsync(InputArray src, InputOutputArray dst, int coi) async => cvRunAsync0(
+      (callback) => CFFI.core_InsertChannel_Async(src.ref, dst.ref, coi, callback),
+      (c) => c.complete(dst),
+    );
 
 /// Invert finds the inverse or pseudo-inverse of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad278044679d4ecf20f7622cc151aaaa2
-(double rval, Mat dst) invert(
+Future<(double rval, Mat dst)> invertAsync(
   InputArray src, {
-  OutputArray? dst,
   int flags = DECOMP_LU,
-}) {
-  dst ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_Invert(src.ref, dst!.ref, flags, p));
-    return p.value;
-  });
-  return (rval, dst);
-}
+}) async =>
+    cvRunAsync2<(double, Mat)>((callback) => CFFI.core_Invert_Async(src.ref, flags, callback), (c, p, p1) {
+      final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      c.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// KMeans finds centers of clusters and groups input samples around the clusters.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
-(double rval, Mat bestLabels, Mat centers) kmeans(
+Future<(double rval, Mat bestLabels, Mat centers)> kmeansAsync(
   InputArray data,
   int K,
   InputOutputArray bestLabels,
   (int, int, double) criteria,
   int attempts,
-  int flags, {
-  OutputArray? centers,
-}) {
-  centers ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(
-      () => CFFI.KMeans(
-        data.ref,
-        K,
-        bestLabels.ref,
-        TermCriteria.fromRecord(criteria).ref,
-        attempts,
-        flags,
-        centers!.ref,
-        p,
-      ),
-    );
-    return p.value;
-  });
-  return (rval, bestLabels, centers);
-}
+  int flags,
+) async =>
+    cvRunAsync2(
+        (callback) =>
+            CFFI.core_KMeans_Async(data.ref, K, bestLabels.ref, criteria.cvd.ref, attempts, flags, callback),
+        (completer, p, p1) {
+      final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      completer.complete((rval, bestLabels, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// KMeansPoints finds centers of clusters and groups input samples around the clusters.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
-(double rval, Mat bestLabels, Mat centers) kmeansByPoints(
+Future<(double rval, Mat bestLabels, Mat centers)> kmeansByPointsAsync(
   VecPoint2f pts,
   int K,
   InputOutputArray bestLabels,
   (int, int, double) criteria,
   int attempts,
-  int flags, {
-  OutputArray? centers,
-}) {
-  centers ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(
-      () => CFFI.KMeansPoints(
-        pts.ref,
-        K,
-        bestLabels.ref,
-        TermCriteria.fromRecord(criteria).ref,
-        attempts,
-        flags,
-        centers!.ref,
-        p,
-      ),
-    );
-    return p.value;
-  });
-  return (rval, bestLabels, centers);
-}
+  int flags,
+) async =>
+    cvRunAsync2(
+        (callback) => CFFI.core_KMeans_Points_Async(
+              pts.ref,
+              K,
+              bestLabels.ref,
+              criteria.cvd.ref,
+              attempts,
+              flags,
+              callback,
+            ), (completer, p, p1) {
+      final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      completer.complete((rval, bestLabels, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// Log calculates the natural logarithm of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga937ecdce4679a77168730830a955bea7
-Mat log(InputArray src, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Log(src.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> logAsync(InputArray src) async =>
+    cvRunAsync((callback) => CFFI.core_Log_Async(src.ref, callback), matCompleter);
 
 /// Performs a look-up table transform of an array. Support CV_8U, CV_8S, CV_16U, CV_16S
 ///
@@ -745,515 +626,404 @@ Mat log(InputArray src, {OutputArray? dst}) {
 /// either have a single channel (in this case the same table is used for all channels) or the same
 /// number of channels as in the input array.
 ///
-/// [dst] output array of the same size and number of channels as src, and the same depth as lut.
-///
-/// see also: [convertScaleAbs]
-///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
-Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.LUT(src.ref, lut.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> LUTAsync(InputArray src, InputArray lut) async =>
+    cvRunAsync((callback) => CFFI.core_LUT_Async(src.ref, lut.ref, callback), matCompleter);
 
 /// Magnitude calculates the magnitude of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6d3b097586bca4409873d64a90fe64c3
-Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
-  magnitude ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
-  return magnitude;
-}
+Future<Mat> magnitudeAsync(InputArray x, InputArray y) async =>
+    cvRunAsync((callback) => CFFI.core_Magnitude_Async(x.ref, y.ref, callback), matCompleter);
 
 /// Max calculates per-element maximum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc40fa15eac0fb83f8ca70b7cc0b588d
-Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Max(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> maxAsync(InputArray src1, InputArray src2) async =>
+    cvRunAsync((callback) => CFFI.core_Max_Async(src1.ref, src2.ref, callback), matCompleter);
 
 /// MeanStdDev calculates a mean and standard deviation of array elements.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
-(Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
-  final mean = calloc<cvg.Scalar>();
-  final stddev = calloc<cvg.Scalar>();
-  mask == null
-      ? cvRun(() => CFFI.Mat_MeanStdDev(src.ref, mean, stddev))
-      : cvRun(() => CFFI.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
-  return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
-}
+Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(InputArray src, {InputArray? mask}) async => cvRunAsync2(
+      (callback) => mask == null
+          ? CFFI.core_MeanStdDev_Async(src.ref, callback)
+          : CFFI.core_MeanStdDevWithMask_Async(src.ref, mask.ref, callback),
+      (c, p, p1) =>
+          c.complete((Scalar.fromPointer(p.cast<cvg.Scalar>()), Scalar.fromPointer(p1.cast<cvg.Scalar>()))),
+    );
 
 /// Merge creates one multi-channel array out of several single-channel ones.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
-Mat merge(VecMat mv, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Merge(mv.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> mergeAsync(VecMat mv) async =>
+    cvRunAsync((callback) => CFFI.core_Merge_Async(mv.ref, callback), matCompleter);
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
-Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Min(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> minAsync(InputArray src1, InputArray src2) async =>
+    cvRunAsync((callback) => CFFI.core_Min_Async(src1.ref, src2.ref, callback), matCompleter);
 
 /// MinMaxIdx finds the global minimum and maximum in an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7622c466c628a75d9ed008b42250a73f
-(double minVal, double maxVal, int minIdx, int maxIdx) minMaxIdx(
+Future<(double minVal, double maxVal, int minIdx, int maxIdx)> minMaxIdxAsync(
   InputArray src, {
   InputArray? mask,
-}) {
-  return using<(double, double, int, int)>((arena) {
-    final minValP = arena<ffi.Double>();
-    final maxValP = arena<ffi.Double>();
-    final minIdxP = arena<ffi.Int>();
-    final maxIdxP = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
-    return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
-  });
-}
+}) async =>
+    cvRunAsync4(
+        (callback) => mask == null
+            ? CFFI.core_MinMaxIdx_Async(src.ref, callback)
+            : CFFI.core_MinMaxIdx_Mask_Async(src.ref, mask.ref, callback), (c, p, p1, p2, p3) {
+      final minv = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      final maxv = p1.cast<ffi.Double>().value;
+      calloc.free(p1);
+      final mini = p2.cast<ffi.Int>().value;
+      calloc.free(p2);
+      final maxi = p3.cast<ffi.Int>().value;
+      calloc.free(p3);
+      c.complete((minv, maxv, mini, maxi));
+    });
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
-(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
-  return using<(double, double, Point, Point)>((arena) {
-    final minValP = arena<ffi.Double>();
-    final maxValP = arena<ffi.Double>();
-    final minLocP = calloc<cvg.Point>();
-    final maxLocP = calloc<cvg.Point>();
-    cvRun(() => CFFI.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
-    return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
-  });
-}
+Future<(double minVal, double maxVal, Point minLoc, Point maxLoc)> minMaxLocAsync(
+  InputArray src, {
+  InputArray? mask,
+}) async =>
+    cvRunAsync4(
+        (callback) => mask == null
+            ? CFFI.core_MinMaxLoc_Async(src.ref, callback)
+            : CFFI.core_MinMaxLoc_Mask_Async(src.ref, mask.ref, callback), (c, p, p1, p2, p3) {
+      final minv = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      final maxv = p1.cast<ffi.Double>().value;
+      calloc.free(p1);
+      c.complete((minv, maxv, Point.fromPointer(p2.cast()), Point.fromPointer(p3.cast())));
+    });
 
 /// Copies specified channels from input arrays to the specified channels of output arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-VecMat mixChannels(VecMat src, VecMat dst, VecInt fromTo) {
-  cvRun(() => CFFI.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
-  return dst;
-}
+Future<VecMat> mixChannelsAsync(VecMat src, VecMat dst, VecInt fromTo) async => cvRunAsync0(
+      (callback) => CFFI.core_MixChannels_Async(src.ref, dst.ref, fromTo.ref, callback),
+      (c) => c.complete(dst),
+    );
 
 /// Mulspectrums performs the per-element multiplication of two Fourier spectrums.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3ab38646463c59bf0ce962a9d51db64f
-Mat mulSpectrums(
+Future<Mat> mulSpectrumsAsync(
   InputArray a,
   InputArray b,
   int flags, {
-  OutputArray? c,
   bool conjB = false,
-}) {
-  c ??= Mat.empty();
-  cvRun(() => CFFI.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
-  return c;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_MulSpectrums_Async(a.ref, b.ref, flags, conjB, callback),
+      matCompleter,
+    );
 
 /// Multiply calculates the per-element scaled product of two arrays.
 /// Both input arrays must be of the same size and the same type.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga979d898a58d7f61c53003e162e7ad89f
-Mat multiply(
+Future<Mat> multiplyAsync(
   InputArray src1,
   InputArray src2, {
-  OutputArray? dst,
   double scale = 1,
   int dtype = -1,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
-  return dst;
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_MultiplyWithParams_Async(src1.ref, src2.ref, scale, dtype, callback),
+      matCompleter,
+    );
 
 /// Normalize normalizes the norm or value range of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga87eef7ee3970f86906d69a92cbf064bd
-Mat normalize(
+Future<Mat> normalizeAsync(
   InputArray src,
   InputOutputArray dst, {
   double alpha = 1,
   double beta = 0,
   int normType = NORM_L2,
-  // TODO
-  // int dtype = -1,
-  // InputArray? mask,
-}) {
-  cvRun(() => CFFI.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType));
-  return dst;
-}
+  int dtype = -1,
+  InputArray? mask,
+}) async =>
+    cvRunAsync0(
+      (callback) => mask == null
+          ? CFFI.core_Normalize_Async(src.ref, dst.ref, alpha, beta, normType, dtype, callback)
+          : CFFI.core_Normalize_Mask_Async(
+              src.ref,
+              dst.ref,
+              alpha,
+              beta,
+              normType,
+              dtype,
+              mask.ref,
+              callback,
+            ),
+      (c) => c.complete(dst),
+    );
 
 /// Norm calculates the absolute norm of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-double norm(
+Future<double> normAsync(
   InputArray src1, {
   int normType = NORM_L2,
   InputArray? mask,
-}) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Norm(src1.ref, normType, p));
-    return p.value;
-  });
-}
+}) async =>
+    cvRunAsync(
+      (callback) => mask == null
+          ? CFFI.core_Norm_Async(src1.ref, normType, callback)
+          : CFFI.core_Norm_Mask_Async(src1.ref, normType, mask.ref, callback),
+      doubleCompleter,
+    );
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-double norm1(
+Future<double> norm1Async(
   InputArray src1,
   InputArray src2, {
   int normType = NORM_L2,
   // InputArray? mask,
-}) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.NormWithMats(src1.ref, src2.ref, normType, p));
-    return p.value;
-  });
-}
+}) async =>
+    cvRunAsync(
+      (callback) => CFFI.core_NormWithMats_Async(src1.ref, src2.ref, normType, callback),
+      doubleCompleter,
+    );
 
 /// PerspectiveTransform performs the perspective matrix transformation of vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
-Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
-  return dst;
-}
+Future<Mat> perspectiveTransformAsync(InputArray src, InputArray m) async =>
+    cvRunAsync((callback) => CFFI.core_PerspectiveTransform_Async(src.ref, m.ref, callback), matCompleter);
 
 /// Solve solves one or more linear systems or least-squares problems.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga12b43690dbd31fed96f213eefead2373
-(bool ret, Mat dst) solve(
+Future<(bool ret, Mat dst)> solveAsync(
   InputArray src1,
   InputArray src2, {
-  OutputArray? dst,
   int flags = DECOMP_LU,
-}) {
-  dst ??= Mat.empty();
-  final rval = cvRunArena<bool>((arena) {
-    final p = arena<ffi.Bool>();
-    cvRun(() => CFFI.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
-    return p.value;
-  });
-  return (rval, dst);
-}
+}) async =>
+    cvRunAsync2((callback) => CFFI.core_Solve_Async(src1.ref, src2.ref, flags, callback), (c, p, p1) {
+      final rval = p.cast<ffi.Bool>().value;
+      calloc.free(p);
+      c.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// SolveCubic finds the real roots of a cubic equation.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
-(int rval, Mat roots) solveCubic(InputArray coeffs, {OutputArray? roots}) {
-  roots ??= Mat.empty();
-  final rval = cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
-    return p.value;
-  });
-  return (rval, roots);
-}
+Future<(int rval, Mat roots)> solveCubicAsync(InputArray coeffs) async =>
+    cvRunAsync2((callback) => CFFI.core_SolveCubic_Async(coeffs.ref, callback), (c, p, p1) {
+      final rval = p.cast<ffi.Int>().value;
+      calloc.free(p);
+      c.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// SolvePoly finds the real or complex roots of a polynomial equation.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
-(double rval, Mat roots) solvePoly(
+Future<(double rval, Mat roots)> solvePolyAsync(
   InputArray coeffs, {
-  OutputArray? roots,
   int maxIters = 300,
-}) {
-  roots ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
-    return p.value;
-  });
-  return (rval, roots);
-}
+}) async =>
+    cvRunAsync2((callback) => CFFI.core_SolvePoly_Async(coeffs.ref, maxIters, callback), (c, p, p1) {
+      final rval = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      c.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
+    });
 
 /// Reduce reduces a matrix to a vector.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
-Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
-  return dst;
-}
+Future<Mat> reduceAsync(InputArray src, int dim, int rtype, {int dtype = -1}) async =>
+    cvRunAsync((callback) => CFFI.core_Reduce_Async(src.ref, dim, rtype, dtype, callback), matCompleter);
 
 /// Finds indices of max elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
-Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
-  return dst;
-}
+Future<Mat> reduceArgMaxAsync(InputArray src, int axis, {bool lastIndex = false}) async =>
+    cvRunAsync((callback) => CFFI.core_ReduceArgMax_Async(src.ref, axis, lastIndex, callback), matCompleter);
 
 /// Finds indices of min elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
-Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
-  return dst;
-}
+Future<Mat> reduceArgMinAsync(InputArray src, int axis, {bool lastIndex = false}) async =>
+    cvRunAsync((callback) => CFFI.core_ReduceArgMin_Async(src.ref, axis, lastIndex, callback), matCompleter);
 
 /// Repeat fills the output array with repeated copies of the input array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
-Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Repeat(src.ref, ny, nx, dst!.ref));
-  return dst;
-}
+Future<Mat> repeatAsync(InputArray src, int ny, int nx) async =>
+    cvRunAsync((callback) => CFFI.core_Repeat_Async(src.ref, ny, nx, callback), matCompleter);
 
 /// Calculates the sum of a scaled array and another array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
-Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> scaleAddAsync(InputArray src1, double alpha, InputArray src2) async =>
+    cvRunAsync((callback) => CFFI.core_ScaleAdd_Async(src1.ref, alpha, src2.ref, callback), matCompleter);
 
 /// SetIdentity initializes a scaled identity matrix.
 /// For further details, please see:
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
-Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
-  cvRun(() => CFFI.Mat_SetIdentity(mtx.ref, s));
-  return mtx;
-}
+Future<Mat> setIdentityAsync(InputOutputArray mtx, {Scalar? s}) async => cvRunAsync0(
+      (callback) => CFFI.core_SetIdentity_Async(mtx.ref, s?.ref ?? Scalar.all(1).ref, callback),
+      (c) => c.complete(mtx),
+    );
 
 /// Sort sorts each row or each column of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
-Mat sort(InputArray src, int flags, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Sort(src.ref, dst!.ref, flags));
-  return dst;
-}
+Future<Mat> sortAsync(InputArray src, int flags) async =>
+    cvRunAsync((callback) => CFFI.core_Sort_Async(src.ref, flags, callback), matCompleter);
 
 /// SortIdx sorts each row or each column of a matrix.
 /// Instead of reordering the elements themselves, it stores the indices of sorted elements in the output array
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
-Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_SortIdx(src.ref, dst!.ref, flags));
-  return dst;
-}
+Future<Mat> sortIdxAsync(InputArray src, int flags) async =>
+    cvRunAsync((callback) => CFFI.core_SortIdx_Async(src.ref, flags, callback), matCompleter);
 
 /// Split creates an array of single channel images from a multi-channel image
 /// Created images should be closed manualy to avoid memory leaks.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
-VecMat split(InputArray m) {
-  final p = calloc<cvg.VecMat>();
-  final vec = calloc<cvg.VecMat>();
-  cvRun(() => CFFI.Mat_Split(m.ref, vec));
-  calloc.free(p);
-  return VecMat.fromPointer(vec);
-}
+Future<VecMat> splitAsync(InputArray m) async => cvRunAsync(
+      (callback) => CFFI.core_Split_Async(m.ref, callback),
+      (c, p) => VecMat.fromPointer(p.cast<cvg.VecMat>()),
+    );
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa0f00d98b4b5edeaeb7b8333b2de353b
-Mat subtract(
+Future<Mat> subtractAsync(
   InputArray src1,
   InputArray src2, {
-  OutputArray? dst,
-  // TODO
-  //   InputArray? mask,
-  //   int dtype = -1,
-}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
+  InputArray? mask,
+  int dtype = -1,
+}) async =>
+    cvRunAsync(
+      (callback) =>
+          CFFI.core_Subtract_Async(src1.ref, src2.ref, mask?.ref ?? Mat.empty().ref, dtype, callback),
+      matCompleter,
+    );
 
 /// Trace returns the trace of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
-Scalar trace(InputArray mtx) {
-  final ptr = calloc<cvg.Scalar>();
-  cvRun(() => CFFI.Mat_Trace(mtx.ref, ptr));
-  return Scalar.fromPointer(ptr);
-}
+Future<Scalar> traceAsync(InputArray mtx) async =>
+    cvRunAsync((callback) => CFFI.core_Trace_Async(mtx.ref, callback), scalarCompleter);
 
 /// Transform performs the matrix transformation of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
-Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Transform(src.ref, dst!.ref, m.ref));
-  return dst;
-}
+Future<Mat> transformAsync(InputArray src, InputArray m) async =>
+    cvRunAsync((callback) => CFFI.core_Transform_Async(src.ref, m.ref, callback), matCompleter);
 
 /// Transpose transposes a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
-Mat transpose(InputArray src, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Transpose(src.ref, dst!.ref));
-  return dst;
-}
+Future<Mat> transposeAsync(InputArray src) async =>
+    cvRunAsync((callback) => CFFI.core_Transpose_Async(src.ref, callback), matCompleter);
 
 /// Pow raises every array element to a power.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
-Mat pow(InputArray src, double power, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Pow(src.ref, power, dst!.ref));
-  return dst;
-}
+Future<Mat> powAsync(InputArray src, double power) async =>
+    cvRunAsync((callback) => CFFI.core_Pow_Async(src.ref, power, callback), matCompleter);
 
 /// PolatToCart calculates x and y coordinates of 2D vectors from their magnitude and angle.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga581ff9d44201de2dd1b40a50db93d665
-(Mat x, Mat y) polarToCart(
+Future<(Mat x, Mat y)> polarToCartAsync(
   InputArray magnitude,
   InputArray angle, {
-  OutputArray? x,
-  OutputArray? y,
   bool angleInDegrees = false,
-}) {
-  x ??= Mat.empty();
-  y ??= Mat.empty();
-  cvRun(() => CFFI.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
-  return (x, y);
-}
+}) async =>
+    cvRunAsync2(
+      (callback) => CFFI.core_PolarToCart_Async(magnitude.ref, angle.ref, angleInDegrees, callback),
+      matCompleter2,
+    );
 
 /// Phase calculates the rotation angle of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
-Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
-  angle ??= Mat.empty();
-  cvRun(() => CFFI.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
-  return angle;
-}
-
-/// GetTickCount returns the number of ticks.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/db/de0/group__core__utils.html#gae73f58000611a1af25dd36d496bf4487
-int getTickCount() {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int64>();
-    cvRun(() => CFFI.GetCVTickCount(p));
-    return p.value;
-  });
-}
-
-/// GetTickFrequency returns the number of ticks per second.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/db/de0/group__core__utils.html#ga705441a9ef01f47acdc55d87fbe5090c
-double getTickFrequency() {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => CFFI.GetTickFrequency(p));
-    return p.value;
-  });
-}
-
-/// TheRNG Returns the default random number generator.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
-/// Disabled: double free
-Rng theRNG() {
-  final p = calloc<cvg.RNG>();
-  cvRun(() => CFFI.TheRNG(p));
-  return Rng.fromTheRng(p);
-}
+Future<Mat> phaseAsync(InputArray x, InputArray y, {bool angleInDegrees = false}) async =>
+    cvRunAsync((callback) => CFFI.core_Phase_Async(x.ref, y.ref, angleInDegrees, callback), matCompleter);
 
 /// RandN Fills the array with normally distributed random numbers.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeff1f61e972d133a04ce3a5f81cf6808
-Mat randn(InputOutputArray dst, Scalar mean, Scalar stddev) {
-  cvRun(() => CFFI.RandN(dst.ref, mean.ref, stddev.ref));
-  return dst;
-}
+Future<Mat> randnAsync(InputOutputArray dst, Scalar mean, Scalar stddev) async => cvRunAsync0(
+      (callback) => CFFI.RandN_Async(dst.ref, mean.ref, stddev.ref, callback),
+      (c) => c.complete(dst),
+    );
 
 /// RandShuffle Shuffles the array elements randomly.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6a789c8a5cb56c6dd62506179808f763
-Mat randShuffle(
+Future<Mat> randShuffleAsync(
   InputOutputArray dst, {
   double iterFactor = 1,
   Rng? rng,
-}) {
-  if (rng == null) {
-    cvRun(() => CFFI.RandShuffle(dst.ref));
-  } else {
-    cvRun(() => CFFI.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
-  }
-  return dst;
-}
+}) async =>
+    cvRunAsync0(
+      (callback) => rng == null
+          ? CFFI.RandShuffle_Async(dst.ref, callback)
+          : CFFI.RandShuffleWithParams_Async(dst.ref, iterFactor, rng.ref, callback),
+      (c) => c.complete(dst),
+    );
 
 /// RandU Generates a single uniformly-distributed random
 /// number or an array of random numbers.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1ba1026dca0807b27057ba6a49d258c0
-Mat randu(InputOutputArray dst, Scalar low, Scalar high) {
-  cvRun(() => CFFI.RandU(dst.ref, low.ref, high.ref));
-  return dst;
-}
-
-/// Set the number of threads for OpenCV.
-void setNumThreads(int n) {
-  cvRun(() => CFFI.SetNumThreads(n));
-}
-
-/// Get the number of threads for OpenCV.
-int getNumThreads() {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => CFFI.GetNumThreads(p));
-    return p.value;
-  });
-}
+Future<Mat> randuAsync(InputOutputArray dst, Scalar low, Scalar high) async => cvRunAsync0(
+      (callback) => CFFI.RandU_Async(dst.ref, low.ref, high.ref, callback),
+      (c) => c.complete(dst),
+    );
