@@ -718,7 +718,7 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test('cv.theRNG', () async{
+  test('cv.theRNG', () async {
     final rng = cv.theRNG();
     for (var i = 0; i < 10000; i++) {
       expect(await rng.next().first, isA<int>());
