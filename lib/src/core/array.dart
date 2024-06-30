@@ -15,6 +15,7 @@ abstract class NativeArray<T extends ffi.NativeType, P extends num>
   int length;
 
   late final ffi.Pointer<T> ptr;
+  void dispose();
   ffi.Pointer<ffi.Void> asVoid() => ptr.cast<ffi.Void>();
   @override
   List<int> get props => [ptr.address];

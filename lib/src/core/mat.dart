@@ -156,8 +156,11 @@ class Mat extends CvStruct<cvg.Mat> {
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(CFFI.addresses.Mat_Close);
 
+  @Deprecated("NOT recommended, call [dispose] instead")
   void release() => cvRun(() => CFFI.Mat_Release(ptr));
+
   void dispose() {
+    xdata?.dispose();
     finalizer.detach(this);
     CFFI.Mat_Close(ptr);
   }
