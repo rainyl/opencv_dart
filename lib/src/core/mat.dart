@@ -15,7 +15,7 @@ import 'scalar.dart';
 import 'vec.dart';
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, [this.xdata, bool attach = true]) : super.fromPointer(ptr) {
+  Mat._(cvg.MatPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -29,40 +29,34 @@ class Mat extends CvStruct<cvg.Mat> {
     return vec;
   }
 
+  /// Create a Mat from a list of data
+  ///
+  /// [data] should be raw pixels values with exactly same length of channels * [rows] * [cols]
+  ///
   /// Mat (Size size, int type, void *data, size_t step=AUTO_STEP)
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9fa74fb14362d87cb183453d2441948f
-  factory Mat.fromList(int rows, int cols, MatType type, List<num> data, [int step = 0]) {
-    assert(data is List<int> || data is List<double>, "Only support List<int> or List<double>");
+  factory Mat.fromList(int rows, int cols, MatType type, List<num> data) {
     final p = calloc<cvg.Mat>();
-    // 1 copy
-    final NativeArray xdata;
-    switch (type.depth) {
-      case MatType.CV_8U:
-        xdata = U8Array.fromList(data.cast());
-      case MatType.CV_8S:
-        xdata = I8Array.fromList(data.cast());
-      case MatType.CV_16U:
-        xdata = U16Array.fromList(data.cast());
-      case MatType.CV_16S:
-        xdata = I16Array.fromList(data.cast());
-      case MatType.CV_32S:
-        xdata = I32Array.fromList(data.cast());
-      case MatType.CV_32F:
-        xdata = F32Array.fromList(data.cast<double>());
-      case MatType.CV_64F:
-        xdata = F64Array.fromList(data.cast<double>());
-      default:
-        throw UnsupportedError("Mat.fromBytes for MatType $type unsupported");
-    }
-    // no copy, data is owned by [xdata]
-    cvRun(() => CFFI.Mat_NewFromBytes(rows, cols, type.toInt32(), xdata.asVoid(), step, p));
-    final mat = Mat._(p, xdata);
-    return mat;
+    // copy
+    final xdata = switch (type.depth) {
+      MatType.CV_8U => U8Array.fromList(data.cast()) as NativeArray,
+      MatType.CV_8S => I8Array.fromList(data.cast()) as NativeArray,
+      MatType.CV_16U => U16Array.fromList(data.cast()) as NativeArray,
+      MatType.CV_16S => I16Array.fromList(data.cast()) as NativeArray,
+      MatType.CV_32S => I32Array.fromList(data.cast()) as NativeArray,
+      MatType.CV_32F => F32Array.fromList(data.cast<double>()) as NativeArray,
+      MatType.CV_64F => F64Array.fromList(data.cast<double>()) as NativeArray,
+      _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
+    };
+    // copy
+    cvRun(() => CFFI.Mat_NewFromBytes(rows, cols, type.toInt32(), xdata.asVoid(), p));
+    xdata.dispose();
+    return Mat._(p);
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, null, attach);
+  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, attach);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
@@ -160,13 +154,9 @@ class Mat extends CvStruct<cvg.Mat> {
   void release() => cvRun(() => CFFI.Mat_Release(ptr));
 
   void dispose() {
-    xdata?.dispose();
     finalizer.detach(this);
     CFFI.Mat_Close(ptr);
   }
-
-  /// external native data array of [Mat], used for [Mat.fromList]
-  NativeArray? xdata;
 
   /// cached mat type
   MatType? _type;

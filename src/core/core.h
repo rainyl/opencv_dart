@@ -45,7 +45,7 @@ CvStatus *Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rva
 CvStatus *Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval);
 CvStatus *Mat_NewFromScalar(const Scalar ar, int type, Mat *rval);
 CvStatus *Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
-CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, int step, Mat *rval);
+CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval);
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
