@@ -15049,7 +15049,6 @@ class CvNative {
     int cols,
     int type,
     ffi.Pointer<ffi.Void> buf,
-    int step,
     ffi.Pointer<Mat> rval,
   ) {
     return _Mat_NewFromBytes(
@@ -15057,23 +15056,17 @@ class CvNative {
       cols,
       type,
       buf,
-      step,
       rval,
     );
   }
 
   late final _Mat_NewFromBytesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<ffi.Void>,
-              ffi.Int,
-              ffi.Pointer<Mat>)>>('Mat_NewFromBytes');
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Void>, ffi.Pointer<Mat>)>>('Mat_NewFromBytes');
   late final _Mat_NewFromBytes = _Mat_NewFromBytesPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          int, int, int, ffi.Pointer<ffi.Void>, int, ffi.Pointer<Mat>)>();
+          int, int, int, ffi.Pointer<ffi.Void>, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_NewFromBytes_Async(
     int rows,
