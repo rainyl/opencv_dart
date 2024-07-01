@@ -4,13 +4,12 @@ import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'base.dart';
 
-abstract class Vec<T> with IterableMixin<T>, EquatableMixin implements ffi.Finalizable {
+abstract class Vec<T> with IterableMixin<T>, ComparableMixin implements ffi.Finalizable {
   @override
   int get length;
 

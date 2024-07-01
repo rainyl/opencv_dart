@@ -55,21 +55,23 @@ final CFFI = cvg.CvNative(loadNativeLibrary());
 // base structures
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
-abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
-  ICvStruct.fromPointer(this.ptr);
-
-  ffi.Pointer<T> ptr;
-  T get ref;
-
+mixin ComparableMixin {
   List<Object?> get props;
 
   @override
   // ignore: hash_and_equals
   bool operator ==(Object other) {
-    if (other is! ICvStruct) return false;
+    if (other is! ComparableMixin) return false;
     if (props.length != other.props.length) return false;
     return props.indexed.every((e) => other.props[e.$1] == e.$2);
   }
+}
+
+abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> with ComparableMixin {
+  ICvStruct.fromPointer(this.ptr);
+
+  ffi.Pointer<T> ptr;
+  T get ref;
 }
 
 abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
