@@ -21,7 +21,7 @@ extension WeChatQRCodeAsync on WeChatQRCode {
       [String detectorPrototxtPath = "",
       String detectorCaffeModelPath = "",
       String superResolutionPrototxtPath = "",
-      String superResolutionCaffeModelPath = ""]) async {
+      String superResolutionCaffeModelPath = "",]) async {
     final arena = Arena();
     final p = calloc<cvg.WeChatQRCode>();
     final dp =
@@ -71,6 +71,6 @@ extension WeChatQRCodeAsync on WeChatQRCode {
     await cvRunAsync0<void>(
         (callback) =>
             CFFI.WeChatQRCode_SetScaleFactor_Async(ptr, scaleFactor, callback),
-        (c) => c.complete());
+        (c) => c.complete(),);
   }
 }
