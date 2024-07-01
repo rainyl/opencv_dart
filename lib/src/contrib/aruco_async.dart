@@ -15,8 +15,7 @@ import 'aruco_dict.dart';
 
 extension ArucoDetectorAsync on ArucoDetector {
   static Future<ArucoDetector> emptyAsync() async {
-    final rval =
-        await cvRunAsync<ArucoDetector>(CFFI.ArucoDetector_New_Async, (c, p) {
+    final rval = await cvRunAsync<ArucoDetector>(CFFI.ArucoDetector_New_Async, (c, p) {
       return c.complete(ArucoDetector.fromPointer(p.cast<cvg.ArucoDetector>()));
     });
     return rval;
@@ -35,9 +34,7 @@ extension ArucoDetectorAsync on ArucoDetector {
   Future<(VecVecPoint2f, VecInt, VecVecPoint2f)> detectMarkersAsync(
       InputArray image,) async {
     final rval = await cvRunAsync3<(VecVecPoint2f, VecInt, VecVecPoint2f)>(
-        (callback) =>
-            CFFI.ArucoDetector_DetectMarkers_Async(ref, image.ref, callback),
-        (c, p, p2, p3) {
+        (callback) => CFFI.ArucoDetector_DetectMarkers_Async(ref, image.ref, callback), (c, p, p2, p3) {
       final corners = VecVecPoint2f.fromPointer(p.cast<cvg.VecVecPoint2f>());
       final ids = VecInt.fromPointer(p2.cast<cvg.VecInt>());
       final rejected = VecVecPoint2f.fromPointer(p3.cast<cvg.VecVecPoint2f>());
@@ -436,9 +433,7 @@ extension ArucoDetectorParametersAsync on ArucoDetectorParameters {
 
   Future<double> get minOtsuStdDevAsync async {
     final rval = await cvRunAsync<double>(
-        (callback) =>
-            CFFI.ArucoDetectorParameters_GetMinOtsuStdDev_Async(ref, callback),
-        (c, p) {
+        (callback) => CFFI.ArucoDetectorParameters_GetMinOtsuStdDev_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);

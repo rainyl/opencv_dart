@@ -38,16 +38,10 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   ]) {
     final arena = Arena();
     final p = calloc<cvg.WeChatQRCode>();
-    final dp =
-        detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final dm =
-        detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final srp = superResolutionPrototxtPath
-        .toNativeUtf8(allocator: arena)
-        .cast<ffi.Char>();
-    final srm = superResolutionCaffeModelPath
-        .toNativeUtf8(allocator: arena)
-        .cast<ffi.Char>();
+    final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
     arena.releaseAll();
     return WeChatQRCode._(p);
@@ -89,8 +83,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     cvRun(() => CFFI.WeChatQRCode_SetScaleFactor(ptr, scaleFactor));
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.WeChatQRCodePtr>(CFFI.addresses.WeChatQRCode_Close);
+  static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(CFFI.addresses.WeChatQRCode_Close);
 
   void dispose() {
     finalizer.detach(this);
