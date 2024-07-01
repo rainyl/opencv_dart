@@ -16,11 +16,12 @@ extension WeChatQRCodeAsync on WeChatQRCode {
     return rval;
   }
 
-  static Future<WeChatQRCode> createAsync(
-      [String detectorPrototxtPath = "",
-      String detectorCaffeModelPath = "",
-      String superResolutionPrototxtPath = "",
-      String superResolutionCaffeModelPath = "",]) async {
+  static Future<WeChatQRCode> createAsync([
+    String detectorPrototxtPath = "",
+    String detectorCaffeModelPath = "",
+    String superResolutionPrototxtPath = "",
+    String superResolutionCaffeModelPath = "",
+  ]) async {
     final arena = Arena();
     final p = calloc<cvg.WeChatQRCode>();
     final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
@@ -57,8 +58,8 @@ extension WeChatQRCodeAsync on WeChatQRCode {
 
   Future<void> setScaleFactorAsync(double scaleFactor) async {
     await cvRunAsync0<void>(
-        (callback) =>
-            CFFI.WeChatQRCode_SetScaleFactor_Async(ptr, scaleFactor, callback),
-        (c) => c.complete(),);
+      (callback) => CFFI.WeChatQRCode_SetScaleFactor_Async(ptr, scaleFactor, callback),
+      (c) => c.complete(),
+    );
   }
 }

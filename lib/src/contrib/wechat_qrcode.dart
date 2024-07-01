@@ -15,8 +15,10 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory WeChatQRCode.fromPointer(cvg.WeChatQRCodePtr ptr,
-          [bool attach = true,]) =>
+  factory WeChatQRCode.fromPointer(
+    cvg.WeChatQRCodePtr ptr, [
+    bool attach = true,
+  ]) =>
       WeChatQRCode._(ptr, attach);
 
   factory WeChatQRCode.empty() {
@@ -49,8 +51,10 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
 
   /// Both detects and decodes QR code. To simplify the usage, there is a only API: detectAndDecode.
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#a27c167d2d58e5ee4418fd3a9ed5876cc
-  (List<String>, VecMat points) detectAndDecode(InputArray img,
-      [VecMat? points,]) {
+  (List<String>, VecMat points) detectAndDecode(
+    InputArray img, [
+    VecMat? points,
+  ]) {
     final p = calloc<cvg.VecMat>();
     final rval = calloc<cvg.VecVecChar>();
     cvRun(() => CFFI.WeChatQRCode_DetectAndDecode(ptr, img.ref, p, rval));

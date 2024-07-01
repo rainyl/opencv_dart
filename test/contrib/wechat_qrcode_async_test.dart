@@ -5,8 +5,7 @@ void main() {
   test('cv.WeChatQRCode.empty', () async {
     final qr = await cv.WeChatQRCodeAsync.emptyAsync();
     expect(qr.ptr, isNotNull);
-    final (res, points) =
-        await qr.detectAndDecodeAsync(cv.imread("test/images/qrcode.png"));
+    final (res, points) = await qr.detectAndDecodeAsync(cv.imread("test/images/qrcode.png"));
     expect(res.length, 1);
     expect(res.first, "Hello World!");
     expect(points.length, 1);
@@ -22,8 +21,7 @@ void main() {
       "test/models/sr.caffemodel",
     );
     expect(qr.ptr, isNotNull);
-    final (res, points) = await qr
-        .detectAndDecodeAsync(cv.imread("test/images/multi_qrcodes.png"));
+    final (res, points) = await qr.detectAndDecodeAsync(cv.imread("test/images/multi_qrcodes.png"));
     expect(res.length, 2);
     expect(points.length, 2);
     expect(res, ["bar", "foo"]);

@@ -11,8 +11,7 @@ void main() async {
     final img = cv.imread(arucoImage6x6_250);
     expect(img.isEmpty, false);
 
-    final dict =
-        cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
+    final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
     final params = await cv.ArucoDetectorParametersAsync.emptyAsync();
     final detector = await cv.ArucoDetectorAsync.createAsync(dict, params);
 
@@ -31,15 +30,18 @@ void main() async {
     final imgExpected = cv.imread(arucoImage6x6_250_contour);
     expect(imgExpected.isEmpty, false);
 
-    final dict =
-        cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
+    final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
     final params = await cv.ArucoDetectorParametersAsync.emptyAsync();
     final detector = await cv.ArucoDetectorAsync.createAsync(dict, params);
 
     final (corners, ids, _) = await detector.detectMarkersAsync(img);
     expect(corners.length, greaterThan(0));
     await cv.arucoDrawDetectedMarkersAsync(
-        img, corners, ids, cv.Scalar(200, 0, 0, 0),);
+      img,
+      corners,
+      ids,
+      cv.Scalar(200, 0, 0, 0),
+    );
     var diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, diff);
     diff = cv.cvtColor(diff, cv.COLOR_BGR2GRAY);
@@ -47,13 +49,17 @@ void main() async {
   });
 
   test('cv.arucoGenerateImageMarker', () async {
-    final imgExpected =
-        cv.imread(arucoImage6x6_250_1, flags: cv.IMREAD_GRAYSCALE);
+    final imgExpected = cv.imread(arucoImage6x6_250_1, flags: cv.IMREAD_GRAYSCALE);
     expect(imgExpected.isEmpty, false);
 
     final img = cv.Mat.empty();
     await cv.arucoGenerateImageMarkerAsync(
-        cv.PredefinedDictionaryType.DICT_6X6_250, 1, 200, img, 1,);
+      cv.PredefinedDictionaryType.DICT_6X6_250,
+      1,
+      200,
+      img,
+      1,
+    );
 
     final diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, diff);
@@ -98,24 +104,20 @@ void main() async {
     await params.setAdaptiveThreshConstantAsync(adaptiveThreshConstant);
     await params.setMinMarkerPerimeterRateAsync(minMarkerPerimeterRate);
     await params.setMaxMarkerPerimeterRateAsync(maxMarkerPerimeterRate);
-    await params
-        .setPolygonalApproxAccuracyRateAsync(polygonalApproxAccuracyRate);
+    await params.setPolygonalApproxAccuracyRateAsync(polygonalApproxAccuracyRate);
     await params.setMinCornerDistanceRateAsync(minCornerDistanceRate);
     await params.setMinDistanceToBorderAsync(minDistanceToBorder);
     await params.setMinMarkerDistanceRateAsync(minMarkerDistanceRate);
     await params.setCornerRefinementMethodAsync(cornerRefinementMethod);
     await params.setCornerRefinementWinSizeAsync(cornerRefinementWinSize);
-    await params
-        .setCornerRefinementMaxIterationsAsync(cornerRefinementMaxIterations);
-    await params
-        .setCornerRefinementMinAccuracyAsync(cornerRefinementMinAccuracy);
+    await params.setCornerRefinementMaxIterationsAsync(cornerRefinementMaxIterations);
+    await params.setCornerRefinementMinAccuracyAsync(cornerRefinementMinAccuracy);
     await params.setMarkerBorderBitsAsync(markerBorderBits);
-    await params
-        .setPerspectiveRemovePixelPerCellAsync(perspectiveRemovePixelPerCell);
+    await params.setPerspectiveRemovePixelPerCellAsync(perspectiveRemovePixelPerCell);
     await params.setPerspectiveRemoveIgnoredMarginPerCellAsync(
-        perspectiveRemoveIgnoredMarginPerCell,);
-    await params
-        .setMaxErroneousBitsInBorderRateAsync(maxErroneousBitsInBorderRate);
+      perspectiveRemoveIgnoredMarginPerCell,
+    );
+    await params.setMaxErroneousBitsInBorderRateAsync(maxErroneousBitsInBorderRate);
     await params.setMinOtsuStdDevAsync(minOtsuStdDev);
     await params.setErrorCorrectionRateAsync(errorCorrectionRate);
     await params.setAprilTagQuadDecimateAsync(aprilTagQuadDecimate);
@@ -129,53 +131,95 @@ void main() async {
     await params.setDetectInvertedMarkerAsync(detectInvertedMarker);
 
     expect(
-        await params.adaptiveThreshWinSizeMinAsync, adaptiveThreshWinSizeMin,);
+      await params.adaptiveThreshWinSizeMinAsync,
+      adaptiveThreshWinSizeMin,
+    );
     expect(
-        await params.adaptiveThreshWinSizeMaxAsync, adaptiveThreshWinSizeMax,);
+      await params.adaptiveThreshWinSizeMaxAsync,
+      adaptiveThreshWinSizeMax,
+    );
     expect(
-        await params.adaptiveThreshWinSizeStepAsync, adaptiveThreshWinSizeStep,);
-    expect(await params.adaptiveThreshConstantAsync,
-        closeTo(adaptiveThreshConstant, 1e-4),);
-    expect(await params.minMarkerPerimeterRateAsync,
-        closeTo(minMarkerPerimeterRate, 1e-4),);
-    expect(await params.maxMarkerPerimeterRateAsync,
-        closeTo(maxMarkerPerimeterRate, 1e-4),);
-    expect(await params.polygonalApproxAccuracyRateAsync,
-        closeTo(polygonalApproxAccuracyRate, 1e-4),);
-    expect(await params.minCornerDistanceRateAsync,
-        closeTo(minCornerDistanceRate, 1e-4),);
+      await params.adaptiveThreshWinSizeStepAsync,
+      adaptiveThreshWinSizeStep,
+    );
+    expect(
+      await params.adaptiveThreshConstantAsync,
+      closeTo(adaptiveThreshConstant, 1e-4),
+    );
+    expect(
+      await params.minMarkerPerimeterRateAsync,
+      closeTo(minMarkerPerimeterRate, 1e-4),
+    );
+    expect(
+      await params.maxMarkerPerimeterRateAsync,
+      closeTo(maxMarkerPerimeterRate, 1e-4),
+    );
+    expect(
+      await params.polygonalApproxAccuracyRateAsync,
+      closeTo(polygonalApproxAccuracyRate, 1e-4),
+    );
+    expect(
+      await params.minCornerDistanceRateAsync,
+      closeTo(minCornerDistanceRate, 1e-4),
+    );
     expect(await params.minDistanceToBorderAsync, minDistanceToBorder);
-    expect(await params.minMarkerDistanceRateAsync,
-        closeTo(minMarkerDistanceRate, 1e-4),);
+    expect(
+      await params.minMarkerDistanceRateAsync,
+      closeTo(minMarkerDistanceRate, 1e-4),
+    );
     expect(await params.cornerRefinementMethodAsync, cornerRefinementMethod);
     expect(await params.cornerRefinementWinSizeAsync, cornerRefinementWinSize);
-    expect(await params.cornerRefinementMaxIterationsAsync,
-        cornerRefinementMaxIterations,);
-    expect(await params.cornerRefinementMinAccuracyAsync,
-        closeTo(cornerRefinementMinAccuracy, 1e-4),);
+    expect(
+      await params.cornerRefinementMaxIterationsAsync,
+      cornerRefinementMaxIterations,
+    );
+    expect(
+      await params.cornerRefinementMinAccuracyAsync,
+      closeTo(cornerRefinementMinAccuracy, 1e-4),
+    );
     expect(await params.markerBorderBitsAsync, markerBorderBits);
-    expect(await params.perspectiveRemovePixelPerCellAsync,
-        perspectiveRemovePixelPerCell,);
-    expect(await params.perspectiveRemoveIgnoredMarginPerCellAsync,
-        closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4),);
-    expect(await params.maxErroneousBitsInBorderRateAsync,
-        closeTo(maxErroneousBitsInBorderRate, 1e-4),);
+    expect(
+      await params.perspectiveRemovePixelPerCellAsync,
+      perspectiveRemovePixelPerCell,
+    );
+    expect(
+      await params.perspectiveRemoveIgnoredMarginPerCellAsync,
+      closeTo(perspectiveRemoveIgnoredMarginPerCell, 1e-4),
+    );
+    expect(
+      await params.maxErroneousBitsInBorderRateAsync,
+      closeTo(maxErroneousBitsInBorderRate, 1e-4),
+    );
     expect(await params.minOtsuStdDevAsync, closeTo(minOtsuStdDev, 1e-4));
-    expect(await params.errorCorrectionRateAsync,
-        closeTo(errorCorrectionRate, 1e-4),);
-    expect(await params.aprilTagQuadDecimateAsync,
-        closeTo(aprilTagQuadDecimate, 1e-4),);
     expect(
-        await params.aprilTagQuadSigmaAsync, closeTo(aprilTagQuadSigma, 1e-4),);
+      await params.errorCorrectionRateAsync,
+      closeTo(errorCorrectionRate, 1e-4),
+    );
     expect(
-        await params.aprilTagMinClusterPixelsAsync, aprilTagMinClusterPixels,);
+      await params.aprilTagQuadDecimateAsync,
+      closeTo(aprilTagQuadDecimate, 1e-4),
+    );
+    expect(
+      await params.aprilTagQuadSigmaAsync,
+      closeTo(aprilTagQuadSigma, 1e-4),
+    );
+    expect(
+      await params.aprilTagMinClusterPixelsAsync,
+      aprilTagMinClusterPixels,
+    );
     expect(await params.aprilTagMaxNmaximaAsync, aprilTagMaxNmaxima);
-    expect(await params.aprilTagCriticalRadAsync,
-        closeTo(aprilTagCriticalRad, 1e-4),);
-    expect(await params.aprilTagMaxLineFitMseAsync,
-        closeTo(aprilTagMaxLineFitMse, 1e-4),);
-    expect(await params.aprilTagMinWhiteBlackDiffAsync,
-        closeTo(aprilTagMinWhiteBlackDiff, 1e-4),);
+    expect(
+      await params.aprilTagCriticalRadAsync,
+      closeTo(aprilTagCriticalRad, 1e-4),
+    );
+    expect(
+      await params.aprilTagMaxLineFitMseAsync,
+      closeTo(aprilTagMaxLineFitMse, 1e-4),
+    );
+    expect(
+      await params.aprilTagMinWhiteBlackDiffAsync,
+      closeTo(aprilTagMinWhiteBlackDiff, 1e-4),
+    );
     expect(await params.aprilTagDeglitchAsync, aprilTagDeglitch);
     expect(await params.detectInvertedMarkerAsync, detectInvertedMarker);
 

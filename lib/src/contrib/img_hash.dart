@@ -44,9 +44,7 @@ class PHash implements ImgHashBase {
   @override
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
     final rval = await cvRunAsync<double>(
-        (callback) =>
-            CFFI.pHashCompare_Async(hashOne.ref, hashTwo.ref, callback),
-        (c, p) {
+        (callback) => CFFI.pHashCompare_Async(hashOne.ref, hashTwo.ref, callback), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -57,9 +55,9 @@ class PHash implements ImgHashBase {
   @override
   Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
     await cvRunAsync0<void>(
-        (callback) =>
-            CFFI.pHashCompute_Async(inputArr.ref, outputArr.ref, callback),
-        (c) => c.complete(),);
+      (callback) => CFFI.pHashCompute_Async(inputArr.ref, outputArr.ref, callback),
+      (c) => c.complete(),
+    );
   }
 }
 
@@ -90,9 +88,7 @@ class AverageHash implements ImgHashBase {
   @override
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
     final rval = await cvRunAsync<double>(
-        (callback) =>
-            CFFI.averageHashCompare_Async(hashOne.ref, hashTwo.ref, callback),
-        (c, p) {
+        (callback) => CFFI.averageHashCompare_Async(hashOne.ref, hashTwo.ref, callback), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -103,9 +99,13 @@ class AverageHash implements ImgHashBase {
   @override
   Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
     await cvRunAsync0<void>(
-        (callback) => CFFI.averageHashCompute_Async(
-            inputArr.ref, outputArr.ref, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.averageHashCompute_Async(
+        inputArr.ref,
+        outputArr.ref,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 }
 
@@ -126,8 +126,7 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  static final finalizer =
-      OcvFinalizer<cvg.BlockMeanHashPtr>(CFFI.addresses.BlockMeanHash_Close);
+  static final finalizer = OcvFinalizer<cvg.BlockMeanHashPtr>(CFFI.addresses.BlockMeanHash_Close);
 
   void dispose() {
     finalizer.detach(this);
@@ -165,8 +164,11 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   ///
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
-  static double compareS(InputArray hashOne, InputArray hashTwo,
-      [int mode = 0,]) {
+  static double compareS(
+    InputArray hashOne,
+    InputArray hashTwo, [
+    int mode = 0,
+  ]) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
       cvRun(() => CFFI.blockMeanHashCompare(hashOne.ref, hashTwo.ref, mode, p));
@@ -188,8 +190,11 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   ///
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
-  static void computeS(InputArray inputArr, OutputArray outputArr,
-      [int mode = 0,]) {
+  static void computeS(
+    InputArray inputArr,
+    OutputArray outputArr, [
+    int mode = 0,
+  ]) {
     cvRun(() => CFFI.blockMeanHashCompute(inputArr.ref, outputArr.ref, mode));
   }
 
@@ -205,12 +210,19 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo,
-      [int? mode_,]) async {
+  Future<double> compareAsync(
+    InputArray hashOne,
+    InputArray hashTwo, [
+    int? mode_,
+  ]) async {
     mode_ ??= mode;
     final rval = await cvRunAsync<double>(
         (callback) => CFFI.BlockMeanHash_Compare_Async(
-            ref, hashOne.ref, hashTwo.ref, callback,), (c, p) {
+              ref,
+              hashOne.ref,
+              hashTwo.ref,
+              callback,
+            ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -218,11 +230,18 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
     return rval;
   }
 
-  Future<double> compareSAsync(InputArray hashOne, InputArray hashTwo,
-      [int mode = 0,]) async {
+  Future<double> compareSAsync(
+    InputArray hashOne,
+    InputArray hashTwo, [
+    int mode = 0,
+  ]) async {
     final rval = await cvRunAsync<double>(
         (callback) => CFFI.BlockMeanHash_Compare_Async(
-            ref, hashOne.ref, hashTwo.ref, callback,), (c, p) {
+              ref,
+              hashOne.ref,
+              hashTwo.ref,
+              callback,
+            ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -231,27 +250,42 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr,
-      [int? mode_,]) async {
+  Future<void> computeAsync(
+    InputArray inputArr,
+    OutputArray outputArr, [
+    int? mode_,
+  ]) async {
     mode_ ??= mode;
     await cvRunAsync0<void>(
-        (callback) => CFFI.BlockMeanHash_Compute_Async(
-            ref, inputArr.ref, outputArr.ref, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.BlockMeanHash_Compute_Async(
+        ref,
+        inputArr.ref,
+        outputArr.ref,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 
-  Future<void> computeSAsync(InputArray inputArr, OutputArray outputArr,
-      [int mode = 0,]) async {
+  Future<void> computeSAsync(
+    InputArray inputArr,
+    OutputArray outputArr, [
+    int mode = 0,
+  ]) async {
     await cvRunAsync0<void>(
-        (callback) => CFFI.BlockMeanHash_Compute_Async(
-            ref, inputArr.ref, outputArr.ref, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.BlockMeanHash_Compute_Async(
+        ref,
+        inputArr.ref,
+        outputArr.ref,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 
   Future<List<double>> getMeanAsync() async {
     final rval = await cvRunAsync2<List<double>>(
-        (callback) => CFFI.BlockMeanHash_GetMean_Async(ref, callback),
-        (c, p, p2) {
+        (callback) => CFFI.BlockMeanHash_GetMean_Async(ref, callback), (c, p, p2) {
       final ret = p.cast<ffi.Pointer<ffi.Double>>();
       final length = p2.cast<ffi.Int>().value;
       if (length == 0) return c.complete(List<double>.empty());
@@ -295,7 +329,10 @@ class ColorMomentHash implements ImgHashBase {
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
     final rval = await cvRunAsync<double>(
         (callback) => CFFI.colorMomentHashCompare_Async(
-            hashOne.ref, hashTwo.ref, callback,), (c, p) {
+              hashOne.ref,
+              hashTwo.ref,
+              callback,
+            ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -306,9 +343,13 @@ class ColorMomentHash implements ImgHashBase {
   @override
   Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
     await cvRunAsync0<void>(
-        (callback) => CFFI.colorMomentHashCompute_Async(
-            inputArr.ref, outputArr.ref, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.colorMomentHashCompute_Async(
+        inputArr.ref,
+        outputArr.ref,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 }
 
@@ -327,8 +368,15 @@ class NewMarrHildrethHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.marrHildrethHashCompare(
-          hashOne.ref, hashTwo.ref, alpha, scale, p,),);
+      cvRun(
+        () => CFFI.marrHildrethHashCompare(
+          hashOne.ref,
+          hashTwo.ref,
+          alpha,
+          scale,
+          p,
+        ),
+      );
       return p.value;
     });
   }
@@ -339,15 +387,26 @@ class NewMarrHildrethHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => CFFI.marrHildrethHashCompute(
-        inputArr.ref, outputArr.ref, alpha, scale,),);
+    cvRun(
+      () => CFFI.marrHildrethHashCompute(
+        inputArr.ref,
+        outputArr.ref,
+        alpha,
+        scale,
+      ),
+    );
   }
 
   @override
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
     final rval = await cvRunAsync<double>(
         (callback) => CFFI.marrHildrethHashCompare_Async(
-            hashOne.ref, hashTwo.ref, alpha, scale, callback,), (c, p) {
+              hashOne.ref,
+              hashTwo.ref,
+              alpha,
+              scale,
+              callback,
+            ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -358,9 +417,15 @@ class NewMarrHildrethHash implements ImgHashBase {
   @override
   Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
     await cvRunAsync0<void>(
-        (callback) => CFFI.marrHildrethHashCompute_Async(
-            inputArr.ref, outputArr.ref, alpha, scale, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.marrHildrethHashCompute_Async(
+        inputArr.ref,
+        outputArr.ref,
+        alpha,
+        scale,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 }
 
@@ -379,8 +444,15 @@ class NewRadialVarianceHash implements ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => CFFI.radialVarianceHashCompare(
-          hashOne.ref, hashTwo.ref, sigma, numOfAngleLine, p,),);
+      cvRun(
+        () => CFFI.radialVarianceHashCompare(
+          hashOne.ref,
+          hashTwo.ref,
+          sigma,
+          numOfAngleLine,
+          p,
+        ),
+      );
       return p.value;
     });
   }
@@ -391,15 +463,26 @@ class NewRadialVarianceHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
   void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => CFFI.radialVarianceHashCompute(
-        inputArr.ref, outputArr.ref, sigma, numOfAngleLine,),);
+    cvRun(
+      () => CFFI.radialVarianceHashCompute(
+        inputArr.ref,
+        outputArr.ref,
+        sigma,
+        numOfAngleLine,
+      ),
+    );
   }
 
   @override
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
     final rval = await cvRunAsync<double>(
         (callback) => CFFI.radialVarianceHashCompare_Async(
-            hashOne.ref, hashTwo.ref, sigma, numOfAngleLine, callback,), (c, p) {
+              hashOne.ref,
+              hashTwo.ref,
+              sigma,
+              numOfAngleLine,
+              callback,
+            ), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -410,8 +493,14 @@ class NewRadialVarianceHash implements ImgHashBase {
   @override
   Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
     await cvRunAsync0<void>(
-        (callback) => CFFI.radialVarianceHashCompute_Async(
-            inputArr.ref, outputArr.ref, sigma, numOfAngleLine, callback,),
-        (c) => c.complete(),);
+      (callback) => CFFI.radialVarianceHashCompute_Async(
+        inputArr.ref,
+        outputArr.ref,
+        sigma,
+        numOfAngleLine,
+        callback,
+      ),
+      (c) => c.complete(),
+    );
   }
 }
