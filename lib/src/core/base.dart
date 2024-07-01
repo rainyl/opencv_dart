@@ -8,7 +8,6 @@ import 'dart:ffi' as ffi;
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
 import "../opencv.g.dart" as cvg;
@@ -61,9 +60,19 @@ abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
 
   ffi.Pointer<T> ptr;
   T get ref;
+
+  List<Object?> get props;
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) {
+    if (other is! ICvStruct) return false;
+    if (props.length != other.props.length) return false;
+    return props.indexed.every((e) => other.props[e.$1] == e.$2);
+  }
 }
 
-abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with EquatableMixin {
+abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
   CvStruct.fromPointer(super.ptr) : super.fromPointer();
 }
 
