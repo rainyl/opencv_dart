@@ -1,6 +1,6 @@
-## 1.1.0
+## 1.1.0-dev.1
 
-- New: EXPERIMENTAL, Asynchronous support by @abdelaziz-mahdy and @rainyl, try it and open an issue if you have any problems.
+- New: EXPERIMENTAL Asynchronous support by @abdelaziz-mahdy and @rainyl, try it and open an issue if you have any problems.
 
 ## 1.0.10+1
 
