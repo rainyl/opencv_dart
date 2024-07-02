@@ -2,6 +2,7 @@ library cv;
 
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';

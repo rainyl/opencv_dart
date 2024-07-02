@@ -5,10 +5,10 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/vec.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/vec.dart';
 import '../opencv.g.dart' as cvg;
 
 abstract class ImgHashBase {

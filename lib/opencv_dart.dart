@@ -4,12 +4,11 @@ export 'src/calib3d/calib3d.dart';
 export 'src/calib3d/calib3d_async.dart';
 export 'src/calib3d/fisheye.dart';
 export 'src/constants.g.dart';
+
 export 'src/contrib/aruco.dart';
 export 'src/contrib/aruco_async.dart';
-
 export 'src/contrib/aruco_dict.dart';
 export 'src/contrib/img_hash.dart';
-
 export 'src/contrib/wechat_qrcode.dart';
 export 'src/contrib/wechat_qrcode_async.dart';
 
