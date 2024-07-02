@@ -54,6 +54,7 @@ class U8Array extends NativeArray<ffi.Uint8, int> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -104,6 +105,7 @@ class I8Array extends NativeArray<ffi.Int8, int> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -154,6 +156,7 @@ class U16Array extends NativeArray<ffi.Uint16, int> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -204,6 +207,7 @@ class I16Array extends NativeArray<ffi.Int16, int> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -254,6 +258,7 @@ class I32Array extends NativeArray<ffi.Int, int> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -304,6 +309,7 @@ class F32Array extends NativeArray<ffi.Float, double> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);
@@ -354,6 +360,7 @@ class F64Array extends NativeArray<ffi.Double, double> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
+  @override
   void dispose() {
     finalizer.detach(this);
     calloc.free(ptr);

@@ -123,7 +123,7 @@ CvStatus *ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoin
 
 CvStatus *ArucoDrawDetectedMarkers(Mat image, VecVecPoint2f markerCorners, VecInt markerIds,
                                    Scalar borderColor);
-CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, Mat img, int borderBits);
+CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, int borderBits, Mat *img);
 
 #ifdef __cplusplus
 }

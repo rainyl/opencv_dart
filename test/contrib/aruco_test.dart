@@ -47,8 +47,7 @@ void main() async {
     final imgExpected = cv.imread(arucoImage6x6_250_1, flags: cv.IMREAD_GRAYSCALE);
     expect(imgExpected.isEmpty, false);
 
-    final img = cv.Mat.empty();
-    cv.arucoGenerateImageMarker(cv.PredefinedDictionaryType.DICT_6X6_250, 1, 200, img, 1);
+    final img = cv.arucoGenerateImageMarker(cv.PredefinedDictionaryType.DICT_6X6_250, 1, 200, 1);
 
     final diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, diff);

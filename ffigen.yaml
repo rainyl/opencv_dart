@@ -28,8 +28,11 @@ headers:
     - src/dnn/dnn.h
     - src/dnn/dnn_async.h
     - src/extra/aruco.h
+    - src/extra/aruco_async.h
     - src/extra/img_hash.h
+    - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
+    - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h
     - src/features2d/features2d_async.h
     - src/gapi/gapi.h
@@ -62,8 +65,11 @@ headers:
     - src/dnn/dnn.h
     - src/dnn/dnn_async.h
     - src/extra/aruco.h
+    - src/extra/aruco_async.h
     - src/extra/img_hash.h
+    - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
+    - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h
     - src/features2d/features2d_async.h
     - src/gapi/gapi.h
