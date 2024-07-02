@@ -1,3 +1,7 @@
+## 1.1.0
+
+- New: EXPERIMENTAL, Asynchronous support by @abdelaziz-mahdy and @rainyl, try it and open an issue if you have any problems.
+
 ## 1.0.10+1
 
 - Fix: setup commands error on linux
