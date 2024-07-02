@@ -724,11 +724,13 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   }) {
     final p = calloc<cvg.FaceDetectorYN>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
+    final bufM = VecUChar.fromList(bufferModel);
+    final bufC = VecUChar.fromList(bufferConfig);
     cvRun(
       () => CFFI.FaceDetectorYN_NewFromBuffer(
         cFramework,
-        VecUChar.fromList(bufferModel).ref,
-        VecUChar.fromList(bufferConfig).ref,
+        bufM.ref,
+        bufC.ref,
         inputSize.cvd.ref,
         scoreThreshold,
         nmsThreshold,
@@ -739,6 +741,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
       ),
     );
     calloc.free(cFramework);
+    bufM.dispose();
+    bufC.dispose();
     return FaceDetectorYN._(p);
   }
 
