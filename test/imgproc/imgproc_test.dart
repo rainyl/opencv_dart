@@ -798,10 +798,17 @@ void main() async {
   test('cv.remap', () {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
     expect(src.isEmpty, false);
-    final map1 = cv.Mat.zeros(256, 256, cv.MatType.CV_16SC2);
-    map1.set<int>(50, 50, 25);
-    final map2 = cv.Mat.empty();
-    final dst = cv.remap(src, map1, map2, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
+    final mapX = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_32FC1);
+    final mapY = mapX.clone();
+
+    // flip horizontally
+    for (var i = 0; i < mapX.rows; i++) {
+      for (var j = 0; j < mapX.cols; j++) {
+        mapX.setF32(i, j, (mapX.cols - j).toDouble());
+        mapY.setF32(i, j, i.toDouble());
+      }
+    }
+    final dst = cv.remap(src, mapX, mapY, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
     expect(dst.isEmpty, false);
   });
 
