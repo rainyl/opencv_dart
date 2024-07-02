@@ -4,9 +4,9 @@ import 'package:test/test.dart';
 void main() {
   test("cv.RNG", () async {
     final rng = cv.Rng();
-    final v = await rng.uniformAsync(0, 241, maxCount: 100000).take(10000).toList();
+    final v = await rng.uniform(0, 241, maxCount: 100000).take(10000).toList();
     expect(v, everyElement(greaterThanOrEqualTo(0)));
-    final v1 = await rng.uniformAsync(2.41, 241.0).take(100000).toList();
+    final v1 = await rng.uniform(2.41, 241.0).take(100000).toList();
     expect(v1, everyElement(greaterThanOrEqualTo(2.41)));
 
     rng.dispose();

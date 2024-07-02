@@ -149,22 +149,6 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
     });
   }
 
-  /// STATIC Compare compares the hash value between a and b using BlockMeanHash.
-  ///
-  /// For further information, see:
-  /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
-  static double compareS(
-    InputArray hashOne,
-    InputArray hashTwo, [
-    int mode = 0,
-  ]) {
-    return using<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(() => CFFI.blockMeanHashCompare(hashOne.ref, hashTwo.ref, mode, p));
-      return p.value;
-    });
-  }
-
   /// Compute computes hash of the input image using BlockMeanHash.
   ///
   /// For further information, see:
@@ -173,16 +157,6 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
     final p = outputArr?.ptr ?? calloc<cvg.Mat>();
     cvRun(() => CFFI.BlockMeanHash_Compute(ref, inputArr.ref, p));
-    return outputArr ?? Mat.fromPointer(p);
-  }
-
-  /// STATIC Compute computes hash of the input image using BlockMeanHash.
-  ///
-  /// For further information, see:
-  /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
-  static Mat computeS(InputArray inputArr, {OutputArray? outputArr, int mode = 0}) {
-    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => CFFI.blockMeanHashCompute(inputArr.ref, p, mode));
     return outputArr ?? Mat.fromPointer(p);
   }
 
@@ -208,32 +182,8 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
         doubleCompleter,
       );
 
-  Future<double> compareSAsync(
-    InputArray hashOne,
-    InputArray hashTwo, [
-    int mode = 0,
-  ]) async =>
-      cvRunAsync<double>(
-        (callback) => CFFI.BlockMeanHash_Compare_Async(
-          ref,
-          hashOne.ref,
-          hashTwo.ref,
-          callback,
-        ),
-        doubleCompleter,
-      );
-
   @override
   Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync1<Mat>(
-        (callback) => CFFI.BlockMeanHash_Compute_Async(
-          ref,
-          inputArr.ref,
-          callback,
-        ),
-        matCompleter,
-      );
-
-  Future<Mat> computeSAsync(InputArray inputArr, [int mode = 0]) async => cvRunAsync<Mat>(
         (callback) => CFFI.BlockMeanHash_Compute_Async(
           ref,
           inputArr.ref,

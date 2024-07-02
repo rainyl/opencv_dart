@@ -50,8 +50,6 @@ CvStatus *BlockMeanHash_SetMode(BlockMeanHash self, int mode);
 void BlockMeanHash_Close(BlockMeanHashPtr self);
 CvStatus *BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat *outputArr);
 CvStatus *BlockMeanHash_Compare(BlockMeanHash self, Mat hashOne, Mat hashTwo, double *rval);
-CvStatus *blockMeanHashCompute(Mat inputArr, Mat *outputArr, int mode);
-CvStatus *blockMeanHashCompare(Mat a, Mat b, int mode, double *rval);
 
 CvStatus *colorMomentHashCompute(Mat inputArr, Mat *outputArr);
 CvStatus *colorMomentHashCompare(Mat a, Mat b, double *rval);

@@ -1244,3 +1244,15 @@ class VecVec6fIterator extends VecIterator<Vec6f> {
     return Vec6f.fromPointer(p);
   }
 }
+
+extension VecVec4iExtension on List<Vec4i> {
+  VecVec4i get cvd => VecVec4i.fromList(this);
+}
+
+extension VecVec4fExtension on List<Vec4f> {
+  VecVec4f get cvd => VecVec4f.fromList(this);
+}
+
+extension VecVec6fExtension on List<Vec6f> {
+  VecVec6f get cvd => VecVec6f.fromList(this);
+}

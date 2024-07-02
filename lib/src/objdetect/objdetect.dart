@@ -867,27 +867,8 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FaceRecognizerSF.fromPointer(
-    cvg.FaceRecognizerSFPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory FaceRecognizerSF.fromPointer(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) =>
       FaceRecognizerSF._(ptr, attach);
-
-  @Deprecated("Use FaceRecognizerSF.fromFile instead, will be removed in 1.1.0")
-  factory FaceRecognizerSF.newRecognizer(
-    String model,
-    String config,
-    int backendId,
-    int targetId,
-  ) {
-    final p = calloc<cvg.FaceRecognizerSF>();
-    final cModel = model.toNativeUtf8().cast<ffi.Char>();
-    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => CFFI.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
-    calloc.free(cModel);
-    calloc.free(cConfig);
-    return FaceRecognizerSF._(p);
-  }
 
   /// Creates an instance of this class with given parameters.
   ///
