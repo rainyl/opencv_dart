@@ -9,12 +9,10 @@ import '../opencv.g.dart' as cvg;
 import 'wechat_qrcode.dart';
 
 extension WeChatQRCodeAsync on WeChatQRCode {
-  static Future<WeChatQRCode> emptyAsync() async {
-    final rval = await cvRunAsync<WeChatQRCode>(CFFI.WeChatQRCode_New_Async, (c, p) {
-      return c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>()));
-    });
-    return rval;
-  }
+  static Future<WeChatQRCode> emptyAsync() async => cvRunAsync<WeChatQRCode>(
+        CFFI.WeChatQRCode_New_Async,
+        (c, p) => c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>())),
+      );
 
   static Future<WeChatQRCode> createAsync([
     String detectorPrototxtPath = "",
@@ -23,43 +21,25 @@ extension WeChatQRCodeAsync on WeChatQRCode {
     String superResolutionCaffeModelPath = "",
   ]) async {
     final arena = Arena();
-    final p = calloc<cvg.WeChatQRCode>();
     final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final rval = await cvRunAsync<WeChatQRCode>(
-        (callback) => CFFI.WeChatQRCode_NewWithParams_Async(dp, dm, srp, srm, callback), (c, p) {
-      arena.releaseAll();
-      return c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>()));
-    });
-    return rval;
-  }
-
-  Future<(List<String>, VecMat)> detectAndDecodeAsync(InputArray img) async {
-    final rval = await cvRunAsync2<(List<String>, VecMat)>(
-        (callback) => CFFI.WeChatQRCode_DetectAndDecode_Async(ptr, img.ref, callback), (c, p, p2) {
-      final vec = VecVecChar.fromPointer(p.cast<cvg.VecVecChar>());
-      final points = VecMat.fromPointer(p.cast<cvg.VecMat>());
-      return c.complete((vec.asStringList(), points));
-    });
-    return rval;
-  }
-
-  Future<double> get scaleFactorAsync async {
-    final rval =
-        await cvRunAsync<double>((callback) => CFFI.WeChatQRCode_GetScaleFactor_Async(ptr, callback), (c, p) {
-      final rval = p.cast<ffi.Float>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
-
-  Future<void> setScaleFactorAsync(double scaleFactor) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.WeChatQRCode_SetScaleFactor_Async(ptr, scaleFactor, callback),
-      (c) => c.complete(),
+    final rval = cvRunAsync<WeChatQRCode>(
+      (callback) => CFFI.WeChatQRCode_NewWithParams_Async(dp, dm, srp, srm, callback),
+      (c, p) => c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>())),
     );
+    arena.releaseAll();
+    return rval;
   }
+
+  Future<(List<String>, VecMat)> detectAndDecodeAsync(InputArray img) async =>
+      cvRunAsync2<(List<String>, VecMat)>(
+          (callback) => CFFI.WeChatQRCode_DetectAndDecode_Async(ptr, img.ref, callback), (c, p, p2) {
+        final vec = VecVecChar.fromPointer(p.cast<cvg.VecVecChar>());
+        final points = VecMat.fromPointer(p2.cast<cvg.VecMat>());
+        final rval = vec.asStringList();
+        vec.dispose();
+        return c.complete((rval, points));
+      });
 }

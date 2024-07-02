@@ -96,22 +96,24 @@ void arucoDrawDetectedMarkers(
   );
 }
 
-void arucoGenerateImageMarker(
+Mat arucoGenerateImageMarker(
   PredefinedDictionaryType dictionaryId,
   int id,
   int sidePixels,
-  Mat img,
-  int borderBits,
-) {
+  int borderBits, [
+  Mat? outImg,
+]) {
+  final p = outImg?.ptr ?? calloc<cvg.Mat>();
   cvRun(
     () => CFFI.ArucoGenerateImageMarker(
       dictionaryId.value,
       id,
       sidePixels,
-      img.ref,
       borderBits,
+      p,
     ),
   );
+  return outImg ?? Mat.fromPointer(p);
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {

@@ -26,9 +26,9 @@ CvStatus *WeChatQRCode_DetectAndDecode_Async(WeChatQRCode *self, Mat img, CvCall
     cstrings.reserve(strings.size());
     for (const auto &s : strings)
     {
-        cstrings.emplace_back(s.begin(), s.end());
+        cstrings.push_back(std::vector<char>(s.begin(), s.end()));
     }
-    callback(new VecMat{new std::vector<cv::Mat>(points)}, new VecVecChar{new std::vector<std::vector<char>>(cstrings)});
+    callback(new VecVecChar{new std::vector<std::vector<char>>(cstrings)}, new VecMat{new std::vector<cv::Mat>(points)});
     END_WRAP
 }
 

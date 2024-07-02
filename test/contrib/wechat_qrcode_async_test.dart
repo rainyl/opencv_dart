@@ -26,10 +26,10 @@ void main() {
     expect(points.length, 2);
     expect(res, ["bar", "foo"]);
 
-    expect(await qr.scaleFactorAsync, closeTo(-1.0, 1e-3));
-    await qr.setScaleFactorAsync(0.5);
-    expect(await qr.scaleFactorAsync, closeTo(0.5, 1e-3));
-    await qr.setScaleFactorAsync(1.5);
-    expect(await qr.scaleFactorAsync, closeTo(-1.0, 1e-3));
+    expect(qr.scaleFactor, closeTo(-1.0, 1e-3));
+    qr.scaleFactor = 0.5;
+    expect(qr.scaleFactor, closeTo(0.5, 1e-3));
+    qr.scaleFactor = 1.5;
+    expect(qr.scaleFactor, closeTo(-1.0, 1e-3));
   });
 }

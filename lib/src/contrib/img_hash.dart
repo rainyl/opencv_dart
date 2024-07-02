@@ -5,6 +5,7 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/src/core/vec.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -12,9 +13,9 @@ import '../opencv.g.dart' as cvg;
 
 abstract class ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo);
-  void compute(InputArray inputArr, OutputArray outputArr);
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]);
   Future<double> compareAsync(InputArray hashOne, InputArray hashTwo);
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr);
+  Future<Mat> computeAsync(InputArray inputArr);
 }
 
 /// PHash is implementation of the PHash algorithm.
@@ -37,28 +38,23 @@ class PHash implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => CFFI.pHashCompute(inputArr.ref, outputArr.ref));
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
+    cvRun(() => CFFI.pHashCompute(inputArr.ref, p));
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
-    final rval = await cvRunAsync<double>(
-        (callback) => CFFI.pHashCompare_Async(hashOne.ref, hashTwo.ref, callback), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
+        (callback) => CFFI.pHashCompare_Async(hashOne.ref, hashTwo.ref, callback),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.pHashCompute_Async(inputArr.ref, outputArr.ref, callback),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync<Mat>(
+        (callback) => CFFI.pHashCompute_Async(inputArr.ref, callback),
+        matCompleter,
+      );
 }
 
 /// AverageHash is implementation of the AverageHash algorithm.
@@ -81,32 +77,26 @@ class AverageHash implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => CFFI.averageHashCompute(inputArr.ref, outputArr.ref));
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
+    cvRun(() => CFFI.averageHashCompute(inputArr.ref, p));
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
-    final rval = await cvRunAsync<double>(
-        (callback) => CFFI.averageHashCompare_Async(hashOne.ref, hashTwo.ref, callback), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
+        (callback) => CFFI.averageHashCompare_Async(hashOne.ref, hashTwo.ref, callback),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.averageHashCompute_Async(
-        inputArr.ref,
-        outputArr.ref,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync<Mat>(
+        (callback) => CFFI.averageHashCompute_Async(
+          inputArr.ref,
+          callback,
+        ),
+        matCompleter,
+      );
 }
 
 /// !< use fewer block and generate 16*16/8 uchar hash value
@@ -151,8 +141,7 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
-  double compare(InputArray hashOne, InputArray hashTwo, [int? mode_]) {
-    mode_ ??= mode;
+  double compare(InputArray hashOne, InputArray hashTwo) {
     return using<double>((arena) {
       final p = arena<ffi.Double>();
       cvRun(() => CFFI.BlockMeanHash_Compare(ref, hashOne.ref, hashTwo.ref, p));
@@ -181,21 +170,20 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr, [int? mode_]) {
-    mode_ ??= mode;
-    cvRun(() => CFFI.BlockMeanHash_Compute(ref, inputArr.ref, outputArr.ref));
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
+    cvRun(() => CFFI.BlockMeanHash_Compute(ref, inputArr.ref, p));
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   /// STATIC Compute computes hash of the input image using BlockMeanHash.
   ///
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
-  static void computeS(
-    InputArray inputArr,
-    OutputArray outputArr, [
-    int mode = 0,
-  ]) {
-    cvRun(() => CFFI.blockMeanHashCompute(inputArr.ref, outputArr.ref, mode));
+  static Mat computeS(InputArray inputArr, {OutputArray? outputArr, int mode = 0}) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
+    cvRun(() => CFFI.blockMeanHashCompute(inputArr.ref, p, mode));
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   /// https://docs.opencv.org/4.x/df/d55/classcv_1_1img__hash_1_1BlockMeanHash.html#ad5aef85f58315551cac14bcabe05f0c3
@@ -210,89 +198,54 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(
-    InputArray hashOne,
-    InputArray hashTwo, [
-    int? mode_,
-  ]) async {
-    mode_ ??= mode;
-    final rval = await cvRunAsync<double>(
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
         (callback) => CFFI.BlockMeanHash_Compare_Async(
-              ref,
-              hashOne.ref,
-              hashTwo.ref,
-              callback,
-            ), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+          ref,
+          hashOne.ref,
+          hashTwo.ref,
+          callback,
+        ),
+        doubleCompleter,
+      );
 
   Future<double> compareSAsync(
     InputArray hashOne,
     InputArray hashTwo, [
     int mode = 0,
-  ]) async {
-    final rval = await cvRunAsync<double>(
+  ]) async =>
+      cvRunAsync<double>(
         (callback) => CFFI.BlockMeanHash_Compare_Async(
-              ref,
-              hashOne.ref,
-              hashTwo.ref,
-              callback,
-            ), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+          ref,
+          hashOne.ref,
+          hashTwo.ref,
+          callback,
+        ),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(
-    InputArray inputArr,
-    OutputArray outputArr, [
-    int? mode_,
-  ]) async {
-    mode_ ??= mode;
-    await cvRunAsync0<void>(
-      (callback) => CFFI.BlockMeanHash_Compute_Async(
-        ref,
-        inputArr.ref,
-        outputArr.ref,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync1<Mat>(
+        (callback) => CFFI.BlockMeanHash_Compute_Async(
+          ref,
+          inputArr.ref,
+          callback,
+        ),
+        matCompleter,
+      );
 
-  Future<void> computeSAsync(
-    InputArray inputArr,
-    OutputArray outputArr, [
-    int mode = 0,
-  ]) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.BlockMeanHash_Compute_Async(
-        ref,
-        inputArr.ref,
-        outputArr.ref,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeSAsync(InputArray inputArr, [int mode = 0]) async => cvRunAsync<Mat>(
+        (callback) => CFFI.BlockMeanHash_Compute_Async(
+          ref,
+          inputArr.ref,
+          callback,
+        ),
+        matCompleter,
+      );
 
-  Future<List<double>> getMeanAsync() async {
-    final rval = await cvRunAsync2<List<double>>(
-        (callback) => CFFI.BlockMeanHash_GetMean_Async(ref, callback), (c, p, p2) {
-      final ret = p.cast<ffi.Pointer<ffi.Double>>();
-      final length = p2.cast<ffi.Int>().value;
-      if (length == 0) return c.complete(List<double>.empty());
-      return c.complete(List.generate(length, (i) => ret[i].value));
-    });
-    return rval;
-  }
+  Future<VecDouble> getMeanAsync() async => cvRunAsync<VecDouble>(
+        (callback) => CFFI.BlockMeanHash_GetMean_Async(ref, callback),
+        vecDoubleCompleter,
+      );
 
   @override
   List<int> get props => [ptr.address];
@@ -321,36 +274,30 @@ class ColorMomentHash implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr) {
-    cvRun(() => CFFI.colorMomentHashCompute(inputArr.ref, outputArr.ref));
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
+    cvRun(() => CFFI.colorMomentHashCompute(inputArr.ref, p));
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
-    final rval = await cvRunAsync<double>(
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
         (callback) => CFFI.colorMomentHashCompare_Async(
-              hashOne.ref,
-              hashTwo.ref,
-              callback,
-            ), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+          hashOne.ref,
+          hashTwo.ref,
+          callback,
+        ),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.colorMomentHashCompute_Async(
-        inputArr.ref,
-        outputArr.ref,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync<Mat>(
+        (callback) => CFFI.colorMomentHashCompute_Async(
+          inputArr.ref,
+          callback,
+        ),
+        matCompleter,
+      );
 }
 
 /// MarrHildrethHash is implementation of the MarrHildrethHash algorithm.
@@ -386,47 +333,41 @@ class NewMarrHildrethHash implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr) {
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
     cvRun(
       () => CFFI.marrHildrethHashCompute(
         inputArr.ref,
-        outputArr.ref,
+        p,
         alpha,
         scale,
       ),
     );
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
-    final rval = await cvRunAsync<double>(
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
         (callback) => CFFI.marrHildrethHashCompare_Async(
-              hashOne.ref,
-              hashTwo.ref,
-              alpha,
-              scale,
-              callback,
-            ), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+          hashOne.ref,
+          hashTwo.ref,
+          alpha,
+          scale,
+          callback,
+        ),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.marrHildrethHashCompute_Async(
-        inputArr.ref,
-        outputArr.ref,
-        alpha,
-        scale,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync<Mat>(
+        (callback) => CFFI.marrHildrethHashCompute_Async(
+          inputArr.ref,
+          alpha,
+          scale,
+          callback,
+        ),
+        matCompleter,
+      );
 }
 
 /// NewRadialVarianceHash is implementation of the NewRadialVarianceHash algorithm.
@@ -462,45 +403,39 @@ class NewRadialVarianceHash implements ImgHashBase {
   /// For further information, see:
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#ae2d9288db370089dfd8aab85d5e0b0f3
   @override
-  void compute(InputArray inputArr, OutputArray outputArr) {
+  Mat compute(InputArray inputArr, [OutputArray? outputArr]) {
+    final p = outputArr?.ptr ?? calloc<cvg.Mat>();
     cvRun(
       () => CFFI.radialVarianceHashCompute(
         inputArr.ref,
-        outputArr.ref,
+        p,
         sigma,
         numOfAngleLine,
       ),
     );
+    return outputArr ?? Mat.fromPointer(p);
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
-    final rval = await cvRunAsync<double>(
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async => cvRunAsync<double>(
         (callback) => CFFI.radialVarianceHashCompare_Async(
-              hashOne.ref,
-              hashTwo.ref,
-              sigma,
-              numOfAngleLine,
-              callback,
-            ), (c, p) {
-      final rval = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      return c.complete(rval);
-    });
-    return rval;
-  }
+          hashOne.ref,
+          hashTwo.ref,
+          sigma,
+          numOfAngleLine,
+          callback,
+        ),
+        doubleCompleter,
+      );
 
   @override
-  Future<void> computeAsync(InputArray inputArr, OutputArray outputArr) async {
-    await cvRunAsync0<void>(
-      (callback) => CFFI.radialVarianceHashCompute_Async(
-        inputArr.ref,
-        outputArr.ref,
-        sigma,
-        numOfAngleLine,
-        callback,
-      ),
-      (c) => c.complete(),
-    );
-  }
+  Future<Mat> computeAsync(InputArray inputArr) async => cvRunAsync<Mat>(
+        (callback) => CFFI.radialVarianceHashCompute_Async(
+          inputArr.ref,
+          sigma,
+          numOfAngleLine,
+          callback,
+        ),
+        matCompleter,
+      );
 }

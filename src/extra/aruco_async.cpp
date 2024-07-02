@@ -512,12 +512,13 @@ CvStatus *ArucoDrawDetectedMarkers_Async(Mat image, VecVecPoint2f markerCorners,
     END_WRAP
 }
 
-CvStatus *ArucoGenerateImageMarker_Async(int dictionaryId, int id, int sidePixels, Mat img, int borderBits, CvCallback_0 callback)
+CvStatus *ArucoGenerateImageMarker_Async(int dictionaryId, int id, int sidePixels, int borderBits, CvCallback_1 callback)
 {
     BEGIN_WRAP
     cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictionaryId);
-    cv::aruco::generateImageMarker(dict, id, sidePixels, *img.ptr, borderBits);
-    callback();
+    cv::Mat dst;
+    cv::aruco::generateImageMarker(dict, id, sidePixels, dst, borderBits);
+    callback(new Mat {new cv::Mat(dst)});
     END_WRAP
 }
 

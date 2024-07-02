@@ -74,7 +74,7 @@ CvStatus *ArucoDetector_DetectMarkers_Async(ArucoDetector ad, Mat inputArr, CvCa
 
 // Utility Functions
 CvStatus *ArucoDrawDetectedMarkers_Async(Mat image, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor, CvCallback_0 callback);
-CvStatus *ArucoGenerateImageMarker_Async(int dictionaryId, int id, int sidePixels, Mat img, int borderBits, CvCallback_0 callback);
+CvStatus *ArucoGenerateImageMarker_Async(int dictionaryId, int id, int sidePixels, int borderBits, CvCallback_1 callback);
 CvStatus *getPredefinedDictionary_Async(int dictionaryId, CvCallback_1 callback);
 
 #ifdef __cplusplus

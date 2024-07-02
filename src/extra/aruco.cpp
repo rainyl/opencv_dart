@@ -436,10 +436,12 @@ CvStatus *ArucoDrawDetectedMarkers(Mat image, VecVecPoint2f markerCorners, VecIn
   cv::aruco::drawDetectedMarkers(*image.ptr, *markerCorners.ptr, *markerIds.ptr, _borderColor);
   END_WRAP
 }
-CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, Mat img, int borderBits)
+CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, int borderBits, Mat *img)
 {
   BEGIN_WRAP
   cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictionaryId);
-  cv::aruco::generateImageMarker(dict, id, sidePixels, *img.ptr, borderBits);
+  cv::Mat dst;
+  cv::aruco::generateImageMarker(dict, id, sidePixels, dst, borderBits);
+  *img = {new cv::Mat(dst)};
   END_WRAP
 }

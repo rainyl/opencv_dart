@@ -3367,38 +3367,38 @@ class CvNative {
     int dictionaryId,
     int id,
     int sidePixels,
-    Mat img,
     int borderBits,
+    ffi.Pointer<Mat> img,
   ) {
     return _ArucoGenerateImageMarker(
       dictionaryId,
       id,
       sidePixels,
-      img,
       borderBits,
+      img,
     );
   }
 
   late final _ArucoGenerateImageMarkerPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, Mat,
-              ffi.Int)>>('ArucoGenerateImageMarker');
-  late final _ArucoGenerateImageMarker = _ArucoGenerateImageMarkerPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(int, int, int, Mat, int)>();
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>)>>('ArucoGenerateImageMarker');
+  late final _ArucoGenerateImageMarker =
+      _ArucoGenerateImageMarkerPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              int, int, int, int, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> ArucoGenerateImageMarker_Async(
     int dictionaryId,
     int id,
     int sidePixels,
-    Mat img,
     int borderBits,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _ArucoGenerateImageMarker_Async(
       dictionaryId,
       id,
       sidePixels,
-      img,
       borderBits,
       callback,
     );
@@ -3406,12 +3406,11 @@ class CvNative {
 
   late final _ArucoGenerateImageMarker_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, Mat,
-              ffi.Int, CvCallback_0)>>('ArucoGenerateImageMarker_Async');
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              CvCallback_1)>>('ArucoGenerateImageMarker_Async');
   late final _ArucoGenerateImageMarker_Async =
       _ArucoGenerateImageMarker_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              int, int, int, Mat, int, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(int, int, int, int, CvCallback_1)>();
 
   void AsyncArray_Close(
     AsyncArrayPtr a,
@@ -4170,7 +4169,7 @@ class CvNative {
   ffi.Pointer<CvStatus> BlockMeanHash_Compute(
     BlockMeanHash self,
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
   ) {
     return _BlockMeanHash_Compute(
       self,
@@ -4182,32 +4181,29 @@ class CvNative {
   late final _BlockMeanHash_ComputePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, Mat, Mat)>>('BlockMeanHash_Compute');
+              BlockMeanHash, Mat, ffi.Pointer<Mat>)>>('BlockMeanHash_Compute');
   late final _BlockMeanHash_Compute = _BlockMeanHash_ComputePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat)>();
+      ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> BlockMeanHash_Compute_Async(
     BlockMeanHash self,
     Mat inputArr,
-    Mat outputArr,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _BlockMeanHash_Compute_Async(
       self,
       inputArr,
-      outputArr,
       callback,
     );
   }
 
   late final _BlockMeanHash_Compute_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat,
-              CvCallback_0)>>('BlockMeanHash_Compute_Async');
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat,
+              CvCallback_1)>>('BlockMeanHash_Compute_Async');
   late final _BlockMeanHash_Compute_Async =
       _BlockMeanHash_Compute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, Mat, Mat, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> BlockMeanHash_Create(
     int mode,
@@ -4267,7 +4263,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> BlockMeanHash_GetMean_Async(
     BlockMeanHash self,
-    CvCallback_2 callback,
+    CvCallback_1 callback,
   ) {
     return _BlockMeanHash_GetMean_Async(
       self,
@@ -4278,10 +4274,10 @@ class CvNative {
   late final _BlockMeanHash_GetMean_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, CvCallback_2)>>('BlockMeanHash_GetMean_Async');
+              BlockMeanHash, CvCallback_1)>>('BlockMeanHash_GetMean_Async');
   late final _BlockMeanHash_GetMean_Async =
       _BlockMeanHash_GetMean_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, CvCallback_2)>();
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> BlockMeanHash_SetMode(
     BlockMeanHash self,
@@ -30196,7 +30192,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> averageHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
   ) {
     return _averageHashCompute(
       inputArr,
@@ -30204,30 +30200,29 @@ class CvNative {
     );
   }
 
-  late final _averageHashComputePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>>(
-          'averageHashCompute');
+  late final _averageHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('averageHashCompute');
   late final _averageHashCompute = _averageHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> averageHashCompute_Async(
     Mat inputArr,
-    Mat outputArr,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _averageHashCompute_Async(
       inputArr,
-      outputArr,
       callback,
     );
   }
 
   late final _averageHashCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_0)>>('averageHashCompute_Async');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'averageHashCompute_Async');
   late final _averageHashCompute_Async = _averageHashCompute_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> blockMeanHashCompare(
     Mat a,
@@ -30252,7 +30247,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> blockMeanHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
     int mode,
   ) {
     return _blockMeanHashCompute(
@@ -30263,11 +30258,11 @@ class CvNative {
   }
 
   late final _blockMeanHashComputePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>>(
-      'blockMeanHashCompute');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, ffi.Int)>>('blockMeanHashCompute');
   late final _blockMeanHashCompute = _blockMeanHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, int)>();
 
   ffi.Pointer<CvStatus> calibrateCamera_Async(
     VecVecPoint3f objectPoints,
@@ -30346,7 +30341,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> colorMomentHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
   ) {
     return _colorMomentHashCompute(
       inputArr,
@@ -30354,30 +30349,29 @@ class CvNative {
     );
   }
 
-  late final _colorMomentHashComputePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>>(
-          'colorMomentHashCompute');
+  late final _colorMomentHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('colorMomentHashCompute');
   late final _colorMomentHashCompute = _colorMomentHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> colorMomentHashCompute_Async(
     Mat inputArr,
-    Mat outputArr,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _colorMomentHashCompute_Async(
       inputArr,
-      outputArr,
       callback,
     );
   }
 
   late final _colorMomentHashCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_0)>>('colorMomentHashCompute_Async');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'colorMomentHashCompute_Async');
   late final _colorMomentHashCompute_Async = _colorMomentHashCompute_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> core_AbsDiff_Async(
     Mat src1,
@@ -35307,7 +35301,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> marrHildrethHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
     double alpha,
     double scale,
   ) {
@@ -35321,21 +35315,19 @@ class CvNative {
 
   late final _marrHildrethHashComputePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Float, ffi.Float)>>('marrHildrethHashCompute');
-  late final _marrHildrethHashCompute = _marrHildrethHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double)>();
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Float,
+              ffi.Float)>>('marrHildrethHashCompute');
+  late final _marrHildrethHashCompute = _marrHildrethHashComputePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, double, double)>();
 
   ffi.Pointer<CvStatus> marrHildrethHashCompute_Async(
     Mat inputArr,
-    Mat outputArr,
     double alpha,
     double scale,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _marrHildrethHashCompute_Async(
       inputArr,
-      outputArr,
       alpha,
       scale,
       callback,
@@ -35344,12 +35336,11 @@ class CvNative {
 
   late final _marrHildrethHashCompute_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              CvCallback_0)>>('marrHildrethHashCompute_Async');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float,
+              CvCallback_1)>>('marrHildrethHashCompute_Async');
   late final _marrHildrethHashCompute_Async =
       _marrHildrethHashCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, double, double, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
@@ -35420,7 +35411,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> pHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
   ) {
     return _pHashCompute(
       inputArr,
@@ -35428,30 +35419,29 @@ class CvNative {
     );
   }
 
-  late final _pHashComputePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>>(
-          'pHashCompute');
-  late final _pHashCompute =
-      _pHashComputePtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+  late final _pHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('pHashCompute');
+  late final _pHashCompute = _pHashComputePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> pHashCompute_Async(
     Mat inputArr,
-    Mat outputArr,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _pHashCompute_Async(
       inputArr,
-      outputArr,
       callback,
     );
   }
 
   late final _pHashCompute_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, CvCallback_0)>>('pHashCompute_Async');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>>(
+      'pHashCompute_Async');
   late final _pHashCompute_Async = _pHashCompute_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, CvCallback_0)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
   ffi.Pointer<CvStatus> radialVarianceHashCompare(
     Mat a,
@@ -35505,7 +35495,7 @@ class CvNative {
 
   ffi.Pointer<CvStatus> radialVarianceHashCompute(
     Mat inputArr,
-    Mat outputArr,
+    ffi.Pointer<Mat> outputArr,
     double sigma,
     int numOfAngleLine,
   ) {
@@ -35519,21 +35509,20 @@ class CvNative {
 
   late final _radialVarianceHashComputePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Double, ffi.Int)>>('radialVarianceHashCompute');
-  late final _radialVarianceHashCompute = _radialVarianceHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, int)>();
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Double,
+              ffi.Int)>>('radialVarianceHashCompute');
+  late final _radialVarianceHashCompute =
+      _radialVarianceHashComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, double, int)>();
 
   ffi.Pointer<CvStatus> radialVarianceHashCompute_Async(
     Mat inputArr,
-    Mat outputArr,
     double sigma,
     int numOfAngleLine,
-    CvCallback_0 callback,
+    CvCallback_1 callback,
   ) {
     return _radialVarianceHashCompute_Async(
       inputArr,
-      outputArr,
       sigma,
       numOfAngleLine,
       callback,
@@ -35542,12 +35531,11 @@ class CvNative {
 
   late final _radialVarianceHashCompute_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
-              CvCallback_0)>>('radialVarianceHashCompute_Async');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double, ffi.Int,
+              CvCallback_1)>>('radialVarianceHashCompute_Async');
   late final _radialVarianceHashCompute_Async =
       _radialVarianceHashCompute_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, int, CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, double, int, CvCallback_1)>();
 
   void registerErrorCallback(
     ErrorCallback callback,
