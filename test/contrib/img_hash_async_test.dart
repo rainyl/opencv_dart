@@ -29,7 +29,7 @@ Future<void> testHashAsync(cv.ImgHashBase hashAlgorithm) async {
 }
 
 void main() async {
-  test('cv.PHash', () async => await testHashAsync(cv.PHash()));
+  test('cv.PHash', () async => testHashAsync(cv.PHash()));
   test('cv.AverageHash', () async => testHashAsync(cv.AverageHash()));
   test('cv.BlockMeanHash', () async => testHashAsync(cv.BlockMeanHash()));
   test('cv.ColorMomentHash', () async => testHashAsync(cv.ColorMomentHash()));

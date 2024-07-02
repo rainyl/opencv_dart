@@ -30224,46 +30224,6 @@ class CvNative {
   late final _averageHashCompute_Async = _averageHashCompute_AsyncPtr
       .asFunction<ffi.Pointer<CvStatus> Function(Mat, CvCallback_1)>();
 
-  ffi.Pointer<CvStatus> blockMeanHashCompare(
-    Mat a,
-    Mat b,
-    int mode,
-    ffi.Pointer<ffi.Double> rval,
-  ) {
-    return _blockMeanHashCompare(
-      a,
-      b,
-      mode,
-      rval,
-    );
-  }
-
-  late final _blockMeanHashComparePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int,
-              ffi.Pointer<ffi.Double>)>>('blockMeanHashCompare');
-  late final _blockMeanHashCompare = _blockMeanHashComparePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
-
-  ffi.Pointer<CvStatus> blockMeanHashCompute(
-    Mat inputArr,
-    ffi.Pointer<Mat> outputArr,
-    int mode,
-  ) {
-    return _blockMeanHashCompute(
-      inputArr,
-      outputArr,
-      mode,
-    );
-  }
-
-  late final _blockMeanHashComputePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<Mat>, ffi.Int)>>('blockMeanHashCompute');
-  late final _blockMeanHashCompute = _blockMeanHashComputePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, int)>();
-
   ffi.Pointer<CvStatus> calibrateCamera_Async(
     VecVecPoint3f objectPoints,
     VecVecPoint2f imagePoints,

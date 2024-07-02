@@ -35,17 +35,6 @@ extension VideoCaptureAsync on VideoCapture {
         (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
       );
 
-  /// Returns the specified [VideoCapture] property.
-  ///
-  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  Future<double> getAsync(int propId) async =>
-      cvRunAsync((callback) => CFFI.VideoCapture_Get_Async(ref, propId, callback), doubleCompleter);
-
-  Future<bool> setAsync(int prop, double value) async => cvRunAsync(
-        (callback) => CFFI.VideoCapture_Set_Async(ref, prop, value, callback),
-        boolCompleter,
-      );
-
   // String getBackendName()=>CFFI.videocapture
 
   /// Grabs the next frame from video file or capturing device.

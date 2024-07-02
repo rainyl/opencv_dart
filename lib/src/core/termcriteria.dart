@@ -41,7 +41,7 @@ class TermCriteria extends CvStruct<cvg.TermCriteria> {
   double get eps => ref.epsilon;
 
   @override
-  List<Object?> get props => [type, maxCount, eps];
+  List<num> get props => [type, maxCount, eps];
 
   @override
   cvg.TermCriteria get ref => ptr.ref;

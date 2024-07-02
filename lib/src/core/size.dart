@@ -83,7 +83,7 @@ class Size2f extends CvStruct<cvg.Size2f> {
   }
 
   @override
-  List<Object?> get props => [width, height];
+  List<double> get props => [width, height];
 
   @override
   cvg.Size2f get ref => ptr.ref;
@@ -95,11 +95,9 @@ class Size2f extends CvStruct<cvg.Size2f> {
 }
 
 extension RecordSizeExtension1 on (int, int) {
-  Size toSize() => Size(this.$1, this.$2);
-  Size get cvd => Size(this.$1, this.$2);
+  Size get cvd => Size.fromRecord(this);
 }
 
 extension RecordSize2fExtension1 on (double, double) {
-  Size2f toSize2f() => Size2f(this.$1, this.$2);
-  Size2f get cvd => Size2f(this.$1, this.$2);
+  Size2f get cvd => Size2f.fromRecord(this);
 }

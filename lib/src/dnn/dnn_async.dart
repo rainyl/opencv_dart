@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 library cv;
 
 import 'dart:ffi' as ffi;
@@ -16,30 +18,6 @@ import '../opencv.g.dart' as cvg;
 import './dnn.dart';
 
 extension LayerAsync on Layer {
-  Future<String> get nameAsync async {
-    final rval = cvRunAsync<String>(
-      (callback) => CFFI.Layer_GetName_Async(ref, callback),
-      (c, p) {
-        final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
-        calloc.free(p);
-        return c.complete(rval);
-      },
-    );
-    return rval;
-  }
-
-  Future<String> get typeAsync async {
-    final rval = cvRunAsync<String>(
-      (callback) => CFFI.Layer_GetType_Async(ref, callback),
-      (c, p) {
-        final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
-        calloc.free(p);
-        return c.complete(rval);
-      },
-    );
-    return rval;
-  }
-
   Future<int> inputNameToIndexAsync(String name) async {
     final cName = name.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<int>(

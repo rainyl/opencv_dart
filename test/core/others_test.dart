@@ -270,4 +270,80 @@ void main() {
 
     vec.dispose();
   });
+
+  test('cv.VecVec4i', () {
+    final v = [
+      cv.Vec4i(1, 2, 3, 4),
+      cv.Vec4i(5, 6, 7, 8),
+      cv.Vec4i(9, 10, 11, 12),
+      cv.Vec4i(13, 14, 15, 16),
+    ];
+    final vv = v.cvd;
+    expect(vv.length, v.length);
+    expect(vv.first, cv.Vec4i(1, 2, 3, 4));
+    expect(vv.last, cv.Vec4i(13, 14, 15, 16));
+
+    vv.dispose();
+  });
+
+  test('cv.VecVec4f', () {
+    final v = [
+      cv.Vec4f(1, 2, 3, 4),
+      cv.Vec4f(5, 6, 7, 8),
+      cv.Vec4f(9, 10, 11, 12),
+      cv.Vec4f(13, 14, 15, 16),
+    ];
+    final vv = v.cvd;
+    expect(vv.length, v.length);
+    expect(vv.first, cv.Vec4f(1, 2, 3, 4));
+    expect(vv.last, cv.Vec4f(13, 14, 15, 16));
+
+    vv.dispose();
+  });
+
+  test('cv.VecVec6f', () {
+    final v = [
+      cv.Vec6f(1, 2, 3, 4, 5, 6),
+      cv.Vec6f(5, 6, 7, 8, 9, 10),
+      cv.Vec6f(9, 10, 11, 12, 13, 14),
+      cv.Vec6f(13, 14, 15, 16, 17, 18),
+    ];
+    final vv = v.cvd;
+    expect(vv.length, v.length);
+    expect(vv.first, cv.Vec6f(1, 2, 3, 4, 5, 6));
+    expect(vv.last, cv.Vec6f(13, 14, 15, 16, 17, 18));
+
+    vv.dispose();
+  });
+
+  test('cv.Size', () {
+    const sz = (241, 241);
+    final cvSize = sz.cvd;
+    final cvSize1 = cv.Size.fromRecord(sz);
+    expect(cvSize1, cvSize);
+
+    cvSize1.dispose();
+  });
+
+  test('cv.Size2f', () {
+    const sz0 = (241, 241);
+    const sz = (241.0, 241.0);
+    final cvSize = sz.cvd;
+    final cvSize1 = cv.Size2f.fromRecord(sz);
+    final cvSize2 = cv.Size2f.fromSize(sz0.cvd);
+    expect(cvSize1, cvSize);
+    expect(cvSize2.width, closeTo(sz0.$1, 1e-6));
+
+    cvSize2.dispose();
+  });
+
+  test('cv.TermCriteria', () {
+    const tc = (cv.TERM_COUNT, 10, 0.01);
+    final cvTc = tc.cvd;
+    expect(cvTc.type, tc.$1);
+    expect(cvTc.maxCount, tc.$2);
+    expect(cvTc.eps, closeTo(tc.$3, 1e-6));
+
+    cvTc.dispose();
+  });
 }

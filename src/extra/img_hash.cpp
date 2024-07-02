@@ -42,6 +42,7 @@ CvStatus *BlockMeanHash_SetMode(BlockMeanHash self, int mode) {
   BEGIN_WRAP(*self.ptr)->setMode(mode);
   END_WRAP
 }
+
 void BlockMeanHash_Close(BlockMeanHashPtr self) {
   self->ptr->reset();
   CVD_FREE(self);
@@ -57,18 +58,6 @@ CvStatus *BlockMeanHash_Compute(BlockMeanHash self, Mat inputArr, Mat *outputArr
 CvStatus *BlockMeanHash_Compare(BlockMeanHash self, Mat hashOne, Mat hashTwo, double *rval) {
   BEGIN_WRAP
   *rval = (self.ptr)->get()->compare(*hashOne.ptr, *hashTwo.ptr);
-  END_WRAP
-}
-CvStatus *blockMeanHashCompute(Mat inputArr, Mat *outputArr, int mode) {
-  BEGIN_WRAP
-  cv::Mat dst;
-  cv::img_hash::blockMeanHash(*inputArr.ptr, dst, mode);
-  *outputArr = {new cv::Mat(dst)};
-  END_WRAP
-}
-CvStatus *blockMeanHashCompare(Mat a, Mat b, int mode, double *rval) {
-  BEGIN_WRAP
-  *rval = cv::img_hash::BlockMeanHash::create(mode)->compare(*a.ptr, *b.ptr);
   END_WRAP
 }
 
