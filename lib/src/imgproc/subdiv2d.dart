@@ -17,6 +17,8 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     }
   }
 
+  factory Subdiv2D.fromPointer(cvg.Subdiv2DPtr ptr) => Subdiv2D._(ptr);
+
   factory Subdiv2D.empty() {
     final p = calloc<cvg.Subdiv2D>();
     cvRun(() => CFFI.Subdiv2D_NewEmpty(p));

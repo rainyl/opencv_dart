@@ -1,15 +1,15 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
 import '../opencv.g.dart' as cvg;
 import 'base.dart';
 
-abstract class Vec<T> with IterableMixin<T>, EquatableMixin implements ffi.Finalizable {
+abstract class Vec<T> with IterableMixin<T>, ComparableMixin implements ffi.Finalizable {
   @override
   int get length;
 
@@ -515,3 +515,13 @@ extension ListDoubleExtension on List<double> {
 extension ListStringExtension on List<String> {
   VecVecChar get i8 => VecVecChar.fromList(map((e) => e.i8.toList()).toList());
 }
+
+// async completers
+void vecIntCompleter(Completer<VecInt> completer, VoidPtr p) =>
+    completer.complete(VecInt.fromPointer(p.cast<cvg.VecInt>()));
+
+void vecFloatCompleter(Completer<VecFloat> completer, VoidPtr p) =>
+    completer.complete(VecFloat.fromPointer(p.cast<cvg.VecFloat>()));
+
+void vecDoubleCompleter(Completer<VecDouble> completer, VoidPtr p) =>
+    completer.complete(VecDouble.fromPointer(p.cast<cvg.VecDouble>()));

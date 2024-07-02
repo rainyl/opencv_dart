@@ -17,7 +17,8 @@ extern "C" {
 
 #include "core.h"
 
-CvStatus *SVD_Compute(Mat src, Mat w, Mat u, Mat vt, int flags);
+CvStatus *SVD_Compute(Mat src, Mat *w, Mat *u, Mat *vt, int flags);
+CvStatus *SVD_backSubst(Mat w, Mat u, Mat vt, Mat rhs, Mat *dst);
 
 #ifdef __cplusplus
 }

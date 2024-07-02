@@ -17,11 +17,11 @@ extern "C" {
 #include "core/core.h"
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::VideoCapture, VideoCapture)
-CVD_TYPEDEF(cv::VideoWriter, VideoWriter)
+CVD_TYPEDEF(cv::VideoCapture, VideoCapture);
+CVD_TYPEDEF(cv::VideoWriter, VideoWriter);
 #else
-CVD_TYPEDEF(void, VideoCapture)
-CVD_TYPEDEF(void, VideoWriter)
+CVD_TYPEDEF(void, VideoCapture);
+CVD_TYPEDEF(void, VideoWriter);
 #endif
 
 // VideoCapture

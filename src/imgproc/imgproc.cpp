@@ -7,6 +7,7 @@
 */
 
 #include "imgproc.h"
+#include "utils.hpp"
 #include <vector>
 
 CvStatus *ArcLength(VecPoint curve, bool is_closed, double *rval)
@@ -41,10 +42,10 @@ CvStatus *CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, Vec
   cv::calcHist(*mats.ptr, *chans.ptr, *mask.ptr, *hist.ptr, *sz.ptr, *rng.ptr, acc);
   END_WRAP
 }
-CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, bool uniform)
+CvStatus *CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, double scale)
 {
   BEGIN_WRAP
-  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, uniform);
+  cv::calcBackProject(*mats.ptr, *chans.ptr, *hist.ptr, *backProject.ptr, *rng.ptr, scale);
   END_WRAP
 }
 CvStatus *CompareHist(Mat hist1, Mat hist2, int method, double *rval)
@@ -573,15 +574,6 @@ CvStatus *ApplyCustomColorMap(Mat src, Mat dst, Mat colormap)
   END_WRAP
 }
 
-std::vector<cv::Point2f> vecPointToVecPoint2f(std::vector<cv::Point> src)
-{
-  std::vector<cv::Point2f> v;
-  for (int i = 0; i < src.size(); i++) {
-    v.push_back(cv::Point2f(src.at(i).x, src.at(i).y));
-  }
-  return v;
-}
-
 CvStatus *GetPerspectiveTransform(VecPoint src, VecPoint dst, Mat *rval, int solveMethod)
 {
   BEGIN_WRAP
@@ -718,7 +710,7 @@ CvStatus *CLAHE_CreateWithParams(double clipLimit, Size tileGridSize, CLAHE *rva
 void CLAHE_Close(CLAHEPtr c)
 {
   c->ptr->reset();
-  CVD_FREE(c)
+  CVD_FREE(c);
 }
 
 CvStatus *CLAHE_Apply(CLAHE c, Mat src, Mat dst)
@@ -768,7 +760,7 @@ CvStatus *Subdiv2D_NewWithRect(Rect rect, Subdiv2D *rval)
   *rval = {new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))};
   END_WRAP
 }
-void Subdiv2D_Close(Subdiv2DPtr self){CVD_FREE(self)}
+void Subdiv2D_Close(Subdiv2DPtr self) { CVD_FREE(self); }
 
 CvStatus *Subdiv2D_EdgeDst(Subdiv2D self, int edge, Point2f *dstpt, int *rval)
 {

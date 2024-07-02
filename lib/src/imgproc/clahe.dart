@@ -12,18 +12,21 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory CLAHE.fromNative(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
+  factory CLAHE.fromPointer(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
     final p = calloc<cvg.CLAHE>();
     CFFI.CLAHE_Create(p);
     return CLAHE._(p);
   }
 
+  factory CLAHE([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) =>
+      CLAHE.create(clipLimit, tileGridSize);
+
   /// NewCLAHE returns a new CLAHE algorithm
   ///
   /// For further details, please see:
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html
-  factory CLAHE([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
+  factory CLAHE.create([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
     final p = calloc<cvg.CLAHE>();
     final size = calloc<cvg.Size>()
       ..ref.width = tileGridSize.$1
@@ -56,21 +59,12 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   }
 
   Size get tilesGridSize {
-    return cvRunArena<Size>((arena) {
-      final p = arena<cvg.Size>();
-      cvRun(() => CFFI.CLAHE_GetTilesGridSize(ref, p));
-      return (p.ref.width, p.ref.height);
-    });
+    final p = calloc<cvg.Size>();
+    cvRun(() => CFFI.CLAHE_GetTilesGridSize(ref, p));
+    return Size.fromPointer(p);
   }
 
-  set tilesGridSize(Size value) {
-    cvRunArena((arena) {
-      final p = arena<cvg.Size>()
-        ..ref.width = value.$1
-        ..ref.height = value.$2;
-      cvRun(() => CFFI.CLAHE_SetTilesGridSize(ref, p.ref));
-    });
-  }
+  set tilesGridSize(Size value) => cvRun(() => CFFI.CLAHE_SetTilesGridSize(ref, value.ref));
 
   static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(CFFI.addresses.CLAHE_Close);
 

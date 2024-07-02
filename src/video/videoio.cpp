@@ -27,7 +27,7 @@ CvStatus *VideoCapture_NewFromIndex(int index, int apiPreference, VideoCapture *
   *rval = {new cv::VideoCapture(index, apiPreference)};
   END_WRAP
 }
-void VideoCapture_Close(VideoCapturePtr self){CVD_FREE(self)}
+void VideoCapture_Close(VideoCapturePtr self) { CVD_FREE(self); }
 
 CvStatus *VideoCapture_Open(VideoCapture self, const char *uri, bool *rval)
 {
@@ -97,7 +97,7 @@ CvStatus *VideoWriter_New(VideoWriter *rval)
   *rval = {new cv::VideoWriter()};
   END_WRAP
 }
-void VideoWriter_Close(VideoWriterPtr self){CVD_FREE(self)}
+void VideoWriter_Close(VideoWriterPtr self) { CVD_FREE(self); }
 
 CvStatus *VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,
                            int height, bool isColor)

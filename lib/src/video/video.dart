@@ -189,31 +189,29 @@ Mat calcOpticalFlowFarneback(
   VecPoint2f nextPts, {
   VecUChar? status,
   VecFloat? err,
-  Size winSize = (21, 21),
+  (int, int) winSize = (21, 21),
   int maxLevel = 3,
-  TermCriteria criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+  (int, int, double) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
   int flags = 0,
   double minEigThreshold = 1e-4,
 }) {
   final s = status?.ptr ?? calloc<cvg.VecUChar>();
   final e = err?.ptr ?? calloc<cvg.VecFloat>();
-  cvRunArena((arena) {
-    cvRun(
-      () => CFFI.CalcOpticalFlowPyrLKWithParams(
-        prevImg.ref,
-        nextImg.ref,
-        prevPts.ref,
-        nextPts.ref,
-        s,
-        e,
-        winSize.toSize(arena).ref,
-        maxLevel,
-        criteria.toNativePtr(arena).ref,
-        flags,
-        minEigThreshold,
-      ),
-    );
-  });
+  cvRun(
+    () => CFFI.CalcOpticalFlowPyrLKWithParams(
+      prevImg.ref,
+      nextImg.ref,
+      prevPts.ref,
+      nextPts.ref,
+      s,
+      e,
+      winSize.cvd.ref,
+      maxLevel,
+      criteria.toTermCriteria().ref,
+      flags,
+      minEigThreshold,
+    ),
+  );
   return (nextPts, status ?? VecUChar.fromPointer(s), VecFloat.fromPointer(e));
 }
 
@@ -226,7 +224,7 @@ Mat calcOpticalFlowFarneback(
   InputArray inputImage,
   InputOutputArray warpMatrix,
   int motionType,
-  TermCriteria criteria,
+  (int, int, double) criteria,
   InputArray inputMask,
   int gaussFiltSize,
 ) {
@@ -238,7 +236,7 @@ Mat calcOpticalFlowFarneback(
         inputImage.ref,
         warpMatrix.ref,
         motionType,
-        criteria.toNativePtr(arena).ref,
+        criteria.toTermCriteria().ref,
         inputMask.ref,
         gaussFiltSize,
         p,

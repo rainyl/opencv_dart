@@ -2,10 +2,10 @@
 
 library cv;
 
-import 'package:equatable/equatable.dart';
+import 'base.dart';
 import 'exception.dart';
 
-class MatType extends Equatable {
+class MatType with ComparableMixin {
   final int value;
 
   const MatType(this.value);

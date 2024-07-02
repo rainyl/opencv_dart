@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:math' as math;
 
@@ -99,4 +100,9 @@ extension RecordScalarExtension on (double val1, double val2, double val3, doubl
       ..ref.val4 = this.$4;
     return scalar;
   }
+}
+
+// async completer
+void scalarCompleter(Completer<Scalar> completer, VoidPtr p) {
+  completer.complete(Scalar.fromPointer(p.cast<cvg.Scalar>()));
 }

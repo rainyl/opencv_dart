@@ -13,7 +13,7 @@ CvStatus *ArucoDetectorParameters_Create(ArucoDetectorParameters *rval)
   *rval = {new cv::aruco::DetectorParameters()};
   END_WRAP
 }
-void ArucoDetectorParameters_Close(ArucoDetectorParametersPtr ap){CVD_FREE(ap)}
+void ArucoDetectorParameters_Close(ArucoDetectorParametersPtr ap) { CVD_FREE(ap); }
 
 CvStatus *ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(ArucoDetectorParameters ap,
                                                               int adaptiveThreshWinSizeMin)
@@ -395,7 +395,7 @@ CvStatus *getPredefinedDictionary(int dictionaryId, ArucoDictionary *rval)
   *rval = {new cv::aruco::Dictionary(cv::aruco::getPredefinedDictionary(dictionaryId))};
   END_WRAP
 }
-void ArucoDictionary_Close(ArucoDictionaryPtr self){CVD_FREE(self)}
+void ArucoDictionary_Close(ArucoDictionaryPtr self) { CVD_FREE(self); }
 
 CvStatus *ArucoDetector_New(ArucoDetector *rval)
 {
@@ -410,7 +410,7 @@ CvStatus *ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorP
   *rval = {new cv::aruco::ArucoDetector(*dictionary.ptr, *params.ptr)};
   END_WRAP
 }
-void ArucoDetector_Close(ArucoDetectorPtr ad){CVD_FREE(ad)}
+void ArucoDetector_Close(ArucoDetectorPtr ad) { CVD_FREE(ad); }
 
 CvStatus *ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,
                                       VecInt *markerIds, VecVecPoint2f *rejectedCandidates)
@@ -436,10 +436,12 @@ CvStatus *ArucoDrawDetectedMarkers(Mat image, VecVecPoint2f markerCorners, VecIn
   cv::aruco::drawDetectedMarkers(*image.ptr, *markerCorners.ptr, *markerIds.ptr, _borderColor);
   END_WRAP
 }
-CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, Mat img, int borderBits)
+CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, int borderBits, Mat *img)
 {
   BEGIN_WRAP
   cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictionaryId);
-  cv::aruco::generateImageMarker(dict, id, sidePixels, *img.ptr, borderBits);
+  cv::Mat dst;
+  cv::aruco::generateImageMarker(dict, id, sidePixels, dst, borderBits);
+  *img = {new cv::Mat(dst)};
   END_WRAP
 }

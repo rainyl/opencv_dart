@@ -37,20 +37,20 @@ class Layer extends CvStruct<cvg.Layer> {
 
   /// GetName returns name for this layer.
   String get name {
-    return cvRunArena<String>((arena) {
-      final p = calloc<ffi.Pointer<ffi.Char>>();
-      cvRun(() => CFFI.Layer_GetName(ref, p));
-      return p.value.toDartString();
-    });
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    cvRun(() => CFFI.Layer_GetName(ref, p));
+    final r = p.value.toDartString();
+    calloc.free(p);
+    return r;
   }
 
   /// GetType returns type for this layer.
   String get type {
-    return cvRunArena<String>((arena) {
-      final p = calloc<ffi.Pointer<ffi.Char>>();
-      cvRun(() => CFFI.Layer_GetType(ref, p));
-      return p.value.toDartString();
-    });
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    cvRun(() => CFFI.Layer_GetType(ref, p));
+    final r = p.value.toDartString();
+    calloc.free(p);
+    return r;
   }
 
   /// InputNameToIndex returns index of input blob in input array.
@@ -95,14 +95,17 @@ class Net extends CvStruct<cvg.Net> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory Net.fromPointer(
+    cvg.NetPtr ptr, [
+    bool attach = true,
+  ]) =>
+      Net._(ptr, attach);
 
   factory Net.empty() {
-    return cvRunArena<Net>((arena) {
-      final p = calloc<cvg.Net>();
-      cvRun(() => CFFI.Net_Create(p));
-      final net = Net._(p);
-      return net;
-    });
+    final p = calloc<cvg.Net>();
+    cvRun(() => CFFI.Net_Create(p));
+    final net = Net._(p);
+    return net;
   }
 
   /// Read deep learning network represented in one of the supported formats.
@@ -310,12 +313,10 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/3.4.1/db/d30/classcv_1_1dnn_1_1Net.html#adb34d7650e555264c7da3b47d967311b
   VecMat forwardLayers(List<String> names) {
-    return cvRunArena<VecMat>((arena) {
-      final vecName = names.i8;
-      final vecMat = calloc<cvg.VecMat>();
-      cvRun(() => CFFI.Net_ForwardLayers(ref, vecMat, vecName.ref));
-      return VecMat.fromPointer(vecMat);
-    });
+    final vecName = names.i8;
+    final vecMat = calloc<cvg.VecMat>();
+    cvRun(() => CFFI.Net_ForwardLayers(ref, vecMat, vecName.ref));
+    return VecMat.fromPointer(vecMat);
   }
 
   /// SetPreferableBackend ask network to use specific computation backend.
@@ -369,22 +370,18 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae62a73984f62c49fd3e8e689405b056a
   List<int> getUnconnectedOutLayers() {
-    return using<List<int>>((arena) {
-      final ids = calloc<cvg.VecInt>();
-      cvRun(() => CFFI.Net_GetUnconnectedOutLayers(ref, ids));
-      return VecInt.fromPointer(ids).toList();
-    });
+    final ids = calloc<cvg.VecInt>();
+    cvRun(() => CFFI.Net_GetUnconnectedOutLayers(ref, ids));
+    return VecInt.fromPointer(ids).toList();
   }
 
   /// Returns input scale and zeropoint for a quantized Net.
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
   (VecFloat, VecInt) getInputDetails() {
-    return using<(VecFloat, VecInt)>((arena) {
-      final sc = calloc<cvg.VecFloat>();
-      final zp = calloc<cvg.VecInt>();
-      cvRun(() => CFFI.Net_GetInputDetails(ref, sc, zp));
-      return (VecFloat.fromPointer(sc), VecInt.fromPointer(zp));
-    });
+    final sc = calloc<cvg.VecFloat>();
+    final zp = calloc<cvg.VecInt>();
+    cvRun(() => CFFI.Net_GetInputDetails(ref, sc, zp));
+    return (VecFloat.fromPointer(sc), VecInt.fromPointer(zp));
   }
 
   static final finalizer = OcvFinalizer<cvg.NetPtr>(CFFI.addresses.Net_Close);
@@ -409,30 +406,27 @@ class Net extends CvStruct<cvg.Net> {
 Mat blobFromImage(
   InputArray image, {
   double scalefactor = 1.0,
-  Size? size,
+  (int, int) size = (0, 0),
   Scalar? mean,
   bool swapRB = false,
   bool crop = false,
   int ddepth = MatType.CV_32F,
 }) {
-  return using<Mat>((arena) {
-    size ??= (0, 0);
-    mean ??= Scalar.zeros;
-    final blob = Mat.empty();
-    cvRun(
-      () => CFFI.Net_BlobFromImage(
-        image.ref,
-        blob.ref,
-        scalefactor,
-        size!.toSize(arena).ref,
-        mean!.ref,
-        swapRB,
-        crop,
-        ddepth,
-      ),
-    );
-    return blob;
-  });
+  mean ??= Scalar.zeros;
+  final blob = Mat.empty();
+  cvRun(
+    () => CFFI.Net_BlobFromImage(
+      image.ref,
+      blob.ref,
+      scalefactor,
+      size.cvd.ref,
+      mean!.ref,
+      swapRB,
+      crop,
+      ddepth,
+    ),
+  );
+  return blob;
 }
 
 /// Creates 4-dimensional blob from series of images.
@@ -444,28 +438,27 @@ Mat blobFromImages(
   VecMat images, {
   Mat? blob,
   double scalefactor = 1.0,
-  Size? size,
+  (int, int) size = (0, 0),
   Scalar? mean,
   bool swapRB = false,
   bool crop = false,
   int ddepth = MatType.CV_32F,
 }) {
-  return using<Mat>((arena) {
-    blob ??= Mat.empty();
-    size ??= (0, 0);
-    mean ??= Scalar.zeros;
-    CFFI.Net_BlobFromImages(
+  blob ??= Mat.empty();
+  mean ??= Scalar.zeros;
+  cvRun(
+    () => CFFI.Net_BlobFromImages(
       images.ref,
       blob!.ref,
       scalefactor,
-      size!.toSize(arena).ref,
+      size.cvd.ref,
       mean!.ref,
       swapRB,
       crop,
       ddepth,
-    );
-    return blob!;
-  });
+    ),
+  );
+  return blob;
 }
 
 /// ImagesFromBlob Parse a 4D blob and output the images it contains as

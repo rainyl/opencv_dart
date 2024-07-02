@@ -97,6 +97,8 @@ class OcvDartDesktop(ConanFile):
         self.tool_requires("cmake/3.28.1")
         if self.settings.os != "Windows":
             self.tool_requires("ninja/1.11.1")
+        # if self.settings.os == "Linux":
+        #     self.tool_requires("ffmpeg/6.1")
         if self.settings.os == "Android":
             ndk_path = os.environ.get("ANDROID_NDK_HOME", None) or os.environ.get(
                 "ANDROID_NDK_ROOT", None

@@ -43,11 +43,9 @@ String getBuildInformation() {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6fef31bc8c4071cbc114a758a2b79c14
 Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
-  return cvRunArena<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => CFFI.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
-    return dst!;
-  });
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
+  return dst;
 }
 
 /// Add calculates the per-element sum of two arrays or an array and a scalar.
@@ -55,11 +53,9 @@ Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
 Mat add(Mat src1, Mat src2, [Mat? dst]) {
-  return cvRunArena<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => CFFI.Mat_Add(src1.ref, src2.ref, dst!.ref));
-    return dst!;
-  });
+  dst ??= Mat.empty();
+  cvRun(() => CFFI.Mat_Add(src1.ref, src2.ref, dst!.ref));
+  return dst;
 }
 
 /// AddWeighted calculates the weighted sum of two arrays.
@@ -206,11 +202,11 @@ Mat bitwiseXOR(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
 int borderInterpolate(int p, int len, int borderType) {
-  return cvRunArena<int>((arena) {
-    final ptr = arena<ffi.Int>();
-    cvRun(() => CFFI.Mat_BorderInterpolate(p, len, borderType, ptr));
-    return ptr.value;
-  });
+  final ptr = calloc<ffi.Int>();
+  cvRun(() => CFFI.Mat_BorderInterpolate(p, len, borderType, ptr));
+  final v = ptr.value;
+  calloc.free(ptr);
+  return v;
 }
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
@@ -665,7 +661,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   InputArray data,
   int K,
   InputOutputArray bestLabels,
-  TermCriteria criteria,
+  (int, int, double) criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -678,7 +674,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
         data.ref,
         K,
         bestLabels.ref,
-        criteria.toNativePtr(arena).ref,
+        TermCriteria.fromRecord(criteria).ref,
         attempts,
         flags,
         centers!.ref,
@@ -698,7 +694,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   VecPoint2f pts,
   int K,
   InputOutputArray bestLabels,
-  TermCriteria criteria,
+  (int, int, double) criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -711,7 +707,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
         pts.ref,
         K,
         bestLabels.ref,
-        criteria.toNativePtr(arena).ref,
+        TermCriteria.fromRecord(criteria).ref,
         attempts,
         flags,
         centers!.ref,
@@ -785,14 +781,12 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
-  return cvRunArena<(Scalar, Scalar)>((arena) {
-    final mean = calloc<cvg.Scalar>();
-    final stddev = calloc<cvg.Scalar>();
-    mask == null
-        ? cvRun(() => CFFI.Mat_MeanStdDev(src.ref, mean, stddev))
-        : cvRun(() => CFFI.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
-    return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
-  });
+  final mean = calloc<cvg.Scalar>();
+  final stddev = calloc<cvg.Scalar>();
+  mask == null
+      ? cvRun(() => CFFI.Mat_MeanStdDev(src.ref, mean, stddev))
+      : cvRun(() => CFFI.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
+  return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
 }
 
 /// Merge creates one multi-channel array out of several single-channel ones.
@@ -853,10 +847,8 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
 VecMat mixChannels(VecMat src, VecMat dst, VecInt fromTo) {
-  return cvRunArena<VecMat>((arena) {
-    cvRun(() => CFFI.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
-    return dst;
-  });
+  cvRun(() => CFFI.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
+  return dst;
 }
 
 /// Mulspectrums performs the per-element multiplication of two Fourier spectrums.
@@ -1119,11 +1111,9 @@ Mat subtract(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
-  return cvRunArena<Scalar>((arena) {
-    final ptr = calloc<cvg.Scalar>();
-    cvRun(() => CFFI.Mat_Trace(mtx.ref, ptr));
-    return Scalar.fromPointer(ptr);
-  });
+  final ptr = calloc<cvg.Scalar>();
+  cvRun(() => CFFI.Mat_Trace(mtx.ref, ptr));
+  return Scalar.fromPointer(ptr);
 }
 
 /// Transform performs the matrix transformation of every array element.

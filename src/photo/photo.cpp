@@ -101,7 +101,7 @@ CvStatus *MergeMertens_Process(MergeMertens b, VecMat src, Mat dst)
 void MergeMertens_Close(MergeMertensPtr b)
 {
   b->ptr->reset();
-  CVD_FREE(b)
+  CVD_FREE(b);
 }
 
 CvStatus *AlignMTB_Create(AlignMTB *rval)
@@ -127,7 +127,7 @@ CvStatus *AlignMTB_Process(AlignMTB b, VecMat src, VecMat *dst)
 void AlignMTB_Close(AlignMTBPtr b)
 {
   b->ptr->reset();
-  CVD_FREE(b)
+  CVD_FREE(b);
 }
 
 CvStatus *DetailEnhance(Mat src, Mat dst, float sigma_s, float sigma_r)

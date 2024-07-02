@@ -120,9 +120,9 @@ void main() {
     expect(rect.points.length, greaterThan(0));
     expect(rect.boundingRect, cv.Rect(-6, -6, 15, 15));
     expect(rect.center, cv.Point2f(1, 1));
-    expect(rect.size, (10, 10));
+    expect(rect.size, cv.Size2f(10, 10));
     expect(rect.angle, 60);
-    expect(rect.toString(), 'RotatedRect(Point2f(1.000, 1.000), (10.0, 10.0), 60.000)');
+    expect(rect.toString(), 'RotatedRect(Point2f(1.000, 1.000), Size2f(10.000, 10.000), 60.000)');
 
     final rect2 = cv.RotatedRect.fromNative(rect.ref);
     expect(rect2, rect);
