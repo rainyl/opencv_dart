@@ -103,6 +103,7 @@ CVD_TYPEDEF(std::vector<cv::Point2f>, VecPoint2f);
 CVD_TYPEDEF(std::vector<std::vector<cv::Point2f>>, VecVecPoint2f);
 CVD_TYPEDEF(std::vector<cv::Point3f>, VecPoint3f);
 CVD_TYPEDEF(std::vector<std::vector<cv::Point3f>>, VecVecPoint3f);
+CVD_TYPEDEF(std::vector<cv::Point3i>, VecPoint3i);
 CVD_TYPEDEF(std::vector<uchar>, VecUChar);
 CVD_TYPEDEF(std::vector<char>, VecChar);
 CVD_TYPEDEF(std::vector<int>, VecInt);
@@ -137,6 +138,7 @@ CVD_TYPEDEF(void, VecPoint2f);
 CVD_TYPEDEF(void, VecVecPoint2f);
 CVD_TYPEDEF(void, VecPoint3f);
 CVD_TYPEDEF(void, VecVecPoint3f);
+CVD_TYPEDEF(void, VecPoint3i);
 CVD_TYPEDEF(void, VecUChar);
 CVD_TYPEDEF(void, VecChar);
 CVD_TYPEDEF(void, VecInt);
@@ -173,6 +175,12 @@ typedef struct Point3f {
   float z;
 } Point3f;
 // CVD_CALLBACK_DEF(Point3f);
+
+typedef struct Point3i {
+  int x;
+  int y;
+  int z;
+} Point3i;
 
 // Wrapper for an individual cv::cvRect
 typedef struct Rect {

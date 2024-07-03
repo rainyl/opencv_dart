@@ -33,6 +33,7 @@ headers:
     - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
     - src/extra/ximgproc.h
+    - src/extra/ximgproc_async.h
     - src/extra/xobjdetect.h
     - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h
@@ -72,6 +73,7 @@ headers:
     - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
     - src/extra/ximgproc.h
+    - src/extra/ximgproc_async.h
     - src/extra/xobjdetect.h
     - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h

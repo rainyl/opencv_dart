@@ -71,6 +71,16 @@ CvStatus *VecVecPoint3f_At(VecVecPoint3f vec, int idx, VecPoint3f *rval);
 CvStatus *VecVecPoint3f_Append(VecVecPoint3f vec, VecPoint3f pv);
 void VecVecPoint3f_Close(VecVecPoint3fPtr vec);
 
+CvStatus *VecPoint3i_New(VecPoint3i *rval);
+CvStatus *VecPoint3i_NewFromPointer(Point3i *points, int length, VecPoint3i *rval);
+CvStatus *VecPoint3i_NewFromMat(Mat mat, VecPoint3i *rval);
+CvStatus *VecPoint3i_NewFromVec(VecPoint3i vec, VecPoint3i *rval);
+CvStatus *VecPoint3i_Append(VecPoint3i vec, Point3i point);
+CvStatus *VecPoint3i_At(VecPoint3i vec, int idx, Point3i *rval);
+// CvStatus *VecPoint3i_Data(VecPoint3i vec, Point3i **rval);
+CvStatus *VecPoint3i_Size(VecPoint3i vec, int *rval);
+void VecPoint3i_Close(VecPoint3iPtr vec);
+
 CvStatus *VecUChar_New(VecUChar *rval);
 CvStatus *VecUChar_NewFromPointer(uchar *p, int length, VecUChar *rval);
 CvStatus *VecUChar_NewFromVec(VecUChar vec, VecUChar *rval);

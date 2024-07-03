@@ -6,6 +6,7 @@
 #define CVD_XIMGPROC_H
 
 #include "../core/core.h"
+#include "core/types.h"
 #ifdef __cplusplus
 #include <opencv2/opencv.hpp>
 #include <opencv2/ximgproc.hpp>
@@ -13,104 +14,191 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::ximgproc::RFFeatureGetter>, PtrRFFeatureGetter)
-CVD_TYPEDEF(cv::Ptr<cv::ximgproc::StructuredEdgeDetection>, PtrStructuredEdgeDetection)
-CVD_TYPEDEF(cv::Ptr<cv::ximgproc::EdgeBoxes>, PtrEdgeBoxes)
-CVD_TYPEDEF(cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>, PtrGraphSegmentation)
+CVD_TYPEDEF(cv::Ptr<cv::ximgproc::RFFeatureGetter>, RFFeatureGetter)
+CVD_TYPEDEF(cv::Ptr<cv::ximgproc::StructuredEdgeDetection>, StructuredEdgeDetection)
+CVD_TYPEDEF(cv::Ptr<cv::ximgproc::EdgeBoxes>, EdgeBoxes)
+CVD_TYPEDEF(cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>, GraphSegmentation)
+CVD_TYPEDEF(cv::Ptr<cv::ximgproc::EdgeDrawing>, EdgeDrawing)
+
 #else
-CVD_TYPEDEF(void *, PtrRFFeatureGetter)
-CVD_TYPEDEF(void *, PtrStructuredEdgeDetection)
-CVD_TYPEDEF(void *, PtrEdgeBoxes)
-CVD_TYPEDEF(void *, PtrGraphSegmentation)
+CVD_TYPEDEF(void *, RFFeatureGetter)
+CVD_TYPEDEF(void *, StructuredEdgeDetection)
+CVD_TYPEDEF(void *, EdgeBoxes)
+CVD_TYPEDEF(void *, GraphSegmentation)
+CVD_TYPEDEF(void *, EdgeDrawing)
 #endif
 
-CvStatus *ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, float K, int niters);
+CvStatus *
+ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, float K, int niters);
 CvStatus *ximgproc_edgePreservingFilter(Mat src, CVD_OUT Mat *dst, int d, double threshold);
-CvStatus *ximgproc_findEllipses(Mat image, CVD_OUT Mat *ellipses, float scoreThreshold,
-                                float reliabilityThreshold, float centerDistanceThreshold);
-CvStatus *ximgproc_niBlackThreshold(Mat src, CVD_OUT Mat *dst, double maxValue, int type, int blockSize,
-                                    double k, int binarizationMethod, double r);
+CvStatus *ximgproc_findEllipses(
+    Mat image,
+    CVD_OUT Mat *ellipses,
+    float scoreThreshold,
+    float reliabilityThreshold,
+    float centerDistanceThreshold
+);
+CvStatus *ximgproc_niBlackThreshold(
+    Mat src,
+    CVD_OUT Mat *dst,
+    double maxValue,
+    int type,
+    int blockSize,
+    double k,
+    int binarizationMethod,
+    double r
+);
 CvStatus *ximgproc_PeiLinNormalization(Mat I, CVD_OUT Mat *dst);
 CvStatus *ximgproc_thinning(Mat src, Mat *dst, int thinningType);
 
 // RFFeatureGetter
-CvStatus *ximgproc_RFFeatureGetter_Create(CVD_OUT PtrRFFeatureGetter *rval);
-void      ximgproc_RFFeatureGetter_Close(PtrRFFeatureGetterPtr self);
-CvStatus *ximgproc_RFFeatureGetter_getFeatures(PtrRFFeatureGetter self, Mat src, CVD_OUT Mat features,
-                                               int gnrmRad, int gsmthRad, int shrink, int outNum,
-                                               int gradNum);
-CvStatus *ximgproc_RFFeatureGetter_Clear(PtrRFFeatureGetter self);
-CvStatus *ximgproc_RFFeatureGetter_Empty(PtrRFFeatureGetter self, bool *rval);
+CvStatus *ximgproc_RFFeatureGetter_Create(CVD_OUT RFFeatureGetter *rval);
+void ximgproc_RFFeatureGetter_Close(RFFeatureGetterPtr self);
+CvStatus *ximgproc_RFFeatureGetter_getFeatures(
+    RFFeatureGetter self,
+    Mat src,
+    CVD_OUT Mat *features,
+    int gnrmRad,
+    int gsmthRad,
+    int shrink,
+    int outNum,
+    int gradNum
+);
+CvStatus *ximgproc_RFFeatureGetter_Clear(RFFeatureGetter self);
+CvStatus *ximgproc_RFFeatureGetter_Empty(RFFeatureGetter self, bool *rval);
 
 // StructuredEdgeDetection
-CvStatus *ximgproc_StructuredEdgeDetection_Create(char *model, PtrRFFeatureGetter howToGetFeatures,
-                                                  CVD_OUT PtrStructuredEdgeDetection *rval);
-void      ximgproc_StructuredEdgeDetection_Close(PtrStructuredEdgeDetectionPtr self);
-CvStatus *ximgproc_StructuredEdgeDetection_computeOrientation(PtrStructuredEdgeDetection self, Mat src,
-                                                              CVD_OUT Mat dst);
-CvStatus *ximgproc_StructuredEdgeDetection_detectEdges(PtrStructuredEdgeDetection self, Mat src,
-                                                       CVD_OUT Mat dst);
-CvStatus *ximgproc_StructuredEdgeDetection_edgesNms(PtrStructuredEdgeDetection self, Mat edge_image,
-                                                    Mat orientation_image, CVD_OUT Mat dst, int r, int s,
-                                                    float m, bool isParallel);
+CvStatus *
+ximgproc_StructuredEdgeDetection_Create(char *model, CVD_OUT StructuredEdgeDetection *rval);
+CvStatus *ximgproc_StructuredEdgeDetection_Create_1(
+    char *model, RFFeatureGetter howToGetFeatures, CVD_OUT StructuredEdgeDetection *rval
+);
+void ximgproc_StructuredEdgeDetection_Close(StructuredEdgeDetectionPtr self);
+CvStatus *ximgproc_StructuredEdgeDetection_computeOrientation(
+    StructuredEdgeDetection self, Mat src, CVD_OUT Mat *dst
+);
+CvStatus *ximgproc_StructuredEdgeDetection_detectEdges(
+    StructuredEdgeDetection self, Mat src, CVD_OUT Mat *dst
+);
+CvStatus *ximgproc_StructuredEdgeDetection_edgesNms(
+    StructuredEdgeDetection self,
+    Mat edge_image,
+    Mat orientation_image,
+    CVD_OUT Mat *dst,
+    int r,
+    int s,
+    float m,
+    bool isParallel
+);
 
 // Box, EdgeBoxes
-typedef struct Box {
-  int   h;
-  float score;
-  int   w;
-  int   x;
-  int   y;
-} Box;
-typedef struct Boxes {
-  Box *ptr;
-  int  length;
-} Boxes;
+// typedef struct Box {
+//   int h;
+//   float score;
+//   int w;
+//   int x;
+//   int y;
+// } Box;
 
-CvStatus *ximgproc_EdgeBoxes_Create(float alpha, float beta, float eta, float minScore, int maxBoxes,
-                                    float edgeMinMag, float edgeMergeThr, float clusterMinMag,
-                                    float maxAspectRatio, float minBoxArea, float gamma, float kappa,
-                                    PtrEdgeBoxes *rval);
-CvStatus *ximgproc_EdgeBoxes_Close(PtrEdgeBoxesPtr self);
-CvStatus *ximgproc_EdgeBoxes_getAlpha(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getBeta(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(PtrEdgeBoxes self, Mat edge_map, Mat orientation_map,
-                                              VecRect boxes, CVD_OUT VecFloat *scores);
-CvStatus *ximgproc_EdgeBoxes_getClusterMinMag(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getEdgeMergeThr(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getEdgeMinMag(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getEta(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getGamma(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getKappa(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getMaxAspectRatio(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getMaxBoxes(PtrEdgeBoxes self, int *rval);
-CvStatus *ximgproc_EdgeBoxes_getMinBoxArea(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_getMinScore(PtrEdgeBoxes self, float *rval);
-CvStatus *ximgproc_EdgeBoxes_setAlpha(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setBeta(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setClusterMinMag(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setEdgeMergeThr(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setEdgeMinMag(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setEta(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setGamma(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setKappa(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setMaxAspectRatio(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setMaxBoxes(PtrEdgeBoxes self, int val);
-CvStatus *ximgproc_EdgeBoxes_setMinBoxArea(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_setMinScore(PtrEdgeBoxes self, float val);
-CvStatus *ximgproc_EdgeBoxes_clear(PtrEdgeBoxes self);
-CvStatus *ximgproc_EdgeBoxes_empty(PtrEdgeBoxes self, bool *val);
+// CvStatus *ximgproc_EdgeBoxes_Create(
+//     float alpha,
+//     float beta,
+//     float eta,
+//     float minScore,
+//     int maxBoxes,
+//     float edgeMinMag,
+//     float edgeMergeThr,
+//     float clusterMinMag,
+//     float maxAspectRatio,
+//     float minBoxArea,
+//     float gamma,
+//     float kappa,
+//     EdgeBoxes *rval
+// );
+// CvStatus *ximgproc_EdgeBoxes_Close(EdgeBoxesPtr self);
+// CvStatus *ximgproc_EdgeBoxes_getAlpha(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getBeta(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
+//     EdgeBoxes self, Mat edge_map, Mat orientation_map, VecRect boxes, CVD_OUT VecFloat *scores
+// );
+// CvStatus *ximgproc_EdgeBoxes_getClusterMinMag(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getEdgeMergeThr(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getEdgeMinMag(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getEta(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getGamma(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getKappa(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getMaxAspectRatio(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getMaxBoxes(EdgeBoxes self, int *rval);
+// CvStatus *ximgproc_EdgeBoxes_getMinBoxArea(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_getMinScore(EdgeBoxes self, float *rval);
+// CvStatus *ximgproc_EdgeBoxes_setAlpha(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setBeta(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setClusterMinMag(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setEdgeMergeThr(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setEdgeMinMag(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setEta(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setGamma(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setKappa(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setMaxAspectRatio(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setMaxBoxes(EdgeBoxes self, int val);
+// CvStatus *ximgproc_EdgeBoxes_setMinBoxArea(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_setMinScore(EdgeBoxes self, float val);
+// CvStatus *ximgproc_EdgeBoxes_clear(EdgeBoxes self);
+// CvStatus *ximgproc_EdgeBoxes_empty(EdgeBoxes self, bool *val);
 
 // GraphSegmentation
-CvStatus *ximgproc_GraphSegmentation_Create(float sigma, float k, int min_size, PtrGraphSegmentation *rval);
-void      ximgproc_GraphSegmentation_Close(PtrGraphSegmentationPtr self);
-CvStatus *ximgproc_GraphSegmentation_getK(PtrGraphSegmentation self, float *rval);
-CvStatus *ximgproc_GraphSegmentation_getMinSize(PtrGraphSegmentation self, int *rval);
-CvStatus *ximgproc_GraphSegmentation_getSigma(PtrGraphSegmentation self, double *rval);
-CvStatus *ximgproc_GraphSegmentation_processImage(PtrGraphSegmentation self, Mat src, CVD_OUT Mat *dst);
-CvStatus *ximgproc_GraphSegmentation_setK(PtrGraphSegmentation self, float val);
-CvStatus *ximgproc_GraphSegmentation_setMinSize(PtrGraphSegmentation self, int val);
-CvStatus *ximgproc_GraphSegmentation_setSigma(PtrGraphSegmentation self, double val);
+CvStatus *
+ximgproc_GraphSegmentation_Create(float sigma, float k, int min_size, GraphSegmentation *rval);
+void ximgproc_GraphSegmentation_Close(GraphSegmentationPtr self);
+CvStatus *ximgproc_GraphSegmentation_getK(GraphSegmentation self, float *rval);
+CvStatus *ximgproc_GraphSegmentation_getMinSize(GraphSegmentation self, int *rval);
+CvStatus *ximgproc_GraphSegmentation_getSigma(GraphSegmentation self, double *rval);
+CvStatus *
+ximgproc_GraphSegmentation_processImage(GraphSegmentation self, Mat src, CVD_OUT Mat *dst);
+CvStatus *ximgproc_GraphSegmentation_setK(GraphSegmentation self, float val);
+CvStatus *ximgproc_GraphSegmentation_setMinSize(GraphSegmentation self, int val);
+CvStatus *ximgproc_GraphSegmentation_setSigma(GraphSegmentation self, double val);
+
+// EdgeDrawing
+typedef struct EdgeDrawingParams {
+  int AnchorThresholdValue;
+  int EdgeDetectionOperator;
+  int GradientThresholdValue;
+  double LineFitErrorThreshold;
+  double MaxDistanceBetweenTwoLines;
+  double MaxErrorThreshold;
+  int MinLineLength;
+  int MinPathLength;
+  bool NFAValidation;
+  bool PFmode;
+  int ScanInterval;
+  float Sigma;
+  bool SumFlag;
+} EdgeDrawingParams;
+
+CvStatus *ximgproc_EdgeDrawing_Create(EdgeDrawing *rval);
+void ximgproc_EdgeDrawing_Close(EdgeDrawingPtr self);
+CvStatus *ximgproc_EdgeDrawing_detectEdges(EdgeDrawing self, Mat src);
+CvStatus *ximgproc_EdgeDrawing_detectEllipses(EdgeDrawing self, Mat *ellipses);
+CvStatus *ximgproc_EdgeDrawing_detectLines(EdgeDrawing self, Mat *lines);
+CvStatus *ximgproc_EdgeDrawing_getEdgeImage(EdgeDrawing self, Mat *dst);
+CvStatus *ximgproc_EdgeDrawing_getGradientImage(EdgeDrawing self, Mat *dst);
+CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecInt *rval);
+CvStatus *ximgproc_EdgeDrawing_getSegments(EdgeDrawing self, VecVecPoint *rval);
+CvStatus *ximgproc_EdgeDrawing_setParams(EdgeDrawing self, EdgeDrawingParams params);
+CvStatus *ximgproc_EdgeDrawing_getParams(EdgeDrawing self, EdgeDrawingParams *params);
+
+// Binary morphology on run-length encoded image
+CvStatus *ximgproc_rl_createRLEImage(const VecPoint3i runs, Mat *res, Size size);
+CvStatus *ximgproc_rl_dilate(Mat rlSrc, Mat *rlDest, Mat rlKernel, Point anchor);
+CvStatus *ximgproc_rl_erode(Mat rlSrc, Mat *rlDest, Mat rlKernel, bool bBoundaryOn, Point anchor);
+CvStatus *ximgproc_rl_getStructuringElement(int shape, Size ksize, Mat *rval);
+CvStatus *ximgproc_rl_isRLMorphologyPossible(Mat rlStructuringElement, bool *rval);
+CvStatus *ximgproc_rl_morphologyEx(
+    Mat rlSrc, Mat *rlDest, int op, Mat rlKernel, bool bBoundaryOnForErosion, Point anchor
+);
+CvStatus *ximgproc_rl_paint(Mat image, Mat rlSrc, const Scalar value);
+CvStatus *ximgproc_rl_threshold(Mat src, Mat *rlDest, double thresh, int type);
 
 #ifdef __cplusplus
 }
