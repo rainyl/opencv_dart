@@ -15,50 +15,84 @@ sort: true
 headers:
   entry-points:
     - src/calib3d/calib3d.h
+    - src/calib3d/calib3d_async.h
     - src/core/core.h
+    - src/core/core_async.h
     - src/core/exception.h
     - src/core/svd.h
+    - src/core/svd_async.h
+    - src/core/types.h
     - src/core/vec.h
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
+    - src/extra/aruco_async.h
     - src/extra/img_hash.h
+    - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
     - src/extra/ximgproc.h
     - src/extra/xobjdetect.h
+    - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h
+    - src/features2d/features2d_async.h
+    - src/gapi/gapi.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs_async.h
     - src/imgproc/imgproc.h
+    - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
+    - src/photo/photo_async.h
     - src/stitching/stitching.h
+    - src/stitching/stitching_async.h
     - src/video/video.h
+    - src/video/video_async.h
     - src/video/videoio.h
+    - src/video/videoio_async.h
   include-directives:
     - src/calib3d/calib3d.h
+    - src/calib3d/calib3d_async.h
     - src/core/core.h
+    - src/core/core_async.h
     - src/core/exception.h
     - src/core/svd.h
+    - src/core/svd_async.h
     - src/core/vec.h
     - src/core/version.h
     - src/dnn/asyncarray.h
     - src/dnn/dnn.h
+    - src/dnn/dnn_async.h
     - src/extra/aruco.h
+    - src/extra/aruco_async.h
     - src/extra/img_hash.h
+    - src/extra/img_hash_async.h
     - src/extra/wechat_qrcode.h
     - src/extra/ximgproc.h
     - src/extra/xobjdetect.h
+    - src/extra/wechat_qrcode_async.h
     - src/features2d/features2d.h
+    - src/features2d/features2d_async.h
+    - src/gapi/gapi.h
     - src/highgui/highgui.h
     - src/imgcodecs/imgcodecs.h
+    - src/imgcodecs/imgcodecs_async.h
     - src/imgproc/imgproc.h
+    - src/imgproc/imgproc_async.h
     - src/objdetect/objdetect.h
+    - src/objdetect/objdetect_async.h
     - src/photo/photo.h
+    - src/photo/photo_async.h
     - src/stitching/stitching.h
+    - src/stitching/stitching_async.h
     - src/video/video.h
+    - src/video/video_async.h
     - src/video/videoio.h
+    - src/video/videoio_async.h
+
 functions:
   symbol-address:
     include:

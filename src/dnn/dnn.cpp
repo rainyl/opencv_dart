@@ -89,7 +89,7 @@ CvStatus *Net_ReadNetFromONNXBytes(VecUChar model, Net *rval)
   END_WRAP
 }
 
-void Net_Close(NetPtr net){CVD_FREE(net)}
+void Net_Close(NetPtr net) { CVD_FREE(net); }
 
 CvStatus *Net_BlobFromImage(Mat image, Mat blob, double scalefactor, Size size, Scalar mean, bool swapRB,
                             bool crop, int ddepth)
@@ -279,7 +279,7 @@ CvStatus *Layer_GetType(Layer layer, char **rval)
 void Layer_Close(LayerPtr layer)
 {
   layer->ptr->reset();
-  CVD_FREE(layer)
+  CVD_FREE(layer);
 }
 
 CvStatus *NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,

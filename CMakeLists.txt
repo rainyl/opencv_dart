@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/binary.version" PROJECT_VERSION)
-message(STATUS "Project Version: ${PROJECT_VERSION}")
-
-project(opencv_dart_library VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
+project(opencv_dart_library VERSION 1.0.0 LANGUAGES C CXX)
 set(LIBRARY_NAME "opencv_dart")
 
 set(CMAKE_CXX_STANDARD 20)
@@ -87,6 +84,9 @@ if(IOS)
     )
 endif(IOS)
 
+if(APPLE)
+    target_link_options(${LIBRARY_NAME} PRIVATE "LINKER:-ld_classic")
+endif(APPLE)
 
 if(WIN32)
     set_target_properties(${LIBRARY_NAME} PROPERTIES

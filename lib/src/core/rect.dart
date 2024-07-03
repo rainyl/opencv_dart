@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -93,7 +94,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory RotatedRect(Point2f center, Size2f size, double angle) {
+  factory RotatedRect(Point2f center, (double, double) size, double angle) {
     final sz = calloc<cvg.Size2f>()
       ..ref.width = size.$1
       ..ref.height = size.$2;
@@ -118,31 +119,25 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   }
 
   List<Point2f> get points {
-    return using<List<Point2f>>((arena) {
-      final pts = calloc<cvg.VecPoint2f>();
-      cvRun(() => CFFI.RotatedRect_Points(ptr.ref, pts));
-      return VecPoint2f.fromPointer(pts).toList();
-    });
+    final pts = calloc<cvg.VecPoint2f>();
+    cvRun(() => CFFI.RotatedRect_Points(ptr.ref, pts));
+    return VecPoint2f.fromPointer(pts).toList();
   }
 
   Rect get boundingRect {
-    return using<Rect>((arena) {
-      final rect = calloc<cvg.Rect>();
-      cvRun(() => CFFI.RotatedRect_BoundingRect(ptr.ref, rect));
-      return Rect.fromPointer(rect);
-    });
+    final rect = calloc<cvg.Rect>();
+    cvRun(() => CFFI.RotatedRect_BoundingRect(ptr.ref, rect));
+    return Rect.fromPointer(rect);
   }
 
   Rect2f get boundingRect2f {
-    return using<Rect2f>((arena) {
-      final rect = calloc<cvg.Rect2f>();
-      cvRun(() => CFFI.RotatedRect_BoundingRect2f(ptr.ref, rect));
-      return Rect2f.fromPointer(rect);
-    });
+    final rect = calloc<cvg.Rect2f>();
+    cvRun(() => CFFI.RotatedRect_BoundingRect2f(ptr.ref, rect));
+    return Rect2f.fromPointer(rect);
   }
 
   Point2f get center => Point2f.fromNative(ref.center);
-  Size2f get size => (ref.size.width, ref.size.height);
+  Size2f get size => Size2f(ref.size.width, ref.size.height);
   double get angle => ref.angle;
 
   @override
@@ -217,14 +212,19 @@ class VecRectIterator extends VecIterator<Rect> {
 
   @override
   Rect operator [](int idx) {
-    return cvRunArena<Rect>((arena) {
-      final p = calloc<cvg.Rect>();
-      cvRun(() => CFFI.VecRect_At(ptr, idx, p));
-      return Rect.fromPointer(p);
-    });
+    final p = calloc<cvg.Rect>();
+    cvRun(() => CFFI.VecRect_At(ptr, idx, p));
+    return Rect.fromPointer(p);
   }
 }
 
 extension ListRectExtension on List<Rect> {
   VecRect get cvd => VecRect.fromList(this);
 }
+
+// Completers for async
+void rectCompleter(Completer<Rect> completer, VoidPtr p) =>
+    completer.complete(Rect.fromPointer(p.cast<cvg.Rect>()));
+
+void rotatedRectCompleter(Completer<RotatedRect> completer, VoidPtr p) =>
+    completer.complete(RotatedRect.fromPointer(p.cast<cvg.RotatedRect>()));

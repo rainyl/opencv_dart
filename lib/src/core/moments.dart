@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -84,4 +85,9 @@ class Moments extends CvStruct<cvg.Moment> {
         nu12,
         nu03,
       ];
+}
+
+// async completer
+void momentsCompleter(Completer<Moments> completer, VoidPtr p) {
+  completer.complete(Moments.fromPointer(p.cast<cvg.Moment>()));
 }

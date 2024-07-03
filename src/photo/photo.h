@@ -19,12 +19,12 @@ extern "C" {
 
 #ifdef __cplusplus
 /// see : https://docs.opencv.org/3.4/d7/dd6/classcv_1_1MergeMertens.html
-CVD_TYPEDEF(cv::Ptr<cv::MergeMertens>, MergeMertens)
+CVD_TYPEDEF(cv::Ptr<cv::MergeMertens>, MergeMertens);
 /// see : https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
-CVD_TYPEDEF(cv::Ptr<cv::AlignMTB>, AlignMTB)
+CVD_TYPEDEF(cv::Ptr<cv::AlignMTB>, AlignMTB);
 #else
-CVD_TYPEDEF(void, MergeMertens)
-CVD_TYPEDEF(void, AlignMTB)
+CVD_TYPEDEF(void, MergeMertens);
+CVD_TYPEDEF(void, AlignMTB);
 #endif
 
 CvStatus *ColorChange(Mat src, Mat mask, Mat dst, float red_mul, float green_mul, float blue_mul);

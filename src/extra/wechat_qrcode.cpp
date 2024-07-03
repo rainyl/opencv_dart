@@ -19,7 +19,7 @@ CvStatus *WeChatQRCode_NewWithParams(const char *detector_prototxt_path,
                                                  super_resolution_caffe_model_path)};
   END_WRAP
 }
-void WeChatQRCode_Close(WeChatQRCodePtr self){CVD_FREE(self)}
+void WeChatQRCode_Close(WeChatQRCodePtr self) { CVD_FREE(self); }
 
 CvStatus *WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *points, VecVecChar *rval)
 {

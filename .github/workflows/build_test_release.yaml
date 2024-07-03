@@ -78,7 +78,7 @@ jobs:
           channel: "stable"
 
   build-ubuntu:
-    name: build-ubuntu-android-armv7
+    name: build-ubuntu
     runs-on: ubuntu-22.04
 
     steps:

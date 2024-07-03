@@ -11,9 +11,9 @@
     LICENSE: Apache-2.0
 */
 
-import 'package:equatable/equatable.dart';
+import 'base.dart';
 
-class ErrorCode with EquatableMixin {
+class ErrorCode with ComparableMixin {
   /// @brief everithing is ok CV_StsOk
   static final ErrorCode StsOk = ErrorCode(0);
 

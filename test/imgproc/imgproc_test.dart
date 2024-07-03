@@ -60,7 +60,7 @@ void main() async {
 
     final mask = cv.Mat.empty();
     final hist = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);
-    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32, uniform: false);
+    final backProject = cv.calcBackProject([img].cvd, [0].i32, hist, [0.0, 256.0].f32);
     expect(backProject.isEmpty, false);
   });
 
@@ -154,6 +154,31 @@ void main() async {
     expect((gray.width, gray.height, gray.channels), (512, 512, 1));
     expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
   });
+
+  // test('cv.cvtColorAsync', () async {
+  //   final m = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+  //   for (var i = 0; i < 10; i++) {
+  //     print("$i start");
+  //     final gray = await cv.cvtColorAsync(m, cv.COLOR_BGR2GRAY);
+  //     expect((gray.width, gray.height, gray.channels), (512, 512, 1));
+  //     // expect(cv.imwrite("test/images_out/test_cvtcolor.png", gray), true);
+  //     final sleep = Random().nextInt(1000);
+  //     await Future.delayed(Duration(seconds: 2));
+  //     print("$i finished, sleep: $sleep");
+  //   }
+  // });
+
+  // test('test name', () async {
+  //   Future<void> asyncFunction() async {
+  //     // 模拟耗时操作
+  //     await Future.delayed(Duration(seconds: 2));
+  //     print('Inside async function');
+  //   }
+
+  //   print('Before calling async function');
+  //   await asyncFunction();
+  //   print('After calling async function');
+  // });
 
   test("cv2.equalizeHist", () async {
     final cvImage = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
@@ -278,7 +303,7 @@ void main() async {
     final (contours, _) = cv.findContours(thresImg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
     final rect = cv.minAreaRect(contours.first);
-    expect(rect.size.$1 > 0 && rect.points.isNotEmpty, true);
+    expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
 
     final pts = cv.boxPoints(rect);
     expect(pts.isEmpty, false);
@@ -578,7 +603,7 @@ void main() async {
     expect(img.isEmpty, false);
 
     final (textSize, baseline) = cv.getTextSize("Hello World", cv.FONT_HERSHEY_PLAIN, 1.0, 1);
-    expect((textSize.$1, textSize.$2, baseline), (91, 10, 6));
+    expect((textSize.width, textSize.height, baseline), (91, 10, 6));
   });
 
   // resize
@@ -773,10 +798,17 @@ void main() async {
   test('cv.remap', () {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
     expect(src.isEmpty, false);
-    final map1 = cv.Mat.zeros(256, 256, cv.MatType.CV_16SC2);
-    map1.set<int>(50, 50, 25);
-    final map2 = cv.Mat.empty();
-    final dst = cv.remap(src, map1, map2, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
+    final mapX = cv.Mat.zeros(src.rows, src.cols, cv.MatType.CV_32FC1);
+    final mapY = mapX.clone();
+
+    // flip horizontally
+    for (var i = 0; i < mapX.rows; i++) {
+      for (var j = 0; j < mapX.cols; j++) {
+        mapX.setF32(i, j, (mapX.cols - j).toDouble());
+        mapY.setF32(i, j, i.toDouble());
+      }
+    }
+    final dst = cv.remap(src, mapX, mapY, cv.INTER_LINEAR, borderValue: cv.Scalar.black);
     expect(dst.isEmpty, false);
   });
 

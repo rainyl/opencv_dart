@@ -4,16 +4,28 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
-  test('openCvVersion', () {
-    final version = cv.openCvVersion();
-    print(version);
-    expect(version.length, greaterThan(0));
+  test('openCvVersion', () async {
+    {
+      final version = cv.openCvVersion();
+      print(version);
+      expect(version.length, greaterThan(0));
+    }
+    {
+      final version = await cv.openCvVersionAsync();
+      expect(version.length, greaterThan(0));
+    }
   });
 
-  test('cv.getBuildInformation', () {
-    final info = cv.getBuildInformation();
-    print(info);
-    expect(info.length, greaterThan(0));
+  test('cv.getBuildInformation', () async {
+    {
+      final info = cv.getBuildInformation();
+      print(info);
+      expect(info.length, greaterThan(0));
+    }
+    {
+      final info = await cv.getBuildInformationAsync();
+      expect(info.length, greaterThan(0));
+    }
   });
 
   test('cv.AsyncArray', () {
@@ -706,10 +718,10 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test('cv.theRNG', () {
+  test('cv.theRNG', () async {
     final rng = cv.theRNG();
     for (var i = 0; i < 10000; i++) {
-      expect(rng.next(), isA<int>());
+      expect(await rng.next().first, isA<int>());
     }
   });
 

@@ -2,7 +2,7 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
-  test('cv.Fisheye.undistortImage', () {
+  test('cv.Fisheye.undistortImage', () async {
     final img = cv.imread("test/images/fisheye_sample.jpg", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
@@ -20,11 +20,17 @@ void main() async {
 
     final d = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
 
-    final dst = cv.Fisheye.undistortImage(img, k, d);
-    expect(dst.isEmpty, false);
+    {
+      final dst = cv.Fisheye.undistortImage(img, k, d);
+      expect(dst.isEmpty, false);
+    }
+    {
+      final dst = await cv.Fisheye.undistortImageAsync(img, k, d);
+      expect(dst.isEmpty, false);
+    }
   });
 
-  test('cv.undistortPoints', () {
+  test('cv.undistortPoints', () async {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 1094.7249578198823);
     k.set<double>(0, 1, 0.0);
@@ -65,14 +71,23 @@ void main() async {
     src.set<double>(2, 0, 1920.0);
     src.set<double>(2, 1, 1080.0);
 
-    cv.undistortPoints(src, k, d);
-    final dst = cv.undistortPoints(src, k, d, R: r, P: k);
-    expect(dst.isEmpty, false);
-    expect(dst.at<double>(0, 0), lessThan(480));
-    expect(dst.at<double>(0, 1), lessThan(270));
+    {
+      cv.undistortPoints(src, k, d);
+      final dst = cv.undistortPoints(src, k, d, R: r, P: k);
+      expect(dst.isEmpty, false);
+      expect(dst.at<double>(0, 0), lessThan(480));
+      expect(dst.at<double>(0, 1), lessThan(270));
+    }
+    {
+      await cv.undistortPointsAsync(src, k, d);
+      final dst = await cv.undistortPointsAsync(src, k, d, R: r, P: k);
+      expect(dst.isEmpty, false);
+      expect(dst.at<double>(0, 0), lessThan(480));
+      expect(dst.at<double>(0, 1), lessThan(270));
+    }
   });
 
-  test('cv.Fisheye.undistortPoints', () {
+  test('cv.Fisheye.undistortPoints', () async {
     final k = cv.Mat.zeros(3, 3, cv.MatType.CV_64FC1);
     k.set<double>(0, 0, 1094.7249578198823);
     k.set<double>(0, 1, 0.0);
@@ -109,23 +124,40 @@ void main() async {
     knew.set<double>(0, 0, 0.4 * k.at<double>(0, 0));
     knew.set<double>(1, 1, 0.4 * k.at<double>(1, 1));
 
-    cv.Fisheye.estimateNewCameraMatrixForUndistortRectify(
-      k,
-      d,
-      (1920, 1080),
-      r,
-      P: knew,
-      balance: 1,
-      newSize: (1920, 1080),
-    );
+    {
+      cv.Fisheye.estimateNewCameraMatrixForUndistortRectify(
+        k,
+        d,
+        (1920, 1080),
+        r,
+        P: knew,
+        balance: 1,
+        newSize: (1920, 1080),
+      );
 
-    cv.Fisheye.undistortPoints(src, k, d);
-    cv.Fisheye.undistortPoints(src, k, d, undistorted: dst, R: r, P: k);
-    expect(dst.isEmpty, false);
-    expect(dst.at<double>(0, 0) != 0, true);
+      cv.Fisheye.undistortPoints(src, k, d);
+      cv.Fisheye.undistortPoints(src, k, d, undistorted: dst, R: r, P: k);
+      expect(dst.isEmpty, false);
+      expect(dst.at<double>(0, 0) != 0, true);
+    }
+    {
+      await cv.Fisheye.estimateNewCameraMatrixForUndistortRectifyAsync(
+        k,
+        d,
+        (1920, 1080),
+        r,
+        balance: 1,
+        newSize: (1920, 1080),
+      );
+
+      await cv.Fisheye.undistortPointsAsync(src, k, d);
+      await cv.Fisheye.undistortPointsAsync(src, k, d, R: r, P: k);
+      expect(dst.isEmpty, false);
+      expect(dst.at<double>(0, 0) != 0, true);
+    }
   });
 
-  test('cv.initUndistortRectifyMap', () {
+  test('cv.initUndistortRectifyMap', () async {
     final img = cv.imread("test/images/distortion.jpg", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
 
@@ -149,59 +181,107 @@ void main() async {
     d.set<double>(0, 3, 2.05841873e-04);
     d.set<double>(0, 4, -2.35021914e-02);
 
-    final (newC, roi) = cv.getOptimalNewCameraMatrix(k, d, (img.cols, img.rows), 1);
-    expect(newC.isEmpty, false);
-    expect(roi.width, greaterThan(0));
+    {
+      final (newC, roi) = cv.getOptimalNewCameraMatrix(k, d, (img.cols, img.rows), 1);
+      expect(newC.isEmpty, false);
+      expect(roi.width, greaterThan(0));
 
-    final r = cv.Mat.empty();
-    final (map1, map2) = cv.initUndistortRectifyMap(k, d, r, newC, (img.cols, img.rows), 5);
-    final dst = cv.remap(img, map1, map2, cv.INTER_LINEAR);
-    expect(dst.isEmpty, false);
-    final success = cv.imwrite("test/images/distortion-correct.png", dst);
-    expect(success, true);
+      final r = cv.Mat.empty();
+      final (map1, map2) = cv.initUndistortRectifyMap(k, d, r, newC, (img.cols, img.rows), 5);
+      final dst = cv.remap(img, map1, map2, cv.INTER_LINEAR);
+      expect(dst.isEmpty, false);
+      final success = cv.imwrite("test/images/distortion-correct.png", dst);
+      expect(success, true);
+    }
+    {
+      final (newC, roi) = await cv.getOptimalNewCameraMatrixAsync(k, d, (img.cols, img.rows), 1);
+      expect(newC.isEmpty, false);
+      expect(roi.width, greaterThan(0));
+
+      final r = cv.Mat.empty();
+      final (map1, map2) = await cv.initUndistortRectifyMapAsync(k, d, r, newC, (img.cols, img.rows), 5);
+      final dst = cv.remap(img, map1, map2, cv.INTER_LINEAR);
+      expect(dst.isEmpty, false);
+      final success = cv.imwrite("test/images/distortion-correct.png", dst);
+      expect(success, true);
+    }
   });
 
-  test('cv.findChessboardCorners, cv.drawChessboardCorners', () {
+  test('cv.findChessboardCorners, cv.drawChessboardCorners', () async {
     final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
 
-    final (found, corners) = cv.findChessboardCorners(img, (4, 6), flags: 0);
-    expect(found, true);
-    expect(corners.isEmpty, false);
+    {
+      final (found, corners) = cv.findChessboardCorners(img, (4, 6), flags: 0);
+      expect(found, true);
+      expect(corners.isEmpty, false);
 
-    final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-    cv.drawChessboardCorners(img2, (4, 6), corners, true);
-    expect(img2.isEmpty, false);
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      cv.drawChessboardCorners(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
+    }
+    {
+      final (found, corners) = await cv.findChessboardCornersAsync(img, (4, 6));
+      expect(found, true);
+      expect(corners.isEmpty, false);
+
+      // final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      // await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+      // expect(img2.isEmpty, false);
+    }
   });
 
-  test('cv.findChessboardCornersSB', () {
+  test('cv.findChessboardCornersSB', () async {
     final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
 
-    final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), 0);
-    expect(found, true);
-    expect(corners.isEmpty, false);
+    {
+      final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), 0);
+      expect(found, true);
+      expect(corners.isEmpty, false);
 
-    final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-    cv.drawChessboardCorners(img2, (4, 6), corners, true);
-    expect(img2.isEmpty, false);
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      cv.drawChessboardCorners(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
+    }
+    {
+      final (found, corners) = await cv.findChessboardCornersSBAsync(img, (4, 6), 0);
+      expect(found, true);
+      expect(corners.isEmpty, false);
+
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
+    }
   });
 
-  test('cv.findChessboardCornersSBWithMeta', () {
+  test('cv.findChessboardCornersSBWithMeta', () async {
     final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
 
-    final (found, corners, meta) = cv.findChessboardCornersSBWithMeta(img, (4, 6), 0);
-    expect(found, true);
-    expect(corners.isEmpty, false);
-    expect(meta.isEmpty, false);
+    {
+      final (found, corners, meta) = cv.findChessboardCornersSBWithMeta(img, (4, 6), 0);
+      expect(found, true);
+      expect(corners.isEmpty, false);
+      expect(meta.isEmpty, false);
 
-    final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-    cv.drawChessboardCorners(img2, (4, 6), corners, true);
-    expect(img2.isEmpty, false);
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      cv.drawChessboardCorners(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
+    }
+    {
+      final (found, corners, meta) = await cv.findChessboardCornersSBWithMetaAsync(img, (4, 6), 0);
+      expect(found, true);
+      expect(corners.isEmpty, false);
+      expect(meta.isEmpty, false);
+
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
+    }
   });
 
-  test('cv.calibrateCamera', () {
+  test('cv.calibrateCamera', () async {
     final img = cv.imread("test/images/chessboard_4x6_distort.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
@@ -221,26 +301,47 @@ void main() async {
       cv.VecPoint2f.fromMat(corners).toList(),
     ]);
 
-    final cameraMatrix = cv.Mat.empty();
-    final distCoeffs = cv.Mat.empty();
-    final (rmsErr, mtx, dist, rvecs, tvecs) = cv.calibrateCamera(
-      objectPointsVector,
-      imagePointsVector,
-      (img.cols, img.rows),
-      cameraMatrix,
-      distCoeffs,
-    );
-    expect(rmsErr, greaterThan(0));
-    expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
+    {
+      final cameraMatrix = cv.Mat.empty();
+      final distCoeffs = cv.Mat.empty();
+      final (rmsErr, mtx, dist, rvecs, tvecs) = cv.calibrateCamera(
+        objectPointsVector,
+        imagePointsVector,
+        (img.cols, img.rows),
+        cameraMatrix,
+        distCoeffs,
+      );
+      expect(rmsErr, greaterThan(0));
+      expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
 
-    final dst = cv.undistort(img, cameraMatrix, distCoeffs);
-    final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
-    final xor = cv.bitwiseXOR(dst, target);
-    final sum = xor.sum();
-    expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
+      final dst = cv.undistort(img, cameraMatrix, distCoeffs);
+      final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
+      final xor = cv.bitwiseXOR(dst, target);
+      final sum = xor.sum();
+      expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
+    }
+    {
+      final cameraMatrix = cv.Mat.empty();
+      final distCoeffs = cv.Mat.empty();
+      final (rmsErr, mtx, dist, rvecs, tvecs) = await cv.calibrateCameraAsync(
+        objectPointsVector,
+        imagePointsVector,
+        (img.cols, img.rows),
+        cameraMatrix,
+        distCoeffs,
+      );
+      expect(rmsErr, greaterThan(0));
+      expect(mtx.isEmpty || dist.isEmpty || rvecs.isEmpty || tvecs.isEmpty, false);
+
+      final dst = await cv.undistortAsync(img, cameraMatrix, distCoeffs);
+      final target = cv.imread("test/images/chessboard_4x6_distort_correct.png", flags: cv.IMREAD_GRAYSCALE);
+      final xor = cv.bitwiseXOR(dst, target);
+      final sum = xor.sum();
+      expect(sum.val1, lessThan(img.rows * img.cols * 0.005));
+    }
   });
 
-  test('cv.estimateAffinePartial2D', () {
+  test('cv.estimateAffinePartial2D', () async {
     final src = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 5),
@@ -253,16 +354,24 @@ void main() async {
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
     ].cvd;
-    final (m, inliers) = cv.estimateAffinePartial2D(
-      src,
-      dst,
-    );
-    expect(inliers.isEmpty, false);
-    expect(m.isEmpty, false);
-    expect((m.rows, m.cols), (2, 3));
+    {
+      final (m, inliers) = cv.estimateAffinePartial2D(
+        src,
+        dst,
+      );
+      expect(inliers.isEmpty, false);
+      expect(m.isEmpty, false);
+      expect((m.rows, m.cols), (2, 3));
+    }
+    {
+      final (m, inliers) = await cv.estimateAffinePartial2DAsync(src, dst);
+      expect(inliers.isEmpty, false);
+      expect(m.isEmpty, false);
+      expect((m.rows, m.cols), (2, 3));
+    }
   });
 
-  test('cv.estimateAffine2D', () {
+  test('cv.estimateAffine2D', () async {
     final src = [
       cv.Point2f(0, 0),
       cv.Point2f(10, 5),
@@ -275,12 +384,23 @@ void main() async {
       cv.Point2f(10, 10),
       cv.Point2f(0, 10),
     ].cvd;
-    final (m, inliers) = cv.estimateAffine2D(
-      src,
-      dst,
-    );
-    expect(inliers.isEmpty, false);
-    expect(m.isEmpty, false);
-    expect((m.rows, m.cols), (2, 3));
+    {
+      final (m, inliers) = cv.estimateAffine2D(
+        src,
+        dst,
+      );
+      expect(inliers.isEmpty, false);
+      expect(m.isEmpty, false);
+      expect((m.rows, m.cols), (2, 3));
+    }
+    {
+      final (m, inliers) = await cv.estimateAffine2DAsync(
+        src,
+        dst,
+      );
+      expect(inliers.isEmpty, false);
+      expect(m.isEmpty, false);
+      expect((m.rows, m.cols), (2, 3));
+    }
   });
 }

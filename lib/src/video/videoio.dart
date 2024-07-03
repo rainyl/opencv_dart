@@ -8,7 +8,6 @@ import 'package:ffi/ffi.dart';
 import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../core/size.dart';
 import '../opencv.g.dart' as cvg;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
@@ -17,6 +16,8 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+
+  factory VideoCapture.fromPointer(cvg.VideoCapturePtr ptr) => VideoCapture._(ptr, false);
 
   factory VideoCapture.empty() {
     final p = calloc<cvg.VideoCapture>();
@@ -41,11 +42,9 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 
   factory VideoCapture.fromDevice(int device, {int apiPreference = CAP_ANY}) {
-    return using<VideoCapture>((arena) {
-      final p = calloc<cvg.VideoCapture>();
-      cvRun(() => CFFI.VideoCapture_NewFromIndex(device, apiPreference, p));
-      return VideoCapture._(p);
-    });
+    final p = calloc<cvg.VideoCapture>();
+    cvRun(() => CFFI.VideoCapture_NewFromIndex(device, apiPreference, p));
+    return VideoCapture._(p);
   }
 
   @override
@@ -158,6 +157,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     }
   }
 
+  factory VideoWriter.fromPointer(cvg.VideoWriterPtr ptr) => VideoWriter._(ptr, false);
+
   factory VideoWriter.empty() {
     final p = calloc<cvg.VideoWriter>();
     cvRun(() => CFFI.VideoWriter_New(p));
@@ -168,7 +169,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     String filename,
     String codec,
     double fps,
-    Size frameSize, {
+    (int, int) frameSize, {
     bool isColor = true,
   }) {
     return cvRunArena<VideoWriter>((arena) {
@@ -191,7 +192,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     });
   }
 
-  void open(String filename, String codec, double fps, Size frameSize, {bool isColor = true}) {
+  void open(String filename, String codec, double fps, (int, int) frameSize, {bool isColor = true}) {
     using((arena) {
       final name = filename.toNativeUtf8(allocator: arena);
       final codec_ = codec.toNativeUtf8(allocator: arena);
