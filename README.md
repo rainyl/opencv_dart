@@ -1,6 +1,6 @@
 # opencv_dart
 
-OpenCV Bindings for Dart Language.
+OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
 <p align="center">
 <a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>
@@ -18,10 +18,6 @@ OpenCV Bindings for Dart Language.
 > 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
 > e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
 > or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Windows)
-> 2. iOS: support universal framework(`os64`, fat lib for x86_64 and arm64)
-> 3. Android: all supported ABIs (`x86_64` `arm64-v8a` `armeabi-v7a`) will be built, if you want
-> to reduce the app size, please add `--split-per-abi` to the `flutter build` command, e.g., `flutter build apk --release --target-platform android-arm64,android-x64 --split-per-abi`, otherwise, all `.so` will
-> be packaged to app.
 >
 > For `v1.0.4` and below, make sure run the following setup commands before running your app:
 >
@@ -34,7 +30,7 @@ OpenCV Bindings for Dart Language.
 > | `linux`    | `x64`                              |
 > | `windows`  | `x64`                              |
 > | `macos`    | `x64` `arm64`                      |
-> | `ios`      | `x64` `arm64`                      |
+> | `ios`      | `x64` `arm64` `os64`               |
 >
 > - More questions: refer to [#29](https://github.com/rainyl/opencv_dart/issues/29) or open new issues.
 > - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
@@ -114,8 +110,8 @@ OpenCV Bindings for Dart Language.
 | bgsegm        | :x:                | :x:                |                      |
 | superres      | :x:                | :x:                |                      |
 | xfeatures2d   | :x:                | :x:                |                      |
-| ximgproc      | :x:                | :x:                |                      |
-| xobjdetect    | :x:                | :x:                |                      |
+| ximgproc      | :white_check_mark: | :white_check_mark: |                      |
+| xobjdetect    | :white_check_mark: | :white_check_mark: |                      |
 | xphoto        | :x:                | :x:                |                      |
 
 - :x: : not finished
@@ -174,7 +170,7 @@ see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 - [ ] documentation
 - [x] ~~modify C wrapper to catch exceptions~~
 - [x] Native Assets, see `native-assets` branch
-- [ ] async?
+- [x] async
 - [x] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
 
