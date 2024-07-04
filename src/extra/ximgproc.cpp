@@ -1,6 +1,7 @@
 #include "ximgproc.h"
 #include "core/types.h"
 #include "opencv2/core/types.hpp"
+#include "opencv2/ximgproc/edgeboxes.hpp"
 #include "opencv2/ximgproc/structured_edge_detection.hpp"
 
 CvStatus *
@@ -156,6 +157,37 @@ CvStatus *ximgproc_StructuredEdgeDetection_edgesNms(
   cv::Mat _dst;
   (*self.ptr)->edgesNms(*edge_image.ptr, *orientation_image.ptr, _dst, r, s, m, isParallel);
   *dst = {new cv::Mat(_dst)};
+  END_WRAP
+}
+
+// EdgeBoxes
+CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
+    EdgeBoxes self,
+    Mat edge_map,
+    Mat orientation_map,
+    CVD_OUT VecRect *boxes,
+    CVD_OUT VecFloat *scores
+) {
+  BEGIN_WRAP
+  std::vector<float> _scores;
+  std::vector<cv::Rect> _boxes;
+  auto _self = cv::ximgproc::createEdgeBoxes(
+      self.alpha,
+      self.beta,
+      self.eta,
+      self.minScore,
+      self.maxBoxes,
+      self.edgeMinMag,
+      self.edgeMergeThr,
+      self.clusterMinMag,
+      self.maxAspectRatio,
+      self.minBoxArea,
+      self.gamma,
+      self.kappa
+  );
+  _self->getBoundingBoxes(*edge_map.ptr, *orientation_map.ptr, _boxes, _scores);
+  boxes->ptr = new std::vector<cv::Rect>(_boxes);
+  scores->ptr = new std::vector<float>(_scores);
   END_WRAP
 }
 

@@ -10,6 +10,7 @@ import 'package:opencv_dart/src/core/mat_type.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
+import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
@@ -233,6 +234,112 @@ class ximgproc {
   static const int BINARIZATION_NICK = 3;
 }
 
+/// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#details
+class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
+  EdgeBoxes.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) finalizer.attach(this, ptr.cast(), detach: this);
+  }
+
+  /// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#details
+  factory EdgeBoxes({
+    double alpha = 0.65,
+    double beta = 0.75,
+    double eta = 1,
+    double minScore = 0.01,
+    int maxBoxes = 10000,
+    double edgeMinMag = 0.1,
+    double edgeMergeThr = 0.5,
+    double clusterMinMag = 0.5,
+    double maxAspectRatio = 3,
+    double minBoxArea = 1000,
+    double gamma = 2,
+    double kappa = 1.5,
+  }) {
+    final p = calloc<cvg.EdgeBoxes>()
+      ..ref.alpha = alpha
+      ..ref.beta = beta
+      ..ref.eta = eta
+      ..ref.minScore = minScore
+      ..ref.maxBoxes = maxBoxes
+      ..ref.edgeMinMag = edgeMinMag
+      ..ref.edgeMergeThr = edgeMergeThr
+      ..ref.clusterMinMag = clusterMinMag
+      ..ref.maxAspectRatio = maxAspectRatio
+      ..ref.minBoxArea = minBoxArea
+      ..ref.gamma = gamma
+      ..ref.kappa = kappa;
+
+    return EdgeBoxes.fromPointer(p);
+  }
+
+  /// Returns array containing proposal boxes.
+  ///
+  /// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#a822e422556f8103d01a0a4db6815f0e5
+  (VecRect boxes, VecFloat scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
+    final pvr = calloc<cvg.VecRect>();
+    final pvf = calloc<cvg.VecFloat>();
+    cvRun(() => CFFI.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
+    return (VecRect.fromPointer(pvr), VecFloat.fromPointer(pvf));
+  }
+
+  double get alpha => ref.alpha;
+  set alpha(double value) => ref.alpha = value;
+
+  double get beta => ref.beta;
+  set beta(double value) => ref.beta = value;
+
+  double get eta => ref.eta;
+  set eta(double value) => ref.eta = value;
+
+  double get minScore => ref.minScore;
+  set minScore(double value) => ref.minScore = value;
+
+  int get maxBoxes => ref.maxBoxes;
+  set maxBoxes(int value) => ref.maxBoxes = value;
+
+  double get edgeMinMag => ref.edgeMinMag;
+  set edgeMinMag(double value) => ref.edgeMinMag = value;
+
+  double get edgeMergeThr => ref.edgeMergeThr;
+  set edgeMergeThr(double value) => ref.edgeMergeThr = value;
+
+  double get clusterMinMag => ref.clusterMinMag;
+  set clusterMinMag(double value) => ref.clusterMinMag = value;
+
+  double get maxAspectRatio => ref.maxAspectRatio;
+  set maxAspectRatio(double value) => ref.maxAspectRatio = value;
+
+  double get minBoxArea => ref.minBoxArea;
+  set minBoxArea(double value) => ref.minBoxArea = value;
+
+  double get gamma => ref.gamma;
+  set gamma(double value) => ref.gamma = value;
+
+  double get kappa => ref.kappa;
+  set kappa(double value) => ref.kappa = value;
+
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  @override
+  List<num> get props => [
+        alpha,
+        beta,
+        eta,
+        minScore,
+        maxBoxes,
+        edgeMinMag,
+        edgeMergeThr,
+        clusterMinMag,
+        maxAspectRatio,
+        minBoxArea,
+        gamma,
+        kappa,
+      ];
+
+  @override
+  cvg.EdgeBoxes get ref => ptr.ref;
+}
+
 class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
   RFFeatureGetter.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
@@ -243,9 +350,6 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
     cvRun(() => CFFI.ximgproc_RFFeatureGetter_Create(p));
     return RFFeatureGetter.fromPointer(p);
   }
-
-  static final finalizer =
-      OcvFinalizer<cvg.RFFeatureGetterPtr>(CFFI.addresses.ximgproc_RFFeatureGetter_Close);
 
   Mat getFeatures(InputArray src, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
     final p = calloc<cvg.Mat>();
@@ -272,6 +376,14 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
     final rval = p.value;
     calloc.free(p);
     return rval;
+  }
+
+  static final finalizer =
+      OcvFinalizer<cvg.RFFeatureGetterPtr>(CFFI.addresses.ximgproc_RFFeatureGetter_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ximgproc_RFFeatureGetter_Close(ptr);
   }
 
   @override
@@ -350,6 +462,11 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   static final finalizer =
       OcvFinalizer<cvg.StructuredEdgeDetectionPtr>(CFFI.addresses.ximgproc_StructuredEdgeDetection_Close);
 
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ximgproc_StructuredEdgeDetection_Close(ptr);
+  }
+
   @override
   List<int> get props => [ptr.address];
 
@@ -411,6 +528,11 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
 
   static final finalizer =
       OcvFinalizer<cvg.GraphSegmentationPtr>(CFFI.addresses.ximgproc_GraphSegmentation_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ximgproc_GraphSegmentation_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];
@@ -585,6 +707,11 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   set params(EdgeDrawingParams value) => cvRun(() => CFFI.ximgproc_EdgeDrawing_setParams(ref, value.ref));
 
   static final finalizer = OcvFinalizer<cvg.EdgeDrawingPtr>(CFFI.addresses.ximgproc_EdgeDrawing_Close);
+
+  void dispose() {
+    finalizer.detach(this);
+    CFFI.ximgproc_EdgeDrawing_Close(ptr);
+  }
 
   @override
   List<int> get props => [ptr.address];

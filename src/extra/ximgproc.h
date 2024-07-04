@@ -16,14 +16,12 @@ extern "C" {
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::Ptr<cv::ximgproc::RFFeatureGetter>, RFFeatureGetter)
 CVD_TYPEDEF(cv::Ptr<cv::ximgproc::StructuredEdgeDetection>, StructuredEdgeDetection)
-CVD_TYPEDEF(cv::Ptr<cv::ximgproc::EdgeBoxes>, EdgeBoxes)
 CVD_TYPEDEF(cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>, GraphSegmentation)
 CVD_TYPEDEF(cv::Ptr<cv::ximgproc::EdgeDrawing>, EdgeDrawing)
 
 #else
 CVD_TYPEDEF(void *, RFFeatureGetter)
 CVD_TYPEDEF(void *, StructuredEdgeDetection)
-CVD_TYPEDEF(void *, EdgeBoxes)
 CVD_TYPEDEF(void *, GraphSegmentation)
 CVD_TYPEDEF(void *, EdgeDrawing)
 #endif
@@ -92,59 +90,36 @@ CvStatus *ximgproc_StructuredEdgeDetection_edgesNms(
 );
 
 // Box, EdgeBoxes
-// typedef struct Box {
-//   int h;
-//   float score;
-//   int w;
-//   int x;
-//   int y;
-// } Box;
+typedef struct Box {
+  int h;
+  float score;
+  int w;
+  int x;
+  int y;
+} Box;
 
-// CvStatus *ximgproc_EdgeBoxes_Create(
-//     float alpha,
-//     float beta,
-//     float eta,
-//     float minScore,
-//     int maxBoxes,
-//     float edgeMinMag,
-//     float edgeMergeThr,
-//     float clusterMinMag,
-//     float maxAspectRatio,
-//     float minBoxArea,
-//     float gamma,
-//     float kappa,
-//     EdgeBoxes *rval
-// );
-// CvStatus *ximgproc_EdgeBoxes_Close(EdgeBoxesPtr self);
-// CvStatus *ximgproc_EdgeBoxes_getAlpha(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getBeta(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
-//     EdgeBoxes self, Mat edge_map, Mat orientation_map, VecRect boxes, CVD_OUT VecFloat *scores
-// );
-// CvStatus *ximgproc_EdgeBoxes_getClusterMinMag(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getEdgeMergeThr(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getEdgeMinMag(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getEta(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getGamma(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getKappa(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getMaxAspectRatio(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getMaxBoxes(EdgeBoxes self, int *rval);
-// CvStatus *ximgproc_EdgeBoxes_getMinBoxArea(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_getMinScore(EdgeBoxes self, float *rval);
-// CvStatus *ximgproc_EdgeBoxes_setAlpha(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setBeta(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setClusterMinMag(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setEdgeMergeThr(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setEdgeMinMag(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setEta(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setGamma(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setKappa(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setMaxAspectRatio(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setMaxBoxes(EdgeBoxes self, int val);
-// CvStatus *ximgproc_EdgeBoxes_setMinBoxArea(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_setMinScore(EdgeBoxes self, float val);
-// CvStatus *ximgproc_EdgeBoxes_clear(EdgeBoxes self);
-// CvStatus *ximgproc_EdgeBoxes_empty(EdgeBoxes self, bool *val);
+typedef struct EdgeBoxes {
+  float alpha;
+  float beta;
+  float eta;
+  float minScore;
+  int maxBoxes;
+  float edgeMinMag;
+  float edgeMergeThr;
+  float clusterMinMag;
+  float maxAspectRatio;
+  float minBoxArea;
+  float gamma;
+  float kappa;
+} EdgeBoxes;
+
+CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
+    EdgeBoxes self,
+    Mat edge_map,
+    Mat orientation_map,
+    CVD_OUT VecRect *boxes,
+    CVD_OUT VecFloat *scores
+);
 
 // GraphSegmentation
 CvStatus *

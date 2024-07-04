@@ -35837,6 +35837,35 @@ class CvNative {
   late final _undistort_Async = _undistort_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> ximgproc_EdgeBoxes_getBoundingBoxes(
+    EdgeBoxes self,
+    Mat edge_map,
+    Mat orientation_map,
+    ffi.Pointer<VecRect> boxes,
+    ffi.Pointer<VecFloat> scores,
+  ) {
+    return _ximgproc_EdgeBoxes_getBoundingBoxes(
+      self,
+      edge_map,
+      orientation_map,
+      boxes,
+      scores,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getBoundingBoxesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              EdgeBoxes,
+              Mat,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecFloat>)>>('ximgproc_EdgeBoxes_getBoundingBoxes');
+  late final _ximgproc_EdgeBoxes_getBoundingBoxes =
+      _ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat,
+              ffi.Pointer<VecRect>, ffi.Pointer<VecFloat>)>();
+
   void ximgproc_EdgeDrawing_Close(
     EdgeDrawingPtr self,
   ) {
@@ -37714,6 +37743,23 @@ final class BlockMeanHash extends ffi.Struct {
 
 typedef BlockMeanHashPtr = ffi.Pointer<BlockMeanHash>;
 
+final class Box extends ffi.Struct {
+  @ffi.Int()
+  external int h;
+
+  @ffi.Float()
+  external double score;
+
+  @ffi.Int()
+  external int w;
+
+  @ffi.Int()
+  external int x;
+
+  @ffi.Int()
+  external int y;
+}
+
 final class CLAHE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -37791,7 +37837,41 @@ final class DMatch extends ffi.Struct {
 }
 
 final class EdgeBoxes extends ffi.Struct {
-  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+  @ffi.Float()
+  external double alpha;
+
+  @ffi.Float()
+  external double beta;
+
+  @ffi.Float()
+  external double eta;
+
+  @ffi.Float()
+  external double minScore;
+
+  @ffi.Int()
+  external int maxBoxes;
+
+  @ffi.Float()
+  external double edgeMinMag;
+
+  @ffi.Float()
+  external double edgeMergeThr;
+
+  @ffi.Float()
+  external double clusterMinMag;
+
+  @ffi.Float()
+  external double maxAspectRatio;
+
+  @ffi.Float()
+  external double minBoxArea;
+
+  @ffi.Float()
+  external double gamma;
+
+  @ffi.Float()
+  external double kappa;
 }
 
 final class EdgeDrawing extends ffi.Struct {

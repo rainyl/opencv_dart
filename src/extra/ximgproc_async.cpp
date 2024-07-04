@@ -229,7 +229,7 @@ ximgproc_rl_createRLEImage_Async(const VecPoint3i runs, Size size, CvCallback_1 
 CvStatus *ximgproc_rl_dilate_Async(Mat rlSrc, Mat rlKernel, Point anchor, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
-  cv::ximgproc::rl::dilate(*rlSrc.ptr, *rlKernel.ptr, dst, cv::Point(anchor.x, anchor.y));
+  cv::ximgproc::rl::dilate(*rlSrc.ptr, dst, *rlKernel.ptr, cv::Point(anchor.x, anchor.y));
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
@@ -239,7 +239,7 @@ CvStatus *ximgproc_rl_erode_Async(
   BEGIN_WRAP
   cv::Mat dst;
   cv::ximgproc::rl::erode(
-      *rlSrc.ptr, *rlKernel.ptr, dst, bBoundaryOn, cv::Point(anchor.x, anchor.y)
+      *rlSrc.ptr, dst, *rlKernel.ptr, bBoundaryOn, cv::Point(anchor.x, anchor.y)
   );
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
@@ -269,9 +269,8 @@ CvStatus *ximgproc_rl_morphologyEx_Async(
 }
 CvStatus *ximgproc_rl_paint_Async(Mat image, Mat rlSrc, const Scalar value, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::ximgproc::rl::paint(
-      *image.ptr, *rlSrc.ptr, cv::Scalar(value.val1, value.val2, value.val3, value.val4)
-  );
+  cv::Scalar val = cv::Scalar(value.val1, value.val2, value.val3, value.val4);
+  cv::ximgproc::rl::paint(*image.ptr, *rlSrc.ptr, val);
   callback();
   END_WRAP
 }
