@@ -1,3 +1,20 @@
+## 1.1.0
+
+- Breaking Change: Asynchronous support, APIs ended with `Async` support asynchronous call.
+- Breaking Change: `Rng.uniform,gaussian,next` returns a `Stream` now, [#135](https://github.com/rainyl/opencv_dart/pull/135)
+- Breaking Change: delete `xdata` of Mat, Make `Mat.fromList` copy data internally to avoid extra data management, now it will copy the input data 2 times
+- Breaking Change: `class MatType` -> `extension type const MatType(int value)`
+- remove the dependency of `equatable`
+- New: `ximgproc` and `xobjdetect` modules.
+- `(int, int).toSize(Arena arena)` -> `(int, int).asSize`
+- `(int, int).toPoint(Arena arena)` -> `(int, int).asPoint`
+- `(double, double, double, double).toScalar(Arena arena)` -> `(double, double, double, double).asScalar`
+- New: `Mat.fromRange`
+- New: `Point3i`, `VecPoint3i`
+- remove `BlockMeanHash.compareS`, `BlockMeanHash.computeS`
+- remove `FaceRecognizerSF.newRecognizer`
+- More info at: [#143](https://github.com/rainyl/opencv_dart/discussions/143)
+
 ## 1.1.0-dev.1
 
 - New: EXPERIMENTAL Asynchronous support by @abdelaziz-mahdy and @rainyl, try it and open an issue if you have any problems.
