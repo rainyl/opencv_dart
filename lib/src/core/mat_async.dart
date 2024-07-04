@@ -6,7 +6,7 @@ extension MatAsync on Mat {
   static Future<Mat> emptyAsync() async => cvRunAsync(CFFI.Mat_New_Async, matCompleter);
 
   static Future<Mat> fromScalarAsync(int rows, int cols, MatType type, Scalar s) async => cvRunAsync(
-        (callback) => CFFI.Mat_NewFromScalar_Async(s.ref, rows, cols, type.toInt32(), callback),
+        (callback) => CFFI.Mat_NewFromScalar_Async(s.ref, rows, cols, type.value, callback),
         matCompleter,
       );
 
@@ -38,13 +38,13 @@ extension MatAsync on Mat {
       );
 
   static Future<Mat> eyeAsync(int rows, int cols, MatType type) async =>
-      cvRunAsync((callback) => CFFI.Mat_Eye_Async(rows, cols, type.toInt32(), callback), matCompleter);
+      cvRunAsync((callback) => CFFI.Mat_Eye_Async(rows, cols, type.value, callback), matCompleter);
 
   static Future<Mat> zerosAsync(int rows, int cols, MatType type) async =>
-      cvRunAsync((callback) => CFFI.Mat_Zeros_Async(rows, cols, type.toInt32(), callback), matCompleter);
+      cvRunAsync((callback) => CFFI.Mat_Zeros_Async(rows, cols, type.value, callback), matCompleter);
 
   static Future<Mat> onesAsync(int rows, int cols, MatType type) async =>
-      cvRunAsync((callback) => CFFI.Mat_Ones_Async(rows, cols, type.toInt32(), callback), matCompleter);
+      cvRunAsync((callback) => CFFI.Mat_Ones_Async(rows, cols, type.value, callback), matCompleter);
 
   Future<Mat> cloneAsync() async =>
       cvRunAsync((callback) => CFFI.Mat_Clone_Async(ref, callback), matCompleter);
@@ -57,7 +57,7 @@ extension MatAsync on Mat {
       );
 
   Future<Mat> convertToAsync(MatType type, {double alpha = 1, double beta = 0}) async => cvRunAsync(
-        (callback) => CFFI.Mat_ConvertToWithParams_Async(ref, type.toInt32(), alpha, beta, callback),
+        (callback) => CFFI.Mat_ConvertToWithParams_Async(ref, type.value, alpha, beta, callback),
         matCompleter,
       );
 

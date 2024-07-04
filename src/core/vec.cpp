@@ -298,6 +298,52 @@ void VecVecPoint3f_Close(VecVecPoint3fPtr vec) {
   CVD_FREE(vec);
 }
 
+CvStatus *VecPoint3i_New(VecPoint3i *rval) {
+  BEGIN_WRAP
+  *rval = {new std::vector<cv::Point3i>()};
+  END_WRAP
+}
+CvStatus *VecPoint3i_NewFromPointer(Point3i *points, int length, VecPoint3i *rval) {
+  BEGIN_WRAP
+  std::vector<cv::Point3i> vec;
+  for (int i = 0; i < length; i++) {
+    vec.push_back(cv::Point3i(points[i].x, points[i].y, points[i].z));
+  }
+  *rval = {new std::vector<cv::Point3i>(vec)};
+  END_WRAP
+}
+CvStatus *VecPoint3i_NewFromMat(Mat mat, VecPoint3i *rval) {
+  BEGIN_WRAP
+  *rval = {new std::vector<cv::Point3i>((std::vector<cv::Point3i>)*mat.ptr)};
+  END_WRAP
+}
+CvStatus *VecPoint3i_NewFromVec(VecPoint3i vec, VecPoint3i *rval) {
+  BEGIN_WRAP
+  *rval = {new std::vector<cv::Point3i>(*vec.ptr)};
+  END_WRAP
+}
+CvStatus *VecPoint3i_Append(VecPoint3i vec, Point3i point) {
+  BEGIN_WRAP
+  vec.ptr->push_back(cv::Point3i(point.x, point.y, point.z));
+  END_WRAP
+}
+CvStatus *VecPoint3i_At(VecPoint3i vec, int idx, Point3i *rval) {
+  BEGIN_WRAP
+  auto p = vec.ptr->at(idx);
+  *rval = {p.x, p.y, p.z};
+  END_WRAP
+}
+// CvStatus *VecPoint3i_Data(VecPoint3i vec, Point3i **rval);
+CvStatus *VecPoint3i_Size(VecPoint3i vec, int *rval) {
+  BEGIN_WRAP
+  *rval = static_cast<int>(vec.ptr->size());
+  END_WRAP
+}
+void VecPoint3i_Close(VecPoint3iPtr vec) {
+  vec->ptr->clear();
+  CVD_FREE(vec);
+}
+
 CvStatus *VecUChar_New(VecUChar *rval) {
   BEGIN_WRAP
   *rval = {new std::vector<uchar>()};

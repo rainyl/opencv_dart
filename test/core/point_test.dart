@@ -49,6 +49,9 @@ void main() {
   });
 
   test('VecPoint', () {
+    final vec0 = cv.VecPoint(10);
+    expect(vec0.length, 10);
+
     final vec = <cv.Point>[].cvd;
     expect(vec.length, 0);
 
@@ -132,6 +135,43 @@ void main() {
     final mat = cv.Mat.fromVec(points.cvd);
 
     final vec = cv.VecPoint3f.fromMat(mat);
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+  });
+
+  test('VecPoint3i', () {
+    final vec = <cv.Point3i>[].cvd;
+    expect(vec.length, 0);
+
+    final points = [
+      cv.Point3i(1, 2, 1),
+      cv.Point3i(3, 4, 3),
+      cv.Point3i(5, 6, 5),
+      cv.Point3i(7, 8, 7),
+    ];
+    final vec1 = points.cvd;
+    expect(vec1.length, 4);
+    expect(vec1.first, points.first);
+    expect(vec1.last, points.last);
+
+    final vec2 = cv.VecPoint3i(10);
+    expect(vec2.length, 10);
+    expect(vec2.first, cv.Point3i(0, 0, 0));
+
+    vec.dispose();
+  });
+
+  test('VecPoint3i.fromMat', () {
+    final points = [
+      cv.Point3i(1, 2, 1),
+      cv.Point3i(3, 4, 3),
+      cv.Point3i(5, 6, 5),
+      cv.Point3i(7, 8, 7),
+    ];
+    final mat = cv.Mat.fromVec(points.cvd);
+
+    final vec = cv.VecPoint3i.fromMat(mat);
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);

@@ -5,10 +5,8 @@ cmake_minimum_required(VERSION 3.18)
 
 # Project-level configuration.
 set(PROJECT_NAME "opencv_dart")
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../binary.version" PROJECT_VERSION)
-message(STATUS "Project Version: ${PROJECT_VERSION}")
 
-project(${PROJECT_NAME} LANGUAGES CXX VERSION ${PROJECT_VERSION})
+project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 
 set(CVD_LIB_URL_BASE "https://github.com/rainyl/opencv_dart/releases/download")
 # check whether the auto build is disabled

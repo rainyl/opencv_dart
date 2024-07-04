@@ -50,7 +50,7 @@ class Mat extends CvStruct<cvg.Mat> {
       _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
     };
     // copy
-    cvRun(() => CFFI.Mat_NewFromBytes(rows, cols, type.toInt32(), xdata.asVoid(), p));
+    cvRun(() => CFFI.Mat_NewFromBytes(rows, cols, type.value, xdata.asVoid(), p));
     xdata.dispose();
     return Mat._(p);
   }
@@ -67,7 +67,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.toInt32(), p));
+    cvRun(() => CFFI.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.value, p));
     final mat = Mat._(p);
     return mat;
   }
@@ -80,6 +80,8 @@ class Mat extends CvStruct<cvg.Mat> {
       cvRun(() => CFFI.Mat_NewFromVecPoint2f(vec.ref, p));
     } else if (vec is VecPoint3f) {
       cvRun(() => CFFI.Mat_NewFromVecPoint3f(vec.ref, p));
+    } else if (vec is VecPoint3i) {
+      cvRun(() => CFFI.Mat_NewFromVecPoint3i(vec.ref, p));
     } else {
       throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
@@ -91,28 +93,38 @@ class Mat extends CvStruct<cvg.Mat> {
     type = type ?? MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Mat_NewWithSizeFromScalar(scalar.ref, rows, cols, type!.toInt32(), p));
+    cvRun(() => CFFI.Mat_NewWithSizeFromScalar(scalar.ref, rows, cols, type!.value, p));
     final mat = Mat._(p);
     return mat;
   }
 
+  /// Create [Mat] from another [Mat] with range
+  ///
+  /// Returns a reference of [Mat]
+  factory Mat.fromRange(Mat mat, int rowStart, int rowEnd, {int colStart = 0, int? colEnd}) {
+    final p = calloc<cvg.Mat>();
+    colEnd ??= mat.cols;
+    cvRun(() => CFFI.Mat_FromRange(mat.ref, rowStart, rowEnd, colStart, colEnd!, p));
+    return Mat._(p);
+  }
+
   factory Mat.eye(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Eye(rows, cols, type.toInt32(), p));
+    cvRun(() => CFFI.Eye(rows, cols, type.value, p));
     final mat = Mat._(p);
     return mat;
   }
 
   factory Mat.zeros(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Zeros(rows, cols, type.toInt32(), p));
+    cvRun(() => CFFI.Zeros(rows, cols, type.value, p));
     final mat = Mat._(p);
     return mat;
   }
 
   factory Mat.ones(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Ones(rows, cols, type.toInt32(), p));
+    cvRun(() => CFFI.Ones(rows, cols, type.value, p));
     final mat = Mat._(p);
     return mat;
   }
@@ -1164,7 +1176,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
     final dst = Mat.empty();
-    cvRun(() => CFFI.Mat_ConvertToWithParams(ref, dst.ref, type.toInt32(), alpha, beta));
+    cvRun(() => CFFI.Mat_ConvertToWithParams(ref, dst.ref, type.value, alpha, beta));
     return dst;
   }
 
