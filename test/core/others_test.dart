@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
@@ -16,10 +13,7 @@ void main() {
     final s4 = cv.Scalar.max;
     expect(s3, s4);
 
-    final s5 = using<cv.Scalar>((p0) {
-      final p = (255.0, 0.0, 0.0, 0.0).toScalar(p0);
-      return cv.Scalar.fromNative(p.ref);
-    });
+    final s5 = (255.0, 0.0, 0.0, 0.0).asScalar;
     expect(s5, cv.Scalar.blue);
 
     s5.dispose();

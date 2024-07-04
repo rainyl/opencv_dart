@@ -92,14 +92,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
 }
 
 extension RecordScalarExtension on (double val1, double val2, double val3, double val4) {
-  ffi.Pointer<cvg.Scalar> toScalar(Arena arena) {
-    final scalar = arena<cvg.Scalar>()
-      ..ref.val1 = this.$1
-      ..ref.val2 = this.$2
-      ..ref.val3 = this.$3
-      ..ref.val4 = this.$4;
-    return scalar;
-  }
+  Scalar get asScalar => Scalar(this.$1, this.$2, this.$3, this.$4);
 }
 
 // async completer

@@ -142,6 +142,13 @@ CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval) {
   *rval = {new cv::Mat(*vec.ptr)};
   END_WRAP
 }
+
+CvStatus *Mat_NewFromVecPoint3i(VecPoint3i vec, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(*vec.ptr)};
+  END_WRAP
+}
+
 CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(rows, cols, type, m.ptr->ptr(prows, pcols))};

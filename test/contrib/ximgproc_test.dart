@@ -86,7 +86,7 @@ void main() async {
     expect(dst.shape, src.shape);
   });
 
-  test('cv.StructuredEdgeDetection', () async {
+  test('cv.StructuredEdgeDetection', tags: ["no-local-files"], () async {
     final src = cv.imread("test/images/circles.jpg");
     final rf = cv.RFFeatureGetter.empty();
     final detector =

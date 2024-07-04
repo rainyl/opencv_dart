@@ -725,35 +725,15 @@ extension ListListPoint3fExtension on List<List<Point3f>> {
 }
 
 extension PointRecordExtension on (int x, int y) {
-  ffi.Pointer<cvg.Point> toPoint(Arena arena) {
-    final point = arena<cvg.Point>()
-      ..ref.x = this.$1
-      ..ref.y = this.$2;
-    return point;
-  }
-
   Point get asPoint => Point(this.$1, this.$2);
 }
 
 extension Point2fRecordExtension on (double x, double y) {
-  ffi.Pointer<cvg.Point2f> toPoint(Arena arena) {
-    final point = arena<cvg.Point2f>()
-      ..ref.x = this.$1
-      ..ref.y = this.$2;
-    return point;
-  }
-
   Point2f get asPoint2f => Point2f(this.$1, this.$2);
 }
 
 extension Point3fRecordExtension on (double x, double y, double z) {
-  ffi.Pointer<cvg.Point3f> toPoint(Arena arena) {
-    final point = arena<cvg.Point3f>()
-      ..ref.x = this.$1
-      ..ref.y = this.$2
-      ..ref.z = this.$3;
-    return point;
-  }
+  Point3f get asPoint3f => Point3f(this.$1, this.$2, this.$3);
 }
 
 // completers

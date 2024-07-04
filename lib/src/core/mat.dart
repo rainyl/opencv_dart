@@ -80,6 +80,8 @@ class Mat extends CvStruct<cvg.Mat> {
       cvRun(() => CFFI.Mat_NewFromVecPoint2f(vec.ref, p));
     } else if (vec is VecPoint3f) {
       cvRun(() => CFFI.Mat_NewFromVecPoint3f(vec.ref, p));
+    } else if (vec is VecPoint3i) {
+      cvRun(() => CFFI.Mat_NewFromVecPoint3i(vec.ref, p));
     } else {
       throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }

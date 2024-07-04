@@ -49,6 +49,7 @@ CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval);
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
+CvStatus *Mat_NewFromVecPoint3i(VecPoint3i vec, Mat *rval);
 CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus *Mat_FromCMat(Mat m, Mat *rval);
 CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval);

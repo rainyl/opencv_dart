@@ -16767,6 +16767,23 @@ class CvNative {
   late final _Mat_NewFromVecPoint3f_Async = _Mat_NewFromVecPoint3f_AsyncPtr
       .asFunction<ffi.Pointer<CvStatus> Function(VecPoint3f, CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> Mat_NewFromVecPoint3i(
+    VecPoint3i vec,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_NewFromVecPoint3i(
+      vec,
+      rval,
+    );
+  }
+
+  late final _Mat_NewFromVecPoint3iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint3i, ffi.Pointer<Mat>)>>('Mat_NewFromVecPoint3i');
+  late final _Mat_NewFromVecPoint3i = _Mat_NewFromVecPoint3iPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecPoint3i, ffi.Pointer<Mat>)>();
+
   ffi.Pointer<CvStatus> Mat_NewFromVecPoint_Async(
     VecPoint vec,
     CvCallback_1 callback,
