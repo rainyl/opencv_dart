@@ -5,6 +5,7 @@ library cv.ximgproc;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:opencv_dart/src/core/mat_type.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -313,6 +314,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   ///
   /// https://docs.opencv.org/4.x/d8/d54/classcv_1_1ximgproc_1_1StructuredEdgeDetection.html#a31308e06ffea4507b5feb2e1856b1bd8
   Mat detectEdges(InputArray src) {
+    assert(src.type.depth == MatType.CV_32F);
     final p = calloc<cvg.Mat>();
     cvRun(() => CFFI.ximgproc_StructuredEdgeDetection_detectEdges(ref, src.ref, p));
     return Mat.fromPointer(p);
@@ -429,13 +431,13 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
     double LineFitErrorThreshold = 1.0,
     double MaxDistanceBetweenTwoLines = 6.0,
     double MaxErrorThreshold = 1.3,
-    int MinLineLength = 10,
-    int MinPathLength = 50,
+    int MinLineLength = -1,
+    int MinPathLength = 10,
     bool NFAValidation = true,
     bool PFmode = false,
     int ScanInterval = 1,
     double Sigma = 1.0,
-    bool SumFlag = false,
+    bool SumFlag = true,
   }) {
     final p = calloc<cvg.EdgeDrawingParams>()
       ..ref.AnchorThresholdValue = AnchorThresholdValue
@@ -496,7 +498,21 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
-  List<int> get props => [ptr.address];
+  List<Object?> get props => [
+        AnchorThresholdValue,
+        EdgeDetectionOperator,
+        GradientThresholdValue,
+        LineFitErrorThreshold,
+        MaxDistanceBetweenTwoLines,
+        MaxErrorThreshold,
+        MinLineLength,
+        MinPathLength,
+        NFAValidation,
+        PFmode,
+        ScanInterval,
+        Sigma,
+        SumFlag,
+      ];
 
   @override
   cvg.EdgeDrawingParams get ref => ptr.ref;

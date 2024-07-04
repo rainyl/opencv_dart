@@ -15153,6 +15153,32 @@ class CvNative {
       ffi.Pointer<CvStatus> Function(
           Mat, int, int, int, int, int, ffi.Pointer<Mat>)>();
 
+  ffi.Pointer<CvStatus> Mat_FromRange(
+    Mat m,
+    int rowStart,
+    int rowEnd,
+    int colStart,
+    int colEnd,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_FromRange(
+      m,
+      rowStart,
+      rowEnd,
+      colStart,
+      colEnd,
+      rval,
+    );
+  }
+
+  late final _Mat_FromRangePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Int, ffi.Pointer<Mat>)>>('Mat_FromRange');
+  late final _Mat_FromRange = _Mat_FromRangePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, int, int, ffi.Pointer<Mat>)>();
+
   ffi.Pointer<CvStatus> Mat_Gemm(
     Mat src1,
     Mat src2,

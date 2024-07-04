@@ -171,4 +171,7 @@ class ErrorCode with ComparableMixin {
 
   @override
   List<int> get props => [code];
+
+  @override
+  String toString() => "$code";
 }

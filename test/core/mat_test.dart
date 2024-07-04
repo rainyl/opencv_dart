@@ -68,7 +68,7 @@ void main() async {
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(255));
     expect(() => mat2.add<double>(0.1), throwsUnsupportedError);
-    expect(() => mat2.add<cv.MatType>(cv.MatType.CV_16SC1), throwsUnsupportedError);
+    expect(() => mat2.add<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
     final mat2_1 = mat1.clone();
     mat2_1.add<cv.Mat>(mat0, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(255));
@@ -106,7 +106,7 @@ void main() async {
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(128));
     expect(() => mat2.subtract<double>(0.1), throwsUnsupportedError);
-    expect(() => mat2.subtract<cv.MatType>(cv.MatType.CV_16SC1), throwsUnsupportedError);
+    expect(() => mat2.subtract<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
     final mat2_1 = mat0.clone();
     mat2_1.subtract<cv.Mat>(mat1, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(128));
@@ -144,7 +144,7 @@ void main() async {
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(200));
     expect(() => mat2.multiply<double>(0.1), throwsUnsupportedError);
-    expect(() => mat2.multiply<cv.MatType>(cv.MatType.CV_16SC1), throwsUnsupportedError);
+    expect(() => mat2.subtract<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
     final mat2_1 = mat1.clone();
     mat2_1.multiply<cv.Mat>(mat0, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(200));
@@ -182,7 +182,7 @@ void main() async {
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(100));
     expect(() => mat2.divide<double>(0.1), throwsUnsupportedError);
-    expect(() => mat2.divide<cv.MatType>(cv.MatType.CV_16SC1), throwsUnsupportedError);
+    expect(() => mat2.divide<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
     final mat2_1 = mat0.clone();
     mat2_1.divide<cv.Mat>(mat1, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(100));

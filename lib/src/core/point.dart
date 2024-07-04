@@ -499,6 +499,15 @@ class VecVecPoint extends Vec<VecPoint> implements CvStruct<cvg.VecVecPoint> {
     final vec = VecVecPoint._(p);
     return vec;
   }
+
+  factory VecVecPoint.fromVecPoint(VecPoint v) {
+    final p = calloc<cvg.VecVecPoint>();
+    cvRun(() => CFFI.VecVecPoint_New(p));
+    cvRun(() => CFFI.VecVecPoint_Append(p.ref, v.ref));
+    final vec = VecVecPoint._(p);
+    return vec;
+  }
+
   factory VecVecPoint.fromList(List<List<Point>> pts) {
     final ptr = calloc<cvg.VecVecPoint>();
     cvRun(() => CFFI.VecVecPoint_New(ptr));
@@ -695,8 +704,16 @@ extension ListPoint3fExtension on List<Point3f> {
   VecPoint3f get cvd => VecPoint3f.fromList(this);
 }
 
+extension ListPoint3iExtension on List<Point3i> {
+  VecPoint3i get cvd => VecPoint3i.fromList(this);
+}
+
 extension ListListPointExtension on List<List<Point>> {
   VecVecPoint get cvd => VecVecPoint.fromList(this);
+}
+
+extension VecPointExtension on VecPoint {
+  VecVecPoint get toVecVecPoint => VecVecPoint.fromVecPoint(this);
 }
 
 extension ListListPoint2fExtension on List<List<Point2f>> {

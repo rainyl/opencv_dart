@@ -87,7 +87,7 @@ CvStatus *ximgproc_RFFeatureGetter_getFeatures(
     int gradNum
 ) {
   BEGIN_WRAP
-  cv::Mat _features = cv::Mat();
+  cv::Mat _features;
   (*self.ptr)->getFeatures(*src.ptr, _features, gnrmRad, gsmthRad, shrink, outNum, gradNum);
   *features = {new cv::Mat(_features)};
   END_WRAP
@@ -128,7 +128,7 @@ CvStatus *ximgproc_StructuredEdgeDetection_computeOrientation(
     StructuredEdgeDetection self, Mat src, CVD_OUT Mat *dst
 ) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->computeOrientation(*src.ptr, _dst);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
@@ -137,7 +137,7 @@ CvStatus *ximgproc_StructuredEdgeDetection_detectEdges(
     StructuredEdgeDetection self, Mat src, CVD_OUT Mat *dst
 ) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->detectEdges(*src.ptr, _dst);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
@@ -153,7 +153,7 @@ CvStatus *ximgproc_StructuredEdgeDetection_edgesNms(
     bool isParallel
 ) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->edgesNms(*edge_image.ptr, *orientation_image.ptr, _dst, r, s, m, isParallel);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
@@ -190,7 +190,7 @@ CvStatus *ximgproc_GraphSegmentation_getSigma(GraphSegmentation self, double *rv
 CvStatus *
 ximgproc_GraphSegmentation_processImage(GraphSegmentation self, Mat src, CVD_OUT Mat *dst) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->processImage(*src.ptr, _dst);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
@@ -224,28 +224,28 @@ CvStatus *ximgproc_EdgeDrawing_detectEdges(EdgeDrawing self, Mat src) {
 }
 CvStatus *ximgproc_EdgeDrawing_detectEllipses(EdgeDrawing self, Mat *ellipses) {
   BEGIN_WRAP
-  cv::Mat _ellipses = cv::Mat();
+  cv::Mat _ellipses;
   (*self.ptr)->detectEllipses(_ellipses);
   *ellipses = {new cv::Mat(_ellipses)};
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_detectLines(EdgeDrawing self, Mat *lines) {
   BEGIN_WRAP
-  cv::Mat _lines = cv::Mat();
+  cv::Mat _lines;
   (*self.ptr)->detectLines(_lines);
   *lines = {new cv::Mat(_lines)};
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getEdgeImage(EdgeDrawing self, Mat *dst) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->getEdgeImage(_dst);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getGradientImage(EdgeDrawing self, Mat *dst) {
   BEGIN_WRAP
-  cv::Mat _dst = cv::Mat();
+  cv::Mat _dst;
   (*self.ptr)->getGradientImage(_dst);
   *dst = {new cv::Mat(_dst)};
   END_WRAP
@@ -312,14 +312,14 @@ CvStatus *ximgproc_rl_createRLEImage(const VecPoint3i runs, Mat *res, Size size)
 }
 CvStatus *ximgproc_rl_dilate(Mat rlSrc, Mat *rlDest, Mat rlKernel, Point anchor) {
   BEGIN_WRAP
-  cv::Mat _rlDest = cv::Mat();
+  cv::Mat _rlDest;
   cv::ximgproc::rl::dilate(*rlSrc.ptr, _rlDest, *rlKernel.ptr, cv::Point(anchor.x, anchor.y));
   *rlDest = {new cv::Mat(_rlDest)};
   END_WRAP
 }
 CvStatus *ximgproc_rl_erode(Mat rlSrc, Mat *rlDest, Mat rlKernel, bool bBoundaryOn, Point anchor) {
   BEGIN_WRAP
-  cv::Mat _rlDest = cv::Mat();
+  cv::Mat _rlDest;
   cv::ximgproc::rl::erode(
       *rlSrc.ptr, _rlDest, *rlKernel.ptr, bBoundaryOn, cv::Point(anchor.x, anchor.y)
   );
@@ -342,7 +342,7 @@ CvStatus *ximgproc_rl_morphologyEx(
     Mat rlSrc, Mat *rlDest, int op, Mat rlKernel, bool bBoundaryOnForErosion, Point anchor
 ) {
   BEGIN_WRAP
-  cv::Mat _rlDest = cv::Mat();
+  cv::Mat _rlDest;
   cv::ximgproc::rl::morphologyEx(
       *rlSrc.ptr, _rlDest, op, *rlKernel.ptr, bBoundaryOnForErosion, cv::Point(anchor.x, anchor.y)
   );
@@ -358,7 +358,7 @@ CvStatus *ximgproc_rl_paint(Mat image, Mat rlSrc, const Scalar value) {
 }
 CvStatus *ximgproc_rl_threshold(Mat src, Mat *rlDest, double thresh, int type) {
   BEGIN_WRAP
-  cv::Mat _rlDest = cv::Mat();
+  cv::Mat _rlDest;
   cv::ximgproc::rl::threshold(*src.ptr, _rlDest, thresh, type);
   *rlDest = {new cv::Mat(_rlDest)};
   END_WRAP

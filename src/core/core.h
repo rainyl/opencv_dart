@@ -51,6 +51,7 @@ CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus *Mat_FromCMat(Mat m, Mat *rval);
+CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval);
 void      Mat_Close(MatPtr m);
 void      Mat_CloseVoid(void *m);
 CvStatus *Mat_Release(Mat *m);
