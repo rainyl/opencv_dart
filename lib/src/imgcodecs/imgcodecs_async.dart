@@ -20,8 +20,7 @@ import '../native_lib.dart' show cimgcodecs;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  final rval =
-      cvRunAsync((callback) => cimgcodecs.Image_IMRead_Async(cname, flags, callback), matCompleter);
+  final rval = cvRunAsync((callback) => cimgcodecs.Image_IMRead_Async(cname, flags, callback), matCompleter);
   calloc.free(cname);
   return rval;
 }

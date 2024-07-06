@@ -150,7 +150,8 @@ Mat undistortPoints(
   dst ??= Mat.empty();
   final tc = criteria.cvd;
   cvRun(
-    () => ccalib3d.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
+    () =>
+        ccalib3d.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
   );
   return dst;
 }

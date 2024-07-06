@@ -290,7 +290,8 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set cornerRefinementMethod(int value) => ccontrib.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
+  set cornerRefinementMethod(int value) =>
+      ccontrib.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
 
   int get cornerRefinementWinSize {
     return cvRunArena<int>((arena) {
@@ -410,7 +411,8 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set errorCorrectionRate(double value) => ccontrib.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
+  set errorCorrectionRate(double value) =>
+      ccontrib.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
 
   double get aprilTagQuadDecimate {
     return cvRunArena<double>((arena) {
@@ -420,7 +422,8 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagQuadDecimate(double value) => ccontrib.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
+  set aprilTagQuadDecimate(double value) =>
+      ccontrib.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
 
   double get aprilTagQuadSigma {
     return cvRunArena<double>((arena) {
@@ -463,7 +466,8 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     });
   }
 
-  set aprilTagCriticalRad(double value) => ccontrib.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
+  set aprilTagCriticalRad(double value) =>
+      ccontrib.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
 
   double get aprilTagMaxLineFitMse {
     return cvRunArena<double>((arena) {

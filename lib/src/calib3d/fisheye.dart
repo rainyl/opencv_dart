@@ -66,7 +66,8 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(() =>
+        ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 

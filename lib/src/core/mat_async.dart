@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'mat.dart';

@@ -279,7 +279,8 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   (VecRect boxes, VecFloat scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
     final pvr = calloc<cvg.VecRect>();
     final pvf = calloc<cvg.VecFloat>();
-    cvRun(() => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
+    cvRun(
+        () => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
     return (VecRect.fromPointer(pvr), VecFloat.fromPointer(pvf));
   }
 
@@ -753,7 +754,8 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gac3de990089892266fa30189edcb6da3c
   static Future<Mat> dilateAsync(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) async =>
       cvRunAsync(
-        (callback) => ccontrib.ximgproc_rl_dilate_Async(rlSrc.ref, rlKernel.ref, anchor.asPoint.ref, callback),
+        (callback) =>
+            ccontrib.ximgproc_rl_dilate_Async(rlSrc.ref, rlKernel.ref, anchor.asPoint.ref, callback),
         matCompleter,
       );
 
@@ -781,8 +783,8 @@ class ximgproc_rl {
     (int, int) anchor = (0, 0),
   }) async =>
       cvRunAsync(
-        (callback) =>
-            ccontrib.ximgproc_rl_erode_Async(rlSrc.ref, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_erode_Async(
+            rlSrc.ref, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref, callback),
         matCompleter,
       );
 

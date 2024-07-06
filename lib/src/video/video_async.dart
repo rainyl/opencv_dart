@@ -249,12 +249,13 @@ extension KalmanFilterAsync on KalmanFilter {
     int type = MatType.CV_32F,
   }) async =>
       cvRunAsync(
-        (callback) => cvideo.KalmanFilter_New_Async(dynamParams, measureParams, controlParams, type, callback),
+        (callback) =>
+            cvideo.KalmanFilter_New_Async(dynamParams, measureParams, controlParams, type, callback),
         (completer, p) => completer.complete(KalmanFilter(p.cast<cvg.KalmanFilter>())),
       );
 
-  Future<Mat> correctAsync(Mat measurement) async =>
-      cvRunAsync((callback) => cvideo.KalmanFilter_Correct_Async(ref, measurement.ref, callback), matCompleter);
+  Future<Mat> correctAsync(Mat measurement) async => cvRunAsync(
+      (callback) => cvideo.KalmanFilter_Correct_Async(ref, measurement.ref, callback), matCompleter);
 
   Future<Mat> predictAsync({Mat? control}) async => cvRunAsync(
         (callback) => control == null
