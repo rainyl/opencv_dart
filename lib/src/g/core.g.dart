@@ -1042,7 +1042,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> Mat_DataPtr(
     Mat m,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> data,
+    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> data,
     ffi.Pointer<ffi.Int> length,
   ) {
     return _Mat_DataPtr1(
@@ -1056,11 +1056,11 @@ class CvNativeCore {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               Mat,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>,
+              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
               ffi.Pointer<ffi.Int>)>>('Mat_DataPtr');
   late final _Mat_DataPtr1 = _Mat_DataPtrPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, ffi.Pointer<ffi.Pointer<imp1.uchar>>, ffi.Pointer<ffi.Int>)>();
+      ffi.Pointer<CvStatus> Function(Mat,
+          ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>, ffi.Pointer<ffi.Int>)>();
 
   ffi.Pointer<CvStatus> Mat_Determinant(
     Mat m,
@@ -3810,7 +3810,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_Ptr_u8_1(
     Mat m,
     int i,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
+    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
   ) {
     return _Mat_Ptr_u8_1(
       m,
@@ -3822,16 +3822,16 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_1Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_1');
+              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_1');
   late final _Mat_Ptr_u8_1 = _Mat_Ptr_u8_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
+          Mat, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Ptr_u8_2(
     Mat m,
     int i,
     int j,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
+    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
   ) {
     return _Mat_Ptr_u8_2(
       m,
@@ -3844,17 +3844,17 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_2Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_2');
+              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_2');
   late final _Mat_Ptr_u8_2 = _Mat_Ptr_u8_2Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
+          Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Ptr_u8_3(
     Mat m,
     int i,
     int j,
     int k,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
+    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
   ) {
     return _Mat_Ptr_u8_3(
       m,
@@ -3868,10 +3868,10 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_3Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_3');
+              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_3');
   late final _Mat_Ptr_u8_3 = _Mat_Ptr_u8_3Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, int, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Reduce(
     Mat src,
@@ -7735,7 +7735,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> VecUChar_Append(
     VecUChar vec,
-    imp1.uchar i,
+    int i,
   ) {
     return _VecUChar_Append(
       vec,
@@ -7746,14 +7746,14 @@ class CvNativeCore {
   late final _VecUChar_AppendPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VecUChar, imp1.uchar)>>('VecUChar_Append');
+              VecUChar, ffi.UnsignedChar)>>('VecUChar_Append');
   late final _VecUChar_Append = _VecUChar_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, imp1.uchar)>();
+      ffi.Pointer<CvStatus> Function(VecUChar, int)>();
 
   ffi.Pointer<CvStatus> VecUChar_At(
     VecUChar vec,
     int idx,
-    ffi.Pointer<imp1.uchar> rval,
+    ffi.Pointer<ffi.UnsignedChar> rval,
   ) {
     return _VecUChar_At(
       vec,
@@ -7764,15 +7764,16 @@ class CvNativeCore {
 
   late final _VecUChar_AtPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecUChar, ffi.Int, ffi.Pointer<imp1.uchar>)>>('VecUChar_At');
+          ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int,
+              ffi.Pointer<ffi.UnsignedChar>)>>('VecUChar_At');
   late final _VecUChar_At = _VecUChar_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, int, ffi.Pointer<imp1.uchar>)>();
+      ffi.Pointer<CvStatus> Function(
+          VecUChar, int, ffi.Pointer<ffi.UnsignedChar>)>();
 
   ffi.Pointer<CvStatus> VecUChar_AtNoBoundCheck(
     VecUChar vec,
     int idx,
-    ffi.Pointer<imp1.uchar> rval,
+    ffi.Pointer<ffi.UnsignedChar> rval,
   ) {
     return _VecUChar_AtNoBoundCheck(
       vec,
@@ -7784,9 +7785,10 @@ class CvNativeCore {
   late final _VecUChar_AtNoBoundCheckPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int,
-              ffi.Pointer<imp1.uchar>)>>('VecUChar_AtNoBoundCheck');
+              ffi.Pointer<ffi.UnsignedChar>)>>('VecUChar_AtNoBoundCheck');
   late final _VecUChar_AtNoBoundCheck = _VecUChar_AtNoBoundCheckPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, int, ffi.Pointer<imp1.uchar>)>();
+      ffi.Pointer<CvStatus> Function(
+          VecUChar, int, ffi.Pointer<ffi.UnsignedChar>)>();
 
   void VecUChar_Close(
     imp1.VecUCharPtr vec,
@@ -7804,7 +7806,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> VecUChar_Data(
     VecUChar vec,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
+    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
   ) {
     return _VecUChar_Data(
       vec,
@@ -7815,10 +7817,10 @@ class CvNativeCore {
   late final _VecUChar_DataPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(VecUChar,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('VecUChar_Data');
+              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('VecUChar_Data');
   late final _VecUChar_Data = _VecUChar_DataPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecUChar, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
+          VecUChar, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
 
   ffi.Pointer<CvStatus> VecUChar_New(
     ffi.Pointer<VecUChar> rval,
@@ -7836,7 +7838,7 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(ffi.Pointer<VecUChar>)>();
 
   ffi.Pointer<CvStatus> VecUChar_NewFromPointer(
-    ffi.Pointer<imp1.uchar> p,
+    ffi.Pointer<ffi.UnsignedChar> p,
     int length,
     ffi.Pointer<VecUChar> rval,
   ) {
@@ -7849,11 +7851,11 @@ class CvNativeCore {
 
   late final _VecUChar_NewFromPointerPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<imp1.uchar>, ffi.Int,
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.UnsignedChar>, ffi.Int,
               ffi.Pointer<VecUChar>)>>('VecUChar_NewFromPointer');
   late final _VecUChar_NewFromPointer = _VecUChar_NewFromPointerPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<imp1.uchar>, int, ffi.Pointer<VecUChar>)>();
+          ffi.Pointer<ffi.UnsignedChar>, int, ffi.Pointer<VecUChar>)>();
 
   ffi.Pointer<CvStatus> VecUChar_NewFromVec(
     VecUChar vec,
