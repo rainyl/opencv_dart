@@ -3,6 +3,7 @@ library cv;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
+import '../native_lib.dart' show ccalib3d;
 
 class Fisheye {
   /// FisheyeUndistortImage transforms an image to compensate for fisheye lens distortion
@@ -18,7 +19,7 @@ class Fisheye {
     knew ??= Mat.empty();
     undistorted ??= Mat.empty();
     cvRun(
-      () => CFFI.Fisheye_UndistortImageWithParams(
+      () => ccalib3d.Fisheye_UndistortImageWithParams(
         distorted.ref,
         undistorted!.ref,
         K.ref,
@@ -39,7 +40,7 @@ class Fisheye {
     (int, int) newSize = (0, 0),
   }) =>
       cvRunAsync(
-        (callback) => CFFI.fisheye_undistortImageWithParams_Async(
+        (callback) => ccalib3d.fisheye_undistortImageWithParams_Async(
           distorted.ref,
           K.ref,
           D.ref,
@@ -65,7 +66,7 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() => CFFI.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(() => ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
     return undistorted;
   }
 
@@ -78,7 +79,7 @@ class Fisheye {
     InputArray? P,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.fisheye_undistortPoints_Async(
+        (callback) => ccalib3d.fisheye_undistortPoints_Async(
           distorted.ref,
           K.ref,
           D.ref,
@@ -105,7 +106,7 @@ class Fisheye {
   }) {
     P ??= Mat.empty();
     cvRun(
-      () => CFFI.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+      () => ccalib3d.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
         K.ref,
         D.ref,
         imageSize.cvd.ref,
@@ -130,7 +131,7 @@ class Fisheye {
     double fovScale = 1.0,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
+        (callback) => ccalib3d.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
           K.ref,
           D.ref,
           imageSize.cvd.ref,

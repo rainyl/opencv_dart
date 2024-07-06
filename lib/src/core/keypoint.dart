@@ -4,7 +4,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -75,15 +76,15 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr, [bool attach = true]) => VecKeyPoint._(ptr, attach);
   factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
     final p = calloc<cvg.VecKeyPoint>();
-    cvRun(() => CFFI.VecKeyPoint_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecKeyPoint_NewFromVec(ptr, p));
     final vec = VecKeyPoint._(p);
     return vec;
   }
   factory VecKeyPoint.fromList(List<KeyPoint> pts) {
     final ptr = calloc<cvg.VecKeyPoint>();
-    cvRun(() => CFFI.VecKeyPoint_New(ptr));
+    cvRun(() => ccore.VecKeyPoint_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecKeyPoint_Append(ptr.ref, pts[i].ref));
+      cvRun(() => ccore.VecKeyPoint_Append(ptr.ref, pts[i].ref));
     }
     final vec = VecKeyPoint._(ptr);
     return vec;
@@ -92,7 +93,7 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecKeyPoint_Size(ref, ptrlen));
+    cvRun(() => ccore.VecKeyPoint_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -100,11 +101,11 @@ class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
 
   @override
   cvg.VecKeyPointPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(CFFI.addresses.VecKeyPoint_Close);
+  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(ccore.addresses.VecKeyPoint_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecKeyPoint_Close(ptr);
+    ccore.VecKeyPoint_Close(ptr);
   }
 
   @override
@@ -121,7 +122,7 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecKeyPoint_Size(ptr, p));
+        cvRun(() => ccore.VecKeyPoint_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -130,7 +131,7 @@ class VecKeyPointIterator extends VecIterator<KeyPoint> {
   KeyPoint operator [](int idx) {
     return cvRunArena<KeyPoint>((arena) {
       final p = calloc<cvg.KeyPoint>();
-      cvRun(() => CFFI.VecKeyPoint_At(ptr, idx, p));
+      cvRun(() => ccore.VecKeyPoint_At(ptr, idx, p));
       return KeyPoint.fromPointer(p);
     });
   }

@@ -3,7 +3,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'point.dart';
 import 'size.dart';
@@ -120,19 +121,19 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 
   List<Point2f> get points {
     final pts = calloc<cvg.VecPoint2f>();
-    cvRun(() => CFFI.RotatedRect_Points(ptr.ref, pts));
+    cvRun(() => ccore.RotatedRect_Points(ptr.ref, pts));
     return VecPoint2f.fromPointer(pts).toList();
   }
 
   Rect get boundingRect {
     final rect = calloc<cvg.Rect>();
-    cvRun(() => CFFI.RotatedRect_BoundingRect(ptr.ref, rect));
+    cvRun(() => ccore.RotatedRect_BoundingRect(ptr.ref, rect));
     return Rect.fromPointer(rect);
   }
 
   Rect2f get boundingRect2f {
     final rect = calloc<cvg.Rect2f>();
-    cvRun(() => CFFI.RotatedRect_BoundingRect2f(ptr.ref, rect));
+    cvRun(() => ccore.RotatedRect_BoundingRect2f(ptr.ref, rect));
     return Rect2f.fromPointer(rect);
   }
 
@@ -159,15 +160,15 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   factory VecRect.fromPointer(cvg.VecRectPtr ptr, [bool attach = true]) => VecRect._(ptr, attach);
   factory VecRect.fromVec(cvg.VecRect ptr) {
     final p = calloc<cvg.VecRect>();
-    cvRun(() => CFFI.VecRect_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecRect_NewFromVec(ptr, p));
     final vec = VecRect._(p);
     return vec;
   }
   factory VecRect.fromList(List<Rect> pts) {
     final ptr = calloc<cvg.VecRect>();
-    cvRun(() => CFFI.VecRect_New(ptr));
+    cvRun(() => ccore.VecRect_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecRect_Append(ptr.ref, pts[i].ref));
+      cvRun(() => ccore.VecRect_Append(ptr.ref, pts[i].ref));
     }
     final vec = VecRect._(ptr);
     return vec;
@@ -176,17 +177,17 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecRect_Size(ref, ptrlen));
+    cvRun(() => ccore.VecRect_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(CFFI.addresses.VecRect_Close);
+  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ccore.addresses.VecRect_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecRect_Close(ptr);
+    ccore.VecRect_Close(ptr);
   }
 
   @override
@@ -205,7 +206,7 @@ class VecRectIterator extends VecIterator<Rect> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecRect_Size(ptr, p));
+        cvRun(() => ccore.VecRect_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -213,7 +214,7 @@ class VecRectIterator extends VecIterator<Rect> {
   @override
   Rect operator [](int idx) {
     final p = calloc<cvg.Rect>();
-    cvRun(() => CFFI.VecRect_At(ptr, idx, p));
+    cvRun(() => ccore.VecRect_At(ptr, idx, p));
     return Rect.fromPointer(p);
   }
 }

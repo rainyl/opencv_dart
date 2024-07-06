@@ -4,9 +4,10 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
-import 'base.dart';
-import 'mat.dart';
+import '../core/base.dart';
+import '../core/mat.dart';
+import '../g/dnn.g.dart' as cvg;
+import '../native_lib.dart' show cdnn;
 
 class AsyncArray extends CvStruct<cvg.AsyncArray> {
   AsyncArray._(cvg.AsyncArrayPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -19,21 +20,21 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
 
   factory AsyncArray.empty() {
     final p = calloc<cvg.AsyncArray>();
-    cvRun(() => CFFI.AsyncArray_New(p));
+    cvRun(() => cdnn.AsyncArray_New(p));
     final arr = AsyncArray._(p);
     return arr;
   }
 
-  static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(CFFI.addresses.AsyncArray_Close);
+  static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(cdnn.addresses.AsyncArray_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.AsyncArray_Close(ptr);
+    cdnn.AsyncArray_Close(ptr);
   }
 
   Mat get() {
     final dst = Mat.empty();
-    cvRun(() => CFFI.AsyncArray_Get(ref, dst.ref));
+    cvRun(() => cdnn.AsyncArray_Get(ref, dst.ref));
     return dst;
   }
 

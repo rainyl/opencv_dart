@@ -5,16 +5,17 @@ library cv.ximgproc;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/src/core/mat_type.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
+import '../core/mat_type.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/contrib.g.dart' as cvg;
+import '../native_lib.dart' show ccontrib;
 
 class ximgproc {
   /// Performs anisotropic diffusion on an image.
@@ -29,7 +30,7 @@ class ximgproc {
     OutputArray? dst,
   }) {
     final p = dst?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_anisotropicDiffusion(src.ref, p, alpha, K, niters));
+    cvRun(() => ccontrib.ximgproc_anisotropicDiffusion(src.ref, p, alpha, K, niters));
     return dst ?? Mat.fromPointer(p);
   }
 
@@ -39,7 +40,7 @@ class ximgproc {
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#gaffedd976e0a8efb5938107acab185ec2
   static Future<Mat> anisotropicDiffusionAsync(InputArray src, double alpha, double K, int niters) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_anisotropicDiffusion_Async(src.ref, alpha, K, niters, callback),
+        (callback) => ccontrib.ximgproc_anisotropicDiffusion_Async(src.ref, alpha, K, niters, callback),
         matCompleter,
       );
 
@@ -55,7 +56,7 @@ class ximgproc {
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga86fcda65ced0aafa2741088d82e9161c
   static Mat edgePreservingFilter(InputArray src, int d, double threshold, {OutputArray? dst}) {
     final p = dst?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_edgePreservingFilter(src.ref, p, d, threshold));
+    cvRun(() => ccontrib.ximgproc_edgePreservingFilter(src.ref, p, d, threshold));
     return dst ?? Mat.fromPointer(p);
   }
 
@@ -70,7 +71,7 @@ class ximgproc {
   ///
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga86fcda65ced0aafa2741088d82e9161c
   static Future<Mat> edgePreservingFilterAsync(InputArray src, int d, double threshold) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_edgePreservingFilter_Async(src.ref, d, threshold, callback),
+        (callback) => ccontrib.ximgproc_edgePreservingFilter_Async(src.ref, d, threshold, callback),
         matCompleter,
       );
 
@@ -91,7 +92,7 @@ class ximgproc {
   }) {
     final p = ellipses?.ptr ?? calloc<cvg.Mat>();
     cvRun(
-      () => CFFI.ximgproc_findEllipses(
+      () => ccontrib.ximgproc_findEllipses(
         image.ref,
         p,
         scoreThreshold,
@@ -117,7 +118,7 @@ class ximgproc {
     double centerDistanceThreshold = 0.05,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_findEllipses_Async(
+        (callback) => ccontrib.ximgproc_findEllipses_Async(
           image.ref,
           scoreThreshold,
           reliabilityThreshold,
@@ -143,7 +144,7 @@ class ximgproc {
   }) {
     final p = dst?.ptr ?? calloc<cvg.Mat>();
     cvRun(
-      () => CFFI.ximgproc_niBlackThreshold(
+      () => ccontrib.ximgproc_niBlackThreshold(
         src.ref,
         p,
         maxValue,
@@ -171,7 +172,7 @@ class ximgproc {
     double r = 128,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_niBlackThreshold_Async(
+        (callback) => ccontrib.ximgproc_niBlackThreshold_Async(
           src.ref,
           maxValue,
           type,
@@ -189,7 +190,7 @@ class ximgproc {
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga50d064b92f63916f4162474eea22d656
   static Mat PeiLinNormalization(InputArray I, {OutputArray? T}) {
     final p = T?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_PeiLinNormalization(I.ref, p));
+    cvRun(() => ccontrib.ximgproc_PeiLinNormalization(I.ref, p));
     return T ?? Mat.fromPointer(p);
   }
 
@@ -197,7 +198,7 @@ class ximgproc {
   ///
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga50d064b92f63916f4162474eea22d656
   static Future<Mat> PeiLinNormalizationAsync(InputArray I) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_PeiLinNormalization_Async(I.ref, callback),
+        (callback) => ccontrib.ximgproc_PeiLinNormalization_Async(I.ref, callback),
         matCompleter,
       );
 
@@ -209,7 +210,7 @@ class ximgproc {
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga37002c6ca80c978edb6ead5d6b39740c
   static Mat thinning(InputArray src, {OutputArray? dst, int thinningType = THINNING_ZHANGSUEN}) {
     final p = dst?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_thinning(src.ref, p, thinningType));
+    cvRun(() => ccontrib.ximgproc_thinning(src.ref, p, thinningType));
     return dst ?? Mat.fromPointer(p);
   }
 
@@ -221,7 +222,7 @@ class ximgproc {
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga37002c6ca80c978edb6ead5d6b39740c
   static Future<Mat> thinningAsync(InputArray src, {int thinningType = THINNING_ZHANGSUEN}) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_thinning_Async(src.ref, thinningType, callback),
+        (callback) => ccontrib.ximgproc_thinning_Async(src.ref, thinningType, callback),
         matCompleter,
       );
 
@@ -278,7 +279,7 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   (VecRect boxes, VecFloat scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
     final pvr = calloc<cvg.VecRect>();
     final pvf = calloc<cvg.VecFloat>();
-    cvRun(() => CFFI.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
+    cvRun(() => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
     return (VecRect.fromPointer(pvr), VecFloat.fromPointer(pvf));
   }
 
@@ -347,14 +348,14 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
 
   factory RFFeatureGetter.empty() {
     final p = calloc<cvg.RFFeatureGetter>();
-    cvRun(() => CFFI.ximgproc_RFFeatureGetter_Create(p));
+    cvRun(() => ccontrib.ximgproc_RFFeatureGetter_Create(p));
     return RFFeatureGetter.fromPointer(p);
   }
 
   Mat getFeatures(InputArray src, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
     final p = calloc<cvg.Mat>();
     cvRun(
-      () => CFFI.ximgproc_RFFeatureGetter_getFeatures(
+      () => ccontrib.ximgproc_RFFeatureGetter_getFeatures(
         ref,
         src.ref,
         p,
@@ -368,22 +369,22 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
     return Mat.fromPointer(p);
   }
 
-  void clear() => cvRun(() => CFFI.ximgproc_RFFeatureGetter_Clear(ref));
+  void clear() => cvRun(() => ccontrib.ximgproc_RFFeatureGetter_Clear(ref));
 
   bool isEmpty() {
     final p = calloc<ffi.Bool>();
-    cvRun(() => CFFI.ximgproc_RFFeatureGetter_Empty(ref, p));
+    cvRun(() => ccontrib.ximgproc_RFFeatureGetter_Empty(ref, p));
     final rval = p.value;
     calloc.free(p);
     return rval;
   }
 
   static final finalizer =
-      OcvFinalizer<cvg.RFFeatureGetterPtr>(CFFI.addresses.ximgproc_RFFeatureGetter_Close);
+      OcvFinalizer<cvg.RFFeatureGetterPtr>(ccontrib.addresses.ximgproc_RFFeatureGetter_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.ximgproc_RFFeatureGetter_Close(ptr);
+    ccontrib.ximgproc_RFFeatureGetter_Close(ptr);
   }
 
   @override
@@ -404,8 +405,8 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
     final cmodel = model.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<cvg.StructuredEdgeDetection>();
     howToGetFeatures == null
-        ? cvRun(() => CFFI.ximgproc_StructuredEdgeDetection_Create(cmodel, p))
-        : cvRun(() => CFFI.ximgproc_StructuredEdgeDetection_Create_1(cmodel, howToGetFeatures.ref, p));
+        ? cvRun(() => ccontrib.ximgproc_StructuredEdgeDetection_Create(cmodel, p))
+        : cvRun(() => ccontrib.ximgproc_StructuredEdgeDetection_Create_1(cmodel, howToGetFeatures.ref, p));
     calloc.free(cmodel);
     return StructuredEdgeDetection.fromPointer(p);
   }
@@ -415,7 +416,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   /// https://docs.opencv.org/4.x/d8/d54/classcv_1_1ximgproc_1_1StructuredEdgeDetection.html#a4ef982e80edccef6e92da9db2c20a222
   Mat computeOrientation(Mat src) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_StructuredEdgeDetection_computeOrientation(ref, src.ref, p));
+    cvRun(() => ccontrib.ximgproc_StructuredEdgeDetection_computeOrientation(ref, src.ref, p));
     return Mat.fromPointer(p);
   }
 
@@ -428,7 +429,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   Mat detectEdges(InputArray src) {
     assert(src.type.depth == MatType.CV_32F);
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_StructuredEdgeDetection_detectEdges(ref, src.ref, p));
+    cvRun(() => ccontrib.ximgproc_StructuredEdgeDetection_detectEdges(ref, src.ref, p));
     return Mat.fromPointer(p);
   }
 
@@ -445,7 +446,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   }) {
     final p = calloc<cvg.Mat>();
     cvRun(
-      () => CFFI.ximgproc_StructuredEdgeDetection_edgesNms(
+      () => ccontrib.ximgproc_StructuredEdgeDetection_edgesNms(
         ref,
         edgeImage.ref,
         orientationImage.ref,
@@ -460,11 +461,11 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   }
 
   static final finalizer =
-      OcvFinalizer<cvg.StructuredEdgeDetectionPtr>(CFFI.addresses.ximgproc_StructuredEdgeDetection_Close);
+      OcvFinalizer<cvg.StructuredEdgeDetectionPtr>(ccontrib.addresses.ximgproc_StructuredEdgeDetection_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.ximgproc_StructuredEdgeDetection_Close(ptr);
+    ccontrib.ximgproc_StructuredEdgeDetection_Close(ptr);
   }
 
   @override
@@ -483,7 +484,7 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
   /// https://docs.opencv.org/4.x/d5/df0/group__ximgproc__segmentation.html#gae067b832eee0d26aa30269a7ae423d2f
   factory GraphSegmentation.create({double sigma = 0.5, double k = 300, int minSize = 100}) {
     final p = calloc<cvg.GraphSegmentation>();
-    cvRun(() => CFFI.ximgproc_GraphSegmentation_Create(sigma, k, minSize, p));
+    cvRun(() => ccontrib.ximgproc_GraphSegmentation_Create(sigma, k, minSize, p));
     return GraphSegmentation.fromPointer(p);
   }
 
@@ -492,46 +493,46 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
   /// https://docs.opencv.org/4.x/dd/d19/classcv_1_1ximgproc_1_1segmentation_1_1GraphSegmentation.html#a13a3603cb371d740c3c4b01d63553d90
   Mat processImage(Mat src) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_GraphSegmentation_processImage(ref, src.ref, p));
+    cvRun(() => ccontrib.ximgproc_GraphSegmentation_processImage(ref, src.ref, p));
     return Mat.fromPointer(p);
   }
 
   double get K {
     final p = calloc<ffi.Float>();
-    cvRun(() => CFFI.ximgproc_GraphSegmentation_getK(ref, p));
+    cvRun(() => ccontrib.ximgproc_GraphSegmentation_getK(ref, p));
     final rval = p.value;
     calloc.free(p);
     return rval;
   }
 
-  set K(double value) => cvRun(() => CFFI.ximgproc_GraphSegmentation_setK(ref, value));
+  set K(double value) => cvRun(() => ccontrib.ximgproc_GraphSegmentation_setK(ref, value));
 
   double get sigma {
     final p = calloc<ffi.Double>();
-    cvRun(() => CFFI.ximgproc_GraphSegmentation_getSigma(ref, p));
+    cvRun(() => ccontrib.ximgproc_GraphSegmentation_getSigma(ref, p));
     final rval = p.value;
     calloc.free(p);
     return rval;
   }
 
-  set sigma(double value) => cvRun(() => CFFI.ximgproc_GraphSegmentation_setSigma(ref, value));
+  set sigma(double value) => cvRun(() => ccontrib.ximgproc_GraphSegmentation_setSigma(ref, value));
 
   int get minSize {
     final p = calloc<ffi.Int>();
-    cvRun(() => CFFI.ximgproc_GraphSegmentation_getMinSize(ref, p));
+    cvRun(() => ccontrib.ximgproc_GraphSegmentation_getMinSize(ref, p));
     final rval = p.value;
     calloc.free(p);
     return rval;
   }
 
-  set minSize(int value) => cvRun(() => CFFI.ximgproc_GraphSegmentation_setMinSize(ref, value));
+  set minSize(int value) => cvRun(() => ccontrib.ximgproc_GraphSegmentation_setMinSize(ref, value));
 
   static final finalizer =
-      OcvFinalizer<cvg.GraphSegmentationPtr>(CFFI.addresses.ximgproc_GraphSegmentation_Close);
+      OcvFinalizer<cvg.GraphSegmentationPtr>(ccontrib.addresses.ximgproc_GraphSegmentation_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.ximgproc_GraphSegmentation_Close(ptr);
+    ccontrib.ximgproc_GraphSegmentation_Close(ptr);
   }
 
   @override
@@ -653,64 +654,64 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   /// Creates a smart pointer to a EdgeDrawing object and initializes it.
   factory EdgeDrawing.empty() {
     final p = calloc<cvg.EdgeDrawing>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_Create(p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_Create(p));
     return EdgeDrawing.fromPointer(p);
   }
 
   /// Segment an image and store output in dst.
   ///
   /// https://docs.opencv.org/4.x/dd/d19/classcv_1_1ximgproc_1_1segmentation_1_1GraphSegmentation.html#a13a3603cb371d740c3c4b01d63553d90
-  void detectEdges(Mat src) => cvRun(() => CFFI.ximgproc_EdgeDrawing_detectEdges(ref, src.ref));
+  void detectEdges(Mat src) => cvRun(() => ccontrib.ximgproc_EdgeDrawing_detectEdges(ref, src.ref));
 
   Mat detectEllipses() {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_detectEllipses(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_detectEllipses(ref, p));
     return Mat.fromPointer(p);
   }
 
   Mat detectLines() {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_detectLines(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_detectLines(ref, p));
     return Mat.fromPointer(p);
   }
 
   Mat getEdgeImage() {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_getEdgeImage(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_getEdgeImage(ref, p));
     return Mat.fromPointer(p);
   }
 
   Mat getGradientImage() {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_getGradientImage(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_getGradientImage(ref, p));
     return Mat.fromPointer(p);
   }
 
   VecInt getSegmentIndicesOfLines() {
     final p = calloc<cvg.VecInt>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_getSegmentIndicesOfLines(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_getSegmentIndicesOfLines(ref, p));
     return VecInt.fromPointer(p);
   }
 
   VecVecPoint getSegments() {
     final p = calloc<cvg.VecVecPoint>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_getSegments(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_getSegments(ref, p));
     return VecVecPoint.fromPointer(p);
   }
 
   EdgeDrawingParams get params {
     final p = calloc<cvg.EdgeDrawingParams>();
-    cvRun(() => CFFI.ximgproc_EdgeDrawing_getParams(ref, p));
+    cvRun(() => ccontrib.ximgproc_EdgeDrawing_getParams(ref, p));
     return EdgeDrawingParams.fromPointer(p);
   }
 
-  set params(EdgeDrawingParams value) => cvRun(() => CFFI.ximgproc_EdgeDrawing_setParams(ref, value.ref));
+  set params(EdgeDrawingParams value) => cvRun(() => ccontrib.ximgproc_EdgeDrawing_setParams(ref, value.ref));
 
-  static final finalizer = OcvFinalizer<cvg.EdgeDrawingPtr>(CFFI.addresses.ximgproc_EdgeDrawing_Close);
+  static final finalizer = OcvFinalizer<cvg.EdgeDrawingPtr>(ccontrib.addresses.ximgproc_EdgeDrawing_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.ximgproc_EdgeDrawing_Close(ptr);
+    ccontrib.ximgproc_EdgeDrawing_Close(ptr);
   }
 
   @override
@@ -726,7 +727,7 @@ class ximgproc_rl {
   ///https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gaa2b3524997874269670f2f63d54d792d
   static Mat createRLEImage(VecPoint3i runs, {(int, int) size = (0, 0)}) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_rl_createRLEImage(runs.ref, p, size.cvd.ref));
+    cvRun(() => ccontrib.ximgproc_rl_createRLEImage(runs.ref, p, size.cvd.ref));
     return Mat.fromPointer(p);
   }
 
@@ -734,7 +735,7 @@ class ximgproc_rl {
   ///
   ///https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gaa2b3524997874269670f2f63d54d792d
   static Future<Mat> createRLEImageAsync(VecPoint3i runs, {(int, int) size = (0, 0)}) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_createRLEImage_Async(runs.ref, size.toSize.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_createRLEImage_Async(runs.ref, size.toSize.ref, callback),
         matCompleter,
       );
 
@@ -743,7 +744,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gac3de990089892266fa30189edcb6da3c
   static Mat dilate(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_rl_dilate(rlSrc.ref, p, rlKernel.ref, anchor.asPoint.ref));
+    cvRun(() => ccontrib.ximgproc_rl_dilate(rlSrc.ref, p, rlKernel.ref, anchor.asPoint.ref));
     return Mat.fromPointer(p);
   }
 
@@ -752,7 +753,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gac3de990089892266fa30189edcb6da3c
   static Future<Mat> dilateAsync(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_dilate_Async(rlSrc.ref, rlKernel.ref, anchor.asPoint.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_dilate_Async(rlSrc.ref, rlKernel.ref, anchor.asPoint.ref, callback),
         matCompleter,
       );
 
@@ -766,7 +767,7 @@ class ximgproc_rl {
     (int, int) anchor = (0, 0),
   }) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_rl_erode(rlSrc.ref, p, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref));
+    cvRun(() => ccontrib.ximgproc_rl_erode(rlSrc.ref, p, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref));
     return Mat.fromPointer(p);
   }
 
@@ -781,7 +782,7 @@ class ximgproc_rl {
   }) async =>
       cvRunAsync(
         (callback) =>
-            CFFI.ximgproc_rl_erode_Async(rlSrc.ref, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref, callback),
+            ccontrib.ximgproc_rl_erode_Async(rlSrc.ref, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref, callback),
         matCompleter,
       );
 
@@ -790,7 +791,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
   static Mat getStructuringElement(int shape, (int, int) ksize) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, p));
+    cvRun(() => ccontrib.ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, p));
     return Mat.fromPointer(p);
   }
 
@@ -798,7 +799,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
   static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_getStructuringElement_Async(shape, ksize.toSize.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_getStructuringElement_Async(shape, ksize.toSize.ref, callback),
         matCompleter,
       );
 
@@ -808,7 +809,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga85ed82296e9e9893dcbaa92b87837019
   static bool isRLMorphologyPossible(InputArray rlStructuringElement) {
     final p = calloc<ffi.Bool>();
-    cvRun(() => CFFI.ximgproc_rl_isRLMorphologyPossible(rlStructuringElement.ref, p));
+    cvRun(() => ccontrib.ximgproc_rl_isRLMorphologyPossible(rlStructuringElement.ref, p));
     final rval = p.value;
     calloc.free(p);
     return rval;
@@ -819,7 +820,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga85ed82296e9e9893dcbaa92b87837019
   static Future<bool> isRLMorphologyPossibleAsync(InputArray rlStructuringElement) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_isRLMorphologyPossible_Async(rlStructuringElement.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_isRLMorphologyPossible_Async(rlStructuringElement.ref, callback),
         boolCompleter,
       );
 
@@ -835,7 +836,7 @@ class ximgproc_rl {
   }) {
     final p = calloc<cvg.Mat>();
     cvRun(
-      () => CFFI.ximgproc_rl_morphologyEx(
+      () => ccontrib.ximgproc_rl_morphologyEx(
         rlSrc.ref,
         p,
         op,
@@ -858,7 +859,7 @@ class ximgproc_rl {
     (int, int) anchor = (0, 0),
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_morphologyEx_Async(
+        (callback) => ccontrib.ximgproc_rl_morphologyEx_Async(
           rlSrc.ref,
           op,
           rlKernel.ref,
@@ -873,7 +874,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga7cabc1c2901b8b58082f8febc366638b
   static Mat paint(InputOutputArray image, InputArray rlSrc, Scalar value) {
-    cvRun(() => CFFI.ximgproc_rl_paint(image.ref, rlSrc.ref, value.ref));
+    cvRun(() => ccontrib.ximgproc_rl_paint(image.ref, rlSrc.ref, value.ref));
     return image;
   }
 
@@ -881,7 +882,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga7cabc1c2901b8b58082f8febc366638b
   static Future<Mat> paintAsync(InputOutputArray image, InputArray rlSrc, Scalar value) async => cvRunAsync0(
-        (callback) => CFFI.ximgproc_rl_paint_Async(image.ref, rlSrc.ref, value.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_paint_Async(image.ref, rlSrc.ref, value.ref, callback),
         (c) => c.complete(image),
       );
 
@@ -890,7 +891,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga6c9167cbfe788a52a07f6dd3ef8ca4d9
   static Mat threshold(InputArray sr, double thresh, int type) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.ximgproc_rl_threshold(sr.ref, p, thresh, type));
+    cvRun(() => ccontrib.ximgproc_rl_threshold(sr.ref, p, thresh, type));
     return Mat.fromPointer(p);
   }
 
@@ -898,7 +899,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga6c9167cbfe788a52a07f6dd3ef8ca4d9
   static Future<Mat> thresholdAsync(InputArray src, double thresh, int type) async => cvRunAsync(
-        (callback) => CFFI.ximgproc_rl_threshold_Async(src.ref, thresh, type, callback),
+        (callback) => ccontrib.ximgproc_rl_threshold_Async(src.ref, thresh, type, callback),
         matCompleter,
       );
 }

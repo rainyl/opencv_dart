@@ -3,7 +3,6 @@ library cv;
 export 'src/calib3d/calib3d.dart';
 export 'src/calib3d/calib3d_async.dart';
 export 'src/calib3d/fisheye.dart';
-export 'src/constants.g.dart';
 
 export 'src/contrib/aruco.dart';
 export 'src/contrib/aruco_async.dart';
@@ -15,7 +14,6 @@ export 'src/contrib/ximgproc.dart';
 export 'src/contrib/xobjdetect.dart';
 
 export 'src/core/array.dart';
-export 'src/core/asyncarray.dart';
 export 'src/core/base.dart';
 export 'src/core/contours.dart';
 export 'src/core/core.dart';
@@ -38,10 +36,14 @@ export 'src/core/size.dart';
 export 'src/core/termcriteria.dart';
 export 'src/core/vec.dart';
 
+export 'src/dnn/asyncarray.dart';
 export 'src/dnn/dnn.dart';
 export 'src/dnn/dnn_async.dart';
 export 'src/features2d/features2d.dart';
 export 'src/features2d/features2d_async.dart';
+
+export 'src/g/constants.g.dart';
+
 export 'src/highgui/highgui.dart';
 export 'src/imgcodecs/imgcodecs.dart';
 export 'src/imgcodecs/imgcodecs_async.dart';

@@ -6,7 +6,8 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 
 abstract class Vec<T> with IterableMixin<T>, ComparableMixin implements ffi.Finalizable {
@@ -52,7 +53,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
   factory VecInt.fromPointer(cvg.VecIntPtr ptr, [bool attach = true]) => VecInt._(ptr, attach);
   factory VecInt.fromVec(cvg.VecInt ptr) {
     final p = calloc<cvg.VecInt>();
-    cvRun(() => CFFI.VecInt_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecInt_NewFromVec(ptr, p));
     return VecInt._(p);
   }
   factory VecInt.fromList(List<int> pts) {
@@ -61,7 +62,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecInt_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => ccore.VecInt_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecInt._(ptr);
   }
@@ -69,7 +70,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecInt_Size(ref, ptrlen));
+    cvRun(() => ccore.VecInt_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -77,7 +78,7 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
 
   Int32List get data {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    cvRun(() => CFFI.VecInt_Data(ref, p));
+    cvRun(() => ccore.VecInt_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
     // VecInt, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Int32>().asTypedList(length);
@@ -85,11 +86,11 @@ class VecInt extends Vec<int> implements CvStruct<cvg.VecInt> {
     return d;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecIntPtr>(CFFI.addresses.VecInt_Close);
+  static final finalizer = OcvFinalizer<cvg.VecIntPtr>(ccore.addresses.VecInt_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecInt_Close(ptr);
+    ccore.VecInt_Close(ptr);
   }
 
   @override
@@ -122,7 +123,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   factory VecUChar.fromPointer(cvg.VecUCharPtr ptr, [bool attach = true]) => VecUChar._(ptr, attach);
   factory VecUChar.fromVec(cvg.VecUChar ptr) {
     final p = calloc<cvg.VecUChar>();
-    cvRun(() => CFFI.VecUChar_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecUChar_NewFromVec(ptr, p));
     final vec = VecUChar._(p);
     return vec;
   }
@@ -132,7 +133,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecUChar_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => ccore.VecUChar_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecUChar._(ptr);
   }
@@ -140,7 +141,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecUChar_Size(ref, ptrlen));
+    cvRun(() => ccore.VecUChar_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -149,7 +150,7 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   /// Returns a view of native pointer
   Uint8List get data {
     final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
-    cvRun(() => CFFI.VecUChar_Data(ref, p));
+    cvRun(() => ccore.VecUChar_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
     // VecUChar, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Uint8>().asTypedList(length);
@@ -163,11 +164,11 @@ class VecUChar extends Vec<int> implements CvStruct<cvg.VecUChar> {
   ///
   /// https://github.com/rainyl/opencv_dart/issues/85
   Uint8List toU8List() => Uint8List.fromList(data);
-  static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(CFFI.addresses.VecUChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(ccore.addresses.VecUChar_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecUChar_Close(ptr);
+    ccore.VecUChar_Close(ptr);
   }
 
   @override
@@ -200,7 +201,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   factory VecChar.fromPointer(cvg.VecCharPtr ptr, [bool attach = true]) => VecChar._(ptr, attach);
   factory VecChar.fromVec(cvg.VecChar ptr) {
     final p = calloc<cvg.VecChar>();
-    cvRun(() => CFFI.VecChar_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecChar_NewFromVec(ptr, p));
     final vec = VecChar._(p);
     return vec;
   }
@@ -208,7 +209,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
     final ptr = calloc<cvg.VecChar>();
     final intPtr = calloc<ffi.Uint8>(pts.length);
     intPtr.asTypedList(pts.length).setAll(0, pts);
-    cvRun(() => CFFI.VecChar_NewFromPointer(intPtr.cast<ffi.Char>(), pts.length, ptr));
+    cvRun(() => ccore.VecChar_NewFromPointer(intPtr.cast<ffi.Char>(), pts.length, ptr));
     calloc.free(intPtr);
     return VecChar._(ptr);
   }
@@ -216,7 +217,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecChar_Size(ref, ptrlen));
+    cvRun(() => ccore.VecChar_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -224,7 +225,7 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
 
   Uint8List get data {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => CFFI.VecChar_Data(ref, p));
+    cvRun(() => ccore.VecChar_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
     // VecChar, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Uint8>().asTypedList(length);
@@ -236,11 +237,11 @@ class VecChar extends Vec<int> implements CvStruct<cvg.VecChar> {
 
   @override
   cvg.VecCharPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecCharPtr>(CFFI.addresses.VecChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecCharPtr>(ccore.addresses.VecChar_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecChar_Close(ptr);
+    ccore.VecChar_Close(ptr);
   }
 
   @override
@@ -270,16 +271,16 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
   factory VecVecChar.fromPointer(cvg.VecVecCharPtr ptr, [bool attach = true]) => VecVecChar._(ptr, attach);
   factory VecVecChar.fromVec(cvg.VecVecChar ptr) {
     final p = calloc<cvg.VecVecChar>();
-    cvRun(() => CFFI.VecVecChar_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecVecChar_NewFromVec(ptr, p));
     final vec = VecVecChar._(p);
     return vec;
   }
   factory VecVecChar.fromList(List<List<int>> pts) {
     final ptr = calloc<cvg.VecVecChar>();
-    cvRun(() => CFFI.VecVecChar_New(ptr));
+    cvRun(() => ccore.VecVecChar_New(ptr));
     for (var i = 0; i < pts.length; i++) {
       final point = pts[i].i8;
-      cvRun(() => CFFI.VecVecChar_Append(ptr.ref, point.ref));
+      cvRun(() => ccore.VecVecChar_Append(ptr.ref, point.ref));
     }
     final vec = VecVecChar._(ptr);
     return vec;
@@ -289,11 +290,11 @@ class VecVecChar extends Vec<VecChar> implements CvStruct<cvg.VecVecChar> {
     return map(String.fromCharCodes).toList();
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(CFFI.addresses.VecVecChar_Close);
+  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(ccore.addresses.VecVecChar_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecVecChar_Close(ptr);
+    ccore.VecVecChar_Close(ptr);
   }
 
   @override
@@ -311,7 +312,7 @@ class VecVecCharIterator extends VecIterator<VecChar> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecVecChar_Size(ptr, p));
+        cvRun(() => ccore.VecVecChar_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -321,7 +322,7 @@ class VecVecCharIterator extends VecIterator<VecChar> {
   VecChar operator [](int idx) {
     return cvRunArena<VecChar>((arena) {
       final p = calloc<cvg.VecChar>();
-      cvRun(() => CFFI.VecVecChar_At(ptr, idx, p));
+      cvRun(() => ccore.VecVecChar_At(ptr, idx, p));
       final vec = VecChar.fromPointer(p);
       return vec;
     });
@@ -339,7 +340,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   factory VecFloat.fromPointer(cvg.VecFloatPtr ptr, [bool attach = true]) => VecFloat._(ptr, attach);
   factory VecFloat.fromVec(cvg.VecFloat ptr) {
     final p = calloc<cvg.VecFloat>();
-    cvRun(() => CFFI.VecFloat_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecFloat_NewFromVec(ptr, p));
     final vec = VecFloat._(p);
     return vec;
   }
@@ -349,7 +350,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecFloat_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => ccore.VecFloat_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecFloat._(ptr);
   }
@@ -357,7 +358,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecFloat_Size(ref, ptrlen));
+    cvRun(() => ccore.VecFloat_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -365,7 +366,7 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
 
   Float32List get data {
     final p = calloc<ffi.Pointer<ffi.Float>>();
-    cvRun(() => CFFI.VecFloat_Data(ref, p));
+    cvRun(() => ccore.VecFloat_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
     // VecFloat, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Float>().asTypedList(length);
@@ -373,11 +374,11 @@ class VecFloat extends Vec<double> implements CvStruct<cvg.VecFloat> {
     return d;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecFloatPtr>(CFFI.addresses.VecFloat_Close);
+  static final finalizer = OcvFinalizer<cvg.VecFloatPtr>(ccore.addresses.VecFloat_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecFloat_Close(ptr);
+    ccore.VecFloat_Close(ptr);
   }
 
   @override
@@ -410,7 +411,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   factory VecDouble.fromPointer(cvg.VecDoublePtr ptr, [bool attach = true]) => VecDouble._(ptr, attach);
   factory VecDouble.fromVec(cvg.VecDouble ptr) {
     final p = calloc<cvg.VecDouble>();
-    cvRun(() => CFFI.VecDouble_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecDouble_NewFromVec(ptr, p));
     final vec = VecDouble._(p);
     return vec;
   }
@@ -420,7 +421,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
     for (var i = 0; i < pts.length; i++) {
       intPtr[i] = pts[i];
     }
-    cvRun(() => CFFI.VecDouble_NewFromPointer(intPtr, pts.length, ptr));
+    cvRun(() => ccore.VecDouble_NewFromPointer(intPtr, pts.length, ptr));
     calloc.free(intPtr);
     return VecDouble._(ptr);
   }
@@ -428,7 +429,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecDouble_Size(ref, ptrlen));
+    cvRun(() => ccore.VecDouble_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
@@ -436,7 +437,7 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
 
   Float64List get data {
     final p = calloc<ffi.Pointer<ffi.Double>>();
-    cvRun(() => CFFI.VecDouble_Data(ref, p));
+    cvRun(() => ccore.VecDouble_Data(ref, p));
     // here we will get a view of native pointer, but the native resources are managed by
     // VecDouble, so we can't free it by providing `finalizer: calloc.nativeFree`
     final d = p.value.cast<ffi.Double>().asTypedList(length);
@@ -446,11 +447,11 @@ class VecDouble extends Vec<double> implements CvStruct<cvg.VecDouble> {
 
   @override
   cvg.VecDoublePtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecDoublePtr>(CFFI.addresses.VecDouble_Close);
+  static final finalizer = OcvFinalizer<cvg.VecDoublePtr>(ccore.addresses.VecDouble_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecDouble_Close(ptr);
+    ccore.VecDouble_Close(ptr);
   }
 
   @override

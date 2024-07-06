@@ -9,7 +9,8 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/highgui.g.dart' as cvg;
+import '../native_lib.dart' show chighgui;
 
 /// [Window] is a wrapper around OpenCV's "HighGUI" named windows.
 /// While OpenCV was designed for use in full-scale applications and can be used
@@ -26,13 +27,13 @@ class Window {
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
   Window(this.name, [int flags = 0]) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
+      cvRun(() => chighgui.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
     });
   }
 
   void close() {
     cvRunArena((arena) {
-      CFFI.Window_Close(name.toNativeUtf8(allocator: arena).cast());
+      chighgui.Window_Close(name.toNativeUtf8(allocator: arena).cast());
     });
   }
 
@@ -44,7 +45,7 @@ class Window {
     return cvRunArena<double>((arena) {
       final result = arena<ffi.Double>();
       cvRun(
-        () => CFFI.Window_GetProperty(
+        () => chighgui.Window_GetProperty(
           name.toNativeUtf8(allocator: arena).cast(),
           flag.value,
           result,
@@ -60,7 +61,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
   void setWindowProperty(WindowPropertyFlags flag, double value) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
+      cvRun(() => chighgui.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
     });
   }
 
@@ -71,7 +72,7 @@ class Window {
   void setWindowTitle(String title) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Window_SetTitle(
+        () => chighgui.Window_SetTitle(
           name.toNativeUtf8(allocator: arena).cast(),
           title.toNativeUtf8(allocator: arena).cast(),
         ),
@@ -87,7 +88,7 @@ class Window {
   /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
   void imshow(Mat img) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
+      cvRun(() => chighgui.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
     });
   }
 
@@ -101,7 +102,7 @@ class Window {
   int waitKey(int delay) {
     return cvRunArena<int>((arena) {
       final ret = arena<ffi.Int>();
-      cvRun(() => CFFI.Window_WaitKey(delay, ret));
+      cvRun(() => chighgui.Window_WaitKey(delay, ret));
       return ret.value;
     });
   }
@@ -112,7 +113,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
   void moveWindow(int x, int y) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
+      cvRun(() => chighgui.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
     });
   }
 
@@ -122,7 +123,7 @@ class Window {
   /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
   void resizeWindow(int width, int height) {
     cvRunArena((arena) {
-      cvRun(() => CFFI.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
+      cvRun(() => chighgui.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
     });
   }
 
@@ -138,7 +139,7 @@ class Window {
   Rect selectROI(Mat img) {
     final result = calloc<cvg.Rect>();
     final cname = name.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => CFFI.Window_SelectROI(cname, img.ref, result));
+    cvRun(() => chighgui.Window_SelectROI(cname, img.ref, result));
     calloc.free(cname);
     return Rect.fromPointer(result);
   }
@@ -156,7 +157,7 @@ class Window {
     return cvRunArena<VecRect>((arena) {
       final result = calloc<cvg.VecRect>();
       final cname = name.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => CFFI.Window_SelectROIs(cname, img.ref, result));
+      cvRun(() => chighgui.Window_SelectROIs(cname, img.ref, result));
       calloc.free(cname);
       return VecRect.fromPointer(result);
     });
@@ -175,7 +176,7 @@ class Window {
 int waitKey(int delay) {
   return cvRunArena<int>((arena) {
     final ret = arena<ffi.Int>();
-    cvRun(() => CFFI.Window_WaitKey(delay, ret));
+    cvRun(() => chighgui.Window_WaitKey(delay, ret));
     return ret.value;
   });
 }
@@ -185,7 +186,7 @@ class Trackbar {
     cvRunArena((arena) {
       final ppname = parent.name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final cname = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => CFFI.Trackbar_Create(ppname, cname, max));
+      cvRun(() => chighgui.Trackbar_Create(ppname, cname, max));
       if (value != null) {
         pos = value;
       }
@@ -200,7 +201,7 @@ class Trackbar {
     return cvRunArena<int>((arena) {
       final result = arena<ffi.Int>();
       cvRun(
-        () => CFFI.Trackbar_GetPos(
+        () => chighgui.Trackbar_GetPos(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           result,
@@ -217,7 +218,7 @@ class Trackbar {
   set pos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetPos(
+        () => chighgui.Trackbar_SetPos(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -234,7 +235,7 @@ class Trackbar {
   set minPos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetMin(
+        () => chighgui.Trackbar_SetMin(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -251,7 +252,7 @@ class Trackbar {
   set maxPos(int pos) {
     cvRunArena((arena) {
       cvRun(
-        () => CFFI.Trackbar_SetMax(
+        () => chighgui.Trackbar_SetMax(
           parent.name.toNativeUtf8(allocator: arena).cast(),
           name.toNativeUtf8(allocator: arena).cast(),
           pos,
@@ -267,7 +268,7 @@ class Trackbar {
 
 /// destroy all windows.
 void destroyAllWindows() {
-  cvRun(CFFI.destroyAllWindows);
+  cvRun(chighgui.destroyAllWindows);
 }
 
 enum WindowFlag {

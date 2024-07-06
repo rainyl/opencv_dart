@@ -4,7 +4,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -54,15 +55,15 @@ class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) => VecDMatch._(ptr, attach);
   factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
     final p = calloc<cvg.VecDMatch>();
-    cvRun(() => CFFI.VecDMatch_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecDMatch_NewFromVec(ptr, p));
     final vec = VecDMatch._(p);
     return vec;
   }
   factory VecDMatch.fromList(List<DMatch> pts) {
     final ptr = calloc<cvg.VecDMatch>();
-    cvRun(() => CFFI.VecDMatch_New(ptr));
+    cvRun(() => ccore.VecDMatch_New(ptr));
     for (var i = 0; i < pts.length; i++) {
-      cvRun(() => CFFI.VecDMatch_Append(ptr.ref, pts[i].ref));
+      cvRun(() => ccore.VecDMatch_Append(ptr.ref, pts[i].ref));
     }
     final vec = VecDMatch._(ptr);
     return vec;
@@ -71,16 +72,16 @@ class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
   @override
   int get length {
     final ptrlen = calloc<ffi.Int>();
-    cvRun(() => CFFI.VecDMatch_Size(ref, ptrlen));
+    cvRun(() => ccore.VecDMatch_Size(ref, ptrlen));
     final length = ptrlen.value;
     calloc.free(ptrlen);
     return length;
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(CFFI.addresses.VecDMatch_Close);
+  static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(ccore.addresses.VecDMatch_Close);
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecDMatch_Close(ptr);
+    ccore.VecDMatch_Close(ptr);
   }
 
   @override
@@ -98,7 +99,7 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecDMatch_Size(ptr, p));
+        cvRun(() => ccore.VecDMatch_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -107,7 +108,7 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   DMatch operator [](int idx) {
     return cvRunArena<DMatch>((arena) {
       final p = calloc<cvg.DMatch>();
-      cvRun(() => CFFI.VecDMatch_At(ptr, idx, p));
+      cvRun(() => ccore.VecDMatch_At(ptr, idx, p));
       return DMatch.fromPointer(p);
     });
   }
@@ -123,16 +124,16 @@ class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> 
       VecVecDMatch._(ptr, attach);
   factory VecVecDMatch.fromVec(cvg.VecVecDMatch ptr) {
     final p = calloc<cvg.VecVecDMatch>();
-    cvRun(() => CFFI.VecVecDMatch_NewFromVec(ptr, p));
+    cvRun(() => ccore.VecVecDMatch_NewFromVec(ptr, p));
     final vec = VecVecDMatch._(p);
     return vec;
   }
   factory VecVecDMatch.fromList(List<List<DMatch>> pts) {
     final p = calloc<cvg.VecVecDMatch>();
-    cvRun(() => CFFI.VecVecDMatch_New(p));
+    cvRun(() => ccore.VecVecDMatch_New(p));
     for (var i = 0; i < pts.length; i++) {
       final point = pts[i].cvd;
-      cvRun(() => CFFI.VecVecDMatch_Append(p.ref, point.ref));
+      cvRun(() => ccore.VecVecDMatch_Append(p.ref, point.ref));
     }
     final vec = VecVecDMatch._(p);
     return vec;
@@ -140,10 +141,10 @@ class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> 
 
   @override
   cvg.VecVecDMatchPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(CFFI.addresses.VecVecDMatch_Close);
+  static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(ccore.addresses.VecVecDMatch_Close);
   void dispose() {
     finalizer.detach(this);
-    CFFI.VecVecDMatch_Close(ptr);
+    ccore.VecVecDMatch_Close(ptr);
   }
 
   @override
@@ -159,7 +160,7 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
   @override
   int get length => using<int>((arena) {
         final p = arena<ffi.Int>();
-        cvRun(() => CFFI.VecVecDMatch_Size(ptr, p));
+        cvRun(() => ccore.VecVecDMatch_Size(ptr, p));
         final len = p.value;
         return len;
       });
@@ -168,7 +169,7 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
   VecDMatch operator [](int idx) {
     return cvRunArena<VecDMatch>((arena) {
       final p = calloc<cvg.VecDMatch>();
-      cvRun(() => CFFI.VecVecDMatch_At(ptr, idx, p));
+      cvRun(() => ccore.VecVecDMatch_At(ptr, idx, p));
       final vec = VecDMatch.fromPointer(p);
       return vec;
     });

@@ -3,12 +3,13 @@ library cv;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/photo.g.dart' as cvg;
+import '../native_lib.dart' show cphoto;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {
   static Future<MergeMertens> emptyNewAsync() async => cvRunAsync(
-        CFFI.MergeMertens_Create_Async,
+        cphoto.MergeMertens_Create_Async,
         (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
       );
 
@@ -18,7 +19,7 @@ extension MergeMertensAsync on MergeMertens {
     double exposureWeight = 0.0,
   }) async {
     return cvRunAsync(
-      (callback) => CFFI.MergeMertens_CreateWithParams_Async(
+      (callback) => cphoto.MergeMertens_CreateWithParams_Async(
         contrastWeight,
         saturationWeight,
         exposureWeight,
@@ -30,7 +31,7 @@ extension MergeMertensAsync on MergeMertens {
 
   Future<Mat> processAsync(VecMat src) async {
     return cvRunAsync(
-      (callback) => CFFI.MergeMertens_Process_Async(ref, src.ref, callback),
+      (callback) => cphoto.MergeMertens_Process_Async(ref, src.ref, callback),
       (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
     );
   }
@@ -38,7 +39,7 @@ extension MergeMertensAsync on MergeMertens {
 
 extension AlignMTBAsync on AlignMTB {
   static Future<AlignMTB> emptyNewAsync() async => cvRunAsync(
-        CFFI.AlignMTB_Create_Async,
+        cphoto.AlignMTB_Create_Async,
         (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
       );
 
@@ -48,7 +49,7 @@ extension AlignMTBAsync on AlignMTB {
     bool cut = true,
   }) async {
     return cvRunAsync(
-      (callback) => CFFI.AlignMTB_CreateWithParams_Async(
+      (callback) => cphoto.AlignMTB_CreateWithParams_Async(
         maxBits,
         excludeRange,
         cut,
@@ -60,7 +61,7 @@ extension AlignMTBAsync on AlignMTB {
 
   Future<VecMat> processAsync(VecMat src) async {
     return cvRunAsync(
-      (callback) => CFFI.AlignMTB_Process_Async(ref, src.ref, callback),
+      (callback) => cphoto.AlignMTB_Process_Async(ref, src.ref, callback),
       (c, pdst) => c.complete(VecMat.fromPointer(pdst.cast<cvg.VecMat>())),
     );
   }
@@ -74,7 +75,7 @@ Future<Mat> colorChangeAsync(
   double blueMul = 1.0,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.ColorChange_Async(
+    (callback) => cphoto.ColorChange_Async(
       src.ref,
       mask.ref,
       redMul,
@@ -94,7 +95,7 @@ Future<Mat> seamlessCloneAsync(
   int flags,
 ) async {
   return cvRunAsync(
-    (callback) => CFFI.SeamlessClone_Async(
+    (callback) => cphoto.SeamlessClone_Async(
       src.ref,
       dst.ref,
       mask.ref,
@@ -113,7 +114,7 @@ Future<Mat> illuminationChangeAsync(
   double beta = 0.4,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.IlluminationChange_Async(
+    (callback) => cphoto.IlluminationChange_Async(
       src.ref,
       mask.ref,
       alpha,
@@ -132,7 +133,7 @@ Future<Mat> textureFlatteningAsync(
   int kernelSize = 3,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.TextureFlattening_Async(
+    (callback) => cphoto.TextureFlattening_Async(
       src.ref,
       mask.ref,
       lowThreshold,
@@ -151,7 +152,7 @@ Future<Mat> fastNlMeansDenoisingAsync(
   int searchWindowSize = 21,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.FastNlMeansDenoisingWithParams_Async(
+    (callback) => cphoto.FastNlMeansDenoisingWithParams_Async(
       src.ref,
       h,
       templateWindowSize,
@@ -170,7 +171,7 @@ Future<Mat> fastNlMeansDenoisingColoredAsync(
   int searchWindowSize = 21,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.FastNlMeansDenoisingColoredWithParams_Async(
+    (callback) => cphoto.FastNlMeansDenoisingColoredWithParams_Async(
       src.ref,
       h,
       hColor,
@@ -192,7 +193,7 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
   int searchWindowSize = 21,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.FastNlMeansDenoisingColoredMultiWithParams_Async(
+    (callback) => cphoto.FastNlMeansDenoisingColoredMultiWithParams_Async(
       srcImgs.ref,
       imgToDenoiseIndex,
       temporalWindowSize,
@@ -212,7 +213,7 @@ Future<Mat> detailEnhanceAsync(
   double sigmaR = 0.15,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.DetailEnhance_Async(
+    (callback) => cphoto.DetailEnhance_Async(
       src.ref,
       sigmaS,
       sigmaR,
@@ -229,7 +230,7 @@ Future<Mat> edgePreservingFilterAsync(
   double sigmaR = 0.4,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.EdgePreservingFilter_Async(
+    (callback) => cphoto.EdgePreservingFilter_Async(
       src.ref,
       flags,
       sigmaS,
@@ -247,7 +248,7 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
   double shadeFactor = 0.02,
 }) async {
   return cvRunAsync2(
-    (callback) => CFFI.PencilSketch_Async(
+    (callback) => cphoto.PencilSketch_Async(
       src.ref,
       sigmaS,
       sigmaR,
@@ -266,7 +267,7 @@ Future<Mat> stylizationAsync(
   double sigmaR = 0.45,
 }) async {
   return cvRunAsync(
-    (callback) => CFFI.Stylization_Async(
+    (callback) => cphoto.Stylization_Async(
       src.ref,
       sigmaS,
       sigmaR,
@@ -283,7 +284,7 @@ Future<Mat> inpaintAsync(
   int flags,
 ) async {
   return cvRunAsync(
-    (callback) => CFFI.PhotoInpaint_Async(
+    (callback) => cphoto.PhotoInpaint_Async(
       src.ref,
       inpaintMask.ref,
       inpaintRadius,

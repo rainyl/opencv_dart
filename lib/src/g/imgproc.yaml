@@ -1,0 +1,588 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/imgproc.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@AdaptiveThreshold:
+        name: AdaptiveThreshold
+      c:@F@AdaptiveThreshold_Async:
+        name: AdaptiveThreshold_Async
+      c:@F@ApplyColorMap:
+        name: ApplyColorMap
+      c:@F@ApplyColorMap_Async:
+        name: ApplyColorMap_Async
+      c:@F@ApplyCustomColorMap:
+        name: ApplyCustomColorMap
+      c:@F@ApplyCustomColorMap_Async:
+        name: ApplyCustomColorMap_Async
+      c:@F@ApproxPolyDP:
+        name: ApproxPolyDP
+      c:@F@ApproxPolyDP_Async:
+        name: ApproxPolyDP_Async
+      c:@F@ArcLength:
+        name: ArcLength
+      c:@F@ArcLength_Async:
+        name: ArcLength_Async
+      c:@F@ArrowedLine:
+        name: ArrowedLine
+      c:@F@ArrowedLine_Async:
+        name: ArrowedLine_Async
+      c:@F@BilateralFilter:
+        name: BilateralFilter
+      c:@F@BilateralFilter_Async:
+        name: BilateralFilter_Async
+      c:@F@Blur:
+        name: Blur
+      c:@F@Blur_Async:
+        name: Blur_Async
+      c:@F@BoundingRect:
+        name: BoundingRect
+      c:@F@BoundingRect_Async:
+        name: BoundingRect_Async
+      c:@F@BoxFilter:
+        name: BoxFilter
+      c:@F@BoxFilter_Async:
+        name: BoxFilter_Async
+      c:@F@BoxPoints:
+        name: BoxPoints
+      c:@F@BoxPoints_Async:
+        name: BoxPoints_Async
+      c:@F@CLAHE_Apply:
+        name: CLAHE_Apply
+      c:@F@CLAHE_Apply_Async:
+        name: CLAHE_Apply_Async
+      c:@F@CLAHE_Close:
+        name: CLAHE_Close
+      c:@F@CLAHE_Close_Async:
+        name: CLAHE_Close_Async
+      c:@F@CLAHE_CollectGarbage:
+        name: CLAHE_CollectGarbage
+      c:@F@CLAHE_CollectGarbage_Async:
+        name: CLAHE_CollectGarbage_Async
+      c:@F@CLAHE_Create:
+        name: CLAHE_Create
+      c:@F@CLAHE_CreateWithParams:
+        name: CLAHE_CreateWithParams
+      c:@F@CLAHE_CreateWithParams_Async:
+        name: CLAHE_CreateWithParams_Async
+      c:@F@CLAHE_Create_Async:
+        name: CLAHE_Create_Async
+      c:@F@CLAHE_GetClipLimit:
+        name: CLAHE_GetClipLimit
+      c:@F@CLAHE_GetClipLimit_Async:
+        name: CLAHE_GetClipLimit_Async
+      c:@F@CLAHE_GetTilesGridSize:
+        name: CLAHE_GetTilesGridSize
+      c:@F@CLAHE_GetTilesGridSize_Async:
+        name: CLAHE_GetTilesGridSize_Async
+      c:@F@CLAHE_SetClipLimit:
+        name: CLAHE_SetClipLimit
+      c:@F@CLAHE_SetClipLimit_Async:
+        name: CLAHE_SetClipLimit_Async
+      c:@F@CLAHE_SetTilesGridSize:
+        name: CLAHE_SetTilesGridSize
+      c:@F@CLAHE_SetTilesGridSize_Async:
+        name: CLAHE_SetTilesGridSize_Async
+      c:@F@CalcBackProject:
+        name: CalcBackProject
+      c:@F@CalcBackProject_Async:
+        name: CalcBackProject_Async
+      c:@F@CalcHist:
+        name: CalcHist
+      c:@F@CalcHist_Async:
+        name: CalcHist_Async
+      c:@F@Canny:
+        name: Canny
+      c:@F@Canny_Async:
+        name: Canny_Async
+      c:@F@Circle:
+        name: Circle
+      c:@F@CircleWithParams:
+        name: CircleWithParams
+      c:@F@CircleWithParams_Async:
+        name: CircleWithParams_Async
+      c:@F@Circle_Async:
+        name: Circle_Async
+      c:@F@ClipLine:
+        name: ClipLine
+      c:@F@ClipLine_Async:
+        name: ClipLine_Async
+      c:@F@CompareHist:
+        name: CompareHist
+      c:@F@CompareHist_Async:
+        name: CompareHist_Async
+      c:@F@ConnectedComponents:
+        name: ConnectedComponents
+      c:@F@ConnectedComponentsWithStats:
+        name: ConnectedComponentsWithStats
+      c:@F@ConnectedComponentsWithStats_Async:
+        name: ConnectedComponentsWithStats_Async
+      c:@F@ConnectedComponents_Async:
+        name: ConnectedComponents_Async
+      c:@F@ContourArea:
+        name: ContourArea
+      c:@F@ContourArea_Async:
+        name: ContourArea_Async
+      c:@F@ConvexHull:
+        name: ConvexHull
+      c:@F@ConvexHull_Async:
+        name: ConvexHull_Async
+      c:@F@ConvexityDefects:
+        name: ConvexityDefects
+      c:@F@ConvexityDefects_Async:
+        name: ConvexityDefects_Async
+      c:@F@CornerSubPix:
+        name: CornerSubPix
+      c:@F@CornerSubPix_Async:
+        name: CornerSubPix_Async
+      c:@F@CvtColor:
+        name: CvtColor
+      c:@F@CvtColor_Async:
+        name: CvtColor_Async
+      c:@F@Dilate:
+        name: Dilate
+      c:@F@DilateWithParams:
+        name: DilateWithParams
+      c:@F@DilateWithParams_Async:
+        name: DilateWithParams_Async
+      c:@F@Dilate_Async:
+        name: Dilate_Async
+      c:@F@DistanceTransform:
+        name: DistanceTransform
+      c:@F@DistanceTransform_Async:
+        name: DistanceTransform_Async
+      c:@F@DrawContours:
+        name: DrawContours
+      c:@F@DrawContoursWithParams:
+        name: DrawContoursWithParams
+      c:@F@DrawContoursWithParams_Async:
+        name: DrawContoursWithParams_Async
+      c:@F@DrawContours_Async:
+        name: DrawContours_Async
+      c:@F@Ellipse:
+        name: Ellipse
+      c:@F@EllipseWithParams:
+        name: EllipseWithParams
+      c:@F@EllipseWithParams_Async:
+        name: EllipseWithParams_Async
+      c:@F@Ellipse_Async:
+        name: Ellipse_Async
+      c:@F@EqualizeHist:
+        name: EqualizeHist
+      c:@F@EqualizeHist_Async:
+        name: EqualizeHist_Async
+      c:@F@Erode:
+        name: Erode
+      c:@F@ErodeWithParams:
+        name: ErodeWithParams
+      c:@F@ErodeWithParams_Async:
+        name: ErodeWithParams_Async
+      c:@F@Erode_Async:
+        name: Erode_Async
+      c:@F@FillPoly:
+        name: FillPoly
+      c:@F@FillPolyWithParams:
+        name: FillPolyWithParams
+      c:@F@FillPolyWithParams_Async:
+        name: FillPolyWithParams_Async
+      c:@F@FillPoly_Async:
+        name: FillPoly_Async
+      c:@F@Filter2D:
+        name: Filter2D
+      c:@F@Filter2D_Async:
+        name: Filter2D_Async
+      c:@F@FindContours:
+        name: FindContours
+      c:@F@FindContours_Async:
+        name: FindContours_Async
+      c:@F@FindHomography:
+        name: FindHomography
+      c:@F@FindHomography_Async:
+        name: FindHomography_Async
+      c:@F@FitEllipse:
+        name: FitEllipse
+      c:@F@FitEllipse_Async:
+        name: FitEllipse_Async
+      c:@F@FitLine:
+        name: FitLine
+      c:@F@FitLine_Async:
+        name: FitLine_Async
+      c:@F@GaussianBlur:
+        name: GaussianBlur
+      c:@F@GaussianBlur_Async:
+        name: GaussianBlur_Async
+      c:@F@GetAffineTransform:
+        name: GetAffineTransform
+      c:@F@GetAffineTransform2f:
+        name: GetAffineTransform2f
+      c:@F@GetAffineTransform2f_Async:
+        name: GetAffineTransform2f_Async
+      c:@F@GetAffineTransform_Async:
+        name: GetAffineTransform_Async
+      c:@F@GetGaussianKernel:
+        name: GetGaussianKernel
+      c:@F@GetGaussianKernel_Async:
+        name: GetGaussianKernel_Async
+      c:@F@GetPerspectiveTransform:
+        name: GetPerspectiveTransform
+      c:@F@GetPerspectiveTransform2f:
+        name: GetPerspectiveTransform2f
+      c:@F@GetPerspectiveTransform2f_Async:
+        name: GetPerspectiveTransform2f_Async
+      c:@F@GetPerspectiveTransform_Async:
+        name: GetPerspectiveTransform_Async
+      c:@F@GetRectSubPix:
+        name: GetRectSubPix
+      c:@F@GetRectSubPix_Async:
+        name: GetRectSubPix_Async
+      c:@F@GetRotationMatrix2D:
+        name: GetRotationMatrix2D
+      c:@F@GetRotationMatrix2D_Async:
+        name: GetRotationMatrix2D_Async
+      c:@F@GetStructuringElement:
+        name: GetStructuringElement
+      c:@F@GetStructuringElement_Async:
+        name: GetStructuringElement_Async
+      c:@F@GetTextSizeWithBaseline:
+        name: GetTextSizeWithBaseline
+      c:@F@GetTextSizeWithBaseline_Async:
+        name: GetTextSizeWithBaseline_Async
+      c:@F@GoodFeaturesToTrack:
+        name: GoodFeaturesToTrack
+      c:@F@GoodFeaturesToTrackWithGradient:
+        name: GoodFeaturesToTrackWithGradient
+      c:@F@GoodFeaturesToTrackWithGradient_Async:
+        name: GoodFeaturesToTrackWithGradient_Async
+      c:@F@GoodFeaturesToTrack_Async:
+        name: GoodFeaturesToTrack_Async
+      c:@F@GrabCut:
+        name: GrabCut
+      c:@F@GrabCut_Async:
+        name: GrabCut_Async
+      c:@F@HoughCircles:
+        name: HoughCircles
+      c:@F@HoughCirclesWithParams:
+        name: HoughCirclesWithParams
+      c:@F@HoughCirclesWithParams_Async:
+        name: HoughCirclesWithParams_Async
+      c:@F@HoughCircles_Async:
+        name: HoughCircles_Async
+      c:@F@HoughLines:
+        name: HoughLines
+      c:@F@HoughLinesP:
+        name: HoughLinesP
+      c:@F@HoughLinesPWithParams:
+        name: HoughLinesPWithParams
+      c:@F@HoughLinesPWithParams_Async:
+        name: HoughLinesPWithParams_Async
+      c:@F@HoughLinesP_Async:
+        name: HoughLinesP_Async
+      c:@F@HoughLinesPointSet:
+        name: HoughLinesPointSet
+      c:@F@HoughLinesPointSet_Async:
+        name: HoughLinesPointSet_Async
+      c:@F@HoughLines_Async:
+        name: HoughLines_Async
+      c:@F@Integral:
+        name: Integral
+      c:@F@Integral_Async:
+        name: Integral_Async
+      c:@F@InvertAffineTransform:
+        name: InvertAffineTransform
+      c:@F@InvertAffineTransform_Async:
+        name: InvertAffineTransform_Async
+      c:@F@Laplacian:
+        name: Laplacian
+      c:@F@Laplacian_Async:
+        name: Laplacian_Async
+      c:@F@Line:
+        name: Line
+      c:@F@Line_Async:
+        name: Line_Async
+      c:@F@LinearPolar:
+        name: LinearPolar
+      c:@F@LinearPolar_Async:
+        name: LinearPolar_Async
+      c:@F@LogPolar:
+        name: LogPolar
+      c:@F@LogPolar_Async:
+        name: LogPolar_Async
+      c:@F@Mat_Accumulate:
+        name: Mat_Accumulate
+      c:@F@Mat_AccumulateProduct:
+        name: Mat_AccumulateProduct
+      c:@F@Mat_AccumulateProductWithMask:
+        name: Mat_AccumulateProductWithMask
+      c:@F@Mat_AccumulateProductWithMask_Async:
+        name: Mat_AccumulateProductWithMask_Async
+      c:@F@Mat_AccumulateProduct_Async:
+        name: Mat_AccumulateProduct_Async
+      c:@F@Mat_AccumulateSquare:
+        name: Mat_AccumulateSquare
+      c:@F@Mat_AccumulateSquareWithMask:
+        name: Mat_AccumulateSquareWithMask
+      c:@F@Mat_AccumulateSquareWithMask_Async:
+        name: Mat_AccumulateSquareWithMask_Async
+      c:@F@Mat_AccumulateSquare_Async:
+        name: Mat_AccumulateSquare_Async
+      c:@F@Mat_AccumulateWithMask:
+        name: Mat_AccumulateWithMask
+      c:@F@Mat_AccumulateWithMask_Async:
+        name: Mat_AccumulateWithMask_Async
+      c:@F@Mat_Accumulate_Async:
+        name: Mat_Accumulate_Async
+      c:@F@Mat_AccumulatedWeighted:
+        name: Mat_AccumulatedWeighted
+      c:@F@Mat_AccumulatedWeightedWithMask:
+        name: Mat_AccumulatedWeightedWithMask
+      c:@F@Mat_AccumulatedWeightedWithMask_Async:
+        name: Mat_AccumulatedWeightedWithMask_Async
+      c:@F@Mat_AccumulatedWeighted_Async:
+        name: Mat_AccumulatedWeighted_Async
+      c:@F@MatchShapes:
+        name: MatchShapes
+      c:@F@MatchShapes_Async:
+        name: MatchShapes_Async
+      c:@F@MatchTemplate:
+        name: MatchTemplate
+      c:@F@MatchTemplate_Async:
+        name: MatchTemplate_Async
+      c:@F@MedianBlur:
+        name: MedianBlur
+      c:@F@MedianBlur_Async:
+        name: MedianBlur_Async
+      c:@F@MinAreaRect:
+        name: MinAreaRect
+      c:@F@MinAreaRect_Async:
+        name: MinAreaRect_Async
+      c:@F@MinEnclosingCircle:
+        name: MinEnclosingCircle
+      c:@F@MinEnclosingCircle_Async:
+        name: MinEnclosingCircle_Async
+      c:@F@Moments:
+        name: Moments
+      c:@F@Moments_Async:
+        name: Moments_Async
+      c:@F@MorphologyDefaultBorderValue:
+        name: MorphologyDefaultBorderValue
+      c:@F@MorphologyDefaultBorderValue_Async:
+        name: MorphologyDefaultBorderValue_Async
+      c:@F@MorphologyEx:
+        name: MorphologyEx
+      c:@F@MorphologyExWithParams:
+        name: MorphologyExWithParams
+      c:@F@MorphologyExWithParams_Async:
+        name: MorphologyExWithParams_Async
+      c:@F@MorphologyEx_Async:
+        name: MorphologyEx_Async
+      c:@F@PhaseCorrelate:
+        name: PhaseCorrelate
+      c:@F@PhaseCorrelate_Async:
+        name: PhaseCorrelate_Async
+      c:@F@PointPolygonTest:
+        name: PointPolygonTest
+      c:@F@PointPolygonTest_Async:
+        name: PointPolygonTest_Async
+      c:@F@Polylines:
+        name: Polylines
+      c:@F@Polylines_Async:
+        name: Polylines_Async
+      c:@F@PutText:
+        name: PutText
+      c:@F@PutTextWithParams:
+        name: PutTextWithParams
+      c:@F@PutTextWithParams_Async:
+        name: PutTextWithParams_Async
+      c:@F@PutText_Async:
+        name: PutText_Async
+      c:@F@PyrDown:
+        name: PyrDown
+      c:@F@PyrDown_Async:
+        name: PyrDown_Async
+      c:@F@PyrUp:
+        name: PyrUp
+      c:@F@PyrUp_Async:
+        name: PyrUp_Async
+      c:@F@Rectangle:
+        name: Rectangle
+      c:@F@RectangleWithParams:
+        name: RectangleWithParams
+      c:@F@RectangleWithParams_Async:
+        name: RectangleWithParams_Async
+      c:@F@Rectangle_Async:
+        name: Rectangle_Async
+      c:@F@Remap:
+        name: Remap
+      c:@F@Remap_Async:
+        name: Remap_Async
+      c:@F@Resize:
+        name: Resize
+      c:@F@Resize_Async:
+        name: Resize_Async
+      c:@F@Scharr:
+        name: Scharr
+      c:@F@Scharr_Async:
+        name: Scharr_Async
+      c:@F@SepFilter2D:
+        name: SepFilter2D
+      c:@F@SepFilter2D_Async:
+        name: SepFilter2D_Async
+      c:@F@Sobel:
+        name: Sobel
+      c:@F@Sobel_Async:
+        name: Sobel_Async
+      c:@F@SpatialGradient:
+        name: SpatialGradient
+      c:@F@SpatialGradient_Async:
+        name: SpatialGradient_Async
+      c:@F@SqBoxFilter:
+        name: SqBoxFilter
+      c:@F@SqBoxFilter_Async:
+        name: SqBoxFilter_Async
+      c:@F@Subdiv2D_Close:
+        name: Subdiv2D_Close
+      c:@F@Subdiv2D_Close_Async:
+        name: Subdiv2D_Close_Async
+      c:@F@Subdiv2D_EdgeDst:
+        name: Subdiv2D_EdgeDst
+      c:@F@Subdiv2D_EdgeDst_Async:
+        name: Subdiv2D_EdgeDst_Async
+      c:@F@Subdiv2D_EdgeOrg:
+        name: Subdiv2D_EdgeOrg
+      c:@F@Subdiv2D_EdgeOrg_Async:
+        name: Subdiv2D_EdgeOrg_Async
+      c:@F@Subdiv2D_FindNearest:
+        name: Subdiv2D_FindNearest
+      c:@F@Subdiv2D_FindNearest_Async:
+        name: Subdiv2D_FindNearest_Async
+      c:@F@Subdiv2D_GetEdge:
+        name: Subdiv2D_GetEdge
+      c:@F@Subdiv2D_GetEdgeList:
+        name: Subdiv2D_GetEdgeList
+      c:@F@Subdiv2D_GetEdgeList_Async:
+        name: Subdiv2D_GetEdgeList_Async
+      c:@F@Subdiv2D_GetEdge_Async:
+        name: Subdiv2D_GetEdge_Async
+      c:@F@Subdiv2D_GetLeadingEdgeList:
+        name: Subdiv2D_GetLeadingEdgeList
+      c:@F@Subdiv2D_GetLeadingEdgeList_Async:
+        name: Subdiv2D_GetLeadingEdgeList_Async
+      c:@F@Subdiv2D_GetTriangleList:
+        name: Subdiv2D_GetTriangleList
+      c:@F@Subdiv2D_GetTriangleList_Async:
+        name: Subdiv2D_GetTriangleList_Async
+      c:@F@Subdiv2D_GetVertex:
+        name: Subdiv2D_GetVertex
+      c:@F@Subdiv2D_GetVertex_Async:
+        name: Subdiv2D_GetVertex_Async
+      c:@F@Subdiv2D_GetVoronoiFacetList:
+        name: Subdiv2D_GetVoronoiFacetList
+      c:@F@Subdiv2D_GetVoronoiFacetList_Async:
+        name: Subdiv2D_GetVoronoiFacetList_Async
+      c:@F@Subdiv2D_InitDelaunay:
+        name: Subdiv2D_InitDelaunay
+      c:@F@Subdiv2D_InitDelaunay_Async:
+        name: Subdiv2D_InitDelaunay_Async
+      c:@F@Subdiv2D_Insert:
+        name: Subdiv2D_Insert
+      c:@F@Subdiv2D_InsertVec:
+        name: Subdiv2D_InsertVec
+      c:@F@Subdiv2D_InsertVec_Async:
+        name: Subdiv2D_InsertVec_Async
+      c:@F@Subdiv2D_Insert_Async:
+        name: Subdiv2D_Insert_Async
+      c:@F@Subdiv2D_Locate:
+        name: Subdiv2D_Locate
+      c:@F@Subdiv2D_Locate_Async:
+        name: Subdiv2D_Locate_Async
+      c:@F@Subdiv2D_NewEmpty:
+        name: Subdiv2D_NewEmpty
+      c:@F@Subdiv2D_NewEmpty_Async:
+        name: Subdiv2D_NewEmpty_Async
+      c:@F@Subdiv2D_NewWithRect:
+        name: Subdiv2D_NewWithRect
+      c:@F@Subdiv2D_NewWithRect_Async:
+        name: Subdiv2D_NewWithRect_Async
+      c:@F@Subdiv2D_NextEdge:
+        name: Subdiv2D_NextEdge
+      c:@F@Subdiv2D_NextEdge_Async:
+        name: Subdiv2D_NextEdge_Async
+      c:@F@Subdiv2D_RotateEdge:
+        name: Subdiv2D_RotateEdge
+      c:@F@Subdiv2D_RotateEdge_Async:
+        name: Subdiv2D_RotateEdge_Async
+      c:@F@Subdiv2D_SymEdge:
+        name: Subdiv2D_SymEdge
+      c:@F@Subdiv2D_SymEdge_Async:
+        name: Subdiv2D_SymEdge_Async
+      c:@F@Threshold:
+        name: Threshold
+      c:@F@Threshold_Async:
+        name: Threshold_Async
+      c:@F@WarpAffine:
+        name: WarpAffine
+      c:@F@WarpAffineWithParams:
+        name: WarpAffineWithParams
+      c:@F@WarpAffineWithParams_Async:
+        name: WarpAffineWithParams_Async
+      c:@F@WarpAffine_Async:
+        name: WarpAffine_Async
+      c:@F@WarpPerspective:
+        name: WarpPerspective
+      c:@F@WarpPerspectiveWithParams:
+        name: WarpPerspectiveWithParams
+      c:@F@WarpPerspectiveWithParams_Async:
+        name: WarpPerspectiveWithParams_Async
+      c:@F@WarpPerspective_Async:
+        name: WarpPerspective_Async
+      c:@F@Watershed:
+        name: Watershed
+      c:@F@Watershed_Async:
+        name: Watershed_Async
+      c:@S@CLAHE:
+        name: CLAHE
+      c:@S@Subdiv2D:
+        name: Subdiv2D
+      c:imgproc.h@T@CLAHEPtr:
+        name: CLAHEPtr
+      c:imgproc.h@T@Subdiv2DPtr:
+        name: Subdiv2DPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Moment:
+        name: Moment
+      c:types.h@T@Point:
+        name: Point
+      c:types.h@T@Point2f:
+        name: Point2f
+      c:types.h@T@Rect:
+        name: Rect
+      c:types.h@T@RotatedRect:
+        name: RotatedRect
+      c:types.h@T@Scalar:
+        name: Scalar
+      c:types.h@T@Size:
+        name: Size
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@Vec4f:
+        name: Vec4f
+      c:types.h@T@Vec6f:
+        name: Vec6f
+      c:types.h@T@VecFloat:
+        name: VecFloat
+      c:types.h@T@VecInt:
+        name: VecInt
+      c:types.h@T@VecMat:
+        name: VecMat
+      c:types.h@T@VecPoint:
+        name: VecPoint
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecVecPoint:
+        name: VecVecPoint
+      c:types.h@T@VecVecPoint2f:
+        name: VecVecPoint2f

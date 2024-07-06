@@ -2,7 +2,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/core.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'mat.dart';
 import 'mat_async.dart';
@@ -10,12 +11,12 @@ import 'rng.dart';
 
 extension RngAsync on Rng {
   static Future<Rng> createAsync() async => cvRunAsync(
-        CFFI.Rng_New_Async,
+        ccore.Rng_New_Async,
         (completer, p) => completer.complete(Rng.fromTheRng(p.cast<cvg.RNG>())),
       );
 
   static Future<Rng> fromSeedAsync(int seed) async => cvRunAsync(
-        (callback) => CFFI.Rng_NewWithState_Async(seed, callback),
+        (callback) => ccore.Rng_NewWithState_Async(seed, callback),
         (completer, p) => completer.complete(Rng.fromTheRng(p.cast<cvg.RNG>())),
       );
 
@@ -31,13 +32,13 @@ extension RngAsync on Rng {
   }) async {
     if (inplace) {
       return cvRunAsync0<Mat>(
-        (callback) => CFFI.RNG_Fill_Async(ref, mat.ref, distType, a, b, saturateRange, callback),
+        (callback) => ccore.RNG_Fill_Async(ref, mat.ref, distType, a, b, saturateRange, callback),
         (c) => c.complete(mat),
       );
     } else {
       final m = await mat.cloneAsync();
       return cvRunAsync0<Mat>(
-        (callback) => CFFI.RNG_Fill_Async(ref, m.ref, distType, a, b, saturateRange, callback),
+        (callback) => ccore.RNG_Fill_Async(ref, m.ref, distType, a, b, saturateRange, callback),
         (c) => c.complete(m),
       );
     }
@@ -52,7 +53,7 @@ extension RngAsync on Rng {
     int count = 0;
     while (true) {
       final v = await cvRunAsync<double>(
-        (callback) => CFFI.RNG_Gaussian_Async(ref, sigma, callback),
+        (callback) => ccore.RNG_Gaussian_Async(ref, sigma, callback),
         doubleCompleter,
       );
       yield v;
@@ -68,7 +69,7 @@ extension RngAsync on Rng {
     int count = 0;
     while (true) {
       final v = await cvRunAsync<int>(
-        (callback) => CFFI.RNG_Next_Async(ref, callback),
+        (callback) => ccore.RNG_Next_Async(ref, callback),
         (c, p) {
           final rval = p.cast<ffi.Uint32>().value;
           calloc.free(p);
@@ -92,11 +93,11 @@ extension RngAsync on Rng {
     while (true) {
       if (a is int && b is int) {
         final rval =
-            await cvRunAsync<int>((callback) => CFFI.RNG_Uniform_Async(ref, a, b, callback), intCompleter);
+            await cvRunAsync<int>((callback) => ccore.RNG_Uniform_Async(ref, a, b, callback), intCompleter);
         yield rval;
       } else {
         final rval = await cvRunAsync<double>(
-          (callback) => CFFI.RNG_UniformDouble_Async(ref, a.toDouble(), b.toDouble(), callback),
+          (callback) => ccore.RNG_UniformDouble_Async(ref, a.toDouble(), b.toDouble(), callback),
           doubleCompleter,
         );
         yield rval;
