@@ -1,4 +1,4 @@
-library cv;
+library cv.calib3d.fisheye;
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -66,8 +66,9 @@ class Fisheye {
     R ??= Mat.empty();
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
-    cvRun(() =>
-        ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref));
+    cvRun(
+      () => ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref),
+    );
     return undistorted;
   }
 

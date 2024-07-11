@@ -7,6 +7,7 @@
 */
 
 #include "calib3d.h"
+#include "core/vec.hpp"
 
 CvStatus *Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d) {
   BEGIN_WRAP
@@ -105,9 +106,11 @@ CvStatus *CalibrateCamera(
 ) {
   BEGIN_WRAP
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+  auto _objectPoints = vecvecpoint3f_c2cpp(objectPoints);
+  auto _imagePoints = vecvecpoint2f_c2cpp(imagePoints);
   *rval = cv::calibrateCamera(
-      *objectPoints.ptr,
-      *imagePoints.ptr,
+      _objectPoints,
+      _imagePoints,
       cv::Size(imageSize.width, imageSize.height),
       *cameraMatrix.ptr,
       *distCoeffs.ptr,
@@ -165,7 +168,9 @@ CvStatus *DrawChessboardCorners(Mat image, Size patternSize, Mat corners, bool p
 
 CvStatus *EstimateAffinePartial2D(VecPoint2f from, VecPoint2f to, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(cv::estimateAffinePartial2D(*from.ptr, *to.ptr))};
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
+  *rval = {new cv::Mat(cv::estimateAffinePartial2D(_from, _to))};
   END_WRAP
 }
 
@@ -181,22 +186,19 @@ CvStatus *EstimateAffinePartial2DWithParams(
     Mat *rval
 ) {
   BEGIN_WRAP
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
   *rval = {new cv::Mat(cv::estimateAffinePartial2D(
-      *from.ptr,
-      *to.ptr,
-      *inliers.ptr,
-      method,
-      ransacReprojThreshold,
-      maxIters,
-      confidence,
-      refineIters
+      _from, _to, *inliers.ptr, method, ransacReprojThreshold, maxIters, confidence, refineIters
   ))};
   END_WRAP
 }
 
 CvStatus *EstimateAffine2D(VecPoint2f from, VecPoint2f to, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(cv::estimateAffine2D(*from.ptr, *to.ptr))};
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
+  *rval = {new cv::Mat(cv::estimateAffine2D(_from, _to))};
   END_WRAP
 }
 
@@ -212,15 +214,10 @@ CvStatus *EstimateAffine2DWithParams(
     Mat *rval
 ) {
   BEGIN_WRAP
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
   *rval = {new cv::Mat(cv::estimateAffine2D(
-      *from.ptr,
-      *to.ptr,
-      *inliers.ptr,
-      method,
-      ransacReprojThreshold,
-      maxIters,
-      confidence,
-      refineIters
+      _from, _to, *inliers.ptr, method, ransacReprojThreshold, maxIters, confidence, refineIters
   ))};
   END_WRAP
 }

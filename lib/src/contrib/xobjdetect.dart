@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // ignore_for_file: constant_identifier_names, camel_case_types
 
-library cv.xobjdetect;
+library cv.contrib.xobjdetect;
 
 import 'dart:ffi' as ffi;
 

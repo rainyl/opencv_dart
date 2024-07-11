@@ -22,12 +22,9 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  /// This method is very similar to [clone], will copy data from [mat]
-  factory Mat.fromCMat(cvg.Mat mat) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.Mat_FromCMat(mat, p));
-    final vec = Mat._(p);
-    return vec;
+  factory Mat.fromNative(cvg.Mat mat) {
+    final p = calloc<cvg.Mat>()..ref = mat;
+    return Mat._(p);
   }
 
   /// Create a Mat from a list of data
@@ -68,7 +65,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.Mat_NewWithSizeFromScalar(s.ref, rows, cols, type.value, p));
+    cvRun(() => ccore.Mat_NewFromScalar(s.ref, rows, cols, type.value, p));
     final mat = Mat._(p);
     return mat;
   }
@@ -94,7 +91,7 @@ class Mat extends CvStruct<cvg.Mat> {
     type = type ?? MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.Mat_NewWithSizeFromScalar(scalar.ref, rows, cols, type!.value, p));
+    cvRun(() => ccore.Mat_NewFromScalar(scalar.ref, rows, cols, type!.value, p));
     final mat = Mat._(p);
     return mat;
   }
@@ -1343,46 +1340,26 @@ typedef OutputArray = Mat;
 typedef InputArray = OutputArray;
 typedef InputOutputArray = Mat;
 
-class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
-  VecMat._(this.ptr, [bool attach = true]) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
+class VecMat extends Vec<cvg.VecMat, Mat> implements CvStruct<cvg.VecMat> {
+  VecMat.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
+
+  factory VecMat.fromVec(cvg.VecMat ref) {
+    final p = calloc<cvg.VecMat>()..ref = ref;
+    return VecMat.fromPointer(p);
   }
-  factory VecMat.fromPointer(cvg.VecMatPtr ptr, [bool attach = true]) => VecMat._(ptr, attach);
-  factory VecMat.fromVec(cvg.VecMat ptr) {
-    final p = calloc<cvg.VecMat>();
-    cvRun(() => ccore.VecMat_NewFromVec(ptr, p));
-    final vec = VecMat._(p);
-    return vec;
-  }
-  factory VecMat.fromList(List<Mat> pts) {
-    final ptr = calloc<cvg.VecMat>();
-    cvRun(() => ccore.VecMat_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      cvRun(() => ccore.VecMat_Append(ptr.ref, pts[i].ref));
+
+  factory VecMat.fromList(List<Mat> mats) => VecMat.generate(mats.length, (i) => mats[i]);
+
+  factory VecMat.generate(int length, Mat Function(int i) generator) {
+    final p = calloc<cvg.VecMat>()..ref.length = length;
+    for (var i = 0; i < length; i++) {
+      p.ref.ptr[i] = generator(i).ref;
     }
-    final vec = VecMat._(ptr);
-    return vec;
+    return VecMat.fromPointer(p);
   }
 
   @override
-  int get length {
-    final ptrlen = calloc<ffi.Int>();
-    cvRun(() => ccore.VecMat_Size(ref, ptrlen));
-    final length = ptrlen.value;
-    calloc.free(ptrlen);
-    return length;
-  }
-
-  @override
-  cvg.VecMatPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecMatPtr>(ccore.addresses.VecMat_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecMat_Close(ptr);
-  }
+  int get length => ref.length;
 
   @override
   Iterator<Mat> get iterator => VecMatIterator(ref);
@@ -1392,26 +1369,14 @@ class VecMat extends Vec<Mat> implements CvStruct<cvg.VecMat> {
 }
 
 class VecMatIterator extends VecIterator<Mat> {
-  VecMatIterator(this.ptr);
-  cvg.VecMat ptr;
+  VecMatIterator(this.ref);
+  cvg.VecMat ref;
 
   @override
-  int get length => using<int>(
-        (arena) {
-          final p = arena<ffi.Int>();
-          cvRun(() => ccore.VecMat_Size(ptr, p));
-          final len = p.value;
-          return len;
-        },
-      );
+  int get length => ref.length;
 
   @override
-  Mat operator [](int idx) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.VecMat_At(ptr, idx, p));
-    final mat = Mat._(p);
-    return mat;
-  }
+  Mat operator [](int idx) => Mat.fromNative(ref.ptr[idx]);
 }
 
 extension ListMatExtension on List<Mat> {

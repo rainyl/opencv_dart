@@ -1,5 +1,6 @@
 #include "wechat_qrcode_async.h"
 #include "core/types.h"
+#include "core/vec.hpp"
 
 CvStatus *WeChatQRCode_New_Async(CvCallback_1 callback)
 {
@@ -28,7 +29,7 @@ CvStatus *WeChatQRCode_DetectAndDecode_Async(WeChatQRCode *self, Mat img, CvCall
     {
         cstrings.push_back(std::vector<char>(s.begin(), s.end()));
     }
-    callback(new VecVecChar{new std::vector<std::vector<char>>(cstrings)}, new VecMat{new std::vector<cv::Mat>(points)});
+    callback(new VecVecChar{vecvecchar_cpp2c(cstrings)}, new VecMat{vecmat_cpp2c(points)});
     END_WRAP
 }
 

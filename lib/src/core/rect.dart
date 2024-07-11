@@ -119,10 +119,10 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
     calloc.free(ptr);
   }
 
-  List<Point2f> get points {
+  VecPoint2f get points {
     final pts = calloc<cvg.VecPoint2f>();
     cvRun(() => ccore.RotatedRect_Points(ptr.ref, pts));
-    return VecPoint2f.fromPointer(pts).toList();
+    return VecPoint2f.fromPointer(pts);
   }
 
   Rect get boundingRect {
@@ -149,49 +149,33 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   List<Object> get props => [center, size, angle];
 }
 
-class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
-  VecRect._(this.ptr, [bool attach = true]) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
+class VecRect extends Vec<cvg.VecRect, Rect> {
+  VecRect.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
   factory VecRect([int length = 0, int x = 0, int y = 0, int width = 0, int height = 0]) =>
-      VecRect.fromList(List.generate(length, (i) => Rect(x, y, width, height)));
-  factory VecRect.fromPointer(cvg.VecRectPtr ptr, [bool attach = true]) => VecRect._(ptr, attach);
-  factory VecRect.fromVec(cvg.VecRect ptr) {
-    final p = calloc<cvg.VecRect>();
-    cvRun(() => ccore.VecRect_NewFromVec(ptr, p));
-    final vec = VecRect._(p);
-    return vec;
-  }
-  factory VecRect.fromList(List<Rect> pts) {
-    final ptr = calloc<cvg.VecRect>();
-    cvRun(() => ccore.VecRect_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      cvRun(() => ccore.VecRect_Append(ptr.ref, pts[i].ref));
+      VecRect.generate(length, (i) => Rect(x, y, width, height));
+
+  factory VecRect.fromList(List<Rect> pts) => VecRect.generate(pts.length, (i) => pts[i]);
+
+  factory VecRect.generate(int length, Rect Function(int i) generator) {
+    final p = calloc<cvg.Rect>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      p[i] = v.ref;
     }
-    final vec = VecRect._(ptr);
-    return vec;
+    final pp = calloc<cvg.VecRect>()
+      ..ref.length = length
+      ..ref.ptr = p;
+    return VecRect.fromPointer(pp);
+  }
+
+  factory VecRect.fromVec(cvg.VecRect ref) {
+    final p = calloc<cvg.VecRect>()..ref = ref;
+    return VecRect.fromPointer(p);
   }
 
   @override
-  int get length {
-    final ptrlen = calloc<ffi.Int>();
-    cvRun(() => ccore.VecRect_Size(ref, ptrlen));
-    final length = ptrlen.value;
-    calloc.free(ptrlen);
-    return length;
-  }
+  int get length => ref.length;
 
-  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ccore.addresses.VecRect_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecRect_Close(ptr);
-  }
-
-  @override
-  cvg.VecRectPtr ptr;
   @override
   Iterator<Rect> get iterator => VecRectIterator(ref);
 
@@ -200,23 +184,14 @@ class VecRect extends Vec<Rect> implements CvStruct<cvg.VecRect> {
 }
 
 class VecRectIterator extends VecIterator<Rect> {
-  VecRectIterator(this.ptr);
-  cvg.VecRect ptr;
+  VecRectIterator(this.ref);
+  cvg.VecRect ref;
 
   @override
-  int get length => using<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.VecRect_Size(ptr, p));
-        final len = p.value;
-        return len;
-      });
+  int get length => ref.length;
 
   @override
-  Rect operator [](int idx) {
-    final p = calloc<cvg.Rect>();
-    cvRun(() => ccore.VecRect_At(ptr, idx, p));
-    return Rect.fromPointer(p);
-  }
+  Rect operator [](int idx) => Rect.fromNative(ref.ptr[idx]);
 }
 
 extension ListRectExtension on List<Rect> {

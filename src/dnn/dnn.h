@@ -20,8 +20,9 @@ extern "C" {
 #include "core/core.h"
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::dnn::Net, Net);
-CVD_TYPEDEF(cv::Ptr<cv::dnn::Layer>, Layer);
+namespace cv_dnn = cv::dnn::dnn4_v20240521;
+CVD_TYPEDEF(cv_dnn::Net, Net);
+CVD_TYPEDEF(cv::Ptr<cv_dnn::Layer>, Layer);
 #else
 CVD_TYPEDEF(void, Net);
 CVD_TYPEDEF(void, Layer);

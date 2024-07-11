@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names, camel_case_types, non_constant_identifier_names
 
-library cv.ximgproc;
+library cv.contrib.ximgproc;
 
 import 'dart:ffi' as ffi;
 
@@ -280,7 +280,8 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
     final pvr = calloc<cvg.VecRect>();
     final pvf = calloc<cvg.VecFloat>();
     cvRun(
-        () => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf));
+      () => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf),
+    );
     return (VecRect.fromPointer(pvr), VecFloat.fromPointer(pvf));
   }
 
@@ -784,7 +785,12 @@ class ximgproc_rl {
   }) async =>
       cvRunAsync(
         (callback) => ccontrib.ximgproc_rl_erode_Async(
-            rlSrc.ref, rlKernel.ref, bBoundaryOn, anchor.asPoint.ref, callback),
+          rlSrc.ref,
+          rlKernel.ref,
+          bBoundaryOn,
+          anchor.asPoint.ref,
+          callback,
+        ),
         matCompleter,
       );
 

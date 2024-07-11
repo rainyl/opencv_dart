@@ -522,7 +522,7 @@ class CvNativeCalib3d {
     Mat distCoeffs,
     int flag,
     TermCriteria criteria,
-    imp1.CvCallback_5 callback,
+    imp1.CvCallback_3 callback,
   ) {
     return _calibrateCamera_Async(
       objectPoints,
@@ -546,10 +546,10 @@ class CvNativeCalib3d {
               Mat,
               ffi.Int,
               TermCriteria,
-              imp1.CvCallback_5)>>('calibrateCamera_Async');
+              imp1.CvCallback_3)>>('calibrateCamera_Async');
   late final _calibrateCamera_Async = _calibrateCamera_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecVecPoint2f, Size, Mat,
-          Mat, int, TermCriteria, imp1.CvCallback_5)>();
+          Mat, int, TermCriteria, imp1.CvCallback_3)>();
 
   ffi.Pointer<CvStatus> drawChessboardCorners_Async(
     Mat image,

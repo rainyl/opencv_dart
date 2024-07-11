@@ -151,7 +151,7 @@ CvStatus *calibrateCamera_Async(
     Mat distCoeffs,
     int flag,
     TermCriteria criteria,
-    CVD_OUT CvCallback_5 callback
+    CVD_OUT CvCallback_3 callback
 );
 CvStatus *drawChessboardCorners_Async(
     Mat image, Size patternSize, bool patternWasFound, CVD_OUT CvCallback_0 callback

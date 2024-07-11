@@ -1,5 +1,6 @@
 #include "wechat_qrcode.h"
 #include "core/core.h"
+#include "core/vec.hpp"
 #include <vector>
 
 CvStatus *WeChatQRCode_New(WeChatQRCode *qrcode)
@@ -27,7 +28,7 @@ CvStatus *WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *poin
   std::vector<cv::Mat> pts;
 
   auto strings = self->ptr->detectAndDecode(*img.ptr, pts);
-  *points = {new std::vector<cv::Mat>(pts)};
+  *points = {vecmat_cpp2c(pts)};
 
   std::vector<std::vector<char>> cstrings;
   cstrings.reserve(strings.size());
@@ -35,7 +36,7 @@ CvStatus *WeChatQRCode_DetectAndDecode(WeChatQRCode *self, Mat img, VecMat *poin
     auto s = strings.at(i);
     cstrings.push_back(std::vector<char>(s.begin(), s.end()));
   }
-  *rval = {new std::vector<std::vector<char>>(cstrings)};
+  *rval = {vecvecchar_cpp2c(cstrings)};
 
   END_WRAP
 }

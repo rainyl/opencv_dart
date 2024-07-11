@@ -7,6 +7,7 @@
 */
 
 #include "video.h"
+#include "core/vec.hpp"
 #include <vector>
 
 CvStatus *BackgroundSubtractorMOG2_Create(BackgroundSubtractorMOG2 *rval)
@@ -62,10 +63,16 @@ CvStatus *BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, M
 }
 
 CvStatus *CalcOpticalFlowPyrLK(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
-                               VecUChar status, VecFloat err)
+                               VecUChar *status, VecFloat *err)
 {
   BEGIN_WRAP
-  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, *status.ptr, *err.ptr);
+  auto _prevPts = vecpoint2f_c2cpp(prevPts);
+  auto _nextPts = vecpoint2f_c2cpp(nextPts);
+  std::vector<uchar> _status;
+  std::vector<float> _err;
+  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, _prevPts, _nextPts, _status, _err);
+  *status = vecuchar_cpp2c(_status);
+  *err = vecfloat_cpp2c(_err);
   END_WRAP
 }
 CvStatus *CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f nextPts,
@@ -73,13 +80,15 @@ CvStatus *CalcOpticalFlowPyrLKWithParams(Mat prevImg, Mat nextImg, VecPoint2f pr
                                          TermCriteria criteria, int flags, double minEigThreshold)
 {
   BEGIN_WRAP
+  auto _prevPts = vecpoint2f_c2cpp(prevPts);
+  auto _nextPts = vecpoint2f_c2cpp(nextPts);
   std::vector<uchar> _status;
   std::vector<float> _err;
   auto               tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, *prevPts.ptr, *nextPts.ptr, _status, _err,
+  cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, _prevPts, _nextPts, _status, _err,
                            cv::Size(winSize.width, winSize.height), maxLevel, tc, flags, minEigThreshold);
-  *status = {new std::vector<uchar>(_status)};
-  *err = {new std::vector<float>(_err)};
+  *status = {vecuchar_cpp2c(_status)};
+  *err = {vecfloat_cpp2c(_err)};
   END_WRAP
 }
 CvStatus *CalcOpticalFlowFarneback(Mat prevImg, Mat nextImg, Mat flow, double pyrScale, int levels,

@@ -35,7 +35,7 @@ TEST(Mat, New_Close)
   EXPECT_EQ(type, CV_8UC1);
   Mat_Close(&mat1);
 
-  VecInt sizes = {new std::vector<int>({3, 3})};
+  VecInt sizes = {vecint_cpp2c({3, 3})};
   type = CV_8UC1;
 
   Mat mat2;
@@ -136,7 +136,7 @@ TEST(Mat, Create_extra)
 
   std::vector<uchar> data = {0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13,
                              14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
-  VecUChar           buf = {new std::vector<uchar>(data)};
+  VecUChar           buf = {vecuchar_cpp2c(data)};
   Mat                matt = {};
   s = Mat_NewFromBytes(3, 3, CV_8UC3, data.data(), 0, &matt);
   EXPECT_EQ(s->code, 0);

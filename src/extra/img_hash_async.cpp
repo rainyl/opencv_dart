@@ -1,5 +1,6 @@
 #include "img_hash_async.h"
 #include "core/types.h"
+#include "core/vec.hpp"
 
 // Asynchronous functions for Image Hashing
 
@@ -43,7 +44,7 @@ CvStatus *BlockMeanHash_Create_Async(int mode, CvCallback_1 callback) {
 CvStatus *BlockMeanHash_GetMean_Async(BlockMeanHash self, CvCallback_1 callback) {
     BEGIN_WRAP
     auto vec = self.ptr->get()->getMean();
-    callback(new VecDouble{new std::vector<double>(vec)});
+    callback(new VecDouble{vecdouble_cpp2c(vec)});
     END_WRAP
 }
 

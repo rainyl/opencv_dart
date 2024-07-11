@@ -1,8 +1,6 @@
 #include "ximgproc.h"
 #include "core/types.h"
-#include "opencv2/core/types.hpp"
-#include "opencv2/ximgproc/edgeboxes.hpp"
-#include "opencv2/ximgproc/structured_edge_detection.hpp"
+#include "core/vec.hpp"
 
 CvStatus *
 ximgproc_anisotropicDiffusion(Mat src, CVD_OUT Mat *dst, float alpha, float K, int niters) {
@@ -186,8 +184,8 @@ CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
       self.kappa
   );
   _self->getBoundingBoxes(*edge_map.ptr, *orientation_map.ptr, _boxes, _scores);
-  boxes->ptr = new std::vector<cv::Rect>(_boxes);
-  scores->ptr = new std::vector<float>(_scores);
+  *boxes = vecrect_cpp2c(_boxes);
+  *scores = vecfloat_cpp2c(_scores);
   END_WRAP
 }
 
@@ -285,13 +283,13 @@ CvStatus *ximgproc_EdgeDrawing_getGradientImage(EdgeDrawing self, Mat *dst) {
 CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecInt *rval) {
   BEGIN_WRAP
   std::vector<int> _rval = (*self.ptr)->getSegmentIndicesOfLines();
-  *rval = {new std::vector<int>(_rval)};
+  *rval = {vecint_cpp2c(_rval)};
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getSegments(EdgeDrawing self, VecVecPoint *rval) {
   BEGIN_WRAP
   std::vector<std::vector<cv::Point>> _rval = (*self.ptr)->getSegments();
-  *rval = {new std::vector<std::vector<cv::Point>>(_rval)};
+  *rval = {vecvecpoint_cpp2c(_rval)};
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_setParams(EdgeDrawing self, EdgeDrawingParams params) {
@@ -338,7 +336,8 @@ CvStatus *ximgproc_EdgeDrawing_getParams(EdgeDrawing self, EdgeDrawingParams *pa
 CvStatus *ximgproc_rl_createRLEImage(const VecPoint3i runs, Mat *res, Size size) {
   BEGIN_WRAP
   cv::Mat _res;
-  cv::ximgproc::rl::createRLEImage(*runs.ptr, _res, cv::Size(size.width, size.height));
+  auto _runs = vecpoint3i_c2cpp(runs);
+  cv::ximgproc::rl::createRLEImage(_runs, _res, cv::Size(size.width, size.height));
   *res = {new cv::Mat(_res)};
   END_WRAP
 }

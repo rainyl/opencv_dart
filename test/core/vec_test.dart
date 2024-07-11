@@ -12,6 +12,9 @@ void main() {
     final vec1 = cv.VecInt.fromVec(vec.ref);
     expect(vec1, vec);
 
+    final vec2 = cv.VecInt(100, 10);
+    expect(vec2.toList(), List.generate(100, (index) => 10));
+
     vec1.dispose();
   });
 

@@ -4,10 +4,10 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../core/base.dart';
-import '../core/mat.dart';
 import '../g/core.g.dart' as cvg;
 import '../native_lib.dart' show ccore;
+import 'base.dart';
+import 'mat.dart';
 
 /// SVDCompute decomposes matrix and stores the results to user-provided matrices
 ///

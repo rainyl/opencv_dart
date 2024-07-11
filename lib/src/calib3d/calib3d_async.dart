@@ -1,4 +1,4 @@
-library cv;
+library cv.calib3d;
 
 import 'dart:ffi' as ffi;
 
@@ -79,7 +79,7 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   int flags = 0,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) async =>
-    cvRunAsync5(
+    cvRunAsync3(
       (callback) => ccalib3d.calibrateCamera_Async(
         objectPoints.ref,
         imagePoints.ref,
@@ -90,13 +90,11 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
         criteria.cvd.ref,
         callback,
       ),
-      (c, p, p1, p2, p3, p4) {
+      (c, p, p1, p2) {
         final rmsErr = p.cast<ffi.Double>().value;
         calloc.free(p);
-        final cameraMatrix = Mat.fromPointer(p1.cast());
-        final distCoeffs = Mat.fromPointer(p2.cast());
-        final rvecs = Mat.fromPointer(p3.cast());
-        final tvecs = Mat.fromPointer(p4.cast());
+        final rvecs = Mat.fromPointer(p1.cast());
+        final tvecs = Mat.fromPointer(p2.cast());
         return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs));
       },
     );

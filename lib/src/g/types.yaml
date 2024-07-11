@@ -128,6 +128,8 @@ files:
         name: VecPoint3i
       c:@S@VecRect:
         name: VecRect
+      c:@S@VecRotatedRect:
+        name: VecRotatedRect
       c:@S@VecUChar:
         name: VecUChar
       c:@S@VecVec4f:
@@ -146,6 +148,8 @@ files:
         name: VecVecPoint2f
       c:@S@VecVecPoint3f:
         name: VecVecPoint3f
+      c:@S@VecVecPoint3i:
+        name: VecVecPoint3i
       c:types.h@T@Contour:
         name: Contour
       c:types.h@T@Contour2f:
@@ -208,6 +212,8 @@ files:
         name: VecPointPtr
       c:types.h@T@VecRectPtr:
         name: VecRectPtr
+      c:types.h@T@VecRotatedRectPtr:
+        name: VecRotatedRectPtr
       c:types.h@T@VecUCharPtr:
         name: VecUCharPtr
       c:types.h@T@VecVec4fPtr:
@@ -224,6 +230,8 @@ files:
         name: VecVecPoint2fPtr
       c:types.h@T@VecVecPoint3fPtr:
         name: VecVecPoint3fPtr
+      c:types.h@T@VecVecPoint3iPtr:
+        name: VecVecPoint3iPtr
       c:types.h@T@VecVecPointPtr:
         name: VecVecPointPtr
       c:types.h@T@uchar:

@@ -122,7 +122,7 @@ TEST(VecVecPoint, NewFromPointerTest)
   VecPoint *points = new VecPoint[length];
   for (int i = 0; i < length; i++) {
     std::vector<cv::Point> vp = {{1, 2}, {3, 4}, {5, 6}, {7, 8}};
-    VecPoint               v = {.ptr = new std::vector<cv::Point>(vp)};
+    VecPoint               v = {.ptr = vecpoint_cpp2c(vp)};
     points[i] = v;
   }
 

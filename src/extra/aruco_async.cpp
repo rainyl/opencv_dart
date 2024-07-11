@@ -1,5 +1,6 @@
 #include "aruco_async.h"
 #include "core/types.h"
+#include "core/vec.hpp"
 
 // Asynchronous functions for ArucoDetectorParameters
 CvStatus *ArucoDetectorParameters_Create_Async(CvCallback_1 callback)
@@ -498,7 +499,7 @@ CvStatus *ArucoDetector_DetectMarkers_Async(ArucoDetector ad, Mat inputArr, CvCa
     std::vector<int> markerIds;
     std::vector<std::vector<cv::Point2f>> rejectedCandidates;
     ad.ptr->detectMarkers(*inputArr.ptr, markerCorners, markerIds, rejectedCandidates);
-    callback(new VecVecPoint2f{new std::vector<std::vector<cv::Point2f>>(markerCorners)}, new VecInt{new std::vector<int>(markerIds)}, new VecVecPoint2f{new std::vector<std::vector<cv::Point2f>>(rejectedCandidates)});
+    callback(new VecVecPoint2f{vecvecpoint2f_cpp2c(markerCorners)}, new VecInt{vecint_cpp2c(markerIds)}, new VecVecPoint2f{vecvecpoint2f_cpp2c(rejectedCandidates)});
     END_WRAP
 }
 
@@ -507,7 +508,8 @@ CvStatus *ArucoDrawDetectedMarkers_Async(Mat image, VecVecPoint2f markerCorners,
 {
     BEGIN_WRAP
     cv::Scalar _borderColor = cv::Scalar(borderColor.val1, borderColor.val2, borderColor.val3);
-    cv::aruco::drawDetectedMarkers(*image.ptr, *markerCorners.ptr, *markerIds.ptr, _borderColor);
+    auto _markerCorners = vecvecpoint2f_c2cpp(markerCorners);
+    cv::aruco::drawDetectedMarkers(*image.ptr, _markerCorners, *markerIds.ptr, _borderColor);
     callback();
     END_WRAP
 }
