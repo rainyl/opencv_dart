@@ -1,4 +1,4 @@
-library cv;
+library cv.objdetect;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -33,8 +33,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
 
   Future<bool> loadAsync(String name) async {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
-    final rval =
-        cvRunAsync<bool>((callback) => cobjdetect.CascadeClassifier_Load_Async(ref, cname, callback), (c, p) {
+    final rval = cvRunAsync<bool>((callback) => cobjdetect.CascadeClassifier_Load_Async(ref, cname, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value != 0;
       calloc.free(p);
       return c.complete(rval);
@@ -127,8 +126,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
   }
 
   Future<bool> emptyAsync() async {
-    final rval =
-        cvRunAsync<bool>((callback) => cobjdetect.CascadeClassifier_Empty_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<bool>((callback) => cobjdetect.CascadeClassifier_Empty_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -137,8 +135,8 @@ extension CascadeClassifierAsync on CascadeClassifier {
   }
 
   Future<int> getFeatureTypeAsync() async {
-    final rval = cvRunAsync<int>(
-        (callback) => cobjdetect.CascadeClassifier_getFeatureType_Async(ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<int>((callback) => cobjdetect.CascadeClassifier_getFeatureType_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
 
@@ -158,8 +156,8 @@ extension CascadeClassifierAsync on CascadeClassifier {
   }
 
   Future<bool> isOldFormatCascadeAsync() async {
-    final rval = cvRunAsync<bool>(
-        (callback) => cobjdetect.CascadeClassifier_isOldFormatCascade_Async(ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<bool>((callback) => cobjdetect.CascadeClassifier_isOldFormatCascade_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -176,8 +174,8 @@ extension HOGDescriptorAsync on HOGDescriptor {
 
   static Future<HOGDescriptor> fromFileAsync(String filename) async {
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    final rval = await cvRunAsync<HOGDescriptor>(
-        (callback) => cobjdetect.HOGDescriptor_NewFromFile_Async(cp, callback), (c, p) {
+    final rval =
+        await cvRunAsync<HOGDescriptor>((callback) => cobjdetect.HOGDescriptor_NewFromFile_Async(cp, callback), (c, p) {
       return c.complete(HOGDescriptor.fromPointer(p.cast<cvg.HOGDescriptor>()));
     });
     calloc.free(cp);
@@ -186,8 +184,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
 
   Future<bool> loadAsync(String name) async {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
-    final rval =
-        cvRunAsync<bool>((callback) => cobjdetect.HOGDescriptor_Load_Async(ref, cname, callback), (c, p) {
+    final rval = cvRunAsync<bool>((callback) => cobjdetect.HOGDescriptor_Load_Async(ref, cname, callback), (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
 
@@ -211,10 +208,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
               callback,
             ), (c, descriptors, locations) {
       return c.complete(
-        (
-          VecF32.fromPointer(descriptors.cast<cvg.VecF32>()),
-          VecPoint.fromPointer(locations.cast<cvg.VecPoint>())
-        ),
+        (VecF32.fromPointer(descriptors.cast<cvg.VecF32>()), VecPoint.fromPointer(locations.cast<cvg.VecPoint>())),
       );
     });
     return rval;
@@ -331,8 +325,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       );
 
   Future<int> getDescriptorSizeAsync() async {
-    final rval = cvRunAsync<int>(
-        (callback) => cobjdetect.HOGDescriptor_getDescriptorSize_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<int>((callback) => cobjdetect.HOGDescriptor_getDescriptorSize_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Size>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -341,8 +334,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
   }
 
   Future<double> getWinSigmaAsync() async {
-    final rval =
-        cvRunAsync<double>((callback) => cobjdetect.HOGDescriptor_getWinSigma_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<double>((callback) => cobjdetect.HOGDescriptor_getWinSigma_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -478,8 +470,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     InputArray img,
   ) async {
     final rval = cvRunAsync3<(String, VecPoint, Mat)>(
-        (callback) => cobjdetect.QRCodeDetector_Decode_Async(ref, img.ref, callback),
-        (c, prval, points, straightCode) {
+        (callback) => cobjdetect.QRCodeDetector_Decode_Async(ref, img.ref, callback), (c, prval, points, straightCode) {
       // prval is a char ** pointer
       final rval = prval.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
       calloc.free(prval);
@@ -627,8 +618,8 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
   }
 
   Future<(int, int)> getInputSizeAsync() async {
-    final rval = cvRunAsync<(int, int)>(
-        (callback) => cobjdetect.FaceDetectorYN_GetInputSize_Async(ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<(int, int)>((callback) => cobjdetect.FaceDetectorYN_GetInputSize_Async(ref, callback), (c, p) {
       final size = p.cast<cvg.Size>().ref;
       final ret = (size.width, size.height);
       return c.complete(ret);
@@ -637,8 +628,8 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
   }
 
   Future<double> getScoreThresholdAsync() async {
-    final rval = cvRunAsync<double>(
-        (callback) => cobjdetect.FaceDetectorYN_GetScoreThreshold_Async(ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<double>((callback) => cobjdetect.FaceDetectorYN_GetScoreThreshold_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Float>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -647,8 +638,8 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
   }
 
   Future<double> getNmsThresholdAsync() async {
-    final rval = cvRunAsync<double>(
-        (callback) => cobjdetect.FaceDetectorYN_GetNMSThreshold_Async(ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<double>((callback) => cobjdetect.FaceDetectorYN_GetNMSThreshold_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Float>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -657,8 +648,7 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
   }
 
   Future<int> getTopKAsync() async {
-    final rval =
-        cvRunAsync<int>((callback) => cobjdetect.FaceDetectorYN_GetTopK_Async(ref, callback), (c, p) {
+    final rval = cvRunAsync<int>((callback) => cobjdetect.FaceDetectorYN_GetTopK_Async(ref, callback), (c, p) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
       return c.complete(rval);
@@ -667,8 +657,8 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
   }
 
   Future<Mat> detectAsync(Mat image) async {
-    final rval = cvRunAsync<Mat>(
-        (callback) => cobjdetect.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, p) {
+    final rval =
+        cvRunAsync<Mat>((callback) => cobjdetect.FaceDetectorYN_Detect_Async(ref, image.ref, callback), (c, p) {
       return c.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
     });
     return rval;

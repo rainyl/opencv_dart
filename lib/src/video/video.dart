@@ -1,4 +1,4 @@
-library cv;
+library cv.video;
 
 import 'dart:ffi' as ffi;
 
@@ -17,8 +17,7 @@ import '../g/video_io.g.dart' as cvg;
 import '../native_lib.dart' show cvideo;
 
 class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
-  BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+  BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -69,8 +68,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
     }
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(cvideo.addresses.BackgroundSubtractorKNN_Close);
+  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(cvideo.addresses.BackgroundSubtractorKNN_Close);
 
   void dispose() {
     finalizer.detach(this);

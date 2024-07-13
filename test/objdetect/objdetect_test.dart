@@ -301,8 +301,7 @@ void main() async {
     expect(matchScoreL2, greaterThanOrEqualTo(0));
 
     // Test matching features using Cosine distance
-    final matchScoreCosine =
-        recognizer.match(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_COSINE);
+    final matchScoreCosine = recognizer.match(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_COSINE);
     expect(matchScoreCosine, greaterThanOrEqualTo(0));
 
     // Clean up

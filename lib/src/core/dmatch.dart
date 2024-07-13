@@ -3,9 +3,10 @@ library cv;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:opencv_dart/opencv_core.dart';
 
 import '../g/types.g.dart' as cvg;
+import 'base.dart';
+import 'vec.dart';
 
 class DMatch extends CvStruct<cvg.DMatch> {
   DMatch._(ffi.Pointer<cvg.DMatch> ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -60,8 +61,7 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
     }
   }
 
-  factory VecDMatch.fromList(List<DMatch> pts) =>
-      VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
+  factory VecDMatch.fromList(List<DMatch> pts) => VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecDMatch.generate(int length, DMatch Function(int i) generator, {bool dispose = true}) {
     final pp = calloc<cvg.VecDMatch>()..ref.length = length;

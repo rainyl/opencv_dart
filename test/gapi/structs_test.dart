@@ -1,5 +1,5 @@
+import 'package:opencv_dart/gapi.dart' as cv_gapi;
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/opencv_gapi.dart' as cv_gapi;
 import 'package:test/test.dart';
 
 void main() {

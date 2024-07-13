@@ -1,4 +1,4 @@
-library cv;
+library cv.photo;
 
 import '../core/base.dart';
 import '../core/mat.dart';

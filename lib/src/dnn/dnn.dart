@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-library cv;
+library cv.dnn;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';

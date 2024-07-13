@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-library cv;
+library cv.features2d;
 
 import 'dart:ffi' as ffi;
 
@@ -250,8 +250,7 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr, [bool attach = true]) =>
-      GFTTDetector._(ptr, attach);
+  factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr, [bool attach = true]) => GFTTDetector._(ptr, attach);
 
   /// returns a new GFTTDetector algorithm
   ///

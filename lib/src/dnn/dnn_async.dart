@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.dnn;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -62,8 +62,8 @@ extension NetAsync on Net {
     final cPath = path.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
-    final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNet_Async(cPath, cConfig, cFramework, callback), (c, p) {
+    final rval =
+        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNet_Async(cPath, cConfig, cFramework, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cPath);
@@ -95,8 +95,7 @@ extension NetAsync on Net {
   static Future<Net> fromCaffeAsync(String prototxt, String caffeModel) async {
     final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
     final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
-    final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromCaffe_Async(cProto, cCaffe, callback), (c, p) {
+    final rval = await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromCaffe_Async(cProto, cCaffe, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cProto);
@@ -108,8 +107,8 @@ extension NetAsync on Net {
   static Future<Net> fromCaffeBytesAsync(Uint8List bufferProto, Uint8List bufferModel) async {
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
-    final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromCaffeBytes_Async(bufP.ref, bufM.ref, callback), (c, p) {
+    final rval =
+        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromCaffeBytes_Async(bufP.ref, bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -127,8 +126,7 @@ extension NetAsync on Net {
 
   static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
-    final rval =
-        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromONNXBytes_Async(bufM.ref, callback), (c, p) {
+    final rval = await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromONNXBytes_Async(bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -137,8 +135,8 @@ extension NetAsync on Net {
   static Future<Net> fromTensorflowAsync(String path, {String config = ""}) async {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final cconf = config.toNativeUtf8().cast<ffi.Char>();
-    final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTensorflow_Async(cpath, cconf, callback), (c, p) {
+    final rval =
+        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromTensorflow_Async(cpath, cconf, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -160,8 +158,7 @@ extension NetAsync on Net {
 
   static Future<Net> fromTFLiteAsync(String path) async {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    final rval =
-        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromTFLite_Async(cpath, callback), (c, p) {
+    final rval = await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromTFLite_Async(cpath, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -170,8 +167,7 @@ extension NetAsync on Net {
 
   static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
-    final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTFLiteBytes_Async(bufM.ref, callback), (c, p) {
+    final rval = await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromTFLiteBytes_Async(bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;

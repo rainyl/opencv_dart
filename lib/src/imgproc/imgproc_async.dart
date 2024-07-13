@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.imgproc;
 
 import 'dart:async';
 import 'dart:ffi' as ffi;
@@ -117,8 +117,7 @@ Future<Mat> calcBackProjectAsync(
   double scale = 1.0,
 }) async =>
     cvRunAsync(
-      (callback) =>
-          cimgproc.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, scale, callback),
+      (callback) => cimgproc.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, scale, callback),
       matCompleter,
     );
 
@@ -135,8 +134,7 @@ Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async =>
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) async =>
-    cvRunAsync((callback) => cimgproc.ClipLine_Async(imgRect.ref, pt1.ref, pt2.ref, callback),
-        (completer, p) {
+    cvRunAsync((callback) => cimgproc.ClipLine_Async(imgRect.ref, pt1.ref, pt2.ref, callback), (completer, p) {
       final success = p.cast<ffi.Bool>().value;
       calloc.free(p);
       completer.complete((success, pt1, pt2));
@@ -152,8 +150,7 @@ Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) a
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
-Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace) async =>
-    cvRunAsync(
+Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace) async => cvRunAsync(
       (callback) => cimgproc.BilateralFilter_Async(src.ref, diameter, sigmaColor, sigmaSpace, callback),
       matCompleter,
     );
@@ -176,8 +173,8 @@ Future<Mat> boxFilterAsync(Mat src, int depth, (int, int) ksize) async =>
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
-Future<Mat> sqrBoxFilterAsync(Mat src, int depth, (int, int) ksize) async => cvRunAsync(
-    (callback) => cimgproc.SqBoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
+Future<Mat> sqrBoxFilterAsync(Mat src, int depth, (int, int) ksize) async =>
+    cvRunAsync((callback) => cimgproc.SqBoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
 
 /// Dilate dilates an image by using a specific structuring element.
 ///
@@ -301,11 +298,9 @@ Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points)
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
-Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) async =>
-    cvRunAsync2(
+Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) async => cvRunAsync2(
       (callback) => cimgproc.FindContours_Async(src.ref, mode, method, callback),
-      (c, p, p1) =>
-          c.complete((Contours.fromPointer(p.cast<cvg.VecVecPoint>()), Mat.fromPointer(p1.cast<cvg.Mat>()))),
+      (c, p, p1) => c.complete((Contours.fromPointer(p.cast<cvg.VecVecPoint>()), Mat.fromPointer(p1.cast<cvg.Mat>()))),
     );
 
 /// PointPolygonTest performs a point-in-contour test.
@@ -327,8 +322,7 @@ Future<(int rval, Mat labels)> connectedComponentsAsync(
   int ltype,
   int ccltype,
 ) async =>
-    cvRunAsync2(
-        (callback) => cimgproc.ConnectedComponents_Async(image.ref, connectivity, ltype, ccltype, callback),
+    cvRunAsync2((callback) => cimgproc.ConnectedComponents_Async(image.ref, connectivity, ltype, ccltype, callback),
         (completer, p, p1) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
@@ -347,8 +341,7 @@ Future<(int rval, Mat labels, Mat stats, Mat centroids)> connectedComponentsWith
   int ccltype,
 ) async =>
     cvRunAsync4(
-      (callback) =>
-          cimgproc.ConnectedComponentsWithStats_Async(src.ref, connectivity, ltype, ccltype, callback),
+      (callback) => cimgproc.ConnectedComponentsWithStats_Async(src.ref, connectivity, ltype, ccltype, callback),
       (completer, p, p1, p2, p3) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
@@ -364,8 +357,7 @@ Future<(int rval, Mat labels, Mat stats, Mat centroids)> connectedComponentsWith
 /// For further details, please see:
 /// https:///docs.opencv.org/master/df/dfb/group__imgproc__object.html#ga586ebfb0a7fb604b35a23d85391329be
 Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {Mat? mask}) async => cvRunAsync(
-      (callback) =>
-          cimgproc.MatchTemplate_Async(image.ref, templ.ref, method, mask?.ref ?? Mat.empty().ref, callback),
+      (callback) => cimgproc.MatchTemplate_Async(image.ref, templ.ref, method, mask?.ref ?? Mat.empty().ref, callback),
       matCompleter,
     );
 
@@ -448,8 +440,8 @@ Future<Mat> morphologyExAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
 Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Point? anchor}) async => cvRunAsync(
-      (callback) => cimgproc.GetStructuringElement_Async(
-          shape, ksize.cvd.ref, anchor?.ref ?? Point(-1, -1).ref, callback),
+      (callback) =>
+          cimgproc.GetStructuringElement_Async(shape, ksize.cvd.ref, anchor?.ref ?? Point(-1, -1).ref, callback),
       matCompleter,
     );
 
@@ -572,8 +564,7 @@ Future<Mat> cannyAsync(
   bool l2gradient = false,
 }) async =>
     cvRunAsync(
-      (callback) =>
-          cimgproc.Canny_Async(image.ref, threshold1, threshold2, apertureSize, l2gradient, callback),
+      (callback) => cimgproc.Canny_Async(image.ref, threshold1, threshold2, apertureSize, l2gradient, callback),
       matCompleter,
     );
 
@@ -723,8 +714,8 @@ Future<Mat> HoughLinesAsync(
   double max_theta = CV_PI,
 }) async =>
     cvRunAsync(
-      (callback) => cimgproc.HoughLines_Async(
-          image.ref, rho, theta, threshold, srn, stn, min_theta, max_theta, callback),
+      (callback) =>
+          cimgproc.HoughLines_Async(image.ref, rho, theta, threshold, srn, stn, min_theta, max_theta, callback),
       matCompleter,
     );
 
@@ -808,8 +799,7 @@ Future<(double, Mat dst)> thresholdAsync(
   double maxval,
   int type,
 ) async =>
-    cvRunAsync2((callback) => cimgproc.Threshold_Async(src.ref, thresh, maxval, type, callback),
-        (completer, p, p1) {
+    cvRunAsync2((callback) => cimgproc.Threshold_Async(src.ref, thresh, maxval, type, callback), (completer, p, p1) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
       completer.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
@@ -944,8 +934,7 @@ Future<Mat> lineAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) =>
-          cimgproc.Line_Async(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift, callback),
+      (callback) => cimgproc.Line_Async(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift, callback),
       (completer) => completer.complete(img),
     );
 
@@ -963,8 +952,8 @@ Future<Mat> rectangleAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) => cimgproc.RectangleWithParams_Async(
-          img.ref, rect.ref, color.ref, thickness, lineType, shift, callback),
+      (callback) =>
+          cimgproc.RectangleWithParams_Async(img.ref, rect.ref, color.ref, thickness, lineType, shift, callback),
       (completer) => completer.complete(img),
     );
 
@@ -1202,8 +1191,7 @@ Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor) async
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
-Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) async =>
-    cvRunAsync(
+Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) async => cvRunAsync(
       (callback) => cimgproc.GetPerspectiveTransform_Async(src.ref, dst.ref, solveMethod, callback),
       matCompleter,
     );
@@ -1393,8 +1381,7 @@ Future<Mat> linearPolarAsync(InputArray src, Point2f center, double maxRadius, i
 /// distType: DistanceTypes
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf849da1fdafa67ee84b1e9a23b93f91f
-Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double reps, double aeps) async =>
-    cvRunAsync(
+Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double reps, double aeps) async => cvRunAsync(
       (callback) => cimgproc.FitLine_Async(points.ref, distType, param, reps, aeps, callback),
       matCompleter,
     );
@@ -1403,8 +1390,7 @@ Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double rep
 /// method: ShapeMatchModes
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
-Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async =>
-    cvRunAsync(
+Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async => cvRunAsync(
       (callback) => cimgproc.MatchShapes_Async(contour1.ref, contour2.ref, method, parameter, callback),
       doubleCompleter,
     );
@@ -1430,8 +1416,7 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
   InputArray? window,
 }) async =>
     cvRunAsync2(
-      (callback) =>
-          cimgproc.PhaseCorrelate_Async(src1.ref, src2.ref, window?.ref ?? Mat.empty().ref, callback),
+      (callback) => cimgproc.PhaseCorrelate_Async(src1.ref, src2.ref, window?.ref ?? Mat.empty().ref, callback),
       (c, p, p1) {
         final response = p1.cast<ffi.Double>().value;
         calloc.free(p1);
@@ -1445,8 +1430,7 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga1a567a79901513811ff3b9976923b199
 ///
 Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async => mask == null
-    ? cvRunAsync0(
-        (callback) => cimgproc.Mat_Accumulate_Async(src.ref, dst.ref, callback), (c) => c.complete(dst))
+    ? cvRunAsync0((callback) => cimgproc.Mat_Accumulate_Async(src.ref, dst.ref, callback), (c) => c.complete(dst))
     : cvRunAsync0(
         (callback) => cimgproc.Mat_AccumulateWithMask_Async(src.ref, dst.ref, mask.ref, callback),
         (c) => c.complete(dst),
@@ -1456,16 +1440,15 @@ Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? m
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
-Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async =>
-    mask == null
-        ? cvRunAsync0(
-            (callback) => cimgproc.Mat_AccumulateSquare_Async(src.ref, dst.ref, callback),
-            (c) => c.complete(dst),
-          )
-        : cvRunAsync0(
-            (callback) => cimgproc.Mat_AccumulateSquareWithMask_Async(src.ref, dst.ref, mask.ref, callback),
-            (c) => c.complete(dst),
-          );
+Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async => mask == null
+    ? cvRunAsync0(
+        (callback) => cimgproc.Mat_AccumulateSquare_Async(src.ref, dst.ref, callback),
+        (c) => c.complete(dst),
+      )
+    : cvRunAsync0(
+        (callback) => cimgproc.Mat_AccumulateSquareWithMask_Async(src.ref, dst.ref, mask.ref, callback),
+        (c) => c.complete(dst),
+      );
 
 /// Adds the per-element product of two input images to the accumulator image.
 ///
@@ -1483,8 +1466,7 @@ Future<Mat> accumulateProductAsync(
             (c) => c.complete(dst),
           )
         : cvRunAsync0(
-            (callback) =>
-                cimgproc.Mat_AccumulateProductWithMask_Async(src1.ref, src2.ref, dst.ref, mask.ref, callback),
+            (callback) => cimgproc.Mat_AccumulateProductWithMask_Async(src1.ref, src2.ref, dst.ref, mask.ref, callback),
             (c) => c.complete(dst),
           );
 
@@ -1504,7 +1486,6 @@ Future<Mat> accumulateWeightedAsync(
             (c) => c.complete(dst),
           )
         : cvRunAsync0(
-            (callback) =>
-                cimgproc.Mat_AccumulatedWeightedWithMask_Async(src.ref, dst.ref, alpha, mask.ref, callback),
+            (callback) => cimgproc.Mat_AccumulatedWeightedWithMask_Async(src.ref, dst.ref, alpha, mask.ref, callback),
             (c) => c.complete(dst),
           );

@@ -1,4 +1,4 @@
-library cv.gapi;
+library cv.contrib;
 
 export 'src/contrib/aruco.dart';
 export 'src/contrib/aruco_async.dart';

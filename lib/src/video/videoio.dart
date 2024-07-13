@@ -1,4 +1,4 @@
-library cv;
+library cv.videoio;
 
 import 'dart:convert';
 import 'dart:ffi' as ffi;

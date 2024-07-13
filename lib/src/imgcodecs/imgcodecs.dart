@@ -1,4 +1,4 @@
-library cv;
+library cv.imgcodecs;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';

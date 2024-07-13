@@ -89,8 +89,7 @@ void main() async {
   test('cv.StructuredEdgeDetection', tags: ["no-local-files"], () async {
     final src = cv.imread("test/images/circles.jpg");
     final rf = cv.RFFeatureGetter.empty();
-    final detector =
-        cv.StructuredEdgeDetection.create("test/models/structure_edge_model.yml.gz", howToGetFeatures: rf);
+    final detector = cv.StructuredEdgeDetection.create("test/models/structure_edge_model.yml.gz", howToGetFeatures: rf);
 
     // note the alpha, improper data of src will cause crash internally in opencv
     // without friendly exception
@@ -304,8 +303,7 @@ void main() async {
 
     const nSize = 21;
 
-    final elementRLE =
-        await cv.ximgproc_rl.getStructuringElementAsync(cv.MORPH_RECT, (nSize * 2 + 1, nSize * 2 + 1));
+    final elementRLE = await cv.ximgproc_rl.getStructuringElementAsync(cv.MORPH_RECT, (nSize * 2 + 1, nSize * 2 + 1));
     final dst = await cv.ximgproc_rl.erodeAsync(src2, elementRLE, bBoundaryOn: false);
     expect(dst.isEmpty, false);
 

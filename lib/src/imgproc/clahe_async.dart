@@ -1,3 +1,5 @@
+library cv.imgproc.clahe;
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';

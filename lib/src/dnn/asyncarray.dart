@@ -1,4 +1,4 @@
-library cv;
+library cv.dnn;
 
 import 'dart:ffi' as ffi;
 

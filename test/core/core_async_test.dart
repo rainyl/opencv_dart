@@ -290,8 +290,7 @@ void main() async {
     final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].cvd;
     final bestLabels = cv.Mat.empty();
     const criteria = (cv.TERM_COUNT, 10, 1.0);
-    final (_, _, centers) =
-        await cv.kmeansByPointsAsync(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
+    final (_, _, centers) = await cv.kmeansByPointsAsync(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
     expect(centers.isEmpty, equals(false));
   });
 

@@ -1,4 +1,5 @@
 // ignore_for_file: constant_identifier_names
+library cv.imgproc.subdiv2d;
 
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';

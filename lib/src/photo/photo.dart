@@ -1,4 +1,4 @@
-library cv;
+library cv.photo;
 
 import 'dart:ffi' as ffi;
 

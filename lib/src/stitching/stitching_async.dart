@@ -1,6 +1,7 @@
-library cv;
+library cv.stitching;
 
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
