@@ -659,15 +659,19 @@ extension StringVecExtension on String {
 }
 
 extension ListUCharExtension on List<int> {
-  VecUChar get u8 => VecUChar.fromList(this);
-  VecChar get i8 => VecChar.fromList(this);
+  VecUChar get vecUChar => VecUChar.fromList(this);
+  VecChar get vecChar => VecChar.fromList(this);
+  VecU8 get u8 => VecU8.fromList(this);
+  VecI8 get i8 => VecI8.fromList(this);
   VecU16 get u16 => VecU16.fromList(this);
   VecI16 get i16 => VecI16.fromList(this);
   VecI32 get i32 => VecI32.fromList(this);
+  VecF32 get f32 => VecF32.fromList(map((e) => e.toDouble()).toList());
+  VecF64 get f64 => VecF64.fromList(cast<double>());
 }
 
 extension ListListCharExtension on List<List<int>> {
-  VecVecChar get i8 => VecVecChar.fromList(this);
+  VecVecChar get vecVecChar => VecVecChar.fromList(this);
 }
 
 extension ListFloatExtension on List<double> {

@@ -9,6 +9,7 @@ import 'vec.dart';
 abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
   CvVec.fromPointer(super.ptr) : super.fromPointer();
   List<num> get val;
+  set val(List<num> value);
 }
 
 /// uchar
@@ -41,6 +42,12 @@ class Vec2b extends CvVec<cvg.Vec2b> {
 
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -93,6 +100,13 @@ class Vec3b extends CvVec<cvg.Vec3b> {
 
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -151,6 +165,14 @@ class Vec4b extends CvVec<cvg.Vec4b> {
   @override
   List<int> get val => [val1, val2, val3, val4];
 
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
+
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   void dispose() {
@@ -197,6 +219,12 @@ class Vec2w extends CvVec<cvg.Vec2w> {
 
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -249,6 +277,13 @@ class Vec3w extends CvVec<cvg.Vec3w> {
 
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -306,6 +341,14 @@ class Vec4w extends CvVec<cvg.Vec4w> {
   @override
   List<int> get val => [val1, val2, val3, val4];
 
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
+
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   void dispose() {
@@ -351,6 +394,12 @@ class Vec2s extends CvVec<cvg.Vec2s> {
 
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -403,6 +452,13 @@ class Vec3s extends CvVec<cvg.Vec3s> {
 
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -461,6 +517,14 @@ class Vec4s extends CvVec<cvg.Vec4s> {
   @override
   List<int> get val => [val1, val2, val3, val4];
 
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
+
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   void dispose() {
@@ -507,6 +571,12 @@ class Vec2i extends CvVec<cvg.Vec2i> {
 
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -559,6 +629,13 @@ class Vec3i extends CvVec<cvg.Vec3i> {
 
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -616,6 +693,14 @@ class Vec4i extends CvVec<cvg.Vec4i> {
 
   @override
   List<int> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -683,6 +768,16 @@ class Vec6i extends CvVec<cvg.Vec6i> {
 
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+    val5 = value[4].toInt();
+    val6 = value[5].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -761,6 +856,18 @@ class Vec8i extends CvVec<cvg.Vec8i> {
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6, val7, val8];
 
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+    val5 = value[4].toInt();
+    val6 = value[5].toInt();
+    val7 = value[6].toInt();
+    val8 = value[7].toInt();
+  }
+
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   void dispose() {
@@ -807,6 +914,12 @@ class Vec2f extends CvVec<cvg.Vec2f> {
 
   @override
   List<double> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -859,6 +972,13 @@ class Vec3f extends CvVec<cvg.Vec3f> {
 
   @override
   List<double> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -917,6 +1037,14 @@ class Vec4f extends CvVec<cvg.Vec4f> {
 
   @override
   List<double> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -986,6 +1114,16 @@ class Vec6f extends CvVec<cvg.Vec6f> {
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
 
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+    val5 = value[4].toDouble();
+    val6 = value[5].toDouble();
+  }
+
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   void dispose() {
@@ -1033,6 +1171,12 @@ class Vec2d extends CvVec<cvg.Vec2d> {
 
   @override
   List<double> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -1085,6 +1229,13 @@ class Vec3d extends CvVec<cvg.Vec3d> {
 
   @override
   List<double> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -1143,6 +1294,14 @@ class Vec4d extends CvVec<cvg.Vec4d> {
 
   @override
   List<double> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -1211,6 +1370,16 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+    val5 = value[4].toDouble();
+    val6 = value[5].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 

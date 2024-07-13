@@ -1,6 +1,8 @@
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
+import 'vec_matcher.dart';
+
 void main() {
   test('VecI32', () {
     final points = List.generate(100, (index) => index);
@@ -10,7 +12,7 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     final vec2 = cv.VecI32(100, 10);
     expect(vec2.toList(), List.generate(100, (index) => 10));
@@ -20,7 +22,7 @@ void main() {
 
   test('VecUChar', () {
     final points = List.generate(1000, (index) => index % 256);
-    final vec = points.u8;
+    final vec = points.vecUChar;
     final u8List = vec.toU8List();
     expect(u8List.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
 
@@ -32,14 +34,14 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec.dispose();
   });
 
   test('VecChar', () {
     final points = List.generate(100, (index) => index);
-    final vec = points.i8;
+    final vec = points.vecChar;
 
     final data = vec.data;
     expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
@@ -49,7 +51,27 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
+
+    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
+    expect(vec2.asString(), "AAAA你好");
+
+    vec1.dispose();
+  });
+
+  test('VecI8', () {
+    final points = List.generate(100, (index) => index);
+    final vec = points.vecChar;
+
+    final data = vec.data;
+    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+
+    final vec1 = vec.clone();
+    expect(vec1, vecElementEquals(vec));
 
     final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
     expect(vec2.asString(), "AAAA你好");
@@ -59,13 +81,15 @@ void main() {
 
   test('VecVecChar', () {
     final points = List.generate(100, (index) => List.generate(100, (index) => index));
-    final vec = points.i8;
+    final vec = points.vecVecChar;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1.length, vec.length);
+    expect(vec1.first, vecElementEquals(vec.first));
+    expect(vec1.last, vecElementEquals(vec.last));
 
     vec1.dispose();
   });
@@ -73,6 +97,9 @@ void main() {
   test('VecF32', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f32;
+
+    final vec_ = List.generate(100, (index) => index).f32;
+    expect(vec_ == vec, false);
 
     final data = vec.data;
     expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
@@ -82,7 +109,7 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec1.dispose();
   });
@@ -99,7 +126,7 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec1.dispose();
   });
@@ -113,7 +140,7 @@ void main() {
     expect(vec.first.toString(), "Rect(0, 0, 10, 20)");
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec1.dispose();
   });
@@ -141,7 +168,7 @@ void main() {
     expect(vec.first.toString(), "DMatch(0, 0, 0, 0.000)");
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec1.dispose();
   });
@@ -157,7 +184,9 @@ void main() {
     expect(vec.last, points.last);
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1.length, vec.length);
+    expect(vec1.first, vecElementEquals(vec.first));
+    expect(vec1.last, vecElementEquals(vec.last));
 
     vec1.dispose();
   });
@@ -182,7 +211,7 @@ void main() {
     expect(vec.first.toString(), "KeyPoint(0.000, 0.000, 0.000, 0.000, 0.000, 0, 0)");
 
     final vec1 = vec.clone();
-    expect(vec1, vec);
+    expect(vec1, vecElementEquals(vec));
 
     vec1.dispose();
   });
