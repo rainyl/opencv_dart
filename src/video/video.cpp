@@ -68,8 +68,7 @@ CvStatus *CalcOpticalFlowPyrLK(
   std::vector<float> _err;
   cv::calcOpticalFlowPyrLK(*prevImg.ptr, *nextImg.ptr, _prevPts, _nextPts, _status, _err);
 
-  free(nextPts->ptr);
-  *nextPts = vecpoint2f_cpp2c(_nextPts);
+  vecpoint2f_cpp2c(_nextPts, nextPts);
 
   *status = vecuchar_cpp2c(_status);
   *err = vecfloat_cpp2c(_err);
@@ -108,8 +107,7 @@ CvStatus *CalcOpticalFlowPyrLKWithParams(
       flags,
       minEigThreshold
   );
-  free(nextPts->ptr);
-  *nextPts = vecpoint2f_cpp2c(_nextPts);
+  vecpoint2f_cpp2c(_nextPts, nextPts);
 
   *status = vecuchar_cpp2c(_status);
   *err = vecfloat_cpp2c(_err);

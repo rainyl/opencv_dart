@@ -148,20 +148,20 @@ Future<(VecPoint2f nextPts, VecUChar status, VecF32 error)> calcOpticalFlowPyrLK
   int flags = 0,
   double minEigThreshold = 1e-4,
 }) async =>
-    cvRunAsync3(
+    cvRunAsync2(
         (callback) => cvideo.CalcOpticalFlowPyrLK_Async(
               prevImg.ref,
               nextImg.ref,
               prevPts.ref,
-              nextPts.ref,
+              nextPts.ptr,
               winSize.cvd.ref,
               maxLevel,
               criteria.cvd.ref,
               flags,
               minEigThreshold,
               callback,
-            ), (c, p, p1, p2) {
-      nextPts.reattach(p2.cast<cvg.VecPoint2f>());
+            ), (c, p, p1) {
+      nextPts.reattach();
       c.complete(
         (
           nextPts,

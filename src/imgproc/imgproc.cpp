@@ -34,8 +34,7 @@ CvStatus *EqualizeHist(Mat src, Mat dst) {
   cv::equalizeHist(*src.ptr, *dst.ptr);
   END_WRAP
 }
-CvStatus *
-CalcHist(VecMat mats, VecI32 chans, Mat mask, Mat hist, VecI32 sz, VecF32 rng, bool acc) {
+CvStatus *CalcHist(VecMat mats, VecI32 chans, Mat mask, Mat hist, VecI32 sz, VecF32 rng, bool acc) {
   BEGIN_WRAP
   auto _mats = vecmat_c2cpp(mats);
   auto _chans = vecint_c2cpp(chans);
@@ -82,12 +81,22 @@ CvStatus *Blur(Mat src, Mat dst, Size ps) {
   cv::blur(*src.ptr, *dst.ptr, cv::Size(ps.width, ps.height));
   END_WRAP
 }
-CvStatus *BoxFilter(Mat src, Mat dst, int ddepth, Size ps) {
+CvStatus *
+BoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType) {
   BEGIN_WRAP
-  cv::boxFilter(*src.ptr, *dst.ptr, ddepth, cv::Size(ps.width, ps.height));
+  cv::boxFilter(
+      *src.ptr,
+      *dst.ptr,
+      ddepth,
+      cv::Size(ps.width, ps.height),
+      cv::Point(anchor.x, anchor.y),
+      normalize,
+      borderType
+  );
   END_WRAP
 }
-CvStatus *SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps) {
+CvStatus *
+SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType) {
   BEGIN_WRAP
   cv::sqrBoxFilter(*src.ptr, *dst.ptr, ddepth, cv::Size(ps.width, ps.height));
   END_WRAP

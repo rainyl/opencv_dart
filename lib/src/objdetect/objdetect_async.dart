@@ -365,6 +365,8 @@ extension HOGDescriptorAsync on HOGDescriptor {
               eps,
               callback,
             ), (c) {
+      rectList.reattach();
+      weights.reattach();
       return c.complete((rectList, weights));
     });
     return rval;
@@ -383,6 +385,7 @@ Future<VecRect> groupRectanglesAsync(
 ) async {
   final rval = cvRunAsync0<VecRect>(
       (callback) => cobjdetect.GroupRectangles_Async(rects.ptr, groupThreshold, eps, callback), (c) {
+    rects.reattach();
     return c.complete(rects);
   });
   return rval;

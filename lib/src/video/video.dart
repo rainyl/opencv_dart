@@ -207,6 +207,7 @@ Mat calcOpticalFlowFarneback(
       minEigThreshold,
     ),
   );
+  nextPts.reattach();
   return (nextPts, status ?? VecUChar.fromPointer(s), VecF32.fromPointer(e));
 }
 

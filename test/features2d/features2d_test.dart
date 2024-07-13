@@ -96,26 +96,26 @@ void main() async {
     gf.dispose();
   });
 
-  // test('cv.ORB', () {
-  //   // FIXME: wont exit, someting wrong
-  //   final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-  //   expect(img.isEmpty, false);
+  test('cv.ORB', () {
+    // FIXME: wont exit, someting wrong
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    expect(img.isEmpty, false);
 
-  //   final ka = cv.ORB.empty();
-  //   final kp = ka.detect(img);
-  //   expect(kp.length, 500);
+    final ka = cv.ORB.empty();
+    final kp = ka.detect(img);
+    expect(kp.length, 500);
 
-  //   final orb = cv.ORB.create();
-  //   final kp1 = orb.detect(img);
-  //   expect(kp1.length, 500);
+    final orb = cv.ORB.create();
+    final kp1 = orb.detect(img);
+    expect(kp1.length, 500);
 
-  //   final mask = cv.Mat.empty();
-  //   final (kp2, desc) = ka.detectAndCompute(img, mask);
-  //   expect(kp2.length, 500);
-  //   expect(desc.isEmpty, false);
+    final mask = cv.Mat.empty();
+    final (kp2, desc) = ka.detectAndCompute(img, mask);
+    expect(kp2.length, 500);
+    expect(desc.isEmpty, false);
 
-  //   orb.dispose();
-  // });
+    orb.dispose();
+  });
 
   test('cv.SimpleBlobDetector', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);

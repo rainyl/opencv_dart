@@ -74,17 +74,17 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    VecPoint2f *nextPts,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
     int flags,
     double minEigThreshold,
-    CvCallback_3 callback
+    CvCallback_2 callback
 ) {
   BEGIN_WRAP
   auto _prevPts = vecpoint2f_c2cpp(prevPts);
-  auto _nextPts = vecpoint2f_c2cpp(nextPts);
+  auto _nextPts = vecpoint2f_c2cpp(*nextPts);
   std::vector<uchar> _status;
   std::vector<float> _err;
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
@@ -101,7 +101,8 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
       flags,
       minEigThreshold
   );
-  callback(vecuchar_cpp2c_p(_status), vecfloat_cpp2c_p(_err), vecpoint2f_cpp2c_p(_nextPts));
+  vecpoint2f_cpp2c(_nextPts, nextPts);
+  callback(vecuchar_cpp2c_p(_status), vecfloat_cpp2c_p(_err));
   END_WRAP
 }
 CvStatus *CalcOpticalFlowFarneback_Async(

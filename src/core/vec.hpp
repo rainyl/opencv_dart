@@ -2,6 +2,7 @@
 #define CVD_VEC_UTILS_H
 
 #include "types.h"
+#include <malloc/_malloc.h>
 #include <vector>
 
 inline std::vector<cv::Point> vecpoint_c2cpp(VecPoint v) {
@@ -38,6 +39,14 @@ inline VecPoint2f vecpoint2f_cpp2c(std::vector<cv::Point2f> v) {
   Point2f *ptr = new Point2f[v.size()];
   for (int i = 0; i < v.size(); i++) { ptr[i] = Point2f{v[i].x, v[i].y}; }
   return VecPoint2f{.ptr = ptr, .length = v.size()};
+}
+
+inline void vecpoint2f_cpp2c(std::vector<cv::Point2f> v, VecPoint2f *vv) {
+  if (vv->length != v.size()) {
+    vv->ptr = (Point2f *)realloc(vv->ptr, v.size() * sizeof(Point2f));
+    vv->length = v.size();
+  }
+  for (int i = 0; i < v.size(); i++) { vv->ptr[i] = Point2f{v[i].x, v[i].y}; }
 }
 
 inline VecPoint2f *vecpoint2f_cpp2c_p(std::vector<cv::Point2f> v) {
@@ -372,6 +381,14 @@ inline VecF64 vecdouble_cpp2c(std::vector<double> v) {
   return VecF64{.ptr = ptr, .length = v.size()};
 }
 
+inline void vecdouble_cpp2c(std::vector<double> v, VecF64 *vv) {
+  if (vv->length != v.size()) {
+    vv->ptr = (double *)realloc(vv->ptr, v.size() * sizeof(double));
+    vv->length = v.size();
+  }
+  for (int i = 0; i < v.size(); i++) { vv->ptr[i] = v[i]; }
+}
+
 inline VecF64 *vecdouble_cpp2c_p(std::vector<double> v) {
   double *ptr = new double[v.size()];
   for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
@@ -390,6 +407,14 @@ inline VecRect vecrect_cpp2c(std::vector<cv::Rect> v) {
   Rect *ptr = (Rect *)calloc(v.size(), sizeof(Rect));
   for (int i = 0; i < v.size(); i++) { ptr[i] = {v[i].x, v[i].y, v[i].width, v[i].height}; }
   return VecRect{.ptr = ptr, .length = v.size()};
+}
+
+inline void vecrect_cpp2c(std::vector<cv::Rect> v, VecRect *vv) {
+  if (vv->length != v.size()) {
+    vv->ptr = (Rect *)realloc(vv->ptr, v.size() * sizeof(Rect));
+    vv->length = v.size();
+  }
+  for (int i = 0; i < v.size(); i++) { vv->ptr[i] = {v[i].x, v[i].y, v[i].width, v[i].height}; }
 }
 
 inline VecRect *vecrect_cpp2c_p(std::vector<cv::Rect> v) {

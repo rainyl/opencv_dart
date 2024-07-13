@@ -39,8 +39,10 @@ CvStatus *ConvexHull(VecPoint points, CVD_OUT Mat hull, bool clockwise, bool ret
 CvStatus *ConvexityDefects(VecPoint points, Mat hull, Mat result);
 CvStatus *BilateralFilter(Mat src, Mat dst, int d, double sc, double ss);
 CvStatus *Blur(Mat src, Mat dst, Size ps);
-CvStatus *BoxFilter(Mat src, Mat dst, int ddepth, Size ps);
-CvStatus *SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps);
+CvStatus *
+BoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType);
+CvStatus *
+SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType);
 CvStatus *Dilate(Mat src, Mat dst, Mat kernel);
 CvStatus *DilateWithParams(
     Mat src, Mat dst, Mat kernel, Point anchor, int iterations, int borderType, Scalar borderValue

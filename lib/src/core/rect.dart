@@ -174,7 +174,7 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
   VecRect.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      // Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -209,12 +209,18 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
   @override
   void dispose() {
     Vec.finalizer.detach(this);
-    // calloc.free(ptr.ref.ptr);
+    calloc.free(ptr.ref.ptr);
     calloc.free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecRect>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecRectIterator extends VecIterator<Rect> {

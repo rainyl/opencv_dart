@@ -834,12 +834,12 @@ files:
         name: openCVVersion_Async
       c:@F@registerErrorCallback:
         name: registerErrorCallback
-      c:@T@double_t:
-        name: double_t
-      c:@T@float_t:
-        name: float_t
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:math.h@T@double_t:
+        name: double_t
+      c:math.h@T@float_t:
+        name: float_t
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:

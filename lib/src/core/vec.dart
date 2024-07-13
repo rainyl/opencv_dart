@@ -23,6 +23,12 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
 
   void dispose();
   Vec clone();
+  void reattach({ffi.Pointer<N>? newPtr}) {
+    if (newPtr != null) this.ptr = newPtr;
+    finalizer.detach(this);
+    finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+  }
+
   ffi.Pointer<ffi.Void> asVoid();
 
   @override
@@ -111,6 +117,12 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecUChar>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecUCharIterator extends VecIterator<int> {
@@ -172,6 +184,12 @@ class VecChar extends Vec<cvg.VecChar, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecChar>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecCharIterator extends VecIterator<int> {
@@ -228,6 +246,12 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVecChar>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecVecCharIterator extends VecIterator<VecChar> {
@@ -288,6 +312,12 @@ class VecI8 extends Vec<cvg.VecI8, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecI8>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecI8Iterator extends VecIterator<int> {
@@ -342,6 +372,12 @@ class VecU16 extends Vec<cvg.VecU16, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecU16>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecU16Iterator extends VecIterator<int> {
@@ -397,6 +433,12 @@ class VecI16 extends Vec<cvg.VecI16, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecI16>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecI16Iterator extends VecIterator<int> {
@@ -454,6 +496,12 @@ class VecI32 extends Vec<cvg.VecI32, int> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecI32>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecI32Iterator extends VecIterator<int> {
@@ -509,6 +557,12 @@ class VecF32 extends Vec<cvg.VecF32, double> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecF32>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecF32Iterator extends VecIterator<double> {
@@ -566,6 +620,12 @@ class VecF64 extends Vec<cvg.VecF64, double> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecF64>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecF64Iterator extends VecIterator<double> {

@@ -9,6 +9,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 #include <opencv2/core.hpp>

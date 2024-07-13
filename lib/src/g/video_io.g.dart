@@ -488,13 +488,13 @@ class CvNativeVideoIO {
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    ffi.Pointer<VecPoint2f> nextPts,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
     int flags,
     double minEigThreshold,
-    imp1.CvCallback_3 callback,
+    imp1.CvCallback_2 callback,
   ) {
     return _CalcOpticalFlowPyrLK_Async(
       prevImg,
@@ -516,17 +516,26 @@ class CvNativeVideoIO {
               Mat,
               Mat,
               VecPoint2f,
-              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
               Size,
               ffi.Int,
               TermCriteria,
               ffi.Int,
               ffi.Double,
-              imp1.CvCallback_3)>>('CalcOpticalFlowPyrLK_Async');
+              imp1.CvCallback_2)>>('CalcOpticalFlowPyrLK_Async');
   late final _CalcOpticalFlowPyrLK_Async =
       _CalcOpticalFlowPyrLK_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, VecPoint2f, VecPoint2f, Size,
-              int, TermCriteria, int, double, imp1.CvCallback_3)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
+              Size,
+              int,
+              TermCriteria,
+              int,
+              double,
+              imp1.CvCallback_2)>();
 
   ffi.Pointer<CvStatus> FindTransformECC(
     Mat templateImage,

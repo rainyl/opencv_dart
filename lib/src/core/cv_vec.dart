@@ -1268,6 +1268,12 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec4i>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
@@ -1320,6 +1326,12 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec4f>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
@@ -1372,6 +1384,12 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec6f>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecVec6fIterator extends VecIterator<Vec6f> {

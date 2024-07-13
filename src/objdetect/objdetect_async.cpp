@@ -329,10 +329,8 @@ CvStatus *HOGDescriptor_groupRectangles_Async(
   auto _rectList = vecrect_c2cpp(*rectList);
   auto _weights = vecdouble_c2cpp(*weights);
   self.ptr->groupRectangles(_rectList, _weights, groupThreshold, eps);
-  free(rectList->ptr);
-  *rectList = vecrect_cpp2c(_rectList);
-  free(weights->ptr);
-  *weights = vecdouble_cpp2c(_weights);
+  vecrect_cpp2c(_rectList, rectList);
+  vecdouble_cpp2c(_weights, weights);
   callback();
   END_WRAP
 }
@@ -342,8 +340,7 @@ GroupRectangles_Async(VecRect *rects, int groupThreshold, double eps, CvCallback
   BEGIN_WRAP
   auto _rects = vecrect_c2cpp(*rects);
   cv::groupRectangles(_rects, groupThreshold, eps);
-  free(rects->ptr);
-  *rects = vecrect_cpp2c(_rects);
+  vecrect_cpp2c(_rects, rects);
   callback();
   END_WRAP
 }

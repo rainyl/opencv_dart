@@ -51,7 +51,6 @@ CvStatus *CascadeClassifier_DetectMultiScaleWithParams(
   auto maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, rects, scale, minNeighbors, flags, minsize, maxsize);
   *objects = vecrect_cpp2c(rects);
-  std::cout << "xywh:" << objects->ptr[0].x << objects->ptr[0].y << objects->ptr[0].width << objects->ptr[0].height << std::endl;
   END_WRAP
 }
 
@@ -328,10 +327,8 @@ CvStatus *HOGDescriptor_groupRectangles(
   auto _rectList = vecrect_c2cpp(*rectList);
   auto _weights = vecdouble_c2cpp(*weights);
   self.ptr->groupRectangles(_rectList, _weights, groupThreshold, eps);
-  free(rectList->ptr);
-  free(weights->ptr);
-  *rectList = vecrect_cpp2c(_rectList);
-  *weights = vecdouble_cpp2c(_weights);
+  vecrect_cpp2c(_rectList, rectList);
+  vecdouble_cpp2c(_weights, weights);
   END_WRAP
 }
 
@@ -339,8 +336,7 @@ CvStatus *GroupRectangles(VecRect *rects, int groupThreshold, double eps) {
   BEGIN_WRAP
   auto _rects = vecrect_c2cpp(*rects);
   cv::groupRectangles(_rects, groupThreshold, eps);
-  free(rects->ptr);
-  *rects = vecrect_cpp2c(_rects);
+  vecrect_cpp2c(_rects, rects);
   END_WRAP
 }
 

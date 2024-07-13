@@ -33,13 +33,13 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    VecPoint2f *nextPts,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
     int flags,
     double minEigThreshold,
-    CvCallback_3 callback
+    CvCallback_2 callback
 );
 CvStatus *CalcOpticalFlowFarneback_Async(
     Mat prevImg,
@@ -110,25 +110,18 @@ CvStatus *KalmanFilter_GetTemp5_Async(KalmanFilter self, CvCallback_1 callback);
 
 CvStatus *KalmanFilter_SetStatePre_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
 CvStatus *KalmanFilter_SetStatePost_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
-CvStatus *KalmanFilter_SetTransitionMatrix_Async(
-    KalmanFilter self, Mat value, CvCallback_0 callback
-);
 CvStatus *
-KalmanFilter_SetControlMatrix_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
-CvStatus *KalmanFilter_SetMeasurementMatrix_Async(
-    KalmanFilter self, Mat value, CvCallback_0 callback
-);
-CvStatus *KalmanFilter_SetProcessNoiseCov_Async(
-    KalmanFilter self, Mat value, CvCallback_0 callback
-);
-CvStatus *KalmanFilter_SetMeasurementNoiseCov_Async(
-    KalmanFilter self, Mat value, CvCallback_0 callback
-);
+KalmanFilter_SetTransitionMatrix_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+CvStatus *KalmanFilter_SetControlMatrix_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
 CvStatus *
-KalmanFilter_SetErrorCovPre_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+KalmanFilter_SetMeasurementMatrix_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+CvStatus *
+KalmanFilter_SetProcessNoiseCov_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+CvStatus *
+KalmanFilter_SetMeasurementNoiseCov_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+CvStatus *KalmanFilter_SetErrorCovPre_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
 CvStatus *KalmanFilter_SetGain_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
-CvStatus *
-KalmanFilter_SetErrorCovPost_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
+CvStatus *KalmanFilter_SetErrorCovPost_Async(KalmanFilter self, Mat value, CvCallback_0 callback);
 
 #ifdef __cplusplus
 }

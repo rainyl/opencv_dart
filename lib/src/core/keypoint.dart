@@ -122,6 +122,12 @@ class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecKeyPoint>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {

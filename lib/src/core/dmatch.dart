@@ -94,6 +94,12 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecDMatch>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
@@ -146,6 +152,12 @@ class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVecDMatch>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {

@@ -416,6 +416,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         eps,
       ),
     );
+    rectList.reattach();
+    weights.reattach();
     return (rectList, weights);
   }
 
@@ -443,6 +445,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
   cvRun(() => cobjdetect.GroupRectangles(rects.ptr, groupThreshold, eps));
+  rects.reattach();
   return rects;
 }
 

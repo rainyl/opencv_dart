@@ -188,9 +188,20 @@ Mat blur(Mat src, (int, int) ksize, {Mat? dst}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
-Mat boxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+Mat boxFilter(
+  Mat src,
+  int depth,
+  (int, int) ksize, {
+  Point? anchor,
+  bool normalize = true,
+  int borderType = BORDER_DEFAULT,
+  Mat? dst,
+}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  anchor ??= Point(-1, -1);
+  cvRun(
+    () => cimgproc.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+  );
   return dst;
 }
 
@@ -198,9 +209,20 @@ Mat boxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
-Mat sqrBoxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+Mat sqrBoxFilter(
+  Mat src,
+  int depth,
+  (int, int) ksize, {
+  Point? anchor,
+  bool normalize = true,
+  int borderType = BORDER_DEFAULT,
+  Mat? dst,
+}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  anchor ??= Point(-1, -1);
+  cvRun(
+    () => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+  );
   return dst;
 }
 

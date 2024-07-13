@@ -443,21 +443,27 @@ class CvNativeImgproc {
     Mat dst,
     int ddepth,
     Size ps,
+    Point anchor,
+    bool normalize,
+    int borderType,
   ) {
     return _BoxFilter(
       src,
       dst,
       ddepth,
       ps,
+      anchor,
+      normalize,
+      borderType,
     );
   }
 
   late final _BoxFilterPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Int, Size)>>('BoxFilter');
+              Mat, Mat, ffi.Int, Size, Point, ffi.Bool, ffi.Int)>>('BoxFilter');
   late final _BoxFilter = _BoxFilterPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size, Point, bool, int)>();
 
   ffi.Pointer<CvStatus> BoxFilter_Async(
     Mat src,
@@ -5277,21 +5283,27 @@ class CvNativeImgproc {
     Mat dst,
     int ddepth,
     Size ps,
+    Point anchor,
+    bool normalize,
+    int borderType,
   ) {
     return _SqBoxFilter(
       src,
       dst,
       ddepth,
       ps,
+      anchor,
+      normalize,
+      borderType,
     );
   }
 
   late final _SqBoxFilterPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Int, Size)>>('SqBoxFilter');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Size, Point,
+              ffi.Bool, ffi.Int)>>('SqBoxFilter');
   late final _SqBoxFilter = _SqBoxFilterPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size, Point, bool, int)>();
 
   ffi.Pointer<CvStatus> SqBoxFilter_Async(
     Mat src,

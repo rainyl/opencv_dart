@@ -209,7 +209,6 @@ void ORB_Close(ORBPtr self) {
 CvStatus *ORB_Detect(const ORB self, const Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
-  std::cout << (*self.ptr)->getEdgeThreshold() << std::endl;
   (*self.ptr)->detect(*src.ptr, detected);
   *rval = veckeypoint_cpp2c(detected);
   END_WRAP
