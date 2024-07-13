@@ -7,7 +7,8 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/contrib.g.dart' as cvg;
+import '../native_lib.dart' show ccontrib;
 
 class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   WeChatQRCode._(super.ptr, [bool attach = true]) : super.fromPointer() {
@@ -23,7 +24,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
 
   factory WeChatQRCode.empty() {
     final p = calloc<cvg.WeChatQRCode>();
-    cvRun(() => CFFI.WeChatQRCode_New(p));
+    cvRun(() => ccontrib.WeChatQRCode_New(p));
     return WeChatQRCode._(p);
   }
 
@@ -44,7 +45,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    cvRun(() => CFFI.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
+    cvRun(() => ccontrib.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
     arena.releaseAll();
     return WeChatQRCode._(p);
   }
@@ -57,7 +58,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   ]) {
     final p = calloc<cvg.VecMat>();
     final rval = calloc<cvg.VecVecChar>();
-    cvRun(() => CFFI.WeChatQRCode_DetectAndDecode(ptr, img.ref, p, rval));
+    cvRun(() => ccontrib.WeChatQRCode_DetectAndDecode(ptr, img.ref, p, rval));
     final vec = VecVecChar.fromPointer(rval);
     final points = VecMat.fromPointer(p);
     return (vec.asStringList(), points);
@@ -67,7 +68,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   double get scaleFactor {
     return cvRunArena<double>((arena) {
       final p = calloc<ffi.Float>();
-      cvRun(() => CFFI.WeChatQRCode_GetScaleFactor(ptr, p));
+      cvRun(() => ccontrib.WeChatQRCode_GetScaleFactor(ptr, p));
       return p.value;
     });
   }
@@ -84,14 +85,14 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   ///
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#a084f9aa8693fa0a62c43dd10d2533ab8
   set scaleFactor(double scaleFactor) {
-    cvRun(() => CFFI.WeChatQRCode_SetScaleFactor(ptr, scaleFactor));
+    cvRun(() => ccontrib.WeChatQRCode_SetScaleFactor(ptr, scaleFactor));
   }
 
-  static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(CFFI.addresses.WeChatQRCode_Close);
+  static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(ccontrib.addresses.WeChatQRCode_Close);
 
   void dispose() {
     finalizer.detach(this);
-    CFFI.WeChatQRCode_Close(ptr);
+    ccontrib.WeChatQRCode_Close(ptr);
   }
 
   @override

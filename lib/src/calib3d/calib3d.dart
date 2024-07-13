@@ -4,7 +4,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/contours.dart';
 import '../core/mat.dart';
@@ -12,7 +11,9 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccalib3d;
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
 ///
@@ -31,7 +32,7 @@ import '../opencv.g.dart' as cvg;
   map1 ??= Mat.empty();
   map2 ??= Mat.empty();
   cvRun(
-    () => CFFI.InitUndistortRectifyMap(
+    () => ccalib3d.InitUndistortRectifyMap(
       cameraMatrix.ref,
       distCoeffs.ref,
       R.ref,
@@ -60,7 +61,7 @@ import '../opencv.g.dart' as cvg;
   final validPixROI = calloc<cvg.Rect>();
   final matPtr = calloc<cvg.Mat>();
   cvRun(
-    () => CFFI.GetOptimalNewCameraMatrixWithParams(
+    () => ccalib3d.GetOptimalNewCameraMatrixWithParams(
       cameraMatrix.ref,
       distCoeffs.ref,
       imageSize.cvd.ref,
@@ -94,7 +95,7 @@ import '../opencv.g.dart' as cvg;
   final cRmsErr = calloc<ffi.Double>();
 
   cvRun(
-    () => CFFI.CalibrateCamera(
+    () => ccalib3d.CalibrateCamera(
       objectPoints.ref,
       imagePoints.ref,
       imageSize.cvd.ref,
@@ -127,7 +128,7 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() => CFFI.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(() => ccalib3d.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -149,7 +150,8 @@ Mat undistortPoints(
   dst ??= Mat.empty();
   final tc = criteria.cvd;
   cvRun(
-    () => CFFI.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
+    () =>
+        ccalib3d.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
   );
   return dst;
 }
@@ -166,7 +168,7 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final r = calloc<ffi.Bool>();
-  cvRun(() => CFFI.FindChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ref, flags, r));
+  cvRun(() => ccalib3d.FindChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ref, flags, r));
   final rval = r.value;
   calloc.free(r);
   return (rval, corners);
@@ -182,7 +184,7 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final b = calloc<ffi.Bool>();
-  cvRun(() => CFFI.FindChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ref, flags, b));
+  cvRun(() => ccalib3d.FindChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ref, flags, b));
   final rval = b.value;
   calloc.free(b);
   return (rval, corners);
@@ -201,7 +203,7 @@ Mat undistortPoints(
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   cvRun(
-    () => CFFI.FindChessboardCornersSBWithMeta(
+    () => ccalib3d.FindChessboardCornersSBWithMeta(
       image.ref,
       patternSize.cvd.ref,
       corners!.ref,
@@ -225,7 +227,7 @@ Mat drawChessboardCorners(
   InputArray corners,
   bool patternWasFound,
 ) {
-  cvRun(() => CFFI.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
+  cvRun(() => ccalib3d.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
   return image;
 }
 
@@ -247,7 +249,7 @@ Mat drawChessboardCorners(
   inliers ??= Mat.empty();
   final p = calloc<cvg.Mat>();
   cvRun(
-    () => CFFI.EstimateAffinePartial2DWithParams(
+    () => ccalib3d.EstimateAffinePartial2DWithParams(
       from.ref,
       to.ref,
       inliers!.ref,
@@ -279,7 +281,7 @@ Mat drawChessboardCorners(
   inliers ??= Mat.empty();
   final p = calloc<cvg.Mat>();
   cvRun(
-    () => CFFI.EstimateAffine2DWithParams(
+    () => ccalib3d.EstimateAffine2DWithParams(
       from.ref,
       to.ref,
       inliers!.ref,

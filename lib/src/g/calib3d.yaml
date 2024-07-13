@@ -1,0 +1,90 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/calib3d.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@CalibrateCamera:
+        name: CalibrateCamera
+      c:@F@DrawChessboardCorners:
+        name: DrawChessboardCorners
+      c:@F@EstimateAffine2D:
+        name: EstimateAffine2D
+      c:@F@EstimateAffine2DWithParams:
+        name: EstimateAffine2DWithParams
+      c:@F@EstimateAffinePartial2D:
+        name: EstimateAffinePartial2D
+      c:@F@EstimateAffinePartial2DWithParams:
+        name: EstimateAffinePartial2DWithParams
+      c:@F@FindChessboardCorners:
+        name: FindChessboardCorners
+      c:@F@FindChessboardCornersSB:
+        name: FindChessboardCornersSB
+      c:@F@FindChessboardCornersSBWithMeta:
+        name: FindChessboardCornersSBWithMeta
+      c:@F@Fisheye_EstimateNewCameraMatrixForUndistortRectify:
+        name: Fisheye_EstimateNewCameraMatrixForUndistortRectify
+      c:@F@Fisheye_UndistortImage:
+        name: Fisheye_UndistortImage
+      c:@F@Fisheye_UndistortImageWithParams:
+        name: Fisheye_UndistortImageWithParams
+      c:@F@Fisheye_UndistortPoints:
+        name: Fisheye_UndistortPoints
+      c:@F@GetOptimalNewCameraMatrixWithParams:
+        name: GetOptimalNewCameraMatrixWithParams
+      c:@F@InitUndistortRectifyMap:
+        name: InitUndistortRectifyMap
+      c:@F@Undistort:
+        name: Undistort
+      c:@F@UndistortPoints:
+        name: UndistortPoints
+      c:@F@calibrateCamera_Async:
+        name: calibrateCamera_Async
+      c:@F@drawChessboardCorners_Async:
+        name: drawChessboardCorners_Async
+      c:@F@estimateAffine2DWithParams_Async:
+        name: estimateAffine2DWithParams_Async
+      c:@F@estimateAffine2D_Async:
+        name: estimateAffine2D_Async
+      c:@F@estimateAffinePartial2DWithParams_Async:
+        name: estimateAffinePartial2DWithParams_Async
+      c:@F@estimateAffinePartial2D_Async:
+        name: estimateAffinePartial2D_Async
+      c:@F@findChessboardCornersSBWithMeta_Async:
+        name: findChessboardCornersSBWithMeta_Async
+      c:@F@findChessboardCornersSB_Async:
+        name: findChessboardCornersSB_Async
+      c:@F@findChessboardCorners_Async:
+        name: findChessboardCorners_Async
+      c:@F@fisheye_estimateNewCameraMatrixForUndistortRectify_Async:
+        name: fisheye_estimateNewCameraMatrixForUndistortRectify_Async
+      c:@F@fisheye_undistortImageWithParams_Async:
+        name: fisheye_undistortImageWithParams_Async
+      c:@F@fisheye_undistortImage_Async:
+        name: fisheye_undistortImage_Async
+      c:@F@fisheye_undistortPoints_Async:
+        name: fisheye_undistortPoints_Async
+      c:@F@getOptimalNewCameraMatrix_Async:
+        name: getOptimalNewCameraMatrix_Async
+      c:@F@initUndistortRectifyMap_Async:
+        name: initUndistortRectifyMap_Async
+      c:@F@undistortPoints_Async:
+        name: undistortPoints_Async
+      c:@F@undistort_Async:
+        name: undistort_Async
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Rect:
+        name: Rect
+      c:types.h@T@Size:
+        name: Size
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecVecPoint2f:
+        name: VecVecPoint2f
+      c:types.h@T@VecVecPoint3f:
+        name: VecVecPoint3f

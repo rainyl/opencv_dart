@@ -1,0 +1,41 @@
+name: CvNativeStitching
+description: |
+  Native bindings for OpenCV - Stitching
+output:
+  bindings: ../lib/src/g/stitching.g.dart
+  symbol-file:
+    output: 'package:opencv_dart/src/g/stitching.yaml'
+    import-path: 'package:opencv_dart/src/g/stitching.g.dart'
+# ffi-native:
+#   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+import:
+  symbol-files:
+    - 'package:opencv_dart/src/g/types.yaml'
+compiler-opts: "-Isrc"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - ../src/stitching/stitching.h
+    - ../src/stitching/stitching_async.h
+  include-directives:
+    - ../src/stitching/stitching.h
+    - ../src/stitching/stitching_async.h
+
+functions:
+  symbol-address:
+    include:
+      - ".*_Close.*"
+
+preamble: |
+  // coverage:ignore-file
+  // opencv_dart - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).

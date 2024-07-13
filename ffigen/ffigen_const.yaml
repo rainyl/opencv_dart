@@ -2,15 +2,17 @@ name: CvConst
 description: |
   Constants for color conversion
 output:
-  bindings: lib/src/constants.g.dart
+  bindings: ../lib/src/g/constants.g.dart
 # ffi-native:
 #   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
 compiler-opts: ""
+sort: true
+include-unused-typedefs: true
 headers:
   entry-points:
-    - src/constants.h
+    - ../src/core/constants.h
   include-directives:
-    - src/constants.h
+    - ../src/core/constants.h
 
 preamble: |
   // opencv_dart - OpenCV bindings for Dart language

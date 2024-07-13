@@ -5,15 +5,12 @@ library cv;
 
 import 'dart:async';
 import 'dart:ffi' as ffi;
-import 'dart:ffi';
-import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" as cvg;
+import "../g/types.g.dart" as cvg;
+import '../native_lib.dart' show ccore;
 import "exception.dart" show CvException;
-
-const _libraryName = "opencv_dart";
 
 /* fundamental constants */
 const double CV_PI = 3.1415926535897932384626433832795;
@@ -34,23 +31,6 @@ const int CV_I32_MAX = 2147483647; // int
 const int CV_I32_MIN = -2147483648;
 const double CV_F32_MAX = 3.4028234663852886e+38;
 const double CV_F64_MAX = 1.7976931348623157e+308;
-
-// load native library
-ffi.DynamicLibrary loadNativeLibrary() {
-  if (Platform.isIOS) return ffi.DynamicLibrary.process();
-  final defaultLibPath = switch (Platform.operatingSystem) {
-    "windows" => "$_libraryName.dll",
-    "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
-    "macos" => "lib$_libraryName.dylib",
-    _ => throw UnsupportedError(
-        "Platform ${Platform.operatingSystem} not supported",
-      )
-  };
-  final libPath = Platform.environment["OPENCV_DART_LIB_PATH"] ?? defaultLibPath;
-  return ffi.DynamicLibrary.open(libPath);
-}
-
-final CFFI = cvg.CvNative(loadNativeLibrary());
 
 // base structures
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
@@ -86,7 +66,7 @@ void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final file = s.ref.file.cast<Utf8>().toDartString();
   final funcName = s.ref.func.cast<Utf8>().toDartString();
   final line = s.ref.line;
-  CFFI.CvStatus_Close(s);
+  ccore.CvStatus_Close(s);
   if (code != 0) {
     throw CvException(code, msg: msg, file: file, func: funcName, line: line);
   }
@@ -102,7 +82,7 @@ Future<T> cvRunAsync0<T>(
   void Function(Completer<T> completer) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_0Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   void onResponse() {
     onComplete(completer);
     ccallback.close();
@@ -118,7 +98,7 @@ Future<T> cvRunAsync<T>(
   void Function(Completer<T> completer, VoidPtr p) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_1Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
   void onResponse(VoidPtr p) {
     onComplete(completer, p);
     ccallback.close();
@@ -136,7 +116,7 @@ Future<T> cvRunAsync2<T>(
   void Function(Completer<T> completer, VoidPtr p, VoidPtr p1) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_2Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_2Function> ccallback;
   void onResponse(VoidPtr p, VoidPtr p1) {
     onComplete(completer, p, p1);
     ccallback.close();
@@ -152,7 +132,7 @@ Future<T> cvRunAsync3<T>(
   void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_3Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_3Function> ccallback;
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2) {
     onComplete(completer, p, p1, p2);
     ccallback.close();
@@ -174,7 +154,7 @@ Future<T> cvRunAsync4<T>(
   ) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_4Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_4Function> ccallback;
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) {
     onComplete(completer, p, p1, p2, p3);
     ccallback.close();
@@ -197,7 +177,7 @@ Future<T> cvRunAsync5<T>(
   ) onComplete,
 ) {
   final completer = Completer<T>();
-  late final NativeCallable<cvg.CvCallback_5Function> ccallback;
+  late final ffi.NativeCallable<cvg.CvCallback_5Function> ccallback;
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) {
     onComplete(completer, p, p1, p2, p3, p4);
     ccallback.close();
@@ -238,7 +218,7 @@ void floatCompleter(Completer<double> completer, VoidPtr p) {
 // Arena wrapper
 R cvRunArena<R>(
   R Function(Arena arena) computation, [
-  Allocator wrappedAllocator = calloc,
+  ffi.Allocator wrappedAllocator = calloc,
   bool keep = false,
 ]) {
   final arena = Arena(wrappedAllocator);

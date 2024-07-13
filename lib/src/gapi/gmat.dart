@@ -4,14 +4,15 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-// import '../constants.g.dart';
+// import '../g/constants.g.dart';
 import '../core/base.dart';
 // import '../core/dmatch.dart';
 // import '../core/keypoint.dart';
 import '../core/mat.dart';
 // import '../core/scalar.dart';
 // import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/gapi.g.dart' as cvg;
+import '../native_lib.dart' show cgapi;
 
 class GMat extends CvStruct<cvg.GMat> {
   GMat.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
@@ -22,20 +23,20 @@ class GMat extends CvStruct<cvg.GMat> {
 
   factory GMat.empty() {
     final p = calloc<cvg.GMat>();
-    cvRun(() => CFFI.gapi_GMat_New_Empty(p));
+    cvRun(() => cgapi.gapi_GMat_New_Empty(p));
     return GMat.fromPointer(p);
   }
 
   factory GMat.fromMat(Mat mat) {
     final p = calloc<cvg.GMat>();
-    cvRun(() => CFFI.gapi_GMat_New_FromMat(mat.ref, p));
+    cvRun(() => cgapi.gapi_GMat_New_FromMat(mat.ref, p));
     return GMat.fromPointer(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.GMatPtr>(CFFI.addresses.gapi_GMat_Close);
+  static final finalizer = OcvFinalizer<cvg.GMatPtr>(cgapi.addresses.gapi_GMat_Close);
   void dispose() {
     finalizer.detach(this);
-    CFFI.gapi_GMat_Close(ptr);
+    cgapi.gapi_GMat_Close(ptr);
   }
 
   @override

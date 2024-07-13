@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
-import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/src/opencv.g.dart' as cvg;
 import 'package:test/test.dart';
 
 void main() {
@@ -10,42 +6,34 @@ void main() {
     final point = cv.Point(1, 2);
     expect((point.x, point.y), (1, 2));
     expect(point.toString(), "Point(1, 2)");
-    using((arena) {
-      final cPoint = arena<cvg.Point>()
-        ..ref.x = 1
-        ..ref.y = 2;
-      final p = cv.Point.fromNative(cPoint.ref);
+
+    {
+      final p = cv.Point.fromNative(point.ref);
       expect(p, cv.Point(1, 2));
       expect(p.ref.x, 1);
-    });
+    }
 
     final point1 = cv.Point2f(1.50, 2.3);
     closeTo(point1.x, 1.50);
     closeTo(point1.y, 2.3);
     expect(point1.toString(), "Point2f(1.500, 2.300)");
-    using((arena) {
-      final cPoint = arena<cvg.Point2f>()
-        ..ref.x = 1
-        ..ref.y = 2;
-      final p = cv.Point2f.fromNative(cPoint.ref);
-      expect(p, cv.Point2f(1, 2));
-      expect(p.ref.x, 1);
-    });
+    {
+      final p = cv.Point2f.fromNative(point1.ref);
+      expect(p, cv.Point2f(1.5, 2.3));
+      expect(p.ref.x, 1.5);
+    }
 
     final point2 = cv.Point3f(1.50, 2.3, 3.4);
     closeTo(point2.x, 1.50);
     closeTo(point2.y, 2.3);
     closeTo(point2.z, 3.4);
     expect(point2.toString(), "Point3f(1.500, 2.300, 3.400)");
-    using((arena) {
-      final cPoint = arena<cvg.Point3f>()
-        ..ref.x = 1
-        ..ref.y = 2
-        ..ref.z = 3;
-      final p = cv.Point3f.fromNative(cPoint.ref);
-      expect(p, cv.Point3f(1, 2, 3));
-      expect(p.ref.x, 1);
-    });
+
+    {
+      final p = cv.Point3f.fromNative(point2.ref);
+      expect(p, cv.Point3f(1.50, 2.3, 3.4));
+      expect(p.ref.x, 1.50);
+    }
   });
 
   test('VecPoint', () {

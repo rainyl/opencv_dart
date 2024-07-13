@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:ffi/ffi.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
 import 'base.dart';
 
 class Scalar extends CvStruct<cvg.Scalar> {

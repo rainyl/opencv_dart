@@ -6,10 +6,7 @@ bak/
 .bak/
 .pytest_cache/
 test/_data/
-ffigen/
 ffigen_test/
-ffigen_contrib.yaml
-ffigen_cuda.yaml
 replace.py
 generate.py
 demo.*

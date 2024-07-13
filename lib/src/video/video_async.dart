@@ -4,7 +4,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -13,12 +12,14 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/video_io.g.dart' as cvg;
+import '../native_lib.dart' show cvideo;
 import 'video.dart';
 
 extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
   static Future<BackgroundSubtractorMOG2> emptyAsync() async => cvRunAsync(
-        CFFI.BackgroundSubtractorMOG2_Create_Async,
+        cvideo.BackgroundSubtractorMOG2_Create_Async,
         (c, p) => c.complete(BackgroundSubtractorMOG2(p.cast<cvg.BackgroundSubtractorMOG2>())),
       );
 
@@ -28,7 +29,7 @@ extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
     bool detectShadows = true,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.BackgroundSubtractorMOG2_CreateWithParams_Async(
+        (callback) => cvideo.BackgroundSubtractorMOG2_CreateWithParams_Async(
           history,
           varThreshold,
           detectShadows,
@@ -38,14 +39,14 @@ extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
       );
 
   Future<Mat> applyAsync(Mat src) async => cvRunAsync(
-        (callback) => CFFI.BackgroundSubtractorMOG2_Apply_Async(ref, src.ref, callback),
+        (callback) => cvideo.BackgroundSubtractorMOG2_Apply_Async(ref, src.ref, callback),
         matCompleter,
       );
 }
 
 extension BackgroundSubtractorKNNAsync on BackgroundSubtractorKNN {
   static Future<BackgroundSubtractorKNN> emptyAsync() async => cvRunAsync(
-        CFFI.BackgroundSubtractorMOG2_Create_Async,
+        cvideo.BackgroundSubtractorMOG2_Create_Async,
         (c, p) => c.complete(BackgroundSubtractorKNN(p.cast<cvg.BackgroundSubtractorKNN>())),
       );
 
@@ -55,7 +56,7 @@ extension BackgroundSubtractorKNNAsync on BackgroundSubtractorKNN {
     bool detectShadows = true,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.BackgroundSubtractorKNN_CreateWithParams_Async(
+        (callback) => cvideo.BackgroundSubtractorKNN_CreateWithParams_Async(
           history,
           varThreshold,
           detectShadows,
@@ -65,7 +66,7 @@ extension BackgroundSubtractorKNNAsync on BackgroundSubtractorKNN {
       );
 
   Future<Mat> applyAsync(Mat src) async => cvRunAsync(
-        (callback) => CFFI.BackgroundSubtractorKNN_Apply_Async(ref, src.ref, callback),
+        (callback) => cvideo.BackgroundSubtractorKNN_Apply_Async(ref, src.ref, callback),
         matCompleter,
       );
 }
@@ -83,7 +84,7 @@ Future<BackgroundSubtractorMOG2> createBackgroundSubtractorMOG2Async({
   bool detectShadows = true,
 }) async =>
     cvRunAsync(
-      (callback) => CFFI.BackgroundSubtractorMOG2_CreateWithParams_Async(
+      (callback) => cvideo.BackgroundSubtractorMOG2_CreateWithParams_Async(
         history,
         varThreshold,
         detectShadows,
@@ -115,7 +116,7 @@ Future<Mat> calcOpticalFlowFarnebackAsync(
   int flags,
 ) async =>
     cvRunAsync0(
-      (callback) => CFFI.CalcOpticalFlowFarneback_Async(
+      (callback) => cvideo.CalcOpticalFlowFarneback_Async(
         prev.ref,
         next.ref,
         flow.ref,
@@ -148,7 +149,7 @@ Future<(VecPoint2f nextPts, VecUChar status, VecFloat error)> calcOpticalFlowPyr
   double minEigThreshold = 1e-4,
 }) async =>
     cvRunAsync2(
-      (callback) => CFFI.CalcOpticalFlowPyrLK_Async(
+      (callback) => cvideo.CalcOpticalFlowPyrLK_Async(
         prevImg.ref,
         nextImg.ref,
         prevPts.ref,
@@ -183,7 +184,7 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
   int gaussFiltSize,
 ) async =>
     cvRunAsync(
-        (callback) => CFFI.FindTransformECC_Async(
+        (callback) => cvideo.FindTransformECC_Async(
               templateImage.ref,
               inputImage.ref,
               warpMatrix.ref,
@@ -203,7 +204,7 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
 /// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
 extension TrackerMILAsync on TrackerMIL {
   static Future<TrackerMIL> createAsync() async => cvRunAsync(
-        CFFI.TrackerMIL_Create_Async,
+        cvideo.TrackerMIL_Create_Async,
         (completer, p) => completer.complete(TrackerMIL(p.cast<cvg.TrackerMIL>())),
       );
 
@@ -219,13 +220,13 @@ extension TrackerMILAsync on TrackerMIL {
       "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
     );
 
-    cvRun(() => CFFI.TrackerMIL_Init(ref, image.ref, boundingBox.ref));
+    cvRun(() => cvideo.TrackerMIL_Init(ref, image.ref, boundingBox.ref));
   }
 
   /// Update the tracker, find the new most likely bounding box for the target.
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
   Future<(bool, Rect)> updateAsync(Mat img) async => cvRunAsync2(
-        (callback) => CFFI.TrackerMIL_Update_Async(ref, img.ref, callback),
+        (callback) => cvideo.TrackerMIL_Update_Async(ref, img.ref, callback),
         (completer, p, p1) {
           final rval = p.cast<ffi.Bool>().value;
           calloc.free(p);
@@ -248,17 +249,18 @@ extension KalmanFilterAsync on KalmanFilter {
     int type = MatType.CV_32F,
   }) async =>
       cvRunAsync(
-        (callback) => CFFI.KalmanFilter_New_Async(dynamParams, measureParams, controlParams, type, callback),
+        (callback) =>
+            cvideo.KalmanFilter_New_Async(dynamParams, measureParams, controlParams, type, callback),
         (completer, p) => completer.complete(KalmanFilter(p.cast<cvg.KalmanFilter>())),
       );
 
-  Future<Mat> correctAsync(Mat measurement) async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_Correct_Async(ref, measurement.ref, callback), matCompleter);
+  Future<Mat> correctAsync(Mat measurement) async => cvRunAsync(
+      (callback) => cvideo.KalmanFilter_Correct_Async(ref, measurement.ref, callback), matCompleter);
 
   Future<Mat> predictAsync({Mat? control}) async => cvRunAsync(
         (callback) => control == null
-            ? CFFI.KalmanFilter_Predict_Async(ref, callback)
-            : CFFI.KalmanFilter_PredictWithParams_Async(ref, control.ref, callback),
+            ? cvideo.KalmanFilter_Predict_Async(ref, callback)
+            : cvideo.KalmanFilter_PredictWithParams_Async(ref, control.ref, callback),
         matCompleter,
       );
 
@@ -269,7 +271,7 @@ extension KalmanFilterAsync on KalmanFilter {
     int type = MatType.CV_32F,
   }) async =>
       cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_InitWithParams_Async(
+        (callback) => cvideo.KalmanFilter_InitWithParams_Async(
           ref,
           dynamParams,
           measureParams,
@@ -282,97 +284,97 @@ extension KalmanFilterAsync on KalmanFilter {
 
   // corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
   Future<Mat> getStatePost() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetStatePost_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetStatePost_Async(ref, callback), matCompleter);
 
   Future<void> setStatePost(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetStatePost_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetStatePost_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getStatePre() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetStatePre_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetStatePre_Async(ref, callback), matCompleter);
 
   Future<void> setStatePre(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetStatePre_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetStatePre_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getTransitionMatrix() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTransitionMatrix_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTransitionMatrix_Async(ref, callback), matCompleter);
 
   Future<void> setTransitionMatrix(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetTransitionMatrix_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetTransitionMatrix_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getTemp1() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTemp1_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTemp1_Async(ref, callback), matCompleter);
 
   Future<Mat> getTemp2() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTemp2_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTemp2_Async(ref, callback), matCompleter);
 
   Future<Mat> getTemp3() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTemp3_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTemp3_Async(ref, callback), matCompleter);
 
   Future<Mat> getTemp4() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTemp4_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTemp4_Async(ref, callback), matCompleter);
 
   Future<Mat> getTemp5() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetTemp5_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetTemp5_Async(ref, callback), matCompleter);
 
   Future<Mat> getProcessNoiseCov() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetProcessNoiseCov_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetProcessNoiseCov_Async(ref, callback), matCompleter);
 
   Future<void> setProcessNoiseCov(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetProcessNoiseCov_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetProcessNoiseCov_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getMeasurementNoiseCov() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetMeasurementNoiseCov_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetMeasurementNoiseCov_Async(ref, callback), matCompleter);
 
   Future<void> setMeasurementNoiseCov(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetMeasurementNoiseCov_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetMeasurementNoiseCov_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getMeasurementMatrix() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetMeasurementMatrix_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetMeasurementMatrix_Async(ref, callback), matCompleter);
 
   Future<void> setMeasurementMatrix(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetMeasurementMatrix_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetMeasurementMatrix_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getGain() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetGain_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetGain_Async(ref, callback), matCompleter);
 
   Future<void> setGain(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetGain_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetGain_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getErrorCovPre() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetErrorCovPre_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetErrorCovPre_Async(ref, callback), matCompleter);
 
   Future<void> setErrorCovPre(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetErrorCovPre_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetErrorCovPre_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getErrorCovPost() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetErrorCovPost_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetErrorCovPost_Async(ref, callback), matCompleter);
 
   Future<void> setErrorCovPost(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetErrorCovPost_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetErrorCovPost_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 
   Future<Mat> getControlMatrix() async =>
-      cvRunAsync((callback) => CFFI.KalmanFilter_GetControlMatrix_Async(ref, callback), matCompleter);
+      cvRunAsync((callback) => cvideo.KalmanFilter_GetControlMatrix_Async(ref, callback), matCompleter);
 
   Future<void> setControlMatrix(Mat m) async => cvRunAsync0(
-        (callback) => CFFI.KalmanFilter_SetControlMatrix_Async(ref, m.ref, callback),
+        (callback) => cvideo.KalmanFilter_SetControlMatrix_Async(ref, m.ref, callback),
         (c) => c.complete(),
       );
 }

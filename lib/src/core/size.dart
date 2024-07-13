@@ -3,7 +3,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
-import '../opencv.g.dart' as cvg;
+import '../g/types.g.dart' as cvg;
 import 'base.dart';
 
 class Size extends CvStruct<cvg.Size> {

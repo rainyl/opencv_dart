@@ -5,13 +5,14 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/error_code.dart';
 import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/imgcodecs.g.dart' as cvg;
+import '../native_lib.dart' show cimgcodecs;
 
 /// IMRead reads an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
@@ -23,7 +24,7 @@ import '../opencv.g.dart' as cvg;
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => CFFI.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    cvRun(() => cimgcodecs.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
     return Mat.fromPointer(p);
   });
 }
@@ -37,10 +38,10 @@ bool imwrite(String filename, InputArray img, {VecInt? params}) {
     final fname = filename.toNativeUtf8(allocator: arena);
     final p = arena<ffi.Bool>();
     if (params == null) {
-      cvRun(() => CFFI.Image_IMWrite(fname.cast(), img.ref, p));
+      cvRun(() => cimgcodecs.Image_IMWrite(fname.cast(), img.ref, p));
     } else {
       cvRun(
-        () => CFFI.Image_IMWrite_WithParams(
+        () => cimgcodecs.Image_IMWrite_WithParams(
           fname.cast(),
           img.ref,
           params.ref,
@@ -68,8 +69,8 @@ Uint8List imencode(
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
   params == null
-      ? cvRun(() => CFFI.Image_IMEncode(cExt, img.ref, success, buffer))
-      : cvRun(() => CFFI.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+      ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, success, buffer))
+      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
   calloc.free(cExt);
   if (!success.value) {
     throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
@@ -88,6 +89,6 @@ Uint8List imencode(
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
-  cvRun(() => CFFI.Image_IMDecode(vec.ref, flags, dst!.ptr));
+  cvRun(() => cimgcodecs.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;
 }

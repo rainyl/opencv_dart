@@ -5,13 +5,14 @@ import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/contrib.g.dart' as cvg;
+import '../native_lib.dart' show ccontrib;
 import 'aruco.dart';
 import 'aruco_dict.dart';
 
 extension ArucoDetectorAsync on ArucoDetector {
   static Future<ArucoDetector> emptyAsync() async => cvRunAsync<ArucoDetector>(
-        CFFI.ArucoDetector_New_Async,
+        ccontrib.ArucoDetector_New_Async,
         (c, p) => c.complete(ArucoDetector.fromPointer(p.cast<cvg.ArucoDetector>())),
       );
 
@@ -20,7 +21,7 @@ extension ArucoDetectorAsync on ArucoDetector {
     ArucoDetectorParameters parameters,
   ) async =>
       cvRunAsync<ArucoDetector>(
-        (callback) => CFFI.ArucoDetector_NewWithParams_Async(
+        (callback) => ccontrib.ArucoDetector_NewWithParams_Async(
           dictionary.ref,
           parameters.ref,
           callback,
@@ -32,7 +33,7 @@ extension ArucoDetectorAsync on ArucoDetector {
     InputArray image,
   ) async =>
       cvRunAsync3<(VecVecPoint2f, VecInt, VecVecPoint2f)>(
-          (callback) => CFFI.ArucoDetector_DetectMarkers_Async(ref, image.ref, callback), (c, p, p2, p3) {
+          (callback) => ccontrib.ArucoDetector_DetectMarkers_Async(ref, image.ref, callback), (c, p, p2, p3) {
         final corners = VecVecPoint2f.fromPointer(p.cast<cvg.VecVecPoint2f>());
         final ids = VecInt.fromPointer(p2.cast<cvg.VecInt>());
         final rejected = VecVecPoint2f.fromPointer(p3.cast<cvg.VecVecPoint2f>());
@@ -47,7 +48,7 @@ Future<void> arucoDrawDetectedMarkersAsync(
   Scalar borderColor,
 ) async =>
     cvRunAsync0<void>(
-      (callback) => CFFI.ArucoDrawDetectedMarkers_Async(
+      (callback) => ccontrib.ArucoDrawDetectedMarkers_Async(
         img.ref,
         markerCorners.ref,
         markerIds.ref,
@@ -64,7 +65,7 @@ Future<Mat> arucoGenerateImageMarkerAsync(
   int borderBits,
 ) async =>
     cvRunAsync<Mat>(
-      (callback) => CFFI.ArucoGenerateImageMarker_Async(
+      (callback) => ccontrib.ArucoGenerateImageMarker_Async(
         dictionaryId.value,
         id,
         sidePixels,

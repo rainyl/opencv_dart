@@ -4,7 +4,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/contours.dart';
 import '../core/mat.dart';
@@ -12,6 +11,8 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
+import '../g/constants.g.dart';
+import '../native_lib.dart' show ccalib3d;
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
 ///
@@ -26,7 +27,7 @@ Future<(Mat, Mat)> initUndistortRectifyMapAsync(
   int m1type,
 ) async =>
     cvRunAsync2<(Mat, Mat)>(
-      (callback) => CFFI.initUndistortRectifyMap_Async(
+      (callback) => ccalib3d.initUndistortRectifyMap_Async(
         cameraMatrix.ref,
         distCoeffs.ref,
         R.ref,
@@ -51,7 +52,7 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
   bool centerPrincipalPoint = false,
 }) async =>
     cvRunAsync2(
-      (callback) => CFFI.getOptimalNewCameraMatrix_Async(
+      (callback) => ccalib3d.getOptimalNewCameraMatrix_Async(
         cameraMatrix.ref,
         distCoeffs.ref,
         imageSize.cvd.ref,
@@ -79,7 +80,7 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) async =>
     cvRunAsync5(
-      (callback) => CFFI.calibrateCamera_Async(
+      (callback) => ccalib3d.calibrateCamera_Async(
         objectPoints.ref,
         imagePoints.ref,
         imageSize.cvd.ref,
@@ -113,7 +114,7 @@ Future<Mat> undistortAsync(
   InputArray? newCameraMatrix,
 }) async =>
     cvRunAsync(
-      (callback) => CFFI.undistort_Async(
+      (callback) => ccalib3d.undistort_Async(
         src.ref,
         cameraMatrix.ref,
         distCoeffs.ref,
@@ -136,7 +137,7 @@ Future<Mat> undistortPointsAsync(
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) async =>
     cvRunAsync(
-      (callback) => CFFI.undistortPoints_Async(
+      (callback) => ccalib3d.undistortPoints_Async(
         src.ref,
         cameraMatrix.ref,
         distCoeffs.ref,
@@ -158,7 +159,7 @@ Future<(bool success, Mat corners)> findChessboardCornersAsync(
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
 }) async =>
     cvRunAsync2(
-      (callback) => CFFI.findChessboardCorners_Async(
+      (callback) => ccalib3d.findChessboardCorners_Async(
         image.ref,
         patternSize.cvd.ref,
         flags,
@@ -180,7 +181,7 @@ Future<(bool, Mat corners)> findChessboardCornersSBAsync(
   int flags,
 ) async =>
     cvRunAsync2(
-      (callback) => CFFI.findChessboardCornersSB_Async(
+      (callback) => ccalib3d.findChessboardCornersSB_Async(
         image.ref,
         patternSize.cvd.ref,
         flags,
@@ -203,7 +204,7 @@ Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
 ) async =>
     cvRunAsync3(
       (callback) =>
-          CFFI.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
+          ccalib3d.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
       (c, p, p1, p2) {
         final rval = p.cast<ffi.Bool>().value;
         calloc.free(p);
@@ -225,7 +226,7 @@ Future<Mat> drawChessboardCornersAsync(
 ) async =>
     cvRunAsync0<Mat>(
       (callback) =>
-          CFFI.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
+          ccalib3d.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
       (c) => c.complete(image),
     );
 
@@ -244,7 +245,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
   int refineIters = 10,
 }) async =>
     cvRunAsync2(
-      (callback) => CFFI.estimateAffinePartial2DWithParams_Async(
+      (callback) => ccalib3d.estimateAffinePartial2DWithParams_Async(
         from.ref,
         to.ref,
         method,
@@ -271,7 +272,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
   int refineIters = 10,
 }) async =>
     cvRunAsync2(
-      (callback) => CFFI.estimateAffine2DWithParams_Async(
+      (callback) => ccalib3d.estimateAffine2DWithParams_Async(
         from.ref,
         to.ref,
         method,

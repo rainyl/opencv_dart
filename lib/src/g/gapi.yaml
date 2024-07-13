@@ -1,0 +1,374 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/gapi.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@GArrayGArrayPoint_FromVec:
+        name: GArrayGArrayPoint_FromVec
+      c:@F@GArrayPoint2d_FromVec:
+        name: GArrayPoint2d_FromVec
+      c:@F@GArrayPoint2f_FromVec:
+        name: GArrayPoint2f_FromVec
+      c:@F@GArrayPoint2i_FromVec:
+        name: GArrayPoint2i_FromVec
+      c:@F@GArrayPoint3d_FromVec:
+        name: GArrayPoint3d_FromVec
+      c:@F@GArrayPoint3f_FromVec:
+        name: GArrayPoint3f_FromVec
+      c:@F@GArrayPoint3i_FromVec:
+        name: GArrayPoint3i_FromVec
+      c:@F@GArrayPoint_FromVec:
+        name: GArrayPoint_FromVec
+      c:@F@GArrayPrim_FromVec:
+        name: GArrayPrim_FromVec
+      c:@F@GArrayVec4i_FromVec:
+        name: GArrayVec4i_FromVec
+      c:@F@Prim_from_Circle:
+        name: Prim_from_Circle
+      c:@F@Prim_from_FText:
+        name: Prim_from_FText
+      c:@F@Prim_from_Image:
+        name: Prim_from_Image
+      c:@F@Prim_from_Line:
+        name: Prim_from_Line
+      c:@F@Prim_from_Mosaic:
+        name: Prim_from_Mosaic
+      c:@F@Prim_from_Poly:
+        name: Prim_from_Poly
+      c:@F@Prim_from_Rect:
+        name: Prim_from_Rect
+      c:@F@Prim_from_Text:
+        name: Prim_from_Text
+      c:@F@VecPrim_Append:
+        name: VecPrim_Append
+      c:@F@VecPrim_At:
+        name: VecPrim_At
+      c:@F@VecPrim_Close:
+        name: VecPrim_Close
+      c:@F@VecPrim_New:
+        name: VecPrim_New
+      c:@F@VecPrim_NewFromPointer:
+        name: VecPrim_NewFromPointer
+      c:@F@VecPrim_NewFromVec:
+        name: VecPrim_NewFromVec
+      c:@F@VecPrim_Size:
+        name: VecPrim_Size
+      c:@F@gapi_BGR2Gray:
+        name: gapi_BGR2Gray
+      c:@F@gapi_BGR2I420:
+        name: gapi_BGR2I420
+      c:@F@gapi_BGR2LUV:
+        name: gapi_BGR2LUV
+      c:@F@gapi_BGR2RGB:
+        name: gapi_BGR2RGB
+      c:@F@gapi_BGR2YUV:
+        name: gapi_BGR2YUV
+      c:@F@gapi_BayerGR2RGB:
+        name: gapi_BayerGR2RGB
+      c:@F@gapi_Canny:
+        name: gapi_Canny
+      c:@F@gapi_GComputation_Close:
+        name: gapi_GComputation_Close
+      c:@F@gapi_GComputation_New:
+        name: gapi_GComputation_New
+      c:@F@gapi_GComputation_New_1:
+        name: gapi_GComputation_New_1
+      c:@F@gapi_GComputation_New_2:
+        name: gapi_GComputation_New_2
+      c:@F@gapi_GComputation_New_3:
+        name: gapi_GComputation_New_3
+      c:@F@gapi_GComputation_apply:
+        name: gapi_GComputation_apply
+      c:@F@gapi_GComputation_apply_1:
+        name: gapi_GComputation_apply_1
+      c:@F@gapi_GComputation_apply_2:
+        name: gapi_GComputation_apply_2
+      c:@F@gapi_GComputation_apply_3:
+        name: gapi_GComputation_apply_3
+      c:@F@gapi_GMat_Close:
+        name: gapi_GMat_Close
+      c:@F@gapi_GMat_New_Empty:
+        name: gapi_GMat_New_Empty
+      c:@F@gapi_GMat_New_FromMat:
+        name: gapi_GMat_New_FromMat
+      c:@F@gapi_GScalar_Close:
+        name: gapi_GScalar_Close
+      c:@F@gapi_GScalar_New_Empty:
+        name: gapi_GScalar_New_Empty
+      c:@F@gapi_GScalar_New_FromDouble:
+        name: gapi_GScalar_New_FromDouble
+      c:@F@gapi_GScalar_New_FromScalar:
+        name: gapi_GScalar_New_FromScalar
+      c:@F@gapi_I4202BGR:
+        name: gapi_I4202BGR
+      c:@F@gapi_I4202RGB:
+        name: gapi_I4202RGB
+      c:@F@gapi_LUT:
+        name: gapi_LUT
+      c:@F@gapi_LUV2BGR:
+        name: gapi_LUV2BGR
+      c:@F@gapi_Laplacian:
+        name: gapi_Laplacian
+      c:@F@gapi_NV12toBGR:
+        name: gapi_NV12toBGR
+      c:@F@gapi_NV12toBGRp:
+        name: gapi_NV12toBGRp
+      c:@F@gapi_NV12toGray:
+        name: gapi_NV12toGray
+      c:@F@gapi_NV12toRGB:
+        name: gapi_NV12toRGB
+      c:@F@gapi_NV12toRGBp:
+        name: gapi_NV12toRGBp
+      c:@F@gapi_RGB2Gray:
+        name: gapi_RGB2Gray
+      c:@F@gapi_RGB2Gray_1:
+        name: gapi_RGB2Gray_1
+      c:@F@gapi_RGB2HSV:
+        name: gapi_RGB2HSV
+      c:@F@gapi_RGB2I420:
+        name: gapi_RGB2I420
+      c:@F@gapi_RGB2Lab:
+        name: gapi_RGB2Lab
+      c:@F@gapi_RGB2YUV:
+        name: gapi_RGB2YUV
+      c:@F@gapi_RGB2YUV422:
+        name: gapi_RGB2YUV422
+      c:@F@gapi_Sobel:
+        name: gapi_Sobel
+      c:@F@gapi_SobelXY:
+        name: gapi_SobelXY
+      c:@F@gapi_YUV2BGR:
+        name: gapi_YUV2BGR
+      c:@F@gapi_YUV2RGB:
+        name: gapi_YUV2RGB
+      c:@F@gapi_add:
+        name: gapi_add
+      c:@F@gapi_addC:
+        name: gapi_addC
+      c:@F@gapi_addC_1:
+        name: gapi_addC_1
+      c:@F@gapi_bilateralFilter:
+        name: gapi_bilateralFilter
+      c:@F@gapi_blur:
+        name: gapi_blur
+      c:@F@gapi_boundingRect:
+        name: gapi_boundingRect
+      c:@F@gapi_boundingRect_1:
+        name: gapi_boundingRect_1
+      c:@F@gapi_boundingRect_2:
+        name: gapi_boundingRect_2
+      c:@F@gapi_boxFilter:
+        name: gapi_boxFilter
+      c:@F@gapi_cartToPolar:
+        name: gapi_cartToPolar
+      c:@F@gapi_concatHor:
+        name: gapi_concatHor
+      c:@F@gapi_concatVert:
+        name: gapi_concatVert
+      c:@F@gapi_convertTo:
+        name: gapi_convertTo
+      c:@F@gapi_copy_1:
+        name: gapi_copy_1
+      c:@F@gapi_crop:
+        name: gapi_crop
+      c:@F@gapi_dilate:
+        name: gapi_dilate
+      c:@F@gapi_dilate3x3:
+        name: gapi_dilate3x3
+      c:@F@gapi_div:
+        name: gapi_div
+      c:@F@gapi_divC:
+        name: gapi_divC
+      c:@F@gapi_divRC:
+        name: gapi_divRC
+      c:@F@gapi_erode:
+        name: gapi_erode
+      c:@F@gapi_erode3x3:
+        name: gapi_erode3x3
+      c:@F@gapi_filter2D:
+        name: gapi_filter2D
+      c:@F@gapi_findContours:
+        name: gapi_findContours
+      c:@F@gapi_findContoursH:
+        name: gapi_findContoursH
+      c:@F@gapi_findContoursH_1:
+        name: gapi_findContoursH_1
+      c:@F@gapi_findContours_1:
+        name: gapi_findContours_1
+      c:@F@gapi_fitLine2D:
+        name: gapi_fitLine2D
+      c:@F@gapi_fitLine2D_1:
+        name: gapi_fitLine2D_1
+      c:@F@gapi_fitLine2D_2:
+        name: gapi_fitLine2D_2
+      c:@F@gapi_fitLine2D_3:
+        name: gapi_fitLine2D_3
+      c:@F@gapi_fitLine3D_1:
+        name: gapi_fitLine3D_1
+      c:@F@gapi_fitLine3D_2:
+        name: gapi_fitLine3D_2
+      c:@F@gapi_fitLine3D_3:
+        name: gapi_fitLine3D_3
+      c:@F@gapi_fitLine3D_4:
+        name: gapi_fitLine3D_4
+      c:@F@gapi_flip:
+        name: gapi_flip
+      c:@F@gapi_gaussianBlur:
+        name: gapi_gaussianBlur
+      c:@F@gapi_goodFeaturesToTrack:
+        name: gapi_goodFeaturesToTrack
+      c:@F@gapi_mask:
+        name: gapi_mask
+      c:@F@gapi_mean:
+        name: gapi_mean
+      c:@F@gapi_medianBlur:
+        name: gapi_medianBlur
+      c:@F@gapi_merge3:
+        name: gapi_merge3
+      c:@F@gapi_merge4:
+        name: gapi_merge4
+      c:@F@gapi_morphologyEx:
+        name: gapi_morphologyEx
+      c:@F@gapi_mul:
+        name: gapi_mul
+      c:@F@gapi_mulC:
+        name: gapi_mulC
+      c:@F@gapi_mulC_1:
+        name: gapi_mulC_1
+      c:@F@gapi_mulC_2:
+        name: gapi_mulC_2
+      c:@F@gapi_normalize:
+        name: gapi_normalize
+      c:@F@gapi_phase:
+        name: gapi_phase
+      c:@F@gapi_polarToCart:
+        name: gapi_polarToCart
+      c:@F@gapi_remap:
+        name: gapi_remap
+      c:@F@gapi_resize:
+        name: gapi_resize
+      c:@F@gapi_resizeP:
+        name: gapi_resizeP
+      c:@F@gapi_sepFilter:
+        name: gapi_sepFilter
+      c:@F@gapi_split3:
+        name: gapi_split3
+      c:@F@gapi_split4:
+        name: gapi_split4
+      c:@F@gapi_sqrt:
+        name: gapi_sqrt
+      c:@F@gapi_sub:
+        name: gapi_sub
+      c:@F@gapi_subC:
+        name: gapi_subC
+      c:@F@gapi_subRC:
+        name: gapi_subRC
+      c:@F@gapi_warpAffine:
+        name: gapi_warpAffine
+      c:@F@gapi_warpPerspective:
+        name: gapi_warpPerspective
+      c:@S@GArrayGArrayPoint:
+        name: GArrayGArrayPoint
+      c:@S@GArrayPoint:
+        name: GArrayPoint
+      c:@S@GArrayPoint2d:
+        name: GArrayPoint2d
+      c:@S@GArrayPoint2f:
+        name: GArrayPoint2f
+      c:@S@GArrayPoint2i:
+        name: GArrayPoint2i
+      c:@S@GArrayPoint3d:
+        name: GArrayPoint3d
+      c:@S@GArrayPoint3f:
+        name: GArrayPoint3f
+      c:@S@GArrayPoint3i:
+        name: GArrayPoint3i
+      c:@S@GArrayPrim:
+        name: GArrayPrim
+      c:@S@GArrayVec4i:
+        name: GArrayVec4i
+      c:@S@GComputation:
+        name: GComputation
+      c:@S@GFrame:
+        name: GFrame
+      c:@S@GMat:
+        name: GMat
+      c:@S@GOpaquePoint:
+        name: GOpaquePoint
+      c:@S@GOpaqueRect:
+        name: GOpaqueRect
+      c:@S@GOpaqueVec4f:
+        name: GOpaqueVec4f
+      c:@S@GOpaqueVec6f:
+        name: GOpaqueVec6f
+      c:@S@GScalar:
+        name: GScalar
+      c:@S@Prim:
+        name: Prim
+      c:@S@VecGMat:
+        name: VecGMat
+      c:@S@VecPrim:
+        name: VecPrim
+      c:gapi.h@T@GArrayGArrayPointPtr:
+        name: GArrayGArrayPointPtr
+      c:gapi.h@T@GArrayPoint2dPtr:
+        name: GArrayPoint2dPtr
+      c:gapi.h@T@GArrayPoint2fPtr:
+        name: GArrayPoint2fPtr
+      c:gapi.h@T@GArrayPoint2iPtr:
+        name: GArrayPoint2iPtr
+      c:gapi.h@T@GArrayPoint3dPtr:
+        name: GArrayPoint3dPtr
+      c:gapi.h@T@GArrayPoint3fPtr:
+        name: GArrayPoint3fPtr
+      c:gapi.h@T@GArrayPoint3iPtr:
+        name: GArrayPoint3iPtr
+      c:gapi.h@T@GArrayPointPtr:
+        name: GArrayPointPtr
+      c:gapi.h@T@GArrayPrimPtr:
+        name: GArrayPrimPtr
+      c:gapi.h@T@GArrayVec4iPtr:
+        name: GArrayVec4iPtr
+      c:gapi.h@T@GComputationPtr:
+        name: GComputationPtr
+      c:gapi.h@T@GFramePtr:
+        name: GFramePtr
+      c:gapi.h@T@GMatPtr:
+        name: GMatPtr
+      c:gapi.h@T@GOpaquePointPtr:
+        name: GOpaquePointPtr
+      c:gapi.h@T@GOpaqueRectPtr:
+        name: GOpaqueRectPtr
+      c:gapi.h@T@GOpaqueVec4fPtr:
+        name: GOpaqueVec4fPtr
+      c:gapi.h@T@GOpaqueVec6fPtr:
+        name: GOpaqueVec6fPtr
+      c:gapi.h@T@GScalarPtr:
+        name: GScalarPtr
+      c:gapi.h@T@PrimPtr:
+        name: PrimPtr
+      c:gapi.h@T@Prims:
+        name: Prims
+      c:gapi.h@T@VecGMatPtr:
+        name: VecGMatPtr
+      c:gapi.h@T@VecPrimPtr:
+        name: VecPrimPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Point:
+        name: Point
+      c:types.h@T@Rect:
+        name: Rect
+      c:types.h@T@Scalar:
+        name: Scalar
+      c:types.h@T@Size:
+        name: Size
+      c:types.h@T@VecPoint:
+        name: VecPoint
+      c:types.h@T@VecVec4i:
+        name: VecVec4i
+      c:types.h@T@VecVecPoint:
+        name: VecVecPoint
