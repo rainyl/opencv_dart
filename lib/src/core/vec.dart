@@ -211,16 +211,18 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
     }
   }
 
-  factory VecVecChar.fromList(List<List<int>> pts) =>
-      VecVecChar.generate(pts.length, (i) => pts[i].i8, dispose: false);
+  factory VecVecChar.fromList(List<List<int>> pts) => VecVecChar.generate(pts.length, (i) => pts[i]);
 
-  factory VecVecChar.generate(int length, VecChar Function(int i) generator, {bool dispose = true}) {
+  factory VecVecChar.generate(int length, Iterable<int> Function(int i) generator) {
     final pp = calloc<cvg.VecVecChar>()..ref.length = length;
     pp.ref.ptr = calloc<cvg.VecChar>(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
-      if (dispose) v.dispose();
+      pp.ref.ptr[i].ptr = calloc<ffi.Char>(v.length);
+      pp.ref.ptr[i].length = v.length;
+      for (var j = 0; j < v.length; j++) {
+        pp.ref.ptr[i].ptr[j] = v.elementAt(j);
+      }
     }
     return VecVecChar.fromPointer(pp);
   }
@@ -230,7 +232,7 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   }
 
   @override
-  VecVecChar clone() => VecVecChar.generate(length, (idx) => this[idx], dispose: false);
+  VecVecChar clone() => VecVecChar.generate(length, (idx) => this[idx]);
 
   @override
   Iterator<VecChar> get iterator => VecVecCharIterator(ref);
