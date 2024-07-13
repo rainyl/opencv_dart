@@ -146,7 +146,6 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   void release() {
     cvRun(() => cvideo.VideoCapture_Release(ref));
   }
-
 }
 
 class VideoWriter extends CvStruct<cvg.VideoWriter> {
@@ -243,5 +242,4 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
       return p.value != 0;
     });
   }
-
 }

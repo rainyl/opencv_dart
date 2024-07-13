@@ -255,7 +255,6 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     });
   }
 
-
   @override
   cvg.Subdiv2D get ref => ptr.ref;
 

@@ -68,7 +68,6 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     return dst.convertTo(MatType.CV_8UC3, alpha: 255.0);
   }
 
-
   @override
   cvg.MergeMertens get ref => ptr.ref;
 }
@@ -137,7 +136,6 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     cphoto.AlignMTB_Process(ref, src.ref, dst);
     return VecMat.fromPointer(dst);
   }
-
 
   @override
   cvg.AlignMTB get ref => ptr.ref;

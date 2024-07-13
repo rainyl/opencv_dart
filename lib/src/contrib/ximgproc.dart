@@ -467,7 +467,6 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
     ccontrib.ximgproc_StructuredEdgeDetection_Close(ptr);
   }
 
-
   @override
   cvg.StructuredEdgeDetection get ref => ptr.ref;
 }
@@ -531,7 +530,6 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
     finalizer.detach(this);
     ccontrib.ximgproc_GraphSegmentation_Close(ptr);
   }
-
 
   @override
   cvg.GraphSegmentation get ref => ptr.ref;
@@ -708,7 +706,6 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
     finalizer.detach(this);
     ccontrib.ximgproc_EdgeDrawing_Close(ptr);
   }
-
 
   @override
   cvg.EdgeDrawing get ref => ptr.ref;

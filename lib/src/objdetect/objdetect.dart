@@ -136,11 +136,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         outputRejectLevels,
       ),
     );
-    return (
-      VecRect.fromPointer(objects),
-      VecI32.fromPointer(rejectLevels),
-      VecF64.fromPointer(levelWeights)
-    );
+    return (VecRect.fromPointer(objects), VecI32.fromPointer(rejectLevels), VecF64.fromPointer(levelWeights));
   }
 
   /// Checks whether the classifier has been loaded.
@@ -190,7 +186,6 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     finalizer.detach(this);
     cobjdetect.CascadeClassifier_Close(ptr);
   }
-
 }
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
@@ -440,7 +435,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     finalizer.detach(this);
     cobjdetect.HOGDescriptor_Close(ptr);
   }
-
 }
 
 // GroupRectangles groups the object candidate rectangles.
@@ -849,7 +843,6 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     finalizer.detach(this);
     cobjdetect.FaceDetectorYN_Close(ptr);
   }
-
 }
 
 /// DNN-based face recognizer.
@@ -945,7 +938,6 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     finalizer.detach(this);
     cobjdetect.FaceRecognizerSF_Close(ptr);
   }
-
 
   @Deprecated("Use [FR_COSINE] instead.")
   static const int DIS_TYPR_FR_COSINE = 0;

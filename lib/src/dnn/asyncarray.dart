@@ -38,7 +38,6 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
     return dst;
   }
 
-
   @override
   cvg.AsyncArray get ref => ptr.ref;
 }

@@ -187,7 +187,6 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
     cstitching.Stitcher_Close(ptr);
   }
 
-
   @override
   cvg.Stitcher get ref => ptr.ref;
 }

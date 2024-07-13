@@ -81,7 +81,6 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
     calloc.free(cp);
   }
 
-
   @override
   cvg.PtrWBDetector get ref => ptr.ref;
 }
