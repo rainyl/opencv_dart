@@ -2,7 +2,6 @@
 #define CVD_VEC_UTILS_H
 
 #include "types.h"
-#include <malloc/_malloc.h>
 #include <vector>
 
 inline std::vector<cv::Point> vecpoint_c2cpp(VecPoint v) {
