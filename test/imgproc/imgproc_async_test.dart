@@ -125,7 +125,8 @@ void main() async {
     expect(contours.length, greaterThan(0));
     expect(hierarchy.isEmpty, equals(false));
     expect(
-      List.generate(contours.length, (index) => contours.elementAt(index).length).every((element) => element == 4),
+      List.generate(contours.length, (index) => contours.elementAt(index).length)
+          .every((element) => element == 4),
       equals(true),
     );
 
@@ -252,7 +253,8 @@ void main() async {
 
     final (_, thres) = await cv.thresholdAsync(gray, 25, 255, cv.THRESH_BINARY);
 
-    final (dest, labels) = await cv.distanceTransformAsync(thres, cv.DIST_L2, cv.DIST_MASK_3, cv.DIST_LABEL_CCOMP);
+    final (dest, labels) =
+        await cv.distanceTransformAsync(thres, cv.DIST_L2, cv.DIST_MASK_3, cv.DIST_LABEL_CCOMP);
     expect(dest.isEmpty || dest.rows != img.rows || dest.cols != img.cols, false);
     expect(labels.isEmpty, false);
   });
@@ -630,7 +632,8 @@ void main() async {
 
     final (_, imgThresh) = await cv.thresholdAsync(gray, 5, 50, cv.THRESH_OTSU + cv.THRESH_BINARY);
 
-    final (_, markers) = await cv.connectedComponentsAsync(imgThresh, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final (_, markers) =
+        await cv.connectedComponentsAsync(imgThresh, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
     await cv.watershedAsync(src, markers);
     expect(markers.isEmpty, false);
     expect((markers.rows, markers.cols), (src.rows, src.cols));
@@ -938,7 +941,8 @@ void main() async {
       cv.Point2f(1167.2201416015625, 693.495068359375),
     ];
 
-    final (affineMatrix, _) = await cv.estimateAffinePartial2DAsync(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
+    final (affineMatrix, _) =
+        await cv.estimateAffinePartial2DAsync(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
     final invMask = await cv.warpAffineAsync(mask, affineMatrix, (2048, 2048));
     for (int i = 0; i < 2047; i++) {

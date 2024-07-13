@@ -163,7 +163,8 @@ void main() async {
   });
 
   test('cv.Net.fromCaffe', () {
-    final model = cv.Net.fromCaffe("test/models/bvlc_googlenet.prototxt", "test/models/bvlc_googlenet.caffemodel");
+    final model =
+        cv.Net.fromCaffe("test/models/bvlc_googlenet.prototxt", "test/models/bvlc_googlenet.caffemodel");
     checkCaffeNet(model);
   });
 

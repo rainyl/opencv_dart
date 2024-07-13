@@ -109,8 +109,8 @@ extension VideoWriterAsync on VideoWriter {
     final name = filename.toNativeUtf8().cast<ffi.Char>();
     final codec_ = codec.toNativeUtf8().cast<ffi.Char>();
     final rval = cvRunAsync<bool>(
-      (callback) =>
-          cvideo.VideoWriter_Open_Async(ref, name, codec_, fps, frameSize.$1, frameSize.$2, isColor, callback),
+      (callback) => cvideo.VideoWriter_Open_Async(
+          ref, name, codec_, fps, frameSize.$1, frameSize.$2, isColor, callback),
       boolCompleter,
     );
     calloc.free(name);

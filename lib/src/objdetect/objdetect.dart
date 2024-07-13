@@ -179,7 +179,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(cobjdetect.addresses.CascadeClassifier_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.CascadeClassifierPtr>(cobjdetect.addresses.CascadeClassifier_Close);
 
   void dispose() {
     finalizer.detach(this);

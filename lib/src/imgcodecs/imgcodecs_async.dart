@@ -83,7 +83,8 @@ Future<(bool, Uint8List)> imencodeAsync(
 /// https://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga26a67788faa58ade337f8d28ba0eb19e
 Future<Mat> imdecodeAsync(Uint8List buf, int flags) async {
   final vec = VecUChar.fromList(buf);
-  final rval = cvRunAsync((callback) => cimgcodecs.Image_IMDecode_Async(vec.ref, flags, callback), matCompleter);
+  final rval =
+      cvRunAsync((callback) => cimgcodecs.Image_IMDecode_Async(vec.ref, flags, callback), matCompleter);
   vec.dispose();
   return rval;
 }

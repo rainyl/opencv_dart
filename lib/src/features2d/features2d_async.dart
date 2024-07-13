@@ -39,7 +39,8 @@ extension AKAZEAsync on AKAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async => cvRunAsync2<(VecKeyPoint, Mat)>(
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
         (callback) => cfeatures2d.AKAZE_DetectAndCompute_Async(
           ref,
           src.ref,
@@ -104,7 +105,8 @@ extension BRISKAsync on BRISK {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async => cvRunAsync2<(VecKeyPoint, Mat)>(
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
         (callback) => cfeatures2d.BRISK_DetectAndCompute_Async(
           ref,
           src.ref,
@@ -211,7 +213,8 @@ extension KAZEAsync on KAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async => cvRunAsync2<(VecKeyPoint, Mat)>(
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
         (callback) => cfeatures2d.KAZE_DetectAndCompute_Async(
           ref,
           src.ref,
@@ -305,7 +308,8 @@ extension ORBAsync on ORB {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async => cvRunAsync2<(VecKeyPoint, Mat)>(
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
         (callback) => cfeatures2d.ORB_DetectAndCompute_Async(
           ref,
           src.ref,
@@ -460,7 +464,8 @@ extension SIFTAsync on SIFT {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async => cvRunAsync2<(VecKeyPoint, Mat)>(
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async =>
+      cvRunAsync2<(VecKeyPoint, Mat)>(
         (callback) => cfeatures2d.SIFT_DetectAndCompute_Async(
           ref,
           src.ref,

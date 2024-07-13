@@ -61,7 +61,8 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
     }
   }
 
-  factory VecDMatch.fromList(List<DMatch> pts) => VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
+  factory VecDMatch.fromList(List<DMatch> pts) =>
+      VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecDMatch.generate(int length, DMatch Function(int i) generator, {bool dispose = true}) {
     final pp = calloc<cvg.VecDMatch>()..ref.length = length;

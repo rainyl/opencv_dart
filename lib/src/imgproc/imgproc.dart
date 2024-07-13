@@ -829,7 +829,8 @@ Mat HoughLines(
   double max_theta = CV_PI,
 }) {
   lines ??= Mat.empty();
-  cvRun(() => cimgproc.HoughLines(image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
+  cvRun(() =>
+      cimgproc.HoughLines(image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
   return lines;
 }
 
@@ -980,7 +981,8 @@ Mat arrowedLine(
   int shift = 0,
   double tipLength = 0.1,
 }) {
-  cvRun(() => cimgproc.ArrowedLine(img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
+  cvRun(() =>
+      cimgproc.ArrowedLine(img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
   return img;
 }
 
@@ -1118,7 +1120,8 @@ Mat polylines(
     final baseline = arena<ffi.Int>();
     final size = calloc<cvg.Size>();
     final textPtr = text.toNativeUtf8(allocator: arena);
-    cvRun(() => cimgproc.GetTextSizeWithBaseline(textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
+    cvRun(() =>
+        cimgproc.GetTextSizeWithBaseline(textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
     return (Size.fromPointer(size), baseline.value);
   });
 }
@@ -1412,7 +1415,8 @@ Mat remap(
 }) {
   borderValue ??= Scalar();
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
+  cvRun(() =>
+      cimgproc.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
   return dst;
 }
 

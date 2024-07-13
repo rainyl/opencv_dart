@@ -41,7 +41,8 @@ void main() async {
 
     classifier.dispose();
 
-    final cls = await cv.CascadeClassifierAsync.fromFileAsync("test/data/haarcascade_frontalface_default.xml");
+    final cls =
+        await cv.CascadeClassifierAsync.fromFileAsync("test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
 
     {

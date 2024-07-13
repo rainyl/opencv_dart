@@ -128,7 +128,8 @@ void main() async {
     expect(contours.length, greaterThan(0));
     expect(hierarchy.isEmpty, equals(false));
     expect(
-      List.generate(contours.length, (index) => contours.elementAt(index).length).every((element) => element == 4),
+      List.generate(contours.length, (index) => contours.elementAt(index).length)
+          .every((element) => element == 4),
       equals(true),
     );
 

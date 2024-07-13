@@ -56,7 +56,8 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3ec256af000e129e08eb5f269ccdeb0f
   Future<(int rval, Point2f nearestPt)> findNearestAsync(Point2f pt) async =>
-      cvRunAsync2((callback) => cimgproc.Subdiv2D_FindNearest_Async(ref, pt.ref, callback), (completer, p, p1) {
+      cvRunAsync2((callback) => cimgproc.Subdiv2D_FindNearest_Async(ref, pt.ref, callback),
+          (completer, p, p1) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
         completer.complete((rval, Point2f.fromPointer(p1.cast<cvg.Point2f>())));
@@ -120,10 +121,14 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns a list of all Voronoi facets.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
-  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecI32 idx) async => cvRunAsync2(
+  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecI32 idx) async =>
+      cvRunAsync2(
         (callback) => cimgproc.Subdiv2D_GetVoronoiFacetList_Async(ref, idx.ref, callback),
         (completer, p, p1) => completer.complete(
-          (VecVecPoint2f.fromPointer(p.cast<cvg.VecVecPoint2f>()), VecPoint2f.fromPointer(p1.cast<cvg.VecPoint2f>())),
+          (
+            VecVecPoint2f.fromPointer(p.cast<cvg.VecVecPoint2f>()),
+            VecPoint2f.fromPointer(p1.cast<cvg.VecPoint2f>())
+          ),
         ),
       );
 
@@ -164,7 +169,8 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aec8f1fd5a802f62faa97520b465897d7
   Future<(int rval, int edge, int vertex)> locateAsync(Point2f pt) async =>
-      cvRunAsync3((callback) => cimgproc.Subdiv2D_Locate_Async(ref, pt.ref, callback), (completer, p, p1, p2) {
+      cvRunAsync3((callback) => cimgproc.Subdiv2D_Locate_Async(ref, pt.ref, callback),
+          (completer, p, p1, p2) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
         final edge = p1.cast<ffi.Int>().value;

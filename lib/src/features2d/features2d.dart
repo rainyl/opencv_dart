@@ -250,7 +250,8 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr, [bool attach = true]) => GFTTDetector._(ptr, attach);
+  factory GFTTDetector.fromPointer(cvg.GFTTDetectorPtr ptr, [bool attach = true]) =>
+      GFTTDetector._(ptr, attach);
 
   /// returns a new GFTTDetector algorithm
   ///

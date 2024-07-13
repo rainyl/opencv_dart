@@ -734,7 +734,8 @@ void main() async {
   test(
     'cv.setNumThreads',
     onPlatform: {
-      "mac-os": const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
+      "mac-os":
+          const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
     },
     () {
       cv.setNumThreads(2);
