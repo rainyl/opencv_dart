@@ -32,9 +32,17 @@ class DMatch extends CvStruct<cvg.DMatch> {
   }
 
   int get queryIdx => ref.queryIdx;
+  set queryIdx(int value) => ref.queryIdx = value;
+
   int get trainIdx => ref.trainIdx;
+  set trainIdx(int value) => ref.trainIdx = value;
+
   int get imgIdx => ref.imgIdx;
+  set imgIdx(int value) => ref.imgIdx = value;
+
   double get distance => ref.distance;
+  set distance(double value) => ref.distance = value;
+
   @override
   List<Object?> get props => [queryIdx, trainIdx, imgIdx, distance];
 
@@ -44,26 +52,30 @@ class DMatch extends CvStruct<cvg.DMatch> {
   String toString() => "DMatch($queryIdx, $trainIdx, $imgIdx, ${distance.toStringAsFixed(3)})";
 }
 
-class VecDMatch extends Vec<cvg.VecDMatch, DMatch> implements CvStruct<cvg.VecDMatch> {
-  VecDMatch.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecDMatch.fromVec(cvg.VecDMatch ref) {
-    final p = calloc<cvg.VecDMatch>()..ref = ref;
-    return VecDMatch.fromPointer(p);
-  }
-
-  factory VecDMatch.fromList(List<DMatch> pts) => VecDMatch.generate(pts.length, (i) => pts[i]);
-
-  factory VecDMatch.generate(int length, DMatch Function(int i) generator) {
-    final p = calloc<cvg.DMatch>(length);
-    for (var i = 0; i < length; i++) {
-      p[i] = generator(i).ref;
+class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
+  VecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
-    final ptr = calloc<cvg.VecDMatch>()
-      ..ref.ptr = p
-      ..ref.length = length;
-    return VecDMatch.fromPointer(ptr);
   }
+
+  factory VecDMatch.fromList(List<DMatch> pts) =>
+      VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecDMatch.generate(int length, DMatch Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecDMatch>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.DMatch>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecDMatch.fromPointer(pp);
+  }
+
+  @override
+  VecDMatch clone() => VecDMatch.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   int get length => ref.length;
@@ -72,6 +84,16 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> implements CvStruct<cvg.VecDM
   Iterator<DMatch> get iterator => VecDMatchIterator(ref);
   @override
   cvg.VecDMatch get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
@@ -82,36 +104,48 @@ class VecDMatchIterator extends VecIterator<DMatch> {
   int get length => ref.length;
 
   @override
-  DMatch operator [](int idx) => DMatch.fromNative(ref.ptr[idx]);
+  DMatch operator [](int idx) => DMatch.fromPointer(ref.ptr + idx, false);
 }
 
-class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> implements CvStruct<cvg.VecVecDMatch> {
-  VecVecDMatch.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecVecDMatch.fromVec(cvg.VecVecDMatch ref) {
-    final p = calloc<cvg.VecVecDMatch>()..ref = ref;
-    return VecVecDMatch.fromPointer(p);
+class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
+  VecVecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+    }
   }
 
   factory VecVecDMatch.fromList(List<List<DMatch>> pts) =>
-      VecVecDMatch.generate(pts.length, (i) => VecDMatch.fromList(pts[i]));
+      VecVecDMatch.generate(pts.length, (i) => VecDMatch.fromList(pts[i]), dispose: false);
 
-  factory VecVecDMatch.generate(int length, VecDMatch Function(int i) generator) {
-    final p = calloc<cvg.VecDMatch>(length);
+  factory VecVecDMatch.generate(int length, VecDMatch Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVecDMatch>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.VecDMatch>(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      p[i] = v.ref;
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final pp = calloc<cvg.VecVecDMatch>()
-      ..ref.length = length
-      ..ref.ptr = p;
     return VecVecDMatch.fromPointer(pp);
   }
+
+  @override
+  VecVecDMatch clone() => VecVecDMatch.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
   @override
   cvg.VecVecDMatch get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {
@@ -122,7 +156,7 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
   int get length => ref.length;
 
   @override
-  VecDMatch operator [](int idx) => VecDMatch.fromVec(ref.ptr[idx]);
+  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ref.ptr + idx, false);
 }
 
 extension ListDMatchExtension on List<DMatch> {

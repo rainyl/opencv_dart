@@ -19,4 +19,4 @@ ffigen:
 
 ffigen_test:
 	dart run ffigen --config ffigen/ffigen_types.yaml
-	dart run ffigen --config ffigen/ffigen_photo.yaml
+	dart run ffigen --config ffigen/ffigen_core.yaml

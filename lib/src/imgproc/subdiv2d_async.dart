@@ -93,8 +93,8 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns a list of the leading edge ID connected to each triangle.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
-  Future<VecInt> getLeadingEdgeListAsync() async =>
-      cvRunAsync((callback) => cimgproc.Subdiv2D_GetLeadingEdgeList_Async(ref, callback), vecIntCompleter);
+  Future<VecI32> getLeadingEdgeListAsync() async =>
+      cvRunAsync((callback) => cimgproc.Subdiv2D_GetLeadingEdgeList_Async(ref, callback), vecI32Completer);
 
   /// Returns a list of all triangles.
   ///
@@ -120,7 +120,7 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns a list of all Voronoi facets.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
-  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecInt idx) async =>
+  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecI32 idx) async =>
       cvRunAsync2(
         (callback) => cimgproc.Subdiv2D_GetVoronoiFacetList_Async(ref, idx.ref, callback),
         (completer, p, p1) => completer.complete(

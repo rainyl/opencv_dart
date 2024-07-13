@@ -6,7 +6,6 @@ import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
 import '../native_lib.dart' show ccore;
-import 'array.dart';
 import 'base.dart';
 import 'cv_vec.dart';
 import 'mat_type.dart';
@@ -38,13 +37,13 @@ class Mat extends CvStruct<cvg.Mat> {
     final p = calloc<cvg.Mat>();
     // copy
     final xdata = switch (type.depth) {
-      MatType.CV_8U => U8Array.fromList(data.cast()) as NativeArray,
-      MatType.CV_8S => I8Array.fromList(data.cast()) as NativeArray,
-      MatType.CV_16U => U16Array.fromList(data.cast()) as NativeArray,
-      MatType.CV_16S => I16Array.fromList(data.cast()) as NativeArray,
-      MatType.CV_32S => I32Array.fromList(data.cast()) as NativeArray,
-      MatType.CV_32F => F32Array.fromList(data.cast<double>()) as NativeArray,
-      MatType.CV_64F => F64Array.fromList(data.cast<double>()) as NativeArray,
+      MatType.CV_8U => VecU8.fromList(data.cast<int>()) as Vec,
+      MatType.CV_8S => VecI8.fromList(data.cast<int>()) as Vec,
+      MatType.CV_16U => VecU16.fromList(data.cast<int>()) as Vec,
+      MatType.CV_16S => VecI16.fromList(data.cast<int>()) as Vec,
+      MatType.CV_32S => VecI32.fromList(data.cast<int>()) as Vec,
+      MatType.CV_32F => VecF32.fromList(data.cast<double>()) as Vec,
+      MatType.CV_64F => VecF64.fromList(data.cast<double>()) as Vec,
       _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
     };
     // copy
@@ -70,21 +69,24 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  factory Mat.fromVec(Vec vec) {
+  factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type}) {
     final p = calloc<cvg.Mat>();
-    if (vec is VecPoint) {
-      cvRun(() => ccore.Mat_NewFromVecPoint(vec.ref, p));
-    } else if (vec is VecPoint2f) {
-      cvRun(() => ccore.Mat_NewFromVecPoint2f(vec.ref, p));
-    } else if (vec is VecPoint3f) {
-      cvRun(() => ccore.Mat_NewFromVecPoint3f(vec.ref, p));
-    } else if (vec is VecPoint3i) {
-      cvRun(() => ccore.Mat_NewFromVecPoint3i(vec.ref, p));
-    } else {
-      throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
+    switch ((vec, rows, cols, type)) {
+      case (final VecPoint vec, _, _, _):
+        cvRun(() => ccore.Mat_NewFromVecPoint(vec.ref, p));
+      case (final VecPoint2f vec, _, _, _):
+        cvRun(() => ccore.Mat_NewFromVecPoint2f(vec.ref, p));
+      case (final VecPoint3f vec, _, _, _):
+        cvRun(() => ccore.Mat_NewFromVecPoint3f(vec.ref, p));
+      case (final VecPoint3i vec, _, _, _):
+        cvRun(() => ccore.Mat_NewFromVecPoint3i(vec.ref, p));
+      case (final VecU8 vec, final rows, final cols, final type)
+          when rows != null && cols != null && type != null:
+        cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, vec.asVoid(), p));
+      default:
+        throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
-    final mat = Mat._(p);
-    return mat;
+    return Mat._(p);
   }
 
   factory Mat.create({int rows = 0, int cols = 0, int r = 0, int g = 0, int b = 0, MatType? type}) {
@@ -237,9 +239,9 @@ class Mat extends CvStruct<cvg.Mat> {
 
   // List<int> get shape {
   //   return cvRunArena<List<int>>((arena) {
-  //     final s = arena<cvg.VecInt>();
+  //     final s = arena<cvg.VecI32>();
   //     cvRun(() => cffiCore.Mat_Size(ref, s));
-  //     final vec = VecInt.fromPointer(s.value);
+  //     final vec = VecI32.fromPointer(s.value);
   //     return vec.toList();
   //   });
   // }
@@ -1331,8 +1333,6 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-  @override
   cvg.Mat get ref => ptr.ref;
 }
 
@@ -1340,23 +1340,29 @@ typedef OutputArray = Mat;
 typedef InputArray = OutputArray;
 typedef InputOutputArray = Mat;
 
-class VecMat extends Vec<cvg.VecMat, Mat> implements CvStruct<cvg.VecMat> {
-  VecMat.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecMat.fromVec(cvg.VecMat ref) {
-    final p = calloc<cvg.VecMat>()..ref = ref;
-    return VecMat.fromPointer(p);
-  }
-
-  factory VecMat.fromList(List<Mat> mats) => VecMat.generate(mats.length, (i) => mats[i]);
-
-  factory VecMat.generate(int length, Mat Function(int i) generator) {
-    final p = calloc<cvg.VecMat>()..ref.length = length;
-    for (var i = 0; i < length; i++) {
-      p.ref.ptr[i] = generator(i).ref;
+class VecMat extends Vec<cvg.VecMat, Mat> {
+  VecMat.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
-    return VecMat.fromPointer(p);
   }
+
+  factory VecMat.fromList(List<Mat> mats) => VecMat.generate(mats.length, (i) => mats[i], dispose: false);
+
+  factory VecMat.generate(int length, Mat Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecMat>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Mat>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecMat.fromPointer(pp);
+  }
+
+  @override
+  VecMat clone() => VecMat.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   int get length => ref.length;
@@ -1366,6 +1372,16 @@ class VecMat extends Vec<cvg.VecMat, Mat> implements CvStruct<cvg.VecMat> {
 
   @override
   cvg.VecMat get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecMatIterator extends VecIterator<Mat> {
@@ -1376,7 +1392,7 @@ class VecMatIterator extends VecIterator<Mat> {
   int get length => ref.length;
 
   @override
-  Mat operator [](int idx) => Mat.fromNative(ref.ptr[idx]);
+  Mat operator [](int idx) => Mat.fromPointer(ref.ptr + idx, false);
 }
 
 extension ListMatExtension on List<Mat> {

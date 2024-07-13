@@ -36,8 +36,6 @@ extension VideoCaptureAsync on VideoCapture {
         (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
       );
 
-  // String getBackendName()=>cffiVideoIO.videocapture
-
   /// Grabs the next frame from video file or capturing device.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939

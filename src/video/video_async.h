@@ -39,7 +39,7 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
     TermCriteria criteria,
     int flags,
     double minEigThreshold,
-    CvCallback_2 callback
+    CvCallback_3 callback
 );
 CvStatus *CalcOpticalFlowFarneback_Async(
     Mat prevImg,

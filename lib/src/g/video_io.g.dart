@@ -400,9 +400,9 @@ class CvNativeVideoIO {
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    ffi.Pointer<VecPoint2f> nextPts,
     VecUChar status,
-    VecFloat err,
+    VecF32 err,
   ) {
     return _CalcOpticalFlowPyrLK(
       prevImg,
@@ -416,19 +416,24 @@ class CvNativeVideoIO {
 
   late final _CalcOpticalFlowPyrLKPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, VecPoint2f, VecPoint2f,
-              VecUChar, VecFloat)>>('CalcOpticalFlowPyrLK');
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
+              VecUChar,
+              VecF32)>>('CalcOpticalFlowPyrLK');
   late final _CalcOpticalFlowPyrLK = _CalcOpticalFlowPyrLKPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, Mat, VecPoint2f, VecPoint2f, VecUChar, VecFloat)>();
+          Mat, Mat, VecPoint2f, ffi.Pointer<VecPoint2f>, VecUChar, VecF32)>();
 
   ffi.Pointer<CvStatus> CalcOpticalFlowPyrLKWithParams(
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    ffi.Pointer<VecPoint2f> nextPts,
     ffi.Pointer<VecUChar> status,
-    ffi.Pointer<VecFloat> err,
+    ffi.Pointer<VecF32> err,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
@@ -456,9 +461,9 @@ class CvNativeVideoIO {
               Mat,
               Mat,
               VecPoint2f,
-              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
               ffi.Pointer<VecUChar>,
-              ffi.Pointer<VecFloat>,
+              ffi.Pointer<VecF32>,
               Size,
               ffi.Int,
               TermCriteria,
@@ -470,9 +475,9 @@ class CvNativeVideoIO {
               Mat,
               Mat,
               VecPoint2f,
-              VecPoint2f,
+              ffi.Pointer<VecPoint2f>,
               ffi.Pointer<VecUChar>,
-              ffi.Pointer<VecFloat>,
+              ffi.Pointer<VecF32>,
               Size,
               int,
               TermCriteria,
@@ -489,7 +494,7 @@ class CvNativeVideoIO {
     TermCriteria criteria,
     int flags,
     double minEigThreshold,
-    imp1.CvCallback_2 callback,
+    imp1.CvCallback_3 callback,
   ) {
     return _CalcOpticalFlowPyrLK_Async(
       prevImg,
@@ -517,11 +522,11 @@ class CvNativeVideoIO {
               TermCriteria,
               ffi.Int,
               ffi.Double,
-              imp1.CvCallback_2)>>('CalcOpticalFlowPyrLK_Async');
+              imp1.CvCallback_3)>>('CalcOpticalFlowPyrLK_Async');
   late final _CalcOpticalFlowPyrLK_Async =
       _CalcOpticalFlowPyrLK_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, VecPoint2f, VecPoint2f, Size,
-              int, TermCriteria, int, double, imp1.CvCallback_2)>();
+              int, TermCriteria, int, double, imp1.CvCallback_3)>();
 
   ffi.Pointer<CvStatus> FindTransformECC(
     Mat templateImage,
@@ -2420,6 +2425,26 @@ class CvNativeVideoIO {
       ffi.Pointer<CvStatus> Function(
           VideoCapture, int, double, imp1.CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> VideoCapture_getBackendName(
+    VideoCapture self,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _VideoCapture_getBackendName(
+      self,
+      rval,
+    );
+  }
+
+  late final _VideoCapture_getBackendNamePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  VideoCapture, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'VideoCapture_getBackendName');
+  late final _VideoCapture_getBackendName =
+      _VideoCapture_getBackendNamePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VideoCapture, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
   void VideoWriter_Close(
     VideoWriterPtr self,
   ) {
@@ -2686,6 +2711,26 @@ class CvNativeVideoIO {
   late final _VideoWriter_Write_Async = _VideoWriter_Write_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> VideoWriter_getBackendName(
+    VideoWriter self,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _VideoWriter_getBackendName(
+      self,
+      rval,
+    );
+  }
+
+  late final _VideoWriter_getBackendNamePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  VideoWriter, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'VideoWriter_getBackendName');
+  late final _VideoWriter_getBackendName =
+      _VideoWriter_getBackendNamePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VideoWriter, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -2748,7 +2793,7 @@ final class TrackerMIL extends ffi.Struct {
 
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
 typedef TrackerPtr = ffi.Pointer<Tracker>;
-typedef VecFloat = imp1.VecFloat;
+typedef VecF32 = imp1.VecF32;
 typedef VecPoint2f = imp1.VecPoint2f;
 typedef VecUChar = imp1.VecUChar;
 

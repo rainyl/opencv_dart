@@ -1,6 +1,5 @@
 library cv.core;
 
-export 'src/core/array.dart';
 export 'src/core/base.dart';
 export 'src/core/contours.dart';
 export 'src/core/core.dart';

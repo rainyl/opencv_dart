@@ -717,7 +717,7 @@ Future<(double minVal, double maxVal, Point minLoc, Point maxLoc)> minMaxLocAsyn
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-Future<VecMat> mixChannelsAsync(VecMat src, VecMat dst, VecInt fromTo) async => cvRunAsync0(
+Future<VecMat> mixChannelsAsync(VecMat src, VecMat dst, VecI32 fromTo) async => cvRunAsync0(
       (callback) => ccore.core_MixChannels_Async(src.ref, dst.ref, fromTo.ref, callback),
       (c) => c.complete(dst),
     );

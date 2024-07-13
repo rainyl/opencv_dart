@@ -12,7 +12,7 @@ void WBDetector_Close(PtrWBDetectorPtr self) {
   CVD_FREE(self);
 }
 CvStatus *WBDetector_Detect(
-    PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox, CVD_OUT VecDouble *confidences
+    PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox, CVD_OUT VecF64 *confidences
 ) {
 
   BEGIN_WRAP

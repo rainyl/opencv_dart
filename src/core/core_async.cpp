@@ -16,19 +16,19 @@ CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callb
   callback(new Mat{new cv::Mat(rows, cols, type)});
   END_WRAP
 }
-CvStatus *Mat_NewWithSizes_Async(VecInt sizes, int type, CvCallback_1 callback) {
+CvStatus *Mat_NewWithSizes_Async(VecI32 sizes, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type)});
   END_WRAP
 }
-CvStatus *Mat_NewWithSizesScalar_Async(VecInt sizes, int type, Scalar s, CvCallback_1 callback) {
+CvStatus *Mat_NewWithSizesScalar_Async(VecI32 sizes, int type, Scalar s, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(s.val1, s.val2, s.val3, s.val4);
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, c)});
   END_WRAP
 }
 CvStatus *
-Mat_NewWithSizesFromBytes_Async(VecInt sizes, int type, VecChar buf, CvCallback_1 callback) {
+Mat_NewWithSizesFromBytes_Async(VecI32 sizes, int type, VecChar buf, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, buf.ptr)});
   END_WRAP
@@ -40,28 +40,33 @@ Mat_NewFromScalar_Async(const Scalar s, int rows, int cols, int type, CvCallback
   callback(new Mat{new cv::Mat(rows, cols, type, c)});
   END_WRAP
 }
+
 CvStatus *
 Mat_NewFromBytes_Async(int rows, int cols, int type, void *buf, int step, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(rows, cols, type, buf, step)});
+  cv::Mat m = cv::Mat(rows, cols, type);
+  m.create(rows, cols, type);
+  memcpy(m.data, buf, m.total() * m.elemSize());
+  callback(new Mat{new cv::Mat(m)});
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint_Async(VecPoint vec, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = vecpoint_c2cpp(vec);
-  callback(new Mat{new cv::Mat(v)});
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint2f_Async(VecPoint2f vec, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = vecpoint2f_c2cpp(vec);
-  callback(new Mat{new cv::Mat(v)});
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint3f_Async(VecPoint3f vec, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = vecpoint3f_c2cpp(vec);
-  callback(new Mat{new cv::Mat(v)});
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 
@@ -694,7 +699,7 @@ CvStatus *core_MinMaxLoc_Mask_Async(Mat self, Mat mask, CvCallback_4 callback) {
   END_WRAP
 }
 
-CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecInt fromTo, CvCallback_0 callback) {
+CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecI32 fromTo, CvCallback_0 callback) {
   BEGIN_WRAP
   auto _src = vecmat_c2cpp(src);
   auto _dst = vecmat_c2cpp(dst);
@@ -847,7 +852,7 @@ CvStatus *core_Split_Async(Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::Mat> dst;
   cv::split(*src.ptr, dst);
-  callback(new VecMat{vecmat_cpp2c(dst)});
+  callback(vecmat_cpp2c_p(dst));
   END_WRAP
 }
 

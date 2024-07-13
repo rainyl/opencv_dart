@@ -108,12 +108,16 @@ files:
         name: VecChar
       c:@S@VecDMatch:
         name: VecDMatch
-      c:@S@VecDouble:
-        name: VecDouble
-      c:@S@VecFloat:
-        name: VecFloat
-      c:@S@VecInt:
-        name: VecInt
+      c:@S@VecF32:
+        name: VecF32
+      c:@S@VecF64:
+        name: VecF64
+      c:@S@VecI16:
+        name: VecI16
+      c:@S@VecI32:
+        name: VecI32
+      c:@S@VecI8:
+        name: VecI8
       c:@S@VecKeyPoint:
         name: VecKeyPoint
       c:@S@VecMat:
@@ -130,6 +134,10 @@ files:
         name: VecRect
       c:@S@VecRotatedRect:
         name: VecRotatedRect
+      c:@S@VecU16:
+        name: VecU16
+      c:@S@VecU8:
+        name: VecU8
       c:@S@VecUChar:
         name: VecUChar
       c:@S@VecVec4f:
@@ -192,12 +200,16 @@ files:
         name: VecCharPtr
       c:types.h@T@VecDMatchPtr:
         name: VecDMatchPtr
-      c:types.h@T@VecDoublePtr:
-        name: VecDoublePtr
-      c:types.h@T@VecFloatPtr:
-        name: VecFloatPtr
-      c:types.h@T@VecIntPtr:
-        name: VecIntPtr
+      c:types.h@T@VecF32Ptr:
+        name: VecF32Ptr
+      c:types.h@T@VecF64Ptr:
+        name: VecF64Ptr
+      c:types.h@T@VecI16Ptr:
+        name: VecI16Ptr
+      c:types.h@T@VecI32Ptr:
+        name: VecI32Ptr
+      c:types.h@T@VecI8Ptr:
+        name: VecI8Ptr
       c:types.h@T@VecKeyPointPtr:
         name: VecKeyPointPtr
       c:types.h@T@VecMatPtr:
@@ -214,6 +226,10 @@ files:
         name: VecRectPtr
       c:types.h@T@VecRotatedRectPtr:
         name: VecRotatedRectPtr
+      c:types.h@T@VecU16Ptr:
+        name: VecU16Ptr
+      c:types.h@T@VecU8Ptr:
+        name: VecU8Ptr
       c:types.h@T@VecUCharPtr:
         name: VecUCharPtr
       c:types.h@T@VecVec4fPtr:

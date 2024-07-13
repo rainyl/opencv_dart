@@ -32,7 +32,7 @@ CvStatus *CascadeClassifier_DetectMultiScale(CascadeClassifier self, Mat img, Ve
   BEGIN_WRAP
   std::vector<cv::Rect> rects = std::vector<cv::Rect>();
   self.ptr->detectMultiScale(*img.ptr, rects);
-  *rval = {vecrect_cpp2c(rects)};
+  *rval = vecrect_cpp2c(rects);
   END_WRAP
 }
 CvStatus *CascadeClassifier_DetectMultiScaleWithParams(
@@ -50,7 +50,8 @@ CvStatus *CascadeClassifier_DetectMultiScaleWithParams(
   auto minsize = cv::Size(minSize.width, minSize.height);
   auto maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, rects, scale, minNeighbors, flags, minsize, maxsize);
-  *objects = {vecrect_cpp2c(rects)};
+  *objects = vecrect_cpp2c(rects);
+  std::cout << "xywh:" << objects->ptr[0].x << objects->ptr[0].y << objects->ptr[0].width << objects->ptr[0].height << std::endl;
   END_WRAP
 }
 
@@ -58,7 +59,7 @@ CvStatus *CascadeClassifier_DetectMultiScale2(
     CascadeClassifier self,
     Mat img,
     VecRect *objects,
-    VecInt *numDetections,
+    VecI32 *numDetections,
     double scaleFactor,
     int minNeighbors,
     int flags,
@@ -73,8 +74,8 @@ CvStatus *CascadeClassifier_DetectMultiScale2(
   self.ptr->detectMultiScale(
       *img.ptr, rects, nums, scaleFactor, minNeighbors, flags, minsize, maxsize
   );
-  *objects = {vecrect_cpp2c(rects)};
-  *numDetections = {vecint_cpp2c(nums)};
+  *objects = vecrect_cpp2c(rects);
+  *numDetections = vecint_cpp2c(nums);
   END_WRAP
 }
 
@@ -82,8 +83,8 @@ CvStatus *CascadeClassifier_DetectMultiScale3(
     CascadeClassifier self,
     Mat img,
     VecRect *objects,
-    VecInt *rejectLevels,
-    VecDouble *levelWeights,
+    VecI32 *rejectLevels,
+    VecF64 *levelWeights,
     double scaleFactor,
     int minNeighbors,
     int flags,
@@ -109,9 +110,9 @@ CvStatus *CascadeClassifier_DetectMultiScale3(
       maxsize,
       outputRejectLevels
   );
-  *objects = {vecrect_cpp2c(rects)};
-  *rejectLevels = {vecint_cpp2c(rejects)};
-  *levelWeights = {vecdouble_cpp2c(weights)};
+  *objects = vecrect_cpp2c(rects);
+  *rejectLevels = vecint_cpp2c(rejects);
+  *levelWeights = vecdouble_cpp2c(weights);
   END_WRAP
 }
 CvStatus *CascadeClassifier_Empty(CascadeClassifier self, bool *rval) {
@@ -157,7 +158,7 @@ CvStatus *HOGDescriptor_Detect(
     HOGDescriptor self,
     Mat img,
     VecPoint *foundLocations,
-    VecDouble *weights,
+    VecF64 *weights,
     double hitThresh,
     Size winStride,
     Size padding,
@@ -176,9 +177,9 @@ CvStatus *HOGDescriptor_Detect(
       cv::Point(padding.width, padding.height),
       _searchLocations
   );
-  *foundLocations = {vecpoint_cpp2c(_foundLocations)};
-  *weights = {vecdouble_cpp2c(_weights)};
-  *searchLocations = {vecpoint_cpp2c(_searchLocations)};
+  *foundLocations = vecpoint_cpp2c(_foundLocations);
+  *weights = vecdouble_cpp2c(_weights);
+  *searchLocations = vecpoint_cpp2c(_searchLocations);
   END_WRAP
 }
 CvStatus *HOGDescriptor_Detect2(
@@ -201,15 +202,15 @@ CvStatus *HOGDescriptor_Detect2(
       cv::Point(padding.width, padding.height),
       _searchLocations
   );
-  *foundLocations = {vecpoint_cpp2c(_foundLocations)};
-  *searchLocations = {vecpoint_cpp2c(_searchLocations)};
+  *foundLocations = vecpoint_cpp2c(_foundLocations);
+  *searchLocations = vecpoint_cpp2c(_searchLocations);
   END_WRAP
 }
 CvStatus *HOGDescriptor_DetectMultiScale(HOGDescriptor self, Mat img, VecRect *rval) {
   BEGIN_WRAP
   std::vector<cv::Rect> rects = std::vector<cv::Rect>();
   self.ptr->detectMultiScale(*img.ptr, rects);
-  *rval = {vecrect_cpp2c(rects)};
+  *rval = vecrect_cpp2c(rects);
   END_WRAP
 }
 CvStatus *HOGDescriptor_DetectMultiScaleWithParams(
@@ -230,23 +231,23 @@ CvStatus *HOGDescriptor_DetectMultiScaleWithParams(
   self.ptr->detectMultiScale(
       *img.ptr, rects, hitThresh, winstride, pad, scale, finalThreshold, useMeanshiftGrouping
   );
-  *rval = {vecrect_cpp2c(rects)};
+  *rval = vecrect_cpp2c(rects);
   END_WRAP
 }
-CvStatus *HOG_GetDefaultPeopleDetector(VecFloat *rval) {
+CvStatus *HOG_GetDefaultPeopleDetector(VecF32 *rval) {
   BEGIN_WRAP
-  *rval = {vecfloat_cpp2c(cv::HOGDescriptor::getDefaultPeopleDetector())};
+  *rval = vecfloat_cpp2c(cv::HOGDescriptor::getDefaultPeopleDetector());
   END_WRAP
 }
-CvStatus *HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecFloat det) {
+CvStatus *HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecF32 det) {
   BEGIN_WRAP
-  self.ptr->setSVMDetector(*det.ptr);
+  self.ptr->setSVMDetector(vecfloat_c2cpp(det));
   END_WRAP
 }
 CvStatus *HOGDescriptor_Compute(
     HOGDescriptor self,
     Mat img,
-    VecFloat *descriptors,
+    VecF32 *descriptors,
     Size winStride,
     Size padding,
     VecPoint *locations
@@ -261,8 +262,8 @@ CvStatus *HOGDescriptor_Compute(
       cv::Size(padding.width, padding.height),
       _locations
   );
-  *descriptors = {vecfloat_cpp2c(_descriptors)};
-  *locations = {vecpoint_cpp2c(_locations)};
+  *descriptors = vecfloat_cpp2c(_descriptors);
+  *locations = vecpoint_cpp2c(_locations);
   END_WRAP
 }
 CvStatus *HOGDescriptor_computeGradient(
@@ -290,7 +291,7 @@ CvStatus *HOGDescriptor_computeGradient(
 // }
 // CvStatus *HOGDescriptor_detectROI(HOGDescriptor self, Mat img, VecPoint *locations, VecPoint
 // *foundLocations,
-//                                  VecDouble *confidences, double hitThreshold, Size winStride,
+//                                  VecF64 *confidences, double hitThreshold, Size winStride,
 //                                  Size padding)
 // {
 //   BEGIN_WRAP
@@ -305,9 +306,9 @@ CvStatus *HOGDescriptor_computeGradient(
 //   *confidences = {_confidences};
 //   END_WRAP
 // }
-CvStatus *HOGDescriptor_getDaimlerPeopleDetector(VecFloat *rval) {
+CvStatus *HOGDescriptor_getDaimlerPeopleDetector(VecF32 *rval) {
   BEGIN_WRAP
-  *rval = {vecfloat_cpp2c(cv::HOGDescriptor::getDaimlerPeopleDetector())};
+  *rval = vecfloat_cpp2c(cv::HOGDescriptor::getDaimlerPeopleDetector());
   END_WRAP
 }
 CvStatus *HOGDescriptor_getDescriptorSize(HOGDescriptor self, size_t *rval) {
@@ -321,19 +322,25 @@ CvStatus *HOGDescriptor_getWinSigma(HOGDescriptor self, double *rval) {
   END_WRAP
 }
 CvStatus *HOGDescriptor_groupRectangles(
-    HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps
+    HOGDescriptor self, VecRect *rectList, VecF64 *weights, int groupThreshold, double eps
 ) {
   BEGIN_WRAP
-  auto _rectList = vecrect_c2cpp(rectList);
-  auto _weights = vecdouble_c2cpp(weights);
+  auto _rectList = vecrect_c2cpp(*rectList);
+  auto _weights = vecdouble_c2cpp(*weights);
   self.ptr->groupRectangles(_rectList, _weights, groupThreshold, eps);
+  free(rectList->ptr);
+  free(weights->ptr);
+  *rectList = vecrect_cpp2c(_rectList);
+  *weights = vecdouble_cpp2c(_weights);
   END_WRAP
 }
 
-CvStatus *GroupRectangles(VecRect rects, int groupThreshold, double eps) {
+CvStatus *GroupRectangles(VecRect *rects, int groupThreshold, double eps) {
   BEGIN_WRAP
-  auto _rects = vecrect_c2cpp(rects);
+  auto _rects = vecrect_c2cpp(*rects);
   cv::groupRectangles(_rects, groupThreshold, eps);
+  free(rects->ptr);
+  *rects = vecrect_cpp2c(_rects);
   END_WRAP
 }
 
@@ -350,7 +357,7 @@ CvStatus *QRCodeDetector_DetectAndDecode(
   cv::Mat mat;
   auto info = self.ptr->detectAndDecode(*input.ptr, points_, mat);
   *rval = strdup(info.c_str());
-  *points = {vecpoint_cpp2c(points_)};
+  *points = vecpoint_cpp2c(points_);
   *straight_qrcode = {new cv::Mat(mat)};
   END_WRAP
 }
@@ -358,7 +365,7 @@ CvStatus *QRCodeDetector_Detect(QRCodeDetector self, Mat input, VecPoint *points
   BEGIN_WRAP
   std::vector<cv::Point> _points;
   *rval = self.ptr->detect(*input.ptr, _points);
-  *points = {vecpoint_cpp2c(_points)};
+  *points = vecpoint_cpp2c(_points);
   END_WRAP
 }
 CvStatus *QRCodeDetector_Decode(
@@ -368,7 +375,7 @@ CvStatus *QRCodeDetector_Decode(
   std::vector<cv::Point> _points;
   auto info = self.ptr->detectAndDecode(*input.ptr, _points, *straight_qrcode.ptr);
   *rval = strdup(info.c_str());
-  *points = {vecpoint_cpp2c(_points)};
+  *points = vecpoint_cpp2c(_points);
   END_WRAP
 }
 CvStatus *QRCodeDetector_decodeCurved(
@@ -390,7 +397,7 @@ CvStatus *QRCodeDetector_detectAndDecodeCurved(
   std::vector<cv::Point> _points;
   auto ret = self.ptr->detectAndDecodeCurved(*img.ptr, _points, _straight_qrcode);
   *rval = strdup(ret.c_str());
-  *points = {vecpoint_cpp2c(_points)};
+  *points = vecpoint_cpp2c(_points);
   *straight_qrcode = {new cv::Mat(_straight_qrcode)};
   END_WRAP
 }
@@ -400,7 +407,7 @@ CvStatus *QRCodeDetector_DetectMulti(QRCodeDetector self, Mat input, VecPoint *p
   BEGIN_WRAP
   std::vector<cv::Point> _points;
   *rval = self.ptr->detectMulti(*input.ptr, _points);
-  *points = {vecpoint_cpp2c(_points)};
+  *points = vecpoint_cpp2c(_points);
   END_WRAP
 }
 CvStatus *QRCodeDetector_DetectAndDecodeMulti(
@@ -426,9 +433,9 @@ CvStatus *QRCodeDetector_DetectAndDecodeMulti(
     for (int i = 0; i < decodedCodes.size(); i++) {
       vecvec.push_back(std::vector<char>(decodedCodes[i].begin(), decodedCodes[i].end()));
     }
-    *decoded = {vecvecchar_cpp2c(vecvec)};
-    *straight_code = {vecmat_cpp2c(straightQrCodes)};
-    *points = {vecpoint_cpp2c(points_)};
+    *decoded = vecvecchar_cpp2c(vecvec);
+    *straight_code = vecmat_cpp2c(straightQrCodes);
+    *points = vecpoint_cpp2c(points_);
   }
   END_WRAP
 }

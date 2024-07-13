@@ -208,13 +208,13 @@ CvStatus *
 ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async(EdgeDrawing self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto dst = (*self.ptr)->getSegmentIndicesOfLines();
-  callback(new VecInt{vecint_cpp2c(dst)});
+  callback(vecint_cpp2c_p(dst));
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getSegments_Async(EdgeDrawing self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto dst = (*self.ptr)->getSegments();
-  callback(new VecVecPoint{vecvecpoint_cpp2c(dst)});
+  callback(vecvecpoint_cpp2c_p(dst));
   END_WRAP
 }
 

@@ -35,12 +35,12 @@ CvStatus *HOGDescriptor_DetectMultiScaleWithParams_Async(HOGDescriptor self, Mat
 CvStatus *HOGDescriptor_Compute_Async(HOGDescriptor self, Mat img, Size winStride, Size padding, CvCallback_2 callback);
 CvStatus *HOGDescriptor_computeGradient_Async(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL, Size paddingBR, CvCallback_0 callback);
 CvStatus *HOG_GetDefaultPeopleDetector_Async(CvCallback_1 callback);
-CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_0 callback);
+CvStatus *HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecF32 det, CvCallback_0 callback);
 CvStatus *HOGDescriptor_getDaimlerPeopleDetector_Async(CvCallback_1 callback);
 CvStatus *HOGDescriptor_getDescriptorSize_Async(HOGDescriptor self, CvCallback_1 callback);
 CvStatus *HOGDescriptor_getWinSigma_Async(HOGDescriptor self, CvCallback_1 callback);
-CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect rectList, VecDouble weights, int groupThreshold, double eps, CvCallback_0 callback);
-CvStatus *GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_0 callback);
+CvStatus *HOGDescriptor_groupRectangles_Async(HOGDescriptor self, VecRect *rectList, VecF64 *weights, int groupThreshold, double eps, CvCallback_0 callback);
+CvStatus *GroupRectangles_Async(VecRect *rects, int groupThreshold, double eps, CvCallback_0 callback);
 
 // QRCodeDetector
 CvStatus *QRCodeDetector_New_Async(CvCallback_1 callback);

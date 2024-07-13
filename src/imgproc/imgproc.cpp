@@ -21,7 +21,7 @@ CvStatus *ApproxPolyDP(VecPoint curve, double epsilon, bool closed, VecPoint *rv
   std::vector<cv::Point> approxCurvePts;
   auto _curve = vecpoint_c2cpp(curve);
   cv::approxPolyDP(_curve, approxCurvePts, epsilon, closed);
-  *rval = {vecpoint_cpp2c(approxCurvePts)};
+  *rval = vecpoint_cpp2c(approxCurvePts);
   END_WRAP
 }
 CvStatus *CvtColor(Mat src, Mat dst, int code) {
@@ -35,7 +35,7 @@ CvStatus *EqualizeHist(Mat src, Mat dst) {
   END_WRAP
 }
 CvStatus *
-CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, VecFloat rng, bool acc) {
+CalcHist(VecMat mats, VecI32 chans, Mat mask, Mat hist, VecI32 sz, VecF32 rng, bool acc) {
   BEGIN_WRAP
   auto _mats = vecmat_c2cpp(mats);
   auto _chans = vecint_c2cpp(chans);
@@ -45,13 +45,14 @@ CalcHist(VecMat mats, VecInt chans, Mat mask, Mat hist, VecInt sz, VecFloat rng,
   END_WRAP
 }
 CvStatus *
-CalcBackProject(VecMat mats, VecInt chans, Mat hist, Mat backProject, VecFloat rng, double scale) {
+CalcBackProject(VecMat mats, VecI32 chans, Mat hist, Mat *backProject, VecF32 rng, double scale) {
   BEGIN_WRAP
-  cv::Mat backProject;
+  cv::Mat _backProject;
   auto _mats = vecmat_c2cpp(mats);
   auto _chans = vecint_c2cpp(chans);
   auto _rng = vecfloat_c2cpp(rng);
-  cv::calcBackProject(_mats, _chans, *hist.ptr, backProject, _rng, scale);
+  cv::calcBackProject(_mats, _chans, *hist.ptr, _backProject, _rng, scale);
+  *backProject = {new cv::Mat(_backProject)};
   END_WRAP
 }
 CvStatus *CompareHist(Mat hist1, Mat hist2, int method, double *rval) {
@@ -181,7 +182,7 @@ CvStatus *BoxPoints(RotatedRect rect, VecPoint2f *boxPts) {
   for (int i = 0; i < mat.rows; i++) {
     vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
   }
-  *boxPts = {vecpoint2f_cpp2c(vec)};
+  *boxPts = vecpoint2f_cpp2c(vec);
   END_WRAP
 }
 CvStatus *ContourArea(VecPoint pts, double *rval) {
@@ -219,7 +220,7 @@ CvStatus *FindContours(Mat src, Mat hierarchy, int mode, int method, VecVecPoint
   std::vector<std::vector<cv::Point>> contours;
   //   std::vector<cv::Vec4i> hierarchy;
   cv::findContours(*src.ptr, contours, *hierarchy.ptr, mode, method);
-  *rval = {vecvecpoint_cpp2c(contours)};
+  *rval = vecvecpoint_cpp2c(contours);
   END_WRAP
 }
 CvStatus *PointPolygonTest(VecPoint pts, Point2f pt, bool measureDist, double *rval) {
@@ -345,7 +346,7 @@ CvStatus *GoodFeaturesToTrack(
   cv::goodFeaturesToTrack(
       *img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize, useHarrisDetector, k
   );
-  *corners = {vecpoint2f_cpp2c(_corners)};
+  *corners = vecpoint2f_cpp2c(_corners);
   END_WRAP
 }
 CvStatus *GoodFeaturesToTrackWithGradient(
@@ -374,7 +375,7 @@ CvStatus *GoodFeaturesToTrackWithGradient(
       useHarrisDetector,
       k
   );
-  *corners = {vecpoint2f_cpp2c(_corners)};
+  *corners = vecpoint2f_cpp2c(_corners);
   END_WRAP
 }
 CvStatus *
@@ -1067,11 +1068,11 @@ CvStatus *Subdiv2D_GetEdgeList(Subdiv2D self, Vec4f **rval, int *size) {
   *rval = rv;
   END_WRAP
 }
-CvStatus *Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecInt *leadingEdgeList) {
+CvStatus *Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecI32 *leadingEdgeList) {
   BEGIN_WRAP
   std::vector<int> v;
   self.ptr->getLeadingEdgeList(v);
-  *leadingEdgeList = {vecint_cpp2c(v)};
+  *leadingEdgeList = vecint_cpp2c(v);
   END_WRAP
 }
 CvStatus *Subdiv2D_GetTriangleList(Subdiv2D self, Vec6f **rval, int *size) {
@@ -1093,15 +1094,15 @@ CvStatus *Subdiv2D_GetVertex(Subdiv2D self, int vertex, int *firstEdge, Point2f 
   END_WRAP
 }
 CvStatus *Subdiv2D_GetVoronoiFacetList(
-    Subdiv2D self, VecInt idx, VecVecPoint2f *facetList, VecPoint2f *facetCenters
+    Subdiv2D self, VecI32 idx, VecVecPoint2f *facetList, VecPoint2f *facetCenters
 ) {
   BEGIN_WRAP
   auto vf = std::vector<std::vector<cv::Point2f>>();
   auto vfc = std::vector<cv::Point2f>();
   auto _idx = vecint_c2cpp(idx);
   self.ptr->getVoronoiFacetList(_idx, vf, vfc);
-  *facetList = {vecvecpoint2f_cpp2c(vf)};
-  *facetCenters = {vecpoint2f_cpp2c(vfc)};
+  *facetList = vecvecpoint2f_cpp2c(vf);
+  *facetCenters = vecpoint2f_cpp2c(vfc);
   END_WRAP;
 }
 CvStatus *Subdiv2D_InitDelaunay(Subdiv2D self, Rect rect) {

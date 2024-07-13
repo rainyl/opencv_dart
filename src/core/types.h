@@ -69,8 +69,8 @@ extern "C" {
 
 #define CVD_TYPEDEF_VEC(TYPE, NAME)                                                                \
   typedef struct NAME {                                                                            \
-    size_t length;                                                                                 \
     TYPE *ptr;                                                                                     \
+    size_t length;                                                                                 \
   } NAME;                                                                                          \
   typedef NAME *NAME##Ptr;
 
@@ -184,11 +184,11 @@ typedef struct Scalar {
 
 // Wrapper for a individual cv::KeyPoint
 typedef struct KeyPoint {
-  double x;
-  double y;
-  double size;
-  double angle;
-  double response;
+  float x;
+  float y;
+  float size;
+  float angle;
+  float response;
   int octave;
   int classID;
 } KeyPoint;
@@ -402,9 +402,13 @@ typedef void (*CvCallback_9)(void *, void *, void *, void *, void *, void *, voi
 
 CVD_TYPEDEF_VEC(uchar, VecUChar);
 CVD_TYPEDEF_VEC(char, VecChar);
-CVD_TYPEDEF_VEC(int, VecInt);
-CVD_TYPEDEF_VEC(float, VecFloat);
-CVD_TYPEDEF_VEC(double, VecDouble);
+CVD_TYPEDEF_VEC(uint8_t, VecU8);
+CVD_TYPEDEF_VEC(int8_t, VecI8);
+CVD_TYPEDEF_VEC(uint16_t, VecU16);
+CVD_TYPEDEF_VEC(int16_t, VecI16);
+CVD_TYPEDEF_VEC(int32_t, VecI32);
+CVD_TYPEDEF_VEC(float_t, VecF32);
+CVD_TYPEDEF_VEC(double_t, VecF64);
 CVD_TYPEDEF_VEC(VecChar, VecVecChar);
 CVD_TYPEDEF_VEC(Mat, VecMat);
 CVD_TYPEDEF_VEC(Point, VecPoint);

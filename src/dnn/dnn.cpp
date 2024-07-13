@@ -160,7 +160,7 @@ CvStatus *Net_ForwardLayers(Net net, VecMat *outputBlobs, VecVecChar outBlobName
 
   auto names = vecvecchar_c2cpp_s(outBlobNames);
   net.ptr->forward(blobs, names);
-  *outputBlobs = {vecmat_cpp2c(blobs)};
+  *outputBlobs = vecmat_cpp2c(blobs);
   END_WRAP
 }
 
@@ -183,9 +183,9 @@ CvStatus *Net_GetPerfProfile(Net net, int64_t *rval) {
   END_WRAP
 }
 
-CvStatus *Net_GetUnconnectedOutLayers(Net net, VecInt *rval) {
+CvStatus *Net_GetUnconnectedOutLayers(Net net, VecI32 *rval) {
   BEGIN_WRAP
-  *rval = {vecint_cpp2c(net.ptr->getUnconnectedOutLayers())};
+  *rval = vecint_cpp2c(net.ptr->getUnconnectedOutLayers());
   END_WRAP
 }
 
@@ -196,7 +196,7 @@ CvStatus *Net_GetLayerNames(Net net, VecVecChar *rval) {
   END_WRAP
 }
 
-CvStatus *Net_GetInputDetails(Net net, VecFloat *scales, VecInt *zeropoints) {
+CvStatus *Net_GetInputDetails(Net net, VecF32 *scales, VecI32 *zeropoints) {
   BEGIN_WRAP
   std::vector<float> sc;
   std::vector<int> zp;
@@ -263,7 +263,7 @@ void Layer_Close(LayerPtr layer) {
 }
 
 CvStatus *NMSBoxes(
-    VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, VecInt *indices
+    VecRect bboxes, VecF32 scores, float score_threshold, float nms_threshold, VecI32 *indices
 ) {
   BEGIN_WRAP
   std::vector<int> v;
@@ -276,10 +276,10 @@ CvStatus *NMSBoxes(
 
 CvStatus *NMSBoxesWithParams(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     const float score_threshold,
     const float nms_threshold,
-    VecInt *indices,
+    VecI32 *indices,
     const float eta,
     const int top_k
 ) {

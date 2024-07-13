@@ -147,8 +147,6 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     cvRun(() => cvideo.VideoCapture_Release(ref));
   }
 
-  @override
-  List<int> get props => [ptr.address];
 }
 
 class VideoWriter extends CvStruct<cvg.VideoWriter> {
@@ -246,6 +244,4 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     });
   }
 
-  @override
-  List<int> get props => [ptr.address];
 }

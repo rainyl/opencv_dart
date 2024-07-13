@@ -178,7 +178,7 @@ CvStatus *AlignMTB_Process_Async(AlignMTB b, VecMat src, CvCallback_1 callback) 
   auto vec = std::vector<cv::Mat>();
   auto _src = vecmat_c2cpp(src);
   (*b.ptr)->process(_src, vec);
-  callback(new VecMat{vecmat_cpp2c(vec)});
+  callback(vecmat_cpp2c_p(vec));
   END_WRAP
 }
 

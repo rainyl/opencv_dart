@@ -75,7 +75,5 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-  @override
   cvg.CLAHE get ref => ptr.ref;
 }

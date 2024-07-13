@@ -25,8 +25,6 @@ class Layer extends CvStruct<cvg.Layer> {
     }
   }
 
-  @Deprecated("Use [Layer.fromPointer] instead.")
-  factory Layer.fromNative(cvg.LayerPtr ptr) => Layer._(ptr);
   factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
 
   static final finalizer = OcvFinalizer<cvg.LayerPtr>(cdnn.addresses.Layer_Close);
@@ -80,8 +78,6 @@ class Layer extends CvStruct<cvg.Layer> {
     });
   }
 
-  @override
-  List<int> get props => [ptr.address];
   @override
   cvg.Layer get ref => ptr.ref;
 }
@@ -371,18 +367,18 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae62a73984f62c49fd3e8e689405b056a
   List<int> getUnconnectedOutLayers() {
-    final ids = calloc<cvg.VecInt>();
+    final ids = calloc<cvg.VecI32>();
     cvRun(() => cdnn.Net_GetUnconnectedOutLayers(ref, ids));
-    return VecInt.fromPointer(ids).toList();
+    return VecI32.fromPointer(ids).toList();
   }
 
   /// Returns input scale and zeropoint for a quantized Net.
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
-  (VecFloat, VecInt) getInputDetails() {
-    final sc = calloc<cvg.VecFloat>();
-    final zp = calloc<cvg.VecInt>();
+  (VecF32, VecI32) getInputDetails() {
+    final sc = calloc<cvg.VecF32>();
+    final zp = calloc<cvg.VecI32>();
     cvRun(() => cdnn.Net_GetInputDetails(ref, sc, zp));
-    return (VecFloat.fromPointer(sc), VecInt.fromPointer(zp));
+    return (VecF32.fromPointer(sc), VecI32.fromPointer(zp));
   }
 
   static final finalizer = OcvFinalizer<cvg.NetPtr>(cdnn.addresses.Net_Close);
@@ -392,8 +388,6 @@ class Net extends CvStruct<cvg.Net> {
     cdnn.Net_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
   @override
   cvg.Net get ref => ptr.ref;
 }
@@ -496,13 +490,13 @@ Scalar getBlobSize(Mat blob) {
 /// https://docs.opencv.org/4.4.0/d6/d0f/group__dnn.html#ga9d118d70a1659af729d01b10233213ee
 List<int> NMSBoxes(
   VecRect bboxes,
-  VecFloat scores,
+  VecF32 scores,
   double scoreThreshold,
   double nmsThreshold, {
   double eta = 1.0,
   int topK = 0,
 }) {
-  final indices = calloc<cvg.VecInt>();
+  final indices = calloc<cvg.VecI32>();
   cdnn.NMSBoxesWithParams(
     bboxes.ref,
     scores.ref,
@@ -512,7 +506,7 @@ List<int> NMSBoxes(
     eta,
     topK,
   );
-  return VecInt.fromPointer(indices).toList();
+  return VecI32.fromPointer(indices).toList();
 }
 
 // Constants

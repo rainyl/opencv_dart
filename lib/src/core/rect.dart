@@ -35,9 +35,17 @@ class Rect extends CvStruct<cvg.Rect> {
   }
 
   int get x => ptr.ref.x;
+  set x(int v) => ptr.ref.x = v;
+
   int get y => ptr.ref.y;
+  set y(int v) => ptr.ref.y = v;
+
   int get width => ptr.ref.width;
+  set width(int v) => ptr.ref.width = v;
+
   int get height => ptr.ref.height;
+  set height(int v) => ptr.ref.height = v;
+
   int get right => x + width;
   int get bottom => y + height;
 
@@ -74,9 +82,17 @@ class Rect2f extends CvStruct<cvg.Rect2f> {
   }
 
   double get x => ptr.ref.x;
+  set x(double v) => ptr.ref.x = v;
+
   double get y => ptr.ref.y;
+  set y(double v) => ptr.ref.y = v;
+
   double get width => ptr.ref.width;
+  set width(double v) => ptr.ref.width = v;
+
   double get height => ptr.ref.height;
+  set height(double v) => ptr.ref.height = v;
+
   double get right => x + width;
   double get bottom => y + height;
 
@@ -138,8 +154,13 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   }
 
   Point2f get center => Point2f.fromNative(ref.center);
+  set center(Point2f value) => ref.center = value.ref;
+
   Size2f get size => Size2f(ref.size.width, ref.size.height);
+  set size(Size2f value) => ref.size = value.ref;
+
   double get angle => ref.angle;
+  set angle(double value) => ref.angle = value;
 
   @override
   cvg.RotatedRect get ref => ptr.ref;
@@ -150,28 +171,31 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 }
 
 class VecRect extends Vec<cvg.VecRect, Rect> {
-  VecRect.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
+  VecRect.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      // Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+    }
+  }
+
   factory VecRect([int length = 0, int x = 0, int y = 0, int width = 0, int height = 0]) =>
       VecRect.generate(length, (i) => Rect(x, y, width, height));
 
-  factory VecRect.fromList(List<Rect> pts) => VecRect.generate(pts.length, (i) => pts[i]);
+  factory VecRect.fromList(List<Rect> pts) => VecRect.generate(pts.length, (i) => pts[i], dispose: false);
 
-  factory VecRect.generate(int length, Rect Function(int i) generator) {
-    final p = calloc<cvg.Rect>(length);
+  factory VecRect.generate(int length, Rect Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecRect>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Rect>(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      p[i] = v.ref;
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final pp = calloc<cvg.VecRect>()
-      ..ref.length = length
-      ..ref.ptr = p;
     return VecRect.fromPointer(pp);
   }
 
-  factory VecRect.fromVec(cvg.VecRect ref) {
-    final p = calloc<cvg.VecRect>()..ref = ref;
-    return VecRect.fromPointer(p);
-  }
+  @override
+  VecRect clone() => VecRect.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   int get length => ref.length;
@@ -181,6 +205,16 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
 
   @override
   cvg.VecRect get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    // calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecRectIterator extends VecIterator<Rect> {
@@ -191,7 +225,7 @@ class VecRectIterator extends VecIterator<Rect> {
   int get length => ref.length;
 
   @override
-  Rect operator [](int idx) => Rect.fromNative(ref.ptr[idx]);
+  Rect operator [](int idx) => Rect.fromPointer(ref.ptr + idx, false);
 }
 
 extension ListRectExtension on List<Rect> {

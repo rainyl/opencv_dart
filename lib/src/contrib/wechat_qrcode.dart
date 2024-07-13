@@ -96,8 +96,5 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.WeChatQRCode get ref => ptr.ref;
 }

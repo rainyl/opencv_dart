@@ -94,10 +94,10 @@ Mat equalizeHist(Mat src, {Mat? dst}) {
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga6ca1876785483836f72a77ced8ea759a
 Mat calcHist(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat mask,
-  VecInt histSize,
-  VecFloat ranges, {
+  VecI32 histSize,
+  VecF32 ranges, {
   Mat? hist,
   bool accumulate = false,
 }) {
@@ -123,24 +123,15 @@ Mat calcHist(
 /// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
 Mat calcBackProject(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat hist,
-  VecFloat ranges, {
+  VecF32 ranges, {
   Mat? dst,
   double scale = 1.0,
 }) {
-  dst ??= Mat.empty();
-  cvRun(
-    () => cimgproc.CalcBackProject(
-      src.ref,
-      channels.ref,
-      hist.ref,
-      dst!.ref,
-      ranges.ref,
-      scale,
-    ),
-  );
-  return dst;
+  final p = dst?.ptr ?? calloc<cvg.Mat>();
+  cvRun(() => cimgproc.CalcBackProject(src.ref, channels.ref, hist.ref, p, ranges.ref, scale));
+  return dst ?? Mat.fromPointer(p);
 }
 
 /// CompareHist Compares two histograms.

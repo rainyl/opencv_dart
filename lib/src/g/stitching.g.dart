@@ -63,7 +63,7 @@ class CvNativeStitching {
 
   ffi.Pointer<CvStatus> Stitcher_Component(
     Stitcher self,
-    ffi.Pointer<VecInt> rval,
+    ffi.Pointer<VecI32> rval,
   ) {
     return _Stitcher_Component(
       self,
@@ -74,9 +74,9 @@ class CvNativeStitching {
   late final _Stitcher_ComponentPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Stitcher, ffi.Pointer<VecInt>)>>('Stitcher_Component');
+              Stitcher, ffi.Pointer<VecI32>)>>('Stitcher_Component');
   late final _Stitcher_Component = _Stitcher_ComponentPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecInt>)>();
+      ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> Stitcher_Component_Async(
     Stitcher self,
@@ -914,5 +914,5 @@ final class Stitcher extends ffi.Struct {
 }
 
 typedef StitcherPtr = ffi.Pointer<Stitcher>;
-typedef VecInt = imp1.VecInt;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;

@@ -134,7 +134,7 @@ CvStatus *AlignMTB_Process(AlignMTB b, VecMat src, VecMat *dst) {
   auto vec = std::vector<cv::Mat>();
   auto _src = vecmat_c2cpp(src);
   (*b.ptr)->process(_src, vec);
-  *dst = {vecmat_cpp2c(vec)};
+  *dst = vecmat_cpp2c(vec);
   END_WRAP
 }
 void AlignMTB_Close(AlignMTBPtr b) {

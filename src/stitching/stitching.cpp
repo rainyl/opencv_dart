@@ -126,9 +126,9 @@ CvStatus *Stitcher_Stitch_1(Stitcher self, VecMat mats, VecMat masks, Mat rpano,
   END_WRAP
 }
 
-CvStatus *Stitcher_Component(Stitcher self, VecInt *rval) {
+CvStatus *Stitcher_Component(Stitcher self, VecI32 *rval) {
   BEGIN_WRAP
   std::vector<int> _rval = (*self.ptr)->component();
-  *rval = {vecint_cpp2c(_rval)};
+  *rval = vecint_cpp2c(_rval);
   END_WRAP
 }

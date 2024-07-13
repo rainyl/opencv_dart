@@ -102,7 +102,4 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
     finalizer.detach(this);
     ccontrib.ArucoDictionary_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }

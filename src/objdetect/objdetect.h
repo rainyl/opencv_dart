@@ -44,10 +44,10 @@ CvStatus *CascadeClassifier_DetectMultiScaleWithParams(CascadeClassifier self, M
                                                        double scale, int minNeighbors, int flags,
                                                        Size minSize, Size maxSize);
 CvStatus *CascadeClassifier_DetectMultiScale2(CascadeClassifier self, Mat img, VecRect *objects,
-                                              VecInt *numDetections, double scaleFactor, int minNeighbors,
+                                              VecI32 *numDetections, double scaleFactor, int minNeighbors,
                                               int flags, Size minSize, Size maxSize);
 CvStatus *CascadeClassifier_DetectMultiScale3(CascadeClassifier self, Mat img, VecRect *objects,
-                                              VecInt *rejectLevels, VecDouble *levelWeights,
+                                              VecI32 *rejectLevels, VecF64 *levelWeights,
                                               double scaleFactor, int minNeighbors, int flags, Size minSize,
                                               Size maxSize, bool outputRejectLevels);
 CvStatus *CascadeClassifier_Empty(CascadeClassifier self, bool *rval);
@@ -58,7 +58,7 @@ CvStatus *CascadeClassifier_isOldFormatCascade(CascadeClassifier self, bool *rva
 // HOGDescriptor
 // struct for detection region of interest (ROI)
 // typedef struct DetectionROI {
-//   VecDouble confidences;
+//   VecF64 confidences;
 //   VecPoint  locations;
 //   double    scale;
 // } DetectionROI;
@@ -66,7 +66,7 @@ CvStatus *HOGDescriptor_New(HOGDescriptor *rval);
 CvStatus *HOGDescriptor_NewFromFile(char *filename, HOGDescriptor *rval);
 void      HOGDescriptor_Close(HOGDescriptorPtr self);
 CvStatus *HOGDescriptor_Load(HOGDescriptor self, char *name, bool *rval);
-CvStatus *HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocations, VecDouble *weights,
+CvStatus *HOGDescriptor_Detect(HOGDescriptor self, Mat img, VecPoint *foundLocations, VecF64 *weights,
                                double hitThresh, Size winStride, Size padding, VecPoint *searchLocations);
 CvStatus *HOGDescriptor_Detect2(HOGDescriptor self, Mat img, VecPoint *foundLocations, double hitThresh,
                                 Size winStride, Size padding, VecPoint *searchLocations);
@@ -75,9 +75,9 @@ CvStatus *HOGDescriptor_DetectMultiScaleWithParams(HOGDescriptor self, Mat img, 
                                                    Size winStride, Size padding, double scale,
                                                    double finalThreshold, bool useMeanshiftGrouping,
                                                    VecRect *rval);
-CvStatus *HOG_GetDefaultPeopleDetector(VecFloat *rval);
-CvStatus *HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecFloat det);
-CvStatus *HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecFloat *descriptors, Size winStride,
+CvStatus *HOG_GetDefaultPeopleDetector(VecF32 *rval);
+CvStatus *HOGDescriptor_SetSVMDetector(HOGDescriptor self, VecF32 det);
+CvStatus *HOGDescriptor_Compute(HOGDescriptor self, Mat img, VecF32 *descriptors, Size winStride,
                                 Size padding, VecPoint *locations);
 CvStatus *HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, Mat angleOfs, Size paddingTL,
                                         Size paddingBR);
@@ -86,14 +86,14 @@ CvStatus *HOGDescriptor_computeGradient(HOGDescriptor self, Mat img, Mat grad, M
 //                                            int groupThreshold);
 // CvStatus *HOGDescriptor_detectROI(HOGDescriptor self, Mat img, VecPoint *locations, VecPoint
 // *foundLocations,
-//                                  VecDouble *confidences, double hitThreshold, Size winStride, Size
+//                                  VecF64 *confidences, double hitThreshold, Size winStride, Size
 //                                  padding);
-CvStatus *HOGDescriptor_getDaimlerPeopleDetector(VecFloat *rval);
+CvStatus *HOGDescriptor_getDaimlerPeopleDetector(VecF32 *rval);
 CvStatus *HOGDescriptor_getDescriptorSize(HOGDescriptor self, size_t *rval);
 CvStatus *HOGDescriptor_getWinSigma(HOGDescriptor self, double *rval);
-CvStatus *HOGDescriptor_groupRectangles(HOGDescriptor self, VecRect rectList, VecDouble weights,
+CvStatus *HOGDescriptor_groupRectangles(HOGDescriptor self, VecRect *rectList, VecF64 *weights,
                                         int groupThreshold, double eps);
-CvStatus *GroupRectangles(VecRect rects, int groupThreshold, double eps);
+CvStatus *GroupRectangles(VecRect *rects, int groupThreshold, double eps);
 
 // QRCodeDetector
 CvStatus *QRCodeDetector_New(QRCodeDetector *rval);

@@ -258,10 +258,10 @@ class CvNativeDnn {
 
   ffi.Pointer<CvStatus> NMSBoxes(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     double score_threshold,
     double nms_threshold,
-    ffi.Pointer<VecInt> indices,
+    ffi.Pointer<VecI32> indices,
   ) {
     return _NMSBoxes(
       bboxes,
@@ -274,18 +274,18 @@ class CvNativeDnn {
 
   late final _NMSBoxesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecRect, VecFloat, ffi.Float,
-              ffi.Float, ffi.Pointer<VecInt>)>>('NMSBoxes');
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              ffi.Pointer<VecI32>)>>('NMSBoxes');
   late final _NMSBoxes = _NMSBoxesPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecRect, VecFloat, double, double, ffi.Pointer<VecInt>)>();
+          VecRect, VecF32, double, double, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> NMSBoxesWithParams(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     double score_threshold,
     double nms_threshold,
-    ffi.Pointer<VecInt> indices,
+    ffi.Pointer<VecI32> indices,
     double eta,
     int top_k,
   ) {
@@ -302,21 +302,15 @@ class CvNativeDnn {
 
   late final _NMSBoxesWithParamsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecRect,
-              VecFloat,
-              ffi.Float,
-              ffi.Float,
-              ffi.Pointer<VecInt>,
-              ffi.Float,
-              ffi.Int)>>('NMSBoxesWithParams');
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              ffi.Pointer<VecI32>, ffi.Float, ffi.Int)>>('NMSBoxesWithParams');
   late final _NMSBoxesWithParams = _NMSBoxesWithParamsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, VecFloat, double, double,
-          ffi.Pointer<VecInt>, double, int)>();
+      ffi.Pointer<CvStatus> Function(
+          VecRect, VecF32, double, double, ffi.Pointer<VecI32>, double, int)>();
 
   ffi.Pointer<CvStatus> NMSBoxesWithParams_Async(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     double score_threshold,
     double nms_threshold,
     double eta,
@@ -338,7 +332,7 @@ class CvNativeDnn {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               VecRect,
-              VecFloat,
+              VecF32,
               ffi.Float,
               ffi.Float,
               ffi.Float,
@@ -346,12 +340,12 @@ class CvNativeDnn {
               imp1.CvCallback_1)>>('NMSBoxesWithParams_Async');
   late final _NMSBoxesWithParams_Async =
       _NMSBoxesWithParams_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(VecRect, VecFloat, double, double,
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, double, double,
               double, int, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> NMSBoxes_Async(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     double score_threshold,
     double nms_threshold,
     imp1.CvCallback_1 callback,
@@ -367,11 +361,11 @@ class CvNativeDnn {
 
   late final _NMSBoxes_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecRect, VecFloat, ffi.Float,
-              ffi.Float, imp1.CvCallback_1)>>('NMSBoxes_Async');
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              imp1.CvCallback_1)>>('NMSBoxes_Async');
   late final _NMSBoxes_Async = _NMSBoxes_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecRect, VecFloat, double, double, imp1.CvCallback_1)>();
+          VecRect, VecF32, double, double, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Net_BlobFromImage(
     Mat image,
@@ -825,8 +819,8 @@ class CvNativeDnn {
 
   ffi.Pointer<CvStatus> Net_GetInputDetails(
     Net net,
-    ffi.Pointer<VecFloat> scales,
-    ffi.Pointer<VecInt> zeropoints,
+    ffi.Pointer<VecF32> scales,
+    ffi.Pointer<VecI32> zeropoints,
   ) {
     return _Net_GetInputDetails(
       net,
@@ -837,11 +831,11 @@ class CvNativeDnn {
 
   late final _Net_GetInputDetailsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecFloat>,
-              ffi.Pointer<VecInt>)>>('Net_GetInputDetails');
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecF32>,
+              ffi.Pointer<VecI32>)>>('Net_GetInputDetails');
   late final _Net_GetInputDetails = _Net_GetInputDetailsPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Net, ffi.Pointer<VecFloat>, ffi.Pointer<VecInt>)>();
+          Net, ffi.Pointer<VecF32>, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> Net_GetInputDetails_Async(
     Net net,
@@ -968,7 +962,7 @@ class CvNativeDnn {
 
   ffi.Pointer<CvStatus> Net_GetUnconnectedOutLayers(
     Net net,
-    ffi.Pointer<VecInt> rval,
+    ffi.Pointer<VecI32> rval,
   ) {
     return _Net_GetUnconnectedOutLayers(
       net,
@@ -979,9 +973,9 @@ class CvNativeDnn {
   late final _Net_GetUnconnectedOutLayersPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Net, ffi.Pointer<VecInt>)>>('Net_GetUnconnectedOutLayers');
+              Net, ffi.Pointer<VecI32>)>>('Net_GetUnconnectedOutLayers');
   late final _Net_GetUnconnectedOutLayers = _Net_GetUnconnectedOutLayersPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecInt>)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> Net_GetUnconnectedOutLayers_Async(
     Net net,
@@ -1666,8 +1660,8 @@ final class Net extends ffi.Struct {
 typedef NetPtr = ffi.Pointer<Net>;
 typedef Scalar = imp1.Scalar;
 typedef Size = imp1.Size;
-typedef VecFloat = imp1.VecFloat;
-typedef VecInt = imp1.VecInt;
+typedef VecF32 = imp1.VecF32;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecRect = imp1.VecRect;
 typedef VecUChar = imp1.VecUChar;

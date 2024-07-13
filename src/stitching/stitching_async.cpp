@@ -153,6 +153,6 @@ CvStatus *Stitcher_Stitch_1_Async(Stitcher self, VecMat mats, VecMat masks, CvCa
 CvStatus *Stitcher_Component_Async(Stitcher self, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<int> _rval = (*self.ptr)->component();
-  callback(new VecInt{vecint_cpp2c(_rval)});
+  callback(vecint_cpp2c_p(_rval));
   END_WRAP
 }

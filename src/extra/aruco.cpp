@@ -403,7 +403,7 @@ CvStatus *ArucoDetector_DetectMarkers(
     ArucoDetector ad,
     Mat inputArr,
     VecVecPoint2f *markerCorners,
-    VecInt *markerIds,
+    VecI32 *markerIds,
     VecVecPoint2f *rejectedCandidates
 ) {
   BEGIN_WRAP
@@ -411,23 +411,26 @@ CvStatus *ArucoDetector_DetectMarkers(
   std::vector<int> _markerIds;
   std::vector<std::vector<cv::Point2f>> _rejectedCandidates;
   ad.ptr->detectMarkers(*inputArr.ptr, _markerCorners, _markerIds, _rejectedCandidates);
-  *markerCorners = {vecvecpoint2f_cpp2c(_markerCorners)};
-  *markerIds = {vecint_cpp2c(_markerIds)};
+  *markerCorners = vecvecpoint2f_cpp2c(_markerCorners);
+  *markerIds = vecint_cpp2c(_markerIds);
   if (rejectedCandidates != NULL) {
-    *rejectedCandidates = {vecvecpoint2f_cpp2c(_rejectedCandidates)};
+    *rejectedCandidates = vecvecpoint2f_cpp2c(_rejectedCandidates);
   }
   END_WRAP
 }
 
 CvStatus *ArucoDrawDetectedMarkers(
-    Mat image, VecVecPoint2f markerCorners, VecInt markerIds, Scalar borderColor
+    Mat image, VecVecPoint2f markerCorners, VecI32 markerIds, Scalar borderColor
 ) {
   BEGIN_WRAP
-  cv::Scalar _borderColor = cv::Scalar(borderColor.val1, borderColor.val2, borderColor.val3);
+  cv::Scalar _borderColor =
+      cv::Scalar(borderColor.val1, borderColor.val2, borderColor.val3, borderColor.val4);
   auto _markerCorners = vecvecpoint2f_c2cpp(markerCorners);
-  cv::aruco::drawDetectedMarkers(*image.ptr, _markerCorners, *markerIds.ptr, _borderColor);
+  auto _markerIds = vecint_c2cpp(markerIds);
+  cv::aruco::drawDetectedMarkers(*image.ptr, _markerCorners, _markerIds, _borderColor);
   END_WRAP
 }
+
 CvStatus *
 ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, int borderBits, Mat *img) {
   BEGIN_WRAP

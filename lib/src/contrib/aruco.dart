@@ -55,11 +55,11 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d9/d6a/group__aruco.html#ga3bc50d61fe4db7bce8d26d56b5a6428a
-  (VecVecPoint2f corners, VecInt ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
-    return using<(VecVecPoint2f, VecInt, VecVecPoint2f)>((arena) {
+  (VecVecPoint2f corners, VecI32 ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
+    return using<(VecVecPoint2f, VecI32, VecVecPoint2f)>((arena) {
       final pCorners = calloc<cvg.VecVecPoint2f>();
       final pRejected = calloc<cvg.VecVecPoint2f>();
-      final pIds = calloc<cvg.VecInt>();
+      final pIds = calloc<cvg.VecI32>();
       cvRun(
         () => ccontrib.ArucoDetector_DetectMarkers(
           ref,
@@ -70,21 +70,18 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
         ),
       );
       return (
-        VecVecPoint2f.fromVec(pCorners.ref),
-        VecInt.fromVec(pIds.ref),
-        VecVecPoint2f.fromVec(pRejected.ref)
+        VecVecPoint2f.fromPointer(pCorners),
+        VecI32.fromPointer(pIds),
+        VecVecPoint2f.fromPointer(pRejected)
       );
     });
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
 void arucoDrawDetectedMarkers(
   Mat img,
   VecVecPoint2f markerCorners,
-  VecInt markerIds,
+  VecI32 markerIds,
   Scalar borderColor,
 ) {
   cvRun(
@@ -519,7 +516,4 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
   set detectInvertedMarker(bool value) => cvRun(
         () => ccontrib.ArucoDetectorParameters_SetDetectInvertedMarker(ref, value),
       );
-
-  @override
-  List<int> get props => [ptr.address];
 }

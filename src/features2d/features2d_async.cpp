@@ -24,7 +24,7 @@ CvStatus *AKAZE_Detect_Async(AKAZE self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -33,7 +33,7 @@ CvStatus *AKAZE_DetectAndCompute_Async(AKAZE self, Mat src, Mat mask, CvCallback
   std::vector<cv::KeyPoint> detected;
   cv::Mat desc;
   (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, desc);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)}, new Mat{new cv::Mat(desc)});
+  callback(veckeypoint_cpp2c_p(detected), new Mat{new cv::Mat(desc)});
   END_WRAP
 }
 
@@ -59,7 +59,7 @@ AgastFeatureDetector_Detect_Async(AgastFeatureDetector self, Mat src, CvCallback
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -82,7 +82,7 @@ CvStatus *BRISK_Detect_Async(BRISK self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -91,7 +91,7 @@ CvStatus *BRISK_DetectAndCompute_Async(BRISK self, Mat src, Mat mask, CvCallback
   std::vector<cv::KeyPoint> detected;
   cv::Mat desc;
   (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, desc);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)}, new Mat{new cv::Mat(desc)});
+  callback(veckeypoint_cpp2c_p(detected), new Mat{new cv::Mat(desc)});
   END_WRAP
 }
 
@@ -128,7 +128,7 @@ FastFeatureDetector_Detect_Async(FastFeatureDetector self, Mat src, CvCallback_1
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -151,7 +151,7 @@ CvStatus *GFTTDetector_Detect_Async(GFTTDetector self, Mat src, CvCallback_1 cal
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -174,7 +174,7 @@ CvStatus *KAZE_Detect_Async(KAZE self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -183,7 +183,7 @@ CvStatus *KAZE_DetectAndCompute_Async(KAZE self, Mat src, Mat mask, CvCallback_2
   std::vector<cv::KeyPoint> detected;
   cv::Mat desc;
   (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, desc);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)}, new Mat{new cv::Mat(desc)});
+  callback(veckeypoint_cpp2c_p(detected), new Mat{new cv::Mat(desc)});
   END_WRAP
 }
 
@@ -206,7 +206,7 @@ CvStatus *MSER_Detect_Async(MSER self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -257,7 +257,7 @@ CvStatus *ORB_Detect_Async(ORB self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -266,7 +266,7 @@ CvStatus *ORB_DetectAndCompute_Async(ORB self, Mat src, Mat mask, CvCallback_2 c
   std::vector<cv::KeyPoint> detected;
   cv::Mat desc;
   (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, desc);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)}, new Mat{new cv::Mat(desc)});
+  callback(veckeypoint_cpp2c_p(detected), new Mat{new cv::Mat(desc)});
   END_WRAP
 }
 
@@ -300,7 +300,7 @@ CvStatus *SimpleBlobDetector_Detect_Async(SimpleBlobDetector self, Mat src, CvCa
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -329,7 +329,7 @@ CvStatus *BFMatcher_Match_Async(BFMatcher self, Mat query, Mat train, CvCallback
   BEGIN_WRAP
   std::vector<cv::DMatch> matches;
   (*self.ptr)->match(*query.ptr, *train.ptr, matches);
-  callback(new VecDMatch{vecdmatch_cpp2c(matches)});
+  callback(vecdmatch_cpp2c_p(matches));
   END_WRAP
 }
 
@@ -338,7 +338,7 @@ BFMatcher_KnnMatch_Async(BFMatcher self, Mat query, Mat train, int k, CvCallback
   BEGIN_WRAP
   std::vector<std::vector<cv::DMatch>> matches;
   (*self.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
-  callback(new VecVecDMatch{vecvecdmatch_cpp2c(matches)});
+  callback(vecvecdmatch_cpp2c_p(matches));
   END_WRAP
 }
 
@@ -364,7 +364,7 @@ CvStatus *FlannBasedMatcher_KnnMatch_Async(
   BEGIN_WRAP
   std::vector<std::vector<cv::DMatch>> matches;
   (*self.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
-  callback(new VecVecDMatch{vecvecdmatch_cpp2c(matches)});
+  callback(vecvecdmatch_cpp2c_p(matches));
   END_WRAP
 }
 
@@ -436,7 +436,7 @@ CvStatus *SIFT_Detect_Async(SIFT self, Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected;
   (*self.ptr)->detect(*src.ptr, detected);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)});
+  callback(veckeypoint_cpp2c_p(detected));
   END_WRAP
 }
 
@@ -445,6 +445,6 @@ CvStatus *SIFT_DetectAndCompute_Async(SIFT self, Mat src, Mat mask, CvCallback_2
   std::vector<cv::KeyPoint> detected;
   cv::Mat desc;
   (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, desc);
-  callback(new VecKeyPoint{veckeypoint_cpp2c(detected)}, new Mat{new cv::Mat(desc)});
+  callback(veckeypoint_cpp2c_p(detected), new Mat{new cv::Mat(desc)});
   END_WRAP
 }

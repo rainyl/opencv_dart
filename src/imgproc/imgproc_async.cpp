@@ -18,7 +18,7 @@ CvStatus *ApproxPolyDP_Async(VecPoint curve, double epsilon, bool closed, CvCall
   std::vector<cv::Point> approxCurvePts;
   auto _curve = vecpoint_c2cpp(curve);
   cv::approxPolyDP(_curve, approxCurvePts, epsilon, closed);
-  callback(new VecPoint{vecpoint_cpp2c(approxCurvePts)});
+  callback(vecpoint_cpp2c_p(approxCurvePts));
   END_WRAP
 }
 
@@ -55,7 +55,7 @@ CvStatus *CvtColor_Async(Mat src, int code, CVD_OUT CvCallback_1 callback) {
 }
 
 CvStatus *CalcHist_Async(
-    VecMat mats, VecInt chans, Mat mask, VecInt sz, VecFloat rng, bool acc, CvCallback_1 callback
+    VecMat mats, VecI32 chans, Mat mask, VecI32 sz, VecF32 rng, bool acc, CvCallback_1 callback
 ) {
   BEGIN_WRAP
   cv::Mat hist;
@@ -69,7 +69,7 @@ CvStatus *CalcHist_Async(
 }
 
 CvStatus *CalcBackProject_Async(
-    VecMat mats, VecInt chans, Mat hist, VecFloat rng, double scale, CvCallback_1 callback
+    VecMat mats, VecI32 chans, Mat hist, VecF32 rng, double scale, CvCallback_1 callback
 ) {
   BEGIN_WRAP
   cv::Mat backProject;
@@ -251,7 +251,7 @@ CvStatus *BoxPoints_Async(RotatedRect rect, CvCallback_1 callback) {
   for (int i = 0; i < mat.rows; i++) {
     vec.push_back(cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1)));
   }
-  callback(new VecPoint2f{vecpoint2f_cpp2c(vec)});
+  callback(vecpoint2f_cpp2c_p(vec));
   END_WRAP
 }
 
@@ -294,7 +294,7 @@ CvStatus *FindContours_Async(Mat src, int mode, int method, CvCallback_2 callbac
   // std::vector<cv::Vec4i> hierarchy;
   cv::Mat hierarchy;
   cv::findContours(*src.ptr, contours, hierarchy, mode, method);
-  callback(new VecVecPoint{vecvecpoint_cpp2c(contours)}, new Mat{new cv::Mat(hierarchy)});
+  callback(vecvecpoint_cpp2c_p(contours), new Mat{new cv::Mat(hierarchy)});
   END_WRAP
 }
 
@@ -478,7 +478,7 @@ CvStatus *GoodFeaturesToTrack_Async(
   cv::goodFeaturesToTrack(
       *img.ptr, _corners, maxCorners, quality, minDist, *mask.ptr, blockSize, useHarrisDetector, k
   );
-  callback(new VecPoint2f{vecpoint2f_cpp2c(_corners)});
+  callback(vecpoint2f_cpp2c_p(_corners));
   END_WRAP
 }
 
@@ -508,7 +508,7 @@ CvStatus *GoodFeaturesToTrackWithGradient_Async(
       useHarrisDetector,
       k
   );
-  callback(new VecPoint2f{vecpoint2f_cpp2c(_corners)});
+  callback(vecpoint2f_cpp2c_p(_corners));
   END_WRAP
 }
 
@@ -1416,7 +1416,7 @@ CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = std::vector<cv::Vec4f>();
   self.ptr->getEdgeList(v);
-  callback(new VecVec4f{vec_vec4f_cpp2c(v)});
+  callback(vec_vec4f_cpp2c_p(v));
   END_WRAP
 }
 
@@ -1424,7 +1424,7 @@ CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback
   BEGIN_WRAP
   std::vector<int> v;
   self.ptr->getLeadingEdgeList(v);
-  callback(new VecInt{vecint_cpp2c(v)});
+  callback(vecint_cpp2c_p(v));
   END_WRAP
 }
 
@@ -1432,7 +1432,7 @@ CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = std::vector<cv::Vec6f>();
   self.ptr->getTriangleList(v);
-  callback(new VecVec6f{vec_vec6f_cpp2c(v)});
+  callback(vec_vec6f_cpp2c_p(v));
   END_WRAP
 }
 
@@ -1444,13 +1444,13 @@ CvStatus *Subdiv2D_GetVertex_Async(Subdiv2D self, int vertex, CvCallback_2 callb
   END_WRAP
 }
 
-CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecInt idx, CvCallback_2 callback) {
+CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecI32 idx, CvCallback_2 callback) {
   BEGIN_WRAP
   auto vf = std::vector<std::vector<cv::Point2f>>();
   auto vfc = std::vector<cv::Point2f>();
   auto _idx = vecint_c2cpp(idx);
   self.ptr->getVoronoiFacetList(_idx, vf, vfc);
-  callback(new VecVecPoint2f{vecvecpoint2f_cpp2c(vf)}, new VecPoint2f{vecpoint2f_cpp2c(vfc)});
+  callback(vecvecpoint2f_cpp2c_p(vf), vecpoint2f_cpp2c_p(vfc));
   END_WRAP;
 }
 

@@ -38,8 +38,6 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
     return dst;
   }
 
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.AsyncArray get ref => ptr.ref;

@@ -66,7 +66,7 @@ CvStatus *Stitcher_ComposePanorama_1(Stitcher self, VecMat mats, Mat rpano, int 
 CvStatus *Stitcher_Stitch(Stitcher self, VecMat mats, Mat rpano, int *rval);
 CvStatus *Stitcher_Stitch_1(Stitcher self, VecMat mats, VecMat masks, Mat rpano, int *rval);
 
-CvStatus *Stitcher_Component(Stitcher self, VecInt *rval);
+CvStatus *Stitcher_Component(Stitcher self, VecI32 *rval);
 #pragma endregion
 
 #ifdef __cplusplus

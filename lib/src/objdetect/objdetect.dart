@@ -83,7 +83,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     return VecRect.fromPointer(ret);
   }
 
-  (VecRect objects, VecInt numDetections) detectMultiScale2(
+  (VecRect objects, VecI32 numDetections) detectMultiScale2(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -92,7 +92,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     (int, int) maxSize = (0, 0),
   }) {
     final ret = calloc<cvg.VecRect>();
-    final pnums = calloc<cvg.VecInt>();
+    final pnums = calloc<cvg.VecI32>();
     cvRun(
       () => cobjdetect.CascadeClassifier_DetectMultiScale2(
         ref,
@@ -106,10 +106,10 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         maxSize.cvd.ref,
       ),
     );
-    return (VecRect.fromPointer(ret), VecInt.fromPointer(pnums));
+    return (VecRect.fromPointer(ret), VecI32.fromPointer(pnums));
   }
 
-  (VecRect objects, VecInt numDetections, VecDouble levelWeights) detectMultiScale3(
+  (VecRect objects, VecI32 numDetections, VecF64 levelWeights) detectMultiScale3(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -119,8 +119,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     bool outputRejectLevels = false,
   }) {
     final objects = calloc<cvg.VecRect>();
-    final rejectLevels = calloc<cvg.VecInt>();
-    final levelWeights = calloc<cvg.VecDouble>();
+    final rejectLevels = calloc<cvg.VecI32>();
+    final levelWeights = calloc<cvg.VecF64>();
     cvRun(
       () => cobjdetect.CascadeClassifier_DetectMultiScale3(
         ref,
@@ -138,8 +138,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     );
     return (
       VecRect.fromPointer(objects),
-      VecInt.fromPointer(rejectLevels),
-      VecDouble.fromPointer(levelWeights)
+      VecI32.fromPointer(rejectLevels),
+      VecF64.fromPointer(levelWeights)
     );
   }
 
@@ -191,8 +191,6 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     cobjdetect.CascadeClassifier_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 }
 
 class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
@@ -238,12 +236,12 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Computes HOG descriptors of given image.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a38cd712cd5a6d9ed0344731fcd121e8b
-  (VecFloat descriptors, VecPoint locations) compute(
+  (VecF32 descriptors, VecPoint locations) compute(
     Mat img, {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) {
-    final descriptors = calloc<cvg.VecFloat>();
+    final descriptors = calloc<cvg.VecF32>();
     final locations = calloc<cvg.VecPoint>();
     cvRun(
       () => cobjdetect.HOGDescriptor_Compute(
@@ -256,7 +254,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
       ),
     );
     return (
-      VecFloat.fromPointer(descriptors),
+      VecF32.fromPointer(descriptors),
       VecPoint.fromPointer(locations),
     );
   }
@@ -287,7 +285,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Performs object detection without a multi-scale window.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a309829908ffaf4645755729d7aa90627
-  (VecPoint foundLocations, VecDouble weights, VecPoint searchLocations) detect2(
+  (VecPoint foundLocations, VecF64 weights, VecPoint searchLocations) detect2(
     InputArray img, {
     double hitThreshold = 0,
     (int, int) winStride = (0, 0),
@@ -295,7 +293,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }) {
     final foundLocations = calloc<cvg.VecPoint>();
     final searchLocations = calloc<cvg.VecPoint>();
-    final weights = calloc<cvg.VecDouble>();
+    final weights = calloc<cvg.VecF64>();
     cvRun(
       () => cobjdetect.HOGDescriptor_Detect(
         ref,
@@ -310,7 +308,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     );
     return (
       VecPoint.fromPointer(foundLocations),
-      VecDouble.fromPointer(weights),
+      VecF64.fromPointer(weights),
       VecPoint.fromPointer(searchLocations),
     );
   }
@@ -376,16 +374,16 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a660e5cd036fd5ddf0f5767b352acd948
-  static VecFloat getDefaultPeopleDetector() {
-    final v = calloc<cvg.VecFloat>();
+  static VecF32 getDefaultPeopleDetector() {
+    final v = calloc<cvg.VecF32>();
     cvRun(() => cobjdetect.HOG_GetDefaultPeopleDetector(v));
-    return VecFloat.fromPointer(v);
+    return VecF32.fromPointer(v);
   }
 
-  static VecFloat getDaimlerPeopleDetector() {
-    final v = calloc<cvg.VecFloat>();
+  static VecF32 getDaimlerPeopleDetector() {
+    final v = calloc<cvg.VecF32>();
     cvRun(() => cobjdetect.HOGDescriptor_getDaimlerPeopleDetector(v));
-    return VecFloat.fromPointer(v);
+    return VecF32.fromPointer(v);
   }
 
   int getDescriptorSize() {
@@ -408,17 +406,17 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Groups the object candidate rectangles.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#ad7c9679b23e8476e332e9114181d656d
-  (VecRect rectList, VecDouble weights) groupRectangles(
+  (VecRect rectList, VecF64 weights) groupRectangles(
     VecRect rectList,
-    VecDouble weights,
+    VecF64 weights,
     int groupThreshold,
     double eps,
   ) {
     cvRun(
       () => cobjdetect.HOGDescriptor_groupRectangles(
         ref,
-        rectList.ref,
-        weights.ref,
+        rectList.ptr,
+        weights.ptr,
         groupThreshold,
         eps,
       ),
@@ -430,7 +428,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a09e354ad701f56f9c550dc0385dc36f1
-  void setSVMDetector(VecFloat det) {
+  void setSVMDetector(VecF32 det) {
     cvRun(() => cobjdetect.HOGDescriptor_SetSVMDetector(ref, det.ref));
   }
 
@@ -443,8 +441,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     cobjdetect.HOGDescriptor_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 }
 
 // GroupRectangles groups the object candidate rectangles.
@@ -452,7 +448,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 // For further details, please see:
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
-  cvRun(() => cobjdetect.GroupRectangles(rects.ref, groupThreshold, eps));
+  cvRun(() => cobjdetect.GroupRectangles(rects.ptr, groupThreshold, eps));
   return rects;
 }
 
@@ -623,8 +619,6 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 
   @override
   cvg.QRCodeDetector get ref => ptr.ref;
-  @override
-  List<int> get props => [ptr.address];
 }
 
 /// DNN-based face detector.
@@ -856,8 +850,6 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     cobjdetect.FaceDetectorYN_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 }
 
 /// DNN-based face recognizer.
@@ -954,8 +946,6 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     cobjdetect.FaceRecognizerSF_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 
   @Deprecated("Use [FR_COSINE] instead.")
   static const int DIS_TYPR_FR_COSINE = 0;

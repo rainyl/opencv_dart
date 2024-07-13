@@ -74,18 +74,18 @@ CvStatus *Mat_NewWithSize(int rows, int cols, int type, Mat *rval) {
   *rval = {new cv::Mat(rows, cols, type)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizes(VecInt sizes, int type, Mat *rval) {
+CvStatus *Mat_NewWithSizes(VecI32 sizes, int type, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(sizes.length, sizes.ptr, type)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval) {
+CvStatus *Mat_NewWithSizesFromScalar(VecI32 sizes, int type, Scalar ar, Mat *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
   *rval = {new cv::Mat(sizes.length, sizes.ptr, type, c)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizesFromBytes(VecInt sizes, int type, void *buf, Mat *rval) {
+CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, void *buf, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(sizes.length, sizes.ptr, type, buf)};
   END_WRAP
@@ -97,57 +97,69 @@ CvStatus *Mat_NewFromScalar(const Scalar ar, int rows, int cols, int type, Mat *
   *rval = {new cv::Mat(rows, cols, type, c)};
   END_WRAP
 }
+
 CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval) {
   BEGIN_WRAP
-  // auto p = reinterpret_cast<uchar *>(buf);
-  // int depth = CV_MAT_DEPTH(type);
-  //     switch (depth) {
-  //   case CV_8U:
-  //   case CV_8S: expect_total = 256; break;
-  //   case CV_16U:
-  //   case CV_16S: expect_total = 65536; break;
-  //   // TODO: can't create a mat with 4294967296 rows, maybe use vector instead
-  //   // case CV_32S:
-  //   //   expect_total = 4294967296;
-  //   //   break;
-  //   default:
-  //     throw cv::Exception(
-  //         cv::Error::StsNotImplemented,
-  //         "source Mat Type not supported",
-  //         __func__,
-  //         __FILE__,
-  //         __LINE__
-  //     );
-  //   }
   cv::Mat m = cv::Mat(rows, cols, type);
   m.create(rows, cols, type);
   memcpy(m.data, buf, m.total() * m.elemSize());
   *rval = {new cv::Mat(m)};
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval) {
   BEGIN_WRAP
   auto v = vecpoint_c2cpp(vec);
-  *rval = {new cv::Mat(v)};
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval) {
   BEGIN_WRAP
   auto v = vecpoint2f_c2cpp(vec);
-  *rval = {new cv::Mat(v)};
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval) {
   BEGIN_WRAP
   auto v = vecpoint3f_c2cpp(vec);
-  *rval = {new cv::Mat(v)};
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 
 CvStatus *Mat_NewFromVecPoint3i(VecPoint3i vec, Mat *rval) {
   BEGIN_WRAP
   auto v = vecpoint3i_c2cpp(vec);
-  *rval = {new cv::Mat(v)};
+  *rval = {new cv::Mat(v, true)};
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint(Mat self, VecPoint *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point> pts;
+  self.ptr->copyTo(pts);
+  *vec = vecpoint_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint2f(Mat self, VecPoint2f *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point2f> pts;
+  self.ptr->copyTo(pts);
+  *vec = vecpoint2f_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint3f(Mat self, VecPoint3f *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point3f> pts = (std::vector<cv::Point3f>)*self.ptr;
+  *vec = vecpoint3f_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint3i(Mat self, VecPoint3i *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point3i> pts = (std::vector<cv::Point3i>)*self.ptr;
+  *vec = vecpoint3i_cpp2c(pts);
   END_WRAP
 }
 
@@ -311,13 +323,11 @@ CvStatus *Mat_Total(Mat m, int *rval) {
   *rval = m.ptr->total();
   END_WRAP
 }
-CvStatus *Mat_Size(Mat m, VecInt *rval) {
+CvStatus *Mat_Size(Mat m, VecI32 *rval) {
   BEGIN_WRAP
   auto size = m.ptr->size;
   int *ptr = new int[size.dims()];
-  for (int i = 0; i < size.dims(); i++) {
-    ptr[i] = size[i];
-  }
+  memcpy(ptr, size.p, size.dims());
   *rval = {ptr, static_cast<size_t>(size.dims())};
   END_WRAP
 }
@@ -1366,7 +1376,7 @@ CvStatus *Mat_MinMaxLoc(Mat m, double *minVal, double *maxVal, Point *minLoc, Po
   END_WRAP
 }
 
-CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecInt fromTo) {
+CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
   BEGIN_WRAP
   auto _src = vecmat_c2cpp(src);
   auto _dst = vecmat_c2cpp(dst);

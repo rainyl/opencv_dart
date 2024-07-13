@@ -32,7 +32,7 @@ files:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
-      c:types.h@T@VecInt:
-        name: VecInt
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecUChar:
         name: VecUChar

@@ -66,12 +66,25 @@ class Scalar extends CvStruct<cvg.Scalar> {
     calloc.free(ptr);
   }
 
-  double get val1 => ptr.ref.val1;
-  double get val2 => ptr.ref.val2;
-  double get val3 => ptr.ref.val3;
-  double get val4 => ptr.ref.val4;
+  double get val1 => ref.val1;
+  set val1(double value) => ref.val1 = value;
+
+  double get val2 => ref.val2;
+  set val2(double value) => ref.val2 = value;
+
+  double get val3 => ref.val3;
+  set val3(double value) => ref.val3 = value;
+
+  double get val4 => ref.val4;
+  set val4(double value) => ref.val4 = value;
 
   List<double> get val => [val1, val2, val3, val4];
+  set val(List<double> value) {
+    val1 = value[0];
+    val2 = value[1];
+    val3 = value[2];
+    val4 = value[3];
+  }
 
   @override
   cvg.Scalar get ref => ptr.ref;

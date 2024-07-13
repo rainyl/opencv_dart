@@ -35,7 +35,7 @@ TEST(Mat, New_Close)
   EXPECT_EQ(type, CV_8UC1);
   Mat_Close(&mat1);
 
-  VecInt sizes = {vecint_cpp2c({3, 3})};
+  VecI32 sizes = {vecint_cpp2c({3, 3})};
   type = CV_8UC1;
 
   Mat mat2;

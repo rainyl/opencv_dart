@@ -39,6 +39,8 @@ CvStatus *VideoCapture_IsOpened(VideoCapture self, int *rval);
 CvStatus *VideoCapture_Read(VideoCapture self, Mat buf, int *rval);
 CvStatus *VideoCapture_Release(VideoCapture self);
 CvStatus *VideoCapture_Grab(VideoCapture self, int skip);
+// TODO: add this to dart
+CvStatus *VideoCapture_getBackendName(VideoCapture self, char **rval);
 
 // VideoWriter
 CvStatus *VideoWriter_New(VideoWriter *rval);
@@ -49,6 +51,8 @@ CvStatus *VideoWriter_IsOpened(VideoWriter self, int *rval);
 CvStatus *VideoWriter_Write(VideoWriter self, Mat img);
 CvStatus *VideoWriter_Release(VideoWriter self);
 CvStatus *VideoWriter_Fourcc(char c1, char c2, char c3, char c4, int *rval);
+// TODO: add this to dart
+CvStatus *VideoWriter_getBackendName(VideoWriter self, char **rval);
 
 #ifdef __cplusplus
 }

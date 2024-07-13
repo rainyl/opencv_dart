@@ -86,10 +86,10 @@ Future<Mat> equalizeHistAsync(Mat src) async {
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga6ca1876785483836f72a77ced8ea759a
 Future<Mat> calcHistAsync(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat mask,
-  VecInt histSize,
-  VecFloat ranges, {
+  VecI32 histSize,
+  VecF32 ranges, {
   bool accumulate = false,
 }) async =>
     cvRunAsync(
@@ -111,9 +111,9 @@ Future<Mat> calcHistAsync(
 /// https://docs.opencv.org/4.10.0/d6/dc7/group__imgproc__hist.html#gab644bc90e7475cc047aa1b25dbcbd8df
 Future<Mat> calcBackProjectAsync(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat hist,
-  VecFloat ranges, {
+  VecF32 ranges, {
   double scale = 1.0,
 }) async =>
     cvRunAsync(

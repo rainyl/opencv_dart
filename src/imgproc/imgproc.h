@@ -30,9 +30,9 @@ CvStatus *ApproxPolyDP(VecPoint curve, double epsilon, bool closed, CVD_OUT VecP
 CvStatus *CvtColor(Mat src, CVD_OUT Mat dst, int code);
 CvStatus *EqualizeHist(Mat src, CVD_OUT Mat dst);
 CvStatus *
-CalcHist(VecMat mats, VecInt chans, Mat mask, CVD_OUT Mat hist, VecInt sz, VecFloat rng, bool acc);
+CalcHist(VecMat mats, VecI32 chans, Mat mask, CVD_OUT Mat hist, VecI32 sz, VecF32 rng, bool acc);
 CvStatus *CalcBackProject(
-    VecMat mats, VecInt chans, CVD_OUT Mat hist, Mat backProject, VecFloat rng, double scale
+    VecMat mats, VecI32 chans, Mat hist, CVD_OUT Mat *backProject, VecF32 rng, double scale
 );
 CvStatus *CompareHist(Mat hist1, Mat hist2, int method, CVD_OUT double *rval);
 CvStatus *ConvexHull(VecPoint points, CVD_OUT Mat hull, bool clockwise, bool returnPoints);
@@ -335,11 +335,11 @@ CvStatus *Subdiv2D_EdgeOrg(Subdiv2D self, int edge, Point2f *orgpt, int *rval);
 CvStatus *Subdiv2D_FindNearest(Subdiv2D self, Point2f pt, Point2f *nearestPt, int *rval);
 CvStatus *Subdiv2D_GetEdge(Subdiv2D self, int edge, int nextEdgeType, int *rval);
 CvStatus *Subdiv2D_GetEdgeList(Subdiv2D self, Vec4f **rval, int *size);
-CvStatus *Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecInt *leadingEdgeList);
+CvStatus *Subdiv2D_GetLeadingEdgeList(Subdiv2D self, VecI32 *leadingEdgeList);
 CvStatus *Subdiv2D_GetTriangleList(Subdiv2D self, Vec6f **rval, int *size);
 CvStatus *Subdiv2D_GetVertex(Subdiv2D self, int vertex, int *firstEdge, Point2f *rval);
 CvStatus *Subdiv2D_GetVoronoiFacetList(
-    Subdiv2D self, VecInt idx, VecVecPoint2f *facetList, VecPoint2f *facetCenters
+    Subdiv2D self, VecI32 idx, VecVecPoint2f *facetList, VecPoint2f *facetCenters
 );
 CvStatus *Subdiv2D_InitDelaunay(Subdiv2D self, Rect rect);
 CvStatus *Subdiv2D_Insert(Subdiv2D self, Point2f pt, int *rval);

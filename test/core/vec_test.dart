@@ -2,17 +2,17 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() {
-  test('VecInt', () {
+  test('VecI32', () {
     final points = List.generate(100, (index) => index);
     final vec = points.i32;
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecInt.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
-    final vec2 = cv.VecInt(100, 10);
+    final vec2 = cv.VecI32(100, 10);
     expect(vec2.toList(), List.generate(100, (index) => 10));
 
     vec1.dispose();
@@ -31,10 +31,10 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecUChar.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
-    vec1.dispose();
+    vec.dispose();
   });
 
   test('VecChar', () {
@@ -48,7 +48,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecChar.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
@@ -64,13 +64,13 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecChar.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
   });
 
-  test('VecFloat', () {
+  test('VecF32', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f32;
 
@@ -81,13 +81,13 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecFloat.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
   });
 
-  test('VecDouble', () {
+  test('VecF64', () {
     final points = List.generate(100, (index) => index.toDouble());
     final vec = points.f64;
 
@@ -98,7 +98,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecDouble.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
@@ -112,7 +112,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "Rect(0, 0, 10, 20)");
 
-    final vec1 = cv.VecRect.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
@@ -140,7 +140,7 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "DMatch(0, 0, 0, 0.000)");
 
-    final vec1 = cv.VecDMatch.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
@@ -156,7 +156,7 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    final vec1 = cv.VecVecDMatch.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
 
     vec1.dispose();
@@ -181,12 +181,8 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "KeyPoint(0.000, 0.000, 0.000, 0.000, 0.000, 0, 0)");
 
-    final vec1 = cv.VecKeyPoint.fromVec(vec.ref);
+    final vec1 = vec.clone();
     expect(vec1, vec);
-
-    for (final p in points) {
-      p.dispose();
-    }
 
     vec1.dispose();
   });

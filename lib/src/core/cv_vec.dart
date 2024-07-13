@@ -34,7 +34,11 @@ class Vec2b extends CvVec<cvg.Vec2b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
 
@@ -79,8 +83,14 @@ class Vec3b extends CvVec<cvg.Vec3b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
 
@@ -127,9 +137,17 @@ class Vec4b extends CvVec<cvg.Vec4b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
 
@@ -172,7 +190,11 @@ class Vec2w extends CvVec<cvg.Vec2w> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
 
@@ -217,8 +239,14 @@ class Vec3w extends CvVec<cvg.Vec3w> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
 
@@ -263,11 +291,18 @@ class Vec4w extends CvVec<cvg.Vec4w> {
       ..ref.val4 = v.val4;
     return Vec4w._(p);
   }
-
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
 
@@ -308,9 +343,12 @@ class Vec2s extends CvVec<cvg.Vec2s> {
       ..ref.val2 = v.val2;
     return Vec2s._(p);
   }
-
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
 
@@ -355,8 +393,14 @@ class Vec3s extends CvVec<cvg.Vec3s> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
 
@@ -403,9 +447,17 @@ class Vec4s extends CvVec<cvg.Vec4s> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
 
@@ -448,7 +500,11 @@ class Vec2i extends CvVec<cvg.Vec2i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
 
@@ -493,8 +549,14 @@ class Vec3i extends CvVec<cvg.Vec3i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
 
@@ -541,9 +603,17 @@ class Vec4i extends CvVec<cvg.Vec4i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
 
@@ -594,11 +664,23 @@ class Vec6i extends CvVec<cvg.Vec6i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   int get val5 => ref.val5;
+  set val5(int v) => ref.val5 = v;
+
   int get val6 => ref.val6;
+  set val6(int v) => ref.val6 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6];
 
@@ -653,13 +735,29 @@ class Vec8i extends CvVec<cvg.Vec8i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   int get val5 => ref.val5;
+  set val5(int v) => ref.val5 = v;
+
   int get val6 => ref.val6;
+  set val6(int v) => ref.val6 = v;
+
   int get val7 => ref.val7;
+  set val7(int v) => ref.val7 = v;
+
   int get val8 => ref.val8;
+  set val8(int v) => ref.val8 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6, val7, val8];
 
@@ -702,7 +800,11 @@ class Vec2f extends CvVec<cvg.Vec2f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   @override
   List<double> get val => [val1, val2];
 
@@ -747,8 +849,14 @@ class Vec3f extends CvVec<cvg.Vec3f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   @override
   List<double> get val => [val1, val2, val3];
 
@@ -796,9 +904,17 @@ class Vec4f extends CvVec<cvg.Vec4f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4];
 
@@ -850,11 +966,23 @@ class Vec6f extends CvVec<cvg.Vec6f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   double get val5 => ref.val5;
+  set val5(double v) => ref.val5 = v;
+
   double get val6 => ref.val6;
+  set val6(double v) => ref.val6 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
 
@@ -898,7 +1026,11 @@ class Vec2d extends CvVec<cvg.Vec2d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   @override
   List<double> get val => [val1, val2];
 
@@ -943,8 +1075,14 @@ class Vec3d extends CvVec<cvg.Vec3d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   @override
   List<double> get val => [val1, val2, val3];
 
@@ -992,9 +1130,17 @@ class Vec4d extends CvVec<cvg.Vec4d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4];
 
@@ -1046,11 +1192,23 @@ class Vec6d extends CvVec<cvg.Vec6d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   double get val5 => ref.val5;
+  set val5(double v) => ref.val5 = v;
+
   double get val6 => ref.val6;
+  set val6(double v) => ref.val6 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
 
@@ -1072,28 +1230,44 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 }
 
 class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
-  VecVec4i.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecVec4i.fromVec(cvg.VecVec4i ref) {
-    final p = calloc<cvg.VecVec4i>()..ref = ref;
-    return VecVec4i.fromPointer(p);
-  }
-
-  factory VecVec4i.fromList(List<Vec4i> pts) => VecVec4i.generate(pts.length, (i) => pts[i]);
-
-  factory VecVec4i.generate(int length, Vec4i Function(int i) generator) {
-    final ptr = calloc<cvg.VecVec4i>()..ref.length = length;
-    for (var i = 0; i < length; i++) {
-      ptr.ref.ptr[i] = generator(i).ref;
+  VecVec4i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
-    return VecVec4i.fromPointer(ptr);
   }
+
+  factory VecVec4i.fromList(List<Vec4i> pts) => VecVec4i.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecVec4i.generate(int length, Vec4i Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec4i>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec4i>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecVec4i.fromPointer(pp);
+  }
+
+  @override
+  VecVec4i clone() => VecVec4i.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec4i> get iterator => VecVec4iIterator(ref);
 
   @override
   cvg.VecVec4i get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
@@ -1104,32 +1278,48 @@ class VecVec4iIterator extends VecIterator<Vec4i> {
   int get length => ref.length;
 
   @override
-  Vec4i operator [](int idx) => Vec4i.fromNative(ref.ptr[idx]);
+  Vec4i operator [](int idx) => Vec4i.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
-  VecVec4f.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecVec4f.fromVec(cvg.VecVec4f ref) {
-    final p = calloc<cvg.VecVec4f>()..ref = ref;
-    return VecVec4f.fromPointer(p);
-  }
-
-  factory VecVec4f.fromList(List<Vec4f> pts) => VecVec4f.generate(pts.length, (i) => pts[i]);
-
-  factory VecVec4f.generate(int length, Vec4f Function(int i) generator) {
-    final ptr = calloc<cvg.VecVec4f>()..ref.length = length;
-    for (var i = 0; i < length; i++) {
-      ptr.ref.ptr[i] = generator(i).ref;
+  VecVec4f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
-    return VecVec4f.fromPointer(ptr);
   }
+
+  factory VecVec4f.fromList(List<Vec4f> pts) => VecVec4f.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecVec4f.generate(int length, Vec4f Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec4f>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec4f>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecVec4f.fromPointer(pp);
+  }
+
+  @override
+  VecVec4f clone() => VecVec4f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec4f> get iterator => VecVec4fIterator(ref);
 
   @override
   cvg.VecVec4f get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
@@ -1140,32 +1330,48 @@ class VecVec4fIterator extends VecIterator<Vec4f> {
   int get length => ref.length;
 
   @override
-  Vec4f operator [](int idx) => Vec4f.fromNative(ref.ptr[idx]);
+  Vec4f operator [](int idx) => Vec4f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
-  VecVec6f.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory VecVec6f.fromVec(cvg.VecVec6f ref) {
-    final p = calloc<cvg.VecVec6f>()..ref = ref;
-    return VecVec6f.fromPointer(p);
-  }
-
-  factory VecVec6f.fromList(List<Vec6f> pts) => VecVec6f.generate(pts.length, (i) => pts[i]);
-
-  factory VecVec6f.generate(int length, Vec6f Function(int i) generator) {
-    final ptr = calloc<cvg.VecVec6f>()..ref.length = length;
-    for (var i = 0; i < length; i++) {
-      ptr.ref.ptr[i] = generator(i).ref;
+  VecVec6f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
-    return VecVec6f.fromPointer(ptr);
   }
+
+  factory VecVec6f.fromList(List<Vec6f> pts) => VecVec6f.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecVec6f.generate(int length, Vec6f Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec6f>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec6f>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecVec6f.fromPointer(pp);
+  }
+
+  @override
+  VecVec6f clone() => VecVec6f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec6f> get iterator => VecVec6fIterator(ref);
 
   @override
   cvg.VecVec6f get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 }
 
 class VecVec6fIterator extends VecIterator<Vec6f> {
@@ -1176,7 +1382,7 @@ class VecVec6fIterator extends VecIterator<Vec6f> {
   int get length => ref.length;
 
   @override
-  Vec6f operator [](int idx) => Vec6f.fromNative(ref.ptr[idx]);
+  Vec6f operator [](int idx) => Vec6f.fromPointer(ref.ptr + idx, false);
 }
 
 extension VecVec4iExtension on List<Vec4i> {

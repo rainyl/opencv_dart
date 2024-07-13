@@ -252,12 +252,12 @@ files:
         name: Mat
       c:types.h@T@Size:
         name: Size
-      c:types.h@T@VecDouble:
-        name: VecDouble
-      c:types.h@T@VecFloat:
-        name: VecFloat
-      c:types.h@T@VecInt:
-        name: VecInt
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:

@@ -33,7 +33,7 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
-bool imwrite(String filename, InputArray img, {VecInt? params}) {
+bool imwrite(String filename, InputArray img, {VecI32? params}) {
   return using<bool>((arena) {
     final fname = filename.toNativeUtf8(allocator: arena);
     final p = arena<ffi.Bool>();
@@ -62,7 +62,7 @@ bool imwrite(String filename, InputArray img, {VecInt? params}) {
 Uint8List imencode(
   String ext,
   InputArray img, {
-  VecInt? params,
+  VecI32? params,
 }) {
   final buffer = calloc<cvg.VecUChar>();
   final success = calloc<ffi.Bool>();

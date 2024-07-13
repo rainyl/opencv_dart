@@ -27,6 +27,20 @@ functions:
 # typedefs:
 #   include:
 #     - .*
+type-map:
+  'typedefs':
+    'uchar':
+      'lib': 'ffi'
+      'c-type': 'UnsignedChar'
+      'dart-type': 'int'
+    'float_t':
+      'lib': 'ffi'
+      'c-type': 'Float'
+      'dart-type': 'double'
+    'double_t':
+      'lib': 'ffi'
+      'c-type': 'Double'
+      'dart-type': 'double'
 
 preamble: |
   // coverage:ignore-file

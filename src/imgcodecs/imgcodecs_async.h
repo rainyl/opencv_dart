@@ -17,10 +17,10 @@ extern "C" {
 CvStatus *Image_IMRead_Async(const char *filename, int flags, CvCallback_1 callback);
 CvStatus *Image_IMWrite_Async(const char *filename, Mat img, CvCallback_1 callback);
 CvStatus *
-Image_IMWrite_WithParams_Async(const char *filename, Mat img, VecInt params, CvCallback_1 callback);
+Image_IMWrite_WithParams_Async(const char *filename, Mat img, VecI32 params, CvCallback_1 callback);
 CvStatus *Image_IMEncode_Async(const char *fileExt, Mat img, CvCallback_2 callback);
 CvStatus *
-Image_IMEncode_WithParams_Async(const char *fileExt, Mat img, VecInt params, CvCallback_2 callback);
+Image_IMEncode_WithParams_Async(const char *fileExt, Mat img, VecI32 params, CvCallback_2 callback);
 CvStatus *Image_IMDecode_Async(VecUChar buf, int flags, CvCallback_1 callback);
 
 #ifdef __cplusplus

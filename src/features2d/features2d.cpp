@@ -10,6 +10,8 @@
 #include "core/vec.hpp"
 #include "utils.hpp"
 
+#include <iostream>
+
 CvStatus *AKAZE_Create(AKAZE *rval) {
   BEGIN_WRAP
   *rval = {new cv::Ptr<cv::AKAZE>(cv::AKAZE::create())};
@@ -24,14 +26,14 @@ CvStatus *AKAZE_Detect(AKAZE a, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 CvStatus *AKAZE_DetectAndCompute(AKAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -49,7 +51,7 @@ CvStatus *AgastFeatureDetector_Detect(AgastFeatureDetector a, Mat src, VecKeyPoi
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -67,14 +69,14 @@ CvStatus *BRISK_Detect(BRISK b, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*b.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 CvStatus *BRISK_DetectAndCompute(BRISK b, Mat src, Mat mask, Mat desc, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*b.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -102,7 +104,7 @@ CvStatus *FastFeatureDetector_Detect(FastFeatureDetector f, Mat src, VecKeyPoint
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*f.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -120,7 +122,7 @@ CvStatus *GFTTDetector_Detect(GFTTDetector a, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -138,14 +140,14 @@ CvStatus *KAZE_Detect(KAZE a, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 CvStatus *KAZE_DetectAndCompute(KAZE a, Mat src, Mat mask, Mat desc, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -163,7 +165,7 @@ CvStatus *MSER_Detect(MSER a, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*a.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 
@@ -199,23 +201,27 @@ CvStatus *ORB_CreateWithParams(
   ))};
   END_WRAP
 }
-void ORB_Close(ORBPtr o) {
-  o->ptr->reset();
-  CVD_FREE(o);
+void ORB_Close(ORBPtr self) {
+  self->ptr->reset();
+  CVD_FREE(self);
 }
 
-CvStatus *ORB_Detect(ORB o, Mat src, VecKeyPoint *rval) {
+CvStatus *ORB_Detect(const ORB self, const Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
-  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
-  (*o.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  std::vector<cv::KeyPoint> detected;
+  std::cout << (*self.ptr)->getEdgeThreshold() << std::endl;
+  (*self.ptr)->detect(*src.ptr, detected);
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
-CvStatus *ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval) {
+
+CvStatus *ORB_DetectAndCompute(ORB self, Mat src, Mat mask, Mat *desc, VecKeyPoint *rval) {
   BEGIN_WRAP
-  std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
-  (*o.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
-  *rval = {veckeypoint_cpp2c(detected)};
+  std::vector<cv::KeyPoint> detected;
+  cv::Mat _desc;
+  (*self.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, _desc);
+  *rval = veckeypoint_cpp2c(detected);
+  *desc = {new cv::Mat(_desc)};
   END_WRAP
 }
 
@@ -241,7 +247,7 @@ CvStatus *SimpleBlobDetector_Detect(SimpleBlobDetector b, Mat src, VecKeyPoint *
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*b.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 CvStatus *SimpleBlobDetectorParams_Create(SimpleBlobDetectorParams *rval) {
@@ -269,14 +275,14 @@ CvStatus *BFMatcher_Match(BFMatcher b, Mat query, Mat train, VecDMatch *rval) {
   BEGIN_WRAP
   std::vector<cv::DMatch> matches = std::vector<cv::DMatch>();
   (*b.ptr)->match(*query.ptr, *train.ptr, matches);
-  *rval = {vecdmatch_cpp2c(matches)};
+  *rval = vecdmatch_cpp2c(matches);
   END_WRAP
 }
 CvStatus *BFMatcher_KnnMatch(BFMatcher b, Mat query, Mat train, int k, VecVecDMatch *rval) {
   BEGIN_WRAP
   std::vector<std::vector<cv::DMatch>> matches = std::vector<std::vector<cv::DMatch>>();
   (*b.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
-  *rval = {vecvecdmatch_cpp2c(matches)};
+  *rval = vecvecdmatch_cpp2c(matches);
   END_WRAP
 }
 
@@ -295,7 +301,7 @@ FlannBasedMatcher_KnnMatch(FlannBasedMatcher f, Mat query, Mat train, int k, Vec
   BEGIN_WRAP
   std::vector<std::vector<cv::DMatch>> matches = std::vector<std::vector<cv::DMatch>>();
   (*f.ptr)->knnMatch(*query.ptr, *train.ptr, matches, k);
-  *rval = {vecvecdmatch_cpp2c(matches)};
+  *rval = vecvecdmatch_cpp2c(matches);
   END_WRAP
 }
 
@@ -321,14 +327,14 @@ CvStatus *SIFT_Detect(SIFT f, Mat src, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*f.ptr)->detect(*src.ptr, detected);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 CvStatus *SIFT_DetectAndCompute(SIFT f, Mat src, Mat mask, Mat desc, VecKeyPoint *rval) {
   BEGIN_WRAP
   std::vector<cv::KeyPoint> detected = std::vector<cv::KeyPoint>();
   (*f.ptr)->detectAndCompute(*src.ptr, *mask.ptr, detected, *desc.ptr);
-  *rval = {veckeypoint_cpp2c(detected)};
+  *rval = veckeypoint_cpp2c(detected);
   END_WRAP
 }
 

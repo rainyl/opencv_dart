@@ -146,7 +146,7 @@ CvStatus *Net_ImagesFromBlob_Async(Mat blob, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::Mat> imgs;
   cv_dnn::imagesFromBlob(*blob.ptr, imgs);
-  callback(new VecMat{vecmat_cpp2c(imgs)});
+  callback(vecmat_cpp2c_p(imgs));
   END_WRAP
 }
 
@@ -182,7 +182,7 @@ CvStatus *Net_ForwardLayers_Async(Net net, VecVecChar outBlobNames, CvCallback_1
   std::vector<cv::Mat> blobs;
   std::vector<cv::String> names = vecvecchar_c2cpp_s(outBlobNames);
   net.ptr->forward(blobs, names);
-  callback(new VecMat{vecmat_cpp2c(blobs)});
+  callback(vecmat_cpp2c_p(blobs));
   END_WRAP
 }
 
@@ -211,14 +211,14 @@ CvStatus *Net_GetPerfProfile_Async(Net net, CvCallback_1 callback) {
 CvStatus *Net_GetUnconnectedOutLayers_Async(Net net, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<int> layers = net.ptr->getUnconnectedOutLayers();
-  callback(new VecInt{vecint_cpp2c(layers)});
+  callback(vecint_cpp2c_p(layers));
   END_WRAP
 }
 
 CvStatus *Net_GetLayerNames_Async(Net net, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::String> cstrs = net.ptr->getLayerNames();
-  callback(new VecVecChar{vecvecchar_cpp2c_s(cstrs)});
+  callback(vecvecchar_cpp2c_s_p(cstrs));
   END_WRAP
 }
 
@@ -227,7 +227,7 @@ CvStatus *Net_GetInputDetails_Async(Net net, CvCallback_2 callback) {
   std::vector<float> sc;
   std::vector<int> zp;
   net.ptr->getInputDetails(sc, zp);
-  callback(new VecFloat{vecfloat_cpp2c(sc)}, new VecInt{vecint_cpp2c(zp)});
+  callback(vecfloat_cpp2c_p(sc), vecint_cpp2c_p(zp));
   END_WRAP
 }
 
@@ -291,24 +291,20 @@ void Layer_Close_Async(LayerPtr layer, CvCallback_0 callback) {
 }
 
 CvStatus *NMSBoxes_Async(
-    VecRect bboxes,
-    VecFloat scores,
-    float score_threshold,
-    float nms_threshold,
-    CvCallback_1 callback
+    VecRect bboxes, VecF32 scores, float score_threshold, float nms_threshold, CvCallback_1 callback
 ) {
   BEGIN_WRAP
   std::vector<int> v;
   auto _bboxes = vecrect_c2cpp(bboxes);
   auto _scores = vecfloat_c2cpp(scores);
   cv_dnn::NMSBoxes(_bboxes, _scores, score_threshold, nms_threshold, v, 1.f, 0);
-  callback(new VecInt{vecint_cpp2c(v)});
+  callback(vecint_cpp2c_p(v));
   END_WRAP
 }
 
 CvStatus *NMSBoxesWithParams_Async(
     VecRect bboxes,
-    VecFloat scores,
+    VecF32 scores,
     const float score_threshold,
     const float nms_threshold,
     const float eta,
@@ -320,6 +316,6 @@ CvStatus *NMSBoxesWithParams_Async(
   auto _bboxes = vecrect_c2cpp(bboxes);
   auto _scores = vecfloat_c2cpp(scores);
   cv_dnn::NMSBoxes(_bboxes, _scores, score_threshold, nms_threshold, v, eta, top_k);
-  callback(new VecInt{vecint_cpp2c(v)});
+  callback(vecint_cpp2c_p(v));
   END_WRAP
 }

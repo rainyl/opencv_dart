@@ -276,13 +276,13 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   /// Returns array containing proposal boxes.
   ///
   /// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#a822e422556f8103d01a0a4db6815f0e5
-  (VecRect boxes, VecFloat scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
+  (VecRect boxes, VecF32 scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
     final pvr = calloc<cvg.VecRect>();
-    final pvf = calloc<cvg.VecFloat>();
+    final pvf = calloc<cvg.VecF32>();
     cvRun(
       () => ccontrib.ximgproc_EdgeBoxes_getBoundingBoxes(ref, edge_map.ref, orientation_map.ref, pvr, pvf),
     );
-    return (VecRect.fromPointer(pvr), VecFloat.fromPointer(pvf));
+    return (VecRect.fromPointer(pvr), VecF32.fromPointer(pvf));
   }
 
   double get alpha => ref.alpha;
@@ -390,9 +390,6 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.RFFeatureGetter get ref => ptr.ref;
 }
 
@@ -470,8 +467,6 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
     ccontrib.ximgproc_StructuredEdgeDetection_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.StructuredEdgeDetection get ref => ptr.ref;
@@ -537,8 +532,6 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
     ccontrib.ximgproc_GraphSegmentation_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.GraphSegmentation get ref => ptr.ref;
@@ -689,10 +682,10 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
     return Mat.fromPointer(p);
   }
 
-  VecInt getSegmentIndicesOfLines() {
-    final p = calloc<cvg.VecInt>();
+  VecI32 getSegmentIndicesOfLines() {
+    final p = calloc<cvg.VecI32>();
     cvRun(() => ccontrib.ximgproc_EdgeDrawing_getSegmentIndicesOfLines(ref, p));
-    return VecInt.fromPointer(p);
+    return VecI32.fromPointer(p);
   }
 
   VecVecPoint getSegments() {
@@ -716,8 +709,6 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
     ccontrib.ximgproc_EdgeDrawing_Close(ptr);
   }
 
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.EdgeDrawing get ref => ptr.ref;

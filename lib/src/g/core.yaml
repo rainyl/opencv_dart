@@ -542,6 +542,14 @@ files:
         name: Mat_colRange
       c:@F@Mat_rowRange:
         name: Mat_rowRange
+      c:@F@Mat_toVecPoint:
+        name: Mat_toVecPoint
+      c:@F@Mat_toVecPoint2f:
+        name: Mat_toVecPoint2f
+      c:@F@Mat_toVecPoint3f:
+        name: Mat_toVecPoint3f
+      c:@F@Mat_toVecPoint3i:
+        name: Mat_toVecPoint3i
       c:@F@Norm:
         name: Norm
       c:@F@NormWithMats:
@@ -896,8 +904,8 @@ files:
         name: Vec8i
       c:types.h@T@VecChar:
         name: VecChar
-      c:types.h@T@VecInt:
-        name: VecInt
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:

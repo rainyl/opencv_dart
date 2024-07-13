@@ -1,6 +1,7 @@
 #include "objdetect_async.h"
 #include "core/types.h"
 #include "core/vec.hpp"
+#include <cstdlib>
 
 // Asynchronous functions for CascadeClassifier
 CvStatus *CascadeClassifier_New_Async(CvCallback_1 callback) {
@@ -28,7 +29,7 @@ CascadeClassifier_DetectMultiScale_Async(CascadeClassifier self, Mat img, CvCall
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
   self.ptr->detectMultiScale(*img.ptr, rects);
-  callback(new VecRect{vecrect_cpp2c(rects)});
+  callback(vecrect_cpp2c_p(rects));
   END_WRAP
 }
 
@@ -47,7 +48,7 @@ CvStatus *CascadeClassifier_DetectMultiScaleWithParams_Async(
   auto minsize = cv::Size(minSize.width, minSize.height);
   auto maxsize = cv::Size(maxSize.width, maxSize.height);
   self.ptr->detectMultiScale(*img.ptr, rects, scale, minNeighbors, flags, minsize, maxsize);
-  callback(new VecRect{vecrect_cpp2c(rects)});
+  callback(vecrect_cpp2c_p(rects));
   END_WRAP
 }
 
@@ -69,7 +70,7 @@ CvStatus *CascadeClassifier_DetectMultiScale2_Async(
   self.ptr->detectMultiScale(
       *img.ptr, rects, nums, scaleFactor, minNeighbors, flags, minsize, maxsize
   );
-  callback(new VecRect{vecrect_cpp2c(rects)}, new VecInt{vecint_cpp2c(nums)});
+  callback(vecrect_cpp2c_p(rects), vecint_cpp2c_p(nums));
   END_WRAP
 }
 
@@ -103,9 +104,9 @@ CvStatus *CascadeClassifier_DetectMultiScale3_Async(
       outputRejectLevels
   );
   callback(
-      new VecRect{vecrect_cpp2c(rects)},
-      new VecInt{vecint_cpp2c(rejects)},
-      new VecDouble{vecdouble_cpp2c(weights)}
+      vecrect_cpp2c_p(rects),
+      vecint_cpp2c_p(rejects),
+      vecdouble_cpp2c_p(weights)
   );
   END_WRAP
 }
@@ -182,9 +183,9 @@ CvStatus *HOGDescriptor_Detect_Async(
       _searchLocations
   );
   callback(
-      new VecPoint{vecpoint_cpp2c(_foundLocations)},
-      new VecDouble{vecdouble_cpp2c(_weights)},
-      new VecPoint{vecpoint_cpp2c(_searchLocations)}
+      vecpoint_cpp2c_p(_foundLocations),
+      vecdouble_cpp2c_p(_weights),
+      vecpoint_cpp2c_p(_searchLocations)
   );
   END_WRAP
 }
@@ -209,7 +210,7 @@ CvStatus *HOGDescriptor_Detect2_Async(
       _searchLocations
   );
   callback(
-      new VecPoint{vecpoint_cpp2c(_foundLocations)}, new VecPoint{vecpoint_cpp2c(_searchLocations)}
+      vecpoint_cpp2c_p(_foundLocations), vecpoint_cpp2c_p(_searchLocations)
   );
   END_WRAP
 }
@@ -218,7 +219,7 @@ CvStatus *HOGDescriptor_DetectMultiScale_Async(HOGDescriptor self, Mat img, CvCa
   BEGIN_WRAP
   std::vector<cv::Rect> rects;
   self.ptr->detectMultiScale(*img.ptr, rects);
-  callback(new VecRect{vecrect_cpp2c(rects)});
+  callback(vecrect_cpp2c_p(rects));
   END_WRAP
 }
 
@@ -240,7 +241,7 @@ CvStatus *HOGDescriptor_DetectMultiScaleWithParams_Async(
   self.ptr->detectMultiScale(
       *img.ptr, rects, hitThresh, winstride, pad, scale, finalThreshold, useMeanshiftGrouping
   );
-  callback(new VecRect{vecrect_cpp2c(rects)});
+  callback(vecrect_cpp2c_p(rects));
   END_WRAP
 }
 
@@ -257,7 +258,7 @@ CvStatus *HOGDescriptor_Compute_Async(
       cv::Size(padding.width, padding.height),
       _locations
   );
-  callback(new VecFloat{vecfloat_cpp2c(_descriptors)}, new VecPoint{vecpoint_cpp2c(_locations)});
+  callback(vecfloat_cpp2c_p(_descriptors), vecpoint_cpp2c_p(_locations));
   END_WRAP
 }
 
@@ -284,21 +285,21 @@ CvStatus *HOGDescriptor_computeGradient_Async(
 
 CvStatus *HOG_GetDefaultPeopleDetector_Async(CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new VecFloat{vecfloat_cpp2c(cv::HOGDescriptor::getDefaultPeopleDetector())});
+  callback(vecfloat_cpp2c_p(cv::HOGDescriptor::getDefaultPeopleDetector()));
   END_WRAP
 }
 
 CvStatus *
-HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecFloat det, CvCallback_0 callback) {
+HOGDescriptor_SetSVMDetector_Async(HOGDescriptor self, VecF32 det, CvCallback_0 callback) {
   BEGIN_WRAP
-  self.ptr->setSVMDetector(*det.ptr);
+  self.ptr->setSVMDetector(vecfloat_c2cpp(det));
   callback();
   END_WRAP
 }
 
 CvStatus *HOGDescriptor_getDaimlerPeopleDetector_Async(CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new VecFloat{vecfloat_cpp2c(cv::HOGDescriptor::getDaimlerPeopleDetector())});
+  callback(vecfloat_cpp2c_p(cv::HOGDescriptor::getDaimlerPeopleDetector()));
   END_WRAP
 }
 
@@ -318,25 +319,31 @@ CvStatus *HOGDescriptor_getWinSigma_Async(HOGDescriptor self, CvCallback_1 callb
 
 CvStatus *HOGDescriptor_groupRectangles_Async(
     HOGDescriptor self,
-    VecRect rectList,
-    VecDouble weights,
+    VecRect *rectList,
+    VecF64 *weights,
     int groupThreshold,
     double eps,
     CvCallback_0 callback
 ) {
   BEGIN_WRAP
-  auto _rectList = vecrect_c2cpp(rectList);
-  auto _weights = vecdouble_c2cpp(weights);
+  auto _rectList = vecrect_c2cpp(*rectList);
+  auto _weights = vecdouble_c2cpp(*weights);
   self.ptr->groupRectangles(_rectList, _weights, groupThreshold, eps);
+  free(rectList->ptr);
+  *rectList = vecrect_cpp2c(_rectList);
+  free(weights->ptr);
+  *weights = vecdouble_cpp2c(_weights);
   callback();
   END_WRAP
 }
 
 CvStatus *
-GroupRectangles_Async(VecRect rects, int groupThreshold, double eps, CvCallback_0 callback) {
+GroupRectangles_Async(VecRect *rects, int groupThreshold, double eps, CvCallback_0 callback) {
   BEGIN_WRAP
-  auto _rects = vecrect_c2cpp(rects);
+  auto _rects = vecrect_c2cpp(*rects);
   cv::groupRectangles(_rects, groupThreshold, eps);
+  free(rects->ptr);
+  *rects = vecrect_cpp2c(_rects);
   callback();
   END_WRAP
 }
@@ -356,7 +363,7 @@ QRCodeDetector_DetectAndDecode_Async(QRCodeDetector self, Mat input, CvCallback_
   auto info = self.ptr->detectAndDecode(*input.ptr, points_, straight_qrcode);
   callback(
       new char *(strdup(info.c_str())),
-      new VecPoint{vecpoint_cpp2c(points_)},
+      vecpoint_cpp2c_p(points_),
       new Mat{new cv::Mat(straight_qrcode)}
   );
   END_WRAP
@@ -366,7 +373,7 @@ CvStatus *QRCodeDetector_Detect_Async(QRCodeDetector self, Mat input, CvCallback
   BEGIN_WRAP
   std::vector<cv::Point> _points;
   bool rval = self.ptr->detect(*input.ptr, _points);
-  callback(new bool(rval), new VecPoint{vecpoint_cpp2c(_points)});
+  callback(new bool(rval), vecpoint_cpp2c_p(_points));
   END_WRAP
 }
 
@@ -377,7 +384,7 @@ CvStatus *QRCodeDetector_Decode_Async(QRCodeDetector self, Mat input, CvCallback
   auto info = self.ptr->detectAndDecode(*input.ptr, _points, straight_qrcode);
   callback(
       new char *(strdup(info.c_str())),
-      new VecPoint{vecpoint_cpp2c(_points)},
+      vecpoint_cpp2c_p(_points),
       new Mat{new cv::Mat(straight_qrcode)}
   );
   END_WRAP
@@ -402,7 +409,7 @@ QRCodeDetector_detectAndDecodeCurved_Async(QRCodeDetector self, Mat img, CvCallb
   auto ret = self.ptr->detectAndDecodeCurved(*img.ptr, _points, _straight_qrcode);
   callback(
       new char *(strdup(ret.c_str())),
-      new VecPoint{vecpoint_cpp2c(_points)},
+      vecpoint_cpp2c_p(_points),
       new Mat{new cv::Mat(_straight_qrcode)}
   );
   END_WRAP
@@ -412,7 +419,7 @@ CvStatus *QRCodeDetector_DetectMulti_Async(QRCodeDetector self, Mat input, CvCal
   BEGIN_WRAP
   std::vector<cv::Point> _points;
   bool rval = self.ptr->detectMulti(*input.ptr, _points);
-  callback(new bool(rval), new VecPoint{vecpoint_cpp2c(_points)});
+  callback(new bool(rval), vecpoint_cpp2c_p(_points));
   END_WRAP
 }
 
@@ -437,9 +444,9 @@ QRCodeDetector_DetectAndDecodeMulti_Async(QRCodeDetector self, Mat input, CvCall
     }
     callback(
         new bool(rval),
-        new VecVecChar{vecvecchar_cpp2c(vecvec)},
-        new VecPoint{vecpoint_cpp2c(points_)},
-        new VecMat{vecmat_cpp2c(straightQrCodes)}
+        vecvecchar_cpp2c_p(vecvec),
+        vecpoint_cpp2c_p(points_),
+        vecmat_cpp2c_p(straightQrCodes)
     );
   }
   END_WRAP

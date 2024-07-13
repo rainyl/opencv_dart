@@ -822,10 +822,10 @@ class CvNativeImgproc {
 
   ffi.Pointer<CvStatus> CalcBackProject(
     VecMat mats,
-    VecInt chans,
+    VecI32 chans,
     Mat hist,
-    Mat backProject,
-    VecFloat rng,
+    ffi.Pointer<Mat> backProject,
+    VecF32 rng,
     double scale,
   ) {
     return _CalcBackProject(
@@ -840,17 +840,17 @@ class CvNativeImgproc {
 
   late final _CalcBackProjectPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, Mat, VecFloat,
-              ffi.Double)>>('CalcBackProject');
+          ffi.Pointer<CvStatus> Function(VecMat, VecI32, Mat, ffi.Pointer<Mat>,
+              VecF32, ffi.Double)>>('CalcBackProject');
   late final _CalcBackProject = _CalcBackProjectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, Mat, VecFloat, double)>();
+          VecMat, VecI32, Mat, ffi.Pointer<Mat>, VecF32, double)>();
 
   ffi.Pointer<CvStatus> CalcBackProject_Async(
     VecMat mats,
-    VecInt chans,
+    VecI32 chans,
     Mat backProject,
-    VecFloat rng,
+    VecF32 rng,
     double scale,
     imp1.CvCallback_1 callback,
   ) {
@@ -866,19 +866,19 @@ class CvNativeImgproc {
 
   late final _CalcBackProject_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, VecFloat,
+          ffi.Pointer<CvStatus> Function(VecMat, VecI32, Mat, VecF32,
               ffi.Double, imp1.CvCallback_1)>>('CalcBackProject_Async');
   late final _CalcBackProject_Async = _CalcBackProject_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, VecFloat, double, imp1.CvCallback_1)>();
+          VecMat, VecI32, Mat, VecF32, double, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> CalcHist(
     VecMat mats,
-    VecInt chans,
+    VecI32 chans,
     Mat mask,
     Mat hist,
-    VecInt sz,
-    VecFloat rng,
+    VecI32 sz,
+    VecF32 rng,
     bool acc,
   ) {
     return _CalcHist(
@@ -894,18 +894,18 @@ class CvNativeImgproc {
 
   late final _CalcHistPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, Mat, VecInt,
-              VecFloat, ffi.Bool)>>('CalcHist');
+          ffi.Pointer<CvStatus> Function(
+              VecMat, VecI32, Mat, Mat, VecI32, VecF32, ffi.Bool)>>('CalcHist');
   late final _CalcHist = _CalcHistPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, Mat, VecInt, VecFloat, bool)>();
+          VecMat, VecI32, Mat, Mat, VecI32, VecF32, bool)>();
 
   ffi.Pointer<CvStatus> CalcHist_Async(
     VecMat mats,
-    VecInt chans,
+    VecI32 chans,
     Mat mask,
-    VecInt sz,
-    VecFloat rng,
+    VecI32 sz,
+    VecF32 rng,
     bool acc,
     imp1.CvCallback_1 callback,
   ) {
@@ -922,11 +922,11 @@ class CvNativeImgproc {
 
   late final _CalcHist_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, VecInt, Mat, VecInt, VecFloat,
+          ffi.Pointer<CvStatus> Function(VecMat, VecI32, Mat, VecI32, VecF32,
               ffi.Bool, imp1.CvCallback_1)>>('CalcHist_Async');
   late final _CalcHist_Async = _CalcHist_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecInt, Mat, VecInt, VecFloat, bool, imp1.CvCallback_1)>();
+          VecMat, VecI32, Mat, VecI32, VecF32, bool, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Canny(
     Mat src,
@@ -5558,7 +5558,7 @@ class CvNativeImgproc {
 
   ffi.Pointer<CvStatus> Subdiv2D_GetLeadingEdgeList(
     Subdiv2D self,
-    ffi.Pointer<VecInt> leadingEdgeList,
+    ffi.Pointer<VecI32> leadingEdgeList,
   ) {
     return _Subdiv2D_GetLeadingEdgeList(
       self,
@@ -5569,10 +5569,10 @@ class CvNativeImgproc {
   late final _Subdiv2D_GetLeadingEdgeListPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Subdiv2D, ffi.Pointer<VecInt>)>>('Subdiv2D_GetLeadingEdgeList');
+              Subdiv2D, ffi.Pointer<VecI32>)>>('Subdiv2D_GetLeadingEdgeList');
   late final _Subdiv2D_GetLeadingEdgeList =
       _Subdiv2D_GetLeadingEdgeListPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Subdiv2D, ffi.Pointer<VecInt>)>();
+          ffi.Pointer<CvStatus> Function(Subdiv2D, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> Subdiv2D_GetLeadingEdgeList_Async(
     Subdiv2D self,
@@ -5680,7 +5680,7 @@ class CvNativeImgproc {
 
   ffi.Pointer<CvStatus> Subdiv2D_GetVoronoiFacetList(
     Subdiv2D self,
-    VecInt idx,
+    VecI32 idx,
     ffi.Pointer<VecVecPoint2f> facetList,
     ffi.Pointer<VecPoint2f> facetCenters,
   ) {
@@ -5696,17 +5696,17 @@ class CvNativeImgproc {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               Subdiv2D,
-              VecInt,
+              VecI32,
               ffi.Pointer<VecVecPoint2f>,
               ffi.Pointer<VecPoint2f>)>>('Subdiv2D_GetVoronoiFacetList');
   late final _Subdiv2D_GetVoronoiFacetList =
       _Subdiv2D_GetVoronoiFacetListPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Subdiv2D, VecInt,
+          ffi.Pointer<CvStatus> Function(Subdiv2D, VecI32,
               ffi.Pointer<VecVecPoint2f>, ffi.Pointer<VecPoint2f>)>();
 
   ffi.Pointer<CvStatus> Subdiv2D_GetVoronoiFacetList_Async(
     Subdiv2D self,
-    VecInt idx,
+    VecI32 idx,
     imp1.CvCallback_2 callback,
   ) {
     return _Subdiv2D_GetVoronoiFacetList_Async(
@@ -5718,12 +5718,12 @@ class CvNativeImgproc {
 
   late final _Subdiv2D_GetVoronoiFacetList_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Subdiv2D, VecInt,
+          ffi.Pointer<CvStatus> Function(Subdiv2D, VecI32,
               imp1.CvCallback_2)>>('Subdiv2D_GetVoronoiFacetList_Async');
   late final _Subdiv2D_GetVoronoiFacetList_Async =
       _Subdiv2D_GetVoronoiFacetList_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Subdiv2D, VecInt, imp1.CvCallback_2)>();
+              Subdiv2D, VecI32, imp1.CvCallback_2)>();
 
   ffi.Pointer<CvStatus> Subdiv2D_InitDelaunay(
     Subdiv2D self,
@@ -6393,8 +6393,8 @@ typedef Subdiv2DPtr = ffi.Pointer<Subdiv2D>;
 typedef TermCriteria = imp1.TermCriteria;
 typedef Vec4f = imp1.Vec4f;
 typedef Vec6f = imp1.Vec6f;
-typedef VecFloat = imp1.VecFloat;
-typedef VecInt = imp1.VecInt;
+typedef VecF32 = imp1.VecF32;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecPoint = imp1.VecPoint;
 typedef VecPoint2f = imp1.VecPoint2f;

@@ -119,9 +119,9 @@ CvStatus *ArucoDetector_NewWithParams(ArucoDictionary dictionary, ArucoDetectorP
                                       ArucoDetector *rval);
 void      ArucoDetector_Close(ArucoDetectorPtr ad);
 CvStatus *ArucoDetector_DetectMarkers(ArucoDetector ad, Mat inputArr, VecVecPoint2f *markerCorners,
-                                      VecInt *markerIds, VecVecPoint2f *rejectedCandidates);
+                                      VecI32 *markerIds, VecVecPoint2f *rejectedCandidates);
 
-CvStatus *ArucoDrawDetectedMarkers(Mat image, VecVecPoint2f markerCorners, VecInt markerIds,
+CvStatus *ArucoDrawDetectedMarkers(Mat image, VecVecPoint2f markerCorners, VecI32 markerIds,
                                    Scalar borderColor);
 CvStatus *ArucoGenerateImageMarker(int dictionaryId, int id, int sidePixels, int borderBits, Mat *img);
 

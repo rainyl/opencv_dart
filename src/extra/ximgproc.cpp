@@ -164,7 +164,7 @@ CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
     Mat edge_map,
     Mat orientation_map,
     CVD_OUT VecRect *boxes,
-    CVD_OUT VecFloat *scores
+    CVD_OUT VecF32 *scores
 ) {
   BEGIN_WRAP
   std::vector<float> _scores;
@@ -280,16 +280,16 @@ CvStatus *ximgproc_EdgeDrawing_getGradientImage(EdgeDrawing self, Mat *dst) {
   *dst = {new cv::Mat(_dst)};
   END_WRAP
 }
-CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecInt *rval) {
+CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecI32 *rval) {
   BEGIN_WRAP
   std::vector<int> _rval = (*self.ptr)->getSegmentIndicesOfLines();
-  *rval = {vecint_cpp2c(_rval)};
+  *rval = vecint_cpp2c(_rval);
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getSegments(EdgeDrawing self, VecVecPoint *rval) {
   BEGIN_WRAP
   std::vector<std::vector<cv::Point>> _rval = (*self.ptr)->getSegments();
-  *rval = {vecvecpoint_cpp2c(_rval)};
+  *rval = vecvecpoint_cpp2c(_rval);
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_setParams(EdgeDrawing self, EdgeDrawingParams params) {
