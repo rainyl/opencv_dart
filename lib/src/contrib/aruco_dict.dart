@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-library cv;
+library cv.contrib;
 
 import 'dart:ffi' as ffi;
 
@@ -102,7 +102,4 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
     finalizer.detach(this);
     ccontrib.ArucoDictionary_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }

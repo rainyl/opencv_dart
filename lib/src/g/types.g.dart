@@ -162,19 +162,19 @@ final class InputOutputArray extends ffi.Struct {
 typedef InputOutputArrayPtr = ffi.Pointer<InputOutputArray>;
 
 final class KeyPoint extends ffi.Struct {
-  @ffi.Double()
+  @ffi.Float()
   external double x;
 
-  @ffi.Double()
+  @ffi.Float()
   external double y;
 
-  @ffi.Double()
+  @ffi.Float()
   external double size;
 
-  @ffi.Double()
+  @ffi.Float()
   external double angle;
 
-  @ffi.Double()
+  @ffi.Float()
   external double response;
 
   @ffi.Int()
@@ -387,10 +387,10 @@ final class TermCriteria extends ffi.Struct {
 }
 
 final class Vec2b extends ffi.Struct {
-  @uchar()
+  @ffi.UnsignedChar()
   external int val1;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val2;
 }
 
@@ -435,13 +435,13 @@ final class Vec2w extends ffi.Struct {
 }
 
 final class Vec3b extends ffi.Struct {
-  @uchar()
+  @ffi.UnsignedChar()
   external int val1;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val2;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val3;
 }
 
@@ -501,16 +501,16 @@ final class Vec3w extends ffi.Struct {
 }
 
 final class Vec4b extends ffi.Struct {
-  @uchar()
+  @ffi.UnsignedChar()
   external int val1;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val2;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val3;
 
-  @uchar()
+  @ffi.UnsignedChar()
   external int val4;
 }
 
@@ -671,127 +671,244 @@ final class Vec8i extends ffi.Struct {
 }
 
 final class VecChar extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.Char> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecCharPtr = ffi.Pointer<VecChar>;
 
 final class VecDMatch extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<DMatch> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecDMatchPtr = ffi.Pointer<VecDMatch>;
 
-final class VecDouble extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+final class VecF32 extends ffi.Struct {
+  external ffi.Pointer<ffi.Float> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
-typedef VecDoublePtr = ffi.Pointer<VecDouble>;
+typedef VecF32Ptr = ffi.Pointer<VecF32>;
 
-final class VecFloat extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+final class VecF64 extends ffi.Struct {
+  external ffi.Pointer<ffi.Double> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
-typedef VecFloatPtr = ffi.Pointer<VecFloat>;
+typedef VecF64Ptr = ffi.Pointer<VecF64>;
 
-final class VecInt extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+final class VecI16 extends ffi.Struct {
+  external ffi.Pointer<ffi.Int16> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
-typedef VecIntPtr = ffi.Pointer<VecInt>;
+typedef VecI16Ptr = ffi.Pointer<VecI16>;
+
+final class VecI32 extends ffi.Struct {
+  external ffi.Pointer<ffi.Int32> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecI32Ptr = ffi.Pointer<VecI32>;
+
+final class VecI8 extends ffi.Struct {
+  external ffi.Pointer<ffi.Int8> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecI8Ptr = ffi.Pointer<VecI8>;
 
 final class VecKeyPoint extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<KeyPoint> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecKeyPointPtr = ffi.Pointer<VecKeyPoint>;
 
 final class VecMat extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Mat> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecMatPtr = ffi.Pointer<VecMat>;
 
 final class VecPoint extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Point> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 final class VecPoint2f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Point2f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecPoint2fPtr = ffi.Pointer<VecPoint2f>;
 
 final class VecPoint3f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Point3f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecPoint3fPtr = ffi.Pointer<VecPoint3f>;
 
 final class VecPoint3i extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Point3i> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecPoint3iPtr = ffi.Pointer<VecPoint3i>;
 typedef VecPointPtr = ffi.Pointer<VecPoint>;
 
 final class VecRect extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Rect> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecRectPtr = ffi.Pointer<VecRect>;
 
+final class VecRotatedRect extends ffi.Struct {
+  external ffi.Pointer<RotatedRect> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecRotatedRectPtr = ffi.Pointer<VecRotatedRect>;
+
+final class VecU16 extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint16> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecU16Ptr = ffi.Pointer<VecU16>;
+
+final class VecU8 extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint8> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecU8Ptr = ffi.Pointer<VecU8>;
+
 final class VecUChar extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<ffi.UnsignedChar> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecUCharPtr = ffi.Pointer<VecUChar>;
 
 final class VecVec4f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Vec4f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVec4fPtr = ffi.Pointer<VecVec4f>;
 
 final class VecVec4i extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Vec4i> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVec4iPtr = ffi.Pointer<VecVec4i>;
 
 final class VecVec6f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<Vec6f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVec6fPtr = ffi.Pointer<VecVec6f>;
 
 final class VecVecChar extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<VecChar> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVecCharPtr = ffi.Pointer<VecVecChar>;
 
 final class VecVecDMatch extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<VecDMatch> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVecDMatchPtr = ffi.Pointer<VecVecDMatch>;
 
 final class VecVecPoint extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<VecPoint> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 final class VecVecPoint2f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<VecPoint2f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVecPoint2fPtr = ffi.Pointer<VecVecPoint2f>;
 
 final class VecVecPoint3f extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> ptr;
+  external ffi.Pointer<VecPoint3f> ptr;
+
+  @ffi.Size()
+  external int length;
 }
 
 typedef VecVecPoint3fPtr = ffi.Pointer<VecVecPoint3f>;
+
+final class VecVecPoint3i extends ffi.Struct {
+  external ffi.Pointer<VecPoint3i> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecVecPoint3iPtr = ffi.Pointer<VecVecPoint3i>;
 typedef VecVecPointPtr = ffi.Pointer<VecVecPoint>;
 typedef uchar = ffi.UnsignedChar;
 typedef Dartuchar = int;

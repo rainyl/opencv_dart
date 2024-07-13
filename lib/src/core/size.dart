@@ -20,6 +20,8 @@ class Size extends CvStruct<cvg.Size> {
     return Size.fromPointer(p);
   }
 
+  factory Size.fromNative(cvg.Size sz) => Size(sz.width, sz.height);
+
   factory Size.fromRecord((int, int) record) {
     final p = calloc<cvg.Size>()
       ..ref.height = record.$2
@@ -28,7 +30,10 @@ class Size extends CvStruct<cvg.Size> {
   }
 
   int get width => ref.width;
+  set width(int value) => ref.width = value;
+
   int get height => ref.height;
+  set height(int value) => ref.height = value;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -58,6 +63,8 @@ class Size2f extends CvStruct<cvg.Size2f> {
     return Size2f.fromPointer(p);
   }
 
+  factory Size2f.fromNative(cvg.Size2f sz) => Size2f(sz.width, sz.height);
+
   factory Size2f.fromRecord((double, double) record) {
     final p = calloc<cvg.Size2f>()
       ..ref.height = record.$2
@@ -73,7 +80,10 @@ class Size2f extends CvStruct<cvg.Size2f> {
   }
 
   double get width => ref.width;
+  set width(double value) => ref.width = value;
+
   double get height => ref.height;
+  set height(double value) => ref.height = value;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 

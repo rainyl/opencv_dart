@@ -1,4 +1,4 @@
-library cv;
+library cv.contrib;
 
 import '../core/base.dart';
 import '../core/mat.dart';
@@ -29,13 +29,13 @@ extension ArucoDetectorAsync on ArucoDetector {
         (c, p) => c.complete(ArucoDetector.fromPointer(p.cast<cvg.ArucoDetector>())),
       );
 
-  Future<(VecVecPoint2f, VecInt, VecVecPoint2f)> detectMarkersAsync(
+  Future<(VecVecPoint2f, VecI32, VecVecPoint2f)> detectMarkersAsync(
     InputArray image,
   ) async =>
-      cvRunAsync3<(VecVecPoint2f, VecInt, VecVecPoint2f)>(
+      cvRunAsync3<(VecVecPoint2f, VecI32, VecVecPoint2f)>(
           (callback) => ccontrib.ArucoDetector_DetectMarkers_Async(ref, image.ref, callback), (c, p, p2, p3) {
         final corners = VecVecPoint2f.fromPointer(p.cast<cvg.VecVecPoint2f>());
-        final ids = VecInt.fromPointer(p2.cast<cvg.VecInt>());
+        final ids = VecI32.fromPointer(p2.cast<cvg.VecI32>());
         final rejected = VecVecPoint2f.fromPointer(p3.cast<cvg.VecVecPoint2f>());
         return c.complete((corners, ids, rejected));
       });
@@ -44,7 +44,7 @@ extension ArucoDetectorAsync on ArucoDetector {
 Future<void> arucoDrawDetectedMarkersAsync(
   Mat img,
   VecVecPoint2f markerCorners,
-  VecInt markerIds,
+  VecI32 markerIds,
   Scalar borderColor,
 ) async =>
     cvRunAsync0<void>(

@@ -1,4 +1,4 @@
-library cv;
+library cv.calib3d;
 
 import 'dart:ffi' as ffi;
 

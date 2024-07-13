@@ -1,6 +1,7 @@
-library cv;
+library cv.stitching;
 
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
@@ -168,10 +169,10 @@ extension StitcherAsync on Stitcher {
     });
   }
 
-  Future<VecInt> getComponentAsync() async {
+  Future<VecI32> getComponentAsync() async {
     return cvRunAsync(
       (callback) => cstitching.Stitcher_Component_Async(ref, callback),
-      (c, p) => c.complete(VecInt.fromPointer(p.cast<cvg.VecInt>())),
+      (c, p) => c.complete(VecI32.fromPointer(p.cast<cvg.VecI32>())),
     );
   }
 }

@@ -3,13 +3,13 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
 abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
   CvVec.fromPointer(super.ptr) : super.fromPointer();
   List<num> get val;
+  set val(List<num> value);
 }
 
 /// uchar
@@ -35,9 +35,19 @@ class Vec2b extends CvVec<cvg.Vec2b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -80,10 +90,23 @@ class Vec3b extends CvVec<cvg.Vec3b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -128,11 +151,27 @@ class Vec4b extends CvVec<cvg.Vec4b> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -173,9 +212,19 @@ class Vec2w extends CvVec<cvg.Vec2w> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -218,10 +267,23 @@ class Vec3w extends CvVec<cvg.Vec3w> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -264,13 +326,28 @@ class Vec4w extends CvVec<cvg.Vec4w> {
       ..ref.val4 = v.val4;
     return Vec4w._(p);
   }
-
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -309,11 +386,20 @@ class Vec2s extends CvVec<cvg.Vec2s> {
       ..ref.val2 = v.val2;
     return Vec2s._(p);
   }
-
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -356,10 +442,23 @@ class Vec3s extends CvVec<cvg.Vec3s> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -404,11 +503,27 @@ class Vec4s extends CvVec<cvg.Vec4s> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -449,9 +564,19 @@ class Vec2i extends CvVec<cvg.Vec2i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   @override
   List<int> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -494,10 +619,23 @@ class Vec3i extends CvVec<cvg.Vec3i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   @override
   List<int> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -542,11 +680,27 @@ class Vec4i extends CvVec<cvg.Vec4i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -595,13 +749,35 @@ class Vec6i extends CvVec<cvg.Vec6i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   int get val5 => ref.val5;
+  set val5(int v) => ref.val5 = v;
+
   int get val6 => ref.val6;
+  set val6(int v) => ref.val6 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+    val5 = value[4].toInt();
+    val6 = value[5].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -654,15 +830,43 @@ class Vec8i extends CvVec<cvg.Vec8i> {
   }
 
   int get val1 => ref.val1;
+  set val1(int v) => ref.val1 = v;
+
   int get val2 => ref.val2;
+  set val2(int v) => ref.val2 = v;
+
   int get val3 => ref.val3;
+  set val3(int v) => ref.val3 = v;
+
   int get val4 => ref.val4;
+  set val4(int v) => ref.val4 = v;
+
   int get val5 => ref.val5;
+  set val5(int v) => ref.val5 = v;
+
   int get val6 => ref.val6;
+  set val6(int v) => ref.val6 = v;
+
   int get val7 => ref.val7;
+  set val7(int v) => ref.val7 = v;
+
   int get val8 => ref.val8;
+  set val8(int v) => ref.val8 = v;
+
   @override
   List<int> get val => [val1, val2, val3, val4, val5, val6, val7, val8];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toInt();
+    val2 = value[1].toInt();
+    val3 = value[2].toInt();
+    val4 = value[3].toInt();
+    val5 = value[4].toInt();
+    val6 = value[5].toInt();
+    val7 = value[6].toInt();
+    val8 = value[7].toInt();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -703,9 +907,19 @@ class Vec2f extends CvVec<cvg.Vec2f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   @override
   List<double> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -748,10 +962,23 @@ class Vec3f extends CvVec<cvg.Vec3f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   @override
   List<double> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -797,11 +1024,27 @@ class Vec4f extends CvVec<cvg.Vec4f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -851,13 +1094,35 @@ class Vec6f extends CvVec<cvg.Vec6f> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   double get val5 => ref.val5;
+  set val5(double v) => ref.val5 = v;
+
   double get val6 => ref.val6;
+  set val6(double v) => ref.val6 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+    val5 = value[4].toDouble();
+    val6 = value[5].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -899,9 +1164,19 @@ class Vec2d extends CvVec<cvg.Vec2d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   @override
   List<double> get val => [val1, val2];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -944,10 +1219,23 @@ class Vec3d extends CvVec<cvg.Vec3d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   @override
   List<double> get val => [val1, val2, val3];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -993,11 +1281,27 @@ class Vec4d extends CvVec<cvg.Vec4d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -1047,13 +1351,35 @@ class Vec6d extends CvVec<cvg.Vec6d> {
   }
 
   double get val1 => ref.val1;
+  set val1(double v) => ref.val1 = v;
+
   double get val2 => ref.val2;
+  set val2(double v) => ref.val2 = v;
+
   double get val3 => ref.val3;
+  set val3(double v) => ref.val3 = v;
+
   double get val4 => ref.val4;
+  set val4(double v) => ref.val4 = v;
+
   double get val5 => ref.val5;
+  set val5(double v) => ref.val5 = v;
+
   double get val6 => ref.val6;
+  set val6(double v) => ref.val6 = v;
+
   @override
   List<double> get val => [val1, val2, val3, val4, val5, val6];
+
+  @override
+  set val(List<num> value) {
+    val1 = value[0].toDouble();
+    val2 = value[1].toDouble();
+    val3 = value[2].toDouble();
+    val4 = value[3].toDouble();
+    val5 = value[4].toDouble();
+    val6 = value[5].toDouble();
+  }
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -1072,178 +1398,204 @@ class Vec6d extends CvVec<cvg.Vec6d> {
       "Vec6d(${val1.toStringAsFixed(3)}, ${val2.toStringAsFixed(3)}, ${val3.toStringAsFixed(3)}, ${val4.toStringAsFixed(3)}, ${val5.toStringAsFixed(3)}, ${val6.toStringAsFixed(3)})";
 }
 
-class VecVec4i extends Vec<Vec4i> implements CvStruct<cvg.VecVec4i> {
-  VecVec4i._(this.ptr, [bool attach = true]) {
+class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
+  VecVec4i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecVec4i.fromPointer(cvg.VecVec4iPtr ptr, [bool attach = true]) => VecVec4i._(ptr, attach);
+  factory VecVec4i.fromList(List<Vec4i> pts) => VecVec4i.generate(pts.length, (i) => pts[i], dispose: false);
 
-  factory VecVec4i.fromList(List<Vec4i> pts) {
-    final ptr = calloc<cvg.VecVec4i>();
-    cvRun(() => ccore.VecVec4i_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      final p = pts[i];
-      cvRun(() => ccore.VecVec4i_Append(ptr.ref, p.ref));
+  factory VecVec4i.generate(int length, Vec4i Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec4i>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec4i>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecVec4i._(ptr);
-    return vec;
+    return VecVec4i.fromPointer(pp);
   }
 
   @override
-  cvg.VecVec4iPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecVec4iPtr>(ccore.addresses.VecVec4i_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecVec4i_Close(ptr);
-  }
+  VecVec4i clone() => VecVec4i.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec4i> get iterator => VecVec4iIterator(ref);
 
   @override
   cvg.VecVec4i get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec4i>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Vec4i value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+  }
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
-  VecVec4iIterator(this.ptr);
-  cvg.VecVec4i ptr;
+  VecVec4iIterator(this.ref);
+  cvg.VecVec4i ref;
 
   @override
-  int get length {
-    return using<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccore.VecVec4i_Size(ptr, p));
-      final len = p.value;
-      return len;
-    });
-  }
+  int get length => ref.length;
 
   @override
-  Vec4i operator [](int idx) {
-    final p = calloc<cvg.Vec4i>();
-    cvRun(() => ccore.VecVec4i_At(ptr, idx, p));
-    return Vec4i.fromPointer(p);
-  }
+  Vec4i operator [](int idx) => Vec4i.fromPointer(ref.ptr + idx, false);
 }
 
-class VecVec4f extends Vec<Vec4f> implements CvStruct<cvg.VecVec4f> {
-  VecVec4f._(this.ptr, [bool attach = true]) {
+class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
+  VecVec4f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecVec4f.fromPointer(cvg.VecVec4fPtr ptr, [bool attach = true]) => VecVec4f._(ptr, attach);
+  factory VecVec4f.fromList(List<Vec4f> pts) => VecVec4f.generate(pts.length, (i) => pts[i], dispose: false);
 
-  factory VecVec4f.fromList(List<Vec4f> pts) {
-    final ptr = calloc<cvg.VecVec4f>();
-    cvRun(() => ccore.VecVec4f_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      final p = pts[i];
-      cvRun(() => ccore.VecVec4f_Append(ptr.ref, p.ref));
+  factory VecVec4f.generate(int length, Vec4f Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec4f>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec4f>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecVec4f._(ptr);
-    return vec;
+    return VecVec4f.fromPointer(pp);
   }
 
   @override
-  cvg.VecVec4fPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.VecVec4f_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecVec4f_Close(ptr);
-  }
+  VecVec4f clone() => VecVec4f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec4f> get iterator => VecVec4fIterator(ref);
 
   @override
   cvg.VecVec4f get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec4f>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Vec4f value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+  }
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
-  VecVec4fIterator(this.ptr);
-  cvg.VecVec4f ptr;
+  VecVec4fIterator(this.ref);
+  cvg.VecVec4f ref;
 
   @override
-  int get length {
-    return using<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccore.VecVec4f_Size(ptr, p));
-      final len = p.value;
-      return len;
-    });
-  }
+  int get length => ref.length;
 
   @override
-  Vec4f operator [](int idx) {
-    final p = calloc<cvg.Vec4f>();
-    cvRun(() => ccore.VecVec4f_At(ptr, idx, p));
-    return Vec4f.fromPointer(p);
-  }
+  Vec4f operator [](int idx) => Vec4f.fromPointer(ref.ptr + idx, false);
 }
 
-class VecVec6f extends Vec<Vec6f> implements CvStruct<cvg.VecVec6f> {
-  VecVec6f._(this.ptr, [bool attach = true]) {
+class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
+  VecVec6f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecVec6f.fromPointer(cvg.VecVec6fPtr ptr, [bool attach = true]) => VecVec6f._(ptr, attach);
+  factory VecVec6f.fromList(List<Vec6f> pts) => VecVec6f.generate(pts.length, (i) => pts[i], dispose: false);
 
-  factory VecVec6f.fromList(List<Vec6f> pts) {
-    final ptr = calloc<cvg.VecVec6f>();
-    cvRun(() => ccore.VecVec6f_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      final p = pts[i];
-      cvRun(() => ccore.VecVec6f_Append(ptr.ref, p.ref));
+  factory VecVec6f.generate(int length, Vec6f Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVec6f>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.Vec6f>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecVec6f._(ptr);
-    return vec;
+    return VecVec6f.fromPointer(pp);
   }
 
   @override
-  cvg.VecVec6fPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecVec6fPtr>(ccore.addresses.VecVec6f_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecVec6f_Close(ptr);
-  }
+  VecVec6f clone() => VecVec6f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<Vec6f> get iterator => VecVec6fIterator(ref);
 
   @override
   cvg.VecVec6f get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVec6f>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Vec6f value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+    ref.ptr[idx].val5 = value.val5;
+    ref.ptr[idx].val6 = value.val6;
+  }
 }
 
 class VecVec6fIterator extends VecIterator<Vec6f> {
-  VecVec6fIterator(this.ptr);
-  cvg.VecVec6f ptr;
+  VecVec6fIterator(this.ref);
+  cvg.VecVec6f ref;
 
   @override
-  int get length {
-    return using<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccore.VecVec6f_Size(ptr, p));
-      final len = p.value;
-      return len;
-    });
-  }
+  int get length => ref.length;
 
   @override
-  Vec6f operator [](int idx) {
-    final p = calloc<cvg.Vec6f>();
-    cvRun(() => ccore.VecVec6f_At(ptr, idx, p));
-    return Vec6f.fromPointer(p);
-  }
+  Vec6f operator [](int idx) => Vec6f.fromPointer(ref.ptr + idx, false);
 }
 
 extension VecVec4iExtension on List<Vec4i> {

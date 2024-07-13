@@ -5,7 +5,6 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -45,12 +44,25 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   }
 
   double get x => ref.x;
+  set x(double value) => ref.x = value;
+
   double get y => ref.y;
+  set y(double value) => ref.y = value;
+
   double get size => ref.size;
+  set size(double value) => ref.size = value;
+
   double get angle => ref.angle;
+  set angle(double value) => ref.angle = value;
+
   double get response => ref.response;
+  set response(double value) => ref.response = value;
+
   int get octave => ref.octave;
+  set octave(int value) => ref.octave = value;
+
   int get classID => ref.classID;
+  set classID(int value) => ref.classID = value;
 
   @override
   List<Object?> get props => [x, y, size, angle, response, octave, classID];
@@ -67,74 +79,77 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
       "$octave, $classID)";
 }
 
-class VecKeyPoint extends Vec<KeyPoint> implements CvStruct<cvg.VecKeyPoint> {
-  VecKeyPoint._(this.ptr, [bool attach = true]) {
+class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
+  VecKeyPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
-  factory VecKeyPoint.fromPointer(cvg.VecKeyPointPtr ptr, [bool attach = true]) => VecKeyPoint._(ptr, attach);
-  factory VecKeyPoint.fromVec(cvg.VecKeyPoint ptr) {
-    final p = calloc<cvg.VecKeyPoint>();
-    cvRun(() => ccore.VecKeyPoint_NewFromVec(ptr, p));
-    final vec = VecKeyPoint._(p);
-    return vec;
-  }
-  factory VecKeyPoint.fromList(List<KeyPoint> pts) {
-    final ptr = calloc<cvg.VecKeyPoint>();
-    cvRun(() => ccore.VecKeyPoint_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      cvRun(() => ccore.VecKeyPoint_Append(ptr.ref, pts[i].ref));
+
+  factory VecKeyPoint.fromList(List<KeyPoint> pts) =>
+      VecKeyPoint.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecKeyPoint.generate(int length, KeyPoint Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecKeyPoint>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.KeyPoint>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecKeyPoint._(ptr);
-    return vec;
+    return VecKeyPoint.fromPointer(pp);
   }
 
   @override
-  int get length {
-    final ptrlen = calloc<ffi.Int>();
-    cvRun(() => ccore.VecKeyPoint_Size(ref, ptrlen));
-    final length = ptrlen.value;
-    calloc.free(ptrlen);
-    return length;
-  }
+  VecKeyPoint clone() => VecKeyPoint.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  cvg.VecKeyPointPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(ccore.addresses.VecKeyPoint_Close);
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecKeyPoint_Close(ptr);
-  }
+  int get length => ref.length;
 
   @override
   Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
 
   @override
   cvg.VecKeyPoint get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecKeyPoint>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, KeyPoint value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].size = value.size;
+    ref.ptr[idx].angle = value.angle;
+    ref.ptr[idx].octave = value.octave;
+    ref.ptr[idx].classID = value.classID;
+    ref.ptr[idx].response = value.response;
+  }
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {
-  VecKeyPointIterator(this.ptr);
-  cvg.VecKeyPoint ptr;
+  VecKeyPointIterator(this.ref);
+  cvg.VecKeyPoint ref;
 
   @override
-  int get length => using<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.VecKeyPoint_Size(ptr, p));
-        final len = p.value;
-        return len;
-      });
+  int get length => ref.length;
 
   @override
-  KeyPoint operator [](int idx) {
-    return cvRunArena<KeyPoint>((arena) {
-      final p = calloc<cvg.KeyPoint>();
-      cvRun(() => ccore.VecKeyPoint_At(ptr, idx, p));
-      return KeyPoint.fromPointer(p);
-    });
-  }
+  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ref.ptr + idx, false);
 }
 
 extension ListKeyPointExtension on List<KeyPoint> {

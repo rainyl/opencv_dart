@@ -1,4 +1,4 @@
-library cv;
+library cv.videoio;
 
 import 'dart:convert';
 import 'dart:ffi' as ffi;
@@ -35,8 +35,6 @@ extension VideoCaptureAsync on VideoCapture {
         (callback) => cvideo.VideoCapture_NewFromIndex_Async(device, apiPreference, callback),
         (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
       );
-
-  // String getBackendName()=>cffiVideoIO.videocapture
 
   /// Grabs the next frame from video file or capturing device.
   ///

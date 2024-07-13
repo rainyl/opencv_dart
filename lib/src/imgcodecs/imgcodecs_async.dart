@@ -1,4 +1,4 @@
-library cv;
+library cv.imgcodecs;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -29,7 +29,7 @@ Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
-Future<bool> imwriteAsync(String filename, InputArray img, {VecInt? params}) async {
+Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) async {
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
   final rval = cvRunAsync<bool>(
     (callback) => params == null
@@ -54,7 +54,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecInt? params}) asy
 Future<(bool, Uint8List)> imencodeAsync(
   String ext,
   InputArray img, {
-  VecInt? params,
+  VecI32? params,
 }) async {
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
   final rval = cvRunAsync2<(bool, Uint8List)>(

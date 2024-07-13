@@ -2526,7 +2526,7 @@ class CvNativeContrib {
     ArucoDetector ad,
     Mat inputArr,
     ffi.Pointer<VecVecPoint2f> markerCorners,
-    ffi.Pointer<VecInt> markerIds,
+    ffi.Pointer<VecI32> markerIds,
     ffi.Pointer<VecVecPoint2f> rejectedCandidates,
   ) {
     return _ArucoDetector_DetectMarkers(
@@ -2544,7 +2544,7 @@ class CvNativeContrib {
               ArucoDetector,
               Mat,
               ffi.Pointer<VecVecPoint2f>,
-              ffi.Pointer<VecInt>,
+              ffi.Pointer<VecI32>,
               ffi.Pointer<VecVecPoint2f>)>>('ArucoDetector_DetectMarkers');
   late final _ArucoDetector_DetectMarkers =
       _ArucoDetector_DetectMarkersPtr.asFunction<
@@ -2552,7 +2552,7 @@ class CvNativeContrib {
               ArucoDetector,
               Mat,
               ffi.Pointer<VecVecPoint2f>,
-              ffi.Pointer<VecInt>,
+              ffi.Pointer<VecI32>,
               ffi.Pointer<VecVecPoint2f>)>();
 
   ffi.Pointer<CvStatus> ArucoDetector_DetectMarkers_Async(
@@ -2669,7 +2669,7 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> ArucoDrawDetectedMarkers(
     Mat image,
     VecVecPoint2f markerCorners,
-    VecInt markerIds,
+    VecI32 markerIds,
     Scalar borderColor,
   ) {
     return _ArucoDrawDetectedMarkers(
@@ -2683,15 +2683,15 @@ class CvNativeContrib {
   late final _ArucoDrawDetectedMarkersPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, VecVecPoint2f, VecInt, Scalar)>>('ArucoDrawDetectedMarkers');
+              Mat, VecVecPoint2f, VecI32, Scalar)>>('ArucoDrawDetectedMarkers');
   late final _ArucoDrawDetectedMarkers =
       _ArucoDrawDetectedMarkersPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecInt, Scalar)>();
+          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar)>();
 
   ffi.Pointer<CvStatus> ArucoDrawDetectedMarkers_Async(
     Mat image,
     VecVecPoint2f markerCorners,
-    VecInt markerIds,
+    VecI32 markerIds,
     Scalar borderColor,
     imp1.CvCallback_0 callback,
   ) {
@@ -2706,12 +2706,12 @@ class CvNativeContrib {
 
   late final _ArucoDrawDetectedMarkers_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecInt, Scalar,
+          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar,
               imp1.CvCallback_0)>>('ArucoDrawDetectedMarkers_Async');
   late final _ArucoDrawDetectedMarkers_Async =
       _ArucoDrawDetectedMarkers_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, VecVecPoint2f, VecInt, Scalar, imp1.CvCallback_0)>();
+              Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> ArucoGenerateImageMarker(
     int dictionaryId,
@@ -3007,7 +3007,7 @@ class CvNativeContrib {
     ffi.Pointer<PtrWBDetector> self,
     Mat img,
     ffi.Pointer<VecRect> bbox,
-    ffi.Pointer<VecDouble> confidences,
+    ffi.Pointer<VecF64> confidences,
   ) {
     return _WBDetector_Detect(
       self,
@@ -3019,14 +3019,11 @@ class CvNativeContrib {
 
   late final _WBDetector_DetectPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<PtrWBDetector>,
-              Mat,
-              ffi.Pointer<VecRect>,
-              ffi.Pointer<VecDouble>)>>('WBDetector_Detect');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>, Mat,
+              ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>>('WBDetector_Detect');
   late final _WBDetector_Detect = _WBDetector_DetectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>, Mat,
-          ffi.Pointer<VecRect>, ffi.Pointer<VecDouble>)>();
+          ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>();
 
   ffi.Pointer<CvStatus> WBDetector_Read(
     ffi.Pointer<PtrWBDetector> self,
@@ -3765,7 +3762,7 @@ class CvNativeContrib {
     Mat edge_map,
     Mat orientation_map,
     ffi.Pointer<VecRect> boxes,
-    ffi.Pointer<VecFloat> scores,
+    ffi.Pointer<VecF32> scores,
   ) {
     return _ximgproc_EdgeBoxes_getBoundingBoxes(
       self,
@@ -3783,11 +3780,11 @@ class CvNativeContrib {
               Mat,
               Mat,
               ffi.Pointer<VecRect>,
-              ffi.Pointer<VecFloat>)>>('ximgproc_EdgeBoxes_getBoundingBoxes');
+              ffi.Pointer<VecF32>)>>('ximgproc_EdgeBoxes_getBoundingBoxes');
   late final _ximgproc_EdgeBoxes_getBoundingBoxes =
       _ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
           ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat,
-              ffi.Pointer<VecRect>, ffi.Pointer<VecFloat>)>();
+              ffi.Pointer<VecRect>, ffi.Pointer<VecF32>)>();
 
   void ximgproc_EdgeDrawing_Close(
     EdgeDrawingPtr self,
@@ -4038,7 +4035,7 @@ class CvNativeContrib {
 
   ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
     EdgeDrawing self,
-    ffi.Pointer<VecInt> rval,
+    ffi.Pointer<VecI32> rval,
   ) {
     return _ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
       self,
@@ -4049,11 +4046,11 @@ class CvNativeContrib {
   late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr = _lookup<
           ffi.NativeFunction<
               ffi.Pointer<CvStatus> Function(
-                  EdgeDrawing, ffi.Pointer<VecInt>)>>(
+                  EdgeDrawing, ffi.Pointer<VecI32>)>>(
       'ximgproc_EdgeDrawing_getSegmentIndicesOfLines');
   late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLines =
       _ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecInt>)>();
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async(
     EdgeDrawing self,
@@ -5562,9 +5559,9 @@ final class StructuredEdgeDetection extends ffi.Struct {
 }
 
 typedef StructuredEdgeDetectionPtr = ffi.Pointer<StructuredEdgeDetection>;
-typedef VecDouble = imp1.VecDouble;
-typedef VecFloat = imp1.VecFloat;
-typedef VecInt = imp1.VecInt;
+typedef VecF32 = imp1.VecF32;
+typedef VecF64 = imp1.VecF64;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecPoint3i = imp1.VecPoint3i;
 typedef VecRect = imp1.VecRect;

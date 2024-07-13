@@ -97,6 +97,7 @@ void main() async {
   });
 
   test('cv.ORB', () {
+    // FIXME: wont exit, someting wrong
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 

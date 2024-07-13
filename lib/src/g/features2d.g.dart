@@ -1366,10 +1366,10 @@ class CvNativeFeatures2d {
       ffi.Pointer<CvStatus> Function(MSER, Mat, imp1.CvCallback_1)>();
 
   void ORB_Close(
-    ORBPtr o,
+    ORBPtr self,
   ) {
     return _ORB_Close(
-      o,
+      self,
     );
   }
 
@@ -1511,12 +1511,12 @@ class CvNativeFeatures2d {
       ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> ORB_Detect(
-    ORB o,
+    ORB self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
   ) {
     return _ORB_Detect(
-      o,
+      self,
       src,
       rval,
     );
@@ -1530,14 +1530,14 @@ class CvNativeFeatures2d {
       ffi.Pointer<CvStatus> Function(ORB, Mat, ffi.Pointer<VecKeyPoint>)>();
 
   ffi.Pointer<CvStatus> ORB_DetectAndCompute(
-    ORB o,
+    ORB self,
     Mat src,
     Mat mask,
-    Mat desc,
+    ffi.Pointer<Mat> desc,
     ffi.Pointer<VecKeyPoint> rval,
   ) {
     return _ORB_DetectAndCompute(
-      o,
+      self,
       src,
       mask,
       desc,
@@ -1547,11 +1547,11 @@ class CvNativeFeatures2d {
 
   late final _ORB_DetectAndComputePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, Mat,
+          ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<Mat>,
               ffi.Pointer<VecKeyPoint>)>>('ORB_DetectAndCompute');
   late final _ORB_DetectAndCompute = _ORB_DetectAndComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          ORB, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>)>();
+          ORB, Mat, Mat, ffi.Pointer<Mat>, ffi.Pointer<VecKeyPoint>)>();
 
   ffi.Pointer<CvStatus> ORB_DetectAndCompute_Async(
     ORB self,

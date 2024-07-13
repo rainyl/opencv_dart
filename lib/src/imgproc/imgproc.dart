@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.imgproc;
 
 import 'dart:ffi' as ffi;
 import 'dart:ffi';
@@ -94,10 +94,10 @@ Mat equalizeHist(Mat src, {Mat? dst}) {
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga6ca1876785483836f72a77ced8ea759a
 Mat calcHist(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat mask,
-  VecInt histSize,
-  VecFloat ranges, {
+  VecI32 histSize,
+  VecF32 ranges, {
   Mat? hist,
   bool accumulate = false,
 }) {
@@ -123,24 +123,15 @@ Mat calcHist(
 /// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
 Mat calcBackProject(
   VecMat src,
-  VecInt channels,
+  VecI32 channels,
   Mat hist,
-  VecFloat ranges, {
+  VecF32 ranges, {
   Mat? dst,
   double scale = 1.0,
 }) {
-  dst ??= Mat.empty();
-  cvRun(
-    () => cimgproc.CalcBackProject(
-      src.ref,
-      channels.ref,
-      hist.ref,
-      dst!.ref,
-      ranges.ref,
-      scale,
-    ),
-  );
-  return dst;
+  final p = dst?.ptr ?? calloc<cvg.Mat>();
+  cvRun(() => cimgproc.CalcBackProject(src.ref, channels.ref, hist.ref, p, ranges.ref, scale));
+  return dst ?? Mat.fromPointer(p);
 }
 
 /// CompareHist Compares two histograms.
@@ -197,9 +188,20 @@ Mat blur(Mat src, (int, int) ksize, {Mat? dst}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
-Mat boxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+Mat boxFilter(
+  Mat src,
+  int depth,
+  (int, int) ksize, {
+  Point? anchor,
+  bool normalize = true,
+  int borderType = BORDER_DEFAULT,
+  Mat? dst,
+}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  anchor ??= Point(-1, -1);
+  cvRun(
+    () => cimgproc.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+  );
   return dst;
 }
 
@@ -207,9 +209,20 @@ Mat boxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
-Mat sqrBoxFilter(Mat src, int depth, (int, int) ksize, {Mat? dst}) {
+Mat sqrBoxFilter(
+  Mat src,
+  int depth,
+  (int, int) ksize, {
+  Point? anchor,
+  bool normalize = true,
+  int borderType = BORDER_DEFAULT,
+  Mat? dst,
+}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref));
+  anchor ??= Point(-1, -1);
+  cvRun(
+    () => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+  );
   return dst;
 }
 
@@ -226,7 +239,7 @@ Mat dilate(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -256,7 +269,7 @@ Mat erode(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -510,7 +523,7 @@ Mat morphologyEx(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue = borderValue ?? Scalar.default_();
+  borderValue = borderValue ?? Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -1211,7 +1224,7 @@ Mat warpAffine(
   Scalar? borderValue,
 }) {
   dst ??= Mat.empty();
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   cvRun(
     () => cimgproc.WarpAffineWithParams(
       src.ref,
@@ -1241,7 +1254,7 @@ Mat warpPerspective(
   Scalar? borderValue,
 }) {
   dst ??= Mat.empty();
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   cvRun(
     () => cimgproc.WarpPerspectiveWithParams(
       src.ref,
@@ -1400,7 +1413,7 @@ Mat remap(
   int borderMode = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   cvRun(() =>
       cimgproc.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));

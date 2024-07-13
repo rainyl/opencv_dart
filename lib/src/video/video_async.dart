@@ -1,4 +1,4 @@
-library cv;
+library cv.video;
 
 import 'dart:ffi' as ffi;
 
@@ -137,7 +137,7 @@ Future<Mat> calcOpticalFlowFarnebackAsync(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga473e4b886d0bcc6b65831eb88ed93323
-Future<(VecPoint2f nextPts, VecUChar status, VecFloat error)> calcOpticalFlowPyrLKAsync(
+Future<(VecPoint2f nextPts, VecUChar status, VecF32 error)> calcOpticalFlowPyrLKAsync(
   InputArray prevImg,
   InputArray nextImg,
   VecPoint2f prevPts,
@@ -149,26 +149,27 @@ Future<(VecPoint2f nextPts, VecUChar status, VecFloat error)> calcOpticalFlowPyr
   double minEigThreshold = 1e-4,
 }) async =>
     cvRunAsync2(
-      (callback) => cvideo.CalcOpticalFlowPyrLK_Async(
-        prevImg.ref,
-        nextImg.ref,
-        prevPts.ref,
-        nextPts.ref,
-        winSize.cvd.ref,
-        maxLevel,
-        criteria.cvd.ref,
-        flags,
-        minEigThreshold,
-        callback,
-      ),
-      (completer, p, p1) => completer.complete(
+        (callback) => cvideo.CalcOpticalFlowPyrLK_Async(
+              prevImg.ref,
+              nextImg.ref,
+              prevPts.ref,
+              nextPts.ptr,
+              winSize.cvd.ref,
+              maxLevel,
+              criteria.cvd.ref,
+              flags,
+              minEigThreshold,
+              callback,
+            ), (c, p, p1) {
+      nextPts.reattach();
+      c.complete(
         (
           nextPts,
           VecUChar.fromPointer(p.cast<cvg.VecUChar>()),
-          VecFloat.fromPointer(p1.cast<cvg.VecFloat>()),
+          VecF32.fromPointer(p1.cast<cvg.VecF32>()),
         ),
-      ),
-    );
+      );
+    });
 
 /// FindTransformECC finds the geometric transform (warp) between two images in terms of the ECC criterion.
 ///

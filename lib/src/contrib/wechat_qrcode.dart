@@ -1,4 +1,4 @@
-library cv;
+library cv.contrib;
 
 import 'dart:ffi' as ffi;
 
@@ -94,9 +94,6 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     finalizer.detach(this);
     ccontrib.WeChatQRCode_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.WeChatQRCode get ref => ptr.ref;

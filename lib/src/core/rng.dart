@@ -118,7 +118,5 @@ class Rng extends CvStruct<cvg.RNG> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-  @override
   cvg.RNG get ref => ptr.ref;
 }

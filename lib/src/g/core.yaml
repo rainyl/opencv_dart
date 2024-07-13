@@ -310,8 +310,6 @@ files:
         name: Mat_NewFromVecPoint_Async
       c:@F@Mat_NewWithSize:
         name: Mat_NewWithSize
-      c:@F@Mat_NewWithSizeFromScalar:
-        name: Mat_NewWithSizeFromScalar
       c:@F@Mat_NewWithSize_Async:
         name: Mat_NewWithSize_Async
       c:@F@Mat_NewWithSizes:
@@ -544,6 +542,14 @@ files:
         name: Mat_colRange
       c:@F@Mat_rowRange:
         name: Mat_rowRange
+      c:@F@Mat_toVecPoint:
+        name: Mat_toVecPoint
+      c:@F@Mat_toVecPoint2f:
+        name: Mat_toVecPoint2f
+      c:@F@Mat_toVecPoint3f:
+        name: Mat_toVecPoint3f
+      c:@F@Mat_toVecPoint3i:
+        name: Mat_toVecPoint3i
       c:@F@Norm:
         name: Norm
       c:@F@NormWithMats:
@@ -618,322 +624,6 @@ files:
         name: SetRNGSeed
       c:@F@TheRNG:
         name: TheRNG
-      c:@F@VecChar_Append:
-        name: VecChar_Append
-      c:@F@VecChar_At:
-        name: VecChar_At
-      c:@F@VecChar_Close:
-        name: VecChar_Close
-      c:@F@VecChar_Data:
-        name: VecChar_Data
-      c:@F@VecChar_New:
-        name: VecChar_New
-      c:@F@VecChar_NewFromPointer:
-        name: VecChar_NewFromPointer
-      c:@F@VecChar_NewFromVec:
-        name: VecChar_NewFromVec
-      c:@F@VecChar_Size:
-        name: VecChar_Size
-      c:@F@VecChar_ToString:
-        name: VecChar_ToString
-      c:@F@VecDMatch_Append:
-        name: VecDMatch_Append
-      c:@F@VecDMatch_At:
-        name: VecDMatch_At
-      c:@F@VecDMatch_Close:
-        name: VecDMatch_Close
-      c:@F@VecDMatch_New:
-        name: VecDMatch_New
-      c:@F@VecDMatch_NewFromPointer:
-        name: VecDMatch_NewFromPointer
-      c:@F@VecDMatch_NewFromVec:
-        name: VecDMatch_NewFromVec
-      c:@F@VecDMatch_Size:
-        name: VecDMatch_Size
-      c:@F@VecDouble_Append:
-        name: VecDouble_Append
-      c:@F@VecDouble_At:
-        name: VecDouble_At
-      c:@F@VecDouble_Close:
-        name: VecDouble_Close
-      c:@F@VecDouble_Data:
-        name: VecDouble_Data
-      c:@F@VecDouble_New:
-        name: VecDouble_New
-      c:@F@VecDouble_NewFromPointer:
-        name: VecDouble_NewFromPointer
-      c:@F@VecDouble_NewFromVec:
-        name: VecDouble_NewFromVec
-      c:@F@VecDouble_Size:
-        name: VecDouble_Size
-      c:@F@VecFloat_Append:
-        name: VecFloat_Append
-      c:@F@VecFloat_At:
-        name: VecFloat_At
-      c:@F@VecFloat_Close:
-        name: VecFloat_Close
-      c:@F@VecFloat_Data:
-        name: VecFloat_Data
-      c:@F@VecFloat_New:
-        name: VecFloat_New
-      c:@F@VecFloat_NewFromPointer:
-        name: VecFloat_NewFromPointer
-      c:@F@VecFloat_NewFromVec:
-        name: VecFloat_NewFromVec
-      c:@F@VecFloat_Size:
-        name: VecFloat_Size
-      c:@F@VecInt_Append:
-        name: VecInt_Append
-      c:@F@VecInt_At:
-        name: VecInt_At
-      c:@F@VecInt_AtNoBoundCheck:
-        name: VecInt_AtNoBoundCheck
-      c:@F@VecInt_Close:
-        name: VecInt_Close
-      c:@F@VecInt_Data:
-        name: VecInt_Data
-      c:@F@VecInt_New:
-        name: VecInt_New
-      c:@F@VecInt_NewFromPointer:
-        name: VecInt_NewFromPointer
-      c:@F@VecInt_NewFromVec:
-        name: VecInt_NewFromVec
-      c:@F@VecInt_Size:
-        name: VecInt_Size
-      c:@F@VecKeyPoint_Append:
-        name: VecKeyPoint_Append
-      c:@F@VecKeyPoint_At:
-        name: VecKeyPoint_At
-      c:@F@VecKeyPoint_Close:
-        name: VecKeyPoint_Close
-      c:@F@VecKeyPoint_New:
-        name: VecKeyPoint_New
-      c:@F@VecKeyPoint_NewFromPointer:
-        name: VecKeyPoint_NewFromPointer
-      c:@F@VecKeyPoint_NewFromVec:
-        name: VecKeyPoint_NewFromVec
-      c:@F@VecKeyPoint_Size:
-        name: VecKeyPoint_Size
-      c:@F@VecMat_Append:
-        name: VecMat_Append
-      c:@F@VecMat_At:
-        name: VecMat_At
-      c:@F@VecMat_Close:
-        name: VecMat_Close
-      c:@F@VecMat_New:
-        name: VecMat_New
-      c:@F@VecMat_NewFromPointer:
-        name: VecMat_NewFromPointer
-      c:@F@VecMat_NewFromVec:
-        name: VecMat_NewFromVec
-      c:@F@VecMat_Size:
-        name: VecMat_Size
-      c:@F@VecPoint2f_Append:
-        name: VecPoint2f_Append
-      c:@F@VecPoint2f_At:
-        name: VecPoint2f_At
-      c:@F@VecPoint2f_Close:
-        name: VecPoint2f_Close
-      c:@F@VecPoint2f_New:
-        name: VecPoint2f_New
-      c:@F@VecPoint2f_NewFromMat:
-        name: VecPoint2f_NewFromMat
-      c:@F@VecPoint2f_NewFromPointer:
-        name: VecPoint2f_NewFromPointer
-      c:@F@VecPoint2f_NewFromVec:
-        name: VecPoint2f_NewFromVec
-      c:@F@VecPoint2f_Size:
-        name: VecPoint2f_Size
-      c:@F@VecPoint3f_Append:
-        name: VecPoint3f_Append
-      c:@F@VecPoint3f_At:
-        name: VecPoint3f_At
-      c:@F@VecPoint3f_Close:
-        name: VecPoint3f_Close
-      c:@F@VecPoint3f_New:
-        name: VecPoint3f_New
-      c:@F@VecPoint3f_NewFromMat:
-        name: VecPoint3f_NewFromMat
-      c:@F@VecPoint3f_NewFromPointer:
-        name: VecPoint3f_NewFromPointer
-      c:@F@VecPoint3f_NewFromVec:
-        name: VecPoint3f_NewFromVec
-      c:@F@VecPoint3f_Size:
-        name: VecPoint3f_Size
-      c:@F@VecPoint3i_Append:
-        name: VecPoint3i_Append
-      c:@F@VecPoint3i_At:
-        name: VecPoint3i_At
-      c:@F@VecPoint3i_Close:
-        name: VecPoint3i_Close
-      c:@F@VecPoint3i_New:
-        name: VecPoint3i_New
-      c:@F@VecPoint3i_NewFromMat:
-        name: VecPoint3i_NewFromMat
-      c:@F@VecPoint3i_NewFromPointer:
-        name: VecPoint3i_NewFromPointer
-      c:@F@VecPoint3i_NewFromVec:
-        name: VecPoint3i_NewFromVec
-      c:@F@VecPoint3i_Size:
-        name: VecPoint3i_Size
-      c:@F@VecPoint_Append:
-        name: VecPoint_Append
-      c:@F@VecPoint_At:
-        name: VecPoint_At
-      c:@F@VecPoint_Close:
-        name: VecPoint_Close
-      c:@F@VecPoint_New:
-        name: VecPoint_New
-      c:@F@VecPoint_NewFromMat:
-        name: VecPoint_NewFromMat
-      c:@F@VecPoint_NewFromPointer:
-        name: VecPoint_NewFromPointer
-      c:@F@VecPoint_NewFromVec:
-        name: VecPoint_NewFromVec
-      c:@F@VecPoint_Size:
-        name: VecPoint_Size
-      c:@F@VecRect_Append:
-        name: VecRect_Append
-      c:@F@VecRect_At:
-        name: VecRect_At
-      c:@F@VecRect_Close:
-        name: VecRect_Close
-      c:@F@VecRect_New:
-        name: VecRect_New
-      c:@F@VecRect_NewFromPointer:
-        name: VecRect_NewFromPointer
-      c:@F@VecRect_NewFromVec:
-        name: VecRect_NewFromVec
-      c:@F@VecRect_Size:
-        name: VecRect_Size
-      c:@F@VecUChar_Append:
-        name: VecUChar_Append
-      c:@F@VecUChar_At:
-        name: VecUChar_At
-      c:@F@VecUChar_AtNoBoundCheck:
-        name: VecUChar_AtNoBoundCheck
-      c:@F@VecUChar_Close:
-        name: VecUChar_Close
-      c:@F@VecUChar_Data:
-        name: VecUChar_Data
-      c:@F@VecUChar_New:
-        name: VecUChar_New
-      c:@F@VecUChar_NewFromPointer:
-        name: VecUChar_NewFromPointer
-      c:@F@VecUChar_NewFromVec:
-        name: VecUChar_NewFromVec
-      c:@F@VecUChar_Size:
-        name: VecUChar_Size
-      c:@F@VecVec4f_Append:
-        name: VecVec4f_Append
-      c:@F@VecVec4f_At:
-        name: VecVec4f_At
-      c:@F@VecVec4f_Close:
-        name: VecVec4f_Close
-      c:@F@VecVec4f_New:
-        name: VecVec4f_New
-      c:@F@VecVec4f_NewFromPointer:
-        name: VecVec4f_NewFromPointer
-      c:@F@VecVec4f_Size:
-        name: VecVec4f_Size
-      c:@F@VecVec4i_Append:
-        name: VecVec4i_Append
-      c:@F@VecVec4i_At:
-        name: VecVec4i_At
-      c:@F@VecVec4i_Close:
-        name: VecVec4i_Close
-      c:@F@VecVec4i_New:
-        name: VecVec4i_New
-      c:@F@VecVec4i_NewFromPointer:
-        name: VecVec4i_NewFromPointer
-      c:@F@VecVec4i_Size:
-        name: VecVec4i_Size
-      c:@F@VecVec6f_Append:
-        name: VecVec6f_Append
-      c:@F@VecVec6f_At:
-        name: VecVec6f_At
-      c:@F@VecVec6f_Close:
-        name: VecVec6f_Close
-      c:@F@VecVec6f_New:
-        name: VecVec6f_New
-      c:@F@VecVec6f_NewFromPointer:
-        name: VecVec6f_NewFromPointer
-      c:@F@VecVec6f_Size:
-        name: VecVec6f_Size
-      c:@F@VecVecChar_Append:
-        name: VecVecChar_Append
-      c:@F@VecVecChar_Append_Str:
-        name: VecVecChar_Append_Str
-      c:@F@VecVecChar_At:
-        name: VecVecChar_At
-      c:@F@VecVecChar_At_Str:
-        name: VecVecChar_At_Str
-      c:@F@VecVecChar_Close:
-        name: VecVecChar_Close
-      c:@F@VecVecChar_New:
-        name: VecVecChar_New
-      c:@F@VecVecChar_NewFromVec:
-        name: VecVecChar_NewFromVec
-      c:@F@VecVecChar_Size:
-        name: VecVecChar_Size
-      c:@F@VecVecDMatch_Append:
-        name: VecVecDMatch_Append
-      c:@F@VecVecDMatch_At:
-        name: VecVecDMatch_At
-      c:@F@VecVecDMatch_Close:
-        name: VecVecDMatch_Close
-      c:@F@VecVecDMatch_Data:
-        name: VecVecDMatch_Data
-      c:@F@VecVecDMatch_New:
-        name: VecVecDMatch_New
-      c:@F@VecVecDMatch_NewFromPointer:
-        name: VecVecDMatch_NewFromPointer
-      c:@F@VecVecDMatch_NewFromVec:
-        name: VecVecDMatch_NewFromVec
-      c:@F@VecVecDMatch_Size:
-        name: VecVecDMatch_Size
-      c:@F@VecVecPoint2f_Append:
-        name: VecVecPoint2f_Append
-      c:@F@VecVecPoint2f_At:
-        name: VecVecPoint2f_At
-      c:@F@VecVecPoint2f_Close:
-        name: VecVecPoint2f_Close
-      c:@F@VecVecPoint2f_New:
-        name: VecVecPoint2f_New
-      c:@F@VecVecPoint2f_NewFromPointer:
-        name: VecVecPoint2f_NewFromPointer
-      c:@F@VecVecPoint2f_NewFromVec:
-        name: VecVecPoint2f_NewFromVec
-      c:@F@VecVecPoint2f_Size:
-        name: VecVecPoint2f_Size
-      c:@F@VecVecPoint3f_Append:
-        name: VecVecPoint3f_Append
-      c:@F@VecVecPoint3f_At:
-        name: VecVecPoint3f_At
-      c:@F@VecVecPoint3f_Close:
-        name: VecVecPoint3f_Close
-      c:@F@VecVecPoint3f_New:
-        name: VecVecPoint3f_New
-      c:@F@VecVecPoint3f_NewFromPointer:
-        name: VecVecPoint3f_NewFromPointer
-      c:@F@VecVecPoint3f_NewFromVec:
-        name: VecVecPoint3f_NewFromVec
-      c:@F@VecVecPoint3f_Size:
-        name: VecVecPoint3f_Size
-      c:@F@VecVecPoint_Append:
-        name: VecVecPoint_Append
-      c:@F@VecVecPoint_At:
-        name: VecVecPoint_At
-      c:@F@VecVecPoint_Close:
-        name: VecVecPoint_Close
-      c:@F@VecVecPoint_New:
-        name: VecVecPoint_New
-      c:@F@VecVecPoint_NewFromPointer:
-        name: VecVecPoint_NewFromPointer
-      c:@F@VecVecPoint_NewFromVec:
-        name: VecVecPoint_NewFromVec
-      c:@F@VecVecPoint_Size:
-        name: VecVecPoint_Size
       c:@F@Zeros:
         name: Zeros
       c:@F@core_AbsDiff_Async:
@@ -1144,28 +834,18 @@ files:
         name: openCVVersion_Async
       c:@F@registerErrorCallback:
         name: registerErrorCallback
-      c:@T@double_t:
-        name: double_t
-      c:@T@float_t:
-        name: float_t
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:math.h@T@double_t:
+        name: double_t
+      c:math.h@T@float_t:
+        name: float_t
       c:types.h@T@CvStatus:
         name: CvStatus
-      c:types.h@T@DMatch:
-        name: DMatch
-      c:types.h@T@KeyPoint:
-        name: KeyPoint
       c:types.h@T@Mat:
         name: Mat
       c:types.h@T@Point:
         name: Point
-      c:types.h@T@Point2f:
-        name: Point2f
-      c:types.h@T@Point3f:
-        name: Point3f
-      c:types.h@T@Point3i:
-        name: Point3i
       c:types.h@T@RNG:
         name: RNG
       c:types.h@T@Rect:
@@ -1224,16 +904,8 @@ files:
         name: Vec8i
       c:types.h@T@VecChar:
         name: VecChar
-      c:types.h@T@VecDMatch:
-        name: VecDMatch
-      c:types.h@T@VecDouble:
-        name: VecDouble
-      c:types.h@T@VecFloat:
-        name: VecFloat
-      c:types.h@T@VecInt:
-        name: VecInt
-      c:types.h@T@VecKeyPoint:
-        name: VecKeyPoint
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:
@@ -1244,23 +916,5 @@ files:
         name: VecPoint3f
       c:types.h@T@VecPoint3i:
         name: VecPoint3i
-      c:types.h@T@VecRect:
-        name: VecRect
       c:types.h@T@VecUChar:
         name: VecUChar
-      c:types.h@T@VecVec4f:
-        name: VecVec4f
-      c:types.h@T@VecVec4i:
-        name: VecVec4i
-      c:types.h@T@VecVec6f:
-        name: VecVec6f
-      c:types.h@T@VecVecChar:
-        name: VecVecChar
-      c:types.h@T@VecVecDMatch:
-        name: VecVecDMatch
-      c:types.h@T@VecVecPoint:
-        name: VecVecPoint
-      c:types.h@T@VecVecPoint2f:
-        name: VecVecPoint2f
-      c:types.h@T@VecVecPoint3f:
-        name: VecVecPoint3f

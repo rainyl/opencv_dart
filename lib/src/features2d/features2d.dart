@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-library cv;
+library cv.features2d;
 
 import 'dart:ffi' as ffi;
 
@@ -66,9 +66,6 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.AKAZE get ref => ptr.ref;
 }
 
@@ -110,9 +107,6 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
     finalizer.detach(this);
     cfeatures2d.AgastFeatureDetector_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.AgastFeatureDetector get ref => ptr.ref;
@@ -166,9 +160,6 @@ class BRISK extends CvStruct<cvg.BRISK> {
     finalizer.detach(this);
     cfeatures2d.BRISK_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.BRISK get ref => ptr.ref;
@@ -249,9 +240,6 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.FastFeatureDetector get ref => ptr.ref;
 }
 
@@ -291,9 +279,6 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
     finalizer.detach(this);
     cfeatures2d.GFTTDetector_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.GFTTDetector get ref => ptr.ref;
@@ -349,9 +334,6 @@ class KAZE extends CvStruct<cvg.KAZE> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.KAZE get ref => ptr.ref;
 }
 
@@ -392,9 +374,6 @@ class MSER extends CvStruct<cvg.MSER> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.MSER get ref => ptr.ref;
 }
 
@@ -410,7 +389,7 @@ enum ORBScoreType {
 class ORB extends CvStruct<cvg.ORB> {
   ORB._(cvg.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
   factory ORB.fromPointer(cvg.ORBPtr ptr, [bool attach = true]) => ORB._(ptr, attach);
@@ -464,7 +443,7 @@ class ORB extends CvStruct<cvg.ORB> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
     final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.ORB_Detect(ptr.ref, src.ref, ret));
+    cvRun(() => cfeatures2d.ORB_Detect(ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -473,12 +452,10 @@ class ORB extends CvStruct<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
+    final pdesc = calloc<cvg.Mat>();
     final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(
-      () => cfeatures2d.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),
-    );
-    return (VecKeyPoint.fromPointer(ret), desc);
+    cvRun(() => cfeatures2d.ORB_DetectAndCompute(ref, src.ref, mask.ref, pdesc, ret));
+    return (VecKeyPoint.fromPointer(ret), Mat.fromPointer(pdesc));
   }
 
   static final finalizer = OcvFinalizer<cvg.ORBPtr>(cfeatures2d.addresses.ORB_Close);
@@ -487,9 +464,6 @@ class ORB extends CvStruct<cvg.ORB> {
     finalizer.detach(this);
     cfeatures2d.ORB_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.ORB get ref => ptr.ref;
@@ -598,100 +572,61 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   }
 
   int get blobColor => ref.blobColor;
+  set blobColor(int value) => ref.blobColor = value;
+
   bool get filterByArea => ref.filterByArea;
+  set filterByArea(bool value) => ref.filterByArea = value;
+
   bool get filterByCircularity => ref.filterByCircularity;
+  set filterByCircularity(bool value) => ref.filterByCircularity = value;
+
   bool get filterByColor => ref.filterByColor;
+  set filterByColor(bool value) => ref.filterByColor = value;
+
   bool get filterByConvexity => ref.filterByConvexity;
+  set filterByConvexity(bool value) => ref.filterByConvexity = value;
+
   bool get filterByInertia => ref.filterByInertia;
+  set filterByInertia(bool value) => ref.filterByInertia = value;
+
   double get maxArea => ref.maxArea;
+  set maxArea(double v) => ref.maxArea = v;
+
   double get maxCircularity => ref.maxCircularity;
+  set maxCircularity(double v) => ref.maxCircularity = v;
+
   double get maxConvexity => ref.maxConvexity;
+  set maxConvexity(double v) => ref.maxConvexity = v;
+
   double get maxInertiaRatio => ref.maxInertiaRatio;
+  set maxInertiaRatio(double v) => ref.maxInertiaRatio = v;
+
   double get maxThreshold => ref.maxThreshold;
+  set maxThreshold(double v) => ref.maxThreshold = v;
+
   double get minArea => ref.minArea;
+  set minArea(double v) => ref.minArea = v;
+
   double get minCircularity => ref.minCircularity;
+  set minCircularity(double v) => ref.minCircularity = v;
+
   double get minConvexity => ref.minConvexity;
+  set minConvexity(double v) => ref.minConvexity = v;
+
   double get minDistBetweenBlobs => ref.minDistBetweenBlobs;
+  set minDistBetweenBlobs(double v) => ref.minDistBetweenBlobs = v;
+
   double get minInertiaRatio => ref.minInertiaRatio;
+  set minInertiaRatio(double v) => ref.minInertiaRatio = v;
+
   int get minRepeatability => ref.minRepeatability;
+  set minRepeatability(int v) => ref.minRepeatability = v;
+
   double get minThreshold => ref.minThreshold;
+  set minThreshold(double v) => ref.minThreshold = v;
+
   double get thresholdStep => ref.thresholdStep;
-
-  set blobColor(int v) {
-    ref.blobColor = v;
-  }
-
-  set filterByArea(bool v) {
-    ref.filterByArea = v;
-  }
-
-  set filterByCircularity(bool v) {
-    ref.filterByCircularity = v;
-  }
-
-  set filterByColor(bool v) {
-    ref.filterByColor = v;
-  }
-
-  set filterByConvexity(bool v) {
-    ref.filterByConvexity = v;
-  }
-
-  set filterByInertia(bool v) {
-    ref.filterByInertia = v;
-  }
-
-  set maxArea(double v) {
-    ref.maxArea = v;
-  }
-
-  set maxCircularity(double v) {
-    ref.maxCircularity = v;
-  }
-
-  set maxConvexity(double v) {
-    ref.maxConvexity = v;
-  }
-
-  set maxInertiaRatio(double v) {
-    ref.maxInertiaRatio = v;
-  }
-
-  set maxThreshold(double v) {
-    ref.maxThreshold = v;
-  }
-
-  set minArea(double v) {
-    ref.minArea = v;
-  }
-
-  set minCircularity(double v) {
-    ref.minCircularity = v;
-  }
-
-  set minConvexity(double v) {
-    ref.minConvexity = v;
-  }
-
-  set minDistBetweenBlobs(double v) {
-    ref.minDistBetweenBlobs = v;
-  }
-
-  set minInertiaRatio(double v) {
-    ref.minInertiaRatio = v;
-  }
-
-  set minRepeatability(int v) {
-    ref.minRepeatability = v;
-  }
-
-  set minThreshold(double v) {
-    ref.minThreshold = v;
-  }
-
-  set thresholdStep(double v) {
-    ref.thresholdStep = v;
-  }
+  set thresholdStep(double v) => ref.thresholdStep = v;
 
   @override
   List<num> get props => [
@@ -759,9 +694,6 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.SimpleBlobDetector get ref => ptr.ref;
 }
 
@@ -818,9 +750,6 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.BFMatcher get ref => ptr.ref;
 }
 
@@ -864,9 +793,6 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     finalizer.detach(this);
     cfeatures2d.FlannBasedMatcher_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.FlannBasedMatcher get ref => ptr.ref;
@@ -955,9 +881,6 @@ class SIFT extends CvStruct<cvg.SIFT> {
     finalizer.detach(this);
     cfeatures2d.SIFT_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.SIFT get ref => ptr.ref;

@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.core;
 
 import 'dart:ffi' as ffi;
 
@@ -339,7 +339,7 @@ Mat copyMakeBorder(
   Scalar? value,
 }) {
   dst ??= Mat.empty();
-  value ??= Scalar.default_();
+  value ??= Scalar();
   cvRun(
     () => ccore.Mat_CopyMakeBorder(
       src.ref,
@@ -795,9 +795,9 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
 Mat merge(VecMat mv, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Merge(mv.ref, dst!.ref));
-  return dst;
+  final p = calloc<cvg.Mat>();
+  cvRun(() => ccore.Mat_Merge(mv.ref, p));
+  return Mat.fromPointer(p);
 }
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
@@ -847,7 +847,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-VecMat mixChannels(VecMat src, VecMat dst, VecInt fromTo) {
+VecMat mixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
   cvRun(() => ccore.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
   return dst;
 }

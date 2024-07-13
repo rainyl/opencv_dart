@@ -1,4 +1,4 @@
-library cv;
+library cv.objdetect;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -68,7 +68,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
     return rval;
   }
 
-  Future<(VecRect objects, VecInt numDetections)> detectMultiScale2Async(
+  Future<(VecRect objects, VecI32 numDetections)> detectMultiScale2Async(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -76,7 +76,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
   }) async {
-    final rval = cvRunAsync2<(VecRect, VecInt)>(
+    final rval = cvRunAsync2<(VecRect, VecI32)>(
         (callback) => cobjdetect.CascadeClassifier_DetectMultiScale2_Async(
               ref,
               image.ref,
@@ -88,13 +88,13 @@ extension CascadeClassifierAsync on CascadeClassifier {
               callback,
             ), (c, ret, pnums) {
       return c.complete(
-        (VecRect.fromPointer(ret.cast<cvg.VecRect>()), VecInt.fromPointer(pnums.cast<cvg.VecInt>())),
+        (VecRect.fromPointer(ret.cast<cvg.VecRect>()), VecI32.fromPointer(pnums.cast<cvg.VecI32>())),
       );
     });
     return rval;
   }
 
-  Future<(VecRect objects, VecInt rejectLevels, VecDouble levelWeights)> detectMultiScale3Async(
+  Future<(VecRect objects, VecI32 rejectLevels, VecF64 levelWeights)> detectMultiScale3Async(
     InputArray image, {
     double scaleFactor = 1.1,
     int minNeighbors = 3,
@@ -103,7 +103,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) maxSize = (0, 0),
     bool outputRejectLevels = false,
   }) async {
-    final rval = cvRunAsync3<(VecRect, VecInt, VecDouble)>(
+    final rval = cvRunAsync3<(VecRect, VecI32, VecF64)>(
       (callback) => cobjdetect.CascadeClassifier_DetectMultiScale3_Async(
         ref,
         image.ref,
@@ -118,8 +118,8 @@ extension CascadeClassifierAsync on CascadeClassifier {
       (c, p1, p2, p3) => c.complete(
         (
           VecRect.fromPointer(p1.cast<cvg.VecRect>()),
-          VecInt.fromPointer(p2.cast<cvg.VecInt>()),
-          VecDouble.fromPointer(p3.cast<cvg.VecDouble>())
+          VecI32.fromPointer(p2.cast<cvg.VecI32>()),
+          VecF64.fromPointer(p3.cast<cvg.VecF64>())
         ),
       ),
     );
@@ -197,12 +197,12 @@ extension HOGDescriptorAsync on HOGDescriptor {
     return rval;
   }
 
-  Future<(VecFloat descriptors, VecPoint locations)> computeAsync(
+  Future<(VecF32 descriptors, VecPoint locations)> computeAsync(
     Mat img, {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) async {
-    final rval = cvRunAsync2<(VecFloat, VecPoint)>(
+    final rval = cvRunAsync2<(VecF32, VecPoint)>(
         (callback) => cobjdetect.HOGDescriptor_Compute_Async(
               ref,
               img.ref,
@@ -212,7 +212,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
             ), (c, descriptors, locations) {
       return c.complete(
         (
-          VecFloat.fromPointer(descriptors.cast<cvg.VecFloat>()),
+          VecF32.fromPointer(descriptors.cast<cvg.VecF32>()),
           VecPoint.fromPointer(locations.cast<cvg.VecPoint>())
         ),
       );
@@ -242,13 +242,13 @@ extension HOGDescriptorAsync on HOGDescriptor {
     return rval;
   }
 
-  Future<(VecPoint foundLocations, VecDouble weights, VecPoint searchLocations)> detect2Async(
+  Future<(VecPoint foundLocations, VecF64 weights, VecPoint searchLocations)> detect2Async(
     InputArray img, {
     double hitThreshold = 0,
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) async {
-    final rval = cvRunAsync3<(VecPoint, VecDouble, VecPoint)>(
+    final rval = cvRunAsync3<(VecPoint, VecF64, VecPoint)>(
         (callback) => cobjdetect.HOGDescriptor_Detect_Async(
               ref,
               img.ref,
@@ -260,7 +260,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       return c.complete(
         (
           VecPoint.fromPointer(foundLocations.cast<cvg.VecPoint>()),
-          VecDouble.fromPointer(weights.cast<cvg.VecDouble>()),
+          VecF64.fromPointer(weights.cast<cvg.VecF64>()),
           VecPoint.fromPointer(searchLocations.cast<cvg.VecPoint>())
         ),
       );
@@ -320,19 +320,15 @@ extension HOGDescriptorAsync on HOGDescriptor {
     return rval;
   }
 
-  static Future<VecFloat> getDefaultPeopleDetectorAsync() async {
-    final rval = cvRunAsync<VecFloat>(cobjdetect.HOG_GetDefaultPeopleDetector_Async, (c, v) {
-      return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
-    });
-    return rval;
-  }
+  static Future<VecF32> getDefaultPeopleDetectorAsync() async => cvRunAsync<VecF32>(
+        cobjdetect.HOG_GetDefaultPeopleDetector_Async,
+        (c, v) => c.complete(VecF32.fromPointer(v.cast<cvg.VecF32>())),
+      );
 
-  static Future<VecFloat> getDaimlerPeopleDetectorAsync() async {
-    final rval = cvRunAsync<VecFloat>(cobjdetect.HOGDescriptor_getDaimlerPeopleDetector_Async, (c, v) {
-      return c.complete(VecFloat.fromPointer(v.cast<cvg.VecFloat>()));
-    });
-    return rval;
-  }
+  static Future<VecF32> getDaimlerPeopleDetectorAsync() async => cvRunAsync<VecF32>(
+        cobjdetect.HOGDescriptor_getDaimlerPeopleDetector_Async,
+        (c, v) => c.complete(VecF32.fromPointer(v.cast<cvg.VecF32>())),
+      );
 
   Future<int> getDescriptorSizeAsync() async {
     final rval = cvRunAsync<int>(
@@ -354,32 +350,32 @@ extension HOGDescriptorAsync on HOGDescriptor {
     return rval;
   }
 
-  Future<(VecRect rectList, VecDouble weights)> groupRectanglesAsync(
+  Future<(VecRect rectList, VecF64 weights)> groupRectanglesAsync(
     VecRect rectList,
-    VecDouble weights,
+    VecF64 weights,
     int groupThreshold,
     double eps,
   ) async {
-    final rval = cvRunAsync0<(VecRect, VecDouble)>(
+    final rval = cvRunAsync0<(VecRect, VecF64)>(
         (callback) => cobjdetect.HOGDescriptor_groupRectangles_Async(
               ref,
-              rectList.ref,
-              weights.ref,
+              rectList.ptr,
+              weights.ptr,
               groupThreshold,
               eps,
               callback,
             ), (c) {
+      rectList.reattach();
+      weights.reattach();
       return c.complete((rectList, weights));
     });
     return rval;
   }
 
-  Future<void> setSVMDetectorAsync(VecFloat det) async {
-    await cvRunAsync0<void>(
-        (callback) => cobjdetect.HOGDescriptor_SetSVMDetector_Async(ref, det.ref, callback), (c) {
-      return c.complete();
-    });
-  }
+  Future<void> setSVMDetectorAsync(VecF32 det) async => cvRunAsync0<void>(
+        (callback) => cobjdetect.HOGDescriptor_SetSVMDetector_Async(ref, det.ref, callback),
+        (c) => c.complete(),
+      );
 }
 
 Future<VecRect> groupRectanglesAsync(
@@ -388,7 +384,8 @@ Future<VecRect> groupRectanglesAsync(
   double eps,
 ) async {
   final rval = cvRunAsync0<VecRect>(
-      (callback) => cobjdetect.GroupRectangles_Async(rects.ref, groupThreshold, eps, callback), (c) {
+      (callback) => cobjdetect.GroupRectangles_Async(rects.ptr, groupThreshold, eps, callback), (c) {
+    rects.reattach();
     return c.complete(rects);
   });
   return rval;

@@ -4,6 +4,7 @@
 */
 
 #include "video_async.h"
+#include "core/vec.hpp"
 #include <vector>
 
 CvStatus *BackgroundSubtractorMOG2_Create_Async(CvCallback_1 callback) {
@@ -73,7 +74,7 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
     Mat prevImg,
     Mat nextImg,
     VecPoint2f prevPts,
-    VecPoint2f nextPts,
+    VecPoint2f *nextPts,
     Size winSize,
     int maxLevel,
     TermCriteria criteria,
@@ -82,14 +83,16 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
     CvCallback_2 callback
 ) {
   BEGIN_WRAP
+  auto _prevPts = vecpoint2f_c2cpp(prevPts);
+  auto _nextPts = vecpoint2f_c2cpp(*nextPts);
   std::vector<uchar> _status;
   std::vector<float> _err;
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
   cv::calcOpticalFlowPyrLK(
       *prevImg.ptr,
       *nextImg.ptr,
-      *prevPts.ptr,
-      *nextPts.ptr,
+      _prevPts,
+      _nextPts,
       _status,
       _err,
       cv::Size(winSize.width, winSize.height),
@@ -98,9 +101,8 @@ CvStatus *CalcOpticalFlowPyrLK_Async(
       flags,
       minEigThreshold
   );
-  callback(
-      new VecUChar{new std::vector<uchar>(_status)}, new VecFloat{new std::vector<float>(_err)}
-  );
+  vecpoint2f_cpp2c(_nextPts, nextPts);
+  callback(vecuchar_cpp2c_p(_status), vecfloat_cpp2c_p(_err));
   END_WRAP
 }
 CvStatus *CalcOpticalFlowFarneback_Async(

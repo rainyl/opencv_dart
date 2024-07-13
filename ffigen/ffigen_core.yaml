@@ -39,13 +39,6 @@ functions:
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 
-type-map:
-  'typedefs':
-    'uchar':
-      'lib': 'ffi'
-      'c-type': 'UnsignedChar'
-      'dart-type': 'int'
-
 preamble: |
   // coverage:ignore-file
   // opencv_dart - OpenCV bindings for Dart language

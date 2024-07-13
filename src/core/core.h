@@ -40,21 +40,26 @@ void CvStatus_Close(CvStatus *self);
  */
 CvStatus *Mat_New(Mat *rval);
 CvStatus *Mat_NewWithSize(int rows, int cols, int type, Mat *rval);
-CvStatus *Mat_NewWithSizes(VecInt sizes, int type, Mat *rval);
-CvStatus *Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval);
-CvStatus *Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval);
-CvStatus *Mat_NewFromScalar(const Scalar ar, int type, Mat *rval);
-CvStatus *Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
+CvStatus *Mat_NewWithSizes(VecI32 sizes, int type, Mat *rval);
+CvStatus *Mat_NewWithSizesFromScalar(VecI32 sizes, int type, Scalar ar, Mat *rval);
+CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, VecChar buf, Mat *rval);
+CvStatus *Mat_NewFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
 CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval);
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval);
 CvStatus *Mat_NewFromVecPoint3i(VecPoint3i vec, Mat *rval);
+
+CvStatus *Mat_toVecPoint(Mat self, VecPoint *vec);
+CvStatus *Mat_toVecPoint2f(Mat self, VecPoint2f *vec);
+CvStatus *Mat_toVecPoint3f(Mat self, VecPoint3f *vec);
+CvStatus *Mat_toVecPoint3i(Mat self, VecPoint3i *vec);
+
 CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus *Mat_FromCMat(Mat m, Mat *rval);
 CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval);
-void      Mat_Close(MatPtr m);
-void      Mat_CloseVoid(void *m);
+void Mat_Close(MatPtr m);
+void Mat_CloseVoid(void *m);
 CvStatus *Mat_Release(Mat *m);
 CvStatus *Mat_Empty(Mat m, bool *rval);
 CvStatus *Mat_IsContinuous(Mat m, bool *rval);
@@ -78,7 +83,7 @@ CvStatus *Mat_Channels(Mat m, int *rval);
 CvStatus *Mat_Type(Mat m, int *rval);
 CvStatus *Mat_Step(Mat m, int *rval);
 CvStatus *Mat_Total(Mat m, int *rval);
-CvStatus *Mat_Size(Mat m, VecInt *rval);
+CvStatus *Mat_Size(Mat m, VecI32 *rval);
 CvStatus *Mat_ElemSize(Mat m, int *rval);
 CvStatus *Mat_Data(Mat m, VecUChar *rval);
 CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length);
@@ -233,16 +238,27 @@ CvStatus *Mat_BitwiseOrWithMask(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_BitwiseXor(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_BitwiseXorWithMask(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_Compare(Mat src1, Mat src2, Mat dst, int ct);
-CvStatus *Mat_BatchDistance(Mat src1, Mat src2, Mat dist, int dtype, Mat nidx, int normType, int K, Mat mask,
-                            int update, bool crosscheck);
+CvStatus *Mat_BatchDistance(
+    Mat src1,
+    Mat src2,
+    Mat dist,
+    int dtype,
+    Mat nidx,
+    int normType,
+    int K,
+    Mat mask,
+    int update,
+    bool crosscheck
+);
 CvStatus *Mat_BorderInterpolate(int p, int len, int borderType, int *rval);
 CvStatus *Mat_CalcCovarMatrix(Mat samples, Mat covar, Mat mean, int flags, int ctype);
 CvStatus *Mat_CartToPolar(Mat x, Mat y, Mat magnitude, Mat angle, bool angleInDegrees);
 CvStatus *Mat_CheckRange(Mat m, bool quiet, Point *pos, double minVal, double maxVal, bool *rval);
 CvStatus *Mat_CompleteSymm(Mat m, bool lowerToUpper);
 CvStatus *Mat_ConvertScaleAbs(Mat src, Mat dst, double alpha, double beta);
-CvStatus *Mat_CopyMakeBorder(Mat src, Mat dst, int top, int bottom, int left, int right, int borderType,
-                             Scalar value);
+CvStatus *Mat_CopyMakeBorder(
+    Mat src, Mat dst, int top, int bottom, int left, int right, int borderType, Scalar value
+);
 CvStatus *Mat_CountNonZero(Mat src, int *rval);
 CvStatus *Mat_DCT(Mat src, Mat dst, int flags);
 CvStatus *Mat_Determinant(Mat m, double *rval);
@@ -270,11 +286,11 @@ CvStatus *Mat_Magnitude(Mat x, Mat y, Mat magnitude);
 CvStatus *Mat_Max(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_MeanStdDev(Mat src, Scalar *dstMean, Scalar *dstStdDev);
 CvStatus *Mat_MeanStdDevWithMask(Mat src, Scalar *dstMean, Scalar *dstStdDev, Mat mask);
-CvStatus *Mat_Merge(VecMat mats, Mat dst);
+CvStatus *Mat_Merge(VecMat mats, Mat *dst);
 CvStatus *Mat_Min(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_MinMaxIdx(Mat m, double *minVal, double *maxVal, int *minIdx, int *maxIdx);
 CvStatus *Mat_MinMaxLoc(Mat m, double *minVal, double *maxVal, Point *minLoc, Point *maxLoc);
-CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecInt fromTo);
+CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo);
 CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags);
 CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_MultiplyWithParams(Mat src1, Mat src2, Mat dst, double scale, int dtype);
@@ -304,10 +320,26 @@ CvStatus *Mat_Sum(Mat src, Scalar *rval);
 CvStatus *Mat_rowRange(Mat m, int start, int end, Mat *rval);
 CvStatus *Mat_colRange(Mat m, int start, int end, Mat *rval);
 CvStatus *LUT(Mat src, Mat lut, Mat dst);
-CvStatus *KMeans(Mat data, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags, Mat centers,
-                 double *rval);
-CvStatus *KMeansPoints(VecPoint2f pts, int k, Mat bestLabels, TermCriteria criteria, int attempts, int flags,
-                       Mat centers, double *rval);
+CvStatus *KMeans(
+    Mat data,
+    int k,
+    Mat bestLabels,
+    TermCriteria criteria,
+    int attempts,
+    int flags,
+    Mat centers,
+    double *rval
+);
+CvStatus *KMeansPoints(
+    VecPoint2f pts,
+    int k,
+    Mat bestLabels,
+    TermCriteria criteria,
+    int attempts,
+    int flags,
+    Mat centers,
+    double *rval
+);
 CvStatus *Rotate(Mat src, Mat dst, int rotateCode);
 CvStatus *Norm(Mat src1, int normType, double *rval);
 CvStatus *NormWithMats(Mat src1, Mat src2, int normType, double *rval);
@@ -317,7 +349,7 @@ CvStatus *NormWithMats(Mat src1, Mat src2, int normType, double *rval);
 
 CvStatus *Rng_New(RNG *rval);
 CvStatus *Rng_NewWithState(uint64_t state, RNG *rval);
-void      Rng_Close(RNGPtr rng);
+void Rng_Close(RNGPtr rng);
 CvStatus *TheRNG(RNG *rval);
 CvStatus *SetRNGSeed(int seed);
 CvStatus *RNG_Fill(RNG rng, Mat mat, int distType, double a, double b, bool saturateRange);

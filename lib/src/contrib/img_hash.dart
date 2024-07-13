@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-library cv;
+library cv.contrib;
 
 import 'dart:ffi' as ffi;
 
@@ -193,13 +193,10 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
         matCompleter,
       );
 
-  Future<VecDouble> getMeanAsync() async => cvRunAsync<VecDouble>(
+  Future<VecF64> getMeanAsync() async => cvRunAsync<VecF64>(
         (callback) => ccontrib.BlockMeanHash_GetMean_Async(ref, callback),
-        vecDoubleCompleter,
+        vecF64Completer,
       );
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.BlockMeanHash get ref => ptr.ref;

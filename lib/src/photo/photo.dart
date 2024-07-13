@@ -1,4 +1,4 @@
-library cv;
+library cv.photo;
 
 import 'dart:ffi' as ffi;
 
@@ -69,9 +69,6 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
   cvg.MergeMertens get ref => ptr.ref;
 }
 
@@ -139,9 +136,6 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     cphoto.AlignMTB_Process(ref, src.ref, dst);
     return VecMat.fromPointer(dst);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.AlignMTB get ref => ptr.ref;

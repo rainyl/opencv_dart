@@ -1,6 +1,8 @@
 #include "core_async.h"
 #include "core/types.h"
 #include "lut.hpp"
+#include "vec.hpp"
+
 #include "opencv2/core.hpp"
 #include "opencv2/core/types.hpp"
 #pragma region Mat_Constructors
@@ -14,21 +16,21 @@ CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callb
   callback(new Mat{new cv::Mat(rows, cols, type)});
   END_WRAP
 }
-CvStatus *Mat_NewWithSizes_Async(VecInt sizes, int type, CvCallback_1 callback) {
+CvStatus *Mat_NewWithSizes_Async(VecI32 sizes, int type, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(*sizes.ptr, type)});
+  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type)});
   END_WRAP
 }
-CvStatus *Mat_NewWithSizesScalar_Async(VecInt sizes, int type, Scalar s, CvCallback_1 callback) {
+CvStatus *Mat_NewWithSizesScalar_Async(VecI32 sizes, int type, Scalar s, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(s.val1, s.val2, s.val3, s.val4);
-  callback(new Mat{new cv::Mat(*sizes.ptr, type, c)});
+  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, c)});
   END_WRAP
 }
 CvStatus *
-Mat_NewWithSizesFromBytes_Async(VecInt sizes, int type, VecChar buf, CvCallback_1 callback) {
+Mat_NewWithSizesFromBytes_Async(VecI32 sizes, int type, VecChar buf, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(*sizes.ptr, type, buf.ptr)});
+  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, buf.ptr)});
   END_WRAP
 }
 CvStatus *
@@ -38,25 +40,33 @@ Mat_NewFromScalar_Async(const Scalar s, int rows, int cols, int type, CvCallback
   callback(new Mat{new cv::Mat(rows, cols, type, c)});
   END_WRAP
 }
+
 CvStatus *
 Mat_NewFromBytes_Async(int rows, int cols, int type, void *buf, int step, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(rows, cols, type, buf, step)});
+  cv::Mat m = cv::Mat(rows, cols, type);
+  m.create(rows, cols, type);
+  memcpy(m.data, buf, m.total() * m.elemSize());
+  callback(new Mat{new cv::Mat(m)});
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint_Async(VecPoint vec, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(*vec.ptr)});
+  auto v = vecpoint_c2cpp(vec);
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint2f_Async(VecPoint2f vec, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(*vec.ptr)});
+  auto v = vecpoint2f_c2cpp(vec);
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint3f_Async(VecPoint3f vec, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(*vec.ptr)});
+  auto v = vecpoint3f_c2cpp(vec);
+  callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
 
@@ -130,16 +140,24 @@ Mat_ConvertToWithParams_Async(Mat self, int type, float alpha, float beta, CvCal
 }
 CvStatus *Mat_ToVecUChar_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  self.ptr->convertTo(dst, CV_8UC1);
-  callback(new VecUChar{new std::vector<uchar>(dst)});
+  if (self.ptr->isContinuous()) {
+    callback(new VecUChar{self.ptr->data, self.ptr->total() * self.ptr->channels()});
+  } else {
+    throw cv::Exception(
+        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+    );
+  }
   END_WRAP
 }
 CvStatus *Mat_ToVecChar_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  self.ptr->convertTo(dst, CV_8SC1);
-  callback(new VecChar{new std::vector<char>(dst)});
+  if (self.ptr->isContinuous()) {
+    callback(new VecChar{(char *)self.ptr->data, self.ptr->total() * self.ptr->channels()});
+  } else {
+    throw cv::Exception(
+        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+    );
+  }
   END_WRAP
 }
 CvStatus *Mat_Region_Async(Mat self, Rect r, CvCallback_1 callback) {
@@ -620,9 +638,10 @@ CvStatus *core_MeanStdDevWithMask_Async(Mat src, Mat mask, CvCallback_2 callback
 
 CvStatus *core_Merge_Async(VecMat mats, CvCallback_1 callback) {
   BEGIN_WRAP
-  cv::Mat dst;
-  cv::merge(*mats.ptr, dst);
-  callback(new Mat{new cv::Mat(dst)});
+  auto mv = vecmat_c2cpp(mats);
+  cv::Mat _dst;
+  cv::merge(mv, _dst);
+  callback(new Mat{new cv::Mat(_dst)});
   END_WRAP
 }
 
@@ -680,9 +699,13 @@ CvStatus *core_MinMaxLoc_Mask_Async(Mat self, Mat mask, CvCallback_4 callback) {
   END_WRAP
 }
 
-CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecInt fromTo, CvCallback_0 callback) {
+CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecI32 fromTo, CvCallback_0 callback) {
   BEGIN_WRAP
-  cv::mixChannels(*src.ptr, *dst.ptr, *fromTo.ptr);
+  auto _src = vecmat_c2cpp(src);
+  auto _dst = vecmat_c2cpp(dst);
+  std::vector<int> _fromTo(fromTo.ptr, fromTo.ptr + fromTo.length);
+  cv::mixChannels(_src, _dst, _fromTo);
+  // TODO: check whether dst changed
   callback();
   END_WRAP
 }
@@ -829,7 +852,7 @@ CvStatus *core_Split_Async(Mat src, CvCallback_1 callback) {
   BEGIN_WRAP
   std::vector<cv::Mat> dst;
   cv::split(*src.ptr, dst);
-  callback(new VecMat{new std::vector<cv::Mat>(dst)});
+  callback(vecmat_cpp2c_p(dst));
   END_WRAP
 }
 
@@ -1095,7 +1118,8 @@ CvStatus *core_KMeans_Points_Async(
   BEGIN_WRAP
   cv::TermCriteria tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
   cv::Mat centers;
-  double rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, tc, attempts, flags, centers);
+  auto _pts = vecpoint2f_c2cpp(pts);
+  double rval = cv::kmeans(_pts, k, *bestLabels.ptr, tc, attempts, flags, centers);
   callback(new double(rval), new Mat{new cv::Mat(centers)});
   END_WRAP
 }

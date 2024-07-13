@@ -1,5 +1,7 @@
 #include "core.h"
 #include "lut.hpp"
+#include "vec.hpp"
+
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
@@ -14,9 +16,10 @@ CvStatus *RotatedRect_Points(RotatedRect rect, VecPoint2f *pts) {
   );
   std::vector<cv::Point2f> pts_;
   r.points(pts_);
-  *pts = {new std::vector<cv::Point2f>(pts_)};
+  *pts = vecpoint2f_cpp2c(pts_);
   END_WRAP
 }
+
 CvStatus *RotatedRect_BoundingRect(RotatedRect rect, Rect *rval) {
   BEGIN_WRAP
   auto r = cv::RotatedRect(
@@ -68,84 +71,95 @@ CvStatus *Mat_New(Mat *rval) {
 }
 CvStatus *Mat_NewWithSize(int rows, int cols, int type, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(rows, cols, type, 0.0)};
+  *rval = {new cv::Mat(rows, cols, type)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizes(VecInt sizes, int type, Mat *rval) {
+CvStatus *Mat_NewWithSizes(VecI32 sizes, int type, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(*sizes.ptr, type)};
+  *rval = {new cv::Mat(sizes.length, sizes.ptr, type)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizesFromScalar(VecInt sizes, int type, Scalar ar, Mat *rval) {
-  BEGIN_WRAP
-  cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
-  *rval = {new cv::Mat(*sizes.ptr, type, c)};
-  END_WRAP
-}
-CvStatus *Mat_NewWithSizesFromBytes(VecInt sizes, int type, VecChar buf, Mat *rval) {
-  BEGIN_WRAP
-  *rval = {new cv::Mat(*sizes.ptr, type, buf.ptr)};
-  END_WRAP
-}
-CvStatus *Mat_NewFromScalar(const Scalar ar, int type, Mat *rval) {
+CvStatus *Mat_NewWithSizesFromScalar(VecI32 sizes, int type, Scalar ar, Mat *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
-  *rval = {new cv::Mat(1, 1, type, c)};
+  *rval = {new cv::Mat(sizes.length, sizes.ptr, type, c)};
   END_WRAP
 }
-CvStatus *Mat_NewWithSizeFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval) {
+CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, void *buf, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(sizes.length, sizes.ptr, type, buf)};
+  END_WRAP
+}
+
+CvStatus *Mat_NewFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
   *rval = {new cv::Mat(rows, cols, type, c)};
   END_WRAP
 }
+
 CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval) {
   BEGIN_WRAP
-  // auto p = reinterpret_cast<uchar *>(buf);
-  // int depth = CV_MAT_DEPTH(type);
-  //     switch (depth) {
-  //   case CV_8U:
-  //   case CV_8S: expect_total = 256; break;
-  //   case CV_16U:
-  //   case CV_16S: expect_total = 65536; break;
-  //   // TODO: can't create a mat with 4294967296 rows, maybe use vector instead
-  //   // case CV_32S:
-  //   //   expect_total = 4294967296;
-  //   //   break;
-  //   default:
-  //     throw cv::Exception(
-  //         cv::Error::StsNotImplemented,
-  //         "source Mat Type not supported",
-  //         __func__,
-  //         __FILE__,
-  //         __LINE__
-  //     );
-  //   }
   cv::Mat m = cv::Mat(rows, cols, type);
   m.create(rows, cols, type);
   memcpy(m.data, buf, m.total() * m.elemSize());
   *rval = {new cv::Mat(m)};
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(*vec.ptr)};
+  auto v = vecpoint_c2cpp(vec);
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint2f(VecPoint2f vec, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(*vec.ptr)};
+  auto v = vecpoint2f_c2cpp(vec);
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 CvStatus *Mat_NewFromVecPoint3f(VecPoint3f vec, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(*vec.ptr)};
+  auto v = vecpoint3f_c2cpp(vec);
+  *rval = {new cv::Mat(v, true)};
   END_WRAP
 }
 
 CvStatus *Mat_NewFromVecPoint3i(VecPoint3i vec, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(*vec.ptr)};
+  auto v = vecpoint3i_c2cpp(vec);
+  *rval = {new cv::Mat(v, true)};
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint(Mat self, VecPoint *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point> pts;
+  self.ptr->copyTo(pts);
+  *vec = vecpoint_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint2f(Mat self, VecPoint2f *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point2f> pts;
+  self.ptr->copyTo(pts);
+  *vec = vecpoint2f_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint3f(Mat self, VecPoint3f *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point3f> pts = (std::vector<cv::Point3f>)*self.ptr;
+  *vec = vecpoint3f_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toVecPoint3i(Mat self, VecPoint3i *vec) {
+  BEGIN_WRAP
+  std::vector<cv::Point3i> pts = (std::vector<cv::Point3i>)*self.ptr;
+  *vec = vecpoint3i_cpp2c(pts);
   END_WRAP
 }
 
@@ -155,7 +169,7 @@ CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols,
   END_WRAP
 }
 
-CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval){
+CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(*m.ptr, cv::Range(rowStart, rowEnd), cv::Range(colStart, colEnd))};
   END_WRAP
@@ -218,12 +232,24 @@ CvStatus *Mat_ConvertToWithParams(Mat m, Mat dst, int type, float alpha, float b
 }
 CvStatus *Mat_ToVecUChar(Mat m, VecUChar *rval) {
   BEGIN_WRAP
-  *rval = {new std::vector<uchar>(m.ptr->begin<uchar>(), m.ptr->end<uchar>())};
+  if (m.ptr->isContinuous()) {
+    *rval = {m.ptr->data, m.ptr->total() * m.ptr->channels()};
+  } else {
+    throw cv::Exception(
+        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+    );
+  }
   END_WRAP
 }
 CvStatus *Mat_ToVecChar(Mat m, VecChar *rval) {
   BEGIN_WRAP
-  *rval = {new std::vector<char>(m.ptr->begin<char>(), m.ptr->end<char>())};
+  if (m.ptr->isContinuous()) {
+    *rval = {(char *)m.ptr->data, m.ptr->total() * m.ptr->channels()};
+  } else {
+    throw cv::Exception(
+        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+    );
+  }
   END_WRAP
 }
 CvStatus *Mat_Region(Mat m, Rect r, Mat *rval) {
@@ -297,13 +323,12 @@ CvStatus *Mat_Total(Mat m, int *rval) {
   *rval = m.ptr->total();
   END_WRAP
 }
-CvStatus *Mat_Size(Mat m, VecInt *rval) {
+CvStatus *Mat_Size(Mat m, VecI32 *rval) {
   BEGIN_WRAP
-  std::vector<int> v;
-
   auto size = m.ptr->size;
-  for (int i = 0; i < size.dims(); i++) { v.push_back(size[i]); }
-  *rval = {new std::vector<int>(v)};
+  int *ptr = new int[size.dims()];
+  memcpy(ptr, size.p, size.dims());
+  *rval = {ptr, static_cast<size_t>(size.dims())};
   END_WRAP
 }
 CvStatus *Mat_ElemSize(Mat m, int *rval) {
@@ -313,7 +338,13 @@ CvStatus *Mat_ElemSize(Mat m, int *rval) {
 }
 CvStatus *Mat_Data(Mat m, VecUChar *rval) {
   BEGIN_WRAP
-  *rval = {new std::vector<uchar>(*m.ptr->data)};
+  if (m.ptr->isContinuous()) {
+    *rval = {(uchar *)m.ptr->data, m.ptr->total() * m.ptr->channels()};
+  } else {
+    throw cv::Exception(
+        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+    );
+  }
   END_WRAP
 }
 
@@ -1314,9 +1345,12 @@ CvStatus *Mat_MeanStdDevWithMask(Mat src, Scalar *dstMean, Scalar *dstStdDev, Ma
   END_WRAP
 }
 
-CvStatus *Mat_Merge(VecMat vec, Mat dst) {
+CvStatus *Mat_Merge(VecMat vec, Mat *dst) {
   BEGIN_WRAP
-  cv::merge(*vec.ptr, *dst.ptr);
+  auto mv = vecmat_c2cpp(vec);
+  cv::Mat _dst;
+  cv::merge(mv, _dst);
+  *dst = {new cv::Mat(_dst)};
   END_WRAP
 }
 
@@ -1342,9 +1376,12 @@ CvStatus *Mat_MinMaxLoc(Mat m, double *minVal, double *maxVal, Point *minLoc, Po
   END_WRAP
 }
 
-CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecInt fromTo) {
+CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
   BEGIN_WRAP
-  cv::mixChannels(*src.ptr, *dst.ptr, *fromTo.ptr);
+  auto _src = vecmat_c2cpp(src);
+  auto _dst = vecmat_c2cpp(dst);
+  std::vector<int> _fromTo(fromTo.ptr, fromTo.ptr + fromTo.length);
+  cv::mixChannels(_src, _dst, _fromTo);
   END_WRAP
 }
 
@@ -1447,7 +1484,7 @@ CvStatus *Mat_Split(Mat src, VecMat *rval) {
   BEGIN_WRAP
   std::vector<cv::Mat> channels;
   cv::split(*src.ptr, channels);
-  *rval = {new std::vector<cv::Mat>(channels)};
+  *rval = vecmat_cpp2c(channels);
   END_WRAP
 }
 
@@ -1684,7 +1721,8 @@ CvStatus *KMeansPoints(
 ) {
   BEGIN_WRAP
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-  *rval = cv::kmeans(*pts.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
+  auto _pts = vecpoint2f_c2cpp(pts);
+  *rval = cv::kmeans(_pts, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
 CvStatus *Rotate(Mat src, Mat dst, int rotateCode) {

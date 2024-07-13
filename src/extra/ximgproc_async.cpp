@@ -4,6 +4,7 @@
 */
 #include "ximgproc_async.h"
 #include "core/types.h"
+#include "core/vec.hpp"
 #include "opencv2/core/types.hpp"
 #include "opencv2/ximgproc.hpp"
 #include "opencv2/ximgproc/structured_edge_detection.hpp"
@@ -207,13 +208,13 @@ CvStatus *
 ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async(EdgeDrawing self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto dst = (*self.ptr)->getSegmentIndicesOfLines();
-  callback(new VecInt{new std::vector<int>(dst)});
+  callback(vecint_cpp2c_p(dst));
   END_WRAP
 }
 CvStatus *ximgproc_EdgeDrawing_getSegments_Async(EdgeDrawing self, CvCallback_1 callback) {
   BEGIN_WRAP
   auto dst = (*self.ptr)->getSegments();
-  callback(new VecVecPoint{new std::vector<std::vector<cv::Point>>(dst)});
+  callback(vecvecpoint_cpp2c_p(dst));
   END_WRAP
 }
 
@@ -222,7 +223,8 @@ CvStatus *
 ximgproc_rl_createRLEImage_Async(const VecPoint3i runs, Size size, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
-  cv::ximgproc::rl::createRLEImage(*runs.ptr, dst, cv::Size(size.width, size.height));
+  auto _runs = vecpoint3i_c2cpp(runs);
+  cv::ximgproc::rl::createRLEImage(_runs, dst, cv::Size(size.width, size.height));
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }

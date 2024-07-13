@@ -1,4 +1,5 @@
 // ignore_for_file: constant_identifier_names
+library cv.imgproc.subdiv2d;
 
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
@@ -121,11 +122,11 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// Returns a list of the leading edge ID connected to each triangle.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
-  VecInt getLeadingEdgeList() {
-    return using<VecInt>((arena) {
-      final pv = calloc<cvg.VecInt>();
+  VecI32 getLeadingEdgeList() {
+    return using<VecI32>((arena) {
+      final pv = calloc<cvg.VecI32>();
       cvRun(() => cimgproc.Subdiv2D_GetLeadingEdgeList(ref, pv));
-      return VecInt.fromPointer(pv);
+      return VecI32.fromPointer(pv);
     });
   }
 
@@ -162,7 +163,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// Returns a list of all Voronoi facets.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
-  (VecVecPoint2f facetList, VecPoint2f facetCenters) getVoronoiFacetList(VecInt idx) {
+  (VecVecPoint2f facetList, VecPoint2f facetCenters) getVoronoiFacetList(VecI32 idx) {
     return using<(VecVecPoint2f, VecPoint2f)>((arena) {
       final pf = calloc<cvg.VecVecPoint2f>();
       final pfc = calloc<cvg.VecPoint2f>();
@@ -254,9 +255,6 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
       return p.value;
     });
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.Subdiv2D get ref => ptr.ref;

@@ -14,10 +14,10 @@ extern "C" {
 #pragma region Mat_Constructors
 CvStatus *Mat_New_Async(CvCallback_1 callback);
 CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callback);
-CvStatus *Mat_NewWithSizes_Async(VecInt sizes, int type, CvCallback_1 callback);
-CvStatus *Mat_NewWithSizesScalar_Async(VecInt sizes, int type, Scalar s, CvCallback_1 callback);
+CvStatus *Mat_NewWithSizes_Async(VecI32 sizes, int type, CvCallback_1 callback);
+CvStatus *Mat_NewWithSizesScalar_Async(VecI32 sizes, int type, Scalar s, CvCallback_1 callback);
 CvStatus *
-Mat_NewWithSizesFromBytes_Async(VecInt sizes, int type, VecChar buf, CvCallback_1 callback);
+Mat_NewWithSizesFromBytes_Async(VecI32 sizes, int type, VecChar buf, CvCallback_1 callback);
 CvStatus *
 Mat_NewFromScalar_Async(const Scalar s, int rows, int cols, int type, CvCallback_1 callback);
 CvStatus *
@@ -56,7 +56,7 @@ CvStatus *Mat_Reshape_Async(Mat self, int cn, int rows, CvCallback_1 callback);
 // CvStatus *Mat_Type_Async(Mat self, CvCallback_1 callback);
 // CvStatus *Mat_Step_Async(Mat self, int *rval);
 // CvStatus *Mat_Total_Async(Mat self, int *rval);
-// CvStatus *Mat_Size_Async(Mat self, VecInt *rval);
+// CvStatus *Mat_Size_Async(Mat self, VecI32 *rval);
 // CvStatus *Mat_ElemSize_Async(Mat self, int *rval);
 // CvStatus *Mat_Data_Async(Mat self, VecUChar *rval);
 // CvStatus *Mat_DataPtr_Async(Mat self, uchar **data, int *length);
@@ -306,7 +306,7 @@ CvStatus *core_MinMaxLoc_Async(
     Mat self, CvCallback_4 callback
 ); // double *minVal, double *maxVal, Point *minLoc, Point *maxLoc
 CvStatus *core_MinMaxLoc_Mask_Async(Mat self, Mat mask, CvCallback_4 callback);
-CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecInt fromTo, CvCallback_0 callback);
+CvStatus *core_MixChannels_Async(VecMat src, VecMat dst, VecI32 fromTo, CvCallback_0 callback);
 CvStatus *core_MulSpectrums_Async(Mat a, Mat b, int flags, bool conjB, CvCallback_1 callback);
 CvStatus *core_Multiply_Async(Mat src1, Mat src2, CvCallback_1 callback);
 CvStatus *

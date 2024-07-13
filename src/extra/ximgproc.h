@@ -118,7 +118,7 @@ CvStatus *ximgproc_EdgeBoxes_getBoundingBoxes(
     Mat edge_map,
     Mat orientation_map,
     CVD_OUT VecRect *boxes,
-    CVD_OUT VecFloat *scores
+    CVD_OUT VecF32 *scores
 );
 
 // GraphSegmentation
@@ -158,7 +158,7 @@ CvStatus *ximgproc_EdgeDrawing_detectEllipses(EdgeDrawing self, Mat *ellipses);
 CvStatus *ximgproc_EdgeDrawing_detectLines(EdgeDrawing self, Mat *lines);
 CvStatus *ximgproc_EdgeDrawing_getEdgeImage(EdgeDrawing self, Mat *dst);
 CvStatus *ximgproc_EdgeDrawing_getGradientImage(EdgeDrawing self, Mat *dst);
-CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecInt *rval);
+CvStatus *ximgproc_EdgeDrawing_getSegmentIndicesOfLines(EdgeDrawing self, VecI32 *rval);
 CvStatus *ximgproc_EdgeDrawing_getSegments(EdgeDrawing self, VecVecPoint *rval);
 CvStatus *ximgproc_EdgeDrawing_setParams(EdgeDrawing self, EdgeDrawingParams params);
 CvStatus *ximgproc_EdgeDrawing_getParams(EdgeDrawing self, EdgeDrawingParams *params);

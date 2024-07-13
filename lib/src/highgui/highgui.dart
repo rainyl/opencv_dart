@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-library cv;
+library cv.highgui;
 
 import 'dart:ffi' as ffi;
 

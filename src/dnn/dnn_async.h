@@ -48,8 +48,8 @@ CvStatus *Layer_OutputNameToIndex_Async(Layer layer, const char *name, CvCallbac
 CvStatus *Layer_GetName_Async(Layer layer, CvCallback_1 callback);
 CvStatus *Layer_GetType_Async(Layer layer, CvCallback_1 callback);
 void Layer_Close_Async(LayerPtr layer, CvCallback_0 callback);
-CvStatus *NMSBoxes_Async(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold, CvCallback_1 callback);
-CvStatus *NMSBoxesWithParams_Async(VecRect bboxes, VecFloat scores, const float score_threshold, const float nms_threshold, const float eta, const int top_k, CvCallback_1 callback);
+CvStatus *NMSBoxes_Async(VecRect bboxes, VecF32 scores, float score_threshold, float nms_threshold, CvCallback_1 callback);
+CvStatus *NMSBoxesWithParams_Async(VecRect bboxes, VecF32 scores, const float score_threshold, const float nms_threshold, const float eta, const int top_k, CvCallback_1 callback);
 
 #ifdef __cplusplus
 }

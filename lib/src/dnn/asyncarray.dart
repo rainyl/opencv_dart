@@ -1,4 +1,4 @@
-library cv;
+library cv.dnn;
 
 import 'dart:ffi' as ffi;
 
@@ -37,9 +37,6 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
     cvRun(() => cdnn.AsyncArray_Get(ref, dst.ref));
     return dst;
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.AsyncArray get ref => ptr.ref;

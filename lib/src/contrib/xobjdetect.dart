@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // ignore_for_file: constant_identifier_names, camel_case_types
 
-library cv.xobjdetect;
+library cv.contrib.xobjdetect;
 
 import 'dart:ffi' as ffi;
 
@@ -49,11 +49,11 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   /// [confidences]	Confidence values for bounding boxes output vector
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#ad19680e6545f49a9ca42dfc3457319e2
-  (VecRect bboxes, VecDouble confidences) detect(Mat img) {
+  (VecRect bboxes, VecF64 confidences) detect(Mat img) {
     final bboxesPtr = calloc<cvg.VecRect>();
-    final confidencesPtr = calloc<cvg.VecDouble>();
+    final confidencesPtr = calloc<cvg.VecF64>();
     cvRun(() => ccontrib.WBDetector_Detect(ptr, img.ref, bboxesPtr, confidencesPtr));
-    return (VecRect.fromPointer(bboxesPtr), VecDouble.fromPointer(confidencesPtr));
+    return (VecRect.fromPointer(bboxesPtr), VecF64.fromPointer(confidencesPtr));
   }
 
   /// Train WaldBoost detector.
@@ -80,9 +80,6 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
     cvRun(() => ccontrib.WBDetector_Write(ptr, cp));
     calloc.free(cp);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 
   @override
   cvg.PtrWBDetector get ref => ptr.ref;

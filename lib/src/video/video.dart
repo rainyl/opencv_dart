@@ -1,4 +1,4 @@
-library cv;
+library cv.video;
 
 import 'dart:ffi' as ffi;
 
@@ -60,9 +60,6 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
     finalizer.detach(this);
     cvideo.BackgroundSubtractorMOG2_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
 class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
@@ -110,9 +107,6 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
 
   @override
   cvg.BackgroundSubtractorKNN get ref => ptr.ref;
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
 /// NewBackgroundSubtractorMOG2 returns a new BackgroundSubtractor algorithm
@@ -183,13 +177,13 @@ Mat calcOpticalFlowFarneback(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/dc/d6b/group__video__track.html#ga473e4b886d0bcc6b65831eb88ed93323
-(VecPoint2f nextPts, VecUChar? status, VecFloat? error) calcOpticalFlowPyrLK(
+(VecPoint2f nextPts, VecUChar? status, VecF32? error) calcOpticalFlowPyrLK(
   InputArray prevImg,
   InputArray nextImg,
   VecPoint2f prevPts,
   VecPoint2f nextPts, {
   VecUChar? status,
-  VecFloat? err,
+  VecF32? err,
   (int, int) winSize = (21, 21),
   int maxLevel = 3,
   (int, int, double) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
@@ -197,13 +191,13 @@ Mat calcOpticalFlowFarneback(
   double minEigThreshold = 1e-4,
 }) {
   final s = status?.ptr ?? calloc<cvg.VecUChar>();
-  final e = err?.ptr ?? calloc<cvg.VecFloat>();
+  final e = err?.ptr ?? calloc<cvg.VecF32>();
   cvRun(
     () => cvideo.CalcOpticalFlowPyrLKWithParams(
       prevImg.ref,
       nextImg.ref,
       prevPts.ref,
-      nextPts.ref,
+      nextPts.ptr,
       s,
       e,
       winSize.cvd.ref,
@@ -213,7 +207,8 @@ Mat calcOpticalFlowFarneback(
       minEigThreshold,
     ),
   );
-  return (nextPts, status ?? VecUChar.fromPointer(s), VecFloat.fromPointer(e));
+  nextPts.reattach();
+  return (nextPts, status ?? VecUChar.fromPointer(s), VecF32.fromPointer(e));
 }
 
 /// FindTransformECC finds the geometric transform (warp) between two images in terms of the ECC criterion.
@@ -298,9 +293,6 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
 
   @override
   cvg.TrackerMIL get ref => ptr.ref;
-
-  @override
-  List<int> get props => [ptr.address];
 }
 
 /// KalmanFilter implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter.
@@ -489,7 +481,4 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
   set controlMatrix(Mat m) {
     cvRun(() => cvideo.KalmanFilter_SetControlMatrix(ref, m.ref));
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }

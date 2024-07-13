@@ -21,7 +21,7 @@ CVD_TYPEDEF(void *, PtrWBDetector)
 CvStatus *WBDetector_Create(PtrWBDetector *rval);
 void      WBDetector_Close(PtrWBDetectorPtr self);
 CvStatus *WBDetector_Detect(PtrWBDetector *self, Mat img, CVD_OUT VecRect *bbox,
-                            CVD_OUT VecDouble *confidences);
+                            CVD_OUT VecF64 *confidences);
 CvStatus *WBDetector_Train(PtrWBDetector *self, char *pos_samples, char *neg_imgs);
 CvStatus *WBDetector_Read(PtrWBDetector *self, char *filename);
 CvStatus *WBDetector_Write(PtrWBDetector *self, char *filename);

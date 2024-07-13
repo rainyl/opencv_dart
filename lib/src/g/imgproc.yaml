@@ -572,10 +572,10 @@ files:
         name: Vec4f
       c:types.h@T@Vec6f:
         name: Vec6f
-      c:types.h@T@VecFloat:
-        name: VecFloat
-      c:types.h@T@VecInt:
-        name: VecInt
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:

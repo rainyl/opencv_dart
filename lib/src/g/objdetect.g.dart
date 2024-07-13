@@ -69,7 +69,7 @@ class CvNativeObjdetect {
     CascadeClassifier self,
     Mat img,
     ffi.Pointer<VecRect> objects,
-    ffi.Pointer<VecInt> numDetections,
+    ffi.Pointer<VecI32> numDetections,
     double scaleFactor,
     int minNeighbors,
     int flags,
@@ -95,7 +95,7 @@ class CvNativeObjdetect {
               CascadeClassifier,
               Mat,
               ffi.Pointer<VecRect>,
-              ffi.Pointer<VecInt>,
+              ffi.Pointer<VecI32>,
               ffi.Double,
               ffi.Int,
               ffi.Int,
@@ -107,7 +107,7 @@ class CvNativeObjdetect {
               CascadeClassifier,
               Mat,
               ffi.Pointer<VecRect>,
-              ffi.Pointer<VecInt>,
+              ffi.Pointer<VecI32>,
               double,
               int,
               int,
@@ -156,8 +156,8 @@ class CvNativeObjdetect {
     CascadeClassifier self,
     Mat img,
     ffi.Pointer<VecRect> objects,
-    ffi.Pointer<VecInt> rejectLevels,
-    ffi.Pointer<VecDouble> levelWeights,
+    ffi.Pointer<VecI32> rejectLevels,
+    ffi.Pointer<VecF64> levelWeights,
     double scaleFactor,
     int minNeighbors,
     int flags,
@@ -186,8 +186,8 @@ class CvNativeObjdetect {
               CascadeClassifier,
               Mat,
               ffi.Pointer<VecRect>,
-              ffi.Pointer<VecInt>,
-              ffi.Pointer<VecDouble>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecF64>,
               ffi.Double,
               ffi.Int,
               ffi.Int,
@@ -200,8 +200,8 @@ class CvNativeObjdetect {
               CascadeClassifier,
               Mat,
               ffi.Pointer<VecRect>,
-              ffi.Pointer<VecInt>,
-              ffi.Pointer<VecDouble>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecF64>,
               double,
               int,
               int,
@@ -1377,7 +1377,7 @@ class CvNativeObjdetect {
               ffi.Pointer<ffi.Char>, int, int, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> GroupRectangles(
-    VecRect rects,
+    ffi.Pointer<VecRect> rects,
     int groupThreshold,
     double eps,
   ) {
@@ -1391,12 +1391,12 @@ class CvNativeObjdetect {
   late final _GroupRectanglesPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VecRect, ffi.Int, ffi.Double)>>('GroupRectangles');
+              ffi.Pointer<VecRect>, ffi.Int, ffi.Double)>>('GroupRectangles');
   late final _GroupRectangles = _GroupRectanglesPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, int, double)>();
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>, int, double)>();
 
   ffi.Pointer<CvStatus> GroupRectangles_Async(
-    VecRect rects,
+    ffi.Pointer<VecRect> rects,
     int groupThreshold,
     double eps,
     imp1.CvCallback_0 callback,
@@ -1411,11 +1411,11 @@ class CvNativeObjdetect {
 
   late final _GroupRectangles_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecRect, ffi.Int, ffi.Double,
-              imp1.CvCallback_0)>>('GroupRectangles_Async');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>, ffi.Int,
+              ffi.Double, imp1.CvCallback_0)>>('GroupRectangles_Async');
   late final _GroupRectangles_Async = _GroupRectangles_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecRect, int, double, imp1.CvCallback_0)>();
+          ffi.Pointer<VecRect>, int, double, imp1.CvCallback_0)>();
 
   void HOGDescriptor_Close(
     HOGDescriptorPtr self,
@@ -1434,7 +1434,7 @@ class CvNativeObjdetect {
   ffi.Pointer<CvStatus> HOGDescriptor_Compute(
     HOGDescriptor self,
     Mat img,
-    ffi.Pointer<VecFloat> descriptors,
+    ffi.Pointer<VecF32> descriptors,
     Size winStride,
     Size padding,
     ffi.Pointer<VecPoint> locations,
@@ -1454,12 +1454,12 @@ class CvNativeObjdetect {
           ffi.Pointer<CvStatus> Function(
               HOGDescriptor,
               Mat,
-              ffi.Pointer<VecFloat>,
+              ffi.Pointer<VecF32>,
               Size,
               Size,
               ffi.Pointer<VecPoint>)>>('HOGDescriptor_Compute');
   late final _HOGDescriptor_Compute = _HOGDescriptor_ComputePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecFloat>,
+      ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecF32>,
           Size, Size, ffi.Pointer<VecPoint>)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_Compute_Async(
@@ -1491,7 +1491,7 @@ class CvNativeObjdetect {
     HOGDescriptor self,
     Mat img,
     ffi.Pointer<VecPoint> foundLocations,
-    ffi.Pointer<VecDouble> weights,
+    ffi.Pointer<VecF64> weights,
     double hitThresh,
     Size winStride,
     Size padding,
@@ -1515,14 +1515,14 @@ class CvNativeObjdetect {
               HOGDescriptor,
               Mat,
               ffi.Pointer<VecPoint>,
-              ffi.Pointer<VecDouble>,
+              ffi.Pointer<VecF64>,
               ffi.Double,
               Size,
               Size,
               ffi.Pointer<VecPoint>)>>('HOGDescriptor_Detect');
   late final _HOGDescriptor_Detect = _HOGDescriptor_DetectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>,
-          ffi.Pointer<VecDouble>, double, Size, Size, ffi.Pointer<VecPoint>)>();
+          ffi.Pointer<VecF64>, double, Size, Size, ffi.Pointer<VecPoint>)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_Detect2(
     HOGDescriptor self,
@@ -1849,7 +1849,7 @@ class CvNativeObjdetect {
 
   ffi.Pointer<CvStatus> HOGDescriptor_SetSVMDetector(
     HOGDescriptor self,
-    VecFloat det,
+    VecF32 det,
   ) {
     return _HOGDescriptor_SetSVMDetector(
       self,
@@ -1860,13 +1860,13 @@ class CvNativeObjdetect {
   late final _HOGDescriptor_SetSVMDetectorPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, VecFloat)>>('HOGDescriptor_SetSVMDetector');
+              HOGDescriptor, VecF32)>>('HOGDescriptor_SetSVMDetector');
   late final _HOGDescriptor_SetSVMDetector = _HOGDescriptor_SetSVMDetectorPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(HOGDescriptor, VecFloat)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(HOGDescriptor, VecF32)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_SetSVMDetector_Async(
     HOGDescriptor self,
-    VecFloat det,
+    VecF32 det,
     imp1.CvCallback_0 callback,
   ) {
     return _HOGDescriptor_SetSVMDetector_Async(
@@ -1878,12 +1878,12 @@ class CvNativeObjdetect {
 
   late final _HOGDescriptor_SetSVMDetector_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(HOGDescriptor, VecFloat,
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, VecF32,
               imp1.CvCallback_0)>>('HOGDescriptor_SetSVMDetector_Async');
   late final _HOGDescriptor_SetSVMDetector_Async =
       _HOGDescriptor_SetSVMDetector_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, VecFloat, imp1.CvCallback_0)>();
+              HOGDescriptor, VecF32, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_computeGradient(
     HOGDescriptor self,
@@ -1942,7 +1942,7 @@ class CvNativeObjdetect {
               HOGDescriptor, Mat, Mat, Mat, Size, Size, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_getDaimlerPeopleDetector(
-    ffi.Pointer<VecFloat> rval,
+    ffi.Pointer<VecF32> rval,
   ) {
     return _HOGDescriptor_getDaimlerPeopleDetector(
       rval,
@@ -1950,12 +1950,12 @@ class CvNativeObjdetect {
   }
 
   late final _HOGDescriptor_getDaimlerPeopleDetectorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>>(
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
       'HOGDescriptor_getDaimlerPeopleDetector');
   late final _HOGDescriptor_getDaimlerPeopleDetector =
       _HOGDescriptor_getDaimlerPeopleDetectorPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>();
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_getDaimlerPeopleDetector_Async(
     imp1.CvCallback_1 callback,
@@ -2049,8 +2049,8 @@ class CvNativeObjdetect {
 
   ffi.Pointer<CvStatus> HOGDescriptor_groupRectangles(
     HOGDescriptor self,
-    VecRect rectList,
-    VecDouble weights,
+    ffi.Pointer<VecRect> rectList,
+    ffi.Pointer<VecF64> weights,
     int groupThreshold,
     double eps,
   ) {
@@ -2065,17 +2065,21 @@ class CvNativeObjdetect {
 
   late final _HOGDescriptor_groupRectanglesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(HOGDescriptor, VecRect, VecDouble,
-              ffi.Int, ffi.Double)>>('HOGDescriptor_groupRectangles');
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>,
+              ffi.Int,
+              ffi.Double)>>('HOGDescriptor_groupRectangles');
   late final _HOGDescriptor_groupRectangles =
       _HOGDescriptor_groupRectanglesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, VecRect, VecDouble, int, double)>();
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>, int, double)>();
 
   ffi.Pointer<CvStatus> HOGDescriptor_groupRectangles_Async(
     HOGDescriptor self,
-    VecRect rectList,
-    VecDouble weights,
+    ffi.Pointer<VecRect> rectList,
+    ffi.Pointer<VecF64> weights,
     int groupThreshold,
     double eps,
     imp1.CvCallback_0 callback,
@@ -2094,18 +2098,18 @@ class CvNativeObjdetect {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               HOGDescriptor,
-              VecRect,
-              VecDouble,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>,
               ffi.Int,
               ffi.Double,
               imp1.CvCallback_0)>>('HOGDescriptor_groupRectangles_Async');
   late final _HOGDescriptor_groupRectangles_Async =
       _HOGDescriptor_groupRectangles_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(HOGDescriptor, VecRect, VecDouble, int,
-              double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>, int, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector(
-    ffi.Pointer<VecFloat> rval,
+    ffi.Pointer<VecF32> rval,
   ) {
     return _HOG_GetDefaultPeopleDetector(
       rval,
@@ -2113,11 +2117,11 @@ class CvNativeObjdetect {
   }
 
   late final _HOG_GetDefaultPeopleDetectorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecFloat>)>>('HOG_GetDefaultPeopleDetector');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
+      'HOG_GetDefaultPeopleDetector');
   late final _HOG_GetDefaultPeopleDetector = _HOG_GetDefaultPeopleDetectorPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>();
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
 
   ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector_Async(
     imp1.CvCallback_1 callback,
@@ -2705,9 +2709,9 @@ final class QRCodeDetector extends ffi.Struct {
 
 typedef QRCodeDetectorPtr = ffi.Pointer<QRCodeDetector>;
 typedef Size = imp1.Size;
-typedef VecDouble = imp1.VecDouble;
-typedef VecFloat = imp1.VecFloat;
-typedef VecInt = imp1.VecInt;
+typedef VecF32 = imp1.VecF32;
+typedef VecF64 = imp1.VecF64;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecPoint = imp1.VecPoint;
 typedef VecRect = imp1.VecRect;

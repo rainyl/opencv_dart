@@ -1,4 +1,4 @@
-library cv;
+library cv.contrib;
 
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';

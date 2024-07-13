@@ -104,9 +104,9 @@ CvStatus *ORB_Create(ORB *rval);
 CvStatus *ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
                                int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
                                ORB *rval);
-void      ORB_Close(ORBPtr o);
-CvStatus *ORB_Detect(ORB o, Mat src, VecKeyPoint *rval);
-CvStatus *ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+void      ORB_Close(ORBPtr self);
+CvStatus *ORB_Detect(ORB self, Mat src, VecKeyPoint *rval);
+CvStatus *ORB_DetectAndCompute(ORB self, Mat src, Mat mask, Mat *desc, VecKeyPoint *rval);
 
 CvStatus *SimpleBlobDetector_Create(SimpleBlobDetector *rval);
 CvStatus *SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval);

@@ -122,7 +122,7 @@ TEST(VecVecPoint, NewFromPointerTest)
   VecPoint *points = new VecPoint[length];
   for (int i = 0; i < length; i++) {
     std::vector<cv::Point> vp = {{1, 2}, {3, 4}, {5, 6}, {7, 8}};
-    VecPoint               v = {.ptr = new std::vector<cv::Point>(vp)};
+    VecPoint               v = {.ptr = vecpoint_cpp2c(vp)};
     points[i] = v;
   }
 
@@ -568,89 +568,89 @@ TEST(VecVecChar, New_Append_At_Size_Close)
   EXPECT_STREQ(s1, "abc");
 }
 
-TEST(VecInt, New_Append_At_Size_Close)
+TEST(VecI32, New_Append_At_Size_Close)
 {
-  VecInt    vec;
-  CvStatus *status = VecInt_New(&vec);
+  VecI32    vec;
+  CvStatus *status = VecI32_New(&vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
-  status = VecInt_Append(vec, 1);
+  status = VecI32_Append(vec, 1);
   ASSERT_EQ(status->code, 0);
-  status = VecInt_Append(vec, 2);
+  status = VecI32_Append(vec, 2);
   ASSERT_EQ(status->code, 0);
 
   int c;
-  status = VecInt_At(vec, 0, &c);
+  status = VecI32_At(vec, 0, &c);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(c, 1);
 
   int size;
-  status = VecInt_Size(vec, &size);
+  status = VecI32_Size(vec, &size);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(size, 2);
 
-  VecInt_Close(&vec);
+  VecI32_Close(&vec);
 
   int *chars = new int[]{0, 1, 2, 3};
-  status = VecInt_NewFromPointer(chars, 4, &vec);
+  status = VecI32_NewFromPointer(chars, 4, &vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
 }
 
-TEST(VecFloat, New_Append_At_Size_Close)
+TEST(VecF32, New_Append_At_Size_Close)
 {
-  VecFloat  vec;
-  CvStatus *status = VecFloat_New(&vec);
+  VecF32  vec;
+  CvStatus *status = VecF32_New(&vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
-  status = VecFloat_Append(vec, 1);
+  status = VecF32_Append(vec, 1);
   ASSERT_EQ(status->code, 0);
-  status = VecFloat_Append(vec, 2);
+  status = VecF32_Append(vec, 2);
   ASSERT_EQ(status->code, 0);
 
   float c;
-  status = VecFloat_At(vec, 0, &c);
+  status = VecF32_At(vec, 0, &c);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(c, 1);
 
   int size;
-  status = VecFloat_Size(vec, &size);
+  status = VecF32_Size(vec, &size);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(size, 2);
 
-  VecFloat_Close(&vec);
+  VecF32_Close(&vec);
 
   float *chars = new float[]{0, 1, 2, 3};
-  status = VecFloat_NewFromPointer(chars, 4, &vec);
+  status = VecF32_NewFromPointer(chars, 4, &vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
 }
 
-TEST(VecDouble, New_Append_At_Size_Close)
+TEST(VecF64, New_Append_At_Size_Close)
 {
-  VecDouble vec;
-  CvStatus *status = VecDouble_New(&vec);
+  VecF64 vec;
+  CvStatus *status = VecF64_New(&vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
-  status = VecDouble_Append(vec, 1);
+  status = VecF64_Append(vec, 1);
   ASSERT_EQ(status->code, 0);
-  status = VecDouble_Append(vec, 2);
+  status = VecF64_Append(vec, 2);
   ASSERT_EQ(status->code, 0);
 
   double c;
-  status = VecDouble_At(vec, 0, &c);
+  status = VecF64_At(vec, 0, &c);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(c, 1);
 
   int size;
-  status = VecDouble_Size(vec, &size);
+  status = VecF64_Size(vec, &size);
   ASSERT_EQ(status->code, 0);
   ASSERT_EQ(size, 2);
 
-  VecDouble_Close(&vec);
+  VecF64_Close(&vec);
 
   double *chars = new double[]{0, 1, 2, 3};
-  status = VecDouble_NewFromPointer(chars, 4, &vec);
+  status = VecF64_NewFromPointer(chars, 4, &vec);
   ASSERT_EQ(status->code, 0);
   ASSERT_NE(vec.ptr, nullptr);
 }

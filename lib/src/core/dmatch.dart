@@ -5,7 +5,6 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -34,9 +33,17 @@ class DMatch extends CvStruct<cvg.DMatch> {
   }
 
   int get queryIdx => ref.queryIdx;
+  set queryIdx(int value) => ref.queryIdx = value;
+
   int get trainIdx => ref.trainIdx;
+  set trainIdx(int value) => ref.trainIdx = value;
+
   int get imgIdx => ref.imgIdx;
+  set imgIdx(int value) => ref.imgIdx = value;
+
   double get distance => ref.distance;
+  set distance(double value) => ref.distance = value;
+
   @override
   List<Object?> get props => [queryIdx, trainIdx, imgIdx, distance];
 
@@ -46,134 +53,135 @@ class DMatch extends CvStruct<cvg.DMatch> {
   String toString() => "DMatch($queryIdx, $trainIdx, $imgIdx, ${distance.toStringAsFixed(3)})";
 }
 
-class VecDMatch extends Vec<DMatch> implements CvStruct<cvg.VecDMatch> {
-  VecDMatch._(this.ptr, [bool attach = true]) {
+class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
+  VecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
-  factory VecDMatch.fromPointer(cvg.VecDMatchPtr ptr, [bool attach = true]) => VecDMatch._(ptr, attach);
-  factory VecDMatch.fromVec(cvg.VecDMatch ptr) {
-    final p = calloc<cvg.VecDMatch>();
-    cvRun(() => ccore.VecDMatch_NewFromVec(ptr, p));
-    final vec = VecDMatch._(p);
-    return vec;
-  }
-  factory VecDMatch.fromList(List<DMatch> pts) {
-    final ptr = calloc<cvg.VecDMatch>();
-    cvRun(() => ccore.VecDMatch_New(ptr));
-    for (var i = 0; i < pts.length; i++) {
-      cvRun(() => ccore.VecDMatch_Append(ptr.ref, pts[i].ref));
+
+  factory VecDMatch.fromList(List<DMatch> pts) =>
+      VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecDMatch.generate(int length, DMatch Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecDMatch>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.DMatch>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecDMatch._(ptr);
-    return vec;
+    return VecDMatch.fromPointer(pp);
   }
 
   @override
-  int get length {
-    final ptrlen = calloc<ffi.Int>();
-    cvRun(() => ccore.VecDMatch_Size(ref, ptrlen));
-    final length = ptrlen.value;
-    calloc.free(ptrlen);
-    return length;
-  }
+  VecDMatch clone() => VecDMatch.generate(length, (idx) => this[idx], dispose: false);
 
-  static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(ccore.addresses.VecDMatch_Close);
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecDMatch_Close(ptr);
-  }
+  @override
+  int get length => ref.length;
 
   @override
   Iterator<DMatch> get iterator => VecDMatchIterator(ref);
   @override
   cvg.VecDMatch get ref => ptr.ref;
+
   @override
-  ffi.Pointer<cvg.VecDMatch> ptr;
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecDMatch>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, DMatch value) {
+    ref.ptr[idx].queryIdx = value.queryIdx;
+    ref.ptr[idx].trainIdx = value.trainIdx;
+    ref.ptr[idx].imgIdx = value.imgIdx;
+    ref.ptr[idx].distance = value.distance;
+  }
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
-  VecDMatchIterator(this.ptr);
-  cvg.VecDMatch ptr;
+  VecDMatchIterator(this.ref);
+  cvg.VecDMatch ref;
 
   @override
-  int get length => using<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.VecDMatch_Size(ptr, p));
-        final len = p.value;
-        return len;
-      });
+  int get length => ref.length;
 
   @override
-  DMatch operator [](int idx) {
-    return cvRunArena<DMatch>((arena) {
-      final p = calloc<cvg.DMatch>();
-      cvRun(() => ccore.VecDMatch_At(ptr, idx, p));
-      return DMatch.fromPointer(p);
-    });
-  }
+  DMatch operator [](int idx) => DMatch.fromPointer(ref.ptr + idx, false);
 }
 
-class VecVecDMatch extends Vec<VecDMatch> implements CvStruct<cvg.VecVecDMatch> {
-  VecVecDMatch._(this.ptr, [bool attach = true]) {
+class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
+  VecVecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
     }
   }
-  factory VecVecDMatch.fromPointer(cvg.VecVecDMatchPtr ptr, [bool attach = true]) =>
-      VecVecDMatch._(ptr, attach);
-  factory VecVecDMatch.fromVec(cvg.VecVecDMatch ptr) {
-    final p = calloc<cvg.VecVecDMatch>();
-    cvRun(() => ccore.VecVecDMatch_NewFromVec(ptr, p));
-    final vec = VecVecDMatch._(p);
-    return vec;
-  }
-  factory VecVecDMatch.fromList(List<List<DMatch>> pts) {
-    final p = calloc<cvg.VecVecDMatch>();
-    cvRun(() => ccore.VecVecDMatch_New(p));
-    for (var i = 0; i < pts.length; i++) {
-      final point = pts[i].cvd;
-      cvRun(() => ccore.VecVecDMatch_Append(p.ref, point.ref));
+
+  factory VecVecDMatch.fromList(List<List<DMatch>> pts) =>
+      VecVecDMatch.generate(pts.length, (i) => VecDMatch.fromList(pts[i]), dispose: false);
+
+  factory VecVecDMatch.generate(int length, VecDMatch Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecVecDMatch>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.VecDMatch>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
     }
-    final vec = VecVecDMatch._(p);
-    return vec;
+    return VecVecDMatch.fromPointer(pp);
   }
 
   @override
-  cvg.VecVecDMatchPtr ptr;
-  static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(ccore.addresses.VecVecDMatch_Close);
-  void dispose() {
-    finalizer.detach(this);
-    ccore.VecVecDMatch_Close(ptr);
-  }
+  VecVecDMatch clone() => VecVecDMatch.generate(length, (idx) => this[idx], dispose: false);
 
   @override
   Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
   @override
   cvg.VecVecDMatch get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecVecDMatch>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  // TODO: add support
+  @override
+  void operator []=(int idx, VecDMatch value) => throw UnsupportedError("");
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {
-  VecVecDMatchIterator(this.ptr);
-  cvg.VecVecDMatch ptr;
+  VecVecDMatchIterator(this.ref);
+  cvg.VecVecDMatch ref;
 
   @override
-  int get length => using<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.VecVecDMatch_Size(ptr, p));
-        final len = p.value;
-        return len;
-      });
+  int get length => ref.length;
 
   @override
-  VecDMatch operator [](int idx) {
-    return cvRunArena<VecDMatch>((arena) {
-      final p = calloc<cvg.VecDMatch>();
-      cvRun(() => ccore.VecVecDMatch_At(ptr, idx, p));
-      final vec = VecDMatch.fromPointer(p);
-      return vec;
-    });
-  }
+  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ref.ptr + idx, false);
 }
 
 extension ListDMatchExtension on List<DMatch> {

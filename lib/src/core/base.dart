@@ -52,6 +52,9 @@ abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> with Comparab
 
   ffi.Pointer<T> ptr;
   T get ref;
+
+  @override
+  List<Object?> get props => [ptr.address];
 }
 
 abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {

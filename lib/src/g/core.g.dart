@@ -1042,7 +1042,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> Mat_DataPtr(
     Mat m,
-    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> data,
+    ffi.Pointer<ffi.Pointer<imp1.uchar>> data,
     ffi.Pointer<ffi.Int> length,
   ) {
     return _Mat_DataPtr1(
@@ -1056,11 +1056,11 @@ class CvNativeCore {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
               Mat,
-              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
+              ffi.Pointer<ffi.Pointer<imp1.uchar>>,
               ffi.Pointer<ffi.Int>)>>('Mat_DataPtr');
   late final _Mat_DataPtr1 = _Mat_DataPtrPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat,
-          ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>, ffi.Pointer<ffi.Int>)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<ffi.Pointer<imp1.uchar>>, ffi.Pointer<ffi.Int>)>();
 
   ffi.Pointer<CvStatus> Mat_Determinant(
     Mat m,
@@ -2520,7 +2520,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> Mat_Merge(
     VecMat mats,
-    Mat dst,
+    ffi.Pointer<Mat> dst,
   ) {
     return _Mat_Merge(
       mats,
@@ -2528,11 +2528,12 @@ class CvNativeCore {
     );
   }
 
-  late final _Mat_MergePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecMat, Mat)>>(
-          'Mat_Merge');
-  late final _Mat_Merge =
-      _Mat_MergePtr.asFunction<ffi.Pointer<CvStatus> Function(VecMat, Mat)>();
+  late final _Mat_MergePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecMat, ffi.Pointer<Mat>)>>('Mat_Merge');
+  late final _Mat_Merge = _Mat_MergePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecMat, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_Min(
     Mat src1,
@@ -2615,7 +2616,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_MixChannels(
     VecMat src,
     VecMat dst,
-    VecInt fromTo,
+    VecI32 fromTo,
   ) {
     return _Mat_MixChannels(
       src,
@@ -2627,9 +2628,9 @@ class CvNativeCore {
   late final _Mat_MixChannelsPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VecMat, VecMat, VecInt)>>('Mat_MixChannels');
+              VecMat, VecMat, VecI32)>>('Mat_MixChannels');
   late final _Mat_MixChannels = _Mat_MixChannelsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecMat, VecMat, VecInt)>();
+      ffi.Pointer<CvStatus> Function(VecMat, VecMat, VecI32)>();
 
   ffi.Pointer<CvStatus> Mat_MulSpectrums(
     Mat a,
@@ -2874,11 +2875,15 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> Mat_NewFromScalar(
     Scalar ar,
+    int rows,
+    int cols,
     int type,
     ffi.Pointer<Mat> rval,
   ) {
     return _Mat_NewFromScalar(
       ar,
+      rows,
+      cols,
       type,
       rval,
     );
@@ -2886,10 +2891,11 @@ class CvNativeCore {
 
   late final _Mat_NewFromScalarPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Scalar, ffi.Int, ffi.Pointer<Mat>)>>('Mat_NewFromScalar');
+          ffi.Pointer<CvStatus> Function(Scalar, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>)>>('Mat_NewFromScalar');
   late final _Mat_NewFromScalar = _Mat_NewFromScalarPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Scalar, int, ffi.Pointer<Mat>)>();
+      ffi.Pointer<CvStatus> Function(
+          Scalar, int, int, int, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_NewFromScalar_Async(
     Scalar s,
@@ -3058,31 +3064,6 @@ class CvNativeCore {
   late final _Mat_NewWithSize = _Mat_NewWithSizePtr.asFunction<
       ffi.Pointer<CvStatus> Function(int, int, int, ffi.Pointer<Mat>)>();
 
-  ffi.Pointer<CvStatus> Mat_NewWithSizeFromScalar(
-    Scalar ar,
-    int rows,
-    int cols,
-    int type,
-    ffi.Pointer<Mat> rval,
-  ) {
-    return _Mat_NewWithSizeFromScalar(
-      ar,
-      rows,
-      cols,
-      type,
-      rval,
-    );
-  }
-
-  late final _Mat_NewWithSizeFromScalarPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Scalar, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Pointer<Mat>)>>('Mat_NewWithSizeFromScalar');
-  late final _Mat_NewWithSizeFromScalar =
-      _Mat_NewWithSizeFromScalarPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Scalar, int, int, int, ffi.Pointer<Mat>)>();
-
   ffi.Pointer<CvStatus> Mat_NewWithSize_Async(
     int rows,
     int cols,
@@ -3105,7 +3086,7 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(int, int, int, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizes(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     ffi.Pointer<Mat> rval,
   ) {
@@ -3119,12 +3100,12 @@ class CvNativeCore {
   late final _Mat_NewWithSizesPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Int, ffi.Pointer<Mat>)>>('Mat_NewWithSizes');
+              VecI32, ffi.Int, ffi.Pointer<Mat>)>>('Mat_NewWithSizes');
   late final _Mat_NewWithSizes = _Mat_NewWithSizesPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, int, ffi.Pointer<Mat>)>();
+      ffi.Pointer<CvStatus> Function(VecI32, int, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizesFromBytes(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     VecChar buf,
     ffi.Pointer<Mat> rval,
@@ -3139,15 +3120,15 @@ class CvNativeCore {
 
   late final _Mat_NewWithSizesFromBytesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, VecChar,
+          ffi.Pointer<CvStatus> Function(VecI32, ffi.Int, VecChar,
               ffi.Pointer<Mat>)>>('Mat_NewWithSizesFromBytes');
   late final _Mat_NewWithSizesFromBytes =
       _Mat_NewWithSizesFromBytesPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, int, VecChar, ffi.Pointer<Mat>)>();
+              VecI32, int, VecChar, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizesFromBytes_Async(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     VecChar buf,
     imp1.CvCallback_1 callback,
@@ -3162,15 +3143,15 @@ class CvNativeCore {
 
   late final _Mat_NewWithSizesFromBytes_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, VecChar,
+          ffi.Pointer<CvStatus> Function(VecI32, ffi.Int, VecChar,
               imp1.CvCallback_1)>>('Mat_NewWithSizesFromBytes_Async');
   late final _Mat_NewWithSizesFromBytes_Async =
       _Mat_NewWithSizesFromBytes_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, int, VecChar, imp1.CvCallback_1)>();
+              VecI32, int, VecChar, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizesFromScalar(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     Scalar ar,
     ffi.Pointer<Mat> rval,
@@ -3185,15 +3166,15 @@ class CvNativeCore {
 
   late final _Mat_NewWithSizesFromScalarPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, Scalar,
+          ffi.Pointer<CvStatus> Function(VecI32, ffi.Int, Scalar,
               ffi.Pointer<Mat>)>>('Mat_NewWithSizesFromScalar');
   late final _Mat_NewWithSizesFromScalar =
       _Mat_NewWithSizesFromScalarPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, int, Scalar, ffi.Pointer<Mat>)>();
+              VecI32, int, Scalar, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizesScalar_Async(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     Scalar s,
     imp1.CvCallback_1 callback,
@@ -3208,15 +3189,15 @@ class CvNativeCore {
 
   late final _Mat_NewWithSizesScalar_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecInt, ffi.Int, Scalar,
+          ffi.Pointer<CvStatus> Function(VecI32, ffi.Int, Scalar,
               imp1.CvCallback_1)>>('Mat_NewWithSizesScalar_Async');
   late final _Mat_NewWithSizesScalar_Async =
       _Mat_NewWithSizesScalar_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, int, Scalar, imp1.CvCallback_1)>();
+              VecI32, int, Scalar, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Mat_NewWithSizes_Async(
-    VecInt sizes,
+    VecI32 sizes,
     int type,
     imp1.CvCallback_1 callback,
   ) {
@@ -3230,9 +3211,9 @@ class CvNativeCore {
   late final _Mat_NewWithSizes_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Int, imp1.CvCallback_1)>>('Mat_NewWithSizes_Async');
+              VecI32, ffi.Int, imp1.CvCallback_1)>>('Mat_NewWithSizes_Async');
   late final _Mat_NewWithSizes_Async = _Mat_NewWithSizes_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, int, imp1.CvCallback_1)>();
+      ffi.Pointer<CvStatus> Function(VecI32, int, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Mat_New_Async(
     imp1.CvCallback_1 callback,
@@ -3810,7 +3791,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_Ptr_u8_1(
     Mat m,
     int i,
-    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
+    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
   ) {
     return _Mat_Ptr_u8_1(
       m,
@@ -3822,16 +3803,16 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_1Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int,
-              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_1');
+              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_1');
   late final _Mat_Ptr_u8_1 = _Mat_Ptr_u8_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
+          Mat, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Ptr_u8_2(
     Mat m,
     int i,
     int j,
-    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
+    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
   ) {
     return _Mat_Ptr_u8_2(
       m,
@@ -3844,17 +3825,17 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_2Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
-              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_2');
+              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_2');
   late final _Mat_Ptr_u8_2 = _Mat_Ptr_u8_2Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
+          Mat, int, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Ptr_u8_3(
     Mat m,
     int i,
     int j,
     int k,
-    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
+    ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
   ) {
     return _Mat_Ptr_u8_3(
       m,
@@ -3868,10 +3849,10 @@ class CvNativeCore {
   late final _Mat_Ptr_u8_3Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('Mat_Ptr_u8_3');
+              ffi.Pointer<ffi.Pointer<imp1.uchar>>)>>('Mat_Ptr_u8_3');
   late final _Mat_Ptr_u8_3 = _Mat_Ptr_u8_3Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, int, int, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
+          Mat, int, int, int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>();
 
   ffi.Pointer<CvStatus> Mat_Reduce(
     Mat src,
@@ -4895,7 +4876,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> Mat_Size(
     Mat m,
-    ffi.Pointer<VecInt> rval,
+    ffi.Pointer<VecI32> rval,
   ) {
     return _Mat_Size(
       m,
@@ -4906,9 +4887,9 @@ class CvNativeCore {
   late final _Mat_SizePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecInt>)>>('Mat_Size');
+              Mat, ffi.Pointer<VecI32>)>>('Mat_Size');
   late final _Mat_Size = _Mat_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecInt>)>();
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecI32>)>();
 
   ffi.Pointer<CvStatus> Mat_Solve(
     Mat src1,
@@ -5423,6 +5404,74 @@ class CvNativeCore {
               Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>>('Mat_rowRange');
   late final _Mat_rowRange = _Mat_rowRangePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> Mat_toVecPoint(
+    Mat self,
+    ffi.Pointer<VecPoint> vec,
+  ) {
+    return _Mat_toVecPoint(
+      self,
+      vec,
+    );
+  }
+
+  late final _Mat_toVecPointPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecPoint>)>>('Mat_toVecPoint');
+  late final _Mat_toVecPoint = _Mat_toVecPointPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint>)>();
+
+  ffi.Pointer<CvStatus> Mat_toVecPoint2f(
+    Mat self,
+    ffi.Pointer<VecPoint2f> vec,
+  ) {
+    return _Mat_toVecPoint2f(
+      self,
+      vec,
+    );
+  }
+
+  late final _Mat_toVecPoint2fPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecPoint2f>)>>('Mat_toVecPoint2f');
+  late final _Mat_toVecPoint2f = _Mat_toVecPoint2fPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint2f>)>();
+
+  ffi.Pointer<CvStatus> Mat_toVecPoint3f(
+    Mat self,
+    ffi.Pointer<VecPoint3f> vec,
+  ) {
+    return _Mat_toVecPoint3f(
+      self,
+      vec,
+    );
+  }
+
+  late final _Mat_toVecPoint3fPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecPoint3f>)>>('Mat_toVecPoint3f');
+  late final _Mat_toVecPoint3f = _Mat_toVecPoint3fPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint3f>)>();
+
+  ffi.Pointer<CvStatus> Mat_toVecPoint3i(
+    Mat self,
+    ffi.Pointer<VecPoint3i> vec,
+  ) {
+    return _Mat_toVecPoint3i(
+      self,
+      vec,
+    );
+  }
+
+  late final _Mat_toVecPoint3iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecPoint3i>)>>('Mat_toVecPoint3i');
+  late final _Mat_toVecPoint3i = _Mat_toVecPoint3iPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint3i>)>();
 
   ffi.Pointer<CvStatus> Norm(
     Mat src1,
@@ -6122,2725 +6171,6 @@ class CvNativeCore {
       'TheRNG');
   late final _TheRNG =
       _TheRNGPtr.asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<RNG>)>();
-
-  ffi.Pointer<CvStatus> VecChar_Append(
-    VecChar vec,
-    int i,
-  ) {
-    return _VecChar_Append(
-      vec,
-      i,
-    );
-  }
-
-  late final _VecChar_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecChar, ffi.Char)>>('VecChar_Append');
-  late final _VecChar_Append = _VecChar_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecChar, int)>();
-
-  ffi.Pointer<CvStatus> VecChar_At(
-    VecChar vec,
-    int idx,
-    ffi.Pointer<ffi.Char> rval,
-  ) {
-    return _VecChar_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecChar_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecChar, ffi.Int, ffi.Pointer<ffi.Char>)>>('VecChar_At');
-  late final _VecChar_At = _VecChar_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecChar, int, ffi.Pointer<ffi.Char>)>();
-
-  void VecChar_Close(
-    imp1.VecCharPtr vec,
-  ) {
-    return _VecChar_Close(
-      vec,
-    );
-  }
-
-  late final _VecChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecCharPtr)>>(
-          'VecChar_Close');
-  late final _VecChar_Close =
-      _VecChar_ClosePtr.asFunction<void Function(imp1.VecCharPtr)>();
-
-  ffi.Pointer<CvStatus> VecChar_Data(
-    VecChar vec,
-    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-  ) {
-    return _VecChar_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecChar_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('VecChar_Data');
-  late final _VecChar_Data = _VecChar_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
-
-  ffi.Pointer<CvStatus> VecChar_New(
-    ffi.Pointer<VecChar> rval,
-  ) {
-    return _VecChar_New(
-      rval,
-    );
-  }
-
-  late final _VecChar_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecChar>)>>('VecChar_New');
-  late final _VecChar_New = _VecChar_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecChar>)>();
-
-  ffi.Pointer<CvStatus> VecChar_NewFromPointer(
-    ffi.Pointer<ffi.Char> p,
-    int length,
-    ffi.Pointer<VecChar> rval,
-  ) {
-    return _VecChar_NewFromPointer(
-      p,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecChar_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
-              ffi.Pointer<VecChar>)>>('VecChar_NewFromPointer');
-  late final _VecChar_NewFromPointer = _VecChar_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, int, ffi.Pointer<VecChar>)>();
-
-  ffi.Pointer<CvStatus> VecChar_NewFromVec(
-    VecChar vec,
-    ffi.Pointer<VecChar> rval,
-  ) {
-    return _VecChar_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecChar_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecChar, ffi.Pointer<VecChar>)>>('VecChar_NewFromVec');
-  late final _VecChar_NewFromVec = _VecChar_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecChar, ffi.Pointer<VecChar>)>();
-
-  ffi.Pointer<CvStatus> VecChar_Size(
-    VecChar vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecChar_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecChar_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecChar, ffi.Pointer<ffi.Int>)>>('VecChar_Size');
-  late final _VecChar_Size = _VecChar_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecChar, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecChar_ToString(
-    VecChar vec,
-    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-    ffi.Pointer<ffi.Int> length,
-  ) {
-    return _VecChar_ToString(
-      vec,
-      rval,
-      length,
-    );
-  }
-
-  late final _VecChar_ToStringPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecChar,
-              ffi.Pointer<ffi.Pointer<ffi.Char>>,
-              ffi.Pointer<ffi.Int>)>>('VecChar_ToString');
-  late final _VecChar_ToString = _VecChar_ToStringPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecChar, ffi.Pointer<ffi.Pointer<ffi.Char>>, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_Append(
-    VecDMatch vec,
-    DMatch dm,
-  ) {
-    return _VecDMatch_Append(
-      vec,
-      dm,
-    );
-  }
-
-  late final _VecDMatch_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecDMatch, DMatch)>>(
-      'VecDMatch_Append');
-  late final _VecDMatch_Append = _VecDMatch_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDMatch, DMatch)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_At(
-    VecDMatch vec,
-    int idx,
-    ffi.Pointer<DMatch> rval,
-  ) {
-    return _VecDMatch_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecDMatch_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDMatch, ffi.Int, ffi.Pointer<DMatch>)>>('VecDMatch_At');
-  late final _VecDMatch_At = _VecDMatch_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDMatch, int, ffi.Pointer<DMatch>)>();
-
-  void VecDMatch_Close(
-    imp1.VecDMatchPtr vec,
-  ) {
-    return _VecDMatch_Close(
-      vec,
-    );
-  }
-
-  late final _VecDMatch_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecDMatchPtr)>>(
-          'VecDMatch_Close');
-  late final _VecDMatch_Close =
-      _VecDMatch_ClosePtr.asFunction<void Function(imp1.VecDMatchPtr)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_New(
-    ffi.Pointer<VecDMatch> rval,
-  ) {
-    return _VecDMatch_New(
-      rval,
-    );
-  }
-
-  late final _VecDMatch_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecDMatch>)>>('VecDMatch_New');
-  late final _VecDMatch_New = _VecDMatch_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_NewFromPointer(
-    ffi.Pointer<DMatch> matches,
-    int length,
-    ffi.Pointer<VecDMatch> rval,
-  ) {
-    return _VecDMatch_NewFromPointer(
-      matches,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecDMatch_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<DMatch>, ffi.Int,
-              ffi.Pointer<VecDMatch>)>>('VecDMatch_NewFromPointer');
-  late final _VecDMatch_NewFromPointer =
-      _VecDMatch_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<DMatch>, int, ffi.Pointer<VecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_NewFromVec(
-    VecDMatch vec,
-    ffi.Pointer<VecDMatch> rval,
-  ) {
-    return _VecDMatch_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecDMatch_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDMatch, ffi.Pointer<VecDMatch>)>>('VecDMatch_NewFromVec');
-  late final _VecDMatch_NewFromVec = _VecDMatch_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDMatch, ffi.Pointer<VecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecDMatch_Size(
-    VecDMatch vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecDMatch_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecDMatch_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDMatch, ffi.Pointer<ffi.Int>)>>('VecDMatch_Size');
-  late final _VecDMatch_Size = _VecDMatch_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDMatch, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecDouble_Append(
-    VecDouble vec,
-    double d,
-  ) {
-    return _VecDouble_Append(
-      vec,
-      d,
-    );
-  }
-
-  late final _VecDouble_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDouble, ffi.Double)>>('VecDouble_Append');
-  late final _VecDouble_Append = _VecDouble_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDouble, double)>();
-
-  ffi.Pointer<CvStatus> VecDouble_At(
-    VecDouble vec,
-    int idx,
-    ffi.Pointer<ffi.Double> rval,
-  ) {
-    return _VecDouble_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecDouble_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDouble, ffi.Int, ffi.Pointer<ffi.Double>)>>('VecDouble_At');
-  late final _VecDouble_At = _VecDouble_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecDouble, int, ffi.Pointer<ffi.Double>)>();
-
-  void VecDouble_Close(
-    imp1.VecDoublePtr vec,
-  ) {
-    return _VecDouble_Close(
-      vec,
-    );
-  }
-
-  late final _VecDouble_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecDoublePtr)>>(
-          'VecDouble_Close');
-  late final _VecDouble_Close =
-      _VecDouble_ClosePtr.asFunction<void Function(imp1.VecDoublePtr)>();
-
-  ffi.Pointer<CvStatus> VecDouble_Data(
-    VecDouble vec,
-    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
-  ) {
-    return _VecDouble_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecDouble_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecDouble,
-              ffi.Pointer<ffi.Pointer<ffi.Double>>)>>('VecDouble_Data');
-  late final _VecDouble_Data = _VecDouble_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecDouble, ffi.Pointer<ffi.Pointer<ffi.Double>>)>();
-
-  ffi.Pointer<CvStatus> VecDouble_New(
-    ffi.Pointer<VecDouble> rval,
-  ) {
-    return _VecDouble_New(
-      rval,
-    );
-  }
-
-  late final _VecDouble_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecDouble>)>>('VecDouble_New');
-  late final _VecDouble_New = _VecDouble_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecDouble>)>();
-
-  ffi.Pointer<CvStatus> VecDouble_NewFromPointer(
-    ffi.Pointer<ffi.Double> p,
-    int length,
-    ffi.Pointer<VecDouble> rval,
-  ) {
-    return _VecDouble_NewFromPointer(
-      p,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecDouble_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Double>, ffi.Int,
-              ffi.Pointer<VecDouble>)>>('VecDouble_NewFromPointer');
-  late final _VecDouble_NewFromPointer =
-      _VecDouble_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Double>, int, ffi.Pointer<VecDouble>)>();
-
-  ffi.Pointer<CvStatus> VecDouble_NewFromVec(
-    VecDouble vec,
-    ffi.Pointer<VecDouble> rval,
-  ) {
-    return _VecDouble_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecDouble_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDouble, ffi.Pointer<VecDouble>)>>('VecDouble_NewFromVec');
-  late final _VecDouble_NewFromVec = _VecDouble_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDouble, ffi.Pointer<VecDouble>)>();
-
-  ffi.Pointer<CvStatus> VecDouble_Size(
-    VecDouble vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecDouble_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecDouble_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecDouble, ffi.Pointer<ffi.Int>)>>('VecDouble_Size');
-  late final _VecDouble_Size = _VecDouble_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecDouble, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecFloat_Append(
-    VecFloat vec,
-    double f,
-  ) {
-    return _VecFloat_Append(
-      vec,
-      f,
-    );
-  }
-
-  late final _VecFloat_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecFloat, ffi.Float)>>(
-      'VecFloat_Append');
-  late final _VecFloat_Append = _VecFloat_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecFloat, double)>();
-
-  ffi.Pointer<CvStatus> VecFloat_At(
-    VecFloat vec,
-    int idx,
-    ffi.Pointer<ffi.Float> rval,
-  ) {
-    return _VecFloat_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecFloat_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecFloat, ffi.Int, ffi.Pointer<ffi.Float>)>>('VecFloat_At');
-  late final _VecFloat_At = _VecFloat_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecFloat, int, ffi.Pointer<ffi.Float>)>();
-
-  void VecFloat_Close(
-    imp1.VecFloatPtr vec,
-  ) {
-    return _VecFloat_Close(
-      vec,
-    );
-  }
-
-  late final _VecFloat_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecFloatPtr)>>(
-          'VecFloat_Close');
-  late final _VecFloat_Close =
-      _VecFloat_ClosePtr.asFunction<void Function(imp1.VecFloatPtr)>();
-
-  ffi.Pointer<CvStatus> VecFloat_Data(
-    VecFloat vec,
-    ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
-  ) {
-    return _VecFloat_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecFloat_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>>('VecFloat_Data');
-  late final _VecFloat_Data = _VecFloat_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecFloat, ffi.Pointer<ffi.Pointer<ffi.Float>>)>();
-
-  ffi.Pointer<CvStatus> VecFloat_New(
-    ffi.Pointer<VecFloat> rval,
-  ) {
-    return _VecFloat_New(
-      rval,
-    );
-  }
-
-  late final _VecFloat_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecFloat>)>>('VecFloat_New');
-  late final _VecFloat_New = _VecFloat_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecFloat>)>();
-
-  ffi.Pointer<CvStatus> VecFloat_NewFromPointer(
-    ffi.Pointer<ffi.Float> p,
-    int length,
-    ffi.Pointer<VecFloat> rval,
-  ) {
-    return _VecFloat_NewFromPointer(
-      p,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecFloat_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Float>, ffi.Int,
-              ffi.Pointer<VecFloat>)>>('VecFloat_NewFromPointer');
-  late final _VecFloat_NewFromPointer = _VecFloat_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Float>, int, ffi.Pointer<VecFloat>)>();
-
-  ffi.Pointer<CvStatus> VecFloat_NewFromVec(
-    VecFloat vec,
-    ffi.Pointer<VecFloat> rval,
-  ) {
-    return _VecFloat_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecFloat_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecFloat, ffi.Pointer<VecFloat>)>>('VecFloat_NewFromVec');
-  late final _VecFloat_NewFromVec = _VecFloat_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecFloat, ffi.Pointer<VecFloat>)>();
-
-  ffi.Pointer<CvStatus> VecFloat_Size(
-    VecFloat vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecFloat_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecFloat_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecFloat, ffi.Pointer<ffi.Int>)>>('VecFloat_Size');
-  late final _VecFloat_Size = _VecFloat_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecFloat, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecInt_Append(
-    VecInt vec,
-    int i,
-  ) {
-    return _VecInt_Append(
-      vec,
-      i,
-    );
-  }
-
-  late final _VecInt_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecInt, ffi.Int)>>(
-      'VecInt_Append');
-  late final _VecInt_Append = _VecInt_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, int)>();
-
-  ffi.Pointer<CvStatus> VecInt_At(
-    VecInt vec,
-    int idx,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecInt_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecInt_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>>('VecInt_At');
-  late final _VecInt_At = _VecInt_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, int, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecInt_AtNoBoundCheck(
-    VecInt vec,
-    int idx,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecInt_AtNoBoundCheck(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecInt_AtNoBoundCheckPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Int, ffi.Pointer<ffi.Int>)>>('VecInt_AtNoBoundCheck');
-  late final _VecInt_AtNoBoundCheck = _VecInt_AtNoBoundCheckPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, int, ffi.Pointer<ffi.Int>)>();
-
-  void VecInt_Close(
-    imp1.VecIntPtr vec,
-  ) {
-    return _VecInt_Close(
-      vec,
-    );
-  }
-
-  late final _VecInt_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecIntPtr)>>(
-          'VecInt_Close');
-  late final _VecInt_Close =
-      _VecInt_ClosePtr.asFunction<void Function(imp1.VecIntPtr)>();
-
-  ffi.Pointer<CvStatus> VecInt_Data(
-    VecInt vec,
-    ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
-  ) {
-    return _VecInt_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecInt_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>>('VecInt_Data');
-  late final _VecInt_Data = _VecInt_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecInt, ffi.Pointer<ffi.Pointer<ffi.Int>>)>();
-
-  ffi.Pointer<CvStatus> VecInt_New(
-    ffi.Pointer<VecInt> rval,
-  ) {
-    return _VecInt_New(
-      rval,
-    );
-  }
-
-  late final _VecInt_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecInt>)>>('VecInt_New');
-  late final _VecInt_New = _VecInt_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecInt>)>();
-
-  /// Copy from a pointer
-  ffi.Pointer<CvStatus> VecInt_NewFromPointer(
-    ffi.Pointer<ffi.Int> p,
-    int length,
-    ffi.Pointer<VecInt> rval,
-  ) {
-    return _VecInt_NewFromPointer(
-      p,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecInt_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>, ffi.Int,
-              ffi.Pointer<VecInt>)>>('VecInt_NewFromPointer');
-  late final _VecInt_NewFromPointer = _VecInt_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Int>, int, ffi.Pointer<VecInt>)>();
-
-  ffi.Pointer<CvStatus> VecInt_NewFromVec(
-    VecInt vec,
-    ffi.Pointer<VecInt> rval,
-  ) {
-    return _VecInt_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecInt_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Pointer<VecInt>)>>('VecInt_NewFromVec');
-  late final _VecInt_NewFromVec = _VecInt_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, ffi.Pointer<VecInt>)>();
-
-  ffi.Pointer<CvStatus> VecInt_Size(
-    VecInt vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecInt_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecInt_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecInt, ffi.Pointer<ffi.Int>)>>('VecInt_Size');
-  late final _VecInt_Size = _VecInt_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecInt, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_Append(
-    VecKeyPoint vec,
-    KeyPoint kp,
-  ) {
-    return _VecKeyPoint_Append(
-      vec,
-      kp,
-    );
-  }
-
-  late final _VecKeyPoint_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecKeyPoint, KeyPoint)>>('VecKeyPoint_Append');
-  late final _VecKeyPoint_Append = _VecKeyPoint_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecKeyPoint, KeyPoint)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_At(
-    VecKeyPoint vec,
-    int idx,
-    ffi.Pointer<KeyPoint> rval,
-  ) {
-    return _VecKeyPoint_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecKeyPoint_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecKeyPoint, ffi.Int, ffi.Pointer<KeyPoint>)>>('VecKeyPoint_At');
-  late final _VecKeyPoint_At = _VecKeyPoint_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecKeyPoint, int, ffi.Pointer<KeyPoint>)>();
-
-  void VecKeyPoint_Close(
-    imp1.VecKeyPointPtr vec,
-  ) {
-    return _VecKeyPoint_Close(
-      vec,
-    );
-  }
-
-  late final _VecKeyPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecKeyPointPtr)>>(
-          'VecKeyPoint_Close');
-  late final _VecKeyPoint_Close =
-      _VecKeyPoint_ClosePtr.asFunction<void Function(imp1.VecKeyPointPtr)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_New(
-    ffi.Pointer<VecKeyPoint> rval,
-  ) {
-    return _VecKeyPoint_New(
-      rval,
-    );
-  }
-
-  late final _VecKeyPoint_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecKeyPoint>)>>('VecKeyPoint_New');
-  late final _VecKeyPoint_New = _VecKeyPoint_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_NewFromPointer(
-    ffi.Pointer<KeyPoint> keypoints,
-    int length,
-    ffi.Pointer<VecKeyPoint> rval,
-  ) {
-    return _VecKeyPoint_NewFromPointer(
-      keypoints,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecKeyPoint_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<KeyPoint>, ffi.Int,
-              ffi.Pointer<VecKeyPoint>)>>('VecKeyPoint_NewFromPointer');
-  late final _VecKeyPoint_NewFromPointer =
-      _VecKeyPoint_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<KeyPoint>, int, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_NewFromVec(
-    VecKeyPoint vec,
-    ffi.Pointer<VecKeyPoint> rval,
-  ) {
-    return _VecKeyPoint_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecKeyPoint_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecKeyPoint,
-              ffi.Pointer<VecKeyPoint>)>>('VecKeyPoint_NewFromVec');
-  late final _VecKeyPoint_NewFromVec = _VecKeyPoint_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecKeyPoint, ffi.Pointer<VecKeyPoint>)>();
-
-  ffi.Pointer<CvStatus> VecKeyPoint_Size(
-    VecKeyPoint vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecKeyPoint_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecKeyPoint_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecKeyPoint, ffi.Pointer<ffi.Int>)>>('VecKeyPoint_Size');
-  late final _VecKeyPoint_Size = _VecKeyPoint_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecKeyPoint, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecMat_Append(
-    VecMat vec,
-    Mat mat,
-  ) {
-    return _VecMat_Append(
-      vec,
-      mat,
-    );
-  }
-
-  late final _VecMat_AppendPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecMat, Mat)>>(
-          'VecMat_Append');
-  late final _VecMat_Append = _VecMat_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecMat, Mat)>();
-
-  ffi.Pointer<CvStatus> VecMat_At(
-    VecMat vec,
-    int i,
-    ffi.Pointer<Mat> rval,
-  ) {
-    return _VecMat_At(
-      vec,
-      i,
-      rval,
-    );
-  }
-
-  late final _VecMat_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat, ffi.Int, ffi.Pointer<Mat>)>>('VecMat_At');
-  late final _VecMat_At = _VecMat_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecMat, int, ffi.Pointer<Mat>)>();
-
-  void VecMat_Close(
-    imp1.VecMatPtr vec,
-  ) {
-    return _VecMat_Close(
-      vec,
-    );
-  }
-
-  late final _VecMat_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecMatPtr)>>(
-          'VecMat_Close');
-  late final _VecMat_Close =
-      _VecMat_ClosePtr.asFunction<void Function(imp1.VecMatPtr)>();
-
-  ffi.Pointer<CvStatus> VecMat_New(
-    ffi.Pointer<VecMat> rval,
-  ) {
-    return _VecMat_New(
-      rval,
-    );
-  }
-
-  late final _VecMat_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecMat>)>>('VecMat_New');
-  late final _VecMat_New = _VecMat_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecMat>)>();
-
-  ffi.Pointer<CvStatus> VecMat_NewFromPointer(
-    ffi.Pointer<Mat> mats,
-    int length,
-    ffi.Pointer<VecMat> rval,
-  ) {
-    return _VecMat_NewFromPointer(
-      mats,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecMat_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Mat>, ffi.Int,
-              ffi.Pointer<VecMat>)>>('VecMat_NewFromPointer');
-  late final _VecMat_NewFromPointer = _VecMat_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Mat>, int, ffi.Pointer<VecMat>)>();
-
-  ffi.Pointer<CvStatus> VecMat_NewFromVec(
-    VecMat vec,
-    ffi.Pointer<VecMat> rval,
-  ) {
-    return _VecMat_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecMat_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat, ffi.Pointer<VecMat>)>>('VecMat_NewFromVec');
-  late final _VecMat_NewFromVec = _VecMat_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecMat, ffi.Pointer<VecMat>)>();
-
-  ffi.Pointer<CvStatus> VecMat_Size(
-    VecMat vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecMat_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecMat_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat, ffi.Pointer<ffi.Int>)>>('VecMat_Size');
-  late final _VecMat_Size = _VecMat_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecMat, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_Append(
-    VecPoint2f vec,
-    Point2f p,
-  ) {
-    return _VecPoint2f_Append(
-      vec,
-      p,
-    );
-  }
-
-  late final _VecPoint2f_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecPoint2f, Point2f)>>(
-      'VecPoint2f_Append');
-  late final _VecPoint2f_Append = _VecPoint2f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint2f, Point2f)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_At(
-    VecPoint2f vec,
-    int idx,
-    ffi.Pointer<Point2f> rval,
-  ) {
-    return _VecPoint2f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint2f, ffi.Int, ffi.Pointer<Point2f>)>>('VecPoint2f_At');
-  late final _VecPoint2f_At = _VecPoint2f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint2f, int, ffi.Pointer<Point2f>)>();
-
-  void VecPoint2f_Close(
-    imp1.VecPoint2fPtr vec,
-  ) {
-    return _VecPoint2f_Close(
-      vec,
-    );
-  }
-
-  late final _VecPoint2f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint2fPtr)>>(
-          'VecPoint2f_Close');
-  late final _VecPoint2f_Close =
-      _VecPoint2f_ClosePtr.asFunction<void Function(imp1.VecPoint2fPtr)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_New(
-    ffi.Pointer<VecPoint2f> rval,
-  ) {
-    return _VecPoint2f_New(
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint2f>)>>('VecPoint2f_New');
-  late final _VecPoint2f_New = _VecPoint2f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_NewFromMat(
-    Mat mat,
-    ffi.Pointer<VecPoint2f> rval,
-  ) {
-    return _VecPoint2f_NewFromMat(
-      mat,
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_NewFromMatPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecPoint2f>)>>('VecPoint2f_NewFromMat');
-  late final _VecPoint2f_NewFromMat = _VecPoint2f_NewFromMatPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_NewFromPointer(
-    ffi.Pointer<Point2f> pts,
-    int length,
-    ffi.Pointer<VecPoint2f> rval,
-  ) {
-    return _VecPoint2f_NewFromPointer(
-      pts,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Point2f>, ffi.Int,
-              ffi.Pointer<VecPoint2f>)>>('VecPoint2f_NewFromPointer');
-  late final _VecPoint2f_NewFromPointer =
-      _VecPoint2f_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<Point2f>, int, ffi.Pointer<VecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_NewFromVec(
-    VecPoint2f vec,
-    ffi.Pointer<VecPoint2f> rval,
-  ) {
-    return _VecPoint2f_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint2f, ffi.Pointer<VecPoint2f>)>>('VecPoint2f_NewFromVec');
-  late final _VecPoint2f_NewFromVec = _VecPoint2f_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Pointer<VecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint2f_Size(
-    VecPoint2f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecPoint2f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint2f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint2f, ffi.Pointer<ffi.Int>)>>('VecPoint2f_Size');
-  late final _VecPoint2f_Size = _VecPoint2f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint2f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_Append(
-    VecPoint3f vec,
-    Point3f point,
-  ) {
-    return _VecPoint3f_Append(
-      vec,
-      point,
-    );
-  }
-
-  late final _VecPoint3f_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecPoint3f, Point3f)>>(
-      'VecPoint3f_Append');
-  late final _VecPoint3f_Append = _VecPoint3f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3f, Point3f)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_At(
-    VecPoint3f vec,
-    int idx,
-    ffi.Pointer<Point3f> rval,
-  ) {
-    return _VecPoint3f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3f, ffi.Int, ffi.Pointer<Point3f>)>>('VecPoint3f_At');
-  late final _VecPoint3f_At = _VecPoint3f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3f, int, ffi.Pointer<Point3f>)>();
-
-  void VecPoint3f_Close(
-    imp1.VecPoint3fPtr vec,
-  ) {
-    return _VecPoint3f_Close(
-      vec,
-    );
-  }
-
-  late final _VecPoint3f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint3fPtr)>>(
-          'VecPoint3f_Close');
-  late final _VecPoint3f_Close =
-      _VecPoint3f_ClosePtr.asFunction<void Function(imp1.VecPoint3fPtr)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_New(
-    ffi.Pointer<VecPoint3f> rval,
-  ) {
-    return _VecPoint3f_New(
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint3f>)>>('VecPoint3f_New');
-  late final _VecPoint3f_New = _VecPoint3f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_NewFromMat(
-    Mat mat,
-    ffi.Pointer<VecPoint3f> rval,
-  ) {
-    return _VecPoint3f_NewFromMat(
-      mat,
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_NewFromMatPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecPoint3f>)>>('VecPoint3f_NewFromMat');
-  late final _VecPoint3f_NewFromMat = _VecPoint3f_NewFromMatPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_NewFromPointer(
-    ffi.Pointer<Point3f> points,
-    int length,
-    ffi.Pointer<VecPoint3f> rval,
-  ) {
-    return _VecPoint3f_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Point3f>, ffi.Int,
-              ffi.Pointer<VecPoint3f>)>>('VecPoint3f_NewFromPointer');
-  late final _VecPoint3f_NewFromPointer =
-      _VecPoint3f_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<Point3f>, int, ffi.Pointer<VecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_NewFromVec(
-    VecPoint3f vec,
-    ffi.Pointer<VecPoint3f> rval,
-  ) {
-    return _VecPoint3f_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3f, ffi.Pointer<VecPoint3f>)>>('VecPoint3f_NewFromVec');
-  late final _VecPoint3f_NewFromVec = _VecPoint3f_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Pointer<VecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3f_Size(
-    VecPoint3f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecPoint3f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint3f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3f, ffi.Pointer<ffi.Int>)>>('VecPoint3f_Size');
-  late final _VecPoint3f_Size = _VecPoint3f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_Append(
-    VecPoint3i vec,
-    Point3i point,
-  ) {
-    return _VecPoint3i_Append(
-      vec,
-      point,
-    );
-  }
-
-  late final _VecPoint3i_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecPoint3i, Point3i)>>(
-      'VecPoint3i_Append');
-  late final _VecPoint3i_Append = _VecPoint3i_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3i, Point3i)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_At(
-    VecPoint3i vec,
-    int idx,
-    ffi.Pointer<Point3i> rval,
-  ) {
-    return _VecPoint3i_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3i, ffi.Int, ffi.Pointer<Point3i>)>>('VecPoint3i_At');
-  late final _VecPoint3i_At = _VecPoint3i_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3i, int, ffi.Pointer<Point3i>)>();
-
-  void VecPoint3i_Close(
-    imp1.VecPoint3iPtr vec,
-  ) {
-    return _VecPoint3i_Close(
-      vec,
-    );
-  }
-
-  late final _VecPoint3i_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint3iPtr)>>(
-          'VecPoint3i_Close');
-  late final _VecPoint3i_Close =
-      _VecPoint3i_ClosePtr.asFunction<void Function(imp1.VecPoint3iPtr)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_New(
-    ffi.Pointer<VecPoint3i> rval,
-  ) {
-    return _VecPoint3i_New(
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint3i>)>>('VecPoint3i_New');
-  late final _VecPoint3i_New = _VecPoint3i_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint3i>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_NewFromMat(
-    Mat mat,
-    ffi.Pointer<VecPoint3i> rval,
-  ) {
-    return _VecPoint3i_NewFromMat(
-      mat,
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_NewFromMatPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecPoint3i>)>>('VecPoint3i_NewFromMat');
-  late final _VecPoint3i_NewFromMat = _VecPoint3i_NewFromMatPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint3i>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_NewFromPointer(
-    ffi.Pointer<Point3i> points,
-    int length,
-    ffi.Pointer<VecPoint3i> rval,
-  ) {
-    return _VecPoint3i_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Point3i>, ffi.Int,
-              ffi.Pointer<VecPoint3i>)>>('VecPoint3i_NewFromPointer');
-  late final _VecPoint3i_NewFromPointer =
-      _VecPoint3i_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<Point3i>, int, ffi.Pointer<VecPoint3i>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_NewFromVec(
-    VecPoint3i vec,
-    ffi.Pointer<VecPoint3i> rval,
-  ) {
-    return _VecPoint3i_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3i, ffi.Pointer<VecPoint3i>)>>('VecPoint3i_NewFromVec');
-  late final _VecPoint3i_NewFromVec = _VecPoint3i_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3i, ffi.Pointer<VecPoint3i>)>();
-
-  ffi.Pointer<CvStatus> VecPoint3i_Size(
-    VecPoint3i vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecPoint3i_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint3i_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3i, ffi.Pointer<ffi.Int>)>>('VecPoint3i_Size');
-  late final _VecPoint3i_Size = _VecPoint3i_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint3i, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecPoint_Append(
-    VecPoint vec,
-    Point p,
-  ) {
-    return _VecPoint_Append(
-      vec,
-      p,
-    );
-  }
-
-  late final _VecPoint_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecPoint, Point)>>(
-      'VecPoint_Append');
-  late final _VecPoint_Append = _VecPoint_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint, Point)>();
-
-  ffi.Pointer<CvStatus> VecPoint_At(
-    VecPoint vec,
-    int idx,
-    ffi.Pointer<Point> rval,
-  ) {
-    return _VecPoint_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecPoint_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint, ffi.Int, ffi.Pointer<Point>)>>('VecPoint_At');
-  late final _VecPoint_At = _VecPoint_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint, int, ffi.Pointer<Point>)>();
-
-  void VecPoint_Close(
-    imp1.VecPointPtr vec,
-  ) {
-    return _VecPoint_Close(
-      vec,
-    );
-  }
-
-  late final _VecPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecPointPtr)>>(
-          'VecPoint_Close');
-  late final _VecPoint_Close =
-      _VecPoint_ClosePtr.asFunction<void Function(imp1.VecPointPtr)>();
-
-  ffi.Pointer<CvStatus> VecPoint_New(
-    ffi.Pointer<VecPoint> rval,
-  ) {
-    return _VecPoint_New(
-      rval,
-    );
-  }
-
-  late final _VecPoint_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint>)>>('VecPoint_New');
-  late final _VecPoint_New = _VecPoint_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecPoint_NewFromMat(
-    Mat mat,
-    ffi.Pointer<VecPoint> rval,
-  ) {
-    return _VecPoint_NewFromMat(
-      mat,
-      rval,
-    );
-  }
-
-  late final _VecPoint_NewFromMatPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecPoint>)>>('VecPoint_NewFromMat');
-  late final _VecPoint_NewFromMat = _VecPoint_NewFromMatPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecPoint>)>();
-
-  /// Copy from a pointer
-  ffi.Pointer<CvStatus> VecPoint_NewFromPointer(
-    ffi.Pointer<Point> points,
-    int length,
-    ffi.Pointer<VecPoint> rval,
-  ) {
-    return _VecPoint_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecPoint_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Point>, ffi.Int,
-              ffi.Pointer<VecPoint>)>>('VecPoint_NewFromPointer');
-  late final _VecPoint_NewFromPointer = _VecPoint_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Point>, int, ffi.Pointer<VecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecPoint_NewFromVec(
-    VecPoint vec,
-    ffi.Pointer<VecPoint> rval,
-  ) {
-    return _VecPoint_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint, ffi.Pointer<VecPoint>)>>('VecPoint_NewFromVec');
-  late final _VecPoint_NewFromVec = _VecPoint_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<VecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecPoint_Size(
-    VecPoint vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecPoint_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecPoint_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint, ffi.Pointer<ffi.Int>)>>('VecPoint_Size');
-  late final _VecPoint_Size = _VecPoint_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecPoint, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecRect_Append(
-    VecRect vec,
-    Rect rect,
-  ) {
-    return _VecRect_Append(
-      vec,
-      rect,
-    );
-  }
-
-  late final _VecRect_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecRect, Rect)>>(
-      'VecRect_Append');
-  late final _VecRect_Append = _VecRect_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, Rect)>();
-
-  ffi.Pointer<CvStatus> VecRect_At(
-    VecRect vec,
-    int idx,
-    ffi.Pointer<Rect> rval,
-  ) {
-    return _VecRect_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecRect_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecRect, ffi.Int, ffi.Pointer<Rect>)>>('VecRect_At');
-  late final _VecRect_At = _VecRect_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, int, ffi.Pointer<Rect>)>();
-
-  void VecRect_Close(
-    imp1.VecRectPtr vec,
-  ) {
-    return _VecRect_Close(
-      vec,
-    );
-  }
-
-  late final _VecRect_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecRectPtr)>>(
-          'VecRect_Close');
-  late final _VecRect_Close =
-      _VecRect_ClosePtr.asFunction<void Function(imp1.VecRectPtr)>();
-
-  ffi.Pointer<CvStatus> VecRect_New(
-    ffi.Pointer<VecRect> rval,
-  ) {
-    return _VecRect_New(
-      rval,
-    );
-  }
-
-  late final _VecRect_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>)>>('VecRect_New');
-  late final _VecRect_New = _VecRect_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>)>();
-
-  ffi.Pointer<CvStatus> VecRect_NewFromPointer(
-    ffi.Pointer<Rect> rects,
-    int length,
-    ffi.Pointer<VecRect> rval,
-  ) {
-    return _VecRect_NewFromPointer(
-      rects,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecRect_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Rect>, ffi.Int,
-              ffi.Pointer<VecRect>)>>('VecRect_NewFromPointer');
-  late final _VecRect_NewFromPointer = _VecRect_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Rect>, int, ffi.Pointer<VecRect>)>();
-
-  ffi.Pointer<CvStatus> VecRect_NewFromVec(
-    VecRect vec,
-    ffi.Pointer<VecRect> rval,
-  ) {
-    return _VecRect_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecRect_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecRect, ffi.Pointer<VecRect>)>>('VecRect_NewFromVec');
-  late final _VecRect_NewFromVec = _VecRect_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, ffi.Pointer<VecRect>)>();
-
-  ffi.Pointer<CvStatus> VecRect_Size(
-    VecRect vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecRect_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecRect_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecRect, ffi.Pointer<ffi.Int>)>>('VecRect_Size');
-  late final _VecRect_Size = _VecRect_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecRect, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_Append(
-    VecUChar vec,
-    int i,
-  ) {
-    return _VecUChar_Append(
-      vec,
-      i,
-    );
-  }
-
-  late final _VecUChar_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecUChar, ffi.UnsignedChar)>>('VecUChar_Append');
-  late final _VecUChar_Append = _VecUChar_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, int)>();
-
-  ffi.Pointer<CvStatus> VecUChar_At(
-    VecUChar vec,
-    int idx,
-    ffi.Pointer<ffi.UnsignedChar> rval,
-  ) {
-    return _VecUChar_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecUChar_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int,
-              ffi.Pointer<ffi.UnsignedChar>)>>('VecUChar_At');
-  late final _VecUChar_At = _VecUChar_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecUChar, int, ffi.Pointer<ffi.UnsignedChar>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_AtNoBoundCheck(
-    VecUChar vec,
-    int idx,
-    ffi.Pointer<ffi.UnsignedChar> rval,
-  ) {
-    return _VecUChar_AtNoBoundCheck(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecUChar_AtNoBoundCheckPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int,
-              ffi.Pointer<ffi.UnsignedChar>)>>('VecUChar_AtNoBoundCheck');
-  late final _VecUChar_AtNoBoundCheck = _VecUChar_AtNoBoundCheckPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecUChar, int, ffi.Pointer<ffi.UnsignedChar>)>();
-
-  void VecUChar_Close(
-    imp1.VecUCharPtr vec,
-  ) {
-    return _VecUChar_Close(
-      vec,
-    );
-  }
-
-  late final _VecUChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecUCharPtr)>>(
-          'VecUChar_Close');
-  late final _VecUChar_Close =
-      _VecUChar_ClosePtr.asFunction<void Function(imp1.VecUCharPtr)>();
-
-  ffi.Pointer<CvStatus> VecUChar_Data(
-    VecUChar vec,
-    ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> rval,
-  ) {
-    return _VecUChar_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecUChar_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecUChar,
-              ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>>('VecUChar_Data');
-  late final _VecUChar_Data = _VecUChar_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecUChar, ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_New(
-    ffi.Pointer<VecUChar> rval,
-  ) {
-    return _VecUChar_New(
-      rval,
-    );
-  }
-
-  late final _VecUChar_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecUChar>)>>('VecUChar_New');
-  late final _VecUChar_New = _VecUChar_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecUChar>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_NewFromPointer(
-    ffi.Pointer<ffi.UnsignedChar> p,
-    int length,
-    ffi.Pointer<VecUChar> rval,
-  ) {
-    return _VecUChar_NewFromPointer(
-      p,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecUChar_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.UnsignedChar>, ffi.Int,
-              ffi.Pointer<VecUChar>)>>('VecUChar_NewFromPointer');
-  late final _VecUChar_NewFromPointer = _VecUChar_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.UnsignedChar>, int, ffi.Pointer<VecUChar>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_NewFromVec(
-    VecUChar vec,
-    ffi.Pointer<VecUChar> rval,
-  ) {
-    return _VecUChar_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecUChar_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecUChar, ffi.Pointer<VecUChar>)>>('VecUChar_NewFromVec');
-  late final _VecUChar_NewFromVec = _VecUChar_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<VecUChar>)>();
-
-  ffi.Pointer<CvStatus> VecUChar_Size(
-    VecUChar vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecUChar_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecUChar_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecUChar, ffi.Pointer<ffi.Int>)>>('VecUChar_Size');
-  late final _VecUChar_Size = _VecUChar_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVec4f_Append(
-    VecVec4f vec,
-    Vec4f v,
-  ) {
-    return _VecVec4f_Append(
-      vec,
-      v,
-    );
-  }
-
-  late final _VecVec4f_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecVec4f, Vec4f)>>(
-      'VecVec4f_Append');
-  late final _VecVec4f_Append = _VecVec4f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4f, Vec4f)>();
-
-  ffi.Pointer<CvStatus> VecVec4f_At(
-    VecVec4f vec,
-    int idx,
-    ffi.Pointer<Vec4f> rval,
-  ) {
-    return _VecVec4f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVec4f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec4f, ffi.Int, ffi.Pointer<Vec4f>)>>('VecVec4f_At');
-  late final _VecVec4f_At = _VecVec4f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4f, int, ffi.Pointer<Vec4f>)>();
-
-  void VecVec4f_Close(
-    imp1.VecVec4fPtr vec,
-  ) {
-    return _VecVec4f_Close(
-      vec,
-    );
-  }
-
-  late final _VecVec4f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVec4fPtr)>>(
-          'VecVec4f_Close');
-  late final _VecVec4f_Close =
-      _VecVec4f_ClosePtr.asFunction<void Function(imp1.VecVec4fPtr)>();
-
-  ffi.Pointer<CvStatus> VecVec4f_New(
-    ffi.Pointer<VecVec4f> rval,
-  ) {
-    return _VecVec4f_New(
-      rval,
-    );
-  }
-
-  late final _VecVec4f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVec4f>)>>('VecVec4f_New');
-  late final _VecVec4f_New = _VecVec4f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVec4f>)>();
-
-  ffi.Pointer<CvStatus> VecVec4f_NewFromPointer(
-    ffi.Pointer<Vec4f> data,
-    int length,
-    ffi.Pointer<VecVec4f> rval,
-  ) {
-    return _VecVec4f_NewFromPointer(
-      data,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVec4f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Vec4f>, ffi.Int,
-              ffi.Pointer<VecVec4f>)>>('VecVec4f_NewFromPointer');
-  late final _VecVec4f_NewFromPointer = _VecVec4f_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Vec4f>, int, ffi.Pointer<VecVec4f>)>();
-
-  ffi.Pointer<CvStatus> VecVec4f_Size(
-    VecVec4f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVec4f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVec4f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec4f, ffi.Pointer<ffi.Int>)>>('VecVec4f_Size');
-  late final _VecVec4f_Size = _VecVec4f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVec4i_Append(
-    VecVec4i vec,
-    Vec4i v,
-  ) {
-    return _VecVec4i_Append(
-      vec,
-      v,
-    );
-  }
-
-  late final _VecVec4i_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecVec4i, Vec4i)>>(
-      'VecVec4i_Append');
-  late final _VecVec4i_Append = _VecVec4i_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4i, Vec4i)>();
-
-  ffi.Pointer<CvStatus> VecVec4i_At(
-    VecVec4i vec,
-    int idx,
-    ffi.Pointer<Vec4i> rval,
-  ) {
-    return _VecVec4i_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVec4i_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec4i, ffi.Int, ffi.Pointer<Vec4i>)>>('VecVec4i_At');
-  late final _VecVec4i_At = _VecVec4i_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4i, int, ffi.Pointer<Vec4i>)>();
-
-  void VecVec4i_Close(
-    imp1.VecVec4iPtr vec,
-  ) {
-    return _VecVec4i_Close(
-      vec,
-    );
-  }
-
-  late final _VecVec4i_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVec4iPtr)>>(
-          'VecVec4i_Close');
-  late final _VecVec4i_Close =
-      _VecVec4i_ClosePtr.asFunction<void Function(imp1.VecVec4iPtr)>();
-
-  ffi.Pointer<CvStatus> VecVec4i_New(
-    ffi.Pointer<VecVec4i> rval,
-  ) {
-    return _VecVec4i_New(
-      rval,
-    );
-  }
-
-  late final _VecVec4i_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVec4i>)>>('VecVec4i_New');
-  late final _VecVec4i_New = _VecVec4i_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVec4i>)>();
-
-  ffi.Pointer<CvStatus> VecVec4i_NewFromPointer(
-    ffi.Pointer<Vec4i> data,
-    int length,
-    ffi.Pointer<VecVec4i> rval,
-  ) {
-    return _VecVec4i_NewFromPointer(
-      data,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVec4i_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Vec4i>, ffi.Int,
-              ffi.Pointer<VecVec4i>)>>('VecVec4i_NewFromPointer');
-  late final _VecVec4i_NewFromPointer = _VecVec4i_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Vec4i>, int, ffi.Pointer<VecVec4i>)>();
-
-  ffi.Pointer<CvStatus> VecVec4i_Size(
-    VecVec4i vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVec4i_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVec4i_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec4i, ffi.Pointer<ffi.Int>)>>('VecVec4i_Size');
-  late final _VecVec4i_Size = _VecVec4i_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec4i, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVec6f_Append(
-    VecVec6f vec,
-    Vec6f v,
-  ) {
-    return _VecVec6f_Append(
-      vec,
-      v,
-    );
-  }
-
-  late final _VecVec6f_AppendPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecVec6f, Vec6f)>>(
-      'VecVec6f_Append');
-  late final _VecVec6f_Append = _VecVec6f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec6f, Vec6f)>();
-
-  ffi.Pointer<CvStatus> VecVec6f_At(
-    VecVec6f vec,
-    int idx,
-    ffi.Pointer<Vec6f> rval,
-  ) {
-    return _VecVec6f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVec6f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec6f, ffi.Int, ffi.Pointer<Vec6f>)>>('VecVec6f_At');
-  late final _VecVec6f_At = _VecVec6f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec6f, int, ffi.Pointer<Vec6f>)>();
-
-  void VecVec6f_Close(
-    imp1.VecVec6fPtr vec,
-  ) {
-    return _VecVec6f_Close(
-      vec,
-    );
-  }
-
-  late final _VecVec6f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVec6fPtr)>>(
-          'VecVec6f_Close');
-  late final _VecVec6f_Close =
-      _VecVec6f_ClosePtr.asFunction<void Function(imp1.VecVec6fPtr)>();
-
-  ffi.Pointer<CvStatus> VecVec6f_New(
-    ffi.Pointer<VecVec6f> rval,
-  ) {
-    return _VecVec6f_New(
-      rval,
-    );
-  }
-
-  late final _VecVec6f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVec6f>)>>('VecVec6f_New');
-  late final _VecVec6f_New = _VecVec6f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVec6f>)>();
-
-  ffi.Pointer<CvStatus> VecVec6f_NewFromPointer(
-    ffi.Pointer<Vec6f> data,
-    int length,
-    ffi.Pointer<VecVec6f> rval,
-  ) {
-    return _VecVec6f_NewFromPointer(
-      data,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVec6f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<Vec6f>, ffi.Int,
-              ffi.Pointer<VecVec6f>)>>('VecVec6f_NewFromPointer');
-  late final _VecVec6f_NewFromPointer = _VecVec6f_NewFromPointerPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<Vec6f>, int, ffi.Pointer<VecVec6f>)>();
-
-  ffi.Pointer<CvStatus> VecVec6f_Size(
-    VecVec6f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVec6f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVec6f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVec6f, ffi.Pointer<ffi.Int>)>>('VecVec6f_Size');
-  late final _VecVec6f_Size = _VecVec6f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVec6f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_Append(
-    VecVecChar vec,
-    VecChar v,
-  ) {
-    return _VecVecChar_Append(
-      vec,
-      v,
-    );
-  }
-
-  late final _VecVecChar_AppendPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(VecVecChar, VecChar)>>(
-      'VecVecChar_Append');
-  late final _VecVecChar_Append = _VecVecChar_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, VecChar)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_Append_Str(
-    VecVecChar vec,
-    ffi.Pointer<ffi.Char> str,
-  ) {
-    return _VecVecChar_Append_Str(
-      vec,
-      str,
-    );
-  }
-
-  late final _VecVecChar_Append_StrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecChar, ffi.Pointer<ffi.Char>)>>('VecVecChar_Append_Str');
-  late final _VecVecChar_Append_Str = _VecVecChar_Append_StrPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<ffi.Char>)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_At(
-    VecVecChar vec,
-    int idx,
-    ffi.Pointer<VecChar> rval,
-  ) {
-    return _VecVecChar_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVecChar_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecChar, ffi.Int, ffi.Pointer<VecChar>)>>('VecVecChar_At');
-  late final _VecVecChar_At = _VecVecChar_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, int, ffi.Pointer<VecChar>)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_At_Str(
-    VecVecChar vec,
-    int idx,
-    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-    ffi.Pointer<ffi.Int> length,
-  ) {
-    return _VecVecChar_At_Str(
-      vec,
-      idx,
-      rval,
-      length,
-    );
-  }
-
-  late final _VecVecChar_At_StrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecChar,
-              ffi.Int,
-              ffi.Pointer<ffi.Pointer<ffi.Char>>,
-              ffi.Pointer<ffi.Int>)>>('VecVecChar_At_Str');
-  late final _VecVecChar_At_Str = _VecVecChar_At_StrPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, int,
-          ffi.Pointer<ffi.Pointer<ffi.Char>>, ffi.Pointer<ffi.Int>)>();
-
-  void VecVecChar_Close(
-    imp1.VecVecCharPtr vec,
-  ) {
-    return _VecVecChar_Close(
-      vec,
-    );
-  }
-
-  late final _VecVecChar_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVecCharPtr)>>(
-          'VecVecChar_Close');
-  late final _VecVecChar_Close =
-      _VecVecChar_ClosePtr.asFunction<void Function(imp1.VecVecCharPtr)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_New(
-    ffi.Pointer<VecVecChar> rval,
-  ) {
-    return _VecVecChar_New(
-      rval,
-    );
-  }
-
-  late final _VecVecChar_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVecChar>)>>('VecVecChar_New');
-  late final _VecVecChar_New = _VecVecChar_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecChar>)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_NewFromVec(
-    VecVecChar vec,
-    ffi.Pointer<VecVecChar> rval,
-  ) {
-    return _VecVecChar_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecChar_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecChar, ffi.Pointer<VecVecChar>)>>('VecVecChar_NewFromVec');
-  late final _VecVecChar_NewFromVec = _VecVecChar_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<VecVecChar>)>();
-
-  ffi.Pointer<CvStatus> VecVecChar_Size(
-    VecVecChar vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVecChar_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecChar_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecChar, ffi.Pointer<ffi.Int>)>>('VecVecChar_Size');
-  late final _VecVecChar_Size = _VecVecChar_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecChar, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_Append(
-    VecVecDMatch vec,
-    VecDMatch dm,
-  ) {
-    return _VecVecDMatch_Append(
-      vec,
-      dm,
-    );
-  }
-
-  late final _VecVecDMatch_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecDMatch, VecDMatch)>>('VecVecDMatch_Append');
-  late final _VecVecDMatch_Append = _VecVecDMatch_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecDMatch, VecDMatch)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_At(
-    VecVecDMatch vec,
-    int idx,
-    ffi.Pointer<VecDMatch> rval,
-  ) {
-    return _VecVecDMatch_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecDMatch, ffi.Int,
-              ffi.Pointer<VecDMatch>)>>('VecVecDMatch_At');
-  late final _VecVecDMatch_At = _VecVecDMatch_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecDMatch, int, ffi.Pointer<VecDMatch>)>();
-
-  void VecVecDMatch_Close(
-    imp1.VecVecDMatchPtr vec,
-  ) {
-    return _VecVecDMatch_Close(
-      vec,
-    );
-  }
-
-  late final _VecVecDMatch_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVecDMatchPtr)>>(
-          'VecVecDMatch_Close');
-  late final _VecVecDMatch_Close =
-      _VecVecDMatch_ClosePtr.asFunction<void Function(imp1.VecVecDMatchPtr)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_Data(
-    VecVecDMatch vec,
-    ffi.Pointer<ffi.Pointer<VecDMatch>> rval,
-  ) {
-    return _VecVecDMatch_Data(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecDMatch,
-              ffi.Pointer<ffi.Pointer<VecDMatch>>)>>('VecVecDMatch_Data');
-  late final _VecVecDMatch_Data = _VecVecDMatch_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecDMatch, ffi.Pointer<ffi.Pointer<VecDMatch>>)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_New(
-    ffi.Pointer<VecVecDMatch> rval,
-  ) {
-    return _VecVecDMatch_New(
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVecDMatch>)>>('VecVecDMatch_New');
-  late final _VecVecDMatch_New = _VecVecDMatch_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_NewFromPointer(
-    ffi.Pointer<VecDMatch> matches,
-    int length,
-    ffi.Pointer<VecVecDMatch> rval,
-  ) {
-    return _VecVecDMatch_NewFromPointer(
-      matches,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecDMatch>, ffi.Int,
-              ffi.Pointer<VecVecDMatch>)>>('VecVecDMatch_NewFromPointer');
-  late final _VecVecDMatch_NewFromPointer =
-      _VecVecDMatch_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecDMatch>, int, ffi.Pointer<VecVecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_NewFromVec(
-    VecVecDMatch vec,
-    ffi.Pointer<VecVecDMatch> rval,
-  ) {
-    return _VecVecDMatch_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecDMatch,
-              ffi.Pointer<VecVecDMatch>)>>('VecVecDMatch_NewFromVec');
-  late final _VecVecDMatch_NewFromVec = _VecVecDMatch_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecDMatch, ffi.Pointer<VecVecDMatch>)>();
-
-  ffi.Pointer<CvStatus> VecVecDMatch_Size(
-    VecVecDMatch vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVecDMatch_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecDMatch_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecDMatch, ffi.Pointer<ffi.Int>)>>('VecVecDMatch_Size');
-  late final _VecVecDMatch_Size = _VecVecDMatch_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecDMatch, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_Append(
-    VecVecPoint2f vec,
-    VecPoint2f pv,
-  ) {
-    return _VecVecPoint2f_Append(
-      vec,
-      pv,
-    );
-  }
-
-  late final _VecVecPoint2f_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint2f, VecPoint2f)>>('VecVecPoint2f_Append');
-  late final _VecVecPoint2f_Append = _VecVecPoint2f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint2f, VecPoint2f)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_At(
-    VecVecPoint2f vec,
-    int idx,
-    ffi.Pointer<VecPoint2f> rval,
-  ) {
-    return _VecVecPoint2f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint2f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecPoint2f, ffi.Int,
-              ffi.Pointer<VecPoint2f>)>>('VecVecPoint2f_At');
-  late final _VecVecPoint2f_At = _VecVecPoint2f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecPoint2f, int, ffi.Pointer<VecPoint2f>)>();
-
-  void VecVecPoint2f_Close(
-    imp1.VecVecPoint2fPtr vec,
-  ) {
-    return _VecVecPoint2f_Close(
-      vec,
-    );
-  }
-
-  late final _VecVecPoint2f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPoint2fPtr)>>(
-          'VecVecPoint2f_Close');
-  late final _VecVecPoint2f_Close = _VecVecPoint2f_ClosePtr.asFunction<
-      void Function(imp1.VecVecPoint2fPtr)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_New(
-    ffi.Pointer<VecVecPoint2f> rval,
-  ) {
-    return _VecVecPoint2f_New(
-      rval,
-    );
-  }
-
-  late final _VecVecPoint2f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVecPoint2f>)>>('VecVecPoint2f_New');
-  late final _VecVecPoint2f_New = _VecVecPoint2f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_NewFromPointer(
-    ffi.Pointer<VecPoint2f> points,
-    int length,
-    ffi.Pointer<VecVecPoint2f> rval,
-  ) {
-    return _VecVecPoint2f_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint2f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint2f>, ffi.Int,
-              ffi.Pointer<VecVecPoint2f>)>>('VecVecPoint2f_NewFromPointer');
-  late final _VecVecPoint2f_NewFromPointer =
-      _VecVecPoint2f_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint2f>, int, ffi.Pointer<VecVecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_NewFromVec(
-    VecVecPoint2f vec,
-    ffi.Pointer<VecVecPoint2f> rval,
-  ) {
-    return _VecVecPoint2f_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint2f_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecPoint2f,
-              ffi.Pointer<VecVecPoint2f>)>>('VecVecPoint2f_NewFromVec');
-  late final _VecVecPoint2f_NewFromVec =
-      _VecVecPoint2f_NewFromVecPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint2f, ffi.Pointer<VecVecPoint2f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint2f_Size(
-    VecVecPoint2f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVecPoint2f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint2f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint2f, ffi.Pointer<ffi.Int>)>>('VecVecPoint2f_Size');
-  late final _VecVecPoint2f_Size = _VecVecPoint2f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint2f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_Append(
-    VecVecPoint3f vec,
-    VecPoint3f pv,
-  ) {
-    return _VecVecPoint3f_Append(
-      vec,
-      pv,
-    );
-  }
-
-  late final _VecVecPoint3f_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint3f, VecPoint3f)>>('VecVecPoint3f_Append');
-  late final _VecVecPoint3f_Append = _VecVecPoint3f_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecPoint3f)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_At(
-    VecVecPoint3f vec,
-    int idx,
-    ffi.Pointer<VecPoint3f> rval,
-  ) {
-    return _VecVecPoint3f_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint3f_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecPoint3f, ffi.Int,
-              ffi.Pointer<VecPoint3f>)>>('VecVecPoint3f_At');
-  late final _VecVecPoint3f_At = _VecVecPoint3f_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecPoint3f, int, ffi.Pointer<VecPoint3f>)>();
-
-  void VecVecPoint3f_Close(
-    imp1.VecVecPoint3fPtr vec,
-  ) {
-    return _VecVecPoint3f_Close(
-      vec,
-    );
-  }
-
-  late final _VecVecPoint3f_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPoint3fPtr)>>(
-          'VecVecPoint3f_Close');
-  late final _VecVecPoint3f_Close = _VecVecPoint3f_ClosePtr.asFunction<
-      void Function(imp1.VecVecPoint3fPtr)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_New(
-    ffi.Pointer<VecVecPoint3f> rval,
-  ) {
-    return _VecVecPoint3f_New(
-      rval,
-    );
-  }
-
-  late final _VecVecPoint3f_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVecPoint3f>)>>('VecVecPoint3f_New');
-  late final _VecVecPoint3f_New = _VecVecPoint3f_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_NewFromPointer(
-    ffi.Pointer<VecPoint3f> points,
-    int length,
-    ffi.Pointer<VecVecPoint3f> rval,
-  ) {
-    return _VecVecPoint3f_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint3f_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint3f>, ffi.Int,
-              ffi.Pointer<VecVecPoint3f>)>>('VecVecPoint3f_NewFromPointer');
-  late final _VecVecPoint3f_NewFromPointer =
-      _VecVecPoint3f_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint3f>, int, ffi.Pointer<VecVecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_NewFromVec(
-    VecVecPoint3f vec,
-    ffi.Pointer<VecVecPoint3f> rval,
-  ) {
-    return _VecVecPoint3f_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint3f_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecPoint3f,
-              ffi.Pointer<VecVecPoint3f>)>>('VecVecPoint3f_NewFromVec');
-  late final _VecVecPoint3f_NewFromVec =
-      _VecVecPoint3f_NewFromVecPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint3f, ffi.Pointer<VecVecPoint3f>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint3f_Size(
-    VecVecPoint3f vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVecPoint3f_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint3f_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint3f, ffi.Pointer<ffi.Int>)>>('VecVecPoint3f_Size');
-  late final _VecVecPoint3f_Size = _VecVecPoint3f_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint3f, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_Append(
-    VecVecPoint vec,
-    VecPoint pv,
-  ) {
-    return _VecVecPoint_Append(
-      vec,
-      pv,
-    );
-  }
-
-  late final _VecVecPoint_AppendPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint, VecPoint)>>('VecVecPoint_Append');
-  late final _VecVecPoint_Append = _VecVecPoint_AppendPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint, VecPoint)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_At(
-    VecVecPoint vec,
-    int idx,
-    ffi.Pointer<VecPoint> rval,
-  ) {
-    return _VecVecPoint_At(
-      vec,
-      idx,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint_AtPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint, ffi.Int, ffi.Pointer<VecPoint>)>>('VecVecPoint_At');
-  late final _VecVecPoint_At = _VecVecPoint_AtPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecVecPoint, int, ffi.Pointer<VecPoint>)>();
-
-  void VecVecPoint_Close(
-    imp1.VecVecPointPtr vec,
-  ) {
-    return _VecVecPoint_Close(
-      vec,
-    );
-  }
-
-  late final _VecVecPoint_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPointPtr)>>(
-          'VecVecPoint_Close');
-  late final _VecVecPoint_Close =
-      _VecVecPoint_ClosePtr.asFunction<void Function(imp1.VecVecPointPtr)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_New(
-    ffi.Pointer<VecVecPoint> rval,
-  ) {
-    return _VecVecPoint_New(
-      rval,
-    );
-  }
-
-  late final _VecVecPoint_NewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecVecPoint>)>>('VecVecPoint_New');
-  late final _VecVecPoint_New = _VecVecPoint_NewPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecVecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_NewFromPointer(
-    ffi.Pointer<VecPoint> points,
-    int length,
-    ffi.Pointer<VecVecPoint> rval,
-  ) {
-    return _VecVecPoint_NewFromPointer(
-      points,
-      length,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint_NewFromPointerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecPoint>, ffi.Int,
-              ffi.Pointer<VecVecPoint>)>>('VecVecPoint_NewFromPointer');
-  late final _VecVecPoint_NewFromPointer =
-      _VecVecPoint_NewFromPointerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecPoint>, int, ffi.Pointer<VecVecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_NewFromVec(
-    VecVecPoint vec,
-    ffi.Pointer<VecVecPoint> rval,
-  ) {
-    return _VecVecPoint_NewFromVec(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint_NewFromVecPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecVecPoint,
-              ffi.Pointer<VecVecPoint>)>>('VecVecPoint_NewFromVec');
-  late final _VecVecPoint_NewFromVec = _VecVecPoint_NewFromVecPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint, ffi.Pointer<VecVecPoint>)>();
-
-  ffi.Pointer<CvStatus> VecVecPoint_Size(
-    VecVecPoint vec,
-    ffi.Pointer<ffi.Int> rval,
-  ) {
-    return _VecVecPoint_Size(
-      vec,
-      rval,
-    );
-  }
-
-  late final _VecVecPoint_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecVecPoint, ffi.Pointer<ffi.Int>)>>('VecVecPoint_Size');
-  late final _VecVecPoint_Size = _VecVecPoint_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecVecPoint, ffi.Pointer<ffi.Int>)>();
 
   ffi.Pointer<CvStatus> Zeros(
     int rows,
@@ -10050,7 +7380,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> core_MixChannels_Async(
     VecMat src,
     VecMat dst,
-    VecInt fromTo,
+    VecI32 fromTo,
     imp1.CvCallback_0 callback,
   ) {
     return _core_MixChannels_Async(
@@ -10063,11 +7393,11 @@ class CvNativeCore {
 
   late final _core_MixChannels_AsyncPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, VecMat, VecInt,
+          ffi.Pointer<CvStatus> Function(VecMat, VecMat, VecI32,
               imp1.CvCallback_0)>>('core_MixChannels_Async');
   late final _core_MixChannels_Async = _core_MixChannels_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecMat, VecMat, VecInt, imp1.CvCallback_0)>();
+          VecMat, VecMat, VecI32, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> core_MulSpectrums_Async(
     Mat a,
@@ -11023,52 +8353,9 @@ class _SymbolAddresses {
       get Mat_CloseVoid => _library._Mat_CloseVoidPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.RNGPtr)>>
       get Rng_Close => _library._Rng_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecCharPtr)>>
-      get VecChar_Close => _library._VecChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecDMatchPtr)>>
-      get VecDMatch_Close => _library._VecDMatch_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecDoublePtr)>>
-      get VecDouble_Close => _library._VecDouble_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecFloatPtr)>>
-      get VecFloat_Close => _library._VecFloat_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecIntPtr)>>
-      get VecInt_Close => _library._VecInt_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecKeyPointPtr)>>
-      get VecKeyPoint_Close => _library._VecKeyPoint_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecMatPtr)>>
-      get VecMat_Close => _library._VecMat_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint2fPtr)>>
-      get VecPoint2f_Close => _library._VecPoint2f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint3fPtr)>>
-      get VecPoint3f_Close => _library._VecPoint3f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecPoint3iPtr)>>
-      get VecPoint3i_Close => _library._VecPoint3i_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecPointPtr)>>
-      get VecPoint_Close => _library._VecPoint_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecRectPtr)>>
-      get VecRect_Close => _library._VecRect_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecUCharPtr)>>
-      get VecUChar_Close => _library._VecUChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVec4fPtr)>>
-      get VecVec4f_Close => _library._VecVec4f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVec4iPtr)>>
-      get VecVec4i_Close => _library._VecVec4i_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVec6fPtr)>>
-      get VecVec6f_Close => _library._VecVec6f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVecCharPtr)>>
-      get VecVecChar_Close => _library._VecVecChar_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVecDMatchPtr)>>
-      get VecVecDMatch_Close => _library._VecVecDMatch_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPoint2fPtr)>>
-      get VecVecPoint2f_Close => _library._VecVecPoint2f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPoint3fPtr)>>
-      get VecVecPoint3f_Close => _library._VecVecPoint3f_ClosePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.VecVecPointPtr)>>
-      get VecVecPoint_Close => _library._VecVecPoint_ClosePtr;
 }
 
 typedef CvStatus = imp1.CvStatus;
-typedef DMatch = imp1.DMatch;
 typedef ErrorCallback = ffi.Pointer<ffi.NativeFunction<ErrorCallbackFunction>>;
 typedef ErrorCallbackFunction = ffi.Void Function(
     ffi.Int status,
@@ -11084,12 +8371,8 @@ typedef DartErrorCallbackFunction = void Function(
     ffi.Pointer<ffi.Char> file_name,
     int line,
     ffi.Pointer<ffi.Void> userdata);
-typedef KeyPoint = imp1.KeyPoint;
 typedef Mat = imp1.Mat;
 typedef Point = imp1.Point;
-typedef Point2f = imp1.Point2f;
-typedef Point3f = imp1.Point3f;
-typedef Point3i = imp1.Point3i;
 typedef RNG = imp1.RNG;
 typedef Rect = imp1.Rect;
 typedef Rect2f = imp1.Rect2f;
@@ -11119,26 +8402,13 @@ typedef Vec6f = imp1.Vec6f;
 typedef Vec6i = imp1.Vec6i;
 typedef Vec8i = imp1.Vec8i;
 typedef VecChar = imp1.VecChar;
-typedef VecDMatch = imp1.VecDMatch;
-typedef VecDouble = imp1.VecDouble;
-typedef VecFloat = imp1.VecFloat;
-typedef VecInt = imp1.VecInt;
-typedef VecKeyPoint = imp1.VecKeyPoint;
+typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecPoint = imp1.VecPoint;
 typedef VecPoint2f = imp1.VecPoint2f;
 typedef VecPoint3f = imp1.VecPoint3f;
 typedef VecPoint3i = imp1.VecPoint3i;
-typedef VecRect = imp1.VecRect;
 typedef VecUChar = imp1.VecUChar;
-typedef VecVec4f = imp1.VecVec4f;
-typedef VecVec4i = imp1.VecVec4i;
-typedef VecVec6f = imp1.VecVec6f;
-typedef VecVecChar = imp1.VecVecChar;
-typedef VecVecDMatch = imp1.VecVecDMatch;
-typedef VecVecPoint = imp1.VecVecPoint;
-typedef VecVecPoint2f = imp1.VecVecPoint2f;
-typedef VecVecPoint3f = imp1.VecVecPoint3f;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
 typedef float_t = ffi.Float;

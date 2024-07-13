@@ -1,5 +1,6 @@
 #include "calib3d_async.h"
 #include "core/types.h"
+#include "core/vec.hpp"
 #include <opencv2/calib3d.hpp>
 
 CvStatus *fisheye_undistortImage_Async(Mat distorted, Mat k, Mat d, CVD_OUT CvCallback_1 callback) {
@@ -67,15 +68,17 @@ CvStatus *calibrateCamera_Async(
     Mat distCoeffs,
     int flag,
     TermCriteria criteria,
-    CVD_OUT CvCallback_5 callback
+    CVD_OUT CvCallback_3 callback
 ) {
   BEGIN_WRAP
   auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
   cv::Mat rvecs;
   cv::Mat tvecs;
+  auto _objectPoints = vecvecpoint3f_c2cpp(objectPoints);
+  auto _imagePoints = vecvecpoint2f_c2cpp(imagePoints);
   auto rval = cv::calibrateCamera(
-      *objectPoints.ptr,
-      *imagePoints.ptr,
+      _objectPoints,
+      _imagePoints,
       cv::Size(imageSize.width, imageSize.height),
       *cameraMatrix.ptr,
       *distCoeffs.ptr,
@@ -84,13 +87,7 @@ CvStatus *calibrateCamera_Async(
       flag,
       tc
   );
-  callback(
-      new double(rval),
-      new Mat{new cv::Mat(*cameraMatrix.ptr)},
-      new Mat{new cv::Mat(*distCoeffs.ptr)},
-      new Mat{new cv::Mat(rvecs)},
-      new Mat{new cv::Mat(tvecs)}
-  );
+  callback(new double(rval), new Mat{new cv::Mat(rvecs)}, new Mat{new cv::Mat(tvecs)});
   END_WRAP
 }
 CvStatus *drawChessboardCorners_Async(
@@ -107,7 +104,9 @@ CvStatus *drawChessboardCorners_Async(
 CvStatus *estimateAffinePartial2D_Async(VecPoint2f from, VecPoint2f to, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
-  cv::estimateAffinePartial2D(*from.ptr, *to.ptr, dst);
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
+  cv::estimateAffinePartial2D(_from, _to, dst);
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
@@ -123,8 +122,10 @@ CvStatus *estimateAffinePartial2DWithParams_Async(
 ) {
   BEGIN_WRAP
   cv::Mat inliers;
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
   cv::Mat dst = cv::estimateAffinePartial2D(
-      *from.ptr, *to.ptr, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
+      _from, _to, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
   );
   callback(new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(inliers)});
   END_WRAP
@@ -132,7 +133,9 @@ CvStatus *estimateAffinePartial2DWithParams_Async(
 CvStatus *estimateAffine2D_Async(VecPoint2f from, VecPoint2f to, CVD_OUT CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
-  cv::estimateAffine2D(*from.ptr, *to.ptr, dst);
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
+  cv::estimateAffine2D(_from, _to, dst);
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
@@ -148,8 +151,10 @@ CvStatus *estimateAffine2DWithParams_Async(
 ) {
   BEGIN_WRAP
   cv::Mat inliers;
+  auto _from = vecpoint2f_c2cpp(from);
+  auto _to = vecpoint2f_c2cpp(to);
   cv::Mat dst = cv::estimateAffine2D(
-      *from.ptr, *to.ptr, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
+      _from, _to, inliers, method, ransacReprojThreshold, maxIters, confidence, refineIters
   );
   callback(new Mat{new cv::Mat(dst)}, new Mat{new cv::Mat(inliers)});
   END_WRAP

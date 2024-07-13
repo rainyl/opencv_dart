@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.dnn;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -265,10 +265,10 @@ extension NetAsync on Net {
     return rval;
   }
 
-  Future<VecInt> getUnconnectedOutLayersAsync() async {
-    final rval = cvRunAsync<VecInt>(
+  Future<VecI32> getUnconnectedOutLayersAsync() async {
+    final rval = cvRunAsync<VecI32>(
       (callback) => cdnn.Net_GetUnconnectedOutLayers_Async(ref, callback),
-      (c, result) => c.complete(VecInt.fromPointer(result.cast<cvg.VecInt>())),
+      (c, result) => c.complete(VecI32.fromPointer(result.cast<cvg.VecI32>())),
     );
     return rval;
   }
@@ -281,11 +281,11 @@ extension NetAsync on Net {
     return rval;
   }
 
-  Future<(VecFloat, VecInt)> getInputDetailsAsync() async {
-    final rval = cvRunAsync2<(VecFloat, VecInt)>(
+  Future<(VecF32, VecI32)> getInputDetailsAsync() async {
+    final rval = cvRunAsync2<(VecF32, VecI32)>(
       (callback) => cdnn.Net_GetInputDetails_Async(ref, callback),
       (c, sc, zp) => c.complete(
-        (VecFloat.fromPointer(sc.cast<cvg.VecFloat>()), VecInt.fromPointer(zp.cast<cvg.VecInt>())),
+        (VecF32.fromPointer(sc.cast<cvg.VecF32>()), VecI32.fromPointer(zp.cast<cvg.VecI32>())),
       ),
     );
     return rval;
@@ -318,7 +318,7 @@ Future<Scalar> getBlobSizeAsync(Mat blob) async {
 
 Future<List<int>> NMSBoxesAsync(
   VecRect bboxes,
-  VecFloat scores,
+  VecF32 scores,
   double scoreThreshold,
   double nmsThreshold, {
   double eta = 1.0,
@@ -334,7 +334,7 @@ Future<List<int>> NMSBoxesAsync(
       topK,
       callback,
     ),
-    (c, result) => c.complete(VecInt.fromPointer(result.cast<cvg.VecInt>()).toList()),
+    (c, result) => c.complete(VecI32.fromPointer(result.cast<cvg.VecI32>()).toList()),
   );
   return rval;
 }

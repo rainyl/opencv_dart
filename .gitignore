@@ -24,7 +24,6 @@ test/models/
 CMakeUserPresets*
 *.framework
 *.xcframework
-.clang-format
 CMakePresets.json
 gh-md-toc
 .fvm/

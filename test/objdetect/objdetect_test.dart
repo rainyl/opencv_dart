@@ -67,7 +67,8 @@ void main() async {
     expect(img.isEmpty, false);
     {
       final hog = cv.HOGDescriptor.empty();
-      hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector());
+      final det = cv.HOGDescriptor.getDefaultPeopleDetector();
+      hog.setSVMDetector(det);
       final rects = hog.detectMultiScale(img);
       expect(rects.length, 1);
       hog.dispose();
@@ -263,7 +264,7 @@ void main() async {
     }
   });
 
-  // Test for cv.FaceRecognizerSF
+  // // Test for cv.FaceRecognizerSF
   test('cv.FaceRecognizerSF', tags: ["no-local-files"], () {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
     final recognizer = cv.FaceRecognizerSF.fromFile(modelPath, "");

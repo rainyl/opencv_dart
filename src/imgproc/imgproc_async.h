@@ -20,10 +20,10 @@ CvStatus *Blur_Async(Mat src, Size ps, CvCallback_1 callback);
 CvStatus *BoxFilter_Async(Mat src, int ddepth, Size ps, CvCallback_1 callback);
 CvStatus *CvtColor_Async(Mat src, int code, CVD_OUT CvCallback_1 callback);
 CvStatus *CalcHist_Async(
-    VecMat mats, VecInt chans, Mat mask, VecInt sz, VecFloat rng, bool acc, CvCallback_1 callback
+    VecMat mats, VecI32 chans, Mat mask, VecI32 sz, VecF32 rng, bool acc, CvCallback_1 callback
 );
 CvStatus *CalcBackProject_Async(
-    VecMat mats, VecInt chans, Mat backProject, VecFloat rng, double scale, CvCallback_1 callback
+    VecMat mats, VecI32 chans, Mat backProject, VecF32 rng, double scale, CvCallback_1 callback
 );
 CvStatus *CompareHist_Async(Mat hist1, Mat hist2, int method, CVD_OUT CvCallback_1 callback);
 CvStatus *
@@ -445,7 +445,7 @@ CvStatus *Subdiv2D_GetEdgeList_Async(Subdiv2D self, CvCallback_1 callback);
 CvStatus *Subdiv2D_GetLeadingEdgeList_Async(Subdiv2D self, CvCallback_1 callback);
 CvStatus *Subdiv2D_GetTriangleList_Async(Subdiv2D self, CvCallback_1 callback);
 CvStatus *Subdiv2D_GetVertex_Async(Subdiv2D self, int vertex, CvCallback_2 callback);
-CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecInt idx, CvCallback_2 callback);
+CvStatus *Subdiv2D_GetVoronoiFacetList_Async(Subdiv2D self, VecI32 idx, CvCallback_2 callback);
 CvStatus *Subdiv2D_InitDelaunay_Async(Subdiv2D self, Rect rect, CvCallback_0 callback);
 CvStatus *Subdiv2D_Insert_Async(Subdiv2D self, Point2f pt, CvCallback_1 callback);
 CvStatus *Subdiv2D_InsertVec_Async(Subdiv2D self, VecPoint2f ptvec, CvCallback_0 callback);

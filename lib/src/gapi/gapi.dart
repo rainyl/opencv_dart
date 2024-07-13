@@ -1,4 +1,4 @@
-library cv;
+library cv.gapi;
 
 import 'dart:ffi' as ffi;
 

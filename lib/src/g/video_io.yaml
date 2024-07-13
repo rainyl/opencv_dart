@@ -240,6 +240,8 @@ files:
         name: VideoCapture_Set
       c:@F@VideoCapture_Set_Async:
         name: VideoCapture_Set_Async
+      c:@F@VideoCapture_getBackendName:
+        name: VideoCapture_getBackendName
       c:@F@VideoWriter_Close:
         name: VideoWriter_Close
       c:@F@VideoWriter_Fourcc:
@@ -266,6 +268,8 @@ files:
         name: VideoWriter_Write
       c:@F@VideoWriter_Write_Async:
         name: VideoWriter_Write_Async
+      c:@F@VideoWriter_getBackendName:
+        name: VideoWriter_getBackendName
       c:@S@BackgroundSubtractorKNN:
         name: BackgroundSubtractorKNN
       c:@S@BackgroundSubtractorMOG2:
@@ -292,8 +296,8 @@ files:
         name: Size
       c:types.h@T@TermCriteria:
         name: TermCriteria
-      c:types.h@T@VecFloat:
-        name: VecFloat
+      c:types.h@T@VecF32:
+        name: VecF32
       c:types.h@T@VecPoint2f:
         name: VecPoint2f
       c:types.h@T@VecUChar:
