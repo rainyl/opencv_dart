@@ -20,6 +20,7 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
   int get length;
 
   T operator [](int idx) => elementAt(idx);
+  void operator []=(int idx, T value);
 
   void dispose();
   Vec clone();
@@ -123,6 +124,9 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecUCharIterator extends VecIterator<int> {
@@ -190,6 +194,9 @@ class VecChar extends Vec<cvg.VecChar, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecCharIterator extends VecIterator<int> {
@@ -254,6 +261,11 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  // TODO: add support
+  @override
+  void operator []=(int idx, VecChar value) =>
+      throw UnsupportedError("VecVecChar does not support operator []=");
 }
 
 class VecVecCharIterator extends VecIterator<VecChar> {
@@ -320,6 +332,9 @@ class VecI8 extends Vec<cvg.VecI8, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecI8Iterator extends VecIterator<int> {
@@ -380,6 +395,9 @@ class VecU16 extends Vec<cvg.VecU16, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecU16Iterator extends VecIterator<int> {
@@ -441,6 +459,9 @@ class VecI16 extends Vec<cvg.VecI16, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecI16Iterator extends VecIterator<int> {
@@ -504,6 +525,9 @@ class VecI32 extends Vec<cvg.VecI32, int> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, int value) => ref.ptr[idx] = value;
 }
 
 class VecI32Iterator extends VecIterator<int> {
@@ -565,6 +589,9 @@ class VecF32 extends Vec<cvg.VecF32, double> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, double value) => ref.ptr[idx] = value;
 }
 
 class VecF32Iterator extends VecIterator<double> {
@@ -628,6 +655,9 @@ class VecF64 extends Vec<cvg.VecF64, double> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, double value) => ref.ptr[idx] = value;
 }
 
 class VecF64Iterator extends VecIterator<double> {

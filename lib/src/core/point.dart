@@ -213,6 +213,12 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Point value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+  }
 }
 
 class VecPointIterator extends VecIterator<Point> {
@@ -284,6 +290,12 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void operator []=(int idx, Point2f value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+  }
 }
 
 class VecPoint2fIterator extends VecIterator<Point2f> {
@@ -354,6 +366,13 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
   void reattach({ffi.Pointer<cvg.VecPoint3f>? newPtr}) {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Point3f value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].z = value.z;
   }
 }
 
@@ -426,6 +445,13 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Point3i value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].z = value.z;
+  }
 }
 
 class VecPoint3iIterator extends VecIterator<Point3i> {
@@ -488,6 +514,9 @@ class VecVecPoint extends Vec<cvg.VecVecPoint, VecPoint> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, VecPoint value) => throw UnsupportedError("VecVecPoint is read-only");
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
@@ -550,6 +579,9 @@ class VecVecPoint2f extends Vec<cvg.VecVecPoint2f, VecPoint2f> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, VecPoint2f value) => throw UnsupportedError("VecVecPoint2f is read-only");
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
@@ -611,6 +643,9 @@ class VecVecPoint3f extends Vec<cvg.VecVecPoint3f, VecPoint3f> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, VecPoint3f value) => throw UnsupportedError("VecVecPoint3f is read-only");
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {

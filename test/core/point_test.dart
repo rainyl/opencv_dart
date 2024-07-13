@@ -49,6 +49,16 @@ void main() {
     expect(vec1.first, cv.Point(1, 2));
     expect(vec1.last, cv.Point(7, 8));
 
+    // get the reference
+    final pt = vec1[1];
+    expect(pt, cv.Point(3, 4));
+    // change the reference will affect the original value
+    pt.x = 100;
+    expect(pt, cv.Point(100, 4));
+    // change the value
+    vec1[1] = cv.Point(100, 100);
+    expect(vec1[1], cv.Point(100, 100));
+
     vec.dispose();
   });
 
@@ -73,6 +83,16 @@ void main() {
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
+
+    // get the reference
+    final pt = vec1[1];
+    expect(pt, cv.Point2f(3, 4));
+    // change the reference will affect the original value
+    pt.x = 100;
+    expect(pt, cv.Point2f(100, 4));
+    // change the value
+    vec1[1] = cv.Point2f(100, 100);
+    expect(vec1[1], cv.Point2f(100, 100));
 
     final points1 = cv.VecPoint2f(10, 1, 1);
     expect(points1.length, 10);
@@ -110,6 +130,16 @@ void main() {
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
 
+    // get the reference
+    final pt = vec1[1];
+    expect(pt, cv.Point3f(3, 4, 3));
+    // change the reference will affect the original value
+    pt.x = 100;
+    expect(pt, cv.Point3f(100, 4, 3));
+    // change the value
+    vec1[1] = cv.Point3f(3, 4, 100);
+    expect(vec1[1], cv.Point3f(3, 4, 100));
+
     vec.dispose();
   });
 
@@ -142,6 +172,16 @@ void main() {
     expect(vec1.length, 4);
     expect(vec1.first, points.first);
     expect(vec1.last, points.last);
+
+    // get the reference
+    final pt = vec1[1];
+    expect(pt, cv.Point3i(3, 4, 3));
+    // change the reference will affect the original value
+    pt.x = 100;
+    expect(pt, cv.Point3i(100, 4, 3));
+    // change the value
+    vec1[1] = cv.Point3i(3, 4, 100);
+    expect(vec1[1], cv.Point3i(3, 4, 100));
 
     final vec2 = cv.VecPoint3i(10);
     expect(vec2.length, 10);
@@ -177,6 +217,9 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
+    // TODO: add support
+    // vec[1] = cv.VecPoint(10);
+
     vec.dispose();
   });
 
@@ -192,6 +235,9 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
+    // TODO: add support
+    // vec[1] = cv.VecPoint(10);
+
     vec.dispose();
   });
 
@@ -206,6 +252,9 @@ void main() {
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
+
+    // TODO: add support
+    // vec[1] = cv.VecPoint(10);
 
     vec.dispose();
   });

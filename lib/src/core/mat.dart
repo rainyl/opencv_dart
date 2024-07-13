@@ -1388,6 +1388,9 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Mat value) => throw UnsupportedError("VecMat is read-only");
 }
 
 class VecMatIterator extends VecIterator<Mat> {

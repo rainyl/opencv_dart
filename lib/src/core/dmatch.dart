@@ -100,6 +100,14 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, DMatch value) {
+    ref.ptr[idx].queryIdx = value.queryIdx;
+    ref.ptr[idx].trainIdx = value.trainIdx;
+    ref.ptr[idx].imgIdx = value.imgIdx;
+    ref.ptr[idx].distance = value.distance;
+  }
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
@@ -158,6 +166,10 @@ class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  // TODO: add support
+  @override
+  void operator []=(int idx, VecDMatch value) => throw UnsupportedError("");
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {

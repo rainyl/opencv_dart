@@ -345,6 +345,16 @@ void main() {
     expect(vv.first, cv.Vec4i(1, 2, 3, 4));
     expect(vv.last, cv.Vec4i(13, 14, 15, 16));
 
+    // get the reference
+    final vec = vv[1];
+    expect(vec, cv.Vec4i(5, 6, 7, 8));
+    // change the reference will affect the original value
+    vec.val = [2, 5, 4, 1];
+    expect(vec, cv.Vec4i(2, 5, 4, 1));
+    // change the value
+    vv[1] = cv.Vec4i(5, 2, 4, 1);
+    expect(vv[1], cv.Vec4i(5, 2, 4, 1));
+
     final vv_ = vv.clone();
     expect(vv_, vecElementEquals(vv));
 
@@ -363,6 +373,16 @@ void main() {
     expect(vv.first, cv.Vec4f(1, 2, 3, 4));
     expect(vv.last, cv.Vec4f(13, 14, 15, 16));
 
+    // get the reference
+    final vec = vv[1];
+    expect(vec, cv.Vec4f(5, 6, 7, 8));
+    // change the reference will affect the original value
+    vec.val = [2, 5, 4, 1];
+    expect(vec, cv.Vec4f(2, 5, 4, 1));
+    // change the value
+    vv[1] = cv.Vec4f(5, 2, 4, 1);
+    expect(vv[1], cv.Vec4f(5, 2, 4, 1));
+
     final vv_ = vv.clone();
     expect(vv_, vecElementEquals(vv));
 
@@ -380,6 +400,16 @@ void main() {
     expect(vv.length, v.length);
     expect(vv.first, cv.Vec6f(1, 2, 3, 4, 5, 6));
     expect(vv.last, cv.Vec6f(13, 14, 15, 16, 17, 18));
+
+    // get the reference
+    final vec = vv[1];
+    expect(vec, cv.Vec6f(5, 6, 7, 8, 9, 10));
+    // change the reference will affect the original value
+    vec.val = [5, 2, 5, 4, 1, 0];
+    expect(vec, cv.Vec6f(5, 2, 5, 4, 1, 0));
+    // change the value
+    vv[1] = cv.Vec6f(50, 20, 50, 40, 10, 0);
+    expect(vv[1], cv.Vec6f(50, 20, 50, 40, 10, 0));
 
     final vv_ = vv.clone();
     expect(vv_, vecElementEquals(vv));

@@ -221,6 +221,14 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Rect value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].width = value.width;
+    ref.ptr[idx].height = value.height;
+  }
 }
 
 class VecRectIterator extends VecIterator<Rect> {

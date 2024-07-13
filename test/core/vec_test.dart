@@ -11,6 +11,9 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
+    vec[24] = 1;
+    expect(vec[24], 1);
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -33,6 +36,9 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
+    vec[24] = 1;
+    expect(vec[24], 1);
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -49,6 +55,9 @@ void main() {
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
+
+    vec[24] = 1;
+    expect(vec[24], 1);
 
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
@@ -70,6 +79,9 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
+    vec[24] = 1;
+    expect(vec[24], 1);
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -85,6 +97,10 @@ void main() {
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
+
+    // TODO: add support
+    // vec[24] = cv.VecChar();
+    // expect(vec[24], );
 
     final vec1 = vec.clone();
     expect(vec1.length, vec.length);
@@ -108,6 +124,9 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
+    vec[24] = 1;
+    expect(vec[24], 1);
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -125,6 +144,9 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
+    vec[24] = 1;
+    expect(vec[24], 1);
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -138,6 +160,16 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
     expect(vec.first.toString(), "Rect(0, 0, 10, 20)");
+
+    // get the reference
+    final rect = vec[1]; // cv.Rect(1, 1, 11, 21)
+    expect(rect, cv.Rect(1, 1, 11, 21));
+    // change the reference will affect the original value
+    rect.x = 100;
+    expect(rect, cv.Rect(100, 1, 11, 21));
+    // change the value
+    vec[1] = cv.Rect(100, 100, 11, 21);
+    expect(vec[1], cv.Rect(100, 100, 11, 21));
 
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
@@ -167,6 +199,16 @@ void main() {
     expect(vec.last, points.last);
     expect(vec.first.toString(), "DMatch(0, 0, 0, 0.000)");
 
+    // get the reference
+    final dm = vec[1]; // cv.Rect(1, 1, 11, 21)
+    expect(dm, cv.DMatch(1, 1, 1, 1.0));
+    // change the reference will affect the original value
+    dm.queryIdx = 100;
+    expect(dm, cv.DMatch(100, 1, 1, 1.0));
+    // change the value
+    vec[1] = cv.DMatch(100, 100, 11, 21.0);
+    expect(vec[1], cv.DMatch(100, 100, 11, 21.0));
+
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
@@ -182,6 +224,9 @@ void main() {
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
+
+    // TODO: add support
+    // vec[1] = cv.VecDMatch();
 
     final vec1 = vec.clone();
     expect(vec1.length, vec.length);
@@ -209,6 +254,16 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
     expect(vec.first.toString(), "KeyPoint(0.000, 0.000, 0.000, 0.000, 0.000, 0, 0)");
+
+    // get the reference
+    final kp = vec[1];
+    expect(kp, cv.KeyPoint(1.000, 1.000, 1.000, 1.000, 1.000, 1, 1));
+    // change the reference will affect the original value
+    kp.x = 100.0;
+    expect(kp, cv.KeyPoint(100.0, 1.000, 1.000, 1.000, 1.000, 1, 1));
+    // change the value
+    vec[1] = cv.KeyPoint(5.000, 2.000, 5.000, 4.000, 1.000, 0, 0);
+    expect(vec[1], cv.KeyPoint(5.000, 2.000, 5.000, 4.000, 1.000, 0, 0));
 
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));

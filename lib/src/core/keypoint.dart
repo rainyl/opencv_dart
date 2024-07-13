@@ -128,6 +128,17 @@ class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, KeyPoint value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].size = value.size;
+    ref.ptr[idx].angle = value.angle;
+    ref.ptr[idx].octave = value.octave;
+    ref.ptr[idx].classID = value.classID;
+    ref.ptr[idx].response = value.response;
+  }
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {

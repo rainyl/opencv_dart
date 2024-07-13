@@ -1443,6 +1443,14 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Vec4i value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+  }
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
@@ -1501,6 +1509,14 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
   }
+
+  @override
+  void operator []=(int idx, Vec4f value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+  }
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
@@ -1558,6 +1574,16 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
   void reattach({ffi.Pointer<cvg.VecVec6f>? newPtr}) {
     super.reattach(newPtr: newPtr);
     Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Vec6f value) {
+    ref.ptr[idx].val1 = value.val1;
+    ref.ptr[idx].val2 = value.val2;
+    ref.ptr[idx].val3 = value.val3;
+    ref.ptr[idx].val4 = value.val4;
+    ref.ptr[idx].val5 = value.val5;
+    ref.ptr[idx].val6 = value.val6;
   }
 }
 
