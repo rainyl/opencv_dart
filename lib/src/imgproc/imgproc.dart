@@ -239,7 +239,7 @@ Mat dilate(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -269,7 +269,7 @@ Mat erode(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -523,7 +523,7 @@ Mat morphologyEx(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue = borderValue ?? Scalar.default_();
+  borderValue = borderValue ?? Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
@@ -1224,7 +1224,7 @@ Mat warpAffine(
   Scalar? borderValue,
 }) {
   dst ??= Mat.empty();
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   cvRun(
     () => cimgproc.WarpAffineWithParams(
       src.ref,
@@ -1254,7 +1254,7 @@ Mat warpPerspective(
   Scalar? borderValue,
 }) {
   dst ??= Mat.empty();
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   cvRun(
     () => cimgproc.WarpPerspectiveWithParams(
       src.ref,
@@ -1413,7 +1413,7 @@ Mat remap(
   int borderMode = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue ??= Scalar.default_();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   cvRun(() =>
       cimgproc.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));

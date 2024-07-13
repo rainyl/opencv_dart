@@ -14,7 +14,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
     }
   }
 
-  factory Scalar(double val1, double val2, double val3, double val4) {
+  factory Scalar([double val1 = 0.0, double val2 = 0.0, double val3 = 0.0, double val4 = 0.0]) {
     final p = calloc<cvg.Scalar>()
       ..ref.val1 = val1
       ..ref.val2 = val2
@@ -25,10 +25,7 @@ class Scalar extends CvStruct<cvg.Scalar> {
   factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);
   factory Scalar.fromPointer(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) => Scalar._(ptr, attach);
   factory Scalar.all(double val) => Scalar(val, val, val, val);
-  factory Scalar.default_() => Scalar(0.0, 0.0, 0.0, 0.0);
-  factory Scalar.fromRgb(int r, int g, int b) {
-    return Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
-  }
+  factory Scalar.fromRgb(int r, int g, int b) => Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
 
   Scalar operator +(Scalar other) {
     return Scalar(val1 + other.val1, val2 + other.val2, val3 + other.val3, val4 + other.val4);
@@ -91,9 +88,8 @@ class Scalar extends CvStruct<cvg.Scalar> {
   @override
   List<double> get props => [val1, val2, val3, val4];
   @override
-  String toString() {
-    return "Scalar($val1, $val2, $val3, $val4)";
-  }
+  String toString() =>
+      "Scalar(${val1.toStringAsFixed(3)}, ${val2.toStringAsFixed(3)}, ${val3.toStringAsFixed(3)}, ${val4.toStringAsFixed(3)})";
 
   static final Scalar red = Scalar.fromRgb(255, 0, 0);
   static final Scalar green = Scalar.fromRgb(0, 255, 0);

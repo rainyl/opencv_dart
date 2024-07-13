@@ -339,7 +339,7 @@ Mat copyMakeBorder(
   Scalar? value,
 }) {
   dst ??= Mat.empty();
-  value ??= Scalar.default_();
+  value ??= Scalar();
   cvRun(
     () => ccore.Mat_CopyMakeBorder(
       src.ref,

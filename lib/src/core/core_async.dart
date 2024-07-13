@@ -274,7 +274,7 @@ Future<Mat> copyMakeBorderAsync(
         left,
         right,
         borderType,
-        value?.ref ?? Scalar.default_().ref,
+        value?.ref ?? Scalar().ref,
         callback,
       ),
       matCompleter,

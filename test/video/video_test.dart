@@ -76,7 +76,7 @@ void main() async {
       (200, 200),
       flags: cv.INTER_LINEAR + cv.WARP_INVERSE_MAP,
       borderMode: cv.BORDER_CONSTANT,
-      borderValue: cv.Scalar.default_(),
+      borderValue: cv.Scalar(),
     );
 
     final mapTranslation = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);

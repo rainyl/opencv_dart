@@ -140,8 +140,6 @@ class VecUCharIterator extends VecIterator<int> {
   int operator [](int idx) => ref.ptr[idx];
 }
 
-typedef VecU8 = VecUChar;
-
 class VecChar extends Vec<cvg.VecChar, int> {
   VecChar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
@@ -278,74 +276,6 @@ class VecVecCharIterator extends VecIterator<VecChar> {
   /// return the reference
   @override
   VecChar operator [](int idx) => VecChar.fromPointer(ref.ptr + idx, false);
-}
-
-class VecI8 extends Vec<cvg.VecI8, int> {
-  VecI8.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
-    if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
-    }
-  }
-
-  factory VecI8([int length = 0, int value = 0]) => VecI8.generate(length, (i) => value);
-  factory VecI8.fromList(List<int> pts) => VecI8.generate(pts.length, (i) => pts[i]);
-
-  factory VecI8.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecI8>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Int8>(length);
-    for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
-    }
-    return VecI8.fromPointer(pp);
-  }
-
-  @override
-  int get length => ref.length;
-
-  Int8List get data => ref.ptr.cast<ffi.Int8>().asTypedList(length);
-
-  String asString() => utf8.decode(data);
-
-  @override
-  VecI8 clone() => VecI8.generate(length, (idx) => this[idx]);
-
-  @override
-  Iterator<int> get iterator => VecI8Iterator(ref);
-
-  @override
-  cvg.VecI8 get ref => ptr.ref;
-
-  @override
-  void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
-  }
-
-  @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
-
-  @override
-  void reattach({ffi.Pointer<cvg.VecI8>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
-
-  @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
-}
-
-class VecI8Iterator extends VecIterator<int> {
-  VecI8Iterator(this.ref);
-  cvg.VecI8 ref;
-
-  @override
-  int get length => ref.length;
-
-  @override
-  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecU16 extends Vec<cvg.VecU16, int> {
@@ -687,6 +617,9 @@ extension StringVecExtension on String {
     return v;
   }
 }
+
+typedef VecU8 = VecUChar;
+typedef VecI8 = VecChar;
 
 extension ListUCharExtension on List<int> {
   VecUChar get vecUChar => VecUChar.fromList(this);

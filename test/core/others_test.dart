@@ -6,7 +6,7 @@ import 'vec_matcher.dart';
 void main() {
   test('cv.Scalar', () {
     final s = cv.Scalar(0, 0, 0, 0);
-    final s1 = cv.Scalar.default_();
+    final s1 = cv.Scalar();
     final s2 = cv.Scalar.zeros;
     expect(s, s1);
     expect(s, s2);
@@ -17,6 +17,9 @@ void main() {
 
     final s5 = (255.0, 0.0, 0.0, 0.0).asScalar;
     expect(s5, cv.Scalar.blue);
+
+    s5.val = [2, 5, 4, 1];
+    expect(s5.val, [2, 5, 4, 1]);
 
     s5.dispose();
   });

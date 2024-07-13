@@ -62,31 +62,16 @@ void main() {
     final vec1 = vec.clone();
     expect(vec1, vecElementEquals(vec));
 
-    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
-    expect(vec2.asString(), "AAAA你好");
+    const hellos = [
+      72, 101, 108, 108, 111, // Hello
+      228, 189, 160, 229, 165, 189, // 你好
+      236, 149, 136, 235, 133, 149, 237, 149, 152, 236, 132, 184, 236, 154, 148, // 안녕하세요
+      208, 159, 209, 128, 208, 184, 208, 178, 208, 181, 209, 130, // Привет
+      227, 129, 147, 227, 130, 147, 227, 129, 171, 227, 129, 161, 227, 129, 175, // こんにちは
+    ];
 
-    vec1.dispose();
-  });
-
-  test('VecI8', () {
-    final points = List.generate(100, (index) => index);
-    final vec = points.vecChar;
-
-    final data = vec.data;
-    expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
-
-    expect(vec.length, points.length);
-    expect(vec.first, points.first);
-    expect(vec.last, points.last);
-
-    vec[24] = 1;
-    expect(vec[24], 1);
-
-    final vec1 = vec.clone();
-    expect(vec1, vecElementEquals(vec));
-
-    final vec2 = cv.VecChar.fromList([65, 65, 65, 65, 228, 189, 160, 229, 165, 189]);
-    expect(vec2.asString(), "AAAA你好");
+    final vec2 = cv.VecChar.fromList(hellos);
+    expect(vec2.asString(), "Hello你好안녕하세요Приветこんにちは");
 
     vec1.dispose();
   });
