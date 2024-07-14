@@ -1166,10 +1166,11 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
-  void copyTo(Mat dst) {
-    cvRun(() => ccore.Mat_CopyTo(ref, dst.ref));
-  }
+  void copyTo(Mat dst, {Mat? mask}) => mask == null
+      ? cvRun(() => ccore.Mat_CopyTo(ref, dst.ref))
+      : cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
 
+  @Deprecated("use copyTo instead")
   void copyToWithMask(Mat dst, Mat mask) {
     cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
   }

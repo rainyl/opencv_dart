@@ -223,7 +223,7 @@ void main() async {
     final mat2 = cv.Mat.zeros(200, 100, cv.MatType.CV_8UC3);
     mat0.copyTo(mat1);
     expect(mat1.at<int>(0, 0), 1);
-    mat0.copyToWithMask(mat2, mat0);
+    mat0.copyTo(mat2, mask: mat0);
     expect(mat1.at<int>(0, 0), 1);
   });
 
