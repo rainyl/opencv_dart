@@ -80,8 +80,7 @@ class Mat extends CvStruct<cvg.Mat> {
         cvRun(() => ccore.Mat_NewFromVecPoint3f(vec.ref, p));
       case (final VecPoint3i vec, _, _, _):
         cvRun(() => ccore.Mat_NewFromVecPoint3i(vec.ref, p));
-      case (final VecU8 vec, final rows, final cols, final type)
-          when rows != null && cols != null && type != null:
+      case (final VecU8 vec, final rows, final cols, final type) when rows != null && cols != null && type != null:
         cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, vec.asVoid(), p));
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
@@ -1166,10 +1165,11 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
-  void copyTo(Mat dst) {
-    cvRun(() => ccore.Mat_CopyTo(ref, dst.ref));
-  }
+  void copyTo(Mat dst, {Mat? mask}) => mask == null
+      ? cvRun(() => ccore.Mat_CopyTo(ref, dst.ref))
+      : cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
 
+  @Deprecated("use copyTo instead")
   void copyToWithMask(Mat dst, Mat mask) {
     cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
   }
@@ -1409,15 +1409,9 @@ extension ListMatExtension on List<Mat> {
 }
 
 // Completers for async
-void matCompleter(Completer<Mat> completer, VoidPtr p) =>
-    completer.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
+void matCompleter(Completer<Mat> completer, VoidPtr p) => completer.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
 void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
     completer.complete((Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>())));
-void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
-    completer.complete(
-      (
-        Mat.fromPointer(p.cast<cvg.Mat>()),
-        Mat.fromPointer(p1.cast<cvg.Mat>()),
-        Mat.fromPointer(p2.cast<cvg.Mat>())
-      ),
+void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) => completer.complete(
+      (Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>()), Mat.fromPointer(p2.cast<cvg.Mat>())),
     );
