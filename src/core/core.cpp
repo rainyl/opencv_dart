@@ -1584,8 +1584,8 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
     case CV_8U:
       cvd::LUT8u_16f(
           src.ptr->ptr<uchar>(),
-          lut.ptr->ptr<cv::float16_t>(),
-          dst.ptr->ptr<cv::float16_t>(),
+          lut.ptr->ptr<cv::hfloat>(),
+          dst.ptr->ptr<cv::hfloat>(),
           len,
           cn,
           lutcn
@@ -1594,8 +1594,8 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
     case CV_8S:
       cvd::LUT8s_16f(
           src.ptr->ptr<char>(),
-          lut.ptr->ptr<cv::float16_t>(),
-          dst.ptr->ptr<cv::float16_t>(),
+          lut.ptr->ptr<cv::hfloat>(),
+          dst.ptr->ptr<cv::hfloat>(),
           len,
           cn,
           lutcn
