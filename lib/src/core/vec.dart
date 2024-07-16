@@ -601,6 +601,127 @@ class VecF64Iterator extends VecIterator<double> {
   double operator [](int idx) => ref.ptr[idx];
 }
 
+class VecF16 extends Vec<cvg.VecF16, double> {
+  VecF16.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+    }
+  }
+
+  factory VecF16([int length = 0, double value = 0.0]) => VecF16.generate(length, (i) => value);
+  factory VecF16.fromList(List<double> pts) => VecF16.generate(pts.length, (i) => pts[i]);
+
+  factory VecF16.generate(int length, double Function(int i) generator) {
+    final pp = calloc<cvg.VecF16>()..ref.length = length;
+    pp.ref.ptr = calloc<ffi.Uint16>(length);
+    for (var i = 0; i < length; i++) {
+      pp.ref.ptr[i] = generator(i).fp16;
+    }
+    return VecF16.fromPointer(pp);
+  }
+
+  @override
+  VecF16 clone() => VecF16.generate(length, (idx) => this[idx]);
+
+  @override
+  int get length => ref.length;
+
+  Uint16List get data => ref.ptr.cast<ffi.Uint16>().asTypedList(length);
+  Iterable<double> get dataFp16 => data.map(float16);
+
+  @override
+  Iterator<double> get iterator => VecF16Iterator(ref);
+  @override
+  cvg.VecF16 get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecF16>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, double value) => ref.ptr[idx] = float16Inv(value);
+}
+
+class VecF16Iterator extends VecIterator<double> {
+  VecF16Iterator(this.ref);
+  cvg.VecF16 ref;
+
+  @override
+  int get length => ref.length;
+
+  @override
+  double operator [](int idx) => float16(ref.ptr[idx]);
+}
+
+double float16(int w) {
+  final t = calloc<ffi.UnsignedInt>()..value = ((w & 0x7fff) << 13) + 0x38000000;
+  final sign = calloc<ffi.UnsignedInt>()..value = (w & 0x8000) << 16;
+  final e = calloc<ffi.UnsignedInt>()..value = w & 0x7c00;
+
+  final out = calloc<cvg.Cv32suf_C>()..ref.u = t.value + (1 << 23);
+  if (e.value >= 0x7c00) {
+    out.ref.u = t.value + 0x38000000;
+  } else {
+    if (e.value == 0) {
+      out.ref.f -= 6.103515625e-05;
+    } else {
+      out.ref.u = t.value;
+    }
+  }
+  out.ref.u |= sign.value;
+  final rval = out.ref.f;
+  calloc.free(out);
+  calloc.free(t);
+  calloc.free(sign);
+  calloc.free(e);
+  return rval;
+}
+
+int float16Inv(double x) {
+  final in_ = calloc<cvg.Cv32suf_C>()..ref.f = x;
+  final sign = calloc<ffi.UnsignedInt>()..value = in_.ref.u & 0x80000000;
+  final w = calloc<ffi.UnsignedInt>();
+  in_.ref.u ^= sign.value;
+  if (in_.ref.u > 0x47800000) {
+    w.value = in_.ref.u > 0x7f800000 ? 0x7e00 : 0x7c00;
+  } else {
+    if (in_.ref.u < 0x38800000) {
+      in_.ref.f += 0.5;
+      w.value = in_.ref.u - 0x3f000000;
+    } else {
+      final t = calloc<ffi.UnsignedInt>()..value = in_.ref.u + 0xc8000fff;
+      w.value = (t.value + ((in_.ref.u >> 13) & 1)) >> 13;
+      calloc.free(t);
+    }
+  }
+  final rval = w.value | (sign.value >> 16);
+  calloc.free(in_);
+  calloc.free(sign);
+  calloc.free(w);
+  return rval;
+}
+
+extension DoubleFp16Extension on double {
+  int get fp16 => float16Inv(this);
+}
+
+extension IntFp16Extension on int {
+  double get fp16 => float16(this);
+}
+
 extension StringVecExtension on String {
   VecUChar get u8 {
     return cvRunArena<VecUChar>((arena) {
@@ -630,7 +751,7 @@ extension ListUCharExtension on List<int> {
   VecI16 get i16 => VecI16.fromList(this);
   VecI32 get i32 => VecI32.fromList(this);
   VecF32 get f32 => VecF32.fromList(map((e) => e.toDouble()).toList());
-  VecF64 get f64 => VecF64.fromList(cast<double>());
+  VecF64 get f64 => VecF64.fromList(map((e) => e.toDouble()).toList());
 }
 
 extension ListListCharExtension on List<List<int>> {
@@ -640,6 +761,7 @@ extension ListListCharExtension on List<List<int>> {
 extension ListFloatExtension on List<double> {
   VecF32 get f32 => VecF32.fromList(this);
   VecF64 get f64 => VecF64.fromList(this);
+  VecF16 get f16 => VecF16.fromList(this);
 }
 
 extension ListStringExtension on List<String> {

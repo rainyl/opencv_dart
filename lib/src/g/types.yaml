@@ -108,6 +108,8 @@ files:
         name: VecChar
       c:@S@VecDMatch:
         name: VecDMatch
+      c:@S@VecF16:
+        name: VecF16
       c:@S@VecF32:
         name: VecF32
       c:@S@VecF64:
@@ -158,6 +160,10 @@ files:
         name: VecVecPoint3f
       c:@S@VecVecPoint3i:
         name: VecVecPoint3i
+      c:@U@Cv16suf_C:
+        name: Cv16suf_C
+      c:@U@Cv32suf_C:
+        name: Cv32suf_C
       c:types.h@T@Contour:
         name: Contour
       c:types.h@T@Contour2f:
@@ -200,6 +206,8 @@ files:
         name: VecCharPtr
       c:types.h@T@VecDMatchPtr:
         name: VecDMatchPtr
+      c:types.h@T@VecF16Ptr:
+        name: VecF16Ptr
       c:types.h@T@VecF32Ptr:
         name: VecF32Ptr
       c:types.h@T@VecF64Ptr:

@@ -18,6 +18,26 @@ typedef Contour3f = VecPoint3f;
 typedef Contours = VecVecPoint;
 typedef Contours2f = VecVecPoint2f;
 typedef Contours3f = VecVecPoint3f;
+
+final class Cv16suf_C extends ffi.Union {
+  @ffi.Short()
+  external int i;
+
+  @ushort()
+  external int u;
+}
+
+final class Cv32suf_C extends ffi.Union {
+  @ffi.Int()
+  external int i;
+
+  @ffi.UnsignedInt()
+  external int u;
+
+  @ffi.Float()
+  external double f;
+}
+
 typedef CvCallback_0 = ffi.Pointer<ffi.NativeFunction<CvCallback_0Function>>;
 typedef CvCallback_0Function = ffi.Void Function();
 typedef DartCvCallback_0Function = void Function();
@@ -687,6 +707,15 @@ final class VecDMatch extends ffi.Struct {
 }
 
 typedef VecDMatchPtr = ffi.Pointer<VecDMatch>;
+
+final class VecF16 extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint16> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecF16Ptr = ffi.Pointer<VecF16>;
 
 final class VecF32 extends ffi.Struct {
   external ffi.Pointer<ffi.Float> ptr;

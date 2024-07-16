@@ -44,6 +44,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32S => VecI32.fromList(data.cast<int>()) as Vec,
       MatType.CV_32F => VecF32.fromList(data.cast<double>()) as Vec,
       MatType.CV_64F => VecF64.fromList(data.cast<double>()) as Vec,
+      MatType.CV_16F => VecF16.fromList(data.cast<double>()) as Vec,
       _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
     };
     // copy
@@ -1221,6 +1222,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
+  @Deprecated("Use convertTo instead")
   Mat convertToFp16() {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_ConvertFp16(ref, p));

@@ -8,8 +8,8 @@
 
 #include <math.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 #include <opencv2/core.hpp>
@@ -390,6 +390,17 @@ typedef struct TermCriteria {
   double epsilon;
 } TermCriteria;
 
+typedef union Cv32suf_C {
+  int i;
+  unsigned u;
+  float f;
+} Cv32suf_C;
+
+typedef union Cv16suf_C {
+  short i;
+  ushort u;
+} Cv16suf_C;
+
 typedef void (*CvCallback_0)();
 typedef void (*CvCallback_1)(void *);
 typedef void (*CvCallback_2)(void *, void *);
@@ -410,6 +421,7 @@ CVD_TYPEDEF_VEC(int16_t, VecI16);
 CVD_TYPEDEF_VEC(int32_t, VecI32);
 CVD_TYPEDEF_VEC(float_t, VecF32);
 CVD_TYPEDEF_VEC(double_t, VecF64);
+CVD_TYPEDEF_VEC(uint16_t, VecF16);
 CVD_TYPEDEF_VEC(VecChar, VecVecChar);
 CVD_TYPEDEF_VEC(Mat, VecMat);
 CVD_TYPEDEF_VEC(Point, VecPoint);
