@@ -329,6 +329,37 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.float16', () {
+    // https://en.wikipedia.org/wiki/Half-precision_floating-point_format#Half_precision_examples
+    expect(cv.float16(0x0000), closeTo(0.0, 1e-8));
+    expect(cv.float16(0x0001), closeTo(0.000000059604645, 1e-8));
+    expect(cv.float16(0x03ff), closeTo(0.000060975552, 1e-8));
+    expect(cv.float16(0x0400), closeTo(0.00006103515625, 1e-8));
+    expect(cv.float16(0x3555), closeTo(0.33325195, 1e-8));
+    expect(cv.float16(0x3bff), closeTo(0.99951172, 1e-8));
+    expect(cv.float16(0x3c00), closeTo(1.00, 1e-8));
+    expect(cv.float16(0x3c01), closeTo(1.00097656, 1e-8));
+    expect(cv.float16(0x7bff), closeTo(65504, 1e-8));
+    expect(cv.float16(0x7c00), double.infinity);
+    expect(cv.float16(0x8000), closeTo(-0, 1e-8));
+    expect(cv.float16(0xc000), closeTo(-2, 1e-8));
+    expect(cv.float16(0xfc00), double.negativeInfinity);
+
+    expect(cv.float16Inv(0.0), 0x0000);
+    expect(cv.float16Inv(0.000000059604645), 0x0001);
+    expect(cv.float16Inv(0.000060975552), 0x03ff);
+    expect(cv.float16Inv(0.00006103515625), 0x0400);
+    expect(cv.float16Inv(0.33325195), 0x3555);
+    expect(cv.float16Inv(0.99951172), 0x3bff);
+    expect(cv.float16Inv(1.00), 0x3c00);
+    expect(cv.float16Inv(1.00097656), 0x3c01);
+    expect(cv.float16Inv(65504), 0x7bff);
+    expect(cv.float16Inv(double.infinity), 0x7c00);
+    expect(cv.float16Inv(-0), 0x8000);
+    expect(cv.float16Inv(-2), 0xc000);
+    expect(cv.float16Inv(double.negativeInfinity), 0xfc00);
+  });
+
   test('cv.LUT', () {
     void testOneLUT(cv.Mat src, cv.Mat lut) {
       expect(lut.channels == src.channels || lut.channels == 1, true);
@@ -351,6 +382,7 @@ void main() async {
       cv.MatType.CV_32S,
       cv.MatType.CV_32F,
       cv.MatType.CV_64F,
+      cv.MatType.CV_16F, // TODO: Not supported by official opencv, replace if they support it
     ];
     for (final int channel in [1, 2, 3, 4]) {
       for (final depth in depthSrc) {
@@ -366,6 +398,7 @@ void main() async {
           // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F ||
+            cv.MatType.CV_16F ||
             cv.MatType.CV_64F =>
               List.generate(lutSize * lutType.channels, (i) => (lutSize - (i ~/ channel) - 1).toDouble()),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),

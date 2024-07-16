@@ -1,5 +1,6 @@
 #include "core.h"
 #include "lut.hpp"
+#include "opencv2/core/cvdef.h"
 #include "vec.hpp"
 
 #include <cassert>
@@ -1547,7 +1548,7 @@ CvStatus *Mat_colRange(Mat m, int start, int end, Mat *rval) {
 CvStatus *LUT(Mat src, Mat lut, Mat dst) {
   BEGIN_WRAP
   auto cn = src.ptr->channels(), depth = src.ptr->depth();
-  if (depth == CV_8U || depth == CV_8S) {
+  if (lut.ptr->depth() != CV_16F && (depth == CV_8U || depth == CV_8S)) {
     cv::LUT(*src.ptr, *lut.ptr, *dst.ptr);
   } else {
     int lutcn = lut.ptr->channels(), lut_depth = lut.ptr->depth();
@@ -1580,6 +1581,27 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
     int len = (int)it.size;
 
     switch (depth) {
+    case CV_8U:
+      cvd::LUT8u_16f(
+          src.ptr->ptr<uchar>(),
+          lut.ptr->ptr<cv::hfloat>(),
+          dst.ptr->ptr<cv::hfloat>(),
+          len,
+          cn,
+          lutcn
+      );
+      break;
+    case CV_8S:
+      cvd::LUT8s_16f(
+          src.ptr->ptr<char>(),
+          lut.ptr->ptr<cv::hfloat>(),
+          dst.ptr->ptr<cv::hfloat>(),
+          len,
+          cn,
+          lutcn
+      );
+      break;
+
     case CV_16U:
       switch (lut_depth) {
       case CV_8U:
@@ -1615,6 +1637,11 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
       case CV_64F:
         cvd::LUT16u_64f(
             src.ptr->ptr<ushort>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn
+        );
+        break;
+      case CV_16F:
+        cvd::LUT16u_16f(
+            src.ptr->ptr<ushort>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
         );
         break;
       default:
@@ -1657,6 +1684,11 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
       case CV_64F:
         cvd::LUT16s_64f(
             src.ptr->ptr<short>(), lut.ptr->ptr<double>(), dst.ptr->ptr<double>(), len, cn, lutcn
+        );
+        break;
+      case CV_16F:
+        cvd::LUT16s_16f(
+            src.ptr->ptr<short>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
         );
         break;
       default:

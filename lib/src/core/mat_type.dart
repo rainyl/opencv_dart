@@ -18,6 +18,7 @@ extension type const MatType(int value) {
   const MatType.CV_32SC(int channels) : this.makeType(CV_32S, channels);
   const MatType.CV_32FC(int channels) : this.makeType(CV_32F, channels);
   const MatType.CV_64FC(int channels) : this.makeType(CV_64F, channels);
+  const MatType.CV_16FC(int channels) : this.makeType(CV_16F, channels);
 
   int get depth => value & (CV_DEPTH_MAX - 1);
   bool get isInteger => depth < CV_32F;
@@ -38,7 +39,7 @@ extension type const MatType(int value) {
   static const int CV_32S = 4;
   static const int CV_32F = 5;
   static const int CV_64F = 6;
-  static const int CV_USRTYPE1 = 7;
+  static const int CV_16F = 7;
 
   /// predefined type constants
   static const CV_8UC1 = MatType.CV_8UC(1); // 0
@@ -69,6 +70,10 @@ extension type const MatType(int value) {
   static const CV_64FC2 = MatType.CV_64FC(2); // 14
   static const CV_64FC3 = MatType.CV_64FC(3); // 22
   static const CV_64FC4 = MatType.CV_64FC(4); // 30
+  static const CV_16FC1 = MatType.CV_16FC(1); // 7
+  static const CV_16FC2 = MatType.CV_16FC(2); // 15
+  static const CV_16FC3 = MatType.CV_16FC(3); // 23
+  static const CV_16FC4 = MatType.CV_16FC(4); // 31
 
   // TODO: extension type do not support override/redeclare methods exist in Object
   // such as toString(), if they support this feature, we can just use toString()
@@ -81,7 +86,7 @@ extension type const MatType(int value) {
       CV_32S => "CV_32S",
       CV_32F => "CV_32F",
       CV_64F => "CV_64F",
-      CV_USRTYPE1 => "CV_USRTYPE1",
+      CV_16F => "CV_16F",
       _ => throw CvdException("Unsupported type value ($value)"),
     };
     return channels <= 4 ? "${s}C$channels" : "${s}C($channels)";

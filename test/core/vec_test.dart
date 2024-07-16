@@ -23,6 +23,44 @@ void main() {
     vec1.dispose();
   });
 
+  test('VecI16', () {
+    final points = List.generate(100, (index) => index);
+    final vec = points.i16;
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+
+    vec[24] = 1;
+    expect(vec[24], 1);
+
+    final vec1 = vec.clone();
+    expect(vec1, vecElementEquals(vec));
+
+    final vec2 = cv.VecI16(100, 10);
+    expect(vec2.toList(), List.generate(100, (index) => 10));
+
+    vec1.dispose();
+  });
+
+  test('VecU16', () {
+    final points = List.generate(100, (index) => index);
+    final vec = points.u16;
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+
+    vec[24] = 1;
+    expect(vec[24], 1);
+
+    final vec1 = vec.clone();
+    expect(vec1, vecElementEquals(vec));
+
+    final vec2 = cv.VecU16(100, 10);
+    expect(vec2.toList(), List.generate(100, (index) => 10));
+
+    vec1.dispose();
+  });
+
   test('VecUChar', () {
     final points = List.generate(1000, (index) => index % 256);
     final vec = points.vecUChar;
@@ -124,6 +162,26 @@ void main() {
 
     final data = vec.data;
     expect(data.indexed.map((e) => e.$2 == points[e.$1]).every((e) => e), true);
+
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+
+    vec[24] = 1;
+    expect(vec[24], 1);
+
+    final vec1 = vec.clone();
+    expect(vec1, vecElementEquals(vec));
+
+    vec1.dispose();
+  });
+
+  test('VecF16', () {
+    final points = List.generate(100, (index) => index.toDouble());
+    final vec = points.f16;
+
+    final data = vec.dataFp16;
+    expect(data.indexed.every((e) => e.$2 - points[e.$1] < 1e-8), true);
 
     expect(vec.length, points.length);
     expect(vec.first, points.first);
