@@ -1641,7 +1641,7 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
         break;
       case CV_16F:
         cvd::LUT16u_16f(
-            src.ptr->ptr<ushort>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn
+            src.ptr->ptr<ushort>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
         );
         break;
       default:
@@ -1688,7 +1688,7 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
         break;
       case CV_16F:
         cvd::LUT16s_16f(
-            src.ptr->ptr<short>(), lut.ptr->ptr<ushort>(), dst.ptr->ptr<ushort>(), len, cn, lutcn
+            src.ptr->ptr<short>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
         );
         break;
       default:

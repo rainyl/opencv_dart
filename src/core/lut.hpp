@@ -59,7 +59,7 @@ static void LUT16u_64f(const ushort *src, const double *lut, double *dst, int le
   LUT_BODY
 }
 
-static void LUT16u_16f(const ushort *src, const ushort *lut, ushort *dst, int len, int cn, int lutcn)
+static void LUT16u_16f(const ushort *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
 {
   LUT_BODY
 }
@@ -95,7 +95,7 @@ static void LUT16s_64f(const short *src, const double *lut, double *dst, int len
   LUT_BODY
 }
 
-static void LUT16s_16f(const short *src, const ushort *lut, ushort *dst, int len, int cn, int lutcn)
+static void LUT16s_16f(const short *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
 {
   LUT_BODY
 }
