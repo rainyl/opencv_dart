@@ -1,3 +1,7 @@
+## 1.1.0+1
+
+- Fix: download wrong binaries on `windows` and `linux`, other platforms are not affected.
+
 ## 1.1.0
 
 - Breaking Change: Asynchronous support, APIs ended with `Async` support asynchronous call.
