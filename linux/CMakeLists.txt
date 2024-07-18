@@ -8,6 +8,7 @@ set(PROJECT_NAME "opencv_dart")
 
 project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../binary.version" PROJECT_VERSION)
 set(CVD_LIB_URL_BASE "https://github.com/rainyl/opencv_dart/releases/download")
 # check whether the auto build is disabled
 set(OPENCV_DART_DISABLE_AUTO_BUILD $ENV{OPENCV_DART_DISABLE_AUTO_BUILD})
