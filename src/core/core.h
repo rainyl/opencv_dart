@@ -55,6 +55,16 @@ CvStatus *Mat_toVecPoint2f(Mat self, VecPoint2f *vec);
 CvStatus *Mat_toVecPoint3f(Mat self, VecPoint3f *vec);
 CvStatus *Mat_toVecPoint3i(Mat self, VecPoint3i *vec);
 
+CvStatus *Mat_toString(
+    Mat self,
+    int fmtType,
+    int f16Precision,
+    int f32Precision,
+    int f64Precision,
+    bool multiLine,
+    char **rval
+);
+
 CvStatus *Mat_FromPtr(Mat m, int rows, int cols, int type, int prows, int pcols, Mat *rval);
 CvStatus *Mat_FromCMat(Mat m, Mat *rval);
 CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEnd, Mat *rval);

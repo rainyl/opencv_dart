@@ -5405,6 +5405,40 @@ class CvNativeCore {
   late final _Mat_rowRange = _Mat_rowRangePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, ffi.Pointer<Mat>)>();
 
+  ffi.Pointer<CvStatus> Mat_toString(
+    Mat self,
+    int fmtType,
+    int f16Precision,
+    int f32Precision,
+    int f64Precision,
+    bool multiLine,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Mat_toString(
+      self,
+      fmtType,
+      f16Precision,
+      f32Precision,
+      f64Precision,
+      multiLine,
+      rval,
+    );
+  }
+
+  late final _Mat_toStringPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Mat_toString');
+  late final _Mat_toString = _Mat_toStringPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, int, int, bool, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
   ffi.Pointer<CvStatus> Mat_toVecPoint(
     Mat self,
     ffi.Pointer<VecPoint> vec,
