@@ -52,10 +52,83 @@ void main() async {
 
     final data = List.generate(rows * cols * channels, (i) => i);
     for (var i = 0; i < 100; i++) {
-      final mat = cv.Mat.fromList(rows, cols, cv.MatType.CV_8UC(channels), data);
+      final mat = cv.Mat.fromList(rows, cols, const cv.MatType.CV_8UC(channels), data);
       expect(mat.isEmpty, false);
       expect(mat.shape, [rows, cols, channels]);
       expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(0, 1, 2));
+    }
+  });
+
+  test('Mat.fromVec', () {
+    const int rows = 3;
+    const int cols = 3;
+    const int channels = 3;
+
+    final data = List.generate(rows * cols * channels, (i) => i);
+
+    {
+      const type = cv.MatType.CV_8UC(channels);
+      final mat = cv.Mat.fromVec(data.vecUChar, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(0, 1, 2));
+    }
+
+    {
+      const type = cv.MatType.CV_8SC(channels);
+      final mat = cv.Mat.fromVec(data.vecChar, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3b>(0, 1), cv.Vec3b(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_16UC(channels);
+      final mat = cv.Mat.fromVec(data.u16, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3w>(0, 1), cv.Vec3w(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_16SC(channels);
+      final mat = cv.Mat.fromVec(data.i16, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3s>(0, 1), cv.Vec3s(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_32SC(channels);
+      final mat = cv.Mat.fromVec(data.i32, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3i>(0, 1), cv.Vec3i(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_32FC(channels);
+      final mat = cv.Mat.fromVec(data.f32, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3f>(0, 1), cv.Vec3f(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_64FC(channels);
+      final mat = cv.Mat.fromVec(data.f64, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3d>(0, 1), cv.Vec3d(3, 4, 5));
+    }
+
+    {
+      const type = cv.MatType.CV_16FC(channels);
+      final mat = cv.Mat.fromVec(data.f16, rows: rows, cols: cols, type: type);
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      final pix = mat.at<cv.Vec3w>(0, 1);
+      expect(pix.val, [3.0.fp16, 4.0.fp16, 5.0.fp16]);
     }
   });
 

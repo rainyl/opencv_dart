@@ -752,6 +752,7 @@ extension ListUCharExtension on List<int> {
   VecI32 get i32 => VecI32.fromList(this);
   VecF32 get f32 => VecF32.fromList(map((e) => e.toDouble()).toList());
   VecF64 get f64 => VecF64.fromList(map((e) => e.toDouble()).toList());
+  VecF16 get f16 => VecF16.fromList(map((e) => e.toDouble()).toList());
 }
 
 extension ListListCharExtension on List<List<int>> {
