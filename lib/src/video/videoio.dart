@@ -72,6 +72,14 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     cvRun(() => cvideo.VideoCapture_Set(ref, prop, value));
   }
 
+  String getBackendName(){
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    cvRun(() => cvideo.VideoCapture_getBackendName(ref, p));
+    final name = p.value.toDartString();
+    calloc.free(p);
+    return name;
+  }
+
   /// Returns true if video capturing has been initialized already.
   ///
   /// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns true.

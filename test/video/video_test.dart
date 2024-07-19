@@ -209,6 +209,9 @@ void main() async {
     final (success, frame) = vc.read();
     expect(success, true);
     expect(frame.isEmpty, false);
+
+    expect(vc.getBackendName(), isNotEmpty);
+
     expect(vc.codec, "h264");
 
     expect(cv.VideoCapture.toCodec("h264"), closeTo(875967080, 1e-3));
