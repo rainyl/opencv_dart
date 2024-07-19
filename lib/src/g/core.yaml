@@ -542,6 +542,8 @@ files:
         name: Mat_colRange
       c:@F@Mat_rowRange:
         name: Mat_rowRange
+      c:@F@Mat_toString:
+        name: Mat_toString
       c:@F@Mat_toVecPoint:
         name: Mat_toVecPoint
       c:@F@Mat_toVecPoint2f:

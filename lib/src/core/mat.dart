@@ -324,8 +324,6 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.value;
       });
 
-
-
   num atNum<T extends num>(int row, int col, [int? i2]) {
     return switch (type.depth) {
       MatType.CV_8U => atU8(row, col, i2),
@@ -1339,13 +1337,32 @@ class Mat extends CvStruct<cvg.Mat> {
     return ret;
   }
 
-  @override
-  String toString() {
-    return "Mat(address=${ptr.address}, type=$type rows=$rows, cols=$cols, channels=$channels)";
+  String toFmtString({
+    int fmtType = FMT_NUMPY,
+    int f16Precision = 4,
+    int f32Precision = 8,
+    int f64Precision = 16,
+    bool multiLine = true,
+  }) {
+    final p = calloc<ffi.Pointer<ffi.Char>>();
+    cvRun(() => ccore.Mat_toString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p));
+    final rval = p.value.toDartString();
+    calloc.free(p);
+    return rval;
   }
 
   @override
+  String toString() => toFmtString();
+
+  @override
   cvg.Mat get ref => ptr.ref;
+
+  static const int FMT_DEFAULT = 0;
+  static const int FMT_MATLAB = 1;
+  static const int FMT_CSV = 2;
+  static const int FMT_PYTHON = 3;
+  static const int FMT_NUMPY = 4;
+  static const int FMT_C = 5;
 }
 
 typedef OutputArray = Mat;

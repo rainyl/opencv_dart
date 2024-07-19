@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
+#include <string.h>
 #include <vector>
 
 CvStatus *RotatedRect_Points(RotatedRect rect, VecPoint2f *pts) {
@@ -161,6 +162,27 @@ CvStatus *Mat_toVecPoint3i(Mat self, VecPoint3i *vec) {
   BEGIN_WRAP
   std::vector<cv::Point3i> pts = (std::vector<cv::Point3i>)*self.ptr;
   *vec = vecpoint3i_cpp2c(pts);
+  END_WRAP
+}
+
+CvStatus *Mat_toString(
+    Mat self,
+    int fmtType,
+    int f16Precision,
+    int f32Precision,
+    int f64Precision,
+    bool multiLine,
+    char **rval
+) {
+  BEGIN_WRAP
+  auto fmt = cv::Formatter::get(static_cast<cv::Formatter::FormatType>(fmtType));
+  fmt->set16fPrecision(f16Precision);
+  fmt->set32fPrecision(f32Precision);
+  fmt->set64fPrecision(f64Precision);
+  fmt->setMultiline(multiLine);
+  std::string fmtStr;
+  fmtStr << fmt->format(*self.ptr);
+  *rval = strdup(fmtStr.c_str());
   END_WRAP
 }
 
@@ -1641,7 +1663,12 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
         break;
       case CV_16F:
         cvd::LUT16u_16f(
-            src.ptr->ptr<ushort>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
+            src.ptr->ptr<ushort>(),
+            lut.ptr->ptr<cv::hfloat>(),
+            dst.ptr->ptr<cv::hfloat>(),
+            len,
+            cn,
+            lutcn
         );
         break;
       default:
@@ -1688,7 +1715,12 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
         break;
       case CV_16F:
         cvd::LUT16s_16f(
-            src.ptr->ptr<short>(), lut.ptr->ptr<cv::hfloat>(), dst.ptr->ptr<cv::hfloat>(), len, cn, lutcn
+            src.ptr->ptr<short>(),
+            lut.ptr->ptr<cv::hfloat>(),
+            dst.ptr->ptr<cv::hfloat>(),
+            len,
+            cn,
+            lutcn
         );
         break;
       default:
