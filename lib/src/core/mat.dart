@@ -72,21 +72,28 @@ class Mat extends CvStruct<cvg.Mat> {
 
   factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type}) {
     final p = calloc<cvg.Mat>();
-    switch ((vec, rows, cols, type)) {
-      case (final VecPoint vec, _, _, _):
+    switch (vec) {
+      case VecPoint():
         cvRun(() => ccore.Mat_NewFromVecPoint(vec.ref, p));
-      case (final VecPoint2f vec, _, _, _):
+      case VecPoint2f():
         cvRun(() => ccore.Mat_NewFromVecPoint2f(vec.ref, p));
-      case (final VecPoint3f vec, _, _, _):
+      case VecPoint3f():
         cvRun(() => ccore.Mat_NewFromVecPoint3f(vec.ref, p));
-      case (final VecPoint3i vec, _, _, _):
+      case VecPoint3i():
         cvRun(() => ccore.Mat_NewFromVecPoint3i(vec.ref, p));
-      case (final VecU8 vec, final rows, final cols, final type)
-          when rows != null && cols != null && type != null:
+      case VecU8() when rows != null && cols != null && type != null:
+      case VecI8() when rows != null && cols != null && type != null:
+      case VecU16() when rows != null && cols != null && type != null:
+      case VecI16() when rows != null && cols != null && type != null:
+      case VecI32() when rows != null && cols != null && type != null:
+      case VecF32() when rows != null && cols != null && type != null:
+      case VecF64() when rows != null && cols != null && type != null:
+      case VecF16() when rows != null && cols != null && type != null:
         cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, vec.asVoid(), p));
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
+    vec.dispose();
     return Mat._(p);
   }
 
@@ -317,6 +324,8 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.value;
       });
 
+
+
   num atNum<T extends num>(int row, int col, [int? i2]) {
     return switch (type.depth) {
       MatType.CV_8U => atU8(row, col, i2),
@@ -326,6 +335,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32S => atI32(row, col, i2),
       MatType.CV_32F => atF32(row, col, i2),
       MatType.CV_64F => atF64(row, col, i2),
+      MatType.CV_16F => float16(atU16(row, col, i2)),
       _ => throw UnsupportedError("Unsupported type: $type")
     };
   }
@@ -1298,12 +1308,11 @@ class Mat extends CvStruct<cvg.Mat> {
   /// The list is ordered as [row][col][channels].
   ///
   /// [T]: The type of the elements in the mat.
-  /// [P]: The type of the elements in the list.
   ///
   /// Example:
   /// ```dart
   /// final mat = Mat.fromBytes(width: 3, height: 3, type: MatType.CV_8UC3, bytes: [0, 1, 2, 3, 4, 5, 6, 7, 8]);
-  /// final list = mat.toList3D<Vec3b, int>();
+  /// final list = mat.toList3D<Vec3b>();
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
   List<List<List<num>>> toList3D<T extends CvVec>() {
