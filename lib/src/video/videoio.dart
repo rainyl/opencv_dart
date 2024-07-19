@@ -72,7 +72,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     cvRun(() => cvideo.VideoCapture_Set(ref, prop, value));
   }
 
-  String getBackendName(){
+  String getBackendName() {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => cvideo.VideoCapture_getBackendName(ref, p));
     final name = p.value.toDartString();
