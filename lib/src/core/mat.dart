@@ -324,8 +324,6 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.value;
       });
 
-
-
   num atNum<T extends num>(int row, int col, [int? i2]) {
     return switch (type.depth) {
       MatType.CV_8U => atU8(row, col, i2),
