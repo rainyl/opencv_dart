@@ -32,8 +32,7 @@ void main() async {
       mat3.rows,
       (row) => List.generate(
         mat3.cols,
-        (col) =>
-            List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
+        (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
       ),
     );
     expect(mat3.toList3D<cv.Vec3b>(), expected3);
@@ -53,8 +52,7 @@ void main() async {
 
     final data = List.generate(rows * cols * channels, (i) => i);
     for (var i = 0; i < 100; i++) {
-      final mat =
-          cv.Mat.fromList(rows, cols, const cv.MatType.CV_8UC(channels), data);
+      final mat = cv.Mat.fromList(rows, cols, const cv.MatType.CV_8UC(channels), data);
       expect(mat.isEmpty, false);
       expect(mat.shape, [rows, cols, channels]);
       expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(0, 1, 2));
@@ -70,8 +68,7 @@ void main() async {
 
     {
       const type = cv.MatType.CV_8UC(channels);
-      final mat =
-          cv.Mat.fromVec(data.vecUChar, rows: rows, cols: cols, type: type);
+      final mat = cv.Mat.fromVec(data.vecUChar, rows: rows, cols: cols, type: type);
       expect(mat.isEmpty, false);
       expect(mat.shape, [rows, cols, channels]);
       expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(0, 1, 2));
@@ -84,8 +81,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
     {
       const type = cv.MatType.CV_8SC(channels);
-      final mat =
-          cv.Mat.fromVec(data.vecChar, rows: rows, cols: cols, type: type);
+      final mat = cv.Mat.fromVec(data.vecChar, rows: rows, cols: cols, type: type);
       expect(mat.isEmpty, false);
       expect(mat.shape, [rows, cols, channels]);
       expect(mat.at<cv.Vec3b>(0, 1), cv.Vec3b(3, 4, 5));
@@ -143,8 +139,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
   test('Mat operations Add', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(128);
-    final mat1 =
-        cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));
+    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));
 
     // Mat
     final mat2 = mat1.add<cv.Mat>(mat0);
@@ -182,8 +177,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
   test('Mat operations Subtract', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(255);
-    final mat1 =
-        cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));
+    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));
 
     // Mat
     final mat2 = mat0.subtract<cv.Mat>(mat1);
@@ -221,8 +215,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
   test('Mat operations Multiply', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(100);
-    final mat1 =
-        cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(2));
+    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(2));
 
     // Mat
     final mat2 = mat0.multiply<cv.Mat>(mat1);
@@ -260,8 +253,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
   test('Mat operations Divide', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(200);
-    final mat1 =
-        cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(2));
+    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(2));
 
     // Mat
     final mat2 = mat0.divide<cv.Mat>(mat1);
@@ -372,8 +364,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     {
       final src = cv.Mat.zeros(3840, 2160, cv.MatType.CV_16UC3);
       final dataList = List.generate(65536, (i) => 65535 - i);
-      final lut =
-          cv.Mat.fromList(1, dataList.length, cv.MatType.CV_16UC1, dataList);
+      final lut = cv.Mat.fromList(1, dataList.length, cv.MatType.CV_16UC1, dataList);
       final sw = Stopwatch();
       sw.start();
       final dst = cv.LUT(src, lut);
@@ -386,8 +377,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat test others', () {
-    final mat0 =
-        cv.Mat.fromScalar(200, 100, cv.MatType.CV_8UC3, cv.Scalar(1, 1, 1, 1));
+    final mat0 = cv.Mat.fromScalar(200, 100, cv.MatType.CV_8UC3, cv.Scalar(1, 1, 1, 1));
     expect(mat0.props, equals([mat0.ptr.address]));
     final data = mat0.data;
     expect(data.length, greaterThan(0));
@@ -512,11 +502,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(ptr1[0], closeTo(21.0, 1e-6));
     final expected = [21.0, 1.0, 1.0];
     final accessed = List.generate(mat.cols, (i) => ptr1[i]);
-    expect(
-        expected.indexed
-            .map((e) => e.$2 - accessed[e.$1] < 1e-6)
-            .every((e) => e),
-        true);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
   test('Mat.ptrAt.F64', () {
@@ -533,16 +519,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(ptr1[0], closeTo(21.0, 1e-6));
     final expected = [21.0, 1.0, 1.0];
     final accessed = List.generate(mat.cols, (i) => ptr1[i]);
-    expect(
-        expected.indexed
-            .map((e) => e.$2 - accessed[e.$1] < 1e-6)
-            .every((e) => e),
-        true);
+    expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
   test('Mat At Set Vec*b(uchar)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2b>(0, 0), cv.Vec2b(2, 4));
 
@@ -574,8 +555,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat At Set Vec*w(ushort)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_16UC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16UC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2w>(0, 0), cv.Vec2w(2, 4));
 
@@ -607,8 +587,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat At Set Vec*s(short)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_16SC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16SC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2s>(0, 0), cv.Vec2s(2, 4));
 
@@ -640,8 +619,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat At Set Vec*i(int)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_32SC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32SC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2i>(0, 0), cv.Vec2i(2, 4));
 
@@ -673,8 +651,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat At Set Vec*f(float)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec2f>(0, 0), cv.Vec2f(2, 4));
 
@@ -706,8 +683,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat At Set Vec*d(double)', () {
-    var mat =
-        cv.Mat.fromScalar(1, 1, cv.MatType.CV_64FC2, cv.Scalar(2, 4, 1, 0));
+    var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_64FC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec2d>(0, 0), cv.Vec2d(2, 4));
 
@@ -751,8 +727,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print(
-          'Mat(${mat.rows}, ${mat.cols}, ${mat.type}).at: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).at: ${sw.elapsedMilliseconds}ms');
     }
 
     {
@@ -764,8 +739,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print(
-          'Mat(${mat.rows}, ${mat.cols}, ${mat.type}).atU8: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).atU8: ${sw.elapsedMilliseconds}ms');
     }
 
     {
@@ -777,8 +751,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print(
-          'Mat(${mat.rows}, ${mat.cols}, ${mat.type}).set: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).set: ${sw.elapsedMilliseconds}ms');
     }
 
     {
@@ -790,8 +763,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print(
-          'Mat(${mat.rows}, ${mat.cols}, ${mat.type}).setU8: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).setU8: ${sw.elapsedMilliseconds}ms');
     }
   });
 
