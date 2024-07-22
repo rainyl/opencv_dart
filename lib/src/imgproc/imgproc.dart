@@ -82,7 +82,7 @@ Mat cvtColor(Mat src, int code, {Mat? dst}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
 Mat equalizeHist(Mat src, {Mat? dst}) {
-  assert(src.channels == 1, "src must be grayscale");
+  cvAssert(src.channels == 1, "src must be grayscale");
   dst ??= Mat.empty();
   cvRun(() => cimgproc.EqualizeHist(src.ref, dst!.ref));
   return dst;

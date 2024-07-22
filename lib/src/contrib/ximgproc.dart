@@ -426,7 +426,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   ///
   /// https://docs.opencv.org/4.x/d8/d54/classcv_1_1ximgproc_1_1StructuredEdgeDetection.html#a31308e06ffea4507b5feb2e1856b1bd8
   Mat detectEdges(InputArray src) {
-    assert(src.type.depth == MatType.CV_32F);
+    cvAssert(src.type.depth == MatType.CV_32F);
     final p = calloc<cvg.Mat>();
     cvRun(() => ccontrib.ximgproc_StructuredEdgeDetection_detectEdges(ref, src.ref, p));
     return Mat.fromPointer(p);

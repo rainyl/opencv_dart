@@ -10,7 +10,7 @@ import 'package:ffi/ffi.dart';
 
 import "../g/types.g.dart" as cvg;
 import '../native_lib.dart' show ccore;
-import "exception.dart" show CvException;
+import "exception.dart" show CvException, CvdException;
 
 /* fundamental constants */
 const double CV_PI = 3.1415926535897932384626433832795;
@@ -238,6 +238,10 @@ R cvRunArena<R>(
       arena.releaseAll();
     }
   }
+}
+
+void cvAssert(bool condition, [String? msg]) {
+  if (!condition) throw CvdException(msg ?? 'Assertion failed');
 }
 
 // finalizers
