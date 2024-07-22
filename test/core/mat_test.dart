@@ -801,7 +801,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       [4, 5, 6],
       [7, 8, 9]
     ];
-    final matFrom2DList = cv.Mat.from2DList(data2D, const cv.MatType.CV_8UC(2));
+    final matFrom2DList = cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1);
     expect(matFrom2DList.isEmpty, equals(false));
     expect(matFrom2DList.shape, [3, 3, 1]);
     expect(matFrom2DList.at<int>(0, 0), equals(1));
