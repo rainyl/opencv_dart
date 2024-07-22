@@ -24,8 +24,7 @@ import '../native_lib.dart' show cimgcodecs;
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => cimgcodecs.Image_IMRead(
-        filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    cvRun(() => cimgcodecs.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
     return Mat.fromPointer(p);
   });
 }
@@ -71,8 +70,7 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
 
   params == null
       ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, success, buffer))
-      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(
-          cExt, img.ref, params.ref, success, buffer));
+      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
   calloc.free(cExt);
   return (success.value, VecUChar.fromPointer(buffer).toU8List());
 }
