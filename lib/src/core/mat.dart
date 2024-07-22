@@ -61,7 +61,7 @@ class Mat extends CvStruct<cvg.Mat> {
     final rows = data.length;
     final cols = data.first.length;
     assert(rows > 0, "The input data must not be empty.");
-    assert(cols > 0 && data.every((e) => e.length == cols), "All rows must have the same number of columns.");
+    assert(cols > 0 && data.every((r) => r.length == cols), "All rows must have the same number of columns.");
     final flatData = data.expand((row) => row).toList();
     return Mat.fromList(rows, cols, type, flatData);
   }
@@ -76,7 +76,7 @@ class Mat extends CvStruct<cvg.Mat> {
     final channels = data.first.first.length;
     assert(rows > 0, "The input data must not be empty.");
     assert(
-      cols > 0 && channels > 0 && data.every((c) => c.length == cols && c.every((p) => p.length == channels)),
+      cols > 0 && channels > 0 && data.every((r) => r.length == cols && r.every((c) => c.length == channels)),
       "All rows must have the same number of columns.",
     );
 
