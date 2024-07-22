@@ -24,7 +24,8 @@ import '../native_lib.dart' show cimgcodecs;
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => cimgcodecs.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    cvRun(() => cimgcodecs.Image_IMRead(
+        filename.toNativeUtf8(allocator: arena).cast(), flags, p));
     return Mat.fromPointer(p);
   });
 }
@@ -59,7 +60,7 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
-Uint8List imencode(
+(bool, Uint8List) imencode(
   String ext,
   InputArray img, {
   VecI32? params,
@@ -70,12 +71,10 @@ Uint8List imencode(
 
   params == null
       ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, success, buffer))
-      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(
+          cExt, img.ref, params.ref, success, buffer));
   calloc.free(cExt);
-  if (!success.value) {
-    throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
-  }
-  return VecUChar.fromPointer(buffer).toU8List();
+  return (success.value, VecUChar.fromPointer(buffer).toU8List());
 }
 
 /// imdecode reads an image from a buffer in memory.
