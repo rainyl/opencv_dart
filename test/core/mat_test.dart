@@ -771,7 +771,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final data2D = [
       [1, 2, 3],
       [4, 5, 6],
-      [7, 8, 9]
+      [7, 8, 9],
     ];
     final matFrom2DList = cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1);
     expect(matFrom2DList.isEmpty, equals(false));
@@ -779,6 +779,9 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom2DList.at<int>(0, 0), equals(1));
     expect(matFrom2DList.at<int>(2, 2), equals(9));
     expect(matFrom2DList.toList(), data2D);
+
+    data2D[1].add(6);
+    expect(() => cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1), throwsA(isA<AssertionError>()));
   });
 
   test('Mat Creation from 3D List', () {
@@ -786,18 +789,18 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       [
         [1, 2, 3],
         [4, 5, 6],
-        [7, 8, 9]
+        [7, 8, 9],
       ],
       [
         [10, 11, 12],
         [13, 14, 15],
-        [16, 17, 18]
+        [16, 17, 18],
       ],
       [
         [19, 20, 21],
         [22, 23, 24],
-        [25, 26, 27]
-      ]
+        [25, 26, 27],
+      ],
     ];
     final matFrom3DList = cv.Mat.from3DList(data3D, cv.MatType.CV_8UC3);
     expect(matFrom3DList.isEmpty, equals(false));
@@ -805,5 +808,13 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom3DList.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 2, 3));
     expect(matFrom3DList.at<cv.Vec3b>(2, 2), cv.Vec3b(25, 26, 27));
     expect(matFrom3DList.toList3D<cv.Vec3b>(), data3D);
+
+    final data3D1 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
+    data3D1[0][0].add(3);
+    expect(() => cv.Mat.from3DList(data3D1, cv.MatType.CV_8UC3), throwsA(isA<AssertionError>()));
+
+    final data3D2 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
+    data3D2[0].add([1, 2, 3]);
+    expect(() => cv.Mat.from3DList(data3D1, cv.MatType.CV_8UC3), throwsA(isA<AssertionError>()));
   });
 }

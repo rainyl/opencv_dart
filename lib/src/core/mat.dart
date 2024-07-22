@@ -55,59 +55,30 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Create a Mat from a 2D list
   ///
-  /// [data] should be a 2D list of numbers where each sublist represents a row of the matrix.
+  /// [data] should be a 2D list of numbers with a shape of (rows, cols).
   /// [type] specifies the Mat type.
-  factory Mat.from2DList(List<List<num>> data, MatType type) {
+  factory Mat.from2DList(Iterable<Iterable<num>> data, MatType type) {
     final rows = data.length;
-    if (rows == 0) {
-      throw Exception("The input data must not be empty.");
-    }
-    final cols = data[0].length;
-    if (cols == 0) {
-      throw Exception("Each row in the input data must have at least one column.");
-    }
-
-    // Check that all rows have the same number of columns
-    for (int i = 1; i < rows; i++) {
-      if (data[i].length != cols) {
-        throw Exception("All rows must have the same number of columns.");
-      }
-    }
-
+    final cols = data.first.length;
+    assert(rows > 0, "The input data must not be empty.");
+    assert(cols > 0 && data.every((e) => e.length == cols), "All rows must have the same number of columns.");
     final flatData = data.expand((row) => row).toList();
     return Mat.fromList(rows, cols, type, flatData);
   }
 
   /// Create a Mat from a 3D list
   ///
-  /// [data] should be a 3D list of numbers where each sublist represents a row of the matrix.
+  /// [data] should be a 3D list of numbers with a shape of (rows, cols, channels).
   /// [type] specifies the Mat type.
-  factory Mat.from3DList(List<List<List<num>>> data, MatType type) {
+  factory Mat.from3DList(Iterable<Iterable<Iterable<num>>> data, MatType type) {
     final rows = data.length;
-    if (rows == 0) {
-      throw Exception("The input data must not be empty.");
-    }
-    final cols = data[0].length;
-    if (cols == 0) {
-      throw Exception("Each row in the input data must have at least one column.");
-    }
-    final channels = data[0][0].length;
-    if (channels != type.channels) {
-      throw Exception("The number of channels in the data must match the Mat type.");
-    }
-
-    // Check that all rows have the same number of columns
-    for (int i = 1; i < rows; i++) {
-      if (data[i].length != cols) {
-        throw Exception("All rows must have the same number of columns.");
-      }
-      // Check that all columns have the same number of channels
-      for (int j = 0; j < cols; j++) {
-        if (data[i][j].length != channels) {
-          throw Exception("All columns must have the same number of channels.");
-        }
-      }
-    }
+    final cols = data.first.length;
+    final channels = data.first.first.length;
+    assert(rows > 0, "The input data must not be empty.");
+    assert(
+      cols > 0 && channels > 0 && data.every((c) => c.length == cols && c.every((p) => p.length == channels)),
+      "All rows must have the same number of columns.",
+    );
 
     final flatData = data.expand((row) => row.expand((pixel) => pixel)).toList();
     return Mat.fromList(rows, cols, type, flatData);
