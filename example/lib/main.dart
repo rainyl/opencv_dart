@@ -33,14 +33,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   // native resources are unsendable for isolate, so use raw data or encoded Uint8List and convert back
-  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async => Isolate.run(() {
+  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async =>
+      Isolate.run(() {
         final im = cv.imdecode(buffer, cv.IMREAD_COLOR);
         late cv.Mat gray, blur;
         for (var i = 0; i < 1000; i++) {
           gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
           blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
         }
-        return (cv.imencode(".png", gray), cv.imencode(".png", blur));
+        return (cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2);
       });
 
   Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
@@ -66,12 +67,14 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () async {
                   final picker = ImagePicker();
-                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  final img =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     final path = img.path;
                     final mat = cv.imread(path);
-                    print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
-                    final bytes = cv.imencode(".png", mat);
+                    print(
+                        "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                    final (success, bytes) = cv.imencode(".png", mat);
                     // heavy computation
                     final (gray, blur) = await heavyTask(bytes);
                     setState(() {
@@ -83,16 +86,22 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   // heavy computation
                   // final (gray, blur) = await heavyTask(bytes);
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
-                  final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                  final (gray, blur) =
+                      await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
                   setState(() {
-                    images = [bytes, cv.imencode(".png", gray), cv.imencode(".png", blur)];
+                    images = [
+                      bytes,
+                      cv.imencode(".png", gray).$2,
+                      cv.imencode(".png", blur).$2
+                    ];
                   });
                 },
                 child: const Text("Process"),
