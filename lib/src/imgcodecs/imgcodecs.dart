@@ -6,8 +6,6 @@ import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
-import '../core/error_code.dart';
-import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
@@ -65,14 +63,20 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
   VecI32? params,
 }) {
   final buffer = calloc<cvg.VecUChar>();
-  final success = calloc<ffi.Bool>();
+  final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
   params == null
-      ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, success, buffer))
-      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+      ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, pSuccess, buffer))
+      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, pSuccess, buffer));
+  final success = pSuccess.value;
   calloc.free(cExt);
-  return (success.value, VecUChar.fromPointer(buffer).toU8List());
+  calloc.free(pSuccess);
+
+  final vec = VecUChar.fromPointer(buffer);
+  final u8List = vec.toU8List(); // will copy data
+  vec.dispose();
+  return (success, u8List);
 }
 
 /// imdecode reads an image from a buffer in memory.
