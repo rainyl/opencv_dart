@@ -97,7 +97,6 @@ class Mat extends CvStruct<cvg.Mat> {
       "All rows must have the same number of columns.",
     );
 
-    // final flatData = data.expand((row) => row.expand((pixel) => pixel)).toList();
     return Mat.fromList(rows, cols, type, flatData);
   }
 

@@ -781,7 +781,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom2DList.toList(), data2D);
 
     data2D[1].add(6);
-    expect(() => cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1), throwsA(isA<cv.CvException>()));
+    expect(() => cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1), throwsA(isA<cv.CvdException>()));
   });
 
   test('Mat Creation from 3D List', () {
@@ -811,10 +811,10 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
     final data3D1 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
     data3D1[0][0].add(3);
-    expect(() => cv.Mat.from3DList(data3D1, cv.MatType.CV_8UC3), throwsA(isA<cv.CvException>()));
+    expect(() => cv.Mat.from3DList(data3D1, cv.MatType.CV_8UC3), throwsA(isA<cv.CvdException>()));
 
     final data3D2 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
     data3D2[0].add([1, 2, 3]);
-    expect(() => cv.Mat.from3DList(data3D2, cv.MatType.CV_8UC3), throwsA(isA<cv.CvException>()));
+    expect(() => cv.Mat.from3DList(data3D2, cv.MatType.CV_8UC3), throwsA(isA<cv.CvdException>()));
   });
 }
