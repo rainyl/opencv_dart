@@ -45,12 +45,10 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32F => VecF32.fromList(data.cast<double>()) as Vec,
       MatType.CV_64F => VecF64.fromList(data.cast<double>()) as Vec,
       MatType.CV_16F => VecF16.fromList(data.cast<double>()) as Vec,
-      _ =>
-        throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
+      _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
     };
     // copy
-    cvRun(() =>
-        ccore.Mat_NewFromBytes(rows, cols, type.value, xdata.asVoid(), p));
+    cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, xdata.asVoid(), p));
     xdata.dispose();
     return Mat._(p);
   }
@@ -66,8 +64,7 @@ class Mat extends CvStruct<cvg.Mat> {
     }
     final cols = data[0].length;
     if (cols == 0) {
-      throw Exception(
-          "Each row in the input data must have at least one column.");
+      throw Exception("Each row in the input data must have at least one column.");
     }
 
     // Check that all rows have the same number of columns
@@ -92,13 +89,11 @@ class Mat extends CvStruct<cvg.Mat> {
     }
     final cols = data[0].length;
     if (cols == 0) {
-      throw Exception(
-          "Each row in the input data must have at least one column.");
+      throw Exception("Each row in the input data must have at least one column.");
     }
     final channels = data[0][0].length;
     if (channels != type.channels) {
-      throw Exception(
-          "The number of channels in the data must match the Mat type.");
+      throw Exception("The number of channels in the data must match the Mat type.");
     }
 
     // Check that all rows have the same number of columns
@@ -114,14 +109,12 @@ class Mat extends CvStruct<cvg.Mat> {
       }
     }
 
-    final flatData =
-        data.expand((row) => row.expand((pixel) => pixel)).toList();
+    final flatData = data.expand((row) => row.expand((pixel) => pixel)).toList();
     return Mat.fromList(rows, cols, type, flatData);
   }
 
   /// This method is different from [Mat.fromPtr], will construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) =>
-      Mat._(mat, attach);
+  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, attach);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
@@ -156,8 +149,7 @@ class Mat extends CvStruct<cvg.Mat> {
       case VecF32() when rows != null && cols != null && type != null:
       case VecF64() when rows != null && cols != null && type != null:
       case VecF16() when rows != null && cols != null && type != null:
-        cvRun(() =>
-            ccore.Mat_NewFromBytes(rows, cols, type.value, vec.asVoid(), p));
+        cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, vec.asVoid(), p));
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
@@ -165,18 +157,11 @@ class Mat extends CvStruct<cvg.Mat> {
     return Mat._(p);
   }
 
-  factory Mat.create(
-      {int rows = 0,
-      int cols = 0,
-      int r = 0,
-      int g = 0,
-      int b = 0,
-      MatType? type}) {
+  factory Mat.create({int rows = 0, int cols = 0, int r = 0, int g = 0, int b = 0, MatType? type}) {
     type = type ?? MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
     final p = calloc<cvg.Mat>();
-    cvRun(
-        () => ccore.Mat_NewFromScalar(scalar.ref, rows, cols, type!.value, p));
+    cvRun(() => ccore.Mat_NewFromScalar(scalar.ref, rows, cols, type!.value, p));
     final mat = Mat._(p);
     return mat;
   }
@@ -184,12 +169,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Create [Mat] from another [Mat] with range
   ///
   /// Returns a reference of [Mat]
-  factory Mat.fromRange(Mat mat, int rowStart, int rowEnd,
-      {int colStart = 0, int? colEnd}) {
+  factory Mat.fromRange(Mat mat, int rowStart, int rowEnd, {int colStart = 0, int? colEnd}) {
     final p = calloc<cvg.Mat>();
     colEnd ??= mat.cols;
-    cvRun(() =>
-        ccore.Mat_FromRange(mat.ref, rowStart, rowEnd, colStart, colEnd!, p));
+    cvRun(() => ccore.Mat_FromRange(mat.ref, rowStart, rowEnd, colStart, colEnd!, p));
     return Mat._(p);
   }
 
@@ -214,8 +197,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  factory Mat.randn(int rows, int cols, MatType type,
-      {Scalar? mean, Scalar? std}) {
+  factory Mat.randn(int rows, int cols, MatType type, {Scalar? mean, Scalar? std}) {
     mean ??= Scalar.all(0);
     std ??= Scalar.all(1);
     final mat = Mat.create(rows: rows, cols: cols, type: type);
@@ -223,8 +205,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  factory Mat.randu(int rows, int cols, MatType type,
-      {Scalar? low, Scalar? high}) {
+  factory Mat.randu(int rows, int cols, MatType type, {Scalar? low, Scalar? high}) {
     low ??= Scalar.all(0);
     high ??= Scalar.all(256);
     final mat = Mat.create(rows: rows, cols: cols, type: type);
@@ -903,8 +884,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => ccore.Mat_AddI32(ref, val));
       return this;
@@ -1005,8 +985,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => ccore.Mat_SubtractI32(ref, val));
       return this;
@@ -1107,8 +1086,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => ccore.Mat_MultiplyI32(ref, val));
       return this;
@@ -1209,8 +1187,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideI32(int val, {bool inplace = false}) {
-    assert(
-        type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
     if (inplace) {
       cvRun(() => ccore.Mat_DivideI32(ref, val));
       return this;
@@ -1269,8 +1246,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
     final dst = Mat.empty();
-    cvRun(() =>
-        ccore.Mat_ConvertToWithParams(ref, dst.ref, type.value, alpha, beta));
+    cvRun(() => ccore.Mat_ConvertToWithParams(ref, dst.ref, type.value, alpha, beta));
     return dst;
   }
 
@@ -1367,8 +1343,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// PatchNaNs converts NaN's to zeros.
-  void patchNaNs({double val = 0}) =>
-      cvRun(() => ccore.Mat_PatchNaNs(ref, val));
+  void patchNaNs({double val = 0}) => cvRun(() => ccore.Mat_PatchNaNs(ref, val));
 
   Mat setTo(Scalar s) {
     cvRun(() => ccore.Mat_SetTo(ref, s.ref));
@@ -1377,20 +1352,13 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// This Method converts single-channel Mat to 2D List
   List<List<num>> toList() => switch (type.depth) {
-        MatType.CV_8U => List.generate(
-            rows, (row) => List.generate(cols, (col) => atU8(row, col))),
-        MatType.CV_8S => List.generate(
-            rows, (row) => List.generate(cols, (col) => atI8(row, col))),
-        MatType.CV_16U => List.generate(
-            rows, (row) => List.generate(cols, (col) => atU16(row, col))),
-        MatType.CV_16S => List.generate(
-            rows, (row) => List.generate(cols, (col) => atI16(row, col))),
-        MatType.CV_32S => List.generate(
-            rows, (row) => List.generate(cols, (col) => atI32(row, col))),
-        MatType.CV_32F => List.generate(
-            rows, (row) => List.generate(cols, (col) => atF32(row, col))),
-        MatType.CV_64F => List.generate(
-            rows, (row) => List.generate(cols, (col) => atF64(row, col))),
+        MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
+        MatType.CV_8S => List.generate(rows, (row) => List.generate(cols, (col) => atI8(row, col))),
+        MatType.CV_16U => List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
+        MatType.CV_16S => List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
+        MatType.CV_32S => List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
+        MatType.CV_32F => List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
+        MatType.CV_64F => List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
         _ => throw UnsupportedError("toList() for $type is not supported!")
       };
 
@@ -1406,10 +1374,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
   List<List<List<num>>> toList3D<T extends CvVec>() {
-    assert(channels >= 2,
-        "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(
-        rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
+    assert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
+    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
   }
 
   /// Get  a view of native data, and will be GCed when the Mat is GCed.
@@ -1439,8 +1405,7 @@ class Mat extends CvStruct<cvg.Mat> {
     bool multiLine = true,
   }) {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => ccore.Mat_toString(
-        ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p));
+    cvRun(() => ccore.Mat_toString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p));
     final rval = p.value.toDartString();
     calloc.free(p);
     return rval;
@@ -1472,11 +1437,9 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
     }
   }
 
-  factory VecMat.fromList(List<Mat> mats) =>
-      VecMat.generate(mats.length, (i) => mats[i], dispose: false);
+  factory VecMat.fromList(List<Mat> mats) => VecMat.generate(mats.length, (i) => mats[i], dispose: false);
 
-  factory VecMat.generate(int length, Mat Function(int i) generator,
-      {bool dispose = true}) {
+  factory VecMat.generate(int length, Mat Function(int i) generator, {bool dispose = true}) {
     final pp = calloc<cvg.VecMat>()..ref.length = length;
     pp.ref.ptr = calloc<cvg.Mat>(length);
     for (var i = 0; i < length; i++) {
@@ -1516,8 +1479,7 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
   }
 
   @override
-  void operator []=(int idx, Mat value) =>
-      throw UnsupportedError("VecMat is read-only");
+  void operator []=(int idx, Mat value) => throw UnsupportedError("VecMat is read-only");
 }
 
 class VecMatIterator extends VecIterator<Mat> {
@@ -1539,12 +1501,8 @@ extension ListMatExtension on List<Mat> {
 void matCompleter(Completer<Mat> completer, VoidPtr p) =>
     completer.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
 void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
-    completer.complete((
-      Mat.fromPointer(p.cast<cvg.Mat>()),
-      Mat.fromPointer(p1.cast<cvg.Mat>())
-    ));
-void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1,
-        VoidPtr p2) =>
+    completer.complete((Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>())));
+void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
     completer.complete(
       (
         Mat.fromPointer(p.cast<cvg.Mat>()),
