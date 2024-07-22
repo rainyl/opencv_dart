@@ -259,13 +259,13 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
   }
 
   void init(InputArray image, Rect boundingBox) {
-    assert(boundingBox.x >= 0, "boundingBox.x must be >= 0");
-    assert(boundingBox.y >= 0, "boundingBox.y must be >= 0");
-    assert(
+    cvAssert(boundingBox.x >= 0, "boundingBox.x must be >= 0");
+    cvAssert(boundingBox.y >= 0, "boundingBox.y must be >= 0");
+    cvAssert(
       boundingBox.right <= image.cols,
       "boundingBox.right=${boundingBox.right} must be <= image.cols=${image.cols}",
     );
-    assert(
+    cvAssert(
       boundingBox.bottom <= image.rows,
       "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
     );

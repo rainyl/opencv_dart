@@ -76,7 +76,7 @@ Future<Mat> cvtColorAsync(Mat src, int code) async =>
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
 Future<Mat> equalizeHistAsync(Mat src) async {
-  assert(src.channels == 1, "src must be grayscale");
+  cvAssert(src.channels == 1, "src must be grayscale");
   return cvRunAsync<Mat>((callback) => cimgproc.EqualizeHist_Async(src.ref, callback), matCompleter);
 }
 

@@ -61,6 +61,6 @@ class CvdException implements Exception {
 
   @override
   String toString() {
-    return "OpenCvDartException: $message";
+    return "CvdException: $message";
   }
 }
