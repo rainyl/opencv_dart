@@ -350,7 +350,7 @@ CvStatus *Mat_Size(Mat m, VecI32 *rval) {
   BEGIN_WRAP
   auto size = m.ptr->size;
   int *ptr = new int[size.dims()];
-  memcpy(ptr, size.p, size.dims());
+  memcpy(ptr, size.p, size.dims() * sizeof(int));
   *rval = {ptr, static_cast<size_t>(size.dims())};
   END_WRAP
 }
