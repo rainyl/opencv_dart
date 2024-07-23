@@ -401,6 +401,10 @@ typedef union Cv16suf_C {
   ushort u;
 } Cv16suf_C;
 
+typedef struct MatStep {
+  size_t p[3];
+} MatStep;
+
 typedef void (*CvCallback_0)();
 typedef void (*CvCallback_1)(void *);
 typedef void (*CvCallback_2)(void *, void *);

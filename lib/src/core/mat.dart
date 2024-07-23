@@ -19,7 +19,10 @@ class Mat extends CvStruct<cvg.Mat> {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
+    // refreshProps();
   }
+
+  //SECTION - Constructors
 
   factory Mat.fromNative(cvg.Mat mat) {
     final p = calloc<cvg.Mat>()..ref = mat;
@@ -215,87 +218,51 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.Mat_Close);
+  //!SECTION Constructors
 
-  @Deprecated("NOT recommended, call [dispose] instead")
-  void release() => cvRun(() => ccore.Mat_Release(ptr));
-
-  void dispose() {
-    finalizer.detach(this);
-    ccore.Mat_Close(ptr);
-  }
+  //SECTION - Properties
 
   /// cached mat type
-  MatType? _type;
+  // late MatType _type;
+
+  // late int _rows, _cols, _channels, _total, _elemSize, _dims;
+
+  // late bool _isEmpty, _isContinus;
+
+  // late (int, int, int) _step;
+
+  // late (ffi.Pointer<ffi.Uint8> ptr, int len) _dataPtr;
 
   /// here the mat type can't be changed once created, method such as [convertTo] will create a new [Mat]
-  MatType get type {
-    if (_type == null) {
-      final p = calloc<ffi.Int>();
-      cvRun(() => ccore.Mat_Type(ref, p));
-      _type = MatType(p.value);
-    }
-    return _type!;
+  MatType get type => MatType(ccore.Mat_Type(ref));
+
+  int get width => cols;
+  int get height => rows;
+  int get cols => ccore.Mat_Cols(ref);
+  int get rows => ccore.Mat_Rows(ref);
+  int get channels => ccore.Mat_Channels(ref);
+  int get total => ccore.Mat_Total(ref);
+  bool get isEmpty => ccore.Mat_Empty(ref);
+  bool get isContinus => ccore.Mat_IsContinuous(ref);
+  (int, int, int) get step {
+    final ms = ccore.Mat_Step(ref);
+    return (ms.p[0], ms.p[1], ms.p[2]);
   }
 
-  int get width => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Cols(ref, p));
-        return p.value;
-      });
-  int get height => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Rows(ref, p));
-        return p.value;
-      });
-  int get cols => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Cols(ref, p));
-        return p.value;
-      });
-  int get rows => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Rows(ref, p));
-        return p.value;
-      });
-  int get channels => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Channels(ref, p));
-        return p.value;
-      });
-  int get total => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Total(ref, p));
-        return p.value;
-      });
-  bool get isEmpty => cvRunArena<bool>((arena) {
-        final p = arena<ffi.Bool>();
-        cvRun(() => ccore.Mat_Empty(ref, p));
-        return p.value;
-      });
-  bool get isContinus => cvRunArena<bool>((arena) {
-        final p = arena<ffi.Bool>();
-        cvRun(() => ccore.Mat_IsContinuous(ref, p));
-        return p.value;
-      });
-  int get step => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_Step(ref, p));
-        return p.value;
-      });
-  int get elemSize => cvRunArena<int>((arena) {
-        final p = arena<ffi.Int>();
-        cvRun(() => ccore.Mat_ElemSize(ref, p));
-        return p.value;
-      });
+  int get elemSize => ccore.Mat_ElemSize(ref);
+  int get dims => ccore.Mat_Dims(ref);
+
+  /// Get  a view of native data, and will be GCed when the Mat is GCed.
+  Uint8List get data => dataPtr.$1.asTypedList(dataPtr.$2);
+
+  /// Get the data pointer of the Mat
+  ///
+  /// DO NOT free the pointer, the native memory is managed by [Mat]
+  (ffi.Pointer<ffi.Uint8> ptr, int len) get dataPtr =>
+      (ccore.Mat_Data(ref).cast<ffi.Uint8>(), total * elemSize);
 
   /// Mat.size
-  VecI32 get size {
-    final p = calloc<cvg.VecI32>();
-    cvRun(() => ccore.Mat_Size(ref, p));
-    final vec = VecI32.fromPointer(p);
-    return vec;
-  }
+  VecI32 get size => VecI32.fromPointer(ccore.Mat_Size(ref));
 
   /// ([rows], [cols], [channels])
   List<int> get shape => [rows, cols, channels];
@@ -303,7 +270,6 @@ class Mat extends CvStruct<cvg.Mat> {
   /// only for [channels] == 1
   int get countNoneZero {
     cvAssert(channels == 1, "countNoneZero only for channels == 1");
-
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Int>();
       cvRun(() => ccore.Mat_CountNonZero(ref, p));
@@ -311,74 +277,164 @@ class Mat extends CvStruct<cvg.Mat> {
     });
   }
 
-  int atU8(int row, int col, [int? i2]) => using<int>((arena) {
-        final p = arena<ffi.Uint8>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetUChar(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetUChar3(ref, row, col, i2, p));
-        return p.value;
-      });
+  // void refreshProps() {
+  //   {
+  //     // MatType _type;
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Type(ref, p));
+  //     _type = MatType(p.value);
+  //     calloc.free(p);
+  //   }
 
-  int atI8(int row, int col, [int? i2]) => using<int>((arena) {
-        final p = arena<ffi.Int8>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetSChar(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetSChar3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _rows
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Rows(ref, p));
+  //     _rows = p.value;
+  //     calloc.free(p);
+  //   }
 
-  int atU16(int row, int col, [int? i2]) => using<int>((arena) {
-        final p = arena<ffi.Uint16>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetUShort(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetUShort3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _cols
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Cols(ref, p));
+  //     _cols = p.value;
+  //     calloc.free(p);
+  //   }
 
-  int atI16(int row, int col, [int? i2]) => using<int>((arena) {
-        final p = arena<ffi.Int16>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetShort(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetShort3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _channels
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Channels(ref, p));
+  //     _channels = p.value;
+  //     calloc.free(p);
+  //   }
 
-  int atI32(int row, int col, [int? i2]) => using<int>((arena) {
-        final p = arena<ffi.Int32>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetInt(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetInt3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _total
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Total(ref, p));
+  //     _total = p.value;
+  //     calloc.free(p);
+  //   }
 
-  double atF32(int row, int col, [int? i2]) => using<double>((arena) {
-        final p = arena<ffi.Float>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetFloat(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetFloat3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _elemSize
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_ElemSize(ref, p));
+  //     _elemSize = p.value;
+  //     calloc.free(p);
+  //   }
 
-  double atF64(int row, int col, [int? i2]) => using<double>((arena) {
-        final p = arena<ffi.Double>();
-        i2 == null
-            ? cvRun(() => ccore.Mat_GetDouble(ref, row, col, p))
-            : cvRun(() => ccore.Mat_GetDouble3(ref, row, col, i2, p));
-        return p.value;
-      });
+  //   // int _dims;
+  //   {
+  //     final p = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_Dims(ref, p));
+  //     _dims = p.value;
+  //     calloc.free(p);
+  //   }
 
-  num atNum<T extends num>(int row, int col, [int? i2]) {
+  //   // bool _isEmpty, _isContinus;
+  //   {
+  //     final p = calloc<ffi.Bool>();
+  //     cvRun(() => ccore.Mat_Empty(ref, p));
+  //     _isEmpty = p.value;
+  //     calloc.free(p);
+  //   }
+
+  //   {
+  //     final p = calloc<ffi.Bool>();
+  //     cvRun(() => ccore.Mat_IsContinuous(ref, p));
+  //     _isContinus = p.value;
+  //     calloc.free(p);
+  //   }
+
+  //   // (int, int, int)? _step;
+  //   {
+  //     final p = calloc<ffi.Size>();
+  //     final p1 = calloc<ffi.Size>();
+  //     final p2 = calloc<ffi.Size>();
+  //     cvRun(() => ccore.Mat_Step(ref, p, p1, p2));
+  //     _step = (p.value, p1.value, p2.value);
+  //     calloc.free(p);
+  //     calloc.free(p1);
+  //     calloc.free(p2);
+  //   }
+
+  //   // _dataPtr
+  //   {
+  //     final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
+  //     final plen = calloc<ffi.Int>();
+  //     cvRun(() => ccore.Mat_DataPtr(ref, p, plen));
+  //     _dataPtr = (p.value.cast<ffi.Uint8>(), plen.value);
+  //     calloc.free(p);
+  //     calloc.free(plen);
+  //   }
+  // }
+
+  //!SECTION - Properties
+
+  //SECTION - At Set
+
+  /// wrapper of cv::Mat::at()
+  ///
+  /// [pdata] data pointer, used to improve performance
+  /// [step] used to improve performance
+  num atNum(int i0, int i1, {int? i2, ffi.Pointer<ffi.Uint8>? pdata, (int, int, int)? step}) {
+    pdata ??= dataPtr.$1;
+    step ??= this.step;
+    if (i2 == null) {
+      // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L894
+      final pp = pdata + i0 * step.$1;
+      return switch (type.depth) {
+        MatType.CV_8U => (pp.cast<ffi.Uint8>() + i1).value,
+        MatType.CV_8S => (pp.cast<ffi.Int8>() + i1).value,
+        MatType.CV_16U => (pp.cast<ffi.Uint16>() + i1).value,
+        MatType.CV_16S => (pp.cast<ffi.Int16>() + i1).value,
+        MatType.CV_32S => (pp.cast<ffi.Int>() + i1).value,
+        MatType.CV_32F => (pp.cast<ffi.Float>() + i1).value,
+        MatType.CV_64F => (pp.cast<ffi.Double>() + i1).value,
+        MatType.CV_16F => float16((pp.cast<ffi.Uint16>() + i1).value),
+        _ => throw UnsupportedError("Unsupported type: $type")
+      };
+    }
+    // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L968
     return switch (type.depth) {
-      MatType.CV_8U => atU8(row, col, i2),
-      MatType.CV_8S => atI8(row, col, i2),
-      MatType.CV_16U => atU16(row, col, i2),
-      MatType.CV_16S => atI16(row, col, i2),
-      MatType.CV_32S => atI32(row, col, i2),
-      MatType.CV_32F => atF32(row, col, i2),
-      MatType.CV_64F => atF64(row, col, i2),
-      MatType.CV_16F => float16(atU16(row, col, i2)),
+      MatType.CV_8U => ptrAt<ffi.Uint8>(i0, i1, i2).value,
+      MatType.CV_8S => ptrAt<ffi.Int8>(i0, i1, i2).value,
+      MatType.CV_16U => ptrAt<ffi.Uint16>(i0, i1, i2).value,
+      MatType.CV_16S => ptrAt<ffi.Int16>(i0, i1, i2).value,
+      MatType.CV_32S => ptrAt<ffi.Int>(i0, i1, i2).value,
+      MatType.CV_32F => ptrAt<ffi.Float>(i0, i1, i2).value,
+      MatType.CV_64F => ptrAt<ffi.Double>(i0, i1, i2).value,
+      MatType.CV_16F => float16(ptrAt<ffi.Uint16>(i0, i1, i2).value),
       _ => throw UnsupportedError("Unsupported type: $type")
     };
+  }
+
+  /// Get pixel value via [row], [col]
+  List<num> atNumRC(int row, int col) {
+    final p = ptrAt<ffi.Uint8>(row, col);
+    switch (type.depth) {
+      case MatType.CV_8U:
+        return p.cast<ffi.Uint8>().asTypedList(channels);
+      case MatType.CV_8S:
+        return p.cast<ffi.Int8>().asTypedList(channels);
+      case MatType.CV_16U:
+        return p.cast<ffi.Uint16>().asTypedList(channels);
+      case MatType.CV_16S:
+        return p.cast<ffi.Int16>().asTypedList(channels);
+      case MatType.CV_32S:
+        return p.cast<ffi.Int32>().asTypedList(channels);
+      case MatType.CV_32F:
+        return p.cast<ffi.Float>().asTypedList(channels);
+      case MatType.CV_64F:
+        return p.cast<ffi.Double>().asTypedList(channels);
+      case MatType.CV_16F:
+        return p.cast<ffi.Uint16>().asTypedList(channels).map(float16).toList(growable: false);
+      case _:
+        throw UnsupportedError("Unsupported type: $type");
+    }
   }
 
   T atVec<T>(int row, int col) {
@@ -496,16 +552,19 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
-  T at<T>(int row, int col, [int? i2]) {
+  T at<T>(int i0, int i1, [int? i2]) {
     if (T == int || T == double || T == num) {
-      return atNum(row, col, i2) as T;
+      return atNum(i0, i1, i2: i2) as T;
     } else if (isSubtype<T, CvVec>()) {
-      return atVec<T>(row, col);
+      return atVec<T>(i0, i1);
     } else {
       throw UnsupportedError("T must be num or CvVec(e.g., Vec3b), but got $T");
     }
   }
 
+  //!SECTION At
+
+  //SECTION - Set
   void setVec<T>(int row, int col, T val) {
     // Vec2b, Vec3b, Vec4b
     if (val is Vec2b) {
@@ -567,50 +626,57 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  void setU8(int row, int col, int val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetUChar(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetUChar3(ref, row, col, i2, val));
-
-  void setI8(int row, int col, int val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetSChar(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetSChar3(ref, row, col, i2, val));
-
-  void setU16(int row, int col, int val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetUShort(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetUShort3(ref, row, col, i2, val));
-
-  void setI16(int row, int col, int val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetShort(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetShort3(ref, row, col, i2, val));
-
-  void setI32(int row, int col, int val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetInt(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetInt3(ref, row, col, i2, val));
-
-  void setF32(int row, int col, double val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetFloat(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetFloat3(ref, row, col, i2, val));
-
-  void setF64(int row, int col, double val, [int? i2]) => i2 == null
-      ? cvRun(() => ccore.Mat_SetDouble(ref, row, col, val))
-      : cvRun(() => ccore.Mat_SetDouble3(ref, row, col, i2, val));
-
-  void setNum<T extends num>(int row, int col, T val, [int? i2]) {
-    return switch (type.depth) {
-      MatType.CV_8U => setU8(row, col, val as int, i2),
-      MatType.CV_8S => setI8(row, col, val as int, i2),
-      MatType.CV_16U => setU16(row, col, val as int, i2),
-      MatType.CV_16S => setI16(row, col, val as int, i2),
-      MatType.CV_32S => setI32(row, col, val as int, i2),
-      MatType.CV_32F => setF32(row, col, val as double, i2),
-      MatType.CV_64F => setF64(row, col, val as double, i2),
-      _ => throw UnsupportedError("Unsupported type: $type")
-    };
+  void setNum(int i0, int i1, num val, {int? i2, ffi.Pointer<ffi.Uint8>? pdata, (int, int, int)? step}) {
+    step ??= this.step;
+    pdata ??= dataPtr.$1;
+    if (i2 == null) {
+      final pp = pdata + i0 * step.$1;
+      switch (type.depth) {
+        case MatType.CV_8U:
+          (pp.cast<ffi.Uint8>() + i1).value = val.toInt();
+        case MatType.CV_8S:
+          (pp.cast<ffi.Int8>() + i1).value = val.toInt();
+        case MatType.CV_16U:
+          (pp.cast<ffi.Uint16>() + i1).value = val.toInt();
+        case MatType.CV_16S:
+          (pp.cast<ffi.Int16>() + i1).value = val.toInt();
+        case MatType.CV_32S:
+          (pp.cast<ffi.Int>() + i1).value = val.toInt();
+        case MatType.CV_32F:
+          (pp.cast<ffi.Float>() + i1).value = val.toDouble();
+        case MatType.CV_64F:
+          (pp.cast<ffi.Double>() + i1).value = val.toDouble();
+        case MatType.CV_16F:
+          (pp.cast<ffi.Uint16>() + i1).value = val.toDouble().fp16;
+        case _:
+          throw UnsupportedError("Unsupported type: $type");
+      }
+    } else {
+      switch (type.depth) {
+        case MatType.CV_8U:
+          ptrAt<ffi.Uint8>(i0, i1, i2).value = val.toInt();
+        case MatType.CV_8S:
+          ptrAt<ffi.Int8>(i0, i1, i2).value = val.toInt();
+        case MatType.CV_16U:
+          ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toInt();
+        case MatType.CV_16S:
+          ptrAt<ffi.Int16>(i0, i1, i2).value = val.toInt();
+        case MatType.CV_32S:
+          ptrAt<ffi.Int>(i0, i1, i2).value = val.toInt();
+        case MatType.CV_32F:
+          ptrAt<ffi.Float>(i0, i1, i2).value = val.toDouble();
+        case MatType.CV_64F:
+          ptrAt<ffi.Double>(i0, i1, i2).value = val.toDouble();
+        case MatType.CV_16F:
+          ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toDouble().fp16;
+        case _:
+          throw UnsupportedError("Unsupported type: $type");
+      }
+    }
   }
 
   /// equivalent to Mat::at\<T\>(i0, i1, i2) = val;
-  /// where T might be int, double, [U8], [I8], [U16], [I16], [I32], [F32], [F64].
-  /// or cv::Vec<> like cv::Vec3b
+  /// where T might be int, double, or cv::Vec<> like cv::Vec3b
   ///
   /// example
   /// ```dart
@@ -619,25 +685,11 @@ class Mat extends CvStruct<cvg.Mat> {
   /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
   /// ```
-  void set<T>(int row, int col, Object val, [int? i2]) {
+  void set<T>(int i0, int i1, Object val, [int? i2]) {
     if (T == int || T == double) {
-      setNum(row, col, val as num, i2);
+      setNum(i0, i1, val as num, i2: i2);
     } else if (isSubtype<T, CvVec>()) {
-      setVec<T>(row, col, val as T);
-    } else if (T == U8) {
-      setU8(row, col, val as int);
-    } else if (T == I8) {
-      setI8(row, col, val as int);
-    } else if (T == U16) {
-      setU16(row, col, val as int);
-    } else if (T == I16) {
-      setI16(row, col, val as int);
-    } else if (T == I32) {
-      setI32(row, col, val as int);
-    } else if (T == F32) {
-      setF32(row, col, val as double);
-    } else if (T == F64) {
-      setF64(row, col, val as double);
+      setVec<T>(i0, i1, val as T);
     } else {
       throw UnsupportedError("Unsupported type $T");
     }
@@ -645,6 +697,8 @@ class Mat extends CvStruct<cvg.Mat> {
 
   // https://github.com/dart-lang/sdk/issues/43390#issuecomment-690993957
   bool isSubtype<S, T>() => <S>[] is List<T>;
+
+  //!SECTION Set
 
   /// equivalent to Mat::ptr\<T\>(i0, i1, i2)
   ///
@@ -672,134 +726,34 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
   ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
-    if (T == ffi.UnsignedChar) return ptrU8(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.Char) return ptrI8(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.UnsignedShort) return ptrU16(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.Short) return ptrI16(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.Int) return ptrI32(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.Float) return ptrF32(i0, i1, i2) as ffi.Pointer<T>;
-    if (T == ffi.Double) return ptrF64(i0, i1, i2) as ffi.Pointer<T>;
+    final s = step;
+    final (p, _) = dataPtr;
+
+    ffi.Pointer<ffi.Uint8> pp = p + i0 * s.$1;
+    if (i1 != null) {
+      pp += i1 * s.$2;
+      if (i2 != null) pp += i2 * s.$3;
+    }
+
+    // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L789
+    if (T == ffi.Uint8 || T == U8) return pp as ffi.Pointer<T>;
+    if (T == ffi.Int8 || T == I8) return pp.cast<ffi.Int8>() as ffi.Pointer<T>;
+    if (T == ffi.Uint16 || T == U16) return pp.cast<ffi.Uint16>() as ffi.Pointer<T>;
+    if (T == ffi.Int16 || T == I16) return pp.cast<ffi.Int16>() as ffi.Pointer<T>;
+    if (T == ffi.Int || T == I32) return pp.cast<ffi.Int>() as ffi.Pointer<T>;
+    if (T == ffi.Float || T == F32) return pp.cast<ffi.Float>() as ffi.Pointer<T>;
+    if (T == ffi.Double || T == F64) return pp.cast<ffi.Double>() as ffi.Pointer<T>;
     throw UnsupportedError("ptr<$T>() is not supported!");
-  }
-
-  ffi.Pointer<ffi.UnsignedChar> ptrU8(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_u8_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_u8_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_u8_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrU8($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.UnsignedChar>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.Char> ptrI8(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i8_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i8_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_i8_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrI8($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.Char>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.UnsignedShort> ptrU16(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.UnsignedShort>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_u16_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_u16_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_u16_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrU16($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.UnsignedShort>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.Short> ptrI16(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.Short>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i16_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i16_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_i16_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrI16($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.Short>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.Int> ptrI32(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.Int>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i32_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_i32_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_i32_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrI32($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.Int>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.Float> ptrF32(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.Float>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_f32_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_f32_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_f32_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrF32($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.Float>();
-    calloc.free(p);
-    return ret;
-  }
-
-  ffi.Pointer<ffi.Double> ptrF64(int i0, [int? i1, int? i2]) {
-    final p = calloc<ffi.Pointer<ffi.Double>>();
-    if (i1 == null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_f64_1(ref, i0, p));
-    } else if (i1 != null && i2 == null) {
-      cvRun(() => ccore.Mat_Ptr_f64_2(ref, i0, i1, p));
-    } else if (i1 != null && i2 != null) {
-      cvRun(() => ccore.Mat_Ptr_f64_3(ref, i0, i1, i2, p));
-    } else {
-      throw UnsupportedError("ptrF64($i0, $i1, $i2) is not supported!");
-    }
-    final ret = p.value.cast<ffi.Double>();
-    calloc.free(p);
-    return ret;
   }
 
   // TODO: for now, dart do not support operator overloading
   // https://github.com/dart-lang/language/issues/2456
   // waiting for it's implementation and add more methods
   // operator +(int v) {
-  //   cffiCore.Mat_AddUChar(ref, v);
+  //   ccore.Mat_AddUChar(ref, v);
   // }
+
+  //SECTION - Add
 
   /// add
   Mat add<T>(T val, {bool inplace = false}) {
@@ -902,6 +856,10 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
+  //!SECTION ADD
+
+  //SECTION - Subtract
+
   /// subtract
   Mat subtract<T>(T val, {bool inplace = false}) {
     if (T == Mat) {
@@ -1003,6 +961,9 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
+  //!SECTION - Subtract
+
+  //SECTION - multiply
   /// multiply
   Mat multiply<T>(T val, {bool inplace = false}) {
     if (T == Mat) {
@@ -1104,6 +1065,9 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
+  //!SECTION - multiply
+
+  //SECTION - divide
   /// divide
   Mat divide<T>(T val, {bool inplace = false}) {
     if (T == Mat) {
@@ -1204,6 +1168,7 @@ class Mat extends CvStruct<cvg.Mat> {
       return dst;
     }
   }
+  //!SECTION - divide
 
   Mat transpose({bool inplace = false}) {
     final dst = inplace ? this : Mat.empty();
@@ -1334,16 +1299,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// This Method converts single-channel Mat to 2D List
-  List<List<num>> toList() => switch (type.depth) {
-        MatType.CV_8U => List.generate(rows, (row) => List.generate(cols, (col) => atU8(row, col))),
-        MatType.CV_8S => List.generate(rows, (row) => List.generate(cols, (col) => atI8(row, col))),
-        MatType.CV_16U => List.generate(rows, (row) => List.generate(cols, (col) => atU16(row, col))),
-        MatType.CV_16S => List.generate(rows, (row) => List.generate(cols, (col) => atI16(row, col))),
-        MatType.CV_32S => List.generate(rows, (row) => List.generate(cols, (col) => atI32(row, col))),
-        MatType.CV_32F => List.generate(rows, (row) => List.generate(cols, (col) => atF32(row, col))),
-        MatType.CV_64F => List.generate(rows, (row) => List.generate(cols, (col) => atF64(row, col))),
-        _ => throw UnsupportedError("toList() for $type is not supported!")
-      };
+  List<List<num>> toList() => List.generate(rows, (row) => List.generate(cols, (col) => atNum(row, col)));
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
   /// The list is ordered as [row][col][channels].
@@ -1358,26 +1314,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   List<List<List<num>>> toList3D<T extends CvVec>() {
     cvAssert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(rows, (row) => List.generate(cols, (col) => at<T>(row, col).val));
-  }
-
-  /// Get  a view of native data, and will be GCed when the Mat is GCed.
-  Uint8List get data {
-    final (p, len) = dataPtr;
-    return p.asTypedList(len);
-  }
-
-  /// Get the data pointer of the Mat
-  ///
-  /// DO NOT free the pointer, the native memory is managed by [Mat]
-  (ffi.Pointer<ffi.Uint8> ptr, int len) get dataPtr {
-    final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
-    final plen = calloc<ffi.Int>();
-    cvRun(() => ccore.Mat_DataPtr(ref, p, plen));
-    final ret = (p.value.cast<ffi.Uint8>(), plen.value);
-    calloc.free(p);
-    calloc.free(plen);
-    return ret;
+    return List.generate(
+      rows,
+      (row) => List.generate(cols, (col) => atNumRC(row, col)),
+    );
   }
 
   String toFmtString({
@@ -1396,6 +1336,16 @@ class Mat extends CvStruct<cvg.Mat> {
 
   @override
   String toString() => toFmtString();
+
+  static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.Mat_Close);
+
+  @Deprecated("NOT recommended, call [dispose] instead")
+  void release() => cvRun(() => ccore.Mat_Release(ptr));
+
+  void dispose() {
+    finalizer.detach(this);
+    ccore.Mat_Close(ptr);
+  }
 
   @override
   cvg.Mat get ref => ptr.ref;

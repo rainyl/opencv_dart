@@ -16,11 +16,13 @@ CvStatus *Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d) {
 }
 
 CvStatus *Fisheye_UndistortImageWithParams(
-    Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size
+    Mat distorted, Mat *undistorted, Mat k, Mat d, Mat knew, Size size
 ) {
   BEGIN_WRAP
   cv::Size sz(size.width, size.height);
-  cv::fisheye::undistortImage(*distorted.ptr, *undistorted.ptr, *k.ptr, *d.ptr, *knew.ptr, sz);
+  cv::Mat _undistorted;
+  cv::fisheye::undistortImage(*distorted.ptr, _undistorted, *k.ptr, *d.ptr, *knew.ptr, sz);
+  *undistorted = {new cv::Mat(_undistorted)};
   END_WRAP
 }
 
@@ -49,21 +51,17 @@ CvStatus *InitUndistortRectifyMap(
     Mat newCameraMatrix,
     Size size,
     int m1type,
-    Mat map1,
-    Mat map2
+    Mat *map1,
+    Mat *map2
 ) {
   BEGIN_WRAP
   cv::Size sz(size.width, size.height);
+  cv::Mat _map1, _map2;
   cv::initUndistortRectifyMap(
-      *cameraMatrix.ptr,
-      *distCoeffs.ptr,
-      *r.ptr,
-      *newCameraMatrix.ptr,
-      sz,
-      m1type,
-      *map1.ptr,
-      *map2.ptr
+      *cameraMatrix.ptr, *distCoeffs.ptr, *r.ptr, *newCameraMatrix.ptr, sz, m1type, _map1, _map2
   );
+  *map1 = {new cv::Mat(_map1)};
+  *map2 = {new cv::Mat(_map2)};
   END_WRAP
 }
 

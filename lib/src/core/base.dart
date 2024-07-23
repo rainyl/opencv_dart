@@ -5,6 +5,7 @@ library cv;
 
 import 'dart:async';
 import 'dart:ffi' as ffi;
+import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
@@ -266,4 +267,40 @@ typedef F64 = ffi.Double;
 // others
 extension PointerCharExtension on ffi.Pointer<ffi.Char> {
   String toDartString() => cast<Utf8>().toDartString();
+}
+
+// https://github.com/dart-lang/sdk/issues/37448
+extension Uint8ListExtension on Uint8List {
+  Uint8List subview(int start, [int? end]) =>
+      Uint8List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Int8ListExtension on Int8List {
+  Int8List subview(int start, [int? end]) =>
+      Int8List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Uint16ListExtension on Uint16List {
+  Uint16List subview(int start, [int? end]) =>
+      Uint16List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Int16ListExtension on Int16List {
+  Int16List subview(int start, [int? end]) =>
+      Int16List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Int32ListExtension on Int32List {
+  Int32List subview(int start, [int? end]) =>
+      Int32List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Float32ListExtension on Float32List {
+  Float32List subview(int start, [int? end]) =>
+      Float32List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
+}
+
+extension Float64ListExtension on Float64List {
+  Float64List subview(int start, [int? end]) =>
+      Float64List.view(buffer, elementSizeInBytes * start, end != null ? end - start : length - start);
 }

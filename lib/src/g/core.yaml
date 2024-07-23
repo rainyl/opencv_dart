@@ -110,10 +110,10 @@ files:
         name: Mat_DFT
       c:@F@Mat_Data:
         name: Mat_Data
-      c:@F@Mat_DataPtr:
-        name: Mat_DataPtr
       c:@F@Mat_Determinant:
         name: Mat_Determinant
+      c:@F@Mat_Dims:
+        name: Mat_Dims
       c:@F@Mat_Divide:
         name: Mat_Divide
       c:@F@Mat_DivideF64:
@@ -846,6 +846,8 @@ files:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
+      c:types.h@T@MatStep:
+        name: MatStep
       c:types.h@T@Point:
         name: Point
       c:types.h@T@RNG:

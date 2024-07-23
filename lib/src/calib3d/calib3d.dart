@@ -29,8 +29,8 @@ import '../native_lib.dart' show ccalib3d;
   OutputArray? map1,
   OutputArray? map2,
 }) {
-  map1 ??= Mat.empty();
-  map2 ??= Mat.empty();
+  final p1 = map1?.ptr ?? calloc<cvg.Mat>();
+  final p2 = map2?.ptr ?? calloc<cvg.Mat>();
   cvRun(
     () => ccalib3d.InitUndistortRectifyMap(
       cameraMatrix.ref,
@@ -39,11 +39,11 @@ import '../native_lib.dart' show ccalib3d;
       newCameraMatrix.ref,
       size.cvd.ref,
       m1type,
-      map1!.ref,
-      map2!.ref,
+      p1,
+      p2,
     ),
   );
-  return (map1, map2);
+  return (map1 ?? Mat.fromPointer(p1), map2 ?? Mat.fromPointer(p2));
 }
 
 /// GetOptimalNewCameraMatrixWithParams computes and returns the optimal new camera matrix based on the free scaling parameter.
