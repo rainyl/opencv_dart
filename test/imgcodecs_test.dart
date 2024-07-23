@@ -27,10 +27,12 @@ void main() async {
     final cvImage = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
     expect((cvImage.width, cvImage.height), (512, 512));
     final (success, buf) = cv.imencode(".png", cvImage);
+    expect(success, true);
     expect(buf.length, greaterThan(0));
     await File("test/images_out/test_imencode.png").writeAsBytes(buf);
     final params = [cv.IMWRITE_PNG_COMPRESSION, 9].i32;
     final (success1, buf1) = cv.imencode(".png", cvImage, params: params);
+    expect(success1, true);
     expect(buf1.length, greaterThan(0));
 
     final cvimgDecode = cv.imdecode(buf, cv.IMREAD_COLOR);

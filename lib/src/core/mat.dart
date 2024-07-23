@@ -289,17 +289,13 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.value;
       });
 
-  /// ([rows], [cols])
-  List<int> get size => [rows, cols];
-
-  // List<int> get shape {
-  //   return cvRunArena<List<int>>((arena) {
-  //     final s = arena<cvg.VecI32>();
-  //     cvRun(() => cffiCore.Mat_Size(ref, s));
-  //     final vec = VecI32.fromPointer(s.value);
-  //     return vec.toList();
-  //   });
-  // }
+  /// Mat.size
+  VecI32 get size {
+    final p = calloc<cvg.VecI32>();
+    cvRun(() => ccore.Mat_Size(ref, p));
+    final vec = VecI32.fromPointer(p);
+    return vec;
+  }
 
   /// ([rows], [cols], [channels])
   List<int> get shape => [rows, cols, channels];
