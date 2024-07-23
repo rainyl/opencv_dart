@@ -142,6 +142,8 @@ files:
         name: Mat_Eye_Async
       c:@F@Mat_FindNonZero:
         name: Mat_FindNonZero
+      c:@F@Mat_Flags:
+        name: Mat_Flags
       c:@F@Mat_Flip:
         name: Mat_Flip
       c:@F@Mat_FromCMat:

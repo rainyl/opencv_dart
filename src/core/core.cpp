@@ -219,6 +219,7 @@ CvStatus *Mat_Release(Mat *m) {
   END_WRAP
 }
 
+int Mat_Flags(Mat m) { return (m.ptr->flags); }
 bool Mat_Empty(Mat m) { return m.ptr->empty(); }
 bool Mat_IsContinuous(Mat m) { return m.ptr->isContinuous(); }
 int Mat_Rows(Mat m) { return m.ptr->rows; }

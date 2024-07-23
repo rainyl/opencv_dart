@@ -19,7 +19,6 @@ class Mat extends CvStruct<cvg.Mat> {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
-    // refreshProps();
   }
 
   //SECTION - Constructors
@@ -233,8 +232,9 @@ class Mat extends CvStruct<cvg.Mat> {
 
   // late (ffi.Pointer<ffi.Uint8> ptr, int len) _dataPtr;
 
-  /// here the mat type can't be changed once created, method such as [convertTo] will create a new [Mat]
   MatType get type => MatType(ccore.Mat_Type(ref));
+
+  int get flags => ccore.Mat_Flags(ref);
 
   int get width => cols;
   int get height => rows;
@@ -276,101 +276,6 @@ class Mat extends CvStruct<cvg.Mat> {
       return p.value;
     });
   }
-
-  // void refreshProps() {
-  //   {
-  //     // MatType _type;
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Type(ref, p));
-  //     _type = MatType(p.value);
-  //     calloc.free(p);
-  //   }
-
-  //   // int _rows
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Rows(ref, p));
-  //     _rows = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // int _cols
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Cols(ref, p));
-  //     _cols = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // int _channels
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Channels(ref, p));
-  //     _channels = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // int _total
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Total(ref, p));
-  //     _total = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // int _elemSize
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_ElemSize(ref, p));
-  //     _elemSize = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // int _dims;
-  //   {
-  //     final p = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_Dims(ref, p));
-  //     _dims = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // bool _isEmpty, _isContinus;
-  //   {
-  //     final p = calloc<ffi.Bool>();
-  //     cvRun(() => ccore.Mat_Empty(ref, p));
-  //     _isEmpty = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   {
-  //     final p = calloc<ffi.Bool>();
-  //     cvRun(() => ccore.Mat_IsContinuous(ref, p));
-  //     _isContinus = p.value;
-  //     calloc.free(p);
-  //   }
-
-  //   // (int, int, int)? _step;
-  //   {
-  //     final p = calloc<ffi.Size>();
-  //     final p1 = calloc<ffi.Size>();
-  //     final p2 = calloc<ffi.Size>();
-  //     cvRun(() => ccore.Mat_Step(ref, p, p1, p2));
-  //     _step = (p.value, p1.value, p2.value);
-  //     calloc.free(p);
-  //     calloc.free(p1);
-  //     calloc.free(p2);
-  //   }
-
-  //   // _dataPtr
-  //   {
-  //     final p = calloc<ffi.Pointer<ffi.UnsignedChar>>();
-  //     final plen = calloc<ffi.Int>();
-  //     cvRun(() => ccore.Mat_DataPtr(ref, p, plen));
-  //     _dataPtr = (p.value.cast<ffi.Uint8>(), plen.value);
-  //     calloc.free(p);
-  //     calloc.free(plen);
-  //   }
-  // }
 
   //!SECTION - Properties
 
@@ -1312,7 +1217,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// final list = mat.toList3D<Vec3b>();
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
-  List<List<List<num>>> toList3D<T extends CvVec>() {
+  List<List<List<num>>> toList3D() {
     cvAssert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
     return List.generate(
       rows,

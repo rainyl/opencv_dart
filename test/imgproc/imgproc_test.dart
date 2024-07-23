@@ -68,8 +68,6 @@ void main() async {
     final img = cv.imread("test/images/face-detect.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
-    cv.Mat.empty();
-    cv.Mat.empty();
     final mask = cv.Mat.empty();
 
     final hist1 = cv.calcHist([img].cvd, [0].i32, mask, [256].i32, [0.0, 256.0].f32);

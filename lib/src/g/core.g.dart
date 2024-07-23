@@ -1289,6 +1289,18 @@ class CvNativeCore {
   late final _Mat_FindNonZero = _Mat_FindNonZeroPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat)>();
 
+  int Mat_Flags(
+    Mat m,
+  ) {
+    return _Mat_Flags(
+      m,
+    );
+  }
+
+  late final _Mat_FlagsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Flags');
+  late final _Mat_Flags = _Mat_FlagsPtr.asFunction<int Function(Mat)>();
+
   ffi.Pointer<CvStatus> Mat_Flip(
     Mat src,
     Mat dst,

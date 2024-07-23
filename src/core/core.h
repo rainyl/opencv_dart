@@ -72,6 +72,7 @@ void Mat_Close(MatPtr m);
 void Mat_CloseVoid(void *m);
 CvStatus *Mat_Release(Mat *m);
 
+int Mat_Flags(Mat m);
 bool Mat_Empty(Mat m);
 bool Mat_IsContinuous(Mat m);
 int Mat_Rows(Mat m);

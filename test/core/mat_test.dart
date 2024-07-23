@@ -35,7 +35,7 @@ void main() async {
         (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
       ),
     );
-    expect(mat3.toList3D<cv.Vec3b>(), expected3);
+    expect(mat3.toList3D(), expected3);
 
     final mat4 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     expect((mat4.width, mat4.height, mat4.channels), (100, 100, 3));
@@ -837,7 +837,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom3DList.shape, [3, 3, 3]);
     expect(matFrom3DList.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 2, 3));
     expect(matFrom3DList.at<cv.Vec3b>(2, 2), cv.Vec3b(25, 26, 27));
-    expect(matFrom3DList.toList3D<cv.Vec3b>(), data3D);
+    expect(matFrom3DList.toList3D(), data3D);
 
     final data3D1 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
     data3D1[0][0].add(3);
