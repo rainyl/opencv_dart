@@ -38,7 +38,7 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.absDiff(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, 0), equals(1));
+    expect(dst.at<int>(0, 0, i2: 0), equals(1));
   });
 
   test('cv.Add', () {
@@ -46,41 +46,41 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.add(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, 0), equals(1));
+    expect(dst.at<int>(0, 0, i2: 0), equals(1));
   });
 
   test('cv.addWeighted', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.addWeighted(mat0, 0.5, mat1, 0.5, 1);
-    expect(dst.at<int>(0, 0, 0), equals(75 + 1));
+    expect(dst.at<int>(0, 0, i2: 0), equals(75 + 1));
   });
 
   test('cv.bitwise_and', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseAND(mat0, mat1);
-    expect(dst.at<int>(0, 0, 0), equals(100 & 50));
+    expect(dst.at<int>(0, 0, i2: 0), equals(100 & 50));
   });
 
   test('cv.bitwise_not', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final dst = cv.bitwiseNOT(mat0);
-    expect(dst.at<int>(0, 0, 0), equals(155));
+    expect(dst.at<int>(0, 0, i2: 0), equals(155));
   });
 
   test('cv.bitwise_or', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, 0), equals(100 | 50));
+    expect(dst.at<int>(0, 0, i2: 0), equals(100 | 50));
   });
 
   test('cv.bitwise_xor', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseXOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, 0), equals(100 ^ 50));
+    expect(dst.at<int>(0, 0, i2: 0), equals(100 ^ 50));
   });
 
   test('cv.batchDistance', () {
@@ -538,10 +538,10 @@ void main() async {
       (9.0, 3.0, 1.0, 2.0),
     ];
     for (var i = 0; i < testPoints.length; i++) {
-      a.set<double>(i, 0, testPoints[i].$1);
-      a.set<double>(i, 1, testPoints[i].$2);
-      a.set<double>(i, 2, testPoints[i].$3);
-      b.set<double>(i, 0, testPoints[i].$4);
+      a.set(i, 0, testPoints[i].$1);
+      a.set(i, 1, testPoints[i].$2);
+      a.set(i, 2, testPoints[i].$3);
+      b.set(i, 0, testPoints[i].$4);
     }
     final (solved, solve) = cv.solve(a, b, flags: cv.DECOMP_LU);
     expect(solved, equals(true));
@@ -550,10 +550,10 @@ void main() async {
 
   test('cv.solveCubic', () {
     final coeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_32FC1);
-    coeffs.set<double>(0, 0, 2.0);
-    coeffs.set<double>(0, 1, 3.0);
-    coeffs.set<double>(0, 2, -11.0);
-    coeffs.set<double>(0, 3, -6.0);
+    coeffs.set(0, 0, 2.0);
+    coeffs.set(0, 1, 3.0);
+    coeffs.set(0, 2, -11.0);
+    coeffs.set(0, 3, -6.0);
 
     final (rootsCount, roots) = cv.solveCubic(coeffs);
     expect(rootsCount, equals(3));
@@ -562,9 +562,9 @@ void main() async {
 
   test('cv.solvePoly', () {
     final coeffs = cv.Mat.zeros(1, 3, cv.MatType.CV_32FC1);
-    coeffs.set<double>(0, 0, 49.0);
-    coeffs.set<double>(0, 1, -14.0);
-    coeffs.set<double>(0, 2, 1.0);
+    coeffs.set(0, 0, 49.0);
+    coeffs.set(0, 1, -14.0);
+    coeffs.set(0, 2, 1.0);
 
     final (diffError, roots) = cv.solvePoly(coeffs);
     expect(diffError, lessThan(1.0e-61));
@@ -575,7 +575,7 @@ void main() async {
     final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j + 1);
+        src.set(i, j, j + 1);
       }
     }
     final dst = cv.reduce(src, 0, cv.REDUCE_SUM, dtype: cv.MatType.CV_32FC1.value);
@@ -591,7 +591,7 @@ void main() async {
     final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j + 1);
+        src.set(i, j, j + 1);
       }
     }
     final dst = cv.reduceArgMax(src, 1);
@@ -603,7 +603,7 @@ void main() async {
     final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j + 1);
+        src.set(i, j, j + 1);
       }
     }
     final dst = cv.reduceArgMin(src, 1);
@@ -615,7 +615,7 @@ void main() async {
     final src = cv.Mat.randu(1, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j);
+        src.set(i, j, j);
       }
     }
     final dst = cv.repeat(src, 3, 1);
@@ -640,7 +640,7 @@ void main() async {
     final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j);
+        src.set(i, j, j);
       }
     }
     final dst = cv.sort(src, cv.SORT_EVERY_ROW + cv.SORT_DESCENDING);
@@ -652,7 +652,7 @@ void main() async {
     final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
     for (var i = 0; i < src.rows; i++) {
       for (var j = 0; j < src.cols; j++) {
-        src.set<int>(i, j, j);
+        src.set(i, j, j);
       }
     }
     final dst = cv.sortIdx(src, cv.SORT_EVERY_ROW + cv.SORT_DESCENDING);
@@ -689,7 +689,7 @@ void main() async {
     for (var row = 0; row < src.rows; row++) {
       for (var col = 0; col < src.cols; col++) {
         if (row == col) {
-          src.set<int>(row, col, 1);
+          src.set(row, col, 1);
         }
       }
     }

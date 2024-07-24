@@ -221,17 +221,6 @@ class Mat extends CvStruct<cvg.Mat> {
 
   //SECTION - Properties
 
-  /// cached mat type
-  // late MatType _type;
-
-  // late int _rows, _cols, _channels, _total, _elemSize, _dims;
-
-  // late bool _isEmpty, _isContinus;
-
-  // late (int, int, int) _step;
-
-  // late (ffi.Pointer<ffi.Uint8> ptr, int len) _dataPtr;
-
   MatType get type => MatType(ccore.Mat_Type(ref));
 
   int get flags => ccore.Mat_Flags(ref);
@@ -283,11 +272,12 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// wrapper of cv::Mat::at()
   ///
-  /// [pdata] data pointer, used to improve performance
-  /// [step] used to improve performance
-  num atNum(int i0, int i1, {int? i2, ffi.Pointer<ffi.Uint8>? pdata, (int, int, int)? step}) {
-    pdata ??= dataPtr.$1;
-    step ??= this.step;
+  /// enable cache to improve performance
+  num atNum(int i0, int i1, {int? i2}) {
+    final pdata = dataPtr.$1;
+    final step = this.step;
+    final type = this.type;
+
     if (i2 == null) {
       // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L894
       final pp = pdata + i0 * step.$1;
@@ -318,7 +308,12 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// Get pixel value via [row], [col]
-  List<num> atNumRC(int row, int col) {
+  ///
+  /// Note: No bound check under **release** mode
+  List<num> atPixel(int row, int col) {
+    assert(0 <= row && row < rows, "row must be less than $rows");
+    assert(0 <= col && col < cols, "col must be less than $cols");
+
     final p = ptrAt<ffi.Uint8>(row, col);
     switch (type.depth) {
       case MatType.CV_8U:
@@ -457,7 +452,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
-  T at<T>(int i0, int i1, [int? i2]) {
+  T at<T>(int i0, int i1, {int? i2}) {
     if (T == int || T == double || T == num) {
       return atNum(i0, i1, i2: i2) as T;
     } else if (isSubtype<T, CvVec>()) {
@@ -470,113 +465,104 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION At
 
   //SECTION - Set
-  void setVec<T>(int row, int col, T val) {
-    // Vec2b, Vec3b, Vec4b
-    if (val is Vec2b) {
-      cvRun(() => ccore.Mat_SetVec2b(ref, row, col, val.ref));
-    } else if (val is Vec3b) {
-      cvRun(() => ccore.Mat_SetVec3b(ref, row, col, val.ref));
-    } else if (val is Vec4b) {
-      cvRun(() => ccore.Mat_SetVec4b(ref, row, col, val.ref));
-    }
-    // Vec2w, Vec3w, Vec4w
-    else if (val is Vec2w) {
-      cvRun(() => ccore.Mat_SetVec2w(ref, row, col, val.ref));
-    } else if (val is Vec3w) {
-      cvRun(() => ccore.Mat_SetVec3w(ref, row, col, val.ref));
-    } else if (val is Vec4w) {
-      cvRun(() => ccore.Mat_SetVec4w(ref, row, col, val.ref));
-    }
-    // Vec2s, Vec3s, Vec4s
-    else if (val is Vec2s) {
-      cvRun(() => ccore.Mat_SetVec2s(ref, row, col, val.ref));
-    } else if (val is Vec3s) {
-      cvRun(() => ccore.Mat_SetVec3s(ref, row, col, val.ref));
-    } else if (val is Vec4s) {
-      cvRun(() => ccore.Mat_SetVec4s(ref, row, col, val.ref));
-    }
-    // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
-    else if (val is Vec2i) {
-      cvRun(() => ccore.Mat_SetVec2i(ref, row, col, val.ref));
-    } else if (val is Vec3i) {
-      cvRun(() => ccore.Mat_SetVec3i(ref, row, col, val.ref));
-    } else if (val is Vec4i) {
-      cvRun(() => ccore.Mat_SetVec4i(ref, row, col, val.ref));
-    } else if (val is Vec6i) {
-      cvRun(() => ccore.Mat_SetVec6i(ref, row, col, val.ref));
-    } else if (val is Vec8i) {
-      cvRun(() => ccore.Mat_SetVec8i(ref, row, col, val.ref));
-    }
-    // Vec2f, Vec3f, Vec4f, Vec6f
-    else if (val is Vec2f) {
-      cvRun(() => ccore.Mat_SetVec2f(ref, row, col, val.ref));
-    } else if (val is Vec3f) {
-      cvRun(() => ccore.Mat_SetVec3f(ref, row, col, val.ref));
-    } else if (val is Vec4f) {
-      cvRun(() => ccore.Mat_SetVec4f(ref, row, col, val.ref));
-    } else if (val is Vec6f) {
-      cvRun(() => ccore.Mat_SetVec6f(ref, row, col, val.ref));
-    }
-    // Vec2d, Vec3d, Vec4d, Vec6d
-    else if (val is Vec2d) {
-      cvRun(() => ccore.Mat_SetVec2d(ref, row, col, val.ref));
-    } else if (val is Vec3d) {
-      cvRun(() => ccore.Mat_SetVec3d(ref, row, col, val.ref));
-    } else if (val is Vec4d) {
-      cvRun(() => ccore.Mat_SetVec4d(ref, row, col, val.ref));
-    } else if (val is Vec6d) {
-      cvRun(() => ccore.Mat_SetVec6d(ref, row, col, val.ref));
-    } else {
-      throw UnsupportedError("at<$T>() for $type is not supported!");
+  void setVec<T extends CvVec>(int row, int col, T val) {
+    switch (val) {
+      // Vec2b, Vec3b, Vec4b
+      case Vec2b():
+        cvRun(() => ccore.Mat_SetVec2b(ref, row, col, val.ref));
+      case Vec3b():
+        cvRun(() => ccore.Mat_SetVec3b(ref, row, col, val.ref));
+      case Vec4b():
+        cvRun(() => ccore.Mat_SetVec4b(ref, row, col, val.ref));
+      // Vec2w, Vec3w, Vec4w
+      case Vec2w():
+        cvRun(() => ccore.Mat_SetVec2w(ref, row, col, val.ref));
+      case Vec3w():
+        cvRun(() => ccore.Mat_SetVec3w(ref, row, col, val.ref));
+      case Vec4w():
+        cvRun(() => ccore.Mat_SetVec4w(ref, row, col, val.ref));
+      // Vec2s, Vec3s, Vec4s
+      case Vec2s():
+        cvRun(() => ccore.Mat_SetVec2s(ref, row, col, val.ref));
+      case Vec3s():
+        cvRun(() => ccore.Mat_SetVec3s(ref, row, col, val.ref));
+      case Vec4s():
+        cvRun(() => ccore.Mat_SetVec4s(ref, row, col, val.ref));
+      // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
+      case Vec2i():
+        cvRun(() => ccore.Mat_SetVec2i(ref, row, col, val.ref));
+      case Vec3i():
+        cvRun(() => ccore.Mat_SetVec3i(ref, row, col, val.ref));
+      case Vec4i():
+        cvRun(() => ccore.Mat_SetVec4i(ref, row, col, val.ref));
+      case Vec6i():
+        cvRun(() => ccore.Mat_SetVec6i(ref, row, col, val.ref));
+      case Vec8i():
+        cvRun(() => ccore.Mat_SetVec8i(ref, row, col, val.ref));
+      // Vec2f, Vec3f, Vec4f, Vec6f
+      case Vec2f():
+        cvRun(() => ccore.Mat_SetVec2f(ref, row, col, val.ref));
+      case Vec3f():
+        cvRun(() => ccore.Mat_SetVec3f(ref, row, col, val.ref));
+      case Vec4f():
+        cvRun(() => ccore.Mat_SetVec4f(ref, row, col, val.ref));
+      case Vec6f():
+        cvRun(() => ccore.Mat_SetVec6f(ref, row, col, val.ref));
+      // Vec2d, Vec3d, Vec4d, Vec6d
+      case Vec2d():
+        cvRun(() => ccore.Mat_SetVec2d(ref, row, col, val.ref));
+      case Vec3d():
+        cvRun(() => ccore.Mat_SetVec3d(ref, row, col, val.ref));
+      case Vec4d():
+        cvRun(() => ccore.Mat_SetVec4d(ref, row, col, val.ref));
+      case Vec6d():
+        cvRun(() => ccore.Mat_SetVec6d(ref, row, col, val.ref));
+      default:
+        throw UnsupportedError("setVec<$T>() for $type is not supported!");
     }
   }
 
-  void setNum(int i0, int i1, num val, {int? i2, ffi.Pointer<ffi.Uint8>? pdata, (int, int, int)? step}) {
-    step ??= this.step;
-    pdata ??= dataPtr.$1;
-    if (i2 == null) {
-      final pp = pdata + i0 * step.$1;
-      switch (type.depth) {
-        case MatType.CV_8U:
-          (pp.cast<ffi.Uint8>() + i1).value = val.toInt();
-        case MatType.CV_8S:
-          (pp.cast<ffi.Int8>() + i1).value = val.toInt();
-        case MatType.CV_16U:
-          (pp.cast<ffi.Uint16>() + i1).value = val.toInt();
-        case MatType.CV_16S:
-          (pp.cast<ffi.Int16>() + i1).value = val.toInt();
-        case MatType.CV_32S:
-          (pp.cast<ffi.Int>() + i1).value = val.toInt();
-        case MatType.CV_32F:
-          (pp.cast<ffi.Float>() + i1).value = val.toDouble();
-        case MatType.CV_64F:
-          (pp.cast<ffi.Double>() + i1).value = val.toDouble();
-        case MatType.CV_16F:
-          (pp.cast<ffi.Uint16>() + i1).value = val.toDouble().fp16;
-        case _:
-          throw UnsupportedError("Unsupported type: $type");
-      }
-    } else {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          ptrAt<ffi.Uint8>(i0, i1, i2).value = val.toInt();
-        case MatType.CV_8S:
-          ptrAt<ffi.Int8>(i0, i1, i2).value = val.toInt();
-        case MatType.CV_16U:
-          ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toInt();
-        case MatType.CV_16S:
-          ptrAt<ffi.Int16>(i0, i1, i2).value = val.toInt();
-        case MatType.CV_32S:
-          ptrAt<ffi.Int>(i0, i1, i2).value = val.toInt();
-        case MatType.CV_32F:
-          ptrAt<ffi.Float>(i0, i1, i2).value = val.toDouble();
-        case MatType.CV_64F:
-          ptrAt<ffi.Double>(i0, i1, i2).value = val.toDouble();
-        case MatType.CV_16F:
-          ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toDouble().fp16;
-        case _:
-          throw UnsupportedError("Unsupported type: $type");
-      }
+  void setNum(int i0, int i1, num val, {int? i2}) {
+    final pdata = dataPtr.$1;
+    final step = this.step;
+    final type = this.type;
+
+    final pp = pdata + i0 * step.$1;
+    switch (type.depth) {
+      case MatType.CV_8U:
+        i2 == null
+            ? (pp.cast<ffi.Uint8>() + i1).value = val.toInt()
+            : ptrAt<ffi.Uint8>(i0, i1, i2).value = val.toInt();
+      case MatType.CV_8S:
+        i2 == null
+            ? (pp.cast<ffi.Int8>() + i1).value = val.toInt()
+            : ptrAt<ffi.Int8>(i0, i1, i2).value = val.toInt();
+      case MatType.CV_16U:
+        i2 == null
+            ? (pp.cast<ffi.Uint16>() + i1).value = val.toInt()
+            : ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toInt();
+      case MatType.CV_16S:
+        i2 == null
+            ? (pp.cast<ffi.Int16>() + i1).value = val.toInt()
+            : ptrAt<ffi.Int16>(i0, i1, i2).value = val.toInt();
+      case MatType.CV_32S:
+        i2 == null
+            ? (pp.cast<ffi.Int>() + i1).value = val.toInt()
+            : ptrAt<ffi.Int>(i0, i1, i2).value = val.toInt();
+      case MatType.CV_32F:
+        i2 == null
+            ? (pp.cast<ffi.Float>() + i1).value = val.toDouble()
+            : ptrAt<ffi.Float>(i0, i1, i2).value = val.toDouble();
+      case MatType.CV_64F:
+        i2 == null
+            ? (pp.cast<ffi.Double>() + i1).value = val.toDouble()
+            : ptrAt<ffi.Double>(i0, i1, i2).value = val.toDouble();
+      case MatType.CV_16F:
+        i2 == null
+            ? (pp.cast<ffi.Uint16>() + i1).value = val.toDouble().fp16
+            : ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toDouble().fp16;
+      case _:
+        throw UnsupportedError("Unsupported type: $type");
     }
   }
 
@@ -590,13 +576,14 @@ class Mat extends CvStruct<cvg.Mat> {
   /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
   /// ```
-  void set<T>(int i0, int i1, Object val, [int? i2]) {
-    if (T == int || T == double) {
-      setNum(i0, i1, val as num, i2: i2);
-    } else if (isSubtype<T, CvVec>()) {
-      setVec<T>(i0, i1, val as T);
-    } else {
-      throw UnsupportedError("Unsupported type $T");
+  void set<T>(int i0, int i1, T val, {int? i2}) {
+    switch (val) {
+      case num():
+        setNum(i0, i1, val, i2: i2);
+      case CvVec():
+        setVec<CvVec>(i0, i1, val);
+      default:
+        throw UnsupportedError("Unsupported type ${val.runtimeType}");
     }
   }
 
@@ -631,13 +618,13 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
   ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
-    final s = step;
-    final (p, _) = dataPtr;
+    final pdata = dataPtr.$1;
+    final step = this.step;
 
-    ffi.Pointer<ffi.Uint8> pp = p + i0 * s.$1;
+    ffi.Pointer<ffi.Uint8> pp = pdata + i0 * step.$1;
     if (i1 != null) {
-      pp += i1 * s.$2;
-      if (i2 != null) pp += i2 * s.$3;
+      pp += i1 * step.$2;
+      if (i2 != null) pp += i2 * step.$3;
     }
 
     // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L789
@@ -1221,7 +1208,7 @@ class Mat extends CvStruct<cvg.Mat> {
     cvAssert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
     return List.generate(
       rows,
-      (row) => List.generate(cols, (col) => atNumRC(row, col)),
+      (row) => List.generate(cols, (col) => atPixel(row, col)),
     );
   }
 
