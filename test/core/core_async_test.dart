@@ -24,7 +24,7 @@ void main() async {
     expect(level, equals(cv.LOG_LEVEL_INFO));
   });
   test('getLogTagLevelAsync', () async {
-    final tag = 'ASYNC_GET_TAG';
+    final tag = 'ASYNC_TAG';
     await cv.setLogTagLevelAsync(tag, cv.LOG_LEVEL_ERROR);
     final level = await cv.getLogTagLevelAsync(tag);
     print('Current log level for $tag: $level');
