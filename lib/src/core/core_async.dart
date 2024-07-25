@@ -18,7 +18,6 @@ import 'scalar.dart';
 import 'termcriteria.dart';
 import 'vec.dart';
 
-
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
 ///

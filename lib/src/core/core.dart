@@ -32,7 +32,6 @@ void setLogLevel(int logLevel) {
   cvRun(() => ccore.setLogLevel(logLevel));
 }
 
-
 /// Gets the global logging level.
 int getLogLevel() {
   final p = calloc<ffi.Int>();
