@@ -255,12 +255,12 @@ ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
 // native types
-typedef U8 = ffi.UnsignedChar;
-typedef I8 = ffi.Char;
-typedef U16 = ffi.UnsignedShort;
-typedef I16 = ffi.Short;
+typedef U8 = ffi.Uint8;
+typedef I8 = ffi.Int8;
+typedef U16 = ffi.Uint16;
+typedef I16 = ffi.Int16;
 // typedef U32 = ffi.UnsignedInt;
-typedef I32 = ffi.Int;
+typedef I32 = ffi.Int32;
 typedef F32 = ffi.Float;
 typedef F64 = ffi.Double;
 

@@ -83,6 +83,7 @@ MatStep Mat_Step(Mat m);
 int Mat_Total(Mat m);
 VecI32 *Mat_Size(Mat m);
 int Mat_ElemSize(Mat m);
+int Mat_ElemSize1(Mat m);
 int Mat_Dims(Mat m);
 uchar *Mat_Data(Mat m);
 // CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length);

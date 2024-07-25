@@ -757,7 +757,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat at set perf', skip: true, () {
-    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_8UC3);
+    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_32SC3);
     final sw = Stopwatch();
 
     {
@@ -774,7 +774,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
 
     {
       var currentPix = 0;
-      mat.set<cv.Vec3b>(mat.rows - 1, mat.cols - 1, cv.Vec3b(241, 241, 241));
+      mat.set<cv.Vec3i>(mat.rows - 1, mat.cols - 1, cv.Vec3i(241, 241, 241));
       sw.reset();
       sw.start();
       mat.iterPixel((_, __, pix) => currentPix = pix[0].toInt());

@@ -238,6 +238,7 @@ VecI32 *Mat_Size(Mat m) {
   return new VecI32{ptr, static_cast<size_t>(size.dims())};
 }
 int Mat_ElemSize(Mat m) { return m.ptr->elemSize(); }
+int Mat_ElemSize1(Mat m) { return m.ptr->elemSize1(); }
 
 int Mat_Dims(Mat m) { return m.ptr->dims; }
 

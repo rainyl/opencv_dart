@@ -47,7 +47,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32F => VecF32.fromList(data.cast<double>()) as Vec,
       MatType.CV_64F => VecF64.fromList(data.cast<double>()) as Vec,
       MatType.CV_16F => VecF16.fromList(data.cast<double>()) as Vec,
-      _ => throw UnsupportedError("Mat.fromBytes for MatType $type unsupported"),
+      _ => throw UnsupportedError("Mat.fromBytes for MatType ${type.asString()} unsupported"),
     };
     // copy
     cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, xdata.asVoid(), p));
@@ -238,16 +238,16 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   int get elemSize => ccore.Mat_ElemSize(ref);
+  int get elemSize1 => ccore.Mat_ElemSize1(ref);
   int get dims => ccore.Mat_Dims(ref);
 
   /// Get  a view of native data, and will be GCed when the Mat is GCed.
-  Uint8List get data => dataPtr.$1.asTypedList(dataPtr.$2);
+  Uint8List get data => dataPtr.asTypedList(total * elemSize);
 
   /// Get the data pointer of the Mat
   ///
   /// DO NOT free the pointer, the native memory is managed by [Mat]
-  (ffi.Pointer<ffi.Uint8> ptr, int len) get dataPtr =>
-      (ccore.Mat_Data(ref).cast<ffi.Uint8>(), total * elemSize);
+  ffi.Pointer<U8> get dataPtr => ccore.Mat_Data(ref).cast<U8>();
 
   /// Mat.size
   VecI32 get size => VecI32.fromPointer(ccore.Mat_Size(ref));
@@ -272,36 +272,17 @@ class Mat extends CvStruct<cvg.Mat> {
   /// wrapper of cv::Mat::at()
   ///
   num atNum(int i0, int i1, [int? i2]) {
-    final pdata = dataPtr.$1;
-    final step = this.step;
-    final type = this.type;
-
-    if (i2 == null) {
-      // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L894
-      final pp = pdata + i0 * step.$1;
-      return switch (type.depth) {
-        MatType.CV_8U => (pp.cast<ffi.Uint8>() + i1).value,
-        MatType.CV_8S => (pp.cast<ffi.Int8>() + i1).value,
-        MatType.CV_16U => (pp.cast<ffi.Uint16>() + i1).value,
-        MatType.CV_16S => (pp.cast<ffi.Int16>() + i1).value,
-        MatType.CV_32S => (pp.cast<ffi.Int>() + i1).value,
-        MatType.CV_32F => (pp.cast<ffi.Float>() + i1).value,
-        MatType.CV_64F => (pp.cast<ffi.Double>() + i1).value,
-        MatType.CV_16F => float16((pp.cast<ffi.Uint16>() + i1).value),
-        _ => throw UnsupportedError("Unsupported type: $type")
-      };
-    }
     // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L968
     return switch (type.depth) {
-      MatType.CV_8U => ptrAt<ffi.Uint8>(i0, i1, i2).value,
-      MatType.CV_8S => ptrAt<ffi.Int8>(i0, i1, i2).value,
-      MatType.CV_16U => ptrAt<ffi.Uint16>(i0, i1, i2).value,
-      MatType.CV_16S => ptrAt<ffi.Int16>(i0, i1, i2).value,
-      MatType.CV_32S => ptrAt<ffi.Int>(i0, i1, i2).value,
-      MatType.CV_32F => ptrAt<ffi.Float>(i0, i1, i2).value,
-      MatType.CV_64F => ptrAt<ffi.Double>(i0, i1, i2).value,
-      MatType.CV_16F => float16(ptrAt<ffi.Uint16>(i0, i1, i2).value),
-      _ => throw UnsupportedError("Unsupported type: $type")
+      MatType.CV_8U => i2 == null ? (ptrAt<U8>(i0) + i1).value : ptrAt<U8>(i0, i1, i2).value,
+      MatType.CV_8S => i2 == null ? (ptrAt<I8>(i0) + i1).value : ptrAt<I8>(i0, i1, i2).value,
+      MatType.CV_16U => i2 == null ? (ptrAt<U16>(i0) + i1).value : ptrAt<U16>(i0, i1, i2).value,
+      MatType.CV_16S => i2 == null ? (ptrAt<I16>(i0) + i1).value : ptrAt<I16>(i0, i1, i2).value,
+      MatType.CV_32S => i2 == null ? (ptrAt<I32>(i0) + i1).value : ptrAt<I32>(i0, i1, i2).value,
+      MatType.CV_32F => i2 == null ? (ptrAt<F32>(i0) + i1).value : ptrAt<F32>(i0, i1, i2).value,
+      MatType.CV_64F => i2 == null ? (ptrAt<F64>(i0) + i1).value : ptrAt<F64>(i0, i1, i2).value,
+      MatType.CV_16F => float16(i2 == null ? (ptrAt<U16>(i0) + i1).value : ptrAt<U16>(i0, i1, i2).value),
+      _ => throw UnsupportedError("Unsupported type: ${type.asString()}")
     };
   }
 
@@ -312,27 +293,26 @@ class Mat extends CvStruct<cvg.Mat> {
     assert(0 <= row && row < rows, "row must be less than $rows");
     assert(0 <= col && col < cols, "col must be less than $cols");
 
-    final p = ptrAt<ffi.Uint8>(row, col);
     switch (type.depth) {
       case MatType.CV_8U:
-        return p.cast<ffi.Uint8>().asTypedList(channels);
+        return ptrAt<U8>(row, col).asTypedList(channels);
       case MatType.CV_8S:
-        return p.cast<ffi.Int8>().asTypedList(channels);
+        return ptrAt<I8>(row, col).asTypedList(channels);
       case MatType.CV_16U:
-        return p.cast<ffi.Uint16>().asTypedList(channels);
+        return ptrAt<U16>(row, col).asTypedList(channels);
       case MatType.CV_16S:
-        return p.cast<ffi.Int16>().asTypedList(channels);
+        return ptrAt<I16>(row, col).asTypedList(channels);
       case MatType.CV_32S:
-        return p.cast<ffi.Int32>().asTypedList(channels);
+        return ptrAt<I32>(row, col).asTypedList(channels);
       case MatType.CV_32F:
-        return p.cast<ffi.Float>().asTypedList(channels);
+        return ptrAt<F32>(row, col).asTypedList(channels);
       case MatType.CV_64F:
-        return p.cast<ffi.Double>().asTypedList(channels);
+        return ptrAt<F64>(row, col).asTypedList(channels);
       // TODO: support CV_16F
       // case MatType.CV_16F:
-      //   return p.cast<ffi.Uint16>().asTypedList(channels).map(float16).toList(growable: false);
+      //   return ptrAt<U16>(row, col).asTypedList(channels).map(float16).toList(growable: false);
       case _:
-        throw UnsupportedError("Unsupported type: $type");
+        throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
   }
 
@@ -437,7 +417,7 @@ class Mat extends CvStruct<cvg.Mat> {
       cvRun(() => ccore.Mat_GetVec6d(ref, row, col, p));
       return Vec6d.fromPointer(p) as T;
     } else {
-      throw UnsupportedError("at<$T>() for $type is not supported!");
+      throw UnsupportedError("at<$T>() for ${type.asString()} is not supported!");
     }
   }
 
@@ -517,51 +497,36 @@ class Mat extends CvStruct<cvg.Mat> {
       case Vec6d():
         cvRun(() => ccore.Mat_SetVec6d(ref, row, col, val.ref));
       default:
-        throw UnsupportedError("setVec<$T>() for $type is not supported!");
+        throw UnsupportedError("setVec<$T>() for ${type.asString()} is not supported!");
     }
   }
 
   void setNum(int i0, int i1, num val, [int? i2]) {
-    final pdata = dataPtr.$1;
-    final step = this.step;
-    final type = this.type;
-
-    final pp = pdata + i0 * step.$1;
     switch (type.depth) {
       case MatType.CV_8U:
-        i2 == null
-            ? (pp.cast<ffi.Uint8>() + i1).value = val.toInt()
-            : ptrAt<ffi.Uint8>(i0, i1, i2).value = val.toInt();
+        i2 == null ? (ptrAt<U8>(i0) + i1).value = val.toInt() : ptrAt<U8>(i0, i1, i2).value = val.toInt();
       case MatType.CV_8S:
-        i2 == null
-            ? (pp.cast<ffi.Int8>() + i1).value = val.toInt()
-            : ptrAt<ffi.Int8>(i0, i1, i2).value = val.toInt();
+        i2 == null ? (ptrAt<I8>(i0) + i1).value = val.toInt() : ptrAt<I8>(i0, i1, i2).value = val.toInt();
       case MatType.CV_16U:
-        i2 == null
-            ? (pp.cast<ffi.Uint16>() + i1).value = val.toInt()
-            : ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toInt();
+        i2 == null ? (ptrAt<U16>(i0) + i1).value = val.toInt() : ptrAt<U16>(i0, i1, i2).value = val.toInt();
       case MatType.CV_16S:
-        i2 == null
-            ? (pp.cast<ffi.Int16>() + i1).value = val.toInt()
-            : ptrAt<ffi.Int16>(i0, i1, i2).value = val.toInt();
+        i2 == null ? (ptrAt<I16>(i0) + i1).value = val.toInt() : ptrAt<I16>(i0, i1, i2).value = val.toInt();
       case MatType.CV_32S:
-        i2 == null
-            ? (pp.cast<ffi.Int>() + i1).value = val.toInt()
-            : ptrAt<ffi.Int>(i0, i1, i2).value = val.toInt();
+        i2 == null ? (ptrAt<I32>(i0) + i1).value = val.toInt() : ptrAt<I32>(i0, i1, i2).value = val.toInt();
       case MatType.CV_32F:
         i2 == null
-            ? (pp.cast<ffi.Float>() + i1).value = val.toDouble()
-            : ptrAt<ffi.Float>(i0, i1, i2).value = val.toDouble();
+            ? (ptrAt<F32>(i0) + i1).value = val.toDouble()
+            : ptrAt<F32>(i0, i1, i2).value = val.toDouble();
       case MatType.CV_64F:
         i2 == null
-            ? (pp.cast<ffi.Double>() + i1).value = val.toDouble()
-            : ptrAt<ffi.Double>(i0, i1, i2).value = val.toDouble();
+            ? (ptrAt<F64>(i0) + i1).value = val.toDouble()
+            : ptrAt<F64>(i0, i1, i2).value = val.toDouble();
       case MatType.CV_16F:
         i2 == null
-            ? (pp.cast<ffi.Uint16>() + i1).value = val.toDouble().fp16
-            : ptrAt<ffi.Uint16>(i0, i1, i2).value = val.toDouble().fp16;
+            ? (ptrAt<U16>(i0) + i1).value = val.toDouble().fp16
+            : ptrAt<U16>(i0, i1, i2).value = val.toDouble().fp16;
       case _:
-        throw UnsupportedError("Unsupported type: $type");
+        throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
   }
 
@@ -617,10 +582,9 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
   ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
-    final pdata = dataPtr.$1;
     final step = this.step;
 
-    ffi.Pointer<ffi.Uint8> pp = pdata + i0 * step.$1;
+    ffi.Pointer<U8> pp = dataPtr + i0 * step.$1;
     if (i1 != null) {
       pp += i1 * step.$2;
       if (i2 != null) pp += i2 * step.$3;
@@ -628,28 +592,28 @@ class Mat extends CvStruct<cvg.Mat> {
     return pp.cast<T>();
   }
 
-  List<num> _ptrAsTypedList(ffi.Pointer<ffi.Uint8> p, int count, int depth) {
+  List<num> _ptrAsTypedList(ffi.Pointer<U8> p, int count, int depth) {
     switch (depth) {
       case MatType.CV_8U:
-        return p.cast<ffi.Uint8>().asTypedList(count);
+        return p.cast<U8>().asTypedList(count);
       case MatType.CV_8S:
-        return p.cast<ffi.Int8>().asTypedList(count);
+        return p.cast<I8>().asTypedList(count);
       case MatType.CV_16U:
-        return p.cast<ffi.Uint16>().asTypedList(count);
+        return p.cast<U16>().asTypedList(count);
       case MatType.CV_16S:
-        return p.cast<ffi.Int16>().asTypedList(count);
+        return p.cast<I16>().asTypedList(count);
       case MatType.CV_32S:
-        return p.cast<ffi.Int32>().asTypedList(count);
+        return p.cast<I32>().asTypedList(count);
       case MatType.CV_32F:
-        return p.cast<ffi.Float>().asTypedList(count);
+        return p.cast<F32>().asTypedList(count);
       case MatType.CV_64F:
-        return p.cast<ffi.Double>().asTypedList(count);
+        return p.cast<F64>().asTypedList(count);
       // TODO: for now, dart has no `Float16` type, so this will create a new list, which
       // is different from the above
       // case MatType.CV_16F:
-      //   callback(pp.cast<ffi.Uint16>().asTypedList(count).map(float16).toList(growable: false));
+      //   callback(pp.cast<U16>().asTypedList(count).map(float16).toList(growable: false));
       case _:
-        throw UnsupportedError("Unsupported type: $type");
+        throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
   }
 
@@ -670,12 +634,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   void iterPixel(void Function(int row, int col, List<num> pixel) callback) {
     // cache necessary props, they will be only get once
-    final depth = type.depth;
-    final pdata = dataPtr.$1;
-    final step = this.step;
-    final channels = this.channels;
-    final rows = this.rows;
-    final cols = this.cols;
+    final depth = type.depth, pdata = dataPtr, step = this.step, channels = this.channels;
+    final rows = this.rows, cols = this.cols;
 
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
@@ -692,12 +652,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// in the Mat will be changed too.
   void iterRow(void Function(int row, List<num> values) callback) {
     // cache necessary props, they will be only get once
-    final depth = type.depth;
-    final pdata = dataPtr.$1;
-    final step = this.step;
-    final channels = this.channels;
-    final rows = this.rows;
-    final cols = this.cols;
+    final depth = type.depth, pdata = dataPtr, step = this.step, channels = this.channels;
+    final rows = this.rows, cols = this.cols;
 
     for (int row = 0; row < rows; row++) {
       final pp = pdata + row * step.$1;
@@ -725,7 +681,7 @@ class Mat extends CvStruct<cvg.Mat> {
         case MatType.CV_64F:
           return addF64(val as double, inplace: inplace);
         default:
-          throw UnsupportedError("add float to $type is not supported!");
+          throw UnsupportedError("add float to ${type.asString()} is not supported!");
       }
     } else if (T == int) {
       switch (type.depth) {
@@ -744,7 +700,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat addMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "$type != ${other.type}");
+    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => ccore.Mat_Add(ref, other.ref, ref));
       return this;
@@ -830,7 +786,7 @@ class Mat extends CvStruct<cvg.Mat> {
         case MatType.CV_64F:
           return subtractF64(val as double, inplace: inplace);
         default:
-          throw UnsupportedError("subtract float to $type is not supported!");
+          throw UnsupportedError("subtract float to ${type.asString()} is not supported!");
       }
     } else if (T == int) {
       switch (type.depth) {
@@ -849,7 +805,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat subtractMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "$type != ${other.type}");
+    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => ccore.Mat_Subtract(ref, other.ref, ref));
       return this;
@@ -934,7 +890,7 @@ class Mat extends CvStruct<cvg.Mat> {
         case MatType.CV_64F:
           return multiplyF64(val as double, inplace: inplace);
         default:
-          throw UnsupportedError("multiply float to $type is not supported!");
+          throw UnsupportedError("multiply float to ${type.asString()} is not supported!");
       }
     } else if (T == int) {
       switch (type.depth) {
@@ -953,7 +909,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat multiplyMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "$type != ${other.type}");
+    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => ccore.Mat_Multiply(ref, other.ref, ref));
       return this;
@@ -1038,7 +994,7 @@ class Mat extends CvStruct<cvg.Mat> {
         case MatType.CV_64F:
           return divideF64(val as double, inplace: inplace);
         default:
-          throw UnsupportedError("divide float to $type is not supported!");
+          throw UnsupportedError("divide float to ${type.asString()} is not supported!");
       }
     } else if (T == int) {
       switch (type.depth) {
@@ -1057,7 +1013,7 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat divideMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "$type != ${other.type}");
+    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => ccore.Mat_Divide(ref, other.ref, ref));
       return this;
@@ -1258,7 +1214,11 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// This Method converts single-channel Mat to 2D List
-  List<List<num>> toList() => List.generate(rows, (row) => List.generate(cols, (col) => atNum(row, col)));
+  List<List<num>> toList() {
+    final ret = <List<num>>[];
+    iterRow((r, v) => ret.add(v));
+    return ret;
+  }
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
   /// The list is ordered as [row][col][channels].
@@ -1273,10 +1233,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   List<List<List<num>>> toList3D() {
     cvAssert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
-    return List.generate(
-      rows,
-      (row) => List.generate(cols, (col) => atPixel(row, col)),
-    );
+    final rows = this.rows, cols = this.cols;
+    return List.generate(rows, (r) => List.generate(cols, (c) => atPixel(r, c)));
   }
 
   String toFmtString({

@@ -1205,6 +1205,18 @@ class CvNativeCore {
       _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_ElemSize');
   late final _Mat_ElemSize = _Mat_ElemSizePtr.asFunction<int Function(Mat)>();
 
+  int Mat_ElemSize1(
+    Mat m,
+  ) {
+    return _Mat_ElemSize1(
+      m,
+    );
+  }
+
+  late final _Mat_ElemSize1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_ElemSize1');
+  late final _Mat_ElemSize1 = _Mat_ElemSize1Ptr.asFunction<int Function(Mat)>();
+
   bool Mat_Empty(
     Mat m,
   ) {
