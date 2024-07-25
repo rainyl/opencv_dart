@@ -34,8 +34,7 @@ void setLogLevel(int logLevel) {
 
 /// Sets the global logging level asynchronously.
 Future<void> setLogLevelAsync(int logLevel) {
-  return cvRunAsync0(
-      (callback) => ccore.setLogLevel_Async(logLevel, callback), voidCompleter);
+  return cvRunAsync0((callback) => ccore.setLogLevel_Async(logLevel, callback), voidCompleter);
 }
 
 /// Gets the global logging level.
@@ -49,8 +48,7 @@ int getLogLevel() {
 
 /// Gets the global logging level asynchronously.
 Future<int> getLogLevelAsync() {
-  return cvRunAsync((callback) => ccore.getLogLevel_Async(callback),
-      (completer, p) {
+  return cvRunAsync((callback) => ccore.getLogLevel_Async(callback), (completer, p) {
     final level = p.cast<ffi.Int>().value;
     calloc.free(p);
     completer.complete(level);
@@ -68,9 +66,7 @@ void setLogTagLevel(String tag, int logLevel) {
 Future<void> setLogTagLevelAsync(String tag, int logLevel) {
   final tagPtr = tag.toNativeUtf8();
   return cvRunAsync0(
-      (callback) =>
-          ccore.setLogTagLevel_Async(tagPtr.cast(), logLevel, callback),
-      voidCompleter);
+      (callback) => ccore.setLogTagLevel_Async(tagPtr.cast(), logLevel, callback), voidCompleter);
 }
 
 /// Gets the logging level for a specific tag.
@@ -87,9 +83,7 @@ int getLogTagLevel(String tag) {
 /// Gets the logging level for a specific tag asynchronously.
 Future<int> getLogTagLevelAsync(String tag) {
   final tagPtr = tag.toNativeUtf8();
-  return cvRunAsync(
-      (callback) => ccore.getLogTagLevel_Async(tagPtr.cast(), callback),
-      (completer, p) {
+  return cvRunAsync((callback) => ccore.getLogTagLevel_Async(tagPtr.cast(), callback), (completer, p) {
     final level = p.cast<ffi.Int>().value;
     calloc.free(p);
     calloc.free(tagPtr);
@@ -182,8 +176,7 @@ Mat bitwiseAND(
   if (mask == null) {
     cvRun(() => ccore.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() =>
-        ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -217,8 +210,7 @@ Mat bitwiseOR(
   if (mask == null) {
     cvRun(() => ccore.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() =>
-        ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -238,8 +230,7 @@ Mat bitwiseXOR(
   if (mask == null) {
     cvRun(() => ccore.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
   } else {
-    cvRun(() =>
-        ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+    cvRun(() => ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   }
   return dst;
 }
@@ -505,8 +496,7 @@ Mat divide(
   eigenvectors ??= Mat.empty();
   final ret = cvRunArena<bool>((arena) {
     final p = arena<ffi.Bool>();
-    cvRun(
-        () => ccore.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
+    cvRun(() => ccore.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
     return p.value;
   });
   return (ret, eigenvalues, eigenvectors);
@@ -523,8 +513,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  cvRun(() => ccore.Mat_EigenNonSymmetric(
-      src.ref, eigenvalues!.ref, eigenvectors!.ref));
+  cvRun(() => ccore.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
   return (eigenvalues, eigenvectors);
 }
 
@@ -546,8 +535,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  ccore.Mat_PCACompute(
-      data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
+  ccore.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
   return (mean, eigenvalues, eigenvectors);
 }
 
@@ -605,8 +593,7 @@ Mat gemm(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Gemm(
-      src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
+  cvRun(() => ccore.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
   return dst;
 }
 
@@ -708,8 +695,7 @@ Mat inRangebyScalar(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() =>
-      ccore.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => ccore.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
   return dst;
 }
 
@@ -873,8 +859,7 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   final stddev = calloc<cvg.Scalar>();
   mask == null
       ? cvRun(() => ccore.Mat_MeanStdDev(src.ref, mean, stddev))
-      : cvRun(
-          () => ccore.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
+      : cvRun(() => ccore.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
   return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
 }
 
@@ -911,8 +896,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
     final maxValP = arena<ffi.Double>();
     final minIdxP = arena<ffi.Int>();
     final maxIdxP = arena<ffi.Int>();
-    cvRun(
-        () => ccore.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
+    cvRun(() => ccore.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
     return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
   });
 }
@@ -921,22 +905,14 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
-(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(
-    InputArray src,
-    {InputArray? mask}) {
+(double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
   return using<(double, double, Point, Point)>((arena) {
     final minValP = arena<ffi.Double>();
     final maxValP = arena<ffi.Double>();
     final minLocP = calloc<cvg.Point>();
     final maxLocP = calloc<cvg.Point>();
-    cvRun(
-        () => ccore.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
-    return (
-      minValP.value,
-      maxValP.value,
-      Point.fromPointer(minLocP),
-      Point.fromPointer(maxLocP)
-    );
+    cvRun(() => ccore.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
+    return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
   });
 }
 
@@ -978,8 +954,7 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() =>
-      ccore.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -1099,8 +1074,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
-Mat reduce(InputArray src, int dim, int rtype,
-    {OutputArray? dst, int dtype = -1}) {
+Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
   dst ??= Mat.empty();
   cvRun(() => ccore.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
   return dst;
@@ -1110,8 +1084,7 @@ Mat reduce(InputArray src, int dim, int rtype,
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
-Mat reduceArgMax(InputArray src, int axis,
-    {OutputArray? dst, bool lastIndex = false}) {
+Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
   cvRun(() => ccore.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
   return dst;
@@ -1121,8 +1094,7 @@ Mat reduceArgMax(InputArray src, int axis,
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
-Mat reduceArgMin(InputArray src, int axis,
-    {OutputArray? dst, bool lastIndex = false}) {
+Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
   cvRun(() => ccore.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
   return dst;
@@ -1142,8 +1114,7 @@ Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
-Mat scaleAdd(InputArray src1, double alpha, InputArray src2,
-    {OutputArray? dst}) {
+Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
   cvRun(() => ccore.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
   return dst;
@@ -1262,8 +1233,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 }) {
   x ??= Mat.empty();
   y ??= Mat.empty();
-  cvRun(() => ccore.Mat_PolarToCart(
-      magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
+  cvRun(() => ccore.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
   return (x, y);
 }
 
@@ -1271,8 +1241,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
-Mat phase(InputArray x, InputArray y,
-    {OutputArray? angle, bool angleInDegrees = false}) {
+Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
   angle ??= Mat.empty();
   cvRun(() => ccore.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
   return angle;
