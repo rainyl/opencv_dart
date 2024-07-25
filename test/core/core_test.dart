@@ -18,7 +18,6 @@ void main() async {
     expect(level, equals(cv.LOG_LEVEL_WARNING));
   });
 
-
   test('openCvVersion', () async {
     {
       final version = cv.openCvVersion();

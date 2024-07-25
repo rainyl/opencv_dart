@@ -41,7 +41,6 @@ int getLogLevel() {
   return level;
 }
 
-
 /// get version
 String openCvVersion() {
   final p = calloc<ffi.Pointer<ffi.Char>>();
