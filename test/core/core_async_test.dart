@@ -4,41 +4,6 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
-  test('setLogLevelAsync', () async {
-    await cv.setLogLevelAsync(cv.LOG_LEVEL_INFO);
-    final level = await cv.getLogLevelAsync();
-    print('Current log level: $level');
-    expect(level, equals(cv.LOG_LEVEL_INFO));
-  });
-  test('getLogLevelAsync', () async {
-    await cv.setLogLevelAsync(cv.LOG_LEVEL_ERROR);
-    final level = await cv.getLogLevelAsync();
-    print('Current log level: $level');
-    expect(level, equals(cv.LOG_LEVEL_ERROR));
-  });
-  test('setLogTagLevelAsync', () async {
-    final tag = 'ASYNC_TAG';
-    await cv.setLogTagLevelAsync(tag, cv.LOG_LEVEL_INFO);
-    final level = await cv.getLogTagLevelAsync(tag);
-    print('Current log level for $tag: $level');
-    expect(level, equals(cv.LOG_LEVEL_INFO));
-  });
-  test('getLogTagLevelAsync', () async {
-    final tag = 'ASYNC_TAG';
-    await cv.setLogTagLevelAsync(tag, cv.LOG_LEVEL_ERROR);
-    final level = await cv.getLogTagLevelAsync(tag);
-    print('Current log level for $tag: $level');
-    expect(level, equals(cv.LOG_LEVEL_ERROR));
-  });
-  test('openCvVersionAsync', () async {
-    final version = await cv.openCvVersionAsync();
-    expect(version.length, greaterThan(0));
-  });
-
-  test('cv.getBuildInformationAsync', () async {
-    final info = await cv.getBuildInformationAsync();
-    expect(info.length, greaterThan(0));
-  });
 
   test('cv.absDiffAsync', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);

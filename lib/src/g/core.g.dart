@@ -8343,21 +8343,6 @@ class CvNativeCore {
   late final _getLogLevel = _getLogLevelPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>();
 
-  ffi.Pointer<CvStatus> getLogLevel_Async(
-    imp1.CvCallback_1 callback,
-  ) {
-    return _getLogLevel_Async(
-      callback,
-    );
-  }
-
-  late final _getLogLevel_AsyncPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
-      'getLogLevel_Async');
-  late final _getLogLevel_Async = _getLogLevel_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
-
   ffi.Pointer<CvStatus> getLogTagLevel(
     ffi.Pointer<ffi.Char> tag,
     ffi.Pointer<ffi.Int> logLevel,
@@ -8375,24 +8360,6 @@ class CvNativeCore {
   late final _getLogTagLevel = _getLogTagLevelPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>();
-
-  ffi.Pointer<CvStatus> getLogTagLevel_Async(
-    ffi.Pointer<ffi.Char> tag,
-    imp1.CvCallback_1 callback,
-  ) {
-    return _getLogTagLevel_Async(
-      tag,
-      callback,
-    );
-  }
-
-  late final _getLogTagLevel_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
-              imp1.CvCallback_1)>>('getLogTagLevel_Async');
-  late final _getLogTagLevel_Async = _getLogTagLevel_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
@@ -8452,23 +8419,6 @@ class CvNativeCore {
   late final _setLogLevel =
       _setLogLevelPtr.asFunction<ffi.Pointer<CvStatus> Function(int)>();
 
-  ffi.Pointer<CvStatus> setLogLevel_Async(
-    int logLevel,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _setLogLevel_Async(
-      logLevel,
-      callback,
-    );
-  }
-
-  late final _setLogLevel_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Int, imp1.CvCallback_0)>>('setLogLevel_Async');
-  late final _setLogLevel_Async = _setLogLevel_AsyncPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(int, imp1.CvCallback_0)>();
-
   ffi.Pointer<CvStatus> setLogTagLevel(
     ffi.Pointer<ffi.Char> tag,
     int logLevel,
@@ -8485,26 +8435,6 @@ class CvNativeCore {
               ffi.Pointer<ffi.Char>, ffi.Int)>>('setLogTagLevel');
   late final _setLogTagLevel = _setLogTagLevelPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int)>();
-
-  ffi.Pointer<CvStatus> setLogTagLevel_Async(
-    ffi.Pointer<ffi.Char> tag,
-    int logLevel,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _setLogTagLevel_Async(
-      tag,
-      logLevel,
-      callback,
-    );
-  }
-
-  late final _setLogTagLevel_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
-              imp1.CvCallback_0)>>('setLogTagLevel_Async');
-  late final _setLogTagLevel_Async = _setLogTagLevel_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, int, imp1.CvCallback_0)>();
 
   late final addresses = _SymbolAddresses(this);
 }

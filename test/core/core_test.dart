@@ -27,7 +27,7 @@ void main() async {
   });
 
   test('getLogTagLevel', () {
-    final tag = 'TEST_TAG';
+    final tag = 'TEST_TAG_2';
     cv.setLogTagLevel(tag, cv.LOG_LEVEL_WARNING);
     final level = cv.getLogTagLevel(tag);
     print('Current log level for $tag: $level');

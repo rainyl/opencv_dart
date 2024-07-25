@@ -32,10 +32,6 @@ void setLogLevel(int logLevel) {
   cvRun(() => ccore.setLogLevel(logLevel));
 }
 
-/// Sets the global logging level asynchronously.
-Future<void> setLogLevelAsync(int logLevel) {
-  return cvRunAsync0((callback) => ccore.setLogLevel_Async(logLevel, callback), voidCompleter);
-}
 
 /// Gets the global logging level.
 int getLogLevel() {
@@ -46,27 +42,11 @@ int getLogLevel() {
   return level;
 }
 
-/// Gets the global logging level asynchronously.
-Future<int> getLogLevelAsync() {
-  return cvRunAsync((callback) => ccore.getLogLevel_Async(callback), (completer, p) {
-    final level = p.cast<ffi.Int>().value;
-    calloc.free(p);
-    completer.complete(level);
-  });
-}
-
 /// Sets the logging level for a specific tag.
 void setLogTagLevel(String tag, int logLevel) {
   final tagPtr = tag.toNativeUtf8();
   cvRun(() => ccore.setLogTagLevel(tagPtr.cast(), logLevel));
   calloc.free(tagPtr);
-}
-
-/// Sets the logging level for a specific tag asynchronously.
-Future<void> setLogTagLevelAsync(String tag, int logLevel) {
-  final tagPtr = tag.toNativeUtf8();
-  return cvRunAsync0(
-      (callback) => ccore.setLogTagLevel_Async(tagPtr.cast(), logLevel, callback), voidCompleter);
 }
 
 /// Gets the logging level for a specific tag.
@@ -78,17 +58,6 @@ int getLogTagLevel(String tag) {
   calloc.free(p);
   calloc.free(tagPtr);
   return level;
-}
-
-/// Gets the logging level for a specific tag asynchronously.
-Future<int> getLogTagLevelAsync(String tag) {
-  final tagPtr = tag.toNativeUtf8();
-  return cvRunAsync((callback) => ccore.getLogTagLevel_Async(tagPtr.cast(), callback), (completer, p) {
-    final level = p.cast<ffi.Int>().value;
-    calloc.free(p);
-    calloc.free(tagPtr);
-    completer.complete(level);
-  });
 }
 
 /// get version
