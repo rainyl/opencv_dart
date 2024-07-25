@@ -157,6 +157,28 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     });
   });
 
+  test('Mat.atPixel', () {
+    const int rows = 3;
+    const int cols = 3;
+    const int channels = 3;
+    final data = List.generate(rows * cols * channels, (i) => i);
+    for (final depth in [0, 1, 2, 3, 4]) {
+      final mat = cv.Mat.fromList(rows, cols, cv.MatType.makeType(depth, channels), data);
+      expect(mat.atPixel(0, 0), data.sublist(0, 3));
+      expect(mat.atPixel(2, 2), data.sublist(data.length - 3, data.length));
+    }
+    for (final depth in [5, 6]) {
+      final mat = cv.Mat.fromList(
+        rows,
+        cols,
+        cv.MatType.makeType(depth, channels),
+        data.map((e) => e.toDouble()).toList(),
+      );
+      expect(mat.atPixel(0, 0), data.sublist(0, 3));
+      expect(mat.atPixel(2, 2), data.sublist(data.length - 3, data.length));
+    }
+  });
+
   test('Mat operations Add', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(128);
     final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));

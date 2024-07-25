@@ -271,7 +271,6 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// wrapper of cv::Mat::at()
   ///
-  /// enable cache to improve performance
   num atNum(int i0, int i1, [int? i2]) {
     final pdata = dataPtr.$1;
     final step = this.step;
@@ -306,7 +305,7 @@ class Mat extends CvStruct<cvg.Mat> {
     };
   }
 
-  /// Get pixel value via [row], [col]
+  /// Get pixel value via [row], [col], returns a view of native data
   ///
   /// Note: No bound check under **release** mode
   List<num> atPixel(int row, int col) {
@@ -626,16 +625,7 @@ class Mat extends CvStruct<cvg.Mat> {
       pp += i1 * step.$2;
       if (i2 != null) pp += i2 * step.$3;
     }
-
-    // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L789
-    if (T == ffi.Uint8 || T == U8) return pp as ffi.Pointer<T>;
-    if (T == ffi.Int8 || T == I8) return pp.cast<ffi.Int8>() as ffi.Pointer<T>;
-    if (T == ffi.Uint16 || T == U16) return pp.cast<ffi.Uint16>() as ffi.Pointer<T>;
-    if (T == ffi.Int16 || T == I16) return pp.cast<ffi.Int16>() as ffi.Pointer<T>;
-    if (T == ffi.Int || T == I32) return pp.cast<ffi.Int>() as ffi.Pointer<T>;
-    if (T == ffi.Float || T == F32) return pp.cast<ffi.Float>() as ffi.Pointer<T>;
-    if (T == ffi.Double || T == F64) return pp.cast<ffi.Double>() as ffi.Pointer<T>;
-    throw UnsupportedError("ptr<$T>() is not supported!");
+    return pp.cast<T>();
   }
 
   List<num> _ptrAsTypedList(ffi.Pointer<ffi.Uint8> p, int count, int depth) {
