@@ -30,4 +30,11 @@ void main() {
     rng.fill(mat, cv.RNG_DIST_NORMAL, 0, 10, inplace: true);
     expect(mat.at<double>(0, 0) != 0, true);
   });
+
+  test("cv.RNG.fillAsync", () async {
+    final rng = cv.Rng.fromSeed(241);
+    final mat = cv.Mat.zeros(241, 241, cv.MatType.CV_32FC3);
+    await rng.fillAsync(mat, cv.RNG_DIST_NORMAL, 0, 10, inplace: true);
+    expect(mat.at<double>(0, 0) != 0, true);
+  });
 }
