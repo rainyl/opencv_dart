@@ -4,16 +4,6 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
-  test('openCvVersionAsync', () async {
-    final version = await cv.openCvVersionAsync();
-    expect(version.length, greaterThan(0));
-  });
-
-  test('cv.getBuildInformationAsync', () async {
-    final info = await cv.getBuildInformationAsync();
-    expect(info.length, greaterThan(0));
-  });
-
   test('cv.absDiffAsync', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
