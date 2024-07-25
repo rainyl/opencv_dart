@@ -741,12 +741,12 @@ void main() async {
       cv.Point2f(51.51214828037607, -0.1042212249954444),
     ];
     for (var i = 0; i < srcPts.length; i++) {
-      src.setF64(i, 0, srcPts[i].x);
-      src.setF64(i, 1, srcPts[i].y);
+      src.set<double>(i, 0, srcPts[i].x);
+      src.set<double>(i, 1, srcPts[i].y);
     }
     for (var i = 0; i < dstPts.length; i++) {
-      dst.setF64(i, 0, dstPts[i].x);
-      dst.setF64(i, 1, dstPts[i].y);
+      dst.set<double>(i, 0, dstPts[i].x);
+      dst.set<double>(i, 1, dstPts[i].y);
     }
 
     final (m, _) = await cv.findHomographyAsync(
@@ -768,8 +768,8 @@ void main() async {
     // flip horizontally
     for (var i = 0; i < mapX.rows; i++) {
       for (var j = 0; j < mapX.cols; j++) {
-        mapX.setF32(i, j, (mapX.cols - j).toDouble());
-        mapY.setF32(i, j, i.toDouble());
+        mapX.set<double>(i, j, (mapX.cols - j).toDouble());
+        mapY.set<double>(i, j, i.toDouble());
       }
     }
     final dst = await cv.remapAsync(src, mapX, mapY, cv.INTER_LINEAR, borderValue: cv.Scalar.black);

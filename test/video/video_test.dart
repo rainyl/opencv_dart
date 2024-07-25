@@ -68,7 +68,7 @@ void main() async {
     final testImg = cv.resize(img, (216, 216));
     final translationGround = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
     translationGround.set<double>(0, 2, 11.4159);
-    translationGround.setF32(1, 2, 17.1828);
+    translationGround.set<double>(1, 2, 17.1828);
 
     final wrappedImage = cv.warpAffine(
       testImg,

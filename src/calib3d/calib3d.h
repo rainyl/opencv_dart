@@ -20,13 +20,13 @@ extern "C" {
 #include <stddef.h>
 // Calib
 CvStatus *Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d);
-CvStatus *Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size);
+CvStatus *Fisheye_UndistortImageWithParams(Mat distorted, Mat *undistorted, Mat k, Mat d, Mat knew, Size size);
 CvStatus *Fisheye_UndistortPoints(Mat distorted, Mat undistorted, Mat k, Mat d, Mat R, Mat P);
 CvStatus *Fisheye_EstimateNewCameraMatrixForUndistortRectify(Mat k, Mat d, Size imgSize, Mat r, Mat p,
                                                              double balance, Size newSize, double fovScale);
 
 CvStatus *InitUndistortRectifyMap(Mat cameraMatrix, Mat distCoeffs, Mat r, Mat newCameraMatrix, Size size,
-                                  int m1type, Mat map1, Mat map2);
+                                  int m1type, Mat *map1, Mat *map2);
 CvStatus *GetOptimalNewCameraMatrixWithParams(Mat cameraMatrix, Mat distCoeffs, Size size, double alpha,
                                               Size newImgSize, Rect *validPixROI, bool centerPrincipalPoint,
                                               Mat *rval);

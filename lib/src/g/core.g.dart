@@ -580,22 +580,17 @@ class CvNativeCore {
   late final _Mat_CartToPolar = _Mat_CartToPolarPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, bool)>();
 
-  ffi.Pointer<CvStatus> Mat_Channels(
+  int Mat_Channels(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Channels(
       m,
-      rval,
     );
   }
 
-  late final _Mat_ChannelsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Channels');
-  late final _Mat_Channels = _Mat_ChannelsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_ChannelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Channels');
+  late final _Mat_Channels = _Mat_ChannelsPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_CheckRange(
     Mat m,
@@ -688,22 +683,17 @@ class CvNativeCore {
   late final _Mat_CloseVoid =
       _Mat_CloseVoidPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
-  ffi.Pointer<CvStatus> Mat_Cols(
+  int Mat_Cols(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Cols(
       m,
-      rval,
     );
   }
 
-  late final _Mat_ColsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Cols');
-  late final _Mat_Cols = _Mat_ColsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_ColsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Cols');
+  late final _Mat_Cols = _Mat_ColsPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Compare(
     Mat src1,
@@ -1023,44 +1013,19 @@ class CvNativeCore {
   late final _Mat_DFT =
       _Mat_DFTPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int)>();
 
-  ffi.Pointer<CvStatus> Mat_Data(
+  ffi.Pointer<imp1.uchar> Mat_Data(
     Mat m,
-    ffi.Pointer<VecUChar> rval,
   ) {
     return _Mat_Data(
       m,
-      rval,
     );
   }
 
-  late final _Mat_DataPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecUChar>)>>('Mat_Data');
-  late final _Mat_Data = _Mat_DataPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecUChar>)>();
-
-  ffi.Pointer<CvStatus> Mat_DataPtr(
-    Mat m,
-    ffi.Pointer<ffi.Pointer<imp1.uchar>> data,
-    ffi.Pointer<ffi.Int> length,
-  ) {
-    return _Mat_DataPtr1(
-      m,
-      data,
-      length,
-    );
-  }
-
-  late final _Mat_DataPtrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              ffi.Pointer<ffi.Pointer<imp1.uchar>>,
-              ffi.Pointer<ffi.Int>)>>('Mat_DataPtr');
-  late final _Mat_DataPtr1 = _Mat_DataPtrPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, ffi.Pointer<ffi.Pointer<imp1.uchar>>, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_DataPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<imp1.uchar> Function(Mat)>>(
+          'Mat_Data');
+  late final _Mat_Data =
+      _Mat_DataPtr.asFunction<ffi.Pointer<imp1.uchar> Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Determinant(
     Mat m,
@@ -1078,6 +1043,18 @@ class CvNativeCore {
               Mat, ffi.Pointer<ffi.Double>)>>('Mat_Determinant');
   late final _Mat_Determinant = _Mat_DeterminantPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Double>)>();
+
+  int Mat_Dims(
+    Mat m,
+  ) {
+    return _Mat_Dims(
+      m,
+    );
+  }
+
+  late final _Mat_DimsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Dims');
+  late final _Mat_Dims = _Mat_DimsPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Divide(
     Mat src1,
@@ -1216,39 +1193,41 @@ class CvNativeCore {
   late final _Mat_EigenNonSymmetric = _Mat_EigenNonSymmetricPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>();
 
-  ffi.Pointer<CvStatus> Mat_ElemSize(
+  int Mat_ElemSize(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_ElemSize(
       m,
-      rval,
     );
   }
 
-  late final _Mat_ElemSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_ElemSize');
-  late final _Mat_ElemSize = _Mat_ElemSizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_ElemSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_ElemSize');
+  late final _Mat_ElemSize = _Mat_ElemSizePtr.asFunction<int Function(Mat)>();
 
-  ffi.Pointer<CvStatus> Mat_Empty(
+  int Mat_ElemSize1(
     Mat m,
-    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _Mat_ElemSize1(
+      m,
+    );
+  }
+
+  late final _Mat_ElemSize1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_ElemSize1');
+  late final _Mat_ElemSize1 = _Mat_ElemSize1Ptr.asFunction<int Function(Mat)>();
+
+  bool Mat_Empty(
+    Mat m,
   ) {
     return _Mat_Empty(
       m,
-      rval,
     );
   }
 
-  late final _Mat_EmptyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Bool>)>>('Mat_Empty');
-  late final _Mat_Empty = _Mat_EmptyPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>();
+  late final _Mat_EmptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('Mat_Empty');
+  late final _Mat_Empty = _Mat_EmptyPtr.asFunction<bool Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Exp(
     Mat src,
@@ -1321,6 +1300,18 @@ class CvNativeCore {
           'Mat_FindNonZero');
   late final _Mat_FindNonZero = _Mat_FindNonZeroPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+
+  int Mat_Flags(
+    Mat m,
+  ) {
+    return _Mat_Flags(
+      m,
+    );
+  }
+
+  late final _Mat_FlagsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Flags');
+  late final _Mat_Flags = _Mat_FlagsPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Flip(
     Mat src,
@@ -2371,22 +2362,18 @@ class CvNativeCore {
   late final _Mat_Invert = _Mat_InvertPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
 
-  ffi.Pointer<CvStatus> Mat_IsContinuous(
+  bool Mat_IsContinuous(
     Mat m,
-    ffi.Pointer<ffi.Bool> rval,
   ) {
     return _Mat_IsContinuous(
       m,
-      rval,
     );
   }
 
-  late final _Mat_IsContinuousPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Bool>)>>('Mat_IsContinuous');
-  late final _Mat_IsContinuous = _Mat_IsContinuousPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>();
+  late final _Mat_IsContinuousPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('Mat_IsContinuous');
+  late final _Mat_IsContinuous =
+      _Mat_IsContinuousPtr.asFunction<bool Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Log(
     Mat src,
@@ -4034,22 +4021,17 @@ class CvNativeCore {
   late final _Mat_Reshape_Async = _Mat_Reshape_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, imp1.CvCallback_1)>();
 
-  ffi.Pointer<CvStatus> Mat_Rows(
+  int Mat_Rows(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Rows(
       m,
-      rval,
     );
   }
 
-  late final _Mat_RowsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Rows');
-  late final _Mat_Rows = _Mat_RowsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_RowsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Rows');
+  late final _Mat_Rows = _Mat_RowsPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_ScaleAdd(
     Mat src1,
@@ -4874,22 +4856,19 @@ class CvNativeCore {
   late final _Mat_SetVec8i = _Mat_SetVec8iPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, Vec8i)>();
 
-  ffi.Pointer<CvStatus> Mat_Size(
+  ffi.Pointer<VecI32> Mat_Size(
     Mat m,
-    ffi.Pointer<VecI32> rval,
   ) {
     return _Mat_Size(
       m,
-      rval,
     );
   }
 
-  late final _Mat_SizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecI32>)>>('Mat_Size');
-  late final _Mat_Size = _Mat_SizePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecI32>)>();
+  late final _Mat_SizePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<VecI32> Function(Mat)>>(
+          'Mat_Size');
+  late final _Mat_Size =
+      _Mat_SizePtr.asFunction<ffi.Pointer<VecI32> Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Solve(
     Mat src1,
@@ -5024,22 +5003,17 @@ class CvNativeCore {
   late final _Mat_Sqrt = _Mat_SqrtPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
 
-  ffi.Pointer<CvStatus> Mat_Step(
+  MatStep Mat_Step(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Step(
       m,
-      rval,
     );
   }
 
-  late final _Mat_StepPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Step');
-  late final _Mat_Step = _Mat_StepPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_StepPtr =
+      _lookup<ffi.NativeFunction<MatStep Function(Mat)>>('Mat_Step');
+  late final _Mat_Step = _Mat_StepPtr.asFunction<MatStep Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Subtract(
     Mat src1,
@@ -5239,22 +5213,17 @@ class CvNativeCore {
   late final _Mat_ToVecUChar_Async = _Mat_ToVecUChar_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
 
-  ffi.Pointer<CvStatus> Mat_Total(
+  int Mat_Total(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Total(
       m,
-      rval,
     );
   }
 
-  late final _Mat_TotalPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Total');
-  late final _Mat_Total = _Mat_TotalPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_TotalPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Total');
+  late final _Mat_Total = _Mat_TotalPtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Trace(
     Mat src,
@@ -5307,22 +5276,17 @@ class CvNativeCore {
   late final _Mat_Transpose =
       _Mat_TransposePtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>();
 
-  ffi.Pointer<CvStatus> Mat_Type(
+  int Mat_Type(
     Mat m,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_Type(
       m,
-      rval,
     );
   }
 
-  late final _Mat_TypePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_Type');
-  late final _Mat_Type = _Mat_TypePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_TypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_Type');
+  late final _Mat_Type = _Mat_TypePtr.asFunction<int Function(Mat)>();
 
   ffi.Pointer<CvStatus> Mat_Vconcat(
     Mat src1,
@@ -8434,6 +8398,7 @@ typedef DartErrorCallbackFunction = void Function(
     int line,
     ffi.Pointer<ffi.Void> userdata);
 typedef Mat = imp1.Mat;
+typedef MatStep = imp1.MatStep;
 typedef Point = imp1.Point;
 typedef RNG = imp1.RNG;
 typedef Rect = imp1.Rect;

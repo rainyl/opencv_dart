@@ -34,6 +34,8 @@ files:
         name: KeyPoint
       c:@S@Mat:
         name: Mat
+      c:@S@MatStep:
+        name: MatStep
       c:@S@Moment:
         name: Moment
       c:@S@Point:

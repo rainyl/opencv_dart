@@ -71,8 +71,23 @@ CvStatus *Mat_FromRange(Mat m, int rowStart, int rowEnd, int colStart, int colEn
 void Mat_Close(MatPtr m);
 void Mat_CloseVoid(void *m);
 CvStatus *Mat_Release(Mat *m);
-CvStatus *Mat_Empty(Mat m, bool *rval);
-CvStatus *Mat_IsContinuous(Mat m, bool *rval);
+
+int Mat_Flags(Mat m);
+bool Mat_Empty(Mat m);
+bool Mat_IsContinuous(Mat m);
+int Mat_Rows(Mat m);
+int Mat_Cols(Mat m);
+int Mat_Channels(Mat m);
+int Mat_Type(Mat m);
+MatStep Mat_Step(Mat m);
+int Mat_Total(Mat m);
+VecI32 *Mat_Size(Mat m);
+int Mat_ElemSize(Mat m);
+int Mat_ElemSize1(Mat m);
+int Mat_Dims(Mat m);
+uchar *Mat_Data(Mat m);
+// CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length);
+
 CvStatus *Mat_Clone(Mat m, Mat *rval);
 CvStatus *Mat_CopyTo(Mat m, Mat dst);
 CvStatus *Mat_CopyToWithMask(Mat m, Mat dst, Mat mask);
@@ -87,16 +102,7 @@ CvStatus *Mat_ConvertFp16(Mat m, Mat *rval);
 CvStatus *Mat_Mean(Mat m, Scalar *rval);
 CvStatus *Mat_MeanWithMask(Mat m, Mat mask, Scalar *rval);
 CvStatus *Mat_Sqrt(Mat m, Mat *rval);
-CvStatus *Mat_Rows(Mat m, int *rval);
-CvStatus *Mat_Cols(Mat m, int *rval);
-CvStatus *Mat_Channels(Mat m, int *rval);
-CvStatus *Mat_Type(Mat m, int *rval);
-CvStatus *Mat_Step(Mat m, int *rval);
-CvStatus *Mat_Total(Mat m, int *rval);
-CvStatus *Mat_Size(Mat m, VecI32 *rval);
-CvStatus *Mat_ElemSize(Mat m, int *rval);
-CvStatus *Mat_Data(Mat m, VecUChar *rval);
-CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length);
+
 CvStatus *Eye(int rows, int cols, int type, Mat *rval);
 CvStatus *Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus *Ones(int rows, int cols, int type, Mat *rval);

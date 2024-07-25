@@ -346,7 +346,7 @@ class CvNativeCalib3d {
 
   ffi.Pointer<CvStatus> Fisheye_UndistortImageWithParams(
     Mat distorted,
-    Mat undistorted,
+    ffi.Pointer<Mat> undistorted,
     Mat k,
     Mat d,
     Mat knew,
@@ -364,11 +364,12 @@ class CvNativeCalib3d {
 
   late final _Fisheye_UndistortImageWithParamsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat,
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, Mat, Mat, Mat,
               Size)>>('Fisheye_UndistortImageWithParams');
   late final _Fisheye_UndistortImageWithParams =
       _Fisheye_UndistortImageWithParamsPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, Size)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, Mat, Mat, Mat, Size)>();
 
   ffi.Pointer<CvStatus> Fisheye_UndistortPoints(
     Mat distorted,
@@ -440,8 +441,8 @@ class CvNativeCalib3d {
     Mat newCameraMatrix,
     Size size,
     int m1type,
-    Mat map1,
-    Mat map2,
+    ffi.Pointer<Mat> map1,
+    ffi.Pointer<Mat> map2,
   ) {
     return _InitUndistortRectifyMap(
       cameraMatrix,
@@ -457,11 +458,11 @@ class CvNativeCalib3d {
 
   late final _InitUndistortRectifyMapPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Size, ffi.Int, Mat,
-              Mat)>>('InitUndistortRectifyMap');
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Size, ffi.Int,
+              ffi.Pointer<Mat>, ffi.Pointer<Mat>)>>('InitUndistortRectifyMap');
   late final _InitUndistortRectifyMap = _InitUndistortRectifyMapPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, Mat, Size, int, Mat, Mat)>();
+          Mat, Mat, Mat, Mat, Size, int, ffi.Pointer<Mat>, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> Undistort(
     Mat src,

@@ -95,6 +95,7 @@ bool checkOnnx(cv.Net net) {
     swapRB: true,
     crop: false,
   );
+  expect(blob.size, [1, 3, 224, 224]);
   expect(blob.isEmpty, false);
 
   net.setInput(blob, name: "data_0");

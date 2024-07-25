@@ -41,7 +41,7 @@ void main() async {
     final img = cv.Mat.ones(256, 256, cv.MatType.CV_8UC1);
     for (var i = 0; i < img.rows; i++) {
       for (var j = 0; j < img.cols; j++) {
-        img.set<cv.U8>(i, j, i + j);
+        img.set<int>(i, j, i + j);
       }
     }
     final hash = await bmh.computeAsync(img);

@@ -110,10 +110,10 @@ files:
         name: Mat_DFT
       c:@F@Mat_Data:
         name: Mat_Data
-      c:@F@Mat_DataPtr:
-        name: Mat_DataPtr
       c:@F@Mat_Determinant:
         name: Mat_Determinant
+      c:@F@Mat_Dims:
+        name: Mat_Dims
       c:@F@Mat_Divide:
         name: Mat_Divide
       c:@F@Mat_DivideF64:
@@ -132,6 +132,8 @@ files:
         name: Mat_EigenNonSymmetric
       c:@F@Mat_ElemSize:
         name: Mat_ElemSize
+      c:@F@Mat_ElemSize1:
+        name: Mat_ElemSize1
       c:@F@Mat_Empty:
         name: Mat_Empty
       c:@F@Mat_Exp:
@@ -142,6 +144,8 @@ files:
         name: Mat_Eye_Async
       c:@F@Mat_FindNonZero:
         name: Mat_FindNonZero
+      c:@F@Mat_Flags:
+        name: Mat_Flags
       c:@F@Mat_Flip:
         name: Mat_Flip
       c:@F@Mat_FromCMat:
@@ -840,16 +844,18 @@ files:
         name: registerErrorCallback
       c:@F@setLogLevel:
         name: setLogLevel
+      c:@T@double_t:
+        name: double_t
+      c:@T@float_t:
+        name: float_t
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
-      c:math.h@T@double_t:
-        name: double_t
-      c:math.h@T@float_t:
-        name: float_t
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
+      c:types.h@T@MatStep:
+        name: MatStep
       c:types.h@T@Point:
         name: Point
       c:types.h@T@RNG:

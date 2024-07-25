@@ -1,4 +1,5 @@
 #include "core.h"
+#include "core/types.h"
 #include "lut.hpp"
 #include "opencv2/core/cvdef.h"
 #include "vec.hpp"
@@ -218,16 +219,31 @@ CvStatus *Mat_Release(Mat *m) {
   END_WRAP
 }
 
-CvStatus *Mat_Empty(Mat m, bool *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->empty();
-  END_WRAP
+int Mat_Flags(Mat m) { return (m.ptr->flags); }
+bool Mat_Empty(Mat m) { return m.ptr->empty(); }
+bool Mat_IsContinuous(Mat m) { return m.ptr->isContinuous(); }
+int Mat_Rows(Mat m) { return m.ptr->rows; }
+int Mat_Cols(Mat m) { return m.ptr->cols; }
+int Mat_Channels(Mat m) { return m.ptr->channels(); }
+int Mat_Type(Mat m) { return m.ptr->type(); }
+MatStep Mat_Step(Mat m) {
+  auto step = m.ptr->step;
+  return {{step.p[0], step.p[1], step.p[2]}};
 }
-CvStatus *Mat_IsContinuous(Mat m, bool *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->isContinuous();
-  END_WRAP
+int Mat_Total(Mat m) { return m.ptr->total(); }
+VecI32 *Mat_Size(Mat m) {
+  auto size = m.ptr->size;
+  int *ptr = new int[size.dims()];
+  memcpy(ptr, size.p, size.dims() * sizeof(int));
+  return new VecI32{ptr, static_cast<size_t>(size.dims())};
 }
+int Mat_ElemSize(Mat m) { return m.ptr->elemSize(); }
+int Mat_ElemSize1(Mat m) { return m.ptr->elemSize1(); }
+
+int Mat_Dims(Mat m) { return m.ptr->dims; }
+
+uchar *Mat_Data(Mat m) { return (uchar *)m.ptr->data; }
+
 CvStatus *Mat_Clone(Mat m, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(m.ptr->clone())};
@@ -264,6 +280,7 @@ CvStatus *Mat_ToVecUChar(Mat m, VecUChar *rval) {
   }
   END_WRAP
 }
+
 CvStatus *Mat_ToVecChar(Mat m, VecChar *rval) {
   BEGIN_WRAP
   if (m.ptr->isContinuous()) {
@@ -314,67 +331,6 @@ CvStatus *Mat_Sqrt(Mat m, Mat *rval) {
   auto dst = cv::Mat();
   cv::sqrt(*m.ptr, dst);
   *rval = {new cv::Mat(dst)};
-  END_WRAP
-}
-CvStatus *Mat_Rows(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->rows;
-  END_WRAP
-}
-CvStatus *Mat_Cols(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->cols;
-  END_WRAP
-}
-CvStatus *Mat_Channels(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->channels();
-  END_WRAP
-}
-CvStatus *Mat_Type(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->type();
-  END_WRAP
-}
-CvStatus *Mat_Step(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->step;
-  END_WRAP
-}
-CvStatus *Mat_Total(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->total();
-  END_WRAP
-}
-CvStatus *Mat_Size(Mat m, VecI32 *rval) {
-  BEGIN_WRAP
-  auto size = m.ptr->size;
-  int *ptr = new int[size.dims()];
-  memcpy(ptr, size.p, size.dims() * sizeof(int));
-  *rval = {ptr, static_cast<size_t>(size.dims())};
-  END_WRAP
-}
-CvStatus *Mat_ElemSize(Mat m, int *rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->elemSize();
-  END_WRAP
-}
-CvStatus *Mat_Data(Mat m, VecUChar *rval) {
-  BEGIN_WRAP
-  if (m.ptr->isContinuous()) {
-    *rval = {(uchar *)m.ptr->data, m.ptr->total() * m.ptr->channels()};
-  } else {
-    throw cv::Exception(
-        cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
-    );
-  }
-  END_WRAP
-}
-
-CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length) {
-  BEGIN_WRAP
-  *data = m.ptr->data;
-  *length = static_cast<int>(m.ptr->total() * m.ptr->elemSize());
   END_WRAP
 }
 

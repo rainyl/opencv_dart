@@ -16,14 +16,14 @@ void main() async {
     expect(mat1.type, cv.MatType.CV_8UC3);
     expect(mat1.total, equals(100 * 100));
     expect(mat1.isContinus, equals(true));
-    expect(mat1.step, equals(100 * 3));
+    expect(mat1.step.$1, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
     expect(mat1.at<int>(0, 0, 0), 255);
 
     final mat2 = cv.Mat.zeros(3, 3, cv.MatType.CV_8UC1);
     expect((mat2.width, mat2.height, mat2.channels), (3, 3, 1));
     expect(mat2.countNoneZero, equals(0));
-    mat2.setU8(0, 0, 241);
+    mat2.set(0, 0, 241);
     expect(mat2.toList()[0][0], 241);
 
     final mat3 = cv.Mat.eye(3, 3, cv.MatType.CV_8UC3);
@@ -35,7 +35,7 @@ void main() async {
         (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
       ),
     );
-    expect(mat3.toList3D<cv.Vec3b>(), expected3);
+    expect(mat3.toList3D(), expected3);
 
     final mat4 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     expect((mat4.width, mat4.height, mat4.channels), (100, 100, 3));
@@ -134,6 +134,48 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       expect(mat.shape, [rows, cols, channels]);
       final pix = mat.at<cv.Vec3w>(0, 1);
       expect(pix.val, [3.0.fp16, 4.0.fp16, 5.0.fp16]);
+    }
+  });
+
+  test('Mat.iterPixel Mat.iterRow', () {
+    const int rows = 3840;
+    const int cols = 2160;
+    const int channels = 3;
+
+    final data = List.generate(rows * cols * channels, (i) => i);
+    final mat = cv.Mat.fromList(rows, cols, const cv.MatType.CV_32SC(channels), data);
+
+    mat.iterPixel((row, col, pixel) {
+      final start = row * cols * channels + col * channels;
+      final end = start + channels;
+      expect(pixel, data.sublist(start, end));
+    });
+
+    mat.iterRow((r, v) {
+      final start = r * cols * channels;
+      expect(v, data.sublist(start, start + cols * channels));
+    });
+  });
+
+  test('Mat.atPixel', () {
+    const int rows = 3;
+    const int cols = 3;
+    const int channels = 3;
+    final data = List.generate(rows * cols * channels, (i) => i);
+    for (final depth in [0, 1, 2, 3, 4]) {
+      final mat = cv.Mat.fromList(rows, cols, cv.MatType.makeType(depth, channels), data);
+      expect(mat.atPixel(0, 0), data.sublist(0, 3));
+      expect(mat.atPixel(2, 2), data.sublist(data.length - 3, data.length));
+    }
+    for (final depth in [5, 6]) {
+      final mat = cv.Mat.fromList(
+        rows,
+        cols,
+        cv.MatType.makeType(depth, channels),
+        data.map((e) => e.toDouble()).toList(),
+      );
+      expect(mat.atPixel(0, 0), data.sublist(0, 3));
+      expect(mat.atPixel(2, 2), data.sublist(data.length - 3, data.length));
     }
   });
 
@@ -431,7 +473,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(ptr0.address, greaterThan(0));
     expect(ptr0[0], 1);
     ptr0[0] = 21;
-    expect(mat.atI8(0, 0), 21);
+    expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
 
     final ptr1 = mat.ptrAt<cv.I8>(0, 0);
@@ -439,8 +481,8 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(ptr1[0], 21);
     expect(List.generate(mat.cols, (i) => ptr1[i]), [21, 1, 1]);
 
-    mat.set<cv.I8>(0, 0, 2);
-    expect(mat.atI8(0, 0), 2);
+    mat.set(0, 0, 2);
+    expect(mat.at<int>(0, 0), 2);
   });
 
   test('Mat.ptrAt.U16', () {
@@ -527,30 +569,30 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2b>(0, 0), cv.Vec2b(2, 4));
 
-    mat.set<cv.U8>(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec2b>(0, 0, cv.Vec2b(99, 99));
+    mat.set(0, 0, cv.Vec2b(99, 99));
     expect(mat.at<cv.Vec2b>(0, 0), cv.Vec2b(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(2, 4, 1));
 
-    mat.setU8(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec3b>(0, 0, cv.Vec3b(99, 99, 99));
+    mat.set(0, 0, cv.Vec3b(99, 99, 99));
     expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec4b>(0, 0), cv.Vec4b(2, 4, 1, 0));
 
-    mat.setU8(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec4b>(0, 0, cv.Vec4b(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4b(99, 99, 99, 99));
     expect(mat.at<cv.Vec4b>(0, 0), cv.Vec4b(99, 99, 99, 99));
   });
 
@@ -559,30 +601,30 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2w>(0, 0), cv.Vec2w(2, 4));
 
-    mat.set<cv.U16>(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec2w>(0, 0, cv.Vec2w(99, 99));
+    mat.set(0, 0, cv.Vec2w(99, 99));
     expect(mat.at<cv.Vec2w>(0, 0), cv.Vec2w(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16UC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec3w>(0, 0), cv.Vec3w(2, 4, 1));
 
-    mat.setU16(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec3w>(0, 0, cv.Vec3w(99, 99, 99));
+    mat.set(0, 0, cv.Vec3w(99, 99, 99));
     expect(mat.at<cv.Vec3w>(0, 0), cv.Vec3w(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16UC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec4w>(0, 0), cv.Vec4w(2, 4, 1, 0));
 
-    mat.setU16(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec4w>(0, 0, cv.Vec4w(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4w(99, 99, 99, 99));
     expect(mat.at<cv.Vec4w>(0, 0), cv.Vec4w(99, 99, 99, 99));
   });
 
@@ -591,30 +633,30 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2s>(0, 0), cv.Vec2s(2, 4));
 
-    mat.set<cv.I16>(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec2s>(0, 0, cv.Vec2s(99, 99));
+    mat.set(0, 0, cv.Vec2s(99, 99));
     expect(mat.at<cv.Vec2s>(0, 0), cv.Vec2s(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16SC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec3s>(0, 0), cv.Vec3s(2, 4, 1));
 
-    mat.setI16(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec3s>(0, 0, cv.Vec3s(99, 99, 99));
+    mat.set(0, 0, cv.Vec3s(99, 99, 99));
     expect(mat.at<cv.Vec3s>(0, 0), cv.Vec3s(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_16SC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec4s>(0, 0), cv.Vec4s(2, 4, 1, 0));
 
-    mat.setI16(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec4s>(0, 0, cv.Vec4s(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4s(99, 99, 99, 99));
     expect(mat.at<cv.Vec4s>(0, 0), cv.Vec4s(99, 99, 99, 99));
   });
 
@@ -623,30 +665,30 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec2i>(0, 0), cv.Vec2i(2, 4));
 
-    mat.set<cv.I32>(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec2i>(0, 0, cv.Vec2i(99, 99));
+    mat.set(0, 0, cv.Vec2i(99, 99));
     expect(mat.at<cv.Vec2i>(0, 0), cv.Vec2i(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32SC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec3i>(0, 0), cv.Vec3i(2, 4, 1));
 
-    mat.setI32(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec3i>(0, 0, cv.Vec3i(99, 99, 99));
+    mat.set(0, 0, cv.Vec3i(99, 99, 99));
     expect(mat.at<cv.Vec3i>(0, 0), cv.Vec3i(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32SC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);
     expect(mat.at<cv.Vec4i>(0, 0), cv.Vec4i(2, 4, 1, 0));
 
-    mat.setI32(0, 0, 99);
+    mat.set(0, 0, 99);
     expect(mat.at<int>(0, 0), 99);
 
-    mat.set<cv.Vec4i>(0, 0, cv.Vec4i(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4i(99, 99, 99, 99));
     expect(mat.at<cv.Vec4i>(0, 0), cv.Vec4i(99, 99, 99, 99));
   });
 
@@ -655,30 +697,30 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec2f>(0, 0), cv.Vec2f(2, 4));
 
-    mat.set<cv.F32>(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec2f>(0, 0, cv.Vec2f(99, 99));
+    mat.set(0, 0, cv.Vec2f(99, 99));
     expect(mat.at<cv.Vec2f>(0, 0), cv.Vec2f(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec3f>(0, 0), cv.Vec3f(2, 4, 1));
 
-    mat.setF32(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec3f>(0, 0, cv.Vec3f(99, 99, 99));
+    mat.set(0, 0, cv.Vec3f(99, 99, 99));
     expect(mat.at<cv.Vec3f>(0, 0), cv.Vec3f(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_32FC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec4f>(0, 0), cv.Vec4f(2, 4, 1, 0));
 
-    mat.setF32(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec4f>(0, 0, cv.Vec4f(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4f(99, 99, 99, 99));
     expect(mat.at<cv.Vec4f>(0, 0), cv.Vec4f(99, 99, 99, 99));
   });
 
@@ -687,35 +729,35 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec2d>(0, 0), cv.Vec2d(2, 4));
 
-    mat.set<cv.F64>(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec2d>(0, 0, cv.Vec2d(99, 99));
+    mat.set(0, 0, cv.Vec2d(99, 99));
     expect(mat.at<cv.Vec2d>(0, 0), cv.Vec2d(99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_64FC3, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec3d>(0, 0), cv.Vec3d(2, 4, 1));
 
-    mat.setF64(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec3d>(0, 0, cv.Vec3d(99, 99, 99));
+    mat.set(0, 0, cv.Vec3d(99, 99, 99));
     expect(mat.at<cv.Vec3d>(0, 0), cv.Vec3d(99, 99, 99));
 
     mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_64FC4, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<double>(0, 0), closeTo(2, 1e-3));
     expect(mat.at<cv.Vec4d>(0, 0), cv.Vec4d(2, 4, 1, 0));
 
-    mat.setF64(0, 0, 99.0);
+    mat.set(0, 0, 99.0);
     expect(mat.at<double>(0, 0), closeTo(99.0, 1e-6));
 
-    mat.set<cv.Vec4d>(0, 0, cv.Vec4d(99, 99, 99, 99));
+    mat.set(0, 0, cv.Vec4d(99, 99, 99, 99));
     expect(mat.at<cv.Vec4d>(0, 0), cv.Vec4d(99, 99, 99, 99));
   });
 
   test('Mat at set perf', skip: true, () {
-    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_8UC1);
+    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_32SC3);
     final sw = Stopwatch();
 
     {
@@ -727,19 +769,18 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).at: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).at<int>: ${sw.elapsedMilliseconds}ms');
     }
 
     {
+      var currentPix = 0;
+      mat.set<cv.Vec3i>(mat.rows - 1, mat.cols - 1, cv.Vec3i(241, 241, 241));
       sw.reset();
       sw.start();
-      for (var row = 0; row < mat.rows; row++) {
-        for (var col = 0; col < mat.cols; col++) {
-          mat.atU8(row, col);
-        }
-      }
+      mat.iterPixel((_, __, pix) => currentPix = pix[0].toInt());
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).atU8: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel At: ${sw.elapsedMilliseconds}ms');
+      expect(currentPix, 241);
     }
 
     {
@@ -751,19 +792,16 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).set: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).set: ${sw.elapsedMilliseconds}ms');
     }
 
     {
       sw.reset();
       sw.start();
-      for (var row = 0; row < mat.rows; row++) {
-        for (var col = 0; col < mat.cols; col++) {
-          mat.setU8(row, col, 1);
-        }
-      }
+      mat.iterPixel((_, __, pix) => pix[0] = 241);
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).setU8: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel set: ${sw.elapsedMilliseconds}ms');
+      expect(mat.at<int>(0, 0), 241);
     }
   });
 
@@ -807,7 +845,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom3DList.shape, [3, 3, 3]);
     expect(matFrom3DList.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 2, 3));
     expect(matFrom3DList.at<cv.Vec3b>(2, 2), cv.Vec3b(25, 26, 27));
-    expect(matFrom3DList.toList3D<cv.Vec3b>(), data3D);
+    expect(matFrom3DList.toList3D(), data3D);
 
     final data3D1 = data3D.map((e) => e.map((e) => e.map((e) => e).toList()).toList()).toList();
     data3D1[0][0].add(3);

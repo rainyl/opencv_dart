@@ -210,6 +210,11 @@ final class Mat extends ffi.Struct {
 
 typedef MatPtr = ffi.Pointer<Mat>;
 
+final class MatStep extends ffi.Struct {
+  @ffi.Array.multi([3])
+  external ffi.Array<ffi.Size> p;
+}
+
 final class Moment extends ffi.Struct {
   @ffi.Double()
   external double m00;

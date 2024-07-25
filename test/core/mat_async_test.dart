@@ -12,14 +12,14 @@ void main() async {
     expect(mat1.type, cv.MatType.CV_8UC3);
     expect(mat1.total, equals(100 * 100));
     expect(mat1.isContinus, equals(true));
-    expect(mat1.step, equals(100 * 3));
+    expect(mat1.step.$1, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
     expect(mat1.at<int>(0, 0, 0), 255);
 
     final mat2 = await cv.MatAsync.zerosAsync(3, 3, cv.MatType.CV_8UC1);
     expect((mat2.width, mat2.height, mat2.channels), (3, 3, 1));
     expect(mat2.countNoneZero, equals(0));
-    mat2.setU8(0, 0, 241);
+    mat2.set(0, 0, 241);
     expect(mat2.toList()[0][0], 241);
 
     final mat3 = await cv.MatAsync.eyeAsync(3, 3, cv.MatType.CV_8UC3);
@@ -31,7 +31,7 @@ void main() async {
         (col) => List.generate(mat3.channels, (c) => row == col && c == 0 ? 1 : 0),
       ),
     );
-    expect(mat3.toList3D<cv.Vec3b>(), expected3);
+    expect(mat3.toList3D(), expected3);
 
     final mat4 = await cv.MatAsync.onesAsync(100, 100, cv.MatType.CV_8UC3);
     expect((mat4.width, mat4.height, mat4.channels), (100, 100, 3));

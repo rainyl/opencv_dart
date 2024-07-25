@@ -1,8 +1,12 @@
 library cv.calib3d.fisheye;
 
+import 'dart:ffi' as ffi;
+import 'package:ffi/ffi.dart';
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
+import '../g/types.g.dart' as cvg;
 import '../native_lib.dart' show ccalib3d;
 
 class Fisheye {
@@ -17,18 +21,18 @@ class Fisheye {
     (int, int) newSize = (0, 0),
   }) {
     knew ??= Mat.empty();
-    undistorted ??= Mat.empty();
+    final p1 = undistorted?.ptr ?? calloc<cvg.Mat>();
     cvRun(
       () => ccalib3d.Fisheye_UndistortImageWithParams(
         distorted.ref,
-        undistorted!.ref,
+        p1,
         K.ref,
         D.ref,
         knew!.ref,
         newSize.cvd.ref,
       ),
     );
-    return undistorted;
+    return undistorted ?? Mat.fromPointer(p1);
   }
 
   /// async version of [undistortImage]
