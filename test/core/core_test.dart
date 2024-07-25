@@ -18,21 +18,6 @@ void main() async {
     expect(level, equals(cv.LOG_LEVEL_WARNING));
   });
 
-  test('setLogTagLevel', () {
-    final tag = 'TEST_TAG';
-    cv.setLogTagLevel(tag, cv.LOG_LEVEL_DEBUG);
-    final level = cv.getLogTagLevel(tag);
-    print('Current log level for $tag: $level');
-    expect(level, equals(cv.LOG_LEVEL_DEBUG));
-  });
-
-  test('getLogTagLevel', () {
-    final tag = 'TEST_TAG_2';
-    cv.setLogTagLevel(tag, cv.LOG_LEVEL_WARNING);
-    final level = cv.getLogTagLevel(tag);
-    print('Current log level for $tag: $level');
-    expect(level, equals(cv.LOG_LEVEL_WARNING));
-  });
 
   test('openCvVersion', () async {
     {

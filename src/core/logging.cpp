@@ -19,17 +19,4 @@ CvStatus *getLogLevel(int *logLevel) {
 
 
 
-CvStatus *setLogTagLevel(const char *tag, int logLevel) {
-    BEGIN_WRAP
-    cv::utils::logging::setLogTagLevel(tag, static_cast<cv::utils::logging::LogLevel>(logLevel));
-    END_WRAP
-}
-
-
-
-CvStatus *getLogTagLevel(const char *tag, int *logLevel) {
-    BEGIN_WRAP
-    *logLevel = static_cast<int>(cv::utils::logging::getLogTagLevel(tag));
-    END_WRAP
-}
 

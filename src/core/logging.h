@@ -13,8 +13,6 @@ extern "C" {
 CvStatus *setLogLevel(int logLevel);
 CvStatus *getLogLevel(int *logLevel);
 
-CvStatus *setLogTagLevel(const char *tag, int logLevel);
-CvStatus *getLogTagLevel(const char *tag, int *logLevel);
 
 #ifdef __cplusplus
 }

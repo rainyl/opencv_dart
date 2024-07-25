@@ -832,8 +832,6 @@ files:
         name: getBuildInfo_Async
       c:@F@getLogLevel:
         name: getLogLevel
-      c:@F@getLogTagLevel:
-        name: getLogTagLevel
       c:@F@openCVVersion:
         name: openCVVersion
       c:@F@openCVVersion_Async:
@@ -842,8 +840,6 @@ files:
         name: registerErrorCallback
       c:@F@setLogLevel:
         name: setLogLevel
-      c:@F@setLogTagLevel:
-        name: setLogTagLevel
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
       c:math.h@T@double_t:

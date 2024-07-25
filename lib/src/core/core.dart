@@ -41,23 +41,6 @@ int getLogLevel() {
   return level;
 }
 
-/// Sets the logging level for a specific tag.
-void setLogTagLevel(String tag, int logLevel) {
-  final tagPtr = tag.toNativeUtf8();
-  cvRun(() => ccore.setLogTagLevel(tagPtr.cast(), logLevel));
-  calloc.free(tagPtr);
-}
-
-/// Gets the logging level for a specific tag.
-int getLogTagLevel(String tag) {
-  final tagPtr = tag.toNativeUtf8();
-  final p = calloc<ffi.Int>();
-  cvRun(() => ccore.getLogTagLevel(tagPtr.cast(), p));
-  final level = p.value;
-  calloc.free(p);
-  calloc.free(tagPtr);
-  return level;
-}
 
 /// get version
 String openCvVersion() {

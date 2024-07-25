@@ -8343,24 +8343,6 @@ class CvNativeCore {
   late final _getLogLevel = _getLogLevelPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>();
 
-  ffi.Pointer<CvStatus> getLogTagLevel(
-    ffi.Pointer<ffi.Char> tag,
-    ffi.Pointer<ffi.Int> logLevel,
-  ) {
-    return _getLogTagLevel(
-      tag,
-      logLevel,
-    );
-  }
-
-  late final _getLogTagLevelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>>('getLogTagLevel');
-  late final _getLogTagLevel = _getLogTagLevelPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>();
-
   ffi.Pointer<CvStatus> openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
@@ -8418,23 +8400,6 @@ class CvNativeCore {
           'setLogLevel');
   late final _setLogLevel =
       _setLogLevelPtr.asFunction<ffi.Pointer<CvStatus> Function(int)>();
-
-  ffi.Pointer<CvStatus> setLogTagLevel(
-    ffi.Pointer<ffi.Char> tag,
-    int logLevel,
-  ) {
-    return _setLogTagLevel(
-      tag,
-      logLevel,
-    );
-  }
-
-  late final _setLogTagLevelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>, ffi.Int)>>('setLogTagLevel');
-  late final _setLogTagLevel = _setLogTagLevelPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int)>();
 
   late final addresses = _SymbolAddresses(this);
 }
