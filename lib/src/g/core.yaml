@@ -830,18 +830,34 @@ files:
         name: getBuildInfo
       c:@F@getBuildInfo_Async:
         name: getBuildInfo_Async
+      c:@F@getLogLevel:
+        name: getLogLevel
+      c:@F@getLogLevel_Async:
+        name: getLogLevel_Async
+      c:@F@getLogTagLevel:
+        name: getLogTagLevel
+      c:@F@getLogTagLevel_Async:
+        name: getLogTagLevel_Async
       c:@F@openCVVersion:
         name: openCVVersion
       c:@F@openCVVersion_Async:
         name: openCVVersion_Async
       c:@F@registerErrorCallback:
         name: registerErrorCallback
-      c:@T@double_t:
-        name: double_t
-      c:@T@float_t:
-        name: float_t
+      c:@F@setLogLevel:
+        name: setLogLevel
+      c:@F@setLogLevel_Async:
+        name: setLogLevel_Async
+      c:@F@setLogTagLevel:
+        name: setLogTagLevel
+      c:@F@setLogTagLevel_Async:
+        name: setLogTagLevel_Async
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:math.h@T@double_t:
+        name: double_t
+      c:math.h@T@float_t:
+        name: float_t
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
