@@ -13,7 +13,6 @@ extern "C" {
 CvStatus *setLogLevel(int logLevel);
 CvStatus *getLogLevel(int *logLevel);
 
-
 #ifdef __cplusplus
 }
 #endif
