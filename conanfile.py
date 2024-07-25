@@ -6,7 +6,7 @@ import conan.tools.files as cfiles
 import tarfile
 from pathlib import Path
 
-OPENCV_VERSION = "4.10.0+2"
+OPENCV_VERSION = "4.10.0+4"
 OPENCV_FILES_URL = (
     f"https://github.com/rainyl/opencv.full/releases/download/{OPENCV_VERSION}"
 )
