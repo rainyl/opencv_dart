@@ -220,7 +220,6 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION Constructors
 
   //SECTION - Properties
-
   MatType get type => MatType(ccore.Mat_Type(ref));
 
   int get flags => ccore.Mat_Flags(ref);
@@ -273,7 +272,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// wrapper of cv::Mat::at()
   ///
   /// enable cache to improve performance
-  num atNum(int i0, int i1, {int? i2}) {
+  num atNum(int i0, int i1, [int? i2]) {
     final pdata = dataPtr.$1;
     final step = this.step;
     final type = this.type;
@@ -330,8 +329,9 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.cast<ffi.Float>().asTypedList(channels);
       case MatType.CV_64F:
         return p.cast<ffi.Double>().asTypedList(channels);
-      case MatType.CV_16F:
-        return p.cast<ffi.Uint16>().asTypedList(channels).map(float16).toList(growable: false);
+      // TODO: support CV_16F
+      // case MatType.CV_16F:
+      //   return p.cast<ffi.Uint16>().asTypedList(channels).map(float16).toList(growable: false);
       case _:
         throw UnsupportedError("Unsupported type: $type");
     }
@@ -452,9 +452,9 @@ class Mat extends CvStruct<cvg.Mat> {
   /// ```
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
-  T at<T>(int i0, int i1, {int? i2}) {
+  T at<T>(int i0, int i1, [int? i2]) {
     if (T == int || T == double || T == num) {
-      return atNum(i0, i1, i2: i2) as T;
+      return atNum(i0, i1, i2) as T;
     } else if (isSubtype<T, CvVec>()) {
       return atVec<T>(i0, i1);
     } else {
@@ -522,7 +522,7 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  void setNum(int i0, int i1, num val, {int? i2}) {
+  void setNum(int i0, int i1, num val, [int? i2]) {
     final pdata = dataPtr.$1;
     final step = this.step;
     final type = this.type;
@@ -576,10 +576,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// m.set<cv.Vec3f>(0, 0, cv.Vec3f(9, 9, 9));
   /// m.at<cv.Vec3f>(0, 0); // cv.Vec3f(9, 9, 9)
   /// ```
-  void set<T>(int i0, int i1, T val, {int? i2}) {
+  void set<T>(int i0, int i1, T val, [int? i2]) {
     switch (val) {
       case num():
-        setNum(i0, i1, val, i2: i2);
+        setNum(i0, i1, val, i2);
       case CvVec():
         setVec<CvVec>(i0, i1, val);
       default:
@@ -636,6 +636,83 @@ class Mat extends CvStruct<cvg.Mat> {
     if (T == ffi.Float || T == F32) return pp.cast<ffi.Float>() as ffi.Pointer<T>;
     if (T == ffi.Double || T == F64) return pp.cast<ffi.Double>() as ffi.Pointer<T>;
     throw UnsupportedError("ptr<$T>() is not supported!");
+  }
+
+  List<num> _ptrAsTypedList(ffi.Pointer<ffi.Uint8> p, int count, int depth) {
+    switch (depth) {
+      case MatType.CV_8U:
+        return p.cast<ffi.Uint8>().asTypedList(count);
+      case MatType.CV_8S:
+        return p.cast<ffi.Int8>().asTypedList(count);
+      case MatType.CV_16U:
+        return p.cast<ffi.Uint16>().asTypedList(count);
+      case MatType.CV_16S:
+        return p.cast<ffi.Int16>().asTypedList(count);
+      case MatType.CV_32S:
+        return p.cast<ffi.Int32>().asTypedList(count);
+      case MatType.CV_32F:
+        return p.cast<ffi.Float>().asTypedList(count);
+      case MatType.CV_64F:
+        return p.cast<ffi.Double>().asTypedList(count);
+      // TODO: for now, dart has no `Float16` type, so this will create a new list, which
+      // is different from the above
+      // case MatType.CV_16F:
+      //   callback(pp.cast<ffi.Uint16>().asTypedList(count).map(float16).toList(growable: false));
+      case _:
+        throw UnsupportedError("Unsupported type: $type");
+    }
+  }
+
+  /// Iterate over all pixels in the Mat.
+  ///
+  /// [callback] is called for each pixel in the Mat, the parameter `pixel`
+  /// of [callback] is a view of the pixel at every (row, col), which means
+  /// it can be modified and will be reflected in the Mat.
+  ///
+  /// Example:
+  /// ```dart
+  /// final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC3);
+  /// mat.iterPixel((row, col, pixel) {
+  ///   print(pixel); // [1, 1, 1]
+  ///   pixel[0] = 2;
+  /// });
+  /// print(mat.atPixel(0, 0)); // [2, 1, 1]
+  /// ```
+  void iterPixel(void Function(int row, int col, List<num> pixel) callback) {
+    // cache necessary props, they will be only get once
+    final depth = type.depth;
+    final pdata = dataPtr.$1;
+    final step = this.step;
+    final channels = this.channels;
+    final rows = this.rows;
+    final cols = this.cols;
+
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        final pp = pdata + row * step.$1 + col * step.$2;
+        callback(row, col, _ptrAsTypedList(pp, channels, depth));
+      }
+    }
+  }
+
+  /// Iterate over all rows in the Mat.
+  ///
+  /// Similar to [iterPixel], the parameter `values` of [callback] is a view of
+  /// the row at every `row`, which means it can be modified and the original values
+  /// in the Mat will be changed too.
+  void iterRow(void Function(int row, List<num> values) callback) {
+    // cache necessary props, they will be only get once
+    final depth = type.depth;
+    final pdata = dataPtr.$1;
+    final step = this.step;
+    final channels = this.channels;
+    final rows = this.rows;
+    final cols = this.cols;
+
+    for (int row = 0; row < rows; row++) {
+      final pp = pdata + row * step.$1;
+      callback(row, _ptrAsTypedList(pp, channels * cols, depth));
+    }
   }
 
   // TODO: for now, dart do not support operator overloading

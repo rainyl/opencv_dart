@@ -18,7 +18,7 @@ void main() async {
     expect(mat1.isContinus, equals(true));
     expect(mat1.step.$1, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
-    expect(mat1.at<int>(0, 0, i2: 0), 255);
+    expect(mat1.at<int>(0, 0, 0), 255);
 
     final mat2 = cv.Mat.zeros(3, 3, cv.MatType.CV_8UC1);
     expect((mat2.width, mat2.height, mat2.channels), (3, 3, 1));
@@ -135,6 +135,26 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       final pix = mat.at<cv.Vec3w>(0, 1);
       expect(pix.val, [3.0.fp16, 4.0.fp16, 5.0.fp16]);
     }
+  });
+
+  test('Mat.iterPixel Mat.iterRow', () {
+    const int rows = 3840;
+    const int cols = 2160;
+    const int channels = 3;
+
+    final data = List.generate(rows * cols * channels, (i) => i);
+    final mat = cv.Mat.fromList(rows, cols, const cv.MatType.CV_32SC(channels), data);
+
+    mat.iterPixel((row, col, pixel) {
+      final start = row * cols * channels + col * channels;
+      final end = start + channels;
+      expect(pixel, data.sublist(start, end));
+    });
+
+    mat.iterRow((r, v) {
+      final start = r * cols * channels;
+      expect(v, data.sublist(start, start + cols * channels));
+    });
   });
 
   test('Mat operations Add', () {
@@ -315,7 +335,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
     final mat1 = mat0.region(cv.Rect(10, 10, 100, 100));
     expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
-    expect(mat1.at<int>(0, 0, i2: 0), equals(mat0.at<int>(10, 10, i2: 0)));
+    expect(mat1.at<int>(0, 0, 0), equals(mat0.at<int>(10, 10, 0)));
   });
 
   test('Mat Rotate', () {
@@ -715,7 +735,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat at set perf', skip: true, () {
-    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_8UC1);
+    final mat = cv.Mat.zeros(3840, 2160, cv.MatType.CV_8UC3);
     final sw = Stopwatch();
 
     {
@@ -727,36 +747,21 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).at<int>: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).at<int>: ${sw.elapsedMilliseconds}ms');
     }
 
     {
-      // TODO: impl cache
+      var currentPix = 0;
+      mat.set<cv.Vec3b>(mat.rows - 1, mat.cols - 1, cv.Vec3b(241, 241, 241));
       sw.reset();
       sw.start();
-      for (var row = 0; row < mat.rows; row++) {
-        for (var col = 0; col < mat.cols; col++) {
-          mat.at<int>(row, col);
-        }
-      }
+      mat.iterPixel((_, __, pix) => currentPix = pix[0].toInt());
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).atNum + cache: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel At: ${sw.elapsedMilliseconds}ms');
+      expect(currentPix, 241);
     }
 
     {
-      sw.reset();
-      sw.start();
-      for (var row = 0; row < mat.rows; row++) {
-        for (var col = 0; col < mat.cols; col++) {
-          mat.set<int>(row, col, 1);
-        }
-      }
-      sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).set: ${sw.elapsedMilliseconds}ms');
-    }
-
-    {
-      // TODO: impl cache
       sw.reset();
       sw.start();
       for (var row = 0; row < mat.rows; row++) {
@@ -765,7 +770,16 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         }
       }
       sw.stop();
-      print('Mat(${mat.rows}, ${mat.cols}, ${mat.type}).setNum + cache: ${sw.elapsedMilliseconds}ms');
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).set: ${sw.elapsedMilliseconds}ms');
+    }
+
+    {
+      sw.reset();
+      sw.start();
+      mat.iterPixel((_, __, pix) => pix[0] = 241);
+      sw.stop();
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel set: ${sw.elapsedMilliseconds}ms');
+      expect(mat.at<int>(0, 0), 241);
     }
   });
 

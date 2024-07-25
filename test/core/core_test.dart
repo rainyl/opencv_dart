@@ -38,7 +38,7 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.absDiff(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, i2: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.Add', () {
@@ -46,41 +46,41 @@ void main() async {
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     cv.add(mat0, mat1, dst);
-    expect(dst.at<int>(0, 0, i2: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.addWeighted', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.addWeighted(mat0, 0.5, mat1, 0.5, 1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(75 + 1));
+    expect(dst.at<int>(0, 0, 0), equals(75 + 1));
   });
 
   test('cv.bitwise_and', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseAND(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 & 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 & 50));
   });
 
   test('cv.bitwise_not', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final dst = cv.bitwiseNOT(mat0);
-    expect(dst.at<int>(0, 0, i2: 0), equals(155));
+    expect(dst.at<int>(0, 0, 0), equals(155));
   });
 
   test('cv.bitwise_or', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 | 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 | 50));
   });
 
   test('cv.bitwise_xor', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseXOR(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 ^ 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 ^ 50));
   });
 
   test('cv.batchDistance', () {

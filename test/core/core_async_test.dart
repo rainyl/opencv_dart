@@ -18,48 +18,48 @@ void main() async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = await cv.absDiffAsync(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.addAsync', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = await cv.addAsync(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(1));
+    expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
   test('cv.addWeightedAsync', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = await cv.addWeightedAsync(mat0, 0.5, mat1, 0.5, 1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(75 + 1));
+    expect(dst.at<int>(0, 0, 0), equals(75 + 1));
   });
 
   test('cv.bitwise_and async', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = await cv.bitwiseANDAsync(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 & 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 & 50));
   });
 
   test('cv.bitwise_not async', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final dst = await cv.bitwiseNOTAsync(mat0);
-    expect(dst.at<int>(0, 0, i2: 0), equals(155));
+    expect(dst.at<int>(0, 0, 0), equals(155));
   });
 
   test('cv.bitwise_or async', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = await cv.bitwiseORAsync(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 | 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 | 50));
   });
 
   test('cv.bitwise_xor async', () async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = await cv.bitwiseXORAsync(mat0, mat1);
-    expect(dst.at<int>(0, 0, i2: 0), equals(100 ^ 50));
+    expect(dst.at<int>(0, 0, 0), equals(100 ^ 50));
   });
 
   test('cv.batchDistance async', () async {
