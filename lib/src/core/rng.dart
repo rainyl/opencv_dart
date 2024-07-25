@@ -62,15 +62,17 @@ class Rng extends CvStruct<cvg.RNG> {
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8df8ce4dc7d15916cee743e5a884639d
   Stream<double> gaussian(double sigma, {int? maxCount}) async* {
     int count = 0;
-    while (true) {
-      final p = calloc<ffi.Double>();
-      cvRun(() => ccore.RNG_Gaussian(ref, sigma, p));
-      final v = p.value;
-      calloc.free(p);
-      yield v;
+    final p = calloc<ffi.Double>();
+    try {
+      while (true) {
+        cvRun(() => ccore.RNG_Gaussian(ref, sigma, p));
+        yield p.value;
 
-      count++;
-      if (count == maxCount) break;
+        count++;
+        if (maxCount != null && ++count >= maxCount) break;
+      }
+    } finally {
+      calloc.free(p);
     }
   }
 
@@ -78,15 +80,17 @@ class Rng extends CvStruct<cvg.RNG> {
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#ad8d035897a5e31e7fc3e1e6c378c32f5
   Stream<int> next({int? maxCount}) async* {
     int count = 0;
-    while (true) {
-      final p = calloc<ffi.Uint32>();
-      cvRun(() => ccore.RNG_Next(ref, p));
-      final v = p.value;
-      calloc.free(p);
-      yield v;
+    final p = calloc<ffi.Uint32>();
+    try {
+      while (true) {
+        cvRun(() => ccore.RNG_Next(ref, p));
+        yield p.value;
 
-      count++;
-      if (count == maxCount) break;
+        count++;
+        if (maxCount != null && ++count >= maxCount) break;
+      }
+    } finally {
+      calloc.free(p);
     }
   }
 
@@ -97,23 +101,33 @@ class Rng extends CvStruct<cvg.RNG> {
   /// https://docs.opencv.org/4.x/d1/dd6/classcv_1_1RNG.html#a8325cc562269b47bcac2343639b6fafc
   Stream<num> uniform(num a, num b, {int? maxCount}) async* {
     int count = 0;
-    while (true) {
-      if (a is int && b is int) {
-        final p = calloc<ffi.Int>();
-        cvRun(() => ccore.RNG_Uniform(ref, a, b, p));
-        final v = p.value;
-        calloc.free(p);
-        yield v;
-      } else {
-        final p = calloc<ffi.Double>();
-        cvRun(() => ccore.RNG_UniformDouble(ref, a.toDouble(), b.toDouble(), p));
-        final v = p.value;
-        calloc.free(p);
-        yield v;
-      }
 
-      count++;
-      if (count == maxCount) break;
+    if (a is int && b is int) {
+      final p = calloc<ffi.Int>();
+      try {
+        while (true) {
+          cvRun(() => ccore.RNG_Uniform(ref, a, b, p));
+          yield p.value;
+
+          count++;
+          if (maxCount != null && ++count >= maxCount) break;
+        }
+      } finally {
+        calloc.free(p);
+      }
+    } else {
+      final p = calloc<ffi.Double>();
+      try {
+        while (true) {
+          cvRun(() => ccore.RNG_UniformDouble(ref, a.toDouble(), b.toDouble(), p));
+          yield p.value;
+
+          count++;
+          if (maxCount != null && ++count >= maxCount) break;
+        }
+      } finally {
+        calloc.free(p);
+      }
     }
   }
 

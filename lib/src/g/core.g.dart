@@ -8281,6 +8281,20 @@ class CvNativeCore {
   late final _getBuildInfo_Async = _getBuildInfo_AsyncPtr
       .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> getLogLevel(
+    ffi.Pointer<ffi.Int> logLevel,
+  ) {
+    return _getLogLevel(
+      logLevel,
+    );
+  }
+
+  late final _getLogLevelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>>('getLogLevel');
+  late final _getLogLevel = _getLogLevelPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>();
+
   ffi.Pointer<CvStatus> openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
   ) {
@@ -8324,6 +8338,20 @@ class CvNativeCore {
           'registerErrorCallback');
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
+
+  ffi.Pointer<CvStatus> setLogLevel(
+    int logLevel,
+  ) {
+    return _setLogLevel(
+      logLevel,
+    );
+  }
+
+  late final _setLogLevelPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Int)>>(
+          'setLogLevel');
+  late final _setLogLevel =
+      _setLogLevelPtr.asFunction<ffi.Pointer<CvStatus> Function(int)>();
 
   late final addresses = _SymbolAddresses(this);
 }

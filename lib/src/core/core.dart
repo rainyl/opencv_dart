@@ -18,6 +18,29 @@ import 'scalar.dart';
 import 'termcriteria.dart';
 import 'vec.dart';
 
+/// Constants for log levels
+const int LOG_LEVEL_SILENT = 0;
+const int LOG_LEVEL_FATAL = 1;
+const int LOG_LEVEL_ERROR = 2;
+const int LOG_LEVEL_WARNING = 3;
+const int LOG_LEVEL_INFO = 4;
+const int LOG_LEVEL_DEBUG = 5;
+const int LOG_LEVEL_VERBOSE = 6;
+
+/// Sets the global logging level.
+void setLogLevel(int logLevel) {
+  cvRun(() => ccore.setLogLevel(logLevel));
+}
+
+/// Gets the global logging level.
+int getLogLevel() {
+  final p = calloc<ffi.Int>();
+  cvRun(() => ccore.getLogLevel(p));
+  final level = p.value;
+  calloc.free(p);
+  return level;
+}
+
 /// get version
 String openCvVersion() {
   final p = calloc<ffi.Pointer<ffi.Char>>();

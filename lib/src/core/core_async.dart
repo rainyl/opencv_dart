@@ -18,22 +18,6 @@ import 'scalar.dart';
 import 'termcriteria.dart';
 import 'vec.dart';
 
-/// get version
-Future<String> openCvVersionAsync() async => cvRunAsync(ccore.openCVVersion_Async, (c, p) {
-      final s = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
-      calloc.free(p);
-      c.complete(s);
-    });
-
-/// Returns full configuration time cmake output.
-///
-/// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
-Future<String> getBuildInformationAsync() async => cvRunAsync(ccore.getBuildInfo_Async, (c, p) {
-      final s = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
-      calloc.free(p);
-      c.complete(s);
-    });
-
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
 ///

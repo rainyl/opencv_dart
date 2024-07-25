@@ -4,28 +4,28 @@ import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
+  test('setLogLevel', () {
+    cv.setLogLevel(cv.LOG_LEVEL_DEBUG);
+    final level = cv.getLogLevel();
+    expect(level, equals(cv.LOG_LEVEL_DEBUG));
+  });
+
+  test('getLogLevel', () {
+    cv.setLogLevel(cv.LOG_LEVEL_WARNING);
+    final level = cv.getLogLevel();
+    expect(level, equals(cv.LOG_LEVEL_WARNING));
+  });
+
   test('openCvVersion', () async {
-    {
-      final version = cv.openCvVersion();
-      print(version);
-      expect(version.length, greaterThan(0));
-    }
-    {
-      final version = await cv.openCvVersionAsync();
-      expect(version.length, greaterThan(0));
-    }
+    final version = cv.openCvVersion();
+    print(version);
+    expect(version.length, greaterThan(0));
   });
 
   test('cv.getBuildInformation', () async {
-    {
-      final info = cv.getBuildInformation();
-      print(info);
-      expect(info.length, greaterThan(0));
-    }
-    {
-      final info = await cv.getBuildInformationAsync();
-      expect(info.length, greaterThan(0));
-    }
+    final info = cv.getBuildInformation();
+    print(info);
+    expect(info.length, greaterThan(0));
   });
 
   test('cv.AsyncArray', () {

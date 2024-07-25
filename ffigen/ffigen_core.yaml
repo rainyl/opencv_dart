@@ -23,6 +23,7 @@ headers:
     - ../src/core/svd_async.h
     - ../src/core/vec.h
     - ../src/core/version.h
+    - ../src/core/logging.h
   include-directives:
     - ../src/core/core.h
     - ../src/core/core_async.h
@@ -31,7 +32,7 @@ headers:
     - ../src/core/svd_async.h
     - ../src/core/vec.h
     - ../src/core/version.h
-
+    - ../src/core/logging.h
 functions:
   symbol-address:
     include:
