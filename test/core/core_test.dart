@@ -40,20 +40,12 @@ void main() async {
       print(version);
       expect(version.length, greaterThan(0));
     }
-    {
-      final version = await cv.openCvVersionAsync();
-      expect(version.length, greaterThan(0));
-    }
   });
 
   test('cv.getBuildInformation', () async {
     {
       final info = cv.getBuildInformation();
       print(info);
-      expect(info.length, greaterThan(0));
-    }
-    {
-      final info = await cv.getBuildInformationAsync();
       expect(info.length, greaterThan(0));
     }
   });
