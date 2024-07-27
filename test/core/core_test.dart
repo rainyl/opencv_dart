@@ -170,11 +170,121 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
-  test('cv.divide', () {
-    final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
-    final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
-    final dst = cv.divide(mat1, mat2);
-    expect(dst.isEmpty, equals(false));
+  group('cv.divide tests', () {
+    test('cv.divide with ones', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      final dst1 = mat1.divide(mat2);
+      final dst2 = cv.divide(mat1, mat2);
+
+      expect(dst1.isEmpty, equals(false));
+      expect(dst2.isEmpty, equals(false));
+
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(dst1.at<double>(i, j), equals(1.0));
+          expect(dst2.at<double>(i, j), equals(1.0));
+        }
+      }
+    });
+
+    test('cv.divide by zero', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      final mat2 = cv.Mat.zeros(101, 102, cv.MatType.CV_32FC1);
+      final dst1 = mat1.divide(mat2);
+      final dst2 = cv.divide(mat1, mat2);
+
+      expect(dst1.isEmpty, equals(false));
+      expect(dst2.isEmpty, equals(false));
+
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(dst1.at<double>(i, j).isInfinite, equals(true));
+          expect(dst2.at<double>(i, j).isInfinite, equals(true));
+        }
+      }
+    });
+
+    test('cv.divide with different values', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      mat1.setTo(cv.Scalar.all(10.0));
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      mat2.setTo(cv.Scalar.all(2.0));
+      final dst1 = mat1.divide(mat2);
+      final dst2 = cv.divide(mat1, mat2);
+
+      expect(dst1.isEmpty, equals(false));
+      expect(dst2.isEmpty, equals(false));
+
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(dst1.at<double>(i, j), equals(5.0));
+          expect(dst2.at<double>(i, j), equals(5.0));
+        }
+      }
+    });
+
+    test('cv.divide with mixed values', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      for (int i = 0; i < mat1.rows; i++) {
+        for (int j = 0; j < mat1.cols; j++) {
+          mat1.set<double>(i, j, (i + 1).toDouble());
+          mat2.set<double>(i, j, (j + 1).toDouble());
+        }
+      }
+      final dst1 = mat1.divide(mat2);
+      final dst2 = cv.divide(mat1, mat2);
+
+      expect(dst1.isEmpty, equals(false));
+      expect(dst2.isEmpty, equals(false));
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(
+            dst1.at<double>(i, j),
+            closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001),
+          );
+          expect(
+            dst2.at<double>(i, j),
+            closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001),
+          );
+        }
+      }
+    });
+
+    test('cv.divide with scalar', () {
+      final mat = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      mat.setTo(cv.Scalar.all(10.0));
+      final scalar = 2.0;
+      final dst1 = mat.divide(scalar);
+
+      expect(dst1.isEmpty, equals(false));
+
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(dst1.at<double>(i, j), equals(5.0));
+        }
+      }
+    });
+
+    test('cv.divide with small values', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      mat1.setTo(cv.Scalar.all(1e-10));
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
+      mat2.setTo(cv.Scalar.all(2e-10));
+      final dst1 = mat1.divide(mat2);
+      final dst2 = cv.divide(mat1, mat2);
+
+      expect(dst1.isEmpty, equals(false));
+      expect(dst2.isEmpty, equals(false));
+
+      for (int i = 0; i < dst1.rows; i++) {
+        for (int j = 0; j < dst1.cols; j++) {
+          expect(dst1.at<double>(i, j), equals(0.5));
+          expect(dst2.at<double>(i, j), equals(0.5));
+        }
+      }
+    });
   });
 
   test('cv.eigen', () {
