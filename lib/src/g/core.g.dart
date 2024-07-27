@@ -310,6 +310,7 @@ class CvNativeCore {
     double beta,
     double gamma,
     Mat dst,
+    int dtype,
   ) {
     return _Mat_AddWeighted(
       src1,
@@ -318,15 +319,17 @@ class CvNativeCore {
       beta,
       gamma,
       dst,
+      dtype,
     );
   }
 
   late final _Mat_AddWeightedPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, ffi.Double, Mat, ffi.Double,
-              ffi.Double, Mat)>>('Mat_AddWeighted');
+              ffi.Double, Mat, ffi.Int)>>('Mat_AddWeighted');
   late final _Mat_AddWeighted = _Mat_AddWeightedPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, double, Mat, double, double, Mat)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, double, Mat, double, double, Mat, int)>();
 
   ffi.Pointer<CvStatus> Mat_BatchDistance(
     Mat src1,
@@ -996,22 +999,25 @@ class CvNativeCore {
       _Mat_DCTPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int)>();
 
   ffi.Pointer<CvStatus> Mat_DFT(
-    Mat m,
+    Mat src,
     Mat dst,
     int flags,
+    int nonzeroRows,
   ) {
     return _Mat_DFT(
-      m,
+      src,
       dst,
       flags,
+      nonzeroRows,
     );
   }
 
   late final _Mat_DFTPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int)>>('Mat_DFT');
-  late final _Mat_DFT =
-      _Mat_DFTPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Int, ffi.Int)>>('Mat_DFT');
+  late final _Mat_DFT = _Mat_DFTPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, int)>();
 
   ffi.Pointer<imp1.uchar> Mat_Data(
     Mat m,
@@ -1059,20 +1065,25 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_Divide(
     Mat src1,
     Mat src2,
+    double scale,
+    int dtype,
     Mat dst,
   ) {
     return _Mat_Divide(
       src1,
       src2,
+      scale,
+      dtype,
       dst,
     );
   }
 
   late final _Mat_DividePtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>>(
-      'Mat_Divide');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Double, ffi.Int, Mat)>>('Mat_Divide');
   late final _Mat_Divide = _Mat_DividePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, Mat)>();
 
   ffi.Pointer<CvStatus> Mat_DivideF64(
     Mat m,
@@ -2624,21 +2635,23 @@ class CvNativeCore {
     Mat b,
     Mat c,
     int flags,
+    bool conjB,
   ) {
     return _Mat_MulSpectrums(
       a,
       b,
       c,
       flags,
+      conjB,
     );
   }
 
   late final _Mat_MulSpectrumsPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Int)>>('Mat_MulSpectrums');
+              Mat, Mat, Mat, ffi.Int, ffi.Bool)>>('Mat_MulSpectrums');
   late final _Mat_MulSpectrums = _Mat_MulSpectrumsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, int)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, int, bool)>();
 
   ffi.Pointer<CvStatus> Mat_Multiply(
     Mat src1,

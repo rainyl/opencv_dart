@@ -5,34 +5,40 @@
 
 #include "opencv2/core.hpp"
 #include "opencv2/core/types.hpp"
+
 #pragma region Mat_Constructors
 CvStatus *Mat_New_Async(CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat()});
   END_WRAP
 }
+
 CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(rows, cols, type)});
   END_WRAP
 }
+
 CvStatus *Mat_NewWithSizes_Async(VecI32 sizes, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type)});
   END_WRAP
 }
+
 CvStatus *Mat_NewWithSizesScalar_Async(VecI32 sizes, int type, Scalar s, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(s.val1, s.val2, s.val3, s.val4);
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, c)});
   END_WRAP
 }
+
 CvStatus *
 Mat_NewWithSizesFromBytes_Async(VecI32 sizes, int type, VecChar buf, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, buf.ptr)});
   END_WRAP
 }
+
 CvStatus *
 Mat_NewFromScalar_Async(const Scalar s, int rows, int cols, int type, CvCallback_1 callback) {
   BEGIN_WRAP
@@ -57,12 +63,14 @@ CvStatus *Mat_NewFromVecPoint_Async(VecPoint vec, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint2f_Async(VecPoint2f vec, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = vecpoint2f_c2cpp(vec);
   callback(new Mat{new cv::Mat(v, true)});
   END_WRAP
 }
+
 CvStatus *Mat_NewFromVecPoint3f_Async(VecPoint3f vec, CvCallback_1 callback) {
   BEGIN_WRAP
   auto v = vecpoint3f_c2cpp(vec);
@@ -75,17 +83,18 @@ CvStatus *Mat_Eye_Async(int rows, int cols, int type, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(cv::Mat::eye(rows, cols, type))});
   END_WRAP
 }
+
 CvStatus *Mat_Zeros_Async(int rows, int cols, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(cv::Mat::zeros(rows, cols, type))});
   END_WRAP
 }
+
 CvStatus *Mat_Ones_Async(int rows, int cols, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(cv::Mat::ones(rows, cols, type))});
   END_WRAP
 }
-
 #pragma endregion
 
 #pragma region Mat_functions
@@ -111,18 +120,21 @@ CvStatus *Mat_Clone_Async(Mat self, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(self.ptr->clone())});
   END_WRAP
 }
+
 CvStatus *Mat_CopyTo_Async(Mat self, Mat dst, CvCallback_0 callback) {
   BEGIN_WRAP
   self.ptr->copyTo(*dst.ptr);
   callback();
   END_WRAP
 }
+
 CvStatus *Mat_CopyToWithMask_Async(Mat self, Mat dst, Mat mask, CvCallback_0 callback) {
   BEGIN_WRAP
   self.ptr->copyTo(*dst.ptr, *mask.ptr);
   callback();
   END_WRAP
 }
+
 CvStatus *Mat_ConvertTo_Async(Mat self, int type, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -130,6 +142,7 @@ CvStatus *Mat_ConvertTo_Async(Mat self, int type, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *
 Mat_ConvertToWithParams_Async(Mat self, int type, float alpha, float beta, CvCallback_1 callback) {
   BEGIN_WRAP
@@ -138,6 +151,7 @@ Mat_ConvertToWithParams_Async(Mat self, int type, float alpha, float beta, CvCal
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *Mat_ToVecUChar_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
   if (self.ptr->isContinuous()) {
@@ -149,6 +163,7 @@ CvStatus *Mat_ToVecUChar_Async(Mat self, CvCallback_1 callback) {
   }
   END_WRAP
 }
+
 CvStatus *Mat_ToVecChar_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
   if (self.ptr->isContinuous()) {
@@ -160,17 +175,18 @@ CvStatus *Mat_ToVecChar_Async(Mat self, CvCallback_1 callback) {
   }
   END_WRAP
 }
+
 CvStatus *Mat_Region_Async(Mat self, Rect r, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(*self.ptr, cv::Rect(r.x, r.y, r.width, r.height))});
   END_WRAP
 }
+
 CvStatus *Mat_Reshape_Async(Mat self, int cn, int rows, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(self.ptr->reshape(cn, rows))});
   END_WRAP
 }
-
 #pragma endregion
 
 CvStatus *core_PatchNaNs_Async(Mat self, double val, CvCallback_0 callback) {
@@ -188,12 +204,14 @@ CvStatus *core_Mean_Async(Mat self, CvCallback_1 callback) {
   callback(new Scalar{c.val[0], c.val[1], c.val[2], c.val[3]});
   END_WRAP
 }
+
 CvStatus *core_MeanWithMask_Async(Mat self, Mat mask, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Scalar c = cv::mean(*self.ptr, *mask.ptr);
   callback(new Scalar{c.val[0], c.val[1], c.val[2], c.val[3]});
   END_WRAP
 }
+
 CvStatus *core_Sqrt_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -201,6 +219,7 @@ CvStatus *core_Sqrt_Async(Mat self, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_AbsDiff_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -208,6 +227,7 @@ CvStatus *core_AbsDiff_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_Add_Async(Mat src1, Mat src2, Mat mask, int dtype, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -215,6 +235,7 @@ CvStatus *core_Add_Async(Mat src1, Mat src2, Mat mask, int dtype, CvCallback_1 c
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_AddWeighted_Async(
     Mat src1, double alpha, Mat src2, double beta, double gamma, int dtype, CvCallback_1 callback
 ) {
@@ -224,6 +245,7 @@ CvStatus *core_AddWeighted_Async(
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseAnd_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -231,6 +253,7 @@ CvStatus *core_BitwiseAnd_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseAndWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -238,6 +261,7 @@ CvStatus *core_BitwiseAndWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseNot_Async(Mat src1, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -245,6 +269,7 @@ CvStatus *core_BitwiseNot_Async(Mat src1, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseNotWithMask_Async(Mat src1, Mat mask, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -252,6 +277,7 @@ CvStatus *core_BitwiseNotWithMask_Async(Mat src1, Mat mask, CvCallback_1 callbac
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseOr_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -259,6 +285,7 @@ CvStatus *core_BitwiseOr_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseOrWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -266,6 +293,7 @@ CvStatus *core_BitwiseOrWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseXor_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -273,6 +301,7 @@ CvStatus *core_BitwiseXor_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_BitwiseXorWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -280,6 +309,7 @@ CvStatus *core_BitwiseXorWithMask_Async(Mat src1, Mat src2, Mat mask, CvCallback
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
 CvStatus *core_Compare_Async(Mat src1, Mat src2, int ct, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -403,12 +433,11 @@ CvStatus *core_DFT_Async(Mat self, int flags, int nonzeroRows, CvCallback_1 call
 
 CvStatus *core_Divide_Async(Mat src1, Mat src2, double scale, int dtype, CvCallback_1 callback) {
   BEGIN_WRAP
-  cv::divide(*src1.ptr, *src2.ptr, *src1.ptr);
+  cv::divide(*src1.ptr, *src2.ptr, *src1.ptr, scale, dtype);
   callback(new Mat{new cv::Mat(*src1.ptr)});
   END_WRAP
 }
 
-// Mat eigenvalues, Mat eigenvectors, bool *rval
 CvStatus *core_Eigen_Async(Mat src, CvCallback_3 callback) {
   BEGIN_WRAP
   cv::Mat eigenvalues, eigenvectors;
@@ -1152,7 +1181,6 @@ CvStatus *core_NormWithMats_Async(Mat src1, Mat src2, int normType, CvCallback_1
   callback(new double(rval));
   END_WRAP
 }
-
 #pragma region RNG
 
 CvStatus *Rng_New_Async(CvCallback_1 callback) {
@@ -1235,5 +1263,4 @@ CvStatus *RandU_Async(Mat mat, Scalar low, Scalar high, CvCallback_0 callback) {
   callback();
   END_WRAP
 }
-
 #pragma endregion

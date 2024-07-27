@@ -1035,10 +1035,10 @@ CvStatus *Mat_Add(Mat src1, Mat src2, Mat dst) {
   END_WRAP
 }
 
-CvStatus *Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst) {
-  BEGIN_WRAP
-  cv::addWeighted(*src1.ptr, alpha, *src2.ptr, beta, gamma, *dst.ptr);
-  END_WRAP
+CvStatus *Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst, int dtype) {
+    BEGIN_WRAP
+    cv::addWeighted(*src1.ptr, alpha, *src2.ptr, beta, gamma, *dst.ptr, dtype);
+    END_WRAP
 }
 
 CvStatus *Mat_BitwiseAnd(Mat src1, Mat src2, Mat dst) {
@@ -1175,15 +1175,16 @@ CvStatus *Mat_Determinant(Mat m, double *rval) {
   END_WRAP
 }
 
-CvStatus *Mat_DFT(Mat m, Mat dst, int flags) {
-  BEGIN_WRAP
-  cv::dft(*m.ptr, *dst.ptr, flags);
-  END_WRAP
+CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows) {
+    BEGIN_WRAP
+    cv::dft(*src.ptr, *dst.ptr, flags, nonzeroRows);
+    END_WRAP
 }
 
-CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst) {
+
+CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   BEGIN_WRAP
-  cv::divide(*src1.ptr, *src2.ptr, *dst.ptr);
+  cv::divide(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
   END_WRAP
 }
 
@@ -1364,15 +1365,15 @@ CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
   END_WRAP
 }
 
-CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags) {
-  BEGIN_WRAP
-  cv::mulSpectrums(*a.ptr, *b.ptr, *c.ptr, flags);
-  END_WRAP
+CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags, bool conjB) {
+    BEGIN_WRAP
+    cv::mulSpectrums(*a.ptr, *b.ptr, *c.ptr, flags, conjB);
+    END_WRAP
 }
 
-CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst) {
+CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   BEGIN_WRAP
-  cv::multiply(*src1.ptr, *src2.ptr, *dst.ptr);
+  cv::multiply(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
   END_WRAP
 }
 
@@ -1714,7 +1715,7 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
   END_WRAP
 }
 
-CvStatus *KMeans(
+CvStatus *Mat_KMeans(
     Mat data,
     int k,
     Mat bestLabels,
@@ -1729,6 +1730,7 @@ CvStatus *KMeans(
   *rval = cv::kmeans(*data.ptr, k, *bestLabels.ptr, tc, attempts, flags, *centers.ptr);
   END_WRAP
 }
+
 CvStatus *KMeansPoints(
     VecPoint2f pts,
     int k,
