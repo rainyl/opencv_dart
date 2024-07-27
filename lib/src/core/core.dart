@@ -104,7 +104,7 @@ Mat addWeighted(
       beta,
       gamma,
       dst!.ref,
-      // dtype,
+      dtype,
     ),
   );
   return dst;
@@ -412,7 +412,7 @@ Mat dft(
   int nonzeroRows = 0, // TODO: add
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags, nonzeroRows));
   return dst;
 }
 
@@ -429,7 +429,7 @@ Mat divide(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -887,7 +887,7 @@ Mat mulSpectrums(
   bool conjB = false,
 }) {
   c ??= Mat.empty();
-  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
+  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags, conjB));
   return c;
 }
 
@@ -918,7 +918,6 @@ Mat normalize(
   double alpha = 1,
   double beta = 0,
   int normType = NORM_L2,
-  // TODO
   // int dtype = -1,
   // InputArray? mask,
 }) {
@@ -1121,9 +1120,8 @@ Mat subtract(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
-  // TODO
-  //   InputArray? mask,
-  //   int dtype = -1,
+  // InputArray? mask,
+  // int dtype = -1,
 }) {
   dst ??= Mat.empty();
   cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
