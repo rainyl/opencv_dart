@@ -668,108 +668,115 @@ class Mat extends CvStruct<cvg.Mat> {
   //   ccore.Mat_AddUChar(ref, v);
   // }
 
+  Mat _opInt(
+    int val,
+    ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, int val) func, {
+    bool inplace = false,
+  }) {
+    if (inplace) {
+      cvRun(() => func(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => func(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat _opDouble(
+    double val,
+    ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, double val) func, {
+    bool inplace = false,
+  }) {
+    if (inplace) {
+      cvRun(() => func(ref, val));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => func(dst.ref, val));
+      return dst;
+    }
+  }
+
+  Mat _opMat(
+    Mat other,
+    ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, cvg.Mat) func, {
+    bool inplace = false,
+  }) {
+    assert(other.type == type, "${type.asString()} != ${other.type.asString()}");
+    if (inplace) {
+      cvRun(() => func(ref, other.ref));
+      return this;
+    } else {
+      final dst = clone();
+      cvRun(() => func(dst.ref, other.ref));
+      return dst;
+    }
+  }
+
   //SECTION - Add
 
   /// add
   Mat add<T>(T val, {bool inplace = false}) {
-    if (T == Mat) {
-      return addMat(val as Mat, inplace: inplace);
-    } else if (T == double) {
-      switch (type.depth) {
-        case MatType.CV_32F:
-          return addF32(val as double, inplace: inplace);
-        case MatType.CV_64F:
-          return addF64(val as double, inplace: inplace);
-        default:
-          throw UnsupportedError("add float to ${type.asString()} is not supported!");
-      }
-    } else if (T == int) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          return addU8(val as int, inplace: inplace);
-        case MatType.CV_8S:
-          return addI8(val as int, inplace: inplace);
-        case MatType.CV_32S:
-          return addI32(val as int, inplace: inplace);
-        default:
-          throw UnimplementedError();
-      }
-    } else {
-      throw UnsupportedError("Type $T is not supported");
-    }
+    return switch (val) {
+      Mat() => addMat(val as Mat, inplace: inplace),
+      int() => switch (type.depth) {
+          MatType.CV_8U => addU8(val as int, inplace: inplace),
+          MatType.CV_8S => addI8(val as int, inplace: inplace),
+          MatType.CV_16U => addU16(val as int, inplace: inplace),
+          MatType.CV_16S => addI16(val as int, inplace: inplace),
+          MatType.CV_32S => addI32(val as int, inplace: inplace),
+          _ => throw UnsupportedError("add int to ${type.asString()} is not supported!"),
+        },
+      double() => switch (type.depth) {
+          MatType.CV_32F => addF32(val as double, inplace: inplace),
+          MatType.CV_64F => addF64(val as double, inplace: inplace),
+          // MatType.CV_16F => addF16(val as double, inplace: inplace), // TODO
+          _ => throw UnsupportedError("add double to ${type.asString()} is not supported!"),
+        },
+      _ => throw UnsupportedError("Type $T is not supported"),
+    };
   }
 
-  Mat addMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
-    if (inplace) {
-      cvRun(() => ccore.Mat_Add(ref, other.ref, ref));
-      return this;
-    } else {
-      final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Add(ref, other.ref, dst.ref));
-      return dst;
-    }
-  }
+  Mat addMat(Mat other, {bool inplace = false}) => _opMat(other, ccore.Mat_AddMat, inplace: inplace);
 
   Mat addU8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_AddUChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_AddUChar(dst.ref, val));
-      return dst;
-    }
+    // no bound check in release mode
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
+    return _opInt(val, ccore.Mat_AddUChar, inplace: inplace);
   }
 
   Mat addI8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_AddSChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_AddSChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
+    return _opInt(val, ccore.Mat_AddSChar, inplace: inplace);
+  }
+
+  Mat addI16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16S && val >= CV_I16_MIN && val <= CV_I16_MAX);
+    return _opInt(val, ccore.Mat_AddI16, inplace: inplace);
+  }
+
+  Mat addU16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16U && val >= CV_U16_MIN && val <= CV_U16_MAX);
+    return _opInt(val, ccore.Mat_AddU16, inplace: inplace);
   }
 
   Mat addI32(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_AddI32(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_AddI32(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    return _opInt(val, ccore.Mat_AddI32, inplace: inplace);
   }
 
   Mat addF32(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_AddFloat(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_AddFloat(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
+    return _opDouble(val, ccore.Mat_AddFloat, inplace: inplace);
   }
 
   Mat addF64(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_AddF64(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_AddF64(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
+    return _opDouble(val, ccore.Mat_AddF64, inplace: inplace);
   }
+
+  // TODO - addF16
 
   //!SECTION ADD
 
@@ -777,319 +784,199 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// subtract
   Mat subtract<T>(T val, {bool inplace = false}) {
-    if (T == Mat) {
-      return subtractMat(val as Mat, inplace: inplace);
-    } else if (T == double) {
-      switch (type.depth) {
-        case MatType.CV_32F:
-          return subtractF32(val as double, inplace: inplace);
-        case MatType.CV_64F:
-          return subtractF64(val as double, inplace: inplace);
-        default:
-          throw UnsupportedError("subtract float to ${type.asString()} is not supported!");
-      }
-    } else if (T == int) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          return subtractU8(val as int, inplace: inplace);
-        case MatType.CV_8S:
-          return subtractI8(val as int, inplace: inplace);
-        case MatType.CV_32S:
-          return subtractI32(val as int, inplace: inplace);
-        default:
-          throw UnimplementedError();
-      }
-    } else {
-      throw UnsupportedError("Type $T is not supported");
-    }
+    return switch (val) {
+      Mat() => subtractMat(val as Mat, inplace: inplace),
+      int() => switch (type.depth) {
+          MatType.CV_8U => subtractU8(val as int, inplace: inplace),
+          MatType.CV_8S => subtractI8(val as int, inplace: inplace),
+          MatType.CV_16U => subtractU16(val as int, inplace: inplace),
+          MatType.CV_16S => subtractI16(val as int, inplace: inplace),
+          MatType.CV_32S => subtractI32(val as int, inplace: inplace),
+          _ => throw UnsupportedError("subtract int to ${type.asString()} is not supported!"),
+        },
+      double() => switch (type.depth) {
+          MatType.CV_32F => subtractF32(val as double, inplace: inplace),
+          MatType.CV_64F => subtractF64(val as double, inplace: inplace),
+          // MatType.CV_16F => subtractF16(val as double, inplace: inplace), // TODO
+          _ => throw UnsupportedError("subtract double to ${type.asString()} is not supported!"),
+        },
+      _ => throw UnsupportedError("Type $T is not supported"),
+    };
   }
 
-  Mat subtractMat(Mat other, {bool inplace = false}) {
-    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
-    if (inplace) {
-      cvRun(() => ccore.Mat_Subtract(ref, other.ref, ref));
-      return this;
-    } else {
-      final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Subtract(ref, other.ref, dst.ref));
-      return dst;
-    }
-  }
+  Mat subtractMat(Mat other, {bool inplace = false}) =>
+      _opMat(other, ccore.Mat_SubtractMat, inplace: inplace);
 
   Mat subtractU8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_SubtractUChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_SubtractUChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
+    return _opInt(val, ccore.Mat_SubtractUChar, inplace: inplace);
   }
 
   Mat subtractI8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_SubtractSChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_SubtractSChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
+    return _opInt(val, ccore.Mat_SubtractSChar, inplace: inplace);
   }
 
   Mat subtractI32(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_SubtractI32(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_SubtractI32(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    return _opInt(val, ccore.Mat_SubtractI32, inplace: inplace);
+  }
+
+  Mat subtractI16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16S && val >= CV_I16_MIN && val <= CV_I16_MAX);
+    return _opInt(val, ccore.Mat_SubtractI16, inplace: inplace);
+  }
+
+  Mat subtractU16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16U && val >= CV_U16_MIN && val <= CV_U16_MAX);
+    return _opInt(val, ccore.Mat_SubtractU16, inplace: inplace);
   }
 
   Mat subtractF32(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_SubtractFloat(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_SubtractFloat(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
+    return _opDouble(val, ccore.Mat_SubtractFloat, inplace: inplace);
   }
 
   Mat subtractF64(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_SubtractF64(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_SubtractF64(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
+    return _opDouble(val, ccore.Mat_SubtractF64, inplace: inplace);
   }
+
+  // TODO - subtractF16
 
   //!SECTION - Subtract
 
   //SECTION - multiply
-  /// multiply
+  /// Multiply
+  ///
+  /// Note: `multiply<Mat>` is a wrapper for `Mat &operator*=(Mat &a, const Mat &b)`
   Mat multiply<T>(T val, {bool inplace = false}) {
-    if (T == Mat) {
-      return multiplyMat(val as Mat, inplace: inplace);
-    } else if (T == double) {
-      switch (type.depth) {
-        case MatType.CV_32F:
-          return multiplyF32(val as double, inplace: inplace);
-        case MatType.CV_64F:
-          return multiplyF64(val as double, inplace: inplace);
-        default:
-          throw UnsupportedError("multiply float to ${type.asString()} is not supported!");
-      }
-    } else if (T == int) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          return multiplyU8(val as int, inplace: inplace);
-        case MatType.CV_8S:
-          return multiplyI8(val as int, inplace: inplace);
-        case MatType.CV_32S:
-          return multiplyI32(val as int, inplace: inplace);
-        default:
-          throw UnimplementedError();
-      }
-    } else {
-      throw UnsupportedError("Type $T is not supported");
-    }
+    return switch (val) {
+      Mat() => multiplyMat(val as Mat, inplace: inplace),
+      int() => switch (type.depth) {
+          MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
+          MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
+          MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
+          MatType.CV_16S => multiplyI16(val as int, inplace: inplace),
+          MatType.CV_32S => multiplyI32(val as int, inplace: inplace),
+          _ => throw UnsupportedError("multiply int to ${type.asString()} is not supported!"),
+        },
+      double() => switch (type.depth) {
+          MatType.CV_32F => multiplyF32(val as double, inplace: inplace),
+          MatType.CV_64F => multiplyF64(val as double, inplace: inplace),
+          // MatType.CV_16F => multiplyF16(val as double, inplace: inplace), // TODO
+          _ => throw UnsupportedError("multiply double to ${type.asString()} is not supported!"),
+        },
+      _ => throw UnsupportedError("Type $T is not supported"),
+    };
   }
 
-  Mat multiplyMat(Mat other, {bool inplace = false, double scale = 1, int dtype = -1}) {
-    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
-    if (inplace) {
-      cvRun(() => ccore.Mat_Multiply(ref, other.ref, ref, scale, dtype));
-      return this;
-    } else {
-      final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Multiply(ref, other.ref, dst.ref, scale, dtype));
-      return dst;
-    }
-  }
+  /// Matrix multiplication
+  ///
+  /// Wrapper for `Mat &operator*=(Mat &a, const Mat &b)`
+  Mat multiplyMat(Mat other, {bool inplace = false}) =>
+      _opMat(other, ccore.Mat_MultiplyMat, inplace: inplace);
 
   Mat multiplyU8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_MultiplyUChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_MultiplyUChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
+    return _opInt(val, ccore.Mat_MultiplyUChar, inplace: inplace);
   }
 
   Mat multiplyI8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_MultiplySChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_MultiplySChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
+    return _opInt(val, ccore.Mat_MultiplySChar, inplace: inplace);
+  }
+
+  Mat multiplyI16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16S && val >= CV_I16_MIN && val <= CV_I16_MAX);
+    return _opInt(val, ccore.Mat_MultiplyI16, inplace: inplace);
+  }
+
+  Mat multiplyU16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16U && val >= CV_U16_MIN && val <= CV_U16_MAX);
+    return _opInt(val, ccore.Mat_MultiplyU16, inplace: inplace);
   }
 
   Mat multiplyI32(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_MultiplyI32(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_MultiplyI32(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    return _opInt(val, ccore.Mat_MultiplyI32, inplace: inplace);
   }
 
   Mat multiplyF32(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_MultiplyFloat(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_MultiplyFloat(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
+    return _opDouble(val, ccore.Mat_MultiplyFloat, inplace: inplace);
   }
 
   Mat multiplyF64(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_MultiplyF64(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_MultiplyF64(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
+    return _opDouble(val, ccore.Mat_MultiplyF64, inplace: inplace);
   }
+
+  // TODO - multiplyF16
 
   //!SECTION - multiply
 
   //SECTION - divide
   /// divide
   Mat divide<T>(T val, {bool inplace = false}) {
-    if (T == Mat) {
-      return divideMat(val as Mat, inplace: inplace);
-    } else if (T == double) {
-      switch (type.depth) {
-        case MatType.CV_32F:
-          return divideF32(val as double, inplace: inplace);
-        case MatType.CV_64F:
-          return divideF64(val as double, inplace: inplace);
-        default:
-          throw UnsupportedError("divide float to ${type.asString()} is not supported!");
-      }
-    } else if (T == int) {
-      switch (type.depth) {
-        case MatType.CV_8U:
-          return divideU8(val as int, inplace: inplace);
-        case MatType.CV_8S:
-          return divideI8(val as int, inplace: inplace);
-        case MatType.CV_32S:
-          return divideI32(val as int, inplace: inplace);
-        default:
-          throw UnimplementedError();
-      }
-    } else {
-      throw UnsupportedError("Type $T is not supported");
-    }
+    return switch (val) {
+      Mat() => divideMat(val as Mat, inplace: inplace),
+      int() => switch (type.depth) {
+          MatType.CV_8U => divideU8(val as int, inplace: inplace),
+          MatType.CV_8S => divideI8(val as int, inplace: inplace),
+          MatType.CV_16U => divideU16(val as int, inplace: inplace),
+          MatType.CV_16S => divideI16(val as int, inplace: inplace),
+          MatType.CV_32S => divideI32(val as int, inplace: inplace),
+          _ => throw UnsupportedError("divide int to ${type.asString()} is not supported!"),
+        },
+      double() => switch (type.depth) {
+          MatType.CV_32F => divideF32(val as double, inplace: inplace),
+          MatType.CV_64F => divideF64(val as double, inplace: inplace),
+          // MatType.CV_16F => divideF16(val as double, inplace: inplace), // TODO
+          _ => throw UnsupportedError("divide double to ${type.asString()} is not supported!"),
+        },
+      _ => throw UnsupportedError("Type $T is not supported"),
+    };
   }
 
-  Mat divideMat(Mat other, {bool inplace = false, double scale = 1, int dtype = -1}) {
-    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
-
-    if (inplace) {
-      cvRun(() => ccore.Mat_Divide(
-            ref,
-            other.ref,
-            ref,
-            scale,
-            dtype,
-          ));
-      return this;
-    } else {
-      final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Divide(ref, other.ref, dst.ref, scale, dtype));
-      return dst;
-    }
-  }
+  Mat divideMat(Mat other, {bool inplace = false}) => _opMat(other, ccore.Mat_DivideMat, inplace: inplace);
 
   Mat divideU8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_DivideUChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_DivideUChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8U && val >= CV_U8_MIN && val <= CV_U8_MAX);
+    return _opInt(val, ccore.Mat_DivideUChar, inplace: inplace);
   }
 
   Mat divideI8(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_DivideSChar(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_DivideSChar(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_8S && val >= CV_I8_MIN && val <= CV_I8_MAX);
+    return _opInt(val, ccore.Mat_DivideSChar, inplace: inplace);
+  }
+
+  Mat divideI16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16S && val >= CV_I16_MIN && val <= CV_I16_MAX);
+    return _opInt(val, ccore.Mat_DivideI16, inplace: inplace);
+  }
+
+  Mat divideU16(int val, {bool inplace = false}) {
+    assert(type.depth == MatType.CV_16U && val >= CV_U16_MIN && val <= CV_U16_MAX);
+    return _opInt(val, ccore.Mat_DivideU16, inplace: inplace);
   }
 
   Mat divideI32(int val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_DivideI32(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_DivideI32(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32S && val >= CV_I32_MIN && val <= CV_I32_MAX);
+    return _opInt(val, ccore.Mat_DivideI32, inplace: inplace);
   }
 
   Mat divideF32(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_DivideFloat(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_DivideFloat(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_32F && val <= CV_F32_MAX);
+    return _opDouble(val, ccore.Mat_DivideFloat, inplace: inplace);
   }
 
   Mat divideF64(double val, {bool inplace = false}) {
-    cvAssert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
-    if (inplace) {
-      cvRun(() => ccore.Mat_DivideF64(ref, val));
-      return this;
-    } else {
-      final dst = clone();
-      cvRun(() => ccore.Mat_DivideF64(dst.ref, val));
-      return dst;
-    }
+    assert(type.depth == MatType.CV_64F && val <= CV_F64_MAX);
+    return _opDouble(val, ccore.Mat_DivideF64, inplace: inplace);
   }
+
+  // TODO - divideF16
   //!SECTION - divide
 
   Mat transpose({bool inplace = false}) {
@@ -1120,8 +1007,21 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
+  /// Performs an element-wise multiplication or division of the two matrices.
+  ///
+  /// The method returns a temporary object encoding per-element array multiplication,
+  /// with optional scale. Note that this is not a matrix multiplication that corresponds to
+  /// a simpler "\*" operator.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a385c09827713dc3e6d713bfad8460706
+  Mat mul(Mat other, {bool inplace = false, double scale = 1.0}) {
+    final p = inplace ? ptr : calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_Mul(ref, other.ref, p, scale));
+    return inplace ? this : Mat._(p);
+  }
+
   Mat region(Rect rect) {
-    cvAssert(rect.x + rect.width <= width && rect.y + rect.height <= height);
+    cvAssert(rect.right <= width && rect.bottom <= height);
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_Region(ref, rect.ref, p));
     final dst = Mat._(p);

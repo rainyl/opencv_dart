@@ -901,6 +901,39 @@ CvStatus *Mat_SetVec6d(Mat m, int row, int col, Vec6d val) {
 
 #pragma region Mat_operation
 
+CvStatus *Mat_AddMat(Mat m, Mat val) {
+  BEGIN_WRAP
+  *m.ptr += (*val.ptr);
+  END_WRAP
+}
+
+CvStatus *Mat_SubtractMat(Mat m, Mat val) {
+  BEGIN_WRAP
+  *m.ptr -= (*val.ptr);
+  END_WRAP
+}
+
+// Matrix multiplication
+CvStatus *Mat_MultiplyMat(Mat m, Mat val) {
+  BEGIN_WRAP
+  *m.ptr *= (*val.ptr);
+  END_WRAP
+}
+
+// Performs an element-wise multiplication or division of the two matrices.
+CvStatus *Mat_Mul(Mat m, Mat val, Mat *dst, double scale) {
+  BEGIN_WRAP
+  auto expr = (*m.ptr).mul(*val.ptr, scale);
+  *dst = {new cv::Mat(expr)};
+  END_WRAP
+}
+
+CvStatus *Mat_DivideMat(Mat m, Mat val) {
+  BEGIN_WRAP
+  *m.ptr /= (*val.ptr);
+  END_WRAP
+}
+
 CvStatus *Mat_AddUChar(Mat m, uint8_t val) {
   BEGIN_WRAP
   *m.ptr += val;
@@ -943,6 +976,54 @@ CvStatus *Mat_MultiplySChar(Mat m, int8_t val) {
 CvStatus *Mat_DivideSChar(Mat m, int8_t val) {
   BEGIN_WRAP
   *m.ptr /= val;
+  END_WRAP
+}
+
+CvStatus *Mat_AddI16(Mat m, int16_t val) {
+  BEGIN_WRAP
+  *m.ptr += val;
+  END_WRAP
+}
+
+CvStatus *Mat_SubtractI16(Mat m, int16_t val) {
+  BEGIN_WRAP
+  *m.ptr -= val;
+  END_WRAP
+}
+
+CvStatus *Mat_MultiplyI16(Mat m, int16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+
+CvStatus *Mat_DivideI16(Mat m, int16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+
+CvStatus *Mat_AddU16(Mat m, uint16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+
+CvStatus *Mat_SubtractU16(Mat m, uint16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+
+CvStatus *Mat_MultiplyU16(Mat m, uint16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
+  END_WRAP
+}
+
+CvStatus *Mat_DivideU16(Mat m, uint16_t val) {
+  BEGIN_WRAP
+  *m.ptr *= val;
   END_WRAP
 }
 
@@ -1029,16 +1110,17 @@ CvStatus *Mat_AbsDiff(Mat src1, Mat src2, Mat dst) {
   END_WRAP
 }
 
-CvStatus *Mat_Add(Mat src1, Mat src2, Mat dst) {
+CvStatus *Mat_Add(Mat src1, Mat src2, Mat dst, Mat mask, int dtype) {
   BEGIN_WRAP
-  cv::add(*src1.ptr, *src2.ptr, *dst.ptr);
+  cv::add(*src1.ptr, *src2.ptr, *dst.ptr, *mask.ptr, dtype);
   END_WRAP
 }
 
-CvStatus *Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst, int dtype) {
-    BEGIN_WRAP
-    cv::addWeighted(*src1.ptr, alpha, *src2.ptr, beta, gamma, *dst.ptr, dtype);
-    END_WRAP
+CvStatus *
+Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst, int dtype) {
+  BEGIN_WRAP
+  cv::addWeighted(*src1.ptr, alpha, *src2.ptr, beta, gamma, *dst.ptr, dtype);
+  END_WRAP
 }
 
 CvStatus *Mat_BitwiseAnd(Mat src1, Mat src2, Mat dst) {
@@ -1176,13 +1258,12 @@ CvStatus *Mat_Determinant(Mat m, double *rval) {
 }
 
 CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows) {
-    BEGIN_WRAP
-    cv::dft(*src.ptr, *dst.ptr, flags, nonzeroRows);
-    END_WRAP
+  BEGIN_WRAP
+  cv::dft(*src.ptr, *dst.ptr, flags, nonzeroRows);
+  END_WRAP
 }
 
-
-CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype){
+CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   BEGIN_WRAP
   cv::divide(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
   END_WRAP
@@ -1366,11 +1447,10 @@ CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
 }
 
 CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags, bool conjB) {
-    BEGIN_WRAP
-    cv::mulSpectrums(*a.ptr, *b.ptr, *c.ptr, flags, conjB);
-    END_WRAP
+  BEGIN_WRAP
+  cv::mulSpectrums(*a.ptr, *b.ptr, *c.ptr, flags, conjB);
+  END_WRAP
 }
-
 
 CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   BEGIN_WRAP
@@ -1378,9 +1458,9 @@ CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   END_WRAP
 }
 
-CvStatus *Mat_Normalize(Mat src, Mat dst, double alpha, double beta, int typ) {
+CvStatus *Mat_Normalize(Mat src, Mat dst, double alpha, double beta, int typ, int dtype, Mat mask) {
   BEGIN_WRAP
-  cv::normalize(*src.ptr, *dst.ptr, alpha, beta, typ);
+  cv::normalize(*src.ptr, *dst.ptr, alpha, beta, typ, dtype, *mask.ptr);
   END_WRAP
 }
 CvStatus *Mat_PerspectiveTransform(Mat src, Mat dst, Mat tm) {
@@ -1463,9 +1543,9 @@ CvStatus *Mat_Split(Mat src, VecMat *rval) {
   END_WRAP
 }
 
-CvStatus *Mat_Subtract(Mat src1, Mat src2, Mat dst) {
+CvStatus *Mat_Subtract(Mat src1, Mat src2, Mat dst, Mat mask, int dtype) {
   BEGIN_WRAP
-  cv::subtract(*src1.ptr, *src2.ptr, *dst.ptr);
+  cv::subtract(*src1.ptr, *src2.ptr, *dst.ptr, *mask.ptr, dtype);
   END_WRAP
 }
 CvStatus *Mat_T(Mat x, Mat *rval);
@@ -1747,14 +1827,14 @@ CvStatus *Rotate(Mat src, Mat dst, int rotateCode) {
   cv::rotate(*src.ptr, *dst.ptr, rotateCode);
   END_WRAP
 }
-CvStatus *Norm(Mat src1, int normType, double *rval) {
+CvStatus *Norm(Mat src1, int normType, Mat mask, double *rval) {
   BEGIN_WRAP
-  *rval = cv::norm(*src1.ptr, normType);
+  *rval = cv::norm(*src1.ptr, normType, *mask.ptr);
   END_WRAP
 }
-CvStatus *NormWithMats(Mat src1, Mat src2, int normType, double *rval) {
+CvStatus *NormWithMats(Mat src1, Mat src2, int normType, Mat mask, double *rval) {
   BEGIN_WRAP
-  *rval = cv::norm(*src1.ptr, *src2.ptr, normType);
+  *rval = cv::norm(*src1.ptr, *src2.ptr, normType, *mask.ptr);
   END_WRAP
 }
 #pragma endregion

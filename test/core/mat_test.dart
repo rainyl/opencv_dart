@@ -260,13 +260,13 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(2));
 
     // Mat
-    final mat2 = mat0.multiply<cv.Mat>(mat1);
+    final mat2 = mat0.mul(mat1);
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(200));
     expect(() => mat2.multiply<double>(0.1), throwsUnsupportedError);
     expect(() => mat2.subtract<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
     final mat2_1 = mat1.clone();
-    mat2_1.multiply<cv.Mat>(mat0, inplace: true);
+    mat2_1.mul(mat0, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(200));
 
     // int
@@ -291,6 +291,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat6.at<double>(0, 0), closeTo(220.0, 0.001));
     mat6.multiply<double>(2, inplace: true);
     expect(mat6.at<double>(0, 0), closeTo(440.0, 0.001));
+
+    // Matrix multiplication
+    final mat7 = cv.Mat.zeros(3, 3, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(1));
+    mat7.multiply<cv.Mat>(mat7, inplace: true);
+    expect(mat7.at<double>(0, 0), 3); // 1*1 + 1*1 + 1*1
   });
 
   test('Mat operations Divide', () {

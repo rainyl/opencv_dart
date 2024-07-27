@@ -45,7 +45,7 @@ void main() async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
-    cv.add(mat0, mat1, dst);
+    cv.add(mat0, mat1, dst: dst);
     expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
