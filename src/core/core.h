@@ -279,7 +279,7 @@ CvStatus *Mat_CountNonZero(Mat src, int *rval);
 CvStatus *Mat_DCT(Mat src, Mat dst, int flags);
 CvStatus *Mat_Determinant(Mat m, double *rval);
 CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows);
-CvStatus *Mat_Divide(Mat src1, Mat src2, double scale, int dtype, Mat dst);
+CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype);
 CvStatus *Mat_Eigen(Mat src, Mat eigenvalues, Mat eigenvectors, bool *rval);
 CvStatus *Mat_EigenNonSymmetric(Mat src, Mat eigenvalues, Mat eigenvectors);
 CvStatus *Mat_PCACompute(Mat src, Mat mean, Mat eigenvectors, Mat eigenvalues, int maxComponents);
@@ -308,8 +308,7 @@ CvStatus *Mat_MinMaxIdx(Mat m, double *minVal, double *maxVal, int *minIdx, int 
 CvStatus *Mat_MinMaxLoc(Mat m, double *minVal, double *maxVal, Point *minLoc, Point *maxLoc);
 CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo);
 CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags, bool conjB);
-CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst);
-CvStatus *Mat_MultiplyWithParams(Mat src1, Mat src2, Mat dst, double scale, int dtype);
+CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype);
 CvStatus *Mat_Normalize(Mat src, Mat dst, double alpha, double beta, int typ);
 CvStatus *Mat_PerspectiveTransform(Mat src, Mat dst, Mat tm);
 CvStatus *Mat_Solve(Mat src1, Mat src2, Mat dst, int flags, bool *rval);

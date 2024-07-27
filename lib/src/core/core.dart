@@ -432,7 +432,7 @@ Mat divide(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, scale, dtype, dst!.ref));
+  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -922,8 +922,7 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() =>
-      ccore.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.Mat_Multiply(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 

@@ -1065,25 +1065,25 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_Divide(
     Mat src1,
     Mat src2,
+    Mat dst,
     double scale,
     int dtype,
-    Mat dst,
   ) {
     return _Mat_Divide(
       src1,
       src2,
+      dst,
       scale,
       dtype,
-      dst,
     );
   }
 
   late final _Mat_DividePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Double, ffi.Int, Mat)>>('Mat_Divide');
+              Mat, Mat, Mat, ffi.Double, ffi.Int)>>('Mat_Divide');
   late final _Mat_Divide = _Mat_DividePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, Mat)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, int)>();
 
   ffi.Pointer<CvStatus> Mat_DivideF64(
     Mat m,
@@ -2657,19 +2657,24 @@ class CvNativeCore {
     Mat src1,
     Mat src2,
     Mat dst,
+    double scale,
+    int dtype,
   ) {
     return _Mat_Multiply(
       src1,
       src2,
       dst,
+      scale,
+      dtype,
     );
   }
 
   late final _Mat_MultiplyPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>>(
-      'Mat_Multiply');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Double, ffi.Int)>>('Mat_Multiply');
   late final _Mat_Multiply = _Mat_MultiplyPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, int)>();
 
   ffi.Pointer<CvStatus> Mat_MultiplyF64(
     Mat m,
@@ -2769,29 +2774,6 @@ class CvNativeCore {
       'Mat_MultiplyUChar');
   late final _Mat_MultiplyUChar = _Mat_MultiplyUCharPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int)>();
-
-  ffi.Pointer<CvStatus> Mat_MultiplyWithParams(
-    Mat src1,
-    Mat src2,
-    Mat dst,
-    double scale,
-    int dtype,
-  ) {
-    return _Mat_MultiplyWithParams(
-      src1,
-      src2,
-      dst,
-      scale,
-      dtype,
-    );
-  }
-
-  late final _Mat_MultiplyWithParamsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Double, ffi.Int)>>('Mat_MultiplyWithParams');
-  late final _Mat_MultiplyWithParams = _Mat_MultiplyWithParamsPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, int)>();
 
   /// @brief Create empty Mat
   ///

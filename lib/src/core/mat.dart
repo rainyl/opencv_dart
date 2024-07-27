@@ -961,15 +961,16 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  Mat multiplyMat(Mat other, {bool inplace = false}) {
+  Mat multiplyMat(Mat other,
+      {bool inplace = false, double scale = 1, int dtype = -1}) {
     cvAssert(
         other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
-      cvRun(() => ccore.Mat_Multiply(ref, other.ref, ref));
+      cvRun(() => ccore.Mat_Multiply(ref, other.ref, ref, scale, dtype));
       return this;
     } else {
       final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Multiply(ref, other.ref, dst.ref));
+      cvRun(() => ccore.Mat_Multiply(ref, other.ref, dst.ref, scale, dtype));
       return dst;
     }
   }
@@ -1076,11 +1077,17 @@ class Mat extends CvStruct<cvg.Mat> {
         other.type == type, "${type.asString()} != ${other.type.asString()}");
 
     if (inplace) {
-      cvRun(() => ccore.Mat_Divide(ref, other.ref, scale, dtype, ref));
+      cvRun(() => ccore.Mat_Divide(
+            ref,
+            other.ref,
+            ref,
+            scale,
+            dtype,
+          ));
       return this;
     } else {
       final dst = Mat.empty();
-      cvRun(() => ccore.Mat_Divide(ref, other.ref, scale, dtype, dst.ref));
+      cvRun(() => ccore.Mat_Divide(ref, other.ref, dst.ref, scale, dtype));
       return dst;
     }
   }

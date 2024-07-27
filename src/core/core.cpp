@@ -1182,7 +1182,7 @@ CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows) {
 }
 
 
-CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
+CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype){
   BEGIN_WRAP
   cv::divide(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
   END_WRAP
@@ -1371,13 +1371,8 @@ CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags, bool conjB) {
     END_WRAP
 }
 
-CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
-  BEGIN_WRAP
-  cv::multiply(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
-  END_WRAP
-}
 
-CvStatus *Mat_MultiplyWithParams(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
+CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype) {
   BEGIN_WRAP
   cv::multiply(*src1.ptr, *src2.ptr, *dst.ptr, scale, dtype);
   END_WRAP
@@ -1715,7 +1710,7 @@ CvStatus *LUT(Mat src, Mat lut, Mat dst) {
   END_WRAP
 }
 
-CvStatus *Mat_KMeans(
+CvStatus *KMeans(
     Mat data,
     int k,
     Mat bestLabels,

@@ -286,8 +286,6 @@ files:
         name: Mat_MultiplySChar
       c:@F@Mat_MultiplyUChar:
         name: Mat_MultiplyUChar
-      c:@F@Mat_MultiplyWithParams:
-        name: Mat_MultiplyWithParams
       c:@F@Mat_New:
         name: Mat_New
       c:@F@Mat_NewFromBytes:
