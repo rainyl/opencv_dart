@@ -908,10 +908,8 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  Mat multiplyMat(Mat other,
-      {bool inplace = false, double scale = 1, int dtype = -1}) {
-    cvAssert(
-        other.type == type, "${type.asString()} != ${other.type.asString()}");
+  Mat multiplyMat(Mat other, {bool inplace = false, double scale = 1, int dtype = -1}) {
+    cvAssert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => ccore.Mat_Multiply(ref, other.ref, ref, scale, dtype));
       return this;
