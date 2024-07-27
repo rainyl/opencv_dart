@@ -76,9 +76,10 @@ Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
-Mat add(Mat src1, Mat src2, [Mat? dst]) {
+Mat add(Mat src1, Mat src2, {Mat? dst, int dtype = -1, Mat? mask}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Add(src1.ref, src2.ref, dst!.ref));
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Add(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
   return dst;
 }
 
@@ -93,20 +94,10 @@ Mat addWeighted(
   double beta,
   double gamma, {
   OutputArray? dst,
-  int dtype = -1, // TODO: Add this
+  int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(
-    () => ccore.Mat_AddWeighted(
-      src1.ref,
-      alpha,
-      src2.ref,
-      beta,
-      gamma,
-      dst!.ref,
-      // dtype,
-    ),
-  );
+  cvRun(() => ccore.Mat_AddWeighted(src1.ref, alpha, src2.ref, beta, gamma, dst!.ref, dtype));
   return dst;
 }
 
@@ -123,11 +114,9 @@ Mat bitwiseAND(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => ccore.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -137,11 +126,9 @@ Mat bitwiseAND(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
 Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => ccore.Mat_BitwiseNot(src.ref, dst!.ref));
-  } else {
-    cvRun(() => ccore.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseNot(src.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -157,11 +144,9 @@ Mat bitwiseOR(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => ccore.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -177,11 +162,9 @@ Mat bitwiseXOR(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => ccore.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -270,15 +253,7 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   magnitude ??= Mat.empty();
   angle ??= Mat.empty();
-  cvRun(
-    () => ccore.Mat_CartToPolar(
-      x.ref,
-      y.ref,
-      magnitude!.ref,
-      angle!.ref,
-      angleInDegrees,
-    ),
-  );
+  cvRun(() => ccore.Mat_CartToPolar(x.ref, y.ref, magnitude!.ref, angle!.ref, angleInDegrees));
   return (magnitude, angle);
 }
 
@@ -405,14 +380,9 @@ double determinant(InputArray mtx) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadd6cf9baf2b8b704a11b5f04aaf4f39d
-Mat dft(
-  InputArray src, {
-  OutputArray? dst,
-  int flags = 0,
-  int nonzeroRows = 0, // TODO: add
-}) {
+Mat dft(InputArray src, {OutputArray? dst, int flags = 0, int nonzeroRows = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags, nonzeroRows));
   return dst;
 }
 
@@ -421,15 +391,9 @@ Mat dft(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6db555d30115642fedae0cda05604874
-Mat divide(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  double scale = 1,
-  int dtype = -1,
-}) {
+Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1, int dtype = -1}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -887,7 +851,7 @@ Mat mulSpectrums(
   bool conjB = false,
 }) {
   c ??= Mat.empty();
-  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
+  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags, conjB));
   return c;
 }
 
@@ -904,7 +868,7 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.Mat_Multiply(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -918,11 +882,11 @@ Mat normalize(
   double alpha = 1,
   double beta = 0,
   int normType = NORM_L2,
-  // TODO
-  // int dtype = -1,
-  // InputArray? mask,
+  int dtype = -1,
+  InputArray? mask,
 }) {
-  cvRun(() => ccore.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType));
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType, dtype, mask!.ref));
   return dst;
 }
 
@@ -935,11 +899,12 @@ double norm(
   int normType = NORM_L2,
   InputArray? mask,
 }) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => ccore.Norm(src1.ref, normType, p));
-    return p.value;
-  });
+  mask ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.Norm(src1.ref, normType, mask!.ref, p));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
@@ -950,11 +915,12 @@ double norm1(
   InputArray src1,
   InputArray src2, {
   int normType = NORM_L2,
-  // InputArray? mask,
+  InputArray? mask,
 }) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => ccore.NormWithMats(src1.ref, src2.ref, normType, p));
+    mask ??= Mat.empty();
+    cvRun(() => ccore.NormWithMats(src1.ref, src2.ref, normType, mask!.ref, p));
     return p.value;
   });
 }
@@ -1106,10 +1072,8 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 VecMat split(InputArray m) {
-  final p = calloc<cvg.VecMat>();
   final vec = calloc<cvg.VecMat>();
   cvRun(() => ccore.Mat_Split(m.ref, vec));
-  calloc.free(p);
   return VecMat.fromPointer(vec);
 }
 
@@ -1121,12 +1085,12 @@ Mat subtract(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
-  // TODO
-  //   InputArray? mask,
-  //   int dtype = -1,
+  InputArray? mask,
+  int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
   return dst;
 }
 

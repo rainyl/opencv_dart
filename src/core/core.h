@@ -216,6 +216,12 @@ CvStatus *Mat_SetVec6d(Mat m, int row, int col, Vec6d val);
 
 #pragma region Mat_operation
 
+CvStatus *Mat_AddMat(Mat m, Mat val);
+CvStatus *Mat_SubtractMat(Mat m, Mat val);
+CvStatus *Mat_MultiplyMat(Mat m, Mat val);
+CvStatus *Mat_Mul(Mat m, Mat val, Mat *dst, double scale);
+CvStatus *Mat_DivideMat(Mat m, Mat val);
+
 CvStatus *Mat_AddUChar(Mat m, uint8_t val);
 CvStatus *Mat_SubtractUChar(Mat m, uint8_t val);
 CvStatus *Mat_MultiplyUChar(Mat m, uint8_t val);
@@ -225,6 +231,16 @@ CvStatus *Mat_AddSChar(Mat m, int8_t val);
 CvStatus *Mat_SubtractSChar(Mat m, int8_t val);
 CvStatus *Mat_MultiplySChar(Mat m, int8_t val);
 CvStatus *Mat_DivideSChar(Mat m, int8_t val);
+
+CvStatus *Mat_AddI16(Mat m, int16_t val);
+CvStatus *Mat_SubtractI16(Mat m, int16_t val);
+CvStatus *Mat_MultiplyI16(Mat m, int16_t val);
+CvStatus *Mat_DivideI16(Mat m, int16_t val);
+
+CvStatus *Mat_AddU16(Mat m, uint16_t val);
+CvStatus *Mat_SubtractU16(Mat m, uint16_t val);
+CvStatus *Mat_MultiplyU16(Mat m, uint16_t val);
+CvStatus *Mat_DivideU16(Mat m, uint16_t val);
 
 CvStatus *Mat_AddI32(Mat m, int32_t val);
 CvStatus *Mat_SubtractI32(Mat m, int32_t val);
@@ -243,8 +259,9 @@ CvStatus *Mat_DivideF64(Mat m, double_t val);
 CvStatus *Mat_MultiplyMatrix(Mat x, Mat y, Mat *rval);
 
 CvStatus *Mat_AbsDiff(Mat src1, Mat src2, Mat dst);
-CvStatus *Mat_Add(Mat src1, Mat src2, Mat dst);
-CvStatus *Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst);
+CvStatus *Mat_Add(Mat src1, Mat src2, Mat dst, Mat mask, int dtype);
+CvStatus *
+Mat_AddWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst, int dtype);
 CvStatus *Mat_BitwiseAnd(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_BitwiseAndWithMask(Mat src1, Mat src2, Mat dst, Mat mask);
 CvStatus *Mat_BitwiseNot(Mat src1, Mat dst);
@@ -278,8 +295,8 @@ CvStatus *Mat_CopyMakeBorder(
 CvStatus *Mat_CountNonZero(Mat src, int *rval);
 CvStatus *Mat_DCT(Mat src, Mat dst, int flags);
 CvStatus *Mat_Determinant(Mat m, double *rval);
-CvStatus *Mat_DFT(Mat m, Mat dst, int flags);
-CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst);
+CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows);
+CvStatus *Mat_Divide(Mat src1, Mat src2, Mat dst, double scale, int dtype);
 CvStatus *Mat_Eigen(Mat src, Mat eigenvalues, Mat eigenvectors, bool *rval);
 CvStatus *Mat_EigenNonSymmetric(Mat src, Mat eigenvalues, Mat eigenvectors);
 CvStatus *Mat_PCACompute(Mat src, Mat mean, Mat eigenvectors, Mat eigenvalues, int maxComponents);
@@ -307,10 +324,9 @@ CvStatus *Mat_Min(Mat src1, Mat src2, Mat dst);
 CvStatus *Mat_MinMaxIdx(Mat m, double *minVal, double *maxVal, int *minIdx, int *maxIdx);
 CvStatus *Mat_MinMaxLoc(Mat m, double *minVal, double *maxVal, Point *minLoc, Point *maxLoc);
 CvStatus *Mat_MixChannels(VecMat src, VecMat dst, VecI32 fromTo);
-CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags);
-CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst);
-CvStatus *Mat_MultiplyWithParams(Mat src1, Mat src2, Mat dst, double scale, int dtype);
-CvStatus *Mat_Normalize(Mat src, Mat dst, double alpha, double beta, int typ);
+CvStatus *Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags, bool conjB);
+CvStatus *Mat_Multiply(Mat src1, Mat src2, Mat dst, double scale, int dtype);
+CvStatus *Mat_Normalize(Mat src, Mat dst, double alpha, double beta, int typ, int dtype, Mat mask);
 CvStatus *Mat_PerspectiveTransform(Mat src, Mat dst, Mat tm);
 CvStatus *Mat_Solve(Mat src1, Mat src2, Mat dst, int flags, bool *rval);
 CvStatus *Mat_SolveCubic(Mat coeffs, Mat roots, int *rval);
@@ -324,7 +340,7 @@ CvStatus *Mat_SetIdentity(Mat src, double scalar);
 CvStatus *Mat_Sort(Mat src, Mat dst, int flags);
 CvStatus *Mat_SortIdx(Mat src, Mat dst, int flags);
 CvStatus *Mat_Split(Mat src, VecMat *rval);
-CvStatus *Mat_Subtract(Mat src1, Mat src2, Mat dst);
+CvStatus *Mat_Subtract(Mat src1, Mat src2, Mat dst, Mat mask, int dtype);
 CvStatus *Mat_T(Mat x, Mat *rval);
 CvStatus *Mat_Trace(Mat src, Scalar *rval);
 CvStatus *Mat_Transform(Mat src, Mat dst, Mat tm);
@@ -357,8 +373,8 @@ CvStatus *KMeansPoints(
     double *rval
 );
 CvStatus *Rotate(Mat src, Mat dst, int rotateCode);
-CvStatus *Norm(Mat src1, int normType, double *rval);
-CvStatus *NormWithMats(Mat src1, Mat src2, int normType, double *rval);
+CvStatus *Norm(Mat src1, int normType, Mat mask, double *rval);
+CvStatus *NormWithMats(Mat src1, Mat src2, int normType, Mat mask, double *rval);
 #pragma endregion
 
 #pragma region RNG
