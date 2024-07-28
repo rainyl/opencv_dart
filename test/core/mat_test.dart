@@ -427,6 +427,21 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     }
   });
 
+  test('Mat adjustROI locateROI', () {
+    final mat0 = cv.Mat.ones(200, 200, cv.MatType.CV_8UC3);
+    final mat1 = mat0.region(cv.Rect(10, 10, 100, 100));
+
+    expect(mat1.isSubmatrix, true);
+
+    mat1.adjustROI(2, 2, 2, 2);
+    expect(mat1.rows, 104);
+    expect(mat1.cols, 104);
+
+    final (sz, pt) = mat1.locateROI();
+    expect(sz, cv.Size(200, 200));
+    expect(pt, cv.Point(8, 8));
+  });
+
   test('Mat Rotate', () {
     final mat0 = cv.Mat.ones(200, 100, cv.MatType.CV_8UC3);
     final mat1 = mat0.rotate(cv.ROTATE_90_CLOCKWISE);

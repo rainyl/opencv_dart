@@ -47,6 +47,11 @@ class Size extends CvStruct<cvg.Size> {
 
   @override
   cvg.Size get ref => ptr.ref;
+
+  @override
+  String toString() {
+    return "Size($width, $height)";
+  }
 }
 
 class Size2f extends CvStruct<cvg.Size2f> {

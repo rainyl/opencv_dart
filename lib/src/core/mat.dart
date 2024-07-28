@@ -12,6 +12,7 @@ import 'mat_type.dart';
 import 'point.dart';
 import 'rect.dart';
 import 'scalar.dart';
+import 'size.dart';
 import 'vec.dart';
 
 class Mat extends CvStruct<cvg.Mat> {
@@ -1048,6 +1049,53 @@ class Mat extends CvStruct<cvg.Mat> {
 
   // TODO - divideF16
   //!SECTION - divide
+
+  /// Adjusts a submatrix size and position within the parent matrix.
+  ///
+  /// The method is complimentary to Mat::locateROI . The typical use of these
+  /// functions is to determine the submatrix position within the parent matrix
+  /// and then shift the position somehow. Typically, it can be required for
+  /// filtering operations when pixels outside of the ROI should be taken into account.
+  /// When all the method parameters are positive, the ROI needs to grow in all directions
+  /// by the specified amount, for example:
+  ///
+  /// `A.adjustROI(2, 2, 2, 2);`
+  ///
+  /// In this example, the matrix size is increased by 4 elements in each direction.
+  /// The matrix is shifted by 2 elements to the left and 2 elements up, which brings
+  /// in all the necessary pixels for the filtering with the 5x5 kernel.
+  ///
+  /// adjustROI forces the adjusted ROI to be inside of the parent matrix that is
+  /// boundaries of the adjusted ROI are constrained by boundaries of the parent matrix.
+  /// For example, if the submatrix A is located in the first row of a parent matrix
+  /// and you called A.adjustROI(2, 2, 2, 2) then A will not be increased in the upward direction.
+  ///
+  /// The function is used internally by the OpenCV filtering functions, like filter2D ,
+  /// morphological operations, and so on.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9e8ea7f2a254814de7713286b6640d77
+  Mat adjustROI(int dtop, int dbottom, int dleft, int dright) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_AdjustROI(ref, dtop, dbottom, dleft, dright, p));
+    return Mat._(p);
+  }
+
+  /// Locates the matrix header within a parent matrix.
+  ///
+  /// After you extracted a submatrix from a matrix using Mat::row, Mat::col,
+  /// Mat::rowRange, Mat::colRange, and others, the resultant submatrix points
+  /// just to the part of the original big matrix. However, each submatrix contains
+  /// information (represented by datastart and dataend fields) that helps reconstruct
+  /// the original matrix size and the position of the extracted submatrix within the
+  /// original matrix. The method locateROI does exactly that.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a40b5b3371a9c2a4b2b8ce0c8068d7c96
+  (Size wholeSize, Point ofs) locateROI() {
+    final pWholeSize = calloc<cvg.Size>();
+    final pOfs = calloc<cvg.Point>();
+    cvRun(() => ccore.Mat_LocateROI(ref, pWholeSize, pOfs));
+    return (Size.fromPointer(pWholeSize), Point.fromPointer(pOfs));
+  }
 
   /// Creates a matrix header for the specified matrix column.
   ///
