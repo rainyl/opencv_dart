@@ -18,12 +18,7 @@ dependencies:
   stack_trace: ^1.11.1
 
 dev_dependencies:
-  ffigen:
-    # path: ../native/pkgs/ffigen
-    git:
-      url: https://github.com/rainyl/native.git
-      path: pkgs/ffigen
-      ref: a21f691
+  ffigen: ^13.0.0
   test: ^1.25.2
 
 topics:
