@@ -7,7 +7,9 @@ library cv;
 
 import 'exception.dart';
 
-extension type const MatType(int value) implements Object {
+class MatType {
+  final int value;
+  MatType(this.value);
   const MatType.makeType(int depth, int channels)
       : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
 
