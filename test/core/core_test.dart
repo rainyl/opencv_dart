@@ -366,10 +366,8 @@ void main() async {
     });
 
     test('cv.divide with dtype', () {
-      final mat1 =
-          cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
-      final mat2 =
-          cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
       final dtype = cv.MatType.CV_16S;
       final dst = cv.divide(mat1, mat2, dtype: dtype);
       expect(dst.isEmpty, equals(false));
