@@ -7,9 +7,7 @@ library cv;
 
 import 'exception.dart';
 
-class MatType {
-  final int value;
-  MatType(this.value);
+extension type const MatType(int value) {
   const MatType.makeType(int depth, int channels)
       : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
 
@@ -77,8 +75,9 @@ class MatType {
   static const CV_16FC3 = MatType.CV_16FC(3); // 23
   static const CV_16FC4 = MatType.CV_16FC(4); // 31
 
-  @override
-  String toString() {
+  // TODO: extension type do not support override/redeclare methods exist in Object
+  // such as toString(), if they support this feature, we can just use toString()
+  String asString() {
     final String s = switch (depth) {
       CV_8U => "CV_8U",
       CV_8S => "CV_8S",
