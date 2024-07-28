@@ -41,42 +41,72 @@ void main() async {
     expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
-  test('cv.Add', () {
-    final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
-    final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
-    final dst = cv.Mat.empty();
-    cv.add(mat0, mat1, dst: dst);
-    expect(dst.at<int>(0, 0, 0), equals(1));
+  group('cv.add tests', () {
+    test('cv.add without mask', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
+      final dst = cv.Mat.empty();
+      cv.add(mat0, mat1, dst: dst);
+      expect(dst.at<int>(0, 0, 0), equals(1));
+    });
+
+    test('cv.add with mask', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
+      final mask = cv.Mat.ones(100, 100, cv.MatType.CV_8UC1);
+      final dst = cv.Mat.empty();
+      cv.add(mat0, mat1, dst: dst, mask: mask);
+      expect(dst.at<int>(0, 0, 0), equals(1));
+    });
   });
 
-  test('cv.addWeighted', () {
-    final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
-    final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
-    final dst = cv.addWeighted(mat0, 0.5, mat1, 0.5, 1);
-    expect(dst.at<int>(0, 0, 0), equals(75 + 1));
+  group('cv.addWeighted tests', () {
+    test('cv.addWeighted with different alpha, beta, and gamma', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
+      final dst = cv.addWeighted(mat0, 0.7, mat1, 0.3, 10);
+      expect(dst.at<int>(0, 0, 0), equals((0.7 * 100 + 0.3 * 50 + 10).round()));
+    });
+
+    test('cv.addWeighted with same alpha and beta', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(200));
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
+      final dst = cv.addWeighted(mat0, 0.5, mat1, 0.5, 0);
+      expect(dst.at<int>(0, 0, 0), equals(150));
+    });
   });
 
-  test('cv.bitwise_and', () {
-    final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
-    final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
-    final dst = cv.bitwiseAND(mat0, mat1);
-    expect(dst.at<int>(0, 0, 0), equals(100 & 50));
+  group('cv.bitwiseAND tests', () {
+    test('cv.bitwiseAND without mask', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
+      final dst = cv.bitwiseAND(mat0, mat1);
+      expect(dst.at<int>(0, 0, 0), equals(100 & 50));
+    });
+
+    test('cv.bitwiseAND with mask', () {
+      final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
+      final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
+      final mask = cv.Mat.ones(100, 100, cv.MatType.CV_8UC1);
+      final dst = cv.bitwiseAND(mat0, mat1, mask: mask);
+      expect(dst.at<int>(0, 0, 0), equals(100 & 50));
+    });
   });
 
-  test('cv.bitwise_not', () {
+  test('cv.bitwiseNOT', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final dst = cv.bitwiseNOT(mat0);
     expect(dst.at<int>(0, 0, 0), equals(155));
   });
 
-  test('cv.bitwise_or', () {
+  test('cv.bitwiseOR', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseOR(mat0, mat1);
     expect(dst.at<int>(0, 0, 0), equals(100 | 50));
   });
 
-  test('cv.bitwise_xor', () {
+  test('cv.bitwiseXOR', () {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(100));
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(50));
     final dst = cv.bitwiseXOR(mat0, mat1);
@@ -103,25 +133,61 @@ void main() async {
     expect(covar.isEmpty, equals(false));
   });
 
-  test('cv.cartToPolar', () {
-    final x = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
-    final y = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
-    final (magnitude, angle) = cv.cartToPolar(x, y, angleInDegrees: false);
-    expect(magnitude.isEmpty || angle.isEmpty, equals(false));
+  group('cv.cartToPolar tests', () {
+    test('cartToPolar without angleInDegrees', () {
+      final x = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
+      final y = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
+      final (magnitude, angle) = cv.cartToPolar(x, y, angleInDegrees: false);
+      expect(magnitude.isEmpty || angle.isEmpty, equals(false));
+    });
+
+    test('cartToPolar with angleInDegrees', () {
+      final x = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
+      final y = cv.Mat.zeros(100, 100, cv.MatType.CV_32FC1);
+      final (magnitude, angle) = cv.cartToPolar(x, y, angleInDegrees: true);
+      expect(magnitude.isEmpty || angle.isEmpty, equals(false));
+    });
   });
 
-  test('cv.checkRange', () {
-    final mat1 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
-    final (success, pos) = cv.checkRange(mat1);
-    expect(success, equals(true));
-    expect(pos, equals(cv.Point(0, 0)));
+  group('cv.checkRange tests', () {
+    test('cv.checkRange within range', () {
+      final mat1 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
+      final (success, pos) = cv.checkRange(mat1);
+      expect(success, equals(true));
+      expect(pos, equals(cv.Point(0, 0)));
+    });
+
+    test('cv.checkRange outside range', () {
+      final mat1 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1).setTo(cv.Scalar.all(200));
+      final (success, pos) = cv.checkRange(mat1, minVal: 0, maxVal: 100);
+      expect(success, equals(false));
+      expect(pos, equals(cv.Point(0, 0)));
+    });
   });
 
-  test('cv.compare', () {
-    final mat1 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
-    final mat2 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
-    final dst = cv.compare(mat1, mat2, cv.CMP_EQ);
-    expect(dst.isEmpty, equals(false));
+  group('cv.compare tests', () {
+    test('cv.compare equal', () {
+      final mat1 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
+      final mat2 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1);
+      final dst = cv.compare(mat1, mat2, cv.CMP_EQ);
+      expect(dst.isEmpty, equals(false));
+    });
+
+    test('cv.compare greater', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_8UC1).setTo(cv.Scalar.all(50));
+      final mat2 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1).setTo(cv.Scalar.all(30));
+      final dst = cv.compare(mat1, mat2, cv.CMP_GT);
+      expect(dst.isEmpty, equals(false));
+      expect(dst.at<int>(0, 0), equals(255));
+    });
+
+    test('cv.compare less', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_8UC1).setTo(cv.Scalar.all(20));
+      final mat2 = cv.Mat.zeros(101, 102, cv.MatType.CV_8UC1).setTo(cv.Scalar.all(30));
+      final dst = cv.compare(mat1, mat2, cv.CMP_LT);
+      expect(dst.isEmpty, equals(false));
+      expect(dst.at<int>(0, 0), equals(255));
+    });
   });
 
   test('cv.countNonZero', () {
@@ -136,7 +202,7 @@ void main() async {
     expect(mat1.at<double>(99, 0), equals(mat1.at<double>(0, 99)));
   });
 
-  test("cv.convertScaleAbs", () {
+  test('cv.convertScaleAbs', () {
     final src = cv.Mat.create(cols: 100, rows: 100, type: cv.MatType.CV_32FC1);
     final dst = cv.convertScaleAbs(src, alpha: 1, beta: 0);
     expect(dst.isEmpty, equals(false));
@@ -285,6 +351,32 @@ void main() async {
         }
       }
     });
+
+    test('cv.divide with scale', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
+      final scale = 2.0;
+      final dst = cv.divide(mat1, mat2, scale: scale);
+      expect(dst.isEmpty, equals(false));
+      for (int i = 0; i < dst.rows; i++) {
+        for (int j = 0; j < dst.cols; j++) {
+          expect(dst.at<double>(i, j), equals(10.0));
+        }
+      }
+    });
+
+    test('cv.divide with dtype', () {
+      final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
+      final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
+      final dtype = cv.MatType.CV_16S;
+      final dst = cv.divide(mat1, mat2, dtype: dtype);
+      expect(dst.isEmpty, equals(false));
+      for (int i = 0; i < dst.rows; i++) {
+        for (int j = 0; j < dst.cols; j++) {
+          expect(dst.at<int>(i, j), equals(5));
+        }
+      }
+    });
   });
 
   test('cv.eigen', () {
@@ -388,20 +480,22 @@ void main() async {
     expect(dst.rows, equals(src.rows));
   });
 
-  test('cv.inRange', () {
-    final mat1 = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
-    final lb = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
-    final ub = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
-    final dst = cv.inRange(mat1, lb, ub);
-    expect(dst.isEmpty, equals(false));
-  });
+  group('cv.inRange tests', () {
+    test('cv.inRange with Mat', () {
+      final mat1 = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
+      final lb = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
+      final ub = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC1, cv.Scalar(20, 100, 100, 0));
+      final dst = cv.inRange(mat1, lb, ub);
+      expect(dst.isEmpty, equals(false));
+    });
 
-  test('cv.inRangebyScalar', () {
-    final mat1 = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
-    final lb = cv.Scalar(20, 100, 100, 0);
-    final ub = cv.Scalar(20, 100, 100, 0);
-    final dst = cv.inRangebyScalar(mat1, lb, ub);
-    expect(dst.isEmpty, equals(false));
+    test('cv.inRange with Scalar', () {
+      final mat1 = cv.Mat.randu(101, 102, cv.MatType.CV_8UC1);
+      final lb = cv.Scalar(20, 100, 100, 0);
+      final ub = cv.Scalar(20, 100, 100, 0);
+      final dst = cv.inRangebyScalar(mat1, lb, ub);
+      expect(dst.isEmpty, equals(false));
+    });
   });
 
   test('cv.insertChannel', () {
@@ -440,7 +534,6 @@ void main() async {
   });
 
   test('cv.float16', () {
-    // https://en.wikipedia.org/wiki/Half-precision_floating-point_format#Half_precision_examples
     expect(cv.float16(0x0000), closeTo(0.0, 1e-8));
     expect(cv.float16(0x0001), closeTo(0.000000059604645, 1e-8));
     expect(cv.float16(0x03ff), closeTo(0.000060975552, 1e-8));
@@ -478,7 +571,6 @@ void main() async {
       sw.start();
       final dst = cv.LUT(src, lut);
       sw.stop();
-      // print('${src.type} -> ${lut.type}(${src.rows}x${src.cols}): ${sw.elapsedMilliseconds}ms');
       expect(dst.isEmpty, false);
       expect(src.shape, dst.shape);
     }
@@ -506,6 +598,7 @@ void main() async {
         for (final lutDepth in depthLut) {
           final lutType = cv.MatType.makeType(lutDepth, channel);
           // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
+
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F ||
             cv.MatType.CV_16F ||
@@ -599,10 +692,8 @@ void main() async {
   test('cv.mulSpectrums', () {
     final a = cv.Mat.zeros(101, 102, cv.MatType.CV_32FC1);
     final b = cv.Mat.zeros(101, 102, cv.MatType.CV_32FC1);
-
     final dst = cv.mulSpectrums(a, b, 0);
     expect(dst.isEmpty, false);
-
     final dst1 = cv.mulSpectrums(a, b, cv.DFT_ROWS);
     expect(dst1.isEmpty, false);
   });
@@ -626,7 +717,6 @@ void main() async {
     final src1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC1);
     final n = cv.norm(src1);
     expect(n, equals(0));
-
     final src2 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC1);
     final n1 = cv.norm1(src1, src2);
     expect(n1, equals(0));
@@ -664,7 +754,6 @@ void main() async {
     coeffs.set(0, 1, 3.0);
     coeffs.set(0, 2, -11.0);
     coeffs.set(0, 3, -6.0);
-
     final (rootsCount, roots) = cv.solveCubic(coeffs);
     expect(rootsCount, equals(3));
     expect((roots.at<double>(0, 0), roots.at<double>(0, 1), roots.at<double>(0, 2)), (-3.0, 2.0, -0.5));
@@ -675,7 +764,6 @@ void main() async {
     coeffs.set(0, 0, 49.0);
     coeffs.set(0, 1, -14.0);
     coeffs.set(0, 2, 1.0);
-
     final (diffError, roots) = cv.solvePoly(coeffs);
     expect(diffError, lessThan(1.0e-61));
     expect(roots.at<double>(0, 0), equals(7.0));
@@ -691,7 +779,6 @@ void main() async {
     final dst = cv.reduce(src, 0, cv.REDUCE_SUM, dtype: cv.MatType.CV_32FC1.value);
     expect((dst.rows, dst.cols), equals((1, 3)));
     expect((dst.at<double>(0, 0), dst.at<double>(0, 1), dst.at<double>(0, 2)), (2, 4, 6));
-
     final dst1 = cv.reduce(src, 1, cv.REDUCE_SUM, dtype: cv.MatType.CV_32FC1.value);
     expect((dst1.rows, dst1.cols), equals((2, 1)));
     expect((dst1.at<double>(0, 0), dst1.at<double>(1, 0)), (6, 6));
@@ -767,7 +854,6 @@ void main() async {
     }
     final dst = cv.sortIdx(src, cv.SORT_EVERY_ROW + cv.SORT_DESCENDING);
     expect(dst.isEmpty, false);
-
     expect(dst.at<int>(0, 0), 2);
   });
 
@@ -775,13 +861,10 @@ void main() async {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     final chans = cv.split(src);
     expect(chans.length, equals(src.channels));
-
     final dst = cv.merge(chans);
     expect(dst.isEmpty, false);
-
     final diff = cv.absDiff(src, dst);
     expect(diff.isEmpty, false);
-
     final sum = diff.sum();
     expect(sum, equals(cv.Scalar.black));
   });
@@ -815,7 +898,6 @@ void main() async {
         }
       }
     }
-
     final trace = cv.trace(src);
     expect(trace, equals(cv.Scalar(3, 0, 0, 0)));
   });
@@ -844,6 +926,8 @@ void main() async {
     final angle = cv.Mat.zeros(101, 102, cv.MatType.CV_32FC1);
     final (x, y) = cv.polarToCart(magnitude, angle);
     expect(x.isEmpty || y.isEmpty, false);
+    final (x2, y2) = cv.polarToCart(magnitude, angle, angleInDegrees: true);
+    expect(x2.isEmpty || y2.isEmpty, false);
   });
 
   test('cv.phase', () {
@@ -886,18 +970,13 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test(
-    'cv.setNumThreads',
-    onPlatform: {
-      "mac-os":
-          const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
-    },
-    () {
-      cv.setNumThreads(2);
-      final n = cv.getNumThreads();
-      expect(n, equals(2));
-    },
-  );
+  test('cv.setNumThreads', onPlatform: {
+    "mac-os": const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
+  }, () {
+    cv.setNumThreads(2);
+    final n = cv.getNumThreads();
+    expect(n, equals(2));
+  });
 
   test('cv.getNumThreads', () {
     final n = cv.getNumThreads();
