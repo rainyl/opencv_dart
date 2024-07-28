@@ -1077,6 +1077,19 @@ VecMat split(InputArray m) {
   return VecMat.fromPointer(vec);
 }
 
+/// Calculates a square root of array elements.
+///
+/// The function cv::sqrt calculates a square root of each input array element.
+/// In case of multi-channel arrays, each channel is processed independently.
+/// The accuracy is approximately the same as of the built-in std::sqrt .
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga186222c3919657890f88df5a1f64a7d7
+Mat sqrt(Mat src, {Mat? dst}) {
+  final p = dst?.ptr ?? calloc<cvg.Mat>();
+  cvRun(() => ccore.Mat_Sqrt(src.ref, p));
+  return dst ?? Mat.fromPointer(p);
+}
+
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
@@ -1092,6 +1105,18 @@ Mat subtract(
   mask ??= Mat.empty();
   cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
   return dst;
+}
+
+/// Calculates the sum of array elements.
+///
+/// The function cv::sum calculates and returns the sum of array elements,
+/// independently for each channel.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
+Scalar sum(Mat src) {
+  final p = calloc<cvg.Scalar>();
+  cvRun(() => ccore.Mat_Sum(src.ref, p));
+  return Scalar.fromPointer(p);
 }
 
 /// Trace returns the trace of a matrix.

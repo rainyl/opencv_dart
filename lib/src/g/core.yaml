@@ -44,6 +44,8 @@ files:
         name: Mat_AddUChar
       c:@F@Mat_AddWeighted:
         name: Mat_AddWeighted
+      c:@F@Mat_AdjustROI:
+        name: Mat_AdjustROI
       c:@F@Mat_BatchDistance:
         name: Mat_BatchDistance
       c:@F@Mat_BitwiseAnd:
@@ -80,6 +82,8 @@ files:
         name: Mat_Close
       c:@F@Mat_CloseVoid:
         name: Mat_CloseVoid
+      c:@F@Mat_Col:
+        name: Mat_Col
       c:@F@Mat_Cols:
         name: Mat_Cols
       c:@F@Mat_Compare:
@@ -258,6 +262,10 @@ files:
         name: Mat_Invert
       c:@F@Mat_IsContinuous:
         name: Mat_IsContinuous
+      c:@F@Mat_IsSubmatrix:
+        name: Mat_IsSubmatrix
+      c:@F@Mat_LocateROI:
+        name: Mat_LocateROI
       c:@F@Mat_Log:
         name: Mat_Log
       c:@F@Mat_Magnitude:
@@ -422,8 +430,12 @@ files:
         name: Mat_Repeat
       c:@F@Mat_Reshape:
         name: Mat_Reshape
+      c:@F@Mat_ReshapeByVec:
+        name: Mat_ReshapeByVec
       c:@F@Mat_Reshape_Async:
         name: Mat_Reshape_Async
+      c:@F@Mat_Row:
+        name: Mat_Row
       c:@F@Mat_Rows:
         name: Mat_Rows
       c:@F@Mat_ScaleAdd:
@@ -892,6 +904,8 @@ files:
         name: RotatedRect
       c:types.h@T@Scalar:
         name: Scalar
+      c:types.h@T@Size:
+        name: Size
       c:types.h@T@TermCriteria:
         name: TermCriteria
       c:types.h@T@Vec2b:

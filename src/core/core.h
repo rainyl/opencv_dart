@@ -75,6 +75,7 @@ CvStatus *Mat_Release(Mat *m);
 int Mat_Flags(Mat m);
 bool Mat_Empty(Mat m);
 bool Mat_IsContinuous(Mat m);
+bool Mat_IsSubmatrix(Mat m);
 int Mat_Rows(Mat m);
 int Mat_Cols(Mat m);
 int Mat_Channels(Mat m);
@@ -88,7 +89,11 @@ int Mat_Dims(Mat m);
 uchar *Mat_Data(Mat m);
 // CvStatus *Mat_DataPtr(Mat m, uchar **data, int *length);
 
+CvStatus *Mat_AdjustROI(Mat m, int dtop, int dbottom, int dleft, int dright, Mat *rval);
+CvStatus *Mat_LocateROI(Mat m, Size *wholeSize, Point *ofs);
 CvStatus *Mat_Clone(Mat m, Mat *rval);
+CvStatus *Mat_Col(Mat m, int x, Mat *rval);
+CvStatus *Mat_Row(Mat m, int y, Mat *rval);
 CvStatus *Mat_CopyTo(Mat m, Mat dst);
 CvStatus *Mat_CopyToWithMask(Mat m, Mat dst, Mat mask);
 CvStatus *Mat_ConvertTo(Mat m, Mat dst, int type);
@@ -97,6 +102,7 @@ CvStatus *Mat_ToVecUChar(Mat m, VecUChar *rval);
 CvStatus *Mat_ToVecChar(Mat m, VecChar *rval);
 CvStatus *Mat_Region(Mat m, Rect r, Mat *rval);
 CvStatus *Mat_Reshape(Mat m, int cn, int rows, Mat *rval);
+CvStatus *Mat_ReshapeByVec(Mat m, int cn, VecI32 newshape, Mat *rval);
 CvStatus *Mat_PatchNaNs(Mat m, double val);
 CvStatus *Mat_ConvertFp16(Mat m, Mat *rval);
 CvStatus *Mat_Mean(Mat m, Scalar *rval);
@@ -173,7 +179,7 @@ CvStatus *Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval);
 
 #pragma region Mat_setter
 
-CvStatus *Mat_SetTo(Mat m, Scalar value);
+CvStatus *Mat_SetTo(Mat m, Scalar value, Mat mask);
 CvStatus *Mat_SetUChar(Mat m, int row, int col, uint8_t val);
 CvStatus *Mat_SetUChar3(Mat m, int x, int y, int z, uint8_t val);
 CvStatus *Mat_SetSChar(Mat m, int row, int col, int8_t val);

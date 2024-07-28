@@ -222,6 +222,7 @@ CvStatus *Mat_Release(Mat *m) {
 int Mat_Flags(Mat m) { return (m.ptr->flags); }
 bool Mat_Empty(Mat m) { return m.ptr->empty(); }
 bool Mat_IsContinuous(Mat m) { return m.ptr->isContinuous(); }
+bool Mat_IsSubmatrix(Mat m) { return m.ptr->isSubmatrix(); }
 int Mat_Rows(Mat m) { return m.ptr->rows; }
 int Mat_Cols(Mat m) { return m.ptr->cols; }
 int Mat_Channels(Mat m) { return m.ptr->channels(); }
@@ -244,11 +245,40 @@ int Mat_Dims(Mat m) { return m.ptr->dims; }
 
 uchar *Mat_Data(Mat m) { return (uchar *)m.ptr->data; }
 
+CvStatus *Mat_AdjustROI(Mat m, int dtop, int dbottom, int dleft, int dright, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(m.ptr->adjustROI(dtop, dbottom, dleft, dright))};
+  END_WRAP
+}
+
+CvStatus *Mat_LocateROI(Mat m, Size *wholeSize, Point *ofs) {
+  BEGIN_WRAP
+  cv::Size sz;
+  cv::Point pt;
+  m.ptr->locateROI(sz, pt);
+  *wholeSize = {sz.width, sz.height};
+  *ofs = {pt.x, pt.y};
+  END_WRAP
+}
+
 CvStatus *Mat_Clone(Mat m, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(m.ptr->clone())};
   END_WRAP
 }
+
+CvStatus *Mat_Col(Mat m, int x, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(m.ptr->col(x))};
+  END_WRAP
+}
+
+CvStatus *Mat_Row(Mat m, int y, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(m.ptr->row(y))};
+  END_WRAP
+}
+
 CvStatus *Mat_CopyTo(Mat m, Mat dst) {
   BEGIN_WRAP
   m.ptr->copyTo(*dst.ptr);
@@ -302,6 +332,13 @@ CvStatus *Mat_Reshape(Mat m, int cn, int rows, Mat *rval) {
   *rval = {new cv::Mat(m.ptr->reshape(cn, rows))};
   END_WRAP
 }
+
+CvStatus *Mat_ReshapeByVec(Mat m, int cn, VecI32 newshape, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(m.ptr->reshape(cn, vecint_c2cpp(newshape)))};
+  END_WRAP
+}
+
 CvStatus *Mat_PatchNaNs(Mat m, double val) {
   BEGIN_WRAP
   cv::patchNaNs(*m.ptr, val);
@@ -669,10 +706,10 @@ CvStatus *Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval) {
 
 #pragma region Mat_setter
 
-CvStatus *Mat_SetTo(Mat m, Scalar value) {
+CvStatus *Mat_SetTo(Mat m, Scalar value, Mat mask) {
   BEGIN_WRAP
   cv::Scalar c_value(value.val1, value.val2, value.val3, value.val4);
-  m.ptr->setTo(c_value);
+  m.ptr->setTo(c_value, *mask.ptr);
   END_WRAP
 }
 CvStatus *Mat_SetUChar(Mat m, int row, int col, uint8_t val) {
@@ -1548,7 +1585,13 @@ CvStatus *Mat_Subtract(Mat src1, Mat src2, Mat dst, Mat mask, int dtype) {
   cv::subtract(*src1.ptr, *src2.ptr, *dst.ptr, *mask.ptr, dtype);
   END_WRAP
 }
-CvStatus *Mat_T(Mat x, Mat *rval);
+
+CvStatus *Mat_T(Mat x, Mat *rval) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(x.ptr->t())};
+  END_WRAP
+}
+
 CvStatus *Mat_Trace(Mat src, Scalar *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::trace(*src.ptr);
@@ -1556,42 +1599,50 @@ CvStatus *Mat_Trace(Mat src, Scalar *rval) {
   *rval = {c.val[0], c.val[1], c.val[2], c.val[3]};
   END_WRAP
 }
+
 CvStatus *Mat_Transform(Mat src, Mat dst, Mat tm) {
   BEGIN_WRAP
   cv::transform(*src.ptr, *dst.ptr, *tm.ptr);
   END_WRAP
 }
+
 CvStatus *Mat_Transpose(Mat src, Mat dst) {
   BEGIN_WRAP
   cv::transpose(*src.ptr, *dst.ptr);
   END_WRAP
 }
+
 CvStatus *Mat_PolarToCart(Mat magnitude, Mat degree, Mat x, Mat y, bool angleInDegrees) {
   BEGIN_WRAP
   cv::polarToCart(*magnitude.ptr, *degree.ptr, *x.ptr, *y.ptr, angleInDegrees);
   END_WRAP
 }
+
 CvStatus *Mat_Pow(Mat src, double power, Mat dst) {
   BEGIN_WRAP
   cv::pow(*src.ptr, power, *dst.ptr);
   END_WRAP
 }
+
 CvStatus *Mat_Phase(Mat x, Mat y, Mat angle, bool angleInDegrees) {
   BEGIN_WRAP
   cv::phase(*x.ptr, *y.ptr, *angle.ptr, angleInDegrees);
   END_WRAP
 }
+
 CvStatus *Mat_Sum(Mat src, Scalar *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::sum(*src.ptr);
   *rval = {c.val[0], c.val[1], c.val[2], c.val[3]};
   END_WRAP
 }
+
 CvStatus *Mat_rowRange(Mat m, int start, int end, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(m.ptr->rowRange(start, end))};
   END_WRAP
 }
+
 CvStatus *Mat_colRange(Mat m, int start, int end, Mat *rval) {
   BEGIN_WRAP
   *rval = {new cv::Mat(m.ptr->colRange(start, end))};

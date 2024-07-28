@@ -869,6 +869,18 @@ void main() async {
     expect(sum, equals(cv.Scalar.black));
   });
 
+  test('cv.sqrt', () {
+    final src = cv.Mat.fromScalar(3, 3, cv.MatType.CV_32FC1, cv.Scalar.all(9));
+    final dst = cv.sqrt(src);
+    expect(dst.at<double>(0, 0), 3);
+  });
+
+  test('cv.sum', () {
+    final src = cv.Mat.fromScalar(3, 3, cv.MatType.CV_8UC4, cv.Scalar.all(9));
+    final dst = cv.sum(src);
+    expect(dst, cv.Scalar.all(81.0));
+  });
+
   test('cv.subtract', () {
     final src1 = cv.Mat.zeros(10, 10, cv.MatType.CV_8UC3);
     final src2 = cv.Mat.ones(10, 10, cv.MatType.CV_8UC3);
