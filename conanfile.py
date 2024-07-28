@@ -105,7 +105,7 @@ class OcvDartDesktop(ConanFile):
             # )
             # if ndk_path is None:
             #     self.tool_requires("android-ndk/r26c")
-            self.tool_requires("android-ndk/r26c")
+            self.tool_requires("android-ndk/r26d")
         # if self.settings.os == "iOS":
         #     self.tool_requires("ios_cmake_toolchain/1.0.0")
 
