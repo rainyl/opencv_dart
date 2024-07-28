@@ -384,6 +384,32 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(
           Mat, double, Mat, double, double, Mat, int)>();
 
+  ffi.Pointer<CvStatus> Mat_AdjustROI(
+    Mat m,
+    int dtop,
+    int dbottom,
+    int dleft,
+    int dright,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_AdjustROI(
+      m,
+      dtop,
+      dbottom,
+      dleft,
+      dright,
+      rval,
+    );
+  }
+
+  late final _Mat_AdjustROIPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Int, ffi.Pointer<Mat>)>>('Mat_AdjustROI');
+  late final _Mat_AdjustROI = _Mat_AdjustROIPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, int, int, ffi.Pointer<Mat>)>();
+
   ffi.Pointer<CvStatus> Mat_BatchDistance(
     Mat src1,
     Mat src2,
@@ -738,6 +764,25 @@ class CvNativeCore {
           'Mat_CloseVoid');
   late final _Mat_CloseVoid =
       _Mat_CloseVoidPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<CvStatus> Mat_Col(
+    Mat m,
+    int x,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_Col(
+      m,
+      x,
+      rval,
+    );
+  }
+
+  late final _Mat_ColPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, ffi.Pointer<Mat>)>>('Mat_Col');
+  late final _Mat_Col = _Mat_ColPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, ffi.Pointer<Mat>)>();
 
   int Mat_Cols(
     Mat m,
@@ -2487,6 +2532,39 @@ class CvNativeCore {
   late final _Mat_IsContinuous =
       _Mat_IsContinuousPtr.asFunction<bool Function(Mat)>();
 
+  bool Mat_IsSubmatrix(
+    Mat m,
+  ) {
+    return _Mat_IsSubmatrix(
+      m,
+    );
+  }
+
+  late final _Mat_IsSubmatrixPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('Mat_IsSubmatrix');
+  late final _Mat_IsSubmatrix =
+      _Mat_IsSubmatrixPtr.asFunction<bool Function(Mat)>();
+
+  ffi.Pointer<CvStatus> Mat_LocateROI(
+    Mat m,
+    ffi.Pointer<Size> wholeSize,
+    ffi.Pointer<Point> ofs,
+  ) {
+    return _Mat_LocateROI(
+      m,
+      wholeSize,
+      ofs,
+    );
+  }
+
+  late final _Mat_LocateROIPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Size>, ffi.Pointer<Point>)>>('Mat_LocateROI');
+  late final _Mat_LocateROI = _Mat_LocateROIPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Size>, ffi.Pointer<Point>)>();
+
   ffi.Pointer<CvStatus> Mat_Log(
     Mat src,
     Mat dst,
@@ -4170,6 +4248,27 @@ class CvNativeCore {
   late final _Mat_Reshape = _Mat_ReshapePtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, ffi.Pointer<Mat>)>();
 
+  ffi.Pointer<CvStatus> Mat_ReshapeByVec(
+    Mat m,
+    int cn,
+    VecI32 newshape,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_ReshapeByVec(
+      m,
+      cn,
+      newshape,
+      rval,
+    );
+  }
+
+  late final _Mat_ReshapeByVecPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, VecI32, ffi.Pointer<Mat>)>>('Mat_ReshapeByVec');
+  late final _Mat_ReshapeByVec = _Mat_ReshapeByVecPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, VecI32, ffi.Pointer<Mat>)>();
+
   ffi.Pointer<CvStatus> Mat_Reshape_Async(
     Mat self,
     int cn,
@@ -4190,6 +4289,25 @@ class CvNativeCore {
               Mat, ffi.Int, ffi.Int, imp1.CvCallback_1)>>('Mat_Reshape_Async');
   late final _Mat_Reshape_Async = _Mat_Reshape_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Mat_Row(
+    Mat m,
+    int y,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Mat_Row(
+      m,
+      y,
+      rval,
+    );
+  }
+
+  late final _Mat_RowPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, ffi.Pointer<Mat>)>>('Mat_Row');
+  late final _Mat_Row = _Mat_RowPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, ffi.Pointer<Mat>)>();
 
   int Mat_Rows(
     Mat m,
@@ -4463,18 +4581,20 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> Mat_SetTo(
     Mat m,
     Scalar value,
+    Mat mask,
   ) {
     return _Mat_SetTo(
       m,
       value,
+      mask,
     );
   }
 
-  late final _Mat_SetToPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Scalar)>>(
-          'Mat_SetTo');
-  late final _Mat_SetTo =
-      _Mat_SetToPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Scalar)>();
+  late final _Mat_SetToPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Scalar, Mat)>>(
+      'Mat_SetTo');
+  late final _Mat_SetTo = _Mat_SetToPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Scalar, Mat)>();
 
   ffi.Pointer<CvStatus> Mat_SetUChar(
     Mat m,
@@ -8633,6 +8753,7 @@ typedef Rect = imp1.Rect;
 typedef Rect2f = imp1.Rect2f;
 typedef RotatedRect = imp1.RotatedRect;
 typedef Scalar = imp1.Scalar;
+typedef Size = imp1.Size;
 typedef TermCriteria = imp1.TermCriteria;
 typedef Vec2b = imp1.Vec2b;
 typedef Vec2d = imp1.Vec2d;

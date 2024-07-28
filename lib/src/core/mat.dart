@@ -47,7 +47,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32F => VecF32.fromList(data.cast<double>()) as Vec,
       MatType.CV_64F => VecF64.fromList(data.cast<double>()) as Vec,
       MatType.CV_16F => VecF16.fromList(data.cast<double>()) as Vec,
-      _ => throw UnsupportedError("Mat.fromBytes for MatType ${type.asString()} unsupported"),
+      _ => throw UnsupportedError("Mat.fromList for MatType ${type.asString()} unsupported"),
     };
     // copy
     cvRun(() => ccore.Mat_NewFromBytes(rows, cols, type.value, xdata.asVoid(), p));
@@ -112,6 +112,16 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
+  /// [rows]	Number of rows in a 2D array.
+  ///
+  /// [cols]	Number of columns in a 2D array.
+  ///
+  /// [type]	Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices,
+  /// or CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+  ///
+  /// [s]	An optional value to initialize each matrix element with.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a3620c370690b5ca4d40c767be6fb4ceb
   factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_NewFromScalar(s.ref, rows, cols, type.value, p));
@@ -165,6 +175,25 @@ class Mat extends CvStruct<cvg.Mat> {
     return Mat._(p);
   }
 
+  /// Returns an identity matrix of the specified size and type.
+  ///
+  /// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
+  ///
+  /// ```Cpp
+  /// // make a 4x4 diagonal matrix with 0.1's on the diagonal.
+  /// Mat A = Mat::eye(4, 4, CV_32F)*0.1;
+  /// ```
+  ///
+  /// Note
+  ///     In case of multi-channels type, identity matrix will be initialized only for the first channel, the others will be set to 0's
+  ///
+  /// [rows]	Number of rows.
+  ///
+  /// [cols]	Number of columns.
+  ///
+  /// [type]	Created matrix type.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a458874f0ab8946136254da37ba06b78b
   factory Mat.eye(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Eye(rows, cols, type.value, p));
@@ -172,6 +201,26 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
+  /// Returns a zero array of the specified size and type.
+  ///
+  /// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
+  /// array as a function parameter, part of a matrix expression, or as a matrix initializer:
+  ///
+  /// ```cpp
+  /// Mat A;
+  /// A = Mat::zeros(3, 3, CV_32F);
+  /// ```
+  ///
+  /// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
+  /// Otherwise, the existing matrix A is filled with zeros.
+  ///
+  /// [rows] Number of rows.
+  ///
+  /// [cols] Number of columns.
+  ///
+  /// [type] Created matrix type.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a56daa006391a670e9cb0cd08e3168c99
   factory Mat.zeros(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Zeros(rows, cols, type.value, p));
@@ -179,6 +228,23 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
+  /// Returns an array of all 1's of the specified size and type.
+  ///
+  /// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
+  /// Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
+  ///
+  /// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it just remembers the scale factor (3 in this case) and use it when actually invoking the matrix initializer.
+  ///
+  /// Note
+  ///     In case of multi-channels type, only the first channel will be initialized with 1's, the others will be set to 0's.
+  ///
+  /// [rows]	Number of rows.
+  ///
+  /// [cols]	Number of columns.
+  ///
+  /// [type]	Created matrix type.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a5e10227b777425407986727e2d26fcdc
   factory Mat.ones(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Ones(rows, cols, type.value, p));
@@ -202,7 +268,10 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  /// this constructor is a wrapper of cv::Mat::ptr
+  /// this constructor is a wrapper of
+  /// `Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)`
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
   factory Mat.fromPtr(
     cvg.Mat m,
     int rows,
@@ -232,6 +301,7 @@ class Mat extends CvStruct<cvg.Mat> {
   int get total => ccore.Mat_Total(ref);
   bool get isEmpty => ccore.Mat_Empty(ref);
   bool get isContinus => ccore.Mat_IsContinuous(ref);
+  bool get isSubmatrix => ccore.Mat_IsSubmatrix(ref);
   (int, int, int) get step {
     final ms = ccore.Mat_Step(ref);
     return (ms.p[0], ms.p[1], ms.p[2]);
@@ -626,13 +696,13 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Example:
   /// ```dart
   /// final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC3);
-  /// mat.iterPixel((row, col, pixel) {
+  /// mat.forEachPixel((row, col, pixel) {
   ///   print(pixel); // [1, 1, 1]
   ///   pixel[0] = 2;
   /// });
   /// print(mat.atPixel(0, 0)); // [2, 1, 1]
   /// ```
-  void iterPixel(void Function(int row, int col, List<num> pixel) callback) {
+  void forEachPixel(void Function(int row, int col, List<num> pixel) callback) {
     // cache necessary props, they will be only get once
     final depth = type.depth, pdata = dataPtr, step = this.step, channels = this.channels;
     final rows = this.rows, cols = this.cols;
@@ -647,10 +717,10 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Iterate over all rows in the Mat.
   ///
-  /// Similar to [iterPixel], the parameter `values` of [callback] is a view of
+  /// Similar to [forEachPixel], the parameter `values` of [callback] is a view of
   /// the row at every `row`, which means it can be modified and the original values
   /// in the Mat will be changed too.
-  void iterRow(void Function(int row, List<num> values) callback) {
+  void forEachRow(void Function(int row, List<num> values) callback) {
     // cache necessary props, they will be only get once
     final depth = type.depth, pdata = dataPtr, step = this.step, channels = this.channels;
     final rows = this.rows, cols = this.cols;
@@ -979,6 +1049,43 @@ class Mat extends CvStruct<cvg.Mat> {
   // TODO - divideF16
   //!SECTION - divide
 
+  /// Creates a matrix header for the specified matrix column.
+  ///
+  /// The method makes a new header for the specified matrix column and returns it.
+  /// This is an O(1) operation, regardless of the matrix size. The underlying data of
+  /// the new matrix is shared with the original matrix. See also the Mat::row description.
+  ///
+  /// [x]	A 0-based column index.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a23df02a07ffbfa4aa59c19bc003919fe
+  Mat col(int x) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_Col(ref, x, p));
+    return Mat._(p);
+  }
+
+  /// Creates a matrix header for the specified matrix row.
+  ///
+  /// The method makes a new header for the specified matrix row and returns it.
+  /// This is an O(1) operation, regardless of the matrix size. The underlying data
+  /// of the new matrix is shared with the original matrix. Here is the example of
+  /// one of the classical basic matrix processing operations, axpy, used by LU
+  /// and many other algorithms:
+  ///
+  /// ```cpp
+  /// inline void matrix_axpy(Mat& A, int i, int j, double alpha)
+  /// {
+  ///     A.row(i) += A.row(j)*alpha;
+  /// }
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4b22e1c23af7a7f2eef8fa478cfa7434
+  Mat row(int y) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_Row(ref, y, p));
+    return Mat._(p);
+  }
+
   Mat transpose({bool inplace = false}) {
     final dst = inplace ? this : Mat.empty();
     cvRun(() => ccore.Mat_Transpose(ref, dst.ref));
@@ -992,6 +1099,24 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
+  /// Copies the matrix to another one.
+  ///
+  /// The method copies the matrix data to another matrix. Before copying the data,
+  /// the method invokes :
+  ///
+  /// ```cpp
+  /// m.create(this->size(), this->type());
+  /// ```
+  ///
+  /// so that the destination matrix is reallocated if needed. While m.copyTo(m);
+  /// works flawlessly, the function does not handle the case of a partial overlap
+  /// between the source and the destination matrices.
+  ///
+  /// When the operation mask is specified, if the Mat::create call shown above
+  /// reallocates the matrix, the newly allocated matrix is initialized with all
+  /// zeros before copying the data.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a33fd5d125b4c302b0c9aa86980791a77
   void copyTo(Mat dst, {Mat? mask}) => mask == null
       ? cvRun(() => ccore.Mat_CopyTo(ref, dst.ref))
       : cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
@@ -1001,6 +1126,19 @@ class Mat extends CvStruct<cvg.Mat> {
     cvRun(() => ccore.Mat_CopyToWithMask(ref, dst.ref, mask.ref));
   }
 
+  /// Converts an array to another data type with optional scaling.
+  ///
+  /// The method converts source pixel values to the target data type.
+  /// saturate_cast<> is applied at the end to avoid possible overflows:
+  ///
+  /// $m(x,y) = saturate \_ cast<rType>( \alpha (*this)(x,y) +  \beta )$
+  ///
+  /// Parameters
+  ///     [type]	desired output matrix type or, rather, the depth since the number of channels are the same as the input has; if rtype is negative, the output matrix will have the same type as the input.
+  ///     [alpha]	optional scale factor.
+  ///     [beta]	optional delta added to the scaled values.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#adf88c60c5b4980e05bb556080916978b
   Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
     final dst = Mat.empty();
     cvRun(() => ccore.Mat_ConvertToWithParams(ref, dst.ref, type.value, alpha, beta));
@@ -1020,6 +1158,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return inplace ? this : Mat._(p);
   }
 
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa7ec97373406215f2d4bc72cc1d27036
   Mat region(Rect rect) {
     cvAssert(rect.right <= width && rect.bottom <= height);
     final p = calloc<cvg.Mat>();
@@ -1028,11 +1167,30 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
-  Mat reshape(int cn, int rows) {
+  /// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
+  ///
+  /// The method makes a new matrix header for *this elements. The new matrix may have a
+  /// different size and/or different number of channels. Any combination is possible if:
+  ///
+  /// - No extra elements are included into the new matrix and no elements are excluded.
+  /// Consequently, the product rows*cols*channels() must stay the same after the transformation.
+  /// - No data is copied. That is, this is an O(1) operation. Consequently, if you change
+  /// the number of rows, or the operation changes the indices of elements row in some
+  /// other way, the matrix must be continuous. See Mat::isContinuous .
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4eb96e3251417fa88b78e2abd6cfd7d8
+  Mat reshape(int cn, [int rows = 0]) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_Reshape(ref, cn, rows, p));
     final dst = Mat._(p);
     return dst;
+  }
+
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#ab2e41a510891e548f744832cf9b8ab89
+  Mat reshapeTo(int cn, List<int> newshape) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_ReshapeByVec(ref, cn, newshape.i32.ref, p));
+    return Mat._(p);
   }
 
   Mat rotate(int rotationCode, {bool inplace = false}) {
@@ -1046,6 +1204,12 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
+  /// Creates a matrix header for the specified row span.
+  ///
+  /// The method makes a new header for the specified row span of the matrix.
+  /// Similarly to Mat::row and Mat::col , this is an O(1) operation.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa6542193430356ad631a9beabc624107
   Mat rowRange(int start, int end) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_rowRange(ref, start, end, p));
@@ -1053,6 +1217,12 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
+  /// Creates a matrix header for the specified column span.
+  ///
+  /// The method makes a new header for the specified column span of the matrix.
+  /// Similarly to Mat::row and Mat::col , this is an O(1) operation.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aadc8f9210fe4dec50513746c246fa8d9
   Mat colRange(int start, int end) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.Mat_colRange(ref, start, end, p));
@@ -1069,26 +1239,21 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Scalar mean({Mat? mask}) {
-    return cvRunArena<Scalar>((arena) {
-      final s = calloc<cvg.Scalar>();
-      if (mask == null) {
-        cvRun(() => ccore.Mat_Mean(ref, s));
-      } else {
-        cvRun(() => ccore.Mat_MeanWithMask(ref, mask.ref, s));
-      }
-      return Scalar.fromPointer(s);
-    });
+    final s = calloc<cvg.Scalar>();
+    mask == null
+        ? cvRun(() => ccore.Mat_Mean(ref, s))
+        : cvRun(() => ccore.Mat_MeanWithMask(ref, mask.ref, s));
+    return Scalar.fromPointer(s);
   }
 
   /// Calculates standard deviation, per channel.
+  ///
   /// [Scalar] order is same as [Mat], i.e., BGR -> BGR
   Scalar stdDev() {
-    return cvRunArena<Scalar>((arena) {
-      final mean = calloc<cvg.Scalar>();
-      final sd = calloc<cvg.Scalar>();
-      cvRun(() => ccore.Mat_MeanStdDev(ref, mean, sd));
-      return Scalar.fromPointer(sd);
-    });
+    final mean = calloc<cvg.Scalar>();
+    final sd = calloc<cvg.Scalar>();
+    cvRun(() => ccore.Mat_MeanStdDev(ref, mean, sd));
+    return Scalar.fromPointer(sd);
   }
 
   /// Similar to [stdDev]
@@ -1105,37 +1270,58 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Sum calculates the per-channel pixel sum of an image.
   Scalar sum() {
-    return cvRunArena<Scalar>((arena) {
-      final s = calloc<cvg.Scalar>();
-      cvRun(() => ccore.Mat_Sum(ref, s));
-      return Scalar.fromPointer(s);
-    });
+    final s = calloc<cvg.Scalar>();
+    cvRun(() => ccore.Mat_Sum(ref, s));
+    return Scalar.fromPointer(s);
   }
 
   /// PatchNaNs converts NaN's to zeros.
   void patchNaNs({double val = 0}) => cvRun(() => ccore.Mat_PatchNaNs(ref, val));
 
-  Mat setTo(Scalar s) {
-    cvRun(() => ccore.Mat_SetTo(ref, s.ref));
+  /// Sets all or some of the array elements to the specified value.
+  ///
+  /// This is an advanced variant of the Mat::operator=(const Scalar& s) operator.
+  ///
+  /// [value]	Assigned scalar converted to the actual array type.
+  /// [mask]	Operation mask of the same size as *this. Its non-zero elements
+  /// indicate which matrix elements need to be copied. The mask has to be of
+  /// type CV_8U and can have 1 or multiple channels
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a030678ffd9ca6e12127b3fd1337bf6e2
+  Mat setTo(Scalar value, {Mat? mask}) {
+    mask ??= Mat.empty();
+    cvRun(() => ccore.Mat_SetTo(ref, value.ref, mask!.ref));
     return this;
+  }
+
+  /// Transposes a matrix.
+  ///
+  /// The method performs matrix transposition by means of matrix expressions.
+  /// It does not perform the actual transposition but returns a temporary matrix
+  /// transposition object that can be further used as a part of more complex matrix
+  /// expressions or can be assigned to a matrix:
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aaa428c60ccb6d8ea5de18f63dfac8e11
+  Mat t() {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.Mat_T(ref, p));
+    return Mat._(p);
   }
 
   /// This Method converts single-channel Mat to 2D List
   List<List<num>> toList() {
     final ret = <List<num>>[];
-    iterRow((r, v) => ret.add(v));
+    forEachRow((r, v) => ret.add(v));
     return ret;
   }
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
   /// The list is ordered as [row][col][channels].
   ///
-  /// [T]: The type of the elements in the mat.
-  ///
   /// Example:
   /// ```dart
-  /// final mat = Mat.fromBytes(width: 3, height: 3, type: MatType.CV_8UC3, bytes: [0, 1, 2, 3, 4, 5, 6, 7, 8]);
-  /// final list = mat.toList3D<Vec3b>();
+  /// final mat = Mat.fromList(3, 3, MatType.CV_8UC1, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  /// final list = mat.toList3D();
   /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
   /// ```
   List<List<List<num>>> toList3D() {
@@ -1252,6 +1438,7 @@ class VecMatIterator extends VecIterator<Mat> {
 
 extension ListMatExtension on List<Mat> {
   VecMat get cvd => VecMat.fromList(this);
+  VecMat asVecMat() => VecMat.fromList(this);
 }
 
 // Completers for async

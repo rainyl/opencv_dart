@@ -145,13 +145,13 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final data = List.generate(rows * cols * channels, (i) => i);
     final mat = cv.Mat.fromList(rows, cols, const cv.MatType.CV_32SC(channels), data);
 
-    mat.iterPixel((row, col, pixel) {
+    mat.forEachPixel((row, col, pixel) {
       final start = row * cols * channels + col * channels;
       final end = start + channels;
       expect(pixel, data.sublist(start, end));
     });
 
-    mat.iterRow((r, v) {
+    mat.forEachRow((r, v) {
       final start = r * cols * channels;
       expect(v, data.sublist(start, start + cols * channels));
     });
@@ -340,6 +340,9 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat0 = cv.Mat.ones(200, 100, cv.MatType.CV_8UC3);
     final mat1 = mat0.transpose();
     expect((mat1.height, mat1.width, mat1.channels), (100, 200, 3));
+
+    final mat2 = mat1.t();
+    expect(mat2.size, mat0.size);
   });
 
   test('Mat CopyTo', () {
@@ -356,13 +359,72 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat0 = cv.Mat.ones(200, 100, cv.MatType.CV_8UC3);
     final mat1 = mat0.reshape(1, 200);
     expect((mat1.height, mat1.width, mat1.channels), (200, 100 * 3, 1));
+
+    // 4 * 50 * 100 * 3
+    final mat2 = mat0.reshapeTo(4, [50, 100, 3]);
+    expect(mat2.size, [50, 100, 3]);
   });
 
-  test('Mat Region', () {
+  test('Mat Region row col', () {
     final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
     final mat1 = mat0.region(cv.Rect(10, 10, 100, 100));
     expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
     expect(mat1.at<int>(0, 0, 0), equals(mat0.at<int>(10, 10, 0)));
+
+    final row = mat0.row(0);
+    expect(row.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 0, 0));
+    row.set<cv.Vec3b>(0, 0, cv.Vec3b(241, 241, 241));
+    expect(row.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+    // Mat.row() will return a reference so here mat0 is also changed
+    expect(mat0.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+
+    final col = mat0.col(1);
+    expect(col.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 0, 0));
+    col.set<cv.Vec3b>(0, 0, cv.Vec3b(241, 241, 241));
+    expect(col.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+    // Mat.col() will return a reference so here mat0 is also changed
+    expect(mat0.at<cv.Vec3b>(0, 1), cv.Vec3b(241, 241, 241));
+  });
+
+  test('Mat rowRange colRange fromRange', () {
+    {
+      final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
+
+      final rowRange = mat0.rowRange(0, 10);
+      expect(rowRange.rows, 10);
+      expect(rowRange.cols, 110);
+      expect(rowRange.type, cv.MatType.CV_8UC3);
+      expect(rowRange.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 0, 0));
+      rowRange.set<cv.Vec3b>(0, 0, cv.Vec3b(241, 241, 241));
+      expect(rowRange.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+      expect(mat0.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+    }
+
+    {
+      final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
+
+      final colRange = mat0.colRange(0, 10);
+      expect(colRange.rows, 200);
+      expect(colRange.cols, 10);
+      expect(colRange.type, cv.MatType.CV_8UC3);
+      expect(colRange.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 0, 0));
+      colRange.set<cv.Vec3b>(0, 0, cv.Vec3b(241, 241, 241));
+      expect(colRange.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+      expect(mat0.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+    }
+
+    {
+      final mat0 = cv.Mat.ones(200, 110, cv.MatType.CV_8UC3);
+
+      final matFromRange = cv.Mat.fromRange(mat0, 0, 10, colStart: 0, colEnd: 10);
+      expect(matFromRange.rows, 10);
+      expect(matFromRange.cols, 10);
+      expect(matFromRange.type, cv.MatType.CV_8UC3);
+      expect(matFromRange.at<cv.Vec3b>(0, 0), cv.Vec3b(1, 0, 0));
+      matFromRange.set<cv.Vec3b>(0, 0, cv.Vec3b(241, 241, 241));
+      expect(matFromRange.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+      expect(mat0.at<cv.Vec3b>(0, 0), cv.Vec3b(241, 241, 241));
+    }
   });
 
   test('Mat Rotate', () {
@@ -782,7 +844,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       mat.set<cv.Vec3i>(mat.rows - 1, mat.cols - 1, cv.Vec3i(241, 241, 241));
       sw.reset();
       sw.start();
-      mat.iterPixel((_, __, pix) => currentPix = pix[0].toInt());
+      mat.forEachPixel((_, __, pix) => currentPix = pix[0].toInt());
       sw.stop();
       print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel At: ${sw.elapsedMilliseconds}ms');
       expect(currentPix, 241);
@@ -803,7 +865,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     {
       sw.reset();
       sw.start();
-      mat.iterPixel((_, __, pix) => pix[0] = 241);
+      mat.forEachPixel((_, __, pix) => pix[0] = 241);
       sw.stop();
       print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).iterPixel set: ${sw.elapsedMilliseconds}ms');
       expect(mat.at<int>(0, 0), 241);

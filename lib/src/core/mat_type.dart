@@ -3,8 +3,6 @@
 
 library cv;
 
-// import 'package:meta/meta.dart';
-
 import 'exception.dart';
 
 extension type const MatType(int value) implements Object {
