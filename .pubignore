@@ -12,6 +12,7 @@ src/**/*.cpp
 src/**/*.h
 src/**/*.cc
 src/**/*.hpp
+src/dart_api/
 profiles/
 ffigen*.yaml
 conanfile.py

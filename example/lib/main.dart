@@ -75,6 +75,7 @@ class _MyAppState extends State<MyApp> {
                     print(
                         "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
                     final (success, bytes) = cv.imencode(".png", mat);
+                    print("imencode: $success, ${bytes.length}");
                     // heavy computation
                     final (gray, blur) = await heavyTask(bytes);
                     setState(() {
