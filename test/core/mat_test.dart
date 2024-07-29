@@ -646,6 +646,27 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
   });
 
+  test('Mat.ptrAt.F16', () {
+    final mat = cv.Mat.ones(3, 3, cv.MatType.CV_16FC3);
+    final val = mat.atPixel(0, 0);
+    expect(val, [1.0, 0.0, 0.0]);
+    val[0] = 241.0;
+    expect(mat.atPixel(0, 0), [241.0, 0.0, 0.0]);
+    // final ptr0 = mat.ptrAt<cv.F64>(0);
+    // expect(ptr0.address, greaterThan(0));
+    // expect(ptr0[0], closeTo(1.0, 1e-6));
+    // ptr0[0] = 21.0;
+    // expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
+    // expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    // final ptr1 = mat.ptrAt<cv.F64>(0, 0);
+    // expect(ptr1.address, greaterThan(0));
+    // expect(ptr1[0], closeTo(21.0, 1e-6));
+    // final expected = [21.0, 1.0, 1.0];
+    // final accessed = List.generate(mat.cols, (i) => ptr1[i]);
+    // expect(expected.indexed.map((e) => e.$2 - accessed[e.$1] < 1e-6).every((e) => e), true);
+  });
+
   test('Mat At Set Vec*b(uchar)', () {
     var mat = cv.Mat.fromScalar(1, 1, cv.MatType.CV_8UC2, cv.Scalar(2, 4, 1, 0));
     expect(mat.at<int>(0, 0), 2);

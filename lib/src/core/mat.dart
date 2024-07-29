@@ -8,6 +8,7 @@ import '../g/types.g.dart' as cvg;
 import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'cv_vec.dart';
+import 'float16.dart';
 import 'mat_type.dart';
 import 'point.dart';
 import 'rect.dart';
@@ -352,7 +353,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32S => i2 == null ? (ptrAt<I32>(i0) + i1).value : ptrAt<I32>(i0, i1, i2).value,
       MatType.CV_32F => i2 == null ? (ptrAt<F32>(i0) + i1).value : ptrAt<F32>(i0, i1, i2).value,
       MatType.CV_64F => i2 == null ? (ptrAt<F64>(i0) + i1).value : ptrAt<F64>(i0, i1, i2).value,
-      MatType.CV_16F => float16(i2 == null ? (ptrAt<U16>(i0) + i1).value : ptrAt<U16>(i0, i1, i2).value),
+      MatType.CV_16F => Float16P(i2 == null ? ptrAt<U16>(i0) + i1 : ptrAt<U16>(i0, i1, i2)).value,
       _ => throw UnsupportedError("Unsupported type: ${type.asString()}")
     };
   }
@@ -379,9 +380,9 @@ class Mat extends CvStruct<cvg.Mat> {
         return ptrAt<F32>(row, col).asTypedList(channels);
       case MatType.CV_64F:
         return ptrAt<F64>(row, col).asTypedList(channels);
-      // TODO: support CV_16F
-      // case MatType.CV_16F:
-      //   return ptrAt<U16>(row, col).asTypedList(channels).map(float16).toList(growable: false);
+      // TODO: waiting for official impl
+      case MatType.CV_16F:
+        return Float16P(ptrAt<U16>(row, col)).asTypedList(channels);
       case _:
         throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
@@ -592,10 +593,9 @@ class Mat extends CvStruct<cvg.Mat> {
         i2 == null
             ? (ptrAt<F64>(i0) + i1).value = val.toDouble()
             : ptrAt<F64>(i0, i1, i2).value = val.toDouble();
+      // TODO: waiting for official impl
       case MatType.CV_16F:
-        i2 == null
-            ? (ptrAt<U16>(i0) + i1).value = val.toDouble().fp16
-            : ptrAt<U16>(i0, i1, i2).value = val.toDouble().fp16;
+        Float16P(i2 == null ? (ptrAt<U16>(i0) + i1) : ptrAt<U16>(i0, i1, i2)).value = val.toDouble();
       case _:
         throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
@@ -679,10 +679,9 @@ class Mat extends CvStruct<cvg.Mat> {
         return p.cast<F32>().asTypedList(count);
       case MatType.CV_64F:
         return p.cast<F64>().asTypedList(count);
-      // TODO: for now, dart has no `Float16` type, so this will create a new list, which
-      // is different from the above
-      // case MatType.CV_16F:
-      //   callback(pp.cast<U16>().asTypedList(count).map(float16).toList(growable: false));
+      // TODO: waiting for official impl
+      case MatType.CV_16F:
+        return Float16P(p.cast<U16>()).asTypedList(count);
       case _:
         throw UnsupportedError("Unsupported type: ${type.asString()}");
     }
@@ -1103,7 +1102,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// This is an O(1) operation, regardless of the matrix size. The underlying data of
   /// the new matrix is shared with the original matrix. See also the Mat::row description.
   ///
-  /// [x]	A 0-based column index.
+  /// x:	A 0-based column index.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a23df02a07ffbfa4aa59c19bc003919fe
   Mat col(int x) {
