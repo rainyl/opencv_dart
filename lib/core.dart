@@ -8,6 +8,7 @@ export 'src/core/cv_vec.dart';
 export 'src/core/dmatch.dart';
 export 'src/core/error_code.dart';
 export 'src/core/exception.dart';
+export 'src/core/float16.dart';
 export 'src/core/keypoint.dart';
 export 'src/core/mat.dart';
 export 'src/core/mat_async.dart';
