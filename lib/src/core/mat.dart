@@ -353,7 +353,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32S => i2 == null ? (ptrAt<I32>(i0) + i1).value : ptrAt<I32>(i0, i1, i2).value,
       MatType.CV_32F => i2 == null ? (ptrAt<F32>(i0) + i1).value : ptrAt<F32>(i0, i1, i2).value,
       MatType.CV_64F => i2 == null ? (ptrAt<F64>(i0) + i1).value : ptrAt<F64>(i0, i1, i2).value,
-      MatType.CV_16F => Float16P(i2 == null ? ptrAt<U16>(i0) + i1 : ptrAt<U16>(i0, i1, i2)).value,
+      MatType.CV_16F => (i2 == null ? ptrAt<U16>(i0) + i1 : ptrAt<U16>(i0, i1, i2)).asFp16().value,
       _ => throw UnsupportedError("Unsupported type: ${type.asString()}")
     };
   }
