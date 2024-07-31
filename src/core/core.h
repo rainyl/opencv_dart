@@ -113,27 +113,9 @@ CvStatus *Eye(int rows, int cols, int type, Mat *rval);
 CvStatus *Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus *Ones(int rows, int cols, int type, Mat *rval);
 
-CvStatus *Mat_Ptr_u8_1(Mat m, int i, uchar **rval);
-CvStatus *Mat_Ptr_u8_2(Mat m, int i, int j, uchar **rval);
-CvStatus *Mat_Ptr_u8_3(Mat m, int i, int j, int k, uchar **rval);
-CvStatus *Mat_Ptr_i8_1(Mat m, int i, char **rval);
-CvStatus *Mat_Ptr_i8_2(Mat m, int i, int j, char **rval);
-CvStatus *Mat_Ptr_i8_3(Mat m, int i, int j, int k, char **rval);
-CvStatus *Mat_Ptr_u16_1(Mat m, int i, ushort **rval);
-CvStatus *Mat_Ptr_u16_2(Mat m, int i, int j, ushort **rval);
-CvStatus *Mat_Ptr_u16_3(Mat m, int i, int j, int k, ushort **rval);
-CvStatus *Mat_Ptr_i16_1(Mat m, int i, short **rval);
-CvStatus *Mat_Ptr_i16_2(Mat m, int i, int j, short **rval);
-CvStatus *Mat_Ptr_i16_3(Mat m, int i, int j, int k, short **rval);
-CvStatus *Mat_Ptr_i32_1(Mat m, int i, int **rval);
-CvStatus *Mat_Ptr_i32_2(Mat m, int i, int j, int **rval);
-CvStatus *Mat_Ptr_i32_3(Mat m, int i, int j, int k, int **rval);
-CvStatus *Mat_Ptr_f32_1(Mat m, int i, float **rval);
-CvStatus *Mat_Ptr_f32_2(Mat m, int i, int j, float **rval);
-CvStatus *Mat_Ptr_f32_3(Mat m, int i, int j, int k, float **rval);
-CvStatus *Mat_Ptr_f64_1(Mat m, int i, double **rval);
-CvStatus *Mat_Ptr_f64_2(Mat m, int i, int j, double **rval);
-CvStatus *Mat_Ptr_f64_3(Mat m, int i, int j, int k, double **rval);
+uchar *Mat_Ptr_u8_1(Mat m, int i);
+uchar *Mat_Ptr_u8_2(Mat m, int i, int j);
+uchar *Mat_Ptr_u8_3(Mat m, int i, int j, int k);
 
 #pragma region Mat_getter
 
@@ -152,28 +134,28 @@ CvStatus *Mat_GetFloat3(Mat m, int x, int y, int z, float *rval);
 CvStatus *Mat_GetDouble(Mat m, int row, int col, double *rval);
 CvStatus *Mat_GetDouble3(Mat m, int x, int y, int z, double *rval);
 
-CvStatus *Mat_GetVec2b(Mat m, int row, int col, Vec2b *rval);
-CvStatus *Mat_GetVec3b(Mat m, int row, int col, Vec3b *rval);
-CvStatus *Mat_GetVec4b(Mat m, int row, int col, Vec4b *rval);
-CvStatus *Mat_GetVec2s(Mat m, int row, int col, Vec2s *rval);
-CvStatus *Mat_GetVec3s(Mat m, int row, int col, Vec3s *rval);
-CvStatus *Mat_GetVec4s(Mat m, int row, int col, Vec4s *rval);
-CvStatus *Mat_GetVec2w(Mat m, int row, int col, Vec2w *rval);
-CvStatus *Mat_GetVec3w(Mat m, int row, int col, Vec3w *rval);
-CvStatus *Mat_GetVec4w(Mat m, int row, int col, Vec4w *rval);
-CvStatus *Mat_GetVec2i(Mat m, int row, int col, Vec2i *rval);
-CvStatus *Mat_GetVec3i(Mat m, int row, int col, Vec3i *rval);
-CvStatus *Mat_GetVec4i(Mat m, int row, int col, Vec4i *rval);
-CvStatus *Mat_GetVec6i(Mat m, int row, int col, Vec6i *rval);
-CvStatus *Mat_GetVec8i(Mat m, int row, int col, Vec8i *rval);
-CvStatus *Mat_GetVec2f(Mat m, int row, int col, Vec2f *rval);
-CvStatus *Mat_GetVec3f(Mat m, int row, int col, Vec3f *rval);
-CvStatus *Mat_GetVec4f(Mat m, int row, int col, Vec4f *rval);
-CvStatus *Mat_GetVec6f(Mat m, int row, int col, Vec6f *rval);
-CvStatus *Mat_GetVec2d(Mat m, int row, int col, Vec2d *rval);
-CvStatus *Mat_GetVec3d(Mat m, int row, int col, Vec3d *rval);
-CvStatus *Mat_GetVec4d(Mat m, int row, int col, Vec4d *rval);
-CvStatus *Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval);
+Vec2b *Mat_GetVec2b(Mat m, int row, int col);
+Vec3b *Mat_GetVec3b(Mat m, int row, int col);
+Vec4b *Mat_GetVec4b(Mat m, int row, int col);
+Vec2s *Mat_GetVec2s(Mat m, int row, int col);
+Vec3s *Mat_GetVec3s(Mat m, int row, int col);
+Vec4s *Mat_GetVec4s(Mat m, int row, int col);
+Vec2w *Mat_GetVec2w(Mat m, int row, int col);
+Vec3w *Mat_GetVec3w(Mat m, int row, int col);
+Vec4w *Mat_GetVec4w(Mat m, int row, int col);
+Vec2i *Mat_GetVec2i(Mat m, int row, int col);
+Vec3i *Mat_GetVec3i(Mat m, int row, int col);
+Vec4i *Mat_GetVec4i(Mat m, int row, int col);
+Vec6i *Mat_GetVec6i(Mat m, int row, int col);
+Vec8i *Mat_GetVec8i(Mat m, int row, int col);
+Vec2f *Mat_GetVec2f(Mat m, int row, int col);
+Vec3f *Mat_GetVec3f(Mat m, int row, int col);
+Vec4f *Mat_GetVec4f(Mat m, int row, int col);
+Vec6f *Mat_GetVec6f(Mat m, int row, int col);
+Vec2d *Mat_GetVec2d(Mat m, int row, int col);
+Vec3d *Mat_GetVec3d(Mat m, int row, int col);
+Vec4d *Mat_GetVec4d(Mat m, int row, int col);
+Vec6d *Mat_GetVec6d(Mat m, int row, int col);
 
 #pragma endregion
 

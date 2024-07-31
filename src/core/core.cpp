@@ -387,114 +387,9 @@ CvStatus *Ones(int rows, int cols, int type, Mat *rval) {
   END_WRAP
 }
 
-CvStatus *Mat_Ptr_u8_1(Mat m, int i, uchar **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr(i);
-  END_WRAP
-}
-
-CvStatus *Mat_Ptr_u8_2(Mat m, int i, int j, uchar **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr(i, j);
-  END_WRAP
-}
-
-CvStatus *Mat_Ptr_u8_3(Mat m, int i, int j, int k, uchar **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr(i, j, k);
-  END_WRAP
-}
-
-CvStatus *Mat_Ptr_i8_1(Mat m, int i, char **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<char>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i8_2(Mat m, int i, int j, char **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<char>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i8_3(Mat m, int i, int j, int k, char **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<char>(i, j, k);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_u16_1(Mat m, int i, ushort **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<ushort>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_u16_2(Mat m, int i, int j, ushort **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<ushort>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_u16_3(Mat m, int i, int j, int k, ushort **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<ushort>(i, j, k);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i16_1(Mat m, int i, short **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<short>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i16_2(Mat m, int i, int j, short **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<short>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i16_3(Mat m, int i, int j, int k, short **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<short>(i, j, k);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i32_1(Mat m, int i, int **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<int>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i32_2(Mat m, int i, int j, int **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<int>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_i32_3(Mat m, int i, int j, int k, int **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<int>(i, j, k);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f32_1(Mat m, int i, float **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<float>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f32_2(Mat m, int i, int j, float **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<float>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f32_3(Mat m, int i, int j, int k, float **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<float>(i, j, k);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f64_1(Mat m, int i, double **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<double>(i);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f64_2(Mat m, int i, int j, double **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<double>(i, j);
-  END_WRAP
-}
-CvStatus *Mat_Ptr_f64_3(Mat m, int i, int j, int k, double **rval) {
-  BEGIN_WRAP
-  *rval = m.ptr->ptr<double>(i, j, k);
-  END_WRAP
-}
+uchar *Mat_Ptr_u8_1(Mat m, int i) { return m.ptr->ptr(i); }
+uchar *Mat_Ptr_u8_2(Mat m, int i, int j) { return m.ptr->ptr(i, j); }
+uchar *Mat_Ptr_u8_3(Mat m, int i, int j, int k) { return m.ptr->ptr(i, j, k); }
 
 #pragma region Mat_getter
 
@@ -569,137 +464,93 @@ CvStatus *Mat_GetDouble3(Mat m, int x, int y, int z, double *rval) {
   END_WRAP
 }
 
-CvStatus *Mat_GetVec2b(Mat m, int row, int col, Vec2b *rval) {
-  BEGIN_WRAP
+Vec2b *Mat_GetVec2b(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2b>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2b{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3b(Mat m, int row, int col, Vec3b *rval) {
-  BEGIN_WRAP
+Vec3b *Mat_GetVec3b(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3b>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3b{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4b(Mat m, int row, int col, Vec4b *rval) {
-  BEGIN_WRAP
+Vec4b *Mat_GetVec4b(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4b>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4b{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec2s(Mat m, int row, int col, Vec2s *rval) {
-  BEGIN_WRAP
+Vec2s *Mat_GetVec2s(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2s>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2s{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3s(Mat m, int row, int col, Vec3s *rval) {
-  BEGIN_WRAP
+Vec3s *Mat_GetVec3s(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3s>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3s{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4s(Mat m, int row, int col, Vec4s *rval) {
-  BEGIN_WRAP
+Vec4s *Mat_GetVec4s(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4s>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4s{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec2w(Mat m, int row, int col, Vec2w *rval) {
-  BEGIN_WRAP
+Vec2w *Mat_GetVec2w(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2w>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2w{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3w(Mat m, int row, int col, Vec3w *rval) {
-  BEGIN_WRAP
+Vec3w *Mat_GetVec3w(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3w>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3w{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4w(Mat m, int row, int col, Vec4w *rval) {
-  BEGIN_WRAP
+Vec4w *Mat_GetVec4w(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4w>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4w{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec2i(Mat m, int row, int col, Vec2i *rval) {
-  BEGIN_WRAP
+Vec2i *Mat_GetVec2i(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2i>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2i{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3i(Mat m, int row, int col, Vec3i *rval) {
-  BEGIN_WRAP
+Vec3i *Mat_GetVec3i(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3i>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3i{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4i(Mat m, int row, int col, Vec4i *rval) {
-  BEGIN_WRAP
+Vec4i *Mat_GetVec4i(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4i>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4i{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec6i(Mat m, int row, int col, Vec6i *rval) {
-  BEGIN_WRAP
+Vec6i *Mat_GetVec6i(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec6i>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
-  END_WRAP
+  return new Vec6i{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
 }
-CvStatus *Mat_GetVec8i(Mat m, int row, int col, Vec8i *rval) {
-  BEGIN_WRAP
+Vec8i *Mat_GetVec8i(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec8i>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5], v.val[6], v.val[7]};
-  END_WRAP
+  return new Vec8i{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5], v.val[6], v.val[7]};
 }
-CvStatus *Mat_GetVec2f(Mat m, int row, int col, Vec2f *rval) {
-  BEGIN_WRAP
+Vec2f *Mat_GetVec2f(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2f>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2f{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3f(Mat m, int row, int col, Vec3f *rval) {
-  BEGIN_WRAP
+Vec3f *Mat_GetVec3f(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3f>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3f{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4f(Mat m, int row, int col, Vec4f *rval) {
-  BEGIN_WRAP
+Vec4f *Mat_GetVec4f(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4f>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4f{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec6f(Mat m, int row, int col, Vec6f *rval) {
-  BEGIN_WRAP
+Vec6f *Mat_GetVec6f(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec6f>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
-  END_WRAP
+  return new Vec6f{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
 }
-CvStatus *Mat_GetVec2d(Mat m, int row, int col, Vec2d *rval) {
-  BEGIN_WRAP
+Vec2d *Mat_GetVec2d(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec2d>(row, col);
-  *rval = {v.val[0], v.val[1]};
-  END_WRAP
+  return new Vec2d{v.val[0], v.val[1]};
 }
-CvStatus *Mat_GetVec3d(Mat m, int row, int col, Vec3d *rval) {
-  BEGIN_WRAP
+Vec3d *Mat_GetVec3d(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec3d>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2]};
-  END_WRAP
+  return new Vec3d{v.val[0], v.val[1], v.val[2]};
 }
-CvStatus *Mat_GetVec4d(Mat m, int row, int col, Vec4d *rval) {
-  BEGIN_WRAP
+Vec4d *Mat_GetVec4d(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec4d>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3]};
-  END_WRAP
+  return new Vec4d{v.val[0], v.val[1], v.val[2], v.val[3]};
 }
-CvStatus *Mat_GetVec6d(Mat m, int row, int col, Vec6d *rval) {
-  BEGIN_WRAP
+Vec6d *Mat_GetVec6d(Mat m, int row, int col) {
   auto v = m.ptr->at<cv::Vec6d>(row, col);
-  *rval = {v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
-  END_WRAP
+  return new Vec6d{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
 }
 
 #pragma endregion
