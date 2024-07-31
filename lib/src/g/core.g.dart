@@ -642,7 +642,7 @@ external ffi.Pointer<CvStatus> Mat_Gemm(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetDouble(
   Mat m,
   int row,
@@ -652,7 +652,7 @@ external ffi.Pointer<CvStatus> Mat_GetDouble(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetDouble3(
   Mat m,
   int x,
@@ -663,7 +663,7 @@ external ffi.Pointer<CvStatus> Mat_GetDouble3(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetFloat(
   Mat m,
   int row,
@@ -673,7 +673,7 @@ external ffi.Pointer<CvStatus> Mat_GetFloat(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Float>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetFloat3(
   Mat m,
   int x,
@@ -684,7 +684,7 @@ external ffi.Pointer<CvStatus> Mat_GetFloat3(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetInt(
   Mat m,
   int row,
@@ -694,7 +694,7 @@ external ffi.Pointer<CvStatus> Mat_GetInt(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int32>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetInt3(
   Mat m,
   int x,
@@ -703,7 +703,8 @@ external ffi.Pointer<CvStatus> Mat_GetInt3(
   ffi.Pointer<ffi.Int32> rval,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ffi.Int>)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ffi.Int>)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetOptimalDFTSize(
   int vecsize,
   ffi.Pointer<ffi.Int> rval,
@@ -711,7 +712,7 @@ external ffi.Pointer<CvStatus> Mat_GetOptimalDFTSize(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetSChar(
   Mat m,
   int row,
@@ -721,7 +722,7 @@ external ffi.Pointer<CvStatus> Mat_GetSChar(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int8>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetSChar3(
   Mat m,
   int x,
@@ -732,7 +733,7 @@ external ffi.Pointer<CvStatus> Mat_GetSChar3(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetShort(
   Mat m,
   int row,
@@ -742,7 +743,7 @@ external ffi.Pointer<CvStatus> Mat_GetShort(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int16>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetShort3(
   Mat m,
   int x,
@@ -753,7 +754,7 @@ external ffi.Pointer<CvStatus> Mat_GetShort3(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetUChar(
   Mat m,
   int row,
@@ -763,7 +764,7 @@ external ffi.Pointer<CvStatus> Mat_GetUChar(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint8>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetUChar3(
   Mat m,
   int x,
@@ -774,7 +775,7 @@ external ffi.Pointer<CvStatus> Mat_GetUChar3(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetUShort(
   Mat m,
   int row,
@@ -784,7 +785,7 @@ external ffi.Pointer<CvStatus> Mat_GetUShort(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Uint16>)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_GetUShort3(
   Mat m,
   int x,
@@ -793,202 +794,158 @@ external ffi.Pointer<CvStatus> Mat_GetUShort3(
   ffi.Pointer<ffi.Uint16> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2b>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2b(
+@ffi.Native<ffi.Pointer<Vec2b> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2b> Mat_GetVec2b(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2b> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2d>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2d(
+@ffi.Native<ffi.Pointer<Vec2d> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2d> Mat_GetVec2d(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2d> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2f>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2f(
+@ffi.Native<ffi.Pointer<Vec2f> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2f> Mat_GetVec2f(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2f> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2i>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2i(
+@ffi.Native<ffi.Pointer<Vec2i> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2i> Mat_GetVec2i(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2i> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2s>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2s(
+@ffi.Native<ffi.Pointer<Vec2s> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2s> Mat_GetVec2s(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2s> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec2w>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec2w(
+@ffi.Native<ffi.Pointer<Vec2w> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec2w> Mat_GetVec2w(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec2w> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3b>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3b(
+@ffi.Native<ffi.Pointer<Vec3b> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3b> Mat_GetVec3b(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3b> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3d>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3d(
+@ffi.Native<ffi.Pointer<Vec3d> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3d> Mat_GetVec3d(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3d> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3f>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3f(
+@ffi.Native<ffi.Pointer<Vec3f> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3f> Mat_GetVec3f(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3f> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3i>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3i(
+@ffi.Native<ffi.Pointer<Vec3i> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3i> Mat_GetVec3i(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3i> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3s>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3s(
+@ffi.Native<ffi.Pointer<Vec3s> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3s> Mat_GetVec3s(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3s> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec3w>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec3w(
+@ffi.Native<ffi.Pointer<Vec3w> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec3w> Mat_GetVec3w(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec3w> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4b>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4b(
+@ffi.Native<ffi.Pointer<Vec4b> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4b> Mat_GetVec4b(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4b> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4d>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4d(
+@ffi.Native<ffi.Pointer<Vec4d> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4d> Mat_GetVec4d(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4d> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4f>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4f(
+@ffi.Native<ffi.Pointer<Vec4f> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4f> Mat_GetVec4f(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4f> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4i>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4i(
+@ffi.Native<ffi.Pointer<Vec4i> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4i> Mat_GetVec4i(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4i> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4s>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4s(
+@ffi.Native<ffi.Pointer<Vec4s> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4s> Mat_GetVec4s(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4s> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec4w>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec4w(
+@ffi.Native<ffi.Pointer<Vec4w> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec4w> Mat_GetVec4w(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec4w> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6d>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec6d(
+@ffi.Native<ffi.Pointer<Vec6d> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec6d> Mat_GetVec6d(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec6d> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6f>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec6f(
+@ffi.Native<ffi.Pointer<Vec6f> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec6f> Mat_GetVec6f(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec6f> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec6i>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec6i(
+@ffi.Native<ffi.Pointer<Vec6i> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec6i> Mat_GetVec6i(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec6i> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<Vec8i>)>()
-external ffi.Pointer<CvStatus> Mat_GetVec8i(
+@ffi.Native<ffi.Pointer<Vec8i> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
+external ffi.Pointer<Vec8i> Mat_GetVec8i(
   Mat m,
   int row,
   int col,
-  ffi.Pointer<Vec8i> rval,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat)>()
@@ -1614,7 +1571,8 @@ external ffi.Pointer<CvStatus> Mat_ScaleAdd(
   Mat dst,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Double)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Double)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetDouble(
   Mat m,
   int row,
@@ -1624,7 +1582,7 @@ external ffi.Pointer<CvStatus> Mat_SetDouble(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Double)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetDouble3(
   Mat m,
   int x,
@@ -1633,7 +1591,8 @@ external ffi.Pointer<CvStatus> Mat_SetDouble3(
   double val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Float)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Float)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetFloat(
   Mat m,
   int row,
@@ -1642,7 +1601,8 @@ external ffi.Pointer<CvStatus> Mat_SetFloat(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Float)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Float)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetFloat3(
   Mat m,
   int x,
@@ -1651,13 +1611,14 @@ external ffi.Pointer<CvStatus> Mat_SetFloat3(
   double val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Double)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetIdentity(
   Mat src,
   double scalar,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int32)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int32)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetInt(
   Mat m,
   int row,
@@ -1666,7 +1627,8 @@ external ffi.Pointer<CvStatus> Mat_SetInt(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int32)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int32)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetInt3(
   Mat m,
   int x,
@@ -1675,7 +1637,8 @@ external ffi.Pointer<CvStatus> Mat_SetInt3(
   int val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int8)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int8)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetSChar(
   Mat m,
   int row,
@@ -1684,7 +1647,8 @@ external ffi.Pointer<CvStatus> Mat_SetSChar(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int8)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int8)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetSChar3(
   Mat m,
   int x,
@@ -1693,7 +1657,8 @@ external ffi.Pointer<CvStatus> Mat_SetSChar3(
   int val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int16)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int16)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetShort(
   Mat m,
   int row,
@@ -1702,7 +1667,8 @@ external ffi.Pointer<CvStatus> Mat_SetShort(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int16)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int16)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetShort3(
   Mat m,
   int x,
@@ -1711,14 +1677,15 @@ external ffi.Pointer<CvStatus> Mat_SetShort3(
   int val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar, Mat)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar, Mat)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetTo(
   Mat m,
   Scalar value,
   Mat mask,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint8)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint8)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetUChar(
   Mat m,
   int row,
@@ -1727,7 +1694,8 @@ external ffi.Pointer<CvStatus> Mat_SetUChar(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint8)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint8)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetUChar3(
   Mat m,
   int x,
@@ -1736,7 +1704,8 @@ external ffi.Pointer<CvStatus> Mat_SetUChar3(
   int val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint16)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Uint16)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetUShort(
   Mat m,
   int row,
@@ -1746,7 +1715,7 @@ external ffi.Pointer<CvStatus> Mat_SetUShort(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>()
+        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Uint16)>(isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetUShort3(
   Mat m,
   int x,
@@ -1755,7 +1724,8 @@ external ffi.Pointer<CvStatus> Mat_SetUShort3(
   int val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2b)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2b)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2b(
   Mat m,
   int row,
@@ -1763,7 +1733,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2b(
   Vec2b val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2d)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2d)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2d(
   Mat m,
   int row,
@@ -1771,7 +1742,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2d(
   Vec2d val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2f)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2f)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2f(
   Mat m,
   int row,
@@ -1779,7 +1751,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2f(
   Vec2f val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2i)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2i)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2i(
   Mat m,
   int row,
@@ -1787,7 +1760,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2i(
   Vec2i val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2s)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2s)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2s(
   Mat m,
   int row,
@@ -1795,7 +1769,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2s(
   Vec2s val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2w)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec2w)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec2w(
   Mat m,
   int row,
@@ -1803,7 +1778,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec2w(
   Vec2w val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3b)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3b)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3b(
   Mat m,
   int row,
@@ -1811,7 +1787,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3b(
   Vec3b val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3d)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3d)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3d(
   Mat m,
   int row,
@@ -1819,7 +1796,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3d(
   Vec3d val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3f)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3f)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3f(
   Mat m,
   int row,
@@ -1827,7 +1805,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3f(
   Vec3f val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3i)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3i)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3i(
   Mat m,
   int row,
@@ -1835,7 +1814,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3i(
   Vec3i val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3s)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3s)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3s(
   Mat m,
   int row,
@@ -1843,7 +1823,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3s(
   Vec3s val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3w)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec3w)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec3w(
   Mat m,
   int row,
@@ -1851,7 +1832,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec3w(
   Vec3w val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4b)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4b)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4b(
   Mat m,
   int row,
@@ -1859,7 +1841,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4b(
   Vec4b val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4d)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4d)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4d(
   Mat m,
   int row,
@@ -1867,7 +1850,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4d(
   Vec4d val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4f)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4f)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4f(
   Mat m,
   int row,
@@ -1875,7 +1859,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4f(
   Vec4f val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4i)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4i)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4i(
   Mat m,
   int row,
@@ -1883,7 +1868,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4i(
   Vec4i val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4s)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4s)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4s(
   Mat m,
   int row,
@@ -1891,7 +1877,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4s(
   Vec4s val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4w)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec4w)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec4w(
   Mat m,
   int row,
@@ -1899,7 +1886,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec4w(
   Vec4w val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6d)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6d)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec6d(
   Mat m,
   int row,
@@ -1907,7 +1895,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec6d(
   Vec6d val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6f)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6f)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec6f(
   Mat m,
   int row,
@@ -1915,7 +1904,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec6f(
   Vec6f val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6i)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec6i)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec6i(
   Mat m,
   int row,
@@ -1923,7 +1913,8 @@ external ffi.Pointer<CvStatus> Mat_SetVec6i(
   Vec6i val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec8i)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Vec8i)>(
+    isLeaf: true)
 external ffi.Pointer<CvStatus> Mat_SetVec8i(
   Mat m,
   int row,
