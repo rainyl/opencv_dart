@@ -1,3 +1,10 @@
+## 1.2.1
+
+- use ndk from conan by @rainyl in https://github.com/rainyl/opencv_dart/pull/187
+- add Float16P, Float16List, impl float16 access for Mat by @rainyl in https://github.com/rainyl/opencv_dart/pull/189
+- export Mat properies as leaf functions by @rainyl in https://github.com/rainyl/opencv_dart/pull/191
+- use Mat::Ptr in Mat.ptrAt by @rainyl in https://github.com/rainyl/opencv_dart/pull/193
+
 ## 1.2.0
 
 - Many breaking changes in this version, keep using old version if you do not want to modify your code.
