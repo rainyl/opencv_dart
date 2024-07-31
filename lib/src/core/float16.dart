@@ -9,6 +9,8 @@ extension type Float16P(ffi.Pointer<ffi.Uint16> ptr) {
   double get value => float16(ptr.value);
   set value(double v) => ptr.value = float16Inv(v);
 
+  int get address => ptr.address;
+
   double operator [](int index) => float16(ptr[index]);
   void operator []=(int index, double v) => ptr[index] = float16Inv(v);
 
@@ -38,16 +40,6 @@ class Float16List with ListMixin<double> {
       throw IndexError.withLength(index, length);
     }
   }
-
-  @override
-  double get first => this[0];
-  @override
-  set first(double value) => this[0] = value;
-
-  @override
-  double get last => this[length - 1];
-  @override
-  set last(double value) => this[length - 1] = value;
 
   @override
   set length(int newLength) => throw UnsupportedError('Float16List does not support setting length');
@@ -99,4 +91,8 @@ int float16Inv(double x) {
   calloc.free(sign);
   calloc.free(w);
   return rval;
+}
+
+extension PointerUint16Extension on ffi.Pointer<ffi.Uint16> {
+  Float16P asFp16() => Float16P(this);
 }

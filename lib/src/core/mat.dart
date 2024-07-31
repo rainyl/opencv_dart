@@ -663,6 +663,8 @@ class Mat extends CvStruct<cvg.Mat> {
     return pp.cast<T>();
   }
 
+  Float16P ptrAtF16(int i0, [int? i1, int? i2]) => ptrAt<U16>(i0, i1, i2).asFp16();
+
   List<num> _ptrAsTypedList(ffi.Pointer<U8> p, int count, int depth) {
     switch (depth) {
       case MatType.CV_8U:
