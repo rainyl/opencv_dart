@@ -391,103 +391,59 @@ class Mat extends CvStruct<cvg.Mat> {
   T atVec<T>(int row, int col) {
     // Vec2b, Vec3b, Vec4b
     if (T == Vec2b) {
-      final p = calloc<cvg.Vec2b>();
-      cvRun(() => ccore.Mat_GetVec2b(ref, row, col, p));
-      return Vec2b.fromPointer(p) as T;
+      return Vec2b.fromPointer(ccore.Mat_GetVec2b(ref, row, col)) as T;
     } else if (T == Vec3b) {
-      final p = calloc<cvg.Vec3b>();
-      cvRun(() => ccore.Mat_GetVec3b(ref, row, col, p));
-      return Vec3b.fromPointer(p) as T;
+      return Vec3b.fromPointer(ccore.Mat_GetVec3b(ref, row, col)) as T;
     } else if (T == Vec4b) {
-      final p = calloc<cvg.Vec4b>();
-      cvRun(() => ccore.Mat_GetVec4b(ref, row, col, p));
-      return Vec4b.fromPointer(p) as T;
+      return Vec4b.fromPointer(ccore.Mat_GetVec4b(ref, row, col)) as T;
     }
     // Vec2w, Vec3w, Vec4w
     else if (T == Vec2w) {
-      final p = calloc<cvg.Vec2w>();
-      cvRun(() => ccore.Mat_GetVec2w(ref, row, col, p));
-      return Vec2w.fromPointer(p) as T;
+      return Vec2w.fromPointer(ccore.Mat_GetVec2w(ref, row, col)) as T;
     } else if (T == Vec3w) {
-      final p = calloc<cvg.Vec3w>();
-      cvRun(() => ccore.Mat_GetVec3w(ref, row, col, p));
-      return Vec3w.fromPointer(p) as T;
+      return Vec3w.fromPointer(ccore.Mat_GetVec3w(ref, row, col)) as T;
     } else if (T == Vec4w) {
-      final p = calloc<cvg.Vec4w>();
-      cvRun(() => ccore.Mat_GetVec4w(ref, row, col, p));
-      return Vec4w.fromPointer(p) as T;
+      return Vec4w.fromPointer(ccore.Mat_GetVec4w(ref, row, col)) as T;
     }
     // Vec2s, Vec3s, Vec4s
     else if (T == Vec2s) {
-      final p = calloc<cvg.Vec2s>();
-      cvRun(() => ccore.Mat_GetVec2s(ref, row, col, p));
-      return Vec2s.fromPointer(p) as T;
+      return Vec2s.fromPointer(ccore.Mat_GetVec2s(ref, row, col)) as T;
     } else if (T == Vec3s) {
-      final p = calloc<cvg.Vec3s>();
-      cvRun(() => ccore.Mat_GetVec3s(ref, row, col, p));
-      return Vec3s.fromPointer(p) as T;
+      return Vec3s.fromPointer(ccore.Mat_GetVec3s(ref, row, col)) as T;
     } else if (T == Vec4s) {
-      final p = calloc<cvg.Vec4s>();
-      cvRun(() => ccore.Mat_GetVec4s(ref, row, col, p));
-      return Vec4s.fromPointer(p) as T;
+      return Vec4s.fromPointer(ccore.Mat_GetVec4s(ref, row, col)) as T;
     }
     // Vec2i, Vec3i, Vec4i, Vec6i, Vec8i
     else if (T == Vec2i) {
-      final p = calloc<cvg.Vec2i>();
-      cvRun(() => ccore.Mat_GetVec2i(ref, row, col, p));
-      return Vec2i.fromPointer(p) as T;
+      return Vec2i.fromPointer(ccore.Mat_GetVec2i(ref, row, col)) as T;
     } else if (T == Vec3i) {
-      final p = calloc<cvg.Vec3i>();
-      cvRun(() => ccore.Mat_GetVec3i(ref, row, col, p));
-      return Vec3i.fromPointer(p) as T;
+      return Vec3i.fromPointer(ccore.Mat_GetVec3i(ref, row, col)) as T;
     } else if (T == Vec4i) {
-      final p = calloc<cvg.Vec4i>();
-      cvRun(() => ccore.Mat_GetVec4i(ref, row, col, p));
-      return Vec4i.fromPointer(p) as T;
+      return Vec4i.fromPointer(ccore.Mat_GetVec4i(ref, row, col)) as T;
     } else if (T == Vec6i) {
-      final p = calloc<cvg.Vec6i>();
-      cvRun(() => ccore.Mat_GetVec6i(ref, row, col, p));
-      return Vec6i.fromPointer(p) as T;
+      return Vec6i.fromPointer(ccore.Mat_GetVec6i(ref, row, col)) as T;
     } else if (T == Vec8i) {
-      final p = calloc<cvg.Vec8i>();
-      cvRun(() => ccore.Mat_GetVec8i(ref, row, col, p));
-      return Vec8i.fromPointer(p) as T;
+      return Vec8i.fromPointer(ccore.Mat_GetVec8i(ref, row, col)) as T;
     }
     // Vec2f, Vec3f, Vec4f, Vec6f
     else if (T == Vec2f) {
-      final p = calloc<cvg.Vec2f>();
-      cvRun(() => ccore.Mat_GetVec2f(ref, row, col, p));
-      return Vec2f.fromPointer(p) as T;
+      return Vec2f.fromPointer(ccore.Mat_GetVec2f(ref, row, col)) as T;
     } else if (T == Vec3f) {
-      final p = calloc<cvg.Vec3f>();
-      cvRun(() => ccore.Mat_GetVec3f(ref, row, col, p));
-      return Vec3f.fromPointer(p) as T;
+      return Vec3f.fromPointer(ccore.Mat_GetVec3f(ref, row, col)) as T;
     } else if (T == Vec4f) {
-      final p = calloc<cvg.Vec4f>();
-      cvRun(() => ccore.Mat_GetVec4f(ref, row, col, p));
-      return Vec4f.fromPointer(p) as T;
+      return Vec4f.fromPointer(ccore.Mat_GetVec4f(ref, row, col)) as T;
     } else if (T == Vec6f) {
-      final p = calloc<cvg.Vec6f>();
-      cvRun(() => ccore.Mat_GetVec6f(ref, row, col, p));
-      return Vec6f.fromPointer(p) as T;
+      return Vec6f.fromPointer(ccore.Mat_GetVec6f(ref, row, col)) as T;
     }
     // Vec2d, Vec3d, Vec4d, Vec6d
     else if (T == Vec2d) {
-      final p = calloc<cvg.Vec2d>();
-      cvRun(() => ccore.Mat_GetVec2d(ref, row, col, p));
-      return Vec2d.fromPointer(p) as T;
+      return Vec2d.fromPointer(ccore.Mat_GetVec2d(ref, row, col)) as T;
     } else if (T == Vec3d) {
-      final p = calloc<cvg.Vec3d>();
-      cvRun(() => ccore.Mat_GetVec3d(ref, row, col, p));
-      return Vec3d.fromPointer(p) as T;
+      return Vec3d.fromPointer(ccore.Mat_GetVec3d(ref, row, col)) as T;
     } else if (T == Vec4d) {
-      final p = calloc<cvg.Vec4d>();
-      cvRun(() => ccore.Mat_GetVec4d(ref, row, col, p));
-      return Vec4d.fromPointer(p) as T;
+      return Vec4d.fromPointer(ccore.Mat_GetVec4d(ref, row, col)) as T;
     } else if (T == Vec6d) {
-      final p = calloc<cvg.Vec6d>();
-      cvRun(() => ccore.Mat_GetVec6d(ref, row, col, p));
-      return Vec6d.fromPointer(p) as T;
+      return Vec6d.fromPointer(ccore.Mat_GetVec6d(ref, row, col)) as T;
     } else {
       throw UnsupportedError("at<$T>() for ${type.asString()} is not supported!");
     }
