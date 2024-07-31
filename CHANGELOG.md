@@ -1,3 +1,43 @@
+## 2.1.0-dev.0
+
+- Many breaking changes in this version, keep using old version if you do not want to modify your code.
+- use Mat::ptr directly in Mat.ptrAt
+- faster Mat.atVec
+- Split to multiple libraries by @rainyl in https://github.com/rainyl/opencv_dart/pull/147
+- refactor vector wrappers by @rainyl in https://github.com/rainyl/opencv_dart/pull/155
+- deprecate copyToWithMask, use copyTo(Mat img, {Mat? mask}) instead by @rainyl in https://github.com/rainyl/opencv_dart/pull/157
+- support fp16 by @rainyl in https://github.com/rainyl/opencv_dart/pull/158
+- add getBackendName() for VideoCapture by @rainyl in https://github.com/rainyl/opencv_dart/pull/161
+- support create Mat from VecU8, etc. by @rainyl in https://github.com/rainyl/opencv_dart/pull/162
+- fix: Better mat format/print #156 by @rainyl in https://github.com/rainyl/opencv_dart/pull/163
+- added from list by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/165
+- fix imencode interface by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/168
+- fix Mat.size is not correct #170 by @rainyl in https://github.com/rainyl/opencv_dart/pull/171
+- logging interface by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/175
+- optimize Rng, remove unnecessay async by @rainyl in https://github.com/rainyl/opencv_dart/pull/176
+- update version to use enabled vulkan version by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/178
+- refactor Mat.at, Mat.set, Mat.ptrAt by @rainyl in https://github.com/rainyl/opencv_dart/pull/172
+- improve divide tests by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/181
+- updated functions to pass all params by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/182
+- bump ffigen to 13.0.0 by @rainyl in https://github.com/rainyl/opencv_dart/pull/183
+- add more methods to Mat, more test, add cv.sqrt, cv.sum by @rainyl in https://github.com/rainyl/opencv_dart/pull/185
+- added more tests by @abdelaziz-mahdy in https://github.com/rainyl/opencv_dart/pull/186
+- Fix: download wrong binaries on `windows` and `linux`, other platforms are not affected.
+- Breaking Change: Asynchronous support, APIs ended with `Async` support asynchronous call.
+- Breaking Change: `Rng.uniform,gaussian,next` returns a `Stream` now, [#135](https://github.com/rainyl/opencv_dart/pull/135)
+- Breaking Change: delete `xdata` of Mat, Make `Mat.fromList` copy data internally to avoid extra data management, now it will copy the input data 2 times
+- Breaking Change: `class MatType` -> `extension type const MatType(int value)`
+- remove the dependency of `equatable`
+- New: `ximgproc` and `xobjdetect` modules.
+- `(int, int).toSize(Arena arena)` -> `(int, int).asSize`
+- `(int, int).toPoint(Arena arena)` -> `(int, int).asPoint`
+- `(double, double, double, double).toScalar(Arena arena)` -> `(double, double, double, double).asScalar`
+- New: `Mat.fromRange`
+- New: `Point3i`, `VecPoint3i`
+- remove `BlockMeanHash.compareS`, `BlockMeanHash.computeS`
+- remove `FaceRecognizerSF.newRecognizer`
+- More info at: [#143](https://github.com/rainyl/opencv_dart/discussions/143)
+
 ## 2.0.0-dev.12
 
 - Fix: memory leak caused by cvstatus
