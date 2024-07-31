@@ -34,6 +34,28 @@ headers:
     - ../src/core/version.h
     - ../src/core/logging.h
 functions:
+  leaf:
+    include:
+      - "Mat_Flags"
+      - "Mat_Type"
+      - "Mat_IsContinuous"
+      - "Mat_IsSubmatrix"
+      - "Mat_Rows"
+      - "Mat_Cols"
+      - "Mat_Channels"
+      - "Mat_Step"
+      - "Mat_Total"
+      - "Mat_Size"
+      - "Mat_ElemSize.*"
+      - "Mat_Dims"
+      - "Mat_Data"
+      - ""
+      # - ""
+      # - ""
+      # - ""
+      # - ""
+      # - ""
+
   symbol-address:
     include:
       - ".*_Close.*"
