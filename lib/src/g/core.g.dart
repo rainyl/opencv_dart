@@ -1493,214 +1493,25 @@ external ffi.Pointer<CvStatus> Mat_Pow(
   Mat dst,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f32_1(
+@ffi.Native<ffi.Pointer<imp1.uchar> Function(Mat, ffi.Int)>()
+external ffi.Pointer<imp1.uchar> Mat_Ptr_u8_1(
   Mat m,
   int i,
-  ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f32_2(
+@ffi.Native<ffi.Pointer<imp1.uchar> Function(Mat, ffi.Int, ffi.Int)>()
+external ffi.Pointer<imp1.uchar> Mat_Ptr_u8_2(
   Mat m,
   int i,
   int j,
-  ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
 );
 
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Float>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f32_3(
+@ffi.Native<ffi.Pointer<imp1.uchar> Function(Mat, ffi.Int, ffi.Int, ffi.Int)>()
+external ffi.Pointer<imp1.uchar> Mat_Ptr_u8_3(
   Mat m,
   int i,
   int j,
   int k,
-  ffi.Pointer<ffi.Pointer<ffi.Float>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f64_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f64_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Double>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_f64_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i16_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i16_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Short>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i16_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<ffi.Short>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i32_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i32_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Int>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i32_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i8_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i8_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_i8_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<imp1.ushort>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u16_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<imp1.ushort>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<imp1.ushort>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u16_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<imp1.ushort>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
-        ffi.Pointer<ffi.Pointer<imp1.ushort>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u16_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<imp1.ushort>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u8_1(
-  Mat m,
-  int i,
-  ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u8_2(
-  Mat m,
-  int i,
-  int j,
-  ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Pointer<imp1.uchar>>)>()
-external ffi.Pointer<CvStatus> Mat_Ptr_u8_3(
-  Mat m,
-  int i,
-  int j,
-  int k,
-  ffi.Pointer<ffi.Pointer<imp1.uchar>> rval,
 );
 
 @ffi.Native<

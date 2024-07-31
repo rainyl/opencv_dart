@@ -113,27 +113,9 @@ CvStatus *Eye(int rows, int cols, int type, Mat *rval);
 CvStatus *Zeros(int rows, int cols, int type, Mat *rval);
 CvStatus *Ones(int rows, int cols, int type, Mat *rval);
 
-CvStatus *Mat_Ptr_u8_1(Mat m, int i, uchar **rval);
-CvStatus *Mat_Ptr_u8_2(Mat m, int i, int j, uchar **rval);
-CvStatus *Mat_Ptr_u8_3(Mat m, int i, int j, int k, uchar **rval);
-CvStatus *Mat_Ptr_i8_1(Mat m, int i, char **rval);
-CvStatus *Mat_Ptr_i8_2(Mat m, int i, int j, char **rval);
-CvStatus *Mat_Ptr_i8_3(Mat m, int i, int j, int k, char **rval);
-CvStatus *Mat_Ptr_u16_1(Mat m, int i, ushort **rval);
-CvStatus *Mat_Ptr_u16_2(Mat m, int i, int j, ushort **rval);
-CvStatus *Mat_Ptr_u16_3(Mat m, int i, int j, int k, ushort **rval);
-CvStatus *Mat_Ptr_i16_1(Mat m, int i, short **rval);
-CvStatus *Mat_Ptr_i16_2(Mat m, int i, int j, short **rval);
-CvStatus *Mat_Ptr_i16_3(Mat m, int i, int j, int k, short **rval);
-CvStatus *Mat_Ptr_i32_1(Mat m, int i, int **rval);
-CvStatus *Mat_Ptr_i32_2(Mat m, int i, int j, int **rval);
-CvStatus *Mat_Ptr_i32_3(Mat m, int i, int j, int k, int **rval);
-CvStatus *Mat_Ptr_f32_1(Mat m, int i, float **rval);
-CvStatus *Mat_Ptr_f32_2(Mat m, int i, int j, float **rval);
-CvStatus *Mat_Ptr_f32_3(Mat m, int i, int j, int k, float **rval);
-CvStatus *Mat_Ptr_f64_1(Mat m, int i, double **rval);
-CvStatus *Mat_Ptr_f64_2(Mat m, int i, int j, double **rval);
-CvStatus *Mat_Ptr_f64_3(Mat m, int i, int j, int k, double **rval);
+uchar *Mat_Ptr_u8_1(Mat m, int i);
+uchar *Mat_Ptr_u8_2(Mat m, int i, int j);
+uchar *Mat_Ptr_u8_3(Mat m, int i, int j, int k);
 
 #pragma region Mat_getter
 
