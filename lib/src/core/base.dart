@@ -262,6 +262,7 @@ typedef I16 = ffi.Int16;
 typedef I32 = ffi.Int32;
 typedef F32 = ffi.Float;
 typedef F64 = ffi.Double;
+// typedef F16 = ffi.Uint16;
 
 // others
 extension PointerCharExtension on ffi.Pointer<ffi.Char> {
