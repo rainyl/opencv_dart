@@ -372,42 +372,6 @@ files:
         name: Mat_PolarToCart
       c:@F@Mat_Pow:
         name: Mat_Pow
-      c:@F@Mat_Ptr_f32_1:
-        name: Mat_Ptr_f32_1
-      c:@F@Mat_Ptr_f32_2:
-        name: Mat_Ptr_f32_2
-      c:@F@Mat_Ptr_f32_3:
-        name: Mat_Ptr_f32_3
-      c:@F@Mat_Ptr_f64_1:
-        name: Mat_Ptr_f64_1
-      c:@F@Mat_Ptr_f64_2:
-        name: Mat_Ptr_f64_2
-      c:@F@Mat_Ptr_f64_3:
-        name: Mat_Ptr_f64_3
-      c:@F@Mat_Ptr_i16_1:
-        name: Mat_Ptr_i16_1
-      c:@F@Mat_Ptr_i16_2:
-        name: Mat_Ptr_i16_2
-      c:@F@Mat_Ptr_i16_3:
-        name: Mat_Ptr_i16_3
-      c:@F@Mat_Ptr_i32_1:
-        name: Mat_Ptr_i32_1
-      c:@F@Mat_Ptr_i32_2:
-        name: Mat_Ptr_i32_2
-      c:@F@Mat_Ptr_i32_3:
-        name: Mat_Ptr_i32_3
-      c:@F@Mat_Ptr_i8_1:
-        name: Mat_Ptr_i8_1
-      c:@F@Mat_Ptr_i8_2:
-        name: Mat_Ptr_i8_2
-      c:@F@Mat_Ptr_i8_3:
-        name: Mat_Ptr_i8_3
-      c:@F@Mat_Ptr_u16_1:
-        name: Mat_Ptr_u16_1
-      c:@F@Mat_Ptr_u16_2:
-        name: Mat_Ptr_u16_2
-      c:@F@Mat_Ptr_u16_3:
-        name: Mat_Ptr_u16_3
       c:@F@Mat_Ptr_u8_1:
         name: Mat_Ptr_u8_1
       c:@F@Mat_Ptr_u8_2:

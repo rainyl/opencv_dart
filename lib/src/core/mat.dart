@@ -653,14 +653,12 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
   ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
-    final step = this.step;
-
-    ffi.Pointer<U8> pp = dataPtr + i0 * step.$1;
-    if (i1 != null) {
-      pp += i1 * step.$2;
-      if (i2 != null) pp += i2 * step.$3;
-    }
-    return pp.cast<T>();
+    return switch ((i1, i2)) {
+      (null, null) => ccore.Mat_Ptr_u8_1(ref, i0).cast<T>(),
+      (final int i1, null) => ccore.Mat_Ptr_u8_2(ref, i0, i1).cast<T>(),
+      (final int i1, final int i2) => ccore.Mat_Ptr_u8_3(ref, i0, i1, i2).cast<T>(),
+      _ => throw UnsupportedError("ptrAt<$T>() for i1=$i1, i2=$i2 is not supported!"),
+    };
   }
 
   Float16P ptrAtF16(int i0, [int? i1, int? i2]) => ptrAt<U16>(i0, i1, i2).asFp16();
