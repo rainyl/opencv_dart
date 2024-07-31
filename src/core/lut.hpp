@@ -17,6 +17,17 @@ namespace cvd
         dst[i + k] = lut[src[i + k] * cn + k];                                                               \
   }
 
+// NOTE: opencv doesn't support LUT from CV_8U or CV_8S to CV_16F now
+static void LUT8u_16f(const uchar *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
+{
+  LUT_BODY
+}
+
+static void LUT8s_16f(const char *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
+{
+  LUT_BODY
+}
+
 // 16u
 static void LUT16u_8u(const ushort *src, const uchar *lut, uchar *dst, int len, int cn, int lutcn)
 {
@@ -48,6 +59,11 @@ static void LUT16u_64f(const ushort *src, const double *lut, double *dst, int le
   LUT_BODY
 }
 
+static void LUT16u_16f(const ushort *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
+{
+  LUT_BODY
+}
+
 // 16s
 static void LUT16s_8u(const short *src, const uchar *lut, uchar *dst, int len, int cn, int lutcn)
 {
@@ -75,6 +91,11 @@ static void LUT16s_32f(const short *src, const float *lut, float *dst, int len, 
 }
 
 static void LUT16s_64f(const short *src, const double *lut, double *dst, int len, int cn, int lutcn)
+{
+  LUT_BODY
+}
+
+static void LUT16s_16f(const short *src, const cv::hfloat *lut, cv::hfloat *dst, int len, int cn, int lutcn)
 {
   LUT_BODY
 }

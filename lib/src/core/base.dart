@@ -3,17 +3,14 @@
 
 library cv;
 
+import 'dart:async';
 import 'dart:ffi' as ffi;
-import 'dart:ffi';
-import 'dart:io';
 
-import 'package:equatable/equatable.dart';
 import 'package:ffi/ffi.dart';
 
-import "../opencv.g.dart" as cvg;
-import "exception.dart" show CvException;
-
-const _libraryName = "opencv_dart";
+import '../g/core.g.dart' show CvStatus_Close;
+import "../g/types.g.dart" as cvg;
+import "exception.dart" show CvException, CvdException;
 
 /* fundamental constants */
 const double CV_PI = 3.1415926535897932384626433832795;
@@ -35,50 +32,196 @@ const int CV_I32_MIN = -2147483648;
 const double CV_F32_MAX = 3.4028234663852886e+38;
 const double CV_F64_MAX = 1.7976931348623157e+308;
 
-ffi.DynamicLibrary loadNativeLibrary() {
-  if (Platform.isIOS) return ffi.DynamicLibrary.process();
-  final defaultLibPath = switch (Platform.operatingSystem) {
-    "windows" => "$_libraryName.dll",
-    "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
-    "macos" => "lib$_libraryName.dylib",
-    _ => throw UnsupportedError("Platform ${Platform.operatingSystem} not supported")
-  };
-  final libPath = Platform.environment["OPENCV_DART_LIB_PATH"] ?? defaultLibPath;
-  return ffi.DynamicLibrary.open(libPath);
-}
-
-// final CFFI = CvNative(loadNativeLibrary());
-
+// base structures
 abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
 
-abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> {
+mixin ComparableMixin {
+  List<Object?> get props;
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) {
+    if (other is! ComparableMixin) return false;
+    if (props.length != other.props.length) return false;
+    return props.indexed.every((e) => other.props[e.$1] == e.$2);
+  }
+}
+
+abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> with ComparableMixin {
   ICvStruct.fromPointer(this.ptr);
 
   ffi.Pointer<T> ptr;
   T get ref;
+
+  @override
+  List<Object?> get props => [ptr.address];
 }
 
-abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> with EquatableMixin {
+abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
   CvStruct.fromPointer(super.ptr) : super.fromPointer();
 }
 
-void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) {
-  final s = func();
+// error handler
+void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final code = s.ref.code;
   // String err = s.ref.err.cast<Utf8>().toDartString();
   final msg = s.ref.msg.cast<Utf8>().toDartString();
   final file = s.ref.file.cast<Utf8>().toDartString();
   final funcName = s.ref.func.cast<Utf8>().toDartString();
   final line = s.ref.line;
-  cvg.CvStatus_Close(s);
+  CvStatus_Close(s);
   if (code != 0) {
     throw CvException(code, msg: msg, file: file, func: funcName, line: line);
   }
 }
 
+// sync runner
+void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) => throwIfFailed(func());
+
+// async runner
+typedef VoidPtr = ffi.Pointer<ffi.Void>;
+Future<T> cvRunAsync0<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
+  void Function(Completer<T> completer) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
+  void onResponse() {
+    onComplete(completer);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
+  void Function(Completer<T> completer, VoidPtr p) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
+  void onResponse(VoidPtr p) {
+    onComplete(completer, p);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+const cvRunAsync1 = cvRunAsync;
+
+Future<T> cvRunAsync2<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_2 callback) func,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_2Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1) {
+    onComplete(completer, p, p1);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync3<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_3 callback) func,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_3Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2) {
+    onComplete(completer, p, p1, p2);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync4<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
+  void Function(
+    Completer<T> completer,
+    VoidPtr p,
+    VoidPtr p1,
+    VoidPtr p2,
+    VoidPtr p3,
+  ) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_4Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) {
+    onComplete(completer, p, p1, p2, p3);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+Future<T> cvRunAsync5<T>(
+  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
+  void Function(
+    Completer<T> completer,
+    VoidPtr p,
+    VoidPtr p1,
+    VoidPtr p2,
+    VoidPtr p3,
+    VoidPtr p4,
+  ) onComplete,
+) {
+  final completer = Completer<T>();
+  late final ffi.NativeCallable<cvg.CvCallback_5Function> ccallback;
+  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) {
+    onComplete(completer, p, p1, p2, p3, p4);
+    ccallback.close();
+  }
+
+  ccallback = ffi.NativeCallable.listener(onResponse);
+  throwIfFailed(func(ccallback.nativeFunction));
+  return completer.future;
+}
+
+// async completers
+void voidCompleter(Completer<void> completer) => completer.complete();
+
+void boolCompleter(Completer<bool> completer, VoidPtr p) {
+  final value = p.cast<ffi.Bool>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void intCompleter(Completer<int> completer, VoidPtr p) {
+  final value = p.cast<ffi.Int>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void doubleCompleter(Completer<double> completer, VoidPtr p) {
+  final value = p.cast<ffi.Double>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+void floatCompleter(Completer<double> completer, VoidPtr p) {
+  final value = p.cast<ffi.Float>().value;
+  calloc.free(p);
+  completer.complete(value);
+}
+
+// Arena wrapper
 R cvRunArena<R>(
   R Function(Arena arena) computation, [
-  Allocator wrappedAllocator = calloc,
+  ffi.Allocator wrappedAllocator = calloc,
   bool keep = false,
 ]) {
   final arena = Arena(wrappedAllocator);
@@ -97,58 +240,31 @@ R cvRunArena<R>(
   }
 }
 
+void cvAssert(bool condition, [String? msg]) {
+  if (!condition) throw CvdException(msg ?? 'Assertion failed');
+}
+
+// finalizers
 typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
     = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
-ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
+ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(
+  NativeFinalizerFunctionT<T> func,
+) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
-typedef U8 = ffi.UnsignedChar;
-typedef I8 = ffi.Char;
-typedef U16 = ffi.UnsignedShort;
-typedef I16 = ffi.Short;
+// native types
+typedef U8 = ffi.Uint8;
+typedef I8 = ffi.Int8;
+typedef U16 = ffi.Uint16;
+typedef I16 = ffi.Int16;
 // typedef U32 = ffi.UnsignedInt;
-typedef I32 = ffi.Int;
+typedef I32 = ffi.Int32;
 typedef F32 = ffi.Float;
 typedef F64 = ffi.Double;
+// typedef F16 = ffi.Uint16;
 
+// others
 extension PointerCharExtension on ffi.Pointer<ffi.Char> {
   String toDartString() => cast<Utf8>().toDartString();
-}
-
-enum ImageFormat {
-  // Windows bitmaps - *.bmp, *.dib (always supported)
-  bmp(ext: ".bmp"),
-  dib(ext: ".dib"),
-  // JPEG files - *.jpeg, *.jpg, *.jpe (see the Note section)
-  jpg(ext: ".jpg"),
-  jpeg(ext: ".jpeg"),
-  jpe(ext: ".jpe"),
-  // JPEG 2000 files - *.jp2 (see the Note section)
-  jp2(ext: ".jp2"),
-  // Portable Network Graphics - *.png (see the Note section)
-  png(ext: ".png"),
-  // WebP - *.webp (see the Note section)
-  webp(ext: ".webp"),
-  // Portable image format - *.pbm, *.pgm, *.ppm *.pxm, *.pnm (always supported)
-  pbm(ext: ".pbm"),
-  pgm(ext: ".pgm"),
-  ppm(ext: ".ppm"),
-  pxm(ext: ".pxm"),
-  pnm(ext: ".pnm"),
-  // Sun rasters - *.sr, *.ras (always supported)
-  sr(ext: ".sr"),
-  ras(ext: ".ras"),
-  // TIFF files - *.tiff, *.tif (see the Note section)
-  tiff(ext: ".tiff"),
-  tif(ext: ".tif"),
-  // OpenEXR Image files - *.exr (see the Note section)
-  exr(ext: ".exr"),
-  // Radiance HDR - *.hdr, *.pic (always supported)
-  hdr(ext: ".hdr"),
-  pic(ext: ".pic");
-  // Raster and Vector geospatial data supported by GDAL (see the Note section)
-
-  const ImageFormat({required this.ext});
-  final String ext;
 }

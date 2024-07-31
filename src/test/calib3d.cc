@@ -3,8 +3,6 @@
 #include <gtest/gtest.h>
 // #include <opencv/opencv.hpp>
 #include <stdint.h>
-#include <stdio.h>
-#include <vector>
 
 TEST(calib3d, findChessboardCornersSB)
 {
@@ -13,5 +11,5 @@ TEST(calib3d, findChessboardCornersSB)
   Mat       corners = {new cv::Mat()};
   bool      rval;
   CvStatus *s = FindChessboardCornersSB(img, {4, 6}, corners, 0, &rval);
-  EXPECT_EQ(s.code, 0);
+  EXPECT_EQ(s->code, 0);
 }

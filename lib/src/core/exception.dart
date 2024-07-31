@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore_for_file: avoid_print
 import 'error_code.dart';
 
@@ -51,7 +52,7 @@ class CvException implements Exception {
 //   callback ??= defaultCvErrorCallback;
 //   // final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.listener(callback);
 //   final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.isolateLocal(callback);
-//   cvg.registerErrorCallback(fp.nativeFunction);
+//   CFFI.registerErrorCallback(fp.nativeFunction);
 // }
 
 class CvdException implements Exception {
@@ -60,6 +61,6 @@ class CvdException implements Exception {
 
   @override
   String toString() {
-    return "OpenCvDartException: $message";
+    return "CvdException: $message";
   }
 }

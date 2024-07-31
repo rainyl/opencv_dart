@@ -1,0 +1,38 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/imgcodecs.g.dart:
+    used-config:
+      ffi-native: true
+    symbols:
+      c:@F@Image_IMDecode:
+        name: Image_IMDecode
+      c:@F@Image_IMDecode_Async:
+        name: Image_IMDecode_Async
+      c:@F@Image_IMEncode:
+        name: Image_IMEncode
+      c:@F@Image_IMEncode_Async:
+        name: Image_IMEncode_Async
+      c:@F@Image_IMEncode_WithParams:
+        name: Image_IMEncode_WithParams
+      c:@F@Image_IMEncode_WithParams_Async:
+        name: Image_IMEncode_WithParams_Async
+      c:@F@Image_IMRead:
+        name: Image_IMRead
+      c:@F@Image_IMRead_Async:
+        name: Image_IMRead_Async
+      c:@F@Image_IMWrite:
+        name: Image_IMWrite
+      c:@F@Image_IMWrite_Async:
+        name: Image_IMWrite_Async
+      c:@F@Image_IMWrite_WithParams:
+        name: Image_IMWrite_WithParams
+      c:@F@Image_IMWrite_WithParams_Async:
+        name: Image_IMWrite_WithParams_Async
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@VecI32:
+        name: VecI32
+      c:types.h@T@VecUChar:
+        name: VecUChar

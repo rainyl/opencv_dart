@@ -17,31 +17,31 @@ extern "C" {
 #include "core/core.h"
 #include <stddef.h>
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::Ptr<cv::AKAZE>, AKAZE)
-CVD_TYPEDEF(cv::Ptr<cv::AgastFeatureDetector>, AgastFeatureDetector)
-CVD_TYPEDEF(cv::Ptr<cv::BRISK>, BRISK)
-CVD_TYPEDEF(cv::Ptr<cv::FastFeatureDetector>, FastFeatureDetector)
-CVD_TYPEDEF(cv::Ptr<cv::GFTTDetector>, GFTTDetector)
-CVD_TYPEDEF(cv::Ptr<cv::KAZE>, KAZE)
-CVD_TYPEDEF(cv::Ptr<cv::MSER>, MSER)
-CVD_TYPEDEF(cv::Ptr<cv::ORB>, ORB)
-CVD_TYPEDEF(cv::Ptr<cv::SimpleBlobDetector>, SimpleBlobDetector)
-CVD_TYPEDEF(cv::Ptr<cv::BFMatcher>, BFMatcher)
-CVD_TYPEDEF(cv::Ptr<cv::FlannBasedMatcher>, FlannBasedMatcher)
-CVD_TYPEDEF(cv::Ptr<cv::SIFT>, SIFT)
+CVD_TYPEDEF(cv::Ptr<cv::AKAZE>, AKAZE);
+CVD_TYPEDEF(cv::Ptr<cv::AgastFeatureDetector>, AgastFeatureDetector);
+CVD_TYPEDEF(cv::Ptr<cv::BRISK>, BRISK);
+CVD_TYPEDEF(cv::Ptr<cv::FastFeatureDetector>, FastFeatureDetector);
+CVD_TYPEDEF(cv::Ptr<cv::GFTTDetector>, GFTTDetector);
+CVD_TYPEDEF(cv::Ptr<cv::KAZE>, KAZE);
+CVD_TYPEDEF(cv::Ptr<cv::MSER>, MSER);
+CVD_TYPEDEF(cv::Ptr<cv::ORB>, ORB);
+CVD_TYPEDEF(cv::Ptr<cv::SimpleBlobDetector>, SimpleBlobDetector);
+CVD_TYPEDEF(cv::Ptr<cv::BFMatcher>, BFMatcher);
+CVD_TYPEDEF(cv::Ptr<cv::FlannBasedMatcher>, FlannBasedMatcher);
+CVD_TYPEDEF(cv::Ptr<cv::SIFT>, SIFT);
 #else
-CVD_TYPEDEF(void, AKAZE)
-CVD_TYPEDEF(void, AgastFeatureDetector)
-CVD_TYPEDEF(void, BRISK)
-CVD_TYPEDEF(void, FastFeatureDetector)
-CVD_TYPEDEF(void, GFTTDetector)
-CVD_TYPEDEF(void, KAZE)
-CVD_TYPEDEF(void, MSER)
-CVD_TYPEDEF(void, ORB)
-CVD_TYPEDEF(void, SimpleBlobDetector)
-CVD_TYPEDEF(void, BFMatcher)
-CVD_TYPEDEF(void, FlannBasedMatcher)
-CVD_TYPEDEF(void, SIFT)
+CVD_TYPEDEF(void, AKAZE);
+CVD_TYPEDEF(void, AgastFeatureDetector);
+CVD_TYPEDEF(void, BRISK);
+CVD_TYPEDEF(void, FastFeatureDetector);
+CVD_TYPEDEF(void, GFTTDetector);
+CVD_TYPEDEF(void, KAZE);
+CVD_TYPEDEF(void, MSER);
+CVD_TYPEDEF(void, ORB);
+CVD_TYPEDEF(void, SimpleBlobDetector);
+CVD_TYPEDEF(void, BFMatcher);
+CVD_TYPEDEF(void, FlannBasedMatcher);
+CVD_TYPEDEF(void, SIFT);
 #endif
 
 // Wrapper for SimpleBlobDetectorParams aka SimpleBlobDetector::Params
@@ -104,9 +104,9 @@ CvStatus *ORB_Create(ORB *rval);
 CvStatus *ORB_CreateWithParams(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold,
                                int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold,
                                ORB *rval);
-void      ORB_Close(ORBPtr o);
-CvStatus *ORB_Detect(ORB o, Mat src, VecKeyPoint *rval);
-CvStatus *ORB_DetectAndCompute(ORB o, Mat src, Mat mask, Mat desc, VecKeyPoint *rval);
+void      ORB_Close(ORBPtr self);
+CvStatus *ORB_Detect(ORB self, Mat src, VecKeyPoint *rval);
+CvStatus *ORB_DetectAndCompute(ORB self, Mat src, Mat mask, Mat *desc, VecKeyPoint *rval);
 
 CvStatus *SimpleBlobDetector_Create(SimpleBlobDetector *rval);
 CvStatus *SimpleBlobDetector_Create_WithParams(SimpleBlobDetectorParams params, SimpleBlobDetector *rval);

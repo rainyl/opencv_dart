@@ -14,10 +14,13 @@
 extern "C" {
 #endif
 
-#include "core.h"
+#include "core/types.h"
 
 CvStatus *openCVVersion(const char **rval);
+CvStatus *openCVVersion_Async(CvCallback_1 callback);
+
 CvStatus *getBuildInfo(const char **rval);
+CvStatus *getBuildInfo_Async(CvCallback_1 callback);
 
 #ifdef __cplusplus
 }

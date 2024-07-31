@@ -1,4 +1,4 @@
-library cv;
+library cv.photo;
 
 import 'dart:ffi' as ffi;
 
@@ -8,7 +8,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
 import '../core/point.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/photo.g.dart' as cphoto;
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //
@@ -16,16 +16,20 @@ import '../opencv.g.dart' as cvg;
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
-class MergeMertens extends CvStruct<cvg.MergeMertens> {
-  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class MergeMertens extends CvStruct<cphoto.MergeMertens> {
+  MergeMertens._(cphoto.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-
+  factory MergeMertens.fromPointer(
+    cphoto.MergeMertensPtr ptr, [
+    bool attach = true,
+  ]) =>
+      MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
-    final p = calloc<cvg.MergeMertens>();
-    cvRun(() => cvg.MergeMertens_Create(p));
+    final p = calloc<cphoto.MergeMertens>();
+    cvRun(() => cphoto.MergeMertens_Create(p));
     return MergeMertens._(p);
   }
 
@@ -34,18 +38,23 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double saturationWeight = 1.0,
     double exposureWeight = 0.0,
   }) {
-    final p = calloc<cvg.MergeMertens>();
+    final p = calloc<cphoto.MergeMertens>();
     cvRun(
-      () => cvg.MergeMertens_CreateWithParams(contrastWeight, saturationWeight, exposureWeight, p),
+      () => cphoto.MergeMertens_CreateWithParams(
+        contrastWeight,
+        saturationWeight,
+        exposureWeight,
+        p,
+      ),
     );
     return MergeMertens._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(ffi.Native.addressOf(cvg.MergeMertens_Close));
+  static final finalizer = OcvFinalizer<cphoto.MergeMertensPtr>(cphoto.addresses.MergeMertens_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.MergeMertens_Close(ptr);
+    cphoto.MergeMertens_Close(ptr);
   }
 
   /// BalanceWhite computes merge LDR images using the current MergeMertens.
@@ -54,15 +63,12 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
   Mat process(VecMat src) {
     final dst = Mat.empty();
-    cvg.MergeMertens_Process(ref, src.ref, dst.ref);
+    cphoto.MergeMertens_Process(ref, src.ref, dst.ref);
     return dst.convertTo(MatType.CV_8UC3, alpha: 255.0);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.MergeMertens get ref => ptr.ref;
+  cphoto.MergeMertens get ref => ptr.ref;
 }
 
 /// AlignMTB for converts images to median threshold bitmaps.
@@ -73,12 +79,17 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-class AlignMTB extends CvStruct<cvg.AlignMTB> {
-  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class AlignMTB extends CvStruct<cphoto.AlignMTB> {
+  AlignMTB._(cphoto.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory AlignMTB.fromPointer(
+    cphoto.AlignMTBPtr ptr, [
+    bool attach = true,
+  ]) =>
+      AlignMTB._(ptr.cast(), attach);
 
   /// AlignMTB for converts images to median threshold bitmaps.
   /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
@@ -89,8 +100,8 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
-    final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cvg.AlignMTB_Create(p));
+    final p = calloc<cphoto.AlignMTB>();
+    cvRun(() => cphoto.AlignMTB_Create(p));
     return AlignMTB._(p);
   }
 
@@ -102,30 +113,31 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-  factory AlignMTB.create({int maxBits = 6, int excludeRange = 4, bool cut = true}) {
-    final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cvg.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
+  factory AlignMTB.create({
+    int maxBits = 6,
+    int excludeRange = 4,
+    bool cut = true,
+  }) {
+    final p = calloc<cphoto.AlignMTB>();
+    cvRun(() => cphoto.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
     return AlignMTB._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(ffi.Native.addressOf(cvg.AlignMTB_Close));
+  static final finalizer = OcvFinalizer<cphoto.AlignMTBPtr>(cphoto.addresses.AlignMTB_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.AlignMTB_Close(ptr);
+    cphoto.AlignMTB_Close(ptr);
   }
 
   VecMat process(VecMat src) {
-    final dst = calloc<cvg.VecMat>();
-    cvg.AlignMTB_Process(ref, src.ref, dst);
+    final dst = calloc<cphoto.VecMat>();
+    cphoto.AlignMTB_Process(ref, src.ref, dst);
     return VecMat.fromPointer(dst);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.AlignMTB get ref => ptr.ref;
+  cphoto.AlignMTB get ref => ptr.ref;
 }
 
 /// ColorChange mix two differently colored versions of an image seamlessly.
@@ -140,7 +152,9 @@ Mat colorChange(
   double blueMul = 1.0,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cvg.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul));
+  cvRun(
+    () => cphoto.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul),
+  );
   return dst;
 }
 
@@ -148,9 +162,17 @@ Mat colorChange(
 //
 /// For further details, please see:
 /// https://docs.opencv.org/master/df/da0/group__photo__clone.html#ga2bf426e4c93a6b1f21705513dfeca49d
-Mat seamlessClone(InputArray src, InputArray dst, InputArray mask, Point p, int flags) {
+Mat seamlessClone(
+  InputArray src,
+  InputArray dst,
+  InputArray mask,
+  Point p,
+  int flags,
+) {
   final blend = Mat.empty();
-  cvRun(() => cvg.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags));
+  cvRun(
+    () => cphoto.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags),
+  );
   return blend;
 }
 
@@ -165,7 +187,7 @@ Mat illuminationChange(
   double beta = 0.4,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cvg.IlluminationChange(src.ref, mask.ref, dst.ref, alpha, beta));
+  cvRun(() => cphoto.IlluminationChange(src.ref, mask.ref, dst.ref, alpha, beta));
   return dst;
 }
 
@@ -181,7 +203,16 @@ Mat textureFlattening(
   int kernelSize = 3,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cvg.TextureFlattening(src.ref, mask.ref, dst.ref, lowThreshold, highThreshold, kernelSize));
+  cvRun(
+    () => cphoto.TextureFlattening(
+      src.ref,
+      mask.ref,
+      dst.ref,
+      lowThreshold,
+      highThreshold,
+      kernelSize,
+    ),
+  );
   return dst;
 }
 
@@ -198,7 +229,7 @@ Mat fastNlMeansDenoising(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cvg.FastNlMeansDenoisingWithParams(
+    () => cphoto.FastNlMeansDenoisingWithParams(
       src.ref,
       dst.ref,
       h,
@@ -222,7 +253,7 @@ Mat fastNlMeansDenoisingColored(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cvg.FastNlMeansDenoisingColoredWithParams(
+    () => cphoto.FastNlMeansDenoisingColoredWithParams(
       src.ref,
       dst.ref,
       h,
@@ -249,7 +280,7 @@ Mat fastNlMeansDenoisingColoredMulti(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cvg.FastNlMeansDenoisingColoredMultiWithParams(
+    () => cphoto.FastNlMeansDenoisingColoredMultiWithParams(
       srcImgs.ref,
       dst.ref,
       imgToDenoiseIndex,
@@ -269,7 +300,7 @@ Mat fastNlMeansDenoisingColoredMulti(
 /// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#ga0de660cb6f371a464a74c7b651415975
 Mat detailEnhance(InputArray src, {double sigmaS = 10, double sigmaR = 0.15}) {
   final dst = Mat.empty();
-  cvRun(() => cvg.DetailEnhance(src.ref, dst.ref, sigmaS, sigmaR));
+  cvRun(() => cphoto.DetailEnhance(src.ref, dst.ref, sigmaS, sigmaR));
   return dst;
 }
 
@@ -285,7 +316,9 @@ Mat edgePreservingFilter(
   double sigmaR = 0.4,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cvg.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR));
+  cvRun(
+    () => cphoto.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR),
+  );
   return dst;
 }
 
@@ -301,7 +334,16 @@ Mat edgePreservingFilter(
 }) {
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
-  cvRun(() => cvg.PencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor));
+  cvRun(
+    () => cphoto.PencilSketch(
+      src.ref,
+      dst1.ref,
+      dst2.ref,
+      sigmaS,
+      sigmaR,
+      shadeFactor,
+    ),
+  );
   return (dst1, dst2);
 }
 
@@ -318,7 +360,7 @@ Mat stylization(
   double sigmaR = 0.45,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cvg.Stylization(src.ref, dst.ref, sigmaS, sigmaR));
+  cvRun(() => cphoto.Stylization(src.ref, dst.ref, sigmaS, sigmaR));
   return dst;
 }
 
@@ -328,8 +370,21 @@ Mat stylization(
 //
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d7/d8b/group__photo__inpaint.html#gaedd30dfa0214fec4c88138b51d678085
-Mat inpaint(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) {
+Mat inpaint(
+  InputArray src,
+  InputArray inpaintMask,
+  double inpaintRadius,
+  int flags,
+) {
   final dst = Mat.empty();
-  cvRun(() => cvg.PhotoInpaint(src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags));
+  cvRun(
+    () => cphoto.PhotoInpaint(
+      src.ref,
+      inpaintMask.ref,
+      dst.ref,
+      inpaintRadius,
+      flags,
+    ),
+  );
   return dst;
 }

@@ -1,0 +1,320 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/video_io.g.dart:
+    used-config:
+      ffi-native: true
+    symbols:
+      c:@F@BackgroundSubtractorKNN_Apply:
+        name: BackgroundSubtractorKNN_Apply
+      c:@F@BackgroundSubtractorKNN_Apply_Async:
+        name: BackgroundSubtractorKNN_Apply_Async
+      c:@F@BackgroundSubtractorKNN_Close:
+        name: BackgroundSubtractorKNN_Close
+      c:@F@BackgroundSubtractorKNN_Create:
+        name: BackgroundSubtractorKNN_Create
+      c:@F@BackgroundSubtractorKNN_CreateWithParams:
+        name: BackgroundSubtractorKNN_CreateWithParams
+      c:@F@BackgroundSubtractorKNN_CreateWithParams_Async:
+        name: BackgroundSubtractorKNN_CreateWithParams_Async
+      c:@F@BackgroundSubtractorKNN_Create_Async:
+        name: BackgroundSubtractorKNN_Create_Async
+      c:@F@BackgroundSubtractorMOG2_Apply:
+        name: BackgroundSubtractorMOG2_Apply
+      c:@F@BackgroundSubtractorMOG2_Apply_Async:
+        name: BackgroundSubtractorMOG2_Apply_Async
+      c:@F@BackgroundSubtractorMOG2_Close:
+        name: BackgroundSubtractorMOG2_Close
+      c:@F@BackgroundSubtractorMOG2_Create:
+        name: BackgroundSubtractorMOG2_Create
+      c:@F@BackgroundSubtractorMOG2_CreateWithParams:
+        name: BackgroundSubtractorMOG2_CreateWithParams
+      c:@F@BackgroundSubtractorMOG2_CreateWithParams_Async:
+        name: BackgroundSubtractorMOG2_CreateWithParams_Async
+      c:@F@BackgroundSubtractorMOG2_Create_Async:
+        name: BackgroundSubtractorMOG2_Create_Async
+      c:@F@CalcOpticalFlowFarneback:
+        name: CalcOpticalFlowFarneback
+      c:@F@CalcOpticalFlowFarneback_Async:
+        name: CalcOpticalFlowFarneback_Async
+      c:@F@CalcOpticalFlowPyrLK:
+        name: CalcOpticalFlowPyrLK
+      c:@F@CalcOpticalFlowPyrLKWithParams:
+        name: CalcOpticalFlowPyrLKWithParams
+      c:@F@CalcOpticalFlowPyrLK_Async:
+        name: CalcOpticalFlowPyrLK_Async
+      c:@F@FindTransformECC:
+        name: FindTransformECC
+      c:@F@FindTransformECC_Async:
+        name: FindTransformECC_Async
+      c:@F@KalmanFilter_Close:
+        name: KalmanFilter_Close
+      c:@F@KalmanFilter_Correct:
+        name: KalmanFilter_Correct
+      c:@F@KalmanFilter_Correct_Async:
+        name: KalmanFilter_Correct_Async
+      c:@F@KalmanFilter_GetControlMatrix:
+        name: KalmanFilter_GetControlMatrix
+      c:@F@KalmanFilter_GetControlMatrix_Async:
+        name: KalmanFilter_GetControlMatrix_Async
+      c:@F@KalmanFilter_GetErrorCovPost:
+        name: KalmanFilter_GetErrorCovPost
+      c:@F@KalmanFilter_GetErrorCovPost_Async:
+        name: KalmanFilter_GetErrorCovPost_Async
+      c:@F@KalmanFilter_GetErrorCovPre:
+        name: KalmanFilter_GetErrorCovPre
+      c:@F@KalmanFilter_GetErrorCovPre_Async:
+        name: KalmanFilter_GetErrorCovPre_Async
+      c:@F@KalmanFilter_GetGain:
+        name: KalmanFilter_GetGain
+      c:@F@KalmanFilter_GetGain_Async:
+        name: KalmanFilter_GetGain_Async
+      c:@F@KalmanFilter_GetMeasurementMatrix:
+        name: KalmanFilter_GetMeasurementMatrix
+      c:@F@KalmanFilter_GetMeasurementMatrix_Async:
+        name: KalmanFilter_GetMeasurementMatrix_Async
+      c:@F@KalmanFilter_GetMeasurementNoiseCov:
+        name: KalmanFilter_GetMeasurementNoiseCov
+      c:@F@KalmanFilter_GetMeasurementNoiseCov_Async:
+        name: KalmanFilter_GetMeasurementNoiseCov_Async
+      c:@F@KalmanFilter_GetProcessNoiseCov:
+        name: KalmanFilter_GetProcessNoiseCov
+      c:@F@KalmanFilter_GetProcessNoiseCov_Async:
+        name: KalmanFilter_GetProcessNoiseCov_Async
+      c:@F@KalmanFilter_GetStatePost:
+        name: KalmanFilter_GetStatePost
+      c:@F@KalmanFilter_GetStatePost_Async:
+        name: KalmanFilter_GetStatePost_Async
+      c:@F@KalmanFilter_GetStatePre:
+        name: KalmanFilter_GetStatePre
+      c:@F@KalmanFilter_GetStatePre_Async:
+        name: KalmanFilter_GetStatePre_Async
+      c:@F@KalmanFilter_GetTemp1:
+        name: KalmanFilter_GetTemp1
+      c:@F@KalmanFilter_GetTemp1_Async:
+        name: KalmanFilter_GetTemp1_Async
+      c:@F@KalmanFilter_GetTemp2:
+        name: KalmanFilter_GetTemp2
+      c:@F@KalmanFilter_GetTemp2_Async:
+        name: KalmanFilter_GetTemp2_Async
+      c:@F@KalmanFilter_GetTemp3:
+        name: KalmanFilter_GetTemp3
+      c:@F@KalmanFilter_GetTemp3_Async:
+        name: KalmanFilter_GetTemp3_Async
+      c:@F@KalmanFilter_GetTemp4:
+        name: KalmanFilter_GetTemp4
+      c:@F@KalmanFilter_GetTemp4_Async:
+        name: KalmanFilter_GetTemp4_Async
+      c:@F@KalmanFilter_GetTemp5:
+        name: KalmanFilter_GetTemp5
+      c:@F@KalmanFilter_GetTemp5_Async:
+        name: KalmanFilter_GetTemp5_Async
+      c:@F@KalmanFilter_GetTransitionMatrix:
+        name: KalmanFilter_GetTransitionMatrix
+      c:@F@KalmanFilter_GetTransitionMatrix_Async:
+        name: KalmanFilter_GetTransitionMatrix_Async
+      c:@F@KalmanFilter_Init:
+        name: KalmanFilter_Init
+      c:@F@KalmanFilter_InitWithParams:
+        name: KalmanFilter_InitWithParams
+      c:@F@KalmanFilter_InitWithParams_Async:
+        name: KalmanFilter_InitWithParams_Async
+      c:@F@KalmanFilter_Init_Async:
+        name: KalmanFilter_Init_Async
+      c:@F@KalmanFilter_New:
+        name: KalmanFilter_New
+      c:@F@KalmanFilter_New_Async:
+        name: KalmanFilter_New_Async
+      c:@F@KalmanFilter_Predict:
+        name: KalmanFilter_Predict
+      c:@F@KalmanFilter_PredictWithParams:
+        name: KalmanFilter_PredictWithParams
+      c:@F@KalmanFilter_PredictWithParams_Async:
+        name: KalmanFilter_PredictWithParams_Async
+      c:@F@KalmanFilter_Predict_Async:
+        name: KalmanFilter_Predict_Async
+      c:@F@KalmanFilter_SetControlMatrix:
+        name: KalmanFilter_SetControlMatrix
+      c:@F@KalmanFilter_SetControlMatrix_Async:
+        name: KalmanFilter_SetControlMatrix_Async
+      c:@F@KalmanFilter_SetErrorCovPost:
+        name: KalmanFilter_SetErrorCovPost
+      c:@F@KalmanFilter_SetErrorCovPost_Async:
+        name: KalmanFilter_SetErrorCovPost_Async
+      c:@F@KalmanFilter_SetErrorCovPre:
+        name: KalmanFilter_SetErrorCovPre
+      c:@F@KalmanFilter_SetErrorCovPre_Async:
+        name: KalmanFilter_SetErrorCovPre_Async
+      c:@F@KalmanFilter_SetGain:
+        name: KalmanFilter_SetGain
+      c:@F@KalmanFilter_SetGain_Async:
+        name: KalmanFilter_SetGain_Async
+      c:@F@KalmanFilter_SetMeasurementMatrix:
+        name: KalmanFilter_SetMeasurementMatrix
+      c:@F@KalmanFilter_SetMeasurementMatrix_Async:
+        name: KalmanFilter_SetMeasurementMatrix_Async
+      c:@F@KalmanFilter_SetMeasurementNoiseCov:
+        name: KalmanFilter_SetMeasurementNoiseCov
+      c:@F@KalmanFilter_SetMeasurementNoiseCov_Async:
+        name: KalmanFilter_SetMeasurementNoiseCov_Async
+      c:@F@KalmanFilter_SetProcessNoiseCov:
+        name: KalmanFilter_SetProcessNoiseCov
+      c:@F@KalmanFilter_SetProcessNoiseCov_Async:
+        name: KalmanFilter_SetProcessNoiseCov_Async
+      c:@F@KalmanFilter_SetStatePost:
+        name: KalmanFilter_SetStatePost
+      c:@F@KalmanFilter_SetStatePost_Async:
+        name: KalmanFilter_SetStatePost_Async
+      c:@F@KalmanFilter_SetStatePre:
+        name: KalmanFilter_SetStatePre
+      c:@F@KalmanFilter_SetStatePre_Async:
+        name: KalmanFilter_SetStatePre_Async
+      c:@F@KalmanFilter_SetTransitionMatrix:
+        name: KalmanFilter_SetTransitionMatrix
+      c:@F@KalmanFilter_SetTransitionMatrix_Async:
+        name: KalmanFilter_SetTransitionMatrix_Async
+      c:@F@TrackerMIL_Close:
+        name: TrackerMIL_Close
+      c:@F@TrackerMIL_Create:
+        name: TrackerMIL_Create
+      c:@F@TrackerMIL_Create_Async:
+        name: TrackerMIL_Create_Async
+      c:@F@TrackerMIL_Init:
+        name: TrackerMIL_Init
+      c:@F@TrackerMIL_Init_Async:
+        name: TrackerMIL_Init_Async
+      c:@F@TrackerMIL_Update:
+        name: TrackerMIL_Update
+      c:@F@TrackerMIL_Update_Async:
+        name: TrackerMIL_Update_Async
+      c:@F@VideoCapture_Close:
+        name: VideoCapture_Close
+      c:@F@VideoCapture_Get:
+        name: VideoCapture_Get
+      c:@F@VideoCapture_Get_Async:
+        name: VideoCapture_Get_Async
+      c:@F@VideoCapture_Grab:
+        name: VideoCapture_Grab
+      c:@F@VideoCapture_Grab_Async:
+        name: VideoCapture_Grab_Async
+      c:@F@VideoCapture_IsOpened:
+        name: VideoCapture_IsOpened
+      c:@F@VideoCapture_IsOpened_Async:
+        name: VideoCapture_IsOpened_Async
+      c:@F@VideoCapture_New:
+        name: VideoCapture_New
+      c:@F@VideoCapture_NewFromFile:
+        name: VideoCapture_NewFromFile
+      c:@F@VideoCapture_NewFromFile_Async:
+        name: VideoCapture_NewFromFile_Async
+      c:@F@VideoCapture_NewFromIndex:
+        name: VideoCapture_NewFromIndex
+      c:@F@VideoCapture_NewFromIndex_Async:
+        name: VideoCapture_NewFromIndex_Async
+      c:@F@VideoCapture_New_Async:
+        name: VideoCapture_New_Async
+      c:@F@VideoCapture_Open:
+        name: VideoCapture_Open
+      c:@F@VideoCapture_OpenDevice:
+        name: VideoCapture_OpenDevice
+      c:@F@VideoCapture_OpenDeviceWithAPI:
+        name: VideoCapture_OpenDeviceWithAPI
+      c:@F@VideoCapture_OpenDeviceWithAPI_Async:
+        name: VideoCapture_OpenDeviceWithAPI_Async
+      c:@F@VideoCapture_OpenDevice_Async:
+        name: VideoCapture_OpenDevice_Async
+      c:@F@VideoCapture_OpenWithAPI:
+        name: VideoCapture_OpenWithAPI
+      c:@F@VideoCapture_OpenWithAPI_Async:
+        name: VideoCapture_OpenWithAPI_Async
+      c:@F@VideoCapture_Open_Async:
+        name: VideoCapture_Open_Async
+      c:@F@VideoCapture_Read:
+        name: VideoCapture_Read
+      c:@F@VideoCapture_Read_Async:
+        name: VideoCapture_Read_Async
+      c:@F@VideoCapture_Release:
+        name: VideoCapture_Release
+      c:@F@VideoCapture_Release_Async:
+        name: VideoCapture_Release_Async
+      c:@F@VideoCapture_Set:
+        name: VideoCapture_Set
+      c:@F@VideoCapture_Set_Async:
+        name: VideoCapture_Set_Async
+      c:@F@VideoCapture_getBackendName:
+        name: VideoCapture_getBackendName
+      c:@F@VideoWriter_Close:
+        name: VideoWriter_Close
+      c:@F@VideoWriter_Fourcc:
+        name: VideoWriter_Fourcc
+      c:@F@VideoWriter_Fourcc_Async:
+        name: VideoWriter_Fourcc_Async
+      c:@F@VideoWriter_IsOpened:
+        name: VideoWriter_IsOpened
+      c:@F@VideoWriter_IsOpened_Async:
+        name: VideoWriter_IsOpened_Async
+      c:@F@VideoWriter_New:
+        name: VideoWriter_New
+      c:@F@VideoWriter_New_Async:
+        name: VideoWriter_New_Async
+      c:@F@VideoWriter_Open:
+        name: VideoWriter_Open
+      c:@F@VideoWriter_Open_Async:
+        name: VideoWriter_Open_Async
+      c:@F@VideoWriter_Release:
+        name: VideoWriter_Release
+      c:@F@VideoWriter_Release_Async:
+        name: VideoWriter_Release_Async
+      c:@F@VideoWriter_Write:
+        name: VideoWriter_Write
+      c:@F@VideoWriter_Write_Async:
+        name: VideoWriter_Write_Async
+      c:@F@VideoWriter_getBackendName:
+        name: VideoWriter_getBackendName
+      c:@S@BackgroundSubtractorKNN:
+        name: BackgroundSubtractorKNN
+      c:@S@BackgroundSubtractorMOG2:
+        name: BackgroundSubtractorMOG2
+      c:@S@KalmanFilter:
+        name: KalmanFilter
+      c:@S@Tracker:
+        name: Tracker
+      c:@S@TrackerGOTURN:
+        name: TrackerGOTURN
+      c:@S@TrackerMIL:
+        name: TrackerMIL
+      c:@S@VideoCapture:
+        name: VideoCapture
+      c:@S@VideoWriter:
+        name: VideoWriter
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Rect:
+        name: Rect
+      c:types.h@T@Size:
+        name: Size
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecUChar:
+        name: VecUChar
+      c:video.h@T@BackgroundSubtractorKNNPtr:
+        name: BackgroundSubtractorKNNPtr
+      c:video.h@T@BackgroundSubtractorMOG2Ptr:
+        name: BackgroundSubtractorMOG2Ptr
+      c:video.h@T@KalmanFilterPtr:
+        name: KalmanFilterPtr
+      c:video.h@T@TrackerGOTURNPtr:
+        name: TrackerGOTURNPtr
+      c:video.h@T@TrackerMILPtr:
+        name: TrackerMILPtr
+      c:video.h@T@TrackerPtr:
+        name: TrackerPtr
+      c:videoio.h@T@VideoCapturePtr:
+        name: VideoCapturePtr
+      c:videoio.h@T@VideoWriterPtr:
+        name: VideoWriterPtr

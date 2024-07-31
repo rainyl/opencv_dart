@@ -1,35 +1,36 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-library cv;
+library cv.features2d;
 
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
 import '../core/dmatch.dart';
 import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/features2d.g.dart' as cfeatures2d;
 
 /// AKAZE is a wrapper around the cv::AKAZE algorithm.
-class AKAZE extends CvStruct<cvg.AKAZE> {
-  AKAZE._(cvg.AKAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class AKAZE extends CvStruct<cfeatures2d.AKAZE> {
+  AKAZE._(cfeatures2d.AKAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory AKAZE.fromPointer(cfeatures2d.AKAZEPtr ptr, [bool attach = true]) => AKAZE._(ptr, attach);
 
   /// returns a new AKAZE algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d8/d30/classcv_1_1AKAZE.html
   factory AKAZE.empty() {
-    final p = calloc<cvg.AKAZE>();
-    cvRun(() => cvg.AKAZE_Create(p));
+    final p = calloc<cfeatures2d.AKAZE>();
+    cvRun(() => cfeatures2d.AKAZE_Create(p));
     return AKAZE._(p);
   }
 
@@ -38,8 +39,8 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.AKAZE_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.AKAZE_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -49,40 +50,41 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint ret, Mat desc) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(
+      () => cfeatures2d.AKAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),
+    );
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
-  static final finalizer = OcvFinalizer<cvg.AKAZEPtr>(ffi.Native.addressOf(cvg.AKAZE_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.AKAZEPtr>(cfeatures2d.addresses.AKAZE_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.AKAZE_Close(ptr);
+    cfeatures2d.AKAZE_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.AKAZE get ref => ptr.ref;
+  cfeatures2d.AKAZE get ref => ptr.ref;
 }
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
-class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
-  AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class AgastFeatureDetector extends CvStruct<cfeatures2d.AgastFeatureDetector> {
+  AgastFeatureDetector._(cfeatures2d.AgastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory AgastFeatureDetector.fromPointer(cfeatures2d.AgastFeatureDetectorPtr ptr, [bool attach = true]) =>
+      AgastFeatureDetector._(ptr, attach);
 
   /// returns a new AgastFeatureDetector algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/d19/classcv_1_1AgastFeatureDetector.html
   factory AgastFeatureDetector.empty() {
-    final p = calloc<cvg.AgastFeatureDetector>();
-    cvRun(() => cvg.AgastFeatureDetector_Create(p));
+    final p = calloc<cfeatures2d.AgastFeatureDetector>();
+    cvRun(() => cfeatures2d.AgastFeatureDetector_Create(p));
     return AgastFeatureDetector._(p);
   }
 
@@ -91,41 +93,40 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.AgastFeatureDetector_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.AgastFeatureDetector_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.AgastFeatureDetectorPtr>(ffi.Native.addressOf(cvg.AgastFeatureDetector_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.AgastFeatureDetectorPtr>(
+    cfeatures2d.addresses.AgastFeatureDetector_Close,
+  );
 
   void dispose() {
     finalizer.detach(this);
-    cvg.AgastFeatureDetector_Close(ptr);
+    cfeatures2d.AgastFeatureDetector_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.AgastFeatureDetector get ref => ptr.ref;
+  cfeatures2d.AgastFeatureDetector get ref => ptr.ref;
 }
 
 /// BRISK is a wrapper around the cv::BRISK algorithm.
-class BRISK extends CvStruct<cvg.BRISK> {
-  BRISK._(cvg.BRISKPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class BRISK extends CvStruct<cfeatures2d.BRISK> {
+  BRISK._(cfeatures2d.BRISKPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory BRISK.fromPointer(cfeatures2d.BRISKPtr ptr, [bool attach = true]) => BRISK._(ptr, attach);
 
   /// returns a new BRISK algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d8/d30/classcv_1_1AKAZE.html
   factory BRISK.empty() {
-    final p = calloc<cvg.BRISK>();
-    cvRun(() => cvg.BRISK_Create(p));
+    final p = calloc<cfeatures2d.BRISK>();
+    cvRun(() => cfeatures2d.BRISK_Create(p));
     return BRISK._(p);
   }
 
@@ -134,8 +135,8 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.BRISK_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.BRISK_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -145,23 +146,22 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(
+      () => cfeatures2d.BRISK_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),
+    );
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
-  static final finalizer = OcvFinalizer<cvg.BRISKPtr>(ffi.Native.addressOf(cvg.BRISK_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.BRISKPtr>(cfeatures2d.addresses.BRISK_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.BRISK_Close(ptr);
+    cfeatures2d.BRISK_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.BRISK get ref => ptr.ref;
+  cfeatures2d.BRISK get ref => ptr.ref;
 }
 
 enum FastFeatureDetectorType {
@@ -179,20 +179,22 @@ enum FastFeatureDetectorType {
 }
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
-class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
-  FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class FastFeatureDetector extends CvStruct<cfeatures2d.FastFeatureDetector> {
+  FastFeatureDetector._(cfeatures2d.FastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory FastFeatureDetector.fromPointer(cfeatures2d.FastFeatureDetectorPtr ptr, [bool attach = true]) =>
+      FastFeatureDetector._(ptr, attach);
 
   /// returns a new FastFeatureDetector algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/df/d74/classcv_1_1FastFeatureDetector.html
   factory FastFeatureDetector.empty() {
-    final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(() => cvg.FastFeatureDetector_Create(p));
+    final p = calloc<cfeatures2d.FastFeatureDetector>();
+    cvRun(() => cfeatures2d.FastFeatureDetector_Create(p));
     return FastFeatureDetector._(p);
   }
 
@@ -205,9 +207,9 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     bool nonmaxSuppression = true,
     FastFeatureDetectorType type = FastFeatureDetectorType.TYPE_9_16,
   }) {
-    final p = calloc<cvg.FastFeatureDetector>();
+    final p = calloc<cfeatures2d.FastFeatureDetector>();
     cvRun(
-      () => cvg.FastFeatureDetector_CreateWithParams(
+      () => cfeatures2d.FastFeatureDetector_CreateWithParams(
         threshold,
         nonmaxSuppression,
         type.value,
@@ -222,41 +224,41 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.FastFeatureDetector_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.FastFeatureDetector_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.FastFeatureDetectorPtr>(ffi.Native.addressOf(cvg.FastFeatureDetector_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.FastFeatureDetectorPtr>(
+    cfeatures2d.addresses.FastFeatureDetector_Close,
+  );
 
   void dispose() {
     finalizer.detach(this);
-    cvg.FastFeatureDetector_Close(ptr);
+    cfeatures2d.FastFeatureDetector_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.FastFeatureDetector get ref => ptr.ref;
+  cfeatures2d.FastFeatureDetector get ref => ptr.ref;
 }
 
 /// GFTTDetector is a wrapper around the cv::GFTTDetector.
-class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
-  GFTTDetector._(cvg.GFTTDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class GFTTDetector extends CvStruct<cfeatures2d.GFTTDetector> {
+  GFTTDetector._(cfeatures2d.GFTTDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory GFTTDetector.fromPointer(cfeatures2d.GFTTDetectorPtr ptr, [bool attach = true]) =>
+      GFTTDetector._(ptr, attach);
 
   /// returns a new GFTTDetector algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/df/d21/classcv_1_1GFTTDetector.html
   factory GFTTDetector.empty() {
-    final p = calloc<cvg.GFTTDetector>();
-    cvRun(() => cvg.GFTTDetector_Create(p));
+    final p = calloc<cfeatures2d.GFTTDetector>();
+    cvRun(() => cfeatures2d.GFTTDetector_Create(p));
     return GFTTDetector._(p);
   }
 
@@ -265,40 +267,38 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.GFTTDetector_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.GFTTDetector_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer = OcvFinalizer<cvg.GFTTDetectorPtr>(ffi.Native.addressOf(cvg.GFTTDetector_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.GFTTDetectorPtr>(cfeatures2d.addresses.GFTTDetector_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.GFTTDetector_Close(ptr);
+    cfeatures2d.GFTTDetector_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.GFTTDetector get ref => ptr.ref;
+  cfeatures2d.GFTTDetector get ref => ptr.ref;
 }
 
 /// KAZE is a wrapper around the cv::KAZE.
-class KAZE extends CvStruct<cvg.KAZE> {
-  KAZE._(cvg.KAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class KAZE extends CvStruct<cfeatures2d.KAZE> {
+  KAZE._(cfeatures2d.KAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory KAZE.fromPointer(cfeatures2d.KAZEPtr ptr, [bool attach = true]) => KAZE._(ptr, attach);
 
   /// returns a new KAZE algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory KAZE.empty() {
-    final p = calloc<cvg.KAZE>();
-    cvRun(() => cvg.KAZE_Create(p));
+    final p = calloc<cfeatures2d.KAZE>();
+    cvRun(() => cfeatures2d.KAZE_Create(p));
     return KAZE._(p);
   }
 
@@ -307,8 +307,8 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.KAZE_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.KAZE_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -318,40 +318,40 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(
+      () => cfeatures2d.KAZE_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),
+    );
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
-  static final finalizer = OcvFinalizer<cvg.KAZEPtr>(ffi.Native.addressOf(cvg.KAZE_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.KAZEPtr>(cfeatures2d.addresses.KAZE_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.KAZE_Close(ptr);
+    cfeatures2d.KAZE_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.KAZE get ref => ptr.ref;
+  cfeatures2d.KAZE get ref => ptr.ref;
 }
 
 /// MSER is a wrapper around the cv::MSER.
-class MSER extends CvStruct<cvg.MSER> {
-  MSER._(cvg.MSERPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class MSER extends CvStruct<cfeatures2d.MSER> {
+  MSER._(cfeatures2d.MSERPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory MSER.fromPointer(cfeatures2d.MSERPtr ptr, [bool attach = true]) => MSER._(ptr, attach);
 
   /// returns a new MSER algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory MSER.empty() {
-    final p = calloc<cvg.MSER>();
-    cvRun(() => cvg.MSER_Create(p));
+    final p = calloc<cfeatures2d.MSER>();
+    cvRun(() => cfeatures2d.MSER_Create(p));
     return MSER._(p);
   }
 
@@ -360,23 +360,20 @@ class MSER extends CvStruct<cvg.MSER> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.MSER_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.MSER_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer = OcvFinalizer<cvg.MSERPtr>(ffi.Native.addressOf(cvg.MSER_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.MSERPtr>(cfeatures2d.addresses.MSER_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.MSER_Close(ptr);
+    cfeatures2d.MSER_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.MSER get ref => ptr.ref;
+  cfeatures2d.MSER get ref => ptr.ref;
 }
 
 enum ORBScoreType {
@@ -388,20 +385,21 @@ enum ORBScoreType {
 }
 
 /// ORB is a wrapper around the cv::ORB.
-class ORB extends CvStruct<cvg.ORB> {
-  ORB._(cvg.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ORB extends CvStruct<cfeatures2d.ORB> {
+  ORB._(cfeatures2d.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+  factory ORB.fromPointer(cfeatures2d.ORBPtr ptr, [bool attach = true]) => ORB._(ptr, attach);
 
   /// returns a new ORB algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory ORB.empty() {
-    final p = calloc<cvg.ORB>();
-    cvRun(() => cvg.ORB_Create(p));
+    final p = calloc<cfeatures2d.ORB>();
+    cvRun(() => cfeatures2d.ORB_Create(p));
     return ORB._(p);
   }
 
@@ -420,9 +418,9 @@ class ORB extends CvStruct<cvg.ORB> {
     int patchSize = 31,
     int fastThreshold = 20,
   }) {
-    final p = calloc<cvg.ORB>();
+    final p = calloc<cfeatures2d.ORB>();
     cvRun(
-      () => cvg.ORB_CreateWithParams(
+      () => cfeatures2d.ORB_CreateWithParams(
         nFeatures,
         scaleFactor,
         nLevels,
@@ -443,8 +441,8 @@ class ORB extends CvStruct<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.ORB_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.ORB_Detect(ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -453,37 +451,36 @@ class ORB extends CvStruct<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.ORB_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
-    return (VecKeyPoint.fromPointer(ret), desc);
+    final pdesc = calloc<cfeatures2d.Mat>();
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.ORB_DetectAndCompute(ref, src.ref, mask.ref, pdesc, ret));
+    return (VecKeyPoint.fromPointer(ret), Mat.fromPointer(pdesc));
   }
 
-  static final finalizer = OcvFinalizer<cvg.ORBPtr>(ffi.Native.addressOf(cvg.ORB_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.ORBPtr>(cfeatures2d.addresses.ORB_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.ORB_Close(ptr);
+    cfeatures2d.ORB_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.ORB get ref => ptr.ref;
+  cfeatures2d.ORB get ref => ptr.ref;
 }
 
-class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+class SimpleBlobDetectorParams extends CvStruct<cfeatures2d.SimpleBlobDetectorParams> {
+  SimpleBlobDetectorParams._(
+    ffi.Pointer<cfeatures2d.SimpleBlobDetectorParams> ptr, [
+    bool attach = true,
+  ]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory SimpleBlobDetectorParams.empty() {
-    final p = calloc<cvg.SimpleBlobDetectorParams>();
-    cvRun(() => cvg.SimpleBlobDetectorParams_Create(p));
+    final p = calloc<cfeatures2d.SimpleBlobDetectorParams>();
+    cvRun(() => cfeatures2d.SimpleBlobDetectorParams_Create(p));
     return SimpleBlobDetectorParams._(p);
   }
 
@@ -508,10 +505,12 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     double? minThreshold,
     double? thresholdStep,
   }) {
-    final p = calloc<cvg.SimpleBlobDetectorParams>();
+    final p = calloc<cfeatures2d.SimpleBlobDetectorParams>();
     if (blobColor != null) p.ref.blobColor = blobColor;
     if (filterByArea != null) p.ref.filterByArea = filterByArea;
-    if (filterByCircularity != null) p.ref.filterByCircularity = filterByCircularity;
+    if (filterByCircularity != null) {
+      p.ref.filterByCircularity = filterByCircularity;
+    }
     if (filterByColor != null) p.ref.filterByColor = filterByColor;
     if (filterByConvexity != null) p.ref.filterByConvexity = filterByConvexity;
     if (filterByInertia != null) p.ref.filterByInertia = filterByInertia;
@@ -523,7 +522,9 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     if (minArea != null) p.ref.minArea = minArea;
     if (minCircularity != null) p.ref.minCircularity = minCircularity;
     if (minConvexity != null) p.ref.minConvexity = minConvexity;
-    if (minDistBetweenBlobs != null) p.ref.minDistBetweenBlobs = minDistBetweenBlobs;
+    if (minDistBetweenBlobs != null) {
+      p.ref.minDistBetweenBlobs = minDistBetweenBlobs;
+    }
     if (minInertiaRatio != null) p.ref.minInertiaRatio = minInertiaRatio;
     if (minRepeatability != null) p.ref.minRepeatability = minRepeatability;
     if (minThreshold != null) p.ref.minThreshold = minThreshold;
@@ -532,7 +533,7 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     return SimpleBlobDetectorParams._(p);
   }
 
-  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
+  factory SimpleBlobDetectorParams.fromNative(cfeatures2d.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
         blobColor: r.blobColor,
         filterByArea: r.filterByArea,
         filterByCircularity: r.filterByCircularity,
@@ -554,13 +555,13 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
         thresholdStep: r.thresholdStep,
       );
   factory SimpleBlobDetectorParams.fromPointer(
-    ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
+    ffi.Pointer<cfeatures2d.SimpleBlobDetectorParams> p, [
     bool attach = true,
   ]) =>
       SimpleBlobDetectorParams._(p, attach);
 
   @override
-  cvg.SimpleBlobDetectorParams get ref => ptr.ref;
+  cfeatures2d.SimpleBlobDetectorParams get ref => ptr.ref;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
@@ -570,100 +571,61 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   }
 
   int get blobColor => ref.blobColor;
+  set blobColor(int value) => ref.blobColor = value;
+
   bool get filterByArea => ref.filterByArea;
+  set filterByArea(bool value) => ref.filterByArea = value;
+
   bool get filterByCircularity => ref.filterByCircularity;
+  set filterByCircularity(bool value) => ref.filterByCircularity = value;
+
   bool get filterByColor => ref.filterByColor;
+  set filterByColor(bool value) => ref.filterByColor = value;
+
   bool get filterByConvexity => ref.filterByConvexity;
+  set filterByConvexity(bool value) => ref.filterByConvexity = value;
+
   bool get filterByInertia => ref.filterByInertia;
+  set filterByInertia(bool value) => ref.filterByInertia = value;
+
   double get maxArea => ref.maxArea;
+  set maxArea(double v) => ref.maxArea = v;
+
   double get maxCircularity => ref.maxCircularity;
+  set maxCircularity(double v) => ref.maxCircularity = v;
+
   double get maxConvexity => ref.maxConvexity;
+  set maxConvexity(double v) => ref.maxConvexity = v;
+
   double get maxInertiaRatio => ref.maxInertiaRatio;
+  set maxInertiaRatio(double v) => ref.maxInertiaRatio = v;
+
   double get maxThreshold => ref.maxThreshold;
+  set maxThreshold(double v) => ref.maxThreshold = v;
+
   double get minArea => ref.minArea;
+  set minArea(double v) => ref.minArea = v;
+
   double get minCircularity => ref.minCircularity;
+  set minCircularity(double v) => ref.minCircularity = v;
+
   double get minConvexity => ref.minConvexity;
+  set minConvexity(double v) => ref.minConvexity = v;
+
   double get minDistBetweenBlobs => ref.minDistBetweenBlobs;
+  set minDistBetweenBlobs(double v) => ref.minDistBetweenBlobs = v;
+
   double get minInertiaRatio => ref.minInertiaRatio;
+  set minInertiaRatio(double v) => ref.minInertiaRatio = v;
+
   int get minRepeatability => ref.minRepeatability;
+  set minRepeatability(int v) => ref.minRepeatability = v;
+
   double get minThreshold => ref.minThreshold;
+  set minThreshold(double v) => ref.minThreshold = v;
+
   double get thresholdStep => ref.thresholdStep;
-
-  set blobColor(int v) {
-    ref.blobColor = v;
-  }
-
-  set filterByArea(bool v) {
-    ref.filterByArea = v;
-  }
-
-  set filterByCircularity(bool v) {
-    ref.filterByCircularity = v;
-  }
-
-  set filterByColor(bool v) {
-    ref.filterByColor = v;
-  }
-
-  set filterByConvexity(bool v) {
-    ref.filterByConvexity = v;
-  }
-
-  set filterByInertia(bool v) {
-    ref.filterByInertia = v;
-  }
-
-  set maxArea(double v) {
-    ref.maxArea = v;
-  }
-
-  set maxCircularity(double v) {
-    ref.maxCircularity = v;
-  }
-
-  set maxConvexity(double v) {
-    ref.maxConvexity = v;
-  }
-
-  set maxInertiaRatio(double v) {
-    ref.maxInertiaRatio = v;
-  }
-
-  set maxThreshold(double v) {
-    ref.maxThreshold = v;
-  }
-
-  set minArea(double v) {
-    ref.minArea = v;
-  }
-
-  set minCircularity(double v) {
-    ref.minCircularity = v;
-  }
-
-  set minConvexity(double v) {
-    ref.minConvexity = v;
-  }
-
-  set minDistBetweenBlobs(double v) {
-    ref.minDistBetweenBlobs = v;
-  }
-
-  set minInertiaRatio(double v) {
-    ref.minInertiaRatio = v;
-  }
-
-  set minRepeatability(int v) {
-    ref.minRepeatability = v;
-  }
-
-  set minThreshold(double v) {
-    ref.minThreshold = v;
-  }
-
-  set thresholdStep(double v) {
-    ref.thresholdStep = v;
-  }
+  set thresholdStep(double v) => ref.thresholdStep = v;
 
   @override
   List<num> get props => [
@@ -685,26 +647,29 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 }
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
-class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
-  SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class SimpleBlobDetector extends CvStruct<cfeatures2d.SimpleBlobDetector> {
+  SimpleBlobDetector._(cfeatures2d.SimpleBlobDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+
+  factory SimpleBlobDetector.fromPointer(cfeatures2d.SimpleBlobDetectorPtr ptr, [bool attach = true]) =>
+      SimpleBlobDetector._(ptr, attach);
 
   /// returns a new SimpleBlobDetector algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory SimpleBlobDetector.empty() {
-    final p = calloc<cvg.SimpleBlobDetector>();
-    cvRun(() => cvg.SimpleBlobDetector_Create(p));
+    final p = calloc<cfeatures2d.SimpleBlobDetector>();
+    cvRun(() => cfeatures2d.SimpleBlobDetector_Create(p));
     return SimpleBlobDetector._(p);
   }
 
   factory SimpleBlobDetector.create(SimpleBlobDetectorParams params) {
-    final p = calloc<cvg.SimpleBlobDetector>();
-    cvRun(() => cvg.SimpleBlobDetector_Create_WithParams(params.ref, p));
+    final p = calloc<cfeatures2d.SimpleBlobDetector>();
+    cvRun(() => cfeatures2d.SimpleBlobDetector_Create_WithParams(params.ref, p));
     return SimpleBlobDetector._(p);
   }
 
@@ -713,47 +678,46 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.SimpleBlobDetector_Detect(ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.SimpleBlobDetector_Detect(ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.SimpleBlobDetectorPtr>(ffi.Native.addressOf(cvg.SimpleBlobDetector_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.SimpleBlobDetectorPtr>(
+    cfeatures2d.addresses.SimpleBlobDetector_Close,
+  );
 
   void dispose() {
     finalizer.detach(this);
-    cvg.SimpleBlobDetector_Close(ptr);
+    cfeatures2d.SimpleBlobDetector_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.SimpleBlobDetector get ref => ptr.ref;
+  cfeatures2d.SimpleBlobDetector get ref => ptr.ref;
 }
 
 /// BFMatcher is a wrapper around the cv::BFMatcher.
-class BFMatcher extends CvStruct<cvg.BFMatcher> {
-  BFMatcher._(cvg.BFMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class BFMatcher extends CvStruct<cfeatures2d.BFMatcher> {
+  BFMatcher._(cfeatures2d.BFMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory BFMatcher.fromPointer(cfeatures2d.BFMatcherPtr ptr, [bool attach = true]) => BFMatcher._(ptr, attach);
 
   /// returns a new BFMatcher algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory BFMatcher.empty() {
-    final p = calloc<cvg.BFMatcher>();
-    cvRun(() => cvg.BFMatcher_Create(p));
+    final p = calloc<cfeatures2d.BFMatcher>();
+    cvRun(() => cfeatures2d.BFMatcher_Create(p));
     return BFMatcher._(p);
   }
 
   factory BFMatcher.create({int type = NORM_L2, bool crossCheck = false}) {
-    final p = calloc<cvg.BFMatcher>();
-    cvRun(() => cvg.BFMatcher_CreateWithParams(type, crossCheck, p));
+    final p = calloc<cfeatures2d.BFMatcher>();
+    cvRun(() => cfeatures2d.BFMatcher_CreateWithParams(type, crossCheck, p));
     return BFMatcher._(p);
   }
 
@@ -762,8 +726,8 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
   VecDMatch match(Mat query, Mat train) {
-    final ret = calloc<cvg.VecDMatch>();
-    cvRun(() => cvg.BFMatcher_Match(ptr.ref, query.ref, train.ref, ret));
+    final ret = calloc<cfeatures2d.VecDMatch>();
+    cvRun(() => cfeatures2d.BFMatcher_Match(ptr.ref, query.ref, train.ref, ret));
     return VecDMatch.fromPointer(ret);
   }
 
@@ -772,40 +736,39 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    final ret = calloc<cvg.VecVecDMatch>();
-    cvRun(() => cvg.BFMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
+    final ret = calloc<cfeatures2d.VecVecDMatch>();
+    cvRun(() => cfeatures2d.BFMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
     return VecVecDMatch.fromPointer(ret);
   }
 
-  static final finalizer = OcvFinalizer<cvg.BFMatcherPtr>(ffi.Native.addressOf(cvg.BFMatcher_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.BFMatcherPtr>(cfeatures2d.addresses.BFMatcher_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.BFMatcher_Close(ptr);
+    cfeatures2d.BFMatcher_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.BFMatcher get ref => ptr.ref;
+  cfeatures2d.BFMatcher get ref => ptr.ref;
 }
 
 /// FlannBasedMatcher is a wrapper around the cv::FlannBasedMatcher.
-class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
-  FlannBasedMatcher._(cvg.FlannBasedMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class FlannBasedMatcher extends CvStruct<cfeatures2d.FlannBasedMatcher> {
+  FlannBasedMatcher._(cfeatures2d.FlannBasedMatcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory FlannBasedMatcher.fromPointer(cfeatures2d.FlannBasedMatcherPtr ptr, [bool attach = true]) =>
+      FlannBasedMatcher._(ptr, attach);
 
   /// returns a new FlannBasedMatcher algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory FlannBasedMatcher.empty() {
-    final p = calloc<cvg.FlannBasedMatcher>();
-    cvRun(() => cvg.FlannBasedMatcher_Create(p));
+    final p = calloc<cfeatures2d.FlannBasedMatcher>();
+    cvRun(() => cfeatures2d.FlannBasedMatcher_Create(p));
     return FlannBasedMatcher._(p);
   }
 
@@ -814,24 +777,24 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    final ret = calloc<cvg.VecVecDMatch>();
-    cvRun(() => cvg.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret));
+    final ret = calloc<cfeatures2d.VecVecDMatch>();
+    cvRun(
+      () => cfeatures2d.FlannBasedMatcher_KnnMatch(ptr.ref, query.ref, train.ref, k, ret),
+    );
     return VecVecDMatch.fromPointer(ret);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.FlannBasedMatcherPtr>(ffi.Native.addressOf(cvg.FlannBasedMatcher_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.FlannBasedMatcherPtr>(
+    cfeatures2d.addresses.FlannBasedMatcher_Close,
+  );
 
   void dispose() {
     finalizer.detach(this);
-    cvg.FlannBasedMatcher_Close(ptr);
+    cfeatures2d.FlannBasedMatcher_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.FlannBasedMatcher get ref => ptr.ref;
+  cfeatures2d.FlannBasedMatcher get ref => ptr.ref;
 }
 
 enum DrawMatchesFlag {
@@ -851,25 +814,40 @@ enum DrawMatchesFlag {
   final int value;
 }
 
-void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color, DrawMatchesFlag flag) {
-  cvRun(() => cvg.DrawKeyPoints(src.ref, keypoints.ref, dst.ref, color.ref, flag.value));
+void drawKeyPoints(
+  Mat src,
+  VecKeyPoint keypoints,
+  Mat dst,
+  Scalar color,
+  DrawMatchesFlag flag,
+) {
+  cvRun(
+    () => cfeatures2d.DrawKeyPoints(
+      src.ref,
+      keypoints.ref,
+      dst.ref,
+      color.ref,
+      flag.value,
+    ),
+  );
 }
 
 /// SIFT is a wrapper around the cv::SIFT.
-class SIFT extends CvStruct<cvg.SIFT> {
-  SIFT._(cvg.SIFTPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class SIFT extends CvStruct<cfeatures2d.SIFT> {
+  SIFT._(cfeatures2d.SIFTPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
+  factory SIFT.fromPointer(cfeatures2d.SIFTPtr ptr, [bool attach = true]) => SIFT._(ptr, attach);
 
   /// returns a new SIFT algorithm
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d5/d3c/classcv_1_1xfeatures2d_1_1SIFT.html
   factory SIFT.empty() {
-    final p = calloc<cvg.SIFT>();
-    cvRun(() => cvg.SIFT_Create(p));
+    final p = calloc<cfeatures2d.SIFT>();
+    cvRun(() => cfeatures2d.SIFT_Create(p));
     return SIFT._(p);
   }
 
@@ -878,8 +856,8 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.SIFT_Detect(ptr.ref, src.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(() => cfeatures2d.SIFT_Detect(ptr.ref, src.ref, ret));
     return VecKeyPoint.fromPointer(ret);
   }
 
@@ -889,29 +867,28 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cvg.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret));
+    final ret = calloc<cfeatures2d.VecKeyPoint>();
+    cvRun(
+      () => cfeatures2d.SIFT_DetectAndCompute(ptr.ref, src.ref, mask.ref, desc.ref, ret),
+    );
     return (VecKeyPoint.fromPointer(ret), desc);
   }
 
-  static final finalizer = OcvFinalizer<cvg.SIFTPtr>(ffi.Native.addressOf(cvg.SIFT_Close));
+  static final finalizer = OcvFinalizer<cfeatures2d.SIFTPtr>(cfeatures2d.addresses.SIFT_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.SIFT_Close(ptr);
+    cfeatures2d.SIFT_Close(ptr);
   }
 
   @override
-  List<int> get props => [ptr.address];
-
-  @override
-  cvg.SIFT get ref => ptr.ref;
+  cfeatures2d.SIFT get ref => ptr.ref;
 }
 
-// DrawMatches draws matches on combined train and querry images.
-//
-// For further details, please see:
-// https://docs.opencv.org/master/d4/d5d/group__features2d__draw.html#gad8f463ccaf0dc6f61083abd8717c261a
+/// DrawMatches draws matches on combined train and querry images.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d4/d5d/group__features2d__draw.html#gad8f463ccaf0dc6f61083abd8717c261a
 void drawMatches(
   InputArray img1,
   VecKeyPoint keypoints1,
@@ -928,7 +905,7 @@ void drawMatches(
   singlePointColor ??= Scalar.all(-1);
   matchesMask ??= VecChar.fromList([]);
   cvRun(
-    () => cvg.DrawMatches(
+    () => cfeatures2d.DrawMatches(
       img1.ref,
       keypoints1.ref,
       img2.ref,

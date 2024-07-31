@@ -43,7 +43,7 @@ void main() {
     sub1.insert(cv.Point2f(241, 241));
   });
 
-  test('cv.Subdiv2D others', () {
+  test('cv.Subdiv2D others', () async {
     final subdiv = cv.Subdiv2D.fromRect(cv.Rect(0, 0, src.width, src.height));
     subdiv.insertVec(points.cvd);
 
@@ -105,6 +105,76 @@ void main() {
       final rEdge = subdiv.rotateEdge(0, 90);
       expect(rEdge, 2);
       final sEdge = subdiv.symEdge(0);
+      expect(sEdge, 2);
+    }
+  });
+
+  test('cv.Subdiv2D Async', () async {
+    {
+      final sub1 = await cv.Subdiv2DAsync.emptyAsync();
+      await sub1.initDelaunayAsync(cv.Rect(0, 0, src.width, src.height));
+      await sub1.insertAsync(cv.Point2f(241, 241));
+    }
+
+    final subdiv = await cv.Subdiv2DAsync.fromRectAsync(cv.Rect(0, 0, src.width, src.height));
+    await subdiv.insertVecAsync(points.cvd);
+    {
+      final (rval, pt) = await subdiv.edgeDstAsync(1);
+      expect(rval, 0);
+      expect(pt, cv.Point2f(0, 0));
+    }
+
+    {
+      final (rval, pt) = await subdiv.edgeOrgAsync(1);
+      expect(rval, 0);
+      expect(pt, cv.Point2f(0, 0));
+    }
+
+    {
+      final (rval, pt) = await subdiv.findNearestAsync(cv.Point2f(241, 241));
+      expect(rval, 7);
+      expect(pt, cv.Point2f(180, 230));
+    }
+
+    {
+      final edge = await subdiv.getEdgeAsync(1, cv.Subdiv2D.NEXT_AROUND_LEFT);
+      expect(edge, 1);
+    }
+    {
+      final edges = await subdiv.getEdgeListAsync();
+      expect(edges.length, greaterThan(0));
+    }
+
+    {
+      final r = await subdiv.getLeadingEdgeListAsync();
+      expect(r.length, greaterThan(0));
+    }
+
+    {
+      final (pt, v) = await subdiv.getVertexAsync(0);
+      expect(pt, cv.Point2f(0, 0));
+      expect(v, 0);
+    }
+
+    {
+      final (fl, fc) = await subdiv.getVoronoiFacetListAsync([0, 1].i32);
+      expect(fl.length, greaterThan(0));
+      expect(fc.length, greaterThan(0));
+    }
+
+    {
+      final (rval, edge, vertex) = await subdiv.locateAsync(cv.Point2f(241, 241));
+      expect(rval, cv.Subdiv2D.PTLOC_INSIDE);
+      expect(edge, 72);
+      expect(vertex, 0);
+    }
+
+    {
+      final nextEdge = await subdiv.nextEdgeAsync(0);
+      expect(nextEdge, 0);
+      final rEdge = await subdiv.rotateEdgeAsync(0, 90);
+      expect(rEdge, 2);
+      final sEdge = await subdiv.symEdgeAsync(0);
       expect(sEdge, 2);
     }
   });

@@ -6,15 +6,13 @@ bak/
 .bak/
 .pytest_cache/
 test/_data/
-ffigen/
 ffigen_test/
-ffigen_contrib.yaml
-ffigen_cuda.yaml
 replace.py
 generate.py
 demo.*
 coverage/
 pkgs/
+src/dart_api/
 __pycache__
 *.dll
 *.so
@@ -26,7 +24,7 @@ test/models/
 *.dylib
 CMakeUserPresets*
 *.framework
-.clang-format
+*.xcframework
 CMakePresets.json
 gh-md-toc
 .fvm/
@@ -59,6 +57,3 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
-
-# FVM Version Cache
-.fvm/

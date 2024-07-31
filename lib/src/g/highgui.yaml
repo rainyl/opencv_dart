@@ -1,0 +1,50 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/highgui.g.dart:
+    used-config:
+      ffi-native: true
+    symbols:
+      c:@F@Trackbar_Create:
+        name: Trackbar_Create
+      c:@F@Trackbar_CreateWithValue:
+        name: Trackbar_CreateWithValue
+      c:@F@Trackbar_GetPos:
+        name: Trackbar_GetPos
+      c:@F@Trackbar_SetMax:
+        name: Trackbar_SetMax
+      c:@F@Trackbar_SetMin:
+        name: Trackbar_SetMin
+      c:@F@Trackbar_SetPos:
+        name: Trackbar_SetPos
+      c:@F@Window_Close:
+        name: Window_Close
+      c:@F@Window_GetProperty:
+        name: Window_GetProperty
+      c:@F@Window_IMShow:
+        name: Window_IMShow
+      c:@F@Window_Move:
+        name: Window_Move
+      c:@F@Window_New:
+        name: Window_New
+      c:@F@Window_Resize:
+        name: Window_Resize
+      c:@F@Window_SelectROI:
+        name: Window_SelectROI
+      c:@F@Window_SelectROIs:
+        name: Window_SelectROIs
+      c:@F@Window_SetProperty:
+        name: Window_SetProperty
+      c:@F@Window_SetTitle:
+        name: Window_SetTitle
+      c:@F@Window_WaitKey:
+        name: Window_WaitKey
+      c:@F@destroyAllWindows:
+        name: destroyAllWindows
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Rect:
+        name: Rect
+      c:types.h@T@VecRect:
+        name: VecRect

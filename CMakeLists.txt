@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(opencv_dart_library VERSION 0.0.1 LANGUAGES C CXX)
+project(opencv_dart_library VERSION 1.0.0 LANGUAGES C CXX)
 set(LIBRARY_NAME "opencv_dart")
 
 set(CMAKE_CXX_STANDARD 20)
@@ -11,16 +11,15 @@ cmake_policy(SET CMP0135 NEW)
 set(OpenCV_STATIC ON)
 
 if(LINUX OR APPLE)
-find_package(Iconv REQUIRED)
+    find_package(Iconv REQUIRED)
 endif()
-
 find_package(OpenCV REQUIRED)
 
 set(OpenCV_LIBS
     opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
     opencv_features2d opencv_gapi opencv_photo opencv_imgproc
     opencv_objdetect opencv_video opencv_videoio opencv_stitching
-    opencv_img_hash opencv_wechat_qrcode
+    opencv_img_hash opencv_wechat_qrcode opencv_ximgproc opencv_xobjdetect
 )
 
 if(ANDROID)
@@ -43,7 +42,6 @@ message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 file(GLOB_RECURSE CPP_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 
     # "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
     # "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
@@ -74,7 +72,6 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
     OUTPUT_NAME ${LIBRARY_NAME}
     CXX_VISIBILITY_PRESET default
     C_VISIBILITY_PRESET default
-    LINK_FLAGS_RELEASE -s
 )
 
 if(IOS)
@@ -87,6 +84,9 @@ if(IOS)
     )
 endif(IOS)
 
+if(APPLE)
+    target_link_options(${LIBRARY_NAME} PRIVATE "LINKER:-ld_classic")
+endif(APPLE)
 
 if(WIN32)
     set_target_properties(${LIBRARY_NAME} PROPERTIES
@@ -96,6 +96,10 @@ if(WIN32)
 endif(WIN32)
 
 target_compile_definitions(${LIBRARY_NAME} PUBLIC DART_SHARED_LIB)
+
+if(CVD_ENABLE_TEST)
+  set_target_properties(${LIBRARY_NAME} PROPERTIES COMPILE_DEFINITIONS "CVD_ENABLE_TEST")
+endif()
 
 ### install
 install(TARGETS ${LIBRARY_NAME}

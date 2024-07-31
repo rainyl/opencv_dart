@@ -1,17 +1,15 @@
-library cv;
+library cv.imgcodecs;
 
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
 import '../core/base.dart';
-import '../core/error_code.dart';
-import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/imgcodecs.g.dart' as cimgcodecs;
 
 /// IMRead reads an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
@@ -22,8 +20,8 @@ import '../opencv.g.dart' as cvg;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvg.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    final p = calloc<cimgcodecs.Mat>();
+    cvRun(() => cimgcodecs.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
     return Mat.fromPointer(p);
   });
 }
@@ -32,15 +30,15 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
-bool imwrite(String filename, InputArray img, {VecInt? params}) {
+bool imwrite(String filename, InputArray img, {VecI32? params}) {
   return using<bool>((arena) {
     final fname = filename.toNativeUtf8(allocator: arena);
     final p = arena<ffi.Bool>();
     if (params == null) {
-      cvRun(() => cvg.Image_IMWrite(fname.cast(), img.ref, p));
+      cvRun(() => cimgcodecs.Image_IMWrite(fname.cast(), img.ref, p));
     } else {
       cvRun(
-        () => cvg.Image_IMWrite_WithParams(
+        () => cimgcodecs.Image_IMWrite_WithParams(
           fname.cast(),
           img.ref,
           params.ref,
@@ -58,23 +56,26 @@ bool imwrite(String filename, InputArray img, {VecInt? params}) {
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
-Uint8List imencode(
+(bool, Uint8List) imencode(
   String ext,
   InputArray img, {
-  VecInt? params,
+  VecI32? params,
 }) {
-  final buffer = calloc<cvg.VecUChar>();
-  final success = calloc<ffi.Bool>();
+  final buffer = calloc<cimgcodecs.VecUChar>();
+  final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
   params == null
-      ? cvRun(() => cvg.Image_IMEncode(cExt, img.ref, success, buffer))
-      : cvRun(() => cvg.Image_IMEncode_WithParams(cExt, img.ref, params.ref, success, buffer));
+      ? cvRun(() => cimgcodecs.Image_IMEncode(cExt, img.ref, pSuccess, buffer))
+      : cvRun(() => cimgcodecs.Image_IMEncode_WithParams(cExt, img.ref, params.ref, pSuccess, buffer));
+  final success = pSuccess.value;
   calloc.free(cExt);
-  if (!success.value) {
-    throw CvException(ErrorCode.StsError.code, msg: "imencode failed, check your params");
-  }
-  return VecUChar.fromPointer(buffer).toU8List();
+  calloc.free(pSuccess);
+
+  final vec = VecUChar.fromPointer(buffer);
+  final u8List = vec.toU8List(); // will copy data
+  vec.dispose();
+  return (success, u8List);
 }
 
 /// imdecode reads an image from a buffer in memory.
@@ -88,6 +89,6 @@ Uint8List imencode(
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
-  cvRun(() => cvg.Image_IMDecode(vec.ref, flags, dst!.ptr));
+  cvRun(() => cimgcodecs.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;
 }

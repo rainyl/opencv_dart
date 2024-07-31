@@ -6,21 +6,21 @@ analyzer:
     - custom_lint
   exclude:
     # General generated files
-    - "**/*.g.dart"
-    - "**/*.gr.dart"
+    - '**/*.g.dart'
+    - '**/*.gr.dart'
 
     # Flutter
-    - "lib/generated_plugin_registrant.dart"
+    - 'lib/generated_plugin_registrant.dart'
 
     # mockito
-    - "*.mocks.dart"
-    - "**/*.mocks.dart"
+    - '*.mocks.dart'
+    - '**/*.mocks.dart'
 
     # freezed
-    - "**/*.freezed.dart"
+    - '**/*.freezed.dart'
 
     # protobuf
-    - "**/*.pb.dart"
+    - '**/*.pb.dart'
 
     # test_coverage
     - test/.test_coverage.dart
@@ -33,6 +33,7 @@ analyzer:
     # strict-raw-types: true
 
   errors:
+    constant_identifier_names: ignore
     missing_required_param: error
     missing_return: error
     parameter_assignments: error
@@ -84,7 +85,7 @@ linter:
     - close_sinks
     - comment_references
     - conditional_uri_does_not_exist
-    - constant_identifier_names
+    # - constant_identifier_names
     - control_flow_in_finally
     - curly_braces_in_flow_control_structures
     - depend_on_referenced_packages

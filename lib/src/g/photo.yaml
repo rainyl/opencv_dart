@@ -1,0 +1,110 @@
+format_version: 1.0.0
+files:
+  package:opencv_dart/src/g/photo.g.dart:
+    used-config:
+      ffi-native: true
+    symbols:
+      c:@F@AlignMTB_Close:
+        name: AlignMTB_Close
+      c:@F@AlignMTB_Create:
+        name: AlignMTB_Create
+      c:@F@AlignMTB_CreateWithParams:
+        name: AlignMTB_CreateWithParams
+      c:@F@AlignMTB_CreateWithParams_Async:
+        name: AlignMTB_CreateWithParams_Async
+      c:@F@AlignMTB_Create_Async:
+        name: AlignMTB_Create_Async
+      c:@F@AlignMTB_Process:
+        name: AlignMTB_Process
+      c:@F@AlignMTB_Process_Async:
+        name: AlignMTB_Process_Async
+      c:@F@ColorChange:
+        name: ColorChange
+      c:@F@ColorChange_Async:
+        name: ColorChange_Async
+      c:@F@DetailEnhance:
+        name: DetailEnhance
+      c:@F@DetailEnhance_Async:
+        name: DetailEnhance_Async
+      c:@F@EdgePreservingFilter:
+        name: EdgePreservingFilter
+      c:@F@EdgePreservingFilter_Async:
+        name: EdgePreservingFilter_Async
+      c:@F@FastNlMeansDenoising:
+        name: FastNlMeansDenoising
+      c:@F@FastNlMeansDenoisingColored:
+        name: FastNlMeansDenoisingColored
+      c:@F@FastNlMeansDenoisingColoredMulti:
+        name: FastNlMeansDenoisingColoredMulti
+      c:@F@FastNlMeansDenoisingColoredMultiWithParams:
+        name: FastNlMeansDenoisingColoredMultiWithParams
+      c:@F@FastNlMeansDenoisingColoredMultiWithParams_Async:
+        name: FastNlMeansDenoisingColoredMultiWithParams_Async
+      c:@F@FastNlMeansDenoisingColoredMulti_Async:
+        name: FastNlMeansDenoisingColoredMulti_Async
+      c:@F@FastNlMeansDenoisingColoredWithParams:
+        name: FastNlMeansDenoisingColoredWithParams
+      c:@F@FastNlMeansDenoisingColoredWithParams_Async:
+        name: FastNlMeansDenoisingColoredWithParams_Async
+      c:@F@FastNlMeansDenoisingColored_Async:
+        name: FastNlMeansDenoisingColored_Async
+      c:@F@FastNlMeansDenoisingWithParams:
+        name: FastNlMeansDenoisingWithParams
+      c:@F@FastNlMeansDenoisingWithParams_Async:
+        name: FastNlMeansDenoisingWithParams_Async
+      c:@F@FastNlMeansDenoising_Async:
+        name: FastNlMeansDenoising_Async
+      c:@F@IlluminationChange:
+        name: IlluminationChange
+      c:@F@IlluminationChange_Async:
+        name: IlluminationChange_Async
+      c:@F@MergeMertens_Close:
+        name: MergeMertens_Close
+      c:@F@MergeMertens_Create:
+        name: MergeMertens_Create
+      c:@F@MergeMertens_CreateWithParams:
+        name: MergeMertens_CreateWithParams
+      c:@F@MergeMertens_CreateWithParams_Async:
+        name: MergeMertens_CreateWithParams_Async
+      c:@F@MergeMertens_Create_Async:
+        name: MergeMertens_Create_Async
+      c:@F@MergeMertens_Process:
+        name: MergeMertens_Process
+      c:@F@MergeMertens_Process_Async:
+        name: MergeMertens_Process_Async
+      c:@F@PencilSketch:
+        name: PencilSketch
+      c:@F@PencilSketch_Async:
+        name: PencilSketch_Async
+      c:@F@PhotoInpaint:
+        name: PhotoInpaint
+      c:@F@PhotoInpaint_Async:
+        name: PhotoInpaint_Async
+      c:@F@SeamlessClone:
+        name: SeamlessClone
+      c:@F@SeamlessClone_Async:
+        name: SeamlessClone_Async
+      c:@F@Stylization:
+        name: Stylization
+      c:@F@Stylization_Async:
+        name: Stylization_Async
+      c:@F@TextureFlattening:
+        name: TextureFlattening
+      c:@F@TextureFlattening_Async:
+        name: TextureFlattening_Async
+      c:@S@AlignMTB:
+        name: AlignMTB
+      c:@S@MergeMertens:
+        name: MergeMertens
+      c:photo.h@T@AlignMTBPtr:
+        name: AlignMTBPtr
+      c:photo.h@T@MergeMertensPtr:
+        name: MergeMertensPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Point:
+        name: Point
+      c:types.h@T@VecMat:
+        name: VecMat

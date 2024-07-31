@@ -1,0 +1,82 @@
+#pragma once
+#include "core/types.h"
+#include "aruco.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Detector Parameters
+CvStatus *ArucoDetectorParameters_Create_Async(CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async(ArucoDetectorParameters ap, int adaptiveThreshWinSizeMin, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async(ArucoDetectorParameters ap, int adaptiveThreshWinSizeMax, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async(ArucoDetectorParameters ap, int adaptiveThreshWinSizeStep, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAdaptiveThreshConstant_Async(ArucoDetectorParameters ap, double adaptiveThreshConstant, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAdaptiveThreshConstant_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async(ArucoDetectorParameters ap, double minMarkerPerimeterRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async(ArucoDetectorParameters ap, double maxMarkerPerimeterRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async(ArucoDetectorParameters ap, double polygonalApproxAccuracyRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMinCornerDistanceRate_Async(ArucoDetectorParameters ap, double minCornerDistanceRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMinCornerDistanceRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMinDistanceToBorder_Async(ArucoDetectorParameters ap, int minDistanceToBorder, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMinDistanceToBorder_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMinMarkerDistanceRate_Async(ArucoDetectorParameters ap, double minMarkerDistanceRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMinMarkerDistanceRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetCornerRefinementMethod_Async(ArucoDetectorParameters ap, int cornerRefinementMethod, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetCornerRefinementMethod_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetCornerRefinementWinSize_Async(ArucoDetectorParameters ap, int cornerRefinementWinSize, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetCornerRefinementWinSize_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async(ArucoDetectorParameters ap, int cornerRefinementMaxIterations, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async(ArucoDetectorParameters ap, double cornerRefinementMinAccuracy, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMarkerBorderBits_Async(ArucoDetectorParameters ap, int markerBorderBits, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMarkerBorderBits_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async(ArucoDetectorParameters ap, int perspectiveRemovePixelPerCell, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async(ArucoDetectorParameters ap, double perspectiveRemoveIgnoredMarginPerCell, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async(ArucoDetectorParameters ap, double maxErroneousBitsInBorderRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetMinOtsuStdDev_Async(ArucoDetectorParameters ap, double minOtsuStdDev, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetMinOtsuStdDev_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetErrorCorrectionRate_Async(ArucoDetectorParameters ap, double errorCorrectionRate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetErrorCorrectionRate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagQuadDecimate_Async(ArucoDetectorParameters ap, float aprilTagQuadDecimate, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagQuadDecimate_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagQuadSigma_Async(ArucoDetectorParameters ap, float aprilTagQuadSigma, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagQuadSigma_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async(ArucoDetectorParameters ap, int aprilTagMinClusterPixels, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async(ArucoDetectorParameters ap, int aprilTagMaxNmaxima, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagCriticalRad_Async(ArucoDetectorParameters ap, float aprilTagCriticalRad, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagCriticalRad_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async(ArucoDetectorParameters ap, float aprilTagMaxLineFitMse, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async(ArucoDetectorParameters ap, int aprilTagMinWhiteBlackDiff, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetAprilTagDeglitch_Async(ArucoDetectorParameters ap, int aprilTagDeglitch, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetAprilTagDeglitch_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+CvStatus *ArucoDetectorParameters_SetDetectInvertedMarker_Async(ArucoDetectorParameters ap, bool detectInvertedMarker, CvCallback_0 callback);
+CvStatus *ArucoDetectorParameters_GetDetectInvertedMarker_Async(ArucoDetectorParameters ap, CvCallback_1 callback);
+
+// Detector
+CvStatus *ArucoDetector_New_Async(CvCallback_1 callback);
+CvStatus *ArucoDetector_NewWithParams_Async(ArucoDictionary dictionary, ArucoDetectorParameters params, CvCallback_1 callback);
+CvStatus *ArucoDetector_DetectMarkers_Async(ArucoDetector ad, Mat inputArr, CvCallback_3 callback);
+
+// Utility Functions
+CvStatus *ArucoDrawDetectedMarkers_Async(Mat image, VecVecPoint2f markerCorners, VecI32 markerIds, Scalar borderColor, CvCallback_0 callback);
+CvStatus *ArucoGenerateImageMarker_Async(int dictionaryId, int id, int sidePixels, int borderBits, CvCallback_1 callback);
+CvStatus *getPredefinedDictionary_Async(int dictionaryId, CvCallback_1 callback);
+
+#ifdef __cplusplus
+}
+#endif

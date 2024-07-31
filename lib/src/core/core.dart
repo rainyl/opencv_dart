@@ -1,13 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
-library cv;
+library cv.core;
 
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../constants.g.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';
@@ -17,10 +17,33 @@ import 'scalar.dart';
 import 'termcriteria.dart';
 import 'vec.dart';
 
+/// Constants for log levels
+const int LOG_LEVEL_SILENT = 0;
+const int LOG_LEVEL_FATAL = 1;
+const int LOG_LEVEL_ERROR = 2;
+const int LOG_LEVEL_WARNING = 3;
+const int LOG_LEVEL_INFO = 4;
+const int LOG_LEVEL_DEBUG = 5;
+const int LOG_LEVEL_VERBOSE = 6;
+
+/// Sets the global logging level.
+void setLogLevel(int logLevel) {
+  cvRun(() => ccore.setLogLevel(logLevel));
+}
+
+/// Gets the global logging level.
+int getLogLevel() {
+  final p = calloc<ffi.Int>();
+  cvRun(() => ccore.getLogLevel(p));
+  final level = p.value;
+  calloc.free(p);
+  return level;
+}
+
 /// get version
 String openCvVersion() {
   final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => cvg.openCVVersion(p));
+  cvRun(() => ccore.openCVVersion(p));
   final s = p.value.toDartString();
   calloc.free(p);
   return s;
@@ -31,7 +54,7 @@ String openCvVersion() {
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
 String getBuildInformation() {
   final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => cvg.getBuildInfo(p));
+  cvRun(() => ccore.getBuildInfo(p));
   final s = p.value.toDartString();
   calloc.free(p);
   return s;
@@ -43,23 +66,20 @@ String getBuildInformation() {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6fef31bc8c4071cbc114a758a2b79c14
 Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
-  return cvRunArena<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => cvg.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
-    return dst!;
-  });
+  dst ??= Mat.empty();
+  cvRun(() => ccore.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
+  return dst;
 }
 
 /// Add calculates the per-element sum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
-Mat add(Mat src1, Mat src2, [Mat? dst]) {
-  return cvRunArena<Mat>((arena) {
-    dst ??= Mat.empty();
-    cvRun(() => cvg.Mat_Add(src1.ref, src2.ref, dst!.ref));
-    return dst!;
-  });
+Mat add(Mat src1, Mat src2, {Mat? dst, int dtype = -1, Mat? mask}) {
+  dst ??= Mat.empty();
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Add(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
+  return dst;
 }
 
 /// AddWeighted calculates the weighted sum of two arrays.
@@ -73,20 +93,10 @@ Mat addWeighted(
   double beta,
   double gamma, {
   OutputArray? dst,
-  int dtype = -1, // TODO: Add this
+  int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(
-    () => cvg.Mat_AddWeighted(
-      src1.ref,
-      alpha,
-      src2.ref,
-      beta,
-      gamma,
-      dst!.ref,
-      // dtype,
-    ),
-  );
+  cvRun(() => ccore.Mat_AddWeighted(src1.ref, alpha, src2.ref, beta, gamma, dst!.ref, dtype));
   return dst;
 }
 
@@ -103,11 +113,9 @@ Mat bitwiseAND(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => cvg.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => cvg.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -117,11 +125,9 @@ Mat bitwiseAND(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
 Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => cvg.Mat_BitwiseNot(src.ref, dst!.ref));
-  } else {
-    cvRun(() => cvg.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseNot(src.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -137,11 +143,9 @@ Mat bitwiseOR(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => cvg.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => cvg.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -157,11 +161,9 @@ Mat bitwiseXOR(
   InputArray? mask,
 }) {
   dst ??= Mat.empty();
-  if (mask == null) {
-    cvRun(() => cvg.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref));
-  } else {
-    cvRun(() => cvg.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  }
+  mask == null
+      ? cvRun(() => ccore.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref))
+      : cvRun(() => ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
   return dst;
 }
 
@@ -185,7 +187,7 @@ Mat bitwiseXOR(
   nidx ??= Mat.empty();
   mask ??= Mat.empty();
   cvRun(
-    () => cvg.Mat_BatchDistance(
+    () => ccore.Mat_BatchDistance(
       src1.ref,
       src2.ref,
       dist!.ref,
@@ -206,11 +208,11 @@ Mat bitwiseXOR(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
 int borderInterpolate(int p, int len, int borderType) {
-  return cvRunArena<int>((arena) {
-    final ptr = arena<ffi.Int>();
-    cvRun(() => cvg.Mat_BorderInterpolate(p, len, borderType, ptr));
-    return ptr.value;
-  });
+  final ptr = calloc<ffi.Int>();
+  cvRun(() => ccore.Mat_BorderInterpolate(p, len, borderType, ptr));
+  final v = ptr.value;
+  calloc.free(ptr);
+  return v;
 }
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
@@ -226,7 +228,7 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   covar ??= Mat.empty();
   cvRun(
-    () => cvg.Mat_CalcCovarMatrix(
+    () => ccore.Mat_CalcCovarMatrix(
       samples.ref,
       covar!.ref,
       mean.ref,
@@ -250,15 +252,7 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   magnitude ??= Mat.empty();
   angle ??= Mat.empty();
-  cvRun(
-    () => cvg.Mat_CartToPolar(
-      x.ref,
-      y.ref,
-      magnitude!.ref,
-      angle!.ref,
-      angleInDegrees,
-    ),
-  );
+  cvRun(() => ccore.Mat_CartToPolar(x.ref, y.ref, magnitude!.ref, angle!.ref, angleInDegrees));
   return (magnitude, angle);
 }
 
@@ -273,9 +267,9 @@ int borderInterpolate(int p, int len, int borderType) {
   double maxVal = CV_F64_MAX,
 }) {
   return cvRunArena<(bool, Point)>((arena) {
-    final pos = calloc<cvg.Point>();
+    final pos = calloc<ccore.Point>();
     final rval = arena<ffi.Bool>();
-    cvRun(() => cvg.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
+    cvRun(() => ccore.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
     return (rval.value, Point.fromPointer(pos));
   });
 }
@@ -287,7 +281,7 @@ int borderInterpolate(int p, int len, int borderType) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga303cfb72acf8cbb36d884650c09a3a97
 Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
+  cvRun(() => ccore.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
   return dst;
 }
 
@@ -298,7 +292,7 @@ Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
 int countNonZero(Mat src) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvg.Mat_CountNonZero(src.ref, p);
+    ccore.Mat_CountNonZero(src.ref, p);
     return p.value;
   });
 }
@@ -308,7 +302,7 @@ int countNonZero(Mat src) {
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6847337c0c55769e115a70e0f011b5ca
 Mat completeSymm(InputOutputArray m, {bool lowerToUpper = false}) {
-  cvRun(() => cvg.Mat_CompleteSymm(m.ref, lowerToUpper));
+  cvRun(() => ccore.Mat_CompleteSymm(m.ref, lowerToUpper));
   return m;
 }
 
@@ -323,7 +317,7 @@ Mat convertScaleAbs(
   double beta = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
+  cvRun(() => ccore.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
   return dst;
 }
 
@@ -342,9 +336,9 @@ Mat copyMakeBorder(
   Scalar? value,
 }) {
   dst ??= Mat.empty();
-  value ??= Scalar.default_();
+  value ??= Scalar();
   cvRun(
-    () => cvg.Mat_CopyMakeBorder(
+    () => ccore.Mat_CopyMakeBorder(
       src.ref,
       dst!.ref,
       top,
@@ -364,7 +358,7 @@ Mat copyMakeBorder(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga85aad4d668c01fbd64825f589e3696d4
 Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_DCT(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_DCT(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -375,7 +369,7 @@ Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
 double determinant(InputArray mtx) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => cvg.Mat_Determinant(mtx.ref, p));
+    cvRun(() => ccore.Mat_Determinant(mtx.ref, p));
     return p.value;
   });
 }
@@ -385,14 +379,9 @@ double determinant(InputArray mtx) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadd6cf9baf2b8b704a11b5f04aaf4f39d
-Mat dft(
-  InputArray src, {
-  OutputArray? dst,
-  int flags = 0,
-  int nonzeroRows = 0, // TODO: add
-}) {
+Mat dft(InputArray src, {OutputArray? dst, int flags = 0, int nonzeroRows = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_DFT(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags, nonzeroRows));
   return dst;
 }
 
@@ -401,15 +390,9 @@ Mat dft(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6db555d30115642fedae0cda05604874
-Mat divide(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  double scale = 1,
-  int dtype = -1,
-}) {
+Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1, int dtype = -1}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Divide(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -426,7 +409,7 @@ Mat divide(
   eigenvectors ??= Mat.empty();
   final ret = cvRunArena<bool>((arena) {
     final p = arena<ffi.Bool>();
-    cvRun(() => cvg.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
+    cvRun(() => ccore.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
     return p.value;
   });
   return (ret, eigenvalues, eigenvectors);
@@ -443,7 +426,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  cvRun(() => cvg.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
+  cvRun(() => ccore.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
   return (eigenvalues, eigenvectors);
 }
 
@@ -465,7 +448,7 @@ Mat divide(
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  cvg.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
+  ccore.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
   return (mean, eigenvalues, eigenvectors);
 }
 
@@ -475,7 +458,7 @@ Mat divide(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
 Mat exp(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Exp(src.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Exp(src.ref, dst!.ref));
   return dst;
 }
 
@@ -485,7 +468,7 @@ Mat exp(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc6158574aa1f0281878c955bcf35642
 Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_ExtractChannel(src.ref, dst!.ref, coi));
+  cvRun(() => ccore.Mat_ExtractChannel(src.ref, dst!.ref, coi));
   return dst;
 }
 
@@ -495,7 +478,7 @@ Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaed7df59a3539b4cc0fe5c9c8d7586190
 Mat findNonZero(InputArray src, {OutputArray? idx}) {
   idx ??= Mat.empty();
-  cvRun(() => cvg.Mat_FindNonZero(src.ref, idx!.ref));
+  cvRun(() => ccore.Mat_FindNonZero(src.ref, idx!.ref));
   return idx;
 }
 
@@ -505,7 +488,7 @@ Mat findNonZero(InputArray src, {OutputArray? idx}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaca7be533e3dac7feb70fc60635adf441
 Mat flip(InputArray src, int flipCode, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Flip(src.ref, dst!.ref, flipCode));
+  cvRun(() => ccore.Mat_Flip(src.ref, dst!.ref, flipCode));
   return dst;
 }
 
@@ -523,7 +506,7 @@ Mat gemm(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
+  cvRun(() => ccore.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
   return dst;
 }
 
@@ -535,7 +518,7 @@ Mat gemm(
 int getOptimalDFTSize(int vecsize) {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => cvg.Mat_GetOptimalDFTSize(vecsize, p));
+    cvRun(() => ccore.Mat_GetOptimalDFTSize(vecsize, p));
     return p.value;
   });
 }
@@ -546,7 +529,7 @@ int getOptimalDFTSize(int vecsize) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
 Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -556,7 +539,7 @@ Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
 Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -566,7 +549,7 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
 Mat rotate(InputArray src, int rotateCode, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Rotate(src.ref, dst!.ref, rotateCode));
+  cvRun(() => ccore.Rotate(src.ref, dst!.ref, rotateCode));
   return dst;
 }
 
@@ -580,7 +563,7 @@ Mat idct(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Idct(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_Idct(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -595,7 +578,7 @@ Mat idft(
   int nonzeroRows = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
+  cvRun(() => ccore.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
   return dst;
 }
 
@@ -610,7 +593,7 @@ Mat inRange(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => ccore.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
   return dst;
 }
 
@@ -625,7 +608,7 @@ Mat inRangebyScalar(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => ccore.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
   return dst;
 }
 
@@ -635,7 +618,7 @@ Mat inRangebyScalar(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1d4bd886d35b00ec0b764cb4ce6eb515
 Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
-  cvRun(() => cvg.Mat_InsertChannel(src.ref, dst.ref, coi));
+  cvRun(() => ccore.Mat_InsertChannel(src.ref, dst.ref, coi));
   return dst;
 }
 
@@ -651,7 +634,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   dst ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => cvg.Mat_Invert(src.ref, dst!.ref, flags, p));
+    cvRun(() => ccore.Mat_Invert(src.ref, dst!.ref, flags, p));
     return p.value;
   });
   return (rval, dst);
@@ -665,7 +648,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   InputArray data,
   int K,
   InputOutputArray bestLabels,
-  TermCriteria criteria,
+  (int, int, double) criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -674,11 +657,11 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => cvg.KMeans(
+      () => ccore.KMeans(
         data.ref,
         K,
         bestLabels.ref,
-        criteria.toNativePtr(arena).ref,
+        TermCriteria.fromRecord(criteria).ref,
         attempts,
         flags,
         centers!.ref,
@@ -698,7 +681,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   VecPoint2f pts,
   int K,
   InputOutputArray bestLabels,
-  TermCriteria criteria,
+  (int, int, double) criteria,
   int attempts,
   int flags, {
   OutputArray? centers,
@@ -707,11 +690,11 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
     cvRun(
-      () => cvg.KMeansPoints(
+      () => ccore.KMeansPoints(
         pts.ref,
         K,
         bestLabels.ref,
-        criteria.toNativePtr(arena).ref,
+        TermCriteria.fromRecord(criteria).ref,
         attempts,
         flags,
         centers!.ref,
@@ -729,7 +712,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga937ecdce4679a77168730830a955bea7
 Mat log(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Log(src.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Log(src.ref, dst!.ref));
   return dst;
 }
 
@@ -756,7 +739,7 @@ Mat log(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
 Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.LUT(src.ref, lut.ref, dst!.ref));
+  cvRun(() => ccore.LUT(src.ref, lut.ref, dst!.ref));
   return dst;
 }
 
@@ -766,7 +749,7 @@ Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6d3b097586bca4409873d64a90fe64c3
 Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
   magnitude ??= Mat.empty();
-  cvRun(() => cvg.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
+  cvRun(() => ccore.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
   return magnitude;
 }
 
@@ -776,7 +759,7 @@ Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc40fa15eac0fb83f8ca70b7cc0b588d
 Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Max(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Max(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -785,14 +768,12 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
-  return cvRunArena<(Scalar, Scalar)>((arena) {
-    final mean = calloc<cvg.Scalar>();
-    final stddev = calloc<cvg.Scalar>();
-    mask == null
-        ? cvRun(() => cvg.Mat_MeanStdDev(src.ref, mean, stddev))
-        : cvRun(() => cvg.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
-    return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
-  });
+  final mean = calloc<ccore.Scalar>();
+  final stddev = calloc<ccore.Scalar>();
+  mask == null
+      ? cvRun(() => ccore.Mat_MeanStdDev(src.ref, mean, stddev))
+      : cvRun(() => ccore.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
+  return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
 }
 
 /// Merge creates one multi-channel array out of several single-channel ones.
@@ -800,9 +781,9 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
 Mat merge(VecMat mv, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Merge(mv.ref, dst!.ref));
-  return dst;
+  final p = calloc<ccore.Mat>();
+  cvRun(() => ccore.Mat_Merge(mv.ref, p));
+  return Mat.fromPointer(p);
 }
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
@@ -811,7 +792,7 @@ Mat merge(VecMat mv, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
 Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Min(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Min(src1.ref, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -828,7 +809,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
     final maxValP = arena<ffi.Double>();
     final minIdxP = arena<ffi.Int>();
     final maxIdxP = arena<ffi.Int>();
-    cvRun(() => cvg.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
+    cvRun(() => ccore.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
     return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
   });
 }
@@ -841,9 +822,9 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   return using<(double, double, Point, Point)>((arena) {
     final minValP = arena<ffi.Double>();
     final maxValP = arena<ffi.Double>();
-    final minLocP = calloc<cvg.Point>();
-    final maxLocP = calloc<cvg.Point>();
-    cvRun(() => cvg.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
+    final minLocP = calloc<ccore.Point>();
+    final maxLocP = calloc<ccore.Point>();
+    cvRun(() => ccore.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
     return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
   });
 }
@@ -852,11 +833,9 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-VecMat mixChannels(VecMat src, VecMat dst, VecInt fromTo) {
-  return cvRunArena<VecMat>((arena) {
-    cvRun(() => cvg.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
-    return dst;
-  });
+VecMat mixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
+  cvRun(() => ccore.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
+  return dst;
 }
 
 /// Mulspectrums performs the per-element multiplication of two Fourier spectrums.
@@ -871,7 +850,7 @@ Mat mulSpectrums(
   bool conjB = false,
 }) {
   c ??= Mat.empty();
-  cvRun(() => cvg.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags));
+  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags, conjB));
   return c;
 }
 
@@ -888,7 +867,7 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_MultiplyWithParams(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.Mat_Multiply(src1.ref, src2.ref, dst!.ref, scale, dtype));
   return dst;
 }
 
@@ -902,11 +881,11 @@ Mat normalize(
   double alpha = 1,
   double beta = 0,
   int normType = NORM_L2,
-  // TODO
-  // int dtype = -1,
-  // InputArray? mask,
+  int dtype = -1,
+  InputArray? mask,
 }) {
-  cvRun(() => cvg.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType));
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType, dtype, mask!.ref));
   return dst;
 }
 
@@ -919,11 +898,12 @@ double norm(
   int normType = NORM_L2,
   InputArray? mask,
 }) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cvg.Norm(src1.ref, normType, p));
-    return p.value;
-  });
+  mask ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.Norm(src1.ref, normType, mask!.ref, p));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
@@ -934,11 +914,12 @@ double norm1(
   InputArray src1,
   InputArray src2, {
   int normType = NORM_L2,
-  // InputArray? mask,
+  InputArray? mask,
 }) {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => cvg.NormWithMats(src1.ref, src2.ref, normType, p));
+    mask ??= Mat.empty();
+    cvRun(() => ccore.NormWithMats(src1.ref, src2.ref, normType, mask!.ref, p));
     return p.value;
   });
 }
@@ -949,7 +930,7 @@ double norm1(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
 Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
+  cvRun(() => ccore.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
   return dst;
 }
 
@@ -966,7 +947,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
   final rval = cvRunArena<bool>((arena) {
     final p = arena<ffi.Bool>();
-    cvRun(() => cvg.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
+    cvRun(() => ccore.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
     return p.value;
   });
   return (rval, dst);
@@ -980,7 +961,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   roots ??= Mat.empty();
   final rval = cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => cvg.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
+    cvRun(() => ccore.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
     return p.value;
   });
   return (rval, roots);
@@ -998,7 +979,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   roots ??= Mat.empty();
   final rval = cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => cvg.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
+    cvRun(() => ccore.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
     return p.value;
   });
   return (rval, roots);
@@ -1010,7 +991,7 @@ Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
 Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
+  cvRun(() => ccore.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
   return dst;
 }
 
@@ -1020,7 +1001,7 @@ Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
 Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
+  cvRun(() => ccore.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
   return dst;
 }
 
@@ -1030,7 +1011,7 @@ Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = f
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
 Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
+  cvRun(() => ccore.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
   return dst;
 }
 
@@ -1040,7 +1021,7 @@ Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = f
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
 Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Repeat(src.ref, ny, nx, dst!.ref));
+  cvRun(() => ccore.Mat_Repeat(src.ref, ny, nx, dst!.ref));
   return dst;
 }
 
@@ -1050,7 +1031,7 @@ Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
 Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
+  cvRun(() => ccore.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
   return dst;
 }
 
@@ -1059,7 +1040,7 @@ Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst})
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
 Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
-  cvRun(() => cvg.Mat_SetIdentity(mtx.ref, s));
+  cvRun(() => ccore.Mat_SetIdentity(mtx.ref, s));
   return mtx;
 }
 
@@ -1069,7 +1050,7 @@ Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
 Mat sort(InputArray src, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Sort(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_Sort(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -1080,7 +1061,7 @@ Mat sort(InputArray src, int flags, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
 Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_SortIdx(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.Mat_SortIdx(src.ref, dst!.ref, flags));
   return dst;
 }
 
@@ -1090,11 +1071,22 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 VecMat split(InputArray m) {
-  final p = calloc<cvg.VecMat>();
-  final vec = calloc<cvg.VecMat>();
-  cvRun(() => cvg.Mat_Split(m.ref, vec));
-  calloc.free(p);
+  final vec = calloc<ccore.VecMat>();
+  cvRun(() => ccore.Mat_Split(m.ref, vec));
   return VecMat.fromPointer(vec);
+}
+
+/// Calculates a square root of array elements.
+///
+/// The function cv::sqrt calculates a square root of each input array element.
+/// In case of multi-channel arrays, each channel is processed independently.
+/// The accuracy is approximately the same as of the built-in std::sqrt .
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga186222c3919657890f88df5a1f64a7d7
+Mat sqrt(Mat src, {Mat? dst}) {
+  final p = dst?.ptr ?? calloc<ccore.Mat>();
+  cvRun(() => ccore.Mat_Sqrt(src.ref, p));
+  return dst ?? Mat.fromPointer(p);
 }
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
@@ -1105,13 +1097,25 @@ Mat subtract(
   InputArray src1,
   InputArray src2, {
   OutputArray? dst,
-  // TODO
-  //   InputArray? mask,
-  //   int dtype = -1,
+  InputArray? mask,
+  int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Subtract(src1.ref, src2.ref, dst!.ref));
+  mask ??= Mat.empty();
+  cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
   return dst;
+}
+
+/// Calculates the sum of array elements.
+///
+/// The function cv::sum calculates and returns the sum of array elements,
+/// independently for each channel.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
+Scalar sum(Mat src) {
+  final p = calloc<ccore.Scalar>();
+  cvRun(() => ccore.Mat_Sum(src.ref, p));
+  return Scalar.fromPointer(p);
 }
 
 /// Trace returns the trace of a matrix.
@@ -1119,11 +1123,9 @@ Mat subtract(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
-  return cvRunArena<Scalar>((arena) {
-    final ptr = calloc<cvg.Scalar>();
-    cvRun(() => cvg.Mat_Trace(mtx.ref, ptr));
-    return Scalar.fromPointer(ptr);
-  });
+  final ptr = calloc<ccore.Scalar>();
+  cvRun(() => ccore.Mat_Trace(mtx.ref, ptr));
+  return Scalar.fromPointer(ptr);
 }
 
 /// Transform performs the matrix transformation of every array element.
@@ -1132,7 +1134,7 @@ Scalar trace(InputArray mtx) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
 Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Transform(src.ref, dst!.ref, m.ref));
+  cvRun(() => ccore.Mat_Transform(src.ref, dst!.ref, m.ref));
   return dst;
 }
 
@@ -1142,7 +1144,7 @@ Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
 Mat transpose(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Transpose(src.ref, dst!.ref));
+  cvRun(() => ccore.Mat_Transpose(src.ref, dst!.ref));
   return dst;
 }
 
@@ -1152,7 +1154,7 @@ Mat transpose(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
 Mat pow(InputArray src, double power, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cvg.Mat_Pow(src.ref, power, dst!.ref));
+  cvRun(() => ccore.Mat_Pow(src.ref, power, dst!.ref));
   return dst;
 }
 
@@ -1169,7 +1171,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 }) {
   x ??= Mat.empty();
   y ??= Mat.empty();
-  cvRun(() => cvg.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
+  cvRun(() => ccore.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
   return (x, y);
 }
 
@@ -1179,7 +1181,7 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
 Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
   angle ??= Mat.empty();
-  cvRun(() => cvg.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
+  cvRun(() => ccore.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
   return angle;
 }
 
@@ -1190,7 +1192,7 @@ Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees =
 int getTickCount() {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int64>();
-    cvRun(() => cvg.GetCVTickCount(p));
+    cvRun(() => ccore.GetCVTickCount(p));
     return p.value;
   });
 }
@@ -1202,7 +1204,7 @@ int getTickCount() {
 double getTickFrequency() {
   return cvRunArena<double>((arena) {
     final p = arena<ffi.Double>();
-    cvRun(() => cvg.GetTickFrequency(p));
+    cvRun(() => ccore.GetTickFrequency(p));
     return p.value;
   });
 }
@@ -1213,8 +1215,8 @@ double getTickFrequency() {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
 /// Disabled: double free
 Rng theRNG() {
-  final p = calloc<cvg.RNG>();
-  cvRun(() => cvg.TheRNG(p));
+  final p = calloc<ccore.RNG>();
+  cvRun(() => ccore.TheRNG(p));
   return Rng.fromTheRng(p);
 }
 
@@ -1223,7 +1225,7 @@ Rng theRNG() {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeff1f61e972d133a04ce3a5f81cf6808
 Mat randn(InputOutputArray dst, Scalar mean, Scalar stddev) {
-  cvRun(() => cvg.RandN(dst.ref, mean.ref, stddev.ref));
+  cvRun(() => ccore.RandN(dst.ref, mean.ref, stddev.ref));
   return dst;
 }
 
@@ -1237,9 +1239,9 @@ Mat randShuffle(
   Rng? rng,
 }) {
   if (rng == null) {
-    cvRun(() => cvg.RandShuffle(dst.ref));
+    cvRun(() => ccore.RandShuffle(dst.ref));
   } else {
-    cvRun(() => cvg.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
+    cvRun(() => ccore.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
   }
   return dst;
 }
@@ -1250,20 +1252,20 @@ Mat randShuffle(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1ba1026dca0807b27057ba6a49d258c0
 Mat randu(InputOutputArray dst, Scalar low, Scalar high) {
-  cvRun(() => cvg.RandU(dst.ref, low.ref, high.ref));
+  cvRun(() => ccore.RandU(dst.ref, low.ref, high.ref));
   return dst;
 }
 
 /// Set the number of threads for OpenCV.
 void setNumThreads(int n) {
-  cvRun(() => cvg.SetNumThreads(n));
+  cvRun(() => ccore.SetNumThreads(n));
 }
 
 /// Get the number of threads for OpenCV.
 int getNumThreads() {
   return cvRunArena<int>((arena) {
     final p = arena<ffi.Int>();
-    cvRun(() => cvg.GetNumThreads(p));
+    cvRun(() => ccore.GetNumThreads(p));
     return p.value;
   });
 }

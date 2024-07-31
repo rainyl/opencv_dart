@@ -4,6 +4,7 @@ test/images_out
 bak/
 opencv_dart.iml
 coverage/
+src/dart_api/
 *.a
 *.dll
 *.so

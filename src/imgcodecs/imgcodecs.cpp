@@ -7,6 +7,7 @@
 */
 
 #include "imgcodecs.h"
+#include "core/vec.hpp"
 #include <vector>
 
 CvStatus *Image_IMRead(const char *filename, int flags, Mat *rval)
@@ -21,10 +22,11 @@ CvStatus *Image_IMWrite(const char *filename, Mat img, bool *rval)
   *rval = cv::imwrite(filename, *img.ptr);
   END_WRAP
 }
-CvStatus *Image_IMWrite_WithParams(const char *filename, Mat img, VecInt params, bool *rval)
+CvStatus *Image_IMWrite_WithParams(const char *filename, Mat img, VecI32 params, bool *rval)
 {
   BEGIN_WRAP
-  *rval = cv::imwrite(filename, *img.ptr, *params.ptr);
+  auto _params = vecint_c2cpp(params);
+  *rval = cv::imwrite(filename, *img.ptr, _params);
   END_WRAP
 }
 CvStatus *Image_IMEncode(const char *fileExt, Mat img, bool *success, VecUChar *rval)
@@ -32,22 +34,24 @@ CvStatus *Image_IMEncode(const char *fileExt, Mat img, bool *success, VecUChar *
   BEGIN_WRAP
   std::vector<uchar> buf;
   *success = cv::imencode(fileExt, *img.ptr, buf);
-  *rval = {new std::vector<uchar>(buf)};
+  *rval = vecuchar_cpp2c(buf);
   END_WRAP
 }
-CvStatus *Image_IMEncode_WithParams(const char *fileExt, Mat img, VecInt params, bool *success,
+CvStatus *Image_IMEncode_WithParams(const char *fileExt, Mat img, VecI32 params, bool *success,
                                     VecUChar *rval)
 {
   BEGIN_WRAP
   std::vector<uchar> buf;
-  *success = cv::imencode(fileExt, *img.ptr, buf, *params.ptr);
-  *rval = {new std::vector<uchar>(buf)};
+  auto _params = vecint_c2cpp(params);
+  *success = cv::imencode(fileExt, *img.ptr, buf, _params);
+  *rval = vecuchar_cpp2c(buf);
   END_WRAP
 }
 CvStatus *Image_IMDecode(VecUChar buf, int flags, Mat *rval)
 {
   BEGIN_WRAP
-  auto m = cv::imdecode(*buf.ptr, flags);
+  auto _buf = vecuchar_c2cpp(buf);
+  auto m = cv::imdecode(_buf, flags);
   *rval = {new cv::Mat(m)};
   END_WRAP
 }

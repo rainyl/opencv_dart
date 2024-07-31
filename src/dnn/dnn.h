@@ -20,11 +20,12 @@ extern "C" {
 #include "core/core.h"
 
 #ifdef __cplusplus
-CVD_TYPEDEF(cv::dnn::Net, Net)
-CVD_TYPEDEF(cv::Ptr<cv::dnn::Layer>, Layer)
+namespace cv_dnn = cv::dnn::dnn4_v20240521;
+CVD_TYPEDEF(cv_dnn::Net, Net);
+CVD_TYPEDEF(cv::Ptr<cv_dnn::Layer>, Layer);
 #else
-CVD_TYPEDEF(void, Net)
-CVD_TYPEDEF(void, Layer)
+CVD_TYPEDEF(void, Net);
+CVD_TYPEDEF(void, Layer);
 #endif
 
 CvStatus *Net_Create(CVD_OUT Net *rval);
@@ -55,9 +56,9 @@ CvStatus *Net_ForwardLayers(Net net, CVD_OUT VecMat *outputBlobs, VecVecChar out
 CvStatus *Net_SetPreferableBackend(Net net, int backend);
 CvStatus *Net_SetPreferableTarget(Net net, int target);
 CvStatus *Net_GetPerfProfile(Net net, CVD_OUT int64_t *rval);
-CvStatus *Net_GetUnconnectedOutLayers(Net net, CVD_OUT VecInt *rval);
+CvStatus *Net_GetUnconnectedOutLayers(Net net, CVD_OUT VecI32 *rval);
 CvStatus *Net_GetLayerNames(Net net, CVD_OUT VecVecChar *rval);
-CvStatus *Net_GetInputDetails(Net net, CVD_OUT VecFloat *scales, CVD_OUT VecInt *zeropoints);
+CvStatus *Net_GetInputDetails(Net net, CVD_OUT VecF32 *scales, CVD_OUT VecI32 *zeropoints);
 
 CvStatus *Net_GetBlobChannel(Mat blob, int imgidx, int chnidx, CVD_OUT Mat *rval);
 CvStatus *Net_GetBlobSize(Mat blob, CVD_OUT Scalar *rval);
@@ -69,10 +70,10 @@ CvStatus *Layer_GetName(Layer layer, CVD_OUT char **rval);
 CvStatus *Layer_GetType(Layer layer, CVD_OUT char **rval);
 void      Layer_Close(LayerPtr layer);
 
-CvStatus *NMSBoxes(VecRect bboxes, VecFloat scores, float score_threshold, float nms_threshold,
-                   CVD_OUT VecInt *indices);
-CvStatus *NMSBoxesWithParams(VecRect bboxes, VecFloat scores, const float score_threshold,
-                             const float nms_threshold, CVD_OUT VecInt *indices, const float eta,
+CvStatus *NMSBoxes(VecRect bboxes, VecF32 scores, float score_threshold, float nms_threshold,
+                   CVD_OUT VecI32 *indices);
+CvStatus *NMSBoxesWithParams(VecRect bboxes, VecF32 scores, const float score_threshold,
+                             const float nms_threshold, CVD_OUT VecI32 *indices, const float eta,
                              const int top_k);
 
 #ifdef __cplusplus

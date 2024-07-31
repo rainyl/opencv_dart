@@ -1,13 +1,13 @@
 // ignore_for_file: constant_identifier_names
 
-library cv;
+library cv.contrib;
 
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
-import '../opencv.g.dart' as cvg;
+import '../g/contrib.g.dart' as ccontrib;
 
 enum PredefinedDictionaryType {
   ///< 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
@@ -80,29 +80,25 @@ enum PredefinedDictionaryType {
   final int value;
 }
 
-class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
-  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ArucoDictionary extends CvStruct<ccontrib.ArucoDictionary> {
+  ArucoDictionary._(ccontrib.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
-    final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => cvg.getPredefinedDictionary(type.value, p));
+    final p = calloc<ccontrib.ArucoDictionary>();
+    cvRun(() => ccontrib.getPredefinedDictionary(type.value, p));
     return ArucoDictionary._(p);
   }
 
   @override
-  cvg.ArucoDictionary get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.ArucoDictionaryPtr>(ffi.Native.addressOf(cvg.ArucoDictionary_Close));
+  ccontrib.ArucoDictionary get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<ccontrib.ArucoDictionaryPtr>(ccontrib.addresses.ArucoDictionary_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvg.ArucoDictionary_Close(ptr);
+    ccontrib.ArucoDictionary_Close(ptr);
   }
-
-  @override
-  List<int> get props => [ptr.address];
 }

@@ -39,4 +39,5 @@ BuildConfig testIosBuildConfig(BuildConfig config) => BuildConfig.build(
       cCompiler: config.cCompiler,
       linkModePreference: config.linkModePreference,
       buildMode: config.buildMode,
+      linkingEnabled: true,
     );
