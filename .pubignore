@@ -10,6 +10,7 @@ src/dart_api/
 *.so
 *.dylib
 *.lib
+src/test/
 pkgs/
 CMakePresets.json
 CMakeUserPresets*
