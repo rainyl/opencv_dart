@@ -3,7 +3,7 @@
 import 'package:logging/logging.dart';
 import 'package:native_assets_cli/native_assets_cli.dart';
 
-import 'native_toolchain_conan.dart';
+import 'package:opencv_dart/src/helpers/native_toolchain_conan.dart';
 
 void main(List<String> args) async {
   await build(args, (config, output) async {
@@ -11,7 +11,7 @@ void main(List<String> args) async {
     final builder = ConanBuilder.library(
       name: packageName,
       assetName: '$packageName.dart',
-      std: "c++20",
+      cppstd: "20",
       dartBuildFiles: ['hook/build.dart'],
       defines: {
         // "OpenCV_STATIC": "TRUE",
