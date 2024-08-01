@@ -53,7 +53,7 @@ class ConanBuilder implements Builder {
   /// The language standard to use.
   ///
   /// When set to `null`, the default behavior of the compiler will be used.
-  final String? std;
+  final String? cppstd;
 
   ConanBuilder.library({
     required this.name,
@@ -62,7 +62,7 @@ class ConanBuilder implements Builder {
     this.preset,
     this.defines = const {},
     this.dartBuildFiles = const [],
-    this.std,
+    this.cppstd,
   });
 
   @override
@@ -136,7 +136,7 @@ class ConanBuilder implements Builder {
         if (ndkUri == null) throw p.PathException("Android NDK not found!");
         ndkOptions.addAll(["-c", "tools.android:ndk_path=${p.normalize(ndkUri.toFilePath())}"]);
       }
-      final stdOptions = targetOS == OS.windows ? ["-s", "compiler.cppstd=20"] : <String>[];
+      final stdOptions = cppstd != null ? ["-s", "compiler.cppstd=$cppstd"] : <String>[];
       final result = await runProcess(
         executable: "conan",
         arguments: [
