@@ -269,7 +269,7 @@ jobs:
               -output ios/opencv_dart.xcframework
             tar -zcvf libopencv_dart-ios-os64.tar.gz -C ios opencv_dart.xcframework
         - uses: actions/upload-artifact@v4
-          name: upload
+          name: upload arm64
           with:
             path: build/publish/libopencv_dart-ios-arm64.tar.gz
             name: libopencv_dart-ios-arm64.tar.gz
@@ -279,7 +279,7 @@ jobs:
             path: build/publish/libopencv_dart-ios-x64.tar.gz
             name: libopencv_dart-ios-x64.tar.gz
         - uses: actions/upload-artifact@v4
-          name: upload
+          name: upload os64
           with:
             path: libopencv_dart-ios-os64.tar.gz
             name: libopencv_dart-ios-os64.tar.gz
@@ -290,8 +290,6 @@ jobs:
             draft: true
             prerelease: false
             files: |
-              build/publish/libopencv_dart-ios-arm64.tar.gz
-              build/publish/libopencv_dart-ios-x64.tar.gz
               libopencv_dart-ios-os64.tar.gz
         - uses: subosito/flutter-action@v2
           with:

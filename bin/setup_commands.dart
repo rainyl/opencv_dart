@@ -79,7 +79,7 @@ abstract class BaseSetupCommand extends Command {
                 e.path.endsWith(".so") ||
                 e.path.endsWith(".dll") ||
                 e.path.endsWith(".dylib") ||
-                e.path.endsWith(".framework"),
+                e.path.endsWith(".xcframework"),
           )
           .any((e) => e)) {
         print(asWarning("Libs already exists in $extractPath, Skipping..."));
@@ -175,8 +175,9 @@ class IosSetupCommand extends BaseSetupCommand {
     argParser.addOption(
       "arch",
       abbr: "a",
-      allowed: ["x86_64", "x64", "arm64", "os64"],
-      mandatory: true,
+      allowed: ["os64"],
+      mandatory: false,
+      defaultsTo: "os64",
     );
     argParser.addFlag("force", abbr: "f", help: "Force download and extract");
   }
