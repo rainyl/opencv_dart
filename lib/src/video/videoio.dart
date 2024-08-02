@@ -171,49 +171,80 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     return VideoWriter._(p);
   }
 
-  factory VideoWriter.open(
+  factory VideoWriter.fromFile(
     String filename,
     String codec,
     double fps,
     (int, int) frameSize, {
+    int? apiPreference,
     bool isColor = true,
   }) {
-    return cvRunArena<VideoWriter>((arena) {
-      final p = calloc<cvg.VideoWriter>();
-      cvRun(() => cvideo.VideoWriter_New(p));
-      final name = filename.toNativeUtf8(allocator: arena);
-      final codec_ = codec.toNativeUtf8(allocator: arena);
-      cvRun(
-        () => cvideo.VideoWriter_Open(
-          p.ref,
-          name.cast(),
-          codec_.cast(),
-          fps,
-          frameSize.$1,
-          frameSize.$2,
-          isColor,
-        ),
-      );
-      return VideoWriter._(p);
-    });
+    final p = calloc<cvg.VideoWriter>();
+    final cname = filename.toNativeUtf8();
+    final codec_ = VideoWriter.fourcc(codec);
+    apiPreference == null
+        ? cvRun(
+            () => cvideo.VideoWriter_NewFromFile(
+              cname.cast(),
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+            ),
+          )
+        : cvRun(
+            () => cvideo.VideoWriter_NewFromFile_1(
+              cname.cast(),
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+            ),
+          );
+    calloc.free(cname);
+    return VideoWriter._(p);
   }
 
-  void open(String filename, String codec, double fps, (int, int) frameSize, {bool isColor = true}) {
-    using((arena) {
-      final name = filename.toNativeUtf8(allocator: arena);
-      final codec_ = codec.toNativeUtf8(allocator: arena);
-      cvRun(
-        () => cvideo.VideoWriter_Open(
-          ref,
-          name.cast(),
-          codec_.cast(),
-          fps,
-          frameSize.$1,
-          frameSize.$2,
-          isColor,
-        ),
-      );
-    });
+  void open(
+    String filename,
+    String codec,
+    double fps,
+    (int, int) frameSize, {
+    int? apiPreference,
+    bool isColor = true,
+  }) {
+    final cname = filename.toNativeUtf8();
+    final codec_ = VideoWriter.fourcc(codec);
+    apiPreference == null
+        ? cvRun(
+            () => cvideo.VideoWriter_Open(
+              ref,
+              cname.cast(),
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+            ),
+          )
+        : cvRun(
+            () => cvideo.VideoWriter_Open_1(
+              ref,
+              cname.cast(),
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+            ),
+          );
+    calloc.free(cname);
   }
 
   void write(InputArray image) {

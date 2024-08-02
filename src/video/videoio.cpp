@@ -91,22 +91,54 @@ CvStatus *VideoWriter_New(VideoWriter *rval) {
   *rval = {new cv::VideoWriter()};
   END_WRAP
 }
+CvStatus *VideoWriter_NewFromFile(
+    const char *name, int fourcc, double fps, int width, int height, bool isColor, VideoWriter *rval
+) {
+  BEGIN_WRAP
+  *rval = {new cv::VideoWriter(name, fourcc, fps, cv::Size(width, height), isColor)};
+  END_WRAP
+}
+
+CvStatus *VideoWriter_NewFromFile_1(
+    const char *name,
+    int apiPreference,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor,
+    VideoWriter *rval
+) {
+  BEGIN_WRAP
+  *rval = {new cv::VideoWriter(name, apiPreference, fourcc, fps, cv::Size(width, height), isColor)};
+  END_WRAP
+}
+
 void VideoWriter_Close(VideoWriterPtr self) { CVD_FREE(self); }
 
 CvStatus *VideoWriter_Open(
+    VideoWriter self, const char *name, int fourcc, double fps, int width, int height, bool isColor
+) {
+  BEGIN_WRAP
+  self.ptr->open(name, fourcc, fps, cv::Size(width, height), isColor);
+  END_WRAP
+}
+
+CvStatus *VideoWriter_Open_1(
     VideoWriter self,
     const char *name,
-    const char *codec,
+    int apiPreference,
+    int fourcc,
     double fps,
     int width,
     int height,
     bool isColor
 ) {
   BEGIN_WRAP
-  int codecCode = cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]);
-  self.ptr->open(name, codecCode, fps, cv::Size(width, height), isColor);
+  self.ptr->open(name, apiPreference, fourcc, fps, cv::Size(width, height), isColor);
   END_WRAP
 }
+
 CvStatus *VideoWriter_IsOpened(VideoWriter self, int *rval) {
   BEGIN_WRAP
   *rval = self.ptr->isOpened();

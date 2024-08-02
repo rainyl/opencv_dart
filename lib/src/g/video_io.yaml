@@ -254,10 +254,16 @@ files:
         name: VideoWriter_IsOpened_Async
       c:@F@VideoWriter_New:
         name: VideoWriter_New
+      c:@F@VideoWriter_NewFromFile:
+        name: VideoWriter_NewFromFile
+      c:@F@VideoWriter_NewFromFile_1:
+        name: VideoWriter_NewFromFile_1
       c:@F@VideoWriter_New_Async:
         name: VideoWriter_New_Async
       c:@F@VideoWriter_Open:
         name: VideoWriter_Open
+      c:@F@VideoWriter_Open_1:
+        name: VideoWriter_Open_1
       c:@F@VideoWriter_Open_Async:
         name: VideoWriter_Open_Async
       c:@F@VideoWriter_Release:

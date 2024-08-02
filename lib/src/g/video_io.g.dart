@@ -2567,6 +2567,78 @@ class CvNativeVideoIO {
   late final _VideoWriter_New = _VideoWriter_NewPtr.asFunction<
       ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoWriter>)>();
 
+  ffi.Pointer<CvStatus> VideoWriter_NewFromFile(
+    ffi.Pointer<ffi.Char> name,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor,
+    ffi.Pointer<VideoWriter> rval,
+  ) {
+    return _VideoWriter_NewFromFile(
+      name,
+      fourcc,
+      fps,
+      width,
+      height,
+      isColor,
+      rval,
+    );
+  }
+
+  late final _VideoWriter_NewFromFilePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Pointer<VideoWriter>)>>('VideoWriter_NewFromFile');
+  late final _VideoWriter_NewFromFile = _VideoWriter_NewFromFilePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, double, int,
+          int, bool, ffi.Pointer<VideoWriter>)>();
+
+  ffi.Pointer<CvStatus> VideoWriter_NewFromFile_1(
+    ffi.Pointer<ffi.Char> name,
+    int apiPreference,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor,
+    ffi.Pointer<VideoWriter> rval,
+  ) {
+    return _VideoWriter_NewFromFile_1(
+      name,
+      apiPreference,
+      fourcc,
+      fps,
+      width,
+      height,
+      isColor,
+      rval,
+    );
+  }
+
+  late final _VideoWriter_NewFromFile_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Pointer<VideoWriter>)>>('VideoWriter_NewFromFile_1');
+  late final _VideoWriter_NewFromFile_1 =
+      _VideoWriter_NewFromFile_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, int,
+              double, int, int, bool, ffi.Pointer<VideoWriter>)>();
+
   ffi.Pointer<CvStatus> VideoWriter_New_Async(
     imp1.CvCallback_1 callback,
   ) {
@@ -2585,7 +2657,7 @@ class CvNativeVideoIO {
   ffi.Pointer<CvStatus> VideoWriter_Open(
     VideoWriter self,
     ffi.Pointer<ffi.Char> name,
-    ffi.Pointer<ffi.Char> codec,
+    int fourcc,
     double fps,
     int width,
     int height,
@@ -2594,7 +2666,7 @@ class CvNativeVideoIO {
     return _VideoWriter_Open(
       self,
       name,
-      codec,
+      fourcc,
       fps,
       width,
       height,
@@ -2607,14 +2679,51 @@ class CvNativeVideoIO {
           ffi.Pointer<CvStatus> Function(
               VideoWriter,
               ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
+              ffi.Int,
               ffi.Double,
               ffi.Int,
               ffi.Int,
               ffi.Bool)>>('VideoWriter_Open');
   late final _VideoWriter_Open = _VideoWriter_OpenPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>, double, int, int, bool)>();
+      ffi.Pointer<CvStatus> Function(
+          VideoWriter, ffi.Pointer<ffi.Char>, int, double, int, int, bool)>();
+
+  ffi.Pointer<CvStatus> VideoWriter_Open_1(
+    VideoWriter self,
+    ffi.Pointer<ffi.Char> name,
+    int apiPreference,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor,
+  ) {
+    return _VideoWriter_Open_1(
+      self,
+      name,
+      apiPreference,
+      fourcc,
+      fps,
+      width,
+      height,
+      isColor,
+    );
+  }
+
+  late final _VideoWriter_Open_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VideoWriter,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool)>>('VideoWriter_Open_1');
+  late final _VideoWriter_Open_1 = _VideoWriter_Open_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int,
+          int, double, int, int, bool)>();
 
   ffi.Pointer<CvStatus> VideoWriter_Open_Async(
     VideoWriter self,
