@@ -180,6 +180,7 @@ void main() async {
     final writer = cv.VideoWriter.empty();
     expect(writer.isOpened, equals(false));
     writer.open("test/images/small2.mp4", "mp4v", 60, (400, 300));
+    writer.open("test/images/small2.mp4", "mp4v", 60, (400, 300), apiPreference: cv.CAP_FFMPEG);
     writer.release();
 
     expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
@@ -187,11 +188,19 @@ void main() async {
     writer.dispose();
   });
 
-  test('cv.VideoWriter.open', () {
-    final writer = cv.VideoWriter.open("test/images/small2.mp4", "mp4v", 60, (400, 300));
+  test('cv.VideoWriter.fromFile', () {
+    final writer = cv.VideoWriter.fromFile("test/images/small2.mp4", "mp4v", 60, (400, 300));
     final frame = cv.Mat.ones(400, 300, cv.MatType.CV_8UC3);
     writer.write(frame);
     writer.release();
+    final writer1 = cv.VideoWriter.fromFile(
+      "test/images/small2.mp4",
+      "mp4v",
+      60,
+      (400, 300),
+      apiPreference: cv.CAP_FFMPEG,
+    );
+    expect(writer1.isOpened, true);
   });
 
   test('cv.VideoCapture.empty', () {

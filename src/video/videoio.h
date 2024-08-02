@@ -28,11 +28,13 @@ CVD_TYPEDEF(void, VideoWriter);
 CvStatus *VideoCapture_New(VideoCapture *rval);
 CvStatus *VideoCapture_NewFromFile(const char *filename, int apiPreference, VideoCapture *rval);
 CvStatus *VideoCapture_NewFromIndex(int index, int apiPreference, VideoCapture *rval);
-void      VideoCapture_Close(VideoCapturePtr self);
+void VideoCapture_Close(VideoCapturePtr self);
 CvStatus *VideoCapture_Open(VideoCapture self, const char *uri, bool *rval);
-CvStatus *VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval);
+CvStatus *
+VideoCapture_OpenWithAPI(VideoCapture self, const char *uri, int apiPreference, bool *rval);
 CvStatus *VideoCapture_OpenDevice(VideoCapture self, int device, bool *rval);
-CvStatus *VideoCapture_OpenDeviceWithAPI(VideoCapture self, int device, int apiPreference, bool *rval);
+CvStatus *
+VideoCapture_OpenDeviceWithAPI(VideoCapture self, int device, int apiPreference, bool *rval);
 CvStatus *VideoCapture_Set(VideoCapture self, int prop, double param);
 CvStatus *VideoCapture_Get(VideoCapture self, int prop, double *rval);
 CvStatus *VideoCapture_IsOpened(VideoCapture self, int *rval);
@@ -44,9 +46,36 @@ CvStatus *VideoCapture_getBackendName(VideoCapture self, char **rval);
 
 // VideoWriter
 CvStatus *VideoWriter_New(VideoWriter *rval);
-void      VideoWriter_Close(VideoWriterPtr self);
-CvStatus *VideoWriter_Open(VideoWriter self, const char *name, const char *codec, double fps, int width,
-                           int height, bool isColor);
+void VideoWriter_Close(VideoWriterPtr self);
+CvStatus *VideoWriter_NewFromFile(
+    const char *name, int fourcc, double fps, int width, int height, bool isColor, VideoWriter *rval
+);
+CvStatus *VideoWriter_NewFromFile_1(
+    const char *name,
+    int apiPreference,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor,
+    VideoWriter *rval
+);
+
+CvStatus *VideoWriter_Open(
+    VideoWriter self, const char *name, int fourcc, double fps, int width, int height, bool isColor
+);
+
+CvStatus *VideoWriter_Open_1(
+    VideoWriter self,
+    const char *name,
+    int apiPreference,
+    int fourcc,
+    double fps,
+    int width,
+    int height,
+    bool isColor
+);
+
 CvStatus *VideoWriter_IsOpened(VideoWriter self, int *rval);
 CvStatus *VideoWriter_Write(VideoWriter self, Mat img);
 CvStatus *VideoWriter_Release(VideoWriter self);
