@@ -98,3 +98,4 @@ jobs:
           flutter build macos
           # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
+          flutter build ipa --release --no-codesign
