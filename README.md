@@ -9,6 +9,8 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
 <a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
 <a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a>
+<a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/
+1268767086683885598?logo=discord" alt="Discord Server"></a>
 </p>
 
 > [!IMPORTANT]
