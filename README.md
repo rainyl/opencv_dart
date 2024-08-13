@@ -19,7 +19,7 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 > 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
 > e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
 > or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Windows)
-
+>
 > For `v1.0.4` and below, make sure run the following setup commands before running your app:
 >
 > 1. `flutter pub add opencv_dart` or `dart pub add opencv_dart`
@@ -159,17 +159,9 @@ void main() {
 
 #### Flutter
 
-> Android only
-> 
-> if you want build Android apk with custom arch , you can set `OPENCV_DART_ANDROID_SUPPORT_ARCHS` environment variable before **flutter build** 
->
-> e.g., `export OPENCV_DART_ANDROID_SUPPORT_ARCHS=arm64-v8a,armeabi-v7a`(for Unix-like)
-> 
-> or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=arm64-v8a,armeabi-v7a`(for Windows)
-
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
-~~More examples are on the way...~~see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
+~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
 ### TODO
 

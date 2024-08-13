@@ -72,21 +72,24 @@ def CACHE_DIR = SOURCE_DIR.parentFile
 def CVD_VERSION = new File("${project.buildscript.sourceFile.parentFile.parentFile}/binary.version").text
 def CVD_LIB_URL_BASE = "https://github.com/rainyl/opencv_dart/releases/download"
 def ARCHS = ['x86_64', 'arm64-v8a', 'armeabi-v7a']
-def OPENCV_DART_ANDROID_SUPPORT_ARCHS=System.env.OPENCV_DART_ANDROID_SUPPORT_ARCHS ?: null
-if(OPENCV_DART_ANDROID_SUPPORT_ARCHS != null){
-    println "OPENCV_DART_ANDROID_SUPPORT_ARCHS is defined : $OPENCV_DART_ANDROID_SUPPORT_ARCHS"
-    def supportedArchs = OPENCV_DART_ANDROID_SUPPORT_ARCHS.split(",")
-    def acceptedArchs = []
-    supportedArchs.each { supportArch ->
-        if(ARCHS.contains(supportArch)){
-            println "[opencv_dart] Support arch: ${supportArch}"
-            acceptedArchs.add(supportArch)
-        }else{
-            println "[opencv_dart] Unsupport arch: ${supportArch}"
+
+def OPENCV_DART_ANDROID_ENABLED_ABI = System.env.OPENCV_DART_ANDROID_ENABLED_ABI ?: null
+if(OPENCV_DART_ANDROID_ENABLED_ABI != null){
+    println "[opencv_dart] detected OPENCV_DART_ANDROID_ENABLED_ABI : $OPENCV_DART_ANDROID_ENABLED_ABI"
+    def enabledABI = OPENCV_DART_ANDROID_ENABLED_ABI.split(",")
+    def acceptedABI = []
+    enabledABI.each { abi ->
+        if(ARCHS.contains(abi)){
+            println "[opencv_dart] add abi: ${abi}"
+            acceptedABI.add(abi)
+        } else {
+            println "[opencv_dart] invalid abi: ${abi}"
         }
     }
-    println "[opencv_dart] OPENCV_DART for Android support arch : $acceptedArchs"
-    ARCHS = acceptedArchs
+    println "[opencv_dart] accepted abi: $acceptedABI"
+    if (acceptedABI){
+        ARCHS = acceptedABI
+    }
 }
 
 task downloadLibs(type: Download) {
@@ -111,12 +114,7 @@ ARCHS.each { arch ->
     }
 }
 
-task cleanupExtractLibs(type: Delete) {
-    println "[opencv_dart] Cleaning up opencv_dart libraries..."
-    delete "${SOURCE_DIR}/src/main/jniLibs"
-}
-
-task extractLibs(dependsOn: [downloadLibs,cleanupExtractLibs]) {
+task extractLibs(dependsOn: [downloadLibs]) {
     println "[opencv_dart] Extracting libraries..."
     ARCHS.each { arch ->
         finalizedBy "opencv_dart_extract_libs_${arch}"
