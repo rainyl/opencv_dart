@@ -75,7 +75,7 @@ def ARCHS = ['x86_64', 'arm64-v8a', 'armeabi-v7a']
 
 def OPENCV_DART_ANDROID_ENABLED_ABI = System.env.OPENCV_DART_ANDROID_ENABLED_ABI ?: null
 if(OPENCV_DART_ANDROID_ENABLED_ABI != null){
-    println "[opencv_dart] detected OPENCV_DART_ANDROID_ENABLED_ABI : $OPENCV_DART_ANDROID_ENABLED_ABI"
+    println "[opencv_dart] detected OPENCV_DART_ANDROID_ENABLED_ABI: $OPENCV_DART_ANDROID_ENABLED_ABI"
     def enabledABI = OPENCV_DART_ANDROID_ENABLED_ABI.split(",")
     def acceptedABI = []
     enabledABI.each { abi ->
@@ -83,12 +83,15 @@ if(OPENCV_DART_ANDROID_ENABLED_ABI != null){
             println "[opencv_dart] add abi: ${abi}"
             acceptedABI.add(abi)
         } else {
-            println "[opencv_dart] invalid abi: ${abi}"
+            println "[opencv_dart] invalid abi: ${abi}, ignored"
         }
     }
     println "[opencv_dart] accepted abi: $acceptedABI"
     if (acceptedABI){
         ARCHS = acceptedABI
+    } else {
+        println "[opencv_dart] invalid OPENCV_DART_ANDROID_ENABLED_ABI: $OPENCV_DART_ANDROID_ENABLED_ABI"
+        println "[opencv_dart] will enable all supported ABI: $ARCHS"
     }
 }
 
@@ -114,7 +117,7 @@ ARCHS.each { arch ->
     }
 }
 
-task extractLibs(dependsOn: [downloadLibs]) {
+task extractLibs(dependsOn: downloadLibs) {
     println "[opencv_dart] Extracting libraries..."
     ARCHS.each { arch ->
         finalizedBy "opencv_dart_extract_libs_${arch}"
