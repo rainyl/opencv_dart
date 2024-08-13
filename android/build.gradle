@@ -79,13 +79,13 @@ if(OPENCV_DART_ANDROID_SUPPORT_ARCHS != null){
     def acceptedArchs = []
     supportedArchs.each { supportArch ->
         if(ARCHS.contains(supportArch)){
-            println "Support arch: ${supportArch}"
+            println "[opencv_dart] Support arch: ${supportArch}"
             acceptedArchs.add(supportArch)
         }else{
-            println "Unsupport arch: ${supportArch}"
+            println "[opencv_dart] Unsupport arch: ${supportArch}"
         }
     }
-    println "OPENCV_DART for Android support arch : $acceptedArchs"
+    println "[opencv_dart] OPENCV_DART for Android support arch : $acceptedArchs"
     ARCHS = acceptedArchs
 }
 
@@ -112,7 +112,7 @@ ARCHS.each { arch ->
 }
 
 task cleanupExtractLibs(type: Delete) {
-    println "Cleaning up opencv_dart libraries..."
+    println "[opencv_dart] Cleaning up opencv_dart libraries..."
     delete "${SOURCE_DIR}/src/main/jniLibs"
 }
 
