@@ -72,6 +72,22 @@ def CACHE_DIR = SOURCE_DIR.parentFile
 def CVD_VERSION = new File("${project.buildscript.sourceFile.parentFile.parentFile}/binary.version").text
 def CVD_LIB_URL_BASE = "https://github.com/rainyl/opencv_dart/releases/download"
 def ARCHS = ['x86_64', 'arm64-v8a', 'armeabi-v7a']
+def OPENCV_DART_ANDROID_SUPPORT_ARCHS=System.env.OPENCV_DART_ANDROID_SUPPORT_ARCHS ?: null
+if(OPENCV_DART_ANDROID_SUPPORT_ARCHS != null){
+    println "OPENCV_DART_ANDROID_SUPPORT_ARCHS is defined : $OPENCV_DART_ANDROID_SUPPORT_ARCHS"
+    def supportedArchs = OPENCV_DART_ANDROID_SUPPORT_ARCHS.split(",")
+    def acceptedArchs = []
+    supportedArchs.each { supportArch ->
+        if(ARCHS.contains(supportArch)){
+            println "Support arch: ${supportArch}"
+            acceptedArchs.add(supportArch)
+        }else{
+            println "Unsupport arch: ${supportArch}"
+        }
+    }
+    println "OPENCV_DART for Android support arch : $acceptedArchs"
+    ARCHS = acceptedArchs
+}
 
 task downloadLibs(type: Download) {
     println "[opencv_dart] Downloading libraries..."
@@ -95,7 +111,12 @@ ARCHS.each { arch ->
     }
 }
 
-task extractLibs(dependsOn: downloadLibs) {
+task cleanupExtractLibs(type: Delete) {
+    println "Cleaning up opencv_dart libraries..."
+    delete "${SOURCE_DIR}/src/main/jniLibs"
+}
+
+task extractLibs(dependsOn: [downloadLibs,cleanupExtractLibs]) {
     println "[opencv_dart] Extracting libraries..."
     ARCHS.each { arch ->
         finalizedBy "opencv_dart_extract_libs_${arch}"
