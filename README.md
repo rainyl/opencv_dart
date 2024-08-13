@@ -163,9 +163,9 @@ void main() {
 > 
 > if you want build Android apk with custom arch , you can set `OPENCV_DART_ANDROID_SUPPORT_ARCHS` environment variable before **flutter build** 
 >
-> e.g., `export OPENCV_DART_ANDROID_SUPPORT_ARCHS=x86_64,arm64-v8a`(for Unix-like)
+> e.g., `export OPENCV_DART_ANDROID_SUPPORT_ARCHS=arm64-v8a,armeabi-v7a`(for Unix-like)
 > 
-> or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=x86_64,arm64-v8a`(for Windows)
+> or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=arm64-v8a,armeabi-v7a`(for Windows)
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
