@@ -161,7 +161,7 @@ void main() {
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
-~~More examples are on the way...~~see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
+~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
 ### TODO
 
