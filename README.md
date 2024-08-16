@@ -290,6 +290,13 @@ conan toolchain for linux arm is located in [opencv.full](https://github.com/rai
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/einsitang">
+                    <img src="https://avatars.githubusercontent.com/u/1745525?v=4" width="100;" alt="einsitang"/>
+                    <br />
+                    <sub><b>爱因斯唐</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Jiinwoo">
                     <img src="https://avatars.githubusercontent.com/u/46522752?v=4" width="100;" alt="Jiinwoo"/>
                     <br />
