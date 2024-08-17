@@ -109,6 +109,9 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
     ref.ptr[idx].imgIdx = value.imgIdx;
     ref.ptr[idx].distance = value.distance;
   }
+
+  @override
+  DMatch operator [](int idx) => DMatch.fromPointer(ref.ptr + idx, false);
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
@@ -171,6 +174,9 @@ class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
   // TODO: add support
   @override
   void operator []=(int idx, VecDMatch value) => throw UnsupportedError("");
+
+  @override
+  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {

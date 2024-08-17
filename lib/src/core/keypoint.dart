@@ -139,6 +139,9 @@ class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
     ref.ptr[idx].classID = value.classID;
     ref.ptr[idx].response = value.response;
   }
+
+  @override
+  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ref.ptr + idx, false);
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {

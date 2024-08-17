@@ -1451,6 +1451,9 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
     ref.ptr[idx].val3 = value.val3;
     ref.ptr[idx].val4 = value.val4;
   }
+
+  @override
+  Vec4i operator [](int idx) => Vec4i.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
@@ -1517,6 +1520,9 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
     ref.ptr[idx].val3 = value.val3;
     ref.ptr[idx].val4 = value.val4;
   }
+
+  @override
+  Vec4f operator [](int idx) => Vec4f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
@@ -1585,6 +1591,9 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
     ref.ptr[idx].val5 = value.val5;
     ref.ptr[idx].val6 = value.val6;
   }
+
+  @override
+  Vec6f operator [](int idx) => Vec6f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVec6fIterator extends VecIterator<Vec6f> {

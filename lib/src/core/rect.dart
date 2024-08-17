@@ -229,6 +229,9 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
     ref.ptr[idx].width = value.width;
     ref.ptr[idx].height = value.height;
   }
+
+  @override
+  Rect operator [](int idx) => Rect.fromPointer(ref.ptr + idx, false);
 }
 
 class VecRectIterator extends VecIterator<Rect> {

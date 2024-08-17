@@ -1426,6 +1426,9 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
 
   @override
   void operator []=(int idx, Mat value) => throw UnsupportedError("VecMat is read-only");
+
+  @override
+  Mat operator [](int idx) => Mat.fromPointer(ref.ptr + idx, false);
 }
 
 class VecMatIterator extends VecIterator<Mat> {
