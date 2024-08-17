@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 
 void main() async {
   test('setLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_DEBUG);
+    cv.setLogLevel(cv.LOG_LEVEL_ERROR);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_DEBUG));
+    expect(level, equals(cv.LOG_LEVEL_ERROR));
   });
 
   test('getLogLevel', () {

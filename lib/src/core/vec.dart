@@ -20,7 +20,7 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
   @override
   int get length;
 
-  T operator [](int idx) => elementAt(idx);
+  T operator [](int idx);
   void operator []=(int idx, T value);
 
   void dispose();
@@ -77,7 +77,15 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
   }
 
   factory VecUChar([int length = 0, int value = 0]) => VecUChar.generate(length, (i) => value);
-  factory VecUChar.fromList(List<int> pts) => VecUChar.generate(pts.length, (i) => pts[i]);
+  factory VecUChar.fromList(List<int> pts) {
+    final length = pts.length;
+    final pdata = calloc<ffi.UnsignedChar>(length);
+    pdata.cast<U8>().asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecUChar>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecUChar.fromPointer(p);
+  }
 
   factory VecUChar.generate(int length, int Function(int i) generator) {
     final pp = calloc<cvg.VecUChar>()..ref.length = length;
@@ -128,6 +136,9 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
 
   @override
   void operator []=(int idx, int value) => ref.ptr[idx] = value;
+
+  @override
+  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecUCharIterator extends VecIterator<int> {
@@ -150,7 +161,15 @@ class VecChar extends Vec<cvg.VecChar, int> {
   }
 
   factory VecChar([int length = 0, int value = 0]) => VecChar.generate(length, (i) => value);
-  factory VecChar.fromList(List<int> pts) => VecChar.generate(pts.length, (i) => pts[i]);
+  factory VecChar.fromList(List<int> pts) {
+    final length = pts.length;
+    final pdata = calloc<ffi.Char>(length);
+    pdata.cast<I8>().asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecChar>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecChar.fromPointer(p);
+  }
 
   factory VecChar.generate(int length, int Function(int i) generator) {
     final pp = calloc<cvg.VecChar>()..ref.length = length;
@@ -196,6 +215,9 @@ class VecChar extends Vec<cvg.VecChar, int> {
 
   @override
   void operator []=(int idx, int value) => ref.ptr[idx] = value;
+
+  @override
+  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecCharIterator extends VecIterator<int> {
@@ -265,6 +287,9 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   @override
   void operator []=(int idx, VecChar value) =>
       throw UnsupportedError("VecVecChar does not support operator []=");
+
+  @override
+  VecChar operator [](int idx) => VecChar.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVecCharIterator extends VecIterator<VecChar> {
@@ -288,7 +313,15 @@ class VecU16 extends Vec<cvg.VecU16, int> {
   }
 
   factory VecU16([int length = 0, int value = 0]) => VecU16.generate(length, (i) => value);
-  factory VecU16.fromList(List<int> pts) => VecU16.generate(pts.length, (i) => pts[i]);
+  factory VecU16.fromList(List<int> pts) {
+    final length = pts.length;
+    final pdata = calloc<U16>(length);
+    pdata.asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecU16>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecU16.fromPointer(p);
+  }
 
   factory VecU16.generate(int length, int Function(int i) generator) {
     final pp = calloc<cvg.VecU16>()..ref.length = length;
@@ -329,6 +362,9 @@ class VecU16 extends Vec<cvg.VecU16, int> {
 
   @override
   void operator []=(int idx, int value) => ref.ptr[idx] = value;
+
+  @override
+  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecU16Iterator extends VecIterator<int> {
@@ -351,7 +387,15 @@ class VecI16 extends Vec<cvg.VecI16, int> {
   }
 
   factory VecI16([int length = 0, int value = 0]) => VecI16.generate(length, (i) => value);
-  factory VecI16.fromList(List<int> pts) => VecI16.generate(pts.length, (i) => pts[i]);
+  factory VecI16.fromList(List<int> pts) {
+    final length = pts.length;
+    final pdata = calloc<I16>(length);
+    pdata.asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecI16>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecI16.fromPointer(p);
+  }
 
   factory VecI16.generate(int length, int Function(int i) generator) {
     final pp = calloc<cvg.VecI16>()..ref.length = length;
@@ -393,6 +437,9 @@ class VecI16 extends Vec<cvg.VecI16, int> {
 
   @override
   void operator []=(int idx, int value) => ref.ptr[idx] = value;
+
+  @override
+  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecI16Iterator extends VecIterator<int> {
@@ -415,7 +462,15 @@ class VecI32 extends Vec<cvg.VecI32, int> {
   }
 
   factory VecI32([int length = 0, int value = 0]) => VecI32.generate(length, (i) => value);
-  factory VecI32.fromList(List<int> pts) => VecI32.generate(pts.length, (i) => pts[i]);
+  factory VecI32.fromList(List<int> pts) {
+    final length = pts.length;
+    final pdata = calloc<I32>(length);
+    pdata.asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecI32>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecI32.fromPointer(p);
+  }
 
   factory VecI32.generate(int length, int Function(int i) generator) {
     final pp = calloc<cvg.VecI32>()..ref.length = length;
@@ -459,6 +514,9 @@ class VecI32 extends Vec<cvg.VecI32, int> {
 
   @override
   void operator []=(int idx, int value) => ref.ptr[idx] = value;
+
+  @override
+  int operator [](int idx) => ref.ptr[idx];
 }
 
 class VecI32Iterator extends VecIterator<int> {
@@ -481,7 +539,15 @@ class VecF32 extends Vec<cvg.VecF32, double> {
   }
 
   factory VecF32([int length = 0, double value = 0.0]) => VecF32.generate(length, (i) => value);
-  factory VecF32.fromList(List<double> pts) => VecF32.generate(pts.length, (i) => pts[i]);
+  factory VecF32.fromList(List<double> pts) {
+    final length = pts.length;
+    final pdata = calloc<F32>(length);
+    pdata.asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecF32>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecF32.fromPointer(p);
+  }
 
   factory VecF32.generate(int length, double Function(int i) generator) {
     final pp = calloc<cvg.VecF32>()..ref.length = length;
@@ -523,6 +589,9 @@ class VecF32 extends Vec<cvg.VecF32, double> {
 
   @override
   void operator []=(int idx, double value) => ref.ptr[idx] = value;
+
+  @override
+  double operator [](int idx) => ref.ptr[idx];
 }
 
 class VecF32Iterator extends VecIterator<double> {
@@ -545,7 +614,15 @@ class VecF64 extends Vec<cvg.VecF64, double> {
   }
 
   factory VecF64([int length = 0, double value = 0.0]) => VecF64.generate(length, (i) => value);
-  factory VecF64.fromList(List<double> pts) => VecF64.generate(pts.length, (i) => pts[i]);
+  factory VecF64.fromList(List<double> pts) {
+    final length = pts.length;
+    final pdata = calloc<F64>(length);
+    pdata.asTypedList(length).setRange(0, length, pts);
+    final p = calloc<cvg.VecF64>()
+      ..ref.length = length
+      ..ref.ptr = pdata;
+    return VecF64.fromPointer(p);
+  }
 
   factory VecF64.generate(int length, double Function(int i) generator) {
     final pp = calloc<cvg.VecF64>()..ref.length = length;
@@ -589,6 +666,9 @@ class VecF64 extends Vec<cvg.VecF64, double> {
 
   @override
   void operator []=(int idx, double value) => ref.ptr[idx] = value;
+
+  @override
+  double operator [](int idx) => ref.ptr[idx];
 }
 
 class VecF64Iterator extends VecIterator<double> {
@@ -611,6 +691,7 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   }
 
   factory VecF16([int length = 0, double value = 0.0]) => VecF16.generate(length, (i) => value);
+  // TODO: use setRange if dart ffi supports float16
   factory VecF16.fromList(List<double> pts) => VecF16.generate(pts.length, (i) => pts[i]);
 
   factory VecF16.generate(int length, double Function(int i) generator) {
@@ -653,7 +734,10 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   }
 
   @override
-  void operator []=(int idx, double value) => ref.ptr[idx] = float16Inv(value);
+  void operator []=(int idx, double value) => ref.ptr[idx] = value.fp16;
+
+  @override
+  double operator [](int idx) => ref.ptr[idx].fp16;
 }
 
 class VecF16Iterator extends VecIterator<double> {

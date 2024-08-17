@@ -219,6 +219,9 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
     ref.ptr[idx].x = value.x;
     ref.ptr[idx].y = value.y;
   }
+
+  @override
+  Point operator [](int idx) => Point.fromPointer(ref.ptr + idx, false);
 }
 
 class VecPointIterator extends VecIterator<Point> {
@@ -296,6 +299,9 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
     ref.ptr[idx].x = value.x;
     ref.ptr[idx].y = value.y;
   }
+
+  @override
+  Point2f operator [](int idx) => Point2f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecPoint2fIterator extends VecIterator<Point2f> {
@@ -374,6 +380,9 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
     ref.ptr[idx].y = value.y;
     ref.ptr[idx].z = value.z;
   }
+
+  @override
+  Point3f operator [](int idx) => Point3f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecPoint3fIterator extends VecIterator<Point3f> {
@@ -452,6 +461,9 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
     ref.ptr[idx].y = value.y;
     ref.ptr[idx].z = value.z;
   }
+
+  @override
+  Point3i operator [](int idx) => Point3i.fromPointer(ref.ptr + idx, false);
 }
 
 class VecPoint3iIterator extends VecIterator<Point3i> {
@@ -517,6 +529,9 @@ class VecVecPoint extends Vec<cvg.VecVecPoint, VecPoint> {
 
   @override
   void operator []=(int idx, VecPoint value) => throw UnsupportedError("VecVecPoint is read-only");
+
+  @override
+  VecPoint operator [](int idx) => VecPoint.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
@@ -582,6 +597,9 @@ class VecVecPoint2f extends Vec<cvg.VecVecPoint2f, VecPoint2f> {
 
   @override
   void operator []=(int idx, VecPoint2f value) => throw UnsupportedError("VecVecPoint2f is read-only");
+
+  @override
+  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
@@ -646,6 +664,9 @@ class VecVecPoint3f extends Vec<cvg.VecVecPoint3f, VecPoint3f> {
 
   @override
   void operator []=(int idx, VecPoint3f value) => throw UnsupportedError("VecVecPoint3f is read-only");
+
+  @override
+  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ref.ptr + idx, false);
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
