@@ -1,3 +1,12 @@
+## 1.2.2
+
+* remove arm64 and x64 setup options for ios by @rainyl in https://github.com/rainyl/opencv_dart/pull/202
+* rename factory VideoWriter.open to VideoWriter.fromFile, add apiPreference option for VideoWriter by @rainyl in https://github.com/rainyl/opencv_dart/pull/203
+* check libs for android by @rainyl in https://github.com/rainyl/opencv_dart/pull/210
+* Android Plugin custom arch support by @einsitang in https://github.com/rainyl/opencv_dart/pull/211
+* use `setRange` for Vec, optimize operator [] by @rainyl in https://github.com/rainyl/opencv_dart/pull/215
+* add `asVec()` to List extensions for better Vec and List interop by @rainyl in https://github.com/rainyl/opencv_dart/pull/222
+
 ## 1.2.1
 
 - use ndk from conan by @rainyl in https://github.com/rainyl/opencv_dart/pull/187

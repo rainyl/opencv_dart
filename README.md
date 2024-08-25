@@ -13,7 +13,7 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 </p>
 
 > [!IMPORTANT]
-> For `v1.0.6` and later, auto setup is supported, libs will be downloaded from
+> For `v1.0.6` and later, libs will be downloaded from
 > [Releases](https://github.com/rainyl/opencv_dart/releases) automatically.
 >
 > 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
@@ -31,14 +31,14 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 > | `linux`    | `x64`                              |
 > | `windows`  | `x64`                              |
 > | `macos`    | `x64` `arm64`                      |
-> | `ios`      | `x64` `arm64` `os64`               |
+> | `ios`      | `os64` (universal framework)       |
 >
-> - More questions: refer to [#29](https://github.com/rainyl/opencv_dart/issues/29) or open new issues.
+> - More questions: refer to [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
 > - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
 >
 
 > [!NOTE]
-> WIP, contributions are welcome!
+> WIP, APIs may change in the future, contributions are welcome!
 
 - [opencv\_dart](#opencv_dart)
   - [Example](#example)
@@ -201,7 +201,7 @@ see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
   scoop install conan
   ```
 
-- Linux: Ubuntu as example
+- Linux: Ubuntu as example, note `opencv.full` is built on Ubuntu 22.04 with ffmpeg 4.4
 
   ```bash
   sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
