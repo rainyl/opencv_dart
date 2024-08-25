@@ -725,7 +725,7 @@ class ximgproc_rl {
   ///
   ///https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gaa2b3524997874269670f2f63d54d792d
   static Future<Mat> createRLEImageAsync(VecPoint3i runs, {(int, int) size = (0, 0)}) async => cvRunAsync(
-        (callback) => ccontrib.ximgproc_rl_createRLEImage_Async(runs.ref, size.toSize.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_createRLEImage_Async(runs.ref, size.toSize().ref, callback),
         matCompleter,
       );
 
@@ -795,7 +795,7 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
   static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async => cvRunAsync(
-        (callback) => ccontrib.ximgproc_rl_getStructuringElement_Async(shape, ksize.toSize.ref, callback),
+        (callback) => ccontrib.ximgproc_rl_getStructuringElement_Async(shape, ksize.toSize().ref, callback),
         matCompleter,
       );
 

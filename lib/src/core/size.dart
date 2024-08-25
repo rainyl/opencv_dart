@@ -110,11 +110,11 @@ class Size2f extends CvStruct<cvg.Size2f> {
 }
 
 extension RecordSizeExtension1 on (int, int) {
-  Size get cvd => Size.fromRecord(this);
-  Size get toSize => Size.fromRecord(this);
+  Size get cvd => toSize();
+  Size toSize() => Size.fromRecord(this);
 }
 
 extension RecordSize2fExtension1 on (double, double) {
-  Size2f get cvd => Size2f.fromRecord(this);
-  Size2f get toSize2f => Size2f.fromRecord(this);
+  Size2f get cvd => toSize2f();
+  Size2f toSize2f() => Size2f.fromRecord(this);
 }

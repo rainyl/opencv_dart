@@ -1443,8 +1443,10 @@ class VecMatIterator extends VecIterator<Mat> {
 }
 
 extension ListMatExtension on List<Mat> {
-  VecMat get cvd => VecMat.fromList(this);
-  VecMat asVecMat() => VecMat.fromList(this);
+  VecMat get cvd => asVec();
+  @Deprecated("Use asVec() instead")
+  VecMat asVecMat() => asVec();
+  VecMat asVec() => VecMat.fromList(this);
 }
 
 // Completers for async

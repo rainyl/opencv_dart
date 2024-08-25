@@ -246,7 +246,8 @@ class VecRectIterator extends VecIterator<Rect> {
 }
 
 extension ListRectExtension on List<Rect> {
-  VecRect get cvd => VecRect.fromList(this);
+  VecRect get cvd => asVec();
+  VecRect asVec() => VecRect.fromList(this);
 }
 
 // Completers for async

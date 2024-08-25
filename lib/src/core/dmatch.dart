@@ -191,9 +191,11 @@ class VecVecDMatchIterator extends VecIterator<VecDMatch> {
 }
 
 extension ListDMatchExtension on List<DMatch> {
-  VecDMatch get cvd => VecDMatch.fromList(this);
+  VecDMatch get cvd => asVec();
+  VecDMatch asVec() => VecDMatch.fromList(this);
 }
 
 extension ListListDMatchExtension on List<List<DMatch>> {
-  VecVecDMatch get cvd => VecVecDMatch.fromList(this);
+  VecVecDMatch get cvd => asVec();
+  VecVecDMatch asVec() => VecVecDMatch.fromList(this);
 }

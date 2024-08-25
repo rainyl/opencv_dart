@@ -682,47 +682,62 @@ class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
 }
 
 extension ListPointExtension on List<Point> {
-  VecPoint get cvd => VecPoint.fromList(this);
+  VecPoint get cvd => asVec();
+  VecPoint asVec() => VecPoint.fromList(this);
 }
 
 extension ListPoint2fExtension on List<Point2f> {
-  VecPoint2f get cvd => VecPoint2f.fromList(this);
+  VecPoint2f get cvd => asVec();
+  VecPoint2f asVec() => VecPoint2f.fromList(this);
 }
 
 extension ListPoint3fExtension on List<Point3f> {
-  VecPoint3f get cvd => VecPoint3f.fromList(this);
+  VecPoint3f get cvd => asVec();
+  VecPoint3f asVec() => VecPoint3f.fromList(this);
 }
 
 extension ListPoint3iExtension on List<Point3i> {
-  VecPoint3i get cvd => VecPoint3i.fromList(this);
+  VecPoint3i get cvd => asVec();
+  VecPoint3i asVec() => VecPoint3i.fromList(this);
 }
 
 extension ListListPointExtension on List<List<Point>> {
-  VecVecPoint get cvd => VecVecPoint.fromList(this);
+  VecVecPoint get cvd => asVec();
+  VecVecPoint asVec() => VecVecPoint.fromList(this);
 }
 
 extension VecPointExtension on VecPoint {
+  @Deprecated("use asVecVec() instead")
   VecVecPoint get toVecVecPoint => VecVecPoint.fromVecPoint(this);
+  VecVecPoint asVecVec() => VecVecPoint.fromVecPoint(this);
 }
 
 extension ListListPoint2fExtension on List<List<Point2f>> {
-  VecVecPoint2f get cvd => VecVecPoint2f.fromList(this);
+  VecVecPoint2f get cvd => asVec();
+  VecVecPoint2f asVec() => VecVecPoint2f.fromList(this);
 }
 
 extension ListListPoint3fExtension on List<List<Point3f>> {
-  VecVecPoint3f get cvd => VecVecPoint3f.fromList(this);
+  VecVecPoint3f get cvd => asVec();
+  VecVecPoint3f asVec() => VecVecPoint3f.fromList(this);
 }
 
 extension PointRecordExtension on (int x, int y) {
+  @Deprecated("use toPoint() instead")
   Point get asPoint => Point(this.$1, this.$2);
+  Point toPoint() => Point(this.$1, this.$2);
 }
 
 extension Point2fRecordExtension on (double x, double y) {
+  @Deprecated("use toPoint2f() instead")
   Point2f get asPoint2f => Point2f(this.$1, this.$2);
+  Point2f toPoint2f() => Point2f(this.$1, this.$2);
 }
 
 extension Point3fRecordExtension on (double x, double y, double z) {
+  @Deprecated("use toPoint3f() instead")
   Point3f get asPoint3f => Point3f(this.$1, this.$2, this.$3);
+  Point3f toPoint3f() => Point3f(this.$1, this.$2, this.$3);
 }
 
 // completers
