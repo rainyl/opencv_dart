@@ -104,6 +104,8 @@ class OcvDartDesktop(ConanFile):
             ndk_path = ndk_path or os.environ.get("ANDROID_NDK_ROOT", None)
             if ndk_path is None:
                 self.tool_requires("android-ndk/r26d")
+            else:
+                self.conf.define("tools.android:ndk_path", ndk_path)
 
     def layout(self):
         # self.build_folder: build/{os}/{arch}/opencv
