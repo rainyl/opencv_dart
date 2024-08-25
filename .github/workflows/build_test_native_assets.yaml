@@ -1,4 +1,4 @@
-name: Native-Assets build test
+name: Native Assets
 
 on:
   push:
@@ -7,9 +7,6 @@ on:
       - "v2.*.*"
   pull_request:
     branches: ["native-assets"]
-
-env:
-  ANDROID_NDK_VERSION: r26c
 
 jobs:
   build-android:
