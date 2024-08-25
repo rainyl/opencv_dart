@@ -105,6 +105,7 @@ ABI_ALL.each { arch ->
         delete targetDir
     }
     task(extractTaskName, type: Copy) {
+        mustRunAfter "downloadLibs"
         onlyIf {
           ABI_ACCEPTED.contains(arch) && !file("${targetDir}/libopencv_dart.so").exists()
         }
