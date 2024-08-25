@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -1608,13 +1612,16 @@ class VecVec6fIterator extends VecIterator<Vec6f> {
 }
 
 extension VecVec4iExtension on List<Vec4i> {
-  VecVec4i get cvd => VecVec4i.fromList(this);
+  VecVec4i get cvd => asVec();
+  VecVec4i asVec() => VecVec4i.fromList(this);
 }
 
 extension VecVec4fExtension on List<Vec4f> {
-  VecVec4f get cvd => VecVec4f.fromList(this);
+  VecVec4f get cvd => asVec();
+  VecVec4f asVec() => VecVec4f.fromList(this);
 }
 
 extension VecVec6fExtension on List<Vec6f> {
-  VecVec6f get cvd => VecVec6f.fromList(this);
+  VecVec6f get cvd => asVec();
+  VecVec6f asVec() => VecVec6f.fromList(this);
 }

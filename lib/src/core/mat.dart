@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
@@ -1443,8 +1447,10 @@ class VecMatIterator extends VecIterator<Mat> {
 }
 
 extension ListMatExtension on List<Mat> {
-  VecMat get cvd => VecMat.fromList(this);
-  VecMat asVecMat() => VecMat.fromList(this);
+  VecMat get cvd => asVec();
+  @Deprecated("Use asVec() instead")
+  VecMat asVecMat() => asVec();
+  VecMat asVec() => VecMat.fromList(this);
 }
 
 // Completers for async
