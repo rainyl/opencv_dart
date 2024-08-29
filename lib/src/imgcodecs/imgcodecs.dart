@@ -88,7 +88,6 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
 /// https://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga26a67788faa58ade337f8d28ba0eb19e
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
-  print(vec.length);
   dst ??= Mat.empty();
   cvRun(() => cimgcodecs.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;

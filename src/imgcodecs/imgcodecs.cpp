@@ -51,7 +51,7 @@ CvStatus *Image_IMDecode(VecUChar buf, int flags, Mat *rval)
 {
   BEGIN_WRAP
   auto _buf = vecuchar_c2cpp(buf);
-  std::cout << "[opencv_dart] buf size: " << _buf.size() << std::endl;
+  // std::cout << "[opencv_dart] buf size: " << _buf.size() << std::endl;
   auto m = cv::imdecode(_buf, flags);
   *rval = {new cv::Mat(m)};
   END_WRAP

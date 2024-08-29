@@ -46,7 +46,6 @@ class _MyAppState extends State<MyApp> {
 
   Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
     late cv.Mat gray, blur;
-    print(im.isEmpty);
     for (var i = 0; i < 1000; i++) {
       gray = await cv.cvtColorAsync(im, cv.COLOR_BGR2GRAY);
       blur = await cv.gaussianBlurAsync(im, (7, 7), 2, sigmaY: 2);
@@ -96,7 +95,7 @@ class _MyAppState extends State<MyApp> {
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
-                  final im = cv.imdecode(bytes, cv.IMREAD_COLOR);
+                  final im = await cv.imdecodeAsync(bytes, cv.IMREAD_COLOR);
                   final (gray, blur) =
                       await heavyTaskAsync(im);
                   setState(() {
