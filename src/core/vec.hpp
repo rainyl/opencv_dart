@@ -5,10 +5,10 @@
 #include <vector>
 
 inline std::vector<cv::Point> vecpoint_c2cpp(VecPoint v) {
-  std::vector<cv::Point> rv;
+  std::vector<cv::Point> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Point p = v.ptr[i];
-    rv.push_back(cv::Point(p.x, p.y));
+    rv[i] = cv::Point(p.x, p.y);
   }
   return rv;
 }
@@ -26,10 +26,10 @@ inline VecPoint *vecpoint_cpp2c_p(std::vector<cv::Point> v) {
 }
 
 inline std::vector<cv::Point2f> vecpoint2f_c2cpp(VecPoint2f v) {
-  std::vector<cv::Point2f> rv;
+  std::vector<cv::Point2f> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Point2f p = v.ptr[i];
-    rv.push_back(cv::Point2f(p.x, p.y));
+    rv[i] = cv::Point2f(p.x, p.y);
   }
   return rv;
 }
@@ -55,10 +55,10 @@ inline VecPoint2f *vecpoint2f_cpp2c_p(std::vector<cv::Point2f> v) {
 }
 
 inline std::vector<cv::Point3f> vecpoint3f_c2cpp(VecPoint3f v) {
-  std::vector<cv::Point3f> rv;
+  std::vector<cv::Point3f> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Point3f p = v.ptr[i];
-    rv.push_back(cv::Point3f(p.x, p.y, p.z));
+    rv[i] = cv::Point3f(p.x, p.y, p.z);
   }
   return rv;
 }
@@ -76,10 +76,10 @@ inline VecPoint3f *vecpoint3f_cpp2c_p(std::vector<cv::Point3f> v) {
 }
 
 inline std::vector<cv::Point3i> vecpoint3i_c2cpp(VecPoint3i v) {
-  std::vector<cv::Point3i> rv;
+  std::vector<cv::Point3i> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Point3i p = v.ptr[i];
-    rv.push_back(cv::Point3i(p.x, p.y, p.z));
+    rv[i] = cv::Point3i(p.x, p.y, p.z);
   }
   return rv;
 }
@@ -97,11 +97,11 @@ inline VecPoint3i *vecpoint3i_cpp2c_p(std::vector<cv::Point3i> v) {
 }
 
 inline std::vector<std::vector<cv::Point>> vecvecpoint_c2cpp(VecVecPoint v) {
-  std::vector<std::vector<cv::Point>> rv;
+  std::vector<std::vector<cv::Point>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecPoint vp = v.ptr[i];
     std::vector<cv::Point> pts = vecpoint_c2cpp(vp);
-    rv.push_back(pts);
+    rv[i] = pts;
   }
   return rv;
 }
@@ -125,11 +125,11 @@ inline VecVecPoint *vecvecpoint_cpp2c_p(std::vector<std::vector<cv::Point>> v) {
 }
 
 inline std::vector<std::vector<cv::Point2f>> vecvecpoint2f_c2cpp(VecVecPoint2f v) {
-  std::vector<std::vector<cv::Point2f>> rv;
+  std::vector<std::vector<cv::Point2f>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecPoint2f vp = v.ptr[i];
     std::vector<cv::Point2f> pts = vecpoint2f_c2cpp(vp);
-    rv.push_back(pts);
+    rv[i] = pts;
   }
   return rv;
 }
@@ -153,11 +153,11 @@ inline VecVecPoint2f *vecvecpoint2f_cpp2c_p(std::vector<std::vector<cv::Point2f>
 }
 
 inline std::vector<std::vector<cv::Point3f>> vecvecpoint3f_c2cpp(VecVecPoint3f v) {
-  std::vector<std::vector<cv::Point3f>> rv;
+  std::vector<std::vector<cv::Point3f>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecPoint3f vp = v.ptr[i];
     std::vector<cv::Point3f> pts = vecpoint3f_c2cpp(vp);
-    rv.push_back(pts);
+    rv[i] = pts;
   }
   return rv;
 }
@@ -181,11 +181,11 @@ inline VecVecPoint3f *vecvecpoint3f_cpp2c_p(std::vector<std::vector<cv::Point3f>
 }
 
 inline std::vector<std::vector<cv::Point3i>> vecvecpoint3i_c2cpp(VecVecPoint3i v) {
-  std::vector<std::vector<cv::Point3i>> rv;
+  std::vector<std::vector<cv::Point3i>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecPoint3i vp = v.ptr[i];
     std::vector<cv::Point3i> pts = vecpoint3i_c2cpp(vp);
-    rv.push_back(pts);
+    rv[i] = pts;
   }
   return rv;
 }
@@ -209,10 +209,10 @@ inline VecVecPoint3i *vecvecpoint3i_cpp2c_p(std::vector<std::vector<cv::Point3i>
 }
 
 inline std::vector<cv::Mat> vecmat_c2cpp(VecMat v) {
-  std::vector<cv::Mat> rv;
+  std::vector<cv::Mat> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Mat m = v.ptr[i];
-    rv.push_back(*m.ptr);
+    rv[i] = *m.ptr;
   }
   return rv;
 }
@@ -230,11 +230,8 @@ inline VecMat *vecmat_cpp2c_p(std::vector<cv::Mat> v) {
 }
 
 inline std::vector<char> vecchar_c2cpp(VecChar v) {
-  std::vector<char> rv;
-  for (int i = 0; i < v.length; i++) {
-    char p = v.ptr[i];
-    rv.push_back(p);
-  }
+  std::vector<char> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = v.ptr[i]; }
   return rv;
 }
 
@@ -242,34 +239,35 @@ inline std::string vecchar_c2cpp_s(VecChar v) { return std::string(v.ptr, v.leng
 
 inline VecChar vecchar_cpp2c(std::vector<char> v) {
   char *ptr = new char[v.size()];
-  for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
+  std::copy(v.begin(), v.end(), ptr);
+  // for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
   return VecChar{.ptr = ptr, .length = v.size()};
 }
 
 inline VecChar *vecchar_cpp2c_p(std::vector<char> v) {
   char *ptr = new char[v.size()];
-  for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
+  std::copy(v.begin(), v.end(), ptr);
+  // for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
   return new VecChar{.ptr = ptr, .length = v.size()};
 }
 
 inline VecChar vecchar_cpp2c_s(std::string v) {
   char *ptr = new char[v.size()];
-  for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
+  std::copy(v.begin(), v.end(), ptr);
+  // for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
   return VecChar{.ptr = ptr, .length = v.size()};
 }
 
 inline VecChar *vecchar_cpp2c_s_p(std::string v) {
   char *ptr = new char[v.size()];
-  for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
+  std::copy(v.begin(), v.end(), ptr);
+  // for (int i = 0; i < v.size(); i++) { ptr[i] = v[i]; }
   return new VecChar{.ptr = ptr, .length = v.size()};
 }
 
 inline std::vector<uchar> vecuchar_c2cpp(VecUChar v) {
-  std::vector<uchar> rv;
-  for (int i = 0; i < v.length; i++) {
-    char p = v.ptr[i];
-    rv.push_back(p);
-  }
+  std::vector<uchar> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = v.ptr[i]; }
   return rv;
 }
 inline VecUChar vecuchar_cpp2c(std::vector<uchar> v) {
@@ -285,18 +283,18 @@ inline VecUChar *vecuchar_cpp2c_p(std::vector<uchar> v) {
 }
 
 inline std::vector<std::vector<char>> vecvecchar_c2cpp(VecVecChar v) {
-  std::vector<std::vector<char>> rv;
+  std::vector<std::vector<char>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecChar vc = v.ptr[i];
     std::vector<char> pts = vecchar_c2cpp(vc);
-    rv.push_back(pts);
+    rv[i] = pts;
   }
   return rv;
 }
 
 inline std::vector<std::string> vecvecchar_c2cpp_s(VecVecChar v) {
-  std::vector<std::string> rv;
-  for (int i = 0; i < v.length; i++) { rv.push_back(vecchar_c2cpp_s(v.ptr[i])); }
+  std::vector<std::string> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = vecchar_c2cpp_s(v.ptr[i]); }
   return rv;
 }
 
@@ -325,11 +323,8 @@ inline VecVecChar *vecvecchar_cpp2c_s_p(std::vector<std::string> v) {
 }
 
 inline std::vector<int> vecint_c2cpp(VecI32 v) {
-  std::vector<int> rv;
-  for (int i = 0; i < v.length; i++) {
-    int p = v.ptr[i];
-    rv.push_back(p);
-  }
+  std::vector<int> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = v.ptr[i]; }
   return rv;
 }
 inline VecI32 vecint_cpp2c(std::vector<int> v) {
@@ -345,11 +340,8 @@ inline VecI32 *vecint_cpp2c_p(std::vector<int> v) {
 }
 
 inline std::vector<float> vecfloat_c2cpp(VecF32 v) {
-  std::vector<float> rv;
-  for (int i = 0; i < v.length; i++) {
-    float p = v.ptr[i];
-    rv.push_back(p);
-  }
+  std::vector<float> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = v.ptr[i]; }
   return rv;
 }
 
@@ -366,11 +358,8 @@ inline VecF32 *vecfloat_cpp2c_p(std::vector<float> v) {
 }
 
 inline std::vector<double> vecdouble_c2cpp(VecF64 v) {
-  std::vector<double> rv;
-  for (int i = 0; i < v.length; i++) {
-    int p = v.ptr[i];
-    rv.push_back(p);
-  }
+  std::vector<double> rv(v.length);
+  for (int i = 0; i < v.length; i++) { rv[i] = v.ptr[i]; }
   return rv;
 }
 
@@ -395,10 +384,10 @@ inline VecF64 *vecdouble_cpp2c_p(std::vector<double> v) {
 }
 
 inline std::vector<cv::Rect> vecrect_c2cpp(VecRect v) {
-  std::vector<cv::Rect> rv;
+  std::vector<cv::Rect> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Rect p = v.ptr[i];
-    rv.push_back(cv::Rect(p.x, p.y, p.width, p.height));
+    rv[i] = cv::Rect(p.x, p.y, p.width, p.height);
   }
   return rv;
 }
@@ -423,10 +412,10 @@ inline VecRect *vecrect_cpp2c_p(std::vector<cv::Rect> v) {
 }
 
 inline std::vector<cv::KeyPoint> veckeypoint_c2cpp(VecKeyPoint v) {
-  std::vector<cv::KeyPoint> rv;
+  std::vector<cv::KeyPoint> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     KeyPoint p = v.ptr[i];
-    rv.push_back(cv::KeyPoint(p.x, p.y, p.size, p.angle, p.response, p.octave, p.classID));
+    rv[i] = cv::KeyPoint(p.x, p.y, p.size, p.angle, p.response, p.octave, p.classID);
   }
   return rv;
 }
@@ -451,10 +440,10 @@ inline VecKeyPoint *veckeypoint_cpp2c_p(std::vector<cv::KeyPoint> v) {
 }
 
 inline std::vector<cv::DMatch> vecdmatch_c2cpp(VecDMatch v) {
-  std::vector<cv::DMatch> rv;
+  std::vector<cv::DMatch> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     DMatch p = v.ptr[i];
-    rv.push_back(cv::DMatch(p.queryIdx, p.trainIdx, p.imgIdx, p.distance));
+    rv[i] = cv::DMatch(p.queryIdx, p.trainIdx, p.imgIdx, p.distance);
   }
   return rv;
 }
@@ -476,10 +465,10 @@ inline VecDMatch *vecdmatch_cpp2c_p(std::vector<cv::DMatch> v) {
 }
 
 inline std::vector<std::vector<cv::DMatch>> vecvecdmatch_c2cpp(VecVecDMatch v) {
-  std::vector<std::vector<cv::DMatch>> rv;
+  std::vector<std::vector<cv::DMatch>> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     VecDMatch p = v.ptr[i];
-    rv.push_back(vecdmatch_c2cpp(p));
+    rv[i] = vecdmatch_c2cpp(p);
   }
   return rv;
 }
@@ -497,16 +486,16 @@ inline VecVecDMatch *vecvecdmatch_cpp2c_p(std::vector<std::vector<cv::DMatch>> v
 }
 
 inline std::vector<cv::Point2f> vecPointToVecPoint2f(VecPoint src) {
-  std::vector<cv::Point2f> v;
-  for (int i = 0; i < src.length; i++) { v.push_back(cv::Point2f(src.ptr[i].x, src.ptr[i].y)); }
+  std::vector<cv::Point2f> v(src.length);
+  for (int i = 0; i < src.length; i++) { v[i] = cv::Point2f(src.ptr[i].x, src.ptr[i].y); }
   return v;
 }
 
 inline std::vector<cv::Vec4f> vec_vec4f_c2cpp(VecVec4f v) {
-  std::vector<cv::Vec4f> rv;
+  std::vector<cv::Vec4f> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Vec4f p = v.ptr[i];
-    rv.push_back(cv::Vec4f(p.val1, p.val2, p.val3, p.val4));
+    rv[i] = cv::Vec4f(p.val1, p.val2, p.val3, p.val4);
   }
   return rv;
 }
@@ -528,10 +517,10 @@ inline VecVec4f *vec_vec4f_cpp2c_p(std::vector<cv::Vec4f> v) {
 }
 
 inline std::vector<cv::Vec6f> vec_vec6f_c2cpp(VecVec6f v) {
-  std::vector<cv::Vec6f> rv;
+  std::vector<cv::Vec6f> rv(v.length);
   for (int i = 0; i < v.length; i++) {
     Vec6f p = v.ptr[i];
-    rv.push_back(cv::Vec6f(p.val1, p.val2, p.val3, p.val4, p.val5, p.val6));
+    rv[i] = cv::Vec6f(p.val1, p.val2, p.val3, p.val4, p.val5, p.val6);
   }
   return rv;
 }
