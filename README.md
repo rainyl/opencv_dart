@@ -56,7 +56,6 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
       - [2. clone this repo](#2-clone-this-repo)
       - [3. compile](#3-compile)
       - [4. test](#4-test)
-      - [5. Cross-compile for linux aarch64](#5-cross-compile-for-linux-aarch64)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
@@ -263,11 +262,6 @@ e.g., `export OPENCV_DART_LIB_PATH=`pwd`/linux/libopencv_dart.so`
 or `$ENV:OPENCV_DART_LIB_PATH=$PWD\windows\opencv_dart.dll`
 - or append the lib path to the library search path of your system
 - If you want to test using vscode, add above variable to `"dart.env"` in `settings.json`
-
-#### 5. Cross-compile for linux aarch64
-
-Compiling for linux aarch64 requires GCC 13 and newer,
-conan toolchain for linux arm is located in [opencv.full](https://github.com/rainyl/opencv.full/tree/linux-aarch64/profiles), explore more there.
 
 ## Contributors
 

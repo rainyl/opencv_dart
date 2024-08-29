@@ -1,3 +1,9 @@
+## 1.2.3
+
+* fix: android build.gradle task by @einsitang in https://github.com/rainyl/opencv_dart/pull/226
+* fix: vector conversion by @rainyl in https://github.com/rainyl/opencv_dart/pull/229
+* remove the dependency of flutter
+
 ## 1.2.2
 
 * remove arm64 and x64 setup options for ios by @rainyl in https://github.com/rainyl/opencv_dart/pull/202
