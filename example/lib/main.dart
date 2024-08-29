@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
     late cv.Mat gray, blur;
+    print(im.isEmpty);
     for (var i = 0; i < 1000; i++) {
       gray = await cv.cvtColorAsync(im, cv.COLOR_BGR2GRAY);
       blur = await cv.gaussianBlurAsync(im, (7, 7), 2, sigmaY: 2);
@@ -89,13 +90,15 @@ class _MyAppState extends State<MyApp> {
                   final data = await DefaultAssetBundle.of(context)
                       .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
+                  print("bytes: ${bytes.length}");
                   // heavy computation
                   // final (gray, blur) = await heavyTask(bytes);
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
+                  final im = cv.imdecode(bytes, cv.IMREAD_COLOR);
                   final (gray, blur) =
-                      await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                      await heavyTaskAsync(im);
                   setState(() {
                     images = [
                       bytes,
