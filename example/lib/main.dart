@@ -89,13 +89,15 @@ class _MyAppState extends State<MyApp> {
                   final data = await DefaultAssetBundle.of(context)
                       .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
+                  print("bytes: ${bytes.length}");
                   // heavy computation
                   // final (gray, blur) = await heavyTask(bytes);
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
+                  final im = await cv.imdecodeAsync(bytes, cv.IMREAD_COLOR);
                   final (gray, blur) =
-                      await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                      await heavyTaskAsync(im);
                   setState(() {
                     images = [
                       bytes,
