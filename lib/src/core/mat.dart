@@ -334,11 +334,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// only for [channels] == 1
   int get countNoneZero {
     cvAssert(channels == 1, "countNoneZero only for channels == 1");
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccore.Mat_CountNonZero(ref, p));
-      return p.value;
-    });
+    return ccore.Mat_CountNonZero(ref);
   }
 
   //!SECTION - Properties
@@ -1352,7 +1348,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   @override
-  String toString() => toFmtString();
+  String toString() => "Mat(addr=0x${ptr.address.toRadixString(16)}, "
+      "type=${type.asString()}, rows=$rows, cols=$cols, channels=$channels)";
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.Mat_Close);
 

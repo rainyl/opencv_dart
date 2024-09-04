@@ -38,6 +38,7 @@ functions:
     include:
       - "Mat_Flags"
       - "Mat_Type"
+      - "Mat_CountNonZero"
       - "Mat_IsContinuous"
       - "Mat_IsSubmatrix"
       - "Mat_Rows"
@@ -51,7 +52,6 @@ functions:
       - "Mat_Data"
       - "Mat_Get.*"
       - "Mat_Set.*"
-      # - ""
       # - ""
       # - ""
       # - ""

@@ -55,7 +55,7 @@ file(GLOB_RECURSE CPP_FILES
     # "${CMAKE_CURRENT_SOURCE_DIR}/src/stitching/*.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.h"
 )
 
 add_library(${LIBRARY_NAME} SHARED
@@ -68,7 +68,7 @@ target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
 target_link_libraries(${LIBRARY_NAME} PRIVATE ${OpenCV_LIBS})
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES
-    # PUBLIC_HEADER ${GOCV_HEADERS}
+    # PUBLIC_HEADER ${HEADER_FILES}
     OUTPUT_NAME ${LIBRARY_NAME}
     CXX_VISIBILITY_PRESET default
     C_VISIBILITY_PRESET default
