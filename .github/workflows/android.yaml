@@ -37,12 +37,10 @@ jobs:
           extract: true
       - name: build
         run: |
-          mkdir build && cd build
-          ls -alh build/opencv
-          cmake ${{ env.COMMON_CMAKE_OPTIONS }} \
-          -DANDROID_ABI="${{ matrix.abi }}" \
-          -DANDROID_ARM_NEON=ON \
-          ..
+          cd build
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
+          -DANDROID_ARM_NEON=ON ..
+
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
       - name: package
