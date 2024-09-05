@@ -157,6 +157,28 @@ CvStatus *DistanceTransform_Async(
   END_WRAP
 }
 
+CvStatus *FloodFill_Async(
+    Mat src,
+    Mat mask,
+    Point seedPoint,
+    Scalar newVal,
+    Scalar loDiff,
+    Scalar upDiff,
+    int flags,
+    CvCallback_2 callback
+) {
+  BEGIN_WRAP
+  auto _seedPoint = cv::Point(seedPoint.x, seedPoint.y);
+  auto _rect = cv::Rect();
+  auto _newVal = cv::Scalar(newVal.val1, newVal.val2, newVal.val3, newVal.val4);
+  auto _loDiff = cv::Scalar(loDiff.val1, loDiff.val2, loDiff.val3, loDiff.val4);
+  auto _upDiff = cv::Scalar(upDiff.val1, upDiff.val2, upDiff.val3, upDiff.val4);
+  int rval =
+      cv::floodFill(*src.ptr, *mask.ptr, _seedPoint, _newVal, &_rect, _loDiff, _upDiff, flags);
+  callback(new int(rval), new Rect{_rect.x, _rect.y, _rect.width, _rect.height});
+  END_WRAP
+}
+
 CvStatus *EqualizeHist_Async(Mat src, CVD_OUT CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Mat dst;
@@ -1095,24 +1117,6 @@ CvStatus *GetAffineTransform2f_Async(VecPoint2f src, VecPoint2f dst, CvCallback_
   auto _src = vecpoint2f_c2cpp(src);
   auto _dst = vecpoint2f_c2cpp(dst);
   callback(new Mat{new cv::Mat(cv::getAffineTransform(_src, _dst))});
-  END_WRAP
-}
-
-CvStatus *FindHomography_Async(
-    Mat src,
-    Mat dst,
-    int method,
-    double ransacReprojThreshold,
-    const int maxIters,
-    const double confidence,
-    CvCallback_2 callback
-) {
-  BEGIN_WRAP
-  cv::Mat mask;
-  cv::Mat out = cv::findHomography(
-      *src.ptr, *dst.ptr, method, ransacReprojThreshold, mask, maxIters, confidence
-  );
-  callback(new Mat{new cv::Mat(out)}, new Mat{new cv::Mat(mask)});
   END_WRAP
 }
 

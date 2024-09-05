@@ -291,6 +291,64 @@ class CvNativeCalib3d {
           ffi.Pointer<CvStatus> Function(
               Mat, Size, Mat, int, Mat, ffi.Pointer<ffi.Bool>)>();
 
+  ffi.Pointer<CvStatus> FindHomography(
+    Mat src,
+    Mat dst,
+    int method,
+    double ransacReprojThreshold,
+    Mat mask,
+    int maxIters,
+    double confidence,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _FindHomography(
+      src,
+      dst,
+      method,
+      ransacReprojThreshold,
+      mask,
+      maxIters,
+      confidence,
+      rval,
+    );
+  }
+
+  late final _FindHomographyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, Mat,
+              ffi.Int, ffi.Double, ffi.Pointer<Mat>)>>('FindHomography');
+  late final _FindHomography = _FindHomographyPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, int, double, Mat, int, double, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> FindHomography_Async(
+    Mat src,
+    Mat dst,
+    int method,
+    double ransacReprojThreshold,
+    int maxIters,
+    double confidence,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _FindHomography_Async(
+      src,
+      dst,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      callback,
+    );
+  }
+
+  late final _FindHomography_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Int,
+              ffi.Double, imp1.CvCallback_2)>>('FindHomography_Async');
+  late final _FindHomography_Async = _FindHomography_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, int, double, int, double, imp1.CvCallback_2)>();
+
   ffi.Pointer<CvStatus> Fisheye_EstimateNewCameraMatrixForUndistortRectify(
     Mat k,
     Mat d,

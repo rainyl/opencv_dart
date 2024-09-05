@@ -225,7 +225,7 @@ Mat sqrBoxFilter(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+    () => cimgproc.SqrBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
   );
   return dst;
 }
@@ -311,6 +311,41 @@ Mat erode(
   labels ??= Mat.empty();
   cvRun(() => cimgproc.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
   return (dst, labels);
+}
+
+/// Fills a connected component with the given color.
+///
+/// https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga366aae45a6c1289b341d140839f18717
+(int rval, Mat image, Mat mask, Rect rect) floodFill(
+  InputOutputArray image,
+  Point seedPoint,
+  Scalar newVal, {
+  InputOutputArray? mask,
+  Scalar? loDiff,
+  Scalar? upDiff,
+  int flags = 4,
+}) {
+  loDiff ??= Scalar();
+  upDiff ??= Scalar();
+  mask ??= Mat.empty();
+  final pRect = calloc<cvg.Rect>();
+  final pRval = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.FloodFill(
+      image.ref,
+      mask!.ref,
+      seedPoint.ref,
+      newVal.ref,
+      pRect,
+      loDiff!.ref,
+      upDiff!.ref,
+      flags,
+      pRval,
+    ),
+  );
+  final rval = pRval.value;
+  calloc.free(pRval);
+  return (rval, image, mask, Rect.fromPointer(pRect));
 }
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -1338,36 +1373,6 @@ Mat getAffineTransform(VecPoint src, VecPoint dst) {
 Mat getAffineTransform2f(VecPoint2f src, VecPoint2f dst) {
   final mat = calloc<cvg.Mat>();
   cvRun(() => cimgproc.GetAffineTransform2f(src.ref, dst.ref, mat));
-  return Mat.fromPointer(mat);
-}
-
-/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
-Mat findHomography(
-  InputArray srcPoints,
-  InputArray dstPoints, {
-  int method = 0,
-  double ransacReprojThreshold = 3,
-  OutputArray? mask,
-  int maxIters = 2000,
-  double confidence = 0.995,
-}) {
-  mask ??= Mat.empty();
-  final mat = calloc<cvg.Mat>();
-  cvRun(
-    () => cimgproc.FindHomography(
-      srcPoints.ref,
-      dstPoints.ref,
-      method,
-      ransacReprojThreshold,
-      mask!.ref,
-      maxIters,
-      confidence,
-      mat,
-    ),
-  );
   return Mat.fromPointer(mat);
 }
 

@@ -211,6 +211,16 @@ CvStatus *undistortPoints_Async(
     Mat distorted, Mat k, Mat d, Mat r, Mat p, TermCriteria criteria, CVD_OUT CvCallback_1 callback
 );
 
+CvStatus *FindHomography_Async(
+    Mat src,
+    Mat dst,
+    int method,
+    double ransacReprojThreshold,
+    const int maxIters,
+    const double confidence,
+    CvCallback_2 callback
+);
+
 #ifdef __cplusplus
 }
 #endif

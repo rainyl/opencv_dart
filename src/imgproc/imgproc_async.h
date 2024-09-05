@@ -44,6 +44,8 @@ CvStatus *DilateWithParams_Async(
 CvStatus *DistanceTransform_Async(
     Mat src, int distanceType, int maskSize, int labelType, CvCallback_2 callback
 );
+CvStatus *FloodFill_Async(Mat src, Mat mask, Point seedPoint, Scalar newVal, Scalar loDiff, Scalar upDiff, int flags, CvCallback_2 callback);
+
 CvStatus *EqualizeHist_Async(Mat src, CVD_OUT CvCallback_1 callback);
 CvStatus *Erode_Async(Mat src, Mat kernel, CvCallback_1 callback);
 CvStatus *ErodeWithParams_Async(
@@ -344,15 +346,7 @@ CvStatus *GetPerspectiveTransform2f_Async(
 );
 CvStatus *GetAffineTransform_Async(VecPoint src, VecPoint dst, CvCallback_1 callback);
 CvStatus *GetAffineTransform2f_Async(VecPoint2f src, VecPoint2f dst, CvCallback_1 callback);
-CvStatus *FindHomography_Async(
-    Mat src,
-    Mat dst,
-    int method,
-    double ransacReprojThreshold,
-    const int maxIters,
-    const double confidence,
-    CvCallback_2 callback
-);
+
 CvStatus *DrawContours_Async(
     Mat src,
     VecVecPoint contours,
