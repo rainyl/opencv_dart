@@ -48,7 +48,7 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          Copy-Item -Recurse -Force ./install/* windows/
+          Copy-Item -Recurse -Force ${{github.workspace}}\build\install\* windows\
           $env:PATH = "$env:PATH;${{github.workspace}}\windows"
           dart pub get
           dart test -x no-local-files
