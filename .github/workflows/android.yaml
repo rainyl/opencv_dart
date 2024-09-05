@@ -38,6 +38,7 @@ jobs:
         run: |
           cd build
           cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/sdk/native/jni \
           -DANDROID_ARM_NEON=ON ..
 
           cmake --build . --config Release -j $(nproc)
