@@ -91,12 +91,12 @@ jobs:
       with:
         path: artifacts
         pattern: libopencv_dart-macos-*.dylib
-        merge-multiple: true
+        merge-multiple: false
     - name: lipo
       run: |
         ls -R
         cd artifacts
-        lipo -create -output libopencv_dart.dylib libopencv_dart*.dylib
+        lipo -create -output libopencv_dart.dylib */libopencv_dart.dylib
         tar -zcvf libopencv_dart-macos-os64.tar.gz libopencv_dart.dylib
     - name: create-release
       uses: softprops/action-gh-release@v2
