@@ -1,3 +1,10 @@
+## 1.2.4
+
+* change `Mat.toString()` to return something like `Mat(addr=0x1dde02c74b0, type=CV_8UC4, rows=-1, cols=-1, channels=4)` by @rainyl in https://github.com/rainyl/opencv_dart/pull/233
+* migrate build toolchain from `conan` to `cmake` by @rainyl in https://github.com/rainyl/opencv_dart/pull/234
+* add `cv.floodFill` and `cv.floodFillAsync` by @rainyl in https://github.com/rainyl/opencv_dart/pull/236
+* move `findHomography` to `calib3d` by @rainyl in https://github.com/rainyl/opencv_dart/pull/236
+
 ## 1.2.3
 
 * fix: android build.gradle task by @einsitang in https://github.com/rainyl/opencv_dart/pull/226
