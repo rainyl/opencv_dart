@@ -14,10 +14,6 @@ jobs:
     strategy:
       matrix:
         arch: [x64]
-    env:
-      COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_INSTALL_PREFIX=install -DCMAKE_BUILD_TYPE=Release
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,7 +28,9 @@ jobs:
       - name: build
         run: |
           cd build
-          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
+          cmake -DCMAKE_INSTALL_PREFIX=install `
+          -DCMAKE_BUILD_TYPE=Release `
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install

@@ -24,7 +24,7 @@ jobs:
           - {os: macos-14, arch: arm64, platform: MAC_ARM64}
     env:
       COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_TOOLCHAIN_FILE=../profiles/ios.toolchain.cmake \
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
         -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
         -DENABLE_BITCODE=$ENABLE_BITCODE \
         -DENABLE_ARC=$ENABLE_ARC \
@@ -50,8 +50,7 @@ jobs:
       - name: build
         run: |
           cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.osname.platform }} \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 \
-          ..
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 ..
 
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
@@ -92,7 +91,7 @@ jobs:
           - {arch: arm64, name: OS64}
     env:
       COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_TOOLCHAIN_FILE=../profiles/ios.toolchain.cmake \
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
         -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
         -DENABLE_BITCODE=$ENABLE_BITCODE \
         -DENABLE_ARC=$ENABLE_ARC \
@@ -114,8 +113,13 @@ jobs:
         run: |
           cd build
           cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.platform.name }} \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 \
-          ..
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 ..
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-ios-${{ matrix.platform.arch }}.tar.gz .
       - uses: actions/upload-artifact@v4
         name: upload
         with:
@@ -137,7 +141,7 @@ jobs:
       run: |
         cd artifacts
         find . -name "*.tar.gz" -exec tar -zxvf {} \;
-        ls -alh .
+        tree -L 3 .
         # xcodebuild -create-xcframework \
         #     -framework build/ios/x86_64/install/opencv_dart.framework \
         #     -framework build/ios/armv8/install/opencv_dart.framework \
