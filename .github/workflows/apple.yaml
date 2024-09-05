@@ -1,4 +1,4 @@
-name: release
+name: apple
 
 on:
   push:
@@ -60,7 +60,7 @@ jobs:
         name: upload
         with:
           path: build/install/libopencv_dart.dylib
-          name: libopencv_dart-macos-${{ matrix.osname.arch }}.dylib
+          name: libopencv_dart-macos-${{ matrix.osname.arch }}
       # - uses: subosito/flutter-action@v2
       #   with:
       #     flutter-version: '3.19.6'
@@ -90,7 +90,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: artifacts
-        pattern: libopencv_dart-macos-*.dylib
+        pattern: libopencv_dart-macos-*
         merge-multiple: false
     - name: lipo
       run: |
