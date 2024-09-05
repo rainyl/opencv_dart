@@ -72,6 +72,7 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
     OUTPUT_NAME ${LIBRARY_NAME}
     CXX_VISIBILITY_PRESET default
     C_VISIBILITY_PRESET default
+    LINK_FLAGS_RELEASE -s
 )
 
 if(IOS)

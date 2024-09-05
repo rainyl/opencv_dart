@@ -1,0 +1,62 @@
+name: windows
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  windows:
+    name: windows
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        arch: [x64]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-windows-${{ matrix.arch }}.tar.gz"
+          out-file-path: "build/opencv"
+          extract: true
+      - name: build
+        run: |
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=install `
+          -DCMAKE_BUILD_TYPE=Release `
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-windows-${{ matrix.arch }}.tar.gz .
+      - uses: actions/upload-artifact@v4
+        name: upload
+        with:
+          path: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+          name: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+          channel: "stable"
+      - name: test
+        run: |
+          Copy-Item -Recurse -Force ${{github.workspace}}\build\install\* windows\
+          $env:PATH = "$env:PATH;${{github.workspace}}\windows"
+          dart pub get
+          dart test -x no-local-files
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-windows-${{ matrix.arch }}.tar.gz

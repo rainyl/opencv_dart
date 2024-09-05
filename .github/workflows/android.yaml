@@ -1,0 +1,63 @@
+name: android
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  android:
+    name: android
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        abi: [armeabi-v7a, arm64-v8a, x86_64]
+    env:
+      COMMON_CMAKE_OPTIONS: |
+        -DCMAKE_POLICY_DEFAULT_CMP0057=NEW \
+        -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_LATEST_HOME/build/cmake/android.toolchain.cmake \
+        -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=False \
+        -DANDROID_PLATFORM=android-24 \
+        -DCMAKE_INSTALL_PREFIX=install \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DANDROID_STL=c++_static \
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-android-${{ matrix.abi }}.tar.gz"
+          out-file-path: "build/opencv"
+          extract: true
+      - name: build
+        run: |
+          cd build
+          cmake -S ${{ github.workspace }} \
+          ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/sdk/native/jni \
+          -DANDROID_ARM_NEON=ON
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-android-${{ matrix.abi }}.tar.gz .
+      - uses: actions/upload-artifact@v4
+        name: upload
+        with:
+          path: libopencv_dart-android-${{ matrix.abi }}.tar.gz
+          name: libopencv_dart-android-${{ matrix.abi }}.tar.gz
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-android-${{ matrix.abi }}.tar.gz
