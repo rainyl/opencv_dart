@@ -403,4 +403,74 @@ void main() async {
       expect((m.rows, m.cols), (2, 3));
     }
   });
+
+  // findHomography
+  test('cv.findHomography', () {
+    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final srcPts = [
+      cv.Point2f(193, 932),
+      cv.Point2f(191, 378),
+      cv.Point2f(1497, 183),
+      cv.Point2f(1889, 681),
+    ];
+    final dstPts = [
+      cv.Point2f(51.51206544281359, -0.10425475260813055),
+      cv.Point2f(51.51211051314331, -0.10437947532732306),
+      cv.Point2f(51.512222354139325, -0.10437679311830816),
+      cv.Point2f(51.51214828037607, -0.1042212249954444),
+    ];
+    for (var i = 0; i < srcPts.length; i++) {
+      src.set<double>(i, 0, srcPts[i].x);
+      src.set<double>(i, 1, srcPts[i].y);
+    }
+    for (var i = 0; i < dstPts.length; i++) {
+      dst.set<double>(i, 0, dstPts[i].x);
+      dst.set<double>(i, 1, dstPts[i].y);
+    }
+
+    final mask = cv.Mat.empty();
+    final m = cv.findHomography(
+      src,
+      dst,
+      method: cv.HOMOGRAPY_ALL_POINTS,
+      ransacReprojThreshold: 3,
+      mask: mask,
+    );
+    expect(m.isEmpty, false);
+  });
+
+  // findHomography
+  test('cv.findHomographyAsync', () async {
+    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
+    final srcPts = [
+      cv.Point2f(193, 932),
+      cv.Point2f(191, 378),
+      cv.Point2f(1497, 183),
+      cv.Point2f(1889, 681),
+    ];
+    final dstPts = [
+      cv.Point2f(51.51206544281359, -0.10425475260813055),
+      cv.Point2f(51.51211051314331, -0.10437947532732306),
+      cv.Point2f(51.512222354139325, -0.10437679311830816),
+      cv.Point2f(51.51214828037607, -0.1042212249954444),
+    ];
+    for (var i = 0; i < srcPts.length; i++) {
+      src.set<double>(i, 0, srcPts[i].x);
+      src.set<double>(i, 1, srcPts[i].y);
+    }
+    for (var i = 0; i < dstPts.length; i++) {
+      dst.set<double>(i, 0, dstPts[i].x);
+      dst.set<double>(i, 1, dstPts[i].y);
+    }
+
+    final (m, _) = await cv.findHomographyAsync(
+      src,
+      dst,
+      method: cv.HOMOGRAPY_ALL_POINTS,
+      ransacReprojThreshold: 3,
+    );
+    expect(m.isEmpty, false);
+  });
 }

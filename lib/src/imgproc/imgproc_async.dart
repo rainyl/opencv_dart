@@ -242,7 +242,6 @@ Future<Mat> erodeAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga8a0b7fdfcb7a13dde018988ba3a43042
-
 Future<(Mat dst, Mat labels)> distanceTransformAsync(
   Mat src,
   int distanceType,
@@ -252,6 +251,37 @@ Future<(Mat dst, Mat labels)> distanceTransformAsync(
     cvRunAsync2(
       (callback) => cimgproc.DistanceTransform_Async(src.ref, distanceType, maskSize, labelType, callback),
       matCompleter2,
+    );
+
+/// Fills a connected component with the given color.
+///
+/// https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga366aae45a6c1289b341d140839f18717
+Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
+  InputOutputArray image,
+  Point seedPoint,
+  Scalar newVal, {
+  InputOutputArray? mask,
+  Scalar? loDiff,
+  Scalar? upDiff,
+  int flags = 4,
+}) async =>
+    cvRunAsync2(
+      (callback) => cimgproc.FloodFill_Async(
+        image.ref,
+        mask?.ref ?? Mat.empty().ref,
+        seedPoint.ref,
+        newVal.ref,
+        loDiff?.ref ?? Scalar().ref,
+        upDiff?.ref ?? Scalar().ref,
+        flags,
+        callback,
+      ),
+      (c, prval, prect) {
+        final rval = prval.cast<ffi.Int>().value;
+        calloc.free(prval);
+        final rect = Rect.fromPointer(prect.cast<cvg.Rect>());
+        c.complete((rval, image, mask ?? Mat.empty(), rect));
+      },
     );
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -1240,31 +1270,6 @@ Future<Mat> getAffineTransformAsync(VecPoint src, VecPoint dst) async => cvRunAs
 Future<Mat> getAffineTransform2fAsync(VecPoint2f src, VecPoint2f dst) async => cvRunAsync(
       (callback) => cimgproc.GetAffineTransform2f_Async(src.ref, dst.ref, callback),
       matCompleter,
-    );
-
-/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
-Future<(Mat, Mat)> findHomographyAsync(
-  InputArray srcPoints,
-  InputArray dstPoints, {
-  int method = 0,
-  double ransacReprojThreshold = 3,
-  int maxIters = 2000,
-  double confidence = 0.995,
-}) async =>
-    cvRunAsync2(
-      (callback) => cimgproc.FindHomography_Async(
-        srcPoints.ref,
-        dstPoints.ref,
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        callback,
-      ),
-      matCompleter2,
     );
 
 /// DrawContours draws contours outlines or filled contours.

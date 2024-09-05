@@ -268,3 +268,21 @@ CvStatus *undistortPoints_Async(
   callback(new Mat{new cv::Mat(dst)});
   END_WRAP
 }
+
+CvStatus *FindHomography_Async(
+    Mat src,
+    Mat dst,
+    int method,
+    double ransacReprojThreshold,
+    const int maxIters,
+    const double confidence,
+    CvCallback_2 callback
+) {
+  BEGIN_WRAP
+  cv::Mat mask;
+  cv::Mat out = cv::findHomography(
+      *src.ptr, *dst.ptr, method, ransacReprojThreshold, mask, maxIters, confidence
+  );
+  callback(new Mat{new cv::Mat(out)}, new Mat{new cv::Mat(mask)});
+  END_WRAP
+}

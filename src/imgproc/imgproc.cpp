@@ -7,6 +7,7 @@
 */
 
 #include "imgproc.h"
+#include "core/types.h"
 #include "core/vec.hpp"
 #include <vector>
 
@@ -96,7 +97,7 @@ BoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, i
   END_WRAP
 }
 CvStatus *
-SqBoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType) {
+SqrBoxFilter(Mat src, Mat dst, int ddepth, Size ps, Point anchor, bool normalize, int borderType) {
   BEGIN_WRAP
   cv::sqrBoxFilter(*src.ptr, *dst.ptr, ddepth, cv::Size(ps.width, ps.height));
   END_WRAP
@@ -829,22 +830,7 @@ CvStatus *GetAffineTransform2f(VecPoint2f src, VecPoint2f dst, Mat *rval) {
   *rval = {new cv::Mat(cv::getAffineTransform(_src, _dst))};
   END_WRAP
 }
-CvStatus *FindHomography(
-    Mat src,
-    Mat dst,
-    int method,
-    double ransacReprojThreshold,
-    Mat mask,
-    const int maxIters,
-    const double confidence,
-    Mat *rval
-) {
-  BEGIN_WRAP
-  *rval = {new cv::Mat(cv::findHomography(
-      *src.ptr, *dst.ptr, method, ransacReprojThreshold, *mask.ptr, maxIters, confidence
-  ))};
-  END_WRAP
-}
+
 CvStatus *DrawContours(Mat src, VecVecPoint contours, int contourIdx, Scalar color, int thickness) {
   BEGIN_WRAP
   auto _contours = vecvecpoint_c2cpp(contours);
@@ -1202,5 +1188,30 @@ CvStatus *Mat_AccumulatedWeighted(Mat src, Mat dst, double alpha) {
 CvStatus *Mat_AccumulatedWeightedWithMask(Mat src, Mat dst, double alpha, Mat mask) {
   BEGIN_WRAP
   cv::accumulateWeighted(*src.ptr, *dst.ptr, alpha, *mask.ptr);
+  END_WRAP
+}
+
+CvStatus *FloodFill(
+    Mat src,
+    Mat mask,
+    Point seedPoint,
+    Scalar newVal,
+    Rect *rect,
+    Scalar loDiff,
+    Scalar upDiff,
+    int flags,
+    int *rval
+) {
+  BEGIN_WRAP
+  auto _seedPoint = cv::Point(seedPoint.x, seedPoint.y);
+  auto _rect = cv::Rect();
+  auto _newVal = cv::Scalar(newVal.val1, newVal.val2, newVal.val3, newVal.val4);
+  auto _loDiff = cv::Scalar(loDiff.val1, loDiff.val2, loDiff.val3, loDiff.val4);
+  auto _upDiff = cv::Scalar(upDiff.val1, upDiff.val2, upDiff.val3, upDiff.val4);
+  *rval = cv::floodFill(*src.ptr, *mask.ptr, _seedPoint, _newVal, &_rect, _loDiff, _upDiff, flags);
+  rect->x = _rect.x;
+  rect->y = _rect.y;
+  rect->width = _rect.width;
+  rect->height = _rect.height;
   END_WRAP
 }

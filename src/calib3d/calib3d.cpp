@@ -219,3 +219,20 @@ CvStatus *EstimateAffine2DWithParams(
   ))};
   END_WRAP
 }
+
+CvStatus *FindHomography(
+    Mat src,
+    Mat dst,
+    int method,
+    double ransacReprojThreshold,
+    Mat mask,
+    const int maxIters,
+    const double confidence,
+    Mat *rval
+) {
+  BEGIN_WRAP
+  *rval = {new cv::Mat(cv::findHomography(
+      *src.ptr, *dst.ptr, method, ransacReprojThreshold, *mask.ptr, maxIters, confidence
+  ))};
+  END_WRAP
+}

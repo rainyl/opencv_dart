@@ -196,10 +196,6 @@ files:
         name: FindContours
       c:@F@FindContours_Async:
         name: FindContours_Async
-      c:@F@FindHomography:
-        name: FindHomography
-      c:@F@FindHomography_Async:
-        name: FindHomography_Async
       c:@F@FitEllipse:
         name: FitEllipse
       c:@F@FitEllipse_Async:
@@ -208,6 +204,10 @@ files:
         name: FitLine
       c:@F@FitLine_Async:
         name: FitLine_Async
+      c:@F@FloodFill:
+        name: FloodFill
+      c:@F@FloodFill_Async:
+        name: FloodFill_Async
       c:@F@GaussianBlur:
         name: GaussianBlur
       c:@F@GaussianBlur_Async:
@@ -436,10 +436,10 @@ files:
         name: SpatialGradient
       c:@F@SpatialGradient_Async:
         name: SpatialGradient_Async
-      c:@F@SqBoxFilter:
-        name: SqBoxFilter
       c:@F@SqBoxFilter_Async:
         name: SqBoxFilter_Async
+      c:@F@SqrBoxFilter:
+        name: SqrBoxFilter
       c:@F@Subdiv2D_Close:
         name: Subdiv2D_Close
       c:@F@Subdiv2D_Close_Async:

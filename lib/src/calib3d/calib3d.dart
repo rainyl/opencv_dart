@@ -299,3 +299,33 @@ Mat drawChessboardCorners(
   );
   return (Mat.fromPointer(p), inliers);
 }
+
+/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
+Mat findHomography(
+  InputArray srcPoints,
+  InputArray dstPoints, {
+  int method = 0,
+  double ransacReprojThreshold = 3,
+  OutputArray? mask,
+  int maxIters = 2000,
+  double confidence = 0.995,
+}) {
+  mask ??= Mat.empty();
+  final mat = calloc<cvg.Mat>();
+  cvRun(
+    () => ccalib3d.FindHomography(
+      srcPoints.ref,
+      dstPoints.ref,
+      method,
+      ransacReprojThreshold,
+      mask!.ref,
+      maxIters,
+      confidence,
+      mat,
+    ),
+  );
+  return Mat.fromPointer(mat);
+}

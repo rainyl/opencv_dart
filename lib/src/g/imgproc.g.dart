@@ -2238,64 +2238,6 @@ class CvNativeImgproc {
   late final _FindContours_Async = _FindContours_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, imp1.CvCallback_2)>();
 
-  ffi.Pointer<CvStatus> FindHomography(
-    Mat src,
-    Mat dst,
-    int method,
-    double ransacReprojThreshold,
-    Mat mask,
-    int maxIters,
-    double confidence,
-    ffi.Pointer<Mat> rval,
-  ) {
-    return _FindHomography(
-      src,
-      dst,
-      method,
-      ransacReprojThreshold,
-      mask,
-      maxIters,
-      confidence,
-      rval,
-    );
-  }
-
-  late final _FindHomographyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, Mat,
-              ffi.Int, ffi.Double, ffi.Pointer<Mat>)>>('FindHomography');
-  late final _FindHomography = _FindHomographyPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, int, double, Mat, int, double, ffi.Pointer<Mat>)>();
-
-  ffi.Pointer<CvStatus> FindHomography_Async(
-    Mat src,
-    Mat dst,
-    int method,
-    double ransacReprojThreshold,
-    int maxIters,
-    double confidence,
-    imp1.CvCallback_2 callback,
-  ) {
-    return _FindHomography_Async(
-      src,
-      dst,
-      method,
-      ransacReprojThreshold,
-      maxIters,
-      confidence,
-      callback,
-    );
-  }
-
-  late final _FindHomography_AsyncPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, ffi.Int,
-              ffi.Double, imp1.CvCallback_2)>>('FindHomography_Async');
-  late final _FindHomography_Async = _FindHomography_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, int, double, int, double, imp1.CvCallback_2)>();
-
   ffi.Pointer<CvStatus> FitEllipse(
     VecPoint pts,
     ffi.Pointer<RotatedRect> rval,
@@ -2381,6 +2323,76 @@ class CvNativeImgproc {
   late final _FitLine_Async = _FitLine_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           VecPoint, int, double, double, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FloodFill(
+    Mat src,
+    Mat mask,
+    Point seedPoint,
+    Scalar newVal,
+    ffi.Pointer<Rect> rect,
+    Scalar loDiff,
+    Scalar upDiff,
+    int flags,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _FloodFill(
+      src,
+      mask,
+      seedPoint,
+      newVal,
+      rect,
+      loDiff,
+      upDiff,
+      flags,
+      rval,
+    );
+  }
+
+  late final _FloodFillPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              Point,
+              Scalar,
+              ffi.Pointer<Rect>,
+              Scalar,
+              Scalar,
+              ffi.Int,
+              ffi.Pointer<ffi.Int>)>>('FloodFill');
+  late final _FloodFill = _FloodFillPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Point, Scalar, ffi.Pointer<Rect>,
+          Scalar, Scalar, int, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> FloodFill_Async(
+    Mat src,
+    Mat mask,
+    Point seedPoint,
+    Scalar newVal,
+    Scalar loDiff,
+    Scalar upDiff,
+    int flags,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _FloodFill_Async(
+      src,
+      mask,
+      seedPoint,
+      newVal,
+      loDiff,
+      upDiff,
+      flags,
+      callback,
+    );
+  }
+
+  late final _FloodFill_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Point, Scalar, Scalar,
+              Scalar, ffi.Int, imp1.CvCallback_2)>>('FloodFill_Async');
+  late final _FloodFill_Async = _FloodFill_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Point, Scalar, Scalar, Scalar, int, imp1.CvCallback_2)>();
 
   ffi.Pointer<CvStatus> GaussianBlur(
     Mat src,
@@ -5278,33 +5290,6 @@ class CvNativeImgproc {
   late final _SpatialGradient_Async = _SpatialGradient_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, int, imp1.CvCallback_2)>();
 
-  ffi.Pointer<CvStatus> SqBoxFilter(
-    Mat src,
-    Mat dst,
-    int ddepth,
-    Size ps,
-    Point anchor,
-    bool normalize,
-    int borderType,
-  ) {
-    return _SqBoxFilter(
-      src,
-      dst,
-      ddepth,
-      ps,
-      anchor,
-      normalize,
-      borderType,
-    );
-  }
-
-  late final _SqBoxFilterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Size, Point,
-              ffi.Bool, ffi.Int)>>('SqBoxFilter');
-  late final _SqBoxFilter = _SqBoxFilterPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size, Point, bool, int)>();
-
   ffi.Pointer<CvStatus> SqBoxFilter_Async(
     Mat src,
     int ddepth,
@@ -5325,6 +5310,33 @@ class CvNativeImgproc {
               Mat, ffi.Int, Size, imp1.CvCallback_1)>>('SqBoxFilter_Async');
   late final _SqBoxFilter_Async = _SqBoxFilter_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, Size, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> SqrBoxFilter(
+    Mat src,
+    Mat dst,
+    int ddepth,
+    Size ps,
+    Point anchor,
+    bool normalize,
+    int borderType,
+  ) {
+    return _SqrBoxFilter(
+      src,
+      dst,
+      ddepth,
+      ps,
+      anchor,
+      normalize,
+      borderType,
+    );
+  }
+
+  late final _SqrBoxFilterPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Size, Point,
+              ffi.Bool, ffi.Int)>>('SqrBoxFilter');
+  late final _SqrBoxFilter = _SqrBoxFilterPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, Size, Point, bool, int)>();
 
   void Subdiv2D_Close(
     Subdiv2DPtr self,

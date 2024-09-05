@@ -286,3 +286,28 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
       ),
       matCompleter2,
     );
+
+/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
+Future<(Mat, Mat)> findHomographyAsync(
+  InputArray srcPoints,
+  InputArray dstPoints, {
+  int method = 0,
+  double ransacReprojThreshold = 3,
+  int maxIters = 2000,
+  double confidence = 0.995,
+}) async =>
+    cvRunAsync2(
+      (callback) => ccalib3d.FindHomography_Async(
+        srcPoints.ref,
+        dstPoints.ref,
+        method,
+        ransacReprojThreshold,
+        maxIters,
+        confidence,
+        callback,
+      ),
+      matCompleter2,
+    );

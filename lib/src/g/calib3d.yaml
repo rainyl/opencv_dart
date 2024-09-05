@@ -22,6 +22,10 @@ files:
         name: FindChessboardCornersSB
       c:@F@FindChessboardCornersSBWithMeta:
         name: FindChessboardCornersSBWithMeta
+      c:@F@FindHomography:
+        name: FindHomography
+      c:@F@FindHomography_Async:
+        name: FindHomography_Async
       c:@F@Fisheye_EstimateNewCameraMatrixForUndistortRectify:
         name: Fisheye_EstimateNewCameraMatrixForUndistortRectify
       c:@F@Fisheye_UndistortImage:
