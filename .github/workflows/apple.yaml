@@ -114,7 +114,8 @@ jobs:
         run: |
           cd build
           cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.platform.name }} \
-            ..
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 \
+          ..
       - uses: actions/upload-artifact@v4
         name: upload
         with:
