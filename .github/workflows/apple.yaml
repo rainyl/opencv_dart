@@ -40,8 +40,8 @@ jobs:
           extract: true
       - name: build
         run: |
+          cd build
           cmake -S ${{ github.workspace }} \
-          -B ${{ github.workspace }}/build \
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
           -DDEPLOYMENT_TARGET=$MAC_DEPLOYMENT_TARGET \
           -DENABLE_BITCODE=$ENABLE_BITCODE \
@@ -52,8 +52,7 @@ jobs:
           -DPLATFORM=${{ matrix.osname.platform }} \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
-          cmake --build ${{ github.workspace }}/build --config Release -j $(nproc)
-          cmake --build ${{ github.workspace }}/build --config Release --target install
+          cmake --build . --config Release --target install
       - name: package
         run: |
           tar -C build/install -zcvf libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz .
@@ -62,14 +61,6 @@ jobs:
         with:
           path: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
           name: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
-      - name: release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          draft: true
-          prerelease: false
-          files: |
-            libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
@@ -81,6 +72,14 @@ jobs:
           export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
           dart pub get
           dart test -x skip-workflow,no-local-files
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
   release:
     permissions:
       contents: write  # for softprops/action-gh-release to create a release
