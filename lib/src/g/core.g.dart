@@ -1063,22 +1063,18 @@ class CvNativeCore {
   late final _Mat_CopyTo_Async = _Mat_CopyTo_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> Mat_CountNonZero(
+  int Mat_CountNonZero(
     Mat src,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _Mat_CountNonZero(
       src,
-      rval,
     );
   }
 
-  late final _Mat_CountNonZeroPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<ffi.Int>)>>('Mat_CountNonZero');
-  late final _Mat_CountNonZero = _Mat_CountNonZeroPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Int>)>();
+  late final _Mat_CountNonZeroPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(Mat)>>('Mat_CountNonZero');
+  late final _Mat_CountNonZero =
+      _Mat_CountNonZeroPtr.asFunction<int Function(Mat)>(isLeaf: true);
 
   ffi.Pointer<CvStatus> Mat_DCT(
     Mat src,

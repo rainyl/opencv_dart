@@ -294,13 +294,7 @@ Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa4b89393263bb4d604e0fe5986723914
-int countNonZero(Mat src) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    ccore.Mat_CountNonZero(src.ref, p);
-    return p.value;
-  });
-}
+int countNonZero(Mat src) => ccore.Mat_CountNonZero(src.ref);
 
 /// CompleteSymm copies the lower or the upper half of a square matrix to its another half.
 ///

@@ -280,7 +280,7 @@ CvStatus *Mat_ConvertScaleAbs(Mat src, Mat dst, double alpha, double beta);
 CvStatus *Mat_CopyMakeBorder(
     Mat src, Mat dst, int top, int bottom, int left, int right, int borderType, Scalar value
 );
-CvStatus *Mat_CountNonZero(Mat src, int *rval);
+int  Mat_CountNonZero(Mat src);
 CvStatus *Mat_DCT(Mat src, Mat dst, int flags);
 CvStatus *Mat_Determinant(Mat m, double *rval);
 CvStatus *Mat_DFT(Mat src, Mat dst, int flags, int nonzeroRows);

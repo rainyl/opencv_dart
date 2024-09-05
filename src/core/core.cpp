@@ -1127,10 +1127,8 @@ CvStatus *Mat_CopyMakeBorder(
   END_WRAP
 }
 
-CvStatus *Mat_CountNonZero(Mat src, int *rval) {
-  BEGIN_WRAP
-  *rval = cv::countNonZero(*src.ptr);
-  END_WRAP
+int Mat_CountNonZero(Mat src) {
+  return cv::countNonZero(*src.ptr);
 }
 
 CvStatus *Mat_DCT(Mat src, Mat dst, int flags) {
