@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   push:
@@ -22,15 +22,6 @@ jobs:
         osname:
           - {os: macos-13, arch: x64, platform: MAC}
           - {os: macos-14, arch: arm64, platform: MAC_ARM64}
-    env:
-      COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
-        -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
-        -DENABLE_BITCODE=$ENABLE_BITCODE \
-        -DENABLE_ARC=$ENABLE_ARC \
-        -DENABLE_VISIBILITY=$ENABLE_VISIBILITY \
-        -DCMAKE_INSTALL_PREFIX=install \
-        -DCMAKE_BUILD_TYPE=Release \
     runs-on: ${{ matrix.osname.os }}
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +40,15 @@ jobs:
           extract: true
       - name: build
         run: |
-          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.osname.platform }} -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 ..
+          cmake -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
+          -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
+          -DENABLE_BITCODE=$ENABLE_BITCODE \
+          -DENABLE_ARC=$ENABLE_ARC \
+          -DENABLE_VISIBILITY=$ENABLE_VISIBILITY \
+          -DCMAKE_INSTALL_PREFIX=install \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DPLATFORM=${{ matrix.osname.platform }} \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 ..
 
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
@@ -83,11 +82,6 @@ jobs:
   ios:
     name: ios
     runs-on: macos-14
-    strategy:
-      matrix:
-        platform:
-          - {arch: x64, name: SIMULATOR64}
-          - {arch: arm64, name: OS64}
     env:
       COMMON_CMAKE_OPTIONS: |
         -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
@@ -105,53 +99,49 @@ jobs:
         with:
           repository: "rainyl/opencv.full"
           latest: true
-          fileName: "libopencv-ios-${{ matrix.platform.arch }}.tar.gz"
-          out-file-path: "build/opencv"
+          fileName: "libopencv-ios-x64.tar.gz"
+          out-file-path: "build/opencv/x64"
           extract: true
-      - name: build
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-ios-arm64.tar.gz"
+          out-file-path: "build/opencv/arm64"
+          extract: true
+      - name: build_simulator64
         run: |
-          cd build
-          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.platform.name }} \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 ..
+          mkdir -p build/x64 && cd build/x64
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=SIMULATOR64 \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/x64/lib/cmake/opencv4 ..
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: build_os64
+        run: |
+          mkdir -p build/os64 && cd build/os64
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=os64 \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/arm64/lib/cmake/opencv4 ..
 
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
       - name: package
         run: |
-          tar -C build/install -zcvf libopencv_dart-ios-${{ matrix.platform.arch }}.tar.gz .
+          xcodebuild -create-xcframework \
+            -framework build/x64/install/opencv_dart.framework \
+            -framework build/arm64/install/opencv_dart.framework \
+            -output opencv_dart.xcframework
+          tar -zcvf libopencv_dart-ios-os64.tar.gz opencv_dart.xcframework
       - uses: actions/upload-artifact@v4
         name: upload
         with:
-          path: libopencv_dart-ios-${{ matrix.platform.arch }}.tar.gz
-          name: libopencv_dart-ios-${{ matrix.platform.arch }}.tar.gz
-
-  release:
-    permissions:
-      contents: write  # for softprops/action-gh-release to create a release
-    needs: [ios]
-    runs-on: ubuntu-latest
-    steps:
-    - name: download
-      uses: actions/download-artifact@v4
-      with:
-        path: artifacts
-
-    - name: create-universal
-      run: |
-        cd artifacts
-        find . -name "*.tar.gz" -exec tar -zxvf {} \;
-        tree -L 3 .
-        # xcodebuild -create-xcframework \
-        #     -framework build/ios/x86_64/install/opencv_dart.framework \
-        #     -framework build/ios/armv8/install/opencv_dart.framework \
-        #     -output ios/opencv_dart.xcframework
-        # tar -zcvf libopencv_dart-ios-os64.tar.gz -C ios opencv_dart.xcframework
-
-    - name: release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        draft: true
-        prerelease: false
-        files: |
-          libopencv_dart-ios-os64.tar.gz
+          path: libopencv_dart-ios-os64.tar.gz
+          name: libopencv_dart-ios-os64.tar.gz
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-ios-os64.tar.gz
