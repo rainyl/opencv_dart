@@ -59,8 +59,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         name: upload
         with:
-          path: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
-          name: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
+          path: build/install/libopencv_dart.dylib
+          name: libopencv_dart-macos-${{ matrix.osname.arch }}.dylib
       # - uses: subosito/flutter-action@v2
       #   with:
       #     flutter-version: '3.19.6'
@@ -84,7 +84,7 @@ jobs:
     permissions:
       contents: write  # for softprops/action-gh-release to create a release
     needs: [macos]
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
     - name: download
       uses: actions/download-artifact@v4
@@ -95,11 +95,8 @@ jobs:
     - name: lipo
       run: |
         cd artifacts
-        for f in *.tar.gz; do
-          tar -xzf $f
-        done
         ls -R
-        lipo -create -output libopencv_dart.dylib */libopencv_dart.dylib
+        lipo -create -output libopencv_dart.dylib libopencv_dart*.dylib
         tar -zcvf libopencv_dart-macos-os64.tar.gz libopencv_dart.dylib
     - name: create-release
       uses: softprops/action-gh-release@v2
