@@ -52,8 +52,8 @@ jobs:
           -DPLATFORM=${{ matrix.osname.platform }} \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
-          cmake --build . --config Release -j $(nproc)
-          cmake --build . --config Release --target install
+          cmake --build ${{ github.workspace }}/build --config Release -j $(nproc)
+          cmake --build ${{ github.workspace }}/build --config Release --target install
       - name: package
         run: |
           tar -C build/install -zcvf libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz .
@@ -140,23 +140,19 @@ jobs:
           extract: true
       - name: build_simulator64
         run: |
-          mkdir -p build/x64
+          mkdir -p build/x64 && cd build/x64
           cmake -S ${{ github.workspace }} \
-          -B ${{ github.workspace }}/build/x64 \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=SIMULATOR64 \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/x64/lib/cmake/opencv4
 
-          cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
       - name: build_os64
         run: |
-          mkdir -p build/os64
+          mkdir -p build/os64 && cd build/os64
           cmake -S ${{ github.workspace }} \
-          -B ${{ github.workspace }}/build/os64 \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=OS64 \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/arm64/lib/cmake/opencv4
 
-          cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
       - name: package
         run: |
