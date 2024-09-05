@@ -1,0 +1,136 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  # pull_request:
+  #   branches: [ "main" ]
+
+jobs:
+  macos:
+    name: macos
+    strategy:
+      matrix:
+        osname:
+          - {os: macos-13, arch: x64, platform: MAC}
+          - {os: macos-14, arch: arm64, platform: MAC_ARM64}
+    env:
+      COMMON_CMAKE_OPTIONS: |
+        -DCMAKE_TOOLCHAIN_FILE=../profiles/ios.toolchain.cmake \
+        -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
+        -DENABLE_BITCODE=$ENABLE_BITCODE \
+        -DENABLE_ARC=$ENABLE_ARC \
+        -DENABLE_VISIBILITY=$ENABLE_VISIBILITY \
+        -DCMAKE_INSTALL_PREFIX=install \
+        -DCMAKE_BUILD_TYPE=Release \
+    runs-on: ${{ matrix.osname.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: setup
+        run: |
+          brew install --force --overwrite ninja ccache ffmpeg@6 nasm python@3.12
+          brew link --overwrite ffmpeg@6
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-macos-${{ matrix.osname.arch }}.tar.gz"
+          out-file-path: "build/opencv"
+          extract: true
+      - name: build
+        run: |
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=${{ matrix.osname.platform }} \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4 \
+          ..
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz .
+      - uses: actions/upload-artifact@v4
+        name: upload
+        with:
+          path: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
+          name: libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-macos-${{ matrix.osname.arch }}.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+          channel: "stable"
+      - name: test
+        run: |
+          cp -rf build/install/* macos/
+          ls -alh macos
+          export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
+          dart pub get
+          dart test -x skip-workflow,no-local-files
+  ios:
+      name: ios
+      runs-on: macos-14
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: setup
+          run: |
+            brew install --force --overwrite ninja ccache nasm
+        - name: build
+          run: |
+            echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-x86_64
+            conan build . -b missing -pr:h profiles/ios-x86_64 \
+            -o output_dir="build/ios/x86_64"
+
+            echo "tools.cmake.cmaketoolchain:user_toolchain=[\"`pwd`/profiles/ios.toolchain.cmake\"]" >> profiles/ios-armv8
+            conan build . -b missing -pr:h profiles/ios-armv8 \
+            -o output_dir="build/ios/armv8"
+
+            rm -rf ios/opencv_dart.xcframework
+            xcodebuild -create-xcframework \
+              -framework build/ios/x86_64/install/opencv_dart.framework \
+              -framework build/ios/armv8/install/opencv_dart.framework \
+              -output ios/opencv_dart.xcframework
+            tar -zcvf libopencv_dart-ios-os64.tar.gz -C ios opencv_dart.xcframework
+        - uses: actions/upload-artifact@v4
+          name: upload arm64
+          with:
+            path: build/publish/libopencv_dart-ios-arm64.tar.gz
+            name: libopencv_dart-ios-arm64.tar.gz
+        - uses: actions/upload-artifact@v4
+          name: upload x64
+          with:
+            path: build/publish/libopencv_dart-ios-x64.tar.gz
+            name: libopencv_dart-ios-x64.tar.gz
+        - uses: actions/upload-artifact@v4
+          name: upload os64
+          with:
+            path: libopencv_dart-ios-os64.tar.gz
+            name: libopencv_dart-ios-os64.tar.gz
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            draft: true
+            prerelease: false
+            files: |
+              libopencv_dart-ios-os64.tar.gz
+        - uses: subosito/flutter-action@v2
+          with:
+            flutter-version: '3.19.6'
+            channel: "stable"
+        - name: Run Test
+          run: |
+            cd example
+            flutter pub get
+            flutter build ios --release --no-codesign
+            flutter build ios --no-codesign --simulator
