@@ -16,8 +16,7 @@ jobs:
         arch: [x64]
     env:
       COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_INSTALL_PREFIX=install \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=install -DCMAKE_BUILD_TYPE=Release
 
     steps:
       - uses: actions/checkout@v4
@@ -51,8 +50,8 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          cp -rf build/install/* windows/
-          $env:OPENCV_DART_LIB_PATH = "${{github.workspace}}\windows\opencv_dart.dll"
+          Copy-Item -Recurse -Force ./install/* windows/
+          $env:PATH = "$env:PATH;${{github.workspace}}\windows"
           dart pub get
           dart test -x no-local-files
       - name: release

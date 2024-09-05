@@ -45,12 +45,12 @@ jobs:
           cmake --build . --config Release --target install
       - name: package
         run: |
-          tar -C build/install -zcvf android-${{ matrix.abi }}.tar.gz .
+          tar -C build/install -zcvf libopencv_dart-android-${{ matrix.abi }}.tar.gz .
       - uses: actions/upload-artifact@v4
         name: upload
         with:
-          path: android-${{ matrix.abi }}.tar.gz
-          name: android-${{ matrix.abi }}.tar.gz
+          path: libopencv_dart-android-${{ matrix.abi }}.tar.gz
+          name: libopencv_dart-android-${{ matrix.abi }}.tar.gz
 
       - name: release
         uses: softprops/action-gh-release@v1
@@ -59,4 +59,4 @@ jobs:
           draft: true
           prerelease: false
           files: |
-            android-${{ matrix.abi }}.tar.gz
+            libopencv_dart-android-${{ matrix.abi }}.tar.gz
