@@ -4,13 +4,13 @@ description: |
 output:
   bindings: ../lib/src/g/contrib.g.dart
   symbol-file:
-    output: 'package:opencv_dart/src/g/contrib.yaml'
-    import-path: 'package:opencv_dart/src/g/contrib.g.dart'
+    output: "package:opencv_dart/src/g/contrib.yaml"
+    import-path: "package:opencv_dart/src/g/contrib.g.dart"
 # ffi-native:
 #   assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
 import:
   symbol-files:
-    - 'package:opencv_dart/src/g/types.yaml'
+    - "package:opencv_dart/src/g/types.yaml"
 compiler-opts: "-Isrc"
 sort: true
 include-unused-typedefs: true
@@ -20,6 +20,8 @@ headers:
     - ../src/extra/aruco_async.h
     - ../src/extra/img_hash.h
     - ../src/extra/img_hash_async.h
+    - ../src/extra/quality.h
+    - ../src/extra/quality_async.h
     - ../src/extra/wechat_qrcode.h
     - ../src/extra/ximgproc.h
     - ../src/extra/ximgproc_async.h
@@ -30,6 +32,8 @@ headers:
     - ../src/extra/aruco_async.h
     - ../src/extra/img_hash.h
     - ../src/extra/img_hash_async.h
+    - ../src/extra/quality.h
+    - ../src/extra/quality_async.h
     - ../src/extra/wechat_qrcode.h
     - ../src/extra/ximgproc.h
     - ../src/extra/ximgproc_async.h
@@ -40,6 +44,7 @@ functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file
