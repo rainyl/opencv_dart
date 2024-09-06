@@ -113,7 +113,7 @@ class MacOsSetupCommand extends BaseSetupCommand {
     argParser.addOption(
       "arch",
       abbr: "a",
-      allowed: ["x86_64", "x64", "arm64"],
+      allowed: ["x86_64", "x64", "arm64", "os64"],
       mandatory: true,
     );
     argParser.addFlag("force", abbr: "f", help: "Force download and extract");
