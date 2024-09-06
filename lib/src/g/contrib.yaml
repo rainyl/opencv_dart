@@ -292,6 +292,74 @@ files:
         name: BlockMeanHash_SetMode
       c:@F@BlockMeanHash_SetMode_Async:
         name: BlockMeanHash_SetMode_Async
+      c:@F@QualityBRISQUE_close:
+        name: QualityBRISQUE_close
+      c:@F@QualityBRISQUE_compute:
+        name: QualityBRISQUE_compute
+      c:@F@QualityBRISQUE_computeFeatures_static:
+        name: QualityBRISQUE_computeFeatures_static
+      c:@F@QualityBRISQUE_computeFeatures_static_async:
+        name: QualityBRISQUE_computeFeatures_static_async
+      c:@F@QualityBRISQUE_compute_async:
+        name: QualityBRISQUE_compute_async
+      c:@F@QualityBRISQUE_compute_static:
+        name: QualityBRISQUE_compute_static
+      c:@F@QualityBRISQUE_compute_static_async:
+        name: QualityBRISQUE_compute_static_async
+      c:@F@QualityBRISQUE_create:
+        name: QualityBRISQUE_create
+      c:@F@QualityGMSD_close:
+        name: QualityGMSD_close
+      c:@F@QualityGMSD_compute:
+        name: QualityGMSD_compute
+      c:@F@QualityGMSD_compute_async:
+        name: QualityGMSD_compute_async
+      c:@F@QualityGMSD_compute_static:
+        name: QualityGMSD_compute_static
+      c:@F@QualityGMSD_compute_static_async:
+        name: QualityGMSD_compute_static_async
+      c:@F@QualityGMSD_create:
+        name: QualityGMSD_create
+      c:@F@QualityMSE_close:
+        name: QualityMSE_close
+      c:@F@QualityMSE_compute:
+        name: QualityMSE_compute
+      c:@F@QualityMSE_compute_async:
+        name: QualityMSE_compute_async
+      c:@F@QualityMSE_compute_static:
+        name: QualityMSE_compute_static
+      c:@F@QualityMSE_compute_static_async:
+        name: QualityMSE_compute_static_async
+      c:@F@QualityMSE_create:
+        name: QualityMSE_create
+      c:@F@QualityPSNR_close:
+        name: QualityPSNR_close
+      c:@F@QualityPSNR_compute:
+        name: QualityPSNR_compute
+      c:@F@QualityPSNR_compute_async:
+        name: QualityPSNR_compute_async
+      c:@F@QualityPSNR_compute_static:
+        name: QualityPSNR_compute_static
+      c:@F@QualityPSNR_compute_static_async:
+        name: QualityPSNR_compute_static_async
+      c:@F@QualityPSNR_create:
+        name: QualityPSNR_create
+      c:@F@QualityPSNR_getMaxPixelValue:
+        name: QualityPSNR_getMaxPixelValue
+      c:@F@QualityPSNR_setMaxPixelValue:
+        name: QualityPSNR_setMaxPixelValue
+      c:@F@QualitySSIM_close:
+        name: QualitySSIM_close
+      c:@F@QualitySSIM_compute:
+        name: QualitySSIM_compute
+      c:@F@QualitySSIM_compute_async:
+        name: QualitySSIM_compute_async
+      c:@F@QualitySSIM_compute_static:
+        name: QualitySSIM_compute_static
+      c:@F@QualitySSIM_compute_static_async:
+        name: QualitySSIM_compute_static_async
+      c:@F@QualitySSIM_create:
+        name: QualitySSIM_create
       c:@F@WBDetector_Close:
         name: WBDetector_Close
       c:@F@WBDetector_Create:
@@ -542,6 +610,16 @@ files:
         name: GraphSegmentation
       c:@S@PtrWBDetector:
         name: PtrWBDetector
+      c:@S@QualityBRISQUE:
+        name: QualityBRISQUE
+      c:@S@QualityGMSD:
+        name: QualityGMSD
+      c:@S@QualityMSE:
+        name: QualityMSE
+      c:@S@QualityPSNR:
+        name: QualityPSNR
+      c:@S@QualitySSIM:
+        name: QualitySSIM
       c:@S@RFFeatureGetter:
         name: RFFeatureGetter
       c:@S@StructuredEdgeDetection:
@@ -556,6 +634,16 @@ files:
         name: ArucoDictionaryPtr
       c:img_hash.h@T@BlockMeanHashPtr:
         name: BlockMeanHashPtr
+      c:quality.h@T@QualityBRISQUEPtr:
+        name: QualityBRISQUEPtr
+      c:quality.h@T@QualityGMSDPtr:
+        name: QualityGMSDPtr
+      c:quality.h@T@QualityMSEPtr:
+        name: QualityMSEPtr
+      c:quality.h@T@QualityPSNRPtr:
+        name: QualityPSNRPtr
+      c:quality.h@T@QualitySSIMPtr:
+        name: QualitySSIMPtr
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:

@@ -42,7 +42,7 @@ CvStatus *Mat_New(Mat *rval);
 CvStatus *Mat_NewWithSize(int rows, int cols, int type, Mat *rval);
 CvStatus *Mat_NewWithSizes(VecI32 sizes, int type, Mat *rval);
 CvStatus *Mat_NewWithSizesFromScalar(VecI32 sizes, int type, Scalar ar, Mat *rval);
-CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, VecChar buf, Mat *rval);
+CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, void *buf, Mat *rval);
 CvStatus *Mat_NewFromScalar(const Scalar ar, int rows, int cols, int type, Mat *rval);
 CvStatus *Mat_NewFromBytes(int rows, int cols, int type, void *buf, Mat *rval);
 CvStatus *Mat_NewFromVecPoint(VecPoint vec, Mat *rval);

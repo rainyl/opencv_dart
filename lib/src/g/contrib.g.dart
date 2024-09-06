@@ -2974,6 +2974,669 @@ class CvNativeContrib {
           ffi.Pointer<CvStatus> Function(
               BlockMeanHash, int, imp1.CvCallback_0)>();
 
+  void QualityBRISQUE_close(
+    QualityBRISQUEPtr self,
+  ) {
+    return _QualityBRISQUE_close(
+      self,
+    );
+  }
+
+  late final _QualityBRISQUE_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>(
+          'QualityBRISQUE_close');
+  late final _QualityBRISQUE_close =
+      _QualityBRISQUE_closePtr.asFunction<void Function(QualityBRISQUEPtr)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute(
+    QualityBRISQUE self,
+    Mat img,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityBRISQUE_compute(
+      self,
+      img,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat,
+              ffi.Pointer<Scalar>)>>('QualityBRISQUE_compute');
+  late final _QualityBRISQUE_compute = _QualityBRISQUE_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          QualityBRISQUE, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_computeFeatures_static(
+    Mat img,
+    Mat features,
+  ) {
+    return _QualityBRISQUE_computeFeatures_static(
+      img,
+      features,
+    );
+  }
+
+  late final _QualityBRISQUE_computeFeatures_staticPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>>(
+          'QualityBRISQUE_computeFeatures_static');
+  late final _QualityBRISQUE_computeFeatures_static =
+      _QualityBRISQUE_computeFeatures_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_computeFeatures_static_async(
+    Mat img,
+    Mat features,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _QualityBRISQUE_computeFeatures_static_async(
+      img,
+      features,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_computeFeatures_static_asyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+      'QualityBRISQUE_computeFeatures_static_async');
+  late final _QualityBRISQUE_computeFeatures_static_async =
+      _QualityBRISQUE_computeFeatures_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_async(
+    QualityBRISQUE self,
+    Mat img,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityBRISQUE_compute_async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat,
+              imp1.CvCallback_1)>>('QualityBRISQUE_compute_async');
+  late final _QualityBRISQUE_compute_async =
+      _QualityBRISQUE_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityBRISQUE, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_static(
+    Mat img,
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityBRISQUE_compute_static(
+      img,
+      model_file,
+      range_file,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Scalar>)>>('QualityBRISQUE_compute_static');
+  late final _QualityBRISQUE_compute_static =
+      _QualityBRISQUE_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_static_async(
+    Mat img,
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityBRISQUE_compute_static_async(
+      img,
+      model_file,
+      range_file,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('QualityBRISQUE_compute_static_async');
+  late final _QualityBRISQUE_compute_static_async =
+      _QualityBRISQUE_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_create(
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    ffi.Pointer<QualityBRISQUE> rval,
+  ) {
+    return _QualityBRISQUE_create(
+      model_file,
+      range_file,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<QualityBRISQUE>)>>('QualityBRISQUE_create');
+  late final _QualityBRISQUE_create = _QualityBRISQUE_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<QualityBRISQUE>)>();
+
+  void QualityGMSD_close(
+    QualityGMSDPtr self,
+  ) {
+    return _QualityGMSD_close(
+      self,
+    );
+  }
+
+  late final _QualityGMSD_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>(
+          'QualityGMSD_close');
+  late final _QualityGMSD_close =
+      _QualityGMSD_closePtr.asFunction<void Function(QualityGMSDPtr)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute(
+    QualityGMSD self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityGMSD_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityGMSD, Mat, ffi.Pointer<Scalar>)>>('QualityGMSD_compute');
+  late final _QualityGMSD_compute = _QualityGMSD_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityGMSD, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_async(
+    QualityGMSD self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityGMSD_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualityGMSD_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityGMSD, Mat,
+              imp1.CvCallback_1)>>('QualityGMSD_compute_async');
+  late final _QualityGMSD_compute_async =
+      _QualityGMSD_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityGMSD, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityGMSD_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualityGMSD_compute_static');
+  late final _QualityGMSD_compute_static =
+      _QualityGMSD_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityGMSD_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityGMSD_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualityGMSD_compute_static_async');
+  late final _QualityGMSD_compute_static_async =
+      _QualityGMSD_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_create(
+    Mat ref,
+    ffi.Pointer<QualityGMSD> rval,
+  ) {
+    return _QualityGMSD_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualityGMSD>)>>('QualityGMSD_create');
+  late final _QualityGMSD_create = _QualityGMSD_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>();
+
+  void QualityMSE_close(
+    QualityMSEPtr self,
+  ) {
+    return _QualityMSE_close(
+      self,
+    );
+  }
+
+  late final _QualityMSE_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>(
+          'QualityMSE_close');
+  late final _QualityMSE_close =
+      _QualityMSE_closePtr.asFunction<void Function(QualityMSEPtr)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute(
+    QualityMSE self,
+    Mat cmpImgs,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityMSE_compute(
+      self,
+      cmpImgs,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityMSE, Mat, ffi.Pointer<Scalar>)>>('QualityMSE_compute');
+  late final _QualityMSE_compute = _QualityMSE_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityMSE, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_async(
+    QualityMSE self,
+    Mat cmpImgs,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityMSE_compute_async(
+      self,
+      cmpImgs,
+      callback,
+    );
+  }
+
+  late final _QualityMSE_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityMSE, Mat, imp1.CvCallback_1)>>('QualityMSE_compute_async');
+  late final _QualityMSE_compute_async =
+      _QualityMSE_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(QualityMSE, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityMSE_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualityMSE_compute_static');
+  late final _QualityMSE_compute_static =
+      _QualityMSE_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityMSE_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityMSE_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualityMSE_compute_static_async');
+  late final _QualityMSE_compute_static_async =
+      _QualityMSE_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_create(
+    Mat ref,
+    ffi.Pointer<QualityMSE> rval,
+  ) {
+    return _QualityMSE_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualityMSE>)>>('QualityMSE_create');
+  late final _QualityMSE_create = _QualityMSE_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityMSE>)>();
+
+  void QualityPSNR_close(
+    QualityPSNRPtr self,
+  ) {
+    return _QualityPSNR_close(
+      self,
+    );
+  }
+
+  late final _QualityPSNR_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>(
+          'QualityPSNR_close');
+  late final _QualityPSNR_close =
+      _QualityPSNR_closePtr.asFunction<void Function(QualityPSNRPtr)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute(
+    QualityPSNR self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityPSNR_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityPSNR, Mat, ffi.Pointer<Scalar>)>>('QualityPSNR_compute');
+  late final _QualityPSNR_compute = _QualityPSNR_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityPSNR, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_async(
+    QualityPSNR self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityPSNR_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualityPSNR_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityPSNR, Mat,
+              imp1.CvCallback_1)>>('QualityPSNR_compute_async');
+  late final _QualityPSNR_compute_async =
+      _QualityPSNR_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityPSNR, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_static(
+    Mat ref,
+    Mat cmp,
+    double maxPixelValue,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityPSNR_compute_static(
+      ref,
+      cmp,
+      maxPixelValue,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat,
+              ffi.Pointer<Scalar>)>>('QualityPSNR_compute_static');
+  late final _QualityPSNR_compute_static =
+      _QualityPSNR_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    double maxPixelValue,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityPSNR_compute_static_async(
+      ref,
+      cmp,
+      maxPixelValue,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityPSNR_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat,
+              imp1.CvCallback_1)>>('QualityPSNR_compute_static_async');
+  late final _QualityPSNR_compute_static_async =
+      _QualityPSNR_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_create(
+    Mat ref,
+    double maxPixelValue,
+    ffi.Pointer<QualityPSNR> rval,
+  ) {
+    return _QualityPSNR_create(
+      ref,
+      maxPixelValue,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double,
+              ffi.Pointer<QualityPSNR>)>>('QualityPSNR_create');
+  late final _QualityPSNR_create = _QualityPSNR_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, double, ffi.Pointer<QualityPSNR>)>();
+
+  double QualityPSNR_getMaxPixelValue(
+    QualityPSNR self,
+  ) {
+    return _QualityPSNR_getMaxPixelValue(
+      self,
+    );
+  }
+
+  late final _QualityPSNR_getMaxPixelValuePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(QualityPSNR)>>(
+          'QualityPSNR_getMaxPixelValue');
+  late final _QualityPSNR_getMaxPixelValue = _QualityPSNR_getMaxPixelValuePtr
+      .asFunction<double Function(QualityPSNR)>();
+
+  void QualityPSNR_setMaxPixelValue(
+    QualityPSNR self,
+    double maxPixelValue,
+  ) {
+    return _QualityPSNR_setMaxPixelValue(
+      self,
+      maxPixelValue,
+    );
+  }
+
+  late final _QualityPSNR_setMaxPixelValuePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNR, ffi.Double)>>(
+          'QualityPSNR_setMaxPixelValue');
+  late final _QualityPSNR_setMaxPixelValue = _QualityPSNR_setMaxPixelValuePtr
+      .asFunction<void Function(QualityPSNR, double)>();
+
+  void QualitySSIM_close(
+    QualitySSIMPtr self,
+  ) {
+    return _QualitySSIM_close(
+      self,
+    );
+  }
+
+  late final _QualitySSIM_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>(
+          'QualitySSIM_close');
+  late final _QualitySSIM_close =
+      _QualitySSIM_closePtr.asFunction<void Function(QualitySSIMPtr)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute(
+    QualitySSIM self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualitySSIM_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualitySSIM, Mat, ffi.Pointer<Scalar>)>>('QualitySSIM_compute');
+  late final _QualitySSIM_compute = _QualitySSIM_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualitySSIM, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_async(
+    QualitySSIM self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualitySSIM_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualitySSIM_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualitySSIM, Mat,
+              imp1.CvCallback_1)>>('QualitySSIM_compute_async');
+  late final _QualitySSIM_compute_async =
+      _QualitySSIM_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualitySSIM, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualitySSIM_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualitySSIM_compute_static');
+  late final _QualitySSIM_compute_static =
+      _QualitySSIM_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualitySSIM_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualitySSIM_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualitySSIM_compute_static_async');
+  late final _QualitySSIM_compute_static_async =
+      _QualitySSIM_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_create(
+    Mat ref,
+    ffi.Pointer<QualitySSIM> rval,
+  ) {
+    return _QualitySSIM_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualitySSIM>)>>('QualitySSIM_create');
+  late final _QualitySSIM_create = _QualitySSIM_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualitySSIM>)>();
+
   void WBDetector_Close(
     PtrWBDetectorPtr self,
   ) {
@@ -5384,6 +6047,16 @@ class _SymbolAddresses {
       get ArucoDictionary_Close => _library._ArucoDictionary_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>
       get BlockMeanHash_Close => _library._BlockMeanHash_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>
+      get QualityBRISQUE_close => _library._QualityBRISQUE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>
+      get QualityGMSD_close => _library._QualityGMSD_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>
+      get QualityMSE_close => _library._QualityMSE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>
+      get QualityPSNR_close => _library._QualityPSNR_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>
+      get QualitySSIM_close => _library._QualitySSIM_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>
       get WBDetector_Close => _library._WBDetector_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>
@@ -5545,6 +6218,36 @@ final class PtrWBDetector extends ffi.Struct {
 }
 
 typedef PtrWBDetectorPtr = ffi.Pointer<PtrWBDetector>;
+
+final class QualityBRISQUE extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityBRISQUEPtr = ffi.Pointer<QualityBRISQUE>;
+
+final class QualityGMSD extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityGMSDPtr = ffi.Pointer<QualityGMSD>;
+
+final class QualityMSE extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityMSEPtr = ffi.Pointer<QualityMSE>;
+
+final class QualityPSNR extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityPSNRPtr = ffi.Pointer<QualityPSNR>;
+
+final class QualitySSIM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualitySSIMPtr = ffi.Pointer<QualitySSIM>;
 
 final class RFFeatureGetter extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;

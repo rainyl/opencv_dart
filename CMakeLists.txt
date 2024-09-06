@@ -20,6 +20,7 @@ set(OpenCV_LIBS
     opencv_features2d opencv_gapi opencv_photo opencv_imgproc
     opencv_objdetect opencv_video opencv_videoio opencv_stitching
     opencv_img_hash opencv_wechat_qrcode opencv_ximgproc opencv_xobjdetect
+    opencv_quality
 )
 
 if(ANDROID)

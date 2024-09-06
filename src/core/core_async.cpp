@@ -98,23 +98,7 @@ CvStatus *Mat_Ones_Async(int rows, int cols, int type, CvCallback_1 callback) {
 #pragma endregion
 
 #pragma region Mat_functions
-CvStatus *Mat_Release_Async(MatPtr self, CvCallback_0 callback) {
-  BEGIN_WRAP
-  self->ptr->release();
-  callback();
-  END_WRAP
-}
-// bool *rval
-CvStatus *Mat_Empty_Async(Mat self, CvCallback_1 callback) {
-  BEGIN_WRAP
-  callback(new bool(self.ptr->empty()));
-  END_WRAP
-}
-CvStatus *Mat_IsContinuous_Async(Mat self, CvCallback_1 callback) {
-  BEGIN_WRAP
-  callback(new bool(self.ptr->isContinuous()));
-  END_WRAP
-}
+
 CvStatus *Mat_Clone_Async(Mat self, CvCallback_1 callback) {
   BEGIN_WRAP
   callback(new Mat{new cv::Mat(self.ptr->clone())});
