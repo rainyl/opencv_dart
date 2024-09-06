@@ -1,12 +1,22 @@
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:test/test.dart';
 
-void main() {
+void checkResult(cv.Scalar value, List<double> values, {double eps = 1e-3, cv.Mat? qualityMap}) {
+  expect(value.val1, closeTo(values[0], eps));
+  expect(value.val2, closeTo(values[1], eps));
+  expect(value.val3, closeTo(values[2], eps));
+
+  if (qualityMap != null) {
+    expect(qualityMap.isEmpty, false);
+  }
+}
+
+void main() async {
   final refImg = cv.imread("test/images/lenna.png");
   final target = cv.gaussianBlur(refImg, (5, 5), 15);
 
   // https://github.com/shimat/opencvsharp/blob/main/test/OpenCvSharp.Tests/quality/QualityBRISQUETest.cs
-  test("cv.quality.QualityBRISQUE", () {
+  test("cv.quality.QualityBRISQUE", () async {
     const modelPath = "test/data/brisque_model_live.yml";
     const rangePath = "test/data/brisque_range_live.yml";
 
@@ -16,9 +26,10 @@ void main() {
       expect(value, cv.Scalar(0, 0, 0));
 
       value = qualifier.compute(target);
-      expect(value.val1, closeTo(57.261, 1e-3));
-      expect(value.val2, closeTo(0, 1e-6));
-      expect(value.val3, closeTo(0, 1e-6));
+      checkResult(value, [57.261, 0, 0]);
+
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [57.261, 0, 0]);
     }
 
     {
@@ -26,88 +37,89 @@ void main() {
       expect(value, cv.Scalar(0, 0, 0));
 
       value = cv.QualityBRISQUE.compute1(modelPath, rangePath, target);
-      expect(value.val1, closeTo(57.261, 1e-3));
-      expect(value.val2, closeTo(0, 1e-6));
-      expect(value.val3, closeTo(0, 1e-6));
+      checkResult(value, [57.261, 0, 0]);
+
+      value = await cv.QualityBRISQUE.compute1Async(modelPath, rangePath, target);
+      checkResult(value, [57.261, 0, 0]);
 
       final features = cv.QualityBRISQUE.computeFeatures(refImg);
       expect(features.isEmpty, false);
     }
   });
 
-  test("cv.quality.QualityGMSD", () {
+  test("cv.quality.QualityGMSD", () async {
     {
       final qualifier = cv.QualityGMSD.create(refImg);
-      final value = qualifier.compute(target);
-      expect(value.val1, closeTo(0.0616, 1e-3));
-      expect(value.val2, closeTo(0.0711, 1e-3));
-      expect(value.val3, closeTo(0.05983, 1e-3));
+      var value = qualifier.compute(target);
+      checkResult(value, [0.0616, 0.0711, 0.05983]);
+
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [0.0616, 0.0711, 0.05983]);
     }
     {
-      final (value, qualityMap) = cv.QualityGMSD.compute1(refImg, target);
-      expect(value.val1, closeTo(0.0616, 1e-3));
-      expect(value.val2, closeTo(0.0711, 1e-3));
-      expect(value.val3, closeTo(0.05983, 1e-3));
+      var (value, qualityMap) = cv.QualityGMSD.compute1(refImg, target);
+      checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
 
-      expect(qualityMap.isEmpty, false);
+      (value, qualityMap) = await cv.QualityGMSD.compute1Async(refImg, target);
+      checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
     }
   });
 
-  test("cv.quality.QualityMSE", () {
+  test("cv.quality.QualityMSE", () async {
     {
       final qualifier = cv.QualityMSE.create(refImg);
-      final value = qualifier.compute(target);
-      expect(value.val[0], closeTo(83.89224, 1e-6));
-      expect(value.val[1], closeTo(96.848604, 1e-6));
-      expect(value.val[2], closeTo(50.611845, 1e-6));
+      var value = qualifier.compute(target);
+      checkResult(value, [83.89224, 96.848604, 50.611845]);
+
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [83.89224, 96.848604, 50.611845]);
     }
     {
-      final (value, qualityMap) = cv.QualityMSE.compute1(refImg, target);
-      expect(value.val[0], closeTo(83.89224, 1e-6));
-      expect(value.val[1], closeTo(96.848604, 1e-6));
-      expect(value.val[2], closeTo(50.611845, 1e-6));
+      var (value, qualityMap) = cv.QualityMSE.compute1(refImg, target);
+      checkResult(value, [83.89224, 96.848604, 50.611845], qualityMap: qualityMap);
 
-      expect(qualityMap.isEmpty, false);
+      (value, qualityMap) = await cv.QualityMSE.compute1Async(refImg, target);
+      checkResult(value, [83.89224, 96.848604, 50.611845], qualityMap: qualityMap);
     }
   });
 
-  test("cv.quality.QualityPSNR", () {
+  test("cv.quality.QualityPSNR", () async {
     {
       final qualifier = cv.QualityPSNR.create(refImg);
-      final value = qualifier.compute(target);
-      expect(value.val1, closeTo(28.893586, 1e-6));
-      expect(value.val2, closeTo(28.26987, 1e-6));
-      expect(value.val3, closeTo(31.088282, 1e-6));
+      var value = qualifier.compute(target);
+      checkResult(value, [28.893586, 28.26987, 31.088282]);
+
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [28.893586, 28.26987, 31.088282]);
 
       qualifier.maxPixelValue = 241;
       expect(qualifier.maxPixelValue, 241);
     }
     {
-      final (value, qualityMap) = cv.QualityPSNR.compute1(refImg, target);
-      expect(value.val1, closeTo(28.893586, 1e-6));
-      expect(value.val2, closeTo(28.26987, 1e-6));
-      expect(value.val3, closeTo(31.088282, 1e-6));
+      var (value, qualityMap) = cv.QualityPSNR.compute1(refImg, target);
+      checkResult(value, [28.893586, 28.26987, 31.088282], qualityMap: qualityMap);
 
-      expect(qualityMap.isEmpty, false);
+      (value, qualityMap) = await cv.QualityPSNR.compute1Async(refImg, target);
+      checkResult(value, [28.893586, 28.26987, 31.088282], qualityMap: qualityMap);
     }
   });
 
-  test("cv.quality.QualitySSIM", () {
+  test("cv.quality.QualitySSIM", () async {
     {
       final qualifier = cv.QualitySSIM.create(refImg);
-      final value = qualifier.compute(target);
-      expect(value.val[0], closeTo(0.72, 1e-3));
-      expect(value.val[1], closeTo(0.793, 1e-3));
-      expect(value.val[2], closeTo(0.863, 1e-3));
+      var value = qualifier.compute(target);
+      checkResult(value, [0.72, 0.793, 0.863]);
+
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [0.72, 0.793, 0.863]);
     }
 
     {
-      final (value, qualityMap) = cv.QualitySSIM.compute1(refImg, target);
-      expect(value.val[0], closeTo(0.72, 1e-3));
-      expect(value.val[1], closeTo(0.793, 1e-3));
-      expect(value.val[2], closeTo(0.863, 1e-3));
+      var (value, qualityMap) = cv.QualitySSIM.compute1(refImg, target);
+      checkResult(value, [0.72, 0.793, 0.863], qualityMap: qualityMap);
 
-      expect(qualityMap.isEmpty, false);
+      (value, qualityMap) = await cv.QualitySSIM.compute1Async(refImg, target);
+      checkResult(value, [0.72, 0.793, 0.863], qualityMap: qualityMap);
     }
   });
 }

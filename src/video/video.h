@@ -48,7 +48,7 @@ void BackgroundSubtractorKNN_Close(BackgroundSubtractorKNNPtr self);
 CvStatus *BackgroundSubtractorKNN_Apply(BackgroundSubtractorKNN self, Mat src, Mat dst);
 
 CvStatus *CalcOpticalFlowPyrLK(
-    Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f *nextPts, VecUChar status, VecF32 err
+    Mat prevImg, Mat nextImg, VecPoint2f prevPts, VecPoint2f *nextPts, VecUChar *status, VecF32 *err
 );
 CvStatus *CalcOpticalFlowPyrLKWithParams(
     Mat prevImg,

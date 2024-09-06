@@ -1,6 +1,4 @@
-#include "core/types.h"
-#include "opencv2/quality/qualitybrisque.hpp"
-#include "quality.h"
+#include "quality_async.h"
 
 CvStatus *QualityBRISQUE_compute_async(QualityBRISQUE self, Mat img, CvCallback_1 callback) {
   BEGIN_WRAP
