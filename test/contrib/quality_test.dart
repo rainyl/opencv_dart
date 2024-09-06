@@ -42,7 +42,10 @@ void main() async {
       value = await cv.QualityBRISQUE.compute1Async(modelPath, rangePath, target);
       checkResult(value, [57.261, 0, 0]);
 
-      final features = cv.QualityBRISQUE.computeFeatures(refImg);
+      var features = cv.QualityBRISQUE.computeFeatures(refImg);
+      expect(features.isEmpty, false);
+
+      features = await cv.QualityBRISQUE.computeFeaturesAsync(refImg);
       expect(features.isEmpty, false);
     }
   });
