@@ -75,7 +75,7 @@ jobs:
           merge-multiple: false
       - name: extract
         run: |
-          tar -xzvf ${{github.workspace}}/artifacts/libopencv_dart-windows-x64.tar.gz -C windows
+          tar -xzvf ${{github.workspace}}\artifacts\libopencv_dart-windows-x64.tar.gz\libopencv_dart-windows-x64.tar.gz -C windows
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
