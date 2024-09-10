@@ -50,6 +50,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=install \
           -DCMAKE_BUILD_TYPE=Release \
           -DPLATFORM=${{ matrix.osname.platform }} \
+          -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/macos" \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
           cmake --build . --config Release --target install
@@ -67,8 +68,6 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          cp -rf build/install/* macos/
-          ls -alh macos
           export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
           dart pub get
           dart test -x skip-workflow,no-local-files

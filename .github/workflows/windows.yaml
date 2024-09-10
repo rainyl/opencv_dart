@@ -30,6 +30,7 @@ jobs:
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=install `
           -DCMAKE_BUILD_TYPE=Release `
+          -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
           cmake --build . --config Release -j $(nproc)
@@ -44,11 +45,9 @@ jobs:
           name: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - name: test
         run: |
-          Copy-Item -Recurse -Force ${{github.workspace}}\build\install\* windows\
           $env:PATH = "$env:PATH;${{github.workspace}}\windows"
           dart pub get
           dart test -x no-local-files
@@ -60,3 +59,43 @@ jobs:
           prerelease: false
           files: |
             libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+  coverage:
+    name: coverage
+    needs: windows
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: download
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: libopencv_dart-windows-x64.tar.gz
+          merge-multiple: false
+      - name: extract
+        run: |
+          tar -xzvf ${{github.workspace}}/artifacts/libopencv_dart-windows-x64.tar.gz -C windows
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "test/"
+          extract: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: test coverage
+        run: |
+          cd "${{github.workspace}}"
+          ls windows
+          $env:PATH="${{github.workspace}}\windows;$env:PATH"
+          dart pub global activate coverage
+          dart pub global run coverage:test_with_coverage --package . --package-name opencv_dart
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rainyl/opencv_dart
+          file: ./coverage/lcov.info

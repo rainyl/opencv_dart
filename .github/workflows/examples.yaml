@@ -7,30 +7,23 @@ on:
   #   branches: ["main"]
 
 jobs:
-  build-windows:
-    name: build-windows
+  windows:
+    name: windows
     runs-on: windows-2019
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
       - name: build
         run: |
           cd example
           flutter build windows
-          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-  build-ubuntu:
-    name: build-ubuntu
+  ubuntu:
+    name: ubuntu
     runs-on: ubuntu-latest
-
     steps:
       - name: setup
         run: |
@@ -42,7 +35,6 @@ jobs:
             libjpeg-dev libpng-dev libtiff-dev python3-pip
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
@@ -56,45 +48,33 @@ jobs:
           cd example
           flutter build linux
           flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-  build-macos:
-    name: build-macos
+  macos:
+    name: macos
     runs-on: macos-13
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
       - name: build
         run: |
           cd example
           flutter build macos
-          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign
-  build-macos-arm:
-    name: build-macos-arm
+  macos-arm:
+    name: macos-arm
     runs-on: macos-14
     steps:
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
       - name: build
         run: |
           cd example
           flutter build macos
-          # flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
           flutter build ios --release --no-codesign

@@ -7,8 +7,8 @@ on:
     branches: ["main"]
 
 jobs:
-  build-windows:
-    name: build-windows
+  coverage:
+    name: coverage
     runs-on: windows-2019
 
     steps:
@@ -40,7 +40,6 @@ jobs:
           name: libopencv_dart-windows-x64.tar.gz
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
       - name: setup coverage
         run: |
