@@ -2,6 +2,7 @@ name: windows
 
 on:
   push:
+    branches: ["main"]
     tags:
       - "v*.*.*"
   pull_request:
@@ -30,6 +31,7 @@ jobs:
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=install `
           -DCMAKE_BUILD_TYPE=Release `
+          -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
           cmake --build . --config Release -j $(nproc)
@@ -42,16 +44,29 @@ jobs:
         with:
           path: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
           name: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "test/"
+          extract: true
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
           channel: "stable"
-      - name: test
+      - name: test coverage
         run: |
-          Copy-Item -Recurse -Force ${{github.workspace}}\build\install\* windows\
-          $env:PATH = "$env:PATH;${{github.workspace}}\windows"
-          dart pub get
-          dart test -x no-local-files
+          cd "${{github.workspace}}"
+          ls windows
+          $env:PATH="${{github.workspace}}\windows;$env:PATH"
+          dart pub global activate coverage
+          dart pub global run coverage:test_with_coverage --package . --package-name opencv_dart
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rainyl/opencv_dart
+          file: ./coverage/lcov.info
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

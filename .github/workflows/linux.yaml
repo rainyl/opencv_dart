@@ -18,6 +18,7 @@ jobs:
       COMMON_CMAKE_OPTIONS: |
         -DCMAKE_INSTALL_PREFIX=install \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/linux" \
 
     steps:
       - name: setup
@@ -62,7 +63,6 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          cp -rf build/install/* linux/
           export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
           dart pub get
           dart test -x skip-workflow,no-local-files
