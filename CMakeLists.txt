@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project(opencv_dart_library VERSION 1.0.0 LANGUAGES C CXX)
 set(LIBRARY_NAME "opencv_dart")
 
+file(READ ${CMAKE_SOURCE_DIR}/binary.version PROJECT_VERSION)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -40,6 +42,7 @@ message(STATUS "    config: ${OpenCV_DIR}")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+message(STATUS "Project version: ${PROJECT_VERSION}")
 
 file(GLOB_RECURSE CPP_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
@@ -80,9 +83,7 @@ if(IOS)
     set_target_properties(${LIBRARY_NAME} PROPERTIES
         FRAMEWORK TRUE
         FRAMEWORK_VERSION CXX
-        MACOSX_FRAMEWORK_IDENTIFIER dev.rainyl.opencvDart
-        MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
-        MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
+        MACOSX_FRAMEWORK_INFO_PLIST ${CMAKE_SOURCE_DIR}/ios/Info.plist.in
     )
 endif(IOS)
 
