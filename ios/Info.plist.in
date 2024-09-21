@@ -20,7 +20,7 @@
     <string>FMWK</string>
     <key>CFBundleSupportedPlatforms</key>
     <array>
-        <string>iPhoneOS</string>
+        <string>${IOS_SUPPORTED_PLATFORM}</string>
     </array>
     <key>MinimumOSVersion</key>
     <string>100.0</string>

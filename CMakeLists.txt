@@ -80,6 +80,13 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
 )
 
 if(IOS)
+    if(DEFINED SIMULATOR64)
+        set(IOS_SUPPORTED_PLATFORM "iPhoneSimulator")
+    elseif(DEFINED OS64)
+        set(IOS_SUPPORTED_PLATFORM "iPhoneOS")
+    else()
+        message(FATAL_ERROR "For IOS, only OS64 and SIMULATOR64 are supported now.")
+    endif()
     set_target_properties(${LIBRARY_NAME} PROPERTIES
         FRAMEWORK TRUE
         FRAMEWORK_VERSION CXX
