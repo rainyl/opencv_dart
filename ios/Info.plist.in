@@ -9,7 +9,7 @@
     <key>CFBundleName</key>
     <string>${LIBRARY_NAME}</string>
     <key>CFBundleIdentifier</key>
-    <string>dev.rainyl.opencvDart</string>
+    <string>dev.rainyl.OpenCvDart</string>
     <key>CFBundleVersion</key>
     <string>${PROJECT_VERSION}</string>
     <key>CFBundleShortVersionString</key>

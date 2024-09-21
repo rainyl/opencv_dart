@@ -80,8 +80,8 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
 )
 
 if(IOS)
+  # PLATFORM will be defined using ios.toolchain.cmake
   if(DEFINED PLATFORM)
-    # if PLATFORM equals "iPhoneSimulator"
     if(PLATFORM STREQUAL "SIMULATOR64")
       set(IOS_SUPPORTED_PLATFORM "iPhoneSimulator")
     elseif(PLATFORM STREQUAL "OS64")
