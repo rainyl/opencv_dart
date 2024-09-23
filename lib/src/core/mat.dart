@@ -135,6 +135,12 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
+  /// Create [Mat] from a vector [Vec]
+  ///
+  /// [vec] can be an instance of [VecPoint], [VecPoint2f], [VecPoint3f], [VecPoint3i],
+  /// [VecU8], [VecI8], [VecU16], [VecI16], [VecI32], [VecF32], [VecF64], [VecF16]
+  ///
+  /// data will be copied, if [vec] is large, remember to dispose it.
   factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type}) {
     final p = calloc<cvg.Mat>();
     switch (vec) {
@@ -158,7 +164,6 @@ class Mat extends CvStruct<cvg.Mat> {
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
-    vec.dispose();
     return Mat._(p);
   }
 
