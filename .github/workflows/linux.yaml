@@ -36,7 +36,7 @@ jobs:
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv.full"
-          latest: true
+          tag: "4.10.0+6"
           fileName: "libopencv-linux-${{ matrix.arch }}.tar.gz"
           out-file-path: "build/opencv"
           extract: true
