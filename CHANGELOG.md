@@ -1,3 +1,11 @@
+# 1.2.5
+
+* add quality module by @rainyl in https://github.com/rainyl/opencv_dart/pull/239
+* Bump ffigen from 13.0.0 to 14.0.0 by @dependabot in https://github.com/rainyl/opencv_dart/pull/242
+* Cmake install to platform dir by @rainyl in https://github.com/rainyl/opencv_dart/pull/243
+* fix: [iOS] opencv_dart framework is missing MinimumOSVersion #246 by @rainyl in https://github.com/rainyl/opencv_dart/pull/247
+* do not dispose vec in Mat.fromVec by @rainyl in https://github.com/rainyl/opencv_dart/pull/250
+
 ## 1.2.4
 
 * change `Mat.toString()` to return something like `Mat(addr=0x1dde02c74b0, type=CV_8UC4, rows=-1, cols=-1, channels=4)` by @rainyl in https://github.com/rainyl/opencv_dart/pull/233
