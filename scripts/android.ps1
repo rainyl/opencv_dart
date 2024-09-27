@@ -1,0 +1,11 @@
+cmake -S ../../.. -GNinja -DCMAKE_POLICY_DEFAULT_CMP0057=NEW `
+-DCMAKE_TOOLCHAIN_FILE="$env:ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake" `
+-DANDROID_USE_LEGACY_TOOLCHAIN_FILE=False `
+-DANDROID_PLATFORM=android-24 `
+-DCMAKE_INSTALL_PREFIX=install `
+-DCMAKE_BUILD_TYPE=Release `
+-DANDROID_STL=c++_static `
+-DANDROID_ABI=x86_64 `
+-DFFMPEG_DIR="D:\flutter\opencv_dart\build\android\libopencv-android-x86_64\ffmpeg\cmake" `
+-DOpenCV_DIR="D:\flutter\opencv_dart\build\android\libopencv-android-x86_64\sdk\native\jni" `
+-DANDROID_ARM_NEON=ON

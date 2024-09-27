@@ -48,7 +48,7 @@ jobs:
           cd build
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} \
-          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
+          -DFFMPEG_DIR=${{ env.FFMPEG_ROOT }}/cmake \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
           cmake --build . --config Release -j $(nproc)
@@ -67,6 +67,7 @@ jobs:
           channel: "stable"
       - name: test
         run: |
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${{ env.FFMPEG_ROOT }}/lib"
           export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
           dart pub get
           dart test -x skip-workflow,no-local-files
@@ -89,7 +90,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX=install \
         -DCMAKE_BUILD_TYPE=Release \
         -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/linux" \
-        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/aarch64-linux-gnu.toolchain.cmake
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/aarch64-linux-gnu.toolchain.cmake \
 
     steps:
       - name: setup
@@ -116,7 +117,7 @@ jobs:
           cd build
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} \
-          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
+          -DFFMPEG_DIR=${{ env.FFMPEG_ROOT }}/cmake \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
           cmake --build . --config Release -j $(nproc)

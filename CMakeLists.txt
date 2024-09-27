@@ -12,14 +12,11 @@ cmake_policy(SET CMP0135 NEW)
 
 set(OpenCV_STATIC ON)
 
+find_package(FFMPEG REQUIRED)
 if(LINUX OR APPLE)
   find_package(Iconv REQUIRED)
 endif()
 find_package(OpenCV REQUIRED)
-find_package(FFMPEG REQUIRED)
-
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,${FFMPEG_LIBRARIES}")
-message(STATUS "CMAKE_EXE_LINKER_FLAGS: ${CMAKE_EXE_LINKER_FLAGS}")
 
 set(OpenCV_LIBS
   opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
@@ -34,11 +31,16 @@ if(ANDROID)
 endif(ANDROID)
 
 if(IOS)
+  # https://github.com/opencv/opencv/blob/450e741f8d53ff12b4e194c7762adaefb952555a/platforms/ios/build_framework.py#L386
   list(APPEND OpenCV_LIBS
     "-framework AVFoundation"
-    "-framework CoreFoundation"
+    "-framework CoreGraphics"
     "-framework CoreImage"
-    "-framework Foundation"
+    "-framework CoreMedia"
+    "-framework QuartzCore"
+    "-framework Accelerate"
+    "-framework UIKit"
+    "-framework CoreVideo"
   )
 endif(IOS)
 
@@ -61,7 +63,7 @@ target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/src"
   ${OpenCV_INCLUDE_DIRS}
 )
-target_link_libraries(${LIBRARY_NAME} PRIVATE ${OpenCV_LIBS})
+target_link_libraries(${LIBRARY_NAME} PRIVATE ${OpenCV_LIBS} ${FFMPEG_LIBRARIES})
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES
   # PUBLIC_HEADER ${HEADER_FILES}
@@ -126,6 +128,7 @@ install(FILES ${CV_DEPENDENCIES} DESTINATION ${CMAKE_INSTALL_PREFIX})
 if(CVD_PLATFORM_INSTALL_DIR)
   # also install to platform specific directories
   install(TARGETS ${LIBRARY_NAME} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
+  # install(TARGETS ${FFMPEG_LIBRARIES} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
   install(FILES ${CV_DEPENDENCIES} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
 endif()
 
