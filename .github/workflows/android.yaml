@@ -39,6 +39,7 @@ jobs:
           cd build
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/sdk/native/jni \
           -DANDROID_ARM_NEON=ON
 

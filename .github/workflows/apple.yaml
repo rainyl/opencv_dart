@@ -51,6 +51,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release \
           -DPLATFORM=${{ matrix.osname.platform }} \
           -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/macos" \
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
 
           cmake --build . --config Release --target install
@@ -110,6 +111,9 @@ jobs:
     name: ios
     runs-on: macos-14
     env:
+      IOS_ARM64: iosarm64
+      IOSSIMULATOR_X64: simulator64
+      IOSSIMULATOR_ARM64: simulatorarm64
       COMMON_CMAKE_OPTIONS: |
         -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
         -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
@@ -126,37 +130,56 @@ jobs:
         with:
           repository: "rainyl/opencv.full"
           latest: true
-          fileName: "libopencv-ios-x64.tar.gz"
-          out-file-path: "build/opencv/x64"
+          fileName: "libopencv-iossimulator-x64.tar.gz"
+          out-file-path: "build/opencv/${{ env.IOSSIMULATOR_X64 }}"
+          extract: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-iossimulator-arm64.tar.gz"
+          out-file-path: "build/opencv/${{ env.IOSSIMULATOR_ARM64 }}"
           extract: true
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv.full"
           latest: true
           fileName: "libopencv-ios-arm64.tar.gz"
-          out-file-path: "build/opencv/arm64"
+          out-file-path: "build/opencv/${{ env.IOS_ARM64 }}"
           extract: true
       - name: build_simulator64
         run: |
-          mkdir -p build/x64 && cd build/x64
+          mkdir -p build/${{ env.IOSSIMULATOR_X64 }} && cd build/${{ env.IOSSIMULATOR_X64 }}
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=SIMULATOR64 \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/x64/lib/cmake/opencv4
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/${{ env.IOSSIMULATOR_X64 }}/ffmpeg/cmake \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/${{ env.IOSSIMULATOR_X64 }}/lib/cmake/opencv4
+
+          cmake --build . --config Release --target install
+      - name: build_simulatorarm64
+        run: |
+          mkdir -p build/${{ env.IOSSIMULATOR_ARM64 }} && cd build/${{ env.IOSSIMULATOR_ARM64 }}
+          cmake -S ${{ github.workspace }} \
+          ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=SIMULATORARM64 \
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/${{ env.IOSSIMULATOR_ARM64 }}/ffmpeg/cmake \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/${{ env.IOSSIMULATOR_ARM64 }}/lib/cmake/opencv4
 
           cmake --build . --config Release --target install
       - name: build_os64
         run: |
-          mkdir -p build/os64 && cd build/os64
+          mkdir -p build/${{ env.IOS_ARM64 }} && cd build/${{ env.IOS_ARM64 }}
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DPLATFORM=OS64 \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/arm64/lib/cmake/opencv4
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/${{ env.IOS_ARM64 }}/ffmpeg/cmake \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/${{ env.IOS_ARM64 }}/lib/cmake/opencv4
 
           cmake --build . --config Release --target install
       - name: package
         run: |
           xcodebuild -create-xcframework \
-            -framework build/x64/install/opencv_dart.framework \
-            -framework build/os64/install/opencv_dart.framework \
+            -framework build/${{ env.IOS_ARM64 }}/install/opencv_dart.framework \
+            -framework build/${{ env.IOSSIMULATOR_X64 }}/install/opencv_dart.framework \
+            -framework build/${{ env.IOSSIMULATOR_ARM64 }}/install/opencv_dart.framework \
             -output opencv_dart.xcframework
           tar -zcvf libopencv_dart-ios-os64.tar.gz opencv_dart.xcframework
       - uses: actions/upload-artifact@v4

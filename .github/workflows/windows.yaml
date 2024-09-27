@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        arch: [x64]
+        arch: [x64, arm64]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,10 +32,10 @@ jobs:
           cmake -DCMAKE_INSTALL_PREFIX=install `
           -DCMAKE_BUILD_TYPE=Release `
           -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
-          cmake --build . --config Release -j $(nproc)
-          cmake --build . --config Release --target install
+          cmake --build . --config Release -j 4 --target install
       - name: package
         run: |
           tar -C build/install -zcvf libopencv_dart-windows-${{ matrix.arch }}.tar.gz .
