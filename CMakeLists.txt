@@ -18,6 +18,9 @@ endif()
 find_package(OpenCV REQUIRED)
 find_package(FFMPEG REQUIRED)
 
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,${FFMPEG_LIBRARIES}")
+message(STATUS "CMAKE_EXE_LINKER_FLAGS: ${CMAKE_EXE_LINKER_FLAGS}")
+
 set(OpenCV_LIBS
   opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
   opencv_features2d opencv_gapi opencv_photo opencv_imgproc
@@ -32,6 +35,7 @@ endif(ANDROID)
 
 if(IOS)
   list(APPEND OpenCV_LIBS
+    "-framework AVFoundation"
     "-framework CoreFoundation"
     "-framework CoreImage"
     "-framework Foundation"
@@ -47,25 +51,12 @@ message(STATUS "Project version: ${PROJECT_VERSION}")
 
 file(GLOB_RECURSE CPP_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
-
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/calib3d/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/dnn/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/extra/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/highgui/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/imgcodecs/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/imgproc/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/objdetect/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/photo/*.cpp"
-  # "${CMAKE_CURRENT_SOURCE_DIR}/src/stitching/*.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.h"
 )
 
-add_library(${LIBRARY_NAME} SHARED
-  ${CPP_FILES}
-)
+add_library(${LIBRARY_NAME} SHARED ${CPP_FILES})
 target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/src"
   ${OpenCV_INCLUDE_DIRS}
@@ -119,8 +110,8 @@ endif()
 
 ### install
 if(WIN32)
-  file(GLOB_RECURSE FFMPEG_DLL "${OpenCV_DIR}/**/*ffmpeg*.dll")
-  file(TO_CMAKE_PATH ${FFMPEG_DLL} FFMPEG_DLL)
+  # file(GLOB_RECURSE FFMPEG_DLL "${OpenCV_DIR}/**/*ffmpeg*.dll")
+  # file(TO_CMAKE_PATH ${FFMPEG_DLL} FFMPEG_DLL)
   file(GLOB CV_DEPENDENCIES "${CMAKE_BINARY_DIR}/*.dll" ${FFMPEG_DLL})
 elseif(APPLE)
   file(GLOB CV_DEPENDENCIES "${CMAKE_BINARY_DIR}/*.dylib")

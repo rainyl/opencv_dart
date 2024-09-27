@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  FFMPEG_ROOT: /tmp/ffmpeg
+
 jobs:
   android:
     name: android
@@ -34,12 +37,16 @@ jobs:
           fileName: "libopencv-android-${{ matrix.abi }}.tar.gz"
           out-file-path: "build/opencv"
           extract: true
+      - name: setup ffmpeg
+        run: |
+          mkdir -p ${{ env.FFMPEG_ROOT }}
+          cp -rf ${{ github.workspace }}/build/opencv/ffmpeg/* ${{ env.FFMPEG_ROOT }}
       - name: build
         run: |
           cd build
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
-          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
+          -DFFMPEG_DIR=${{ env.FFMPEG_ROOT }}/cmake \
           -DOpenCV_DIR=${{ github.workspace }}/build/opencv/sdk/native/jni \
           -DANDROID_ARM_NEON=ON
 

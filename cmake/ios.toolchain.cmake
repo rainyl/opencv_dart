@@ -81,6 +81,7 @@
 #                   Note: The build argument "MACOSX_DEPLOYMENT_TARGET" can be used to control min-version of macOS
 #    MAC_CATALYST_ARM64 = Build for Apple Silicon macOS with Catalyst support (iOS toolchain on macOS).
 #                         Note: The build argument "MACOSX_DEPLOYMENT_TARGET" can be used to control min-version of macOS
+#    MAC_CATALYST_UNIVERSAL = Combined build for x86_64 and Apple Silicon on Catalyst.
 #
 # CMAKE_OSX_SYSROOT: Path to the SDK to use.  By default this is
 #    automatically determined from PLATFORM and xcodebuild, but
@@ -123,6 +124,7 @@
 #    MAC_UNIVERSAL = x86_64 arm64
 #    MAC_CATALYST = x86_64
 #    MAC_CATALYST_ARM64 = arm64
+#    MAC_CATALYST_UNIVERSAL = x86_64 arm64
 #
 # NOTE: When manually specifying ARCHS, put a semi-colon between the entries. E.g., -DARCHS="armv7;arm64"
 #
@@ -154,7 +156,8 @@
 cmake_minimum_required(VERSION 3.8.0)
 
 # CMake invokes the toolchain file twice during the first build, but only once during subsequent rebuilds.
-if(DEFINED ENV{_IOS_TOOLCHAIN_HAS_RUN})
+# NOTE: To improve single-library build-times, provide the flag "OS_SINGLE_BUILD" as a build argument.
+if(DEFINED OS_SINGLE_BUILD AND DEFINED ENV{_IOS_TOOLCHAIN_HAS_RUN})
   return()
 endif()
 set(ENV{_IOS_TOOLCHAIN_HAS_RUN} true)
@@ -166,7 +169,7 @@ list(APPEND _supported_platforms
         "WATCHOS" "WATCHOSCOMBINED" "SIMULATOR_WATCHOS" "SIMULATORARM64_WATCHOS"
         "MAC" "MAC_ARM64" "MAC_UNIVERSAL"
         "VISIONOS" "SIMULATOR_VISIONOS" "VISIONOSCOMBINED" 
-        "MAC_CATALYST" "MAC_CATALYST_ARM64")
+        "MAC_CATALYST" "MAC_CATALYST_ARM64" "MAC_CATALYST_UNIVERSAL")
 
 # Cache what generator is used
 set(USED_CMAKE_GENERATOR "${CMAKE_GENERATOR}")
@@ -230,7 +233,7 @@ if("${contains_PLATFORM}" EQUAL "-1")
 endif()
 
 # Check if Apple Silicon is supported
-if(PLATFORM MATCHES "^(MAC_ARM64)$|^(MAC_CATALYST_ARM64)$|^(MAC_UNIVERSAL)$" AND ${CMAKE_VERSION} VERSION_LESS "3.19.5")
+if(PLATFORM MATCHES "^(MAC_ARM64)$|^(MAC_CATALYST_ARM64)$|^(MAC_UNIVERSAL)$|^(MAC_CATALYST_UNIVERSAL)$" AND ${CMAKE_VERSION} VERSION_LESS "3.19.5")
   message(FATAL_ERROR "Apple Silicon builds requires a minimum of CMake 3.19.5")
 endif()
 
@@ -275,7 +278,7 @@ if(NOT DEFINED DEPLOYMENT_TARGET)
   elseif(PLATFORM STREQUAL "MAC_UNIVERSAL")
     # Unless specified, SDK version 11.0 (Big Sur) is used by default as minimum target version for universal builds.
     set(DEPLOYMENT_TARGET "11.0")
-  elseif(PLATFORM STREQUAL "MAC_CATALYST" OR PLATFORM STREQUAL "MAC_CATALYST_ARM64")
+  elseif(PLATFORM STREQUAL "MAC_CATALYST" OR PLATFORM STREQUAL "MAC_CATALYST_ARM64" OR PLATFORM STREQUAL "MAC_CATALYST_UNIVERSAL")
     # Unless specified, SDK version 13.0 is used by default as the minimum target version (mac catalyst minimum requirement).
     set(DEPLOYMENT_TARGET "13.1")
   else()
@@ -553,6 +556,13 @@ elseif(PLATFORM_INT STREQUAL "MAC_UNIVERSAL")
   endif()
   string(REPLACE ";" "-" ARCHS_SPLIT "${ARCHS}")
   set(APPLE_TARGET_TRIPLE_INT ${ARCHS_SPLIT}-apple-macosx${DEPLOYMENT_TARGET})
+elseif(PLATFORM_INT STREQUAL "MAC_CATALYST_UNIVERSAL")
+  set(SDK_NAME macosx)
+  if(NOT ARCHS)
+    set(ARCHS "x86_64;arm64")
+  endif()
+  string(REPLACE ";" "-" ARCHS_SPLIT "${ARCHS}")
+  set(APPLE_TARGET_TRIPLE_INT ${ARCHS_SPLIT}-apple-ios${DEPLOYMENT_TARGET}-macabi)
 else()
   message(FATAL_ERROR "Invalid PLATFORM: ${PLATFORM_INT}")
 endif()
@@ -761,7 +771,7 @@ set(APPLE ON CACHE BOOL "")
 if(PLATFORM STREQUAL "MAC" OR PLATFORM STREQUAL "MAC_ARM64" OR PLATFORM STREQUAL "MAC_UNIVERSAL")
   set(IOS OFF CACHE BOOL "")
   set(MACOS ON CACHE BOOL "")
-elseif(PLATFORM STREQUAL "MAC_CATALYST" OR PLATFORM STREQUAL "MAC_CATALYST_ARM64")
+elseif(PLATFORM STREQUAL "MAC_CATALYST" OR PLATFORM STREQUAL "MAC_CATALYST_ARM64" OR PLATFORM STREQUAL "MAC_CATALYST_UNIVERSAL")
   set(IOS ON CACHE BOOL "")
   set(MACOS ON CACHE BOOL "")
 elseif(PLATFORM STREQUAL "VISIONOS" OR PLATFORM STREQUAL "SIMULATOR_VISIONOS" OR PLATFORM STREQUAL "VISIONOSCOMBINED")

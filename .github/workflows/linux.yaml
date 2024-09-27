@@ -7,13 +7,16 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  FFMPEG_ROOT: /tmp/ffmpeg
+
 jobs:
-  ubuntu:
-    name: ubuntu
+  linux:
+    name: linux x64
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        arch: [x64, arm64]
+        arch: [x64]
     env:
       COMMON_CMAKE_OPTIONS: |
         -DCMAKE_INSTALL_PREFIX=install \
@@ -36,6 +39,10 @@ jobs:
           fileName: "libopencv-linux-${{ matrix.arch }}.tar.gz"
           out-file-path: "build/opencv"
           extract: true
+      - name: setup ffmpeg
+        run: |
+          mkdir -p ${{ env.FFMPEG_ROOT }}
+          cp -rf ${{ github.workspace }}/build/opencv/ffmpeg/* ${{ env.FFMPEG_ROOT }}
       - name: build
         run: |
           cd build
@@ -63,6 +70,75 @@ jobs:
           export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
           dart pub get
           dart test -x skip-workflow,no-local-files
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-linux-${{ matrix.arch }}.tar.gz
+  linux-arm64:
+    name: linux arm64
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        arch: [arm64]
+    env:
+      COMMON_CMAKE_OPTIONS: |
+        -DCMAKE_INSTALL_PREFIX=install \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/linux" \
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/aarch64-linux-gnu.toolchain.cmake
+
+    steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y g++-aarch64-linux-gnu
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-linux-${{ matrix.arch }}.tar.gz"
+          out-file-path: "build/opencv"
+          extract: true
+      - name: setup ffmpeg
+        run: |
+          mkdir -p ${{ env.FFMPEG_ROOT }}
+          cp -rf ${{ github.workspace }}/build/opencv/ffmpeg/* ${{ env.FFMPEG_ROOT }}
+      - name: build
+        run: |
+          cd build
+          cmake -S ${{ github.workspace }} \
+          ${{ env.COMMON_CMAKE_OPTIONS }} \
+          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake \
+          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/lib/cmake/opencv4
+
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-linux-${{ matrix.arch }}.tar.gz .
+      - uses: actions/upload-artifact@v4
+        name: upload
+        with:
+          path: libopencv_dart-linux-${{ matrix.arch }}.tar.gz
+          name: libopencv_dart-linux-${{ matrix.arch }}.tar.gz
+      # TODO: add flutter test for arm64
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '3.19.6'
+      #     channel: "stable"
+      # - name: test
+      #   run: |
+      #     export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
+      #     dart pub get
+      #     dart test -x skip-workflow,no-local-files
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

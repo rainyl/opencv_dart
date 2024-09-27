@@ -37,7 +37,8 @@ jobs:
             -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
             -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
-          cmake --build . --config Release -j 4 --target install
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
       - name: package
         run: |
           tar -C build/install -zcvf libopencv_dart-windows-${{ matrix.arch }}.tar.gz .
@@ -108,7 +109,8 @@ jobs:
             -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
             -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
-          cmake --build . --config Release -j 4 --target install
+          cmake --build . --config Release -j $(nproc)
+          cmake --build . --config Release --target install
       - name: package
         run: |
           tar -C build/install -zcvf libopencv_dart-windows-${{ matrix.arch }}.tar.gz .

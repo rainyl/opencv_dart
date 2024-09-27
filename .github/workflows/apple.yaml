@@ -13,6 +13,7 @@ env:
   ENABLE_BITCODE: OFF
   ENABLE_ARC: OFF
   ENABLE_VISIBILITY: OFF
+  FFMPEG_ROOT: /tmp/ffmpeg
 
 jobs:
   macos:
@@ -29,8 +30,7 @@ jobs:
           submodules: true
       - name: setup
         run: |
-          brew install --force --overwrite ninja ccache ffmpeg@6 nasm
-          brew link --overwrite ffmpeg@6
+          brew install --force --overwrite ninja ccache nasm
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv.full"
@@ -38,11 +38,15 @@ jobs:
           fileName: "libopencv-macos-${{ matrix.osname.arch }}.tar.gz"
           out-file-path: "build/opencv"
           extract: true
+      - name: setup ffmpeg
+        run: |
+          mkdir -p ${{ env.FFMPEG_ROOT }}
+          cp -rf ${{ github.workspace }}/build/opencv/ffmpeg/* ${{ env.FFMPEG_ROOT }}
       - name: build
         run: |
           cd build
           cmake -S ${{ github.workspace }} \
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/ios.toolchain.cmake \
           -DDEPLOYMENT_TARGET=$MAC_DEPLOYMENT_TARGET \
           -DENABLE_BITCODE=$ENABLE_BITCODE \
           -DENABLE_ARC=$ENABLE_ARC \
@@ -115,7 +119,7 @@ jobs:
       IOSSIMULATOR_X64: simulator64
       IOSSIMULATOR_ARM64: simulatorarm64
       COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/profiles/ios.toolchain.cmake \
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/ios.toolchain.cmake \
         -DDEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
         -DENABLE_BITCODE=$ENABLE_BITCODE \
         -DENABLE_ARC=$ENABLE_ARC \
