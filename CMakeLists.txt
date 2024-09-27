@@ -14,6 +14,7 @@ if(LINUX OR APPLE)
     find_package(Iconv REQUIRED)
 endif()
 find_package(OpenCV REQUIRED)
+find_package(FFMPEG REQUIRED)
 
 set(OpenCV_LIBS
     opencv_aruco opencv_core opencv_calib3d opencv_dnn opencv_highgui
@@ -116,6 +117,7 @@ endif()
 
 install(TARGETS ${LIBRARY_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(FILES ${CV_DEPENDENCIES} DESTINATION ${CMAKE_INSTALL_PREFIX})
+# TODO: install ffmpeg
 
 if(CVD_PLATFORM_INSTALL_DIR)
   # also install to platform specific directories

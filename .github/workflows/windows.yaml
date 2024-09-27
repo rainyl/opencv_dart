@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        arch: [x64, arm64]
+        arch: [x64]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,11 +29,13 @@ jobs:
       - name: build
         run: |
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=install `
-          -DCMAKE_BUILD_TYPE=Release `
-          -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
-          -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
+          cmake -T v142,host=x64 `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_INSTALL_PREFIX=install `
+            -DCMAKE_POLICY_DEFAULT_CMP0074=NEW `
+            -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
+            -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
+            -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
 
           cmake --build . --config Release -j 4 --target install
       - name: package
@@ -67,6 +69,63 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rainyl/opencv_dart
           file: ./coverage/lcov.info
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          prerelease: false
+          files: |
+            libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+  windows-arm64:
+    name: windows
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        arch: [arm64]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv.full"
+          latest: true
+          fileName: "libopencv-windows-${{ matrix.arch }}.tar.gz"
+          out-file-path: "build/opencv"
+          extract: true
+      - name: build
+        run: |
+          cd build
+          cmake -T v142,host=x64 `
+            -A ARM64 `
+            -DCMAKE_SYSTEM_NAME=Windows `
+            -DCMAKE_SYSTEM_PROCESSOR=ARM64 `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_INSTALL_PREFIX=install `
+            -DCMAKE_POLICY_DEFAULT_CMP0074=NEW `
+            -DCVD_PLATFORM_INSTALL_DIR="${{ github.workspace }}/windows" `
+            -DFFMPEG_DIR=${{ github.workspace }}/build/opencv/ffmpeg/cmake `
+            -DOpenCV_DIR=${{ github.workspace }}/build/opencv ..
+
+          cmake --build . --config Release -j 4 --target install
+      - name: package
+        run: |
+          tar -C build/install -zcvf libopencv_dart-windows-${{ matrix.arch }}.tar.gz .
+      - uses: actions/upload-artifact@v4
+        name: upload
+        with:
+          path: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+          name: libopencv_dart-windows-${{ matrix.arch }}.tar.gz
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: test
+        run: |
+          cd "${{github.workspace}}"
+          ls windows
+          $env:PATH="${{github.workspace}}\windows;$env:PATH"
+          dart test
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
