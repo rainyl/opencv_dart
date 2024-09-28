@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:opencv_core/opencv_core.dart' as cv;
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -33,25 +33,25 @@ class _MyAppState extends State<MyApp> {
   }
 
   // native resources are unsendable for isolate, so use raw data or encoded Uint8List and convert back
-  Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async =>
-      Isolate.run(() {
-        final im = cv.imdecode(buffer, cv.IMREAD_COLOR);
-        late cv.Mat gray, blur;
-        for (var i = 0; i < 1000; i++) {
-          gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
-          blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
-        }
-        return (cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2);
-      });
+  // Future<(Uint8List, Uint8List)> heavyTask(Uint8List buffer) async =>
+  //     Isolate.run(() {
+  //       final im = cv.imdecode(buffer, cv.IMREAD_COLOR);
+  //       late cv.Mat gray, blur;
+  //       for (var i = 0; i < 1000; i++) {
+  //         gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY);
+  //         blur = cv.gaussianBlur(im, (7, 7), 2, sigmaY: 2);
+  //       }
+  //       return (cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2);
+  //     });
 
-  Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
-    late cv.Mat gray, blur;
-    for (var i = 0; i < 1000; i++) {
-      gray = await cv.cvtColorAsync(im, cv.COLOR_BGR2GRAY);
-      blur = await cv.gaussianBlurAsync(im, (7, 7), 2, sigmaY: 2);
-    }
-    return (gray, blur);
-  }
+  // Future<(cv.Mat, cv.Mat)> heavyTaskAsync(cv.Mat im) async {
+  //   late cv.Mat gray, blur;
+  //   for (var i = 0; i < 1000; i++) {
+  //     gray = await cv.cvtColorAsync(im, cv.COLOR_BGR2GRAY);
+  //     blur = await cv.gaussianBlurAsync(im, (7, 7), 2, sigmaY: 2);
+  //   }
+  //   return (gray, blur);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,19 +69,19 @@ class _MyAppState extends State<MyApp> {
                   final picker = ImagePicker();
                   final img =
                       await picker.pickImage(source: ImageSource.gallery);
-                  if (img != null) {
-                    final path = img.path;
-                    final mat = cv.imread(path);
-                    print(
-                        "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
-                    final (success, bytes) = cv.imencode(".png", mat);
-                    print("imencode: $success, ${bytes.length}");
-                    // heavy computation
-                    final (gray, blur) = await heavyTask(bytes);
-                    setState(() {
-                      images = [bytes, gray, blur];
-                    });
-                  }
+                  // if (img != null) {
+                  //   final path = img.path;
+                  //   final mat = cv.imread(path);
+                  //   print(
+                  //       "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                  //   final (success, bytes) = cv.imencode(".png", mat);
+                  //   print("imencode: $success, ${bytes.length}");
+                  //   // heavy computation
+                  //   final (gray, blur) = await heavyTask(bytes);
+                  //   setState(() {
+                  //     images = [bytes, gray, blur];
+                  //   });
+                  // }
                 },
                 child: const Text("Pick Image"),
               ),
@@ -95,15 +95,17 @@ class _MyAppState extends State<MyApp> {
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
-                  final (gray, blur) =
-                      await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
-                  setState(() {
-                    images = [
-                      bytes,
-                      cv.imencode(".png", gray).$2,
-                      cv.imencode(".png", blur).$2
-                    ];
-                  });
+                  // final (gray, blur) =
+                  //     await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                  // setState(() {
+                  //   images = [
+                  //     bytes,
+                  //     cv.imencode(".png", gray).$2,
+                  //     cv.imencode(".png", blur).$2
+                  //   ];
+                  // });
+                  final img = cv.Mat.randu(512, 512, cv.MatType.CV_8UC3);
+                  debugPrint("cv.Mat.randu: ${img.shape}");
                 },
                 child: const Text("Process"),
               ),
