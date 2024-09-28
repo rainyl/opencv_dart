@@ -73,8 +73,7 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:${{ env.FFMPEG_ROOT }}/lib"
-          export OPENCV_DART_LIB_PATH="${{github.workspace}}/macos/libopencv_dart.dylib"
+          export DYLD_LIBRARY_PATH="${{github.workspace}}/linux:$DYLD_LIBRARY_PATH"
           dart pub get
           dart test -x skip-workflow,no-local-files
       - name: release

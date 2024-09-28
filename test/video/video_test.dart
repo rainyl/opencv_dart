@@ -214,12 +214,12 @@ void main() async {
   });
 
   test('cv.VideoCapture.fromFile', () {
-    final vc = cv.VideoCapture.fromFile("test/images/small.mp4", apiPreference: cv.CAP_ANY);
+    final vc = cv.VideoCapture.fromFile("test/images/small.mp4", apiPreference: cv.CAP_FFMPEG);
     final (success, frame) = vc.read();
     expect(success, true);
     expect(frame.isEmpty, false);
 
-    expect(vc.getBackendName(), isNotEmpty);
+    expect(vc.getBackendName(), "FFMPEG");
 
     expect(vc.codec, "h264");
 

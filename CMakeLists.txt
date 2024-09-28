@@ -10,6 +10,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 cmake_policy(SET CMP0135 NEW)
 
+option(CVD_ENABLE_TEST "Enable unit tests" OFF)
+option(CVD_PLATFORM_INSTALL_DIR "Install to platform specific directory" "")
+option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
+
 set(OpenCV_STATIC ON)
 
 find_package(FFMPEG REQUIRED)
@@ -44,12 +48,8 @@ if(IOS)
   )
 endif(IOS)
 
-message(STATUS "OpenCV library status:")
-message(STATUS "    config: ${OpenCV_DIR}")
-message(STATUS "    version: ${OpenCV_VERSION}")
-message(STATUS "    libraries: ${OpenCV_LIBS}")
-message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 message(STATUS "Project version: ${PROJECT_VERSION}")
+message(STATUS "FFMPEG libraries: ${FFMPEG_LIBRARIES}")
 
 file(GLOB_RECURSE CPP_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
@@ -58,7 +58,7 @@ file(GLOB_RECURSE HEADER_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.h"
 )
 
-add_library(${LIBRARY_NAME} SHARED ${CPP_FILES})
+add_library(${LIBRARY_NAME} SHARED ${CPP_FILES} ${HEADER_FILES})
 target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/src"
   ${OpenCV_INCLUDE_DIRS}
@@ -76,7 +76,7 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
 if(IOS)
   # PLATFORM will be defined using ios.toolchain.cmake
   if(DEFINED PLATFORM)
-    if(PLATFORM STREQUAL "SIMULATOR64")
+    if(PLATFORM MATCHES "SIMULATOR*")
       set(IOS_SUPPORTED_PLATFORM "iPhoneSimulator")
     elseif(PLATFORM STREQUAL "OS64")
       set(IOS_SUPPORTED_PLATFORM "iPhoneOS")
@@ -89,7 +89,7 @@ if(IOS)
   set_target_properties(${LIBRARY_NAME} PROPERTIES
     FRAMEWORK TRUE
     FRAMEWORK_VERSION CXX
-    MACOSX_FRAMEWORK_INFO_PLIST ${CMAKE_SOURCE_DIR}/ios/Info.plist.in
+    MACOSX_FRAMEWORK_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/Info.plist.in
   )
 endif(IOS)
 
@@ -102,6 +102,9 @@ if(WIN32)
     WINDOWS_EXPORT_ALL_SYMBOLS ON
     COMPILE_FLAGS "/EHsc"
   )
+  if(BUILD_WITH_STATIC_CRT)
+    target_compile_options(${LIBRARY_NAME} PRIVATE "/MT")
+  endif()
 endif(WIN32)
 
 target_compile_definitions(${LIBRARY_NAME} PUBLIC DART_SHARED_LIB)
@@ -112,13 +115,15 @@ endif()
 
 ### install
 if(WIN32)
-  # file(GLOB_RECURSE FFMPEG_DLL "${OpenCV_DIR}/**/*ffmpeg*.dll")
-  # file(TO_CMAKE_PATH ${FFMPEG_DLL} FFMPEG_DLL)
-  file(GLOB CV_DEPENDENCIES "${CMAKE_BINARY_DIR}/*.dll" ${FFMPEG_DLL})
+  file(GLOB CV_DEPENDENCIES "${FFMPEG_ROOT}/bin/*.dll")
+elseif(IOS)
+  file(GLOB CV_DEPENDENCIES "${FFMPEG_ROOT}/lib/*.dylib")
 elseif(APPLE)
-  file(GLOB CV_DEPENDENCIES "${CMAKE_BINARY_DIR}/*.dylib")
-elseif(LINUX)
-  file(GLOB CV_DEPENDENCIES "${CMAKE_BINARY_DIR}/*.so")
+  file(GLOB CV_DEPENDENCIES "${FFMPEG_ROOT}/lib/*.dylib")
+elseif(ANDROID OR LINUX)
+  file(GLOB CV_DEPENDENCIES "${FFMPEG_ROOT}/lib/*.so")
+else()
+  message(FATAL_ERROR "Unknown platform")
 endif()
 
 install(TARGETS ${LIBRARY_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -128,7 +133,6 @@ install(FILES ${CV_DEPENDENCIES} DESTINATION ${CMAKE_INSTALL_PREFIX})
 if(CVD_PLATFORM_INSTALL_DIR)
   # also install to platform specific directories
   install(TARGETS ${LIBRARY_NAME} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
-  # install(TARGETS ${FFMPEG_LIBRARIES} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
   install(FILES ${CV_DEPENDENCIES} DESTINATION ${CVD_PLATFORM_INSTALL_DIR})
 endif()
 

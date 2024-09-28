@@ -67,8 +67,7 @@ jobs:
           channel: "stable"
       - name: test
         run: |
-          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${{ env.FFMPEG_ROOT }}/lib"
-          export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
+          export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
           dart pub get
           dart test -x skip-workflow,no-local-files
       - name: release
@@ -137,7 +136,7 @@ jobs:
       #     channel: "stable"
       # - name: test
       #   run: |
-      #     export OPENCV_DART_LIB_PATH="${{github.workspace}}/linux/libopencv_dart.so"
+      #     export LD_LIBRARY_PATH="${{github.workspace}}/linux:$LD_LIBRARY_PATH"
       #     dart pub get
       #     dart test -x skip-workflow,no-local-files
       - name: release
