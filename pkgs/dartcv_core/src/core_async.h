@@ -298,10 +298,8 @@ CvStatus *core_MeanStdDevWithMask_Async(
 ); // Scalar *dstMean, Scalar *dstStdDev
 CvStatus *core_Merge_Async(VecMat mats, CvCallback_1 callback);
 CvStatus *core_Min_Async(Mat src1, Mat src2, CvCallback_1 callback);
-CvStatus *core_MinMaxIdx_Async(
-    Mat self, CvCallback_4 callback
-); // double *minVal, double *maxVal, int *minIdx, int *maxIdx
-CvStatus *core_MinMaxIdx_Mask_Async(Mat self, Mat mask, CvCallback_4 callback);
+CvStatus *core_MinMaxIdx_Async(Mat self, double *minVal, double *maxVal, int *minIdx, int *maxIdx, CvCallback_0 callback); // double *minVal, double *maxVal, int *minIdx, int *maxIdx
+CvStatus *core_MinMaxIdx_Mask_Async(Mat self, Mat mask, double *minVal, double *maxVal, int *minIdx, int *maxIdx, CvCallback_0 callback);
 CvStatus *core_MinMaxLoc_Async(
     Mat self, CvCallback_4 callback
 ); // double *minVal, double *maxVal, Point *minLoc, Point *maxLoc

@@ -172,7 +172,7 @@ typedef struct Size2f {
 typedef struct RotatedRect {
   Point2f center;
   Size2f size;
-  double angle;
+  float angle;
 } RotatedRect;
 
 // Wrapper for an individual cv::cvScalar

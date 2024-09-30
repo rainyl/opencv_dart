@@ -134,7 +134,7 @@ endif()
 # ============ download and prepare OpenCV_DIR finished ==============
 
 # ============ build start ===========================================
-find_package(OpenCV REQUIRED COMPONENTS opencv_core)
+find_package(OpenCV REQUIRED COMPONENTS opencv_core opencv_imgcodecs opencv_imgproc)
 
 message(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
 
@@ -162,6 +162,10 @@ file(GLOB_RECURSE CPP_FILES
   "svd_async.cpp"
   "svd.cpp"
   "version.cpp"
+  "imgcodecs.cpp"
+  "imgcodecs_async.cpp"
+  "imgproc.cpp"
+  "imgproc_async.cpp"
 )
 file(GLOB_RECURSE HEADER_FILES
   "core_async.h"
@@ -171,6 +175,10 @@ file(GLOB_RECURSE HEADER_FILES
   "svd_async.h"
   "svd.h"
   "version.h"
+  "imgcodecs.h"
+  "imgcodecs_async.h"
+  "imgproc.h"
+  "imgproc_async.h"
 )
 
 add_library(${LIBRARY_NAME} SHARED ${CPP_FILES} ${HEADER_FILES})

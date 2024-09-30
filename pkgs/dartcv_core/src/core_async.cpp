@@ -666,21 +666,21 @@ CvStatus *core_Min_Async(Mat src1, Mat src2, CvCallback_1 callback) {
   END_WRAP
 }
 
-CvStatus *core_MinMaxIdx_Async(Mat self, CvCallback_4 callback) {
+CvStatus *core_MinMaxIdx_Async(Mat self, double *minVal, double *maxVal, int *minIdx, int *maxIdx, CvCallback_0 callback) {
   BEGIN_WRAP
-  double minVal, maxVal;
-  int minLoc, maxLoc;
-  cv::minMaxIdx(*self.ptr, &minVal, &maxVal, &minLoc, &maxLoc);
-  callback(new double(minVal), new double(maxVal), new int(minLoc), new int(maxLoc));
+  cv::minMaxIdx(*self.ptr, minVal, maxVal, minIdx, maxIdx);
+  if(callback != nullptr){
+    callback();
+  }
   END_WRAP
 }
 
-CvStatus *core_MinMaxIdx_Mask_Async(Mat self, Mat mask, CvCallback_4 callback) {
+CvStatus *core_MinMaxIdx_Mask_Async(Mat self, Mat mask, double *minVal, double *maxVal, int *minIdx, int *maxIdx, CvCallback_0 callback) {
   BEGIN_WRAP
-  double minVal, maxVal;
-  int minLoc, maxLoc;
-  cv::minMaxIdx(*self.ptr, &minVal, &maxVal, &minLoc, &maxLoc, *mask.ptr);
-  callback(new double(minVal), new double(maxVal), new int(minLoc), new int(maxLoc));
+  cv::minMaxIdx(*self.ptr, minVal, maxVal, minIdx, maxIdx, *mask.ptr);
+  if(callback != nullptr){
+    callback();
+  }
   END_WRAP
 }
 

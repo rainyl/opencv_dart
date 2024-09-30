@@ -24,6 +24,10 @@ headers:
     - src/vec.h
     - src/version.h
     - src/logging.h
+    - src/imgcodecs.h
+    - src/imgcodecs_async.h
+    - src/imgproc.h
+    - src/imgproc_async.h
   include-directives:
     - src/core.h
     - src/core_async.h
@@ -33,6 +37,10 @@ headers:
     - src/vec.h
     - src/version.h
     - src/logging.h
+    - src/imgcodecs.h
+    - src/imgcodecs_async.h
+    - src/imgproc.h
+    - src/imgproc_async.h
 functions:
   leaf:
     include:
