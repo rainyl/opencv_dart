@@ -1,4 +1,17 @@
 # See https://www.dartlang.org/guides/libraries/private-files
+pkgs/dartcv_calib3d
+pkgs/dartcv_contrib
+pkgs/dartcv_dnn
+pkgs/dartcv_features2d
+pkgs/dartcv_gapi
+pkgs/dartcv_highgui
+pkgs/dartcv_imgcodecs
+pkgs/dartcv_imgproc
+pkgs/dartcv_objdetect
+pkgs/dartcv_photo
+pkgs/dartcv_stitching
+pkgs/dartcv_video
+pkgs/dartcv_videoio
 
 bak/
 .idea/
@@ -11,7 +24,6 @@ replace.py
 generate.py
 demo.*
 coverage/
-pkgs/
 __pycache__
 *.dll
 *.so

@@ -1,50 +1,36 @@
-bak/
-scripts/
-opencv_dart.iml
-coverage/
-*.a
-*.dll
-*.so
-*.dylib
-*.lib
-*.exe
-src/**/*.cpp
-src/**/*.h
-src/**/*.cc
-src/**/*.hpp
-src/dart_api/
-profiles/
-ffigen*.yaml
-conanfile.py
-images_out/
-pkgs/
-images/
-CMakeUserPresets*
-CMakePresets.json
-*.framework
-*.xcframework
-*.tar.gz
-*.exe
+# See https://www.dartlang.org/guides/libraries/private-files
 
+bak/
 .idea/
 .vscode/
 .bak/
 .pytest_cache/
 test/_data/
-test/models
-test/data
-ffigen/
-ffigen_test/
-ffigen_contrib.yaml
-ffigen_cuda.yaml
-replace.py
-generate.py
-demo.c
+coverage/
+__pycache__
+*.dll
+*.so
+*.a
+*.lib
+.cache/
+small2.mp4
+test/models/
+*.dylib
+CMakeUserPresets*
+*.framework
+*.xcframework
+CMakePresets.json
+gh-md-toc
+.fvm/
+publish/
+*.tar.gz
+*.exe
+
 
 # Files and directories created by pub
 .dart_tool/
 .packages
-build/
+build*/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 
