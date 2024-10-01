@@ -21,21 +21,21 @@ CvStatus *Mat_NewWithSize_Async(int rows, int cols, int type, CvCallback_1 callb
 
 CvStatus *Mat_NewWithSizes_Async(VecI32 sizes, int type, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type)});
+  callback(new Mat{new cv::Mat((int)sizes.length, sizes.ptr, type)});
   END_WRAP
 }
 
 CvStatus *Mat_NewWithSizesScalar_Async(VecI32 sizes, int type, Scalar s, CvCallback_1 callback) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(s.val1, s.val2, s.val3, s.val4);
-  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, c)});
+  callback(new Mat{new cv::Mat((int)sizes.length, sizes.ptr, type, c)});
   END_WRAP
 }
 
 CvStatus *
 Mat_NewWithSizesFromBytes_Async(VecI32 sizes, int type, VecChar buf, CvCallback_1 callback) {
   BEGIN_WRAP
-  callback(new Mat{new cv::Mat(sizes.length, sizes.ptr, type, buf.ptr)});
+  callback(new Mat{new cv::Mat((int)sizes.length, sizes.ptr, type, buf.ptr)});
   END_WRAP
 }
 

@@ -134,12 +134,16 @@ endif()
 # ============ download and prepare OpenCV_DIR finished ==============
 
 # ============ build start ===========================================
-find_package(OpenCV REQUIRED COMPONENTS opencv_core opencv_imgcodecs opencv_imgproc)
+find_package(OpenCV REQUIRED COMPONENTS
+  opencv_core opencv_imgcodecs opencv_imgproc
+  opencv_calib3d opencv_features2d
+  opencv_photo opencv_stitching opencv_video
+)
 
 message(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
 
 if(ANDROID)
-# set(PLATFORM_LIBS ${PLATFORM_LIBS} camera2ndk mediandk -landroid)
+  set(PLATFORM_LIBS ${PLATFORM_LIBS} camera2ndk mediandk -landroid)
 elseif(IOS)
   # https://github.com/opencv/opencv/blob/450e741f8d53ff12b4e194c7762adaefb952555a/platforms/ios/build_framework.py#L386
   set(PLATFORM_LIBS ${PLATFORM_LIBS}
@@ -154,7 +158,7 @@ elseif(IOS)
   )
 endif()
 
-file(GLOB_RECURSE CPP_FILES
+set(CPP_FILES
   "core_async.cpp"
   "core.cpp"
   "exception.cpp"
@@ -166,8 +170,18 @@ file(GLOB_RECURSE CPP_FILES
   "imgcodecs_async.cpp"
   "imgproc.cpp"
   "imgproc_async.cpp"
+  "calib3d.cpp"
+  "calib3d_async.cpp"
+  "features2d.cpp"
+  "features2d_async.cpp"
+  "photo.cpp"
+  "photo_async.cpp"
+  "stitching.cpp"
+  "stitching_async.cpp"
+  "video.cpp"
+  "video_async.cpp"
 )
-file(GLOB_RECURSE HEADER_FILES
+set(HEADER_FILES
   "core_async.h"
   "core.h"
   "exception.h"
@@ -179,6 +193,16 @@ file(GLOB_RECURSE HEADER_FILES
   "imgcodecs_async.h"
   "imgproc.h"
   "imgproc_async.h"
+  "calib3d.h"
+  "calib3d_async.h"
+  "features2d.h"
+  "features2d_async.h"
+  "photo.h"
+  "photo_async.h"
+  "stitching.h"
+  "stitching_async.h"
+  "video.h"
+  "video_async.h"
 )
 
 add_library(${LIBRARY_NAME} SHARED ${CPP_FILES} ${HEADER_FILES})
@@ -186,6 +210,7 @@ target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}"
   ${OpenCV_INCLUDE_DIRS}
 )
+message(STATUS "Added library: ${LIBRARY_NAME} ${HEADER_FILES}")
 set_target_properties(${LIBRARY_NAME} PROPERTIES
   PUBLIC_HEADER ${HEADER_FILES}
   OUTPUT_NAME ${LIBRARY_NAME}

@@ -6,10 +6,64 @@ files:
     symbols:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
+      c:@Ea@STITCHING_OK@STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL:
+        name: STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_HOMOGRAPHY_EST_FAIL:
+        name: STITCHING_ERR_HOMOGRAPHY_EST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_NEED_MORE_IMGS:
+        name: STITCHING_ERR_NEED_MORE_IMGS
+      c:@Ea@STITCHING_OK@STITCHING_OK:
+        name: STITCHING_OK
+      c:@Ea@STITCHING_PANORAMA@STITCHING_PANORAMA:
+        name: STITCHING_PANORAMA
+      c:@Ea@STITCHING_PANORAMA@STITCHING_SCANS:
+        name: STITCHING_SCANS
+      c:@F@AKAZE_Close:
+        name: AKAZE_Close
+      c:@F@AKAZE_Close_Async:
+        name: AKAZE_Close_Async
+      c:@F@AKAZE_Create:
+        name: AKAZE_Create
+      c:@F@AKAZE_Create_Async:
+        name: AKAZE_Create_Async
+      c:@F@AKAZE_Detect:
+        name: AKAZE_Detect
+      c:@F@AKAZE_DetectAndCompute:
+        name: AKAZE_DetectAndCompute
+      c:@F@AKAZE_DetectAndCompute_Async:
+        name: AKAZE_DetectAndCompute_Async
+      c:@F@AKAZE_Detect_Async:
+        name: AKAZE_Detect_Async
       c:@F@AdaptiveThreshold:
         name: AdaptiveThreshold
       c:@F@AdaptiveThreshold_Async:
         name: AdaptiveThreshold_Async
+      c:@F@AgastFeatureDetector_Close:
+        name: AgastFeatureDetector_Close
+      c:@F@AgastFeatureDetector_Close_Async:
+        name: AgastFeatureDetector_Close_Async
+      c:@F@AgastFeatureDetector_Create:
+        name: AgastFeatureDetector_Create
+      c:@F@AgastFeatureDetector_Create_Async:
+        name: AgastFeatureDetector_Create_Async
+      c:@F@AgastFeatureDetector_Detect:
+        name: AgastFeatureDetector_Detect
+      c:@F@AgastFeatureDetector_Detect_Async:
+        name: AgastFeatureDetector_Detect_Async
+      c:@F@AlignMTB_Close:
+        name: AlignMTB_Close
+      c:@F@AlignMTB_Create:
+        name: AlignMTB_Create
+      c:@F@AlignMTB_CreateWithParams:
+        name: AlignMTB_CreateWithParams
+      c:@F@AlignMTB_CreateWithParams_Async:
+        name: AlignMTB_CreateWithParams_Async
+      c:@F@AlignMTB_Create_Async:
+        name: AlignMTB_Create_Async
+      c:@F@AlignMTB_Process:
+        name: AlignMTB_Process
+      c:@F@AlignMTB_Process_Async:
+        name: AlignMTB_Process_Async
       c:@F@ApplyColorMap:
         name: ApplyColorMap
       c:@F@ApplyColorMap_Async:
@@ -30,6 +84,70 @@ files:
         name: ArrowedLine
       c:@F@ArrowedLine_Async:
         name: ArrowedLine_Async
+      c:@F@BFMatcher_Close:
+        name: BFMatcher_Close
+      c:@F@BFMatcher_Close_Async:
+        name: BFMatcher_Close_Async
+      c:@F@BFMatcher_Create:
+        name: BFMatcher_Create
+      c:@F@BFMatcher_CreateWithParams:
+        name: BFMatcher_CreateWithParams
+      c:@F@BFMatcher_CreateWithParams_Async:
+        name: BFMatcher_CreateWithParams_Async
+      c:@F@BFMatcher_Create_Async:
+        name: BFMatcher_Create_Async
+      c:@F@BFMatcher_KnnMatch:
+        name: BFMatcher_KnnMatch
+      c:@F@BFMatcher_KnnMatch_Async:
+        name: BFMatcher_KnnMatch_Async
+      c:@F@BFMatcher_Match:
+        name: BFMatcher_Match
+      c:@F@BFMatcher_Match_Async:
+        name: BFMatcher_Match_Async
+      c:@F@BRISK_Close:
+        name: BRISK_Close
+      c:@F@BRISK_Close_Async:
+        name: BRISK_Close_Async
+      c:@F@BRISK_Create:
+        name: BRISK_Create
+      c:@F@BRISK_Create_Async:
+        name: BRISK_Create_Async
+      c:@F@BRISK_Detect:
+        name: BRISK_Detect
+      c:@F@BRISK_DetectAndCompute:
+        name: BRISK_DetectAndCompute
+      c:@F@BRISK_DetectAndCompute_Async:
+        name: BRISK_DetectAndCompute_Async
+      c:@F@BRISK_Detect_Async:
+        name: BRISK_Detect_Async
+      c:@F@BackgroundSubtractorKNN_Apply:
+        name: BackgroundSubtractorKNN_Apply
+      c:@F@BackgroundSubtractorKNN_Apply_Async:
+        name: BackgroundSubtractorKNN_Apply_Async
+      c:@F@BackgroundSubtractorKNN_Close:
+        name: BackgroundSubtractorKNN_Close
+      c:@F@BackgroundSubtractorKNN_Create:
+        name: BackgroundSubtractorKNN_Create
+      c:@F@BackgroundSubtractorKNN_CreateWithParams:
+        name: BackgroundSubtractorKNN_CreateWithParams
+      c:@F@BackgroundSubtractorKNN_CreateWithParams_Async:
+        name: BackgroundSubtractorKNN_CreateWithParams_Async
+      c:@F@BackgroundSubtractorKNN_Create_Async:
+        name: BackgroundSubtractorKNN_Create_Async
+      c:@F@BackgroundSubtractorMOG2_Apply:
+        name: BackgroundSubtractorMOG2_Apply
+      c:@F@BackgroundSubtractorMOG2_Apply_Async:
+        name: BackgroundSubtractorMOG2_Apply_Async
+      c:@F@BackgroundSubtractorMOG2_Close:
+        name: BackgroundSubtractorMOG2_Close
+      c:@F@BackgroundSubtractorMOG2_Create:
+        name: BackgroundSubtractorMOG2_Create
+      c:@F@BackgroundSubtractorMOG2_CreateWithParams:
+        name: BackgroundSubtractorMOG2_CreateWithParams
+      c:@F@BackgroundSubtractorMOG2_CreateWithParams_Async:
+        name: BackgroundSubtractorMOG2_CreateWithParams_Async
+      c:@F@BackgroundSubtractorMOG2_Create_Async:
+        name: BackgroundSubtractorMOG2_Create_Async
       c:@F@BilateralFilter:
         name: BilateralFilter
       c:@F@BilateralFilter_Async:
@@ -94,6 +212,18 @@ files:
         name: CalcHist
       c:@F@CalcHist_Async:
         name: CalcHist_Async
+      c:@F@CalcOpticalFlowFarneback:
+        name: CalcOpticalFlowFarneback
+      c:@F@CalcOpticalFlowFarneback_Async:
+        name: CalcOpticalFlowFarneback_Async
+      c:@F@CalcOpticalFlowPyrLK:
+        name: CalcOpticalFlowPyrLK
+      c:@F@CalcOpticalFlowPyrLKWithParams:
+        name: CalcOpticalFlowPyrLKWithParams
+      c:@F@CalcOpticalFlowPyrLK_Async:
+        name: CalcOpticalFlowPyrLK_Async
+      c:@F@CalibrateCamera:
+        name: CalibrateCamera
       c:@F@Canny:
         name: Canny
       c:@F@Canny_Async:
@@ -110,6 +240,10 @@ files:
         name: ClipLine
       c:@F@ClipLine_Async:
         name: ClipLine_Async
+      c:@F@ColorChange:
+        name: ColorChange
+      c:@F@ColorChange_Async:
+        name: ColorChange_Async
       c:@F@CompareHist:
         name: CompareHist
       c:@F@CompareHist_Async:
@@ -144,6 +278,10 @@ files:
         name: CvtColor
       c:@F@CvtColor_Async:
         name: CvtColor_Async
+      c:@F@DetailEnhance:
+        name: DetailEnhance
+      c:@F@DetailEnhance_Async:
+        name: DetailEnhance_Async
       c:@F@Dilate:
         name: Dilate
       c:@F@DilateWithParams:
@@ -156,6 +294,8 @@ files:
         name: DistanceTransform
       c:@F@DistanceTransform_Async:
         name: DistanceTransform_Async
+      c:@F@DrawChessboardCorners:
+        name: DrawChessboardCorners
       c:@F@DrawContours:
         name: DrawContours
       c:@F@DrawContoursWithParams:
@@ -164,6 +304,18 @@ files:
         name: DrawContoursWithParams_Async
       c:@F@DrawContours_Async:
         name: DrawContours_Async
+      c:@F@DrawKeyPoints:
+        name: DrawKeyPoints
+      c:@F@DrawKeyPoints_Async:
+        name: DrawKeyPoints_Async
+      c:@F@DrawMatches:
+        name: DrawMatches
+      c:@F@DrawMatches_Async:
+        name: DrawMatches_Async
+      c:@F@EdgePreservingFilter:
+        name: EdgePreservingFilter
+      c:@F@EdgePreservingFilter_Async:
+        name: EdgePreservingFilter_Async
       c:@F@Ellipse:
         name: Ellipse
       c:@F@EllipseWithParams:
@@ -184,8 +336,56 @@ files:
         name: ErodeWithParams_Async
       c:@F@Erode_Async:
         name: Erode_Async
+      c:@F@EstimateAffine2D:
+        name: EstimateAffine2D
+      c:@F@EstimateAffine2DWithParams:
+        name: EstimateAffine2DWithParams
+      c:@F@EstimateAffinePartial2D:
+        name: EstimateAffinePartial2D
+      c:@F@EstimateAffinePartial2DWithParams:
+        name: EstimateAffinePartial2DWithParams
       c:@F@Eye:
         name: Eye
+      c:@F@FastFeatureDetector_Close:
+        name: FastFeatureDetector_Close
+      c:@F@FastFeatureDetector_Close_Async:
+        name: FastFeatureDetector_Close_Async
+      c:@F@FastFeatureDetector_Create:
+        name: FastFeatureDetector_Create
+      c:@F@FastFeatureDetector_CreateWithParams:
+        name: FastFeatureDetector_CreateWithParams
+      c:@F@FastFeatureDetector_CreateWithParams_Async:
+        name: FastFeatureDetector_CreateWithParams_Async
+      c:@F@FastFeatureDetector_Create_Async:
+        name: FastFeatureDetector_Create_Async
+      c:@F@FastFeatureDetector_Detect:
+        name: FastFeatureDetector_Detect
+      c:@F@FastFeatureDetector_Detect_Async:
+        name: FastFeatureDetector_Detect_Async
+      c:@F@FastNlMeansDenoising:
+        name: FastNlMeansDenoising
+      c:@F@FastNlMeansDenoisingColored:
+        name: FastNlMeansDenoisingColored
+      c:@F@FastNlMeansDenoisingColoredMulti:
+        name: FastNlMeansDenoisingColoredMulti
+      c:@F@FastNlMeansDenoisingColoredMultiWithParams:
+        name: FastNlMeansDenoisingColoredMultiWithParams
+      c:@F@FastNlMeansDenoisingColoredMultiWithParams_Async:
+        name: FastNlMeansDenoisingColoredMultiWithParams_Async
+      c:@F@FastNlMeansDenoisingColoredMulti_Async:
+        name: FastNlMeansDenoisingColoredMulti_Async
+      c:@F@FastNlMeansDenoisingColoredWithParams:
+        name: FastNlMeansDenoisingColoredWithParams
+      c:@F@FastNlMeansDenoisingColoredWithParams_Async:
+        name: FastNlMeansDenoisingColoredWithParams_Async
+      c:@F@FastNlMeansDenoisingColored_Async:
+        name: FastNlMeansDenoisingColored_Async
+      c:@F@FastNlMeansDenoisingWithParams:
+        name: FastNlMeansDenoisingWithParams
+      c:@F@FastNlMeansDenoisingWithParams_Async:
+        name: FastNlMeansDenoisingWithParams_Async
+      c:@F@FastNlMeansDenoising_Async:
+        name: FastNlMeansDenoising_Async
       c:@F@FillPoly:
         name: FillPoly
       c:@F@FillPolyWithParams:
@@ -198,10 +398,32 @@ files:
         name: Filter2D
       c:@F@Filter2D_Async:
         name: Filter2D_Async
+      c:@F@FindChessboardCorners:
+        name: FindChessboardCorners
+      c:@F@FindChessboardCornersSB:
+        name: FindChessboardCornersSB
+      c:@F@FindChessboardCornersSBWithMeta:
+        name: FindChessboardCornersSBWithMeta
       c:@F@FindContours:
         name: FindContours
       c:@F@FindContours_Async:
         name: FindContours_Async
+      c:@F@FindHomography:
+        name: FindHomography
+      c:@F@FindHomography_Async:
+        name: FindHomography_Async
+      c:@F@FindTransformECC:
+        name: FindTransformECC
+      c:@F@FindTransformECC_Async:
+        name: FindTransformECC_Async
+      c:@F@Fisheye_EstimateNewCameraMatrixForUndistortRectify:
+        name: Fisheye_EstimateNewCameraMatrixForUndistortRectify
+      c:@F@Fisheye_UndistortImage:
+        name: Fisheye_UndistortImage
+      c:@F@Fisheye_UndistortImageWithParams:
+        name: Fisheye_UndistortImageWithParams
+      c:@F@Fisheye_UndistortPoints:
+        name: Fisheye_UndistortPoints
       c:@F@FitEllipse:
         name: FitEllipse
       c:@F@FitEllipse_Async:
@@ -210,10 +432,34 @@ files:
         name: FitLine
       c:@F@FitLine_Async:
         name: FitLine_Async
+      c:@F@FlannBasedMatcher_Close:
+        name: FlannBasedMatcher_Close
+      c:@F@FlannBasedMatcher_Close_Async:
+        name: FlannBasedMatcher_Close_Async
+      c:@F@FlannBasedMatcher_Create:
+        name: FlannBasedMatcher_Create
+      c:@F@FlannBasedMatcher_Create_Async:
+        name: FlannBasedMatcher_Create_Async
+      c:@F@FlannBasedMatcher_KnnMatch:
+        name: FlannBasedMatcher_KnnMatch
+      c:@F@FlannBasedMatcher_KnnMatch_Async:
+        name: FlannBasedMatcher_KnnMatch_Async
       c:@F@FloodFill:
         name: FloodFill
       c:@F@FloodFill_Async:
         name: FloodFill_Async
+      c:@F@GFTTDetector_Close:
+        name: GFTTDetector_Close
+      c:@F@GFTTDetector_Close_Async:
+        name: GFTTDetector_Close_Async
+      c:@F@GFTTDetector_Create:
+        name: GFTTDetector_Create
+      c:@F@GFTTDetector_Create_Async:
+        name: GFTTDetector_Create_Async
+      c:@F@GFTTDetector_Detect:
+        name: GFTTDetector_Detect
+      c:@F@GFTTDetector_Detect_Async:
+        name: GFTTDetector_Detect_Async
       c:@F@GaussianBlur:
         name: GaussianBlur
       c:@F@GaussianBlur_Async:
@@ -234,6 +480,8 @@ files:
         name: GetGaussianKernel_Async
       c:@F@GetNumThreads:
         name: GetNumThreads
+      c:@F@GetOptimalNewCameraMatrixWithParams:
+        name: GetOptimalNewCameraMatrixWithParams
       c:@F@GetPerspectiveTransform:
         name: GetPerspectiveTransform
       c:@F@GetPerspectiveTransform2f:
@@ -296,6 +544,10 @@ files:
         name: HoughLinesPointSet_Async
       c:@F@HoughLines_Async:
         name: HoughLines_Async
+      c:@F@IlluminationChange:
+        name: IlluminationChange
+      c:@F@IlluminationChange_Async:
+        name: IlluminationChange_Async
       c:@F@Image_IMDecode:
         name: Image_IMDecode
       c:@F@Image_IMDecode_Async:
@@ -320,6 +572,8 @@ files:
         name: Image_IMWrite_WithParams
       c:@F@Image_IMWrite_WithParams_Async:
         name: Image_IMWrite_WithParams_Async
+      c:@F@InitUndistortRectifyMap:
+        name: InitUndistortRectifyMap
       c:@F@Integral:
         name: Integral
       c:@F@Integral_Async:
@@ -328,10 +582,152 @@ files:
         name: InvertAffineTransform
       c:@F@InvertAffineTransform_Async:
         name: InvertAffineTransform_Async
+      c:@F@KAZE_Close:
+        name: KAZE_Close
+      c:@F@KAZE_Close_Async:
+        name: KAZE_Close_Async
+      c:@F@KAZE_Create:
+        name: KAZE_Create
+      c:@F@KAZE_Create_Async:
+        name: KAZE_Create_Async
+      c:@F@KAZE_Detect:
+        name: KAZE_Detect
+      c:@F@KAZE_DetectAndCompute:
+        name: KAZE_DetectAndCompute
+      c:@F@KAZE_DetectAndCompute_Async:
+        name: KAZE_DetectAndCompute_Async
+      c:@F@KAZE_Detect_Async:
+        name: KAZE_Detect_Async
       c:@F@KMeans:
         name: KMeans
       c:@F@KMeansPoints:
         name: KMeansPoints
+      c:@F@KalmanFilter_Close:
+        name: KalmanFilter_Close
+      c:@F@KalmanFilter_Correct:
+        name: KalmanFilter_Correct
+      c:@F@KalmanFilter_Correct_Async:
+        name: KalmanFilter_Correct_Async
+      c:@F@KalmanFilter_GetControlMatrix:
+        name: KalmanFilter_GetControlMatrix
+      c:@F@KalmanFilter_GetControlMatrix_Async:
+        name: KalmanFilter_GetControlMatrix_Async
+      c:@F@KalmanFilter_GetErrorCovPost:
+        name: KalmanFilter_GetErrorCovPost
+      c:@F@KalmanFilter_GetErrorCovPost_Async:
+        name: KalmanFilter_GetErrorCovPost_Async
+      c:@F@KalmanFilter_GetErrorCovPre:
+        name: KalmanFilter_GetErrorCovPre
+      c:@F@KalmanFilter_GetErrorCovPre_Async:
+        name: KalmanFilter_GetErrorCovPre_Async
+      c:@F@KalmanFilter_GetGain:
+        name: KalmanFilter_GetGain
+      c:@F@KalmanFilter_GetGain_Async:
+        name: KalmanFilter_GetGain_Async
+      c:@F@KalmanFilter_GetMeasurementMatrix:
+        name: KalmanFilter_GetMeasurementMatrix
+      c:@F@KalmanFilter_GetMeasurementMatrix_Async:
+        name: KalmanFilter_GetMeasurementMatrix_Async
+      c:@F@KalmanFilter_GetMeasurementNoiseCov:
+        name: KalmanFilter_GetMeasurementNoiseCov
+      c:@F@KalmanFilter_GetMeasurementNoiseCov_Async:
+        name: KalmanFilter_GetMeasurementNoiseCov_Async
+      c:@F@KalmanFilter_GetProcessNoiseCov:
+        name: KalmanFilter_GetProcessNoiseCov
+      c:@F@KalmanFilter_GetProcessNoiseCov_Async:
+        name: KalmanFilter_GetProcessNoiseCov_Async
+      c:@F@KalmanFilter_GetStatePost:
+        name: KalmanFilter_GetStatePost
+      c:@F@KalmanFilter_GetStatePost_Async:
+        name: KalmanFilter_GetStatePost_Async
+      c:@F@KalmanFilter_GetStatePre:
+        name: KalmanFilter_GetStatePre
+      c:@F@KalmanFilter_GetStatePre_Async:
+        name: KalmanFilter_GetStatePre_Async
+      c:@F@KalmanFilter_GetTemp1:
+        name: KalmanFilter_GetTemp1
+      c:@F@KalmanFilter_GetTemp1_Async:
+        name: KalmanFilter_GetTemp1_Async
+      c:@F@KalmanFilter_GetTemp2:
+        name: KalmanFilter_GetTemp2
+      c:@F@KalmanFilter_GetTemp2_Async:
+        name: KalmanFilter_GetTemp2_Async
+      c:@F@KalmanFilter_GetTemp3:
+        name: KalmanFilter_GetTemp3
+      c:@F@KalmanFilter_GetTemp3_Async:
+        name: KalmanFilter_GetTemp3_Async
+      c:@F@KalmanFilter_GetTemp4:
+        name: KalmanFilter_GetTemp4
+      c:@F@KalmanFilter_GetTemp4_Async:
+        name: KalmanFilter_GetTemp4_Async
+      c:@F@KalmanFilter_GetTemp5:
+        name: KalmanFilter_GetTemp5
+      c:@F@KalmanFilter_GetTemp5_Async:
+        name: KalmanFilter_GetTemp5_Async
+      c:@F@KalmanFilter_GetTransitionMatrix:
+        name: KalmanFilter_GetTransitionMatrix
+      c:@F@KalmanFilter_GetTransitionMatrix_Async:
+        name: KalmanFilter_GetTransitionMatrix_Async
+      c:@F@KalmanFilter_Init:
+        name: KalmanFilter_Init
+      c:@F@KalmanFilter_InitWithParams:
+        name: KalmanFilter_InitWithParams
+      c:@F@KalmanFilter_InitWithParams_Async:
+        name: KalmanFilter_InitWithParams_Async
+      c:@F@KalmanFilter_Init_Async:
+        name: KalmanFilter_Init_Async
+      c:@F@KalmanFilter_New:
+        name: KalmanFilter_New
+      c:@F@KalmanFilter_New_Async:
+        name: KalmanFilter_New_Async
+      c:@F@KalmanFilter_Predict:
+        name: KalmanFilter_Predict
+      c:@F@KalmanFilter_PredictWithParams:
+        name: KalmanFilter_PredictWithParams
+      c:@F@KalmanFilter_PredictWithParams_Async:
+        name: KalmanFilter_PredictWithParams_Async
+      c:@F@KalmanFilter_Predict_Async:
+        name: KalmanFilter_Predict_Async
+      c:@F@KalmanFilter_SetControlMatrix:
+        name: KalmanFilter_SetControlMatrix
+      c:@F@KalmanFilter_SetControlMatrix_Async:
+        name: KalmanFilter_SetControlMatrix_Async
+      c:@F@KalmanFilter_SetErrorCovPost:
+        name: KalmanFilter_SetErrorCovPost
+      c:@F@KalmanFilter_SetErrorCovPost_Async:
+        name: KalmanFilter_SetErrorCovPost_Async
+      c:@F@KalmanFilter_SetErrorCovPre:
+        name: KalmanFilter_SetErrorCovPre
+      c:@F@KalmanFilter_SetErrorCovPre_Async:
+        name: KalmanFilter_SetErrorCovPre_Async
+      c:@F@KalmanFilter_SetGain:
+        name: KalmanFilter_SetGain
+      c:@F@KalmanFilter_SetGain_Async:
+        name: KalmanFilter_SetGain_Async
+      c:@F@KalmanFilter_SetMeasurementMatrix:
+        name: KalmanFilter_SetMeasurementMatrix
+      c:@F@KalmanFilter_SetMeasurementMatrix_Async:
+        name: KalmanFilter_SetMeasurementMatrix_Async
+      c:@F@KalmanFilter_SetMeasurementNoiseCov:
+        name: KalmanFilter_SetMeasurementNoiseCov
+      c:@F@KalmanFilter_SetMeasurementNoiseCov_Async:
+        name: KalmanFilter_SetMeasurementNoiseCov_Async
+      c:@F@KalmanFilter_SetProcessNoiseCov:
+        name: KalmanFilter_SetProcessNoiseCov
+      c:@F@KalmanFilter_SetProcessNoiseCov_Async:
+        name: KalmanFilter_SetProcessNoiseCov_Async
+      c:@F@KalmanFilter_SetStatePost:
+        name: KalmanFilter_SetStatePost
+      c:@F@KalmanFilter_SetStatePost_Async:
+        name: KalmanFilter_SetStatePost_Async
+      c:@F@KalmanFilter_SetStatePre:
+        name: KalmanFilter_SetStatePre
+      c:@F@KalmanFilter_SetStatePre_Async:
+        name: KalmanFilter_SetStatePre_Async
+      c:@F@KalmanFilter_SetTransitionMatrix:
+        name: KalmanFilter_SetTransitionMatrix
+      c:@F@KalmanFilter_SetTransitionMatrix_Async:
+        name: KalmanFilter_SetTransitionMatrix_Async
       c:@F@LUT:
         name: LUT
       c:@F@Laplacian:
@@ -350,6 +746,18 @@ files:
         name: LogPolar
       c:@F@LogPolar_Async:
         name: LogPolar_Async
+      c:@F@MSER_Close:
+        name: MSER_Close
+      c:@F@MSER_Close_Async:
+        name: MSER_Close_Async
+      c:@F@MSER_Create:
+        name: MSER_Create
+      c:@F@MSER_Create_Async:
+        name: MSER_Create_Async
+      c:@F@MSER_Detect:
+        name: MSER_Detect
+      c:@F@MSER_Detect_Async:
+        name: MSER_Detect_Async
       c:@F@Mat_AbsDiff:
         name: Mat_AbsDiff
       c:@F@Mat_Accumulate:
@@ -928,6 +1336,20 @@ files:
         name: MedianBlur
       c:@F@MedianBlur_Async:
         name: MedianBlur_Async
+      c:@F@MergeMertens_Close:
+        name: MergeMertens_Close
+      c:@F@MergeMertens_Create:
+        name: MergeMertens_Create
+      c:@F@MergeMertens_CreateWithParams:
+        name: MergeMertens_CreateWithParams
+      c:@F@MergeMertens_CreateWithParams_Async:
+        name: MergeMertens_CreateWithParams_Async
+      c:@F@MergeMertens_Create_Async:
+        name: MergeMertens_Create_Async
+      c:@F@MergeMertens_Process:
+        name: MergeMertens_Process
+      c:@F@MergeMertens_Process_Async:
+        name: MergeMertens_Process_Async
       c:@F@MinAreaRect:
         name: MinAreaRect
       c:@F@MinAreaRect_Async:
@@ -956,12 +1378,40 @@ files:
         name: Norm
       c:@F@NormWithMats:
         name: NormWithMats
+      c:@F@ORB_Close:
+        name: ORB_Close
+      c:@F@ORB_Close_Async:
+        name: ORB_Close_Async
+      c:@F@ORB_Create:
+        name: ORB_Create
+      c:@F@ORB_CreateWithParams:
+        name: ORB_CreateWithParams
+      c:@F@ORB_CreateWithParams_Async:
+        name: ORB_CreateWithParams_Async
+      c:@F@ORB_Create_Async:
+        name: ORB_Create_Async
+      c:@F@ORB_Detect:
+        name: ORB_Detect
+      c:@F@ORB_DetectAndCompute:
+        name: ORB_DetectAndCompute
+      c:@F@ORB_DetectAndCompute_Async:
+        name: ORB_DetectAndCompute_Async
+      c:@F@ORB_Detect_Async:
+        name: ORB_Detect_Async
       c:@F@Ones:
         name: Ones
+      c:@F@PencilSketch:
+        name: PencilSketch
+      c:@F@PencilSketch_Async:
+        name: PencilSketch_Async
       c:@F@PhaseCorrelate:
         name: PhaseCorrelate
       c:@F@PhaseCorrelate_Async:
         name: PhaseCorrelate_Async
+      c:@F@PhotoInpaint:
+        name: PhotoInpaint
+      c:@F@PhotoInpaint_Async:
+        name: PhotoInpaint_Async
       c:@F@PointPolygonTest:
         name: PointPolygonTest
       c:@F@PointPolygonTest_Async:
@@ -1056,6 +1506,22 @@ files:
         name: RotatedRect_BoundingRect2f
       c:@F@RotatedRect_Points:
         name: RotatedRect_Points
+      c:@F@SIFT_Close:
+        name: SIFT_Close
+      c:@F@SIFT_Close_Async:
+        name: SIFT_Close_Async
+      c:@F@SIFT_Create:
+        name: SIFT_Create
+      c:@F@SIFT_Create_Async:
+        name: SIFT_Create_Async
+      c:@F@SIFT_Detect:
+        name: SIFT_Detect
+      c:@F@SIFT_DetectAndCompute:
+        name: SIFT_DetectAndCompute
+      c:@F@SIFT_DetectAndCompute_Async:
+        name: SIFT_DetectAndCompute_Async
+      c:@F@SIFT_Detect_Async:
+        name: SIFT_Detect_Async
       c:@F@SVD_Compute:
         name: SVD_Compute
       c:@F@SVD_Compute_Async:
@@ -1068,6 +1534,10 @@ files:
         name: Scharr
       c:@F@Scharr_Async:
         name: Scharr_Async
+      c:@F@SeamlessClone:
+        name: SeamlessClone
+      c:@F@SeamlessClone_Async:
+        name: SeamlessClone_Async
       c:@F@SepFilter2D:
         name: SepFilter2D
       c:@F@SepFilter2D_Async:
@@ -1076,6 +1546,24 @@ files:
         name: SetNumThreads
       c:@F@SetRNGSeed:
         name: SetRNGSeed
+      c:@F@SimpleBlobDetectorParams_Create:
+        name: SimpleBlobDetectorParams_Create
+      c:@F@SimpleBlobDetector_Close:
+        name: SimpleBlobDetector_Close
+      c:@F@SimpleBlobDetector_Close_Async:
+        name: SimpleBlobDetector_Close_Async
+      c:@F@SimpleBlobDetector_Create:
+        name: SimpleBlobDetector_Create
+      c:@F@SimpleBlobDetector_Create_Async:
+        name: SimpleBlobDetector_Create_Async
+      c:@F@SimpleBlobDetector_Create_WithParams:
+        name: SimpleBlobDetector_Create_WithParams
+      c:@F@SimpleBlobDetector_Create_WithParams_Async:
+        name: SimpleBlobDetector_Create_WithParams_Async
+      c:@F@SimpleBlobDetector_Detect:
+        name: SimpleBlobDetector_Detect
+      c:@F@SimpleBlobDetector_Detect_Async:
+        name: SimpleBlobDetector_Detect_Async
       c:@F@Sobel:
         name: Sobel
       c:@F@Sobel_Async:
@@ -1088,6 +1576,100 @@ files:
         name: SqBoxFilter_Async
       c:@F@SqrBoxFilter:
         name: SqrBoxFilter
+      c:@F@Stitcher_Close:
+        name: Stitcher_Close
+      c:@F@Stitcher_Close_Async:
+        name: Stitcher_Close_Async
+      c:@F@Stitcher_Component:
+        name: Stitcher_Component
+      c:@F@Stitcher_Component_Async:
+        name: Stitcher_Component_Async
+      c:@F@Stitcher_ComposePanorama:
+        name: Stitcher_ComposePanorama
+      c:@F@Stitcher_ComposePanorama_1:
+        name: Stitcher_ComposePanorama_1
+      c:@F@Stitcher_ComposePanorama_1_Async:
+        name: Stitcher_ComposePanorama_1_Async
+      c:@F@Stitcher_ComposePanorama_Async:
+        name: Stitcher_ComposePanorama_Async
+      c:@F@Stitcher_Create:
+        name: Stitcher_Create
+      c:@F@Stitcher_Create_Async:
+        name: Stitcher_Create_Async
+      c:@F@Stitcher_EstimateTransform:
+        name: Stitcher_EstimateTransform
+      c:@F@Stitcher_EstimateTransform_Async:
+        name: Stitcher_EstimateTransform_Async
+      c:@F@Stitcher_Get:
+        name: Stitcher_Get
+      c:@F@Stitcher_GetCompositingResol:
+        name: Stitcher_GetCompositingResol
+      c:@F@Stitcher_GetCompositingResol_Async:
+        name: Stitcher_GetCompositingResol_Async
+      c:@F@Stitcher_GetInterpolationFlags:
+        name: Stitcher_GetInterpolationFlags
+      c:@F@Stitcher_GetInterpolationFlags_Async:
+        name: Stitcher_GetInterpolationFlags_Async
+      c:@F@Stitcher_GetPanoConfidenceThresh:
+        name: Stitcher_GetPanoConfidenceThresh
+      c:@F@Stitcher_GetPanoConfidenceThresh_Async:
+        name: Stitcher_GetPanoConfidenceThresh_Async
+      c:@F@Stitcher_GetRegistrationResol:
+        name: Stitcher_GetRegistrationResol
+      c:@F@Stitcher_GetRegistrationResol_Async:
+        name: Stitcher_GetRegistrationResol_Async
+      c:@F@Stitcher_GetSeamEstimationResol:
+        name: Stitcher_GetSeamEstimationResol
+      c:@F@Stitcher_GetSeamEstimationResol_Async:
+        name: Stitcher_GetSeamEstimationResol_Async
+      c:@F@Stitcher_GetWaveCorrectKind:
+        name: Stitcher_GetWaveCorrectKind
+      c:@F@Stitcher_GetWaveCorrectKind_Async:
+        name: Stitcher_GetWaveCorrectKind_Async
+      c:@F@Stitcher_GetWaveCorrection:
+        name: Stitcher_GetWaveCorrection
+      c:@F@Stitcher_GetWaveCorrection_Async:
+        name: Stitcher_GetWaveCorrection_Async
+      c:@F@Stitcher_SetCompositingResol:
+        name: Stitcher_SetCompositingResol
+      c:@F@Stitcher_SetCompositingResol_Async:
+        name: Stitcher_SetCompositingResol_Async
+      c:@F@Stitcher_SetInterpolationFlags:
+        name: Stitcher_SetInterpolationFlags
+      c:@F@Stitcher_SetInterpolationFlags_Async:
+        name: Stitcher_SetInterpolationFlags_Async
+      c:@F@Stitcher_SetPanoConfidenceThresh:
+        name: Stitcher_SetPanoConfidenceThresh
+      c:@F@Stitcher_SetPanoConfidenceThresh_Async:
+        name: Stitcher_SetPanoConfidenceThresh_Async
+      c:@F@Stitcher_SetRegistrationResol:
+        name: Stitcher_SetRegistrationResol
+      c:@F@Stitcher_SetRegistrationResol_Async:
+        name: Stitcher_SetRegistrationResol_Async
+      c:@F@Stitcher_SetSeamEstimationResol:
+        name: Stitcher_SetSeamEstimationResol
+      c:@F@Stitcher_SetSeamEstimationResol_Async:
+        name: Stitcher_SetSeamEstimationResol_Async
+      c:@F@Stitcher_SetWaveCorrectKind:
+        name: Stitcher_SetWaveCorrectKind
+      c:@F@Stitcher_SetWaveCorrectKind_Async:
+        name: Stitcher_SetWaveCorrectKind_Async
+      c:@F@Stitcher_SetWaveCorrection:
+        name: Stitcher_SetWaveCorrection
+      c:@F@Stitcher_SetWaveCorrection_Async:
+        name: Stitcher_SetWaveCorrection_Async
+      c:@F@Stitcher_Stitch:
+        name: Stitcher_Stitch
+      c:@F@Stitcher_Stitch_1:
+        name: Stitcher_Stitch_1
+      c:@F@Stitcher_Stitch_1_Async:
+        name: Stitcher_Stitch_1_Async
+      c:@F@Stitcher_Stitch_Async:
+        name: Stitcher_Stitch_Async
+      c:@F@Stylization:
+        name: Stylization
+      c:@F@Stylization_Async:
+        name: Stylization_Async
       c:@F@Subdiv2D_Close:
         name: Subdiv2D_Close
       c:@F@Subdiv2D_Close_Async:
@@ -1164,12 +1746,34 @@ files:
         name: Subdiv2D_SymEdge
       c:@F@Subdiv2D_SymEdge_Async:
         name: Subdiv2D_SymEdge_Async
+      c:@F@TextureFlattening:
+        name: TextureFlattening
+      c:@F@TextureFlattening_Async:
+        name: TextureFlattening_Async
       c:@F@TheRNG:
         name: TheRNG
       c:@F@Threshold:
         name: Threshold
       c:@F@Threshold_Async:
         name: Threshold_Async
+      c:@F@TrackerMIL_Close:
+        name: TrackerMIL_Close
+      c:@F@TrackerMIL_Create:
+        name: TrackerMIL_Create
+      c:@F@TrackerMIL_Create_Async:
+        name: TrackerMIL_Create_Async
+      c:@F@TrackerMIL_Init:
+        name: TrackerMIL_Init
+      c:@F@TrackerMIL_Init_Async:
+        name: TrackerMIL_Init_Async
+      c:@F@TrackerMIL_Update:
+        name: TrackerMIL_Update
+      c:@F@TrackerMIL_Update_Async:
+        name: TrackerMIL_Update_Async
+      c:@F@Undistort:
+        name: Undistort
+      c:@F@UndistortPoints:
+        name: UndistortPoints
       c:@F@WarpAffine:
         name: WarpAffine
       c:@F@WarpAffineWithParams:
@@ -1192,6 +1796,8 @@ files:
         name: Watershed_Async
       c:@F@Zeros:
         name: Zeros
+      c:@F@calibrateCamera_Async:
+        name: calibrateCamera_Async
       c:@F@core_AbsDiff_Async:
         name: core_AbsDiff_Async
       c:@F@core_AddWeighted_Async:
@@ -1390,12 +1996,40 @@ files:
         name: core_colRange_Async
       c:@F@core_rowRange_Async:
         name: core_rowRange_Async
+      c:@F@drawChessboardCorners_Async:
+        name: drawChessboardCorners_Async
+      c:@F@estimateAffine2DWithParams_Async:
+        name: estimateAffine2DWithParams_Async
+      c:@F@estimateAffine2D_Async:
+        name: estimateAffine2D_Async
+      c:@F@estimateAffinePartial2DWithParams_Async:
+        name: estimateAffinePartial2DWithParams_Async
+      c:@F@estimateAffinePartial2D_Async:
+        name: estimateAffinePartial2D_Async
+      c:@F@findChessboardCornersSBWithMeta_Async:
+        name: findChessboardCornersSBWithMeta_Async
+      c:@F@findChessboardCornersSB_Async:
+        name: findChessboardCornersSB_Async
+      c:@F@findChessboardCorners_Async:
+        name: findChessboardCorners_Async
+      c:@F@fisheye_estimateNewCameraMatrixForUndistortRectify_Async:
+        name: fisheye_estimateNewCameraMatrixForUndistortRectify_Async
+      c:@F@fisheye_undistortImageWithParams_Async:
+        name: fisheye_undistortImageWithParams_Async
+      c:@F@fisheye_undistortImage_Async:
+        name: fisheye_undistortImage_Async
+      c:@F@fisheye_undistortPoints_Async:
+        name: fisheye_undistortPoints_Async
       c:@F@getBuildInfo:
         name: getBuildInfo
       c:@F@getBuildInfo_Async:
         name: getBuildInfo_Async
       c:@F@getLogLevel:
         name: getLogLevel
+      c:@F@getOptimalNewCameraMatrix_Async:
+        name: getOptimalNewCameraMatrix_Async
+      c:@F@initUndistortRectifyMap_Async:
+        name: initUndistortRectifyMap_Async
       c:@F@openCVVersion:
         name: openCVVersion
       c:@F@openCVVersion_Async:
@@ -1404,20 +2038,98 @@ files:
         name: registerErrorCallback
       c:@F@setLogLevel:
         name: setLogLevel
+      c:@F@undistortPoints_Async:
+        name: undistortPoints_Async
+      c:@F@undistort_Async:
+        name: undistort_Async
+      c:@S@AKAZE:
+        name: AKAZE
+      c:@S@AgastFeatureDetector:
+        name: AgastFeatureDetector
+      c:@S@AlignMTB:
+        name: AlignMTB
+      c:@S@BFMatcher:
+        name: BFMatcher
+      c:@S@BRISK:
+        name: BRISK
+      c:@S@BackgroundSubtractorKNN:
+        name: BackgroundSubtractorKNN
+      c:@S@BackgroundSubtractorMOG2:
+        name: BackgroundSubtractorMOG2
       c:@S@CLAHE:
         name: CLAHE
+      c:@S@FastFeatureDetector:
+        name: FastFeatureDetector
+      c:@S@FlannBasedMatcher:
+        name: FlannBasedMatcher
+      c:@S@GFTTDetector:
+        name: GFTTDetector
+      c:@S@KAZE:
+        name: KAZE
+      c:@S@KalmanFilter:
+        name: KalmanFilter
+      c:@S@MSER:
+        name: MSER
+      c:@S@MergeMertens:
+        name: MergeMertens
+      c:@S@ORB:
+        name: ORB
+      c:@S@SIFT:
+        name: SIFT
+      c:@S@SimpleBlobDetector:
+        name: SimpleBlobDetector
+      c:@S@SimpleBlobDetectorParams:
+        name: SimpleBlobDetectorParams
+      c:@S@Stitcher:
+        name: Stitcher
       c:@S@Subdiv2D:
         name: Subdiv2D
+      c:@S@Tracker:
+        name: Tracker
+      c:@S@TrackerGOTURN:
+        name: TrackerGOTURN
+      c:@S@TrackerMIL:
+        name: TrackerMIL
       c:@T@double_t:
         name: double_t
       c:@T@float_t:
         name: float_t
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:features2d.h@T@AKAZEPtr:
+        name: AKAZEPtr
+      c:features2d.h@T@AgastFeatureDetectorPtr:
+        name: AgastFeatureDetectorPtr
+      c:features2d.h@T@BFMatcherPtr:
+        name: BFMatcherPtr
+      c:features2d.h@T@BRISKPtr:
+        name: BRISKPtr
+      c:features2d.h@T@FastFeatureDetectorPtr:
+        name: FastFeatureDetectorPtr
+      c:features2d.h@T@FlannBasedMatcherPtr:
+        name: FlannBasedMatcherPtr
+      c:features2d.h@T@GFTTDetectorPtr:
+        name: GFTTDetectorPtr
+      c:features2d.h@T@KAZEPtr:
+        name: KAZEPtr
+      c:features2d.h@T@MSERPtr:
+        name: MSERPtr
+      c:features2d.h@T@ORBPtr:
+        name: ORBPtr
+      c:features2d.h@T@SIFTPtr:
+        name: SIFTPtr
+      c:features2d.h@T@SimpleBlobDetectorPtr:
+        name: SimpleBlobDetectorPtr
       c:imgproc.h@T@CLAHEPtr:
         name: CLAHEPtr
       c:imgproc.h@T@Subdiv2DPtr:
         name: Subdiv2DPtr
+      c:photo.h@T@AlignMTBPtr:
+        name: AlignMTBPtr
+      c:photo.h@T@MergeMertensPtr:
+        name: MergeMertensPtr
+      c:stitching.h@T@StitcherPtr:
+        name: StitcherPtr
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
@@ -1490,10 +2202,14 @@ files:
         name: Vec8i
       c:types.h@T@VecChar:
         name: VecChar
+      c:types.h@T@VecDMatch:
+        name: VecDMatch
       c:types.h@T@VecF32:
         name: VecF32
       c:types.h@T@VecI32:
         name: VecI32
+      c:types.h@T@VecKeyPoint:
+        name: VecKeyPoint
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:
@@ -1506,7 +2222,23 @@ files:
         name: VecPoint3i
       c:types.h@T@VecUChar:
         name: VecUChar
+      c:types.h@T@VecVecDMatch:
+        name: VecVecDMatch
       c:types.h@T@VecVecPoint:
         name: VecVecPoint
       c:types.h@T@VecVecPoint2f:
         name: VecVecPoint2f
+      c:types.h@T@VecVecPoint3f:
+        name: VecVecPoint3f
+      c:video.h@T@BackgroundSubtractorKNNPtr:
+        name: BackgroundSubtractorKNNPtr
+      c:video.h@T@BackgroundSubtractorMOG2Ptr:
+        name: BackgroundSubtractorMOG2Ptr
+      c:video.h@T@KalmanFilterPtr:
+        name: KalmanFilterPtr
+      c:video.h@T@TrackerGOTURNPtr:
+        name: TrackerGOTURNPtr
+      c:video.h@T@TrackerMILPtr:
+        name: TrackerMILPtr
+      c:video.h@T@TrackerPtr:
+        name: TrackerPtr

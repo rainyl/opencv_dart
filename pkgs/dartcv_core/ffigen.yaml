@@ -28,6 +28,16 @@ headers:
     - src/imgcodecs_async.h
     - src/imgproc.h
     - src/imgproc_async.h
+    - src/calib3d.h
+    - src/calib3d_async.h
+    - src/features2d.h
+    - src/features2d_async.h
+    - src/photo.h
+    - src/photo_async.h
+    - src/stitching.h
+    - src/stitching_async.h
+    - src/video.h
+    - src/video_async.h
   include-directives:
     - src/core.h
     - src/core_async.h
@@ -41,6 +51,16 @@ headers:
     - src/imgcodecs_async.h
     - src/imgproc.h
     - src/imgproc_async.h
+    - src/calib3d.h
+    - src/calib3d_async.h
+    - src/features2d.h
+    - src/features2d_async.h
+    - src/photo.h
+    - src/photo_async.h
+    - src/stitching.h
+    - src/stitching_async.h
+    - src/video.h
+    - src/video_async.h
 functions:
   leaf:
     include:

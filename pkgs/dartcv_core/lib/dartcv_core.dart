@@ -4,6 +4,9 @@
 
 library cv.core;
 
+export 'src/calib3d/calib3d.dart';
+export 'src/calib3d/calib3d_async.dart';
+export 'src/calib3d/fisheye.dart';
 export 'src/core/base.dart';
 export 'src/core/contours.dart';
 export 'src/core/core.dart';
@@ -27,6 +30,8 @@ export 'src/core/size.dart';
 export 'src/core/svd.dart';
 export 'src/core/termcriteria.dart';
 export 'src/core/vec.dart';
+export 'src/features2d/features2d.dart';
+export 'src/features2d/features2d_async.dart';
 export 'src/g/constants.g.dart';
 export 'src/imgcodecs/imgcodecs.dart';
 export 'src/imgcodecs/imgcodecs_async.dart';
@@ -36,3 +41,9 @@ export 'src/imgproc/imgproc.dart';
 export 'src/imgproc/imgproc_async.dart';
 export 'src/imgproc/subdiv2d.dart';
 export 'src/imgproc/subdiv2d_async.dart';
+export 'src/photo/photo.dart';
+export 'src/photo/photo_async.dart';
+export 'src/stitching/stitching.dart';
+export 'src/stitching/stitching_async.dart';
+export 'src/video/video.dart';
+export 'src/video/video_async.dart';
