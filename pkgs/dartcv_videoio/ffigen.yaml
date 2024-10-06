@@ -1,0 +1,41 @@
+name: CvNativeVideoIO
+description: |
+  Native bindings for OpenCV - VideoIO
+output:
+  bindings: ../lib/src/g/video_io.g.dart
+  symbol-file:
+    output: 'package:dartcv_videoio/src/g/video_io.yaml'
+    import-path: 'package:dartcv_videoio/src/g/video_io.g.dart'
+# ffi-native:
+#   assetId: 'package:dartcv_videoio/dartcv_videoio.dart' # Optional.
+import:
+  symbol-files:
+    - 'package:dartcv_videoio/src/g/types.yaml'
+compiler-opts: "-Isrc"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - src/videoio.h
+    - src/videoio_async.h
+  include-directives:
+    - src/videoio.h
+    - src/videoio_async.h
+
+functions:
+  symbol-address:
+    include:
+      - ".*_Close.*"
+
+preamble: |
+  // coverage:ignore-file
+  // dartcv_videoio - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).

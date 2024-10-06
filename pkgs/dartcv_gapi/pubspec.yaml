@@ -1,0 +1,38 @@
+name: dartcv_gapi
+description: "OpenCV4 bindings for Dart language and Flutter, using dart:ffi. The most complete OpenCV bindings for Dart! With asynchronous support now!"
+version: 1.2.5
+homepage: https://github.com/rainyl/dartcv_gapi
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ffi: ^2.1.3
+  dartcv_core: 0.0.1-dev.0
+
+dev_dependencies:
+  ffigen: ">=13.0.0 <15.0.0"
+  test: ^1.25.2
+
+topics:
+  - opencv
+  - image
+  - ffi
+  - flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        ffiPlugin: true
+      linux:
+        ffiPlugin: true
+      windows:
+        ffiPlugin: true
+      macos:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
