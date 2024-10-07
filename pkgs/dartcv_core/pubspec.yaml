@@ -1,6 +1,6 @@
 name: dartcv_core
 description: "[core] OpenCV4 bindings for Dart language and Flutter, using dart:ffi. The most complete OpenCV bindings for Dart! With asynchronous support now!"
-version: 0.0.1-dev.0
+version: 0.0.1-dev.1
 version_opencv: 4.10.0+9
 homepage: https://github.com/rainyl/dartcv_core/pkgs/dartcv_core
 

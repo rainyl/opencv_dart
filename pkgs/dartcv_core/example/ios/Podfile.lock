@@ -1,27 +1,27 @@
 PODS:
+  - dartcv_core (0.0.1-dev.1):
+    - Flutter
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - dartcv_core (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
+  - dartcv_core (from `.symlinks/plugins/dartcv_core/ios`)
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - dartcv_core (from `.symlinks/plugins/dartcv_core/ios`)
 
 EXTERNAL SOURCES:
+  dartcv_core:
+    :path: ".symlinks/plugins/dartcv_core/ios"
   Flutter:
     :path: Flutter
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  dartcv_core:
-    :path: ".symlinks/plugins/dartcv_core/ios"
 
 SPEC CHECKSUMS:
+  dartcv_core: ef1a691a4464cee11e0d8bc483b43d4ee049326c
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
-  dartcv_core: 818b078a7168d455a7b84e1b1a0f444835ad666b
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

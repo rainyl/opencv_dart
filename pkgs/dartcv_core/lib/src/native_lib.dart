@@ -11,7 +11,7 @@ const _libraryName = "dartcv_core";
 
 // load native library
 ffi.DynamicLibrary loadNativeLibrary() {
-  if (Platform.isIOS) return ffi.DynamicLibrary.process();
+  if (Platform.isIOS || Platform.isMacOS) return ffi.DynamicLibrary.process();
   final defaultLibPath = switch (Platform.operatingSystem) {
     "windows" => "$_libraryName.dll",
     "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
