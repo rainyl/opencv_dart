@@ -10,8 +10,8 @@ proj_ver=pubspec['version']
 opencv_ver=pubspec['version_opencv']
 
 Pod::Spec.new do |s|
-  s.name             = 'dartcv_core'
-  s.version          = proj_ver
+  s.name         = 'dartcv_core'
+  s.version      = proj_ver
   s.summary      = '[core] OpenCV bindings for Dart.'
   s.description  = <<-DESC
     OpenCV bindings for Dart. core module.
