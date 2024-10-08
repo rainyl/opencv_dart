@@ -13,9 +13,9 @@ option(DARTCV_WITH_CORE
 )
 option(DARTCV_WITH_DNN "Include dnn module of opencv" ON)
 option(DARTCV_WITH_OBJDETECT "Include objdetect module of opencv" ON)
-option(DARTCV_WITH_HIGHGUI "Include highgui module of opencv" ON)
+option(DARTCV_WITH_HIGHGUI "Include highgui module of opencv" OFF)
 option(DARTCV_WITH_CONTRIB "Include contrib module of opencv" ON)
-option(DARTCV_WITH_VIDEOIO "Include objdetect module of opencv" ON)
+option(DARTCV_WITH_VIDEOIO "Include objdetect module of opencv" OFF)
 option(DARTCV_WITH_GAPI "Include gapi of opencv" OFF) # TODO: not finished
 option(DARTCV_WORLD "Include all modules" OFF)
 
@@ -39,6 +39,10 @@ endif()
 # ============ download and prepare OpenCV_DIR finished ==============
 find_package(OpenCV REQUIRED)
 
+if(DARTCV_WITH_HIGHGUI OR DARTCV_WITH_VIDEOIO)
+  find_package(FFMPEG REQUIRED)
+endif()
+
 set(OPENCV_DART_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 message(STATUS "OpenCV library status:")
@@ -52,40 +56,5 @@ if(DARTCV_WORLD)
   find_package(FFMPEG REQUIRED)
   add_subdirectory(src/world)
 else()
-  if(DARTCV_WITH_CORE)
-    add_subdirectory(src/core)
-    add_subdirectory(src/calib3d)
-    add_subdirectory(src/features2d)
-    add_subdirectory(src/imgcodecs)
-    add_subdirectory(src/imgproc)
-    add_subdirectory(src/photo)
-    add_subdirectory(src/stitching)
-    add_subdirectory(src/video)
-  endif()
-
-  if(DARTCV_WITH_DNN)
-    add_subdirectory(src/dnn)
-  endif()
-
-  if(DARTCV_WITH_OBJDETECT)
-    add_subdirectory(src/objdetect)
-  endif()
-
-  if(DARTCV_WITH_HIGHGUI)
-    find_package(FFMPEG REQUIRED)
-    add_subdirectory(src/highgui)
-  endif()
-
-  if(DARTCV_WITH_CONTRIB)
-    add_subdirectory(src/contrib)
-  endif()
-
-  if(DARTCV_WITH_VIDEOIO)
-    find_package(FFMPEG REQUIRED)
-    add_subdirectory(src/videoio)
-  endif()
-
-  if(DARTCV_WITH_GAPI)
-    add_subdirectory(src/gapi)
-  endif()
+  add_subdirectory(src)
 endif()
