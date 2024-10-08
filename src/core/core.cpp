@@ -79,18 +79,18 @@ CvStatus *Mat_NewWithSize(int rows, int cols, int type, Mat *rval) {
 }
 CvStatus *Mat_NewWithSizes(VecI32 sizes, int type, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(sizes.length, sizes.ptr, type)};
+  *rval = {new cv::Mat((int)sizes.length, sizes.ptr, type)};
   END_WRAP
 }
 CvStatus *Mat_NewWithSizesFromScalar(VecI32 sizes, int type, Scalar ar, Mat *rval) {
   BEGIN_WRAP
   cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
-  *rval = {new cv::Mat(sizes.length, sizes.ptr, type, c)};
+  *rval = {new cv::Mat((int)sizes.length, sizes.ptr, type, c)};
   END_WRAP
 }
 CvStatus *Mat_NewWithSizesFromBytes(VecI32 sizes, int type, void *buf, Mat *rval) {
   BEGIN_WRAP
-  *rval = {new cv::Mat(sizes.length, sizes.ptr, type, buf)};
+  *rval = {new cv::Mat((int)sizes.length, sizes.ptr, type, buf)};
   END_WRAP
 }
 
@@ -231,15 +231,15 @@ MatStep Mat_Step(Mat m) {
   auto step = m.ptr->step;
   return {{step.p[0], step.p[1], step.p[2]}};
 }
-int Mat_Total(Mat m) { return m.ptr->total(); }
+size_t Mat_Total(Mat m) { return m.ptr->total(); }
 VecI32 *Mat_Size(Mat m) {
   auto size = m.ptr->size;
   int *ptr = new int[size.dims()];
   memcpy(ptr, size.p, size.dims() * sizeof(int));
   return new VecI32{ptr, static_cast<size_t>(size.dims())};
 }
-int Mat_ElemSize(Mat m) { return m.ptr->elemSize(); }
-int Mat_ElemSize1(Mat m) { return m.ptr->elemSize1(); }
+size_t Mat_ElemSize(Mat m) { return m.ptr->elemSize(); }
+size_t Mat_ElemSize1(Mat m) { return m.ptr->elemSize1(); }
 
 int Mat_Dims(Mat m) { return m.ptr->dims; }
 
