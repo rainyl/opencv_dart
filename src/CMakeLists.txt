@@ -48,13 +48,17 @@ set(_cpp_files
   "photo/photo.cpp"
   "stitching/stitching_async.cpp"
   "stitching/stitching.cpp"
-  "video/video_async.cpp"
-  "video/video.cpp"
 )
 
 set(DARTCV_DEPS opencv_core opencv_calib3d opencv_features2d opencv_imgcodecs
-  opencv_imgproc opencv_photo opencv_stitching opencv_video
+  opencv_imgproc opencv_photo opencv_stitching
 )
+
+# video
+if(DARTCV_WITH_DNN)
+  set(_cpp_files ${_cpp_files} "video/video.cpp" "video/video_async.cpp")
+  set(DARTCV_DEPS ${DARTCV_DEPS} opencv_video)
+endif()
 
 # dnn
 if(DARTCV_WITH_DNN)

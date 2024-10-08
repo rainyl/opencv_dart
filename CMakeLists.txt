@@ -13,6 +13,7 @@ option(DARTCV_WITH_CORE
 )
 option(DARTCV_WITH_DNN "Include dnn module of opencv" ON)
 option(DARTCV_WITH_OBJDETECT "Include objdetect module of opencv" ON)
+option(DARTCV_WITH_VIDEO "Include video module of opencv" ON)
 option(DARTCV_WITH_HIGHGUI "Include highgui module of opencv" OFF)
 option(DARTCV_WITH_CONTRIB "Include contrib module of opencv" ON)
 option(DARTCV_WITH_VIDEOIO "Include objdetect module of opencv" OFF)
