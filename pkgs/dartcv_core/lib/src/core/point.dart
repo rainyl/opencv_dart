@@ -8,7 +8,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import 'base.dart';
 import 'mat.dart';
 import 'vec.dart';
@@ -186,7 +186,7 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
 
   factory VecPoint.fromMat(Mat mat) {
     final p = calloc<cvg.VecPoint>();
-    cvRun(() => ccore.Mat_toVecPoint(mat.ref, p));
+    cvRun(() => cffi.Mat_toVecPoint(mat.ref, p));
     return VecPoint.fromPointer(p);
   }
 
@@ -266,7 +266,7 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
 
   factory VecPoint2f.fromMat(Mat mat) {
     final p = calloc<cvg.VecPoint2f>();
-    cvRun(() => ccore.Mat_toVecPoint2f(mat.ref, p));
+    cvRun(() => cffi.Mat_toVecPoint2f(mat.ref, p));
     return VecPoint2f.fromPointer(p);
   }
 
@@ -346,7 +346,7 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
 
   factory VecPoint3f.fromMat(Mat mat) {
     final p = calloc<cvg.VecPoint3f>();
-    cvRun(() => ccore.Mat_toVecPoint3f(mat.ref, p));
+    cvRun(() => cffi.Mat_toVecPoint3f(mat.ref, p));
     return VecPoint3f.fromPointer(p);
   }
 
@@ -427,7 +427,7 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
 
   factory VecPoint3i.fromMat(Mat mat) {
     final p = calloc<cvg.VecPoint3i>();
-    cvRun(() => ccore.Mat_toVecPoint3i(mat.ref, p));
+    cvRun(() => cffi.Mat_toVecPoint3i(mat.ref, p));
     return VecPoint3i.fromPointer(p);
   }
 

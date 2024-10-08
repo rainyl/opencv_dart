@@ -14,7 +14,7 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   Subdiv2D._(cvg.Subdiv2DPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -27,21 +27,21 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
 
   factory Subdiv2D.empty() {
     final p = calloc<cvg.Subdiv2D>();
-    cvRun(() => ccore.Subdiv2D_NewEmpty(p));
+    cvRun(() => cffi.Subdiv2D_NewEmpty(p));
     return Subdiv2D._(p);
   }
 
   factory Subdiv2D.fromRect(Rect rect) {
     final p = calloc<cvg.Subdiv2D>();
-    cvRun(() => ccore.Subdiv2D_NewWithRect(rect.ref, p));
+    cvRun(() => cffi.Subdiv2D_NewWithRect(rect.ref, p));
     return Subdiv2D._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.Subdiv2DPtr>(ccore.addresses.Subdiv2D_Close);
+  static final finalizer = OcvFinalizer<cvg.Subdiv2DPtr>(cffi.addresses.Subdiv2D_Close);
 
   void dispose() {
     finalizer.detach(this);
-    ccore.Subdiv2D_Close(ptr);
+    cffi.Subdiv2D_Close(ptr);
   }
 
   /// Returns the edge destination.
@@ -51,7 +51,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<(int, Point2f)>((arena) {
       final pp = calloc<cvg.Point2f>();
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_EdgeDst(ref, edge, pp, p));
+      cvRun(() => cffi.Subdiv2D_EdgeDst(ref, edge, pp, p));
       return (p.value, Point2f.fromPointer(pp));
     });
   }
@@ -63,7 +63,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<(int, Point2f)>((arena) {
       final pp = calloc<cvg.Point2f>();
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_EdgeOrg(ref, edge, pp, p));
+      cvRun(() => cffi.Subdiv2D_EdgeOrg(ref, edge, pp, p));
       return (p.value, Point2f.fromPointer(pp));
     });
   }
@@ -80,7 +80,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<(int, Point2f)>((arena) {
       final pp = calloc<cvg.Point2f>();
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_FindNearest(ref, pt.ref, pp, p));
+      cvRun(() => cffi.Subdiv2D_FindNearest(ref, pt.ref, pp, p));
       return (p.value, Point2f.fromPointer(pp));
     });
   }
@@ -103,7 +103,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   int getEdge(int edge, int nextEdgeType) {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_GetEdge(ref, edge, nextEdgeType, p));
+      cvRun(() => cffi.Subdiv2D_GetEdge(ref, edge, nextEdgeType, p));
       return p.value;
     });
   }
@@ -115,7 +115,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<List<Vec4f>>((arena) {
       final pv = arena<ffi.Pointer<cvg.Vec4f>>();
       final psize = arena<ffi.Size>();
-      cvRun(() => ccore.Subdiv2D_GetEdgeList(ref, pv, psize));
+      cvRun(() => cffi.Subdiv2D_GetEdgeList(ref, pv, psize));
       return List.generate(psize.value, (i) {
         final v = pv.value[i];
         return Vec4f(v.val1, v.val2, v.val3, v.val4);
@@ -129,7 +129,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   VecI32 getLeadingEdgeList() {
     return using<VecI32>((arena) {
       final pv = calloc<cvg.VecI32>();
-      cvRun(() => ccore.Subdiv2D_GetLeadingEdgeList(ref, pv));
+      cvRun(() => cffi.Subdiv2D_GetLeadingEdgeList(ref, pv));
       return VecI32.fromPointer(pv);
     });
   }
@@ -144,7 +144,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<List<Vec6f>>((arena) {
       final pv = arena<ffi.Pointer<cvg.Vec6f>>();
       final psize = arena<ffi.Size>();
-      cvRun(() => ccore.Subdiv2D_GetTriangleList(ref, pv, psize));
+      cvRun(() => cffi.Subdiv2D_GetTriangleList(ref, pv, psize));
       return List.generate(psize.value, (i) {
         final v = pv.value[i];
         return Vec6f(v.val1, v.val2, v.val3, v.val4, v.val5, v.val6);
@@ -159,7 +159,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<(Point2f, int)>((arena) {
       final pp = calloc<cvg.Point2f>();
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_GetVertex(ref, vertex, p, pp));
+      cvRun(() => cffi.Subdiv2D_GetVertex(ref, vertex, p, pp));
       return (Point2f.fromPointer(pp), p.value);
     });
   }
@@ -171,7 +171,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     return using<(VecVecPoint2f, VecPoint2f)>((arena) {
       final pf = calloc<cvg.VecVecPoint2f>();
       final pfc = calloc<cvg.VecPoint2f>();
-      cvRun(() => ccore.Subdiv2D_GetVoronoiFacetList(ref, idx.ref, pf, pfc));
+      cvRun(() => cffi.Subdiv2D_GetVoronoiFacetList(ref, idx.ref, pf, pfc));
       return (VecVecPoint2f.fromPointer(pf), VecPoint2f.fromPointer(pfc));
     });
   }
@@ -181,7 +181,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#ae4a3d65e798c46fd6ce64370f24b0287
   void initDelaunay(Rect rect) {
     return using<void>((arena) {
-      cvRun(() => ccore.Subdiv2D_InitDelaunay(ref, rect.ref));
+      cvRun(() => cffi.Subdiv2D_InitDelaunay(ref, rect.ref));
     });
   }
 
@@ -191,7 +191,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   int insert(Point2f pt) {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_Insert(ref, pt.ref, p));
+      cvRun(() => cffi.Subdiv2D_Insert(ref, pt.ref, p));
       return p.value;
     });
   }
@@ -203,7 +203,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a18a6c9999210d769538297d843c613f2
   void insertVec(VecPoint2f pv) {
     return using<void>((arena) {
-      cvRun(() => ccore.Subdiv2D_InsertVec(ref, pv.ref));
+      cvRun(() => cffi.Subdiv2D_InsertVec(ref, pv.ref));
     });
   }
 
@@ -224,7 +224,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
       final edge = arena<ffi.Int>();
       final vertex = arena<ffi.Int>();
       final rval = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_Locate(ref, pt.ref, edge, vertex, rval));
+      cvRun(() => cffi.Subdiv2D_Locate(ref, pt.ref, edge, vertex, rval));
       return (rval.value, edge.value, vertex.value);
     });
   }
@@ -235,7 +235,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   int nextEdge(int edge) {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_NextEdge(ref, edge, p));
+      cvRun(() => cffi.Subdiv2D_NextEdge(ref, edge, p));
       return p.value;
     });
   }
@@ -246,7 +246,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   int rotateEdge(int edge, int rotate) {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_RotateEdge(ref, edge, rotate, p));
+      cvRun(() => cffi.Subdiv2D_RotateEdge(ref, edge, rotate, p));
       return p.value;
     });
   }
@@ -255,7 +255,7 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   int symEdge(int edge) {
     return using<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => ccore.Subdiv2D_SymEdge(ref, edge, p));
+      cvRun(() => cffi.Subdiv2D_SymEdge(ref, edge, p));
       return p.value;
     });
   }

@@ -17,7 +17,7 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../g/constants.g.dart';
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
 ///
@@ -36,7 +36,7 @@ import '../native_lib.dart' show ccore;
   final p1 = map1?.ptr ?? calloc<cvg.Mat>();
   final p2 = map2?.ptr ?? calloc<cvg.Mat>();
   cvRun(
-    () => ccore.InitUndistortRectifyMap(
+    () => cffi.InitUndistortRectifyMap(
       cameraMatrix.ref,
       distCoeffs.ref,
       R.ref,
@@ -65,7 +65,7 @@ import '../native_lib.dart' show ccore;
   final validPixROI = calloc<cvg.Rect>();
   final matPtr = calloc<cvg.Mat>();
   cvRun(
-    () => ccore.GetOptimalNewCameraMatrixWithParams(
+    () => cffi.GetOptimalNewCameraMatrixWithParams(
       cameraMatrix.ref,
       distCoeffs.ref,
       imageSize.cvd.ref,
@@ -99,7 +99,7 @@ import '../native_lib.dart' show ccore;
   final cRmsErr = calloc<ffi.Double>();
 
   cvRun(
-    () => ccore.CalibrateCamera(
+    () => cffi.CalibrateCamera(
       objectPoints.ref,
       imagePoints.ref,
       imageSize.cvd.ref,
@@ -132,7 +132,7 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() => ccore.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(() => cffi.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
   return dst;
 }
 
@@ -155,7 +155,7 @@ Mat undistortPoints(
   final tc = criteria.cvd;
   cvRun(
     () =>
-        ccore.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
+        cffi.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
   );
   return dst;
 }
@@ -172,7 +172,7 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final r = calloc<ffi.Bool>();
-  cvRun(() => ccore.FindChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ref, flags, r));
+  cvRun(() => cffi.FindChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ref, flags, r));
   final rval = r.value;
   calloc.free(r);
   return (rval, corners);
@@ -188,7 +188,7 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final b = calloc<ffi.Bool>();
-  cvRun(() => ccore.FindChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ref, flags, b));
+  cvRun(() => cffi.FindChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ref, flags, b));
   final rval = b.value;
   calloc.free(b);
   return (rval, corners);
@@ -207,7 +207,7 @@ Mat undistortPoints(
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   cvRun(
-    () => ccore.FindChessboardCornersSBWithMeta(
+    () => cffi.FindChessboardCornersSBWithMeta(
       image.ref,
       patternSize.cvd.ref,
       corners!.ref,
@@ -231,7 +231,7 @@ Mat drawChessboardCorners(
   InputArray corners,
   bool patternWasFound,
 ) {
-  cvRun(() => ccore.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
+  cvRun(() => cffi.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
   return image;
 }
 
@@ -253,7 +253,7 @@ Mat drawChessboardCorners(
   inliers ??= Mat.empty();
   final p = calloc<cvg.Mat>();
   cvRun(
-    () => ccore.EstimateAffinePartial2DWithParams(
+    () => cffi.EstimateAffinePartial2DWithParams(
       from.ref,
       to.ref,
       inliers!.ref,
@@ -285,7 +285,7 @@ Mat drawChessboardCorners(
   inliers ??= Mat.empty();
   final p = calloc<cvg.Mat>();
   cvRun(
-    () => ccore.EstimateAffine2DWithParams(
+    () => cffi.EstimateAffine2DWithParams(
       from.ref,
       to.ref,
       inliers!.ref,
@@ -316,7 +316,7 @@ Mat findHomography(
   mask ??= Mat.empty();
   final mat = calloc<cvg.Mat>();
   cvRun(
-    () => ccore.FindHomography(
+    () => cffi.FindHomography(
       srcPoints.ref,
       dstPoints.ref,
       method,

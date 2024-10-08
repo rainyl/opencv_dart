@@ -9,7 +9,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import 'base.dart';
 import 'mat.dart';
 
@@ -25,22 +25,22 @@ class SVD {
     final pw = w?.ptr ?? calloc<cvg.Mat>();
     final pu = u?.ptr ?? calloc<cvg.Mat>();
     final pvt = vt?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => ccore.SVD_Compute(src.ref, pw, pu, pvt, flags));
+    cvRun(() => cffi.SVD_Compute(src.ref, pw, pu, pvt, flags));
     return (w ?? Mat.fromPointer(pw), u ?? Mat.fromPointer(pu), vt ?? Mat.fromPointer(pvt));
   }
 
   /// async version of [compute]
   static Future<(Mat w, Mat u, Mat vt)> computeAsync(Mat src, {int flags = 0}) async =>
-      cvRunAsync3((callback) => ccore.SVD_Compute_Async(src.ref, flags, callback), matCompleter3);
+      cvRunAsync3((callback) => cffi.SVD_Compute_Async(src.ref, flags, callback), matCompleter3);
 
   static Mat backSubst(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) {
     final pdst = dst?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => ccore.SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, pdst));
+    cvRun(() => cffi.SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, pdst));
     return dst ?? Mat.fromPointer(pdst);
   }
 
   static Future<Mat> backSubstAsync(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) async => cvRunAsync(
-        (callback) => ccore.SVD_backSubst_Async(w.ref, u.ref, vt.ref, rhs.ref, callback),
+        (callback) => cffi.SVD_backSubst_Async(w.ref, u.ref, vt.ref, rhs.ref, callback),
         matCompleter,
       );
 }

@@ -7,7 +7,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import 'base.dart';
 import 'mat.dart';
 
@@ -18,7 +18,7 @@ class Rng extends CvStruct<cvg.RNG> {
 
   factory Rng() {
     final p = calloc<cvg.RNG>();
-    cvRun(() => ccore.Rng_New(p));
+    cvRun(() => cffi.Rng_New(p));
     final rng = Rng._(p);
     return rng;
   }
@@ -27,16 +27,16 @@ class Rng extends CvStruct<cvg.RNG> {
 
   factory Rng.fromSeed(int seed) {
     final p = calloc<cvg.RNG>();
-    cvRun(() => ccore.Rng_NewWithState(seed, p));
+    cvRun(() => cffi.Rng_NewWithState(seed, p));
     final rng = Rng._(p);
     return rng;
   }
 
-  static final finalizer = OcvFinalizer<cvg.RNGPtr>(ccore.addresses.Rng_Close);
+  static final finalizer = OcvFinalizer<cvg.RNGPtr>(cffi.addresses.Rng_Close);
 
   void dispose() {
     finalizer.detach(this);
-    ccore.Rng_Close(ptr);
+    cffi.Rng_Close(ptr);
   }
 
   /// Fills arrays with random numbers.
@@ -50,11 +50,11 @@ class Rng extends CvStruct<cvg.RNG> {
     bool inplace = false,
   }) {
     if (inplace) {
-      cvRun(() => ccore.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
+      cvRun(() => cffi.RNG_Fill(ref, mat.ref, distType, a, b, saturateRange));
       return mat;
     } else {
       final m = mat.clone();
-      cvRun(() => ccore.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
+      cvRun(() => cffi.RNG_Fill(ref, m.ref, distType, a, b, saturateRange));
       return m;
     }
   }
@@ -69,7 +69,7 @@ class Rng extends CvStruct<cvg.RNG> {
     final p = calloc<ffi.Double>();
     try {
       while (true) {
-        cvRun(() => ccore.RNG_Gaussian(ref, sigma, p));
+        cvRun(() => cffi.RNG_Gaussian(ref, sigma, p));
         yield p.value;
 
         count++;
@@ -87,7 +87,7 @@ class Rng extends CvStruct<cvg.RNG> {
     final p = calloc<ffi.Uint32>();
     try {
       while (true) {
-        cvRun(() => ccore.RNG_Next(ref, p));
+        cvRun(() => cffi.RNG_Next(ref, p));
         yield p.value;
 
         count++;
@@ -110,7 +110,7 @@ class Rng extends CvStruct<cvg.RNG> {
       final p = calloc<ffi.Int>();
       try {
         while (true) {
-          cvRun(() => ccore.RNG_Uniform(ref, a, b, p));
+          cvRun(() => cffi.RNG_Uniform(ref, a, b, p));
           yield p.value;
 
           count++;
@@ -123,7 +123,7 @@ class Rng extends CvStruct<cvg.RNG> {
       final p = calloc<ffi.Double>();
       try {
         while (true) {
-          cvRun(() => ccore.RNG_UniformDouble(ref, a.toDouble(), b.toDouble(), p));
+          cvRun(() => cffi.RNG_UniformDouble(ref, a.toDouble(), b.toDouble(), p));
           yield p.value;
 
           count++;

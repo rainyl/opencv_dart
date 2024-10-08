@@ -8,7 +8,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import 'clahe.dart';
 
 extension CLAHEAsync on CLAHE {
@@ -17,10 +17,10 @@ extension CLAHEAsync on CLAHE {
     (int width, int height) tileGridSize = (8, 8),
   ]) async =>
       cvRunAsync(
-        (callback) => ccore.CLAHE_CreateWithParams_Async(clipLimit, tileGridSize.cvd.ref, callback),
+        (callback) => cffi.CLAHE_CreateWithParams_Async(clipLimit, tileGridSize.cvd.ref, callback),
         (c, p) => c.complete(CLAHE.fromPointer(p.cast<cvg.CLAHE>())),
       );
 
   Future<Mat> applyAsync(Mat src) async =>
-      cvRunAsync((callback) => ccore.CLAHE_Apply_Async(ref, src.ref, callback), matCompleter);
+      cvRunAsync((callback) => cffi.CLAHE_Apply_Async(ref, src.ref, callback), matCompleter);
 }

@@ -12,7 +12,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import './stitching.dart';
 
 extension StitcherAsync on Stitcher {
@@ -20,53 +20,53 @@ extension StitcherAsync on Stitcher {
     StitcherMode mode = StitcherMode.PANORAMA,
   }) async =>
       cvRunAsync(
-        (callback) => ccore.Stitcher_Create_Async(mode.index, callback),
+        (callback) => cffi.Stitcher_Create_Async(mode.index, callback),
         (c, p) => c.complete(Stitcher.fromPointer(p.cast<cvg.Stitcher>())),
       );
 
   Future<double> getRegistrationResolAsync() async => cvRunAsync(
-        (callback) => ccore.Stitcher_GetRegistrationResol_Async(ref, callback),
+        (callback) => cffi.Stitcher_GetRegistrationResol_Async(ref, callback),
         doubleCompleter,
       );
 
   Future<void> setRegistrationResolAsync(double value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetRegistrationResol_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetRegistrationResol_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
   Future<double> getSeamEstimationResolAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetSeamEstimationResol_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetSeamEstimationResol_Async(ref, callback),
       doubleCompleter,
     );
   }
 
   Future<void> setSeamEstimationResolAsync(double value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetSeamEstimationResol_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetSeamEstimationResol_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
   Future<double> getCompositingResolAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetCompositingResol_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetCompositingResol_Async(ref, callback),
       doubleCompleter,
     );
   }
 
   Future<void> setCompositingResolAsync(double value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetCompositingResol_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetCompositingResol_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
   Future<double> getPanoConfidenceThreshAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetPanoConfidenceThresh_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetPanoConfidenceThresh_Async(ref, callback),
       doubleCompleter,
     );
   }
 
   Future<void> setPanoConfidenceThreshAsync(double value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetPanoConfidenceThresh_Async(
+        (callback) => cffi.Stitcher_SetPanoConfidenceThresh_Async(
           ref,
           value,
           callback,
@@ -76,37 +76,37 @@ extension StitcherAsync on Stitcher {
 
   Future<bool> getWaveCorrectionAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetWaveCorrection_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetWaveCorrection_Async(ref, callback),
       boolCompleter,
     );
   }
 
   Future<void> setWaveCorrectionAsync(bool value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetWaveCorrection_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetWaveCorrection_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
   Future<int> getInterpolationFlagsAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetInterpolationFlags_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetInterpolationFlags_Async(ref, callback),
       intCompleter,
     );
   }
 
   Future<void> setInterpolationFlagsAsync(int value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetInterpolationFlags_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetInterpolationFlags_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
   Future<int> getWaveCorrectKindAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_GetWaveCorrectKind_Async(ref, callback),
+      (callback) => cffi.Stitcher_GetWaveCorrectKind_Async(ref, callback),
       intCompleter,
     );
   }
 
   Future<void> setWaveCorrectKindAsync(int value) async => cvRunAsync0(
-        (callback) => ccore.Stitcher_SetWaveCorrectKind_Async(ref, value, callback),
+        (callback) => cffi.Stitcher_SetWaveCorrectKind_Async(ref, value, callback),
         (c) => c.complete(),
       );
 
@@ -116,7 +116,7 @@ extension StitcherAsync on Stitcher {
   }) async {
     masks ??= VecMat.fromList([]);
     return cvRunAsync(
-        (callback) => ccore.Stitcher_EstimateTransform_Async(
+        (callback) => cffi.Stitcher_EstimateTransform_Async(
               ref,
               images.ref,
               masks!.ref,
@@ -131,11 +131,11 @@ extension StitcherAsync on Stitcher {
   Future<(StitcherStatus, Mat)> composePanoramaAsync({VecMat? images}) async {
     return cvRunAsync2(
         (callback) => images == null
-            ? ccore.Stitcher_ComposePanorama_Async(
+            ? cffi.Stitcher_ComposePanorama_Async(
                 ref,
                 callback,
               )
-            : ccore.Stitcher_ComposePanorama_1_Async(
+            : cffi.Stitcher_ComposePanorama_1_Async(
                 ref,
                 images.ref,
                 callback,
@@ -154,12 +154,12 @@ extension StitcherAsync on Stitcher {
   }) async {
     return cvRunAsync2(
         (callback) => masks == null
-            ? ccore.Stitcher_Stitch_Async(
+            ? cffi.Stitcher_Stitch_Async(
                 ref,
                 images.ref,
                 callback,
               )
-            : ccore.Stitcher_Stitch_1_Async(
+            : cffi.Stitcher_Stitch_1_Async(
                 ref,
                 images.ref,
                 masks.ref,
@@ -175,7 +175,7 @@ extension StitcherAsync on Stitcher {
 
   Future<VecI32> getComponentAsync() async {
     return cvRunAsync(
-      (callback) => ccore.Stitcher_Component_Async(ref, callback),
+      (callback) => cffi.Stitcher_Component_Async(ref, callback),
       (c, p) => c.complete(VecI32.fromPointer(p.cast<cvg.VecI32>())),
     );
   }

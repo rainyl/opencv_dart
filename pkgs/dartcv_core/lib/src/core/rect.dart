@@ -8,7 +8,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 import 'base.dart';
 import 'point.dart';
 import 'size.dart';
@@ -141,19 +141,19 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 
   VecPoint2f get points {
     final pts = calloc<cvg.VecPoint2f>();
-    cvRun(() => ccore.RotatedRect_Points(ptr.ref, pts));
+    cvRun(() => cffi.RotatedRect_Points(ptr.ref, pts));
     return VecPoint2f.fromPointer(pts);
   }
 
   Rect get boundingRect {
     final rect = calloc<cvg.Rect>();
-    cvRun(() => ccore.RotatedRect_BoundingRect(ptr.ref, rect));
+    cvRun(() => cffi.RotatedRect_BoundingRect(ptr.ref, rect));
     return Rect.fromPointer(rect);
   }
 
   Rect2f get boundingRect2f {
     final rect = calloc<cvg.Rect2f>();
-    cvRun(() => ccore.RotatedRect_BoundingRect2f(ptr.ref, rect));
+    cvRun(() => cffi.RotatedRect_BoundingRect2f(ptr.ref, rect));
     return Rect2f.fromPointer(rect);
   }
 

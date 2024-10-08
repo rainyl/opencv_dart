@@ -16,7 +16,7 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../g/constants.g.dart';
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
 ///
@@ -31,7 +31,7 @@ Future<(Mat, Mat)> initUndistortRectifyMapAsync(
   int m1type,
 ) async =>
     cvRunAsync2<(Mat, Mat)>(
-      (callback) => ccore.initUndistortRectifyMap_Async(
+      (callback) => cffi.initUndistortRectifyMap_Async(
         cameraMatrix.ref,
         distCoeffs.ref,
         R.ref,
@@ -56,7 +56,7 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
   bool centerPrincipalPoint = false,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.getOptimalNewCameraMatrix_Async(
+      (callback) => cffi.getOptimalNewCameraMatrix_Async(
         cameraMatrix.ref,
         distCoeffs.ref,
         imageSize.cvd.ref,
@@ -84,7 +84,7 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) async =>
     cvRunAsync3(
-      (callback) => ccore.calibrateCamera_Async(
+      (callback) => cffi.calibrateCamera_Async(
         objectPoints.ref,
         imagePoints.ref,
         imageSize.cvd.ref,
@@ -116,7 +116,7 @@ Future<Mat> undistortAsync(
   InputArray? newCameraMatrix,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.undistort_Async(
+      (callback) => cffi.undistort_Async(
         src.ref,
         cameraMatrix.ref,
         distCoeffs.ref,
@@ -139,7 +139,7 @@ Future<Mat> undistortPointsAsync(
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 }) async =>
     cvRunAsync(
-      (callback) => ccore.undistortPoints_Async(
+      (callback) => cffi.undistortPoints_Async(
         src.ref,
         cameraMatrix.ref,
         distCoeffs.ref,
@@ -161,7 +161,7 @@ Future<(bool success, Mat corners)> findChessboardCornersAsync(
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.findChessboardCorners_Async(
+      (callback) => cffi.findChessboardCorners_Async(
         image.ref,
         patternSize.cvd.ref,
         flags,
@@ -183,7 +183,7 @@ Future<(bool, Mat corners)> findChessboardCornersSBAsync(
   int flags,
 ) async =>
     cvRunAsync2(
-      (callback) => ccore.findChessboardCornersSB_Async(
+      (callback) => cffi.findChessboardCornersSB_Async(
         image.ref,
         patternSize.cvd.ref,
         flags,
@@ -206,7 +206,7 @@ Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
 ) async =>
     cvRunAsync3(
       (callback) =>
-          ccore.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
+          cffi.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
       (c, p, p1, p2) {
         final rval = p.cast<ffi.Bool>().value;
         calloc.free(p);
@@ -228,7 +228,7 @@ Future<Mat> drawChessboardCornersAsync(
 ) async =>
     cvRunAsync0<Mat>(
       (callback) =>
-          ccore.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
+          cffi.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
       (c) => c.complete(image),
     );
 
@@ -247,7 +247,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
   int refineIters = 10,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.estimateAffinePartial2DWithParams_Async(
+      (callback) => cffi.estimateAffinePartial2DWithParams_Async(
         from.ref,
         to.ref,
         method,
@@ -274,7 +274,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
   int refineIters = 10,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.estimateAffine2DWithParams_Async(
+      (callback) => cffi.estimateAffine2DWithParams_Async(
         from.ref,
         to.ref,
         method,
@@ -300,7 +300,7 @@ Future<(Mat, Mat)> findHomographyAsync(
   double confidence = 0.995,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.FindHomography_Async(
+      (callback) => cffi.FindHomography_Async(
         srcPoints.ref,
         dstPoints.ref,
         method,

@@ -14,7 +14,7 @@ import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 /// IMRead reads an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
@@ -26,7 +26,7 @@ import '../native_lib.dart' show ccore;
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return cvRunArena<Mat>((arena) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
+    cvRun(() => cffi.Image_IMRead(filename.toNativeUtf8(allocator: arena).cast(), flags, p));
     return Mat.fromPointer(p);
   });
 }
@@ -40,10 +40,10 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
     final fname = filename.toNativeUtf8(allocator: arena);
     final p = arena<ffi.Bool>();
     if (params == null) {
-      cvRun(() => ccore.Image_IMWrite(fname.cast(), img.ref, p));
+      cvRun(() => cffi.Image_IMWrite(fname.cast(), img.ref, p));
     } else {
       cvRun(
-        () => ccore.Image_IMWrite_WithParams(
+        () => cffi.Image_IMWrite_WithParams(
           fname.cast(),
           img.ref,
           params.ref,
@@ -71,8 +71,8 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
   params == null
-      ? cvRun(() => ccore.Image_IMEncode(cExt, img.ref, pSuccess, buffer))
-      : cvRun(() => ccore.Image_IMEncode_WithParams(cExt, img.ref, params.ref, pSuccess, buffer));
+      ? cvRun(() => cffi.Image_IMEncode(cExt, img.ref, pSuccess, buffer))
+      : cvRun(() => cffi.Image_IMEncode_WithParams(cExt, img.ref, params.ref, pSuccess, buffer));
   final success = pSuccess.value;
   calloc.free(cExt);
   calloc.free(pSuccess);
@@ -94,6 +94,6 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
-  cvRun(() => ccore.Image_IMDecode(vec.ref, flags, dst!.ptr));
+  cvRun(() => cffi.Image_IMDecode(vec.ref, flags, dst!.ptr));
   return dst;
 }

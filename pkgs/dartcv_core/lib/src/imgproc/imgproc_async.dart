@@ -24,7 +24,7 @@ import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///
@@ -32,7 +32,7 @@ import '../native_lib.dart' show ccore;
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) async => cvRunAsync(
-      (callback) => ccore.ApproxPolyDP_Async(curve.ref, epsilon, closed, callback),
+      (callback) => cffi.ApproxPolyDP_Async(curve.ref, epsilon, closed, callback),
       vecPointCompleter,
     );
 
@@ -42,7 +42,7 @@ Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) 
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 Future<double> arcLengthAsync(VecPoint curve, bool closed) async =>
-    cvRunAsync((callback) => ccore.ArcLength_Async(curve.ref, closed, callback), doubleCompleter);
+    cvRunAsync((callback) => cffi.ArcLength_Async(curve.ref, closed, callback), doubleCompleter);
 
 /// ConvexHull finds the convex hull of a point set.
 ///
@@ -55,7 +55,7 @@ Future<Mat> convexHullAsync(
   bool returnPoints = true,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.ConvexHull_Async(points.ref, clockwise, returnPoints, callback),
+      (callback) => cffi.ConvexHull_Async(points.ref, clockwise, returnPoints, callback),
       matCompleter,
     );
 
@@ -64,7 +64,7 @@ Future<Mat> convexHullAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
 Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDefects}) async =>
-    cvRunAsync((callback) => ccore.ConvexityDefects_Async(contour.ref, hull.ref, callback), matCompleter);
+    cvRunAsync((callback) => cffi.ConvexityDefects_Async(contour.ref, hull.ref, callback), matCompleter);
 
 /// CvtColor converts an image from one color space to another.
 /// It converts the src Mat image to the dst Mat using the
@@ -73,7 +73,7 @@ Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDef
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
 Future<Mat> cvtColorAsync(Mat src, int code) async =>
-    cvRunAsync<Mat>((callback) => ccore.CvtColor_Async(src.ref, code, callback), matCompleter);
+    cvRunAsync<Mat>((callback) => cffi.CvtColor_Async(src.ref, code, callback), matCompleter);
 
 /// EqualizeHist Equalizes the histogram of a grayscale image.
 ///
@@ -81,7 +81,7 @@ Future<Mat> cvtColorAsync(Mat src, int code) async =>
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
 Future<Mat> equalizeHistAsync(Mat src) async {
   cvAssert(src.channels == 1, "src must be grayscale");
-  return cvRunAsync<Mat>((callback) => ccore.EqualizeHist_Async(src.ref, callback), matCompleter);
+  return cvRunAsync<Mat>((callback) => cffi.EqualizeHist_Async(src.ref, callback), matCompleter);
 }
 
 /// CalcHist Calculates a histogram of a set of images
@@ -97,7 +97,7 @@ Future<Mat> calcHistAsync(
   bool accumulate = false,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.CalcHist_Async(
+      (callback) => cffi.CalcHist_Async(
         src.ref,
         channels.ref,
         mask.ref,
@@ -122,7 +122,7 @@ Future<Mat> calcBackProjectAsync(
 }) async =>
     cvRunAsync(
       (callback) =>
-          ccore.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, scale, callback),
+          cffi.CalcBackProject_Async(src.ref, channels.ref, hist.ref, ranges.ref, scale, callback),
       matCompleter,
     );
 
@@ -131,7 +131,7 @@ Future<Mat> calcBackProjectAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async => cvRunAsync(
-      (callback) => ccore.CompareHist_Async(hist1.ref, hist2.ref, method, callback),
+      (callback) => cffi.CompareHist_Async(hist1.ref, hist2.ref, method, callback),
       doubleCompleter,
     );
 
@@ -139,7 +139,7 @@ Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async =>
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) async =>
-    cvRunAsync((callback) => ccore.ClipLine_Async(imgRect.ref, pt1.ref, pt2.ref, callback),
+    cvRunAsync((callback) => cffi.ClipLine_Async(imgRect.ref, pt1.ref, pt2.ref, callback),
         (completer, p) {
       final success = p.cast<ffi.Bool>().value;
       calloc.free(p);
@@ -158,7 +158,7 @@ Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) a
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
 Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace) async =>
     cvRunAsync(
-      (callback) => ccore.BilateralFilter_Async(src.ref, diameter, sigmaColor, sigmaSpace, callback),
+      (callback) => cffi.BilateralFilter_Async(src.ref, diameter, sigmaColor, sigmaSpace, callback),
       matCompleter,
     );
 
@@ -167,21 +167,21 @@ Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, doubl
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
 Future<Mat> blurAsync(Mat src, (int, int) ksize) async =>
-    cvRunAsync((callback) => ccore.Blur_Async(src.ref, ksize.cvd.ref, callback), matCompleter);
+    cvRunAsync((callback) => cffi.Blur_Async(src.ref, ksize.cvd.ref, callback), matCompleter);
 
 /// BoxFilter blurs an image using the box filter.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gad533230ebf2d42509547d514f7d3fbc3
 Future<Mat> boxFilterAsync(Mat src, int depth, (int, int) ksize) async =>
-    cvRunAsync((callback) => ccore.BoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
+    cvRunAsync((callback) => cffi.BoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
 
 /// SqBoxFilter calculates the normalized sum of squares of the pixel values overlapping the filter.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga76e863e7869912edbe88321253b72688
 Future<Mat> sqrBoxFilterAsync(Mat src, int depth, (int, int) ksize) async => cvRunAsync(
-    (callback) => ccore.SqBoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
+    (callback) => cffi.SqBoxFilter_Async(src.ref, depth, ksize.cvd.ref, callback), matCompleter);
 
 /// Dilate dilates an image by using a specific structuring element.
 ///
@@ -196,7 +196,7 @@ Future<Mat> dilateAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.DilateWithParams_Async(
+      (callback) => cffi.DilateWithParams_Async(
         src.ref,
         kernel.ref,
         anchor?.ref ?? Point(-1, -1).ref,
@@ -222,7 +222,7 @@ Future<Mat> erodeAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.ErodeWithParams_Async(
+      (callback) => cffi.ErodeWithParams_Async(
         src.ref,
         kernel.ref,
         anchor?.ref ?? Point(-1, -1).ref,
@@ -249,7 +249,7 @@ Future<(Mat dst, Mat labels)> distanceTransformAsync(
   int labelType,
 ) async =>
     cvRunAsync2(
-      (callback) => ccore.DistanceTransform_Async(src.ref, distanceType, maskSize, labelType, callback),
+      (callback) => cffi.DistanceTransform_Async(src.ref, distanceType, maskSize, labelType, callback),
       matCompleter2,
     );
 
@@ -266,7 +266,7 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
   int flags = 4,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.FloodFill_Async(
+      (callback) => cffi.FloodFill_Async(
         image.ref,
         mask?.ref ?? Mat.empty().ref,
         seedPoint.ref,
@@ -289,7 +289,7 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Future<Rect> boundingRectAsync(VecPoint points) async =>
-    cvRunAsync((callback) => ccore.BoundingRect_Async(points.ref, callback), rectCompleter);
+    cvRunAsync((callback) => cffi.BoundingRect_Async(points.ref, callback), rectCompleter);
 
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
 ///
@@ -297,35 +297,35 @@ Future<Rect> boundingRectAsync(VecPoint points) async =>
 /// For further Details, please see:
 /// https://docs.opencv.org/4.10.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 Future<VecPoint2f> boxPointsAsync(RotatedRect rect) async =>
-    cvRunAsync((callback) => ccore.BoxPoints_Async(rect.ref, callback), vecPoint2fCompleter);
+    cvRunAsync((callback) => cffi.BoxPoints_Async(rect.ref, callback), vecPoint2fCompleter);
 
 /// ContourArea calculates a contour area.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 Future<double> contourAreaAsync(VecPoint contour) async =>
-    cvRunAsync((callback) => ccore.ContourArea_Async(contour.ref, callback), doubleCompleter);
+    cvRunAsync((callback) => cffi.ContourArea_Async(contour.ref, callback), doubleCompleter);
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 Future<RotatedRect> minAreaRectAsync(VecPoint points) async =>
-    cvRunAsync((callback) => ccore.MinAreaRect_Async(points.ref, callback), rotatedRectCompleter);
+    cvRunAsync((callback) => cffi.MinAreaRect_Async(points.ref, callback), rotatedRectCompleter);
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 Future<RotatedRect> fitEllipseAsync(VecPoint points) async =>
-    cvRunAsync((callback) => ccore.FitEllipse_Async(points.ref, callback), rotatedRectCompleter);
+    cvRunAsync((callback) => cffi.FitEllipse_Async(points.ref, callback), rotatedRectCompleter);
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points) async =>
-    cvRunAsync2((callback) => ccore.MinEnclosingCircle_Async(points.ref, callback), (completer, p, p1) {
+    cvRunAsync2((callback) => cffi.MinEnclosingCircle_Async(points.ref, callback), (completer, p, p1) {
       final radius = p1.cast<ffi.Float>().value;
       calloc.free(p1);
       completer.complete((Point2f.fromPointer(p.cast()), radius));
@@ -337,7 +337,7 @@ Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points)
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
 Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) async =>
     cvRunAsync2(
-      (callback) => ccore.FindContours_Async(src.ref, mode, method, callback),
+      (callback) => cffi.FindContours_Async(src.ref, mode, method, callback),
       (c, p, p1) =>
           c.complete((Contours.fromPointer(p.cast<cvg.VecVecPoint>()), Mat.fromPointer(p1.cast<cvg.Mat>()))),
     );
@@ -347,7 +347,7 @@ Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, 
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 Future<double> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDist) async => cvRunAsync(
-      (callback) => ccore.PointPolygonTest_Async(points.ref, pt.ref, measureDist, callback),
+      (callback) => cffi.PointPolygonTest_Async(points.ref, pt.ref, measureDist, callback),
       doubleCompleter,
     );
 
@@ -362,7 +362,7 @@ Future<(int rval, Mat labels)> connectedComponentsAsync(
   int ccltype,
 ) async =>
     cvRunAsync2(
-        (callback) => ccore.ConnectedComponents_Async(image.ref, connectivity, ltype, ccltype, callback),
+        (callback) => cffi.ConnectedComponents_Async(image.ref, connectivity, ltype, ccltype, callback),
         (completer, p, p1) {
       final rval = p.cast<ffi.Int>().value;
       calloc.free(p);
@@ -382,7 +382,7 @@ Future<(int rval, Mat labels, Mat stats, Mat centroids)> connectedComponentsWith
 ) async =>
     cvRunAsync4(
       (callback) =>
-          ccore.ConnectedComponentsWithStats_Async(src.ref, connectivity, ltype, ccltype, callback),
+          cffi.ConnectedComponentsWithStats_Async(src.ref, connectivity, ltype, ccltype, callback),
       (completer, p, p1, p2, p3) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
@@ -399,7 +399,7 @@ Future<(int rval, Mat labels, Mat stats, Mat centroids)> connectedComponentsWith
 /// https:///docs.opencv.org/master/df/dfb/group__imgproc__object.html#ga586ebfb0a7fb604b35a23d85391329be
 Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {Mat? mask}) async => cvRunAsync(
       (callback) =>
-          ccore.MatchTemplate_Async(image.ref, templ.ref, method, mask?.ref ?? Mat.empty().ref, callback),
+          cffi.MatchTemplate_Async(image.ref, templ.ref, method, mask?.ref ?? Mat.empty().ref, callback),
       matCompleter,
     );
 
@@ -409,7 +409,7 @@ Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {Mat? mask}) as
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Future<Moments> momentsAsync(Mat src, {bool binaryImage = false}) async =>
-    cvRunAsync((callback) => ccore.Moments_Async(src.ref, binaryImage, callback), momentsCompleter);
+    cvRunAsync((callback) => cffi.Moments_Async(src.ref, binaryImage, callback), momentsCompleter);
 
 /// PyrDown blurs an image and downsamples it.
 ///
@@ -421,7 +421,7 @@ Future<Mat> pyrDownAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.PyrDown_Async(src.ref, dstsize.cvd.ref, borderType, callback),
+      (callback) => cffi.PyrDown_Async(src.ref, dstsize.cvd.ref, borderType, callback),
       matCompleter,
     );
 
@@ -436,7 +436,7 @@ Future<Mat> pyrUpAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.PyrUp_Async(src.ref, dstsize.cvd.ref, borderType, callback),
+      (callback) => cffi.PyrUp_Async(src.ref, dstsize.cvd.ref, borderType, callback),
       matCompleter,
     );
 
@@ -446,7 +446,7 @@ Future<Mat> pyrUpAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Future<Scalar> morphologyDefaultBorderValueAsync() async =>
-    cvRunAsync(ccore.MorphologyDefaultBorderValue_Async, scalarCompleter);
+    cvRunAsync(cffi.MorphologyDefaultBorderValue_Async, scalarCompleter);
 
 /// MorphologyEx performs advanced morphological transformations.
 ///
@@ -463,7 +463,7 @@ Future<Mat> morphologyExAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.MorphologyExWithParams_Async(
+      (callback) => cffi.MorphologyExWithParams_Async(
         src.ref,
         op,
         kernel.ref,
@@ -482,7 +482,7 @@ Future<Mat> morphologyExAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
 Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Point? anchor}) async => cvRunAsync(
-      (callback) => ccore.GetStructuringElement_Async(
+      (callback) => cffi.GetStructuringElement_Async(
           shape, ksize.cvd.ref, anchor?.ref ?? Point(-1, -1).ref, callback),
       matCompleter,
     );
@@ -502,7 +502,7 @@ Future<Mat> gaussianBlurAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.GaussianBlur_Async(src.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, callback),
+      (callback) => cffi.GaussianBlur_Async(src.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, callback),
       matCompleter,
     );
 
@@ -511,7 +511,7 @@ Future<Mat> gaussianBlurAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa
 Future<Mat> getGaussianKernelAsync(int ksize, double sigma, {int ktype = 6}) async =>
-    cvRunAsync((callback) => ccore.GetGaussianKernel_Async(ksize, sigma, ktype, callback), matCompleter);
+    cvRunAsync((callback) => cffi.GetGaussianKernel_Async(ksize, sigma, ktype, callback), matCompleter);
 
 /// Sobel calculates the first, second, third, or mixed image derivatives using an extended Sobel operator
 ///
@@ -528,7 +528,7 @@ Future<Mat> sobelAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Sobel_Async(src.ref, ddepth, dx, dy, ksize, scale, delta, borderType, callback),
+      (callback) => cffi.Sobel_Async(src.ref, ddepth, dx, dy, ksize, scale, delta, borderType, callback),
       matCompleter,
     );
 
@@ -542,7 +542,7 @@ Future<(Mat dx, Mat dy)> spatialGradientAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync2(
-      (callback) => ccore.SpatialGradient_Async(src.ref, ksize, borderType, callback),
+      (callback) => cffi.SpatialGradient_Async(src.ref, ksize, borderType, callback),
       matCompleter2,
     );
 
@@ -559,7 +559,7 @@ Future<Mat> laplacianAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Laplacian_Async(src.ref, ddepth, ksize, scale, delta, borderType, callback),
+      (callback) => cffi.Laplacian_Async(src.ref, ddepth, ksize, scale, delta, borderType, callback),
       matCompleter,
     );
 
@@ -577,7 +577,7 @@ Future<Mat> scharrAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Scharr_Async(src.ref, ddepth, dx, dy, scale, delta, borderType, callback),
+      (callback) => cffi.Scharr_Async(src.ref, ddepth, dx, dy, scale, delta, borderType, callback),
       matCompleter,
     );
 
@@ -586,7 +586,7 @@ Future<Mat> scharrAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
 Future<Mat> medianBlurAsync(Mat src, int ksize) async =>
-    cvRunAsync((callback) => ccore.MedianBlur_Async(src.ref, ksize, callback), matCompleter);
+    cvRunAsync((callback) => cffi.MedianBlur_Async(src.ref, ksize, callback), matCompleter);
 
 /// Canny finds edges in an image using the Canny algorithm.
 /// The function finds edges in the input image image and marks
@@ -607,7 +607,7 @@ Future<Mat> cannyAsync(
 }) async =>
     cvRunAsync(
       (callback) =>
-          ccore.Canny_Async(image.ref, threshold1, threshold2, apertureSize, l2gradient, callback),
+          cffi.Canny_Async(image.ref, threshold1, threshold2, apertureSize, l2gradient, callback),
       matCompleter,
     );
 
@@ -624,7 +624,7 @@ Future<VecPoint2f> cornerSubPixAsync(
   (int, int, double) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
 ]) async =>
     cvRunAsync0(
-      (callback) => ccore.CornerSubPix_Async(
+      (callback) => cffi.CornerSubPix_Async(
         image.ref,
         corners.ref,
         winSize.cvd.ref,
@@ -653,7 +653,7 @@ Future<VecPoint2f> goodFeaturesToTrackAsync(
 }) async =>
     gradientSize == null
         ? cvRunAsync(
-            (callback) => ccore.GoodFeaturesToTrack_Async(
+            (callback) => cffi.GoodFeaturesToTrack_Async(
               image.ref,
               maxCorners,
               qualityLevel,
@@ -667,7 +667,7 @@ Future<VecPoint2f> goodFeaturesToTrackAsync(
             vecPoint2fCompleter,
           )
         : cvRunAsync(
-            (callback) => ccore.GoodFeaturesToTrackWithGradient_Async(
+            (callback) => cffi.GoodFeaturesToTrackWithGradient_Async(
               image.ref,
               maxCorners,
               qualityLevel,
@@ -696,7 +696,7 @@ Future<(Mat mask, Mat bgdModel, Mat fgdModel)> grabCutAsync(
   int mode = GC_EVAL,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.GrabCut_Async(
+      (callback) => cffi.GrabCut_Async(
         img.ref,
         mask.ref,
         rect.ref,
@@ -726,7 +726,7 @@ Future<Mat> HoughCirclesAsync(
   int maxRadius = 0,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.HoughCirclesWithParams_Async(
+      (callback) => cffi.HoughCirclesWithParams_Async(
         image.ref,
         method,
         dp,
@@ -757,7 +757,7 @@ Future<Mat> HoughLinesAsync(
   double max_theta = CV_PI,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.HoughLines_Async(
+      (callback) => cffi.HoughLines_Async(
           image.ref, rho, theta, threshold, srn, stn, min_theta, max_theta, callback),
       matCompleter,
     );
@@ -777,7 +777,7 @@ Future<Mat> HoughLinesPAsync(
   double maxLineGap = 0,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.HoughLinesPWithParams_Async(
+      (callback) => cffi.HoughLinesPWithParams_Async(
         image.ref,
         rho,
         theta,
@@ -807,7 +807,7 @@ Future<Mat> HoughLinesPointSetAsync(
   double theta_step,
 ) async =>
     cvRunAsync(
-      (callback) => ccore.HoughLinesPointSet_Async(
+      (callback) => cffi.HoughLinesPointSet_Async(
         point.ref,
         lines_max,
         threshold,
@@ -830,7 +830,7 @@ Future<(Mat sum, Mat sqsum, Mat tilted)> integralAsync(
   int sdepth = -1,
   int sqdepth = -1,
 }) async =>
-    cvRunAsync3((callback) => ccore.Integral_Async(src.ref, sdepth, sqdepth, callback), matCompleter3);
+    cvRunAsync3((callback) => cffi.Integral_Async(src.ref, sdepth, sqdepth, callback), matCompleter3);
 
 /// Threshold applies a fixed-level threshold to each array element.
 ///
@@ -842,7 +842,7 @@ Future<(double, Mat dst)> thresholdAsync(
   double maxval,
   int type,
 ) async =>
-    cvRunAsync2((callback) => ccore.Threshold_Async(src.ref, thresh, maxval, type, callback),
+    cvRunAsync2((callback) => cffi.Threshold_Async(src.ref, thresh, maxval, type, callback),
         (completer, p, p1) {
       final rval = p.cast<ffi.Double>().value;
       calloc.free(p);
@@ -862,7 +862,7 @@ Future<Mat> adaptiveThresholdAsync(
   double C,
 ) async =>
     cvRunAsync(
-      (callback) => ccore.AdaptiveThreshold_Async(
+      (callback) => cffi.AdaptiveThreshold_Async(
         src.ref,
         maxValue,
         adaptiveMethod,
@@ -890,7 +890,7 @@ Future<Mat> arrowedLineAsync(
   double tipLength = 0.1,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.ArrowedLine_Async(
+      (callback) => cffi.ArrowedLine_Async(
         img.ref,
         pt1.ref,
         pt2.ref,
@@ -918,7 +918,7 @@ Future<Mat> circleAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.CircleWithParams_Async(
+      (callback) => cffi.CircleWithParams_Async(
         img.ref,
         center.ref,
         radius,
@@ -948,7 +948,7 @@ Future<Mat> ellipseAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.EllipseWithParams_Async(
+      (callback) => cffi.EllipseWithParams_Async(
         img.ref,
         center.ref,
         axes.ref,
@@ -979,7 +979,7 @@ Future<Mat> lineAsync(
 }) async =>
     cvRunAsync0(
       (callback) =>
-          ccore.Line_Async(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift, callback),
+          cffi.Line_Async(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift, callback),
       (completer) => completer.complete(img),
     );
 
@@ -997,7 +997,7 @@ Future<Mat> rectangleAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.RectangleWithParams_Async(
+      (callback) => cffi.RectangleWithParams_Async(
           img.ref, rect.ref, color.ref, thickness, lineType, shift, callback),
       (completer) => completer.complete(img),
     );
@@ -1015,7 +1015,7 @@ Future<Mat> fillPolyAsync(
   Point? offset,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.FillPolyWithParams_Async(
+      (callback) => cffi.FillPolyWithParams_Async(
         img.ref,
         pts.ref,
         color.ref,
@@ -1041,7 +1041,7 @@ Future<Mat> polylinesAsync(
   int shift = 0,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.Polylines_Async(img.ref, pts.ref, isClosed, color.ref, thickness, callback),
+      (callback) => cffi.Polylines_Async(img.ref, pts.ref, isClosed, color.ref, thickness, callback),
       (completer) => completer.complete(img),
     );
 
@@ -1059,7 +1059,7 @@ Future<(Size size, int baseline)> getTextSizeAsync(
 ) async {
   final ctext = text.toNativeUtf8().cast<ffi.Char>();
   final ret = cvRunAsync2<(Size, int)>(
-      (callback) => ccore.GetTextSizeWithBaseline_Async(ctext, fontFace, fontScale, thickness, callback),
+      (callback) => cffi.GetTextSizeWithBaseline_Async(ctext, fontFace, fontScale, thickness, callback),
       (completer, p, p1) {
     final size = Size.fromPointer(p.cast<cvg.Size>());
     final baseline = p1.cast<ffi.Int>().value;
@@ -1090,7 +1090,7 @@ Future<Mat> putTextAsync(
 }) async {
   final textPtr = text.toNativeUtf8().cast<ffi.Char>();
   final rval = cvRunAsync0<Mat>(
-    (callback) => ccore.PutTextWithParams_Async(
+    (callback) => cffi.PutTextWithParams_Async(
       img.ref,
       textPtr,
       org.ref,
@@ -1125,7 +1125,7 @@ Future<Mat> resizeAsync(
   int interpolation = INTER_LINEAR,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Resize_Async(src.ref, dsize.cvd.ref, fx, fy, interpolation, callback),
+      (callback) => cffi.Resize_Async(src.ref, dsize.cvd.ref, fx, fy, interpolation, callback),
       matCompleter,
     );
 
@@ -1140,7 +1140,7 @@ Future<Mat> getRectSubPixAsync(
   int patchType = -1,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.GetRectSubPix_Async(image.ref, patchSize.cvd.ref, center.ref, callback),
+      (callback) => cffi.GetRectSubPix_Async(image.ref, patchSize.cvd.ref, center.ref, callback),
       matCompleter,
     );
 
@@ -1149,7 +1149,7 @@ Future<Mat> getRectSubPixAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
 Future<Mat> getRotationMatrix2DAsync(Point2f center, double angle, double scale) async => cvRunAsync(
-      (callback) => ccore.GetRotationMatrix2D_Async(center.ref, angle, scale, callback),
+      (callback) => cffi.GetRotationMatrix2D_Async(center.ref, angle, scale, callback),
       matCompleter,
     );
 
@@ -1166,7 +1166,7 @@ Future<Mat> warpAffineAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.WarpAffineWithParams_Async(
+      (callback) => cffi.WarpAffineWithParams_Async(
         src.ref,
         M.ref,
         dsize.cvd.ref,
@@ -1192,7 +1192,7 @@ Future<Mat> warpPerspectiveAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.WarpPerspectiveWithParams_Async(
+      (callback) => cffi.WarpPerspectiveWithParams_Async(
         src.ref,
         M.ref,
         dsize.cvd.ref,
@@ -1209,7 +1209,7 @@ Future<Mat> warpPerspectiveAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/d47/group__imgproc__segmentation.html#ga3267243e4d3f95165d55a618c65ac6e1
 Future<Mat> watershedAsync(InputArray image, InputOutputArray markers) async => cvRunAsync0(
-      (callback) => ccore.Watershed_Async(image.ref, markers.ref, callback),
+      (callback) => cffi.Watershed_Async(image.ref, markers.ref, callback),
       (c) => c.complete(markers),
     );
 
@@ -1218,7 +1218,7 @@ Future<Mat> watershedAsync(InputArray image, InputOutputArray markers) async => 
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gadf478a5e5ff49d8aa24e726ea6f65d15
 Future<Mat> applyColorMapAsync(InputArray src, int colormap) async => cvRunAsync(
-      (callback) => ccore.ApplyColorMap_Async(src.ref, colormap, callback),
+      (callback) => cffi.ApplyColorMap_Async(src.ref, colormap, callback),
       matCompleter,
     );
 
@@ -1227,7 +1227,7 @@ Future<Mat> applyColorMapAsync(InputArray src, int colormap) async => cvRunAsync
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gacb22288ddccc55f9bd9e6d492b409cae
 Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor) async => cvRunAsync(
-      (callback) => ccore.ApplyCustomColorMap_Async(src.ref, userColor.ref, callback),
+      (callback) => cffi.ApplyCustomColorMap_Async(src.ref, userColor.ref, callback),
       matCompleter,
     );
 
@@ -1238,7 +1238,7 @@ Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor) async
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) async =>
     cvRunAsync(
-      (callback) => ccore.GetPerspectiveTransform_Async(src.ref, dst.ref, solveMethod, callback),
+      (callback) => cffi.GetPerspectiveTransform_Async(src.ref, dst.ref, solveMethod, callback),
       matCompleter,
     );
 
@@ -1253,7 +1253,7 @@ Future<Mat> getPerspectiveTransform2fAsync(
   int solveMethod = DECOMP_LU,
 ]) async =>
     cvRunAsync(
-      (callback) => ccore.GetPerspectiveTransform2f_Async(src.ref, dst.ref, solveMethod, callback),
+      (callback) => cffi.GetPerspectiveTransform2f_Async(src.ref, dst.ref, solveMethod, callback),
       matCompleter,
     );
 
@@ -1263,12 +1263,12 @@ Future<Mat> getPerspectiveTransform2fAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999
 Future<Mat> getAffineTransformAsync(VecPoint src, VecPoint dst) async => cvRunAsync(
-      (callback) => ccore.GetAffineTransform_Async(src.ref, dst.ref, callback),
+      (callback) => cffi.GetAffineTransform_Async(src.ref, dst.ref, callback),
       matCompleter,
     );
 
 Future<Mat> getAffineTransform2fAsync(VecPoint2f src, VecPoint2f dst) async => cvRunAsync(
-      (callback) => ccore.GetAffineTransform2f_Async(src.ref, dst.ref, callback),
+      (callback) => cffi.GetAffineTransform2f_Async(src.ref, dst.ref, callback),
       matCompleter,
     );
 
@@ -1288,7 +1288,7 @@ Future<Mat> drawContoursAsync(
   Point? offset,
 }) async =>
     cvRunAsync0(
-      (callback) => ccore.DrawContoursWithParams_Async(
+      (callback) => cffi.DrawContoursWithParams_Async(
         image.ref,
         contours.ref,
         contourIdx,
@@ -1316,7 +1316,7 @@ Future<Mat> remapAsync(
   Scalar? borderValue,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Remap_Async(
+      (callback) => cffi.Remap_Async(
         src.ref,
         map1.ref,
         map2.ref,
@@ -1341,7 +1341,7 @@ Future<Mat> filter2DAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.Filter2D_Async(
+      (callback) => cffi.Filter2D_Async(
         src.ref,
         ddepth,
         kernel.ref,
@@ -1367,7 +1367,7 @@ Future<Mat> sepFilter2DAsync(
   int borderType = BORDER_DEFAULT,
 }) async =>
     cvRunAsync(
-      (callback) => ccore.SepFilter2D_Async(
+      (callback) => cffi.SepFilter2D_Async(
         src.ref,
         ddepth,
         kernelX.ref,
@@ -1385,7 +1385,7 @@ Future<Mat> sepFilter2DAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaec3a0b126a85b5ca2c667b16e0ae022d
 Future<Mat> logPolarAsync(InputArray src, Point2f center, double M, int flags) async => cvRunAsync(
-      (callback) => ccore.LogPolar_Async(src.ref, center.ref, M, flags, callback),
+      (callback) => cffi.LogPolar_Async(src.ref, center.ref, M, flags, callback),
       matCompleter,
     );
 
@@ -1394,7 +1394,7 @@ Future<Mat> logPolarAsync(InputArray src, Point2f center, double M, int flags) a
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaa38a6884ac8b6e0b9bed47939b5362f3
 Future<Mat> linearPolarAsync(InputArray src, Point2f center, double maxRadius, int flags) async => cvRunAsync(
-      (callback) => ccore.LinearPolar_Async(src.ref, center.ref, maxRadius, flags, callback),
+      (callback) => cffi.LinearPolar_Async(src.ref, center.ref, maxRadius, flags, callback),
       matCompleter,
     );
 
@@ -1404,7 +1404,7 @@ Future<Mat> linearPolarAsync(InputArray src, Point2f center, double maxRadius, i
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf849da1fdafa67ee84b1e9a23b93f91f
 Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double reps, double aeps) async =>
     cvRunAsync(
-      (callback) => ccore.FitLine_Async(points.ref, distType, param, reps, aeps, callback),
+      (callback) => cffi.FitLine_Async(points.ref, distType, param, reps, aeps, callback),
       matCompleter,
     );
 
@@ -1414,7 +1414,7 @@ Future<Mat> fitLineAsync(VecPoint points, int distType, double param, double rep
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
 Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async =>
     cvRunAsync(
-      (callback) => ccore.MatchShapes_Async(contour1.ref, contour2.ref, method, parameter, callback),
+      (callback) => cffi.MatchShapes_Async(contour1.ref, contour2.ref, method, parameter, callback),
       doubleCompleter,
     );
 
@@ -1425,7 +1425,7 @@ Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga57d3505a878a7e1a636645727ca08f51
 Future<Mat> invertAffineTransformAsync(InputArray M) async => cvRunAsync(
-      (callback) => ccore.InvertAffineTransform_Async(M.ref, callback),
+      (callback) => cffi.InvertAffineTransform_Async(M.ref, callback),
       matCompleter,
     );
 
@@ -1440,7 +1440,7 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 }) async =>
     cvRunAsync2(
       (callback) =>
-          ccore.PhaseCorrelate_Async(src1.ref, src2.ref, window?.ref ?? Mat.empty().ref, callback),
+          cffi.PhaseCorrelate_Async(src1.ref, src2.ref, window?.ref ?? Mat.empty().ref, callback),
       (c, p, p1) {
         final response = p1.cast<ffi.Double>().value;
         calloc.free(p1);
@@ -1455,9 +1455,9 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 ///
 Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async => mask == null
     ? cvRunAsync0(
-        (callback) => ccore.Mat_Accumulate_Async(src.ref, dst.ref, callback), (c) => c.complete(dst))
+        (callback) => cffi.Mat_Accumulate_Async(src.ref, dst.ref, callback), (c) => c.complete(dst))
     : cvRunAsync0(
-        (callback) => ccore.Mat_AccumulateWithMask_Async(src.ref, dst.ref, mask.ref, callback),
+        (callback) => cffi.Mat_AccumulateWithMask_Async(src.ref, dst.ref, mask.ref, callback),
         (c) => c.complete(dst),
       );
 
@@ -1468,11 +1468,11 @@ Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? m
 Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async =>
     mask == null
         ? cvRunAsync0(
-            (callback) => ccore.Mat_AccumulateSquare_Async(src.ref, dst.ref, callback),
+            (callback) => cffi.Mat_AccumulateSquare_Async(src.ref, dst.ref, callback),
             (c) => c.complete(dst),
           )
         : cvRunAsync0(
-            (callback) => ccore.Mat_AccumulateSquareWithMask_Async(src.ref, dst.ref, mask.ref, callback),
+            (callback) => cffi.Mat_AccumulateSquareWithMask_Async(src.ref, dst.ref, mask.ref, callback),
             (c) => c.complete(dst),
           );
 
@@ -1488,12 +1488,12 @@ Future<Mat> accumulateProductAsync(
 }) async =>
     mask == null
         ? cvRunAsync0(
-            (callback) => ccore.Mat_AccumulateProduct_Async(src1.ref, src2.ref, dst.ref, callback),
+            (callback) => cffi.Mat_AccumulateProduct_Async(src1.ref, src2.ref, dst.ref, callback),
             (c) => c.complete(dst),
           )
         : cvRunAsync0(
             (callback) =>
-                ccore.Mat_AccumulateProductWithMask_Async(src1.ref, src2.ref, dst.ref, mask.ref, callback),
+                cffi.Mat_AccumulateProductWithMask_Async(src1.ref, src2.ref, dst.ref, mask.ref, callback),
             (c) => c.complete(dst),
           );
 
@@ -1509,11 +1509,11 @@ Future<Mat> accumulateWeightedAsync(
 }) async =>
     mask == null
         ? cvRunAsync0(
-            (callback) => ccore.Mat_AccumulatedWeighted_Async(src.ref, dst.ref, alpha, callback),
+            (callback) => cffi.Mat_AccumulatedWeighted_Async(src.ref, dst.ref, alpha, callback),
             (c) => c.complete(dst),
           )
         : cvRunAsync0(
             (callback) =>
-                ccore.Mat_AccumulatedWeightedWithMask_Async(src.ref, dst.ref, alpha, mask.ref, callback),
+                cffi.Mat_AccumulatedWeightedWithMask_Async(src.ref, dst.ref, alpha, mask.ref, callback),
             (c) => c.complete(dst),
           );

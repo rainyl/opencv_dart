@@ -11,7 +11,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 class Fisheye {
   /// FisheyeUndistortImage transforms an image to compensate for fisheye lens distortion
@@ -27,7 +27,7 @@ class Fisheye {
     knew ??= Mat.empty();
     final p1 = undistorted?.ptr ?? calloc<cvg.Mat>();
     cvRun(
-      () => ccore.Fisheye_UndistortImageWithParams(
+      () => cffi.Fisheye_UndistortImageWithParams(
         distorted.ref,
         p1,
         K.ref,
@@ -48,7 +48,7 @@ class Fisheye {
     (int, int) newSize = (0, 0),
   }) =>
       cvRunAsync(
-        (callback) => ccore.fisheye_undistortImageWithParams_Async(
+        (callback) => cffi.fisheye_undistortImageWithParams_Async(
           distorted.ref,
           K.ref,
           D.ref,
@@ -75,7 +75,7 @@ class Fisheye {
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
     cvRun(
-      () => ccore.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref),
+      () => cffi.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref),
     );
     return undistorted;
   }
@@ -89,7 +89,7 @@ class Fisheye {
     InputArray? P,
   }) async =>
       cvRunAsync(
-        (callback) => ccore.fisheye_undistortPoints_Async(
+        (callback) => cffi.fisheye_undistortPoints_Async(
           distorted.ref,
           K.ref,
           D.ref,
@@ -116,7 +116,7 @@ class Fisheye {
   }) {
     P ??= Mat.empty();
     cvRun(
-      () => ccore.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+      () => cffi.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
         K.ref,
         D.ref,
         imageSize.cvd.ref,
@@ -141,7 +141,7 @@ class Fisheye {
     double fovScale = 1.0,
   }) async =>
       cvRunAsync(
-        (callback) => ccore.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
+        (callback) => cffi.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
           K.ref,
           D.ref,
           imageSize.cvd.ref,

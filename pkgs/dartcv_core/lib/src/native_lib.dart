@@ -5,17 +5,15 @@
 // coverage:ignore-file
 import 'dart:ffi' as ffi;
 import 'dart:io';
-import 'g/core.g.dart' as core;
-
-const _libraryName = "dartcv_core";
+import 'g/core.g.dart' as cvg;
 
 // load native library
-ffi.DynamicLibrary loadNativeLibrary() {
+ffi.DynamicLibrary loadNativeLibrary(String libName) {
   if (Platform.isIOS || Platform.isMacOS) return ffi.DynamicLibrary.process();
   final defaultLibPath = switch (Platform.operatingSystem) {
-    "windows" => "$_libraryName.dll",
-    "linux" || "android" || "fuchsia" => "lib$_libraryName.so",
-    "macos" => "lib$_libraryName.dylib",
+    "windows" => "$libName.dll",
+    "linux" || "android" || "fuchsia" => "lib$libName.so",
+    "macos" => "lib$libName.dylib",
     _ => throw UnsupportedError(
         "Platform ${Platform.operatingSystem} not supported",
       )
@@ -24,4 +22,4 @@ ffi.DynamicLibrary loadNativeLibrary() {
   return ffi.DynamicLibrary.open(libPath);
 }
 
-final ccore = core.CvNativeCore(loadNativeLibrary());
+final cffi = cvg.CvNativeCore(loadNativeLibrary("dartcv"));

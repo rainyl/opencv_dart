@@ -13,7 +13,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 /// IMRead reads an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
@@ -24,7 +24,7 @@ import '../native_lib.dart' show ccore;
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  final rval = cvRunAsync((callback) => ccore.Image_IMRead_Async(cname, flags, callback), matCompleter);
+  final rval = cvRunAsync((callback) => cffi.Image_IMRead_Async(cname, flags, callback), matCompleter);
   calloc.free(cname);
   return rval;
 }
@@ -37,8 +37,8 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
   final rval = cvRunAsync<bool>(
     (callback) => params == null
-        ? ccore.Image_IMWrite_Async(cname, img.ref, callback)
-        : ccore.Image_IMWrite_WithParams_Async(cname, img.ref, params.ref, callback),
+        ? cffi.Image_IMWrite_Async(cname, img.ref, callback)
+        : cffi.Image_IMWrite_WithParams_Async(cname, img.ref, params.ref, callback),
     (c, p) {
       final rval = p.cast<ffi.Bool>().value;
       calloc.free(p);
@@ -63,8 +63,8 @@ Future<(bool, Uint8List)> imencodeAsync(
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
   final rval = cvRunAsync2<(bool, Uint8List)>(
     (callback) => params == null
-        ? ccore.Image_IMEncode_Async(cExt, img.ref, callback)
-        : ccore.Image_IMEncode_WithParams_Async(cExt, img.ref, params.ref, callback),
+        ? cffi.Image_IMEncode_Async(cExt, img.ref, callback)
+        : cffi.Image_IMEncode_WithParams_Async(cExt, img.ref, params.ref, callback),
     (c, p, p1) {
       final v = p.cast<ffi.Bool>().value;
       calloc.free(p);
@@ -88,7 +88,7 @@ Future<(bool, Uint8List)> imencodeAsync(
 Future<Mat> imdecodeAsync(Uint8List buf, int flags) async {
   final vec = VecUChar.fromList(buf);
   final rval =
-      cvRunAsync((callback) => ccore.Image_IMDecode_Async(vec.ref, flags, callback), matCompleter);
+      cvRunAsync((callback) => cffi.Image_IMDecode_Async(vec.ref, flags, callback), matCompleter);
   vec.dispose();
   return rval;
 }

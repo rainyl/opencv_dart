@@ -11,7 +11,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../native_lib.dart' show cffi;
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
   CLAHE._(cvg.CLAHEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -22,7 +22,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   factory CLAHE.fromPointer(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
     final p = calloc<cvg.CLAHE>();
-    ccore.CLAHE_Create(p);
+    cffi.CLAHE_Create(p);
     return CLAHE._(p);
   }
 
@@ -38,7 +38,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     final size = calloc<cvg.Size>()
       ..ref.width = tileGridSize.$1
       ..ref.height = tileGridSize.$2;
-    ccore.CLAHE_CreateWithParams(clipLimit, size.ref, p);
+    cffi.CLAHE_CreateWithParams(clipLimit, size.ref, p);
     calloc.free(size);
     return CLAHE._(p);
   }
@@ -49,35 +49,35 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html#a4e92e0e427de21be8d1fae8dcd862c5e
   Mat apply(Mat src, {Mat? dst}) {
     dst ??= Mat.empty();
-    cvRun(() => ccore.CLAHE_Apply(ref, src.ref, dst!.ref));
+    cvRun(() => cffi.CLAHE_Apply(ref, src.ref, dst!.ref));
     return dst;
   }
 
   double get clipLimit {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => ccore.CLAHE_GetClipLimit(ref, p));
+      cvRun(() => cffi.CLAHE_GetClipLimit(ref, p));
       return p.value;
     });
   }
 
   set clipLimit(double value) {
-    cvRun(() => ccore.CLAHE_SetClipLimit(ref, value));
+    cvRun(() => cffi.CLAHE_SetClipLimit(ref, value));
   }
 
   Size get tilesGridSize {
     final p = calloc<cvg.Size>();
-    cvRun(() => ccore.CLAHE_GetTilesGridSize(ref, p));
+    cvRun(() => cffi.CLAHE_GetTilesGridSize(ref, p));
     return Size.fromPointer(p);
   }
 
-  set tilesGridSize(Size value) => cvRun(() => ccore.CLAHE_SetTilesGridSize(ref, value.ref));
+  set tilesGridSize(Size value) => cvRun(() => cffi.CLAHE_SetTilesGridSize(ref, value.ref));
 
-  static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(ccore.addresses.CLAHE_Close);
+  static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(cffi.addresses.CLAHE_Close);
 
   void dispose() {
     finalizer.detach(this);
-    ccore.CLAHE_Close(ptr);
+    cffi.CLAHE_Close(ptr);
   }
 
   @override
