@@ -1,26 +1,26 @@
-name: CvNativeVideoIO
+name: CvNative
 description: |
   Native bindings for OpenCV - VideoIO
 output:
-  bindings: ../lib/src/g/video_io.g.dart
+  bindings: lib/src/g/videoio.g.dart
   symbol-file:
-    output: 'package:dartcv_videoio/src/g/video_io.yaml'
-    import-path: 'package:dartcv_videoio/src/g/video_io.g.dart'
+    output: 'package:dartcv_videoio/src/g/videoio.yaml'
+    import-path: 'package:dartcv_videoio/src/g/videoio.g.dart'
 # ffi-native:
 #   assetId: 'package:dartcv_videoio/dartcv_videoio.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv_videoio/src/g/types.yaml'
-compiler-opts: "-Isrc"
+    - 'package:dartcv_core/src/g/types.yaml'
+compiler-opts: "-Isrc -I../../src"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - src/videoio.h
-    - src/videoio_async.h
+    - ../../src/videoio/videoio.h
+    - ../../src/videoio/videoio_async.h
   include-directives:
-    - src/videoio.h
-    - src/videoio_async.h
+    - ../../src/videoio/videoio.h
+    - ../../src/videoio/videoio_async.h
 
 functions:
   symbol-address:

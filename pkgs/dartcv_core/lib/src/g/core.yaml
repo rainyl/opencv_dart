@@ -6,6 +6,10 @@ files:
     symbols:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
+      c:@Ea@BLOCK_MEAN_HASH_MODE_0@BLOCK_MEAN_HASH_MODE_0:
+        name: BLOCK_MEAN_HASH_MODE_0
+      c:@Ea@BLOCK_MEAN_HASH_MODE_0@BLOCK_MEAN_HASH_MODE_1:
+        name: BLOCK_MEAN_HASH_MODE_1
       c:@Ea@STITCHING_OK@STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL:
         name: STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL
       c:@Ea@STITCHING_OK@STITCHING_ERR_HOMOGRAPHY_EST_FAIL:
@@ -84,6 +88,274 @@ files:
         name: ArrowedLine
       c:@F@ArrowedLine_Async:
         name: ArrowedLine_Async
+      c:@F@ArucoDetectorParameters_Close:
+        name: ArucoDetectorParameters_Close
+      c:@F@ArucoDetectorParameters_Create:
+        name: ArucoDetectorParameters_Create
+      c:@F@ArucoDetectorParameters_Create_Async:
+        name: ArucoDetectorParameters_Create_Async
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshConstant:
+        name: ArucoDetectorParameters_GetAdaptiveThreshConstant
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshConstant_Async:
+        name: ArucoDetectorParameters_GetAdaptiveThreshConstant_Async
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep
+      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async:
+        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagCriticalRad:
+        name: ArucoDetectorParameters_GetAprilTagCriticalRad
+      c:@F@ArucoDetectorParameters_GetAprilTagCriticalRad_Async:
+        name: ArucoDetectorParameters_GetAprilTagCriticalRad_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagDeglitch:
+        name: ArucoDetectorParameters_GetAprilTagDeglitch
+      c:@F@ArucoDetectorParameters_GetAprilTagDeglitch_Async:
+        name: ArucoDetectorParameters_GetAprilTagDeglitch_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagMaxLineFitMse:
+        name: ArucoDetectorParameters_GetAprilTagMaxLineFitMse
+      c:@F@ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async:
+        name: ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagMaxNmaxima:
+        name: ArucoDetectorParameters_GetAprilTagMaxNmaxima
+      c:@F@ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async:
+        name: ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagMinClusterPixels:
+        name: ArucoDetectorParameters_GetAprilTagMinClusterPixels
+      c:@F@ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async:
+        name: ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff:
+        name: ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff
+      c:@F@ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async:
+        name: ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagQuadDecimate:
+        name: ArucoDetectorParameters_GetAprilTagQuadDecimate
+      c:@F@ArucoDetectorParameters_GetAprilTagQuadDecimate_Async:
+        name: ArucoDetectorParameters_GetAprilTagQuadDecimate_Async
+      c:@F@ArucoDetectorParameters_GetAprilTagQuadSigma:
+        name: ArucoDetectorParameters_GetAprilTagQuadSigma
+      c:@F@ArucoDetectorParameters_GetAprilTagQuadSigma_Async:
+        name: ArucoDetectorParameters_GetAprilTagQuadSigma_Async
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMaxIterations:
+        name: ArucoDetectorParameters_GetCornerRefinementMaxIterations
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async:
+        name: ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMethod:
+        name: ArucoDetectorParameters_GetCornerRefinementMethod
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMethod_Async:
+        name: ArucoDetectorParameters_GetCornerRefinementMethod_Async
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMinAccuracy:
+        name: ArucoDetectorParameters_GetCornerRefinementMinAccuracy
+      c:@F@ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async:
+        name: ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async
+      c:@F@ArucoDetectorParameters_GetCornerRefinementWinSize:
+        name: ArucoDetectorParameters_GetCornerRefinementWinSize
+      c:@F@ArucoDetectorParameters_GetCornerRefinementWinSize_Async:
+        name: ArucoDetectorParameters_GetCornerRefinementWinSize_Async
+      c:@F@ArucoDetectorParameters_GetDetectInvertedMarker:
+        name: ArucoDetectorParameters_GetDetectInvertedMarker
+      c:@F@ArucoDetectorParameters_GetDetectInvertedMarker_Async:
+        name: ArucoDetectorParameters_GetDetectInvertedMarker_Async
+      c:@F@ArucoDetectorParameters_GetErrorCorrectionRate:
+        name: ArucoDetectorParameters_GetErrorCorrectionRate
+      c:@F@ArucoDetectorParameters_GetErrorCorrectionRate_Async:
+        name: ArucoDetectorParameters_GetErrorCorrectionRate_Async
+      c:@F@ArucoDetectorParameters_GetMarkerBorderBits:
+        name: ArucoDetectorParameters_GetMarkerBorderBits
+      c:@F@ArucoDetectorParameters_GetMarkerBorderBits_Async:
+        name: ArucoDetectorParameters_GetMarkerBorderBits_Async
+      c:@F@ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate:
+        name: ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate
+      c:@F@ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async:
+        name: ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async
+      c:@F@ArucoDetectorParameters_GetMaxMarkerPerimeterRate:
+        name: ArucoDetectorParameters_GetMaxMarkerPerimeterRate
+      c:@F@ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async:
+        name: ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async
+      c:@F@ArucoDetectorParameters_GetMinCornerDistanceRate:
+        name: ArucoDetectorParameters_GetMinCornerDistanceRate
+      c:@F@ArucoDetectorParameters_GetMinCornerDistanceRate_Async:
+        name: ArucoDetectorParameters_GetMinCornerDistanceRate_Async
+      c:@F@ArucoDetectorParameters_GetMinDistanceToBorder:
+        name: ArucoDetectorParameters_GetMinDistanceToBorder
+      c:@F@ArucoDetectorParameters_GetMinDistanceToBorder_Async:
+        name: ArucoDetectorParameters_GetMinDistanceToBorder_Async
+      c:@F@ArucoDetectorParameters_GetMinMarkerDistanceRate:
+        name: ArucoDetectorParameters_GetMinMarkerDistanceRate
+      c:@F@ArucoDetectorParameters_GetMinMarkerDistanceRate_Async:
+        name: ArucoDetectorParameters_GetMinMarkerDistanceRate_Async
+      c:@F@ArucoDetectorParameters_GetMinMarkerPerimeterRate:
+        name: ArucoDetectorParameters_GetMinMarkerPerimeterRate
+      c:@F@ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async:
+        name: ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async
+      c:@F@ArucoDetectorParameters_GetMinOtsuStdDev:
+        name: ArucoDetectorParameters_GetMinOtsuStdDev
+      c:@F@ArucoDetectorParameters_GetMinOtsuStdDev_Async:
+        name: ArucoDetectorParameters_GetMinOtsuStdDev_Async
+      c:@F@ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell:
+        name: ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell
+      c:@F@ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async:
+        name: ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async
+      c:@F@ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell:
+        name: ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell
+      c:@F@ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async:
+        name: ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async
+      c:@F@ArucoDetectorParameters_GetPolygonalApproxAccuracyRate:
+        name: ArucoDetectorParameters_GetPolygonalApproxAccuracyRate
+      c:@F@ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async:
+        name: ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshConstant:
+        name: ArucoDetectorParameters_SetAdaptiveThreshConstant
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshConstant_Async:
+        name: ArucoDetectorParameters_SetAdaptiveThreshConstant_Async
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep
+      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async:
+        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagCriticalRad:
+        name: ArucoDetectorParameters_SetAprilTagCriticalRad
+      c:@F@ArucoDetectorParameters_SetAprilTagCriticalRad_Async:
+        name: ArucoDetectorParameters_SetAprilTagCriticalRad_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagDeglitch:
+        name: ArucoDetectorParameters_SetAprilTagDeglitch
+      c:@F@ArucoDetectorParameters_SetAprilTagDeglitch_Async:
+        name: ArucoDetectorParameters_SetAprilTagDeglitch_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagMaxLineFitMse:
+        name: ArucoDetectorParameters_SetAprilTagMaxLineFitMse
+      c:@F@ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async:
+        name: ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagMaxNmaxima:
+        name: ArucoDetectorParameters_SetAprilTagMaxNmaxima
+      c:@F@ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async:
+        name: ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagMinClusterPixels:
+        name: ArucoDetectorParameters_SetAprilTagMinClusterPixels
+      c:@F@ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async:
+        name: ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff:
+        name: ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff
+      c:@F@ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async:
+        name: ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagQuadDecimate:
+        name: ArucoDetectorParameters_SetAprilTagQuadDecimate
+      c:@F@ArucoDetectorParameters_SetAprilTagQuadDecimate_Async:
+        name: ArucoDetectorParameters_SetAprilTagQuadDecimate_Async
+      c:@F@ArucoDetectorParameters_SetAprilTagQuadSigma:
+        name: ArucoDetectorParameters_SetAprilTagQuadSigma
+      c:@F@ArucoDetectorParameters_SetAprilTagQuadSigma_Async:
+        name: ArucoDetectorParameters_SetAprilTagQuadSigma_Async
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMaxIterations:
+        name: ArucoDetectorParameters_SetCornerRefinementMaxIterations
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async:
+        name: ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMethod:
+        name: ArucoDetectorParameters_SetCornerRefinementMethod
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMethod_Async:
+        name: ArucoDetectorParameters_SetCornerRefinementMethod_Async
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMinAccuracy:
+        name: ArucoDetectorParameters_SetCornerRefinementMinAccuracy
+      c:@F@ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async:
+        name: ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async
+      c:@F@ArucoDetectorParameters_SetCornerRefinementWinSize:
+        name: ArucoDetectorParameters_SetCornerRefinementWinSize
+      c:@F@ArucoDetectorParameters_SetCornerRefinementWinSize_Async:
+        name: ArucoDetectorParameters_SetCornerRefinementWinSize_Async
+      c:@F@ArucoDetectorParameters_SetDetectInvertedMarker:
+        name: ArucoDetectorParameters_SetDetectInvertedMarker
+      c:@F@ArucoDetectorParameters_SetDetectInvertedMarker_Async:
+        name: ArucoDetectorParameters_SetDetectInvertedMarker_Async
+      c:@F@ArucoDetectorParameters_SetErrorCorrectionRate:
+        name: ArucoDetectorParameters_SetErrorCorrectionRate
+      c:@F@ArucoDetectorParameters_SetErrorCorrectionRate_Async:
+        name: ArucoDetectorParameters_SetErrorCorrectionRate_Async
+      c:@F@ArucoDetectorParameters_SetMarkerBorderBits:
+        name: ArucoDetectorParameters_SetMarkerBorderBits
+      c:@F@ArucoDetectorParameters_SetMarkerBorderBits_Async:
+        name: ArucoDetectorParameters_SetMarkerBorderBits_Async
+      c:@F@ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate:
+        name: ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate
+      c:@F@ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async:
+        name: ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async
+      c:@F@ArucoDetectorParameters_SetMaxMarkerPerimeterRate:
+        name: ArucoDetectorParameters_SetMaxMarkerPerimeterRate
+      c:@F@ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async:
+        name: ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async
+      c:@F@ArucoDetectorParameters_SetMinCornerDistanceRate:
+        name: ArucoDetectorParameters_SetMinCornerDistanceRate
+      c:@F@ArucoDetectorParameters_SetMinCornerDistanceRate_Async:
+        name: ArucoDetectorParameters_SetMinCornerDistanceRate_Async
+      c:@F@ArucoDetectorParameters_SetMinDistanceToBorder:
+        name: ArucoDetectorParameters_SetMinDistanceToBorder
+      c:@F@ArucoDetectorParameters_SetMinDistanceToBorder_Async:
+        name: ArucoDetectorParameters_SetMinDistanceToBorder_Async
+      c:@F@ArucoDetectorParameters_SetMinMarkerDistanceRate:
+        name: ArucoDetectorParameters_SetMinMarkerDistanceRate
+      c:@F@ArucoDetectorParameters_SetMinMarkerDistanceRate_Async:
+        name: ArucoDetectorParameters_SetMinMarkerDistanceRate_Async
+      c:@F@ArucoDetectorParameters_SetMinMarkerPerimeterRate:
+        name: ArucoDetectorParameters_SetMinMarkerPerimeterRate
+      c:@F@ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async:
+        name: ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async
+      c:@F@ArucoDetectorParameters_SetMinOtsuStdDev:
+        name: ArucoDetectorParameters_SetMinOtsuStdDev
+      c:@F@ArucoDetectorParameters_SetMinOtsuStdDev_Async:
+        name: ArucoDetectorParameters_SetMinOtsuStdDev_Async
+      c:@F@ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell:
+        name: ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell
+      c:@F@ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async:
+        name: ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async
+      c:@F@ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell:
+        name: ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell
+      c:@F@ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async:
+        name: ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async
+      c:@F@ArucoDetectorParameters_SetPolygonalApproxAccuracyRate:
+        name: ArucoDetectorParameters_SetPolygonalApproxAccuracyRate
+      c:@F@ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async:
+        name: ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async
+      c:@F@ArucoDetector_Close:
+        name: ArucoDetector_Close
+      c:@F@ArucoDetector_DetectMarkers:
+        name: ArucoDetector_DetectMarkers
+      c:@F@ArucoDetector_DetectMarkers_Async:
+        name: ArucoDetector_DetectMarkers_Async
+      c:@F@ArucoDetector_New:
+        name: ArucoDetector_New
+      c:@F@ArucoDetector_NewWithParams:
+        name: ArucoDetector_NewWithParams
+      c:@F@ArucoDetector_NewWithParams_Async:
+        name: ArucoDetector_NewWithParams_Async
+      c:@F@ArucoDetector_New_Async:
+        name: ArucoDetector_New_Async
+      c:@F@ArucoDictionary_Close:
+        name: ArucoDictionary_Close
+      c:@F@ArucoDrawDetectedMarkers:
+        name: ArucoDrawDetectedMarkers
+      c:@F@ArucoDrawDetectedMarkers_Async:
+        name: ArucoDrawDetectedMarkers_Async
+      c:@F@ArucoGenerateImageMarker:
+        name: ArucoGenerateImageMarker
+      c:@F@ArucoGenerateImageMarker_Async:
+        name: ArucoGenerateImageMarker_Async
+      c:@F@AsyncArray_Close:
+        name: AsyncArray_Close
+      c:@F@AsyncArray_Get:
+        name: AsyncArray_Get
+      c:@F@AsyncArray_New:
+        name: AsyncArray_New
       c:@F@BFMatcher_Close:
         name: BFMatcher_Close
       c:@F@BFMatcher_Close_Async:
@@ -152,6 +424,28 @@ files:
         name: BilateralFilter
       c:@F@BilateralFilter_Async:
         name: BilateralFilter_Async
+      c:@F@BlockMeanHash_Close:
+        name: BlockMeanHash_Close
+      c:@F@BlockMeanHash_Compare:
+        name: BlockMeanHash_Compare
+      c:@F@BlockMeanHash_Compare_Async:
+        name: BlockMeanHash_Compare_Async
+      c:@F@BlockMeanHash_Compute:
+        name: BlockMeanHash_Compute
+      c:@F@BlockMeanHash_Compute_Async:
+        name: BlockMeanHash_Compute_Async
+      c:@F@BlockMeanHash_Create:
+        name: BlockMeanHash_Create
+      c:@F@BlockMeanHash_Create_Async:
+        name: BlockMeanHash_Create_Async
+      c:@F@BlockMeanHash_GetMean:
+        name: BlockMeanHash_GetMean
+      c:@F@BlockMeanHash_GetMean_Async:
+        name: BlockMeanHash_GetMean_Async
+      c:@F@BlockMeanHash_SetMode:
+        name: BlockMeanHash_SetMode
+      c:@F@BlockMeanHash_SetMode_Async:
+        name: BlockMeanHash_SetMode_Async
       c:@F@Blur:
         name: Blur
       c:@F@Blur_Async:
@@ -228,6 +522,52 @@ files:
         name: Canny
       c:@F@Canny_Async:
         name: Canny_Async
+      c:@F@CascadeClassifier_Close:
+        name: CascadeClassifier_Close
+      c:@F@CascadeClassifier_DetectMultiScale:
+        name: CascadeClassifier_DetectMultiScale
+      c:@F@CascadeClassifier_DetectMultiScale2:
+        name: CascadeClassifier_DetectMultiScale2
+      c:@F@CascadeClassifier_DetectMultiScale2_Async:
+        name: CascadeClassifier_DetectMultiScale2_Async
+      c:@F@CascadeClassifier_DetectMultiScale3:
+        name: CascadeClassifier_DetectMultiScale3
+      c:@F@CascadeClassifier_DetectMultiScale3_Async:
+        name: CascadeClassifier_DetectMultiScale3_Async
+      c:@F@CascadeClassifier_DetectMultiScaleWithParams:
+        name: CascadeClassifier_DetectMultiScaleWithParams
+      c:@F@CascadeClassifier_DetectMultiScaleWithParams_Async:
+        name: CascadeClassifier_DetectMultiScaleWithParams_Async
+      c:@F@CascadeClassifier_DetectMultiScale_Async:
+        name: CascadeClassifier_DetectMultiScale_Async
+      c:@F@CascadeClassifier_Empty:
+        name: CascadeClassifier_Empty
+      c:@F@CascadeClassifier_Empty_Async:
+        name: CascadeClassifier_Empty_Async
+      c:@F@CascadeClassifier_Load:
+        name: CascadeClassifier_Load
+      c:@F@CascadeClassifier_Load_Async:
+        name: CascadeClassifier_Load_Async
+      c:@F@CascadeClassifier_New:
+        name: CascadeClassifier_New
+      c:@F@CascadeClassifier_NewFromFile:
+        name: CascadeClassifier_NewFromFile
+      c:@F@CascadeClassifier_NewFromFile_Async:
+        name: CascadeClassifier_NewFromFile_Async
+      c:@F@CascadeClassifier_New_Async:
+        name: CascadeClassifier_New_Async
+      c:@F@CascadeClassifier_getFeatureType:
+        name: CascadeClassifier_getFeatureType
+      c:@F@CascadeClassifier_getFeatureType_Async:
+        name: CascadeClassifier_getFeatureType_Async
+      c:@F@CascadeClassifier_getOriginalWindowSize:
+        name: CascadeClassifier_getOriginalWindowSize
+      c:@F@CascadeClassifier_getOriginalWindowSize_Async:
+        name: CascadeClassifier_getOriginalWindowSize_Async
+      c:@F@CascadeClassifier_isOldFormatCascade:
+        name: CascadeClassifier_isOldFormatCascade
+      c:@F@CascadeClassifier_isOldFormatCascade_Async:
+        name: CascadeClassifier_isOldFormatCascade_Async
       c:@F@Circle:
         name: Circle
       c:@F@CircleWithParams:
@@ -346,6 +686,70 @@ files:
         name: EstimateAffinePartial2DWithParams
       c:@F@Eye:
         name: Eye
+      c:@F@FaceDetectorYN_Close:
+        name: FaceDetectorYN_Close
+      c:@F@FaceDetectorYN_Detect:
+        name: FaceDetectorYN_Detect
+      c:@F@FaceDetectorYN_Detect_Async:
+        name: FaceDetectorYN_Detect_Async
+      c:@F@FaceDetectorYN_GetInputSize:
+        name: FaceDetectorYN_GetInputSize
+      c:@F@FaceDetectorYN_GetInputSize_Async:
+        name: FaceDetectorYN_GetInputSize_Async
+      c:@F@FaceDetectorYN_GetNMSThreshold:
+        name: FaceDetectorYN_GetNMSThreshold
+      c:@F@FaceDetectorYN_GetNMSThreshold_Async:
+        name: FaceDetectorYN_GetNMSThreshold_Async
+      c:@F@FaceDetectorYN_GetScoreThreshold:
+        name: FaceDetectorYN_GetScoreThreshold
+      c:@F@FaceDetectorYN_GetScoreThreshold_Async:
+        name: FaceDetectorYN_GetScoreThreshold_Async
+      c:@F@FaceDetectorYN_GetTopK:
+        name: FaceDetectorYN_GetTopK
+      c:@F@FaceDetectorYN_GetTopK_Async:
+        name: FaceDetectorYN_GetTopK_Async
+      c:@F@FaceDetectorYN_New:
+        name: FaceDetectorYN_New
+      c:@F@FaceDetectorYN_NewFromBuffer:
+        name: FaceDetectorYN_NewFromBuffer
+      c:@F@FaceDetectorYN_NewFromBuffer_Async:
+        name: FaceDetectorYN_NewFromBuffer_Async
+      c:@F@FaceDetectorYN_New_Async:
+        name: FaceDetectorYN_New_Async
+      c:@F@FaceDetectorYN_SetInputSize:
+        name: FaceDetectorYN_SetInputSize
+      c:@F@FaceDetectorYN_SetInputSize_Async:
+        name: FaceDetectorYN_SetInputSize_Async
+      c:@F@FaceDetectorYN_SetNMSThreshold:
+        name: FaceDetectorYN_SetNMSThreshold
+      c:@F@FaceDetectorYN_SetNMSThreshold_Async:
+        name: FaceDetectorYN_SetNMSThreshold_Async
+      c:@F@FaceDetectorYN_SetScoreThreshold:
+        name: FaceDetectorYN_SetScoreThreshold
+      c:@F@FaceDetectorYN_SetScoreThreshold_Async:
+        name: FaceDetectorYN_SetScoreThreshold_Async
+      c:@F@FaceDetectorYN_SetTopK:
+        name: FaceDetectorYN_SetTopK
+      c:@F@FaceDetectorYN_SetTopK_Async:
+        name: FaceDetectorYN_SetTopK_Async
+      c:@F@FaceRecognizerSF_AlignCrop:
+        name: FaceRecognizerSF_AlignCrop
+      c:@F@FaceRecognizerSF_AlignCrop_Async:
+        name: FaceRecognizerSF_AlignCrop_Async
+      c:@F@FaceRecognizerSF_Close:
+        name: FaceRecognizerSF_Close
+      c:@F@FaceRecognizerSF_Feature:
+        name: FaceRecognizerSF_Feature
+      c:@F@FaceRecognizerSF_Feature_Async:
+        name: FaceRecognizerSF_Feature_Async
+      c:@F@FaceRecognizerSF_Match:
+        name: FaceRecognizerSF_Match
+      c:@F@FaceRecognizerSF_Match_Async:
+        name: FaceRecognizerSF_Match_Async
+      c:@F@FaceRecognizerSF_New:
+        name: FaceRecognizerSF_New
+      c:@F@FaceRecognizerSF_New_Async:
+        name: FaceRecognizerSF_New_Async
       c:@F@FastFeatureDetector_Close:
         name: FastFeatureDetector_Close
       c:@F@FastFeatureDetector_Close_Async:
@@ -520,6 +924,72 @@ files:
         name: GrabCut
       c:@F@GrabCut_Async:
         name: GrabCut_Async
+      c:@F@GroupRectangles:
+        name: GroupRectangles
+      c:@F@GroupRectangles_Async:
+        name: GroupRectangles_Async
+      c:@F@HOGDescriptor_Close:
+        name: HOGDescriptor_Close
+      c:@F@HOGDescriptor_Compute:
+        name: HOGDescriptor_Compute
+      c:@F@HOGDescriptor_Compute_Async:
+        name: HOGDescriptor_Compute_Async
+      c:@F@HOGDescriptor_Detect:
+        name: HOGDescriptor_Detect
+      c:@F@HOGDescriptor_Detect2:
+        name: HOGDescriptor_Detect2
+      c:@F@HOGDescriptor_Detect2_Async:
+        name: HOGDescriptor_Detect2_Async
+      c:@F@HOGDescriptor_DetectMultiScale:
+        name: HOGDescriptor_DetectMultiScale
+      c:@F@HOGDescriptor_DetectMultiScaleWithParams:
+        name: HOGDescriptor_DetectMultiScaleWithParams
+      c:@F@HOGDescriptor_DetectMultiScaleWithParams_Async:
+        name: HOGDescriptor_DetectMultiScaleWithParams_Async
+      c:@F@HOGDescriptor_DetectMultiScale_Async:
+        name: HOGDescriptor_DetectMultiScale_Async
+      c:@F@HOGDescriptor_Detect_Async:
+        name: HOGDescriptor_Detect_Async
+      c:@F@HOGDescriptor_Load:
+        name: HOGDescriptor_Load
+      c:@F@HOGDescriptor_Load_Async:
+        name: HOGDescriptor_Load_Async
+      c:@F@HOGDescriptor_New:
+        name: HOGDescriptor_New
+      c:@F@HOGDescriptor_NewFromFile:
+        name: HOGDescriptor_NewFromFile
+      c:@F@HOGDescriptor_NewFromFile_Async:
+        name: HOGDescriptor_NewFromFile_Async
+      c:@F@HOGDescriptor_New_Async:
+        name: HOGDescriptor_New_Async
+      c:@F@HOGDescriptor_SetSVMDetector:
+        name: HOGDescriptor_SetSVMDetector
+      c:@F@HOGDescriptor_SetSVMDetector_Async:
+        name: HOGDescriptor_SetSVMDetector_Async
+      c:@F@HOGDescriptor_computeGradient:
+        name: HOGDescriptor_computeGradient
+      c:@F@HOGDescriptor_computeGradient_Async:
+        name: HOGDescriptor_computeGradient_Async
+      c:@F@HOGDescriptor_getDaimlerPeopleDetector:
+        name: HOGDescriptor_getDaimlerPeopleDetector
+      c:@F@HOGDescriptor_getDaimlerPeopleDetector_Async:
+        name: HOGDescriptor_getDaimlerPeopleDetector_Async
+      c:@F@HOGDescriptor_getDescriptorSize:
+        name: HOGDescriptor_getDescriptorSize
+      c:@F@HOGDescriptor_getDescriptorSize_Async:
+        name: HOGDescriptor_getDescriptorSize_Async
+      c:@F@HOGDescriptor_getWinSigma:
+        name: HOGDescriptor_getWinSigma
+      c:@F@HOGDescriptor_getWinSigma_Async:
+        name: HOGDescriptor_getWinSigma_Async
+      c:@F@HOGDescriptor_groupRectangles:
+        name: HOGDescriptor_groupRectangles
+      c:@F@HOGDescriptor_groupRectangles_Async:
+        name: HOGDescriptor_groupRectangles_Async
+      c:@F@HOG_GetDefaultPeopleDetector:
+        name: HOG_GetDefaultPeopleDetector
+      c:@F@HOG_GetDefaultPeopleDetector_Async:
+        name: HOG_GetDefaultPeopleDetector_Async
       c:@F@HoughCircles:
         name: HoughCircles
       c:@F@HoughCirclesWithParams:
@@ -734,6 +1204,26 @@ files:
         name: Laplacian
       c:@F@Laplacian_Async:
         name: Laplacian_Async
+      c:@F@Layer_Close:
+        name: Layer_Close
+      c:@F@Layer_Close_Async:
+        name: Layer_Close_Async
+      c:@F@Layer_GetName:
+        name: Layer_GetName
+      c:@F@Layer_GetName_Async:
+        name: Layer_GetName_Async
+      c:@F@Layer_GetType:
+        name: Layer_GetType
+      c:@F@Layer_GetType_Async:
+        name: Layer_GetType_Async
+      c:@F@Layer_InputNameToIndex:
+        name: Layer_InputNameToIndex
+      c:@F@Layer_InputNameToIndex_Async:
+        name: Layer_InputNameToIndex_Async
+      c:@F@Layer_OutputNameToIndex:
+        name: Layer_OutputNameToIndex
+      c:@F@Layer_OutputNameToIndex_Async:
+        name: Layer_OutputNameToIndex_Async
       c:@F@Line:
         name: Line
       c:@F@Line_Async:
@@ -1374,6 +1864,140 @@ files:
         name: MorphologyExWithParams_Async
       c:@F@MorphologyEx_Async:
         name: MorphologyEx_Async
+      c:@F@NMSBoxes:
+        name: NMSBoxes
+      c:@F@NMSBoxesWithParams:
+        name: NMSBoxesWithParams
+      c:@F@NMSBoxesWithParams_Async:
+        name: NMSBoxesWithParams_Async
+      c:@F@NMSBoxes_Async:
+        name: NMSBoxes_Async
+      c:@F@Net_BlobFromImage:
+        name: Net_BlobFromImage
+      c:@F@Net_BlobFromImage_Async:
+        name: Net_BlobFromImage_Async
+      c:@F@Net_BlobFromImages:
+        name: Net_BlobFromImages
+      c:@F@Net_BlobFromImages_Async:
+        name: Net_BlobFromImages_Async
+      c:@F@Net_Close:
+        name: Net_Close
+      c:@F@Net_Close_Async:
+        name: Net_Close_Async
+      c:@F@Net_Create:
+        name: Net_Create
+      c:@F@Net_Create_Async:
+        name: Net_Create_Async
+      c:@F@Net_Dump:
+        name: Net_Dump
+      c:@F@Net_Dump_Async:
+        name: Net_Dump_Async
+      c:@F@Net_Empty:
+        name: Net_Empty
+      c:@F@Net_Empty_Async:
+        name: Net_Empty_Async
+      c:@F@Net_Forward:
+        name: Net_Forward
+      c:@F@Net_ForwardLayers:
+        name: Net_ForwardLayers
+      c:@F@Net_ForwardLayers_Async:
+        name: Net_ForwardLayers_Async
+      c:@F@Net_Forward_Async:
+        name: Net_Forward_Async
+      c:@F@Net_FromNet:
+        name: Net_FromNet
+      c:@F@Net_FromNet_Async:
+        name: Net_FromNet_Async
+      c:@F@Net_GetBlobChannel:
+        name: Net_GetBlobChannel
+      c:@F@Net_GetBlobChannel_Async:
+        name: Net_GetBlobChannel_Async
+      c:@F@Net_GetBlobSize:
+        name: Net_GetBlobSize
+      c:@F@Net_GetBlobSize_Async:
+        name: Net_GetBlobSize_Async
+      c:@F@Net_GetInputDetails:
+        name: Net_GetInputDetails
+      c:@F@Net_GetInputDetails_Async:
+        name: Net_GetInputDetails_Async
+      c:@F@Net_GetLayer:
+        name: Net_GetLayer
+      c:@F@Net_GetLayerNames:
+        name: Net_GetLayerNames
+      c:@F@Net_GetLayerNames_Async:
+        name: Net_GetLayerNames_Async
+      c:@F@Net_GetLayer_Async:
+        name: Net_GetLayer_Async
+      c:@F@Net_GetPerfProfile:
+        name: Net_GetPerfProfile
+      c:@F@Net_GetPerfProfile_Async:
+        name: Net_GetPerfProfile_Async
+      c:@F@Net_GetUnconnectedOutLayers:
+        name: Net_GetUnconnectedOutLayers
+      c:@F@Net_GetUnconnectedOutLayers_Async:
+        name: Net_GetUnconnectedOutLayers_Async
+      c:@F@Net_ImagesFromBlob:
+        name: Net_ImagesFromBlob
+      c:@F@Net_ImagesFromBlob_Async:
+        name: Net_ImagesFromBlob_Async
+      c:@F@Net_ReadNet:
+        name: Net_ReadNet
+      c:@F@Net_ReadNetBytes:
+        name: Net_ReadNetBytes
+      c:@F@Net_ReadNetBytes_Async:
+        name: Net_ReadNetBytes_Async
+      c:@F@Net_ReadNetFromCaffe:
+        name: Net_ReadNetFromCaffe
+      c:@F@Net_ReadNetFromCaffeBytes:
+        name: Net_ReadNetFromCaffeBytes
+      c:@F@Net_ReadNetFromCaffeBytes_Async:
+        name: Net_ReadNetFromCaffeBytes_Async
+      c:@F@Net_ReadNetFromCaffe_Async:
+        name: Net_ReadNetFromCaffe_Async
+      c:@F@Net_ReadNetFromONNX:
+        name: Net_ReadNetFromONNX
+      c:@F@Net_ReadNetFromONNXBytes:
+        name: Net_ReadNetFromONNXBytes
+      c:@F@Net_ReadNetFromONNXBytes_Async:
+        name: Net_ReadNetFromONNXBytes_Async
+      c:@F@Net_ReadNetFromONNX_Async:
+        name: Net_ReadNetFromONNX_Async
+      c:@F@Net_ReadNetFromTFLite:
+        name: Net_ReadNetFromTFLite
+      c:@F@Net_ReadNetFromTFLiteBytes:
+        name: Net_ReadNetFromTFLiteBytes
+      c:@F@Net_ReadNetFromTFLiteBytes_Async:
+        name: Net_ReadNetFromTFLiteBytes_Async
+      c:@F@Net_ReadNetFromTFLite_Async:
+        name: Net_ReadNetFromTFLite_Async
+      c:@F@Net_ReadNetFromTensorflow:
+        name: Net_ReadNetFromTensorflow
+      c:@F@Net_ReadNetFromTensorflowBytes:
+        name: Net_ReadNetFromTensorflowBytes
+      c:@F@Net_ReadNetFromTensorflowBytes_Async:
+        name: Net_ReadNetFromTensorflowBytes_Async
+      c:@F@Net_ReadNetFromTensorflow_Async:
+        name: Net_ReadNetFromTensorflow_Async
+      c:@F@Net_ReadNetFromTorch:
+        name: Net_ReadNetFromTorch
+      c:@F@Net_ReadNetFromTorch_Async:
+        name: Net_ReadNetFromTorch_Async
+      c:@F@Net_ReadNet_Async:
+        name: Net_ReadNet_Async
+      c:@F@Net_SetInput:
+        name: Net_SetInput
+      c:@F@Net_SetInput_Async:
+        name: Net_SetInput_Async
+      c:@F@Net_SetPreferableBackend:
+        name: Net_SetPreferableBackend
+      c:@F@Net_SetPreferableBackend_Async:
+        name: Net_SetPreferableBackend_Async
+      c:@F@Net_SetPreferableTarget:
+        name: Net_SetPreferableTarget
+      c:@F@Net_SetPreferableTarget_Async:
+        name: Net_SetPreferableTarget_Async
+      c:@F@Net_forwardAsync:
+        name: Net_forwardAsync
       c:@F@Norm:
         name: Norm
       c:@F@NormWithMats:
@@ -1436,6 +2060,120 @@ files:
         name: PyrUp
       c:@F@PyrUp_Async:
         name: PyrUp_Async
+      c:@F@QRCodeDetector_Close:
+        name: QRCodeDetector_Close
+      c:@F@QRCodeDetector_Decode:
+        name: QRCodeDetector_Decode
+      c:@F@QRCodeDetector_Decode_Async:
+        name: QRCodeDetector_Decode_Async
+      c:@F@QRCodeDetector_Detect:
+        name: QRCodeDetector_Detect
+      c:@F@QRCodeDetector_DetectAndDecode:
+        name: QRCodeDetector_DetectAndDecode
+      c:@F@QRCodeDetector_DetectAndDecodeMulti:
+        name: QRCodeDetector_DetectAndDecodeMulti
+      c:@F@QRCodeDetector_DetectAndDecodeMulti_Async:
+        name: QRCodeDetector_DetectAndDecodeMulti_Async
+      c:@F@QRCodeDetector_DetectAndDecode_Async:
+        name: QRCodeDetector_DetectAndDecode_Async
+      c:@F@QRCodeDetector_DetectMulti:
+        name: QRCodeDetector_DetectMulti
+      c:@F@QRCodeDetector_DetectMulti_Async:
+        name: QRCodeDetector_DetectMulti_Async
+      c:@F@QRCodeDetector_Detect_Async:
+        name: QRCodeDetector_Detect_Async
+      c:@F@QRCodeDetector_New:
+        name: QRCodeDetector_New
+      c:@F@QRCodeDetector_New_Async:
+        name: QRCodeDetector_New_Async
+      c:@F@QRCodeDetector_decodeCurved:
+        name: QRCodeDetector_decodeCurved
+      c:@F@QRCodeDetector_decodeCurved_Async:
+        name: QRCodeDetector_decodeCurved_Async
+      c:@F@QRCodeDetector_detectAndDecodeCurved:
+        name: QRCodeDetector_detectAndDecodeCurved
+      c:@F@QRCodeDetector_detectAndDecodeCurved_Async:
+        name: QRCodeDetector_detectAndDecodeCurved_Async
+      c:@F@QRCodeDetector_setEpsX:
+        name: QRCodeDetector_setEpsX
+      c:@F@QRCodeDetector_setEpsX_Async:
+        name: QRCodeDetector_setEpsX_Async
+      c:@F@QRCodeDetector_setEpsY:
+        name: QRCodeDetector_setEpsY
+      c:@F@QRCodeDetector_setEpsY_Async:
+        name: QRCodeDetector_setEpsY_Async
+      c:@F@QRCodeDetector_setUseAlignmentMarkers:
+        name: QRCodeDetector_setUseAlignmentMarkers
+      c:@F@QRCodeDetector_setUseAlignmentMarkers_Async:
+        name: QRCodeDetector_setUseAlignmentMarkers_Async
+      c:@F@QualityBRISQUE_close:
+        name: QualityBRISQUE_close
+      c:@F@QualityBRISQUE_compute:
+        name: QualityBRISQUE_compute
+      c:@F@QualityBRISQUE_computeFeatures_static:
+        name: QualityBRISQUE_computeFeatures_static
+      c:@F@QualityBRISQUE_computeFeatures_static_async:
+        name: QualityBRISQUE_computeFeatures_static_async
+      c:@F@QualityBRISQUE_compute_async:
+        name: QualityBRISQUE_compute_async
+      c:@F@QualityBRISQUE_compute_static:
+        name: QualityBRISQUE_compute_static
+      c:@F@QualityBRISQUE_compute_static_async:
+        name: QualityBRISQUE_compute_static_async
+      c:@F@QualityBRISQUE_create:
+        name: QualityBRISQUE_create
+      c:@F@QualityGMSD_close:
+        name: QualityGMSD_close
+      c:@F@QualityGMSD_compute:
+        name: QualityGMSD_compute
+      c:@F@QualityGMSD_compute_async:
+        name: QualityGMSD_compute_async
+      c:@F@QualityGMSD_compute_static:
+        name: QualityGMSD_compute_static
+      c:@F@QualityGMSD_compute_static_async:
+        name: QualityGMSD_compute_static_async
+      c:@F@QualityGMSD_create:
+        name: QualityGMSD_create
+      c:@F@QualityMSE_close:
+        name: QualityMSE_close
+      c:@F@QualityMSE_compute:
+        name: QualityMSE_compute
+      c:@F@QualityMSE_compute_async:
+        name: QualityMSE_compute_async
+      c:@F@QualityMSE_compute_static:
+        name: QualityMSE_compute_static
+      c:@F@QualityMSE_compute_static_async:
+        name: QualityMSE_compute_static_async
+      c:@F@QualityMSE_create:
+        name: QualityMSE_create
+      c:@F@QualityPSNR_close:
+        name: QualityPSNR_close
+      c:@F@QualityPSNR_compute:
+        name: QualityPSNR_compute
+      c:@F@QualityPSNR_compute_async:
+        name: QualityPSNR_compute_async
+      c:@F@QualityPSNR_compute_static:
+        name: QualityPSNR_compute_static
+      c:@F@QualityPSNR_compute_static_async:
+        name: QualityPSNR_compute_static_async
+      c:@F@QualityPSNR_create:
+        name: QualityPSNR_create
+      c:@F@QualityPSNR_getMaxPixelValue:
+        name: QualityPSNR_getMaxPixelValue
+      c:@F@QualityPSNR_setMaxPixelValue:
+        name: QualityPSNR_setMaxPixelValue
+      c:@F@QualitySSIM_close:
+        name: QualitySSIM_close
+      c:@F@QualitySSIM_compute:
+        name: QualitySSIM_compute
+      c:@F@QualitySSIM_compute_async:
+        name: QualitySSIM_compute_async
+      c:@F@QualitySSIM_compute_static:
+        name: QualitySSIM_compute_static
+      c:@F@QualitySSIM_compute_static_async:
+        name: QualitySSIM_compute_static_async
+      c:@F@QualitySSIM_create:
+        name: QualitySSIM_create
       c:@F@RNG_Fill:
         name: RNG_Fill
       c:@F@RNG_Fill_Async:
@@ -1774,6 +2512,18 @@ files:
         name: Undistort
       c:@F@UndistortPoints:
         name: UndistortPoints
+      c:@F@WBDetector_Close:
+        name: WBDetector_Close
+      c:@F@WBDetector_Create:
+        name: WBDetector_Create
+      c:@F@WBDetector_Detect:
+        name: WBDetector_Detect
+      c:@F@WBDetector_Read:
+        name: WBDetector_Read
+      c:@F@WBDetector_Train:
+        name: WBDetector_Train
+      c:@F@WBDetector_Write:
+        name: WBDetector_Write
       c:@F@WarpAffine:
         name: WarpAffine
       c:@F@WarpAffineWithParams:
@@ -1794,10 +2544,48 @@ files:
         name: Watershed
       c:@F@Watershed_Async:
         name: Watershed_Async
+      c:@F@WeChatQRCode_Close:
+        name: WeChatQRCode_Close
+      c:@F@WeChatQRCode_DetectAndDecode:
+        name: WeChatQRCode_DetectAndDecode
+      c:@F@WeChatQRCode_DetectAndDecode_Async:
+        name: WeChatQRCode_DetectAndDecode_Async
+      c:@F@WeChatQRCode_GetScaleFactor:
+        name: WeChatQRCode_GetScaleFactor
+      c:@F@WeChatQRCode_GetScaleFactor_Async:
+        name: WeChatQRCode_GetScaleFactor_Async
+      c:@F@WeChatQRCode_New:
+        name: WeChatQRCode_New
+      c:@F@WeChatQRCode_NewWithParams:
+        name: WeChatQRCode_NewWithParams
+      c:@F@WeChatQRCode_NewWithParams_Async:
+        name: WeChatQRCode_NewWithParams_Async
+      c:@F@WeChatQRCode_New_Async:
+        name: WeChatQRCode_New_Async
+      c:@F@WeChatQRCode_SetScaleFactor:
+        name: WeChatQRCode_SetScaleFactor
+      c:@F@WeChatQRCode_SetScaleFactor_Async:
+        name: WeChatQRCode_SetScaleFactor_Async
       c:@F@Zeros:
         name: Zeros
+      c:@F@averageHashCompare:
+        name: averageHashCompare
+      c:@F@averageHashCompare_Async:
+        name: averageHashCompare_Async
+      c:@F@averageHashCompute:
+        name: averageHashCompute
+      c:@F@averageHashCompute_Async:
+        name: averageHashCompute_Async
       c:@F@calibrateCamera_Async:
         name: calibrateCamera_Async
+      c:@F@colorMomentHashCompare:
+        name: colorMomentHashCompare
+      c:@F@colorMomentHashCompare_Async:
+        name: colorMomentHashCompare_Async
+      c:@F@colorMomentHashCompute:
+        name: colorMomentHashCompute
+      c:@F@colorMomentHashCompute_Async:
+        name: colorMomentHashCompute_Async
       c:@F@core_AbsDiff_Async:
         name: core_AbsDiff_Async
       c:@F@core_AddWeighted_Async:
@@ -2028,12 +2816,40 @@ files:
         name: getLogLevel
       c:@F@getOptimalNewCameraMatrix_Async:
         name: getOptimalNewCameraMatrix_Async
+      c:@F@getPredefinedDictionary:
+        name: getPredefinedDictionary
+      c:@F@getPredefinedDictionary_Async:
+        name: getPredefinedDictionary_Async
       c:@F@initUndistortRectifyMap_Async:
         name: initUndistortRectifyMap_Async
+      c:@F@marrHildrethHashCompare:
+        name: marrHildrethHashCompare
+      c:@F@marrHildrethHashCompare_Async:
+        name: marrHildrethHashCompare_Async
+      c:@F@marrHildrethHashCompute:
+        name: marrHildrethHashCompute
+      c:@F@marrHildrethHashCompute_Async:
+        name: marrHildrethHashCompute_Async
       c:@F@openCVVersion:
         name: openCVVersion
       c:@F@openCVVersion_Async:
         name: openCVVersion_Async
+      c:@F@pHashCompare:
+        name: pHashCompare
+      c:@F@pHashCompare_Async:
+        name: pHashCompare_Async
+      c:@F@pHashCompute:
+        name: pHashCompute
+      c:@F@pHashCompute_Async:
+        name: pHashCompute_Async
+      c:@F@radialVarianceHashCompare:
+        name: radialVarianceHashCompare
+      c:@F@radialVarianceHashCompare_Async:
+        name: radialVarianceHashCompare_Async
+      c:@F@radialVarianceHashCompute:
+        name: radialVarianceHashCompute
+      c:@F@radialVarianceHashCompute_Async:
+        name: radialVarianceHashCompute_Async
       c:@F@registerErrorCallback:
         name: registerErrorCallback
       c:@F@setLogLevel:
@@ -2042,12 +2858,172 @@ files:
         name: undistortPoints_Async
       c:@F@undistort_Async:
         name: undistort_Async
+      c:@F@ximgproc_EdgeBoxes_getBoundingBoxes:
+        name: ximgproc_EdgeBoxes_getBoundingBoxes
+      c:@F@ximgproc_EdgeDrawing_Close:
+        name: ximgproc_EdgeDrawing_Close
+      c:@F@ximgproc_EdgeDrawing_Create:
+        name: ximgproc_EdgeDrawing_Create
+      c:@F@ximgproc_EdgeDrawing_Create_Async:
+        name: ximgproc_EdgeDrawing_Create_Async
+      c:@F@ximgproc_EdgeDrawing_detectEdges:
+        name: ximgproc_EdgeDrawing_detectEdges
+      c:@F@ximgproc_EdgeDrawing_detectEdges_Async:
+        name: ximgproc_EdgeDrawing_detectEdges_Async
+      c:@F@ximgproc_EdgeDrawing_detectEllipses:
+        name: ximgproc_EdgeDrawing_detectEllipses
+      c:@F@ximgproc_EdgeDrawing_detectEllipses_Async:
+        name: ximgproc_EdgeDrawing_detectEllipses_Async
+      c:@F@ximgproc_EdgeDrawing_detectLines:
+        name: ximgproc_EdgeDrawing_detectLines
+      c:@F@ximgproc_EdgeDrawing_detectLines_Async:
+        name: ximgproc_EdgeDrawing_detectLines_Async
+      c:@F@ximgproc_EdgeDrawing_getEdgeImage:
+        name: ximgproc_EdgeDrawing_getEdgeImage
+      c:@F@ximgproc_EdgeDrawing_getEdgeImage_Async:
+        name: ximgproc_EdgeDrawing_getEdgeImage_Async
+      c:@F@ximgproc_EdgeDrawing_getGradientImage:
+        name: ximgproc_EdgeDrawing_getGradientImage
+      c:@F@ximgproc_EdgeDrawing_getGradientImage_Async:
+        name: ximgproc_EdgeDrawing_getGradientImage_Async
+      c:@F@ximgproc_EdgeDrawing_getParams:
+        name: ximgproc_EdgeDrawing_getParams
+      c:@F@ximgproc_EdgeDrawing_getSegmentIndicesOfLines:
+        name: ximgproc_EdgeDrawing_getSegmentIndicesOfLines
+      c:@F@ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async:
+        name: ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async
+      c:@F@ximgproc_EdgeDrawing_getSegments:
+        name: ximgproc_EdgeDrawing_getSegments
+      c:@F@ximgproc_EdgeDrawing_getSegments_Async:
+        name: ximgproc_EdgeDrawing_getSegments_Async
+      c:@F@ximgproc_EdgeDrawing_setParams:
+        name: ximgproc_EdgeDrawing_setParams
+      c:@F@ximgproc_GraphSegmentation_Close:
+        name: ximgproc_GraphSegmentation_Close
+      c:@F@ximgproc_GraphSegmentation_Create:
+        name: ximgproc_GraphSegmentation_Create
+      c:@F@ximgproc_GraphSegmentation_Create_Async:
+        name: ximgproc_GraphSegmentation_Create_Async
+      c:@F@ximgproc_GraphSegmentation_getK:
+        name: ximgproc_GraphSegmentation_getK
+      c:@F@ximgproc_GraphSegmentation_getMinSize:
+        name: ximgproc_GraphSegmentation_getMinSize
+      c:@F@ximgproc_GraphSegmentation_getSigma:
+        name: ximgproc_GraphSegmentation_getSigma
+      c:@F@ximgproc_GraphSegmentation_processImage:
+        name: ximgproc_GraphSegmentation_processImage
+      c:@F@ximgproc_GraphSegmentation_processImage_Async:
+        name: ximgproc_GraphSegmentation_processImage_Async
+      c:@F@ximgproc_GraphSegmentation_setK:
+        name: ximgproc_GraphSegmentation_setK
+      c:@F@ximgproc_GraphSegmentation_setMinSize:
+        name: ximgproc_GraphSegmentation_setMinSize
+      c:@F@ximgproc_GraphSegmentation_setSigma:
+        name: ximgproc_GraphSegmentation_setSigma
+      c:@F@ximgproc_PeiLinNormalization:
+        name: ximgproc_PeiLinNormalization
+      c:@F@ximgproc_PeiLinNormalization_Async:
+        name: ximgproc_PeiLinNormalization_Async
+      c:@F@ximgproc_RFFeatureGetter_Clear:
+        name: ximgproc_RFFeatureGetter_Clear
+      c:@F@ximgproc_RFFeatureGetter_Close:
+        name: ximgproc_RFFeatureGetter_Close
+      c:@F@ximgproc_RFFeatureGetter_Create:
+        name: ximgproc_RFFeatureGetter_Create
+      c:@F@ximgproc_RFFeatureGetter_Create_Async:
+        name: ximgproc_RFFeatureGetter_Create_Async
+      c:@F@ximgproc_RFFeatureGetter_Empty:
+        name: ximgproc_RFFeatureGetter_Empty
+      c:@F@ximgproc_RFFeatureGetter_getFeatures:
+        name: ximgproc_RFFeatureGetter_getFeatures
+      c:@F@ximgproc_RFFeatureGetter_getFeatures_Async:
+        name: ximgproc_RFFeatureGetter_getFeatures_Async
+      c:@F@ximgproc_StructuredEdgeDetection_Close:
+        name: ximgproc_StructuredEdgeDetection_Close
+      c:@F@ximgproc_StructuredEdgeDetection_Create:
+        name: ximgproc_StructuredEdgeDetection_Create
+      c:@F@ximgproc_StructuredEdgeDetection_Create_1:
+        name: ximgproc_StructuredEdgeDetection_Create_1
+      c:@F@ximgproc_StructuredEdgeDetection_Create_Async:
+        name: ximgproc_StructuredEdgeDetection_Create_Async
+      c:@F@ximgproc_StructuredEdgeDetection_computeOrientation:
+        name: ximgproc_StructuredEdgeDetection_computeOrientation
+      c:@F@ximgproc_StructuredEdgeDetection_computeOrientation_Async:
+        name: ximgproc_StructuredEdgeDetection_computeOrientation_Async
+      c:@F@ximgproc_StructuredEdgeDetection_detectEdges:
+        name: ximgproc_StructuredEdgeDetection_detectEdges
+      c:@F@ximgproc_StructuredEdgeDetection_detectEdges_Async:
+        name: ximgproc_StructuredEdgeDetection_detectEdges_Async
+      c:@F@ximgproc_StructuredEdgeDetection_edgesNms:
+        name: ximgproc_StructuredEdgeDetection_edgesNms
+      c:@F@ximgproc_StructuredEdgeDetection_edgesNms_Async:
+        name: ximgproc_StructuredEdgeDetection_edgesNms_Async
+      c:@F@ximgproc_anisotropicDiffusion:
+        name: ximgproc_anisotropicDiffusion
+      c:@F@ximgproc_anisotropicDiffusion_Async:
+        name: ximgproc_anisotropicDiffusion_Async
+      c:@F@ximgproc_edgePreservingFilter:
+        name: ximgproc_edgePreservingFilter
+      c:@F@ximgproc_edgePreservingFilter_Async:
+        name: ximgproc_edgePreservingFilter_Async
+      c:@F@ximgproc_findEllipses:
+        name: ximgproc_findEllipses
+      c:@F@ximgproc_findEllipses_Async:
+        name: ximgproc_findEllipses_Async
+      c:@F@ximgproc_niBlackThreshold:
+        name: ximgproc_niBlackThreshold
+      c:@F@ximgproc_niBlackThreshold_Async:
+        name: ximgproc_niBlackThreshold_Async
+      c:@F@ximgproc_rl_createRLEImage:
+        name: ximgproc_rl_createRLEImage
+      c:@F@ximgproc_rl_createRLEImage_Async:
+        name: ximgproc_rl_createRLEImage_Async
+      c:@F@ximgproc_rl_dilate:
+        name: ximgproc_rl_dilate
+      c:@F@ximgproc_rl_dilate_Async:
+        name: ximgproc_rl_dilate_Async
+      c:@F@ximgproc_rl_erode:
+        name: ximgproc_rl_erode
+      c:@F@ximgproc_rl_erode_Async:
+        name: ximgproc_rl_erode_Async
+      c:@F@ximgproc_rl_getStructuringElement:
+        name: ximgproc_rl_getStructuringElement
+      c:@F@ximgproc_rl_getStructuringElement_Async:
+        name: ximgproc_rl_getStructuringElement_Async
+      c:@F@ximgproc_rl_isRLMorphologyPossible:
+        name: ximgproc_rl_isRLMorphologyPossible
+      c:@F@ximgproc_rl_isRLMorphologyPossible_Async:
+        name: ximgproc_rl_isRLMorphologyPossible_Async
+      c:@F@ximgproc_rl_morphologyEx:
+        name: ximgproc_rl_morphologyEx
+      c:@F@ximgproc_rl_morphologyEx_Async:
+        name: ximgproc_rl_morphologyEx_Async
+      c:@F@ximgproc_rl_paint:
+        name: ximgproc_rl_paint
+      c:@F@ximgproc_rl_paint_Async:
+        name: ximgproc_rl_paint_Async
+      c:@F@ximgproc_rl_threshold:
+        name: ximgproc_rl_threshold
+      c:@F@ximgproc_rl_threshold_Async:
+        name: ximgproc_rl_threshold_Async
+      c:@F@ximgproc_thinning:
+        name: ximgproc_thinning
+      c:@F@ximgproc_thinning_Async:
+        name: ximgproc_thinning_Async
       c:@S@AKAZE:
         name: AKAZE
       c:@S@AgastFeatureDetector:
         name: AgastFeatureDetector
       c:@S@AlignMTB:
         name: AlignMTB
+      c:@S@ArucoDetector:
+        name: ArucoDetector
+      c:@S@ArucoDetectorParameters:
+        name: ArucoDetectorParameters
+      c:@S@ArucoDictionary:
+        name: ArucoDictionary
+      c:@S@AsyncArray:
+        name: AsyncArray
       c:@S@BFMatcher:
         name: BFMatcher
       c:@S@BRISK:
@@ -2056,24 +3032,64 @@ files:
         name: BackgroundSubtractorKNN
       c:@S@BackgroundSubtractorMOG2:
         name: BackgroundSubtractorMOG2
+      c:@S@BlockMeanHash:
+        name: BlockMeanHash
+      c:@S@Box:
+        name: Box
       c:@S@CLAHE:
         name: CLAHE
+      c:@S@CascadeClassifier:
+        name: CascadeClassifier
+      c:@S@EdgeBoxes:
+        name: EdgeBoxes
+      c:@S@EdgeDrawing:
+        name: EdgeDrawing
+      c:@S@EdgeDrawingParams:
+        name: EdgeDrawingParams
+      c:@S@FaceDetectorYN:
+        name: FaceDetectorYN
+      c:@S@FaceRecognizerSF:
+        name: FaceRecognizerSF
       c:@S@FastFeatureDetector:
         name: FastFeatureDetector
       c:@S@FlannBasedMatcher:
         name: FlannBasedMatcher
       c:@S@GFTTDetector:
         name: GFTTDetector
+      c:@S@GraphSegmentation:
+        name: GraphSegmentation
+      c:@S@HOGDescriptor:
+        name: HOGDescriptor
       c:@S@KAZE:
         name: KAZE
       c:@S@KalmanFilter:
         name: KalmanFilter
+      c:@S@Layer:
+        name: Layer
       c:@S@MSER:
         name: MSER
       c:@S@MergeMertens:
         name: MergeMertens
+      c:@S@Net:
+        name: Net
       c:@S@ORB:
         name: ORB
+      c:@S@PtrWBDetector:
+        name: PtrWBDetector
+      c:@S@QRCodeDetector:
+        name: QRCodeDetector
+      c:@S@QualityBRISQUE:
+        name: QualityBRISQUE
+      c:@S@QualityGMSD:
+        name: QualityGMSD
+      c:@S@QualityMSE:
+        name: QualityMSE
+      c:@S@QualityPSNR:
+        name: QualityPSNR
+      c:@S@QualitySSIM:
+        name: QualitySSIM
+      c:@S@RFFeatureGetter:
+        name: RFFeatureGetter
       c:@S@SIFT:
         name: SIFT
       c:@S@SimpleBlobDetector:
@@ -2082,6 +3098,8 @@ files:
         name: SimpleBlobDetectorParams
       c:@S@Stitcher:
         name: Stitcher
+      c:@S@StructuredEdgeDetection:
+        name: StructuredEdgeDetection
       c:@S@Subdiv2D:
         name: Subdiv2D
       c:@S@Tracker:
@@ -2090,10 +3108,24 @@ files:
         name: TrackerGOTURN
       c:@S@TrackerMIL:
         name: TrackerMIL
+      c:@S@WeChatQRCode:
+        name: WeChatQRCode
       c:@T@double_t:
         name: double_t
       c:@T@float_t:
         name: float_t
+      c:aruco.h@T@ArucoDetectorParametersPtr:
+        name: ArucoDetectorParametersPtr
+      c:aruco.h@T@ArucoDetectorPtr:
+        name: ArucoDetectorPtr
+      c:aruco.h@T@ArucoDictionaryPtr:
+        name: ArucoDictionaryPtr
+      c:asyncarray.h@T@AsyncArrayPtr:
+        name: AsyncArrayPtr
+      c:dnn.h@T@LayerPtr:
+        name: LayerPtr
+      c:dnn.h@T@NetPtr:
+        name: NetPtr
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
       c:features2d.h@T@AKAZEPtr:
@@ -2120,14 +3152,36 @@ files:
         name: SIFTPtr
       c:features2d.h@T@SimpleBlobDetectorPtr:
         name: SimpleBlobDetectorPtr
+      c:img_hash.h@T@BlockMeanHashPtr:
+        name: BlockMeanHashPtr
       c:imgproc.h@T@CLAHEPtr:
         name: CLAHEPtr
       c:imgproc.h@T@Subdiv2DPtr:
         name: Subdiv2DPtr
+      c:objdetect.h@T@CascadeClassifierPtr:
+        name: CascadeClassifierPtr
+      c:objdetect.h@T@FaceDetectorYNPtr:
+        name: FaceDetectorYNPtr
+      c:objdetect.h@T@FaceRecognizerSFPtr:
+        name: FaceRecognizerSFPtr
+      c:objdetect.h@T@HOGDescriptorPtr:
+        name: HOGDescriptorPtr
+      c:objdetect.h@T@QRCodeDetectorPtr:
+        name: QRCodeDetectorPtr
       c:photo.h@T@AlignMTBPtr:
         name: AlignMTBPtr
       c:photo.h@T@MergeMertensPtr:
         name: MergeMertensPtr
+      c:quality.h@T@QualityBRISQUEPtr:
+        name: QualityBRISQUEPtr
+      c:quality.h@T@QualityGMSDPtr:
+        name: QualityGMSDPtr
+      c:quality.h@T@QualityMSEPtr:
+        name: QualityMSEPtr
+      c:quality.h@T@QualityPSNRPtr:
+        name: QualityPSNRPtr
+      c:quality.h@T@QualitySSIMPtr:
+        name: QualitySSIMPtr
       c:stitching.h@T@StitcherPtr:
         name: StitcherPtr
       c:types.h@T@CvStatus:
@@ -2206,6 +3260,8 @@ files:
         name: VecDMatch
       c:types.h@T@VecF32:
         name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
       c:types.h@T@VecI32:
         name: VecI32
       c:types.h@T@VecKeyPoint:
@@ -2220,8 +3276,12 @@ files:
         name: VecPoint3f
       c:types.h@T@VecPoint3i:
         name: VecPoint3i
+      c:types.h@T@VecRect:
+        name: VecRect
       c:types.h@T@VecUChar:
         name: VecUChar
+      c:types.h@T@VecVecChar:
+        name: VecVecChar
       c:types.h@T@VecVecDMatch:
         name: VecVecDMatch
       c:types.h@T@VecVecPoint:
@@ -2242,3 +3302,15 @@ files:
         name: TrackerMILPtr
       c:video.h@T@TrackerPtr:
         name: TrackerPtr
+      c:wechat_qrcode.h@T@WeChatQRCodePtr:
+        name: WeChatQRCodePtr
+      c:ximgproc.h@T@EdgeDrawingPtr:
+        name: EdgeDrawingPtr
+      c:ximgproc.h@T@GraphSegmentationPtr:
+        name: GraphSegmentationPtr
+      c:ximgproc.h@T@RFFeatureGetterPtr:
+        name: RFFeatureGetterPtr
+      c:ximgproc.h@T@StructuredEdgeDetectionPtr:
+        name: StructuredEdgeDetectionPtr
+      c:xobjdetect.h@T@PtrWBDetectorPtr:
+        name: PtrWBDetectorPtr

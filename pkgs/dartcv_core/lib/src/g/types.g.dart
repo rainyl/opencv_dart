@@ -366,7 +366,7 @@ final class RotatedRect extends ffi.Struct {
 
   external Size2f size;
 
-  @ffi.Float()
+  @ffi.Double()
   external double angle;
 }
 

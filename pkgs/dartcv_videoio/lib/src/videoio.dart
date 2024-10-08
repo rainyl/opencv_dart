@@ -7,13 +7,11 @@ library cv.videoio;
 import 'dart:convert';
 import 'dart:ffi' as ffi;
 
+import 'package:dartcv_core/dartcv_core.dart';
 import 'package:ffi/ffi.dart';
 
-import '../core/base.dart';
-import '../core/mat.dart';
-import '../g/constants.g.dart';
-import '../g/video_io.g.dart' as cvg;
-import '../native_lib.dart' show cvideo;
+import 'g/videoio.g.dart' as cvg;
+import 'native_lib.dart' show cffi;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
   VideoCapture._(cvg.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -26,7 +24,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
   factory VideoCapture.empty() {
     final p = calloc<cvg.VideoCapture>();
-    cvRun(() => cvideo.VideoCapture_New(p));
+    cvRun(() => cffi.VideoCapture_New(p));
     return VideoCapture._(p);
   }
 
@@ -37,7 +35,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     return using<VideoCapture>((arena) {
       final p = calloc<cvg.VideoCapture>();
       final cname = filename.toNativeUtf8(allocator: arena);
-      cvRun(() => cvideo.VideoCapture_NewFromFile(cname.cast(), apiPreference, p));
+      cvRun(() => cffi.VideoCapture_NewFromFile(cname.cast(), apiPreference, p));
       return VideoCapture._(p);
     });
   }
@@ -48,17 +46,17 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
   factory VideoCapture.fromDevice(int device, {int apiPreference = CAP_ANY}) {
     final p = calloc<cvg.VideoCapture>();
-    cvRun(() => cvideo.VideoCapture_NewFromIndex(device, apiPreference, p));
+    cvRun(() => cffi.VideoCapture_NewFromIndex(device, apiPreference, p));
     return VideoCapture._(p);
   }
 
   @override
   cvg.VideoCapture get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(cvideo.addresses.VideoCapture_Close);
+  static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(cffi.addresses.VideoCapture_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.VideoCapture_Close(ptr);
+    cffi.VideoCapture_Close(ptr);
   }
 
   /// Returns the specified [VideoCapture] property.
@@ -67,18 +65,18 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   double get(int propId) {
     return cvRunArena<double>((arena) {
       final p = arena<ffi.Double>();
-      cvRun(() => cvideo.VideoCapture_Get(ref, propId, p));
+      cvRun(() => cffi.VideoCapture_Get(ref, propId, p));
       return p.value;
     });
   }
 
   void set(int prop, double value) {
-    cvRun(() => cvideo.VideoCapture_Set(ref, prop, value));
+    cvRun(() => cffi.VideoCapture_Set(ref, prop, value));
   }
 
   String getBackendName() {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cvideo.VideoCapture_getBackendName(ref, p));
+    cvRun(() => cffi.VideoCapture_getBackendName(ref, p));
     final name = p.value.toDartString();
     calloc.free(p);
     return name;
@@ -91,7 +89,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   bool get isOpened {
     return cvRunArena<bool>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => cvideo.VideoCapture_IsOpened(ref, p));
+      cvRun(() => cffi.VideoCapture_IsOpened(ref, p));
       return p.value != 0;
     });
   }
@@ -102,14 +100,14 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
   void grab({int skip = 0}) {
-    cvRun(() => cvideo.VideoCapture_Grab(ref, skip));
+    cvRun(() => cffi.VideoCapture_Grab(ref, skip));
   }
 
   (bool, Mat) read({Mat? m}) {
     m ??= Mat.empty();
     return cvRunArena<(bool, Mat)>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => cvideo.VideoCapture_Read(ref, m!.ref, p));
+      cvRun(() => cffi.VideoCapture_Read(ref, m!.ref, p));
       return (p.value != 0, m!);
     });
   }
@@ -123,7 +121,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
     return using<bool>((arena) {
       final cname = filename.toNativeUtf8(allocator: arena);
       final success = arena<ffi.Bool>();
-      cvRun(() => cvideo.VideoCapture_OpenWithAPI(ref, cname.cast(), apiPreference, success));
+      cvRun(() => cffi.VideoCapture_OpenWithAPI(ref, cname.cast(), apiPreference, success));
       return success.value;
     });
   }
@@ -134,7 +132,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   bool openIndex(int index, {int apiPreference = CAP_ANY}) {
     return using<bool>((arena) {
       final success = arena<ffi.Bool>();
-      cvRun(() => cvideo.VideoCapture_OpenDeviceWithAPI(ref, index, apiPreference, success));
+      cvRun(() => cffi.VideoCapture_OpenDeviceWithAPI(ref, index, apiPreference, success));
       return success.value;
     });
   }
@@ -156,7 +154,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 
   void release() {
-    cvRun(() => cvideo.VideoCapture_Release(ref));
+    cvRun(() => cffi.VideoCapture_Release(ref));
   }
 }
 
@@ -171,7 +169,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
 
   factory VideoWriter.empty() {
     final p = calloc<cvg.VideoWriter>();
-    cvRun(() => cvideo.VideoWriter_New(p));
+    cvRun(() => cffi.VideoWriter_New(p));
     return VideoWriter._(p);
   }
 
@@ -188,7 +186,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     final codec_ = VideoWriter.fourcc(codec);
     apiPreference == null
         ? cvRun(
-            () => cvideo.VideoWriter_NewFromFile(
+            () => cffi.VideoWriter_NewFromFile(
               cname.cast(),
               codec_,
               fps,
@@ -199,7 +197,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
             ),
           )
         : cvRun(
-            () => cvideo.VideoWriter_NewFromFile_1(
+            () => cffi.VideoWriter_NewFromFile_1(
               cname.cast(),
               apiPreference,
               codec_,
@@ -226,7 +224,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     final codec_ = VideoWriter.fourcc(codec);
     apiPreference == null
         ? cvRun(
-            () => cvideo.VideoWriter_Open(
+            () => cffi.VideoWriter_Open(
               ref,
               cname.cast(),
               codec_,
@@ -237,7 +235,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
             ),
           )
         : cvRun(
-            () => cvideo.VideoWriter_Open_1(
+            () => cffi.VideoWriter_Open_1(
               ref,
               cname.cast(),
               apiPreference,
@@ -252,7 +250,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   }
 
   void write(InputArray image) {
-    cvRun(() => cvideo.VideoWriter_Write(ref, image.ref));
+    cvRun(() => cffi.VideoWriter_Write(ref, image.ref));
   }
 
   static int fourcc(String cc) {
@@ -260,28 +258,28 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     if (cc_.length != 4) return -1;
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => cvideo.VideoWriter_Fourcc(cc_[0], cc_[1], cc_[2], cc_[3], p));
+      cvRun(() => cffi.VideoWriter_Fourcc(cc_[0], cc_[1], cc_[2], cc_[3], p));
       return p.value;
     });
   }
 
   void release() {
-    cvRun(() => cvideo.VideoWriter_Release(ref));
+    cvRun(() => cffi.VideoWriter_Release(ref));
   }
 
   @override
   cvg.VideoWriter get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(cvideo.addresses.VideoWriter_Close);
+  static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(cffi.addresses.VideoWriter_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.VideoWriter_Close(ptr);
+    cffi.VideoWriter_Close(ptr);
   }
 
   bool get isOpened {
     return cvRunArena<bool>((arena) {
       final p = arena<ffi.Int>();
-      cvRun(() => cvideo.VideoWriter_IsOpened(ref, p));
+      cvRun(() => cffi.VideoWriter_IsOpened(ref, p));
       return p.value != 0;
     });
   }

@@ -698,6 +698,2784 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(Mat, Point, Point, Scalar, int, int, int,
           double, imp1.CvCallback_0)>();
 
+  void ArucoDetectorParameters_Close(
+    ArucoDetectorParametersPtr ap,
+  ) {
+    return _ArucoDetectorParameters_Close(
+      ap,
+    );
+  }
+
+  late final _ArucoDetectorParameters_ClosePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParametersPtr)>>(
+      'ArucoDetectorParameters_Close');
+  late final _ArucoDetectorParameters_Close = _ArucoDetectorParameters_ClosePtr
+      .asFunction<void Function(ArucoDetectorParametersPtr)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_Create(
+    ffi.Pointer<ArucoDetectorParameters> rval,
+  ) {
+    return _ArucoDetectorParameters_Create(
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ffi.Pointer<ArucoDetectorParameters>)>>(
+      'ArucoDetectorParameters_Create');
+  late final _ArucoDetectorParameters_Create =
+      _ArucoDetectorParameters_CreatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ArucoDetectorParameters>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_Create_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_Create_Async(
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_Create_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_Create_Async');
+  late final _ArucoDetectorParameters_Create_Async =
+      _ArucoDetectorParameters_Create_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAdaptiveThreshConstant(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshConstant(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetAdaptiveThreshConstant');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstant =
+      _ArucoDetectorParameters_GetAdaptiveThreshConstantPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAdaptiveThreshConstant_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshConstant_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstant_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshConstant_Async');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshConstant_Async =
+      _ArucoDetectorParameters_GetAdaptiveThreshConstant_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMaxPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMinPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStepPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async');
+  late final _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async =
+      _ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagCriticalRad(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagCriticalRad(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRadPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>>(
+      'ArucoDetectorParameters_GetAprilTagCriticalRad');
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRad =
+      _ArucoDetectorParameters_GetAprilTagCriticalRadPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagCriticalRad_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagCriticalRad_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRad_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetAprilTagCriticalRad_Async');
+  late final _ArucoDetectorParameters_GetAprilTagCriticalRad_Async =
+      _ArucoDetectorParameters_GetAprilTagCriticalRad_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagDeglitch(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagDeglitch(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagDeglitchPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAprilTagDeglitch');
+  late final _ArucoDetectorParameters_GetAprilTagDeglitch =
+      _ArucoDetectorParameters_GetAprilTagDeglitchPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagDeglitch_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagDeglitch_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagDeglitch_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetAprilTagDeglitch_Async');
+  late final _ArucoDetectorParameters_GetAprilTagDeglitch_Async =
+      _ArucoDetectorParameters_GetAprilTagDeglitch_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxLineFitMse(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>>(
+      'ArucoDetectorParameters_GetAprilTagMaxLineFitMse');
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMse =
+      _ArucoDetectorParameters_GetAprilTagMaxLineFitMsePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMse_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async');
+  late final _ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async =
+      _ArucoDetectorParameters_GetAprilTagMaxLineFitMse_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxNmaxima(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxNmaxima(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAprilTagMaxNmaxima');
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaxima =
+      _ArucoDetectorParameters_GetAprilTagMaxNmaximaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaxima_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async');
+  late final _ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async =
+      _ArucoDetectorParameters_GetAprilTagMaxNmaxima_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMinClusterPixels(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinClusterPixels(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAprilTagMinClusterPixels');
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixels =
+      _ArucoDetectorParameters_GetAprilTagMinClusterPixelsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixels_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async');
+  late final _ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async =
+      _ArucoDetectorParameters_GetAprilTagMinClusterPixels_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff');
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff =
+      _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiffPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async');
+  late final _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async =
+      _ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadDecimate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadDecimate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>>(
+      'ArucoDetectorParameters_GetAprilTagQuadDecimate');
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimate =
+      _ArucoDetectorParameters_GetAprilTagQuadDecimatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadDecimate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadDecimate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetAprilTagQuadDecimate_Async');
+  late final _ArucoDetectorParameters_GetAprilTagQuadDecimate_Async =
+      _ArucoDetectorParameters_GetAprilTagQuadDecimate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadSigma(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadSigma(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>>(
+      'ArucoDetectorParameters_GetAprilTagQuadSigma');
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigma =
+      _ArucoDetectorParameters_GetAprilTagQuadSigmaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetAprilTagQuadSigma_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetAprilTagQuadSigma_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigma_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetAprilTagQuadSigma_Async');
+  late final _ArucoDetectorParameters_GetAprilTagQuadSigma_Async =
+      _ArucoDetectorParameters_GetAprilTagQuadSigma_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetCornerRefinementMaxIterations(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMaxIterations(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMaxIterations');
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterations =
+      _ArucoDetectorParameters_GetCornerRefinementMaxIterationsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterations_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async');
+  late final _ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async =
+      _ArucoDetectorParameters_GetCornerRefinementMaxIterations_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetCornerRefinementMethod(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMethod(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMethodPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetCornerRefinementMethod');
+  late final _ArucoDetectorParameters_GetCornerRefinementMethod =
+      _ArucoDetectorParameters_GetCornerRefinementMethodPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetCornerRefinementMethod_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMethod_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMethod_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMethod_Async');
+  late final _ArucoDetectorParameters_GetCornerRefinementMethod_Async =
+      _ArucoDetectorParameters_GetCornerRefinementMethod_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMinAccuracy(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMinAccuracy');
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracy =
+      _ArucoDetectorParameters_GetCornerRefinementMinAccuracyPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracy_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async');
+  late final _ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async =
+      _ArucoDetectorParameters_GetCornerRefinementMinAccuracy_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetCornerRefinementWinSize(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementWinSize(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSizePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetCornerRefinementWinSize');
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSize =
+      _ArucoDetectorParameters_GetCornerRefinementWinSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetCornerRefinementWinSize_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetCornerRefinementWinSize_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSize_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetCornerRefinementWinSize_Async');
+  late final _ArucoDetectorParameters_GetCornerRefinementWinSize_Async =
+      _ArucoDetectorParameters_GetCornerRefinementWinSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetDetectInvertedMarker(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _ArucoDetectorParameters_GetDetectInvertedMarker(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetDetectInvertedMarkerPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Bool>)>>(
+      'ArucoDetectorParameters_GetDetectInvertedMarker');
+  late final _ArucoDetectorParameters_GetDetectInvertedMarker =
+      _ArucoDetectorParameters_GetDetectInvertedMarkerPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetDetectInvertedMarker_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetDetectInvertedMarker_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetDetectInvertedMarker_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetDetectInvertedMarker_Async');
+  late final _ArucoDetectorParameters_GetDetectInvertedMarker_Async =
+      _ArucoDetectorParameters_GetDetectInvertedMarker_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetErrorCorrectionRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetErrorCorrectionRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetErrorCorrectionRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetErrorCorrectionRate');
+  late final _ArucoDetectorParameters_GetErrorCorrectionRate =
+      _ArucoDetectorParameters_GetErrorCorrectionRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetErrorCorrectionRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetErrorCorrectionRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetErrorCorrectionRate_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetErrorCorrectionRate_Async');
+  late final _ArucoDetectorParameters_GetErrorCorrectionRate_Async =
+      _ArucoDetectorParameters_GetErrorCorrectionRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMarkerBorderBits(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMarkerBorderBits(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMarkerBorderBitsPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetMarkerBorderBits');
+  late final _ArucoDetectorParameters_GetMarkerBorderBits =
+      _ArucoDetectorParameters_GetMarkerBorderBitsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMarkerBorderBits_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMarkerBorderBits_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMarkerBorderBits_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetMarkerBorderBits_Async');
+  late final _ArucoDetectorParameters_GetMarkerBorderBits_Async =
+      _ArucoDetectorParameters_GetMarkerBorderBits_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+          'ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate');
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate =
+      _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async');
+  late final _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async =
+      _ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMaxMarkerPerimeterRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetMaxMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRate =
+      _ArucoDetectorParameters_GetMaxMarkerPerimeterRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async');
+  late final _ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async =
+      _ArucoDetectorParameters_GetMaxMarkerPerimeterRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinCornerDistanceRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMinCornerDistanceRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetMinCornerDistanceRate');
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRate =
+      _ArucoDetectorParameters_GetMinCornerDistanceRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinCornerDistanceRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMinCornerDistanceRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetMinCornerDistanceRate_Async');
+  late final _ArucoDetectorParameters_GetMinCornerDistanceRate_Async =
+      _ArucoDetectorParameters_GetMinCornerDistanceRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinDistanceToBorder(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMinDistanceToBorder(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinDistanceToBorderPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+      'ArucoDetectorParameters_GetMinDistanceToBorder');
+  late final _ArucoDetectorParameters_GetMinDistanceToBorder =
+      _ArucoDetectorParameters_GetMinDistanceToBorderPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinDistanceToBorder_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMinDistanceToBorder_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinDistanceToBorder_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetMinDistanceToBorder_Async');
+  late final _ArucoDetectorParameters_GetMinDistanceToBorder_Async =
+      _ArucoDetectorParameters_GetMinDistanceToBorder_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinMarkerDistanceRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerDistanceRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetMinMarkerDistanceRate');
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRate =
+      _ArucoDetectorParameters_GetMinMarkerDistanceRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinMarkerDistanceRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerDistanceRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetMinMarkerDistanceRate_Async');
+  late final _ArucoDetectorParameters_GetMinMarkerDistanceRate_Async =
+      _ArucoDetectorParameters_GetMinMarkerDistanceRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerPerimeterRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetMinMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRate =
+      _ArucoDetectorParameters_GetMinMarkerPerimeterRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async');
+  late final _ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async =
+      _ArucoDetectorParameters_GetMinMarkerPerimeterRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinOtsuStdDev(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetMinOtsuStdDev(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinOtsuStdDevPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+      'ArucoDetectorParameters_GetMinOtsuStdDev');
+  late final _ArucoDetectorParameters_GetMinOtsuStdDev =
+      _ArucoDetectorParameters_GetMinOtsuStdDevPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetMinOtsuStdDev_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetMinOtsuStdDev_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetMinOtsuStdDev_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>>(
+      'ArucoDetectorParameters_GetMinOtsuStdDev_Async');
+  late final _ArucoDetectorParameters_GetMinOtsuStdDev_Async =
+      _ArucoDetectorParameters_GetMinOtsuStdDev_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell');
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell =
+      _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCellPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async');
+  late final _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async =
+      _ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell');
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell =
+      _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCellPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async');
+  late final _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async =
+      _ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
+    ArucoDetectorParameters ap,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(
+      ap,
+      rval,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>>(
+          'ArucoDetectorParameters_GetPolygonalApproxAccuracyRate');
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate =
+      _ArucoDetectorParameters_GetPolygonalApproxAccuracyRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async(
+    ArucoDetectorParameters ap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async(
+      ap,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, imp1.CvCallback_1)>>(
+          'ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async');
+  late final _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async =
+      _ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAdaptiveThreshConstant(
+    ArucoDetectorParameters ap,
+    double adaptiveThreshConstant,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshConstant(
+      ap,
+      adaptiveThreshConstant,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshConstant');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstant =
+      _ArucoDetectorParameters_SetAdaptiveThreshConstantPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAdaptiveThreshConstant_Async(
+    ArucoDetectorParameters ap,
+    double adaptiveThreshConstant,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshConstant_Async(
+      ap,
+      adaptiveThreshConstant,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstant_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAdaptiveThreshConstant_Async');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshConstant_Async =
+      _ArucoDetectorParameters_SetAdaptiveThreshConstant_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMax,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(
+      ap,
+      adaptiveThreshWinSizeMax,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMaxPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMax,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async(
+      ap,
+      adaptiveThreshWinSizeMax,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMin,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(
+      ap,
+      adaptiveThreshWinSizeMin,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMinPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeMin,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async(
+      ap,
+      adaptiveThreshWinSizeMin,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeStep,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(
+      ap,
+      adaptiveThreshWinSizeStep,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStepPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async(
+    ArucoDetectorParameters ap,
+    int adaptiveThreshWinSizeStep,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async(
+      ap,
+      adaptiveThreshWinSizeStep,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async');
+  late final _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async =
+      _ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagCriticalRad(
+    ArucoDetectorParameters ap,
+    double aprilTagCriticalRad,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagCriticalRad(
+      ap,
+      aprilTagCriticalRad,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagCriticalRad');
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRad =
+      _ArucoDetectorParameters_SetAprilTagCriticalRadPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagCriticalRad_Async(
+    ArucoDetectorParameters ap,
+    double aprilTagCriticalRad,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagCriticalRad_Async(
+      ap,
+      aprilTagCriticalRad,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRad_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Float, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetAprilTagCriticalRad_Async');
+  late final _ArucoDetectorParameters_SetAprilTagCriticalRad_Async =
+      _ArucoDetectorParameters_SetAprilTagCriticalRad_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagDeglitch(
+    ArucoDetectorParameters ap,
+    int aprilTagDeglitch,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagDeglitch(
+      ap,
+      aprilTagDeglitch,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagDeglitchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetAprilTagDeglitch');
+  late final _ArucoDetectorParameters_SetAprilTagDeglitch =
+      _ArucoDetectorParameters_SetAprilTagDeglitchPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagDeglitch_Async(
+    ArucoDetectorParameters ap,
+    int aprilTagDeglitch,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagDeglitch_Async(
+      ap,
+      aprilTagDeglitch,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagDeglitch_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetAprilTagDeglitch_Async');
+  late final _ArucoDetectorParameters_SetAprilTagDeglitch_Async =
+      _ArucoDetectorParameters_SetAprilTagDeglitch_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
+    ArucoDetectorParameters ap,
+    double aprilTagMaxLineFitMse,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxLineFitMse(
+      ap,
+      aprilTagMaxLineFitMse,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagMaxLineFitMse');
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMse =
+      _ArucoDetectorParameters_SetAprilTagMaxLineFitMsePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async(
+    ArucoDetectorParameters ap,
+    double aprilTagMaxLineFitMse,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async(
+      ap,
+      aprilTagMaxLineFitMse,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMse_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Float, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async');
+  late final _ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async =
+      _ArucoDetectorParameters_SetAprilTagMaxLineFitMse_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxNmaxima(
+    ArucoDetectorParameters ap,
+    int aprilTagMaxNmaxima,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxNmaxima(
+      ap,
+      aprilTagMaxNmaxima,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetAprilTagMaxNmaxima');
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaxima =
+      _ArucoDetectorParameters_SetAprilTagMaxNmaximaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async(
+    ArucoDetectorParameters ap,
+    int aprilTagMaxNmaxima,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async(
+      ap,
+      aprilTagMaxNmaxima,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaxima_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async');
+  late final _ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async =
+      _ArucoDetectorParameters_SetAprilTagMaxNmaxima_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMinClusterPixels(
+    ArucoDetectorParameters ap,
+    int aprilTagMinClusterPixels,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinClusterPixels(
+      ap,
+      aprilTagMinClusterPixels,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetAprilTagMinClusterPixels');
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixels =
+      _ArucoDetectorParameters_SetAprilTagMinClusterPixelsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async(
+    ArucoDetectorParameters ap,
+    int aprilTagMinClusterPixels,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async(
+      ap,
+      aprilTagMinClusterPixels,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixels_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async');
+  late final _ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async =
+      _ArucoDetectorParameters_SetAprilTagMinClusterPixels_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
+    ArucoDetectorParameters ap,
+    int aprilTagMinWhiteBlackDiff,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(
+      ap,
+      aprilTagMinWhiteBlackDiff,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int)>>(
+      'ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff');
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff =
+      _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiffPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async(
+    ArucoDetectorParameters ap,
+    int aprilTagMinWhiteBlackDiff,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async(
+      ap,
+      aprilTagMinWhiteBlackDiff,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async');
+  late final _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async =
+      _ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadDecimate(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadDecimate,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadDecimate(
+      ap,
+      aprilTagQuadDecimate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadDecimate');
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimate =
+      _ArucoDetectorParameters_SetAprilTagQuadDecimatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadDecimate_Async(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadDecimate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadDecimate_Async(
+      ap,
+      aprilTagQuadDecimate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Float, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetAprilTagQuadDecimate_Async');
+  late final _ArucoDetectorParameters_SetAprilTagQuadDecimate_Async =
+      _ArucoDetectorParameters_SetAprilTagQuadDecimate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadSigma(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadSigma,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadSigma(
+      ap,
+      aprilTagQuadSigma,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Float)>>('ArucoDetectorParameters_SetAprilTagQuadSigma');
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigma =
+      _ArucoDetectorParameters_SetAprilTagQuadSigmaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetAprilTagQuadSigma_Async(
+    ArucoDetectorParameters ap,
+    double aprilTagQuadSigma,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetAprilTagQuadSigma_Async(
+      ap,
+      aprilTagQuadSigma,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigma_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Float, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetAprilTagQuadSigma_Async');
+  late final _ArucoDetectorParameters_SetAprilTagQuadSigma_Async =
+      _ArucoDetectorParameters_SetAprilTagQuadSigma_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetCornerRefinementMaxIterations(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMaxIterations,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMaxIterations(
+      ap,
+      cornerRefinementMaxIterations,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMaxIterations');
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterations =
+      _ArucoDetectorParameters_SetCornerRefinementMaxIterationsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMaxIterations,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async(
+      ap,
+      cornerRefinementMaxIterations,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterations_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async');
+  late final _ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async =
+      _ArucoDetectorParameters_SetCornerRefinementMaxIterations_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetCornerRefinementMethod(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMethod,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMethod(
+      ap,
+      cornerRefinementMethod,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMethodPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetCornerRefinementMethod');
+  late final _ArucoDetectorParameters_SetCornerRefinementMethod =
+      _ArucoDetectorParameters_SetCornerRefinementMethodPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetCornerRefinementMethod_Async(
+    ArucoDetectorParameters ap,
+    int cornerRefinementMethod,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMethod_Async(
+      ap,
+      cornerRefinementMethod,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMethod_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMethod_Async');
+  late final _ArucoDetectorParameters_SetCornerRefinementMethod_Async =
+      _ArucoDetectorParameters_SetCornerRefinementMethod_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
+    ArucoDetectorParameters ap,
+    double cornerRefinementMinAccuracy,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMinAccuracy(
+      ap,
+      cornerRefinementMinAccuracy,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMinAccuracy');
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracy =
+      _ArucoDetectorParameters_SetCornerRefinementMinAccuracyPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async(
+    ArucoDetectorParameters ap,
+    double cornerRefinementMinAccuracy,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async(
+      ap,
+      cornerRefinementMinAccuracy,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracy_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async');
+  late final _ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async =
+      _ArucoDetectorParameters_SetCornerRefinementMinAccuracy_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetCornerRefinementWinSize(
+    ArucoDetectorParameters ap,
+    int cornerRefinementWinSize,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementWinSize(
+      ap,
+      cornerRefinementWinSize,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetCornerRefinementWinSize');
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSize =
+      _ArucoDetectorParameters_SetCornerRefinementWinSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetCornerRefinementWinSize_Async(
+    ArucoDetectorParameters ap,
+    int cornerRefinementWinSize,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetCornerRefinementWinSize_Async(
+      ap,
+      cornerRefinementWinSize,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSize_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetCornerRefinementWinSize_Async');
+  late final _ArucoDetectorParameters_SetCornerRefinementWinSize_Async =
+      _ArucoDetectorParameters_SetCornerRefinementWinSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetDetectInvertedMarker(
+    ArucoDetectorParameters ap,
+    bool detectInvertedMarker,
+  ) {
+    return _ArucoDetectorParameters_SetDetectInvertedMarker(
+      ap,
+      detectInvertedMarker,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetDetectInvertedMarkerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Bool)>>('ArucoDetectorParameters_SetDetectInvertedMarker');
+  late final _ArucoDetectorParameters_SetDetectInvertedMarker =
+      _ArucoDetectorParameters_SetDetectInvertedMarkerPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, bool)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetDetectInvertedMarker_Async(
+    ArucoDetectorParameters ap,
+    bool detectInvertedMarker,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetDetectInvertedMarker_Async(
+      ap,
+      detectInvertedMarker,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetDetectInvertedMarker_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Bool, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetDetectInvertedMarker_Async');
+  late final _ArucoDetectorParameters_SetDetectInvertedMarker_Async =
+      _ArucoDetectorParameters_SetDetectInvertedMarker_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, bool, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetErrorCorrectionRate(
+    ArucoDetectorParameters ap,
+    double errorCorrectionRate,
+  ) {
+    return _ArucoDetectorParameters_SetErrorCorrectionRate(
+      ap,
+      errorCorrectionRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetErrorCorrectionRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetErrorCorrectionRate');
+  late final _ArucoDetectorParameters_SetErrorCorrectionRate =
+      _ArucoDetectorParameters_SetErrorCorrectionRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetErrorCorrectionRate_Async(
+    ArucoDetectorParameters ap,
+    double errorCorrectionRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetErrorCorrectionRate_Async(
+      ap,
+      errorCorrectionRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetErrorCorrectionRate_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetErrorCorrectionRate_Async');
+  late final _ArucoDetectorParameters_SetErrorCorrectionRate_Async =
+      _ArucoDetectorParameters_SetErrorCorrectionRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMarkerBorderBits(
+    ArucoDetectorParameters ap,
+    int markerBorderBits,
+  ) {
+    return _ArucoDetectorParameters_SetMarkerBorderBits(
+      ap,
+      markerBorderBits,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMarkerBorderBitsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetMarkerBorderBits');
+  late final _ArucoDetectorParameters_SetMarkerBorderBits =
+      _ArucoDetectorParameters_SetMarkerBorderBitsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMarkerBorderBits_Async(
+    ArucoDetectorParameters ap,
+    int markerBorderBits,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMarkerBorderBits_Async(
+      ap,
+      markerBorderBits,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMarkerBorderBits_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetMarkerBorderBits_Async');
+  late final _ArucoDetectorParameters_SetMarkerBorderBits_Async =
+      _ArucoDetectorParameters_SetMarkerBorderBits_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
+    ArucoDetectorParameters ap,
+    double maxErroneousBitsInBorderRate,
+  ) {
+    return _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(
+      ap,
+      maxErroneousBitsInBorderRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate');
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate =
+      _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async(
+    ArucoDetectorParameters ap,
+    double maxErroneousBitsInBorderRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async(
+      ap,
+      maxErroneousBitsInBorderRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async');
+  late final _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async =
+      _ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    double maxMarkerPerimeterRate,
+  ) {
+    return _ArucoDetectorParameters_SetMaxMarkerPerimeterRate(
+      ap,
+      maxMarkerPerimeterRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetMaxMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRate =
+      _ArucoDetectorParameters_SetMaxMarkerPerimeterRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async(
+    ArucoDetectorParameters ap,
+    double maxMarkerPerimeterRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async(
+      ap,
+      maxMarkerPerimeterRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async');
+  late final _ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async =
+      _ArucoDetectorParameters_SetMaxMarkerPerimeterRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinCornerDistanceRate(
+    ArucoDetectorParameters ap,
+    double minCornerDistanceRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinCornerDistanceRate(
+      ap,
+      minCornerDistanceRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinCornerDistanceRate');
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRate =
+      _ArucoDetectorParameters_SetMinCornerDistanceRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinCornerDistanceRate_Async(
+    ArucoDetectorParameters ap,
+    double minCornerDistanceRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMinCornerDistanceRate_Async(
+      ap,
+      minCornerDistanceRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetMinCornerDistanceRate_Async');
+  late final _ArucoDetectorParameters_SetMinCornerDistanceRate_Async =
+      _ArucoDetectorParameters_SetMinCornerDistanceRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinDistanceToBorder(
+    ArucoDetectorParameters ap,
+    int minDistanceToBorder,
+  ) {
+    return _ArucoDetectorParameters_SetMinDistanceToBorder(
+      ap,
+      minDistanceToBorder,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinDistanceToBorderPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Int)>>('ArucoDetectorParameters_SetMinDistanceToBorder');
+  late final _ArucoDetectorParameters_SetMinDistanceToBorder =
+      _ArucoDetectorParameters_SetMinDistanceToBorderPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinDistanceToBorder_Async(
+    ArucoDetectorParameters ap,
+    int minDistanceToBorder,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMinDistanceToBorder_Async(
+      ap,
+      minDistanceToBorder,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinDistanceToBorder_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetMinDistanceToBorder_Async');
+  late final _ArucoDetectorParameters_SetMinDistanceToBorder_Async =
+      _ArucoDetectorParameters_SetMinDistanceToBorder_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinMarkerDistanceRate(
+    ArucoDetectorParameters ap,
+    double minMarkerDistanceRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerDistanceRate(
+      ap,
+      minMarkerDistanceRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinMarkerDistanceRate');
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRate =
+      _ArucoDetectorParameters_SetMinMarkerDistanceRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinMarkerDistanceRate_Async(
+    ArucoDetectorParameters ap,
+    double minMarkerDistanceRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerDistanceRate_Async(
+      ap,
+      minMarkerDistanceRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetMinMarkerDistanceRate_Async');
+  late final _ArucoDetectorParameters_SetMinMarkerDistanceRate_Async =
+      _ArucoDetectorParameters_SetMinMarkerDistanceRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinMarkerPerimeterRate(
+    ArucoDetectorParameters ap,
+    double minMarkerPerimeterRate,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerPerimeterRate(
+      ap,
+      minMarkerPerimeterRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Double)>>(
+      'ArucoDetectorParameters_SetMinMarkerPerimeterRate');
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRate =
+      _ArucoDetectorParameters_SetMinMarkerPerimeterRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async(
+    ArucoDetectorParameters ap,
+    double minMarkerPerimeterRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async(
+      ap,
+      minMarkerPerimeterRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async');
+  late final _ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async =
+      _ArucoDetectorParameters_SetMinMarkerPerimeterRate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinOtsuStdDev(
+    ArucoDetectorParameters ap,
+    double minOtsuStdDev,
+  ) {
+    return _ArucoDetectorParameters_SetMinOtsuStdDev(
+      ap,
+      minOtsuStdDev,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinOtsuStdDevPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters,
+              ffi.Double)>>('ArucoDetectorParameters_SetMinOtsuStdDev');
+  late final _ArucoDetectorParameters_SetMinOtsuStdDev =
+      _ArucoDetectorParameters_SetMinOtsuStdDevPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetMinOtsuStdDev_Async(
+    ArucoDetectorParameters ap,
+    double minOtsuStdDev,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetMinOtsuStdDev_Async(
+      ap,
+      minOtsuStdDev,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetMinOtsuStdDev_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+      'ArucoDetectorParameters_SetMinOtsuStdDev_Async');
+  late final _ArucoDetectorParameters_SetMinOtsuStdDev_Async =
+      _ArucoDetectorParameters_SetMinOtsuStdDev_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
+    ArucoDetectorParameters ap,
+    double perspectiveRemoveIgnoredMarginPerCell,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
+      ap,
+      perspectiveRemoveIgnoredMarginPerCell,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell');
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell =
+      _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCellPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async(
+    ArucoDetectorParameters ap,
+    double perspectiveRemoveIgnoredMarginPerCell,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async(
+      ap,
+      perspectiveRemoveIgnoredMarginPerCell,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async');
+  late final _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async =
+      _ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
+    ArucoDetectorParameters ap,
+    int perspectiveRemovePixelPerCell,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(
+      ap,
+      perspectiveRemovePixelPerCell,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell');
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell =
+      _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCellPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, int)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async(
+    ArucoDetectorParameters ap,
+    int perspectiveRemovePixelPerCell,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async(
+      ap,
+      perspectiveRemovePixelPerCell,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Int, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async');
+  late final _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async =
+      _ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
+    ArucoDetectorParameters ap,
+    double polygonalApproxAccuracyRate,
+  ) {
+    return _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(
+      ap,
+      polygonalApproxAccuracyRate,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double)>>(
+          'ArucoDetectorParameters_SetPolygonalApproxAccuracyRate');
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate =
+      _ArucoDetectorParameters_SetPolygonalApproxAccuracyRatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetectorParameters, double)>();
+
+  ffi.Pointer<CvStatus>
+      ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async(
+    ArucoDetectorParameters ap,
+    double polygonalApproxAccuracyRate,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async(
+      ap,
+      polygonalApproxAccuracyRate,
+      callback,
+    );
+  }
+
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      ArucoDetectorParameters, ffi.Double, imp1.CvCallback_0)>>(
+          'ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async');
+  late final _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async =
+      _ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_AsyncPtr
+          .asFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ArucoDetectorParameters, double, imp1.CvCallback_0)>();
+
+  void ArucoDetector_Close(
+    ArucoDetectorPtr ad,
+  ) {
+    return _ArucoDetector_Close(
+      ad,
+    );
+  }
+
+  late final _ArucoDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>(
+          'ArucoDetector_Close');
+  late final _ArucoDetector_Close =
+      _ArucoDetector_ClosePtr.asFunction<void Function(ArucoDetectorPtr)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_DetectMarkers(
+    ArucoDetector ad,
+    Mat inputArr,
+    ffi.Pointer<VecVecPoint2f> markerCorners,
+    ffi.Pointer<VecI32> markerIds,
+    ffi.Pointer<VecVecPoint2f> rejectedCandidates,
+  ) {
+    return _ArucoDetector_DetectMarkers(
+      ad,
+      inputArr,
+      markerCorners,
+      markerIds,
+      rejectedCandidates,
+    );
+  }
+
+  late final _ArucoDetector_DetectMarkersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetector,
+              Mat,
+              ffi.Pointer<VecVecPoint2f>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecVecPoint2f>)>>('ArucoDetector_DetectMarkers');
+  late final _ArucoDetector_DetectMarkers =
+      _ArucoDetector_DetectMarkersPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetector,
+              Mat,
+              ffi.Pointer<VecVecPoint2f>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecVecPoint2f>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_DetectMarkers_Async(
+    ArucoDetector ad,
+    Mat inputArr,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _ArucoDetector_DetectMarkers_Async(
+      ad,
+      inputArr,
+      callback,
+    );
+  }
+
+  late final _ArucoDetector_DetectMarkers_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDetector, Mat,
+              imp1.CvCallback_3)>>('ArucoDetector_DetectMarkers_Async');
+  late final _ArucoDetector_DetectMarkers_Async =
+      _ArucoDetector_DetectMarkers_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDetector, Mat, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_New(
+    ffi.Pointer<ArucoDetector> rval,
+  ) {
+    return _ArucoDetector_New(
+      rval,
+    );
+  }
+
+  late final _ArucoDetector_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ArucoDetector>)>>('ArucoDetector_New');
+  late final _ArucoDetector_New = _ArucoDetector_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetector>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_NewWithParams(
+    ArucoDictionary dictionary,
+    ArucoDetectorParameters params,
+    ffi.Pointer<ArucoDetector> rval,
+  ) {
+    return _ArucoDetector_NewWithParams(
+      dictionary,
+      params,
+      rval,
+    );
+  }
+
+  late final _ArucoDetector_NewWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDictionary,
+              ArucoDetectorParameters,
+              ffi.Pointer<ArucoDetector>)>>('ArucoDetector_NewWithParams');
+  late final _ArucoDetector_NewWithParams =
+      _ArucoDetector_NewWithParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDictionary,
+              ArucoDetectorParameters, ffi.Pointer<ArucoDetector>)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_NewWithParams_Async(
+    ArucoDictionary dictionary,
+    ArucoDetectorParameters params,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetector_NewWithParams_Async(
+      dictionary,
+      params,
+      callback,
+    );
+  }
+
+  late final _ArucoDetector_NewWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDictionary,
+              ArucoDetectorParameters,
+              imp1.CvCallback_1)>>('ArucoDetector_NewWithParams_Async');
+  late final _ArucoDetector_NewWithParams_Async =
+      _ArucoDetector_NewWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDictionary, ArucoDetectorParameters, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ArucoDetector_New_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoDetector_New_Async(
+      callback,
+    );
+  }
+
+  late final _ArucoDetector_New_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'ArucoDetector_New_Async');
+  late final _ArucoDetector_New_Async = _ArucoDetector_New_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  void ArucoDictionary_Close(
+    ArucoDictionaryPtr self,
+  ) {
+    return _ArucoDictionary_Close(
+      self,
+    );
+  }
+
+  late final _ArucoDictionary_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>(
+          'ArucoDictionary_Close');
+  late final _ArucoDictionary_Close =
+      _ArucoDictionary_ClosePtr.asFunction<void Function(ArucoDictionaryPtr)>();
+
+  ffi.Pointer<CvStatus> ArucoDrawDetectedMarkers(
+    Mat image,
+    VecVecPoint2f markerCorners,
+    VecI32 markerIds,
+    Scalar borderColor,
+  ) {
+    return _ArucoDrawDetectedMarkers(
+      image,
+      markerCorners,
+      markerIds,
+      borderColor,
+    );
+  }
+
+  late final _ArucoDrawDetectedMarkersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, VecVecPoint2f, VecI32, Scalar)>>('ArucoDrawDetectedMarkers');
+  late final _ArucoDrawDetectedMarkers =
+      _ArucoDrawDetectedMarkersPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar)>();
+
+  ffi.Pointer<CvStatus> ArucoDrawDetectedMarkers_Async(
+    Mat image,
+    VecVecPoint2f markerCorners,
+    VecI32 markerIds,
+    Scalar borderColor,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ArucoDrawDetectedMarkers_Async(
+      image,
+      markerCorners,
+      markerIds,
+      borderColor,
+      callback,
+    );
+  }
+
+  late final _ArucoDrawDetectedMarkers_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar,
+              imp1.CvCallback_0)>>('ArucoDrawDetectedMarkers_Async');
+  late final _ArucoDrawDetectedMarkers_Async =
+      _ArucoDrawDetectedMarkers_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ArucoGenerateImageMarker(
+    int dictionaryId,
+    int id,
+    int sidePixels,
+    int borderBits,
+    ffi.Pointer<Mat> img,
+  ) {
+    return _ArucoGenerateImageMarker(
+      dictionaryId,
+      id,
+      sidePixels,
+      borderBits,
+      img,
+    );
+  }
+
+  late final _ArucoGenerateImageMarkerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>)>>('ArucoGenerateImageMarker');
+  late final _ArucoGenerateImageMarker =
+      _ArucoGenerateImageMarkerPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              int, int, int, int, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ArucoGenerateImageMarker_Async(
+    int dictionaryId,
+    int id,
+    int sidePixels,
+    int borderBits,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ArucoGenerateImageMarker_Async(
+      dictionaryId,
+      id,
+      sidePixels,
+      borderBits,
+      callback,
+    );
+  }
+
+  late final _ArucoGenerateImageMarker_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              imp1.CvCallback_1)>>('ArucoGenerateImageMarker_Async');
+  late final _ArucoGenerateImageMarker_Async =
+      _ArucoGenerateImageMarker_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              int, int, int, int, imp1.CvCallback_1)>();
+
+  void AsyncArray_Close(
+    AsyncArrayPtr a,
+  ) {
+    return _AsyncArray_Close(
+      a,
+    );
+  }
+
+  late final _AsyncArray_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AsyncArrayPtr)>>(
+          'AsyncArray_Close');
+  late final _AsyncArray_Close =
+      _AsyncArray_ClosePtr.asFunction<void Function(AsyncArrayPtr)>();
+
+  ffi.Pointer<CvStatus> AsyncArray_Get(
+    AsyncArray async_out,
+    Mat out,
+  ) {
+    return _AsyncArray_Get(
+      async_out,
+      out,
+    );
+  }
+
+  late final _AsyncArray_GetPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(AsyncArray, Mat)>>(
+      'AsyncArray_Get');
+  late final _AsyncArray_Get = _AsyncArray_GetPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(AsyncArray, Mat)>();
+
+  ffi.Pointer<CvStatus> AsyncArray_New(
+    ffi.Pointer<AsyncArray> rval,
+  ) {
+    return _AsyncArray_New(
+      rval,
+    );
+  }
+
+  late final _AsyncArray_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<AsyncArray>)>>('AsyncArray_New');
+  late final _AsyncArray_New = _AsyncArray_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<AsyncArray>)>();
+
   void BFMatcher_Close(
     BFMatcherPtr b,
   ) {
@@ -1355,6 +4133,217 @@ class CvNativeCore {
   late final _BilateralFilter_Async = _BilateralFilter_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, int, double, double, imp1.CvCallback_1)>();
+
+  void BlockMeanHash_Close(
+    BlockMeanHashPtr self,
+  ) {
+    return _BlockMeanHash_Close(
+      self,
+    );
+  }
+
+  late final _BlockMeanHash_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>(
+          'BlockMeanHash_Close');
+  late final _BlockMeanHash_Close =
+      _BlockMeanHash_ClosePtr.asFunction<void Function(BlockMeanHashPtr)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Compare(
+    BlockMeanHash self,
+    Mat hashOne,
+    Mat hashTwo,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _BlockMeanHash_Compare(
+      self,
+      hashOne,
+      hashTwo,
+      rval,
+    );
+  }
+
+  late final _BlockMeanHash_ComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat,
+              ffi.Pointer<ffi.Double>)>>('BlockMeanHash_Compare');
+  late final _BlockMeanHash_Compare = _BlockMeanHash_ComparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Compare_Async(
+    BlockMeanHash self,
+    Mat hashOne,
+    Mat hashTwo,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _BlockMeanHash_Compare_Async(
+      self,
+      hashOne,
+      hashTwo,
+      callback,
+    );
+  }
+
+  late final _BlockMeanHash_Compare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat,
+              imp1.CvCallback_1)>>('BlockMeanHash_Compare_Async');
+  late final _BlockMeanHash_Compare_Async =
+      _BlockMeanHash_Compare_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Compute(
+    BlockMeanHash self,
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+  ) {
+    return _BlockMeanHash_Compute(
+      self,
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _BlockMeanHash_ComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash, Mat, ffi.Pointer<Mat>)>>('BlockMeanHash_Compute');
+  late final _BlockMeanHash_Compute = _BlockMeanHash_ComputePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Compute_Async(
+    BlockMeanHash self,
+    Mat inputArr,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _BlockMeanHash_Compute_Async(
+      self,
+      inputArr,
+      callback,
+    );
+  }
+
+  late final _BlockMeanHash_Compute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat,
+              imp1.CvCallback_1)>>('BlockMeanHash_Compute_Async');
+  late final _BlockMeanHash_Compute_Async =
+      _BlockMeanHash_Compute_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Create(
+    int mode,
+    ffi.Pointer<BlockMeanHash> rval,
+  ) {
+    return _BlockMeanHash_Create(
+      mode,
+      rval,
+    );
+  }
+
+  late final _BlockMeanHash_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int, ffi.Pointer<BlockMeanHash>)>>('BlockMeanHash_Create');
+  late final _BlockMeanHash_Create = _BlockMeanHash_CreatePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<BlockMeanHash>)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_Create_Async(
+    int mode,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _BlockMeanHash_Create_Async(
+      mode,
+      callback,
+    );
+  }
+
+  late final _BlockMeanHash_Create_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int, imp1.CvCallback_1)>>('BlockMeanHash_Create_Async');
+  late final _BlockMeanHash_Create_Async = _BlockMeanHash_Create_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_GetMean(
+    BlockMeanHash self,
+    ffi.Pointer<ffi.Pointer<ffi.Double>> rval,
+    ffi.Pointer<ffi.Int> length,
+  ) {
+    return _BlockMeanHash_GetMean(
+      self,
+      rval,
+      length,
+    );
+  }
+
+  late final _BlockMeanHash_GetMeanPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash,
+              ffi.Pointer<ffi.Pointer<ffi.Double>>,
+              ffi.Pointer<ffi.Int>)>>('BlockMeanHash_GetMean');
+  late final _BlockMeanHash_GetMean = _BlockMeanHash_GetMeanPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(BlockMeanHash,
+          ffi.Pointer<ffi.Pointer<ffi.Double>>, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_GetMean_Async(
+    BlockMeanHash self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _BlockMeanHash_GetMean_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _BlockMeanHash_GetMean_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash,
+              imp1.CvCallback_1)>>('BlockMeanHash_GetMean_Async');
+  late final _BlockMeanHash_GetMean_Async =
+      _BlockMeanHash_GetMean_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_SetMode(
+    BlockMeanHash self,
+    int mode,
+  ) {
+    return _BlockMeanHash_SetMode(
+      self,
+      mode,
+    );
+  }
+
+  late final _BlockMeanHash_SetModePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash, ffi.Int)>>('BlockMeanHash_SetMode');
+  late final _BlockMeanHash_SetMode = _BlockMeanHash_SetModePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(BlockMeanHash, int)>();
+
+  ffi.Pointer<CvStatus> BlockMeanHash_SetMode_Async(
+    BlockMeanHash self,
+    int mode,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _BlockMeanHash_SetMode_Async(
+      self,
+      mode,
+      callback,
+    );
+  }
+
+  late final _BlockMeanHash_SetMode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Int,
+              imp1.CvCallback_0)>>('BlockMeanHash_SetMode_Async');
+  late final _BlockMeanHash_SetMode_Async =
+      _BlockMeanHash_SetMode_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              BlockMeanHash, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> Blur(
     Mat src,
@@ -2253,6 +5242,584 @@ class CvNativeCore {
   late final _Canny_Async = _Canny_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, double, double, int, bool, imp1.CvCallback_1)>();
+
+  void CascadeClassifier_Close(
+    CascadeClassifierPtr self,
+  ) {
+    return _CascadeClassifier_Close(
+      self,
+    );
+  }
+
+  late final _CascadeClassifier_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CascadeClassifierPtr)>>(
+          'CascadeClassifier_Close');
+  late final _CascadeClassifier_Close = _CascadeClassifier_ClosePtr.asFunction<
+      void Function(CascadeClassifierPtr)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale(
+    CascadeClassifier self,
+    Mat img,
+    ffi.Pointer<VecRect> rval,
+  ) {
+    return _CascadeClassifier_DetectMultiScale(
+      self,
+      img,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScalePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat,
+              ffi.Pointer<VecRect>)>>('CascadeClassifier_DetectMultiScale');
+  late final _CascadeClassifier_DetectMultiScale =
+      _CascadeClassifier_DetectMultiScalePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, Mat, ffi.Pointer<VecRect>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale2(
+    CascadeClassifier self,
+    Mat img,
+    ffi.Pointer<VecRect> objects,
+    ffi.Pointer<VecI32> numDetections,
+    double scaleFactor,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+  ) {
+    return _CascadeClassifier_DetectMultiScale2(
+      self,
+      img,
+      objects,
+      numDetections,
+      scaleFactor,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScale2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecI32>,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              Size,
+              Size)>>('CascadeClassifier_DetectMultiScale2');
+  late final _CascadeClassifier_DetectMultiScale2 =
+      _CascadeClassifier_DetectMultiScale2Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecI32>,
+              double,
+              int,
+              int,
+              Size,
+              Size)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale2_Async(
+    CascadeClassifier self,
+    Mat img,
+    double scaleFactor,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _CascadeClassifier_DetectMultiScale2_Async(
+      self,
+      img,
+      scaleFactor,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScale2_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              Size,
+              Size,
+              imp1.CvCallback_2)>>('CascadeClassifier_DetectMultiScale2_Async');
+  late final _CascadeClassifier_DetectMultiScale2_Async =
+      _CascadeClassifier_DetectMultiScale2_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, double, int,
+              int, Size, Size, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale3(
+    CascadeClassifier self,
+    Mat img,
+    ffi.Pointer<VecRect> objects,
+    ffi.Pointer<VecI32> rejectLevels,
+    ffi.Pointer<VecF64> levelWeights,
+    double scaleFactor,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+    bool outputRejectLevels,
+  ) {
+    return _CascadeClassifier_DetectMultiScale3(
+      self,
+      img,
+      objects,
+      rejectLevels,
+      levelWeights,
+      scaleFactor,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+      outputRejectLevels,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScale3Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecF64>,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              Size,
+              Size,
+              ffi.Bool)>>('CascadeClassifier_DetectMultiScale3');
+  late final _CascadeClassifier_DetectMultiScale3 =
+      _CascadeClassifier_DetectMultiScale3Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecF64>,
+              double,
+              int,
+              int,
+              Size,
+              Size,
+              bool)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale3_Async(
+    CascadeClassifier self,
+    Mat img,
+    double scaleFactor,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+    bool outputRejectLevels,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _CascadeClassifier_DetectMultiScale3_Async(
+      self,
+      img,
+      scaleFactor,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+      outputRejectLevels,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScale3_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              Size,
+              Size,
+              ffi.Bool,
+              imp1.CvCallback_3)>>('CascadeClassifier_DetectMultiScale3_Async');
+  late final _CascadeClassifier_DetectMultiScale3_Async =
+      _CascadeClassifier_DetectMultiScale3_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, double, int,
+              int, Size, Size, bool, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScaleWithParams(
+    CascadeClassifier self,
+    Mat img,
+    ffi.Pointer<VecRect> objects,
+    double scale,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+  ) {
+    return _CascadeClassifier_DetectMultiScaleWithParams(
+      self,
+      img,
+      objects,
+      scale,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScaleWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              Size,
+              Size)>>('CascadeClassifier_DetectMultiScaleWithParams');
+  late final _CascadeClassifier_DetectMultiScaleWithParams =
+      _CascadeClassifier_DetectMultiScaleWithParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat,
+              ffi.Pointer<VecRect>, double, int, int, Size, Size)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScaleWithParams_Async(
+    CascadeClassifier self,
+    Mat img,
+    double scale,
+    int minNeighbors,
+    int flags,
+    Size minSize,
+    Size maxSize,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_DetectMultiScaleWithParams_Async(
+      self,
+      img,
+      scale,
+      minNeighbors,
+      flags,
+      minSize,
+      maxSize,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScaleWithParams_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, ffi.Double,
+                  ffi.Int, ffi.Int, Size, Size, imp1.CvCallback_1)>>(
+      'CascadeClassifier_DetectMultiScaleWithParams_Async');
+  late final _CascadeClassifier_DetectMultiScaleWithParams_Async =
+      _CascadeClassifier_DetectMultiScaleWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat, double, int,
+              int, Size, Size, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_DetectMultiScale_Async(
+    CascadeClassifier self,
+    Mat img,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_DetectMultiScale_Async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_DetectMultiScale_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier, Mat,
+              imp1.CvCallback_1)>>('CascadeClassifier_DetectMultiScale_Async');
+  late final _CascadeClassifier_DetectMultiScale_Async =
+      _CascadeClassifier_DetectMultiScale_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_Empty(
+    CascadeClassifier self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _CascadeClassifier_Empty(
+      self,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_EmptyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              ffi.Pointer<ffi.Bool>)>>('CascadeClassifier_Empty');
+  late final _CascadeClassifier_Empty = _CascadeClassifier_EmptyPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          CascadeClassifier, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_Empty_Async(
+    CascadeClassifier self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_Empty_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_Empty_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              imp1.CvCallback_1)>>('CascadeClassifier_Empty_Async');
+  late final _CascadeClassifier_Empty_Async =
+      _CascadeClassifier_Empty_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_Load(
+    CascadeClassifier self,
+    ffi.Pointer<ffi.Char> name,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _CascadeClassifier_Load(
+      self,
+      name,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_LoadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Int>)>>('CascadeClassifier_Load');
+  late final _CascadeClassifier_Load = _CascadeClassifier_LoadPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          CascadeClassifier, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_Load_Async(
+    CascadeClassifier self,
+    ffi.Pointer<ffi.Char> name,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_Load_Async(
+      self,
+      name,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_Load_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('CascadeClassifier_Load_Async');
+  late final _CascadeClassifier_Load_Async =
+      _CascadeClassifier_Load_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_New(
+    ffi.Pointer<CascadeClassifier> rval,
+  ) {
+    return _CascadeClassifier_New(
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<CascadeClassifier>)>>('CascadeClassifier_New');
+  late final _CascadeClassifier_New = _CascadeClassifier_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<CascadeClassifier>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_NewFromFile(
+    ffi.Pointer<ffi.Char> filename,
+    ffi.Pointer<CascadeClassifier> rval,
+  ) {
+    return _CascadeClassifier_NewFromFile(
+      filename,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_NewFromFilePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ffi.Pointer<ffi.Char>, ffi.Pointer<CascadeClassifier>)>>(
+      'CascadeClassifier_NewFromFile');
+  late final _CascadeClassifier_NewFromFile =
+      _CascadeClassifier_NewFromFilePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<CascadeClassifier>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_NewFromFile_Async(
+    ffi.Pointer<ffi.Char> filename,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_NewFromFile_Async(
+      filename,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_NewFromFile_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('CascadeClassifier_NewFromFile_Async');
+  late final _CascadeClassifier_NewFromFile_Async =
+      _CascadeClassifier_NewFromFile_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_New_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_New_Async(
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_New_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'CascadeClassifier_New_Async');
+  late final _CascadeClassifier_New_Async = _CascadeClassifier_New_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_getFeatureType(
+    CascadeClassifier self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _CascadeClassifier_getFeatureType(
+      self,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_getFeatureTypePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              ffi.Pointer<ffi.Int>)>>('CascadeClassifier_getFeatureType');
+  late final _CascadeClassifier_getFeatureType =
+      _CascadeClassifier_getFeatureTypePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_getFeatureType_Async(
+    CascadeClassifier self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_getFeatureType_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_getFeatureType_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              imp1.CvCallback_1)>>('CascadeClassifier_getFeatureType_Async');
+  late final _CascadeClassifier_getFeatureType_Async =
+      _CascadeClassifier_getFeatureType_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_getOriginalWindowSize(
+    CascadeClassifier self,
+    ffi.Pointer<Size> rval,
+  ) {
+    return _CascadeClassifier_getOriginalWindowSize(
+      self,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_getOriginalWindowSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              ffi.Pointer<Size>)>>('CascadeClassifier_getOriginalWindowSize');
+  late final _CascadeClassifier_getOriginalWindowSize =
+      _CascadeClassifier_getOriginalWindowSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, ffi.Pointer<Size>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_getOriginalWindowSize_Async(
+    CascadeClassifier self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_getOriginalWindowSize_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_getOriginalWindowSize_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  CascadeClassifier, imp1.CvCallback_1)>>(
+      'CascadeClassifier_getOriginalWindowSize_Async');
+  late final _CascadeClassifier_getOriginalWindowSize_Async =
+      _CascadeClassifier_getOriginalWindowSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_isOldFormatCascade(
+    CascadeClassifier self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _CascadeClassifier_isOldFormatCascade(
+      self,
+      rval,
+    );
+  }
+
+  late final _CascadeClassifier_isOldFormatCascadePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(CascadeClassifier,
+              ffi.Pointer<ffi.Bool>)>>('CascadeClassifier_isOldFormatCascade');
+  late final _CascadeClassifier_isOldFormatCascade =
+      _CascadeClassifier_isOldFormatCascadePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> CascadeClassifier_isOldFormatCascade_Async(
+    CascadeClassifier self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _CascadeClassifier_isOldFormatCascade_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _CascadeClassifier_isOldFormatCascade_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  CascadeClassifier, imp1.CvCallback_1)>>(
+      'CascadeClassifier_isOldFormatCascade_Async');
+  late final _CascadeClassifier_isOldFormatCascade_Async =
+      _CascadeClassifier_isOldFormatCascade_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              CascadeClassifier, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Circle(
     Mat img,
@@ -3767,6 +7334,774 @@ class CvNativeCore {
               ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>>('Eye');
   late final _Eye = _EyePtr.asFunction<
       ffi.Pointer<CvStatus> Function(int, int, int, ffi.Pointer<Mat>)>();
+
+  void FaceDetectorYN_Close(
+    FaceDetectorYNPtr self,
+  ) {
+    return _FaceDetectorYN_Close(
+      self,
+    );
+  }
+
+  late final _FaceDetectorYN_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceDetectorYNPtr)>>(
+          'FaceDetectorYN_Close');
+  late final _FaceDetectorYN_Close =
+      _FaceDetectorYN_ClosePtr.asFunction<void Function(FaceDetectorYNPtr)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_Detect(
+    FaceDetectorYN self,
+    Mat img,
+    ffi.Pointer<Mat> faces,
+  ) {
+    return _FaceDetectorYN_Detect(
+      self,
+      img,
+      faces,
+    );
+  }
+
+  late final _FaceDetectorYN_DetectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, Mat, ffi.Pointer<Mat>)>>('FaceDetectorYN_Detect');
+  late final _FaceDetectorYN_Detect = _FaceDetectorYN_DetectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(FaceDetectorYN, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_Detect_Async(
+    FaceDetectorYN self,
+    Mat img,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_Detect_Async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_Detect_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, Mat,
+              imp1.CvCallback_1)>>('FaceDetectorYN_Detect_Async');
+  late final _FaceDetectorYN_Detect_Async =
+      _FaceDetectorYN_Detect_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetInputSize(
+    FaceDetectorYN self,
+    ffi.Pointer<Size> input_size,
+  ) {
+    return _FaceDetectorYN_GetInputSize(
+      self,
+      input_size,
+    );
+  }
+
+  late final _FaceDetectorYN_GetInputSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              ffi.Pointer<Size>)>>('FaceDetectorYN_GetInputSize');
+  late final _FaceDetectorYN_GetInputSize =
+      _FaceDetectorYN_GetInputSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<Size>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetInputSize_Async(
+    FaceDetectorYN self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_GetInputSize_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_GetInputSize_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              imp1.CvCallback_1)>>('FaceDetectorYN_GetInputSize_Async');
+  late final _FaceDetectorYN_GetInputSize_Async =
+      _FaceDetectorYN_GetInputSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetNMSThreshold(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Float> nms_threshold,
+  ) {
+    return _FaceDetectorYN_GetNMSThreshold(
+      self,
+      nms_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_GetNMSThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              ffi.Pointer<ffi.Float>)>>('FaceDetectorYN_GetNMSThreshold');
+  late final _FaceDetectorYN_GetNMSThreshold =
+      _FaceDetectorYN_GetNMSThresholdPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetNMSThreshold_Async(
+    FaceDetectorYN self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_GetNMSThreshold_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_GetNMSThreshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              imp1.CvCallback_1)>>('FaceDetectorYN_GetNMSThreshold_Async');
+  late final _FaceDetectorYN_GetNMSThreshold_Async =
+      _FaceDetectorYN_GetNMSThreshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetScoreThreshold(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Float> score_threshold,
+  ) {
+    return _FaceDetectorYN_GetScoreThreshold(
+      self,
+      score_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_GetScoreThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              ffi.Pointer<ffi.Float>)>>('FaceDetectorYN_GetScoreThreshold');
+  late final _FaceDetectorYN_GetScoreThreshold =
+      _FaceDetectorYN_GetScoreThresholdPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetScoreThreshold_Async(
+    FaceDetectorYN self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_GetScoreThreshold_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_GetScoreThreshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              imp1.CvCallback_1)>>('FaceDetectorYN_GetScoreThreshold_Async');
+  late final _FaceDetectorYN_GetScoreThreshold_Async =
+      _FaceDetectorYN_GetScoreThreshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetTopK(
+    FaceDetectorYN self,
+    ffi.Pointer<ffi.Int> top_k,
+  ) {
+    return _FaceDetectorYN_GetTopK(
+      self,
+      top_k,
+    );
+  }
+
+  late final _FaceDetectorYN_GetTopKPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Pointer<ffi.Int>)>>('FaceDetectorYN_GetTopK');
+  late final _FaceDetectorYN_GetTopK = _FaceDetectorYN_GetTopKPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_GetTopK_Async(
+    FaceDetectorYN self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_GetTopK_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_GetTopK_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
+              imp1.CvCallback_1)>>('FaceDetectorYN_GetTopK_Async');
+  late final _FaceDetectorYN_GetTopK_Async =
+      _FaceDetectorYN_GetTopK_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_New(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    Size input_size,
+    double score_threshold,
+    double nms_threshold,
+    int top_k,
+    int backend_id,
+    int target_id,
+    ffi.Pointer<FaceDetectorYN> rval,
+  ) {
+    return _FaceDetectorYN_New(
+      model,
+      config,
+      input_size,
+      score_threshold,
+      nms_threshold,
+      top_k,
+      backend_id,
+      target_id,
+      rval,
+    );
+  }
+
+  late final _FaceDetectorYN_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              Size,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<FaceDetectorYN>)>>('FaceDetectorYN_New');
+  late final _FaceDetectorYN_New = _FaceDetectorYN_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>,
+          Size,
+          double,
+          double,
+          int,
+          int,
+          int,
+          ffi.Pointer<FaceDetectorYN>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_NewFromBuffer(
+    ffi.Pointer<ffi.Char> framework,
+    VecUChar buffer,
+    VecUChar buffer_config,
+    Size input_size,
+    double score_threshold,
+    double nms_threshold,
+    int top_k,
+    int backend_id,
+    int target_id,
+    ffi.Pointer<FaceDetectorYN> rval,
+  ) {
+    return _FaceDetectorYN_NewFromBuffer(
+      framework,
+      buffer,
+      buffer_config,
+      input_size,
+      score_threshold,
+      nms_threshold,
+      top_k,
+      backend_id,
+      target_id,
+      rval,
+    );
+  }
+
+  late final _FaceDetectorYN_NewFromBufferPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              VecUChar,
+              VecUChar,
+              Size,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<FaceDetectorYN>)>>('FaceDetectorYN_NewFromBuffer');
+  late final _FaceDetectorYN_NewFromBuffer =
+      _FaceDetectorYN_NewFromBufferPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              VecUChar,
+              VecUChar,
+              Size,
+              double,
+              double,
+              int,
+              int,
+              int,
+              ffi.Pointer<FaceDetectorYN>)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_NewFromBuffer_Async(
+    ffi.Pointer<ffi.Char> framework,
+    VecUChar buffer,
+    VecUChar buffer_config,
+    Size input_size,
+    double score_threshold,
+    double nms_threshold,
+    int top_k,
+    int backend_id,
+    int target_id,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_NewFromBuffer_Async(
+      framework,
+      buffer,
+      buffer_config,
+      input_size,
+      score_threshold,
+      nms_threshold,
+      top_k,
+      backend_id,
+      target_id,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_NewFromBuffer_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              VecUChar,
+              VecUChar,
+              Size,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              imp1.CvCallback_1)>>('FaceDetectorYN_NewFromBuffer_Async');
+  late final _FaceDetectorYN_NewFromBuffer_Async =
+      _FaceDetectorYN_NewFromBuffer_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              VecUChar,
+              VecUChar,
+              Size,
+              double,
+              double,
+              int,
+              int,
+              int,
+              imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_New_Async(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    Size input_size,
+    double score_threshold,
+    double nms_threshold,
+    int top_k,
+    int backend_id,
+    int target_id,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceDetectorYN_New_Async(
+      model,
+      config,
+      input_size,
+      score_threshold,
+      nms_threshold,
+      top_k,
+      backend_id,
+      target_id,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_New_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              Size,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              imp1.CvCallback_1)>>('FaceDetectorYN_New_Async');
+  late final _FaceDetectorYN_New_Async =
+      _FaceDetectorYN_New_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              Size,
+              double,
+              double,
+              int,
+              int,
+              int,
+              imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetInputSize(
+    FaceDetectorYN self,
+    Size input_size,
+  ) {
+    return _FaceDetectorYN_SetInputSize(
+      self,
+      input_size,
+    );
+  }
+
+  late final _FaceDetectorYN_SetInputSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, Size)>>('FaceDetectorYN_SetInputSize');
+  late final _FaceDetectorYN_SetInputSize = _FaceDetectorYN_SetInputSizePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(FaceDetectorYN, Size)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetInputSize_Async(
+    FaceDetectorYN self,
+    Size input_size,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _FaceDetectorYN_SetInputSize_Async(
+      self,
+      input_size,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_SetInputSize_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, Size,
+              imp1.CvCallback_0)>>('FaceDetectorYN_SetInputSize_Async');
+  late final _FaceDetectorYN_SetInputSize_Async =
+      _FaceDetectorYN_SetInputSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, Size, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetNMSThreshold(
+    FaceDetectorYN self,
+    double nms_threshold,
+  ) {
+    return _FaceDetectorYN_SetNMSThreshold(
+      self,
+      nms_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_SetNMSThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Float)>>('FaceDetectorYN_SetNMSThreshold');
+  late final _FaceDetectorYN_SetNMSThreshold =
+      _FaceDetectorYN_SetNMSThresholdPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, double)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetNMSThreshold_Async(
+    FaceDetectorYN self,
+    double nms_threshold,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _FaceDetectorYN_SetNMSThreshold_Async(
+      self,
+      nms_threshold,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_SetNMSThreshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Float,
+              imp1.CvCallback_0)>>('FaceDetectorYN_SetNMSThreshold_Async');
+  late final _FaceDetectorYN_SetNMSThreshold_Async =
+      _FaceDetectorYN_SetNMSThreshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetScoreThreshold(
+    FaceDetectorYN self,
+    double score_threshold,
+  ) {
+    return _FaceDetectorYN_SetScoreThreshold(
+      self,
+      score_threshold,
+    );
+  }
+
+  late final _FaceDetectorYN_SetScoreThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Float)>>('FaceDetectorYN_SetScoreThreshold');
+  late final _FaceDetectorYN_SetScoreThreshold =
+      _FaceDetectorYN_SetScoreThresholdPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, double)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetScoreThreshold_Async(
+    FaceDetectorYN self,
+    double score_threshold,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _FaceDetectorYN_SetScoreThreshold_Async(
+      self,
+      score_threshold,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_SetScoreThreshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Float,
+              imp1.CvCallback_0)>>('FaceDetectorYN_SetScoreThreshold_Async');
+  late final _FaceDetectorYN_SetScoreThreshold_Async =
+      _FaceDetectorYN_SetScoreThreshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetTopK(
+    FaceDetectorYN self,
+    int top_k,
+  ) {
+    return _FaceDetectorYN_SetTopK(
+      self,
+      top_k,
+    );
+  }
+
+  late final _FaceDetectorYN_SetTopKPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, ffi.Int)>>('FaceDetectorYN_SetTopK');
+  late final _FaceDetectorYN_SetTopK = _FaceDetectorYN_SetTopKPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(FaceDetectorYN, int)>();
+
+  ffi.Pointer<CvStatus> FaceDetectorYN_SetTopK_Async(
+    FaceDetectorYN self,
+    int top_k,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _FaceDetectorYN_SetTopK_Async(
+      self,
+      top_k,
+      callback,
+    );
+  }
+
+  late final _FaceDetectorYN_SetTopK_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceDetectorYN, ffi.Int,
+              imp1.CvCallback_0)>>('FaceDetectorYN_SetTopK_Async');
+  late final _FaceDetectorYN_SetTopK_Async =
+      _FaceDetectorYN_SetTopK_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceDetectorYN, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_AlignCrop(
+    FaceRecognizerSF self,
+    Mat src_img,
+    Mat face_box,
+    ffi.Pointer<Mat> aligned_img,
+  ) {
+    return _FaceRecognizerSF_AlignCrop(
+      self,
+      src_img,
+      face_box,
+      aligned_img,
+    );
+  }
+
+  late final _FaceRecognizerSF_AlignCropPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, Mat,
+              ffi.Pointer<Mat>)>>('FaceRecognizerSF_AlignCrop');
+  late final _FaceRecognizerSF_AlignCrop =
+      _FaceRecognizerSF_AlignCropPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceRecognizerSF, Mat, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_AlignCrop_Async(
+    FaceRecognizerSF self,
+    Mat src_img,
+    Mat face_box,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceRecognizerSF_AlignCrop_Async(
+      self,
+      src_img,
+      face_box,
+      callback,
+    );
+  }
+
+  late final _FaceRecognizerSF_AlignCrop_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, Mat,
+              imp1.CvCallback_1)>>('FaceRecognizerSF_AlignCrop_Async');
+  late final _FaceRecognizerSF_AlignCrop_Async =
+      _FaceRecognizerSF_AlignCrop_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceRecognizerSF, Mat, Mat, imp1.CvCallback_1)>();
+
+  void FaceRecognizerSF_Close(
+    FaceRecognizerSFPtr self,
+  ) {
+    return _FaceRecognizerSF_Close(
+      self,
+    );
+  }
+
+  late final _FaceRecognizerSF_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceRecognizerSFPtr)>>(
+          'FaceRecognizerSF_Close');
+  late final _FaceRecognizerSF_Close = _FaceRecognizerSF_ClosePtr.asFunction<
+      void Function(FaceRecognizerSFPtr)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_Feature(
+    FaceRecognizerSF self,
+    Mat aligned_img,
+    bool clone,
+    ffi.Pointer<Mat> face_feature,
+  ) {
+    return _FaceRecognizerSF_Feature(
+      self,
+      aligned_img,
+      clone,
+      face_feature,
+    );
+  }
+
+  late final _FaceRecognizerSF_FeaturePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, ffi.Bool,
+              ffi.Pointer<Mat>)>>('FaceRecognizerSF_Feature');
+  late final _FaceRecognizerSF_Feature =
+      _FaceRecognizerSF_FeaturePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceRecognizerSF, Mat, bool, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_Feature_Async(
+    FaceRecognizerSF self,
+    Mat aligned_img,
+    bool clone,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceRecognizerSF_Feature_Async(
+      self,
+      aligned_img,
+      clone,
+      callback,
+    );
+  }
+
+  late final _FaceRecognizerSF_Feature_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, ffi.Bool,
+              imp1.CvCallback_1)>>('FaceRecognizerSF_Feature_Async');
+  late final _FaceRecognizerSF_Feature_Async =
+      _FaceRecognizerSF_Feature_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceRecognizerSF, Mat, bool, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_Match(
+    FaceRecognizerSF self,
+    Mat face_feature1,
+    Mat face_feature2,
+    int dis_type,
+    ffi.Pointer<ffi.Double> distance,
+  ) {
+    return _FaceRecognizerSF_Match(
+      self,
+      face_feature1,
+      face_feature2,
+      dis_type,
+      distance,
+    );
+  }
+
+  late final _FaceRecognizerSF_MatchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, Mat, ffi.Int,
+              ffi.Pointer<ffi.Double>)>>('FaceRecognizerSF_Match');
+  late final _FaceRecognizerSF_Match = _FaceRecognizerSF_MatchPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          FaceRecognizerSF, Mat, Mat, int, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_Match_Async(
+    FaceRecognizerSF self,
+    Mat face_feature1,
+    Mat face_feature2,
+    int dis_type,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceRecognizerSF_Match_Async(
+      self,
+      face_feature1,
+      face_feature2,
+      dis_type,
+      callback,
+    );
+  }
+
+  late final _FaceRecognizerSF_Match_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(FaceRecognizerSF, Mat, Mat, ffi.Int,
+              imp1.CvCallback_1)>>('FaceRecognizerSF_Match_Async');
+  late final _FaceRecognizerSF_Match_Async =
+      _FaceRecognizerSF_Match_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FaceRecognizerSF, Mat, Mat, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_New(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    int backend_id,
+    int target_id,
+    ffi.Pointer<FaceRecognizerSF> rval,
+  ) {
+    return _FaceRecognizerSF_New(
+      model,
+      config,
+      backend_id,
+      target_id,
+      rval,
+    );
+  }
+
+  late final _FaceRecognizerSF_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<FaceRecognizerSF>)>>('FaceRecognizerSF_New');
+  late final _FaceRecognizerSF_New = _FaceRecognizerSF_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, int, int, ffi.Pointer<FaceRecognizerSF>)>();
+
+  ffi.Pointer<CvStatus> FaceRecognizerSF_New_Async(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    int backend_id,
+    int target_id,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _FaceRecognizerSF_New_Async(
+      model,
+      config,
+      backend_id,
+      target_id,
+      callback,
+    );
+  }
+
+  late final _FaceRecognizerSF_New_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              imp1.CvCallback_1)>>('FaceRecognizerSF_New_Async');
+  late final _FaceRecognizerSF_New_Async =
+      _FaceRecognizerSF_New_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, int, int, imp1.CvCallback_1)>();
 
   void FastFeatureDetector_Close(
     FastFeatureDetectorPtr f,
@@ -5837,6 +10172,769 @@ class CvNativeCore {
   late final _GrabCut_Async = _GrabCut_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Rect, Mat, Mat, int, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> GroupRectangles(
+    ffi.Pointer<VecRect> rects,
+    int groupThreshold,
+    double eps,
+  ) {
+    return _GroupRectangles(
+      rects,
+      groupThreshold,
+      eps,
+    );
+  }
+
+  late final _GroupRectanglesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<VecRect>, ffi.Int, ffi.Double)>>('GroupRectangles');
+  late final _GroupRectangles = _GroupRectanglesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>, int, double)>();
+
+  ffi.Pointer<CvStatus> GroupRectangles_Async(
+    ffi.Pointer<VecRect> rects,
+    int groupThreshold,
+    double eps,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _GroupRectangles_Async(
+      rects,
+      groupThreshold,
+      eps,
+      callback,
+    );
+  }
+
+  late final _GroupRectangles_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecRect>, ffi.Int,
+              ffi.Double, imp1.CvCallback_0)>>('GroupRectangles_Async');
+  late final _GroupRectangles_Async = _GroupRectangles_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<VecRect>, int, double, imp1.CvCallback_0)>();
+
+  void HOGDescriptor_Close(
+    HOGDescriptorPtr self,
+  ) {
+    return _HOGDescriptor_Close(
+      self,
+    );
+  }
+
+  late final _HOGDescriptor_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(HOGDescriptorPtr)>>(
+          'HOGDescriptor_Close');
+  late final _HOGDescriptor_Close =
+      _HOGDescriptor_ClosePtr.asFunction<void Function(HOGDescriptorPtr)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Compute(
+    HOGDescriptor self,
+    Mat img,
+    ffi.Pointer<VecF32> descriptors,
+    Size winStride,
+    Size padding,
+    ffi.Pointer<VecPoint> locations,
+  ) {
+    return _HOGDescriptor_Compute(
+      self,
+      img,
+      descriptors,
+      winStride,
+      padding,
+      locations,
+    );
+  }
+
+  late final _HOGDescriptor_ComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              Mat,
+              ffi.Pointer<VecF32>,
+              Size,
+              Size,
+              ffi.Pointer<VecPoint>)>>('HOGDescriptor_Compute');
+  late final _HOGDescriptor_Compute = _HOGDescriptor_ComputePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecF32>,
+          Size, Size, ffi.Pointer<VecPoint>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Compute_Async(
+    HOGDescriptor self,
+    Mat img,
+    Size winStride,
+    Size padding,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _HOGDescriptor_Compute_Async(
+      self,
+      img,
+      winStride,
+      padding,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_Compute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, Size, Size,
+              imp1.CvCallback_2)>>('HOGDescriptor_Compute_Async');
+  late final _HOGDescriptor_Compute_Async =
+      _HOGDescriptor_Compute_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, Size, Size, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Detect(
+    HOGDescriptor self,
+    Mat img,
+    ffi.Pointer<VecPoint> foundLocations,
+    ffi.Pointer<VecF64> weights,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    ffi.Pointer<VecPoint> searchLocations,
+  ) {
+    return _HOGDescriptor_Detect(
+      self,
+      img,
+      foundLocations,
+      weights,
+      hitThresh,
+      winStride,
+      padding,
+      searchLocations,
+    );
+  }
+
+  late final _HOGDescriptor_DetectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<VecF64>,
+              ffi.Double,
+              Size,
+              Size,
+              ffi.Pointer<VecPoint>)>>('HOGDescriptor_Detect');
+  late final _HOGDescriptor_Detect = _HOGDescriptor_DetectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>,
+          ffi.Pointer<VecF64>, double, Size, Size, ffi.Pointer<VecPoint>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Detect2(
+    HOGDescriptor self,
+    Mat img,
+    ffi.Pointer<VecPoint> foundLocations,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    ffi.Pointer<VecPoint> searchLocations,
+  ) {
+    return _HOGDescriptor_Detect2(
+      self,
+      img,
+      foundLocations,
+      hitThresh,
+      winStride,
+      padding,
+      searchLocations,
+    );
+  }
+
+  late final _HOGDescriptor_Detect2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Double,
+              Size,
+              Size,
+              ffi.Pointer<VecPoint>)>>('HOGDescriptor_Detect2');
+  late final _HOGDescriptor_Detect2 = _HOGDescriptor_Detect2Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Pointer<VecPoint>,
+          double, Size, Size, ffi.Pointer<VecPoint>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Detect2_Async(
+    HOGDescriptor self,
+    Mat img,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _HOGDescriptor_Detect2_Async(
+      self,
+      img,
+      hitThresh,
+      winStride,
+      padding,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_Detect2_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Double, Size,
+              Size, imp1.CvCallback_2)>>('HOGDescriptor_Detect2_Async');
+  late final _HOGDescriptor_Detect2_Async =
+      _HOGDescriptor_Detect2_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, double, Size, Size, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScale(
+    HOGDescriptor self,
+    Mat img,
+    ffi.Pointer<VecRect> rval,
+  ) {
+    return _HOGDescriptor_DetectMultiScale(
+      self,
+      img,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_DetectMultiScalePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat,
+              ffi.Pointer<VecRect>)>>('HOGDescriptor_DetectMultiScale');
+  late final _HOGDescriptor_DetectMultiScale =
+      _HOGDescriptor_DetectMultiScalePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, ffi.Pointer<VecRect>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScaleWithParams(
+    HOGDescriptor self,
+    Mat img,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    double scale,
+    double finalThreshold,
+    bool useMeanshiftGrouping,
+    ffi.Pointer<VecRect> rval,
+  ) {
+    return _HOGDescriptor_DetectMultiScaleWithParams(
+      self,
+      img,
+      hitThresh,
+      winStride,
+      padding,
+      scale,
+      finalThreshold,
+      useMeanshiftGrouping,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_DetectMultiScaleWithParamsPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  HOGDescriptor,
+                  Mat,
+                  ffi.Double,
+                  Size,
+                  Size,
+                  ffi.Double,
+                  ffi.Double,
+                  ffi.Bool,
+                  ffi.Pointer<VecRect>)>>(
+      'HOGDescriptor_DetectMultiScaleWithParams');
+  late final _HOGDescriptor_DetectMultiScaleWithParams =
+      _HOGDescriptor_DetectMultiScaleWithParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, double, Size, Size,
+              double, double, bool, ffi.Pointer<VecRect>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScaleWithParams_Async(
+    HOGDescriptor self,
+    Mat img,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    double scale,
+    double finalThreshold,
+    bool useMeanshiftGrouping,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_DetectMultiScaleWithParams_Async(
+      self,
+      img,
+      hitThresh,
+      winStride,
+      padding,
+      scale,
+      finalThreshold,
+      useMeanshiftGrouping,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_DetectMultiScaleWithParams_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  HOGDescriptor,
+                  Mat,
+                  ffi.Double,
+                  Size,
+                  Size,
+                  ffi.Double,
+                  ffi.Double,
+                  ffi.Bool,
+                  imp1.CvCallback_1)>>(
+      'HOGDescriptor_DetectMultiScaleWithParams_Async');
+  late final _HOGDescriptor_DetectMultiScaleWithParams_Async =
+      _HOGDescriptor_DetectMultiScaleWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, double, Size, Size,
+              double, double, bool, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_DetectMultiScale_Async(
+    HOGDescriptor self,
+    Mat img,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_DetectMultiScale_Async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_DetectMultiScale_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat,
+              imp1.CvCallback_1)>>('HOGDescriptor_DetectMultiScale_Async');
+  late final _HOGDescriptor_DetectMultiScale_Async =
+      _HOGDescriptor_DetectMultiScale_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Detect_Async(
+    HOGDescriptor self,
+    Mat img,
+    double hitThresh,
+    Size winStride,
+    Size padding,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _HOGDescriptor_Detect_Async(
+      self,
+      img,
+      hitThresh,
+      winStride,
+      padding,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_Detect_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, ffi.Double, Size,
+              Size, imp1.CvCallback_3)>>('HOGDescriptor_Detect_Async');
+  late final _HOGDescriptor_Detect_Async =
+      _HOGDescriptor_Detect_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, double, Size, Size, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Load(
+    HOGDescriptor self,
+    ffi.Pointer<ffi.Char> name,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _HOGDescriptor_Load(
+      self,
+      name,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_LoadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Bool>)>>('HOGDescriptor_Load');
+  late final _HOGDescriptor_Load = _HOGDescriptor_LoadPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          HOGDescriptor, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_Load_Async(
+    HOGDescriptor self,
+    ffi.Pointer<ffi.Char> name,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_Load_Async(
+      self,
+      name,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_Load_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('HOGDescriptor_Load_Async');
+  late final _HOGDescriptor_Load_Async =
+      _HOGDescriptor_Load_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_New(
+    ffi.Pointer<HOGDescriptor> rval,
+  ) {
+    return _HOGDescriptor_New(
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<HOGDescriptor>)>>('HOGDescriptor_New');
+  late final _HOGDescriptor_New = _HOGDescriptor_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<HOGDescriptor>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_NewFromFile(
+    ffi.Pointer<ffi.Char> filename,
+    ffi.Pointer<HOGDescriptor> rval,
+  ) {
+    return _HOGDescriptor_NewFromFile(
+      filename,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_NewFromFilePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<HOGDescriptor>)>>('HOGDescriptor_NewFromFile');
+  late final _HOGDescriptor_NewFromFile =
+      _HOGDescriptor_NewFromFilePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<HOGDescriptor>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_NewFromFile_Async(
+    ffi.Pointer<ffi.Char> filename,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_NewFromFile_Async(
+      filename,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_NewFromFile_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('HOGDescriptor_NewFromFile_Async');
+  late final _HOGDescriptor_NewFromFile_Async =
+      _HOGDescriptor_NewFromFile_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_New_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_New_Async(
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_New_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'HOGDescriptor_New_Async');
+  late final _HOGDescriptor_New_Async = _HOGDescriptor_New_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_SetSVMDetector(
+    HOGDescriptor self,
+    VecF32 det,
+  ) {
+    return _HOGDescriptor_SetSVMDetector(
+      self,
+      det,
+    );
+  }
+
+  late final _HOGDescriptor_SetSVMDetectorPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, VecF32)>>('HOGDescriptor_SetSVMDetector');
+  late final _HOGDescriptor_SetSVMDetector = _HOGDescriptor_SetSVMDetectorPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(HOGDescriptor, VecF32)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_SetSVMDetector_Async(
+    HOGDescriptor self,
+    VecF32 det,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _HOGDescriptor_SetSVMDetector_Async(
+      self,
+      det,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_SetSVMDetector_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, VecF32,
+              imp1.CvCallback_0)>>('HOGDescriptor_SetSVMDetector_Async');
+  late final _HOGDescriptor_SetSVMDetector_Async =
+      _HOGDescriptor_SetSVMDetector_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, VecF32, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_computeGradient(
+    HOGDescriptor self,
+    Mat img,
+    Mat grad,
+    Mat angleOfs,
+    Size paddingTL,
+    Size paddingBR,
+  ) {
+    return _HOGDescriptor_computeGradient(
+      self,
+      img,
+      grad,
+      angleOfs,
+      paddingTL,
+      paddingBR,
+    );
+  }
+
+  late final _HOGDescriptor_computeGradientPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, Mat, Mat, Size,
+              Size)>>('HOGDescriptor_computeGradient');
+  late final _HOGDescriptor_computeGradient =
+      _HOGDescriptor_computeGradientPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, Mat, Mat, Size, Size)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_computeGradient_Async(
+    HOGDescriptor self,
+    Mat img,
+    Mat grad,
+    Mat angleOfs,
+    Size paddingTL,
+    Size paddingBR,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _HOGDescriptor_computeGradient_Async(
+      self,
+      img,
+      grad,
+      angleOfs,
+      paddingTL,
+      paddingBR,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_computeGradient_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, Mat, Mat, Mat, Size,
+              Size, imp1.CvCallback_0)>>('HOGDescriptor_computeGradient_Async');
+  late final _HOGDescriptor_computeGradient_Async =
+      _HOGDescriptor_computeGradient_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, Mat, Mat, Mat, Size, Size, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getDaimlerPeopleDetector(
+    ffi.Pointer<VecF32> rval,
+  ) {
+    return _HOGDescriptor_getDaimlerPeopleDetector(
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_getDaimlerPeopleDetectorPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
+      'HOGDescriptor_getDaimlerPeopleDetector');
+  late final _HOGDescriptor_getDaimlerPeopleDetector =
+      _HOGDescriptor_getDaimlerPeopleDetectorPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getDaimlerPeopleDetector_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_getDaimlerPeopleDetector_Async(
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_getDaimlerPeopleDetector_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'HOGDescriptor_getDaimlerPeopleDetector_Async');
+  late final _HOGDescriptor_getDaimlerPeopleDetector_Async =
+      _HOGDescriptor_getDaimlerPeopleDetector_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getDescriptorSize(
+    HOGDescriptor self,
+    ffi.Pointer<ffi.Size> rval,
+  ) {
+    return _HOGDescriptor_getDescriptorSize(
+      self,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_getDescriptorSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor,
+              ffi.Pointer<ffi.Size>)>>('HOGDescriptor_getDescriptorSize');
+  late final _HOGDescriptor_getDescriptorSize =
+      _HOGDescriptor_getDescriptorSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, ffi.Pointer<ffi.Size>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getDescriptorSize_Async(
+    HOGDescriptor self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_getDescriptorSize_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_getDescriptorSize_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor,
+              imp1.CvCallback_1)>>('HOGDescriptor_getDescriptorSize_Async');
+  late final _HOGDescriptor_getDescriptorSize_Async =
+      _HOGDescriptor_getDescriptorSize_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getWinSigma(
+    HOGDescriptor self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _HOGDescriptor_getWinSigma(
+      self,
+      rval,
+    );
+  }
+
+  late final _HOGDescriptor_getWinSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor,
+              ffi.Pointer<ffi.Double>)>>('HOGDescriptor_getWinSigma');
+  late final _HOGDescriptor_getWinSigma =
+      _HOGDescriptor_getWinSigmaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_getWinSigma_Async(
+    HOGDescriptor self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOGDescriptor_getWinSigma_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_getWinSigma_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor,
+              imp1.CvCallback_1)>>('HOGDescriptor_getWinSigma_Async');
+  late final _HOGDescriptor_getWinSigma_Async =
+      _HOGDescriptor_getWinSigma_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_groupRectangles(
+    HOGDescriptor self,
+    ffi.Pointer<VecRect> rectList,
+    ffi.Pointer<VecF64> weights,
+    int groupThreshold,
+    double eps,
+  ) {
+    return _HOGDescriptor_groupRectangles(
+      self,
+      rectList,
+      weights,
+      groupThreshold,
+      eps,
+    );
+  }
+
+  late final _HOGDescriptor_groupRectanglesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>,
+              ffi.Int,
+              ffi.Double)>>('HOGDescriptor_groupRectangles');
+  late final _HOGDescriptor_groupRectangles =
+      _HOGDescriptor_groupRectanglesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>, int, double)>();
+
+  ffi.Pointer<CvStatus> HOGDescriptor_groupRectangles_Async(
+    HOGDescriptor self,
+    ffi.Pointer<VecRect> rectList,
+    ffi.Pointer<VecF64> weights,
+    int groupThreshold,
+    double eps,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _HOGDescriptor_groupRectangles_Async(
+      self,
+      rectList,
+      weights,
+      groupThreshold,
+      eps,
+      callback,
+    );
+  }
+
+  late final _HOGDescriptor_groupRectangles_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              HOGDescriptor,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>,
+              ffi.Int,
+              ffi.Double,
+              imp1.CvCallback_0)>>('HOGDescriptor_groupRectangles_Async');
+  late final _HOGDescriptor_groupRectangles_Async =
+      _HOGDescriptor_groupRectangles_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(HOGDescriptor, ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF64>, int, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector(
+    ffi.Pointer<VecF32> rval,
+  ) {
+    return _HOG_GetDefaultPeopleDetector(
+      rval,
+    );
+  }
+
+  late final _HOG_GetDefaultPeopleDetectorPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
+      'HOG_GetDefaultPeopleDetector');
+  late final _HOG_GetDefaultPeopleDetector = _HOG_GetDefaultPeopleDetectorPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
+
+  ffi.Pointer<CvStatus> HOG_GetDefaultPeopleDetector_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _HOG_GetDefaultPeopleDetector_Async(
+      callback,
+    );
+  }
+
+  late final _HOG_GetDefaultPeopleDetector_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'HOG_GetDefaultPeopleDetector_Async');
+  late final _HOG_GetDefaultPeopleDetector_Async =
+      _HOG_GetDefaultPeopleDetector_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> HoughCircles(
     Mat src,
@@ -8125,6 +13223,187 @@ class CvNativeCore {
   late final _Laplacian_Async = _Laplacian_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, int, int, double, double, int, imp1.CvCallback_1)>();
+
+  void Layer_Close(
+    LayerPtr layer,
+  ) {
+    return _Layer_Close(
+      layer,
+    );
+  }
+
+  late final _Layer_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>('Layer_Close');
+  late final _Layer_Close =
+      _Layer_ClosePtr.asFunction<void Function(LayerPtr)>();
+
+  void Layer_Close_Async(
+    LayerPtr layer,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _Layer_Close_Async(
+      layer,
+      callback,
+    );
+  }
+
+  late final _Layer_Close_AsyncPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(LayerPtr, imp1.CvCallback_0)>>(
+      'Layer_Close_Async');
+  late final _Layer_Close_Async = _Layer_Close_AsyncPtr.asFunction<
+      void Function(LayerPtr, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> Layer_GetName(
+    Layer layer,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Layer_GetName(
+      layer,
+      rval,
+    );
+  }
+
+  late final _Layer_GetNamePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Layer_GetName');
+  late final _Layer_GetName = _Layer_GetNamePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> Layer_GetName_Async(
+    Layer layer,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Layer_GetName_Async(
+      layer,
+      callback,
+    );
+  }
+
+  late final _Layer_GetName_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, imp1.CvCallback_1)>>('Layer_GetName_Async');
+  late final _Layer_GetName_Async = _Layer_GetName_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Layer, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Layer_GetType(
+    Layer layer,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Layer_GetType(
+      layer,
+      rval,
+    );
+  }
+
+  late final _Layer_GetTypePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Layer_GetType');
+  late final _Layer_GetType = _Layer_GetTypePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Layer, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> Layer_GetType_Async(
+    Layer layer,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Layer_GetType_Async(
+      layer,
+      callback,
+    );
+  }
+
+  late final _Layer_GetType_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, imp1.CvCallback_1)>>('Layer_GetType_Async');
+  late final _Layer_GetType_Async = _Layer_GetType_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Layer, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Layer_InputNameToIndex(
+    Layer layer,
+    ffi.Pointer<ffi.Char> name,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Layer_InputNameToIndex(
+      layer,
+      name,
+      rval,
+    );
+  }
+
+  late final _Layer_InputNameToIndexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Int>)>>('Layer_InputNameToIndex');
+  late final _Layer_InputNameToIndex = _Layer_InputNameToIndexPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> Layer_InputNameToIndex_Async(
+    Layer layer,
+    ffi.Pointer<ffi.Char> name,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Layer_InputNameToIndex_Async(
+      layer,
+      name,
+      callback,
+    );
+  }
+
+  late final _Layer_InputNameToIndex_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Layer_InputNameToIndex_Async');
+  late final _Layer_InputNameToIndex_Async =
+      _Layer_InputNameToIndex_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Layer_OutputNameToIndex(
+    Layer layer,
+    ffi.Pointer<ffi.Char> name,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _Layer_OutputNameToIndex(
+      layer,
+      name,
+      rval,
+    );
+  }
+
+  late final _Layer_OutputNameToIndexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Int>)>>('Layer_OutputNameToIndex');
+  late final _Layer_OutputNameToIndex = _Layer_OutputNameToIndexPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Layer, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> Layer_OutputNameToIndex_Async(
+    Layer layer,
+    ffi.Pointer<ffi.Char> name,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Layer_OutputNameToIndex_Async(
+      layer,
+      name,
+      callback,
+    );
+  }
+
+  late final _Layer_OutputNameToIndex_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Layer, ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Layer_OutputNameToIndex_Async');
+  late final _Layer_OutputNameToIndex_Async =
+      _Layer_OutputNameToIndex_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Layer, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> Line(
     Mat img,
@@ -14403,6 +19682,1370 @@ class CvNativeCore {
   late final _MorphologyEx_Async = _MorphologyEx_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, int, Mat, imp1.CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> NMSBoxes(
+    VecRect bboxes,
+    VecF32 scores,
+    double score_threshold,
+    double nms_threshold,
+    ffi.Pointer<VecI32> indices,
+  ) {
+    return _NMSBoxes(
+      bboxes,
+      scores,
+      score_threshold,
+      nms_threshold,
+      indices,
+    );
+  }
+
+  late final _NMSBoxesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              ffi.Pointer<VecI32>)>>('NMSBoxes');
+  late final _NMSBoxes = _NMSBoxesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          VecRect, VecF32, double, double, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> NMSBoxesWithParams(
+    VecRect bboxes,
+    VecF32 scores,
+    double score_threshold,
+    double nms_threshold,
+    ffi.Pointer<VecI32> indices,
+    double eta,
+    int top_k,
+  ) {
+    return _NMSBoxesWithParams(
+      bboxes,
+      scores,
+      score_threshold,
+      nms_threshold,
+      indices,
+      eta,
+      top_k,
+    );
+  }
+
+  late final _NMSBoxesWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              ffi.Pointer<VecI32>, ffi.Float, ffi.Int)>>('NMSBoxesWithParams');
+  late final _NMSBoxesWithParams = _NMSBoxesWithParamsPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          VecRect, VecF32, double, double, ffi.Pointer<VecI32>, double, int)>();
+
+  ffi.Pointer<CvStatus> NMSBoxesWithParams_Async(
+    VecRect bboxes,
+    VecF32 scores,
+    double score_threshold,
+    double nms_threshold,
+    double eta,
+    int top_k,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _NMSBoxesWithParams_Async(
+      bboxes,
+      scores,
+      score_threshold,
+      nms_threshold,
+      eta,
+      top_k,
+      callback,
+    );
+  }
+
+  late final _NMSBoxesWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecRect,
+              VecF32,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              imp1.CvCallback_1)>>('NMSBoxesWithParams_Async');
+  late final _NMSBoxesWithParams_Async =
+      _NMSBoxesWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, double, double,
+              double, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> NMSBoxes_Async(
+    VecRect bboxes,
+    VecF32 scores,
+    double score_threshold,
+    double nms_threshold,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _NMSBoxes_Async(
+      bboxes,
+      scores,
+      score_threshold,
+      nms_threshold,
+      callback,
+    );
+  }
+
+  late final _NMSBoxes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecRect, VecF32, ffi.Float, ffi.Float,
+              imp1.CvCallback_1)>>('NMSBoxes_Async');
+  late final _NMSBoxes_Async = _NMSBoxes_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          VecRect, VecF32, double, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_BlobFromImage(
+    Mat image,
+    Mat blob,
+    double scalefactor,
+    Size size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+  ) {
+    return _Net_BlobFromImage(
+      image,
+      blob,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+    );
+  }
+
+  late final _Net_BlobFromImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Size, Scalar,
+              ffi.Bool, ffi.Bool, ffi.Int)>>('Net_BlobFromImage');
+  late final _Net_BlobFromImage = _Net_BlobFromImagePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, double, Size, Scalar, bool, bool, int)>();
+
+  ffi.Pointer<CvStatus> Net_BlobFromImage_Async(
+    Mat image,
+    double scalefactor,
+    Size size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_BlobFromImage_Async(
+      image,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+      callback,
+    );
+  }
+
+  late final _Net_BlobFromImage_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Double,
+              Size,
+              Scalar,
+              ffi.Bool,
+              ffi.Bool,
+              ffi.Int,
+              imp1.CvCallback_1)>>('Net_BlobFromImage_Async');
+  late final _Net_BlobFromImage_Async = _Net_BlobFromImage_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, double, Size, Scalar, bool, bool, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_BlobFromImages(
+    VecMat images,
+    Mat blob,
+    double scalefactor,
+    Size size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+  ) {
+    return _Net_BlobFromImages(
+      images,
+      blob,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+    );
+  }
+
+  late final _Net_BlobFromImagesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Double, Size, Scalar,
+              ffi.Bool, ffi.Bool, ffi.Int)>>('Net_BlobFromImages');
+  late final _Net_BlobFromImages = _Net_BlobFromImagesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          VecMat, Mat, double, Size, Scalar, bool, bool, int)>();
+
+  ffi.Pointer<CvStatus> Net_BlobFromImages_Async(
+    VecMat images,
+    double scalefactor,
+    Size size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_BlobFromImages_Async(
+      images,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+      callback,
+    );
+  }
+
+  late final _Net_BlobFromImages_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecMat,
+              ffi.Double,
+              Size,
+              Scalar,
+              ffi.Bool,
+              ffi.Bool,
+              ffi.Int,
+              imp1.CvCallback_1)>>('Net_BlobFromImages_Async');
+  late final _Net_BlobFromImages_Async =
+      _Net_BlobFromImages_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecMat, double, Size, Scalar, bool,
+              bool, int, imp1.CvCallback_1)>();
+
+  void Net_Close(
+    NetPtr net,
+  ) {
+    return _Net_Close(
+      net,
+    );
+  }
+
+  late final _Net_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(NetPtr)>>('Net_Close');
+  late final _Net_Close = _Net_ClosePtr.asFunction<void Function(NetPtr)>();
+
+  void Net_Close_Async(
+    NetPtr net,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _Net_Close_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_Close_AsyncPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(NetPtr, imp1.CvCallback_0)>>(
+          'Net_Close_Async');
+  late final _Net_Close_Async = _Net_Close_AsyncPtr.asFunction<
+      void Function(NetPtr, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> Net_Create(
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_Create(
+      rval,
+    );
+  }
+
+  late final _Net_CreatePtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<Net>)>>(
+      'Net_Create');
+  late final _Net_Create = _Net_CreatePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_Create_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_Create_Async(
+      callback,
+    );
+  }
+
+  late final _Net_Create_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'Net_Create_Async');
+  late final _Net_Create_Async = _Net_Create_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_Dump(
+    Net net,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _Net_Dump(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_DumpPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('Net_Dump');
+  late final _Net_Dump = _Net_DumpPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> Net_Dump_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_Dump_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_Dump_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_Dump_Async');
+  late final _Net_Dump_Async = _Net_Dump_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_Empty(
+    Net net,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _Net_Empty(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_EmptyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<ffi.Bool>)>>('Net_Empty');
+  late final _Net_Empty = _Net_EmptyPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> Net_Empty_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_Empty_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_Empty_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_Empty_Async');
+  late final _Net_Empty_Async = _Net_Empty_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_Forward(
+    Net net,
+    ffi.Pointer<ffi.Char> outputName,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Net_Forward(
+      net,
+      outputName,
+      rval,
+    );
+  }
+
+  late final _Net_ForwardPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<ffi.Char>, ffi.Pointer<Mat>)>>('Net_Forward');
+  late final _Net_Forward = _Net_ForwardPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, ffi.Pointer<ffi.Char>, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> Net_ForwardLayers(
+    Net net,
+    ffi.Pointer<VecMat> outputBlobs,
+    VecVecChar outBlobNames,
+  ) {
+    return _Net_ForwardLayers(
+      net,
+      outputBlobs,
+      outBlobNames,
+    );
+  }
+
+  late final _Net_ForwardLayersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<VecMat>, VecVecChar)>>('Net_ForwardLayers');
+  late final _Net_ForwardLayers = _Net_ForwardLayersPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecMat>, VecVecChar)>();
+
+  ffi.Pointer<CvStatus> Net_ForwardLayers_Async(
+    Net net,
+    VecVecChar outBlobNames,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ForwardLayers_Async(
+      net,
+      outBlobNames,
+      callback,
+    );
+  }
+
+  late final _Net_ForwardLayers_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, VecVecChar, imp1.CvCallback_1)>>('Net_ForwardLayers_Async');
+  late final _Net_ForwardLayers_Async = _Net_ForwardLayers_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, VecVecChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_Forward_Async(
+    Net net,
+    ffi.Pointer<ffi.Char> outputName,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_Forward_Async(
+      net,
+      outputName,
+      callback,
+    );
+  }
+
+  late final _Net_Forward_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_Forward_Async');
+  late final _Net_Forward_Async = _Net_Forward_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_FromNet(
+    Net net,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_FromNet(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_FromNetPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<Net>)>>('Net_FromNet');
+  late final _Net_FromNet = _Net_FromNetPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_FromNet_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_FromNet_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_FromNet_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_FromNet_Async');
+  late final _Net_FromNet_Async = _Net_FromNet_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetBlobChannel(
+    Mat blob,
+    int imgidx,
+    int chnidx,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _Net_GetBlobChannel(
+      blob,
+      imgidx,
+      chnidx,
+      rval,
+    );
+  }
+
+  late final _Net_GetBlobChannelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>>('Net_GetBlobChannel');
+  late final _Net_GetBlobChannel = _Net_GetBlobChannelPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, int, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> Net_GetBlobChannel_Async(
+    Mat blob,
+    int imgidx,
+    int chnidx,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetBlobChannel_Async(
+      blob,
+      imgidx,
+      chnidx,
+      callback,
+    );
+  }
+
+  late final _Net_GetBlobChannel_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              imp1.CvCallback_1)>>('Net_GetBlobChannel_Async');
+  late final _Net_GetBlobChannel_Async =
+      _Net_GetBlobChannel_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, int, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetBlobSize(
+    Mat blob,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _Net_GetBlobSize(
+      blob,
+      rval,
+    );
+  }
+
+  late final _Net_GetBlobSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Scalar>)>>('Net_GetBlobSize');
+  late final _Net_GetBlobSize = _Net_GetBlobSizePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> Net_GetBlobSize_Async(
+    Mat blob,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetBlobSize_Async(
+      blob,
+      callback,
+    );
+  }
+
+  late final _Net_GetBlobSize_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('Net_GetBlobSize_Async');
+  late final _Net_GetBlobSize_Async = _Net_GetBlobSize_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetInputDetails(
+    Net net,
+    ffi.Pointer<VecF32> scales,
+    ffi.Pointer<VecI32> zeropoints,
+  ) {
+    return _Net_GetInputDetails(
+      net,
+      scales,
+      zeropoints,
+    );
+  }
+
+  late final _Net_GetInputDetailsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecF32>,
+              ffi.Pointer<VecI32>)>>('Net_GetInputDetails');
+  late final _Net_GetInputDetails = _Net_GetInputDetailsPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, ffi.Pointer<VecF32>, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> Net_GetInputDetails_Async(
+    Net net,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _Net_GetInputDetails_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_GetInputDetails_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_2)>>('Net_GetInputDetails_Async');
+  late final _Net_GetInputDetails_Async = _Net_GetInputDetails_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> Net_GetLayer(
+    Net net,
+    int layerid,
+    ffi.Pointer<Layer> rval,
+  ) {
+    return _Net_GetLayer(
+      net,
+      layerid,
+      rval,
+    );
+  }
+
+  late final _Net_GetLayerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Int, ffi.Pointer<Layer>)>>('Net_GetLayer');
+  late final _Net_GetLayer = _Net_GetLayerPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, int, ffi.Pointer<Layer>)>();
+
+  ffi.Pointer<CvStatus> Net_GetLayerNames(
+    Net net,
+    ffi.Pointer<VecVecChar> rval,
+  ) {
+    return _Net_GetLayerNames(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_GetLayerNamesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<VecVecChar>)>>('Net_GetLayerNames');
+  late final _Net_GetLayerNames = _Net_GetLayerNamesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecVecChar>)>();
+
+  ffi.Pointer<CvStatus> Net_GetLayerNames_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetLayerNames_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_GetLayerNames_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_GetLayerNames_Async');
+  late final _Net_GetLayerNames_Async = _Net_GetLayerNames_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetLayer_Async(
+    Net net,
+    int layerid,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetLayer_Async(
+      net,
+      layerid,
+      callback,
+    );
+  }
+
+  late final _Net_GetLayer_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Int, imp1.CvCallback_1)>>('Net_GetLayer_Async');
+  late final _Net_GetLayer_Async = _Net_GetLayer_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetPerfProfile(
+    Net net,
+    ffi.Pointer<ffi.Int64> rval,
+  ) {
+    return _Net_GetPerfProfile(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_GetPerfProfilePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<ffi.Int64>)>>('Net_GetPerfProfile');
+  late final _Net_GetPerfProfile = _Net_GetPerfProfilePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Int64>)>();
+
+  ffi.Pointer<CvStatus> Net_GetPerfProfile_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetPerfProfile_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_GetPerfProfile_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_GetPerfProfile_Async');
+  late final _Net_GetPerfProfile_Async = _Net_GetPerfProfile_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_GetUnconnectedOutLayers(
+    Net net,
+    ffi.Pointer<VecI32> rval,
+  ) {
+    return _Net_GetUnconnectedOutLayers(
+      net,
+      rval,
+    );
+  }
+
+  late final _Net_GetUnconnectedOutLayersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, ffi.Pointer<VecI32>)>>('Net_GetUnconnectedOutLayers');
+  late final _Net_GetUnconnectedOutLayers = _Net_GetUnconnectedOutLayersPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> Net_GetUnconnectedOutLayers_Async(
+    Net net,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_GetUnconnectedOutLayers_Async(
+      net,
+      callback,
+    );
+  }
+
+  late final _Net_GetUnconnectedOutLayers_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, imp1.CvCallback_1)>>('Net_GetUnconnectedOutLayers_Async');
+  late final _Net_GetUnconnectedOutLayers_Async =
+      _Net_GetUnconnectedOutLayers_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Net, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ImagesFromBlob(
+    Mat blob,
+    ffi.Pointer<VecMat> rval,
+  ) {
+    return _Net_ImagesFromBlob(
+      blob,
+      rval,
+    );
+  }
+
+  late final _Net_ImagesFromBlobPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecMat>)>>('Net_ImagesFromBlob');
+  late final _Net_ImagesFromBlob = _Net_ImagesFromBlobPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecMat>)>();
+
+  ffi.Pointer<CvStatus> Net_ImagesFromBlob_Async(
+    Mat blob,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ImagesFromBlob_Async(
+      blob,
+      callback,
+    );
+  }
+
+  late final _Net_ImagesFromBlob_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('Net_ImagesFromBlob_Async');
+  late final _Net_ImagesFromBlob_Async = _Net_ImagesFromBlob_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNet(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    ffi.Pointer<ffi.Char> framework,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNet(
+      model,
+      config,
+      framework,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Net>)>>('Net_ReadNet');
+  late final _Net_ReadNet = _Net_ReadNetPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetBytes(
+    ffi.Pointer<ffi.Char> framework,
+    VecUChar model,
+    VecUChar config,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetBytes(
+      framework,
+      model,
+      config,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetBytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, VecUChar,
+              VecUChar, ffi.Pointer<Net>)>>('Net_ReadNetBytes');
+  late final _Net_ReadNetBytes = _Net_ReadNetBytesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, VecUChar, VecUChar, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetBytes_Async(
+    ffi.Pointer<ffi.Char> framework,
+    VecUChar model,
+    VecUChar config,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetBytes_Async(
+      framework,
+      model,
+      config,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetBytes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, VecUChar,
+              VecUChar, imp1.CvCallback_1)>>('Net_ReadNetBytes_Async');
+  late final _Net_ReadNetBytes_Async = _Net_ReadNetBytes_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, VecUChar, VecUChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromCaffe(
+    ffi.Pointer<ffi.Char> prototxt,
+    ffi.Pointer<ffi.Char> caffeModel,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromCaffe(
+      prototxt,
+      caffeModel,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromCaffePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Net>)>>('Net_ReadNetFromCaffe');
+  late final _Net_ReadNetFromCaffe = _Net_ReadNetFromCaffePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromCaffeBytes(
+    VecUChar prototxt,
+    VecUChar caffeModel,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromCaffeBytes(
+      prototxt,
+      caffeModel,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromCaffeBytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, VecUChar,
+              ffi.Pointer<Net>)>>('Net_ReadNetFromCaffeBytes');
+  late final _Net_ReadNetFromCaffeBytes =
+      _Net_ReadNetFromCaffeBytesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, VecUChar, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromCaffeBytes_Async(
+    VecUChar prototxt,
+    VecUChar caffeModel,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromCaffeBytes_Async(
+      prototxt,
+      caffeModel,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromCaffeBytes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, VecUChar,
+              imp1.CvCallback_1)>>('Net_ReadNetFromCaffeBytes_Async');
+  late final _Net_ReadNetFromCaffeBytes_Async =
+      _Net_ReadNetFromCaffeBytes_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, VecUChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromCaffe_Async(
+    ffi.Pointer<ffi.Char> prototxt,
+    ffi.Pointer<ffi.Char> caffeModel,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromCaffe_Async(
+      prototxt,
+      caffeModel,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromCaffe_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_ReadNetFromCaffe_Async');
+  late final _Net_ReadNetFromCaffe_Async =
+      _Net_ReadNetFromCaffe_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromONNX(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromONNX(
+      model,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromONNXPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>>('Net_ReadNetFromONNX');
+  late final _Net_ReadNetFromONNX = _Net_ReadNetFromONNXPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromONNXBytes(
+    VecUChar model,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromONNXBytes(
+      model,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromONNXBytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, ffi.Pointer<Net>)>>('Net_ReadNetFromONNXBytes');
+  late final _Net_ReadNetFromONNXBytes = _Net_ReadNetFromONNXBytesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromONNXBytes_Async(
+    VecUChar model,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromONNXBytes_Async(
+      model,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromONNXBytes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, imp1.CvCallback_1)>>('Net_ReadNetFromONNXBytes_Async');
+  late final _Net_ReadNetFromONNXBytes_Async =
+      _Net_ReadNetFromONNXBytes_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromONNX_Async(
+    ffi.Pointer<ffi.Char> model,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromONNX_Async(
+      model,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromONNX_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_ReadNetFromONNX_Async');
+  late final _Net_ReadNetFromONNX_Async =
+      _Net_ReadNetFromONNX_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTFLite(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromTFLite(
+      model,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromTFLitePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Net>)>>('Net_ReadNetFromTFLite');
+  late final _Net_ReadNetFromTFLite = _Net_ReadNetFromTFLitePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTFLiteBytes(
+    VecUChar bufferModel,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromTFLiteBytes(
+      bufferModel,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromTFLiteBytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, ffi.Pointer<Net>)>>('Net_ReadNetFromTFLiteBytes');
+  late final _Net_ReadNetFromTFLiteBytes = _Net_ReadNetFromTFLiteBytesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VecUChar, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTFLiteBytes_Async(
+    VecUChar bufferModel,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromTFLiteBytes_Async(
+      bufferModel,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromTFLiteBytes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar,
+              imp1.CvCallback_1)>>('Net_ReadNetFromTFLiteBytes_Async');
+  late final _Net_ReadNetFromTFLiteBytes_Async =
+      _Net_ReadNetFromTFLiteBytes_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTFLite_Async(
+    ffi.Pointer<ffi.Char> model,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromTFLite_Async(
+      model,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromTFLite_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_ReadNetFromTFLite_Async');
+  late final _Net_ReadNetFromTFLite_Async =
+      _Net_ReadNetFromTFLite_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTensorflow(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromTensorflow(
+      model,
+      config,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromTensorflowPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Net>)>>('Net_ReadNetFromTensorflow');
+  late final _Net_ReadNetFromTensorflow =
+      _Net_ReadNetFromTensorflowPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTensorflowBytes(
+    VecUChar model,
+    VecUChar config,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromTensorflowBytes(
+      model,
+      config,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromTensorflowBytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, VecUChar,
+              ffi.Pointer<Net>)>>('Net_ReadNetFromTensorflowBytes');
+  late final _Net_ReadNetFromTensorflowBytes =
+      _Net_ReadNetFromTensorflowBytesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, VecUChar, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTensorflowBytes_Async(
+    VecUChar model,
+    VecUChar config,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromTensorflowBytes_Async(
+      model,
+      config,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromTensorflowBytes_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecUChar, VecUChar,
+              imp1.CvCallback_1)>>('Net_ReadNetFromTensorflowBytes_Async');
+  late final _Net_ReadNetFromTensorflowBytes_Async =
+      _Net_ReadNetFromTensorflowBytes_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, VecUChar, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTensorflow_Async(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromTensorflow_Async(
+      model,
+      config,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromTensorflow_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_ReadNetFromTensorflow_Async');
+  late final _Net_ReadNetFromTensorflow_Async =
+      _Net_ReadNetFromTensorflow_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTorch(
+    ffi.Pointer<ffi.Char> model,
+    bool isBinary,
+    bool evaluate,
+    ffi.Pointer<Net> rval,
+  ) {
+    return _Net_ReadNetFromTorch(
+      model,
+      isBinary,
+      evaluate,
+      rval,
+    );
+  }
+
+  late final _Net_ReadNetFromTorchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Bool,
+              ffi.Bool, ffi.Pointer<Net>)>>('Net_ReadNetFromTorch');
+  late final _Net_ReadNetFromTorch = _Net_ReadNetFromTorchPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, bool, bool, ffi.Pointer<Net>)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNetFromTorch_Async(
+    ffi.Pointer<ffi.Char> model,
+    bool isBinary,
+    bool evaluate,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNetFromTorch_Async(
+      model,
+      isBinary,
+      evaluate,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNetFromTorch_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Bool,
+              ffi.Bool, imp1.CvCallback_1)>>('Net_ReadNetFromTorch_Async');
+  late final _Net_ReadNetFromTorch_Async =
+      _Net_ReadNetFromTorch_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, bool, bool, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_ReadNet_Async(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<ffi.Char> config,
+    ffi.Pointer<ffi.Char> framework,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _Net_ReadNet_Async(
+      model,
+      config,
+      framework,
+      callback,
+    );
+  }
+
+  late final _Net_ReadNet_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('Net_ReadNet_Async');
+  late final _Net_ReadNet_Async = _Net_ReadNet_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> Net_SetInput(
+    Net net,
+    Mat blob,
+    ffi.Pointer<ffi.Char> name,
+  ) {
+    return _Net_SetInput(
+      net,
+      blob,
+      name,
+    );
+  }
+
+  late final _Net_SetInputPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Net, Mat, ffi.Pointer<ffi.Char>)>>('Net_SetInput');
+  late final _Net_SetInput = _Net_SetInputPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, Mat, ffi.Pointer<ffi.Char>)>();
+
+  ffi.Pointer<CvStatus> Net_SetInput_Async(
+    Net net,
+    Mat blob,
+    ffi.Pointer<ffi.Char> name,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _Net_SetInput_Async(
+      net,
+      blob,
+      name,
+      callback,
+    );
+  }
+
+  late final _Net_SetInput_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, Mat, ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_0)>>('Net_SetInput_Async');
+  late final _Net_SetInput_Async = _Net_SetInput_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, Mat, ffi.Pointer<ffi.Char>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> Net_SetPreferableBackend(
+    Net net,
+    int backend,
+  ) {
+    return _Net_SetPreferableBackend(
+      net,
+      backend,
+    );
+  }
+
+  late final _Net_SetPreferableBackendPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Net, ffi.Int)>>(
+          'Net_SetPreferableBackend');
+  late final _Net_SetPreferableBackend = _Net_SetPreferableBackendPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Net, int)>();
+
+  ffi.Pointer<CvStatus> Net_SetPreferableBackend_Async(
+    Net net,
+    int backend,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _Net_SetPreferableBackend_Async(
+      net,
+      backend,
+      callback,
+    );
+  }
+
+  late final _Net_SetPreferableBackend_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Int,
+              imp1.CvCallback_0)>>('Net_SetPreferableBackend_Async');
+  late final _Net_SetPreferableBackend_Async =
+      _Net_SetPreferableBackend_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Net, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> Net_SetPreferableTarget(
+    Net net,
+    int target,
+  ) {
+    return _Net_SetPreferableTarget(
+      net,
+      target,
+    );
+  }
+
+  late final _Net_SetPreferableTargetPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Net, ffi.Int)>>(
+          'Net_SetPreferableTarget');
+  late final _Net_SetPreferableTarget = _Net_SetPreferableTargetPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Net, int)>();
+
+  ffi.Pointer<CvStatus> Net_SetPreferableTarget_Async(
+    Net net,
+    int target,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _Net_SetPreferableTarget_Async(
+      net,
+      target,
+      callback,
+    );
+  }
+
+  late final _Net_SetPreferableTarget_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Int,
+              imp1.CvCallback_0)>>('Net_SetPreferableTarget_Async');
+  late final _Net_SetPreferableTarget_Async =
+      _Net_SetPreferableTarget_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Net, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> Net_forwardAsync(
+    Net net,
+    ffi.Pointer<ffi.Char> outputName,
+    ffi.Pointer<AsyncArray> rval,
+  ) {
+    return _Net_forwardAsync(
+      net,
+      outputName,
+      rval,
+    );
+  }
+
+  late final _Net_forwardAsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<AsyncArray>)>>('Net_forwardAsync');
+  late final _Net_forwardAsync = _Net_forwardAsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Net, ffi.Pointer<ffi.Char>, ffi.Pointer<AsyncArray>)>();
+
   ffi.Pointer<CvStatus> Norm(
     Mat src1,
     int normType,
@@ -15161,6 +21804,1189 @@ class CvNativeCore {
               Mat, Size, ffi.Int, imp1.CvCallback_1)>>('PyrUp_Async');
   late final _PyrUp_Async = _PyrUp_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Size, int, imp1.CvCallback_1)>();
+
+  void QRCodeDetector_Close(
+    QRCodeDetectorPtr self,
+  ) {
+    return _QRCodeDetector_Close(
+      self,
+    );
+  }
+
+  late final _QRCodeDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QRCodeDetectorPtr)>>(
+          'QRCodeDetector_Close');
+  late final _QRCodeDetector_Close =
+      _QRCodeDetector_ClosePtr.asFunction<void Function(QRCodeDetectorPtr)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_Decode(
+    QRCodeDetector self,
+    Mat input,
+    ffi.Pointer<VecPoint> points,
+    Mat straight_qrcode,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _QRCodeDetector_Decode(
+      self,
+      input,
+      points,
+      straight_qrcode,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_DecodePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              Mat,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>>('QRCodeDetector_Decode');
+  late final _QRCodeDetector_Decode = _QRCodeDetector_DecodePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, ffi.Pointer<VecPoint>,
+          Mat, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_Decode_Async(
+    QRCodeDetector self,
+    Mat input,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _QRCodeDetector_Decode_Async(
+      self,
+      input,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_Decode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              imp1.CvCallback_3)>>('QRCodeDetector_Decode_Async');
+  late final _QRCodeDetector_Decode_Async =
+      _QRCodeDetector_Decode_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_Detect(
+    QRCodeDetector self,
+    Mat input,
+    ffi.Pointer<VecPoint> points,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _QRCodeDetector_Detect(
+      self,
+      input,
+      points,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_DetectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<ffi.Bool>)>>('QRCodeDetector_Detect');
+  late final _QRCodeDetector_Detect = _QRCodeDetector_DetectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          QRCodeDetector, Mat, ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecode(
+    QRCodeDetector self,
+    Mat input,
+    ffi.Pointer<VecPoint> points,
+    ffi.Pointer<Mat> straight_qrcode,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _QRCodeDetector_DetectAndDecode(
+      self,
+      input,
+      points,
+      straight_qrcode,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_DetectAndDecodePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  QRCodeDetector,
+                  Mat,
+                  ffi.Pointer<VecPoint>,
+                  ffi.Pointer<Mat>,
+                  ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'QRCodeDetector_DetectAndDecode');
+  late final _QRCodeDetector_DetectAndDecode =
+      _QRCodeDetector_DetectAndDecodePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<Mat>,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecodeMulti(
+    QRCodeDetector self,
+    Mat input,
+    ffi.Pointer<VecVecChar> decoded,
+    ffi.Pointer<VecPoint> points,
+    ffi.Pointer<VecMat> straight_code,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _QRCodeDetector_DetectAndDecodeMulti(
+      self,
+      input,
+      decoded,
+      points,
+      straight_code,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_DetectAndDecodeMultiPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<VecMat>,
+              ffi.Pointer<ffi.Bool>)>>('QRCodeDetector_DetectAndDecodeMulti');
+  late final _QRCodeDetector_DetectAndDecodeMulti =
+      _QRCodeDetector_DetectAndDecodeMultiPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<VecMat>,
+              ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecodeMulti_Async(
+    QRCodeDetector self,
+    Mat input,
+    imp1.CvCallback_4 callback,
+  ) {
+    return _QRCodeDetector_DetectAndDecodeMulti_Async(
+      self,
+      input,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_DetectAndDecodeMulti_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              imp1.CvCallback_4)>>('QRCodeDetector_DetectAndDecodeMulti_Async');
+  late final _QRCodeDetector_DetectAndDecodeMulti_Async =
+      _QRCodeDetector_DetectAndDecodeMulti_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_4)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectAndDecode_Async(
+    QRCodeDetector self,
+    Mat input,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _QRCodeDetector_DetectAndDecode_Async(
+      self,
+      input,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_DetectAndDecode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              imp1.CvCallback_3)>>('QRCodeDetector_DetectAndDecode_Async');
+  late final _QRCodeDetector_DetectAndDecode_Async =
+      _QRCodeDetector_DetectAndDecode_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectMulti(
+    QRCodeDetector self,
+    Mat input,
+    ffi.Pointer<VecPoint> points,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _QRCodeDetector_DetectMulti(
+      self,
+      input,
+      points,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_DetectMultiPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<ffi.Bool>)>>('QRCodeDetector_DetectMulti');
+  late final _QRCodeDetector_DetectMulti =
+      _QRCodeDetector_DetectMultiPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              ffi.Pointer<VecPoint>, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_DetectMulti_Async(
+    QRCodeDetector self,
+    Mat input,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _QRCodeDetector_DetectMulti_Async(
+      self,
+      input,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_DetectMulti_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              imp1.CvCallback_2)>>('QRCodeDetector_DetectMulti_Async');
+  late final _QRCodeDetector_DetectMulti_Async =
+      _QRCodeDetector_DetectMulti_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_Detect_Async(
+    QRCodeDetector self,
+    Mat input,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _QRCodeDetector_Detect_Async(
+      self,
+      input,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_Detect_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat,
+              imp1.CvCallback_2)>>('QRCodeDetector_Detect_Async');
+  late final _QRCodeDetector_Detect_Async =
+      _QRCodeDetector_Detect_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_New(
+    ffi.Pointer<QRCodeDetector> rval,
+  ) {
+    return _QRCodeDetector_New(
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<QRCodeDetector>)>>('QRCodeDetector_New');
+  late final _QRCodeDetector_New = _QRCodeDetector_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<QRCodeDetector>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_New_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QRCodeDetector_New_Async(
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_New_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'QRCodeDetector_New_Async');
+  late final _QRCodeDetector_New_Async = _QRCodeDetector_New_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_decodeCurved(
+    QRCodeDetector self,
+    Mat img,
+    VecPoint points,
+    ffi.Pointer<Mat> straight_qrcode,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _QRCodeDetector_decodeCurved(
+      self,
+      img,
+      points,
+      straight_qrcode,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_decodeCurvedPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, VecPoint,
+                  ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'QRCodeDetector_decodeCurved');
+  late final _QRCodeDetector_decodeCurved =
+      _QRCodeDetector_decodeCurvedPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, VecPoint,
+              ffi.Pointer<Mat>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_decodeCurved_Async(
+    QRCodeDetector self,
+    Mat img,
+    VecPoint points,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _QRCodeDetector_decodeCurved_Async(
+      self,
+      img,
+      points,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_decodeCurved_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, Mat, VecPoint,
+              imp1.CvCallback_2)>>('QRCodeDetector_decodeCurved_Async');
+  late final _QRCodeDetector_decodeCurved_Async =
+      _QRCodeDetector_decodeCurved_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, VecPoint, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_detectAndDecodeCurved(
+    QRCodeDetector self,
+    Mat img,
+    ffi.Pointer<VecPoint> points,
+    ffi.Pointer<Mat> straight_qrcode,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _QRCodeDetector_detectAndDecodeCurved(
+      self,
+      img,
+      points,
+      straight_qrcode,
+      rval,
+    );
+  }
+
+  late final _QRCodeDetector_detectAndDecodeCurvedPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  QRCodeDetector,
+                  Mat,
+                  ffi.Pointer<VecPoint>,
+                  ffi.Pointer<Mat>,
+                  ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'QRCodeDetector_detectAndDecodeCurved');
+  late final _QRCodeDetector_detectAndDecodeCurved =
+      _QRCodeDetector_detectAndDecodeCurvedPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector,
+              Mat,
+              ffi.Pointer<VecPoint>,
+              ffi.Pointer<Mat>,
+              ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_detectAndDecodeCurved_Async(
+    QRCodeDetector self,
+    Mat img,
+    imp1.CvCallback_3 callback,
+  ) {
+    return _QRCodeDetector_detectAndDecodeCurved_Async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_detectAndDecodeCurved_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  QRCodeDetector, Mat, imp1.CvCallback_3)>>(
+      'QRCodeDetector_detectAndDecodeCurved_Async');
+  late final _QRCodeDetector_detectAndDecodeCurved_Async =
+      _QRCodeDetector_detectAndDecodeCurved_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, Mat, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setEpsX(
+    QRCodeDetector self,
+    double epsX,
+  ) {
+    return _QRCodeDetector_setEpsX(
+      self,
+      epsX,
+    );
+  }
+
+  late final _QRCodeDetector_setEpsXPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, ffi.Double)>>('QRCodeDetector_setEpsX');
+  late final _QRCodeDetector_setEpsX = _QRCodeDetector_setEpsXPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QRCodeDetector, double)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setEpsX_Async(
+    QRCodeDetector self,
+    double epsX,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _QRCodeDetector_setEpsX_Async(
+      self,
+      epsX,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_setEpsX_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, ffi.Double,
+              imp1.CvCallback_0)>>('QRCodeDetector_setEpsX_Async');
+  late final _QRCodeDetector_setEpsX_Async =
+      _QRCodeDetector_setEpsX_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setEpsY(
+    QRCodeDetector self,
+    double epsY,
+  ) {
+    return _QRCodeDetector_setEpsY(
+      self,
+      epsY,
+    );
+  }
+
+  late final _QRCodeDetector_setEpsYPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, ffi.Double)>>('QRCodeDetector_setEpsY');
+  late final _QRCodeDetector_setEpsY = _QRCodeDetector_setEpsYPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QRCodeDetector, double)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setEpsY_Async(
+    QRCodeDetector self,
+    double epsY,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _QRCodeDetector_setEpsY_Async(
+      self,
+      epsY,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_setEpsY_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, ffi.Double,
+              imp1.CvCallback_0)>>('QRCodeDetector_setEpsY_Async');
+  late final _QRCodeDetector_setEpsY_Async =
+      _QRCodeDetector_setEpsY_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setUseAlignmentMarkers(
+    QRCodeDetector self,
+    bool useAlignmentMarkers,
+  ) {
+    return _QRCodeDetector_setUseAlignmentMarkers(
+      self,
+      useAlignmentMarkers,
+    );
+  }
+
+  late final _QRCodeDetector_setUseAlignmentMarkersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector,
+              ffi.Bool)>>('QRCodeDetector_setUseAlignmentMarkers');
+  late final _QRCodeDetector_setUseAlignmentMarkers =
+      _QRCodeDetector_setUseAlignmentMarkersPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(QRCodeDetector, bool)>();
+
+  ffi.Pointer<CvStatus> QRCodeDetector_setUseAlignmentMarkers_Async(
+    QRCodeDetector self,
+    bool useAlignmentMarkers,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _QRCodeDetector_setUseAlignmentMarkers_Async(
+      self,
+      useAlignmentMarkers,
+      callback,
+    );
+  }
+
+  late final _QRCodeDetector_setUseAlignmentMarkers_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  QRCodeDetector, ffi.Bool, imp1.CvCallback_0)>>(
+      'QRCodeDetector_setUseAlignmentMarkers_Async');
+  late final _QRCodeDetector_setUseAlignmentMarkers_Async =
+      _QRCodeDetector_setUseAlignmentMarkers_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QRCodeDetector, bool, imp1.CvCallback_0)>();
+
+  void QualityBRISQUE_close(
+    QualityBRISQUEPtr self,
+  ) {
+    return _QualityBRISQUE_close(
+      self,
+    );
+  }
+
+  late final _QualityBRISQUE_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>(
+          'QualityBRISQUE_close');
+  late final _QualityBRISQUE_close =
+      _QualityBRISQUE_closePtr.asFunction<void Function(QualityBRISQUEPtr)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute(
+    QualityBRISQUE self,
+    Mat img,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityBRISQUE_compute(
+      self,
+      img,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat,
+              ffi.Pointer<Scalar>)>>('QualityBRISQUE_compute');
+  late final _QualityBRISQUE_compute = _QualityBRISQUE_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          QualityBRISQUE, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_computeFeatures_static(
+    Mat img,
+    Mat features,
+  ) {
+    return _QualityBRISQUE_computeFeatures_static(
+      img,
+      features,
+    );
+  }
+
+  late final _QualityBRISQUE_computeFeatures_staticPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat)>>(
+          'QualityBRISQUE_computeFeatures_static');
+  late final _QualityBRISQUE_computeFeatures_static =
+      _QualityBRISQUE_computeFeatures_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_computeFeatures_static_async(
+    Mat img,
+    Mat features,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _QualityBRISQUE_computeFeatures_static_async(
+      img,
+      features,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_computeFeatures_static_asyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+      'QualityBRISQUE_computeFeatures_static_async');
+  late final _QualityBRISQUE_computeFeatures_static_async =
+      _QualityBRISQUE_computeFeatures_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_async(
+    QualityBRISQUE self,
+    Mat img,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityBRISQUE_compute_async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat,
+              imp1.CvCallback_1)>>('QualityBRISQUE_compute_async');
+  late final _QualityBRISQUE_compute_async =
+      _QualityBRISQUE_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityBRISQUE, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_static(
+    Mat img,
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityBRISQUE_compute_static(
+      img,
+      model_file,
+      range_file,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Scalar>)>>('QualityBRISQUE_compute_static');
+  late final _QualityBRISQUE_compute_static =
+      _QualityBRISQUE_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_compute_static_async(
+    Mat img,
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityBRISQUE_compute_static_async(
+      img,
+      model_file,
+      range_file,
+      callback,
+    );
+  }
+
+  late final _QualityBRISQUE_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('QualityBRISQUE_compute_static_async');
+  late final _QualityBRISQUE_compute_static_async =
+      _QualityBRISQUE_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityBRISQUE_create(
+    ffi.Pointer<ffi.Char> model_file,
+    ffi.Pointer<ffi.Char> range_file,
+    ffi.Pointer<QualityBRISQUE> rval,
+  ) {
+    return _QualityBRISQUE_create(
+      model_file,
+      range_file,
+      rval,
+    );
+  }
+
+  late final _QualityBRISQUE_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<QualityBRISQUE>)>>('QualityBRISQUE_create');
+  late final _QualityBRISQUE_create = _QualityBRISQUE_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<QualityBRISQUE>)>();
+
+  void QualityGMSD_close(
+    QualityGMSDPtr self,
+  ) {
+    return _QualityGMSD_close(
+      self,
+    );
+  }
+
+  late final _QualityGMSD_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>(
+          'QualityGMSD_close');
+  late final _QualityGMSD_close =
+      _QualityGMSD_closePtr.asFunction<void Function(QualityGMSDPtr)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute(
+    QualityGMSD self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityGMSD_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityGMSD, Mat, ffi.Pointer<Scalar>)>>('QualityGMSD_compute');
+  late final _QualityGMSD_compute = _QualityGMSD_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityGMSD, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_async(
+    QualityGMSD self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityGMSD_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualityGMSD_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityGMSD, Mat,
+              imp1.CvCallback_1)>>('QualityGMSD_compute_async');
+  late final _QualityGMSD_compute_async =
+      _QualityGMSD_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityGMSD, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityGMSD_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualityGMSD_compute_static');
+  late final _QualityGMSD_compute_static =
+      _QualityGMSD_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityGMSD_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityGMSD_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualityGMSD_compute_static_async');
+  late final _QualityGMSD_compute_static_async =
+      _QualityGMSD_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityGMSD_create(
+    Mat ref,
+    ffi.Pointer<QualityGMSD> rval,
+  ) {
+    return _QualityGMSD_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualityGMSD_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualityGMSD>)>>('QualityGMSD_create');
+  late final _QualityGMSD_create = _QualityGMSD_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>();
+
+  void QualityMSE_close(
+    QualityMSEPtr self,
+  ) {
+    return _QualityMSE_close(
+      self,
+    );
+  }
+
+  late final _QualityMSE_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>(
+          'QualityMSE_close');
+  late final _QualityMSE_close =
+      _QualityMSE_closePtr.asFunction<void Function(QualityMSEPtr)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute(
+    QualityMSE self,
+    Mat cmpImgs,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityMSE_compute(
+      self,
+      cmpImgs,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityMSE, Mat, ffi.Pointer<Scalar>)>>('QualityMSE_compute');
+  late final _QualityMSE_compute = _QualityMSE_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityMSE, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_async(
+    QualityMSE self,
+    Mat cmpImgs,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityMSE_compute_async(
+      self,
+      cmpImgs,
+      callback,
+    );
+  }
+
+  late final _QualityMSE_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityMSE, Mat, imp1.CvCallback_1)>>('QualityMSE_compute_async');
+  late final _QualityMSE_compute_async =
+      _QualityMSE_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(QualityMSE, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityMSE_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualityMSE_compute_static');
+  late final _QualityMSE_compute_static =
+      _QualityMSE_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityMSE_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityMSE_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualityMSE_compute_static_async');
+  late final _QualityMSE_compute_static_async =
+      _QualityMSE_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityMSE_create(
+    Mat ref,
+    ffi.Pointer<QualityMSE> rval,
+  ) {
+    return _QualityMSE_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualityMSE_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualityMSE>)>>('QualityMSE_create');
+  late final _QualityMSE_create = _QualityMSE_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityMSE>)>();
+
+  void QualityPSNR_close(
+    QualityPSNRPtr self,
+  ) {
+    return _QualityPSNR_close(
+      self,
+    );
+  }
+
+  late final _QualityPSNR_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>(
+          'QualityPSNR_close');
+  late final _QualityPSNR_close =
+      _QualityPSNR_closePtr.asFunction<void Function(QualityPSNRPtr)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute(
+    QualityPSNR self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityPSNR_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityPSNR, Mat, ffi.Pointer<Scalar>)>>('QualityPSNR_compute');
+  late final _QualityPSNR_compute = _QualityPSNR_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityPSNR, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_async(
+    QualityPSNR self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityPSNR_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualityPSNR_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualityPSNR, Mat,
+              imp1.CvCallback_1)>>('QualityPSNR_compute_async');
+  late final _QualityPSNR_compute_async =
+      _QualityPSNR_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualityPSNR, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_static(
+    Mat ref,
+    Mat cmp,
+    double maxPixelValue,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualityPSNR_compute_static(
+      ref,
+      cmp,
+      maxPixelValue,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat,
+              ffi.Pointer<Scalar>)>>('QualityPSNR_compute_static');
+  late final _QualityPSNR_compute_static =
+      _QualityPSNR_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    double maxPixelValue,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualityPSNR_compute_static_async(
+      ref,
+      cmp,
+      maxPixelValue,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualityPSNR_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat,
+              imp1.CvCallback_1)>>('QualityPSNR_compute_static_async');
+  late final _QualityPSNR_compute_static_async =
+      _QualityPSNR_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualityPSNR_create(
+    Mat ref,
+    double maxPixelValue,
+    ffi.Pointer<QualityPSNR> rval,
+  ) {
+    return _QualityPSNR_create(
+      ref,
+      maxPixelValue,
+      rval,
+    );
+  }
+
+  late final _QualityPSNR_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double,
+              ffi.Pointer<QualityPSNR>)>>('QualityPSNR_create');
+  late final _QualityPSNR_create = _QualityPSNR_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, double, ffi.Pointer<QualityPSNR>)>();
+
+  double QualityPSNR_getMaxPixelValue(
+    QualityPSNR self,
+  ) {
+    return _QualityPSNR_getMaxPixelValue(
+      self,
+    );
+  }
+
+  late final _QualityPSNR_getMaxPixelValuePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(QualityPSNR)>>(
+          'QualityPSNR_getMaxPixelValue');
+  late final _QualityPSNR_getMaxPixelValue = _QualityPSNR_getMaxPixelValuePtr
+      .asFunction<double Function(QualityPSNR)>();
+
+  void QualityPSNR_setMaxPixelValue(
+    QualityPSNR self,
+    double maxPixelValue,
+  ) {
+    return _QualityPSNR_setMaxPixelValue(
+      self,
+      maxPixelValue,
+    );
+  }
+
+  late final _QualityPSNR_setMaxPixelValuePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNR, ffi.Double)>>(
+          'QualityPSNR_setMaxPixelValue');
+  late final _QualityPSNR_setMaxPixelValue = _QualityPSNR_setMaxPixelValuePtr
+      .asFunction<void Function(QualityPSNR, double)>();
+
+  void QualitySSIM_close(
+    QualitySSIMPtr self,
+  ) {
+    return _QualitySSIM_close(
+      self,
+    );
+  }
+
+  late final _QualitySSIM_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>(
+          'QualitySSIM_close');
+  late final _QualitySSIM_close =
+      _QualitySSIM_closePtr.asFunction<void Function(QualitySSIMPtr)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute(
+    QualitySSIM self,
+    Mat cmp,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualitySSIM_compute(
+      self,
+      cmp,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualitySSIM, Mat, ffi.Pointer<Scalar>)>>('QualitySSIM_compute');
+  late final _QualitySSIM_compute = _QualitySSIM_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualitySSIM, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_async(
+    QualitySSIM self,
+    Mat cmp,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualitySSIM_compute_async(
+      self,
+      cmp,
+      callback,
+    );
+  }
+
+  late final _QualitySSIM_compute_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(QualitySSIM, Mat,
+              imp1.CvCallback_1)>>('QualitySSIM_compute_async');
+  late final _QualitySSIM_compute_async =
+      _QualitySSIM_compute_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              QualitySSIM, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_static(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    ffi.Pointer<Scalar> rval,
+  ) {
+    return _QualitySSIM_compute_static(
+      ref,
+      cmp,
+      qualityMap,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_compute_staticPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              ffi.Pointer<Scalar>)>>('QualitySSIM_compute_static');
+  late final _QualitySSIM_compute_static =
+      _QualitySSIM_compute_staticPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_compute_static_async(
+    Mat ref,
+    Mat cmp,
+    Mat qualityMap,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _QualitySSIM_compute_static_async(
+      ref,
+      cmp,
+      qualityMap,
+      callback,
+    );
+  }
+
+  late final _QualitySSIM_compute_static_asyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat,
+              imp1.CvCallback_1)>>('QualitySSIM_compute_static_async');
+  late final _QualitySSIM_compute_static_async =
+      _QualitySSIM_compute_static_asyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> QualitySSIM_create(
+    Mat ref,
+    ffi.Pointer<QualitySSIM> rval,
+  ) {
+    return _QualitySSIM_create(
+      ref,
+      rval,
+    );
+  }
+
+  late final _QualitySSIM_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualitySSIM>)>>('QualitySSIM_create');
+  late final _QualitySSIM_create = _QualitySSIM_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualitySSIM>)>();
 
   ffi.Pointer<CvStatus> RNG_Fill(
     RNG rng,
@@ -18581,6 +26407,115 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Mat, Mat, Mat, Mat, TermCriteria)>();
 
+  void WBDetector_Close(
+    PtrWBDetectorPtr self,
+  ) {
+    return _WBDetector_Close(
+      self,
+    );
+  }
+
+  late final _WBDetector_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>(
+          'WBDetector_Close');
+  late final _WBDetector_Close =
+      _WBDetector_ClosePtr.asFunction<void Function(PtrWBDetectorPtr)>();
+
+  ffi.Pointer<CvStatus> WBDetector_Create(
+    ffi.Pointer<PtrWBDetector> rval,
+  ) {
+    return _WBDetector_Create(
+      rval,
+    );
+  }
+
+  late final _WBDetector_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<PtrWBDetector>)>>('WBDetector_Create');
+  late final _WBDetector_Create = _WBDetector_CreatePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>)>();
+
+  ffi.Pointer<CvStatus> WBDetector_Detect(
+    ffi.Pointer<PtrWBDetector> self,
+    Mat img,
+    ffi.Pointer<VecRect> bbox,
+    ffi.Pointer<VecF64> confidences,
+  ) {
+    return _WBDetector_Detect(
+      self,
+      img,
+      bbox,
+      confidences,
+    );
+  }
+
+  late final _WBDetector_DetectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>, Mat,
+              ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>>('WBDetector_Detect');
+  late final _WBDetector_Detect = _WBDetector_DetectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>, Mat,
+          ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>();
+
+  ffi.Pointer<CvStatus> WBDetector_Read(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> filename,
+  ) {
+    return _WBDetector_Read(
+      self,
+      filename,
+    );
+  }
+
+  late final _WBDetector_ReadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Read');
+  late final _WBDetector_Read = _WBDetector_ReadPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>)>();
+
+  ffi.Pointer<CvStatus> WBDetector_Train(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> pos_samples,
+    ffi.Pointer<ffi.Char> neg_imgs,
+  ) {
+    return _WBDetector_Train(
+      self,
+      pos_samples,
+      neg_imgs,
+    );
+  }
+
+  late final _WBDetector_TrainPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<PtrWBDetector>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Train');
+  late final _WBDetector_Train = _WBDetector_TrainPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+
+  ffi.Pointer<CvStatus> WBDetector_Write(
+    ffi.Pointer<PtrWBDetector> self,
+    ffi.Pointer<ffi.Char> filename,
+  ) {
+    return _WBDetector_Write(
+      self,
+      filename,
+    );
+  }
+
+  late final _WBDetector_WritePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>,
+              ffi.Pointer<ffi.Char>)>>('WBDetector_Write');
+  late final _WBDetector_Write = _WBDetector_WritePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<PtrWBDetector>, ffi.Pointer<ffi.Char>)>();
+
   ffi.Pointer<CvStatus> WarpAffine(
     Mat src,
     Mat dst,
@@ -18813,6 +26748,240 @@ class CvNativeCore {
   late final _Watershed_Async = _Watershed_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
+  void WeChatQRCode_Close(
+    WeChatQRCodePtr self,
+  ) {
+    return _WeChatQRCode_Close(
+      self,
+    );
+  }
+
+  late final _WeChatQRCode_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>(
+          'WeChatQRCode_Close');
+  late final _WeChatQRCode_Close =
+      _WeChatQRCode_ClosePtr.asFunction<void Function(WeChatQRCodePtr)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_DetectAndDecode(
+    ffi.Pointer<WeChatQRCode> self,
+    Mat img,
+    ffi.Pointer<VecMat> points,
+    ffi.Pointer<VecVecChar> rval,
+  ) {
+    return _WeChatQRCode_DetectAndDecode(
+      self,
+      img,
+      points,
+      rval,
+    );
+  }
+
+  late final _WeChatQRCode_DetectAndDecodePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>,
+              Mat,
+              ffi.Pointer<VecMat>,
+              ffi.Pointer<VecVecChar>)>>('WeChatQRCode_DetectAndDecode');
+  late final _WeChatQRCode_DetectAndDecode =
+      _WeChatQRCode_DetectAndDecodePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, Mat,
+              ffi.Pointer<VecMat>, ffi.Pointer<VecVecChar>)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_DetectAndDecode_Async(
+    ffi.Pointer<WeChatQRCode> self,
+    Mat img,
+    imp1.CvCallback_2 callback,
+  ) {
+    return _WeChatQRCode_DetectAndDecode_Async(
+      self,
+      img,
+      callback,
+    );
+  }
+
+  late final _WeChatQRCode_DetectAndDecode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, Mat,
+              imp1.CvCallback_2)>>('WeChatQRCode_DetectAndDecode_Async');
+  late final _WeChatQRCode_DetectAndDecode_Async =
+      _WeChatQRCode_DetectAndDecode_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>, Mat, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_GetScaleFactor(
+    ffi.Pointer<WeChatQRCode> self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _WeChatQRCode_GetScaleFactor(
+      self,
+      rval,
+    );
+  }
+
+  late final _WeChatQRCode_GetScaleFactorPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>,
+              ffi.Pointer<ffi.Float>)>>('WeChatQRCode_GetScaleFactor');
+  late final _WeChatQRCode_GetScaleFactor =
+      _WeChatQRCode_GetScaleFactorPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_GetScaleFactor_Async(
+    ffi.Pointer<WeChatQRCode> self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _WeChatQRCode_GetScaleFactor_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _WeChatQRCode_GetScaleFactor_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>,
+              imp1.CvCallback_1)>>('WeChatQRCode_GetScaleFactor_Async');
+  late final _WeChatQRCode_GetScaleFactor_Async =
+      _WeChatQRCode_GetScaleFactor_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_New(
+    ffi.Pointer<WeChatQRCode> qrcode,
+  ) {
+    return _WeChatQRCode_New(
+      qrcode,
+    );
+  }
+
+  late final _WeChatQRCode_NewPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>)>>('WeChatQRCode_New');
+  late final _WeChatQRCode_New = _WeChatQRCode_NewPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_NewWithParams(
+    ffi.Pointer<ffi.Char> detector_prototxt_path,
+    ffi.Pointer<ffi.Char> detector_caffe_model_path,
+    ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
+    ffi.Pointer<ffi.Char> super_resolution_caffe_model_path,
+    ffi.Pointer<WeChatQRCode> qrcode,
+  ) {
+    return _WeChatQRCode_NewWithParams(
+      detector_prototxt_path,
+      detector_caffe_model_path,
+      super_resolution_prototxt_path,
+      super_resolution_caffe_model_path,
+      qrcode,
+    );
+  }
+
+  late final _WeChatQRCode_NewWithParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<WeChatQRCode>)>>('WeChatQRCode_NewWithParams');
+  late final _WeChatQRCode_NewWithParams =
+      _WeChatQRCode_NewWithParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<WeChatQRCode>)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_NewWithParams_Async(
+    ffi.Pointer<ffi.Char> detector_prototxt_path,
+    ffi.Pointer<ffi.Char> detector_caffe_model_path,
+    ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
+    ffi.Pointer<ffi.Char> super_resolution_caffe_model_path,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _WeChatQRCode_NewWithParams_Async(
+      detector_prototxt_path,
+      detector_caffe_model_path,
+      super_resolution_prototxt_path,
+      super_resolution_caffe_model_path,
+      callback,
+    );
+  }
+
+  late final _WeChatQRCode_NewWithParams_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>>('WeChatQRCode_NewWithParams_Async');
+  late final _WeChatQRCode_NewWithParams_Async =
+      _WeChatQRCode_NewWithParams_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_New_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _WeChatQRCode_New_Async(
+      callback,
+    );
+  }
+
+  late final _WeChatQRCode_New_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'WeChatQRCode_New_Async');
+  late final _WeChatQRCode_New_Async = _WeChatQRCode_New_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_SetScaleFactor(
+    ffi.Pointer<WeChatQRCode> self,
+    double scale_factor,
+  ) {
+    return _WeChatQRCode_SetScaleFactor(
+      self,
+      scale_factor,
+    );
+  }
+
+  late final _WeChatQRCode_SetScaleFactorPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>,
+              ffi.Float)>>('WeChatQRCode_SetScaleFactor');
+  late final _WeChatQRCode_SetScaleFactor =
+      _WeChatQRCode_SetScaleFactorPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, double)>();
+
+  ffi.Pointer<CvStatus> WeChatQRCode_SetScaleFactor_Async(
+    ffi.Pointer<WeChatQRCode> self,
+    double scale_factor,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _WeChatQRCode_SetScaleFactor_Async(
+      self,
+      scale_factor,
+      callback,
+    );
+  }
+
+  late final _WeChatQRCode_SetScaleFactor_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>, ffi.Float,
+              imp1.CvCallback_0)>>('WeChatQRCode_SetScaleFactor_Async');
+  late final _WeChatQRCode_SetScaleFactor_Async =
+      _WeChatQRCode_SetScaleFactor_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<WeChatQRCode>, double, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> Zeros(
     int rows,
     int cols,
@@ -18833,6 +27002,79 @@ class CvNativeCore {
               ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<Mat>)>>('Zeros');
   late final _Zeros = _ZerosPtr.asFunction<
       ffi.Pointer<CvStatus> Function(int, int, int, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> averageHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _averageHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _averageHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('averageHashCompare');
+  late final _averageHashCompare = _averageHashComparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> averageHashCompare_Async(
+    Mat a,
+    Mat b,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _averageHashCompare_Async(
+      a,
+      b,
+      callback,
+    );
+  }
+
+  late final _averageHashCompare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, imp1.CvCallback_1)>>('averageHashCompare_Async');
+  late final _averageHashCompare_Async =
+      _averageHashCompare_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> averageHashCompute(
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+  ) {
+    return _averageHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _averageHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('averageHashCompute');
+  late final _averageHashCompute = _averageHashComputePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> averageHashCompute_Async(
+    Mat inputArr,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _averageHashCompute_Async(
+      inputArr,
+      callback,
+    );
+  }
+
+  late final _averageHashCompute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('averageHashCompute_Async');
+  late final _averageHashCompute_Async = _averageHashCompute_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> calibrateCamera_Async(
     VecVecPoint3f objectPoints,
@@ -18870,6 +27112,79 @@ class CvNativeCore {
   late final _calibrateCamera_Async = _calibrateCamera_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(VecVecPoint3f, VecVecPoint2f, Size, Mat,
           Mat, int, TermCriteria, imp1.CvCallback_3)>();
+
+  ffi.Pointer<CvStatus> colorMomentHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _colorMomentHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _colorMomentHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('colorMomentHashCompare');
+  late final _colorMomentHashCompare = _colorMomentHashComparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> colorMomentHashCompare_Async(
+    Mat a,
+    Mat b,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _colorMomentHashCompare_Async(
+      a,
+      b,
+      callback,
+    );
+  }
+
+  late final _colorMomentHashCompare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, imp1.CvCallback_1)>>('colorMomentHashCompare_Async');
+  late final _colorMomentHashCompare_Async =
+      _colorMomentHashCompare_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> colorMomentHashCompute(
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+  ) {
+    return _colorMomentHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _colorMomentHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('colorMomentHashCompute');
+  late final _colorMomentHashCompute = _colorMomentHashComputePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> colorMomentHashCompute_Async(
+    Mat inputArr,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _colorMomentHashCompute_Async(
+      inputArr,
+      callback,
+    );
+  }
+
+  late final _colorMomentHashCompute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('colorMomentHashCompute_Async');
+  late final _colorMomentHashCompute_Async = _colorMomentHashCompute_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> core_AbsDiff_Async(
     Mat src1,
@@ -21371,6 +29686,40 @@ class CvNativeCore {
           ffi.Pointer<CvStatus> Function(
               Mat, Mat, Size, double, Size, bool, imp1.CvCallback_2)>();
 
+  ffi.Pointer<CvStatus> getPredefinedDictionary(
+    int dictionaryId,
+    ffi.Pointer<ArucoDictionary> rval,
+  ) {
+    return _getPredefinedDictionary(
+      dictionaryId,
+      rval,
+    );
+  }
+
+  late final _getPredefinedDictionaryPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int,
+              ffi.Pointer<ArucoDictionary>)>>('getPredefinedDictionary');
+  late final _getPredefinedDictionary = _getPredefinedDictionaryPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, ffi.Pointer<ArucoDictionary>)>();
+
+  ffi.Pointer<CvStatus> getPredefinedDictionary_Async(
+    int dictionaryId,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _getPredefinedDictionary_Async(
+      dictionaryId,
+      callback,
+    );
+  }
+
+  late final _getPredefinedDictionary_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int, imp1.CvCallback_1)>>('getPredefinedDictionary_Async');
+  late final _getPredefinedDictionary_Async = _getPredefinedDictionary_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, imp1.CvCallback_1)>();
+
   ffi.Pointer<CvStatus> initUndistortRectifyMap_Async(
     Mat cameraMatrix,
     Mat distCoeffs,
@@ -21399,6 +29748,99 @@ class CvNativeCore {
       _initUndistortRectifyMap_AsyncPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
               Mat, Mat, Mat, Mat, Size, int, imp1.CvCallback_2)>();
+
+  ffi.Pointer<CvStatus> marrHildrethHashCompare(
+    Mat a,
+    Mat b,
+    double alpha,
+    double scale,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _marrHildrethHashCompare(
+      a,
+      b,
+      alpha,
+      scale,
+      rval,
+    );
+  }
+
+  late final _marrHildrethHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              ffi.Pointer<ffi.Double>)>>('marrHildrethHashCompare');
+  late final _marrHildrethHashCompare = _marrHildrethHashComparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, double, double, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> marrHildrethHashCompare_Async(
+    Mat a,
+    Mat b,
+    double alpha,
+    double scale,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _marrHildrethHashCompare_Async(
+      a,
+      b,
+      alpha,
+      scale,
+      callback,
+    );
+  }
+
+  late final _marrHildrethHashCompare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
+              imp1.CvCallback_1)>>('marrHildrethHashCompare_Async');
+  late final _marrHildrethHashCompare_Async =
+      _marrHildrethHashCompare_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> marrHildrethHashCompute(
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+    double alpha,
+    double scale,
+  ) {
+    return _marrHildrethHashCompute(
+      inputArr,
+      outputArr,
+      alpha,
+      scale,
+    );
+  }
+
+  late final _marrHildrethHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Float,
+              ffi.Float)>>('marrHildrethHashCompute');
+  late final _marrHildrethHashCompute = _marrHildrethHashComputePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, double, double)>();
+
+  ffi.Pointer<CvStatus> marrHildrethHashCompute_Async(
+    Mat inputArr,
+    double alpha,
+    double scale,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _marrHildrethHashCompute_Async(
+      inputArr,
+      alpha,
+      scale,
+      callback,
+    );
+  }
+
+  late final _marrHildrethHashCompute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float,
+              imp1.CvCallback_1)>>('marrHildrethHashCompute_Async');
+  late final _marrHildrethHashCompute_Async =
+      _marrHildrethHashCompute_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, double, imp1.CvCallback_1)>();
 
   ffi.Pointer<CvStatus> openCVVersion(
     ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
@@ -21429,6 +29871,173 @@ class CvNativeCore {
       'openCVVersion_Async');
   late final _openCVVersion_Async = _openCVVersion_AsyncPtr
       .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> pHashCompare(
+    Mat a,
+    Mat b,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _pHashCompare(
+      a,
+      b,
+      rval,
+    );
+  }
+
+  late final _pHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Pointer<ffi.Double>)>>('pHashCompare');
+  late final _pHashCompare = _pHashComparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> pHashCompare_Async(
+    Mat a,
+    Mat b,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _pHashCompare_Async(
+      a,
+      b,
+      callback,
+    );
+  }
+
+  late final _pHashCompare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, imp1.CvCallback_1)>>('pHashCompare_Async');
+  late final _pHashCompare_Async = _pHashCompare_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> pHashCompute(
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+  ) {
+    return _pHashCompute(
+      inputArr,
+      outputArr,
+    );
+  }
+
+  late final _pHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('pHashCompute');
+  late final _pHashCompute = _pHashComputePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> pHashCompute_Async(
+    Mat inputArr,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _pHashCompute_Async(
+      inputArr,
+      callback,
+    );
+  }
+
+  late final _pHashCompute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('pHashCompute_Async');
+  late final _pHashCompute_Async = _pHashCompute_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> radialVarianceHashCompare(
+    Mat a,
+    Mat b,
+    double sigma,
+    int numOfAngleLine,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _radialVarianceHashCompare(
+      a,
+      b,
+      sigma,
+      numOfAngleLine,
+      rval,
+    );
+  }
+
+  late final _radialVarianceHashComparePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
+              ffi.Pointer<ffi.Double>)>>('radialVarianceHashCompare');
+  late final _radialVarianceHashCompare =
+      _radialVarianceHashComparePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, int, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> radialVarianceHashCompare_Async(
+    Mat a,
+    Mat b,
+    double sigma,
+    int numOfAngleLine,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _radialVarianceHashCompare_Async(
+      a,
+      b,
+      sigma,
+      numOfAngleLine,
+      callback,
+    );
+  }
+
+  late final _radialVarianceHashCompare_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
+              imp1.CvCallback_1)>>('radialVarianceHashCompare_Async');
+  late final _radialVarianceHashCompare_Async =
+      _radialVarianceHashCompare_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, double, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> radialVarianceHashCompute(
+    Mat inputArr,
+    ffi.Pointer<Mat> outputArr,
+    double sigma,
+    int numOfAngleLine,
+  ) {
+    return _radialVarianceHashCompute(
+      inputArr,
+      outputArr,
+      sigma,
+      numOfAngleLine,
+    );
+  }
+
+  late final _radialVarianceHashComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Double,
+              ffi.Int)>>('radialVarianceHashCompute');
+  late final _radialVarianceHashCompute =
+      _radialVarianceHashComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, double, int)>();
+
+  ffi.Pointer<CvStatus> radialVarianceHashCompute_Async(
+    Mat inputArr,
+    double sigma,
+    int numOfAngleLine,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _radialVarianceHashCompute_Async(
+      inputArr,
+      sigma,
+      numOfAngleLine,
+      callback,
+    );
+  }
+
+  late final _radialVarianceHashCompute_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double, ffi.Int,
+              imp1.CvCallback_1)>>('radialVarianceHashCompute_Async');
+  late final _radialVarianceHashCompute_Async =
+      _radialVarianceHashCompute_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, int, imp1.CvCallback_1)>();
 
   void registerErrorCallback(
     ErrorCallback callback,
@@ -21509,6 +30118,1618 @@ class CvNativeCore {
   late final _undistort_Async = _undistort_AsyncPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp1.CvCallback_1)>();
 
+  ffi.Pointer<CvStatus> ximgproc_EdgeBoxes_getBoundingBoxes(
+    EdgeBoxes self,
+    Mat edge_map,
+    Mat orientation_map,
+    ffi.Pointer<VecRect> boxes,
+    ffi.Pointer<VecF32> scores,
+  ) {
+    return _ximgproc_EdgeBoxes_getBoundingBoxes(
+      self,
+      edge_map,
+      orientation_map,
+      boxes,
+      scores,
+    );
+  }
+
+  late final _ximgproc_EdgeBoxes_getBoundingBoxesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              EdgeBoxes,
+              Mat,
+              Mat,
+              ffi.Pointer<VecRect>,
+              ffi.Pointer<VecF32>)>>('ximgproc_EdgeBoxes_getBoundingBoxes');
+  late final _ximgproc_EdgeBoxes_getBoundingBoxes =
+      _ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat,
+              ffi.Pointer<VecRect>, ffi.Pointer<VecF32>)>();
+
+  void ximgproc_EdgeDrawing_Close(
+    EdgeDrawingPtr self,
+  ) {
+    return _ximgproc_EdgeDrawing_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>(
+          'ximgproc_EdgeDrawing_Close');
+  late final _ximgproc_EdgeDrawing_Close = _ximgproc_EdgeDrawing_ClosePtr
+      .asFunction<void Function(EdgeDrawingPtr)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_Create(
+    ffi.Pointer<EdgeDrawing> rval,
+  ) {
+    return _ximgproc_EdgeDrawing_Create(
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_CreatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<EdgeDrawing>)>>('ximgproc_EdgeDrawing_Create');
+  late final _ximgproc_EdgeDrawing_Create = _ximgproc_EdgeDrawing_CreatePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<EdgeDrawing>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_Create_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_Create_Async(
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_Create_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'ximgproc_EdgeDrawing_Create_Async');
+  late final _ximgproc_EdgeDrawing_Create_Async =
+      _ximgproc_EdgeDrawing_Create_AsyncPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectEdges(
+    EdgeDrawing self,
+    Mat src,
+  ) {
+    return _ximgproc_EdgeDrawing_detectEdges(
+      self,
+      src,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectEdgesPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat)>>(
+      'ximgproc_EdgeDrawing_detectEdges');
+  late final _ximgproc_EdgeDrawing_detectEdges =
+      _ximgproc_EdgeDrawing_detectEdgesPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectEdges_Async(
+    EdgeDrawing self,
+    Mat src,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_detectEdges_Async(
+      self,
+      src,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectEdges_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
+              imp1.CvCallback_0)>>('ximgproc_EdgeDrawing_detectEdges_Async');
+  late final _ximgproc_EdgeDrawing_detectEdges_Async =
+      _ximgproc_EdgeDrawing_detectEdges_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectEllipses(
+    EdgeDrawing self,
+    ffi.Pointer<Mat> ellipses,
+  ) {
+    return _ximgproc_EdgeDrawing_detectEllipses(
+      self,
+      ellipses,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectEllipsesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              ffi.Pointer<Mat>)>>('ximgproc_EdgeDrawing_detectEllipses');
+  late final _ximgproc_EdgeDrawing_detectEllipses =
+      _ximgproc_EdgeDrawing_detectEllipsesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectEllipses_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_detectEllipses_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectEllipses_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              imp1.CvCallback_1)>>('ximgproc_EdgeDrawing_detectEllipses_Async');
+  late final _ximgproc_EdgeDrawing_detectEllipses_Async =
+      _ximgproc_EdgeDrawing_detectEllipses_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectLines(
+    EdgeDrawing self,
+    ffi.Pointer<Mat> lines,
+  ) {
+    return _ximgproc_EdgeDrawing_detectLines(
+      self,
+      lines,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectLinesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              ffi.Pointer<Mat>)>>('ximgproc_EdgeDrawing_detectLines');
+  late final _ximgproc_EdgeDrawing_detectLines =
+      _ximgproc_EdgeDrawing_detectLinesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_detectLines_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_detectLines_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_detectLines_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              imp1.CvCallback_1)>>('ximgproc_EdgeDrawing_detectLines_Async');
+  late final _ximgproc_EdgeDrawing_detectLines_Async =
+      _ximgproc_EdgeDrawing_detectLines_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getEdgeImage(
+    EdgeDrawing self,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_EdgeDrawing_getEdgeImage(
+      self,
+      dst,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getEdgeImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              ffi.Pointer<Mat>)>>('ximgproc_EdgeDrawing_getEdgeImage');
+  late final _ximgproc_EdgeDrawing_getEdgeImage =
+      _ximgproc_EdgeDrawing_getEdgeImagePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getEdgeImage_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_getEdgeImage_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getEdgeImage_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              imp1.CvCallback_1)>>('ximgproc_EdgeDrawing_getEdgeImage_Async');
+  late final _ximgproc_EdgeDrawing_getEdgeImage_Async =
+      _ximgproc_EdgeDrawing_getEdgeImage_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getGradientImage(
+    EdgeDrawing self,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_EdgeDrawing_getGradientImage(
+      self,
+      dst,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getGradientImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              ffi.Pointer<Mat>)>>('ximgproc_EdgeDrawing_getGradientImage');
+  late final _ximgproc_EdgeDrawing_getGradientImage =
+      _ximgproc_EdgeDrawing_getGradientImagePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getGradientImage_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_getGradientImage_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getGradientImage_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>>(
+      'ximgproc_EdgeDrawing_getGradientImage_Async');
+  late final _ximgproc_EdgeDrawing_getGradientImage_Async =
+      _ximgproc_EdgeDrawing_getGradientImage_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getParams(
+    EdgeDrawing self,
+    ffi.Pointer<EdgeDrawingParams> params,
+  ) {
+    return _ximgproc_EdgeDrawing_getParams(
+      self,
+      params,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getParamsPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  EdgeDrawing, ffi.Pointer<EdgeDrawingParams>)>>(
+      'ximgproc_EdgeDrawing_getParams');
+  late final _ximgproc_EdgeDrawing_getParams =
+      _ximgproc_EdgeDrawing_getParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              EdgeDrawing, ffi.Pointer<EdgeDrawingParams>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
+    EdgeDrawing self,
+    ffi.Pointer<VecI32> rval,
+  ) {
+    return _ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  EdgeDrawing, ffi.Pointer<VecI32>)>>(
+      'ximgproc_EdgeDrawing_getSegmentIndicesOfLines');
+  late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLines =
+      _ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLines_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>>(
+      'ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async');
+  late final _ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async =
+      _ximgproc_EdgeDrawing_getSegmentIndicesOfLines_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegments(
+    EdgeDrawing self,
+    ffi.Pointer<VecVecPoint> rval,
+  ) {
+    return _ximgproc_EdgeDrawing_getSegments(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getSegmentsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              ffi.Pointer<VecVecPoint>)>>('ximgproc_EdgeDrawing_getSegments');
+  late final _ximgproc_EdgeDrawing_getSegments =
+      _ximgproc_EdgeDrawing_getSegmentsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              EdgeDrawing, ffi.Pointer<VecVecPoint>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_getSegments_Async(
+    EdgeDrawing self,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_EdgeDrawing_getSegments_Async(
+      self,
+      callback,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_getSegments_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              imp1.CvCallback_1)>>('ximgproc_EdgeDrawing_getSegments_Async');
+  late final _ximgproc_EdgeDrawing_getSegments_Async =
+      _ximgproc_EdgeDrawing_getSegments_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_EdgeDrawing_setParams(
+    EdgeDrawing self,
+    EdgeDrawingParams params,
+  ) {
+    return _ximgproc_EdgeDrawing_setParams(
+      self,
+      params,
+    );
+  }
+
+  late final _ximgproc_EdgeDrawing_setParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing,
+              EdgeDrawingParams)>>('ximgproc_EdgeDrawing_setParams');
+  late final _ximgproc_EdgeDrawing_setParams =
+      _ximgproc_EdgeDrawing_setParamsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, EdgeDrawingParams)>();
+
+  void ximgproc_GraphSegmentation_Close(
+    GraphSegmentationPtr self,
+  ) {
+    return _ximgproc_GraphSegmentation_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GraphSegmentationPtr)>>(
+          'ximgproc_GraphSegmentation_Close');
+  late final _ximgproc_GraphSegmentation_Close =
+      _ximgproc_GraphSegmentation_ClosePtr
+          .asFunction<void Function(GraphSegmentationPtr)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_Create(
+    double sigma,
+    double k,
+    int min_size,
+    ffi.Pointer<GraphSegmentation> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_Create(
+      sigma,
+      k,
+      min_size,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Int,
+                  ffi.Pointer<GraphSegmentation>)>>(
+      'ximgproc_GraphSegmentation_Create');
+  late final _ximgproc_GraphSegmentation_Create =
+      _ximgproc_GraphSegmentation_CreatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              double, double, int, ffi.Pointer<GraphSegmentation>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_Create_Async(
+    double sigma,
+    double k,
+    int min_size,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_GraphSegmentation_Create_Async(
+      sigma,
+      k,
+      min_size,
+      callback,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_Create_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Int,
+              imp1.CvCallback_1)>>('ximgproc_GraphSegmentation_Create_Async');
+  late final _ximgproc_GraphSegmentation_Create_Async =
+      _ximgproc_GraphSegmentation_Create_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              double, double, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_getK(
+    GraphSegmentation self,
+    ffi.Pointer<ffi.Float> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getK(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getKPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Pointer<ffi.Float>)>>('ximgproc_GraphSegmentation_getK');
+  late final _ximgproc_GraphSegmentation_getK =
+      _ximgproc_GraphSegmentation_getKPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              GraphSegmentation, ffi.Pointer<ffi.Float>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_getMinSize(
+    GraphSegmentation self,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getMinSize(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getMinSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Pointer<ffi.Int>)>>('ximgproc_GraphSegmentation_getMinSize');
+  late final _ximgproc_GraphSegmentation_getMinSize =
+      _ximgproc_GraphSegmentation_getMinSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              GraphSegmentation, ffi.Pointer<ffi.Int>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_getSigma(
+    GraphSegmentation self,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _ximgproc_GraphSegmentation_getSigma(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_getSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Pointer<ffi.Double>)>>('ximgproc_GraphSegmentation_getSigma');
+  late final _ximgproc_GraphSegmentation_getSigma =
+      _ximgproc_GraphSegmentation_getSigmaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              GraphSegmentation, ffi.Pointer<ffi.Double>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_processImage(
+    GraphSegmentation self,
+    Mat src,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_GraphSegmentation_processImage(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_processImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation, Mat,
+              ffi.Pointer<Mat>)>>('ximgproc_GraphSegmentation_processImage');
+  late final _ximgproc_GraphSegmentation_processImage =
+      _ximgproc_GraphSegmentation_processImagePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              GraphSegmentation, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_processImage_Async(
+    GraphSegmentation self,
+    Mat src,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_GraphSegmentation_processImage_Async(
+      self,
+      src,
+      callback,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_processImage_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  GraphSegmentation, Mat, imp1.CvCallback_1)>>(
+      'ximgproc_GraphSegmentation_processImage_Async');
+  late final _ximgproc_GraphSegmentation_processImage_Async =
+      _ximgproc_GraphSegmentation_processImage_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              GraphSegmentation, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_setK(
+    GraphSegmentation self,
+    double val,
+  ) {
+    return _ximgproc_GraphSegmentation_setK(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setKPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Float)>>('ximgproc_GraphSegmentation_setK');
+  late final _ximgproc_GraphSegmentation_setK =
+      _ximgproc_GraphSegmentation_setKPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation, double)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_setMinSize(
+    GraphSegmentation self,
+    int val,
+  ) {
+    return _ximgproc_GraphSegmentation_setMinSize(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setMinSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Int)>>('ximgproc_GraphSegmentation_setMinSize');
+  late final _ximgproc_GraphSegmentation_setMinSize =
+      _ximgproc_GraphSegmentation_setMinSizePtr
+          .asFunction<ffi.Pointer<CvStatus> Function(GraphSegmentation, int)>();
+
+  ffi.Pointer<CvStatus> ximgproc_GraphSegmentation_setSigma(
+    GraphSegmentation self,
+    double val,
+  ) {
+    return _ximgproc_GraphSegmentation_setSigma(
+      self,
+      val,
+    );
+  }
+
+  late final _ximgproc_GraphSegmentation_setSigmaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation,
+              ffi.Double)>>('ximgproc_GraphSegmentation_setSigma');
+  late final _ximgproc_GraphSegmentation_setSigma =
+      _ximgproc_GraphSegmentation_setSigmaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(GraphSegmentation, double)>();
+
+  ffi.Pointer<CvStatus> ximgproc_PeiLinNormalization(
+    Mat I,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_PeiLinNormalization(
+      I,
+      dst,
+    );
+  }
+
+  late final _ximgproc_PeiLinNormalizationPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>)>>('ximgproc_PeiLinNormalization');
+  late final _ximgproc_PeiLinNormalization = _ximgproc_PeiLinNormalizationPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_PeiLinNormalization_Async(
+    Mat I,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_PeiLinNormalization_Async(
+      I,
+      callback,
+    );
+  }
+
+  late final _ximgproc_PeiLinNormalization_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, imp1.CvCallback_1)>>('ximgproc_PeiLinNormalization_Async');
+  late final _ximgproc_PeiLinNormalization_Async =
+      _ximgproc_PeiLinNormalization_AsyncPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_Clear(
+    RFFeatureGetter self,
+  ) {
+    return _ximgproc_RFFeatureGetter_Clear(
+      self,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_ClearPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>>(
+      'ximgproc_RFFeatureGetter_Clear');
+  late final _ximgproc_RFFeatureGetter_Clear =
+      _ximgproc_RFFeatureGetter_ClearPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>();
+
+  void ximgproc_RFFeatureGetter_Close(
+    RFFeatureGetterPtr self,
+  ) {
+    return _ximgproc_RFFeatureGetter_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_ClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(RFFeatureGetterPtr)>>(
+          'ximgproc_RFFeatureGetter_Close');
+  late final _ximgproc_RFFeatureGetter_Close =
+      _ximgproc_RFFeatureGetter_ClosePtr
+          .asFunction<void Function(RFFeatureGetterPtr)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_Create(
+    ffi.Pointer<RFFeatureGetter> rval,
+  ) {
+    return _ximgproc_RFFeatureGetter_Create(
+      rval,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>>(
+      'ximgproc_RFFeatureGetter_Create');
+  late final _ximgproc_RFFeatureGetter_Create =
+      _ximgproc_RFFeatureGetter_CreatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_Create_Async(
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_RFFeatureGetter_Create_Async(
+      callback,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_Create_AsyncPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>>(
+      'ximgproc_RFFeatureGetter_Create_Async');
+  late final _ximgproc_RFFeatureGetter_Create_Async =
+      _ximgproc_RFFeatureGetter_Create_AsyncPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_Empty(
+    RFFeatureGetter self,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _ximgproc_RFFeatureGetter_Empty(
+      self,
+      rval,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_EmptyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(RFFeatureGetter,
+              ffi.Pointer<ffi.Bool>)>>('ximgproc_RFFeatureGetter_Empty');
+  late final _ximgproc_RFFeatureGetter_Empty =
+      _ximgproc_RFFeatureGetter_EmptyPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              RFFeatureGetter, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_getFeatures(
+    RFFeatureGetter self,
+    Mat src,
+    ffi.Pointer<Mat> features,
+    int gnrmRad,
+    int gsmthRad,
+    int shrink,
+    int outNum,
+    int gradNum,
+  ) {
+    return _ximgproc_RFFeatureGetter_getFeatures(
+      self,
+      src,
+      features,
+      gnrmRad,
+      gsmthRad,
+      shrink,
+      outNum,
+      gradNum,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_getFeaturesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              RFFeatureGetter,
+              Mat,
+              ffi.Pointer<Mat>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int)>>('ximgproc_RFFeatureGetter_getFeatures');
+  late final _ximgproc_RFFeatureGetter_getFeatures =
+      _ximgproc_RFFeatureGetter_getFeaturesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, ffi.Pointer<Mat>,
+              int, int, int, int, int)>();
+
+  ffi.Pointer<CvStatus> ximgproc_RFFeatureGetter_getFeatures_Async(
+    RFFeatureGetter self,
+    Mat src,
+    int gnrmRad,
+    int gsmthRad,
+    int shrink,
+    int outNum,
+    int gradNum,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_RFFeatureGetter_getFeatures_Async(
+      self,
+      src,
+      gnrmRad,
+      gsmthRad,
+      shrink,
+      outNum,
+      gradNum,
+      callback,
+    );
+  }
+
+  late final _ximgproc_RFFeatureGetter_getFeatures_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, ffi.Int,
+                  ffi.Int, ffi.Int, ffi.Int, ffi.Int, imp1.CvCallback_1)>>(
+      'ximgproc_RFFeatureGetter_getFeatures_Async');
+  late final _ximgproc_RFFeatureGetter_getFeatures_Async =
+      _ximgproc_RFFeatureGetter_getFeatures_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, int, int, int,
+              int, int, imp1.CvCallback_1)>();
+
+  void ximgproc_StructuredEdgeDetection_Close(
+    StructuredEdgeDetectionPtr self,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Close(
+      self,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_ClosePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(StructuredEdgeDetectionPtr)>>(
+      'ximgproc_StructuredEdgeDetection_Close');
+  late final _ximgproc_StructuredEdgeDetection_Close =
+      _ximgproc_StructuredEdgeDetection_ClosePtr
+          .asFunction<void Function(StructuredEdgeDetectionPtr)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_Create(
+    ffi.Pointer<ffi.Char> model,
+    ffi.Pointer<StructuredEdgeDetection> rval,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Create(
+      model,
+      rval,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_CreatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+                  ffi.Pointer<StructuredEdgeDetection>)>>(
+      'ximgproc_StructuredEdgeDetection_Create');
+  late final _ximgproc_StructuredEdgeDetection_Create =
+      _ximgproc_StructuredEdgeDetection_CreatePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<StructuredEdgeDetection>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_Create_1(
+    ffi.Pointer<ffi.Char> model,
+    RFFeatureGetter howToGetFeatures,
+    ffi.Pointer<StructuredEdgeDetection> rval,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Create_1(
+      model,
+      howToGetFeatures,
+      rval,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_Create_1Ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+                  RFFeatureGetter, ffi.Pointer<StructuredEdgeDetection>)>>(
+      'ximgproc_StructuredEdgeDetection_Create_1');
+  late final _ximgproc_StructuredEdgeDetection_Create_1 =
+      _ximgproc_StructuredEdgeDetection_Create_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, RFFeatureGetter,
+              ffi.Pointer<StructuredEdgeDetection>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_Create_Async(
+    ffi.Pointer<ffi.Char> model,
+    RFFeatureGetter howToGetFeatures,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_Create_Async(
+      model,
+      howToGetFeatures,
+      callback,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_Create_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  ffi.Pointer<ffi.Char>, RFFeatureGetter, imp1.CvCallback_1)>>(
+      'ximgproc_StructuredEdgeDetection_Create_Async');
+  late final _ximgproc_StructuredEdgeDetection_Create_Async =
+      _ximgproc_StructuredEdgeDetection_Create_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, RFFeatureGetter, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_computeOrientation(
+    StructuredEdgeDetection self,
+    Mat src,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_computeOrientation(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_computeOrientationPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  StructuredEdgeDetection, Mat, ffi.Pointer<Mat>)>>(
+      'ximgproc_StructuredEdgeDetection_computeOrientation');
+  late final _ximgproc_StructuredEdgeDetection_computeOrientation =
+      _ximgproc_StructuredEdgeDetection_computeOrientationPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus>
+      ximgproc_StructuredEdgeDetection_computeOrientation_Async(
+    StructuredEdgeDetection self,
+    Mat src,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_computeOrientation_Async(
+      self,
+      src,
+      callback,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_computeOrientation_AsyncPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Pointer<CvStatus> Function(
+                      StructuredEdgeDetection, Mat, imp1.CvCallback_1)>>(
+          'ximgproc_StructuredEdgeDetection_computeOrientation_Async');
+  late final _ximgproc_StructuredEdgeDetection_computeOrientation_Async =
+      _ximgproc_StructuredEdgeDetection_computeOrientation_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_detectEdges(
+    StructuredEdgeDetection self,
+    Mat src,
+    ffi.Pointer<Mat> dst,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_detectEdges(
+      self,
+      src,
+      dst,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_detectEdgesPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  StructuredEdgeDetection, Mat, ffi.Pointer<Mat>)>>(
+      'ximgproc_StructuredEdgeDetection_detectEdges');
+  late final _ximgproc_StructuredEdgeDetection_detectEdges =
+      _ximgproc_StructuredEdgeDetection_detectEdgesPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection, Mat, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_detectEdges_Async(
+    StructuredEdgeDetection self,
+    Mat src,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_detectEdges_Async(
+      self,
+      src,
+      callback,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_detectEdges_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(
+                  StructuredEdgeDetection, Mat, imp1.CvCallback_1)>>(
+      'ximgproc_StructuredEdgeDetection_detectEdges_Async');
+  late final _ximgproc_StructuredEdgeDetection_detectEdges_Async =
+      _ximgproc_StructuredEdgeDetection_detectEdges_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection, Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_edgesNms(
+    StructuredEdgeDetection self,
+    Mat edge_image,
+    Mat orientation_image,
+    ffi.Pointer<Mat> dst,
+    int r,
+    int s,
+    double m,
+    bool isParallel,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_edgesNms(
+      self,
+      edge_image,
+      orientation_image,
+      dst,
+      r,
+      s,
+      m,
+      isParallel,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_edgesNmsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection,
+              Mat,
+              Mat,
+              ffi.Pointer<Mat>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Float,
+              ffi.Bool)>>('ximgproc_StructuredEdgeDetection_edgesNms');
+  late final _ximgproc_StructuredEdgeDetection_edgesNms =
+      _ximgproc_StructuredEdgeDetection_edgesNmsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat,
+              ffi.Pointer<Mat>, int, int, double, bool)>();
+
+  ffi.Pointer<CvStatus> ximgproc_StructuredEdgeDetection_edgesNms_Async(
+    StructuredEdgeDetection self,
+    Mat edge_image,
+    Mat orientation_image,
+    int r,
+    int s,
+    double m,
+    bool isParallel,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_StructuredEdgeDetection_edgesNms_Async(
+      self,
+      edge_image,
+      orientation_image,
+      r,
+      s,
+      m,
+      isParallel,
+      callback,
+    );
+  }
+
+  late final _ximgproc_StructuredEdgeDetection_edgesNms_AsyncPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat,
+                  ffi.Int, ffi.Int, ffi.Float, ffi.Bool, imp1.CvCallback_1)>>(
+      'ximgproc_StructuredEdgeDetection_edgesNms_Async');
+  late final _ximgproc_StructuredEdgeDetection_edgesNms_Async =
+      _ximgproc_StructuredEdgeDetection_edgesNms_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, int,
+              int, double, bool, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_anisotropicDiffusion(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    double alpha,
+    double K,
+    int niters,
+  ) {
+    return _ximgproc_anisotropicDiffusion(
+      src,
+      dst,
+      alpha,
+      K,
+      niters,
+    );
+  }
+
+  late final _ximgproc_anisotropicDiffusionPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Float,
+              ffi.Float, ffi.Int)>>('ximgproc_anisotropicDiffusion');
+  late final _ximgproc_anisotropicDiffusion =
+      _ximgproc_anisotropicDiffusionPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, double, double, int)>();
+
+  ffi.Pointer<CvStatus> ximgproc_anisotropicDiffusion_Async(
+    Mat src,
+    double alpha,
+    double K,
+    int niters,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_anisotropicDiffusion_Async(
+      src,
+      alpha,
+      K,
+      niters,
+      callback,
+    );
+  }
+
+  late final _ximgproc_anisotropicDiffusion_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float, ffi.Int,
+              imp1.CvCallback_1)>>('ximgproc_anisotropicDiffusion_Async');
+  late final _ximgproc_anisotropicDiffusion_Async =
+      _ximgproc_anisotropicDiffusion_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, double, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_edgePreservingFilter(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    int d,
+    double threshold,
+  ) {
+    return _ximgproc_edgePreservingFilter(
+      src,
+      dst,
+      d,
+      threshold,
+    );
+  }
+
+  late final _ximgproc_edgePreservingFilterPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Int,
+              ffi.Double)>>('ximgproc_edgePreservingFilter');
+  late final _ximgproc_edgePreservingFilter =
+      _ximgproc_edgePreservingFilterPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, int, double)>();
+
+  ffi.Pointer<CvStatus> ximgproc_edgePreservingFilter_Async(
+    Mat src,
+    int d,
+    double threshold,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_edgePreservingFilter_Async(
+      src,
+      d,
+      threshold,
+      callback,
+    );
+  }
+
+  late final _ximgproc_edgePreservingFilter_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Double,
+              imp1.CvCallback_1)>>('ximgproc_edgePreservingFilter_Async');
+  late final _ximgproc_edgePreservingFilter_Async =
+      _ximgproc_edgePreservingFilter_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, int, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_findEllipses(
+    Mat image,
+    ffi.Pointer<Mat> ellipses,
+    double scoreThreshold,
+    double reliabilityThreshold,
+    double centerDistanceThreshold,
+  ) {
+    return _ximgproc_findEllipses(
+      image,
+      ellipses,
+      scoreThreshold,
+      reliabilityThreshold,
+      centerDistanceThreshold,
+    );
+  }
+
+  late final _ximgproc_findEllipsesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Float,
+              ffi.Float, ffi.Float)>>('ximgproc_findEllipses');
+  late final _ximgproc_findEllipses = _ximgproc_findEllipsesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Mat>, double, double, double)>();
+
+  ffi.Pointer<CvStatus> ximgproc_findEllipses_Async(
+    Mat image,
+    double scoreThreshold,
+    double reliabilityThreshold,
+    double centerDistanceThreshold,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_findEllipses_Async(
+      image,
+      scoreThreshold,
+      reliabilityThreshold,
+      centerDistanceThreshold,
+      callback,
+    );
+  }
+
+  late final _ximgproc_findEllipses_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Float, ffi.Float, ffi.Float,
+              imp1.CvCallback_1)>>('ximgproc_findEllipses_Async');
+  late final _ximgproc_findEllipses_Async =
+      _ximgproc_findEllipses_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, double, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_niBlackThreshold(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    double maxValue,
+    int type,
+    int blockSize,
+    double k,
+    int binarizationMethod,
+    double r,
+  ) {
+    return _ximgproc_niBlackThreshold(
+      src,
+      dst,
+      maxValue,
+      type,
+      blockSize,
+      k,
+      binarizationMethod,
+      r,
+    );
+  }
+
+  late final _ximgproc_niBlackThresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<Mat>,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Int,
+              ffi.Double)>>('ximgproc_niBlackThreshold');
+  late final _ximgproc_niBlackThreshold =
+      _ximgproc_niBlackThresholdPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, double, int, int, double, int, double)>();
+
+  ffi.Pointer<CvStatus> ximgproc_niBlackThreshold_Async(
+    Mat src,
+    double maxValue,
+    int type,
+    int blockSize,
+    double k,
+    int binarizationMethod,
+    double r,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_niBlackThreshold_Async(
+      src,
+      maxValue,
+      type,
+      blockSize,
+      k,
+      binarizationMethod,
+      r,
+      callback,
+    );
+  }
+
+  late final _ximgproc_niBlackThreshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Int,
+              ffi.Double,
+              imp1.CvCallback_1)>>('ximgproc_niBlackThreshold_Async');
+  late final _ximgproc_niBlackThreshold_Async =
+      _ximgproc_niBlackThreshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, int, int, double, int, double, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_createRLEImage(
+    VecPoint3i runs,
+    ffi.Pointer<Mat> res,
+    Size size,
+  ) {
+    return _ximgproc_rl_createRLEImage(
+      runs,
+      res,
+      size,
+    );
+  }
+
+  late final _ximgproc_rl_createRLEImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint3i, ffi.Pointer<Mat>,
+              Size)>>('ximgproc_rl_createRLEImage');
+  late final _ximgproc_rl_createRLEImage =
+      _ximgproc_rl_createRLEImagePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint3i, ffi.Pointer<Mat>, Size)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_createRLEImage_Async(
+    VecPoint3i runs,
+    Size size,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_createRLEImage_Async(
+      runs,
+      size,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_createRLEImage_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecPoint3i, Size,
+              imp1.CvCallback_1)>>('ximgproc_rl_createRLEImage_Async');
+  late final _ximgproc_rl_createRLEImage_Async =
+      _ximgproc_rl_createRLEImage_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint3i, Size, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_dilate(
+    Mat rlSrc,
+    ffi.Pointer<Mat> rlDest,
+    Mat rlKernel,
+    Point anchor,
+  ) {
+    return _ximgproc_rl_dilate(
+      rlSrc,
+      rlDest,
+      rlKernel,
+      anchor,
+    );
+  }
+
+  late final _ximgproc_rl_dilatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, Mat, Point)>>('ximgproc_rl_dilate');
+  late final _ximgproc_rl_dilate = _ximgproc_rl_dilatePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, Mat, Point)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_dilate_Async(
+    Mat rlSrc,
+    Mat rlKernel,
+    Point anchor,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_dilate_Async(
+      rlSrc,
+      rlKernel,
+      anchor,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_dilate_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Point, imp1.CvCallback_1)>>('ximgproc_rl_dilate_Async');
+  late final _ximgproc_rl_dilate_Async =
+      _ximgproc_rl_dilate_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Point, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_erode(
+    Mat rlSrc,
+    ffi.Pointer<Mat> rlDest,
+    Mat rlKernel,
+    bool bBoundaryOn,
+    Point anchor,
+  ) {
+    return _ximgproc_rl_erode(
+      rlSrc,
+      rlDest,
+      rlKernel,
+      bBoundaryOn,
+      anchor,
+    );
+  }
+
+  late final _ximgproc_rl_erodePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, Mat, ffi.Bool,
+              Point)>>('ximgproc_rl_erode');
+  late final _ximgproc_rl_erode = _ximgproc_rl_erodePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Mat>, Mat, bool, Point)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_erode_Async(
+    Mat rlSrc,
+    Mat rlKernel,
+    bool bBoundaryOn,
+    Point anchor,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_erode_Async(
+      rlSrc,
+      rlKernel,
+      bBoundaryOn,
+      anchor,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_erode_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Bool, Point,
+              imp1.CvCallback_1)>>('ximgproc_rl_erode_Async');
+  late final _ximgproc_rl_erode_Async = _ximgproc_rl_erode_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, bool, Point, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_getStructuringElement(
+    int shape,
+    Size ksize,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _ximgproc_rl_getStructuringElement(
+      shape,
+      ksize,
+      rval,
+    );
+  }
+
+  late final _ximgproc_rl_getStructuringElementPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, Size,
+              ffi.Pointer<Mat>)>>('ximgproc_rl_getStructuringElement');
+  late final _ximgproc_rl_getStructuringElement =
+      _ximgproc_rl_getStructuringElementPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(int, Size, ffi.Pointer<Mat>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_getStructuringElement_Async(
+    int shape,
+    Size ksize,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_getStructuringElement_Async(
+      shape,
+      ksize,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_getStructuringElement_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, Size,
+              imp1.CvCallback_1)>>('ximgproc_rl_getStructuringElement_Async');
+  late final _ximgproc_rl_getStructuringElement_Async =
+      _ximgproc_rl_getStructuringElement_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(int, Size, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_isRLMorphologyPossible(
+    Mat rlStructuringElement,
+    ffi.Pointer<ffi.Bool> rval,
+  ) {
+    return _ximgproc_rl_isRLMorphologyPossible(
+      rlStructuringElement,
+      rval,
+    );
+  }
+
+  late final _ximgproc_rl_isRLMorphologyPossiblePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat,
+              ffi.Pointer<ffi.Bool>)>>('ximgproc_rl_isRLMorphologyPossible');
+  late final _ximgproc_rl_isRLMorphologyPossible =
+      _ximgproc_rl_isRLMorphologyPossiblePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_isRLMorphologyPossible_Async(
+    Mat rlStructuringElement,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_isRLMorphologyPossible_Async(
+      rlStructuringElement,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_isRLMorphologyPossible_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat,
+              imp1.CvCallback_1)>>('ximgproc_rl_isRLMorphologyPossible_Async');
+  late final _ximgproc_rl_isRLMorphologyPossible_Async =
+      _ximgproc_rl_isRLMorphologyPossible_AsyncPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_morphologyEx(
+    Mat rlSrc,
+    ffi.Pointer<Mat> rlDest,
+    int op,
+    Mat rlKernel,
+    bool bBoundaryOnForErosion,
+    Point anchor,
+  ) {
+    return _ximgproc_rl_morphologyEx(
+      rlSrc,
+      rlDest,
+      op,
+      rlKernel,
+      bBoundaryOnForErosion,
+      anchor,
+    );
+  }
+
+  late final _ximgproc_rl_morphologyExPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Int, Mat,
+              ffi.Bool, Point)>>('ximgproc_rl_morphologyEx');
+  late final _ximgproc_rl_morphologyEx =
+      _ximgproc_rl_morphologyExPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, int, Mat, bool, Point)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_morphologyEx_Async(
+    Mat rlSrc,
+    int op,
+    Mat rlKernel,
+    bool bBoundaryOnForErosion,
+    Point anchor,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_morphologyEx_Async(
+      rlSrc,
+      op,
+      rlKernel,
+      bBoundaryOnForErosion,
+      anchor,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_morphologyEx_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, Mat, ffi.Bool, Point,
+              imp1.CvCallback_1)>>('ximgproc_rl_morphologyEx_Async');
+  late final _ximgproc_rl_morphologyEx_Async =
+      _ximgproc_rl_morphologyEx_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, int, Mat, bool, Point, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_paint(
+    Mat image,
+    Mat rlSrc,
+    Scalar value,
+  ) {
+    return _ximgproc_rl_paint(
+      image,
+      rlSrc,
+      value,
+    );
+  }
+
+  late final _ximgproc_rl_paintPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar)>>(
+      'ximgproc_rl_paint');
+  late final _ximgproc_rl_paint = _ximgproc_rl_paintPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_paint_Async(
+    Mat image,
+    Mat rlSrc,
+    Scalar value,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _ximgproc_rl_paint_Async(
+      image,
+      rlSrc,
+      value,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_paint_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Scalar, imp1.CvCallback_0)>>('ximgproc_rl_paint_Async');
+  late final _ximgproc_rl_paint_Async = _ximgproc_rl_paint_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_threshold(
+    Mat src,
+    ffi.Pointer<Mat> rlDest,
+    double thresh,
+    int type,
+  ) {
+    return _ximgproc_rl_threshold(
+      src,
+      rlDest,
+      thresh,
+      type,
+    );
+  }
+
+  late final _ximgproc_rl_thresholdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, ffi.Double,
+              ffi.Int)>>('ximgproc_rl_threshold');
+  late final _ximgproc_rl_threshold = _ximgproc_rl_thresholdPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, double, int)>();
+
+  ffi.Pointer<CvStatus> ximgproc_rl_threshold_Async(
+    Mat src,
+    double thresh,
+    int type,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_rl_threshold_Async(
+      src,
+      thresh,
+      type,
+      callback,
+    );
+  }
+
+  late final _ximgproc_rl_threshold_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double, ffi.Int,
+              imp1.CvCallback_1)>>('ximgproc_rl_threshold_Async');
+  late final _ximgproc_rl_threshold_Async =
+      _ximgproc_rl_threshold_AsyncPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, double, int, imp1.CvCallback_1)>();
+
+  ffi.Pointer<CvStatus> ximgproc_thinning(
+    Mat src,
+    ffi.Pointer<Mat> dst,
+    int thinningType,
+  ) {
+    return _ximgproc_thinning(
+      src,
+      dst,
+      thinningType,
+    );
+  }
+
+  late final _ximgproc_thinningPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Mat>, ffi.Int)>>('ximgproc_thinning');
+  late final _ximgproc_thinning = _ximgproc_thinningPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Mat>, int)>();
+
+  ffi.Pointer<CvStatus> ximgproc_thinning_Async(
+    Mat src,
+    int thinningType,
+    imp1.CvCallback_1 callback,
+  ) {
+    return _ximgproc_thinning_Async(
+      src,
+      thinningType,
+      callback,
+    );
+  }
+
+  late final _ximgproc_thinning_AsyncPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Int, imp1.CvCallback_1)>>('ximgproc_thinning_Async');
+  late final _ximgproc_thinning_Async = _ximgproc_thinning_AsyncPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, int, imp1.CvCallback_1)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -21531,6 +31752,15 @@ class _SymbolAddresses {
           _library._AgastFeatureDetector_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>
       get AlignMTB_Close => _library._AlignMTB_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParametersPtr)>>
+      get ArucoDetectorParameters_Close =>
+          _library._ArucoDetectorParameters_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>
+      get ArucoDetector_Close => _library._ArucoDetector_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>
+      get ArucoDictionary_Close => _library._ArucoDictionary_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AsyncArrayPtr)>>
+      get AsyncArray_Close => _library._AsyncArray_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BFMatcherPtr)>>
       get BFMatcher_Close => _library._BFMatcher_ClosePtr;
   ffi.Pointer<
@@ -21550,13 +31780,21 @@ class _SymbolAddresses {
           ffi.NativeFunction<ffi.Void Function(BackgroundSubtractorMOG2Ptr)>>
       get BackgroundSubtractorMOG2_Close =>
           _library._BackgroundSubtractorMOG2_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>
+      get BlockMeanHash_Close => _library._BlockMeanHash_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CLAHEPtr)>>
       get CLAHE_Close => _library._CLAHE_ClosePtr;
   ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(CLAHEPtr, imp1.CvCallback_0)>>
       get CLAHE_Close_Async => _library._CLAHE_Close_AsyncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CascadeClassifierPtr)>>
+      get CascadeClassifier_Close => _library._CascadeClassifier_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<CvStatus>)>>
       get CvStatus_Close => _library._CvStatus_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FaceDetectorYNPtr)>>
+      get FaceDetectorYN_Close => _library._FaceDetectorYN_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FaceRecognizerSFPtr)>>
+      get FaceRecognizerSF_Close => _library._FaceRecognizerSF_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FastFeatureDetectorPtr)>>
       get FastFeatureDetector_Close => _library._FastFeatureDetector_ClosePtr;
   ffi.Pointer<
@@ -21580,6 +31818,8 @@ class _SymbolAddresses {
               ffi.Pointer<CvStatus> Function(
                   GFTTDetectorPtr, imp1.CvCallback_0)>>
       get GFTTDetector_Close_Async => _library._GFTTDetector_Close_AsyncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(HOGDescriptorPtr)>>
+      get HOGDescriptor_Close => _library._HOGDescriptor_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KAZEPtr)>> get KAZE_Close =>
       _library._KAZE_ClosePtr;
   ffi.Pointer<
@@ -21588,6 +31828,11 @@ class _SymbolAddresses {
       get KAZE_Close_Async => _library._KAZE_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KalmanFilterPtr)>>
       get KalmanFilter_Close => _library._KalmanFilter_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LayerPtr)>>
+      get Layer_Close => _library._Layer_ClosePtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(LayerPtr, imp1.CvCallback_0)>>
+      get Layer_Close_Async => _library._Layer_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MSERPtr)>> get MSER_Close =>
       _library._MSER_ClosePtr;
   ffi.Pointer<
@@ -21600,12 +31845,28 @@ class _SymbolAddresses {
       get Mat_CloseVoid => _library._Mat_CloseVoidPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>
       get MergeMertens_Close => _library._MergeMertens_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(NetPtr)>> get Net_Close =>
+      _library._Net_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(NetPtr, imp1.CvCallback_0)>>
+      get Net_Close_Async => _library._Net_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ORBPtr)>> get ORB_Close =>
       _library._ORB_ClosePtr;
   ffi.Pointer<
           ffi.NativeFunction<
               ffi.Pointer<CvStatus> Function(ORBPtr, imp1.CvCallback_0)>>
       get ORB_Close_Async => _library._ORB_Close_AsyncPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QRCodeDetectorPtr)>>
+      get QRCodeDetector_Close => _library._QRCodeDetector_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>
+      get QualityBRISQUE_close => _library._QualityBRISQUE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>
+      get QualityGMSD_close => _library._QualityGMSD_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>
+      get QualityMSE_close => _library._QualityMSE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>
+      get QualityPSNR_close => _library._QualityPSNR_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>
+      get QualitySSIM_close => _library._QualitySSIM_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp1.RNGPtr)>>
       get Rng_Close => _library._Rng_ClosePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SIFTPtr)>> get SIFT_Close =>
@@ -21634,6 +31895,21 @@ class _SymbolAddresses {
       get Subdiv2D_Close_Async => _library._Subdiv2D_Close_AsyncPtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(TrackerMILPtr)>>
       get TrackerMIL_Close => _library._TrackerMIL_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>
+      get WBDetector_Close => _library._WBDetector_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>
+      get WeChatQRCode_Close => _library._WeChatQRCode_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>
+      get ximgproc_EdgeDrawing_Close => _library._ximgproc_EdgeDrawing_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(GraphSegmentationPtr)>>
+      get ximgproc_GraphSegmentation_Close =>
+          _library._ximgproc_GraphSegmentation_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RFFeatureGetterPtr)>>
+      get ximgproc_RFFeatureGetter_Close =>
+          _library._ximgproc_RFFeatureGetter_ClosePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StructuredEdgeDetectionPtr)>>
+      get ximgproc_StructuredEdgeDetection_Close =>
+          _library._ximgproc_StructuredEdgeDetection_ClosePtr;
 }
 
 final class AKAZE extends ffi.Struct {
@@ -21654,11 +31930,38 @@ final class AlignMTB extends ffi.Struct {
 
 typedef AlignMTBPtr = ffi.Pointer<AlignMTB>;
 
+final class ArucoDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+final class ArucoDetectorParameters extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef ArucoDetectorParametersPtr = ffi.Pointer<ArucoDetectorParameters>;
+typedef ArucoDetectorPtr = ffi.Pointer<ArucoDetector>;
+
+final class ArucoDictionary extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef ArucoDictionaryPtr = ffi.Pointer<ArucoDictionary>;
+
+final class AsyncArray extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef AsyncArrayPtr = ffi.Pointer<AsyncArray>;
+
 final class BFMatcher extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef BFMatcherPtr = ffi.Pointer<BFMatcher>;
+
+const int BLOCK_MEAN_HASH_MODE_0 = 0;
+
+const int BLOCK_MEAN_HASH_MODE_1 = 1;
 
 final class BRISK extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -21678,12 +31981,126 @@ final class BackgroundSubtractorMOG2 extends ffi.Struct {
 
 typedef BackgroundSubtractorMOG2Ptr = ffi.Pointer<BackgroundSubtractorMOG2>;
 
+final class BlockMeanHash extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef BlockMeanHashPtr = ffi.Pointer<BlockMeanHash>;
+
+final class Box extends ffi.Struct {
+  @ffi.Int()
+  external int h;
+
+  @ffi.Float()
+  external double score;
+
+  @ffi.Int()
+  external int w;
+
+  @ffi.Int()
+  external int x;
+
+  @ffi.Int()
+  external int y;
+}
+
 final class CLAHE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef CLAHEPtr = ffi.Pointer<CLAHE>;
+
+final class CascadeClassifier extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef CascadeClassifierPtr = ffi.Pointer<CascadeClassifier>;
 typedef CvStatus = imp1.CvStatus;
+
+final class EdgeBoxes extends ffi.Struct {
+  @ffi.Float()
+  external double alpha;
+
+  @ffi.Float()
+  external double beta;
+
+  @ffi.Float()
+  external double eta;
+
+  @ffi.Float()
+  external double minScore;
+
+  @ffi.Int()
+  external int maxBoxes;
+
+  @ffi.Float()
+  external double edgeMinMag;
+
+  @ffi.Float()
+  external double edgeMergeThr;
+
+  @ffi.Float()
+  external double clusterMinMag;
+
+  @ffi.Float()
+  external double maxAspectRatio;
+
+  @ffi.Float()
+  external double minBoxArea;
+
+  @ffi.Float()
+  external double gamma;
+
+  @ffi.Float()
+  external double kappa;
+}
+
+final class EdgeDrawing extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+final class EdgeDrawingParams extends ffi.Struct {
+  @ffi.Int()
+  external int AnchorThresholdValue;
+
+  @ffi.Int()
+  external int EdgeDetectionOperator;
+
+  @ffi.Int()
+  external int GradientThresholdValue;
+
+  @ffi.Double()
+  external double LineFitErrorThreshold;
+
+  @ffi.Double()
+  external double MaxDistanceBetweenTwoLines;
+
+  @ffi.Double()
+  external double MaxErrorThreshold;
+
+  @ffi.Int()
+  external int MinLineLength;
+
+  @ffi.Int()
+  external int MinPathLength;
+
+  @ffi.Bool()
+  external bool NFAValidation;
+
+  @ffi.Bool()
+  external bool PFmode;
+
+  @ffi.Int()
+  external int ScanInterval;
+
+  @ffi.Float()
+  external double Sigma;
+
+  @ffi.Bool()
+  external bool SumFlag;
+}
+
+typedef EdgeDrawingPtr = ffi.Pointer<EdgeDrawing>;
 typedef ErrorCallback = ffi.Pointer<ffi.NativeFunction<ErrorCallbackFunction>>;
 typedef ErrorCallbackFunction = ffi.Void Function(
     ffi.Int status,
@@ -21699,6 +32116,18 @@ typedef DartErrorCallbackFunction = void Function(
     ffi.Pointer<ffi.Char> file_name,
     int line,
     ffi.Pointer<ffi.Void> userdata);
+
+final class FaceDetectorYN extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef FaceDetectorYNPtr = ffi.Pointer<FaceDetectorYN>;
+
+final class FaceRecognizerSF extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef FaceRecognizerSFPtr = ffi.Pointer<FaceRecognizerSF>;
 
 final class FastFeatureDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -21718,6 +32147,18 @@ final class GFTTDetector extends ffi.Struct {
 
 typedef GFTTDetectorPtr = ffi.Pointer<GFTTDetector>;
 
+final class GraphSegmentation extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef GraphSegmentationPtr = ffi.Pointer<GraphSegmentation>;
+
+final class HOGDescriptor extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef HOGDescriptorPtr = ffi.Pointer<HOGDescriptor>;
+
 final class KAZE extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -21729,6 +32170,12 @@ final class KalmanFilter extends ffi.Struct {
 }
 
 typedef KalmanFilterPtr = ffi.Pointer<KalmanFilter>;
+
+final class Layer extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef LayerPtr = ffi.Pointer<Layer>;
 
 final class MSER extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -21745,6 +32192,12 @@ final class MergeMertens extends ffi.Struct {
 typedef MergeMertensPtr = ffi.Pointer<MergeMertens>;
 typedef Moment = imp1.Moment;
 
+final class Net extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef NetPtr = ffi.Pointer<Net>;
+
 final class ORB extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -21752,6 +32205,54 @@ final class ORB extends ffi.Struct {
 typedef ORBPtr = ffi.Pointer<ORB>;
 typedef Point = imp1.Point;
 typedef Point2f = imp1.Point2f;
+
+final class PtrWBDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef PtrWBDetectorPtr = ffi.Pointer<PtrWBDetector>;
+
+final class QRCodeDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QRCodeDetectorPtr = ffi.Pointer<QRCodeDetector>;
+
+final class QualityBRISQUE extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityBRISQUEPtr = ffi.Pointer<QualityBRISQUE>;
+
+final class QualityGMSD extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityGMSDPtr = ffi.Pointer<QualityGMSD>;
+
+final class QualityMSE extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityMSEPtr = ffi.Pointer<QualityMSE>;
+
+final class QualityPSNR extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualityPSNRPtr = ffi.Pointer<QualityPSNR>;
+
+final class QualitySSIM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef QualitySSIMPtr = ffi.Pointer<QualitySSIM>;
+
+final class RFFeatureGetter extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef RFFeatureGetterPtr = ffi.Pointer<RFFeatureGetter>;
 typedef RNG = imp1.RNG;
 typedef Rect = imp1.Rect;
 typedef Rect2f = imp1.Rect2f;
@@ -21849,6 +32350,12 @@ final class Stitcher extends ffi.Struct {
 
 typedef StitcherPtr = ffi.Pointer<Stitcher>;
 
+final class StructuredEdgeDetection extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+}
+
+typedef StructuredEdgeDetectionPtr = ffi.Pointer<StructuredEdgeDetection>;
+
 final class Subdiv2D extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
@@ -21897,6 +32404,7 @@ typedef Vec8i = imp1.Vec8i;
 typedef VecChar = imp1.VecChar;
 typedef VecDMatch = imp1.VecDMatch;
 typedef VecF32 = imp1.VecF32;
+typedef VecF64 = imp1.VecF64;
 typedef VecI32 = imp1.VecI32;
 typedef VecKeyPoint = imp1.VecKeyPoint;
 typedef VecMat = imp1.VecMat;
@@ -21904,11 +32412,19 @@ typedef VecPoint = imp1.VecPoint;
 typedef VecPoint2f = imp1.VecPoint2f;
 typedef VecPoint3f = imp1.VecPoint3f;
 typedef VecPoint3i = imp1.VecPoint3i;
+typedef VecRect = imp1.VecRect;
 typedef VecUChar = imp1.VecUChar;
+typedef VecVecChar = imp1.VecVecChar;
 typedef VecVecDMatch = imp1.VecVecDMatch;
 typedef VecVecPoint = imp1.VecVecPoint;
 typedef VecVecPoint2f = imp1.VecVecPoint2f;
 typedef VecVecPoint3f = imp1.VecVecPoint3f;
+
+final class WeChatQRCode extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef WeChatQRCodePtr = ffi.Pointer<WeChatQRCode>;
 typedef double_t = ffi.Double;
 typedef Dartdouble_t = double;
 typedef float_t = ffi.Float;

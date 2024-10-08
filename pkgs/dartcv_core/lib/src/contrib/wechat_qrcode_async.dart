@@ -10,13 +10,13 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/core.g.dart' as cvg;
+import '../native_lib.dart' show cffi;
 import 'wechat_qrcode.dart';
 
 extension WeChatQRCodeAsync on WeChatQRCode {
   static Future<WeChatQRCode> emptyAsync() async => cvRunAsync<WeChatQRCode>(
-        ccontrib.WeChatQRCode_New_Async,
+        cffi.WeChatQRCode_New_Async,
         (c, p) => c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>())),
       );
 
@@ -32,7 +32,7 @@ extension WeChatQRCodeAsync on WeChatQRCode {
     final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final rval = cvRunAsync<WeChatQRCode>(
-      (callback) => ccontrib.WeChatQRCode_NewWithParams_Async(dp, dm, srp, srm, callback),
+      (callback) => cffi.WeChatQRCode_NewWithParams_Async(dp, dm, srp, srm, callback),
       (c, p) => c.complete(WeChatQRCode.fromPointer(p.cast<cvg.WeChatQRCode>())),
     );
     arena.releaseAll();
@@ -41,7 +41,7 @@ extension WeChatQRCodeAsync on WeChatQRCode {
 
   Future<(List<String>, VecMat)> detectAndDecodeAsync(InputArray img) async =>
       cvRunAsync2<(List<String>, VecMat)>(
-          (callback) => ccontrib.WeChatQRCode_DetectAndDecode_Async(ptr, img.ref, callback), (c, p, p2) {
+          (callback) => cffi.WeChatQRCode_DetectAndDecode_Async(ptr, img.ref, callback), (c, p, p2) {
         final vec = VecVecChar.fromPointer(p.cast<cvg.VecVecChar>());
         final points = VecMat.fromPointer(p2.cast<cvg.VecMat>());
         final rval = vec.asStringList();

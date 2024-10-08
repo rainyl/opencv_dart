@@ -11,8 +11,8 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/core.g.dart' as cvg;
+import '../native_lib.dart' show cffi;
 
 enum PredefinedDictionaryType {
   ///< 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
@@ -94,16 +94,16 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
     final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => ccontrib.getPredefinedDictionary(type.value, p));
+    cvRun(() => cffi.getPredefinedDictionary(type.value, p));
     return ArucoDictionary._(p);
   }
 
   @override
   cvg.ArucoDictionary get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.ArucoDictionary_Close);
+  static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(cffi.addresses.ArucoDictionary_Close);
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.ArucoDictionary_Close(ptr);
+    cffi.ArucoDictionary_Close(ptr);
   }
 }

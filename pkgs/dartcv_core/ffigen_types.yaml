@@ -8,14 +8,14 @@ output:
     import-path: 'package:dartcv_core/src/g/types.g.dart'
 # ffi-native:
 #   assetId: 'package:dartcv_core/dartcv_core.dart' # Optional.
-compiler-opts: "-Isrc"
+compiler-opts: "-Isrc -I../../src"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - src/types.h
+    - ../../src/core/types.h
   include-directives:
-    - src/types.h
+    - ../../src/core/types.h
 
 functions:
   symbol-address:

@@ -10,9 +10,9 @@ sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - src/constants.h
+    - ../../src/core/constants.h
   include-directives:
-    - src/constants.h
+    - ../../src/core/constants.h
 
 preamble: |
   // dartcv_core - OpenCV bindings for Dart language

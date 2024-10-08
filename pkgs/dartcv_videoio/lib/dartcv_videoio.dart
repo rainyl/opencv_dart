@@ -4,5 +4,6 @@
 
 library cv.videoio;
 
+export 'package:dartcv_core/dartcv_core.dart';
 export 'src/videoio.dart';
 export 'src/videoio_async.dart';
