@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include "core/core.h"
+#include "core.h"
 
 #ifdef __cplusplus
 namespace cv_dnn = cv::dnn::dnn4_v20240521;

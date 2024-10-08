@@ -7,7 +7,7 @@
 */
 
 #include "dnn.h"
-#include "core/vec.hpp"
+#include "vec.hpp"
 #include <string.h>
 #include <vector>
 

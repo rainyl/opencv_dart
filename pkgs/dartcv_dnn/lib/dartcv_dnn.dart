@@ -4,6 +4,8 @@
 
 library cv.dnn;
 
+export 'package:dartcv_core/dartcv_core.dart';
+
 export 'src/asyncarray.dart';
 export 'src/dnn.dart';
 export 'src/dnn_async.dart';

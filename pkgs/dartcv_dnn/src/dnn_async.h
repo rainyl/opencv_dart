@@ -2,7 +2,7 @@
 #define CVD_DNN_ASYNC_H_
 
 #include "dnn.h"
-#include "core/types.h"
+#include "types.h"
 #include <stdbool.h>
 
 #ifdef __cplusplus

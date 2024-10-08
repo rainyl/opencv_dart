@@ -205,9 +205,14 @@ set(HEADER_FILES
   "video_async.h"
 )
 
+# provide include dir for other project
+set(dartcv_core_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+message(STATUS "Building library: ${LIBRARY_NAME}")
+
 add_library(${LIBRARY_NAME} SHARED ${CPP_FILES} ${HEADER_FILES})
 target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
-  "${CMAKE_CURRENT_SOURCE_DIR}"
+  ${CMAKE_CURRENT_SOURCE_DIR}
   ${OpenCV_INCLUDE_DIRS}
 )
 message(STATUS "Added library: ${LIBRARY_NAME} ${HEADER_FILES}")

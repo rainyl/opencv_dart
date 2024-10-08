@@ -1,6 +1,6 @@
 #include "dnn_async.h"
-#include "core/types.h"
-#include "core/vec.hpp"
+#include "types.h"
+#include "vec.hpp"
 
 // Asynchronous functions for Net
 CvStatus *Net_Create_Async(CvCallback_1 callback) {

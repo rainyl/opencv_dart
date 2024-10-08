@@ -9,17 +9,11 @@ library cv.dnn;
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
+import 'package:dartcv_core/dartcv_core.dart';
 import 'package:ffi/ffi.dart';
 
-import '../core/base.dart';
-import '../core/mat.dart';
-import '../core/mat_type.dart';
-import '../core/rect.dart';
-import '../core/scalar.dart';
-import '../core/size.dart';
-import '../core/vec.dart';
-import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
+import 'g/dnn.g.dart' as cvg;
+import 'native_lib.dart' show cffi;
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
 class Layer extends CvStruct<cvg.Layer> {
@@ -31,17 +25,17 @@ class Layer extends CvStruct<cvg.Layer> {
 
   factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
 
-  static final finalizer = OcvFinalizer<cvg.LayerPtr>(cdnn.addresses.Layer_Close);
+  static final finalizer = OcvFinalizer<cvg.LayerPtr>(cffi.addresses.Layer_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cdnn.Layer_Close(ptr);
+    cffi.Layer_Close(ptr);
   }
 
   /// GetName returns name for this layer.
   String get name {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.Layer_GetName(ref, p));
+    cvRun(() => cffi.Layer_GetName(ref, p));
     final r = p.value.toDartString();
     calloc.free(p);
     return r;
@@ -50,7 +44,7 @@ class Layer extends CvStruct<cvg.Layer> {
   /// GetType returns type for this layer.
   String get type {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.Layer_GetType(ref, p));
+    cvRun(() => cffi.Layer_GetType(ref, p));
     final r = p.value.toDartString();
     calloc.free(p);
     return r;
@@ -64,7 +58,7 @@ class Layer extends CvStruct<cvg.Layer> {
     return using<int>((arena) {
       final cName = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final p = arena<ffi.Int>();
-      cvRun(() => cdnn.Layer_InputNameToIndex(ref, cName, p));
+      cvRun(() => cffi.Layer_InputNameToIndex(ref, cName, p));
       return p.value;
     });
   }
@@ -77,7 +71,7 @@ class Layer extends CvStruct<cvg.Layer> {
     return using<int>((arena) {
       final cName = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final p = arena<ffi.Int>();
-      cvRun(() => cdnn.Layer_OutputNameToIndex(ref, cName, p));
+      cvRun(() => cffi.Layer_OutputNameToIndex(ref, cName, p));
       return p.value;
     });
   }
@@ -104,7 +98,7 @@ class Net extends CvStruct<cvg.Net> {
 
   factory Net.empty() {
     final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.Net_Create(p));
+    cvRun(() => cffi.Net_Create(p));
     final net = Net._(p);
     return net;
   }
@@ -118,7 +112,7 @@ class Net extends CvStruct<cvg.Net> {
       final cConfig = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final cFramework = framework.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final p = calloc<cvg.Net>();
-      cvRun(() => cdnn.Net_ReadNet(cPath, cConfig, cFramework, p));
+      cvRun(() => cffi.Net_ReadNet(cPath, cConfig, cFramework, p));
       final net = Net._(p);
       return net;
     });
@@ -135,7 +129,7 @@ class Net extends CvStruct<cvg.Net> {
       final bufM = VecUChar.fromList(bufferModel);
       final bufC = VecUChar.fromList(bufferConfig!);
       final p = calloc<cvg.Net>();
-      cvRun(() => cdnn.Net_ReadNetBytes(cFramework, bufM.ref, bufC.ref, p));
+      cvRun(() => cffi.Net_ReadNetBytes(cFramework, bufM.ref, bufC.ref, p));
       final net = Net._(p);
       return net;
     });
@@ -148,7 +142,7 @@ class Net extends CvStruct<cvg.Net> {
       final cProto = prototxt.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final cCaffe = caffeModel.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final p = calloc<cvg.Net>();
-      cvRun(() => cdnn.Net_ReadNetFromCaffe(cProto, cCaffe, p));
+      cvRun(() => cffi.Net_ReadNetFromCaffe(cProto, cCaffe, p));
       final net = Net._(p);
       return net;
     });
@@ -160,7 +154,7 @@ class Net extends CvStruct<cvg.Net> {
     final p = calloc<cvg.Net>();
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => cdnn.Net_ReadNetFromCaffeBytes(bufP.ref, bufM.ref, p));
+    cvRun(() => cffi.Net_ReadNetFromCaffeBytes(bufP.ref, bufM.ref, p));
     final net = Net._(p);
     return net;
   }
@@ -172,7 +166,7 @@ class Net extends CvStruct<cvg.Net> {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
       final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => cdnn.Net_ReadNetFromONNX(cpath, p));
+      cvRun(() => cffi.Net_ReadNetFromONNX(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -184,7 +178,7 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromOnnxBytes(Uint8List bufferModel) {
     final p = calloc<cvg.Net>();
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => cdnn.Net_ReadNetFromONNXBytes(bufM.ref, p));
+    cvRun(() => cffi.Net_ReadNetFromONNXBytes(bufM.ref, p));
     final net = Net._(p);
     return net;
   }
@@ -197,7 +191,7 @@ class Net extends CvStruct<cvg.Net> {
       final p = calloc<cvg.Net>();
       final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
       final cconf = config.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => cdnn.Net_ReadNetFromTensorflow(cpath, cconf, p));
+      cvRun(() => cffi.Net_ReadNetFromTensorflow(cpath, cconf, p));
       final net = Net._(p);
       return net;
     });
@@ -211,7 +205,7 @@ class Net extends CvStruct<cvg.Net> {
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
     final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.Net_ReadNetFromTensorflowBytes(bufM.ref, bufC.ref, p));
+    cvRun(() => cffi.Net_ReadNetFromTensorflowBytes(bufM.ref, bufC.ref, p));
     final net = Net._(p);
     return net;
   }
@@ -223,7 +217,7 @@ class Net extends CvStruct<cvg.Net> {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
       final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => cdnn.Net_ReadNetFromTFLite(cpath, p));
+      cvRun(() => cffi.Net_ReadNetFromTFLite(cpath, p));
       final net = Net._(p);
       return net;
     });
@@ -235,7 +229,7 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromTFLiteBytes(Uint8List bufferModel) {
     final bufM = VecUChar.fromList(bufferModel);
     final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.Net_ReadNetFromTFLiteBytes(bufM.ref, p));
+    cvRun(() => cffi.Net_ReadNetFromTFLiteBytes(bufM.ref, p));
     final net = Net._(p);
     return net;
   }
@@ -246,7 +240,7 @@ class Net extends CvStruct<cvg.Net> {
     return using<Net>((arena) {
       final p = calloc<cvg.Net>();
       final cpath = path.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => cdnn.Net_ReadNetFromTorch(cpath, isBinary, evaluate, p));
+      cvRun(() => cffi.Net_ReadNetFromTorch(cpath, isBinary, evaluate, p));
       final net = Net._(p);
       return net;
     });
@@ -259,14 +253,14 @@ class Net extends CvStruct<cvg.Net> {
   bool get isEmpty {
     return cvRunArena<bool>((arena) {
       final p = arena<ffi.Bool>();
-      cvRun(() => cdnn.Net_Empty(ref, p));
+      cvRun(() => cffi.Net_Empty(ref, p));
       return p.value;
     });
   }
 
   String dump() {
     final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.Net_Dump(ref, p));
+    cvRun(() => cffi.Net_Dump(ref, p));
     final ret = p.value.cast<Utf8>().toDartString();
     calloc.free(p);
     return ret;
@@ -280,7 +274,7 @@ class Net extends CvStruct<cvg.Net> {
     // mean ??= Scalar.default_(); not supported yet
     using((arena) {
       final cname = name.toNativeUtf8(allocator: arena);
-      cvRun(() => cdnn.Net_SetInput(ref, blob.ref, cname.cast()));
+      cvRun(() => cffi.Net_SetInput(ref, blob.ref, cname.cast()));
     });
   }
 
@@ -291,7 +285,7 @@ class Net extends CvStruct<cvg.Net> {
   Mat forward({String outputName = ""}) {
     return cvRunArena<Mat>((arena) {
       final m = Mat.empty();
-      cvRun(() => cdnn.Net_Forward(ref, outputName.toNativeUtf8(allocator: arena).cast(), m.ptr));
+      cvRun(() => cffi.Net_Forward(ref, outputName.toNativeUtf8(allocator: arena).cast(), m.ptr));
       return m;
     });
   }
@@ -316,7 +310,7 @@ class Net extends CvStruct<cvg.Net> {
   VecMat forwardLayers(List<String> names) {
     final vecName = names.i8;
     final vecMat = calloc<cvg.VecMat>();
-    cvRun(() => cdnn.Net_ForwardLayers(ref, vecMat, vecName.ref));
+    cvRun(() => cffi.Net_ForwardLayers(ref, vecMat, vecName.ref));
     return VecMat.fromPointer(vecMat);
   }
 
@@ -324,13 +318,13 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/3.4/db/d30/classcv_1_1dnn_1_1Net.html#a7f767df11386d39374db49cd8df8f59e
-  void setPreferableBackend(int backendId) => cvRun(() => cdnn.Net_SetPreferableBackend(ref, backendId));
+  void setPreferableBackend(int backendId) => cvRun(() => cffi.Net_SetPreferableBackend(ref, backendId));
 
   /// SetPreferableTarget ask network to make computations on specific target device.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/3.4/db/d30/classcv_1_1dnn_1_1Net.html#a9dddbefbc7f3defbe3eeb5dc3d3483f4
-  void setPreferableTarget(int targetId) => cvRun(() => cdnn.Net_SetPreferableTarget(ref, targetId));
+  void setPreferableTarget(int targetId) => cvRun(() => cffi.Net_SetPreferableTarget(ref, targetId));
 
   /// GetLayer returns pointer to layer with specified id from the network.
   ///
@@ -338,7 +332,7 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a70aec7f768f38c32b1ee25f3a56526df
   Layer getLayer(int index) {
     final p = calloc<cvg.Layer>();
-    cvRun(() => cdnn.Net_GetLayer(ref, index, p));
+    cvRun(() => cffi.Net_GetLayer(ref, index, p));
     final layer = Layer.fromPointer(p);
     return layer;
   }
@@ -349,7 +343,7 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae8be9806024a0d1d41aba687cce99e6b
   List<String> getLayerNames() {
     final cNames = calloc<cvg.VecVecChar>();
-    cvRun(() => cdnn.Net_GetLayerNames(ref, cNames));
+    cvRun(() => cffi.Net_GetLayerNames(ref, cNames));
     final vec = VecVecChar.fromPointer(cNames);
     return vec.asStringList();
   }
@@ -361,7 +355,7 @@ class Net extends CvStruct<cvg.Net> {
   int getPerfProfile() {
     return cvRunArena<int>((arena) {
       final p = arena<ffi.Int64>();
-      cvRun(() => cdnn.Net_GetPerfProfile(ref, p));
+      cvRun(() => cffi.Net_GetPerfProfile(ref, p));
       return p.value;
     });
   }
@@ -372,7 +366,7 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae62a73984f62c49fd3e8e689405b056a
   List<int> getUnconnectedOutLayers() {
     final ids = calloc<cvg.VecI32>();
-    cvRun(() => cdnn.Net_GetUnconnectedOutLayers(ref, ids));
+    cvRun(() => cffi.Net_GetUnconnectedOutLayers(ref, ids));
     return VecI32.fromPointer(ids).toList();
   }
 
@@ -381,15 +375,15 @@ class Net extends CvStruct<cvg.Net> {
   (VecF32, VecI32) getInputDetails() {
     final sc = calloc<cvg.VecF32>();
     final zp = calloc<cvg.VecI32>();
-    cvRun(() => cdnn.Net_GetInputDetails(ref, sc, zp));
+    cvRun(() => cffi.Net_GetInputDetails(ref, sc, zp));
     return (VecF32.fromPointer(sc), VecI32.fromPointer(zp));
   }
 
-  static final finalizer = OcvFinalizer<cvg.NetPtr>(cdnn.addresses.Net_Close);
+  static final finalizer = OcvFinalizer<cvg.NetPtr>(cffi.addresses.Net_Close);
 
   void dispose() {
     finalizer.detach(this);
-    cdnn.Net_Close(ptr);
+    cffi.Net_Close(ptr);
   }
 
   @override
@@ -414,7 +408,7 @@ Mat blobFromImage(
   mean ??= Scalar.zeros;
   final blob = Mat.empty();
   cvRun(
-    () => cdnn.Net_BlobFromImage(
+    () => cffi.Net_BlobFromImage(
       image.ref,
       blob.ref,
       scalefactor,
@@ -446,7 +440,7 @@ Mat blobFromImages(
   blob ??= Mat.empty();
   mean ??= Scalar.zeros;
   cvRun(
-    () => cdnn.Net_BlobFromImages(
+    () => cffi.Net_BlobFromImages(
       images.ref,
       blob!.ref,
       scalefactor,
@@ -467,7 +461,7 @@ Mat blobFromImages(
 /// https://docs.opencv.org/master/d6/d0f/group__dnn.html#ga4051b5fa2ed5f54b76c059a8625df9f5
 List<Mat> imagesFromBlob(Mat blob) {
   final mats = calloc<cvg.VecMat>();
-  cvRun(() => cdnn.Net_ImagesFromBlob(blob.ref, mats));
+  cvRun(() => cffi.Net_ImagesFromBlob(blob.ref, mats));
   return VecMat.fromPointer(mats).toList();
 }
 
@@ -477,14 +471,14 @@ List<Mat> imagesFromBlob(Mat blob) {
 ///	a bones structure from pose detection, or a color plane from Colorization)
 Mat getBlobChannel(Mat blob, int imgidx, int chnidx) {
   final m = Mat.empty();
-  cvRun(() => cdnn.Net_GetBlobChannel(blob.ref, imgidx, chnidx, m.ptr));
+  cvRun(() => cffi.Net_GetBlobChannel(blob.ref, imgidx, chnidx, m.ptr));
   return m;
 }
 
 /// GetBlobSize retrieves the 4 dimensional size information in (N,C,H,W) order
 Scalar getBlobSize(Mat blob) {
   final s = calloc<cvg.Scalar>();
-  cvRun(() => cdnn.Net_GetBlobSize(blob.ref, s));
+  cvRun(() => cffi.Net_GetBlobSize(blob.ref, s));
   return Scalar.fromPointer(s);
 }
 
@@ -501,7 +495,7 @@ List<int> NMSBoxes(
   int topK = 0,
 }) {
   final indices = calloc<cvg.VecI32>();
-  cdnn.NMSBoxesWithParams(
+  cffi.NMSBoxesWithParams(
     bboxes.ref,
     scores.ref,
     scoreThreshold,

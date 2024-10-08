@@ -9,24 +9,18 @@ library cv.dnn;
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
+import 'package:dartcv_core/dartcv_core.dart';
 import 'package:ffi/ffi.dart';
 
-import '../core/base.dart';
-import '../core/mat.dart';
-import '../core/mat_type.dart';
-import '../core/rect.dart';
-import '../core/scalar.dart';
-import '../core/size.dart';
-import '../core/vec.dart';
-import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
-import './dnn.dart';
+import 'dnn.dart';
+import 'g/dnn.g.dart' as cvg;
+import 'native_lib.dart' show cffi;
 
 extension LayerAsync on Layer {
   Future<int> inputNameToIndexAsync(String name) async {
     final cName = name.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<int>(
-      (callback) => cdnn.Layer_InputNameToIndex_Async(ref, cName, callback),
+      (callback) => cffi.Layer_InputNameToIndex_Async(ref, cName, callback),
       (c, p) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
@@ -41,7 +35,7 @@ extension LayerAsync on Layer {
   Future<int> outputNameToIndexAsync(String name) async {
     final cName = name.toNativeUtf8().cast<ffi.Char>();
     final rval = cvRunAsync<int>(
-      (callback) => cdnn.Layer_OutputNameToIndex_Async(ref, cName, callback),
+      (callback) => cffi.Layer_OutputNameToIndex_Async(ref, cName, callback),
       (c, p) {
         final rval = p.cast<ffi.Int>().value;
         calloc.free(p);
@@ -55,7 +49,7 @@ extension LayerAsync on Layer {
 
 extension NetAsync on Net {
   static Future<Net> emptyAsync() async {
-    final rval = await cvRunAsync<Net>(cdnn.Net_Create_Async, (c, p) {
+    final rval = await cvRunAsync<Net>(cffi.Net_Create_Async, (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
 
@@ -67,7 +61,7 @@ extension NetAsync on Net {
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNet_Async(cPath, cConfig, cFramework, callback), (c, p) {
+        (callback) => cffi.Net_ReadNet_Async(cPath, cConfig, cFramework, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cPath);
@@ -87,7 +81,7 @@ extension NetAsync on Net {
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetBytes_Async(cFramework, bufM.ref, bufC.ref, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetBytes_Async(cFramework, bufM.ref, bufC.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
 
@@ -100,7 +94,7 @@ extension NetAsync on Net {
     final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
     final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromCaffe_Async(cProto, cCaffe, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromCaffe_Async(cProto, cCaffe, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cProto);
@@ -113,7 +107,7 @@ extension NetAsync on Net {
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromCaffeBytes_Async(bufP.ref, bufM.ref, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromCaffeBytes_Async(bufP.ref, bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -121,7 +115,7 @@ extension NetAsync on Net {
 
   static Future<Net> fromOnnxAsync(String path) async {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    final rval = await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromONNX_Async(cpath, callback), (c, p) {
+    final rval = await cvRunAsync<Net>((callback) => cffi.Net_ReadNetFromONNX_Async(cpath, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -132,7 +126,7 @@ extension NetAsync on Net {
   static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
     final rval =
-        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromONNXBytes_Async(bufM.ref, callback), (c, p) {
+        await cvRunAsync<Net>((callback) => cffi.Net_ReadNetFromONNXBytes_Async(bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -142,7 +136,7 @@ extension NetAsync on Net {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final cconf = config.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTensorflow_Async(cpath, cconf, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromTensorflow_Async(cpath, cconf, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -156,7 +150,7 @@ extension NetAsync on Net {
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTensorflowBytes_Async(bufM.ref, bufC.ref, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromTensorflowBytes_Async(bufM.ref, bufC.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -165,7 +159,7 @@ extension NetAsync on Net {
   static Future<Net> fromTFLiteAsync(String path) async {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final rval =
-        await cvRunAsync<Net>((callback) => cdnn.Net_ReadNetFromTFLite_Async(cpath, callback), (c, p) {
+        await cvRunAsync<Net>((callback) => cffi.Net_ReadNetFromTFLite_Async(cpath, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -175,7 +169,7 @@ extension NetAsync on Net {
   static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTFLiteBytes_Async(bufM.ref, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromTFLiteBytes_Async(bufM.ref, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     return rval;
@@ -184,7 +178,7 @@ extension NetAsync on Net {
   static Future<Net> fromTorchAsync(String path, {bool isBinary = true, bool evaluate = true}) async {
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final rval = await cvRunAsync<Net>(
-        (callback) => cdnn.Net_ReadNetFromTorch_Async(cpath, isBinary, evaluate, callback), (c, p) {
+        (callback) => cffi.Net_ReadNetFromTorch_Async(cpath, isBinary, evaluate, callback), (c, p) {
       return c.complete(Net.fromPointer(p.cast<cvg.Net>()));
     });
     calloc.free(cpath);
@@ -193,7 +187,7 @@ extension NetAsync on Net {
 
   Future<bool> isEmptyAsync() async {
     final rval = cvRunAsync<bool>(
-      (callback) => cdnn.Net_Empty_Async(ref, callback),
+      (callback) => cffi.Net_Empty_Async(ref, callback),
       (c, p) {
         final rval = p.cast<ffi.Bool>().value;
         calloc.free(p);
@@ -205,7 +199,7 @@ extension NetAsync on Net {
 
   Future<String> dumpAsync() async {
     final rval = cvRunAsync<String>(
-      (callback) => cdnn.Net_Dump_Async(ref, callback),
+      (callback) => cffi.Net_Dump_Async(ref, callback),
       (c, p) {
         final rval = p.cast<ffi.Pointer<ffi.Char>>().value.toDartString();
         calloc.free(p);
@@ -218,7 +212,7 @@ extension NetAsync on Net {
   Future<void> setInputAsync(InputArray blob, {String name = ""}) async {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
     await cvRunAsync0<void>(
-      (callback) => cdnn.Net_SetInput_Async(ref, blob.ref, cname, callback),
+      (callback) => cffi.Net_SetInput_Async(ref, blob.ref, cname, callback),
       (c) {
         return c.complete();
       },
@@ -228,7 +222,7 @@ extension NetAsync on Net {
 
   Future<Mat> forwardAsync({String outputName = ""}) async {
     final rval = cvRunAsync<Mat>(
-      (callback) => cdnn.Net_Forward_Async(ref, outputName.toNativeUtf8().cast<ffi.Char>(), callback),
+      (callback) => cffi.Net_Forward_Async(ref, outputName.toNativeUtf8().cast<ffi.Char>(), callback),
       (c, result) => c.complete(Mat.fromPointer(result.cast<cvg.Mat>())),
     );
     return rval;
@@ -237,7 +231,7 @@ extension NetAsync on Net {
   Future<VecMat> forwardLayersAsync(List<String> names) async {
     final vecName = names.i8;
     final rval = cvRunAsync<VecMat>(
-      (callback) => cdnn.Net_ForwardLayers_Async(ref, vecName.ref, callback),
+      (callback) => cffi.Net_ForwardLayers_Async(ref, vecName.ref, callback),
       (c, result) => c.complete(VecMat.fromPointer(result.cast<cvg.VecMat>())),
     );
     return rval;
@@ -245,21 +239,21 @@ extension NetAsync on Net {
 
   Future<void> setPreferableBackendAsync(int backendId) async {
     await cvRunAsync0<void>(
-      (callback) => cdnn.Net_SetPreferableBackend_Async(ref, backendId, callback),
+      (callback) => cffi.Net_SetPreferableBackend_Async(ref, backendId, callback),
       (c) => c.complete(),
     );
   }
 
   Future<void> setPreferableTargetAsync(int targetId) async {
     await cvRunAsync0<void>(
-      (callback) => cdnn.Net_SetPreferableTarget_Async(ref, targetId, callback),
+      (callback) => cffi.Net_SetPreferableTarget_Async(ref, targetId, callback),
       (c) => c.complete(),
     );
   }
 
   Future<int> getPerfProfileAsync() async {
     final rval = cvRunAsync<int>(
-      (callback) => cdnn.Net_GetPerfProfile_Async(ref, callback),
+      (callback) => cffi.Net_GetPerfProfile_Async(ref, callback),
       (c, p) {
         final rval = p.cast<ffi.Int64>().value;
         calloc.free(p);
@@ -271,7 +265,7 @@ extension NetAsync on Net {
 
   Future<VecI32> getUnconnectedOutLayersAsync() async {
     final rval = cvRunAsync<VecI32>(
-      (callback) => cdnn.Net_GetUnconnectedOutLayers_Async(ref, callback),
+      (callback) => cffi.Net_GetUnconnectedOutLayers_Async(ref, callback),
       (c, result) => c.complete(VecI32.fromPointer(result.cast<cvg.VecI32>())),
     );
     return rval;
@@ -279,7 +273,7 @@ extension NetAsync on Net {
 
   Future<List<String>> getLayerNamesAsync() async {
     final rval = cvRunAsync<List<String>>(
-      (callback) => cdnn.Net_GetLayerNames_Async(ref, callback),
+      (callback) => cffi.Net_GetLayerNames_Async(ref, callback),
       (c, result) => c.complete(VecVecChar.fromPointer(result.cast<cvg.VecVecChar>()).asStringList()),
     );
     return rval;
@@ -287,7 +281,7 @@ extension NetAsync on Net {
 
   Future<(VecF32, VecI32)> getInputDetailsAsync() async {
     final rval = cvRunAsync2<(VecF32, VecI32)>(
-      (callback) => cdnn.Net_GetInputDetails_Async(ref, callback),
+      (callback) => cffi.Net_GetInputDetails_Async(ref, callback),
       (c, sc, zp) => c.complete(
         (VecF32.fromPointer(sc.cast<cvg.VecF32>()), VecI32.fromPointer(zp.cast<cvg.VecI32>())),
       ),
@@ -297,7 +291,7 @@ extension NetAsync on Net {
 
   Future<Layer> getLayerAsync(int index) async {
     final rval = cvRunAsync<Layer>(
-      (callback) => cdnn.Net_GetLayer_Async(ref, index, callback),
+      (callback) => cffi.Net_GetLayer_Async(ref, index, callback),
       (c, result) => c.complete(Layer.fromPointer(result.cast<cvg.Layer>())),
     );
     return rval;
@@ -306,7 +300,7 @@ extension NetAsync on Net {
 
 Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
   final rval = cvRunAsync<Mat>(
-    (callback) => cdnn.Net_GetBlobChannel_Async(blob.ref, imgidx, chnidx, callback),
+    (callback) => cffi.Net_GetBlobChannel_Async(blob.ref, imgidx, chnidx, callback),
     (c, result) => c.complete(Mat.fromPointer(result.cast<cvg.Mat>())),
   );
   return rval;
@@ -314,7 +308,7 @@ Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
 
 Future<Scalar> getBlobSizeAsync(Mat blob) async {
   final rval = cvRunAsync<Scalar>(
-    (callback) => cdnn.Net_GetBlobSize_Async(blob.ref, callback),
+    (callback) => cffi.Net_GetBlobSize_Async(blob.ref, callback),
     (c, result) => c.complete(Scalar.fromPointer(result.cast<cvg.Scalar>())),
   );
   return rval;
@@ -329,7 +323,7 @@ Future<List<int>> NMSBoxesAsync(
   int topK = 0,
 }) async {
   final rval = cvRunAsync<List<int>>(
-    (callback) => cdnn.NMSBoxesWithParams_Async(
+    (callback) => cffi.NMSBoxesWithParams_Async(
       bboxes.ref,
       scores.ref,
       scoreThreshold,
@@ -354,7 +348,7 @@ Future<Mat> blobFromImageAsync(
 }) async {
   mean ??= Scalar.zeros;
   final rval = await cvRunAsync<Mat>(
-    (callback) => cdnn.Net_BlobFromImage_Async(
+    (callback) => cffi.Net_BlobFromImage_Async(
       image.ref,
       scalefactor,
       size.cvd.ref,
@@ -380,7 +374,7 @@ Future<Mat> blobFromImagesAsync(
 }) async {
   mean ??= Scalar.zeros;
   final rval = await cvRunAsync<Mat>(
-    (callback) => cdnn.Net_BlobFromImages_Async(
+    (callback) => cffi.Net_BlobFromImages_Async(
       images.ref,
       scalefactor,
       size.cvd.ref,
@@ -397,7 +391,7 @@ Future<Mat> blobFromImagesAsync(
 
 Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
   final rval = cvRunAsync<List<Mat>>(
-    (callback) => cdnn.Net_ImagesFromBlob_Async(blob.ref, callback),
+    (callback) => cffi.Net_ImagesFromBlob_Async(blob.ref, callback),
     (c, result) => c.complete(VecMat.fromPointer(result.cast<cvg.VecMat>()).toList()),
   );
   return rval;

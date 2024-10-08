@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 # Project-level configuration.
-set(PROJECT_NAME "opencv_core")
+set(PROJECT_NAME "dartcv_dnn")
 
 project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 
@@ -16,9 +16,9 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DI
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
-set(opencv_core_bundled_libraries
+set(dartcv_dnn_bundled_libraries
   # Defined in ../src/CMakeLists.txt.
   # This can be changed to accommodate different builds.
-  $<TARGET_FILE:cvdart_core>
+  $<TARGET_FILE:dartcv_dnn>
   PARENT_SCOPE
 )
