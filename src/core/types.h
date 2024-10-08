@@ -6,6 +6,12 @@
 #ifndef CVD_CORE_TYPES_H_
 #define CVD_CORE_TYPES_H_
 
+// https://developercommunity.visualstudio.com/t/__imp___std_init_once_complete-unresolve/1684365#T-N10041864
+#if _MSC_VER >= 1932 // Visual Studio 2022 version 17.2+
+#    pragma comment(linker, "/alternatename:__imp___std_init_once_complete=__imp_InitOnceComplete")
+#    pragma comment(linker, "/alternatename:__imp___std_init_once_begin_initialize=__imp_InitOnceBeginInitialize")
+#endif
+
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
