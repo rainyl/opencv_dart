@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 # Project-level configuration.
-set(PROJECT_NAME "opencv_core")
+set(PROJECT_NAME "dartcv_videoio_flutter")
 
 project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 
@@ -13,12 +13,21 @@ project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 # This can be changed to accommodate different builds.
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
+message(STATUS "FFMPEG_LIB_PATHS: ${FFMPEG_LIB_PATHS}")
+
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
-set(opencv_core_bundled_libraries
+set(dartcv_videoio_flutter_bundled_libraries
   # Defined in ../src/CMakeLists.txt.
   # This can be changed to accommodate different builds.
-  $<TARGET_FILE:cvdart_core>
+  $<TARGET_FILE:dartcv>
+  ${FFMPEG_LIB_PATHS}
+  # ${FFMPEG_avdevice_LIBRARY}
+  # ${FFMPEG_avfilter_LIBRARY}
+  # ${FFMPEG_avformat_LIBRARY}
+  # ${FFMPEG_avutil_LIBRARY}
+  # ${FFMPEG_swresample_LIBRARY}
+  # ${FFMPEG_swscale_LIBRARY}
   PARENT_SCOPE
 )

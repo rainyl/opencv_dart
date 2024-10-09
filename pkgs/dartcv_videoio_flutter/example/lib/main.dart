@@ -1,7 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:dartcv_videoio_flutter/dartcv_videoio_flutter.dart' as dartcv_videoio_flutter;
+import 'package:dartcv_videoio_flutter/dartcv_videoio.dart' as cv;
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +17,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late int sumResult;
-  late Future<int> sumAsyncResult;
+  late cv.VideoCapture _capture;
+  late String backend;
+  Uint8List? frame;
 
   @override
   void initState() {
     super.initState();
-    sumResult = dartcv_videoio_flutter.sum(1, 2);
-    sumAsyncResult = dartcv_videoio_flutter.sumAsync(3, 4);
+    _capture = cv.VideoCapture.fromFile(
+      r"D:\flutter\opencv_dart\test\images\small.mp4",
+      apiPreference: cv.CAP_FFMPEG,
+    );
+    backend = _capture.getBackendName();
+    final (ret, _frame) = _capture.read();
+    if (ret) {
+      final (s, f) = cv.imencode(".png", _frame);
+      if (s) {
+        frame = f;
+      }
+    }
   }
 
   @override
@@ -47,22 +60,13 @@ class _MyAppState extends State<MyApp> {
                 ),
                 spacerSmall,
                 Text(
-                  'sum(1, 2) = $sumResult',
+                  "Backend: $backend",
                   style: textStyle,
                   textAlign: TextAlign.center,
                 ),
-                spacerSmall,
-                FutureBuilder<int>(
-                  future: sumAsyncResult,
-                  builder: (BuildContext context, AsyncSnapshot<int> value) {
-                    final displayValue =
-                        (value.hasData) ? value.data : 'loading';
-                    return Text(
-                      'await sumAsync(3, 4) = $displayValue',
-                      style: textStyle,
-                      textAlign: TextAlign.center,
-                    );
-                  },
+                SizedBox(
+                  height: 200,
+                  child: frame == null ? const Placeholder() : Image.memory(frame!),
                 ),
               ],
             ),
