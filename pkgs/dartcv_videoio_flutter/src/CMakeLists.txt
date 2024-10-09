@@ -4,7 +4,7 @@ set(FFMPEG_USE_STATIC_LIBS OFF)
 include(FetchContent)
 FetchContent_Declare(
   dartcv
-  GIT_REPOSITORY https://github.com/rainyl/opencv_dart.git
-  GIT_TAG cpp
+  GIT_REPOSITORY https://github.com/rainyl/dartcv.git
+  GIT_TAG main
 )
 FetchContent_MakeAvailable(dartcv)

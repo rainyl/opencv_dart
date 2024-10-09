@@ -11,16 +11,16 @@ output:
 import:
   symbol-files:
     - 'package:dartcv_core/src/g/types.yaml'
-compiler-opts: "-Isrc -I../../src"
+compiler-opts: "-Isrc -I../c/dartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../../src/videoio/videoio.h
-    - ../../src/videoio/videoio_async.h
+    - ../c/dartcv/videoio/videoio.h
+    - ../c/dartcv/videoio/videoio_async.h
   include-directives:
-    - ../../src/videoio/videoio.h
-    - ../../src/videoio/videoio_async.h
+    - ../c/dartcv/videoio/videoio.h
+    - ../c/dartcv/videoio/videoio_async.h
 
 functions:
   symbol-address:

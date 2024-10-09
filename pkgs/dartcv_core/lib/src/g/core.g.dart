@@ -28279,18 +28279,10 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> core_MinMaxIdx_Async(
     Mat self,
-    ffi.Pointer<ffi.Double> minVal,
-    ffi.Pointer<ffi.Double> maxVal,
-    ffi.Pointer<ffi.Int> minIdx,
-    ffi.Pointer<ffi.Int> maxIdx,
-    imp1.CvCallback_0 callback,
+    imp1.CvCallback_4 callback,
   ) {
     return _core_MinMaxIdx_Async(
       self,
-      minVal,
-      maxVal,
-      minIdx,
-      maxIdx,
       callback,
     );
   }
@@ -28298,37 +28290,18 @@ class CvNativeCore {
   late final _core_MinMaxIdx_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>>('core_MinMaxIdx_Async');
-  late final _core_MinMaxIdx_Async = _core_MinMaxIdx_AsyncPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Int>,
-          ffi.Pointer<ffi.Int>,
-          imp1.CvCallback_0)>();
+              Mat, imp1.CvCallback_4)>>('core_MinMaxIdx_Async');
+  late final _core_MinMaxIdx_Async = _core_MinMaxIdx_AsyncPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, imp1.CvCallback_4)>();
 
   ffi.Pointer<CvStatus> core_MinMaxIdx_Mask_Async(
     Mat self,
     Mat mask,
-    ffi.Pointer<ffi.Double> minVal,
-    ffi.Pointer<ffi.Double> maxVal,
-    ffi.Pointer<ffi.Int> minIdx,
-    ffi.Pointer<ffi.Int> maxIdx,
-    imp1.CvCallback_0 callback,
+    imp1.CvCallback_4 callback,
   ) {
     return _core_MinMaxIdx_Mask_Async(
       self,
       mask,
-      minVal,
-      maxVal,
-      minIdx,
-      maxIdx,
       callback,
     );
   }
@@ -28336,23 +28309,10 @@ class CvNativeCore {
   late final _core_MinMaxIdx_Mask_AsyncPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>>('core_MinMaxIdx_Mask_Async');
+              Mat, Mat, imp1.CvCallback_4)>>('core_MinMaxIdx_Mask_Async');
   late final _core_MinMaxIdx_Mask_Async =
       _core_MinMaxIdx_Mask_AsyncPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_4)>();
 
   ffi.Pointer<CvStatus> core_MinMaxLoc_Async(
     Mat self,

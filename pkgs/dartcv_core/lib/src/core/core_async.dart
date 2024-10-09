@@ -666,25 +666,21 @@ Future<Mat> minAsync(InputArray src1, InputArray src2) async =>
 Future<(double minVal, double maxVal, int minIdx, int maxIdx)> minMaxIdxAsync(
   InputArray src, {
   InputArray? mask,
-}) async {
-  final minValP = calloc<ffi.Double>();
-  final maxValP = calloc<ffi.Double>();
-  final minIdxP = calloc<ffi.Int>();
-  final maxIdxP = calloc<ffi.Int>();
-  return cvRunAsync0<(double, double, int, int)>(
-    (callback) => mask == null
-        ? cffi.core_MinMaxIdx_Async(src.ref, minValP, maxValP, minIdxP, maxIdxP, callback)
-        : cffi.core_MinMaxIdx_Mask_Async(src.ref, mask.ref, minValP, maxValP, minIdxP, maxIdxP, callback),
-    (c) {
-      final ret = (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
-      calloc.free(minValP);
-      calloc.free(maxValP);
-      calloc.free(minIdxP);
-      calloc.free(maxIdxP);
-      c.complete(ret);
-    },
-  );
-}
+}) async =>
+    cvRunAsync4(
+        (callback) => mask == null
+            ? cffi.core_MinMaxIdx_Async(src.ref, callback)
+            : cffi.core_MinMaxIdx_Mask_Async(src.ref, mask.ref, callback), (c, p, p1, p2, p3) {
+      final minv = p.cast<ffi.Double>().value;
+      calloc.free(p);
+      final maxv = p1.cast<ffi.Double>().value;
+      calloc.free(p1);
+      final mini = p2.cast<ffi.Int>().value;
+      calloc.free(p2);
+      final maxi = p3.cast<ffi.Int>().value;
+      calloc.free(p3);
+      c.complete((minv, maxv, mini, maxi));
+    });
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
 ///

@@ -1,0 +1,4 @@
+[submodule "pkgs/c"]
+	path = pkgs/c
+	url = https://github.com/rainyl/dartcv.git
+	branch = main
