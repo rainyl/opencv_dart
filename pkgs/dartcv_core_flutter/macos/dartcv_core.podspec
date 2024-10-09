@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
   # builds of apps using this FFI plugin. Podspec does not support relative
   # paths, so Classes contains a forwarder C file that relatively imports
   # `../src/*` so that the C sources can be shared among all target platforms.
-  s.source       = { :path => '.' }
-  s.source_files  = 'Classes/**/*'
+  s.source       = { :git => 'https://github.com/rainyl/dartcv.git', :tag => '330f610f734e3ab8631cb781fa6e12ad0a8f4c0e' }
+  s.source_files  = 'dartcv/**/*.{h,c,cpp}'
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.15'
 
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
     'Foundation', 'QuartzCore', 'OpenCL'
   ]
   s.vendored_libraries = 'libopencv/libopencv.a'
-  s.xcconfig = { 
+  s.xcconfig = {
     'HEADER_SEARCH_PATHS' => [
       '"${PODS_TARGET_SRCROOT}/libopencv/include/opencv4"'
     ],

@@ -1,0 +1,19 @@
+# Run with `dart run ffigen --config ffigen.yaml`.
+name: DartcvDnnBindings
+description: |
+  Bindings for `src/dartcv_dnn.h`.
+
+  Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
+output: 'lib/dartcv_dnn_bindings_generated.dart'
+headers:
+  entry-points:
+    - 'src/dartcv_dnn.h'
+  include-directives:
+    - 'src/dartcv_dnn.h'
+preamble: |
+  // ignore_for_file: always_specify_types
+  // ignore_for_file: camel_case_types
+  // ignore_for_file: non_constant_identifier_names
+comments:
+  style: any
+  length: full

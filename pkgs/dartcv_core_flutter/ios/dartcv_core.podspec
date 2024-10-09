@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
   OpenCV bindings for Dart. core module.
                        DESC
-  s.homepage         = 'https://github.com/rainyl/dartcv_core/pkgs/dartcv_core'
+  s.homepage         = 'https://github.com/rainyl/opencv_dart/pkgs/dartcv_core'
   s.license          = { :type => 'Apache 2.0', :file => '../LICENSE' }
   s.author           = { 'Rainyl' => 'rainyliusy3@gmail.com' }
 
@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
     'UIKit'
   ]
   s.vendored_libraries = 'libopencv/libopencv.a'
-  s.xcconfig = { 
+  s.xcconfig = {
     'HEADER_SEARCH_PATHS' => [
       '"${PODS_TARGET_SRCROOT}/libopencv/include/opencv4"'
     ],
