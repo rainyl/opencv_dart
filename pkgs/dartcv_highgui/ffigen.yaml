@@ -2,7 +2,7 @@ name: CvNativeHighgui
 description: |
   Native bindings for OpenCV - Highgui
 output:
-  bindings: ../lib/src/g/highgui.g.dart
+  bindings: lib/src/g/highgui.g.dart
   symbol-file:
     output: 'package:dartcv_highgui/src/g/highgui.yaml'
     import-path: 'package:dartcv_highgui/src/g/highgui.g.dart'
@@ -10,15 +10,15 @@ output:
 #   assetId: 'package:dartcv_highgui/dartcv_highgui.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv_highgui/src/g/types.yaml'
-compiler-opts: "-Isrc"
+    - 'package:dartcv_core/src/g/types.yaml'
+compiler-opts: "-Isrc -I../c"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - src/highgui.h
+    - ../c/dartcv/highgui/highgui.h
   include-directives:
-    - src/highgui.h
+    - ../c/dartcv/highgui/highgui.h
 
 functions:
   symbol-address:

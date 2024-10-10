@@ -1,17 +1,17 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint dartcv_videoio.podspec` to validate before publishing.
+# Run `pod lib lint dartcv_core_flutter.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'dartcv_videoio'
+  s.name             = 'dartcv_core_flutter'
   s.version          = '0.0.1'
-  s.summary          = '[core] OpenCV bindings for Dart.'
+  s.summary          = 'A new Flutter FFI plugin project.'
   s.description      = <<-DESC
-  OpenCV bindings for Dart. core module.
+A new Flutter FFI plugin project.
                        DESC
-  s.homepage         = 'https://github.com/rainyl/dartcv_videoio/pkgs/opencv_core'
+  s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Rainyl' => 'rainyliusy3@gmail.com' }
+  s.author           = { 'Your Company' => 'email@example.com' }
 
   # This will ensure the source files in Classes/ are included in the native
   # builds of apps using this FFI plugin. Podspec does not support relative
@@ -20,6 +20,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
+  s.dependency 'DartCvIOS', '4.10.0'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.

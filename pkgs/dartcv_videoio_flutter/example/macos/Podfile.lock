@@ -1,6 +1,7 @@
 PODS:
-  - dartcv_core_flutter (0.0.1):
+  - dartcv_videoio_flutter (0.0.1):
     - DartCvMacOS (= 4.10.0)
+    - DartCvMacOS/videoio (= 4.10.0)
     - FlutterMacOS
   - DartCvMacOS (4.10.0):
     - DartCvMacOS/calib3d (= 4.10.0)
@@ -29,13 +30,12 @@ PODS:
     - DartCvMacOS/core
   - DartCvMacOS/video (4.10.0):
     - DartCvMacOS/core
-  - file_selector_macos (0.0.1):
-    - FlutterMacOS
+  - DartCvMacOS/videoio (4.10.0):
+    - DartCvMacOS/core
   - FlutterMacOS (1.0.0)
 
 DEPENDENCIES:
-  - dartcv_core_flutter (from `Flutter/ephemeral/.symlinks/plugins/dartcv_core_flutter/macos`)
-  - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
+  - dartcv_videoio_flutter (from `Flutter/ephemeral/.symlinks/plugins/dartcv_videoio_flutter/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
 
 SPEC REPOS:
@@ -43,17 +43,14 @@ SPEC REPOS:
     - DartCvMacOS
 
 EXTERNAL SOURCES:
-  dartcv_core_flutter:
-    :path: Flutter/ephemeral/.symlinks/plugins/dartcv_core_flutter/macos
-  file_selector_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
+  dartcv_videoio_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/dartcv_videoio_flutter/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
 
 SPEC CHECKSUMS:
-  dartcv_core_flutter: 31a0013bc581e0e066344ab8c9bf389e866138a2
+  dartcv_videoio_flutter: d42a6bd1c8184ae8f57e97def9ae495b5cf29efc
   DartCvMacOS: 869911a78ddf3b08d992fc1e7c10fce44a40e791
-  file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
 
 PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3

@@ -1,6 +1,7 @@
 PODS:
-  - dartcv_core_flutter (0.0.1):
+  - dartcv_videoio_flutter (0.0.1):
     - DartCvIOS (= 4.10.0)
+    - DartCvIOS/videoio (= 4.10.0)
     - Flutter
   - "DartCvIOS (4.10.0+9)":
     - "DartCvIOS/calib3d (= 4.10.0+9)"
@@ -29,32 +30,35 @@ PODS:
     - DartCvIOS/core
   - "DartCvIOS/video (4.10.0+9)":
     - DartCvIOS/core
+  - "DartCvIOS/videoio (4.10.0+9)":
+    - DartCvIOS/core
   - Flutter (1.0.0)
-  - image_picker_ios (0.0.1):
+  - path_provider_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
-  - dartcv_core_flutter (from `.symlinks/plugins/dartcv_core_flutter/ios`)
+  - dartcv_videoio_flutter (from `.symlinks/plugins/dartcv_videoio_flutter/ios`)
   - Flutter (from `Flutter`)
-  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
     - DartCvIOS
 
 EXTERNAL SOURCES:
-  dartcv_core_flutter:
-    :path: ".symlinks/plugins/dartcv_core_flutter/ios"
+  dartcv_videoio_flutter:
+    :path: ".symlinks/plugins/dartcv_videoio_flutter/ios"
   Flutter:
     :path: Flutter
-  image_picker_ios:
-    :path: ".symlinks/plugins/image_picker_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
-  dartcv_core_flutter: 6db1126e845cd260cd1558688c26c14e0473633b
+  dartcv_videoio_flutter: de5f61f96a9d8768bea3b1c3ca4ae030ca7f5c06
   DartCvIOS: 7e7d6b23d0d282ca6e602ee490e738989fae0739
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

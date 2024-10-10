@@ -1,9 +1,11 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:flutter/services.dart';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:dartcv_videoio_flutter/dartcv_videoio.dart' as cv;
+import 'package:path/path.dart' as p;
 
 void main() {
   runApp(const MyApp());
@@ -18,24 +20,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late cv.VideoCapture _capture;
-  late String backend;
+  String? backend;
   Uint8List? frame;
 
   @override
   void initState() {
     super.initState();
-    _capture = cv.VideoCapture.fromFile(
-      r"D:\flutter\opencv_dart\test\images\small.mp4",
-      apiPreference: cv.CAP_FFMPEG,
-    );
-    backend = _capture.getBackendName();
-    final (ret, _frame) = _capture.read();
-    if (ret) {
-      final (s, f) = cv.imencode(".png", _frame);
-      if (s) {
-        frame = f;
-      }
-    }
+    _capture = cv.VideoCapture.empty();
   }
 
   @override
@@ -52,11 +43,40 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                const Text(
-                  'This calls a native function through FFI that is shipped as source in the package. '
-                  'The native code is built as part of the Flutter Runner build.',
-                  style: textStyle,
-                  textAlign: TextAlign.center,
+                ElevatedButton(
+                  onPressed: () async {
+                    final appDir = await getApplicationCacheDirectory();
+                    final videoFile = File(p.join(appDir.path, "small.mp4"));
+                    if (!videoFile.existsSync()) {
+                      final bytes = await rootBundle.load("assets/small.mp4");
+                      await videoFile.writeAsBytes(bytes.buffer.asUint8List());
+                      debugPrint("Save assets/small.mp4 to ${videoFile.path}");
+                    }
+                    final success = _capture.open(
+                      videoFile.path,
+                      apiPreference: Platform.isIOS ? cv.CAP_AVFOUNDATION : cv.CAP_FFMPEG,
+                    );
+                    if (!success) {
+                      debugPrint("Open $videoFile failed");
+                      return;
+                    }
+
+                    final (ret, _frame) = _capture.read();
+                    if (ret) {
+                      final (s, f) = cv.imencode(".png", _frame);
+                      if (s) {
+                        setState(() {
+                          backend = _capture.getBackendName();
+                          frame = f;
+                        });
+                      }else{
+                        debugPrint("cv.imencode failed");
+                      }
+                    }else{
+                      debugPrint("capture.read failed");
+                    }
+                  },
+                  child: const Text("start"),
                 ),
                 spacerSmall,
                 Text(
