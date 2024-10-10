@@ -1,0 +1,120 @@
+format_version: 1.0.0
+files:
+  package:dartcv/src/g/stitching.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@Ea@STITCHING_OK@STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL:
+        name: STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_HOMOGRAPHY_EST_FAIL:
+        name: STITCHING_ERR_HOMOGRAPHY_EST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_NEED_MORE_IMGS:
+        name: STITCHING_ERR_NEED_MORE_IMGS
+      c:@Ea@STITCHING_OK@STITCHING_OK:
+        name: STITCHING_OK
+      c:@Ea@STITCHING_PANORAMA@STITCHING_PANORAMA:
+        name: STITCHING_PANORAMA
+      c:@Ea@STITCHING_PANORAMA@STITCHING_SCANS:
+        name: STITCHING_SCANS
+      c:@F@Stitcher_Close:
+        name: Stitcher_Close
+      c:@F@Stitcher_Close_Async:
+        name: Stitcher_Close_Async
+      c:@F@Stitcher_Component:
+        name: Stitcher_Component
+      c:@F@Stitcher_Component_Async:
+        name: Stitcher_Component_Async
+      c:@F@Stitcher_ComposePanorama:
+        name: Stitcher_ComposePanorama
+      c:@F@Stitcher_ComposePanorama_1:
+        name: Stitcher_ComposePanorama_1
+      c:@F@Stitcher_ComposePanorama_1_Async:
+        name: Stitcher_ComposePanorama_1_Async
+      c:@F@Stitcher_ComposePanorama_Async:
+        name: Stitcher_ComposePanorama_Async
+      c:@F@Stitcher_Create:
+        name: Stitcher_Create
+      c:@F@Stitcher_Create_Async:
+        name: Stitcher_Create_Async
+      c:@F@Stitcher_EstimateTransform:
+        name: Stitcher_EstimateTransform
+      c:@F@Stitcher_EstimateTransform_Async:
+        name: Stitcher_EstimateTransform_Async
+      c:@F@Stitcher_Get:
+        name: Stitcher_Get
+      c:@F@Stitcher_GetCompositingResol:
+        name: Stitcher_GetCompositingResol
+      c:@F@Stitcher_GetCompositingResol_Async:
+        name: Stitcher_GetCompositingResol_Async
+      c:@F@Stitcher_GetInterpolationFlags:
+        name: Stitcher_GetInterpolationFlags
+      c:@F@Stitcher_GetInterpolationFlags_Async:
+        name: Stitcher_GetInterpolationFlags_Async
+      c:@F@Stitcher_GetPanoConfidenceThresh:
+        name: Stitcher_GetPanoConfidenceThresh
+      c:@F@Stitcher_GetPanoConfidenceThresh_Async:
+        name: Stitcher_GetPanoConfidenceThresh_Async
+      c:@F@Stitcher_GetRegistrationResol:
+        name: Stitcher_GetRegistrationResol
+      c:@F@Stitcher_GetRegistrationResol_Async:
+        name: Stitcher_GetRegistrationResol_Async
+      c:@F@Stitcher_GetSeamEstimationResol:
+        name: Stitcher_GetSeamEstimationResol
+      c:@F@Stitcher_GetSeamEstimationResol_Async:
+        name: Stitcher_GetSeamEstimationResol_Async
+      c:@F@Stitcher_GetWaveCorrectKind:
+        name: Stitcher_GetWaveCorrectKind
+      c:@F@Stitcher_GetWaveCorrectKind_Async:
+        name: Stitcher_GetWaveCorrectKind_Async
+      c:@F@Stitcher_GetWaveCorrection:
+        name: Stitcher_GetWaveCorrection
+      c:@F@Stitcher_GetWaveCorrection_Async:
+        name: Stitcher_GetWaveCorrection_Async
+      c:@F@Stitcher_SetCompositingResol:
+        name: Stitcher_SetCompositingResol
+      c:@F@Stitcher_SetCompositingResol_Async:
+        name: Stitcher_SetCompositingResol_Async
+      c:@F@Stitcher_SetInterpolationFlags:
+        name: Stitcher_SetInterpolationFlags
+      c:@F@Stitcher_SetInterpolationFlags_Async:
+        name: Stitcher_SetInterpolationFlags_Async
+      c:@F@Stitcher_SetPanoConfidenceThresh:
+        name: Stitcher_SetPanoConfidenceThresh
+      c:@F@Stitcher_SetPanoConfidenceThresh_Async:
+        name: Stitcher_SetPanoConfidenceThresh_Async
+      c:@F@Stitcher_SetRegistrationResol:
+        name: Stitcher_SetRegistrationResol
+      c:@F@Stitcher_SetRegistrationResol_Async:
+        name: Stitcher_SetRegistrationResol_Async
+      c:@F@Stitcher_SetSeamEstimationResol:
+        name: Stitcher_SetSeamEstimationResol
+      c:@F@Stitcher_SetSeamEstimationResol_Async:
+        name: Stitcher_SetSeamEstimationResol_Async
+      c:@F@Stitcher_SetWaveCorrectKind:
+        name: Stitcher_SetWaveCorrectKind
+      c:@F@Stitcher_SetWaveCorrectKind_Async:
+        name: Stitcher_SetWaveCorrectKind_Async
+      c:@F@Stitcher_SetWaveCorrection:
+        name: Stitcher_SetWaveCorrection
+      c:@F@Stitcher_SetWaveCorrection_Async:
+        name: Stitcher_SetWaveCorrection_Async
+      c:@F@Stitcher_Stitch:
+        name: Stitcher_Stitch
+      c:@F@Stitcher_Stitch_1:
+        name: Stitcher_Stitch_1
+      c:@F@Stitcher_Stitch_1_Async:
+        name: Stitcher_Stitch_1_Async
+      c:@F@Stitcher_Stitch_Async:
+        name: Stitcher_Stitch_Async
+      c:@S@Stitcher:
+        name: Stitcher
+      c:stitching.h@T@StitcherPtr:
+        name: StitcherPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@VecI32:
+        name: VecI32
+      c:types.h@T@VecMat:
+        name: VecMat

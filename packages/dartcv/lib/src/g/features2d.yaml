@@ -1,0 +1,264 @@
+format_version: 1.0.0
+files:
+  package:dartcv/src/g/features2d.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@AKAZE_Close:
+        name: AKAZE_Close
+      c:@F@AKAZE_Close_Async:
+        name: AKAZE_Close_Async
+      c:@F@AKAZE_Create:
+        name: AKAZE_Create
+      c:@F@AKAZE_Create_Async:
+        name: AKAZE_Create_Async
+      c:@F@AKAZE_Detect:
+        name: AKAZE_Detect
+      c:@F@AKAZE_DetectAndCompute:
+        name: AKAZE_DetectAndCompute
+      c:@F@AKAZE_DetectAndCompute_Async:
+        name: AKAZE_DetectAndCompute_Async
+      c:@F@AKAZE_Detect_Async:
+        name: AKAZE_Detect_Async
+      c:@F@AgastFeatureDetector_Close:
+        name: AgastFeatureDetector_Close
+      c:@F@AgastFeatureDetector_Close_Async:
+        name: AgastFeatureDetector_Close_Async
+      c:@F@AgastFeatureDetector_Create:
+        name: AgastFeatureDetector_Create
+      c:@F@AgastFeatureDetector_Create_Async:
+        name: AgastFeatureDetector_Create_Async
+      c:@F@AgastFeatureDetector_Detect:
+        name: AgastFeatureDetector_Detect
+      c:@F@AgastFeatureDetector_Detect_Async:
+        name: AgastFeatureDetector_Detect_Async
+      c:@F@BFMatcher_Close:
+        name: BFMatcher_Close
+      c:@F@BFMatcher_Close_Async:
+        name: BFMatcher_Close_Async
+      c:@F@BFMatcher_Create:
+        name: BFMatcher_Create
+      c:@F@BFMatcher_CreateWithParams:
+        name: BFMatcher_CreateWithParams
+      c:@F@BFMatcher_CreateWithParams_Async:
+        name: BFMatcher_CreateWithParams_Async
+      c:@F@BFMatcher_Create_Async:
+        name: BFMatcher_Create_Async
+      c:@F@BFMatcher_KnnMatch:
+        name: BFMatcher_KnnMatch
+      c:@F@BFMatcher_KnnMatch_Async:
+        name: BFMatcher_KnnMatch_Async
+      c:@F@BFMatcher_Match:
+        name: BFMatcher_Match
+      c:@F@BFMatcher_Match_Async:
+        name: BFMatcher_Match_Async
+      c:@F@BRISK_Close:
+        name: BRISK_Close
+      c:@F@BRISK_Close_Async:
+        name: BRISK_Close_Async
+      c:@F@BRISK_Create:
+        name: BRISK_Create
+      c:@F@BRISK_Create_Async:
+        name: BRISK_Create_Async
+      c:@F@BRISK_Detect:
+        name: BRISK_Detect
+      c:@F@BRISK_DetectAndCompute:
+        name: BRISK_DetectAndCompute
+      c:@F@BRISK_DetectAndCompute_Async:
+        name: BRISK_DetectAndCompute_Async
+      c:@F@BRISK_Detect_Async:
+        name: BRISK_Detect_Async
+      c:@F@DrawKeyPoints:
+        name: DrawKeyPoints
+      c:@F@DrawKeyPoints_Async:
+        name: DrawKeyPoints_Async
+      c:@F@DrawMatches:
+        name: DrawMatches
+      c:@F@DrawMatches_Async:
+        name: DrawMatches_Async
+      c:@F@FastFeatureDetector_Close:
+        name: FastFeatureDetector_Close
+      c:@F@FastFeatureDetector_Close_Async:
+        name: FastFeatureDetector_Close_Async
+      c:@F@FastFeatureDetector_Create:
+        name: FastFeatureDetector_Create
+      c:@F@FastFeatureDetector_CreateWithParams:
+        name: FastFeatureDetector_CreateWithParams
+      c:@F@FastFeatureDetector_CreateWithParams_Async:
+        name: FastFeatureDetector_CreateWithParams_Async
+      c:@F@FastFeatureDetector_Create_Async:
+        name: FastFeatureDetector_Create_Async
+      c:@F@FastFeatureDetector_Detect:
+        name: FastFeatureDetector_Detect
+      c:@F@FastFeatureDetector_Detect_Async:
+        name: FastFeatureDetector_Detect_Async
+      c:@F@FlannBasedMatcher_Close:
+        name: FlannBasedMatcher_Close
+      c:@F@FlannBasedMatcher_Close_Async:
+        name: FlannBasedMatcher_Close_Async
+      c:@F@FlannBasedMatcher_Create:
+        name: FlannBasedMatcher_Create
+      c:@F@FlannBasedMatcher_Create_Async:
+        name: FlannBasedMatcher_Create_Async
+      c:@F@FlannBasedMatcher_KnnMatch:
+        name: FlannBasedMatcher_KnnMatch
+      c:@F@FlannBasedMatcher_KnnMatch_Async:
+        name: FlannBasedMatcher_KnnMatch_Async
+      c:@F@GFTTDetector_Close:
+        name: GFTTDetector_Close
+      c:@F@GFTTDetector_Close_Async:
+        name: GFTTDetector_Close_Async
+      c:@F@GFTTDetector_Create:
+        name: GFTTDetector_Create
+      c:@F@GFTTDetector_Create_Async:
+        name: GFTTDetector_Create_Async
+      c:@F@GFTTDetector_Detect:
+        name: GFTTDetector_Detect
+      c:@F@GFTTDetector_Detect_Async:
+        name: GFTTDetector_Detect_Async
+      c:@F@KAZE_Close:
+        name: KAZE_Close
+      c:@F@KAZE_Close_Async:
+        name: KAZE_Close_Async
+      c:@F@KAZE_Create:
+        name: KAZE_Create
+      c:@F@KAZE_Create_Async:
+        name: KAZE_Create_Async
+      c:@F@KAZE_Detect:
+        name: KAZE_Detect
+      c:@F@KAZE_DetectAndCompute:
+        name: KAZE_DetectAndCompute
+      c:@F@KAZE_DetectAndCompute_Async:
+        name: KAZE_DetectAndCompute_Async
+      c:@F@KAZE_Detect_Async:
+        name: KAZE_Detect_Async
+      c:@F@MSER_Close:
+        name: MSER_Close
+      c:@F@MSER_Close_Async:
+        name: MSER_Close_Async
+      c:@F@MSER_Create:
+        name: MSER_Create
+      c:@F@MSER_Create_Async:
+        name: MSER_Create_Async
+      c:@F@MSER_Detect:
+        name: MSER_Detect
+      c:@F@MSER_Detect_Async:
+        name: MSER_Detect_Async
+      c:@F@ORB_Close:
+        name: ORB_Close
+      c:@F@ORB_Close_Async:
+        name: ORB_Close_Async
+      c:@F@ORB_Create:
+        name: ORB_Create
+      c:@F@ORB_CreateWithParams:
+        name: ORB_CreateWithParams
+      c:@F@ORB_CreateWithParams_Async:
+        name: ORB_CreateWithParams_Async
+      c:@F@ORB_Create_Async:
+        name: ORB_Create_Async
+      c:@F@ORB_Detect:
+        name: ORB_Detect
+      c:@F@ORB_DetectAndCompute:
+        name: ORB_DetectAndCompute
+      c:@F@ORB_DetectAndCompute_Async:
+        name: ORB_DetectAndCompute_Async
+      c:@F@ORB_Detect_Async:
+        name: ORB_Detect_Async
+      c:@F@SIFT_Close:
+        name: SIFT_Close
+      c:@F@SIFT_Close_Async:
+        name: SIFT_Close_Async
+      c:@F@SIFT_Create:
+        name: SIFT_Create
+      c:@F@SIFT_Create_Async:
+        name: SIFT_Create_Async
+      c:@F@SIFT_Detect:
+        name: SIFT_Detect
+      c:@F@SIFT_DetectAndCompute:
+        name: SIFT_DetectAndCompute
+      c:@F@SIFT_DetectAndCompute_Async:
+        name: SIFT_DetectAndCompute_Async
+      c:@F@SIFT_Detect_Async:
+        name: SIFT_Detect_Async
+      c:@F@SimpleBlobDetectorParams_Create:
+        name: SimpleBlobDetectorParams_Create
+      c:@F@SimpleBlobDetector_Close:
+        name: SimpleBlobDetector_Close
+      c:@F@SimpleBlobDetector_Close_Async:
+        name: SimpleBlobDetector_Close_Async
+      c:@F@SimpleBlobDetector_Create:
+        name: SimpleBlobDetector_Create
+      c:@F@SimpleBlobDetector_Create_Async:
+        name: SimpleBlobDetector_Create_Async
+      c:@F@SimpleBlobDetector_Create_WithParams:
+        name: SimpleBlobDetector_Create_WithParams
+      c:@F@SimpleBlobDetector_Create_WithParams_Async:
+        name: SimpleBlobDetector_Create_WithParams_Async
+      c:@F@SimpleBlobDetector_Detect:
+        name: SimpleBlobDetector_Detect
+      c:@F@SimpleBlobDetector_Detect_Async:
+        name: SimpleBlobDetector_Detect_Async
+      c:@S@AKAZE:
+        name: AKAZE
+      c:@S@AgastFeatureDetector:
+        name: AgastFeatureDetector
+      c:@S@BFMatcher:
+        name: BFMatcher
+      c:@S@BRISK:
+        name: BRISK
+      c:@S@FastFeatureDetector:
+        name: FastFeatureDetector
+      c:@S@FlannBasedMatcher:
+        name: FlannBasedMatcher
+      c:@S@GFTTDetector:
+        name: GFTTDetector
+      c:@S@KAZE:
+        name: KAZE
+      c:@S@MSER:
+        name: MSER
+      c:@S@ORB:
+        name: ORB
+      c:@S@SIFT:
+        name: SIFT
+      c:@S@SimpleBlobDetector:
+        name: SimpleBlobDetector
+      c:@S@SimpleBlobDetectorParams:
+        name: SimpleBlobDetectorParams
+      c:features2d.h@T@AKAZEPtr:
+        name: AKAZEPtr
+      c:features2d.h@T@AgastFeatureDetectorPtr:
+        name: AgastFeatureDetectorPtr
+      c:features2d.h@T@BFMatcherPtr:
+        name: BFMatcherPtr
+      c:features2d.h@T@BRISKPtr:
+        name: BRISKPtr
+      c:features2d.h@T@FastFeatureDetectorPtr:
+        name: FastFeatureDetectorPtr
+      c:features2d.h@T@FlannBasedMatcherPtr:
+        name: FlannBasedMatcherPtr
+      c:features2d.h@T@GFTTDetectorPtr:
+        name: GFTTDetectorPtr
+      c:features2d.h@T@KAZEPtr:
+        name: KAZEPtr
+      c:features2d.h@T@MSERPtr:
+        name: MSERPtr
+      c:features2d.h@T@ORBPtr:
+        name: ORBPtr
+      c:features2d.h@T@SIFTPtr:
+        name: SIFTPtr
+      c:features2d.h@T@SimpleBlobDetectorPtr:
+        name: SimpleBlobDetectorPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Scalar:
+        name: Scalar
+      c:types.h@T@VecChar:
+        name: VecChar
+      c:types.h@T@VecDMatch:
+        name: VecDMatch
+      c:types.h@T@VecKeyPoint:
+        name: VecKeyPoint
+      c:types.h@T@VecVecDMatch:
+        name: VecVecDMatch

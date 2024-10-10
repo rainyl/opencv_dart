@@ -1,0 +1,77 @@
+name: CvNativeCore
+description: |
+  Native bindings for OpenCV - Core
+output:
+  bindings: ../lib/src/g/core.g.dart
+  symbol-file:
+    output: 'package:dartcv/src/g/core.yaml'
+    import-path: 'package:dartcv/src/g/core.g.dart'
+import:
+  symbol-files:
+    - 'package:dartcv/src/g/types.yaml'
+# ffi-native:
+#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+compiler-opts: "-Isrc -Idartcv"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - ../src/dartcv/core/core.h
+    - ../src/dartcv/core/core_async.h
+    - ../src/dartcv/core/exception.h
+    - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/svd_async.h
+    - ../src/dartcv/core/vec.h
+    - ../src/dartcv/core/version.h
+    - ../src/dartcv/core/logging.h
+  include-directives:
+    - ../src/dartcv/core/core.h
+    - ../src/dartcv/core/core_async.h
+    - ../src/dartcv/core/exception.h
+    - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/svd_async.h
+    - ../src/dartcv/core/vec.h
+    - ../src/dartcv/core/version.h
+    - ../src/dartcv/core/logging.h
+functions:
+  leaf:
+    include:
+      - "Mat_Flags"
+      - "Mat_Type"
+      - "Mat_CountNonZero"
+      - "Mat_IsContinuous"
+      - "Mat_IsSubmatrix"
+      - "Mat_Rows"
+      - "Mat_Cols"
+      - "Mat_Channels"
+      - "Mat_Step"
+      - "Mat_Total"
+      - "Mat_Size"
+      - "Mat_ElemSize.*"
+      - "Mat_Dims"
+      - "Mat_Data"
+      - "Mat_Get.*"
+      - "Mat_Set.*"
+      # - ""
+      # - ""
+      # - ""
+      # - ""
+
+  symbol-address:
+    include:
+      - ".*_Close.*"
+#     exclude: # If you only use exclude, then everything not excluded is generated.
+#       - "dispose"
+
+preamble: |
+  // coverage:ignore-file
+  // opencv_dart - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).
