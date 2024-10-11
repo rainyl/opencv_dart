@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'https://github.com/rainyl/dartcv.git'
+          repository: 'rainyl/dartcv'
           ref: 'main'
       - name: build
         run: |
