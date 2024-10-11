@@ -16,43 +16,46 @@ jobs:
         abi: [armeabi-v7a, arm64-v8a, x86_64]
     env:
       COMMON_CMAKE_OPTIONS: |
-        -DCMAKE_POLICY_DEFAULT_CMP0057=NEW \
         -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_LATEST_HOME/build/cmake/android.toolchain.cmake \
         -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=False \
         -DANDROID_PLATFORM=android-24 \
-        -DCMAKE_INSTALL_PREFIX=install \
         -DCMAKE_BUILD_TYPE=Release \
         -DANDROID_STL=c++_static \
+        -DANDROID_ARM_NEON=ON \
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
-      - uses: robinraju/release-downloader@v1.10
-        with:
-          repository: "rainyl/opencv.full"
-          tag: "4.10.0+6"
-          fileName: "libopencv-android-${{ matrix.abi }}.tar.gz"
-          out-file-path: "build/opencv"
-          extract: true
+          repository: 'https://github.com/rainyl/dartcv.git'
+          ref: 'main'
       - name: build
         run: |
-          cd build
+          mkdir build && cd build
           cmake -S ${{ github.workspace }} \
           ${{ env.COMMON_CMAKE_OPTIONS }} -DANDROID_ABI="${{ matrix.abi }}" \
-          -DOpenCV_DIR=${{ github.workspace }}/build/opencv/sdk/native/jni \
-          -DANDROID_ARM_NEON=ON
+            -DCMAKE_INSTALL_PREFIX="${{ matrix.abi }}" \
 
           cmake --build . --config Release -j $(nproc)
           cmake --build . --config Release --target install
-      - name: package
-        run: |
-          tar -C build/install -zcvf libopencv_dart-android-${{ matrix.abi }}.tar.gz .
       - uses: actions/upload-artifact@v4
         name: upload
         with:
-          path: libopencv_dart-android-${{ matrix.abi }}.tar.gz
-          name: libopencv_dart-android-${{ matrix.abi }}.tar.gz
+          path: build/${{ matrix.abi }}
+          name: libdartcv-android-${{ matrix.abi }}
 
+  release:
+    name: android
+    runs-on: ubuntu-24.04
+    steps:
+      - name: download
+        uses: actions/download-artifact@v4
+        with:
+          path: libdartcv-android
+          pattern: libdartcv-android*
+          merge-multiple: true
+      - name: package
+        run: |
+          ls -R libdartcv-android
+          tar -C libdartcv-android -zcvf libdartcv-android.tar.gz .
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -60,4 +63,4 @@ jobs:
           draft: true
           prerelease: false
           files: |
-            libopencv_dart-android-${{ matrix.abi }}.tar.gz
+            libdartcv-android.tar.gz

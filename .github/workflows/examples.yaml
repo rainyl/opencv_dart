@@ -3,10 +3,6 @@ name: Examples
 on:
   push:
     branches: ["main"]
-    paths:
-      - ".github/workflows/**"
-      - "packages/opencv_dart/example/**"
-      - "packages/opencv_core/example/**"
     paths-ignore:
       - "**.md"
       - "LICENSE"
@@ -18,12 +14,12 @@ jobs:
     name: windows
     runs-on: windows-2019
     steps:
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
       - name: opencv_dart
         run: |
           cd packages/opencv_dart/example
