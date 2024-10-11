@@ -1,4 +1,4 @@
-# 1.2.5
+## 1.2.5
 
 * add quality module by @rainyl in https://github.com/rainyl/opencv_dart/pull/239
 * Bump ffigen from 13.0.0 to 14.0.0 by @dependabot in https://github.com/rainyl/opencv_dart/pull/242
