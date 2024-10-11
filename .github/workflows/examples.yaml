@@ -11,6 +11,7 @@ on:
       - "**.md"
       - "LICENSE"
   pull_request:
+    branches: ["main"]
 
 jobs:
   windows:
