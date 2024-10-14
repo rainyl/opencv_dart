@@ -6,5 +6,10 @@
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 
+test/images
+test/images_out
 test/models
+src/
+ffigen/
+Makefile
 libdartcv*

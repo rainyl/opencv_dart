@@ -8,6 +8,12 @@ cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME "opencv_core")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
+# disable warnings
+set (CMAKE_C_FLAGS "/wd4244 /D_CRT_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_DEPRECATE ${CMAKE_C_FLAGS}")
+set (CMAKE_C_FLAGS "/wd4244 /D_CRT_NONSTDC_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE ${CMAKE_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "/wd4244 /D_CRT_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_DEPRECATE ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS "/wd4244 /D_CRT_NONSTDC_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE ${CMAKE_CXX_FLAGS}")
+
 # Invoke the build for native code shared with the other target platforms.
 # This can be changed to accommodate different builds.
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")

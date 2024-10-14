@@ -1,6 +1,29 @@
 cmake_minimum_required(VERSION 3.14)
 
+get_filename_component(PROJ_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+
+macro(_find_version _version_var _version_file _regex_find _regex_replace)
+  # read versions
+  if(EXISTS ${_version_file})
+    file(STRINGS ${_version_file} _version_string REGEX ${_regex_find})
+    string(REGEX REPLACE ${_regex_replace} "\\1" _version_string "${_version_string}")
+    set(${_version_var} "${_version_string}")
+  else()
+    message(FATAL_ERROR "file ${_version_file} not found!")
+  endif()
+endmacro()
+
+_find_version(_version_project "${PROJ_DIR}/pubspec.yaml" "^version: (.+)*$" "version: (.+)*$")
+_find_version(_version_opencv "${PROJ_DIR}/pubspec.yaml" "^opencv_version: (.+)*$" "opencv_version: (.+)*$")
+_find_version(_version_dartcv "${PROJ_DIR}/pubspec.yaml" "^dartcv_version: (.+)*$" "dartcv_version: (.+)*$")
+
+message(STATUS "Project Version: ${_version_project}")
+message(STATUS "OpenCV Version: ${_version_opencv}")
+message(STATUS "DartCv Version: ${_version_dartcv}")
+
 project(dartcv LANGUAGES CXX VERSION 1.0.0)
+
+set(PROJECT_VERSION "${_version_project}")
 
 # Flutter doesn't support build android-x86, disable here
 # https://docs.flutter.dev/deployment/android#what-are-the-supported-target-architectures
@@ -26,16 +49,16 @@ set(DARTCV_WITH_GAPI OFF)
 set(DARTCV_WORLD OFF)
 
 # TODO: read opencv_version from pubspec.yaml
-set(OPENCV_VERSION "4.10.0+9")
+set(OPENCV_VERSION "${_version_opencv}")
 set(DARTCV_DISABLE_DOWNLOAD_OPENCV OFF)
 
 include(FetchContent)
 FetchContent_Declare(
-  dartcv
+  libdartcv
   GIT_REPOSITORY https://github.com/rainyl/dartcv.git
-  GIT_TAG 61effe0762f7919b38f1da58d87c9aa541ee1569
+  GIT_TAG ${_version_dartcv}
 )
-FetchContent_MakeAvailable(dartcv)
+FetchContent_MakeAvailable(libdartcv)
 
 if(ANDROID)
   message(STATUS "Installing ${FFMPEG_LIB_PATHS} to ${CMAKE_INSTALL_PREFIX}")

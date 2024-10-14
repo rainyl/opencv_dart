@@ -1,5 +1,7 @@
-import 'package:dartcv/gapi.dart' as cv_gapi;
+@Skip('GAPI not finished')
+
 import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv/gapi.dart' as cv_gapi;
 import 'package:test/test.dart';
 
 void main() {

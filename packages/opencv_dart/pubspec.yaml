@@ -5,7 +5,9 @@ description: |
   please use opencv_core instead.
   The most complete OpenCV bindings for Dart!
   With asynchronous support now!
-version: 1.2.5
+version: 1.2.6
+opencv_version: 4.10.0+9
+dartcv_version: 4.10.0+2
 homepage: https://github.com/rainyl/opencv_dart
 
 environment:
@@ -15,8 +17,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dartcv:
-    path: ../dartcv
+  dartcv: 0.0.1
 
 dev_dependencies:
   test: ^1.25.2

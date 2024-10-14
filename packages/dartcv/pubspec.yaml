@@ -1,6 +1,10 @@
 name: dartcv
-description: "OpenCV bindings for Dart language. dartcv is for pure dart only, for flutter, please use opencv_dart."
-version: 1.0.0
+description: |
+  OpenCV bindings for Dart language.
+  dartcv is for pure dart only,
+  for flutter, please use [opencv_core](https://pub.dev/packages/opencv_core),
+  if you need videoio module, use [opencv_dart](https://pub.dev/packages/opencv_dart).
+version: 0.0.1
 homepage: https://github.com/rainyl/opencv_dart/packages/dartcv
 
 environment:
