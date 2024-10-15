@@ -1,0 +1,45 @@
+name: CvNativeDnn
+description: |
+  Native bindings for OpenCV - Dnn
+output:
+  bindings: ../lib/src/g/dnn.g.dart
+  symbol-file:
+    output: 'package:dartcv/src/g/dnn.yaml'
+    import-path: 'package:dartcv/src/g/dnn.g.dart'
+# ffi-native:
+#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+import:
+  symbol-files:
+    - 'package:dartcv/src/g/types.yaml'
+compiler-opts: "-Isrc -Idartcv"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - ../src/dartcv/dnn/asyncarray.h
+    - ../src/dartcv/dnn/dnn.h
+    - ../src/dartcv/dnn/dnn_async.h
+  include-directives:
+    - ../src/dartcv/dnn/asyncarray.h
+    - ../src/dartcv/dnn/dnn.h
+    - ../src/dartcv/dnn/dnn_async.h
+
+functions:
+  symbol-address:
+    include:
+      - ".*_Close.*"
+#     exclude: # If you only use exclude, then everything not excluded is generated.
+#       - "dispose"
+
+preamble: |
+  // coverage:ignore-file
+  // opencv_dart - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).
