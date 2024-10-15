@@ -10,6 +10,7 @@ test/images
 test/images_out
 test/models
 src/
+!lib/src
 ffigen/
 Makefile
 libdartcv*
