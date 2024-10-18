@@ -1,33 +1,27 @@
 format_version: 1.0.0
 files:
-  package:dartcv/src/g/imgcodecs.g.dart:
+  package:dartcv4/src/g/imgcodecs.g.dart:
     used-config:
       ffi-native: false
     symbols:
-      c:@F@Image_IMDecode:
-        name: Image_IMDecode
-      c:@F@Image_IMDecode_Async:
-        name: Image_IMDecode_Async
-      c:@F@Image_IMEncode:
-        name: Image_IMEncode
-      c:@F@Image_IMEncode_Async:
-        name: Image_IMEncode_Async
-      c:@F@Image_IMEncode_WithParams:
-        name: Image_IMEncode_WithParams
-      c:@F@Image_IMEncode_WithParams_Async:
-        name: Image_IMEncode_WithParams_Async
-      c:@F@Image_IMRead:
-        name: Image_IMRead
-      c:@F@Image_IMRead_Async:
-        name: Image_IMRead_Async
-      c:@F@Image_IMWrite:
-        name: Image_IMWrite
-      c:@F@Image_IMWrite_Async:
-        name: Image_IMWrite_Async
-      c:@F@Image_IMWrite_WithParams:
-        name: Image_IMWrite_WithParams
-      c:@F@Image_IMWrite_WithParams_Async:
-        name: Image_IMWrite_WithParams_Async
+      c:@F@cv_haveImageReader:
+        name: cv_haveImageReader
+      c:@F@cv_haveImageWriter:
+        name: cv_haveImageWriter
+      c:@F@cv_imcount:
+        name: cv_imcount
+      c:@F@cv_imdecode:
+        name: cv_imdecode
+      c:@F@cv_imencode:
+        name: cv_imencode
+      c:@F@cv_imencode_1:
+        name: cv_imencode_1
+      c:@F@cv_imread:
+        name: cv_imread
+      c:@F@cv_imwrite:
+        name: cv_imwrite
+      c:@F@cv_imwrite_1:
+        name: cv_imwrite_1
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:

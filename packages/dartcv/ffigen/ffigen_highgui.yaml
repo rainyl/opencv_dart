@@ -4,13 +4,13 @@ description: |
 output:
   bindings: ../lib/src/g/highgui.g.dart
   symbol-file:
-    output: 'package:dartcv/src/g/highgui.yaml'
-    import-path: 'package:dartcv/src/g/highgui.g.dart'
+    output: 'package:dartcv4/src/g/highgui.yaml'
+    import-path: 'package:dartcv4/src/g/highgui.g.dart'
 # ffi-native:
-#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv/src/g/types.yaml'
+    - 'package:dartcv4/src/g/types.yaml'
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
@@ -24,6 +24,7 @@ functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file

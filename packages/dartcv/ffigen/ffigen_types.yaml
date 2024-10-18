@@ -4,10 +4,10 @@ description: |
 output:
   bindings: ../lib/src/g/types.g.dart
   symbol-file:
-    output: 'package:dartcv/src/g/types.yaml'
-    import-path: 'package:dartcv/src/g/types.g.dart'
+    output: 'package:dartcv4/src/g/types.yaml'
+    import-path: 'package:dartcv4/src/g/types.g.dart'
 # ffi-native:
-#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
@@ -21,6 +21,7 @@ functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

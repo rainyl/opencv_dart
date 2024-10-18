@@ -4,28 +4,27 @@ description: |
 output:
   bindings: ../lib/src/g/video.g.dart
   symbol-file:
-    output: 'package:dartcv/src/g/video.yaml'
-    import-path: 'package:dartcv/src/g/video.g.dart'
+    output: 'package:dartcv4/src/g/video.yaml'
+    import-path: 'package:dartcv4/src/g/video.g.dart'
 # ffi-native:
-#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv/src/g/types.yaml'
+    - 'package:dartcv4/src/g/types.yaml'
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
     - ../src/dartcv/video/video.h
-    - ../src/dartcv/video/video_async.h
   include-directives:
     - ../src/dartcv/video/video.h
-    - ../src/dartcv/video/video_async.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file

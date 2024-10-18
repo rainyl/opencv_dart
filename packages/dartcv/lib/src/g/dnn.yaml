@@ -1,169 +1,93 @@
 format_version: 1.0.0
 files:
-  package:dartcv/src/g/dnn.g.dart:
+  package:dartcv4/src/g/dnn.g.dart:
     used-config:
       ffi-native: false
     symbols:
-      c:@F@AsyncArray_Close:
-        name: AsyncArray_Close
-      c:@F@AsyncArray_Get:
-        name: AsyncArray_Get
-      c:@F@AsyncArray_New:
-        name: AsyncArray_New
-      c:@F@Layer_Close:
-        name: Layer_Close
-      c:@F@Layer_Close_Async:
-        name: Layer_Close_Async
-      c:@F@Layer_GetName:
-        name: Layer_GetName
-      c:@F@Layer_GetName_Async:
-        name: Layer_GetName_Async
-      c:@F@Layer_GetType:
-        name: Layer_GetType
-      c:@F@Layer_GetType_Async:
-        name: Layer_GetType_Async
-      c:@F@Layer_InputNameToIndex:
-        name: Layer_InputNameToIndex
-      c:@F@Layer_InputNameToIndex_Async:
-        name: Layer_InputNameToIndex_Async
-      c:@F@Layer_OutputNameToIndex:
-        name: Layer_OutputNameToIndex
-      c:@F@Layer_OutputNameToIndex_Async:
-        name: Layer_OutputNameToIndex_Async
-      c:@F@NMSBoxes:
-        name: NMSBoxes
-      c:@F@NMSBoxesWithParams:
-        name: NMSBoxesWithParams
-      c:@F@NMSBoxesWithParams_Async:
-        name: NMSBoxesWithParams_Async
-      c:@F@NMSBoxes_Async:
-        name: NMSBoxes_Async
-      c:@F@Net_BlobFromImage:
-        name: Net_BlobFromImage
-      c:@F@Net_BlobFromImage_Async:
-        name: Net_BlobFromImage_Async
-      c:@F@Net_BlobFromImages:
-        name: Net_BlobFromImages
-      c:@F@Net_BlobFromImages_Async:
-        name: Net_BlobFromImages_Async
-      c:@F@Net_Close:
-        name: Net_Close
-      c:@F@Net_Close_Async:
-        name: Net_Close_Async
-      c:@F@Net_Create:
-        name: Net_Create
-      c:@F@Net_Create_Async:
-        name: Net_Create_Async
-      c:@F@Net_Dump:
-        name: Net_Dump
-      c:@F@Net_Dump_Async:
-        name: Net_Dump_Async
-      c:@F@Net_Empty:
-        name: Net_Empty
-      c:@F@Net_Empty_Async:
-        name: Net_Empty_Async
-      c:@F@Net_Forward:
-        name: Net_Forward
-      c:@F@Net_ForwardLayers:
-        name: Net_ForwardLayers
-      c:@F@Net_ForwardLayers_Async:
-        name: Net_ForwardLayers_Async
-      c:@F@Net_Forward_Async:
-        name: Net_Forward_Async
-      c:@F@Net_FromNet:
-        name: Net_FromNet
-      c:@F@Net_FromNet_Async:
-        name: Net_FromNet_Async
-      c:@F@Net_GetBlobChannel:
-        name: Net_GetBlobChannel
-      c:@F@Net_GetBlobChannel_Async:
-        name: Net_GetBlobChannel_Async
-      c:@F@Net_GetBlobSize:
-        name: Net_GetBlobSize
-      c:@F@Net_GetBlobSize_Async:
-        name: Net_GetBlobSize_Async
-      c:@F@Net_GetInputDetails:
-        name: Net_GetInputDetails
-      c:@F@Net_GetInputDetails_Async:
-        name: Net_GetInputDetails_Async
-      c:@F@Net_GetLayer:
-        name: Net_GetLayer
-      c:@F@Net_GetLayerNames:
-        name: Net_GetLayerNames
-      c:@F@Net_GetLayerNames_Async:
-        name: Net_GetLayerNames_Async
-      c:@F@Net_GetLayer_Async:
-        name: Net_GetLayer_Async
-      c:@F@Net_GetPerfProfile:
-        name: Net_GetPerfProfile
-      c:@F@Net_GetPerfProfile_Async:
-        name: Net_GetPerfProfile_Async
-      c:@F@Net_GetUnconnectedOutLayers:
-        name: Net_GetUnconnectedOutLayers
-      c:@F@Net_GetUnconnectedOutLayers_Async:
-        name: Net_GetUnconnectedOutLayers_Async
-      c:@F@Net_ImagesFromBlob:
-        name: Net_ImagesFromBlob
-      c:@F@Net_ImagesFromBlob_Async:
-        name: Net_ImagesFromBlob_Async
-      c:@F@Net_ReadNet:
-        name: Net_ReadNet
-      c:@F@Net_ReadNetBytes:
-        name: Net_ReadNetBytes
-      c:@F@Net_ReadNetBytes_Async:
-        name: Net_ReadNetBytes_Async
-      c:@F@Net_ReadNetFromCaffe:
-        name: Net_ReadNetFromCaffe
-      c:@F@Net_ReadNetFromCaffeBytes:
-        name: Net_ReadNetFromCaffeBytes
-      c:@F@Net_ReadNetFromCaffeBytes_Async:
-        name: Net_ReadNetFromCaffeBytes_Async
-      c:@F@Net_ReadNetFromCaffe_Async:
-        name: Net_ReadNetFromCaffe_Async
-      c:@F@Net_ReadNetFromONNX:
-        name: Net_ReadNetFromONNX
-      c:@F@Net_ReadNetFromONNXBytes:
-        name: Net_ReadNetFromONNXBytes
-      c:@F@Net_ReadNetFromONNXBytes_Async:
-        name: Net_ReadNetFromONNXBytes_Async
-      c:@F@Net_ReadNetFromONNX_Async:
-        name: Net_ReadNetFromONNX_Async
-      c:@F@Net_ReadNetFromTFLite:
-        name: Net_ReadNetFromTFLite
-      c:@F@Net_ReadNetFromTFLiteBytes:
-        name: Net_ReadNetFromTFLiteBytes
-      c:@F@Net_ReadNetFromTFLiteBytes_Async:
-        name: Net_ReadNetFromTFLiteBytes_Async
-      c:@F@Net_ReadNetFromTFLite_Async:
-        name: Net_ReadNetFromTFLite_Async
-      c:@F@Net_ReadNetFromTensorflow:
-        name: Net_ReadNetFromTensorflow
-      c:@F@Net_ReadNetFromTensorflowBytes:
-        name: Net_ReadNetFromTensorflowBytes
-      c:@F@Net_ReadNetFromTensorflowBytes_Async:
-        name: Net_ReadNetFromTensorflowBytes_Async
-      c:@F@Net_ReadNetFromTensorflow_Async:
-        name: Net_ReadNetFromTensorflow_Async
-      c:@F@Net_ReadNetFromTorch:
-        name: Net_ReadNetFromTorch
-      c:@F@Net_ReadNetFromTorch_Async:
-        name: Net_ReadNetFromTorch_Async
-      c:@F@Net_ReadNet_Async:
-        name: Net_ReadNet_Async
-      c:@F@Net_SetInput:
-        name: Net_SetInput
-      c:@F@Net_SetInput_Async:
-        name: Net_SetInput_Async
-      c:@F@Net_SetPreferableBackend:
-        name: Net_SetPreferableBackend
-      c:@F@Net_SetPreferableBackend_Async:
-        name: Net_SetPreferableBackend_Async
-      c:@F@Net_SetPreferableTarget:
-        name: Net_SetPreferableTarget
-      c:@F@Net_SetPreferableTarget_Async:
-        name: Net_SetPreferableTarget_Async
-      c:@F@Net_forwardAsync:
-        name: Net_forwardAsync
+      c:@F@cv_dnn_AsyncArray_close:
+        name: cv_dnn_AsyncArray_close
+      c:@F@cv_dnn_AsyncArray_get:
+        name: cv_dnn_AsyncArray_get
+      c:@F@cv_dnn_AsyncArray_new:
+        name: cv_dnn_AsyncArray_new
+      c:@F@cv_dnn_Layer_close:
+        name: cv_dnn_Layer_close
+      c:@F@cv_dnn_Layer_getName:
+        name: cv_dnn_Layer_getName
+      c:@F@cv_dnn_Layer_getType:
+        name: cv_dnn_Layer_getType
+      c:@F@cv_dnn_Layer_inputNameToIndex:
+        name: cv_dnn_Layer_inputNameToIndex
+      c:@F@cv_dnn_Layer_outputNameToIndex:
+        name: cv_dnn_Layer_outputNameToIndex
+      c:@F@cv_dnn_NMSBoxes:
+        name: cv_dnn_NMSBoxes
+      c:@F@cv_dnn_NMSBoxes_1:
+        name: cv_dnn_NMSBoxes_1
+      c:@F@cv_dnn_Net_blobFromImage:
+        name: cv_dnn_Net_blobFromImage
+      c:@F@cv_dnn_Net_blobFromImages:
+        name: cv_dnn_Net_blobFromImages
+      c:@F@cv_dnn_Net_close:
+        name: cv_dnn_Net_close
+      c:@F@cv_dnn_Net_create:
+        name: cv_dnn_Net_create
+      c:@F@cv_dnn_Net_dump:
+        name: cv_dnn_Net_dump
+      c:@F@cv_dnn_Net_empty:
+        name: cv_dnn_Net_empty
+      c:@F@cv_dnn_Net_forward:
+        name: cv_dnn_Net_forward
+      c:@F@cv_dnn_Net_forwardAsync:
+        name: cv_dnn_Net_forwardAsync
+      c:@F@cv_dnn_Net_forwardLayers:
+        name: cv_dnn_Net_forwardLayers
+      c:@F@cv_dnn_Net_fromNet:
+        name: cv_dnn_Net_fromNet
+      c:@F@cv_dnn_Net_getBlobChannel:
+        name: cv_dnn_Net_getBlobChannel
+      c:@F@cv_dnn_Net_getBlobSize:
+        name: cv_dnn_Net_getBlobSize
+      c:@F@cv_dnn_Net_getInputDetails:
+        name: cv_dnn_Net_getInputDetails
+      c:@F@cv_dnn_Net_getLayer:
+        name: cv_dnn_Net_getLayer
+      c:@F@cv_dnn_Net_getLayerNames:
+        name: cv_dnn_Net_getLayerNames
+      c:@F@cv_dnn_Net_getPerfProfile:
+        name: cv_dnn_Net_getPerfProfile
+      c:@F@cv_dnn_Net_getUnconnectedOutLayers:
+        name: cv_dnn_Net_getUnconnectedOutLayers
+      c:@F@cv_dnn_Net_imagesFromBlob:
+        name: cv_dnn_Net_imagesFromBlob
+      c:@F@cv_dnn_Net_readNet:
+        name: cv_dnn_Net_readNet
+      c:@F@cv_dnn_Net_readNetBytes:
+        name: cv_dnn_Net_readNetBytes
+      c:@F@cv_dnn_Net_readNetFromCaffe:
+        name: cv_dnn_Net_readNetFromCaffe
+      c:@F@cv_dnn_Net_readNetFromCaffeBytes:
+        name: cv_dnn_Net_readNetFromCaffeBytes
+      c:@F@cv_dnn_Net_readNetFromONNX:
+        name: cv_dnn_Net_readNetFromONNX
+      c:@F@cv_dnn_Net_readNetFromONNXBytes:
+        name: cv_dnn_Net_readNetFromONNXBytes
+      c:@F@cv_dnn_Net_readNetFromTFLite:
+        name: cv_dnn_Net_readNetFromTFLite
+      c:@F@cv_dnn_Net_readNetFromTFLiteBytes:
+        name: cv_dnn_Net_readNetFromTFLiteBytes
+      c:@F@cv_dnn_Net_readNetFromTensorflow:
+        name: cv_dnn_Net_readNetFromTensorflow
+      c:@F@cv_dnn_Net_readNetFromTensorflowBytes:
+        name: cv_dnn_Net_readNetFromTensorflowBytes
+      c:@F@cv_dnn_Net_readNetFromTorch:
+        name: cv_dnn_Net_readNetFromTorch
+      c:@F@cv_dnn_Net_setInput:
+        name: cv_dnn_Net_setInput
+      c:@F@cv_dnn_Net_setPreferableBackend:
+        name: cv_dnn_Net_setPreferableBackend
+      c:@F@cv_dnn_Net_setPreferableTarget:
+        name: cv_dnn_Net_setPreferableTarget
       c:@S@AsyncArray:
         name: AsyncArray
       c:@S@Layer:
@@ -186,6 +110,8 @@ files:
         name: Scalar
       c:types.h@T@VecF32:
         name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
       c:types.h@T@VecI32:
         name: VecI32
       c:types.h@T@VecMat:

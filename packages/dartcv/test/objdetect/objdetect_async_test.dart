@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dartcv/dartcv.dart' as cv;
-import 'package:dartcv/src/core/mat_type.dart';
+import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:dartcv4/src/core/mat_type.dart';
 import 'package:test/test.dart';
 
 cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {

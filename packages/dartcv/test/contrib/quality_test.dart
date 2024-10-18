@@ -1,4 +1,4 @@
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void checkResult(cv.Scalar value, List<double> values, {double eps = 1e-3, cv.Mat? qualityMap}) {

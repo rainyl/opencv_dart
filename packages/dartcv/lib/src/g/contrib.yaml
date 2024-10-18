@@ -1,6 +1,6 @@
 format_version: 1.0.0
 files:
-  package:dartcv/src/g/contrib.g.dart:
+  package:dartcv4/src/g/contrib.g.dart:
     used-config:
       ffi-native: false
     symbols:
@@ -8,592 +8,388 @@ files:
         name: BLOCK_MEAN_HASH_MODE_0
       c:@Ea@BLOCK_MEAN_HASH_MODE_0@BLOCK_MEAN_HASH_MODE_1:
         name: BLOCK_MEAN_HASH_MODE_1
-      c:@F@ArucoDetectorParameters_Close:
-        name: ArucoDetectorParameters_Close
-      c:@F@ArucoDetectorParameters_Create:
-        name: ArucoDetectorParameters_Create
-      c:@F@ArucoDetectorParameters_Create_Async:
-        name: ArucoDetectorParameters_Create_Async
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshConstant:
-        name: ArucoDetectorParameters_GetAdaptiveThreshConstant
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshConstant_Async:
-        name: ArucoDetectorParameters_GetAdaptiveThreshConstant_Async
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax_Async
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin_Async
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep
-      c:@F@ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async:
-        name: ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagCriticalRad:
-        name: ArucoDetectorParameters_GetAprilTagCriticalRad
-      c:@F@ArucoDetectorParameters_GetAprilTagCriticalRad_Async:
-        name: ArucoDetectorParameters_GetAprilTagCriticalRad_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagDeglitch:
-        name: ArucoDetectorParameters_GetAprilTagDeglitch
-      c:@F@ArucoDetectorParameters_GetAprilTagDeglitch_Async:
-        name: ArucoDetectorParameters_GetAprilTagDeglitch_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagMaxLineFitMse:
-        name: ArucoDetectorParameters_GetAprilTagMaxLineFitMse
-      c:@F@ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async:
-        name: ArucoDetectorParameters_GetAprilTagMaxLineFitMse_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagMaxNmaxima:
-        name: ArucoDetectorParameters_GetAprilTagMaxNmaxima
-      c:@F@ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async:
-        name: ArucoDetectorParameters_GetAprilTagMaxNmaxima_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagMinClusterPixels:
-        name: ArucoDetectorParameters_GetAprilTagMinClusterPixels
-      c:@F@ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async:
-        name: ArucoDetectorParameters_GetAprilTagMinClusterPixels_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff:
-        name: ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff
-      c:@F@ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async:
-        name: ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagQuadDecimate:
-        name: ArucoDetectorParameters_GetAprilTagQuadDecimate
-      c:@F@ArucoDetectorParameters_GetAprilTagQuadDecimate_Async:
-        name: ArucoDetectorParameters_GetAprilTagQuadDecimate_Async
-      c:@F@ArucoDetectorParameters_GetAprilTagQuadSigma:
-        name: ArucoDetectorParameters_GetAprilTagQuadSigma
-      c:@F@ArucoDetectorParameters_GetAprilTagQuadSigma_Async:
-        name: ArucoDetectorParameters_GetAprilTagQuadSigma_Async
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMaxIterations:
-        name: ArucoDetectorParameters_GetCornerRefinementMaxIterations
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async:
-        name: ArucoDetectorParameters_GetCornerRefinementMaxIterations_Async
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMethod:
-        name: ArucoDetectorParameters_GetCornerRefinementMethod
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMethod_Async:
-        name: ArucoDetectorParameters_GetCornerRefinementMethod_Async
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMinAccuracy:
-        name: ArucoDetectorParameters_GetCornerRefinementMinAccuracy
-      c:@F@ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async:
-        name: ArucoDetectorParameters_GetCornerRefinementMinAccuracy_Async
-      c:@F@ArucoDetectorParameters_GetCornerRefinementWinSize:
-        name: ArucoDetectorParameters_GetCornerRefinementWinSize
-      c:@F@ArucoDetectorParameters_GetCornerRefinementWinSize_Async:
-        name: ArucoDetectorParameters_GetCornerRefinementWinSize_Async
-      c:@F@ArucoDetectorParameters_GetDetectInvertedMarker:
-        name: ArucoDetectorParameters_GetDetectInvertedMarker
-      c:@F@ArucoDetectorParameters_GetDetectInvertedMarker_Async:
-        name: ArucoDetectorParameters_GetDetectInvertedMarker_Async
-      c:@F@ArucoDetectorParameters_GetErrorCorrectionRate:
-        name: ArucoDetectorParameters_GetErrorCorrectionRate
-      c:@F@ArucoDetectorParameters_GetErrorCorrectionRate_Async:
-        name: ArucoDetectorParameters_GetErrorCorrectionRate_Async
-      c:@F@ArucoDetectorParameters_GetMarkerBorderBits:
-        name: ArucoDetectorParameters_GetMarkerBorderBits
-      c:@F@ArucoDetectorParameters_GetMarkerBorderBits_Async:
-        name: ArucoDetectorParameters_GetMarkerBorderBits_Async
-      c:@F@ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate:
-        name: ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate
-      c:@F@ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async:
-        name: ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate_Async
-      c:@F@ArucoDetectorParameters_GetMaxMarkerPerimeterRate:
-        name: ArucoDetectorParameters_GetMaxMarkerPerimeterRate
-      c:@F@ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async:
-        name: ArucoDetectorParameters_GetMaxMarkerPerimeterRate_Async
-      c:@F@ArucoDetectorParameters_GetMinCornerDistanceRate:
-        name: ArucoDetectorParameters_GetMinCornerDistanceRate
-      c:@F@ArucoDetectorParameters_GetMinCornerDistanceRate_Async:
-        name: ArucoDetectorParameters_GetMinCornerDistanceRate_Async
-      c:@F@ArucoDetectorParameters_GetMinDistanceToBorder:
-        name: ArucoDetectorParameters_GetMinDistanceToBorder
-      c:@F@ArucoDetectorParameters_GetMinDistanceToBorder_Async:
-        name: ArucoDetectorParameters_GetMinDistanceToBorder_Async
-      c:@F@ArucoDetectorParameters_GetMinMarkerDistanceRate:
-        name: ArucoDetectorParameters_GetMinMarkerDistanceRate
-      c:@F@ArucoDetectorParameters_GetMinMarkerDistanceRate_Async:
-        name: ArucoDetectorParameters_GetMinMarkerDistanceRate_Async
-      c:@F@ArucoDetectorParameters_GetMinMarkerPerimeterRate:
-        name: ArucoDetectorParameters_GetMinMarkerPerimeterRate
-      c:@F@ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async:
-        name: ArucoDetectorParameters_GetMinMarkerPerimeterRate_Async
-      c:@F@ArucoDetectorParameters_GetMinOtsuStdDev:
-        name: ArucoDetectorParameters_GetMinOtsuStdDev
-      c:@F@ArucoDetectorParameters_GetMinOtsuStdDev_Async:
-        name: ArucoDetectorParameters_GetMinOtsuStdDev_Async
-      c:@F@ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell:
-        name: ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell
-      c:@F@ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async:
-        name: ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell_Async
-      c:@F@ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell:
-        name: ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell
-      c:@F@ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async:
-        name: ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell_Async
-      c:@F@ArucoDetectorParameters_GetPolygonalApproxAccuracyRate:
-        name: ArucoDetectorParameters_GetPolygonalApproxAccuracyRate
-      c:@F@ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async:
-        name: ArucoDetectorParameters_GetPolygonalApproxAccuracyRate_Async
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshConstant:
-        name: ArucoDetectorParameters_SetAdaptiveThreshConstant
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshConstant_Async:
-        name: ArucoDetectorParameters_SetAdaptiveThreshConstant_Async
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax_Async
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin_Async
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep
-      c:@F@ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async:
-        name: ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagCriticalRad:
-        name: ArucoDetectorParameters_SetAprilTagCriticalRad
-      c:@F@ArucoDetectorParameters_SetAprilTagCriticalRad_Async:
-        name: ArucoDetectorParameters_SetAprilTagCriticalRad_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagDeglitch:
-        name: ArucoDetectorParameters_SetAprilTagDeglitch
-      c:@F@ArucoDetectorParameters_SetAprilTagDeglitch_Async:
-        name: ArucoDetectorParameters_SetAprilTagDeglitch_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagMaxLineFitMse:
-        name: ArucoDetectorParameters_SetAprilTagMaxLineFitMse
-      c:@F@ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async:
-        name: ArucoDetectorParameters_SetAprilTagMaxLineFitMse_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagMaxNmaxima:
-        name: ArucoDetectorParameters_SetAprilTagMaxNmaxima
-      c:@F@ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async:
-        name: ArucoDetectorParameters_SetAprilTagMaxNmaxima_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagMinClusterPixels:
-        name: ArucoDetectorParameters_SetAprilTagMinClusterPixels
-      c:@F@ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async:
-        name: ArucoDetectorParameters_SetAprilTagMinClusterPixels_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff:
-        name: ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff
-      c:@F@ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async:
-        name: ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagQuadDecimate:
-        name: ArucoDetectorParameters_SetAprilTagQuadDecimate
-      c:@F@ArucoDetectorParameters_SetAprilTagQuadDecimate_Async:
-        name: ArucoDetectorParameters_SetAprilTagQuadDecimate_Async
-      c:@F@ArucoDetectorParameters_SetAprilTagQuadSigma:
-        name: ArucoDetectorParameters_SetAprilTagQuadSigma
-      c:@F@ArucoDetectorParameters_SetAprilTagQuadSigma_Async:
-        name: ArucoDetectorParameters_SetAprilTagQuadSigma_Async
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMaxIterations:
-        name: ArucoDetectorParameters_SetCornerRefinementMaxIterations
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async:
-        name: ArucoDetectorParameters_SetCornerRefinementMaxIterations_Async
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMethod:
-        name: ArucoDetectorParameters_SetCornerRefinementMethod
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMethod_Async:
-        name: ArucoDetectorParameters_SetCornerRefinementMethod_Async
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMinAccuracy:
-        name: ArucoDetectorParameters_SetCornerRefinementMinAccuracy
-      c:@F@ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async:
-        name: ArucoDetectorParameters_SetCornerRefinementMinAccuracy_Async
-      c:@F@ArucoDetectorParameters_SetCornerRefinementWinSize:
-        name: ArucoDetectorParameters_SetCornerRefinementWinSize
-      c:@F@ArucoDetectorParameters_SetCornerRefinementWinSize_Async:
-        name: ArucoDetectorParameters_SetCornerRefinementWinSize_Async
-      c:@F@ArucoDetectorParameters_SetDetectInvertedMarker:
-        name: ArucoDetectorParameters_SetDetectInvertedMarker
-      c:@F@ArucoDetectorParameters_SetDetectInvertedMarker_Async:
-        name: ArucoDetectorParameters_SetDetectInvertedMarker_Async
-      c:@F@ArucoDetectorParameters_SetErrorCorrectionRate:
-        name: ArucoDetectorParameters_SetErrorCorrectionRate
-      c:@F@ArucoDetectorParameters_SetErrorCorrectionRate_Async:
-        name: ArucoDetectorParameters_SetErrorCorrectionRate_Async
-      c:@F@ArucoDetectorParameters_SetMarkerBorderBits:
-        name: ArucoDetectorParameters_SetMarkerBorderBits
-      c:@F@ArucoDetectorParameters_SetMarkerBorderBits_Async:
-        name: ArucoDetectorParameters_SetMarkerBorderBits_Async
-      c:@F@ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate:
-        name: ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate
-      c:@F@ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async:
-        name: ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate_Async
-      c:@F@ArucoDetectorParameters_SetMaxMarkerPerimeterRate:
-        name: ArucoDetectorParameters_SetMaxMarkerPerimeterRate
-      c:@F@ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async:
-        name: ArucoDetectorParameters_SetMaxMarkerPerimeterRate_Async
-      c:@F@ArucoDetectorParameters_SetMinCornerDistanceRate:
-        name: ArucoDetectorParameters_SetMinCornerDistanceRate
-      c:@F@ArucoDetectorParameters_SetMinCornerDistanceRate_Async:
-        name: ArucoDetectorParameters_SetMinCornerDistanceRate_Async
-      c:@F@ArucoDetectorParameters_SetMinDistanceToBorder:
-        name: ArucoDetectorParameters_SetMinDistanceToBorder
-      c:@F@ArucoDetectorParameters_SetMinDistanceToBorder_Async:
-        name: ArucoDetectorParameters_SetMinDistanceToBorder_Async
-      c:@F@ArucoDetectorParameters_SetMinMarkerDistanceRate:
-        name: ArucoDetectorParameters_SetMinMarkerDistanceRate
-      c:@F@ArucoDetectorParameters_SetMinMarkerDistanceRate_Async:
-        name: ArucoDetectorParameters_SetMinMarkerDistanceRate_Async
-      c:@F@ArucoDetectorParameters_SetMinMarkerPerimeterRate:
-        name: ArucoDetectorParameters_SetMinMarkerPerimeterRate
-      c:@F@ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async:
-        name: ArucoDetectorParameters_SetMinMarkerPerimeterRate_Async
-      c:@F@ArucoDetectorParameters_SetMinOtsuStdDev:
-        name: ArucoDetectorParameters_SetMinOtsuStdDev
-      c:@F@ArucoDetectorParameters_SetMinOtsuStdDev_Async:
-        name: ArucoDetectorParameters_SetMinOtsuStdDev_Async
-      c:@F@ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell:
-        name: ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell
-      c:@F@ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async:
-        name: ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell_Async
-      c:@F@ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell:
-        name: ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell
-      c:@F@ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async:
-        name: ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell_Async
-      c:@F@ArucoDetectorParameters_SetPolygonalApproxAccuracyRate:
-        name: ArucoDetectorParameters_SetPolygonalApproxAccuracyRate
-      c:@F@ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async:
-        name: ArucoDetectorParameters_SetPolygonalApproxAccuracyRate_Async
-      c:@F@ArucoDetector_Close:
-        name: ArucoDetector_Close
-      c:@F@ArucoDetector_DetectMarkers:
-        name: ArucoDetector_DetectMarkers
-      c:@F@ArucoDetector_DetectMarkers_Async:
-        name: ArucoDetector_DetectMarkers_Async
-      c:@F@ArucoDetector_New:
-        name: ArucoDetector_New
-      c:@F@ArucoDetector_NewWithParams:
-        name: ArucoDetector_NewWithParams
-      c:@F@ArucoDetector_NewWithParams_Async:
-        name: ArucoDetector_NewWithParams_Async
-      c:@F@ArucoDetector_New_Async:
-        name: ArucoDetector_New_Async
-      c:@F@ArucoDictionary_Close:
-        name: ArucoDictionary_Close
-      c:@F@ArucoDrawDetectedMarkers:
-        name: ArucoDrawDetectedMarkers
-      c:@F@ArucoDrawDetectedMarkers_Async:
-        name: ArucoDrawDetectedMarkers_Async
-      c:@F@ArucoGenerateImageMarker:
-        name: ArucoGenerateImageMarker
-      c:@F@ArucoGenerateImageMarker_Async:
-        name: ArucoGenerateImageMarker_Async
-      c:@F@BlockMeanHash_Close:
-        name: BlockMeanHash_Close
-      c:@F@BlockMeanHash_Compare:
-        name: BlockMeanHash_Compare
-      c:@F@BlockMeanHash_Compare_Async:
-        name: BlockMeanHash_Compare_Async
-      c:@F@BlockMeanHash_Compute:
-        name: BlockMeanHash_Compute
-      c:@F@BlockMeanHash_Compute_Async:
-        name: BlockMeanHash_Compute_Async
-      c:@F@BlockMeanHash_Create:
-        name: BlockMeanHash_Create
-      c:@F@BlockMeanHash_Create_Async:
-        name: BlockMeanHash_Create_Async
-      c:@F@BlockMeanHash_GetMean:
-        name: BlockMeanHash_GetMean
-      c:@F@BlockMeanHash_GetMean_Async:
-        name: BlockMeanHash_GetMean_Async
-      c:@F@BlockMeanHash_SetMode:
-        name: BlockMeanHash_SetMode
-      c:@F@BlockMeanHash_SetMode_Async:
-        name: BlockMeanHash_SetMode_Async
-      c:@F@QualityBRISQUE_close:
-        name: QualityBRISQUE_close
-      c:@F@QualityBRISQUE_compute:
-        name: QualityBRISQUE_compute
-      c:@F@QualityBRISQUE_computeFeatures_static:
-        name: QualityBRISQUE_computeFeatures_static
-      c:@F@QualityBRISQUE_computeFeatures_static_async:
-        name: QualityBRISQUE_computeFeatures_static_async
-      c:@F@QualityBRISQUE_compute_async:
-        name: QualityBRISQUE_compute_async
-      c:@F@QualityBRISQUE_compute_static:
-        name: QualityBRISQUE_compute_static
-      c:@F@QualityBRISQUE_compute_static_async:
-        name: QualityBRISQUE_compute_static_async
-      c:@F@QualityBRISQUE_create:
-        name: QualityBRISQUE_create
-      c:@F@QualityGMSD_close:
-        name: QualityGMSD_close
-      c:@F@QualityGMSD_compute:
-        name: QualityGMSD_compute
-      c:@F@QualityGMSD_compute_async:
-        name: QualityGMSD_compute_async
-      c:@F@QualityGMSD_compute_static:
-        name: QualityGMSD_compute_static
-      c:@F@QualityGMSD_compute_static_async:
-        name: QualityGMSD_compute_static_async
-      c:@F@QualityGMSD_create:
-        name: QualityGMSD_create
-      c:@F@QualityMSE_close:
-        name: QualityMSE_close
-      c:@F@QualityMSE_compute:
-        name: QualityMSE_compute
-      c:@F@QualityMSE_compute_async:
-        name: QualityMSE_compute_async
-      c:@F@QualityMSE_compute_static:
-        name: QualityMSE_compute_static
-      c:@F@QualityMSE_compute_static_async:
-        name: QualityMSE_compute_static_async
-      c:@F@QualityMSE_create:
-        name: QualityMSE_create
-      c:@F@QualityPSNR_close:
-        name: QualityPSNR_close
-      c:@F@QualityPSNR_compute:
-        name: QualityPSNR_compute
-      c:@F@QualityPSNR_compute_async:
-        name: QualityPSNR_compute_async
-      c:@F@QualityPSNR_compute_static:
-        name: QualityPSNR_compute_static
-      c:@F@QualityPSNR_compute_static_async:
-        name: QualityPSNR_compute_static_async
-      c:@F@QualityPSNR_create:
-        name: QualityPSNR_create
-      c:@F@QualityPSNR_getMaxPixelValue:
-        name: QualityPSNR_getMaxPixelValue
-      c:@F@QualityPSNR_setMaxPixelValue:
-        name: QualityPSNR_setMaxPixelValue
-      c:@F@QualitySSIM_close:
-        name: QualitySSIM_close
-      c:@F@QualitySSIM_compute:
-        name: QualitySSIM_compute
-      c:@F@QualitySSIM_compute_async:
-        name: QualitySSIM_compute_async
-      c:@F@QualitySSIM_compute_static:
-        name: QualitySSIM_compute_static
-      c:@F@QualitySSIM_compute_static_async:
-        name: QualitySSIM_compute_static_async
-      c:@F@QualitySSIM_create:
-        name: QualitySSIM_create
-      c:@F@WBDetector_Close:
-        name: WBDetector_Close
-      c:@F@WBDetector_Create:
-        name: WBDetector_Create
-      c:@F@WBDetector_Detect:
-        name: WBDetector_Detect
-      c:@F@WBDetector_Read:
-        name: WBDetector_Read
-      c:@F@WBDetector_Train:
-        name: WBDetector_Train
-      c:@F@WBDetector_Write:
-        name: WBDetector_Write
-      c:@F@WeChatQRCode_Close:
-        name: WeChatQRCode_Close
-      c:@F@WeChatQRCode_DetectAndDecode:
-        name: WeChatQRCode_DetectAndDecode
-      c:@F@WeChatQRCode_DetectAndDecode_Async:
-        name: WeChatQRCode_DetectAndDecode_Async
-      c:@F@WeChatQRCode_GetScaleFactor:
-        name: WeChatQRCode_GetScaleFactor
-      c:@F@WeChatQRCode_GetScaleFactor_Async:
-        name: WeChatQRCode_GetScaleFactor_Async
-      c:@F@WeChatQRCode_New:
-        name: WeChatQRCode_New
-      c:@F@WeChatQRCode_NewWithParams:
-        name: WeChatQRCode_NewWithParams
-      c:@F@WeChatQRCode_NewWithParams_Async:
-        name: WeChatQRCode_NewWithParams_Async
-      c:@F@WeChatQRCode_New_Async:
-        name: WeChatQRCode_New_Async
-      c:@F@WeChatQRCode_SetScaleFactor:
-        name: WeChatQRCode_SetScaleFactor
-      c:@F@WeChatQRCode_SetScaleFactor_Async:
-        name: WeChatQRCode_SetScaleFactor_Async
-      c:@F@averageHashCompare:
-        name: averageHashCompare
-      c:@F@averageHashCompare_Async:
-        name: averageHashCompare_Async
-      c:@F@averageHashCompute:
-        name: averageHashCompute
-      c:@F@averageHashCompute_Async:
-        name: averageHashCompute_Async
-      c:@F@colorMomentHashCompare:
-        name: colorMomentHashCompare
-      c:@F@colorMomentHashCompare_Async:
-        name: colorMomentHashCompare_Async
-      c:@F@colorMomentHashCompute:
-        name: colorMomentHashCompute
-      c:@F@colorMomentHashCompute_Async:
-        name: colorMomentHashCompute_Async
-      c:@F@getPredefinedDictionary:
-        name: getPredefinedDictionary
-      c:@F@getPredefinedDictionary_Async:
-        name: getPredefinedDictionary_Async
-      c:@F@marrHildrethHashCompare:
-        name: marrHildrethHashCompare
-      c:@F@marrHildrethHashCompare_Async:
-        name: marrHildrethHashCompare_Async
-      c:@F@marrHildrethHashCompute:
-        name: marrHildrethHashCompute
-      c:@F@marrHildrethHashCompute_Async:
-        name: marrHildrethHashCompute_Async
-      c:@F@pHashCompare:
-        name: pHashCompare
-      c:@F@pHashCompare_Async:
-        name: pHashCompare_Async
-      c:@F@pHashCompute:
-        name: pHashCompute
-      c:@F@pHashCompute_Async:
-        name: pHashCompute_Async
-      c:@F@radialVarianceHashCompare:
-        name: radialVarianceHashCompare
-      c:@F@radialVarianceHashCompare_Async:
-        name: radialVarianceHashCompare_Async
-      c:@F@radialVarianceHashCompute:
-        name: radialVarianceHashCompute
-      c:@F@radialVarianceHashCompute_Async:
-        name: radialVarianceHashCompute_Async
-      c:@F@ximgproc_EdgeBoxes_getBoundingBoxes:
-        name: ximgproc_EdgeBoxes_getBoundingBoxes
-      c:@F@ximgproc_EdgeDrawing_Close:
-        name: ximgproc_EdgeDrawing_Close
-      c:@F@ximgproc_EdgeDrawing_Create:
-        name: ximgproc_EdgeDrawing_Create
-      c:@F@ximgproc_EdgeDrawing_Create_Async:
-        name: ximgproc_EdgeDrawing_Create_Async
-      c:@F@ximgproc_EdgeDrawing_detectEdges:
-        name: ximgproc_EdgeDrawing_detectEdges
-      c:@F@ximgproc_EdgeDrawing_detectEdges_Async:
-        name: ximgproc_EdgeDrawing_detectEdges_Async
-      c:@F@ximgproc_EdgeDrawing_detectEllipses:
-        name: ximgproc_EdgeDrawing_detectEllipses
-      c:@F@ximgproc_EdgeDrawing_detectEllipses_Async:
-        name: ximgproc_EdgeDrawing_detectEllipses_Async
-      c:@F@ximgproc_EdgeDrawing_detectLines:
-        name: ximgproc_EdgeDrawing_detectLines
-      c:@F@ximgproc_EdgeDrawing_detectLines_Async:
-        name: ximgproc_EdgeDrawing_detectLines_Async
-      c:@F@ximgproc_EdgeDrawing_getEdgeImage:
-        name: ximgproc_EdgeDrawing_getEdgeImage
-      c:@F@ximgproc_EdgeDrawing_getEdgeImage_Async:
-        name: ximgproc_EdgeDrawing_getEdgeImage_Async
-      c:@F@ximgproc_EdgeDrawing_getGradientImage:
-        name: ximgproc_EdgeDrawing_getGradientImage
-      c:@F@ximgproc_EdgeDrawing_getGradientImage_Async:
-        name: ximgproc_EdgeDrawing_getGradientImage_Async
-      c:@F@ximgproc_EdgeDrawing_getParams:
-        name: ximgproc_EdgeDrawing_getParams
-      c:@F@ximgproc_EdgeDrawing_getSegmentIndicesOfLines:
-        name: ximgproc_EdgeDrawing_getSegmentIndicesOfLines
-      c:@F@ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async:
-        name: ximgproc_EdgeDrawing_getSegmentIndicesOfLines_Async
-      c:@F@ximgproc_EdgeDrawing_getSegments:
-        name: ximgproc_EdgeDrawing_getSegments
-      c:@F@ximgproc_EdgeDrawing_getSegments_Async:
-        name: ximgproc_EdgeDrawing_getSegments_Async
-      c:@F@ximgproc_EdgeDrawing_setParams:
-        name: ximgproc_EdgeDrawing_setParams
-      c:@F@ximgproc_GraphSegmentation_Close:
-        name: ximgproc_GraphSegmentation_Close
-      c:@F@ximgproc_GraphSegmentation_Create:
-        name: ximgproc_GraphSegmentation_Create
-      c:@F@ximgproc_GraphSegmentation_Create_Async:
-        name: ximgproc_GraphSegmentation_Create_Async
-      c:@F@ximgproc_GraphSegmentation_getK:
-        name: ximgproc_GraphSegmentation_getK
-      c:@F@ximgproc_GraphSegmentation_getMinSize:
-        name: ximgproc_GraphSegmentation_getMinSize
-      c:@F@ximgproc_GraphSegmentation_getSigma:
-        name: ximgproc_GraphSegmentation_getSigma
-      c:@F@ximgproc_GraphSegmentation_processImage:
-        name: ximgproc_GraphSegmentation_processImage
-      c:@F@ximgproc_GraphSegmentation_processImage_Async:
-        name: ximgproc_GraphSegmentation_processImage_Async
-      c:@F@ximgproc_GraphSegmentation_setK:
-        name: ximgproc_GraphSegmentation_setK
-      c:@F@ximgproc_GraphSegmentation_setMinSize:
-        name: ximgproc_GraphSegmentation_setMinSize
-      c:@F@ximgproc_GraphSegmentation_setSigma:
-        name: ximgproc_GraphSegmentation_setSigma
-      c:@F@ximgproc_PeiLinNormalization:
-        name: ximgproc_PeiLinNormalization
-      c:@F@ximgproc_PeiLinNormalization_Async:
-        name: ximgproc_PeiLinNormalization_Async
-      c:@F@ximgproc_RFFeatureGetter_Clear:
-        name: ximgproc_RFFeatureGetter_Clear
-      c:@F@ximgproc_RFFeatureGetter_Close:
-        name: ximgproc_RFFeatureGetter_Close
-      c:@F@ximgproc_RFFeatureGetter_Create:
-        name: ximgproc_RFFeatureGetter_Create
-      c:@F@ximgproc_RFFeatureGetter_Create_Async:
-        name: ximgproc_RFFeatureGetter_Create_Async
-      c:@F@ximgproc_RFFeatureGetter_Empty:
-        name: ximgproc_RFFeatureGetter_Empty
-      c:@F@ximgproc_RFFeatureGetter_getFeatures:
-        name: ximgproc_RFFeatureGetter_getFeatures
-      c:@F@ximgproc_RFFeatureGetter_getFeatures_Async:
-        name: ximgproc_RFFeatureGetter_getFeatures_Async
-      c:@F@ximgproc_StructuredEdgeDetection_Close:
-        name: ximgproc_StructuredEdgeDetection_Close
-      c:@F@ximgproc_StructuredEdgeDetection_Create:
-        name: ximgproc_StructuredEdgeDetection_Create
-      c:@F@ximgproc_StructuredEdgeDetection_Create_1:
-        name: ximgproc_StructuredEdgeDetection_Create_1
-      c:@F@ximgproc_StructuredEdgeDetection_Create_Async:
-        name: ximgproc_StructuredEdgeDetection_Create_Async
-      c:@F@ximgproc_StructuredEdgeDetection_computeOrientation:
-        name: ximgproc_StructuredEdgeDetection_computeOrientation
-      c:@F@ximgproc_StructuredEdgeDetection_computeOrientation_Async:
-        name: ximgproc_StructuredEdgeDetection_computeOrientation_Async
-      c:@F@ximgproc_StructuredEdgeDetection_detectEdges:
-        name: ximgproc_StructuredEdgeDetection_detectEdges
-      c:@F@ximgproc_StructuredEdgeDetection_detectEdges_Async:
-        name: ximgproc_StructuredEdgeDetection_detectEdges_Async
-      c:@F@ximgproc_StructuredEdgeDetection_edgesNms:
-        name: ximgproc_StructuredEdgeDetection_edgesNms
-      c:@F@ximgproc_StructuredEdgeDetection_edgesNms_Async:
-        name: ximgproc_StructuredEdgeDetection_edgesNms_Async
-      c:@F@ximgproc_anisotropicDiffusion:
-        name: ximgproc_anisotropicDiffusion
-      c:@F@ximgproc_anisotropicDiffusion_Async:
-        name: ximgproc_anisotropicDiffusion_Async
-      c:@F@ximgproc_edgePreservingFilter:
-        name: ximgproc_edgePreservingFilter
-      c:@F@ximgproc_edgePreservingFilter_Async:
-        name: ximgproc_edgePreservingFilter_Async
-      c:@F@ximgproc_findEllipses:
-        name: ximgproc_findEllipses
-      c:@F@ximgproc_findEllipses_Async:
-        name: ximgproc_findEllipses_Async
-      c:@F@ximgproc_niBlackThreshold:
-        name: ximgproc_niBlackThreshold
-      c:@F@ximgproc_niBlackThreshold_Async:
-        name: ximgproc_niBlackThreshold_Async
-      c:@F@ximgproc_rl_createRLEImage:
-        name: ximgproc_rl_createRLEImage
-      c:@F@ximgproc_rl_createRLEImage_Async:
-        name: ximgproc_rl_createRLEImage_Async
-      c:@F@ximgproc_rl_dilate:
-        name: ximgproc_rl_dilate
-      c:@F@ximgproc_rl_dilate_Async:
-        name: ximgproc_rl_dilate_Async
-      c:@F@ximgproc_rl_erode:
-        name: ximgproc_rl_erode
-      c:@F@ximgproc_rl_erode_Async:
-        name: ximgproc_rl_erode_Async
-      c:@F@ximgproc_rl_getStructuringElement:
-        name: ximgproc_rl_getStructuringElement
-      c:@F@ximgproc_rl_getStructuringElement_Async:
-        name: ximgproc_rl_getStructuringElement_Async
-      c:@F@ximgproc_rl_isRLMorphologyPossible:
-        name: ximgproc_rl_isRLMorphologyPossible
-      c:@F@ximgproc_rl_isRLMorphologyPossible_Async:
-        name: ximgproc_rl_isRLMorphologyPossible_Async
-      c:@F@ximgproc_rl_morphologyEx:
-        name: ximgproc_rl_morphologyEx
-      c:@F@ximgproc_rl_morphologyEx_Async:
-        name: ximgproc_rl_morphologyEx_Async
-      c:@F@ximgproc_rl_paint:
-        name: ximgproc_rl_paint
-      c:@F@ximgproc_rl_paint_Async:
-        name: ximgproc_rl_paint_Async
-      c:@F@ximgproc_rl_threshold:
-        name: ximgproc_rl_threshold
-      c:@F@ximgproc_rl_threshold_Async:
-        name: ximgproc_rl_threshold_Async
-      c:@F@ximgproc_thinning:
-        name: ximgproc_thinning
-      c:@F@ximgproc_thinning_Async:
-        name: ximgproc_thinning_Async
+      c:@F@cv_aruco_arucoDetector_close:
+        name: cv_aruco_arucoDetector_close
+      c:@F@cv_aruco_arucoDetector_create:
+        name: cv_aruco_arucoDetector_create
+      c:@F@cv_aruco_arucoDetector_create_1:
+        name: cv_aruco_arucoDetector_create_1
+      c:@F@cv_aruco_arucoDetector_detectMarkers:
+        name: cv_aruco_arucoDetector_detectMarkers
+      c:@F@cv_aruco_arucoDictionary_close:
+        name: cv_aruco_arucoDictionary_close
+      c:@F@cv_aruco_detectorParameters_close:
+        name: cv_aruco_detectorParameters_close
+      c:@F@cv_aruco_detectorParameters_create:
+        name: cv_aruco_detectorParameters_create
+      c:@F@cv_aruco_detectorParameters_get_adaptiveThreshConstant:
+        name: cv_aruco_detectorParameters_get_adaptiveThreshConstant
+      c:@F@cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMax:
+        name: cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMax
+      c:@F@cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMin:
+        name: cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMin
+      c:@F@cv_aruco_detectorParameters_get_adaptiveThreshWinSizeStep:
+        name: cv_aruco_detectorParameters_get_adaptiveThreshWinSizeStep
+      c:@F@cv_aruco_detectorParameters_get_aprilTagCriticalRad:
+        name: cv_aruco_detectorParameters_get_aprilTagCriticalRad
+      c:@F@cv_aruco_detectorParameters_get_aprilTagDeglitch:
+        name: cv_aruco_detectorParameters_get_aprilTagDeglitch
+      c:@F@cv_aruco_detectorParameters_get_aprilTagMaxLineFitMse:
+        name: cv_aruco_detectorParameters_get_aprilTagMaxLineFitMse
+      c:@F@cv_aruco_detectorParameters_get_aprilTagMaxNmaxima:
+        name: cv_aruco_detectorParameters_get_aprilTagMaxNmaxima
+      c:@F@cv_aruco_detectorParameters_get_aprilTagMinClusterPixels:
+        name: cv_aruco_detectorParameters_get_aprilTagMinClusterPixels
+      c:@F@cv_aruco_detectorParameters_get_aprilTagMinWhiteBlackDiff:
+        name: cv_aruco_detectorParameters_get_aprilTagMinWhiteBlackDiff
+      c:@F@cv_aruco_detectorParameters_get_aprilTagQuadDecimate:
+        name: cv_aruco_detectorParameters_get_aprilTagQuadDecimate
+      c:@F@cv_aruco_detectorParameters_get_aprilTagQuadSigma:
+        name: cv_aruco_detectorParameters_get_aprilTagQuadSigma
+      c:@F@cv_aruco_detectorParameters_get_cornerRefinementMaxIterations:
+        name: cv_aruco_detectorParameters_get_cornerRefinementMaxIterations
+      c:@F@cv_aruco_detectorParameters_get_cornerRefinementMethod:
+        name: cv_aruco_detectorParameters_get_cornerRefinementMethod
+      c:@F@cv_aruco_detectorParameters_get_cornerRefinementMinAccuracy:
+        name: cv_aruco_detectorParameters_get_cornerRefinementMinAccuracy
+      c:@F@cv_aruco_detectorParameters_get_cornerRefinementWinSize:
+        name: cv_aruco_detectorParameters_get_cornerRefinementWinSize
+      c:@F@cv_aruco_detectorParameters_get_detectInvertedMarker:
+        name: cv_aruco_detectorParameters_get_detectInvertedMarker
+      c:@F@cv_aruco_detectorParameters_get_errorCorrectionRate:
+        name: cv_aruco_detectorParameters_get_errorCorrectionRate
+      c:@F@cv_aruco_detectorParameters_get_markerBorderBits:
+        name: cv_aruco_detectorParameters_get_markerBorderBits
+      c:@F@cv_aruco_detectorParameters_get_maxErroneousBitsInBorderRate:
+        name: cv_aruco_detectorParameters_get_maxErroneousBitsInBorderRate
+      c:@F@cv_aruco_detectorParameters_get_maxMarkerPerimeterRate:
+        name: cv_aruco_detectorParameters_get_maxMarkerPerimeterRate
+      c:@F@cv_aruco_detectorParameters_get_minCornerDistanceRate:
+        name: cv_aruco_detectorParameters_get_minCornerDistanceRate
+      c:@F@cv_aruco_detectorParameters_get_minDistanceToBorder:
+        name: cv_aruco_detectorParameters_get_minDistanceToBorder
+      c:@F@cv_aruco_detectorParameters_get_minMarkerDistanceRate:
+        name: cv_aruco_detectorParameters_get_minMarkerDistanceRate
+      c:@F@cv_aruco_detectorParameters_get_minMarkerPerimeterRate:
+        name: cv_aruco_detectorParameters_get_minMarkerPerimeterRate
+      c:@F@cv_aruco_detectorParameters_get_minOtsuStdDev:
+        name: cv_aruco_detectorParameters_get_minOtsuStdDev
+      c:@F@cv_aruco_detectorParameters_get_perspectiveRemoveIgnoredMarginPerCell:
+        name: cv_aruco_detectorParameters_get_perspectiveRemoveIgnoredMarginPerCell
+      c:@F@cv_aruco_detectorParameters_get_perspectiveRemovePixelPerCell:
+        name: cv_aruco_detectorParameters_get_perspectiveRemovePixelPerCell
+      c:@F@cv_aruco_detectorParameters_get_polygonalApproxAccuracyRate:
+        name: cv_aruco_detectorParameters_get_polygonalApproxAccuracyRate
+      c:@F@cv_aruco_detectorParameters_set_adaptiveThreshConstant:
+        name: cv_aruco_detectorParameters_set_adaptiveThreshConstant
+      c:@F@cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMax:
+        name: cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMax
+      c:@F@cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMin:
+        name: cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMin
+      c:@F@cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStep:
+        name: cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStep
+      c:@F@cv_aruco_detectorParameters_set_aprilTagCriticalRad:
+        name: cv_aruco_detectorParameters_set_aprilTagCriticalRad
+      c:@F@cv_aruco_detectorParameters_set_aprilTagDeglitch:
+        name: cv_aruco_detectorParameters_set_aprilTagDeglitch
+      c:@F@cv_aruco_detectorParameters_set_aprilTagMaxLineFitMse:
+        name: cv_aruco_detectorParameters_set_aprilTagMaxLineFitMse
+      c:@F@cv_aruco_detectorParameters_set_aprilTagMaxNmaxima:
+        name: cv_aruco_detectorParameters_set_aprilTagMaxNmaxima
+      c:@F@cv_aruco_detectorParameters_set_aprilTagMinClusterPixels:
+        name: cv_aruco_detectorParameters_set_aprilTagMinClusterPixels
+      c:@F@cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiff:
+        name: cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiff
+      c:@F@cv_aruco_detectorParameters_set_aprilTagQuadDecimate:
+        name: cv_aruco_detectorParameters_set_aprilTagQuadDecimate
+      c:@F@cv_aruco_detectorParameters_set_aprilTagQuadSigma:
+        name: cv_aruco_detectorParameters_set_aprilTagQuadSigma
+      c:@F@cv_aruco_detectorParameters_set_cornerRefinementMaxIterations:
+        name: cv_aruco_detectorParameters_set_cornerRefinementMaxIterations
+      c:@F@cv_aruco_detectorParameters_set_cornerRefinementMethod:
+        name: cv_aruco_detectorParameters_set_cornerRefinementMethod
+      c:@F@cv_aruco_detectorParameters_set_cornerRefinementMinAccuracy:
+        name: cv_aruco_detectorParameters_set_cornerRefinementMinAccuracy
+      c:@F@cv_aruco_detectorParameters_set_cornerRefinementWinSize:
+        name: cv_aruco_detectorParameters_set_cornerRefinementWinSize
+      c:@F@cv_aruco_detectorParameters_set_detectInvertedMarker:
+        name: cv_aruco_detectorParameters_set_detectInvertedMarker
+      c:@F@cv_aruco_detectorParameters_set_errorCorrectionRate:
+        name: cv_aruco_detectorParameters_set_errorCorrectionRate
+      c:@F@cv_aruco_detectorParameters_set_markerBorderBits:
+        name: cv_aruco_detectorParameters_set_markerBorderBits
+      c:@F@cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRate:
+        name: cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRate
+      c:@F@cv_aruco_detectorParameters_set_maxMarkerPerimeterRate:
+        name: cv_aruco_detectorParameters_set_maxMarkerPerimeterRate
+      c:@F@cv_aruco_detectorParameters_set_minCornerDistanceRate:
+        name: cv_aruco_detectorParameters_set_minCornerDistanceRate
+      c:@F@cv_aruco_detectorParameters_set_minDistanceToBorder:
+        name: cv_aruco_detectorParameters_set_minDistanceToBorder
+      c:@F@cv_aruco_detectorParameters_set_minMarkerDistanceRate:
+        name: cv_aruco_detectorParameters_set_minMarkerDistanceRate
+      c:@F@cv_aruco_detectorParameters_set_minMarkerPerimeterRate:
+        name: cv_aruco_detectorParameters_set_minMarkerPerimeterRate
+      c:@F@cv_aruco_detectorParameters_set_minOtsuStdDev:
+        name: cv_aruco_detectorParameters_set_minOtsuStdDev
+      c:@F@cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCell:
+        name: cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCell
+      c:@F@cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCell:
+        name: cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCell
+      c:@F@cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate:
+        name: cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate
+      c:@F@cv_aruco_drawDetectedMarkers:
+        name: cv_aruco_drawDetectedMarkers
+      c:@F@cv_aruco_generateImageMarker:
+        name: cv_aruco_generateImageMarker
+      c:@F@cv_aruco_getPredefinedDictionary:
+        name: cv_aruco_getPredefinedDictionary
+      c:@F@cv_img_hash_BlockMeanHash_close:
+        name: cv_img_hash_BlockMeanHash_close
+      c:@F@cv_img_hash_BlockMeanHash_compare:
+        name: cv_img_hash_BlockMeanHash_compare
+      c:@F@cv_img_hash_BlockMeanHash_compute:
+        name: cv_img_hash_BlockMeanHash_compute
+      c:@F@cv_img_hash_BlockMeanHash_create:
+        name: cv_img_hash_BlockMeanHash_create
+      c:@F@cv_img_hash_BlockMeanHash_getMean:
+        name: cv_img_hash_BlockMeanHash_getMean
+      c:@F@cv_img_hash_BlockMeanHash_setMode:
+        name: cv_img_hash_BlockMeanHash_setMode
+      c:@F@cv_img_hash_averageHash_compare:
+        name: cv_img_hash_averageHash_compare
+      c:@F@cv_img_hash_averageHash_compute:
+        name: cv_img_hash_averageHash_compute
+      c:@F@cv_img_hash_colorMomentHash_compare:
+        name: cv_img_hash_colorMomentHash_compare
+      c:@F@cv_img_hash_colorMomentHash_compute:
+        name: cv_img_hash_colorMomentHash_compute
+      c:@F@cv_img_hash_marrHildrethHash_compare:
+        name: cv_img_hash_marrHildrethHash_compare
+      c:@F@cv_img_hash_marrHildrethHash_compute:
+        name: cv_img_hash_marrHildrethHash_compute
+      c:@F@cv_img_hash_pHash_compare:
+        name: cv_img_hash_pHash_compare
+      c:@F@cv_img_hash_pHash_compute:
+        name: cv_img_hash_pHash_compute
+      c:@F@cv_img_hash_radialVarianceHash_compare:
+        name: cv_img_hash_radialVarianceHash_compare
+      c:@F@cv_img_hash_radialVarianceHash_compute:
+        name: cv_img_hash_radialVarianceHash_compute
+      c:@F@cv_quality_QualityBRISQUE_close:
+        name: cv_quality_QualityBRISQUE_close
+      c:@F@cv_quality_QualityBRISQUE_compute:
+        name: cv_quality_QualityBRISQUE_compute
+      c:@F@cv_quality_QualityBRISQUE_computeFeatures_static:
+        name: cv_quality_QualityBRISQUE_computeFeatures_static
+      c:@F@cv_quality_QualityBRISQUE_compute_static:
+        name: cv_quality_QualityBRISQUE_compute_static
+      c:@F@cv_quality_QualityBRISQUE_create:
+        name: cv_quality_QualityBRISQUE_create
+      c:@F@cv_quality_QualityGMSD_close:
+        name: cv_quality_QualityGMSD_close
+      c:@F@cv_quality_QualityGMSD_compute:
+        name: cv_quality_QualityGMSD_compute
+      c:@F@cv_quality_QualityGMSD_compute_static:
+        name: cv_quality_QualityGMSD_compute_static
+      c:@F@cv_quality_QualityGMSD_create:
+        name: cv_quality_QualityGMSD_create
+      c:@F@cv_quality_QualityMSE_close:
+        name: cv_quality_QualityMSE_close
+      c:@F@cv_quality_QualityMSE_compute:
+        name: cv_quality_QualityMSE_compute
+      c:@F@cv_quality_QualityMSE_compute_static:
+        name: cv_quality_QualityMSE_compute_static
+      c:@F@cv_quality_QualityMSE_create:
+        name: cv_quality_QualityMSE_create
+      c:@F@cv_quality_QualityPSNR_close:
+        name: cv_quality_QualityPSNR_close
+      c:@F@cv_quality_QualityPSNR_compute:
+        name: cv_quality_QualityPSNR_compute
+      c:@F@cv_quality_QualityPSNR_compute_static:
+        name: cv_quality_QualityPSNR_compute_static
+      c:@F@cv_quality_QualityPSNR_create:
+        name: cv_quality_QualityPSNR_create
+      c:@F@cv_quality_QualityPSNR_getMaxPixelValue:
+        name: cv_quality_QualityPSNR_getMaxPixelValue
+      c:@F@cv_quality_QualityPSNR_setMaxPixelValue:
+        name: cv_quality_QualityPSNR_setMaxPixelValue
+      c:@F@cv_quality_QualitySSIM_close:
+        name: cv_quality_QualitySSIM_close
+      c:@F@cv_quality_QualitySSIM_compute:
+        name: cv_quality_QualitySSIM_compute
+      c:@F@cv_quality_QualitySSIM_compute_static:
+        name: cv_quality_QualitySSIM_compute_static
+      c:@F@cv_quality_QualitySSIM_create:
+        name: cv_quality_QualitySSIM_create
+      c:@F@cv_wechat_qrcode_WeChatQRCode_close:
+        name: cv_wechat_qrcode_WeChatQRCode_close
+      c:@F@cv_wechat_qrcode_WeChatQRCode_create:
+        name: cv_wechat_qrcode_WeChatQRCode_create
+      c:@F@cv_wechat_qrcode_WeChatQRCode_create_1:
+        name: cv_wechat_qrcode_WeChatQRCode_create_1
+      c:@F@cv_wechat_qrcode_WeChatQRCode_detectAndDecode:
+        name: cv_wechat_qrcode_WeChatQRCode_detectAndDecode
+      c:@F@cv_wechat_qrcode_WeChatQRCode_getScaleFactor:
+        name: cv_wechat_qrcode_WeChatQRCode_getScaleFactor
+      c:@F@cv_wechat_qrcode_WeChatQRCode_setScaleFactor:
+        name: cv_wechat_qrcode_WeChatQRCode_setScaleFactor
+      c:@F@cv_ximgproc_EdgeBoxes_getAlpha:
+        name: cv_ximgproc_EdgeBoxes_getAlpha
+      c:@F@cv_ximgproc_EdgeBoxes_getBeta:
+        name: cv_ximgproc_EdgeBoxes_getBeta
+      c:@F@cv_ximgproc_EdgeBoxes_getBoundingBoxes:
+        name: cv_ximgproc_EdgeBoxes_getBoundingBoxes
+      c:@F@cv_ximgproc_EdgeBoxes_getClusterMinMag:
+        name: cv_ximgproc_EdgeBoxes_getClusterMinMag
+      c:@F@cv_ximgproc_EdgeBoxes_getEdgeMergeThr:
+        name: cv_ximgproc_EdgeBoxes_getEdgeMergeThr
+      c:@F@cv_ximgproc_EdgeBoxes_getEdgeMinMag:
+        name: cv_ximgproc_EdgeBoxes_getEdgeMinMag
+      c:@F@cv_ximgproc_EdgeBoxes_getEta:
+        name: cv_ximgproc_EdgeBoxes_getEta
+      c:@F@cv_ximgproc_EdgeBoxes_getGamma:
+        name: cv_ximgproc_EdgeBoxes_getGamma
+      c:@F@cv_ximgproc_EdgeBoxes_getKappa:
+        name: cv_ximgproc_EdgeBoxes_getKappa
+      c:@F@cv_ximgproc_EdgeBoxes_getMaxAspectRatio:
+        name: cv_ximgproc_EdgeBoxes_getMaxAspectRatio
+      c:@F@cv_ximgproc_EdgeBoxes_getMaxBoxes:
+        name: cv_ximgproc_EdgeBoxes_getMaxBoxes
+      c:@F@cv_ximgproc_EdgeBoxes_getMinBoxArea:
+        name: cv_ximgproc_EdgeBoxes_getMinBoxArea
+      c:@F@cv_ximgproc_EdgeBoxes_getMinScore:
+        name: cv_ximgproc_EdgeBoxes_getMinScore
+      c:@F@cv_ximgproc_EdgeBoxes_setAlpha:
+        name: cv_ximgproc_EdgeBoxes_setAlpha
+      c:@F@cv_ximgproc_EdgeBoxes_setBeta:
+        name: cv_ximgproc_EdgeBoxes_setBeta
+      c:@F@cv_ximgproc_EdgeBoxes_setClusterMinMag:
+        name: cv_ximgproc_EdgeBoxes_setClusterMinMag
+      c:@F@cv_ximgproc_EdgeBoxes_setEdgeMergeThr:
+        name: cv_ximgproc_EdgeBoxes_setEdgeMergeThr
+      c:@F@cv_ximgproc_EdgeBoxes_setEdgeMinMag:
+        name: cv_ximgproc_EdgeBoxes_setEdgeMinMag
+      c:@F@cv_ximgproc_EdgeBoxes_setEta:
+        name: cv_ximgproc_EdgeBoxes_setEta
+      c:@F@cv_ximgproc_EdgeBoxes_setGamma:
+        name: cv_ximgproc_EdgeBoxes_setGamma
+      c:@F@cv_ximgproc_EdgeBoxes_setKappa:
+        name: cv_ximgproc_EdgeBoxes_setKappa
+      c:@F@cv_ximgproc_EdgeBoxes_setMaxAspectRatio:
+        name: cv_ximgproc_EdgeBoxes_setMaxAspectRatio
+      c:@F@cv_ximgproc_EdgeBoxes_setMaxBoxes:
+        name: cv_ximgproc_EdgeBoxes_setMaxBoxes
+      c:@F@cv_ximgproc_EdgeBoxes_setMinBoxArea:
+        name: cv_ximgproc_EdgeBoxes_setMinBoxArea
+      c:@F@cv_ximgproc_EdgeBoxes_setMinScore:
+        name: cv_ximgproc_EdgeBoxes_setMinScore
+      c:@F@cv_ximgproc_EdgeDrawing_close:
+        name: cv_ximgproc_EdgeDrawing_close
+      c:@F@cv_ximgproc_EdgeDrawing_create:
+        name: cv_ximgproc_EdgeDrawing_create
+      c:@F@cv_ximgproc_EdgeDrawing_detectEdges:
+        name: cv_ximgproc_EdgeDrawing_detectEdges
+      c:@F@cv_ximgproc_EdgeDrawing_detectEllipses:
+        name: cv_ximgproc_EdgeDrawing_detectEllipses
+      c:@F@cv_ximgproc_EdgeDrawing_detectLines:
+        name: cv_ximgproc_EdgeDrawing_detectLines
+      c:@F@cv_ximgproc_EdgeDrawing_getEdgeImage:
+        name: cv_ximgproc_EdgeDrawing_getEdgeImage
+      c:@F@cv_ximgproc_EdgeDrawing_getGradientImage:
+        name: cv_ximgproc_EdgeDrawing_getGradientImage
+      c:@F@cv_ximgproc_EdgeDrawing_getParams:
+        name: cv_ximgproc_EdgeDrawing_getParams
+      c:@F@cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines:
+        name: cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines
+      c:@F@cv_ximgproc_EdgeDrawing_getSegments:
+        name: cv_ximgproc_EdgeDrawing_getSegments
+      c:@F@cv_ximgproc_EdgeDrawing_setParams:
+        name: cv_ximgproc_EdgeDrawing_setParams
+      c:@F@cv_ximgproc_GraphSegmentation_close:
+        name: cv_ximgproc_GraphSegmentation_close
+      c:@F@cv_ximgproc_GraphSegmentation_create:
+        name: cv_ximgproc_GraphSegmentation_create
+      c:@F@cv_ximgproc_GraphSegmentation_getK:
+        name: cv_ximgproc_GraphSegmentation_getK
+      c:@F@cv_ximgproc_GraphSegmentation_getMinSize:
+        name: cv_ximgproc_GraphSegmentation_getMinSize
+      c:@F@cv_ximgproc_GraphSegmentation_getSigma:
+        name: cv_ximgproc_GraphSegmentation_getSigma
+      c:@F@cv_ximgproc_GraphSegmentation_processImage:
+        name: cv_ximgproc_GraphSegmentation_processImage
+      c:@F@cv_ximgproc_GraphSegmentation_setK:
+        name: cv_ximgproc_GraphSegmentation_setK
+      c:@F@cv_ximgproc_GraphSegmentation_setMinSize:
+        name: cv_ximgproc_GraphSegmentation_setMinSize
+      c:@F@cv_ximgproc_GraphSegmentation_setSigma:
+        name: cv_ximgproc_GraphSegmentation_setSigma
+      c:@F@cv_ximgproc_PeiLinNormalization:
+        name: cv_ximgproc_PeiLinNormalization
+      c:@F@cv_ximgproc_RFFeatureGetter_clear:
+        name: cv_ximgproc_RFFeatureGetter_clear
+      c:@F@cv_ximgproc_RFFeatureGetter_close:
+        name: cv_ximgproc_RFFeatureGetter_close
+      c:@F@cv_ximgproc_RFFeatureGetter_create:
+        name: cv_ximgproc_RFFeatureGetter_create
+      c:@F@cv_ximgproc_RFFeatureGetter_empty:
+        name: cv_ximgproc_RFFeatureGetter_empty
+      c:@F@cv_ximgproc_RFFeatureGetter_getFeatures:
+        name: cv_ximgproc_RFFeatureGetter_getFeatures
+      c:@F@cv_ximgproc_StructuredEdgeDetection_close:
+        name: cv_ximgproc_StructuredEdgeDetection_close
+      c:@F@cv_ximgproc_StructuredEdgeDetection_computeOrientation:
+        name: cv_ximgproc_StructuredEdgeDetection_computeOrientation
+      c:@F@cv_ximgproc_StructuredEdgeDetection_create:
+        name: cv_ximgproc_StructuredEdgeDetection_create
+      c:@F@cv_ximgproc_StructuredEdgeDetection_create_1:
+        name: cv_ximgproc_StructuredEdgeDetection_create_1
+      c:@F@cv_ximgproc_StructuredEdgeDetection_detectEdges:
+        name: cv_ximgproc_StructuredEdgeDetection_detectEdges
+      c:@F@cv_ximgproc_StructuredEdgeDetection_edgesNms:
+        name: cv_ximgproc_StructuredEdgeDetection_edgesNms
+      c:@F@cv_ximgproc_anisotropicDiffusion:
+        name: cv_ximgproc_anisotropicDiffusion
+      c:@F@cv_ximgproc_edgePreservingFilter:
+        name: cv_ximgproc_edgePreservingFilter
+      c:@F@cv_ximgproc_findEllipses:
+        name: cv_ximgproc_findEllipses
+      c:@F@cv_ximgproc_niBlackThreshold:
+        name: cv_ximgproc_niBlackThreshold
+      c:@F@cv_ximgproc_rl_createRLEImage:
+        name: cv_ximgproc_rl_createRLEImage
+      c:@F@cv_ximgproc_rl_dilate:
+        name: cv_ximgproc_rl_dilate
+      c:@F@cv_ximgproc_rl_erode:
+        name: cv_ximgproc_rl_erode
+      c:@F@cv_ximgproc_rl_getStructuringElement:
+        name: cv_ximgproc_rl_getStructuringElement
+      c:@F@cv_ximgproc_rl_isRLMorphologyPossible:
+        name: cv_ximgproc_rl_isRLMorphologyPossible
+      c:@F@cv_ximgproc_rl_morphologyEx:
+        name: cv_ximgproc_rl_morphologyEx
+      c:@F@cv_ximgproc_rl_paint:
+        name: cv_ximgproc_rl_paint
+      c:@F@cv_ximgproc_rl_threshold:
+        name: cv_ximgproc_rl_threshold
+      c:@F@cv_ximgproc_thinning:
+        name: cv_ximgproc_thinning
+      c:@F@cv_xobjdetect_WBDetector_close:
+        name: cv_xobjdetect_WBDetector_close
+      c:@F@cv_xobjdetect_WBDetector_create:
+        name: cv_xobjdetect_WBDetector_create
+      c:@F@cv_xobjdetect_WBDetector_detect:
+        name: cv_xobjdetect_WBDetector_detect
+      c:@F@cv_xobjdetect_WBDetector_read:
+        name: cv_xobjdetect_WBDetector_read
+      c:@F@cv_xobjdetect_WBDetector_train:
+        name: cv_xobjdetect_WBDetector_train
+      c:@F@cv_xobjdetect_WBDetector_write:
+        name: cv_xobjdetect_WBDetector_write
       c:@S@ArucoDetector:
         name: ArucoDetector
-      c:@S@ArucoDetectorParameters:
-        name: ArucoDetectorParameters
+      c:@S@ArucoDetectorParams:
+        name: ArucoDetectorParams
       c:@S@ArucoDictionary:
         name: ArucoDictionary
       c:@S@BlockMeanHash:
@@ -626,8 +422,8 @@ files:
         name: StructuredEdgeDetection
       c:@S@WeChatQRCode:
         name: WeChatQRCode
-      c:aruco.h@T@ArucoDetectorParametersPtr:
-        name: ArucoDetectorParametersPtr
+      c:aruco.h@T@ArucoDetectorParamsPtr:
+        name: ArucoDetectorParamsPtr
       c:aruco.h@T@ArucoDetectorPtr:
         name: ArucoDetectorPtr
       c:aruco.h@T@ArucoDictionaryPtr:
@@ -674,6 +470,8 @@ files:
         name: VecVecPoint2f
       c:wechat_qrcode.h@T@WeChatQRCodePtr:
         name: WeChatQRCodePtr
+      c:ximgproc.h@T@EdgeBoxesPtr:
+        name: EdgeBoxesPtr
       c:ximgproc.h@T@EdgeDrawingPtr:
         name: EdgeDrawingPtr
       c:ximgproc.h@T@GraphSegmentationPtr:

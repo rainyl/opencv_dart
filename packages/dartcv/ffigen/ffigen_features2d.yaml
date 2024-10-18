@@ -4,28 +4,27 @@ description: |
 output:
   bindings: ../lib/src/g/features2d.g.dart
   symbol-file:
-    output: 'package:dartcv/src/g/features2d.yaml'
-    import-path: 'package:dartcv/src/g/features2d.g.dart'
+    output: 'package:dartcv4/src/g/features2d.yaml'
+    import-path: 'package:dartcv4/src/g/features2d.g.dart'
 # ffi-native:
-#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv/src/g/types.yaml'
+    - 'package:dartcv4/src/g/types.yaml'
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
     - ../src/dartcv/features2d/features2d.h
-    - ../src/dartcv/features2d/features2d_async.h
   include-directives:
     - ../src/dartcv/features2d/features2d.h
-    - ../src/dartcv/features2d/features2d_async.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file

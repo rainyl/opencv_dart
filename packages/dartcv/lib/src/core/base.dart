@@ -73,7 +73,7 @@ void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final file = s.ref.file.cast<Utf8>().toDartString();
   final funcName = s.ref.func.cast<Utf8>().toDartString();
   final line = s.ref.line;
-  ccore.CvStatus_Close(s);
+  ccore.CvStatus_close(s);
   if (code != 0) {
     throw CvException(code, msg: msg, file: file, func: funcName, line: line);
   }

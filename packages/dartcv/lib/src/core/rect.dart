@@ -141,19 +141,19 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 
   VecPoint2f get points {
     final pts = calloc<cvg.VecPoint2f>();
-    cvRun(() => ccore.RotatedRect_Points(ptr.ref, pts));
+    cvRun(() => ccore.cv_RotatedRect_points(ptr.ref, pts));
     return VecPoint2f.fromPointer(pts);
   }
 
   Rect get boundingRect {
     final rect = calloc<cvg.CvRect>();
-    cvRun(() => ccore.RotatedRect_BoundingRect(ptr.ref, rect));
+    cvRun(() => ccore.cv_RotatedRect_boundingRect(ptr.ref, rect));
     return Rect.fromPointer(rect);
   }
 
   Rect2f get boundingRect2f {
     final rect = calloc<cvg.CvRect2f>();
-    cvRun(() => ccore.RotatedRect_BoundingRect2f(ptr.ref, rect));
+    cvRun(() => ccore.cv_RotatedRect_boundingRect2f(ptr.ref, rect));
     return Rect2f.fromPointer(rect);
   }
 

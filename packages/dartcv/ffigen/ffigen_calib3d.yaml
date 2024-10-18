@@ -4,28 +4,27 @@ description: |
 output:
   bindings: ../lib/src/g/calib3d.g.dart
   symbol-file:
-    output: 'package:dartcv/src/g/calib3d.yaml'
-    import-path: 'package:dartcv/src/g/calib3d.g.dart'
+    output: 'package:dartcv4/src/g/calib3d.yaml'
+    import-path: 'package:dartcv4/src/g/calib3d.g.dart'
 # ffi-native:
-#   assetId: 'package:dartcv/dartcv.dart' # Optional.
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:dartcv/src/g/types.yaml'
+    - 'package:dartcv4/src/g/types.yaml'
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
     - ../src/dartcv/calib3d/calib3d.h
-    - ../src/dartcv/calib3d/calib3d_async.h
   include-directives:
     - ../src/dartcv/calib3d/calib3d.h
-    - ../src/dartcv/calib3d/calib3d_async.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

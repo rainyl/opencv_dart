@@ -6,9 +6,6 @@ library cv.svd;
 
 import 'dart:ffi' as ffi;
 
-import 'package:ffi/ffi.dart';
-
-import '../g/core.g.dart' as cvg;
 import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'mat.dart';
@@ -22,25 +19,41 @@ class SVD {
   ///
   /// https://docs.opencv.org/4.1.2/df/df7/classcv_1_1SVD.html#a76f0b2044df458160292045a3d3714c6
   static (Mat w, Mat u, Mat vt) compute(Mat src, {Mat? w, Mat? u, Mat? vt, int flags = 0}) {
-    final pw = w?.ptr ?? calloc<cvg.Mat>();
-    final pu = u?.ptr ?? calloc<cvg.Mat>();
-    final pvt = vt?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => ccore.SVD_Compute(src.ref, pw, pu, pvt, flags));
-    return (w ?? Mat.fromPointer(pw), u ?? Mat.fromPointer(pu), vt ?? Mat.fromPointer(pvt));
+    w ??= Mat.empty();
+    u ??= Mat.empty();
+    vt ??= Mat.empty();
+    cvRun(() => ccore.cv_SVD_Compute(src.ref, w!.ref, u!.ref, vt!.ref, flags, ffi.nullptr));
+    return (w, u, vt);
   }
 
   /// async version of [compute]
-  static Future<(Mat w, Mat u, Mat vt)> computeAsync(Mat src, {int flags = 0}) async =>
-      cvRunAsync3((callback) => ccore.SVD_Compute_Async(src.ref, flags, callback), matCompleter3);
-
-  static Mat backSubst(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) {
-    final pdst = dst?.ptr ?? calloc<cvg.Mat>();
-    cvRun(() => ccore.SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, pdst));
-    return dst ?? Mat.fromPointer(pdst);
+  static Future<(Mat w, Mat u, Mat vt)> computeAsync(
+    Mat src, {
+    Mat? w,
+    Mat? u,
+    Mat? vt,
+    int flags = 0,
+  }) async {
+    w ??= Mat.empty();
+    u ??= Mat.empty();
+    vt ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => ccore.cv_SVD_Compute(src.ref, w!.ref, u!.ref, vt!.ref, flags, callback),
+      (c) => c.complete((w!, u!, vt!)),
+    );
   }
 
-  static Future<Mat> backSubstAsync(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) async => cvRunAsync(
-        (callback) => ccore.SVD_backSubst_Async(w.ref, u.ref, vt.ref, rhs.ref, callback),
-        matCompleter,
-      );
+  static Mat backSubst(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) {
+    dst ??= Mat.empty();
+    cvRun(() => ccore.cv_SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, dst!.ref, ffi.nullptr));
+    return dst;
+  }
+
+  static Future<Mat> backSubstAsync(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) async {
+    dst ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => ccore.cv_SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, dst!.ref, callback),
+      (c) => c.complete(dst),
+    );
+  }
 }

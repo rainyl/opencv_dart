@@ -1,6 +1,6 @@
 format_version: 1.0.0
 files:
-  package:dartcv/src/g/gapi.g.dart:
+  package:dartcv4/src/g/gapi.g.dart:
     used-config:
       ffi-native: false
     symbols:

@@ -5,12 +5,10 @@
 library cv.calib3d.fisheye;
 
 import 'dart:ffi' as ffi;
-import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
-import '../g/types.g.dart' as cvg;
 import '../native_lib.dart' show ccalib3d;
 
 class Fisheye {
@@ -25,18 +23,19 @@ class Fisheye {
     (int, int) newSize = (0, 0),
   }) {
     knew ??= Mat.empty();
-    final p1 = undistorted?.ptr ?? calloc<cvg.Mat>();
+    undistorted ??= Mat.empty();
     cvRun(
-      () => ccalib3d.Fisheye_UndistortImageWithParams(
+      () => ccalib3d.cv_fisheye_undistortImage_1(
         distorted.ref,
-        p1,
+        undistorted!.ref,
         K.ref,
         D.ref,
         knew!.ref,
         newSize.cvd.ref,
+        ffi.nullptr,
       ),
     );
-    return undistorted ?? Mat.fromPointer(p1);
+    return undistorted;
   }
 
   /// async version of [undistortImage]
@@ -44,20 +43,25 @@ class Fisheye {
     InputArray distorted,
     InputArray K,
     InputArray D, {
+    OutputArray? undistorted,
     InputArray? knew,
     (int, int) newSize = (0, 0),
-  }) =>
-      cvRunAsync(
-        (callback) => ccalib3d.fisheye_undistortImageWithParams_Async(
-          distorted.ref,
-          K.ref,
-          D.ref,
-          knew?.ref ?? Mat.empty().ref,
-          newSize.cvd.ref,
-          callback,
-        ),
-        matCompleter,
-      );
+  }) async {
+    knew ??= Mat.empty();
+    undistorted ??= Mat.empty();
+    return cvRunAsync0<Mat>(
+      (callback) => ccalib3d.cv_fisheye_undistortImage_1(
+        distorted.ref,
+        undistorted!.ref,
+        K.ref,
+        D.ref,
+        knew!.ref,
+        newSize.cvd.ref,
+        callback,
+      ),
+      (c) => c.complete(undistorted),
+    );
+  }
 
   /// FisheyeUndistortPoints transforms points to compensate for fisheye lens distortion
   ///
@@ -75,7 +79,15 @@ class Fisheye {
     P ??= Mat.empty();
     undistorted ??= Mat.empty();
     cvRun(
-      () => ccalib3d.Fisheye_UndistortPoints(distorted.ref, undistorted!.ref, K.ref, D.ref, R!.ref, P!.ref),
+      () => ccalib3d.cv_fisheye_undistortPoints(
+        distorted.ref,
+        undistorted!.ref,
+        K.ref,
+        D.ref,
+        R!.ref,
+        P!.ref,
+        ffi.nullptr,
+      ),
     );
     return undistorted;
   }
@@ -85,20 +97,26 @@ class Fisheye {
     InputArray distorted,
     InputArray K,
     InputArray D, {
+    OutputArray? undistorted,
     InputArray? R,
     InputArray? P,
-  }) async =>
-      cvRunAsync(
-        (callback) => ccalib3d.fisheye_undistortPoints_Async(
-          distorted.ref,
-          K.ref,
-          D.ref,
-          R?.ref ?? Mat.empty().ref,
-          P?.ref ?? Mat.empty().ref,
-          callback,
-        ),
-        matCompleter,
-      );
+  }) async {
+    R ??= Mat.empty();
+    P ??= Mat.empty();
+    undistorted ??= Mat.empty();
+    return cvRunAsync0<Mat>(
+      (callback) => ccalib3d.cv_fisheye_undistortPoints(
+        distorted.ref,
+        undistorted!.ref,
+        K.ref,
+        D.ref,
+        R!.ref,
+        P!.ref,
+        callback,
+      ),
+      (c) => c.complete(undistorted),
+    );
+  }
 
   /// EstimateNewCameraMatrixForUndistortRectify estimates new camera matrix for undistortion or rectification.
   ///
@@ -116,7 +134,7 @@ class Fisheye {
   }) {
     P ??= Mat.empty();
     cvRun(
-      () => ccalib3d.Fisheye_EstimateNewCameraMatrixForUndistortRectify(
+      () => ccalib3d.cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
         K.ref,
         D.ref,
         imageSize.cvd.ref,
@@ -125,6 +143,7 @@ class Fisheye {
         balance,
         newSize.cvd.ref,
         fovScale,
+        ffi.nullptr,
       ),
     );
     return P;
@@ -136,21 +155,25 @@ class Fisheye {
     InputArray D,
     (int, int) imageSize,
     InputArray R, {
+    OutputArray? P,
     double balance = 0.0,
     (int, int) newSize = (0, 0),
     double fovScale = 1.0,
-  }) async =>
-      cvRunAsync(
-        (callback) => ccalib3d.fisheye_estimateNewCameraMatrixForUndistortRectify_Async(
-          K.ref,
-          D.ref,
-          imageSize.cvd.ref,
-          R.ref,
-          balance,
-          newSize.cvd.ref,
-          fovScale,
-          callback,
-        ),
-        matCompleter,
-      );
+  }) async {
+    P ??= Mat.empty();
+    return cvRunAsync0<Mat>(
+      (callback) => ccalib3d.cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
+        K.ref,
+        D.ref,
+        imageSize.cvd.ref,
+        R.ref,
+        P!.ref,
+        balance,
+        newSize.cvd.ref,
+        fovScale,
+        callback,
+      ),
+      (c) => c.complete(P),
+    );
+  }
 }

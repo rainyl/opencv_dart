@@ -1,4 +1,4 @@
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 
 void main() {
   final image = cv.Mat.zeros(3, 3, cv.MatType.CV_8UC3);

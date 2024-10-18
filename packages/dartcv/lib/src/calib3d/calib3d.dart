@@ -33,21 +33,22 @@ import '../native_lib.dart' show ccalib3d;
   OutputArray? map1,
   OutputArray? map2,
 }) {
-  final p1 = map1?.ptr ?? calloc<cvg.Mat>();
-  final p2 = map2?.ptr ?? calloc<cvg.Mat>();
+  map1 ??= Mat.empty();
+  map2 ??= Mat.empty();
   cvRun(
-    () => ccalib3d.InitUndistortRectifyMap(
+    () => ccalib3d.cv_initUndistortRectifyMap(
       cameraMatrix.ref,
       distCoeffs.ref,
       R.ref,
       newCameraMatrix.ref,
       size.cvd.ref,
       m1type,
-      p1,
-      p2,
+      map1!.ref,
+      map2!.ref,
+      ffi.nullptr,
     ),
   );
-  return (map1 ?? Mat.fromPointer(p1), map2 ?? Mat.fromPointer(p2));
+  return (map1, map2);
 }
 
 /// GetOptimalNewCameraMatrixWithParams computes and returns the optimal new camera matrix based on the free scaling parameter.
@@ -63,9 +64,9 @@ import '../native_lib.dart' show ccalib3d;
   bool centerPrincipalPoint = false,
 }) {
   final validPixROI = calloc<cvg.CvRect>();
-  final matPtr = calloc<cvg.Mat>();
+  final rval = Mat.empty();
   cvRun(
-    () => ccalib3d.GetOptimalNewCameraMatrixWithParams(
+    () => ccalib3d.cv_getOptimalNewCameraMatrix(
       cameraMatrix.ref,
       distCoeffs.ref,
       imageSize.cvd.ref,
@@ -73,10 +74,11 @@ import '../native_lib.dart' show ccalib3d;
       newImgSize.cvd.ref,
       validPixROI,
       centerPrincipalPoint,
-      matPtr,
+      rval.ref,
+      ffi.nullptr,
     ),
   );
-  return (Mat.fromPointer(matPtr), Rect.fromPointer(validPixROI));
+  return (rval, Rect.fromPointer(validPixROI));
 }
 
 // CalibrateCamera finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
@@ -99,7 +101,7 @@ import '../native_lib.dart' show ccalib3d;
   final cRmsErr = calloc<ffi.Double>();
 
   cvRun(
-    () => ccalib3d.CalibrateCamera(
+    () => ccalib3d.cv_calibrateCamera(
       objectPoints.ref,
       imagePoints.ref,
       imageSize.cvd.ref,
@@ -110,6 +112,7 @@ import '../native_lib.dart' show ccalib3d;
       flags,
       criteria.cvd.ref,
       cRmsErr,
+      ffi.nullptr,
     ),
   );
   final rmsErr = cRmsErr.value;
@@ -132,7 +135,16 @@ Mat undistort(
 }) {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
-  cvRun(() => ccalib3d.Undistort(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, newCameraMatrix!.ref));
+  cvRun(
+    () => ccalib3d.cv_undistort(
+      src.ref,
+      dst!.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      newCameraMatrix!.ref,
+      ffi.nullptr,
+    ),
+  );
   return dst;
 }
 
@@ -154,8 +166,16 @@ Mat undistortPoints(
   dst ??= Mat.empty();
   final tc = criteria.cvd;
   cvRun(
-    () =>
-        ccalib3d.UndistortPoints(src.ref, dst!.ref, cameraMatrix.ref, distCoeffs.ref, R!.ref, P!.ref, tc.ref),
+    () => ccalib3d.cv_undistortPoints(
+      src.ref,
+      dst!.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      R!.ref,
+      P!.ref,
+      tc.ref,
+      ffi.nullptr,
+    ),
   );
   return dst;
 }
@@ -172,7 +192,16 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final r = calloc<ffi.Bool>();
-  cvRun(() => ccalib3d.FindChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ref, flags, r));
+  cvRun(
+    () => ccalib3d.cv_findChessboardCorners(
+      image.ref,
+      patternSize.cvd.ref,
+      corners!.ref,
+      flags,
+      r,
+      ffi.nullptr,
+    ),
+  );
   final rval = r.value;
   calloc.free(r);
   return (rval, corners);
@@ -188,7 +217,16 @@ Mat undistortPoints(
 }) {
   corners ??= Mat.empty();
   final b = calloc<ffi.Bool>();
-  cvRun(() => ccalib3d.FindChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ref, flags, b));
+  cvRun(
+    () => ccalib3d.cv_findChessboardCornersSB(
+      image.ref,
+      patternSize.cvd.ref,
+      corners!.ref,
+      flags,
+      b,
+      ffi.nullptr,
+    ),
+  );
   final rval = b.value;
   calloc.free(b);
   return (rval, corners);
@@ -207,13 +245,14 @@ Mat undistortPoints(
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   cvRun(
-    () => ccalib3d.FindChessboardCornersSBWithMeta(
+    () => ccalib3d.cv_FindChessboardCornersSB_1(
       image.ref,
       patternSize.cvd.ref,
       corners!.ref,
       flags,
       meta!.ref,
       b,
+      ffi.nullptr,
     ),
   );
   final rval = b.value;
@@ -231,7 +270,15 @@ Mat drawChessboardCorners(
   InputArray corners,
   bool patternWasFound,
 ) {
-  cvRun(() => ccalib3d.DrawChessboardCorners(image.ref, patternSize.cvd.ref, corners.ref, patternWasFound));
+  cvRun(
+    () => ccalib3d.cv_drawChessboardCorners(
+      image.ref,
+      patternSize.cvd.ref,
+      corners.ref,
+      patternWasFound,
+      ffi.nullptr,
+    ),
+  );
   return image;
 }
 
@@ -251,9 +298,9 @@ Mat drawChessboardCorners(
   OutputArray? inliers,
 }) {
   inliers ??= Mat.empty();
-  final p = calloc<cvg.Mat>();
+  final rval = Mat.empty();
   cvRun(
-    () => ccalib3d.EstimateAffinePartial2DWithParams(
+    () => ccalib3d.cv_estimateAffine2D_1(
       from.ref,
       to.ref,
       inliers!.ref,
@@ -262,10 +309,11 @@ Mat drawChessboardCorners(
       maxIters,
       confidence,
       refineIters,
-      p,
+      rval.ref,
+      ffi.nullptr,
     ),
   );
-  return (Mat.fromPointer(p), inliers);
+  return (rval, inliers);
 }
 
 // EstimateAffine2D Computes an optimal affine transformation between two 2D point sets.
@@ -283,9 +331,9 @@ Mat drawChessboardCorners(
   OutputArray? inliers,
 }) {
   inliers ??= Mat.empty();
-  final p = calloc<cvg.Mat>();
+  final rval = Mat.empty();
   cvRun(
-    () => ccalib3d.EstimateAffine2DWithParams(
+    () => ccalib3d.cv_estimateAffine2D_1(
       from.ref,
       to.ref,
       inliers!.ref,
@@ -294,10 +342,11 @@ Mat drawChessboardCorners(
       maxIters,
       confidence,
       refineIters,
-      p,
+      rval.ref,
+      ffi.nullptr,
     ),
   );
-  return (Mat.fromPointer(p), inliers);
+  return (rval, inliers);
 }
 
 /// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
@@ -314,9 +363,9 @@ Mat findHomography(
   double confidence = 0.995,
 }) {
   mask ??= Mat.empty();
-  final mat = calloc<cvg.Mat>();
+  final mat = Mat.empty();
   cvRun(
-    () => ccalib3d.FindHomography(
+    () => ccalib3d.cv_findHomography(
       srcPoints.ref,
       dstPoints.ref,
       method,
@@ -324,8 +373,9 @@ Mat findHomography(
       mask!.ref,
       maxIters,
       confidence,
-      mat,
+      mat.ref,
+      ffi.nullptr,
     ),
   );
-  return Mat.fromPointer(mat);
+  return mat;
 }

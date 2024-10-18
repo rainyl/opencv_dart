@@ -1,81 +1,45 @@
 format_version: 1.0.0
 files:
-  package:dartcv/src/g/calib3d.g.dart:
+  package:dartcv4/src/g/calib3d.g.dart:
     used-config:
       ffi-native: false
     symbols:
-      c:@F@CalibrateCamera:
-        name: CalibrateCamera
-      c:@F@DrawChessboardCorners:
-        name: DrawChessboardCorners
-      c:@F@EstimateAffine2D:
-        name: EstimateAffine2D
-      c:@F@EstimateAffine2DWithParams:
-        name: EstimateAffine2DWithParams
-      c:@F@EstimateAffinePartial2D:
-        name: EstimateAffinePartial2D
-      c:@F@EstimateAffinePartial2DWithParams:
-        name: EstimateAffinePartial2DWithParams
-      c:@F@FindChessboardCorners:
-        name: FindChessboardCorners
-      c:@F@FindChessboardCornersSB:
-        name: FindChessboardCornersSB
-      c:@F@FindChessboardCornersSBWithMeta:
-        name: FindChessboardCornersSBWithMeta
-      c:@F@FindHomography:
-        name: FindHomography
-      c:@F@FindHomography_Async:
-        name: FindHomography_Async
-      c:@F@Fisheye_EstimateNewCameraMatrixForUndistortRectify:
-        name: Fisheye_EstimateNewCameraMatrixForUndistortRectify
-      c:@F@Fisheye_UndistortImage:
-        name: Fisheye_UndistortImage
-      c:@F@Fisheye_UndistortImageWithParams:
-        name: Fisheye_UndistortImageWithParams
-      c:@F@Fisheye_UndistortPoints:
-        name: Fisheye_UndistortPoints
-      c:@F@GetOptimalNewCameraMatrixWithParams:
-        name: GetOptimalNewCameraMatrixWithParams
-      c:@F@InitUndistortRectifyMap:
-        name: InitUndistortRectifyMap
-      c:@F@Undistort:
-        name: Undistort
-      c:@F@UndistortPoints:
-        name: UndistortPoints
-      c:@F@calibrateCamera_Async:
-        name: calibrateCamera_Async
-      c:@F@drawChessboardCorners_Async:
-        name: drawChessboardCorners_Async
-      c:@F@estimateAffine2DWithParams_Async:
-        name: estimateAffine2DWithParams_Async
-      c:@F@estimateAffine2D_Async:
-        name: estimateAffine2D_Async
-      c:@F@estimateAffinePartial2DWithParams_Async:
-        name: estimateAffinePartial2DWithParams_Async
-      c:@F@estimateAffinePartial2D_Async:
-        name: estimateAffinePartial2D_Async
-      c:@F@findChessboardCornersSBWithMeta_Async:
-        name: findChessboardCornersSBWithMeta_Async
-      c:@F@findChessboardCornersSB_Async:
-        name: findChessboardCornersSB_Async
-      c:@F@findChessboardCorners_Async:
-        name: findChessboardCorners_Async
-      c:@F@fisheye_estimateNewCameraMatrixForUndistortRectify_Async:
-        name: fisheye_estimateNewCameraMatrixForUndistortRectify_Async
-      c:@F@fisheye_undistortImageWithParams_Async:
-        name: fisheye_undistortImageWithParams_Async
-      c:@F@fisheye_undistortImage_Async:
-        name: fisheye_undistortImage_Async
-      c:@F@fisheye_undistortPoints_Async:
-        name: fisheye_undistortPoints_Async
-      c:@F@getOptimalNewCameraMatrix_Async:
-        name: getOptimalNewCameraMatrix_Async
-      c:@F@initUndistortRectifyMap_Async:
-        name: initUndistortRectifyMap_Async
-      c:@F@undistortPoints_Async:
-        name: undistortPoints_Async
-      c:@F@undistort_Async:
-        name: undistort_Async
+      c:@F@cv_FindChessboardCornersSB_1:
+        name: cv_FindChessboardCornersSB_1
+      c:@F@cv_calibrateCamera:
+        name: cv_calibrateCamera
+      c:@F@cv_drawChessboardCorners:
+        name: cv_drawChessboardCorners
+      c:@F@cv_estimateAffine2D:
+        name: cv_estimateAffine2D
+      c:@F@cv_estimateAffine2D_1:
+        name: cv_estimateAffine2D_1
+      c:@F@cv_estimateAffinePartial2D:
+        name: cv_estimateAffinePartial2D
+      c:@F@cv_estimateAffinePartial2D_1:
+        name: cv_estimateAffinePartial2D_1
+      c:@F@cv_findChessboardCorners:
+        name: cv_findChessboardCorners
+      c:@F@cv_findChessboardCornersSB:
+        name: cv_findChessboardCornersSB
+      c:@F@cv_findHomography:
+        name: cv_findHomography
+      c:@F@cv_fisheye_estimateNewCameraMatrixForUndistortRectify:
+        name: cv_fisheye_estimateNewCameraMatrixForUndistortRectify
+      c:@F@cv_fisheye_undistortImage:
+        name: cv_fisheye_undistortImage
+      c:@F@cv_fisheye_undistortImage_1:
+        name: cv_fisheye_undistortImage_1
+      c:@F@cv_fisheye_undistortPoints:
+        name: cv_fisheye_undistortPoints
+      c:@F@cv_getOptimalNewCameraMatrix:
+        name: cv_getOptimalNewCameraMatrix
+      c:@F@cv_initUndistortRectifyMap:
+        name: cv_initUndistortRectifyMap
+      c:@F@cv_undistort:
+        name: cv_undistort
+      c:@F@cv_undistortPoints:
+        name: cv_undistortPoints
       c:types.h@T@CvRect:
         name: CvRect
       c:types.h@T@CvSize:

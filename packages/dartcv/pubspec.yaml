@@ -1,4 +1,4 @@
-name: dartcv
+name: dartcv4
 description: |
   OpenCV bindings for Dart language.
   dartcv is for pure dart only,

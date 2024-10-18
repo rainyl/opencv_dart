@@ -16,6 +16,7 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../g/constants.g.dart';
+import '../g/types.g.dart' as cvg;
 import '../native_lib.dart' show ccalib3d;
 
 /// InitUndistortRectifyMap computes the joint undistortion and rectification transformation and represents the result in the form of maps for remap
@@ -28,20 +29,26 @@ Future<(Mat, Mat)> initUndistortRectifyMapAsync(
   InputArray R,
   InputArray newCameraMatrix,
   (int, int) size,
-  int m1type,
-) async =>
-    cvRunAsync2<(Mat, Mat)>(
-      (callback) => ccalib3d.initUndistortRectifyMap_Async(
-        cameraMatrix.ref,
-        distCoeffs.ref,
-        R.ref,
-        newCameraMatrix.ref,
-        size.cvd.ref,
-        m1type,
-        callback,
-      ),
-      matCompleter2,
-    );
+  int m1type, {
+  OutputArray? map1,
+  OutputArray? map2,
+}) async {
+  map1 ??= Mat.empty();
+  map2 ??= Mat.empty();
+  return cvRunAsync0<(Mat, Mat)>(
+      (callback) => ccalib3d.cv_initUndistortRectifyMap(
+            cameraMatrix.ref,
+            distCoeffs.ref,
+            R.ref,
+            newCameraMatrix.ref,
+            size.cvd.ref,
+            m1type,
+            map1!.ref,
+            map2!.ref,
+            callback,
+          ),
+      (c) => c.complete((map1!, map2!)));
+}
 
 /// GetOptimalNewCameraMatrixWithParams computes and returns the optimal new camera matrix based on the free scaling parameter.
 ///
@@ -54,19 +61,24 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
   double alpha, {
   (int, int) newImgSize = (0, 0),
   bool centerPrincipalPoint = false,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.getOptimalNewCameraMatrix_Async(
-        cameraMatrix.ref,
-        distCoeffs.ref,
-        imageSize.cvd.ref,
-        alpha,
-        newImgSize.cvd.ref,
-        centerPrincipalPoint,
-        callback,
-      ),
-      (c, p, p1) => c.complete((Mat.fromPointer(p.cast()), Rect.fromPointer(p1.cast()))),
-    );
+}) {
+  final validPixROI = calloc<cvg.CvRect>();
+  final rval = Mat.empty();
+  return cvRunAsync0<(Mat, Rect)>(
+    (callback) => ccalib3d.cv_getOptimalNewCameraMatrix(
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      imageSize.cvd.ref,
+      alpha,
+      newImgSize.cvd.ref,
+      validPixROI,
+      centerPrincipalPoint,
+      rval.ref,
+      callback,
+    ),
+    (c) => c.complete((rval, Rect.fromPointer(validPixROI))),
+  );
+}
 
 // CalibrateCamera finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 //
@@ -82,26 +94,30 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   Mat? tvecs,
   int flags = 0,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
-}) async =>
-    cvRunAsync3(
-      (callback) => ccalib3d.calibrateCamera_Async(
-        objectPoints.ref,
-        imagePoints.ref,
-        imageSize.cvd.ref,
-        cameraMatrix.ref,
-        distCoeffs.ref,
-        flags,
-        criteria.cvd.ref,
-        callback,
-      ),
-      (c, p, p1, p2) {
-        final rmsErr = p.cast<ffi.Double>().value;
-        calloc.free(p);
-        final rvecs = Mat.fromPointer(p1.cast());
-        final tvecs = Mat.fromPointer(p2.cast());
-        return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs));
-      },
-    );
+}) {
+  rvecs ??= Mat.empty();
+  tvecs ??= Mat.empty();
+  final cRmsErr = calloc<ffi.Double>();
+
+  return cvRunAsync0(
+      (callback) => ccalib3d.cv_calibrateCamera(
+            objectPoints.ref,
+            imagePoints.ref,
+            imageSize.cvd.ref,
+            cameraMatrix.ref,
+            distCoeffs.ref,
+            rvecs!.ref,
+            tvecs!.ref,
+            flags,
+            criteria.cvd.ref,
+            cRmsErr,
+            callback,
+          ), (c) {
+    final rmsErr = cRmsErr.value;
+    calloc.free(cRmsErr);
+    return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!));
+  });
+}
 
 // Transforms an image to compensate for lens distortion.
 // The function transforms an image to compensate radial and tangential lens distortion.
@@ -113,18 +129,23 @@ Future<Mat> undistortAsync(
   InputArray src,
   InputArray cameraMatrix,
   InputArray distCoeffs, {
+  OutputArray? dst,
   InputArray? newCameraMatrix,
-}) async =>
-    cvRunAsync(
-      (callback) => ccalib3d.undistort_Async(
-        src.ref,
-        cameraMatrix.ref,
-        distCoeffs.ref,
-        newCameraMatrix?.ref ?? Mat.empty().ref,
-        callback,
-      ),
-      matCompleter,
-    );
+}) {
+  dst ??= Mat.empty();
+  newCameraMatrix ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_undistort(
+      src.ref,
+      dst!.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      newCameraMatrix!.ref,
+      callback,
+    ),
+    (c) => c.complete(dst!),
+  );
+}
 
 // UndistortPoints transforms points to compensate for lens distortion
 //
@@ -134,22 +155,29 @@ Future<Mat> undistortPointsAsync(
   InputArray src,
   InputArray cameraMatrix,
   InputArray distCoeffs, {
+  OutputArray? dst,
   InputArray? R,
   InputArray? P,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
-}) async =>
-    cvRunAsync(
-      (callback) => ccalib3d.undistortPoints_Async(
-        src.ref,
-        cameraMatrix.ref,
-        distCoeffs.ref,
-        R?.ref ?? Mat.empty().ref,
-        P?.ref ?? Mat.empty().ref,
-        criteria.cvd.ref,
-        callback,
-      ),
-      matCompleter,
-    );
+}) {
+  R ??= Mat.empty();
+  P ??= Mat.empty();
+  dst ??= Mat.empty();
+  final tc = criteria.cvd;
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_undistortPoints(
+      src.ref,
+      dst!.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      R!.ref,
+      P!.ref,
+      tc.ref,
+      callback,
+    ),
+    (c) => c.complete(dst!),
+  );
+}
 
 // FindChessboardCorners finds the positions of internal corners of the chessboard.
 //
@@ -158,63 +186,78 @@ Future<Mat> undistortPointsAsync(
 Future<(bool success, Mat corners)> findChessboardCornersAsync(
   InputArray image,
   (int, int) patternSize, {
+  OutputArray? corners,
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.findChessboardCorners_Async(
-        image.ref,
-        patternSize.cvd.ref,
-        flags,
-        callback,
-      ),
-      (c, p, p1) {
-        final rval = p.cast<ffi.Bool>().value;
-        calloc.free(p);
-        final corners = Mat.fromPointer(p1.cast());
-        return c.complete((rval, corners));
-      },
-    );
+}) {
+  corners ??= Mat.empty();
+  final r = calloc<ffi.Bool>();
+  return cvRunAsync0(
+      (callback) => ccalib3d.cv_findChessboardCorners(
+            image.ref,
+            patternSize.cvd.ref,
+            corners!.ref,
+            flags,
+            r,
+            callback,
+          ), (c) {
+    final rval = r.value;
+    calloc.free(r);
+    return c.complete((rval, corners!));
+  });
+}
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
 Future<(bool, Mat corners)> findChessboardCornersSBAsync(
   InputArray image,
   (int, int) patternSize,
-  int flags,
-) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.findChessboardCornersSB_Async(
-        image.ref,
-        patternSize.cvd.ref,
-        flags,
-        callback,
-      ),
-      (c, p, p1) {
-        final rval = p.cast<ffi.Bool>().value;
-        calloc.free(p);
-        final corners = Mat.fromPointer(p1.cast());
-        return c.complete((rval, corners));
-      },
-    );
+  int flags, {
+  OutputArray? corners,
+}) {
+  corners ??= Mat.empty();
+  final b = calloc<ffi.Bool>();
+  return cvRunAsync0(
+      (callback) => ccalib3d.cv_findChessboardCornersSB(
+            image.ref,
+            patternSize.cvd.ref,
+            corners!.ref,
+            flags,
+            b,
+            callback,
+          ), (c) {
+    final rval = b.value;
+    calloc.free(b);
+    return c.complete((rval, corners!));
+  });
+}
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
 Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
   InputArray image,
   (int, int) patternSize,
-  int flags,
-) async =>
-    cvRunAsync3(
-      (callback) =>
-          ccalib3d.findChessboardCornersSBWithMeta_Async(image.ref, patternSize.cvd.ref, flags, callback),
-      (c, p, p1, p2) {
-        final rval = p.cast<ffi.Bool>().value;
-        calloc.free(p);
-        final corners = Mat.fromPointer(p1.cast());
-        final meta = Mat.fromPointer(p2.cast());
-        return c.complete((rval, corners, meta));
-      },
-    );
+  int flags, {
+  OutputArray? corners,
+  OutputArray? meta,
+}) {
+  corners ??= Mat.empty();
+  meta ??= Mat.empty();
+  final b = calloc<ffi.Bool>();
+  return cvRunAsync0(
+      (callback) => ccalib3d.cv_FindChessboardCornersSB_1(
+            image.ref,
+            patternSize.cvd.ref,
+            corners!.ref,
+            flags,
+            meta!.ref,
+            b,
+            callback,
+          ), (c) {
+    final rval = b.value;
+    calloc.free(b);
+    return c.complete((rval, corners!, meta!));
+  });
+}
 
 // DrawChessboardCorners renders the detected chessboard corners.
 //
@@ -225,12 +268,18 @@ Future<Mat> drawChessboardCornersAsync(
   (int, int) patternSize,
   InputArray corners,
   bool patternWasFound,
-) async =>
-    cvRunAsync0<Mat>(
-      (callback) =>
-          ccalib3d.drawChessboardCorners_Async(image.ref, patternSize.cvd.ref, patternWasFound, callback),
-      (c) => c.complete(image),
-    );
+) {
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_drawChessboardCorners(
+      image.ref,
+      patternSize.cvd.ref,
+      corners.ref,
+      patternWasFound,
+      callback,
+    ),
+    (c) => c.complete(image),
+  );
+}
 
 // EstimateAffinePartial2D computes an optimal limited affine transformation
 // with 4 degrees of freedom between two 2D point sets.
@@ -245,20 +294,26 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
   int maxIters = 2000,
   double confidence = 0.99,
   int refineIters = 10,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.estimateAffinePartial2DWithParams_Async(
-        from.ref,
-        to.ref,
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        refineIters,
-        callback,
-      ),
-      matCompleter2,
-    );
+  OutputArray? inliers,
+}) {
+  inliers ??= Mat.empty();
+  final rval = Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_estimateAffine2D_1(
+      from.ref,
+      to.ref,
+      inliers!.ref,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+      rval.ref,
+      callback,
+    ),
+    (c) => c.complete((rval, inliers!)),
+  );
+}
 
 // EstimateAffine2D Computes an optimal affine transformation between two 2D point sets.
 //
@@ -272,20 +327,26 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
   int maxIters = 2000,
   double confidence = 0.99,
   int refineIters = 10,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.estimateAffine2DWithParams_Async(
-        from.ref,
-        to.ref,
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        refineIters,
-        callback,
-      ),
-      matCompleter2,
-    );
+  OutputArray? inliers,
+}) {
+  inliers ??= Mat.empty();
+  final rval = Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_estimateAffine2D_1(
+      from.ref,
+      to.ref,
+      inliers!.ref,
+      method,
+      ransacReprojThreshold,
+      maxIters,
+      confidence,
+      refineIters,
+      rval.ref,
+      callback,
+    ),
+    (c) => c.complete((rval, inliers!)),
+  );
+}
 
 /// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
 ///
@@ -296,18 +357,24 @@ Future<(Mat, Mat)> findHomographyAsync(
   InputArray dstPoints, {
   int method = 0,
   double ransacReprojThreshold = 3,
+  OutputArray? mask,
   int maxIters = 2000,
   double confidence = 0.995,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccalib3d.FindHomography_Async(
-        srcPoints.ref,
-        dstPoints.ref,
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        callback,
-      ),
-      matCompleter2,
-    );
+}) {
+  mask ??= Mat.empty();
+  final mat = Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccalib3d.cv_findHomography(
+      srcPoints.ref,
+      dstPoints.ref,
+      method,
+      ransacReprojThreshold,
+      mask!.ref,
+      maxIters,
+      confidence,
+      mat.ref,
+      callback,
+    ),
+    (c) => c.complete((mat, mask!)),
+  );
+}

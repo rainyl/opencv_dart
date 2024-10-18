@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 const arucoImage6x6_250 = "test/images/aruco_6X6_250_6.png";

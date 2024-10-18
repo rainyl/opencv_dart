@@ -1,4 +1,4 @@
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 VecElementEquals vecElementEquals(cv.Vec expectedValues) => VecElementEquals(expectedValues);

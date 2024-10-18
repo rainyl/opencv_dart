@@ -1,4 +1,4 @@
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 const testImage = "test/images/space_shuttle.jpg";

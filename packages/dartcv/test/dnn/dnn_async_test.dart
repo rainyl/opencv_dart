@@ -1,7 +1,7 @@
 @Tags(["no-local-files"])
 
 import 'dart:io';
-import 'package:dartcv/dartcv.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 Future<bool> checkCaffeNetAsync(cv.Net net) async {
