@@ -94,16 +94,17 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
     final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => ccontrib.getPredefinedDictionary(type.value, p));
+    cvRun(() => ccontrib.cv_aruco_getPredefinedDictionary(type.value, p));
     return ArucoDictionary._(p);
   }
 
   @override
   cvg.ArucoDictionary get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.ArucoDictionary_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_arucoDictionary_close);
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.ArucoDictionary_Close(ptr);
+    ccontrib.cv_aruco_arucoDictionary_close(ptr);
   }
 }

@@ -31,7 +31,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
 
   factory ArucoDetector.empty() {
     final p = calloc<cvg.ArucoDetector>();
-    cvRun(() => ccontrib.ArucoDetector_New(p));
+    cvRun(() => ccontrib.cv_aruco_arucoDetector_create(p));
     return ArucoDetector._(p);
   }
 
@@ -41,18 +41,23 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   ) {
     final p = calloc<cvg.ArucoDetector>();
     cvRun(
-      () => ccontrib.ArucoDetector_NewWithParams(dictionary.ref, parameters.ref, p),
+      () => ccontrib.cv_aruco_arucoDetector_create_1(
+        dictionary.ref,
+        parameters.ref,
+        p,
+      ),
     );
     return ArucoDetector._(p);
   }
 
   @override
   cvg.ArucoDetector get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(ccontrib.addresses.ArucoDetector_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.ArucoDetectorPtr>(ccontrib.addresses.cv_aruco_arucoDetector_close);
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.ArucoDetector_Close(ptr);
+    ccontrib.cv_aruco_arucoDetector_close(ptr);
   }
 
   /// DetectMarkers does basic marker detection.
@@ -60,25 +65,24 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d9/d6a/group__aruco.html#ga3bc50d61fe4db7bce8d26d56b5a6428a
   (VecVecPoint2f corners, VecI32 ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
-    return using<(VecVecPoint2f, VecI32, VecVecPoint2f)>((arena) {
-      final pCorners = calloc<cvg.VecVecPoint2f>();
-      final pRejected = calloc<cvg.VecVecPoint2f>();
-      final pIds = calloc<cvg.VecI32>();
-      cvRun(
-        () => ccontrib.ArucoDetector_DetectMarkers(
-          ref,
-          image.ref,
-          pCorners,
-          pIds,
-          pRejected,
-        ),
-      );
-      return (
-        VecVecPoint2f.fromPointer(pCorners),
-        VecI32.fromPointer(pIds),
-        VecVecPoint2f.fromPointer(pRejected)
-      );
-    });
+    final pCorners = calloc<cvg.VecVecPoint2f>();
+    final pRejected = calloc<cvg.VecVecPoint2f>();
+    final pIds = calloc<cvg.VecI32>();
+    cvRun(
+      () => ccontrib.cv_aruco_arucoDetector_detectMarkers(
+        ref,
+        image.ref,
+        pCorners,
+        pIds,
+        pRejected,
+        ffi.nullptr,
+      ),
+    );
+    return (
+      VecVecPoint2f.fromPointer(pCorners),
+      VecI32.fromPointer(pIds),
+      VecVecPoint2f.fromPointer(pRejected)
+    );
   }
 }
 
@@ -89,11 +93,12 @@ void arucoDrawDetectedMarkers(
   Scalar borderColor,
 ) {
   cvRun(
-    () => ccontrib.ArucoDrawDetectedMarkers(
+    () => ccontrib.cv_aruco_drawDetectedMarkers(
       img.ref,
       markerCorners.ref,
       markerIds.ref,
       borderColor.ref,
+      ffi.nullptr,
     ),
   );
 }
@@ -105,22 +110,23 @@ Mat arucoGenerateImageMarker(
   int borderBits, [
   Mat? outImg,
 ]) {
-  final p = outImg?.ptr ?? calloc<cvg.Mat>();
+  outImg ??= Mat.empty();
   cvRun(
-    () => ccontrib.ArucoGenerateImageMarker(
+    () => ccontrib.cv_aruco_generateImageMarker(
       dictionaryId.value,
       id,
       sidePixels,
       borderBits,
-      p,
+      outImg!.ref,
+      ffi.nullptr,
     ),
   );
-  return outImg ?? Mat.fromPointer(p);
+  return outImg;
 }
 
-class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
+class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParams> {
   ArucoDetectorParameters._(
-    cvg.ArucoDetectorParametersPtr ptr, [
+    cvg.ArucoDetectorParamsPtr ptr, [
     bool attach = true,
   ]) : super.fromPointer(ptr) {
     if (attach) {
@@ -128,396 +134,175 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParameters> {
     }
   }
   factory ArucoDetectorParameters.fromPointer(
-    cvg.ArucoDetectorParametersPtr ptr, [
+    cvg.ArucoDetectorParamsPtr ptr, [
     bool attach = true,
   ]) =>
       ArucoDetectorParameters._(ptr, attach);
 
   factory ArucoDetectorParameters.empty() {
-    final p = calloc<cvg.ArucoDetectorParameters>();
-    cvRun(() => ccontrib.ArucoDetectorParameters_Create(p));
+    final p = calloc<cvg.ArucoDetectorParams>();
+    cvRun(() => ccontrib.cv_aruco_detectorParameters_create(p));
     return ArucoDetectorParameters._(p);
   }
 
   @override
-  cvg.ArucoDetectorParameters get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorParametersPtr>(
-    ccontrib.addresses.ArucoDetectorParameters_Close,
+  cvg.ArucoDetectorParams get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvg.ArucoDetectorParamsPtr>(
+    ccontrib.addresses.cv_aruco_detectorParameters_close,
   );
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.ArucoDetectorParameters_Close(ptr);
+    ccontrib.cv_aruco_detectorParameters_close(ptr);
   }
 
-  int get adaptiveThreshWinSizeMin {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAdaptiveThreshWinSizeMin(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get adaptiveThreshWinSizeMin => ccontrib.cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMin(ref);
 
-  set adaptiveThreshWinSizeMin(int value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAdaptiveThreshWinSizeMin(ref, value),
-      );
+  set adaptiveThreshWinSizeMin(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMin(ref, value);
 
-  int get adaptiveThreshWinSizeMax {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAdaptiveThreshWinSizeMax(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get adaptiveThreshWinSizeMax => ccontrib.cv_aruco_detectorParameters_get_adaptiveThreshWinSizeMax(ref);
 
-  set adaptiveThreshWinSizeMax(int value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAdaptiveThreshWinSizeMax(ref, value),
-      );
+  set adaptiveThreshWinSizeMax(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMax(ref, value);
 
-  int get adaptiveThreshWinSizeStep {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAdaptiveThreshWinSizeStep(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get adaptiveThreshWinSizeStep =>
+      ccontrib.cv_aruco_detectorParameters_get_adaptiveThreshWinSizeStep(ref);
 
-  set adaptiveThreshWinSizeStep(int value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAdaptiveThreshWinSizeStep(ref, value),
-      );
+  set adaptiveThreshWinSizeStep(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStep(ref, value);
 
-  double get adaptiveThreshConstant {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAdaptiveThreshConstant(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get adaptiveThreshConstant => ccontrib.cv_aruco_detectorParameters_get_adaptiveThreshConstant(ref);
 
-  set adaptiveThreshConstant(double value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAdaptiveThreshConstant(ref, value),
-      );
+  set adaptiveThreshConstant(double value) =>
+      ccontrib.cv_aruco_detectorParameters_set_adaptiveThreshConstant(ref, value);
 
-  double get minMarkerPerimeterRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetMinMarkerPerimeterRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get minMarkerPerimeterRate => ccontrib.cv_aruco_detectorParameters_get_minMarkerPerimeterRate(ref);
 
   set minMarkerPerimeterRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetMinMarkerPerimeterRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_minMarkerPerimeterRate(ref, value);
 
-  double get maxMarkerPerimeterRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetMaxMarkerPerimeterRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get maxMarkerPerimeterRate => ccontrib.cv_aruco_detectorParameters_get_maxMarkerPerimeterRate(ref);
 
   set maxMarkerPerimeterRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetMaxMarkerPerimeterRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_maxMarkerPerimeterRate(ref, value);
 
-  double get polygonalApproxAccuracyRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetPolygonalApproxAccuracyRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get polygonalApproxAccuracyRate =>
+      ccontrib.cv_aruco_detectorParameters_get_polygonalApproxAccuracyRate(ref);
 
   set polygonalApproxAccuracyRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetPolygonalApproxAccuracyRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate(ref, value);
 
-  double get minCornerDistanceRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetMinCornerDistanceRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get minCornerDistanceRate => ccontrib.cv_aruco_detectorParameters_get_minCornerDistanceRate(ref);
 
   set minCornerDistanceRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetMinCornerDistanceRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_minCornerDistanceRate(ref, value);
 
-  int get minDistanceToBorder {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetMinDistanceToBorder(ref, p));
-      return p.value;
-    });
-  }
+  int get minDistanceToBorder => ccontrib.cv_aruco_detectorParameters_get_minDistanceToBorder(ref);
 
-  set minDistanceToBorder(int value) => ccontrib.ArucoDetectorParameters_SetMinDistanceToBorder(ref, value);
+  set minDistanceToBorder(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_minDistanceToBorder(ref, value);
 
-  double get minMarkerDistanceRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetMinMarkerDistanceRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get minMarkerDistanceRate => ccontrib.cv_aruco_detectorParameters_get_minMarkerDistanceRate(ref);
 
   set minMarkerDistanceRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetMinMarkerDistanceRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_minMarkerDistanceRate(ref, value);
 
-  int get cornerRefinementMethod {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetCornerRefinementMethod(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get cornerRefinementMethod => ccontrib.cv_aruco_detectorParameters_get_cornerRefinementMethod(ref);
 
   set cornerRefinementMethod(int value) =>
-      ccontrib.ArucoDetectorParameters_SetCornerRefinementMethod(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_cornerRefinementMethod(ref, value);
 
-  int get cornerRefinementWinSize {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetCornerRefinementWinSize(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get cornerRefinementWinSize => ccontrib.cv_aruco_detectorParameters_get_cornerRefinementWinSize(ref);
 
   set cornerRefinementWinSize(int value) =>
-      ccontrib.ArucoDetectorParameters_SetCornerRefinementWinSize(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_cornerRefinementWinSize(ref, value);
 
-  int get cornerRefinementMaxIterations {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetCornerRefinementMaxIterations(
-          ref,
-          p,
-        ),
-      );
-      return p.value;
-    });
-  }
+  int get cornerRefinementMaxIterations =>
+      ccontrib.cv_aruco_detectorParameters_get_cornerRefinementMaxIterations(ref);
 
   set cornerRefinementMaxIterations(int value) =>
-      ccontrib.ArucoDetectorParameters_SetCornerRefinementMaxIterations(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_cornerRefinementMaxIterations(ref, value);
 
-  double get cornerRefinementMinAccuracy {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetCornerRefinementMinAccuracy(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get cornerRefinementMinAccuracy =>
+      ccontrib.cv_aruco_detectorParameters_get_cornerRefinementMinAccuracy(ref);
 
   set cornerRefinementMinAccuracy(double value) =>
-      ccontrib.ArucoDetectorParameters_SetCornerRefinementMinAccuracy(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_cornerRefinementMinAccuracy(ref, value);
 
-  int get markerBorderBits {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetMarkerBorderBits(ref, p));
-      return p.value;
-    });
-  }
+  int get markerBorderBits => ccontrib.cv_aruco_detectorParameters_get_markerBorderBits(ref);
 
-  set markerBorderBits(int value) => ccontrib.ArucoDetectorParameters_SetMarkerBorderBits(ref, value);
+  set markerBorderBits(int value) => ccontrib.cv_aruco_detectorParameters_set_markerBorderBits(ref, value);
 
-  int get perspectiveRemovePixelPerCell {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetPerspectiveRemovePixelPerCell(
-          ref,
-          p,
-        ),
-      );
-      return p.value;
-    });
-  }
+  int get perspectiveRemovePixelPerCell =>
+      ccontrib.cv_aruco_detectorParameters_get_perspectiveRemovePixelPerCell(ref);
 
   set perspectiveRemovePixelPerCell(int value) =>
-      ccontrib.ArucoDetectorParameters_SetPerspectiveRemovePixelPerCell(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCell(ref, value);
 
-  double get perspectiveRemoveIgnoredMarginPerCell {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetPerspectiveRemoveIgnoredMarginPerCell(
-          ref,
-          p,
-        ),
-      );
-      return p.value;
-    });
-  }
+  double get perspectiveRemoveIgnoredMarginPerCell =>
+      ccontrib.cv_aruco_detectorParameters_get_perspectiveRemoveIgnoredMarginPerCell(ref);
 
   set perspectiveRemoveIgnoredMarginPerCell(double value) =>
-      ccontrib.ArucoDetectorParameters_SetPerspectiveRemoveIgnoredMarginPerCell(
-        ref,
-        value,
-      );
+      ccontrib.cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCell(ref, value);
 
-  double get maxErroneousBitsInBorderRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetMaxErroneousBitsInBorderRate(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get maxErroneousBitsInBorderRate =>
+      ccontrib.cv_aruco_detectorParameters_get_maxErroneousBitsInBorderRate(ref);
 
   set maxErroneousBitsInBorderRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetMaxErroneousBitsInBorderRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRate(ref, value);
 
-  double get minOtsuStdDev {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetMinOtsuStdDev(ref, p));
-      return p.value;
-    });
-  }
+  double get minOtsuStdDev => ccontrib.cv_aruco_detectorParameters_get_minOtsuStdDev(ref);
 
-  set minOtsuStdDev(double value) => ccontrib.ArucoDetectorParameters_SetMinOtsuStdDev(ref, value);
+  set minOtsuStdDev(double value) => ccontrib.cv_aruco_detectorParameters_set_minOtsuStdDev(ref, value);
 
-  double get errorCorrectionRate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetErrorCorrectionRate(ref, p));
-      return p.value;
-    });
-  }
+  double get errorCorrectionRate => ccontrib.cv_aruco_detectorParameters_get_errorCorrectionRate(ref);
 
   set errorCorrectionRate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetErrorCorrectionRate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_errorCorrectionRate(ref, value);
 
-  double get aprilTagQuadDecimate {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetAprilTagQuadDecimate(ref, p));
-      return p.value;
-    });
-  }
+  double get aprilTagQuadDecimate => ccontrib.cv_aruco_detectorParameters_get_aprilTagQuadDecimate(ref);
 
   set aprilTagQuadDecimate(double value) =>
-      ccontrib.ArucoDetectorParameters_SetAprilTagQuadDecimate(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagQuadDecimate(ref, value);
 
-  double get aprilTagQuadSigma {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetAprilTagQuadSigma(ref, p));
-      return p.value;
-    });
-  }
+  double get aprilTagQuadSigma => ccontrib.cv_aruco_detectorParameters_get_aprilTagQuadSigma(ref);
 
-  set aprilTagQuadSigma(double value) => ccontrib.ArucoDetectorParameters_SetAprilTagQuadSigma(ref, value);
+  set aprilTagQuadSigma(double value) =>
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagQuadSigma(ref, value);
 
-  int get aprilTagMinClusterPixels {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAprilTagMinClusterPixels(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get aprilTagMinClusterPixels => ccontrib.cv_aruco_detectorParameters_get_aprilTagMinClusterPixels(ref);
 
   set aprilTagMinClusterPixels(int value) =>
-      ccontrib.ArucoDetectorParameters_SetAprilTagMinClusterPixels(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagMinClusterPixels(ref, value);
 
-  int get aprilTagMaxNmaxima {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetAprilTagMaxNmaxima(ref, p));
-      return p.value;
-    });
-  }
+  int get aprilTagMaxNmaxima => ccontrib.cv_aruco_detectorParameters_get_aprilTagMaxNmaxima(ref);
 
-  set aprilTagMaxNmaxima(int value) => ccontrib.ArucoDetectorParameters_SetAprilTagMaxNmaxima(ref, value);
+  set aprilTagMaxNmaxima(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagMaxNmaxima(ref, value);
 
-  double get aprilTagCriticalRad {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetAprilTagCriticalRad(ref, p));
-      return p.value;
-    });
-  }
+  double get aprilTagCriticalRad => ccontrib.cv_aruco_detectorParameters_get_aprilTagCriticalRad(ref);
 
   set aprilTagCriticalRad(double value) =>
-      ccontrib.ArucoDetectorParameters_SetAprilTagCriticalRad(ref, value);
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagCriticalRad(ref, value);
 
-  double get aprilTagMaxLineFitMse {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAprilTagMaxLineFitMse(ref, p),
-      );
-      return p.value;
-    });
-  }
+  double get aprilTagMaxLineFitMse => ccontrib.cv_aruco_detectorParameters_get_aprilTagMaxLineFitMse(ref);
 
-  set aprilTagMaxLineFitMse(double value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAprilTagMaxLineFitMse(ref, value),
-      );
+  set aprilTagMaxLineFitMse(double value) =>
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagMaxLineFitMse(ref, value);
 
-  int get aprilTagMinWhiteBlackDiff {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(
-        () => ccontrib.ArucoDetectorParameters_GetAprilTagMinWhiteBlackDiff(ref, p),
-      );
-      return p.value;
-    });
-  }
+  int get aprilTagMinWhiteBlackDiff =>
+      ccontrib.cv_aruco_detectorParameters_get_aprilTagMinWhiteBlackDiff(ref);
 
-  set aprilTagMinWhiteBlackDiff(int value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetAprilTagMinWhiteBlackDiff(ref, value),
-      );
+  set aprilTagMinWhiteBlackDiff(int value) =>
+      ccontrib.cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiff(ref, value);
 
-  int get aprilTagDeglitch {
-    return cvRunArena<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetAprilTagDeglitch(ref, p));
-      return p.value;
-    });
-  }
+  int get aprilTagDeglitch => ccontrib.cv_aruco_detectorParameters_get_aprilTagDeglitch(ref);
 
-  set aprilTagDeglitch(int value) =>
-      cvRun(() => ccontrib.ArucoDetectorParameters_SetAprilTagDeglitch(ref, value));
+  set aprilTagDeglitch(int value) => ccontrib.cv_aruco_detectorParameters_set_aprilTagDeglitch(ref, value);
 
-  bool get detectInvertedMarker {
-    return cvRunArena<bool>((arena) {
-      final p = arena<ffi.Bool>();
-      cvRun(() => ccontrib.ArucoDetectorParameters_GetDetectInvertedMarker(ref, p));
-      return p.value;
-    });
-  }
+  bool get detectInvertedMarker => ccontrib.cv_aruco_detectorParameters_get_detectInvertedMarker(ref);
 
-  set detectInvertedMarker(bool value) => cvRun(
-        () => ccontrib.ArucoDetectorParameters_SetDetectInvertedMarker(ref, value),
-      );
+  set detectInvertedMarker(bool value) =>
+      ccontrib.cv_aruco_detectorParameters_set_detectInvertedMarker(ref, value);
 }

@@ -61,7 +61,7 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
   double alpha, {
   (int, int) newImgSize = (0, 0),
   bool centerPrincipalPoint = false,
-}) {
+}) async {
   final validPixROI = calloc<cvg.CvRect>();
   final rval = Mat.empty();
   return cvRunAsync0<(Mat, Rect)>(
@@ -94,7 +94,7 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   Mat? tvecs,
   int flags = 0,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
-}) {
+}) async {
   rvecs ??= Mat.empty();
   tvecs ??= Mat.empty();
   final cRmsErr = calloc<ffi.Double>();
@@ -131,7 +131,7 @@ Future<Mat> undistortAsync(
   InputArray distCoeffs, {
   OutputArray? dst,
   InputArray? newCameraMatrix,
-}) {
+}) async {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
   return cvRunAsync0(
@@ -159,7 +159,7 @@ Future<Mat> undistortPointsAsync(
   InputArray? R,
   InputArray? P,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
-}) {
+}) async {
   R ??= Mat.empty();
   P ??= Mat.empty();
   dst ??= Mat.empty();
@@ -188,7 +188,7 @@ Future<(bool success, Mat corners)> findChessboardCornersAsync(
   (int, int) patternSize, {
   OutputArray? corners,
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
-}) {
+}) async {
   corners ??= Mat.empty();
   final r = calloc<ffi.Bool>();
   return cvRunAsync0(
@@ -213,7 +213,7 @@ Future<(bool, Mat corners)> findChessboardCornersSBAsync(
   (int, int) patternSize,
   int flags, {
   OutputArray? corners,
-}) {
+}) async {
   corners ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
@@ -239,7 +239,7 @@ Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
   int flags, {
   OutputArray? corners,
   OutputArray? meta,
-}) {
+}) async {
   corners ??= Mat.empty();
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
@@ -268,7 +268,7 @@ Future<Mat> drawChessboardCornersAsync(
   (int, int) patternSize,
   InputArray corners,
   bool patternWasFound,
-) {
+) async {
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawChessboardCorners(
       image.ref,
@@ -295,7 +295,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
   double confidence = 0.99,
   int refineIters = 10,
   OutputArray? inliers,
-}) {
+}) async {
   inliers ??= Mat.empty();
   final rval = Mat.empty();
   return cvRunAsync0(
@@ -328,7 +328,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
   double confidence = 0.99,
   int refineIters = 10,
   OutputArray? inliers,
-}) {
+}) async {
   inliers ??= Mat.empty();
   final rval = Mat.empty();
   return cvRunAsync0(
@@ -360,7 +360,7 @@ Future<(Mat, Mat)> findHomographyAsync(
   OutputArray? mask,
   int maxIters = 2000,
   double confidence = 0.995,
-}) {
+}) async {
   mask ??= Mat.empty();
   final mat = Mat.empty();
   return cvRunAsync0(
