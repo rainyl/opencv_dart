@@ -3577,6 +3577,29 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(
           int, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_PCABackProject(
+    Mat data,
+    Mat mean,
+    Mat eigenvectors,
+    Mat result,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_PCABackProject(
+      data,
+      mean,
+      eigenvectors,
+      result,
+      callback,
+    );
+  }
+
+  late final _cv_PCABackProjectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, imp1.CvCallback_0)>>('cv_PCABackProject');
+  late final _cv_PCABackProject = _cv_PCABackProjectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_PCACompute(
     Mat src,
     Mat mean,
@@ -3602,6 +3625,79 @@ class CvNativeCore {
   late final _cv_PCACompute = _cv_PCAComputePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Mat, Mat, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_PCACompute_1(
+    Mat src,
+    Mat mean,
+    Mat eigenvectors,
+    Mat eigenvalues,
+    double retainedVariance,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_PCACompute_1(
+      src,
+      mean,
+      eigenvectors,
+      eigenvalues,
+      retainedVariance,
+      callback,
+    );
+  }
+
+  late final _cv_PCACompute_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Double,
+              imp1.CvCallback_0)>>('cv_PCACompute_1');
+  late final _cv_PCACompute_1 = _cv_PCACompute_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Mat, double, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_PCAProject(
+    Mat data,
+    Mat mean,
+    Mat eigenvectors,
+    Mat result,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_PCAProject(
+      data,
+      mean,
+      eigenvectors,
+      result,
+      callback,
+    );
+  }
+
+  late final _cv_PCAProjectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, imp1.CvCallback_0)>>('cv_PCAProject');
+  late final _cv_PCAProject = _cv_PCAProjectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_PSNR(
+    Mat src1,
+    Mat src2,
+    double R,
+    ffi.Pointer<ffi.Double> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_PSNR(
+      src1,
+      src2,
+      R,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_PSNRPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double,
+              ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>>('cv_PSNR');
+  late final _cv_PSNR = _cv_PSNRPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, double, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   void cv_RNG_close(
     imp1.RNGPtr rng,
@@ -3808,6 +3904,32 @@ class CvNativeCore {
   late final _cv_RotatedRect_points = _cv_RotatedRect_pointsPtr.asFunction<
       ffi.Pointer<CvStatus> Function(RotatedRect, ffi.Pointer<VecPoint2f>)>();
 
+  ffi.Pointer<CvStatus> cv_SVBackSubst(
+    Mat w,
+    Mat u,
+    Mat vt,
+    Mat rhs,
+    Mat dst,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_SVBackSubst(
+      w,
+      u,
+      vt,
+      rhs,
+      dst,
+      callback,
+    );
+  }
+
+  late final _cv_SVBackSubstPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, Mat, imp1.CvCallback_0)>>('cv_SVBackSubst');
+  late final _cv_SVBackSubst = _cv_SVBackSubstPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Mat, Mat, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_SVD_Compute(
     Mat src,
     Mat w_r,
@@ -3859,6 +3981,32 @@ class CvNativeCore {
   late final _cv_SVD_backSubst = _cv_SVD_backSubstPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Mat, Mat, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_SVDecomp(
+    Mat w,
+    Mat u,
+    Mat vt,
+    Mat d,
+    int flags,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_SVDecomp(
+      w,
+      u,
+      vt,
+      d,
+      flags,
+      callback,
+    );
+  }
+
+  late final _cv_SVDecompPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, Mat, ffi.Int, imp1.CvCallback_0)>>('cv_SVDecomp');
+  late final _cv_SVDecomp = _cv_SVDecompPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, Mat, Mat, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_absdiff(
     Mat src1,
@@ -4236,7 +4384,7 @@ class CvNativeCore {
           Mat, Mat, Mat, Mat, bool, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_checkRange(
-    Mat self,
+    Mat a,
     bool quiet,
     ffi.Pointer<CvPoint> pos,
     double minVal,
@@ -4245,7 +4393,7 @@ class CvNativeCore {
     imp1.CvCallback_0 callback,
   ) {
     return _cv_checkRange(
-      self,
+      a,
       quiet,
       pos,
       minVal,
@@ -4296,14 +4444,14 @@ class CvNativeCore {
     Mat src1,
     Mat src2,
     Mat dst,
-    int ct,
+    int cmpop,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_compare(
       src1,
       src2,
       dst,
-      ct,
+      cmpop,
       callback,
     );
   }
@@ -4316,12 +4464,12 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_completeSymm(
-    Mat self,
+    Mat m,
     bool lowerToUpper,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_completeSymm(
-      self,
+      m,
       lowerToUpper,
       callback,
     );
@@ -4397,6 +4545,27 @@ class CvNativeCore {
   late final _cv_copyMakeBorder = _cv_copyMakeBorderPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, int, int, int, int, int, Scalar, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_copyTo(
+    Mat src,
+    Mat dst,
+    Mat mask,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_copyTo(
+      src,
+      dst,
+      mask,
+      callback,
+    );
+  }
+
+  late final _cv_copyToPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, imp1.CvCallback_0)>>('cv_copyTo');
+  late final _cv_copyTo = _cv_copyToPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_0)>();
 
   int cv_countNonZero(
     Mat src,
@@ -4626,6 +4795,27 @@ class CvNativeCore {
   late final _cv_flip = _cv_flipPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, int, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_flipND(
+    Mat src,
+    Mat dst,
+    int axis,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_flipND(
+      src,
+      dst,
+      axis,
+      callback,
+    );
+  }
+
+  late final _cv_flipNDPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Int, imp1.CvCallback_0)>>('cv_flipND');
+  late final _cv_flipND = _cv_flipNDPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_gemm(
     Mat src1,
     Mat src2,
@@ -4702,6 +4892,19 @@ class CvNativeCore {
       _lookup<ffi.NativeFunction<double_t Function()>>('cv_getTickFrequency');
   late final _cv_getTickFrequency =
       _cv_getTickFrequencyPtr.asFunction<double Function()>();
+
+  bool cv_hasNonZero(
+    Mat src,
+  ) {
+    return _cv_hasNonZero(
+      src,
+    );
+  }
+
+  late final _cv_hasNonZeroPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('cv_hasNonZero');
+  late final _cv_hasNonZero =
+      _cv_hasNonZeroPtr.asFunction<bool Function(Mat)>();
 
   ffi.Pointer<CvStatus> cv_hconcat(
     Mat src1,
@@ -5001,6 +5204,26 @@ class CvNativeCore {
   late final _cv_max = _cv_maxPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_mean(
+    Mat src,
+    ffi.Pointer<Scalar> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_mean(
+      src,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_meanPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_mean');
+  late final _cv_mean = _cv_meanPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_meanStdDev(
     Mat src,
     ffi.Pointer<Scalar> dstMean,
@@ -5046,6 +5269,28 @@ class CvNativeCore {
   late final _cv_meanStdDev_1 = _cv_meanStdDev_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<Scalar>,
           ffi.Pointer<Scalar>, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_mean_1(
+    Mat src,
+    Mat mask,
+    ffi.Pointer<Scalar> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_mean_1(
+      src,
+      mask,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_mean_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_mean_1');
+  late final _cv_mean_1 = _cv_mean_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_merge(
     VecMat mats,
@@ -5093,6 +5338,7 @@ class CvNativeCore {
     ffi.Pointer<ffi.Double> maxVal,
     ffi.Pointer<ffi.Int> minIdx,
     ffi.Pointer<ffi.Int> maxIdx,
+    Mat mask,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_minMaxIdx(
@@ -5101,6 +5347,7 @@ class CvNativeCore {
       maxVal,
       minIdx,
       maxIdx,
+      mask,
       callback,
     );
   }
@@ -5113,6 +5360,7 @@ class CvNativeCore {
               ffi.Pointer<ffi.Double>,
               ffi.Pointer<ffi.Int>,
               ffi.Pointer<ffi.Int>,
+              Mat,
               imp1.CvCallback_0)>>('cv_minMaxIdx');
   late final _cv_minMaxIdx = _cv_minMaxIdxPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
@@ -5121,6 +5369,7 @@ class CvNativeCore {
           ffi.Pointer<ffi.Double>,
           ffi.Pointer<ffi.Int>,
           ffi.Pointer<ffi.Int>,
+          Mat,
           imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_minMaxLoc(
@@ -5129,6 +5378,7 @@ class CvNativeCore {
     ffi.Pointer<ffi.Double> maxVal,
     ffi.Pointer<CvPoint> minLoc,
     ffi.Pointer<CvPoint> maxLoc,
+    Mat mask,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_minMaxLoc(
@@ -5137,6 +5387,7 @@ class CvNativeCore {
       maxVal,
       minLoc,
       maxLoc,
+      mask,
       callback,
     );
   }
@@ -5149,6 +5400,7 @@ class CvNativeCore {
               ffi.Pointer<ffi.Double>,
               ffi.Pointer<CvPoint>,
               ffi.Pointer<CvPoint>,
+              Mat,
               imp1.CvCallback_0)>>('cv_minMaxLoc');
   late final _cv_minMaxLoc = _cv_minMaxLocPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
@@ -5157,6 +5409,7 @@ class CvNativeCore {
           ffi.Pointer<ffi.Double>,
           ffi.Pointer<CvPoint>,
           ffi.Pointer<CvPoint>,
+          Mat,
           imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_mixChannels(
@@ -5206,6 +5459,34 @@ class CvNativeCore {
   late final _cv_mulSpectrums = _cv_mulSpectrumsPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Mat, int, bool, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_mulTransposed(
+    Mat src,
+    Mat dst,
+    bool aTa,
+    Mat delta,
+    double scale,
+    int dtype,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_mulTransposed(
+      src,
+      dst,
+      aTa,
+      delta,
+      scale,
+      dtype,
+      callback,
+    );
+  }
+
+  late final _cv_mulTransposedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Bool, Mat, ffi.Double,
+              ffi.Int, imp1.CvCallback_0)>>('cv_mulTransposed');
+  late final _cv_mulTransposed = _cv_mulTransposedPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, Mat, bool, Mat, double, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_multiply(
     Mat src1,
@@ -5312,6 +5593,25 @@ class CvNativeCore {
   late final _cv_normalize = _cv_normalizePtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, double, double, int, int, Mat, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_patchNaNs(
+    Mat a,
+    double val,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_patchNaNs(
+      a,
+      val,
+      callback,
+    );
+  }
+
+  late final _cv_patchNaNsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Double, imp1.CvCallback_0)>>('cv_patchNaNs');
+  late final _cv_patchNaNs = _cv_patchNaNsPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_perspectiveTransform(
     Mat src,
@@ -5827,6 +6127,25 @@ class CvNativeCore {
   late final _cv_split = _cv_splitPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_sqrt(
+    Mat src,
+    Mat dst,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_sqrt(
+      src,
+      dst,
+      callback,
+    );
+  }
+
+  late final _cv_sqrtPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, imp1.CvCallback_0)>>('cv_sqrt');
+  late final _cv_sqrt = _cv_sqrtPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_subtract(
     Mat src1,

@@ -46,33 +46,21 @@ int getLogLevel() {
 }
 
 /// get version
-String openCvVersion() {
-  final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => ccore.openCVVersion(p));
-  final s = p.value.toDartString();
-  calloc.free(p);
-  return s;
-}
+String openCvVersion() => ccore.getCvVersion().toDartString();
 
 /// Returns full configuration time cmake output.
 ///
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
-String getBuildInformation() {
-  final p = calloc<ffi.Pointer<ffi.Char>>();
-  cvRun(() => ccore.getBuildInfo(p));
-  final s = p.value.toDartString();
-  calloc.free(p);
-  return s;
-}
+String getBuildInformation() => ccore.getBuildInfo().toDartString();
 
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6fef31bc8c4071cbc114a758a2b79c14
-Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
+Mat absDiff(Mat src1, Mat src2, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_AbsDiff(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.cv_absdiff(src1.ref, src2.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -83,7 +71,7 @@ Mat absDiff(Mat src1, Mat src2, [Mat? dst]) {
 Mat add(Mat src1, Mat src2, {Mat? dst, int dtype = -1, Mat? mask}) {
   dst ??= Mat.empty();
   mask ??= Mat.empty();
-  cvRun(() => ccore.Mat_Add(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
+  cvRun(() => ccore.cv_add(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype, ffi.nullptr));
   return dst;
 }
 
@@ -101,74 +89,7 @@ Mat addWeighted(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_AddWeighted(src1.ref, alpha, src2.ref, beta, gamma, dst!.ref, dtype));
-  return dst;
-}
-
-/// BitwiseAnd computes bitwise conjunction of the two arrays (dst = src1 & src2).
-/// Calculates the per-element bit-wise conjunction of two arrays
-/// or an array and a scalar.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga60b4d04b251ba5eb1392c34425497e14
-Mat bitwiseAND(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  mask == null
-      ? cvRun(() => ccore.Mat_BitwiseAnd(src1.ref, src2.ref, dst!.ref))
-      : cvRun(() => ccore.Mat_BitwiseAndWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  return dst;
-}
-
-/// BitwiseNot inverts every bit of an array.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
-Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
-  dst ??= Mat.empty();
-  mask == null
-      ? cvRun(() => ccore.Mat_BitwiseNot(src.ref, dst!.ref))
-      : cvRun(() => ccore.Mat_BitwiseNotWithMask(src.ref, dst!.ref, mask.ref));
-  return dst;
-}
-
-/// BitwiseOr calculates the per-element bit-wise disjunction of two arrays
-/// or an array and a scalar.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gab85523db362a4e26ff0c703793a719b4
-Mat bitwiseOR(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  mask == null
-      ? cvRun(() => ccore.Mat_BitwiseOr(src1.ref, src2.ref, dst!.ref))
-      : cvRun(() => ccore.Mat_BitwiseOrWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
-  return dst;
-}
-
-/// BitwiseXor calculates the per-element bit-wise "exclusive or" operation
-/// on two arrays or an array and a scalar.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga84b2d8188ce506593dcc3f8cd00e8e2c
-Mat bitwiseXOR(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-}) {
-  dst ??= Mat.empty();
-  mask == null
-      ? cvRun(() => ccore.Mat_BitwiseXor(src1.ref, src2.ref, dst!.ref))
-      : cvRun(() => ccore.Mat_BitwiseXorWithMask(src1.ref, src2.ref, dst!.ref, mask.ref));
+  cvRun(() => ccore.cv_addWeighted(src1.ref, alpha, src2.ref, beta, gamma, dst!.ref, dtype, ffi.nullptr));
   return dst;
 }
 
@@ -192,7 +113,7 @@ Mat bitwiseXOR(
   nidx ??= Mat.empty();
   mask ??= Mat.empty();
   cvRun(
-    () => ccore.Mat_BatchDistance(
+    () => ccore.cv_batchDistance(
       src1.ref,
       src2.ref,
       dist!.ref,
@@ -203,9 +124,77 @@ Mat bitwiseXOR(
       mask!.ref,
       update,
       crosscheck,
+      ffi.nullptr,
     ),
   );
   return (dist, nidx);
+}
+
+/// BitwiseAnd computes bitwise conjunction of the two arrays (dst = src1 & src2).
+/// Calculates the per-element bit-wise conjunction of two arrays
+/// or an array and a scalar.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga60b4d04b251ba5eb1392c34425497e14
+Mat bitwiseAND(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+}) {
+  dst ??= Mat.empty();
+  mask == null
+      ? cvRun(() => ccore.cv_bitwise_and(src1.ref, src2.ref, dst!.ref, ffi.nullptr))
+      : cvRun(() => ccore.cv_bitwise_and_1(src1.ref, src2.ref, dst!.ref, mask.ref, ffi.nullptr));
+  return dst;
+}
+
+/// BitwiseNot inverts every bit of an array.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
+Mat bitwiseNOT(InputArray src, {OutputArray? dst, InputArray? mask}) {
+  dst ??= Mat.empty();
+  mask == null
+      ? cvRun(() => ccore.cv_bitwise_not(src.ref, dst!.ref, ffi.nullptr))
+      : cvRun(() => ccore.cv_bitwise_not_1(src.ref, dst!.ref, mask.ref, ffi.nullptr));
+  return dst;
+}
+
+/// BitwiseOr calculates the per-element bit-wise disjunction of two arrays
+/// or an array and a scalar.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gab85523db362a4e26ff0c703793a719b4
+Mat bitwiseOR(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+}) {
+  dst ??= Mat.empty();
+  mask == null
+      ? cvRun(() => ccore.cv_bitwise_or(src1.ref, src2.ref, dst!.ref, ffi.nullptr))
+      : cvRun(() => ccore.cv_bitwise_or_1(src1.ref, src2.ref, dst!.ref, mask.ref, ffi.nullptr));
+  return dst;
+}
+
+/// BitwiseXor calculates the per-element bit-wise "exclusive or" operation
+/// on two arrays or an array and a scalar.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga84b2d8188ce506593dcc3f8cd00e8e2c
+Mat bitwiseXOR(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+}) {
+  dst ??= Mat.empty();
+  mask == null
+      ? cvRun(() => ccore.cv_bitwise_xor(src1.ref, src2.ref, dst!.ref, ffi.nullptr))
+      : cvRun(() => ccore.cv_bitwise_xor_1(src1.ref, src2.ref, dst!.ref, mask.ref, ffi.nullptr));
+  return dst;
 }
 
 /// BorderInterpolate computes the source location of an extrapolated pixel.
@@ -214,7 +203,7 @@ Mat bitwiseXOR(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
 int borderInterpolate(int p, int len, int borderType) {
   final ptr = calloc<ffi.Int>();
-  cvRun(() => ccore.Mat_BorderInterpolate(p, len, borderType, ptr));
+  cvRun(() => ccore.cv_borderInterpolate(p, len, borderType, ptr, ffi.nullptr));
   final v = ptr.value;
   calloc.free(ptr);
   return v;
@@ -233,12 +222,13 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   covar ??= Mat.empty();
   cvRun(
-    () => ccore.Mat_CalcCovarMatrix(
+    () => ccore.cv_calcCovarMatrix(
       samples.ref,
       covar!.ref,
       mean.ref,
       flags,
       ctype,
+      ffi.nullptr,
     ),
   );
   return (covar, mean);
@@ -257,7 +247,7 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   magnitude ??= Mat.empty();
   angle ??= Mat.empty();
-  cvRun(() => ccore.Mat_CartToPolar(x.ref, y.ref, magnitude!.ref, angle!.ref, angleInDegrees));
+  cvRun(() => ccore.cv_cartToPolar(x.ref, y.ref, magnitude!.ref, angle!.ref, angleInDegrees, ffi.nullptr));
   return (magnitude, angle);
 }
 
@@ -271,12 +261,12 @@ int borderInterpolate(int p, int len, int borderType) {
   double minVal = -CV_F64_MAX,
   double maxVal = CV_F64_MAX,
 }) {
-  return cvRunArena<(bool, Point)>((arena) {
-    final pos = calloc<cvg.CvPoint>();
-    final rval = arena<ffi.Bool>();
-    cvRun(() => ccore.Mat_CheckRange(a.ref, quiet, pos, minVal, maxVal, rval));
-    return (rval.value, Point.fromPointer(pos));
-  });
+  final pos = calloc<cvg.CvPoint>();
+  final pRval = calloc<ffi.Bool>();
+  cvRun(() => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, ffi.nullptr));
+  final rval = pRval.value;
+  calloc.free(pRval);
+  return (rval, Point.fromPointer(pos));
 }
 
 /// Compare performs the per-element comparison of two arrays
@@ -286,22 +276,16 @@ int borderInterpolate(int p, int len, int borderType) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga303cfb72acf8cbb36d884650c09a3a97
 Mat compare(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Compare(src1.ref, src2.ref, dst!.ref, cmpop));
+  cvRun(() => ccore.cv_compare(src1.ref, src2.ref, dst!.ref, cmpop, ffi.nullptr));
   return dst;
 }
-
-/// CountNonZero counts non-zero array elements.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa4b89393263bb4d604e0fe5986723914
-int countNonZero(Mat src) => ccore.Mat_CountNonZero(src.ref);
 
 /// CompleteSymm copies the lower or the upper half of a square matrix to its another half.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6847337c0c55769e115a70e0f011b5ca
 Mat completeSymm(InputOutputArray m, {bool lowerToUpper = false}) {
-  cvRun(() => ccore.Mat_CompleteSymm(m.ref, lowerToUpper));
+  cvRun(() => ccore.cv_completeSymm(m.ref, lowerToUpper, ffi.nullptr));
   return m;
 }
 
@@ -316,7 +300,7 @@ Mat convertScaleAbs(
   double beta = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_ConvertScaleAbs(src.ref, dst!.ref, alpha, beta));
+  cvRun(() => ccore.cv_convertScaleAbs(src.ref, dst!.ref, alpha, beta, ffi.nullptr));
   return dst;
 }
 
@@ -337,7 +321,7 @@ Mat copyMakeBorder(
   dst ??= Mat.empty();
   value ??= Scalar();
   cvRun(
-    () => ccore.Mat_CopyMakeBorder(
+    () => ccore.cv_copyMakeBorder(
       src.ref,
       dst!.ref,
       top,
@@ -346,10 +330,30 @@ Mat copyMakeBorder(
       right,
       borderType,
       value!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
 }
+
+/// CopyTo
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga931a49489330f998452fc53e96e1719a
+Mat copyTo(
+  InputArray src,
+  InputArray dst, {
+  InputArray? mask,
+}) {
+  mask ??= Mat.empty();
+  cvRun(() => ccore.cv_copyTo(src.ref, dst.ref, mask!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// CountNonZero counts non-zero array elements.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa4b89393263bb4d604e0fe5986723914
+int countNonZero(Mat src) => ccore.cv_countNonZero(src.ref);
 
 /// DCT performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 ///
@@ -357,7 +361,7 @@ Mat copyMakeBorder(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga85aad4d668c01fbd64825f589e3696d4
 Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_DCT(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.cv_dct(src.ref, dst!.ref, flags, ffi.nullptr));
   return dst;
 }
 
@@ -366,11 +370,11 @@ Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf802bd9ca3e07b8b6170645ef0611d0c
 double determinant(InputArray mtx) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => ccore.Mat_Determinant(mtx.ref, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.cv_determinant(mtx.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// DFT performs a forward or inverse Discrete Fourier Transform (DFT)
@@ -380,7 +384,7 @@ double determinant(InputArray mtx) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadd6cf9baf2b8b704a11b5f04aaf4f39d
 Mat dft(InputArray src, {OutputArray? dst, int flags = 0, int nonzeroRows = 0}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_DFT(src.ref, dst!.ref, flags, nonzeroRows));
+  cvRun(() => ccore.cv_dft(src.ref, dst!.ref, flags, nonzeroRows, ffi.nullptr));
   return dst;
 }
 
@@ -391,7 +395,7 @@ Mat dft(InputArray src, {OutputArray? dst, int flags = 0, int nonzeroRows = 0}) 
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6db555d30115642fedae0cda05604874
 Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1, int dtype = -1}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Divide(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.cv_divide(src1.ref, src2.ref, dst!.ref, scale, dtype, ffi.nullptr));
   return dst;
 }
 
@@ -406,11 +410,10 @@ Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  final ret = cvRunArena<bool>((arena) {
-    final p = arena<ffi.Bool>();
-    cvRun(() => ccore.Mat_Eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Bool>();
+  cvRun(() => ccore.cv_eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p, ffi.nullptr));
+  final ret = p.value;
+  calloc.free(p);
   return (ret, eigenvalues, eigenvectors);
 }
 
@@ -425,30 +428,8 @@ Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  cvRun(() => ccore.Mat_EigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref));
+  cvRun(() => ccore.cv_eigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref, ffi.nullptr));
   return (eigenvalues, eigenvectors);
-}
-
-/// PCACompute performs PCA.
-///
-/// The computed eigenvalues are sorted from the largest to the smallest and the corresponding
-/// eigenvectors are stored as eigenvectors rows.
-///
-/// Note: Calling with maxComponents == 0 (opencv default) will cause all components to be retained.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga27a565b31d820b05dcbcd47112176b6e
-(Mat mean, Mat eigenvalues, Mat eigenvectors) PCACompute(
-  InputArray data,
-  InputOutputArray mean, {
-  OutputArray? eigenvectors,
-  OutputArray? eigenvalues,
-  int maxComponents = 0,
-}) {
-  eigenvalues ??= Mat.empty();
-  eigenvectors ??= Mat.empty();
-  ccore.Mat_PCACompute(data.ref, mean.ref, eigenvectors.ref, eigenvalues.ref, maxComponents);
-  return (mean, eigenvalues, eigenvectors);
 }
 
 /// Exp calculates the exponent of every array element.
@@ -457,7 +438,7 @@ Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
 Mat exp(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Exp(src.ref, dst!.ref));
+  cvRun(() => ccore.cv_exp(src.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -467,7 +448,7 @@ Mat exp(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc6158574aa1f0281878c955bcf35642
 Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_ExtractChannel(src.ref, dst!.ref, coi));
+  cvRun(() => ccore.cv_extractChannel(src.ref, dst!.ref, coi, ffi.nullptr));
   return dst;
 }
 
@@ -477,7 +458,7 @@ Mat extractChannel(InputArray src, int coi, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaed7df59a3539b4cc0fe5c9c8d7586190
 Mat findNonZero(InputArray src, {OutputArray? idx}) {
   idx ??= Mat.empty();
-  cvRun(() => ccore.Mat_FindNonZero(src.ref, idx!.ref));
+  cvRun(() => ccore.cv_findNonZero(src.ref, idx!.ref, ffi.nullptr));
   return idx;
 }
 
@@ -487,7 +468,13 @@ Mat findNonZero(InputArray src, {OutputArray? idx}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaca7be533e3dac7feb70fc60635adf441
 Mat flip(InputArray src, int flipCode, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Flip(src.ref, dst!.ref, flipCode));
+  cvRun(() => ccore.cv_flip(src.ref, dst!.ref, flipCode, ffi.nullptr));
+  return dst;
+}
+
+Mat flipND(InputArray src, int axis, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_flipND(src.ref, dst!.ref, axis, ffi.nullptr));
   return dst;
 }
 
@@ -505,7 +492,7 @@ Mat gemm(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags));
+  cvRun(() => ccore.cv_gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags, ffi.nullptr));
   return dst;
 }
 
@@ -515,12 +502,15 @@ Mat gemm(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6577a2e59968936ae02eb2edde5de299
 int getOptimalDFTSize(int vecsize) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => ccore.Mat_GetOptimalDFTSize(vecsize, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Int>();
+  cvRun(() => ccore.cv_getOptimalDFTSize(vecsize, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
+
+/// has non zero
+bool hasNonZero(InputArray src) => ccore.cv_hasNonZero(src.ref);
 
 /// Hconcat applies horizontal concatenation to given matrices.
 ///
@@ -528,27 +518,7 @@ int getOptimalDFTSize(int vecsize) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
 Mat hconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Hconcat(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
-
-/// Vconcat applies vertical concatenation to given matrices.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
-Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Vconcat(src1.ref, src2.ref, dst!.ref));
-  return dst;
-}
-
-/// Rotate rotates a 2D array in multiples of 90 degrees
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
-Mat rotate(InputArray src, int rotateCode, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Rotate(src.ref, dst!.ref, rotateCode));
+  cvRun(() => ccore.cv_hconcat(src1.ref, src2.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -562,7 +532,7 @@ Mat idct(
   int flags = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Idct(src.ref, dst!.ref, flags));
+  cvRun(() => ccore.cv_idct(src.ref, dst!.ref, flags, ffi.nullptr));
   return dst;
 }
 
@@ -577,7 +547,7 @@ Mat idft(
   int nonzeroRows = 0,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Idft(src.ref, dst!.ref, flags, nonzeroRows));
+  cvRun(() => ccore.cv_idft(src.ref, dst!.ref, flags, nonzeroRows, ffi.nullptr));
   return dst;
 }
 
@@ -592,7 +562,7 @@ Mat inRange(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_InRange(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => ccore.cv_inRange(src.ref, lowerb.ref, upperb.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -607,7 +577,7 @@ Mat inRangebyScalar(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_InRangeWithScalar(src.ref, lowerb.ref, upperb.ref, dst!.ref));
+  cvRun(() => ccore.cv_inRange_1(src.ref, lowerb.ref, upperb.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -617,7 +587,7 @@ Mat inRangebyScalar(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1d4bd886d35b00ec0b764cb4ce6eb515
 Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
-  cvRun(() => ccore.Mat_InsertChannel(src.ref, dst.ref, coi));
+  cvRun(() => ccore.cv_insertChannel(src.ref, dst.ref, coi, ffi.nullptr));
   return dst;
 }
 
@@ -631,78 +601,11 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
   int flags = DECOMP_LU,
 }) {
   dst ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => ccore.Mat_Invert(src.ref, dst!.ref, flags, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.cv_invert(src.ref, dst!.ref, flags, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
   return (rval, dst);
-}
-
-/// KMeans finds centers of clusters and groups input samples around the clusters.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
-(double rval, Mat bestLabels, Mat centers) kmeans(
-  InputArray data,
-  int K,
-  InputOutputArray bestLabels,
-  (int, int, double) criteria,
-  int attempts,
-  int flags, {
-  OutputArray? centers,
-}) {
-  centers ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(
-      () => ccore.KMeans(
-        data.ref,
-        K,
-        bestLabels.ref,
-        TermCriteria.fromRecord(criteria).ref,
-        attempts,
-        flags,
-        centers!.ref,
-        p,
-      ),
-    );
-    return p.value;
-  });
-  return (rval, bestLabels, centers);
-}
-
-/// KMeansPoints finds centers of clusters and groups input samples around the clusters.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
-(double rval, Mat bestLabels, Mat centers) kmeansByPoints(
-  VecPoint2f pts,
-  int K,
-  InputOutputArray bestLabels,
-  (int, int, double) criteria,
-  int attempts,
-  int flags, {
-  OutputArray? centers,
-}) {
-  centers ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(
-      () => ccore.KMeansPoints(
-        pts.ref,
-        K,
-        bestLabels.ref,
-        TermCriteria.fromRecord(criteria).ref,
-        attempts,
-        flags,
-        centers!.ref,
-        p,
-      ),
-    );
-    return p.value;
-  });
-  return (rval, bestLabels, centers);
 }
 
 /// Log calculates the natural logarithm of every array element.
@@ -711,7 +614,7 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga937ecdce4679a77168730830a955bea7
 Mat log(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Log(src.ref, dst!.ref));
+  cvRun(() => ccore.cv_log(src.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -738,7 +641,7 @@ Mat log(InputArray src, {OutputArray? dst}) {
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
 Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.LUT(src.ref, lut.ref, dst!.ref));
+  cvRun(() => ccore.cv_LUT(src.ref, lut.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -748,7 +651,7 @@ Mat LUT(InputArray src, InputArray lut, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6d3b097586bca4409873d64a90fe64c3
 Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
   magnitude ??= Mat.empty();
-  cvRun(() => ccore.Mat_Magnitude(x.ref, y.ref, magnitude!.ref));
+  cvRun(() => ccore.cv_magnitude(x.ref, y.ref, magnitude!.ref, ffi.nullptr));
   return magnitude;
 }
 
@@ -758,8 +661,17 @@ Mat magnitude(InputArray x, InputArray y, {OutputArray? magnitude}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc40fa15eac0fb83f8ca70b7cc0b588d
 Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Max(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.cv_max(src1.ref, src2.ref, dst!.ref, ffi.nullptr));
   return dst;
+}
+
+/// mean
+Scalar mean(InputArray src, {InputArray? mask}) {
+  final p = calloc<cvg.Scalar>();
+  mask == null
+      ? cvRun(() => ccore.cv_mean(src.ref, p, ffi.nullptr))
+      : cvRun(() => ccore.cv_mean_1(src.ref, mask.ref, p, ffi.nullptr));
+  return Scalar.fromPointer(p);
 }
 
 /// MeanStdDev calculates a mean and standard deviation of array elements.
@@ -770,8 +682,8 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
   final mean = calloc<cvg.Scalar>();
   final stddev = calloc<cvg.Scalar>();
   mask == null
-      ? cvRun(() => ccore.Mat_MeanStdDev(src.ref, mean, stddev))
-      : cvRun(() => ccore.Mat_MeanStdDevWithMask(src.ref, mean, stddev, mask.ref));
+      ? cvRun(() => ccore.cv_meanStdDev(src.ref, mean, stddev, ffi.nullptr))
+      : cvRun(() => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, ffi.nullptr));
   return (Scalar.fromPointer(mean), Scalar.fromPointer(stddev));
 }
 
@@ -780,9 +692,9 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
 Mat merge(VecMat mv, {OutputArray? dst}) {
-  final p = calloc<cvg.Mat>();
-  cvRun(() => ccore.Mat_Merge(mv.ref, p));
-  return Mat.fromPointer(p);
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_merge(mv.ref, dst!.ref, ffi.nullptr));
+  return dst;
 }
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
@@ -791,7 +703,7 @@ Mat merge(VecMat mv, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
 Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Min(src1.ref, src2.ref, dst!.ref));
+  cvRun(() => ccore.cv_min(src1.ref, src2.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -803,14 +715,18 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   InputArray src, {
   InputArray? mask,
 }) {
-  return using<(double, double, int, int)>((arena) {
-    final minValP = arena<ffi.Double>();
-    final maxValP = arena<ffi.Double>();
-    final minIdxP = arena<ffi.Int>();
-    final maxIdxP = arena<ffi.Int>();
-    cvRun(() => ccore.Mat_MinMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP));
-    return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
-  });
+  mask ??= Mat.empty();
+  final minValP = calloc<ffi.Double>();
+  final maxValP = calloc<ffi.Double>();
+  final minIdxP = calloc<ffi.Int>();
+  final maxIdxP = calloc<ffi.Int>();
+  cvRun(() => ccore.cv_minMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP, mask!.ref, ffi.nullptr));
+  final rval = (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
+  calloc.free(minValP);
+  calloc.free(maxValP);
+  calloc.free(minIdxP);
+  calloc.free(maxIdxP);
+  return rval;
 }
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
@@ -818,14 +734,16 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/trunk/d2/de8/group__core__array.html#gab473bf2eb6d14ff97e89b355dac20707
 (double minVal, double maxVal, Point minLoc, Point maxLoc) minMaxLoc(InputArray src, {InputArray? mask}) {
-  return using<(double, double, Point, Point)>((arena) {
-    final minValP = arena<ffi.Double>();
-    final maxValP = arena<ffi.Double>();
-    final minLocP = calloc<cvg.CvPoint>();
-    final maxLocP = calloc<cvg.CvPoint>();
-    cvRun(() => ccore.Mat_MinMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP));
-    return (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
-  });
+  mask ??= Mat.empty();
+  final minValP = calloc<ffi.Double>();
+  final maxValP = calloc<ffi.Double>();
+  final minLocP = calloc<cvg.CvPoint>();
+  final maxLocP = calloc<cvg.CvPoint>();
+  cvRun(() => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, ffi.nullptr));
+  final rval = (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
+  calloc.free(minValP);
+  calloc.free(maxValP);
+  return rval;
 }
 
 /// Copies specified channels from input arrays to the specified channels of output arrays.
@@ -833,7 +751,7 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
 VecMat mixChannels(VecMat src, VecMat dst, VecI32 fromTo) {
-  cvRun(() => ccore.Mat_MixChannels(src.ref, dst.ref, fromTo.ref));
+  cvRun(() => ccore.cv_mixChannels(src.ref, dst.ref, fromTo.ref, ffi.nullptr));
   return dst;
 }
 
@@ -849,7 +767,7 @@ Mat mulSpectrums(
   bool conjB = false,
 }) {
   c ??= Mat.empty();
-  cvRun(() => ccore.Mat_MulSpectrums(a.ref, b.ref, c!.ref, flags, conjB));
+  cvRun(() => ccore.cv_mulSpectrums(a.ref, b.ref, c!.ref, flags, conjB, ffi.nullptr));
   return c;
 }
 
@@ -866,8 +784,59 @@ Mat multiply(
   int dtype = -1,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Multiply(src1.ref, src2.ref, dst!.ref, scale, dtype));
+  cvRun(() => ccore.cv_multiply(src1.ref, src2.ref, dst!.ref, scale, dtype, ffi.nullptr));
   return dst;
+}
+
+/// mulTransposed
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gadc4e49f8f7a155044e3be1b9e3b270ab
+Mat mulTransposed(
+  InputArray src,
+  OutputArray dst,
+  bool aTa, {
+  InputArray? delta,
+  double scale = 1,
+  int dtype = -1,
+}) {
+  delta ??= Mat.empty();
+  cvRun(() => ccore.cv_mulTransposed(src.ref, dst.ref, aTa, delta!.ref, scale, dtype, ffi.nullptr));
+  return dst;
+}
+
+/// Norm calculates the absolute norm of an array.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
+double norm(
+  InputArray src1, {
+  int normType = NORM_L2,
+  InputArray? mask,
+}) {
+  mask ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.cv_norm(src1.ref, normType, mask!.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
+}
+
+/// Norm calculates the absolute difference/relative norm of two arrays.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
+double norm1(
+  InputArray src1,
+  InputArray src2, {
+  int normType = NORM_L2,
+  InputArray? mask,
+}) {
+  final p = calloc<ffi.Double>();
+  mask ??= Mat.empty();
+  cvRun(() => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// Normalize normalizes the norm or value range of an array.
@@ -884,43 +853,87 @@ Mat normalize(
   InputArray? mask,
 }) {
   mask ??= Mat.empty();
-  cvRun(() => ccore.Mat_Normalize(src.ref, dst.ref, alpha, beta, normType, dtype, mask!.ref));
+  cvRun(() => ccore.cv_normalize(src.ref, dst.ref, alpha, beta, normType, dtype, mask!.ref, ffi.nullptr));
   return dst;
 }
 
-/// Norm calculates the absolute norm of an array.
+/// patchNaNs
 ///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-double norm(
-  InputArray src1, {
-  int normType = NORM_L2,
-  InputArray? mask,
-}) {
-  mask ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.Norm(src1.ref, normType, mask!.ref, p));
-  final rval = p.value;
-  calloc.free(p);
-  return rval;
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga62286befb7cde3568ff8c7d14d5079da
+Mat patchNaNs(InputArray a, double val) {
+  cvRun(() => ccore.cv_patchNaNs(a.ref, val, ffi.nullptr));
+  return a;
 }
 
-/// Norm calculates the absolute difference/relative norm of two arrays.
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab26049f30ee8e94f7d69d82c124faafc
+Mat PCABackProject(
+  InputArray data,
+  InputArray mean,
+  InputArray eigenvectors, {
+  OutputArray? dst,
+}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_PCABackProject(data.ref, mean.ref, eigenvectors.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// PCACompute performs PCA.
+///
+/// The computed eigenvalues are sorted from the largest to the smallest and the corresponding
+/// eigenvectors are stored as eigenvectors rows.
+///
+/// Note: Calling with maxComponents == 0 (opencv default) will cause all components to be retained.
 ///
 /// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
-double norm1(
-  InputArray src1,
-  InputArray src2, {
-  int normType = NORM_L2,
-  InputArray? mask,
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga27a565b31d820b05dcbcd47112176b6e
+(Mat mean, Mat eigenvalues, Mat eigenvectors) PCACompute(
+  InputArray data,
+  InputOutputArray mean, {
+  OutputArray? eigenvectors,
+  OutputArray? eigenvalues,
+  int maxComponents = 0,
 }) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    mask ??= Mat.empty();
-    cvRun(() => ccore.NormWithMats(src1.ref, src2.ref, normType, mask!.ref, p));
-    return p.value;
-  });
+  eigenvalues ??= Mat.empty();
+  eigenvectors ??= Mat.empty();
+  cvRun(
+    () => ccore.cv_PCACompute(
+      data.ref,
+      mean.ref,
+      eigenvectors!.ref,
+      eigenvalues!.ref,
+      maxComponents,
+      ffi.nullptr,
+    ),
+  );
+  return (mean, eigenvalues, eigenvectors);
+}
+
+(Mat mean, Mat eigenvalues, Mat eigenvectors) PCACompute1(
+  InputArray data,
+  InputOutputArray mean,
+  double retainedVariance, {
+  OutputArray? eigenvectors,
+  OutputArray? eigenvalues,
+}) {
+  eigenvectors ??= Mat.empty();
+  eigenvalues ??= Mat.empty();
+  cvRun(
+    () => ccore.cv_PCACompute_1(
+      data.ref,
+      mean.ref,
+      eigenvectors!.ref,
+      eigenvalues!.ref,
+      retainedVariance,
+      ffi.nullptr,
+    ),
+  );
+  return (mean, eigenvalues, eigenvectors);
+}
+
+(Mat mean, Mat result) PCAProject(Mat data, Mat mean, Mat eigenvectors, {OutputArray? result}) {
+  result ??= Mat.empty();
+  cvRun(() => ccore.cv_PCAProject(data.ref, mean.ref, eigenvectors.ref, result!.ref, ffi.nullptr));
+  return (mean, result);
 }
 
 /// PerspectiveTransform performs the perspective matrix transformation of vectors.
@@ -929,232 +942,18 @@ double norm1(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
 Mat perspectiveTransform(InputArray src, InputArray m, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_PerspectiveTransform(src.ref, dst!.ref, m.ref));
+  cvRun(() => ccore.cv_perspectiveTransform(src.ref, dst!.ref, m.ref, ffi.nullptr));
   return dst;
 }
 
-/// Solve solves one or more linear systems or least-squares problems.
+/// Phase calculates the rotation angle of 2D vectors.
 ///
 /// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga12b43690dbd31fed96f213eefead2373
-(bool ret, Mat dst) solve(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  int flags = DECOMP_LU,
-}) {
-  dst ??= Mat.empty();
-  final rval = cvRunArena<bool>((arena) {
-    final p = arena<ffi.Bool>();
-    cvRun(() => ccore.Mat_Solve(src1.ref, src2.ref, dst!.ref, flags, p));
-    return p.value;
-  });
-  return (rval, dst);
-}
-
-/// SolveCubic finds the real roots of a cubic equation.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
-(int rval, Mat roots) solveCubic(InputArray coeffs, {OutputArray? roots}) {
-  roots ??= Mat.empty();
-  final rval = cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => ccore.Mat_SolveCubic(coeffs.ref, roots!.ref, p));
-    return p.value;
-  });
-  return (rval, roots);
-}
-
-/// SolvePoly finds the real or complex roots of a polynomial equation.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
-(double rval, Mat roots) solvePoly(
-  InputArray coeffs, {
-  OutputArray? roots,
-  int maxIters = 300,
-}) {
-  roots ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => ccore.Mat_SolvePoly(coeffs.ref, roots!.ref, maxIters, p));
-    return p.value;
-  });
-  return (rval, roots);
-}
-
-/// Reduce reduces a matrix to a vector.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
-Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Reduce(src.ref, dst!.ref, dim, rtype, dtype));
-  return dst;
-}
-
-/// Finds indices of max elements along provided axis.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
-Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_ReduceArgMax(src.ref, dst!.ref, axis, lastIndex));
-  return dst;
-}
-
-/// Finds indices of min elements along provided axis.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
-Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_ReduceArgMin(src.ref, dst!.ref, axis, lastIndex));
-  return dst;
-}
-
-/// Repeat fills the output array with repeated copies of the input array.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
-Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Repeat(src.ref, ny, nx, dst!.ref));
-  return dst;
-}
-
-/// Calculates the sum of a scaled array and another array.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
-Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_ScaleAdd(src1.ref, alpha, src2.ref, dst!.ref));
-  return dst;
-}
-
-/// SetIdentity initializes a scaled identity matrix.
-/// For further details, please see:
-///
-///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
-Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
-  cvRun(() => ccore.Mat_SetIdentity(mtx.ref, s));
-  return mtx;
-}
-
-/// Sort sorts each row or each column of a matrix.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
-Mat sort(InputArray src, int flags, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Sort(src.ref, dst!.ref, flags));
-  return dst;
-}
-
-/// SortIdx sorts each row or each column of a matrix.
-/// Instead of reordering the elements themselves, it stores the indices of sorted elements in the output array
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
-Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_SortIdx(src.ref, dst!.ref, flags));
-  return dst;
-}
-
-/// Split creates an array of single channel images from a multi-channel image
-/// Created images should be closed manualy to avoid memory leaks.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
-VecMat split(InputArray m) {
-  final vec = calloc<cvg.VecMat>();
-  cvRun(() => ccore.Mat_Split(m.ref, vec));
-  return VecMat.fromPointer(vec);
-}
-
-/// Calculates a square root of array elements.
-///
-/// The function cv::sqrt calculates a square root of each input array element.
-/// In case of multi-channel arrays, each channel is processed independently.
-/// The accuracy is approximately the same as of the built-in std::sqrt .
-///
-/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga186222c3919657890f88df5a1f64a7d7
-Mat sqrt(Mat src, {Mat? dst}) {
-  final p = dst?.ptr ?? calloc<cvg.Mat>();
-  cvRun(() => ccore.Mat_Sqrt(src.ref, p));
-  return dst ?? Mat.fromPointer(p);
-}
-
-/// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa0f00d98b4b5edeaeb7b8333b2de353b
-Mat subtract(
-  InputArray src1,
-  InputArray src2, {
-  OutputArray? dst,
-  InputArray? mask,
-  int dtype = -1,
-}) {
-  dst ??= Mat.empty();
-  mask ??= Mat.empty();
-  cvRun(() => ccore.Mat_Subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype));
-  return dst;
-}
-
-/// Calculates the sum of array elements.
-///
-/// The function cv::sum calculates and returns the sum of array elements,
-/// independently for each channel.
-///
-/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
-Scalar sum(Mat src) {
-  final p = calloc<cvg.Scalar>();
-  cvRun(() => ccore.Mat_Sum(src.ref, p));
-  return Scalar.fromPointer(p);
-}
-
-/// Trace returns the trace of a matrix.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
-Scalar trace(InputArray mtx) {
-  final ptr = calloc<cvg.Scalar>();
-  cvRun(() => ccore.Mat_Trace(mtx.ref, ptr));
-  return Scalar.fromPointer(ptr);
-}
-
-/// Transform performs the matrix transformation of every array element.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
-Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Transform(src.ref, dst!.ref, m.ref));
-  return dst;
-}
-
-/// Transpose transposes a matrix.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
-Mat transpose(InputArray src, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Transpose(src.ref, dst!.ref));
-  return dst;
-}
-
-/// Pow raises every array element to a power.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
-Mat pow(InputArray src, double power, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccore.Mat_Pow(src.ref, power, dst!.ref));
-  return dst;
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
+Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
+  angle ??= Mat.empty();
+  cvRun(() => ccore.cv_phase(x.ref, y.ref, angle!.ref, angleInDegrees, ffi.nullptr));
+  return angle;
 }
 
 /// PolatToCart calculates x and y coordinates of 2D vectors from their magnitude and angle.
@@ -1170,53 +969,29 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 }) {
   x ??= Mat.empty();
   y ??= Mat.empty();
-  cvRun(() => ccore.Mat_PolarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees));
+  cvRun(() => ccore.cv_polarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees, ffi.nullptr));
   return (x, y);
 }
 
-/// Phase calculates the rotation angle of 2D vectors.
+/// Pow raises every array element to a power.
 ///
 /// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
-Mat phase(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) {
-  angle ??= Mat.empty();
-  cvRun(() => ccore.Mat_Phase(x.ref, y.ref, angle!.ref, angleInDegrees));
-  return angle;
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
+Mat pow(InputArray src, double power, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_pow(src.ref, power, dst!.ref, ffi.nullptr));
+  return dst;
 }
 
-/// GetTickCount returns the number of ticks.
+/// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
 ///
-/// For further details, please see:
-/// https://docs.opencv.org/master/db/de0/group__core__utils.html#gae73f58000611a1af25dd36d496bf4487
-int getTickCount() {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int64>();
-    cvRun(() => ccore.GetCVTickCount(p));
-    return p.value;
-  });
-}
-
-/// GetTickFrequency returns the number of ticks per second.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/db/de0/group__core__utils.html#ga705441a9ef01f47acdc55d87fbe5090c
-double getTickFrequency() {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => ccore.GetTickFrequency(p));
-    return p.value;
-  });
-}
-
-/// TheRNG Returns the default random number generator.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
-/// Disabled: double free
-Rng theRNG() {
-  final p = calloc<cvg.RNG>();
-  cvRun(() => ccore.TheRNG(p));
-  return Rng.fromTheRng(p);
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3119e3ea73010a6f810bb05aa36ac8d6
+double PSNR(InputArray src1, InputArray src2, {double R = 255.0}) {
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.cv_PSNR(src1.ref, src2.ref, R, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// RandN Fills the array with normally distributed random numbers.
@@ -1224,7 +999,7 @@ Rng theRNG() {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeff1f61e972d133a04ce3a5f81cf6808
 Mat randn(InputOutputArray dst, Scalar mean, Scalar stddev) {
-  cvRun(() => ccore.RandN(dst.ref, mean.ref, stddev.ref));
+  cvRun(() => ccore.cv_randn(dst.ref, mean.ref, stddev.ref, ffi.nullptr));
   return dst;
 }
 
@@ -1238,9 +1013,9 @@ Mat randShuffle(
   Rng? rng,
 }) {
   if (rng == null) {
-    cvRun(() => ccore.RandShuffle(dst.ref));
+    cvRun(() => ccore.cv_randShuffle(dst.ref, ffi.nullptr));
   } else {
-    cvRun(() => ccore.RandShuffleWithParams(dst.ref, iterFactor, rng.ref));
+    cvRun(() => ccore.cv_randShuffle_1(dst.ref, iterFactor, rng.ref, ffi.nullptr));
   }
   return dst;
 }
@@ -1251,20 +1026,364 @@ Mat randShuffle(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1ba1026dca0807b27057ba6a49d258c0
 Mat randu(InputOutputArray dst, Scalar low, Scalar high) {
-  cvRun(() => ccore.RandU(dst.ref, low.ref, high.ref));
+  cvRun(() => ccore.cv_randu(dst.ref, low.ref, high.ref, ffi.nullptr));
   return dst;
 }
 
-/// Set the number of threads for OpenCV.
-void setNumThreads(int n) {
-  cvRun(() => ccore.SetNumThreads(n));
+/// Reduce reduces a matrix to a vector.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
+Mat reduce(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_reduce(src.ref, dst!.ref, dim, rtype, dtype, ffi.nullptr));
+  return dst;
 }
 
-/// Get the number of threads for OpenCV.
-int getNumThreads() {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => ccore.GetNumThreads(p));
-    return p.value;
-  });
+/// Finds indices of max elements along provided axis.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
+Mat reduceArgMax(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_reduceArgMax(src.ref, dst!.ref, axis, lastIndex, ffi.nullptr));
+  return dst;
 }
+
+/// Finds indices of min elements along provided axis.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
+Mat reduceArgMin(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_reduceArgMin(src.ref, dst!.ref, axis, lastIndex, ffi.nullptr));
+  return dst;
+}
+
+/// Repeat fills the output array with repeated copies of the input array.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
+Mat repeat(InputArray src, int ny, int nx, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_repeat(src.ref, ny, nx, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// Rotate rotates a 2D array in multiples of 90 degrees
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
+Mat rotate(InputArray src, int rotateCode, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_rotate(src.ref, dst!.ref, rotateCode, ffi.nullptr));
+  return dst;
+}
+
+/// Calculates the sum of a scaled array and another array.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
+Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_scaleAdd(src1.ref, alpha, src2.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// SetIdentity initializes a scaled identity matrix.
+/// For further details, please see:
+///
+///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
+Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
+  cvRun(() => ccore.cv_setIdentity(mtx.ref, s, ffi.nullptr));
+  return mtx;
+}
+
+/// Solve solves one or more linear systems or least-squares problems.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga12b43690dbd31fed96f213eefead2373
+(bool ret, Mat dst) solve(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  int flags = DECOMP_LU,
+}) {
+  dst ??= Mat.empty();
+  final p = calloc<ffi.Bool>();
+  cvRun(() => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return (rval, dst);
+}
+
+/// SolveCubic finds the real roots of a cubic equation.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
+(int rval, Mat roots) solveCubic(InputArray coeffs, {OutputArray? roots}) {
+  roots ??= Mat.empty();
+  final p = calloc<ffi.Int>();
+  cvRun(() => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, ffi.nullptr));
+  final rval = p.value;
+  return (rval, roots);
+}
+
+/// SolvePoly finds the real or complex roots of a polynomial equation.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
+(double rval, Mat roots) solvePoly(
+  InputArray coeffs, {
+  OutputArray? roots,
+  int maxIters = 300,
+}) {
+  roots ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(() => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return (rval, roots);
+}
+
+/// Sort sorts each row or each column of a matrix.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
+Mat sort(InputArray src, int flags, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_sort(src.ref, dst!.ref, flags, ffi.nullptr));
+  return dst;
+}
+
+/// SortIdx sorts each row or each column of a matrix.
+/// Instead of reordering the elements themselves, it stores the indices of sorted elements in the output array
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
+Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_sortIdx(src.ref, dst!.ref, flags, ffi.nullptr));
+  return dst;
+}
+
+/// Split creates an array of single channel images from a multi-channel image
+/// Created images should be closed manualy to avoid memory leaks.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
+VecMat split(InputArray m) {
+  final vec = calloc<cvg.VecMat>();
+  cvRun(() => ccore.cv_split(m.ref, vec, ffi.nullptr));
+  return VecMat.fromPointer(vec);
+}
+
+/// Calculates a square root of array elements.
+///
+/// The function cv::sqrt calculates a square root of each input array element.
+/// In case of multi-channel arrays, each channel is processed independently.
+/// The accuracy is approximately the same as of the built-in std::sqrt .
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga186222c3919657890f88df5a1f64a7d7
+Mat sqrt(Mat src, {Mat? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_sqrt(src.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa0f00d98b4b5edeaeb7b8333b2de353b
+Mat subtract(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+  int dtype = -1,
+}) {
+  dst ??= Mat.empty();
+  mask ??= Mat.empty();
+  cvRun(() => ccore.cv_subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype, ffi.nullptr));
+  return dst;
+}
+
+/// Calculates the sum of array elements.
+///
+/// The function cv::sum calculates and returns the sum of array elements,
+/// independently for each channel.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
+Scalar sum(Mat src) {
+  final p = calloc<cvg.Scalar>();
+  cvRun(() => ccore.cv_sum(src.ref, p, ffi.nullptr));
+  return Scalar.fromPointer(p);
+}
+
+/// SVBackSubst
+Mat SVBackSubst(InputArray w, InputArray u, InputArray vh, InputArray rhs, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_SVBackSubst(w.ref, u.ref, vh.ref, rhs.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// SVDecomp
+(Mat w, Mat u, Mat vh) SVDecomp(
+  InputArray src, {
+  OutputArray? w,
+  OutputArray? u,
+  OutputArray? vt,
+  int flags = 0,
+}) {
+  w ??= Mat.empty();
+  u ??= Mat.empty();
+  vt ??= Mat.empty();
+  cvRun(() => ccore.cv_SVDecomp(src.ref, w!.ref, u!.ref, vt!.ref, flags, ffi.nullptr));
+  return (w, u, vt);
+}
+
+/// Trace returns the trace of a matrix.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
+Scalar trace(InputArray mtx) {
+  final ptr = calloc<cvg.Scalar>();
+  cvRun(() => ccore.cv_trace(mtx.ref, ptr, ffi.nullptr));
+  return Scalar.fromPointer(ptr);
+}
+
+/// Transform performs the matrix transformation of every array element.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
+Mat transform(InputArray src, InputArray m, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_transform(src.ref, dst!.ref, m.ref, ffi.nullptr));
+  return dst;
+}
+
+/// Transpose transposes a matrix.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
+Mat transpose(InputArray src, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_transpose(src.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// Transpose for n-dimensional matrices.
+///
+/// Input should be continuous single-channel matrix.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
+Mat transposeND(InputArray src, List<int> order, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_transposeND(src.ref, dst!.ref, order.i32.ref, ffi.nullptr));
+  return dst;
+}
+
+/// TheRNG Returns the default random number generator.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
+/// Disabled: double free
+Rng theRNG() {
+  final p = calloc<cvg.RNG>();
+  cvRun(() => ccore.cv_theRNG(p));
+  return Rng.fromTheRng(p);
+}
+
+/// Vconcat applies vertical concatenation to given matrices.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
+Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
+  dst ??= Mat.empty();
+  cvRun(() => ccore.cv_vconcat(src1.ref, src2.ref, dst!.ref, ffi.nullptr));
+  return dst;
+}
+
+/// KMeans finds centers of clusters and groups input samples around the clusters.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
+(double rval, Mat bestLabels, Mat centers) kmeans(
+  InputArray data,
+  int K,
+  InputOutputArray bestLabels,
+  (int, int, double) criteria,
+  int attempts,
+  int flags, {
+  OutputArray? centers,
+}) {
+  centers ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(
+    () => ccore.cv_kmeans(
+      data.ref,
+      K,
+      bestLabels.ref,
+      TermCriteria.fromRecord(criteria).ref,
+      attempts,
+      flags,
+      centers!.ref,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  calloc.free(p);
+  return (rval, bestLabels, centers);
+}
+
+/// KMeansPoints finds centers of clusters and groups input samples around the clusters.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
+(double rval, Mat bestLabels, Mat centers) kmeansByPoints(
+  VecPoint2f pts,
+  int K,
+  InputOutputArray bestLabels,
+  (int, int, double) criteria,
+  int attempts,
+  int flags, {
+  OutputArray? centers,
+}) {
+  centers ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  cvRun(
+    () => ccore.cv_kmeans_points(
+      pts.ref,
+      K,
+      bestLabels.ref,
+      TermCriteria.fromRecord(criteria).ref,
+      attempts,
+      flags,
+      centers!.ref,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  return (rval, bestLabels, centers);
+}
+
+/// GetTickCount returns the number of ticks.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/db/de0/group__core__utils.html#gae73f58000611a1af25dd36d496bf4487
+int getTickCount() => ccore.cv_getTickCount();
+
+/// GetTickFrequency returns the number of ticks per second.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/db/de0/group__core__utils.html#ga705441a9ef01f47acdc55d87fbe5090c
+double getTickFrequency() => ccore.cv_getTickFrequency();
+
+/// Set the number of threads for OpenCV.
+void setNumThreads(int n) => ccore.cv_setNumThreads(n);
+
+/// Get the number of threads for OpenCV.
+int getNumThreads() => ccore.cv_getNumThreads();

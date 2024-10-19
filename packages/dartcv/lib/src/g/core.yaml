@@ -374,8 +374,16 @@ files:
         name: cv_Mat_type
       c:@F@cv_Mat_zeros:
         name: cv_Mat_zeros
+      c:@F@cv_PCABackProject:
+        name: cv_PCABackProject
       c:@F@cv_PCACompute:
         name: cv_PCACompute
+      c:@F@cv_PCACompute_1:
+        name: cv_PCACompute_1
+      c:@F@cv_PCAProject:
+        name: cv_PCAProject
+      c:@F@cv_PSNR:
+        name: cv_PSNR
       c:@F@cv_RNG_close:
         name: cv_RNG_close
       c:@F@cv_RNG_create:
@@ -398,10 +406,14 @@ files:
         name: cv_RotatedRect_boundingRect2f
       c:@F@cv_RotatedRect_points:
         name: cv_RotatedRect_points
+      c:@F@cv_SVBackSubst:
+        name: cv_SVBackSubst
       c:@F@cv_SVD_Compute:
         name: cv_SVD_Compute
       c:@F@cv_SVD_backSubst:
         name: cv_SVD_backSubst
+      c:@F@cv_SVDecomp:
+        name: cv_SVDecomp
       c:@F@cv_absdiff:
         name: cv_absdiff
       c:@F@cv_add:
@@ -444,6 +456,8 @@ files:
         name: cv_convertScaleAbs
       c:@F@cv_copyMakeBorder:
         name: cv_copyMakeBorder
+      c:@F@cv_copyTo:
+        name: cv_copyTo
       c:@F@cv_countNonZero:
         name: cv_countNonZero
       c:@F@cv_dct:
@@ -466,6 +480,8 @@ files:
         name: cv_findNonZero
       c:@F@cv_flip:
         name: cv_flip
+      c:@F@cv_flipND:
+        name: cv_flipND
       c:@F@cv_gemm:
         name: cv_gemm
       c:@F@cv_getNumThreads:
@@ -476,6 +492,8 @@ files:
         name: cv_getTickCount
       c:@F@cv_getTickFrequency:
         name: cv_getTickFrequency
+      c:@F@cv_hasNonZero:
+        name: cv_hasNonZero
       c:@F@cv_hconcat:
         name: cv_hconcat
       c:@F@cv_idct:
@@ -500,10 +518,14 @@ files:
         name: cv_magnitude
       c:@F@cv_max:
         name: cv_max
+      c:@F@cv_mean:
+        name: cv_mean
       c:@F@cv_meanStdDev:
         name: cv_meanStdDev
       c:@F@cv_meanStdDev_1:
         name: cv_meanStdDev_1
+      c:@F@cv_mean_1:
+        name: cv_mean_1
       c:@F@cv_merge:
         name: cv_merge
       c:@F@cv_min:
@@ -516,6 +538,8 @@ files:
         name: cv_mixChannels
       c:@F@cv_mulSpectrums:
         name: cv_mulSpectrums
+      c:@F@cv_mulTransposed:
+        name: cv_mulTransposed
       c:@F@cv_multiply:
         name: cv_multiply
       c:@F@cv_norm:
@@ -524,6 +548,8 @@ files:
         name: cv_norm_1
       c:@F@cv_normalize:
         name: cv_normalize
+      c:@F@cv_patchNaNs:
+        name: cv_patchNaNs
       c:@F@cv_perspectiveTransform:
         name: cv_perspectiveTransform
       c:@F@cv_phase:
@@ -572,6 +598,8 @@ files:
         name: cv_sortIdx
       c:@F@cv_split:
         name: cv_split
+      c:@F@cv_sqrt:
+        name: cv_sqrt
       c:@F@cv_subtract:
         name: cv_subtract
       c:@F@cv_sum:
