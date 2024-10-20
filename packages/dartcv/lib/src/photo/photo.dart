@@ -10,7 +10,6 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../core/mat_type.dart';
 import '../core/point.dart';
 import '../g/photo.g.dart' as cvg;
 import '../native_lib.dart' show cphoto;
@@ -34,7 +33,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
       MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
     final p = calloc<cvg.MergeMertens>();
-    cvRun(() => cphoto.MergeMertens_Create(p));
+    cvRun(() => cphoto.cv_createMergeMertens(p));
     return MergeMertens._(p);
   }
 
@@ -45,7 +44,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   }) {
     final p = calloc<cvg.MergeMertens>();
     cvRun(
-      () => cphoto.MergeMertens_CreateWithParams(
+      () => cphoto.cv_createMergeMertens_1(
         contrastWeight,
         saturationWeight,
         exposureWeight,
@@ -55,11 +54,11 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     return MergeMertens._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(cphoto.addresses.MergeMertens_Close);
+  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(cphoto.addresses.cv_MergeMertens_close);
 
   void dispose() {
     finalizer.detach(this);
-    cphoto.MergeMertens_Close(ptr);
+    cphoto.cv_MergeMertens_close(ptr);
   }
 
   /// BalanceWhite computes merge LDR images using the current MergeMertens.
@@ -68,8 +67,8 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html#a2d2254b2aab722c16954de13a663644d
   Mat process(VecMat src) {
     final dst = Mat.empty();
-    cphoto.MergeMertens_Process(ref, src.ref, dst.ref);
-    return dst.convertTo(MatType.CV_8UC3, alpha: 255.0);
+    cvRun(() => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, ffi.nullptr));
+    return dst;
   }
 
   @override
@@ -106,7 +105,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
     final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cphoto.AlignMTB_Create(p));
+    cvRun(() => cphoto.cv_createAlignMTB(p));
     return AlignMTB._(p);
   }
 
@@ -124,20 +123,20 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
     bool cut = true,
   }) {
     final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cphoto.AlignMTB_CreateWithParams(maxBits, excludeRange, cut, p));
+    cvRun(() => cphoto.cv_createAlignMTB_1(maxBits, excludeRange, cut, p));
     return AlignMTB._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(cphoto.addresses.AlignMTB_Close);
+  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(cphoto.addresses.cv_AlignMTB_close);
 
   void dispose() {
     finalizer.detach(this);
-    cphoto.AlignMTB_Close(ptr);
+    cphoto.cv_AlignMTB_close(ptr);
   }
 
   VecMat process(VecMat src) {
     final dst = calloc<cvg.VecMat>();
-    cphoto.AlignMTB_Process(ref, src.ref, dst);
+    cvRun(()=>cphoto.cv_AlignMTB_process(ref, src.ref, dst, ffi.nullptr));
     return VecMat.fromPointer(dst);
   }
 
@@ -158,7 +157,7 @@ Mat colorChange(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.ColorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul),
+    () => cphoto.cv_colorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul, ffi.nullptr),
   );
   return dst;
 }
@@ -176,7 +175,7 @@ Mat seamlessClone(
 ) {
   final blend = Mat.empty();
   cvRun(
-    () => cphoto.SeamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags),
+    () => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, ffi.nullptr),
   );
   return blend;
 }
@@ -192,7 +191,7 @@ Mat illuminationChange(
   double beta = 0.4,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cphoto.IlluminationChange(src.ref, mask.ref, dst.ref, alpha, beta));
+  cvRun(() => cphoto.cv_illuminationChange(src.ref, mask.ref, dst.ref, alpha, beta, ffi.nullptr));
   return dst;
 }
 
@@ -209,13 +208,14 @@ Mat textureFlattening(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.TextureFlattening(
+    () => cphoto.cv_textureFlattening(
       src.ref,
       mask.ref,
       dst.ref,
       lowThreshold,
       highThreshold,
       kernelSize,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -234,12 +234,13 @@ Mat fastNlMeansDenoising(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.FastNlMeansDenoisingWithParams(
+    () => cphoto.cv_fastNlMeansDenoising_1(
       src.ref,
       dst.ref,
       h,
       templateWindowSize,
       searchWindowSize,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -258,13 +259,14 @@ Mat fastNlMeansDenoisingColored(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.FastNlMeansDenoisingColoredWithParams(
+    () => cphoto.cv_fastNlMeansDenoisingColored_1(
       src.ref,
       dst.ref,
       h,
       hColor,
       templateWindowSize,
       searchWindowSize,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -285,7 +287,7 @@ Mat fastNlMeansDenoisingColoredMulti(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.FastNlMeansDenoisingColoredMultiWithParams(
+    () => cphoto.cv_fastNlMeansDenoisingColoredMulti_1(
       srcImgs.ref,
       dst.ref,
       imgToDenoiseIndex,
@@ -294,6 +296,7 @@ Mat fastNlMeansDenoisingColoredMulti(
       hColor,
       templateWindowSize,
       searchWindowSize,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -305,7 +308,7 @@ Mat fastNlMeansDenoisingColoredMulti(
 /// https://docs.opencv.org/4.x/df/dac/group__photo__render.html#ga0de660cb6f371a464a74c7b651415975
 Mat detailEnhance(InputArray src, {double sigmaS = 10, double sigmaR = 0.15}) {
   final dst = Mat.empty();
-  cvRun(() => cphoto.DetailEnhance(src.ref, dst.ref, sigmaS, sigmaR));
+  cvRun(() => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr));
   return dst;
 }
 
@@ -322,7 +325,7 @@ Mat edgePreservingFilter(
 }) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.EdgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR),
+    () => cphoto.cv_edgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR, ffi.nullptr),
   );
   return dst;
 }
@@ -340,13 +343,14 @@ Mat edgePreservingFilter(
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
   cvRun(
-    () => cphoto.PencilSketch(
+    () => cphoto.cv_pencilSketch(
       src.ref,
       dst1.ref,
       dst2.ref,
       sigmaS,
       sigmaR,
       shadeFactor,
+      ffi.nullptr,
     ),
   );
   return (dst1, dst2);
@@ -365,7 +369,7 @@ Mat stylization(
   double sigmaR = 0.45,
 }) {
   final dst = Mat.empty();
-  cvRun(() => cphoto.Stylization(src.ref, dst.ref, sigmaS, sigmaR));
+  cvRun(() => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr));
   return dst;
 }
 
@@ -383,12 +387,13 @@ Mat inpaint(
 ) {
   final dst = Mat.empty();
   cvRun(
-    () => cphoto.PhotoInpaint(
+    () => cphoto.cv_inpaint(
       src.ref,
       inpaintMask.ref,
       dst.ref,
       inpaintRadius,
       flags,
+      ffi.nullptr,
     ),
   );
   return dst;

@@ -4,6 +4,10 @@
 
 library cv.photo;
 
+import 'dart:ffi' as ffi;
+
+import 'package:ffi/ffi.dart';
+
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
@@ -12,61 +16,25 @@ import '../native_lib.dart' show cphoto;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {
-  static Future<MergeMertens> emptyNewAsync() async => cvRunAsync(
-        cphoto.MergeMertens_Create_Async,
-        (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
-      );
-
-  static Future<MergeMertens> createAsync({
-    double contrastWeight = 1.0,
-    double saturationWeight = 1.0,
-    double exposureWeight = 0.0,
-  }) async {
-    return cvRunAsync(
-      (callback) => cphoto.MergeMertens_CreateWithParams_Async(
-        contrastWeight,
-        saturationWeight,
-        exposureWeight,
-        callback,
-      ),
-      (c, p) => c.complete(MergeMertens.fromPointer(p.cast<cvg.MergeMertens>())),
-    );
-  }
-
-  Future<Mat> processAsync(VecMat src) async {
-    return cvRunAsync(
-      (callback) => cphoto.MergeMertens_Process_Async(ref, src.ref, callback),
-      (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  Future<Mat> processAsync(VecMat src) {
+    final dst = Mat.empty();
+    return cvRunAsync0(
+      (callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, ffi.nullptr),
+      (c) {
+        return c.complete(dst);
+      },
     );
   }
 }
 
 extension AlignMTBAsync on AlignMTB {
-  static Future<AlignMTB> emptyNewAsync() async => cvRunAsync(
-        cphoto.AlignMTB_Create_Async,
-        (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
-      );
-
-  static Future<AlignMTB> createAsync({
-    int maxBits = 6,
-    int excludeRange = 4,
-    bool cut = true,
-  }) async {
-    return cvRunAsync(
-      (callback) => cphoto.AlignMTB_CreateWithParams_Async(
-        maxBits,
-        excludeRange,
-        cut,
-        callback,
-      ),
-      (c, p) => c.complete(AlignMTB.fromPointer(p.cast<cvg.AlignMTB>())),
-    );
-  }
-
   Future<VecMat> processAsync(VecMat src) async {
-    return cvRunAsync(
-      (callback) => cphoto.AlignMTB_Process_Async(ref, src.ref, callback),
-      (c, pdst) => c.complete(VecMat.fromPointer(pdst.cast<cvg.VecMat>())),
+    final dst = calloc<cvg.VecMat>();
+    return cvRunAsync0(
+      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst, ffi.nullptr),
+      (c) {
+        return c.complete(VecMat.fromPointer(dst));
+      },
     );
   }
 }
@@ -78,16 +46,12 @@ Future<Mat> colorChangeAsync(
   double greenMul = 1.0,
   double blueMul = 1.0,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.ColorChange_Async(
-      src.ref,
-      mask.ref,
-      redMul,
-      greenMul,
-      blueMul,
-      callback,
-    ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_colorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul, ffi.nullptr),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -98,16 +62,12 @@ Future<Mat> seamlessCloneAsync(
   Point p,
   int flags,
 ) async {
-  return cvRunAsync(
-    (callback) => cphoto.SeamlessClone_Async(
-      src.ref,
-      dst.ref,
-      mask.ref,
-      p.ref,
-      flags,
-      callback,
-    ),
-    matCompleter,
+  final blend = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, ffi.nullptr),
+    (c) {
+      return c.complete(blend);
+    },
   );
 }
 
@@ -117,15 +77,12 @@ Future<Mat> illuminationChangeAsync(
   double alpha = 0.2,
   double beta = 0.4,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.IlluminationChange_Async(
-      src.ref,
-      mask.ref,
-      alpha,
-      beta,
-      callback,
-    ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_illuminationChange(src.ref, mask.ref, dst.ref, alpha, beta, ffi.nullptr),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -136,16 +93,20 @@ Future<Mat> textureFlatteningAsync(
   double highThreshold = 45,
   int kernelSize = 3,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.TextureFlattening_Async(
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_textureFlattening(
       src.ref,
       mask.ref,
+      dst.ref,
       lowThreshold,
       highThreshold,
       kernelSize,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -155,15 +116,19 @@ Future<Mat> fastNlMeansDenoisingAsync(
   int templateWindowSize = 7,
   int searchWindowSize = 21,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.FastNlMeansDenoisingWithParams_Async(
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_fastNlMeansDenoising_1(
       src.ref,
+      dst.ref,
       h,
       templateWindowSize,
       searchWindowSize,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -174,16 +139,20 @@ Future<Mat> fastNlMeansDenoisingColoredAsync(
   int templateWindowSize = 7,
   int searchWindowSize = 21,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.FastNlMeansDenoisingColoredWithParams_Async(
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_fastNlMeansDenoisingColored_1(
       src.ref,
+      dst.ref,
       h,
       hColor,
       templateWindowSize,
       searchWindowSize,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -196,18 +165,22 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
   int templateWindowSize = 7,
   int searchWindowSize = 21,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.FastNlMeansDenoisingColoredMultiWithParams_Async(
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_fastNlMeansDenoisingColoredMulti_1(
       srcImgs.ref,
+      dst.ref,
       imgToDenoiseIndex,
       temporalWindowSize,
       h,
       hColor,
       templateWindowSize,
       searchWindowSize,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -216,14 +189,12 @@ Future<Mat> detailEnhanceAsync(
   double sigmaS = 10,
   double sigmaR = 0.15,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.DetailEnhance_Async(
-      src.ref,
-      sigmaS,
-      sigmaR,
-      callback,
-    ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -233,15 +204,12 @@ Future<Mat> edgePreservingFilterAsync(
   double sigmaS = 60,
   double sigmaR = 0.4,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.EdgePreservingFilter_Async(
-      src.ref,
-      flags,
-      sigmaS,
-      sigmaR,
-      callback,
-    ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_edgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR, ffi.nullptr),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -251,17 +219,21 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
   double sigmaR = 0.07,
   double shadeFactor = 0.02,
 }) async {
-  return cvRunAsync2(
-    (callback) => cphoto.PencilSketch_Async(
+  final dst1 = Mat.empty();
+  final dst2 = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_pencilSketch(
       src.ref,
+      dst1.ref,
+      dst2.ref,
       sigmaS,
       sigmaR,
       shadeFactor,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst1, pdst2) => c.complete(
-      (Mat.fromPointer(pdst1.cast<cvg.Mat>()), Mat.fromPointer(pdst2.cast<cvg.Mat>())),
-    ),
+    (c) {
+      return c.complete((dst1, dst2));
+    },
   );
 }
 
@@ -270,14 +242,12 @@ Future<Mat> stylizationAsync(
   double sigmaS = 60,
   double sigmaR = 0.45,
 }) async {
-  return cvRunAsync(
-    (callback) => cphoto.Stylization_Async(
-      src.ref,
-      sigmaS,
-      sigmaR,
-      callback,
-    ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
 
@@ -287,14 +257,18 @@ Future<Mat> inpaintAsync(
   double inpaintRadius,
   int flags,
 ) async {
-  return cvRunAsync(
-    (callback) => cphoto.PhotoInpaint_Async(
+  final dst = Mat.empty();
+  return cvRunAsync0(
+    (callback) => cphoto.cv_inpaint(
       src.ref,
       inpaintMask.ref,
+      dst.ref,
       inpaintRadius,
       flags,
-      callback,
+      ffi.nullptr,
     ),
-    (c, pdst) => c.complete(Mat.fromPointer(pdst.cast<cvg.Mat>())),
+    (c) {
+      return c.complete(dst);
+    },
   );
 }
