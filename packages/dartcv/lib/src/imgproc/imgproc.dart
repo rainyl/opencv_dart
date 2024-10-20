@@ -154,23 +154,22 @@ Mat calcBackProject(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, ffi.nullptr));
-    return p.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// ClipLine clips the line against the image rectangle.
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 (bool, Point, Point) clipLine(Rect imgRect, Point pt1, Point pt2) {
-  final bool r = using<bool>((arena) {
-    final rval = arena<ffi.Bool>();
-    cvRun(() => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, rval, ffi.nullptr));
-    return rval.value;
-  });
-  return (r, pt1, pt2);
+  final p = calloc<ffi.Bool>();
+  cvRun(() => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return (rval, pt1, pt2);
 }
 
 /// BilateralFilter applies a bilateral filter to an image.
@@ -420,11 +419,11 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 double contourArea(VecPoint contour) {
-  return cvRunArena<double>((arena) {
-    final area = arena<ffi.Double>();
-    cvRun(() => cimgproc.cv_contourArea(contour.ref, area, ffi.nullptr));
-    return area.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_contourArea(contour.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -452,12 +451,12 @@ RotatedRect fitEllipse(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 (Point2f center, double radius) minEnclosingCircle(VecPoint points) {
-  return cvRunArena<(Point2f, double)>((arena) {
-    final center = calloc<cvg.CvPoint2f>();
-    final radius = arena<ffi.Float>();
-    cvRun(() => cimgproc.cv_minEnclosingCircle(points.ref, center, radius, ffi.nullptr));
-    return (Point2f.fromPointer(center), radius.value);
-  });
+  final center = calloc<cvg.CvPoint2f>();
+  final pRadius = calloc<ffi.Float>();
+  cvRun(() => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, ffi.nullptr));
+  final rval = (Point2f.fromPointer(center), pRadius.value);
+  calloc.free(pRadius);
+  return rval;
 }
 
 /// FindContours finds contours in a binary image.
@@ -476,11 +475,11 @@ RotatedRect fitEllipse(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
-  return cvRunArena<double>((arena) {
-    final r = arena<ffi.Double>();
-    cvRun(() => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, r, ffi.nullptr));
-    return r.value;
-  });
+  final r = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, r, ffi.nullptr));
+  final rval = r.value;
+  calloc.free(r);
+  return rval;
 }
 
 /// ConnectedComponents computes the connected components labeled image of boolean image.
@@ -488,21 +487,21 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaedef8c7340499ca391d459122e51bef5
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(
-      () => cimgproc.cv_connectedComponents(
-        image.ref,
-        labels.ref,
-        connectivity,
-        ltype,
-        ccltype,
-        p,
-        ffi.nullptr,
-      ),
-    );
-    return p.value;
-  });
+  final p = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.cv_connectedComponents(
+      image.ref,
+      labels.ref,
+      connectivity,
+      ltype,
+      ccltype,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// ConnectedComponentsWithStats computes the connected components labeled image of boolean
@@ -519,23 +518,23 @@ int connectedComponentsWithStats(
   int ltype,
   int ccltype,
 ) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(
-      () => cimgproc.cv_connectedComponents_1(
-        src.ref,
-        labels.ref,
-        stats.ref,
-        centroids.ref,
-        connectivity,
-        ltype,
-        ccltype,
-        p,
-        ffi.nullptr,
-      ),
-    );
-    return p.value;
-  });
+  final p = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.cv_connectedComponents_1(
+      src.ref,
+      labels.ref,
+      stats.ref,
+      centroids.ref,
+      connectivity,
+      ltype,
+      ccltype,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// MatchTemplate compares a template against overlapped image regions.
@@ -1065,12 +1064,11 @@ Mat HoughLinesPointSet(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
-    return p.value;
-  });
-  return (rval, dst);
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
+  final rval = (p.value, dst);
+  calloc.free(p);
+  return rval;
 }
 
 /// AdaptiveThreshold applies a fixed-level threshold to each array element.
@@ -1281,23 +1279,23 @@ Mat polylines(
   double fontScale,
   int thickness,
 ) {
-  return using<(Size, int)>((arena) {
-    final baseline = arena<ffi.Int>();
-    final size = calloc<cvg.CvSize>();
-    final textPtr = text.toNativeUtf8(allocator: arena);
-    cvRun(
-      () => cimgproc.cv_getTextSize(
-        textPtr.cast(),
-        fontFace,
-        fontScale,
-        thickness,
-        baseline,
-        size,
-        ffi.nullptr,
-      ),
-    );
-    return (Size.fromPointer(size), baseline.value);
-  });
+  final pBaseline = calloc<ffi.Int>();
+  final size = calloc<cvg.CvSize>();
+  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
+  cvRun(
+    () => cimgproc.cv_getTextSize(
+      textPtr,
+      fontFace,
+      fontScale,
+      thickness,
+      pBaseline,
+      size,
+      ffi.nullptr,
+    ),
+  );
+  final rval = (Size.fromPointer(size), pBaseline.value);
+  calloc.free(pBaseline);
+  return rval;
 }
 
 /// PutTextWithParams draws a text string.
@@ -1675,11 +1673,11 @@ Mat fitLine(VecPoint points, int distType, double param, double reps, double aep
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
 double matchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter) {
-  return cvRunArena<double>((arena) {
-    final r = arena<ffi.Double>();
-    cvRun(() => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, r, ffi.nullptr));
-    return r.value;
-  });
+  final r = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, r, ffi.nullptr));
+  final rval = r.value;
+  calloc.free(r);
+  return rval;
 }
 
 /// Inverts an affine transformation.
@@ -1700,12 +1698,12 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga552420a2ace9ef3fb053cd630fdb4952
 (Point2f rval, double response) phaseCorrelate(InputArray src1, InputArray src2, {InputArray? window}) {
   window ??= Mat.empty();
-  return cvRunArena<(Point2f, double)>((arena) {
-    final p = arena<ffi.Double>();
-    final pp = calloc<cvg.CvPoint2f>();
-    cvRun(() => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, ffi.nullptr));
-    return (Point2f.fromPointer(pp), p.value);
-  });
+  final p = calloc<ffi.Double>();
+  final pp = calloc<cvg.CvPoint2f>();
+  cvRun(() => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, ffi.nullptr));
+  final rval = (Point2f.fromPointer(pp), p.value);
+  calloc.free(p);
+  return rval;
 }
 
 /// Adds the square of a source image to the accumulator image.
@@ -1743,9 +1741,7 @@ Mat accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {I
   if (mask == null) {
     cvRun(() => cimgproc.cv_accumulateProduct(src1.ref, src2.ref, dst.ref, ffi.nullptr));
   } else {
-    cvRun(
-      () => cimgproc.cv_accumulateProduct_1(src1.ref, src2.ref, dst.ref, mask.ref, ffi.nullptr),
-    );
+    cvRun(() => cimgproc.cv_accumulateProduct_1(src1.ref, src2.ref, dst.ref, mask.ref, ffi.nullptr));
   }
   return dst;
 }
