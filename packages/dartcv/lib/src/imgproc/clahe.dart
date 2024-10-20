@@ -22,7 +22,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   factory CLAHE.fromPointer(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
   factory CLAHE.empty() {
     final p = calloc<cvg.CLAHE>();
-    cimgproc.CLAHE_Create(p);
+    cimgproc.cv_CLAHE_create(p);
     return CLAHE._(p);
   }
 
@@ -38,7 +38,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     final size = calloc<cvg.CvSize>()
       ..ref.width = tileGridSize.$1
       ..ref.height = tileGridSize.$2;
-    cimgproc.CLAHE_CreateWithParams(clipLimit, size.ref, p);
+    cimgproc.cv_CLAHE_create_1(clipLimit, size.ref, p);
     calloc.free(size);
     return CLAHE._(p);
   }
@@ -49,37 +49,39 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html#a4e92e0e427de21be8d1fae8dcd862c5e
   Mat apply(Mat src, {Mat? dst}) {
     dst ??= Mat.empty();
-    cvRun(() => cimgproc.CLAHE_Apply(ref, src.ref, dst!.ref));
+    cvRun(() => cimgproc.cv_CLAHE_apply(ref, src.ref, dst!.ref, ffi.nullptr));
     return dst;
   }
 
-  double get clipLimit {
-    return cvRunArena<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(() => cimgproc.CLAHE_GetClipLimit(ref, p));
-      return p.value;
+  Future<Mat> applyAsync(Mat src, {Mat? dst}) async {
+    dst ??= Mat.empty();
+    return cvRunAsync0((callback) => cimgproc.cv_CLAHE_apply(ref, src.ref, dst!.ref, callback), (c) {
+      return c.complete(dst);
     });
   }
 
-  set clipLimit(double value) {
-    cvRun(() => cimgproc.CLAHE_SetClipLimit(ref, value));
-  }
+  double get clipLimit => cimgproc.cv_CLAHE_getClipLimit(ref);
+
+  set clipLimit(double value) => cimgproc.cv_CLAHE_setClipLimit(ref, value);
 
   Size get tilesGridSize {
-    final p = calloc<cvg.CvSize>();
-    cvRun(() => cimgproc.CLAHE_GetTilesGridSize(ref, p));
+    final p = cimgproc.cv_CLAHE_getTilesGridSize(ref);
     return Size.fromPointer(p);
   }
 
-  set tilesGridSize(Size value) => cvRun(() => cimgproc.CLAHE_SetTilesGridSize(ref, value.ref));
+  set tilesGridSize(Size value) => cimgproc.cv_CLAHE_setTilesGridSize(ref, value.ref);
 
-  static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(cimgproc.addresses.CLAHE_Close);
+  static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(cimgproc.addresses.cv_CLAHE_close);
 
   void dispose() {
     finalizer.detach(this);
-    cimgproc.CLAHE_Close(ptr);
+    cimgproc.cv_CLAHE_close(ptr);
   }
 
   @override
   cvg.CLAHE get ref => ptr.ref;
+}
+
+CLAHE createCLAHE({double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)}) {
+  return CLAHE.create(clipLimit, tileGridSize);
 }

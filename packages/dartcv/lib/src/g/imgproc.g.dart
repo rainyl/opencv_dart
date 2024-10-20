@@ -116,85 +116,65 @@ class CvNativeImgproc {
   late final _cv_CLAHE_create_1 = _cv_CLAHE_create_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(double, CvSize, ffi.Pointer<CLAHE>)>();
 
-  ffi.Pointer<CvStatus> cv_CLAHE_getClipLimit(
+  double cv_CLAHE_getClipLimit(
     CLAHE self,
-    ffi.Pointer<ffi.Double> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_CLAHE_getClipLimit(
       self,
-      rval,
-      callback,
     );
   }
 
-  late final _cv_CLAHE_getClipLimitPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(CLAHE, ffi.Pointer<ffi.Double>,
-              imp1.CvCallback_0)>>('cv_CLAHE_getClipLimit');
-  late final _cv_CLAHE_getClipLimit = _cv_CLAHE_getClipLimitPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          CLAHE, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+  late final _cv_CLAHE_getClipLimitPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(CLAHE)>>(
+          'cv_CLAHE_getClipLimit');
+  late final _cv_CLAHE_getClipLimit =
+      _cv_CLAHE_getClipLimitPtr.asFunction<double Function(CLAHE)>();
 
-  ffi.Pointer<CvStatus> cv_CLAHE_getTilesGridSize(
+  ffi.Pointer<CvSize> cv_CLAHE_getTilesGridSize(
     CLAHE self,
-    ffi.Pointer<CvSize> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_CLAHE_getTilesGridSize(
       self,
-      rval,
-      callback,
     );
   }
 
-  late final _cv_CLAHE_getTilesGridSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(CLAHE, ffi.Pointer<CvSize>,
-              imp1.CvCallback_0)>>('cv_CLAHE_getTilesGridSize');
-  late final _cv_CLAHE_getTilesGridSize =
-      _cv_CLAHE_getTilesGridSizePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              CLAHE, ffi.Pointer<CvSize>, imp1.CvCallback_0)>();
+  late final _cv_CLAHE_getTilesGridSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvSize> Function(CLAHE)>>(
+          'cv_CLAHE_getTilesGridSize');
+  late final _cv_CLAHE_getTilesGridSize = _cv_CLAHE_getTilesGridSizePtr
+      .asFunction<ffi.Pointer<CvSize> Function(CLAHE)>();
 
-  ffi.Pointer<CvStatus> cv_CLAHE_setClipLimit(
+  void cv_CLAHE_setClipLimit(
     CLAHE self,
     double clipLimit,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_CLAHE_setClipLimit(
       self,
       clipLimit,
-      callback,
     );
   }
 
-  late final _cv_CLAHE_setClipLimitPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              CLAHE, ffi.Double, imp1.CvCallback_0)>>('cv_CLAHE_setClipLimit');
-  late final _cv_CLAHE_setClipLimit = _cv_CLAHE_setClipLimitPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(CLAHE, double, imp1.CvCallback_0)>();
+  late final _cv_CLAHE_setClipLimitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CLAHE, ffi.Double)>>(
+          'cv_CLAHE_setClipLimit');
+  late final _cv_CLAHE_setClipLimit =
+      _cv_CLAHE_setClipLimitPtr.asFunction<void Function(CLAHE, double)>();
 
-  ffi.Pointer<CvStatus> cv_CLAHE_setTilesGridSize(
+  void cv_CLAHE_setTilesGridSize(
     CLAHE self,
     CvSize size,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_CLAHE_setTilesGridSize(
       self,
       size,
-      callback,
     );
   }
 
-  late final _cv_CLAHE_setTilesGridSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              CLAHE, CvSize, imp1.CvCallback_0)>>('cv_CLAHE_setTilesGridSize');
+  late final _cv_CLAHE_setTilesGridSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CLAHE, CvSize)>>(
+          'cv_CLAHE_setTilesGridSize');
   late final _cv_CLAHE_setTilesGridSize =
-      _cv_CLAHE_setTilesGridSizePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(CLAHE, CvSize, imp1.CvCallback_0)>();
+      _cv_CLAHE_setTilesGridSizePtr.asFunction<void Function(CLAHE, CvSize)>();
 
   ffi.Pointer<CvStatus> cv_GaussianBlur(
     Mat src,
