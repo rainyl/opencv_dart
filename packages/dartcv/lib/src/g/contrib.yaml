@@ -234,6 +234,10 @@ files:
         name: cv_wechat_qrcode_WeChatQRCode_getScaleFactor
       c:@F@cv_wechat_qrcode_WeChatQRCode_setScaleFactor:
         name: cv_wechat_qrcode_WeChatQRCode_setScaleFactor
+      c:@F@cv_ximgproc_EdgeBoxes_close:
+        name: cv_ximgproc_EdgeBoxes_close
+      c:@F@cv_ximgproc_EdgeBoxes_create:
+        name: cv_ximgproc_EdgeBoxes_create
       c:@F@cv_ximgproc_EdgeBoxes_getAlpha:
         name: cv_ximgproc_EdgeBoxes_getAlpha
       c:@F@cv_ximgproc_EdgeBoxes_getBeta:

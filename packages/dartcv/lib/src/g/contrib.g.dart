@@ -2172,49 +2172,116 @@ class CvNativeContrib {
           ffi.Pointer<CvStatus> Function(WeChatQRCode, Mat, ffi.Pointer<VecMat>,
               ffi.Pointer<VecVecChar>, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_getScaleFactor(
+  double cv_wechat_qrcode_WeChatQRCode_getScaleFactor(
     WeChatQRCode self,
-    ffi.Pointer<ffi.Float> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_wechat_qrcode_WeChatQRCode_getScaleFactor(
       self,
-      rval,
-      callback,
     );
   }
 
-  late final _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  WeChatQRCode, ffi.Pointer<ffi.Float>, imp1.CvCallback_0)>>(
-      'cv_wechat_qrcode_WeChatQRCode_getScaleFactor');
+  late final _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(WeChatQRCode)>>(
+          'cv_wechat_qrcode_WeChatQRCode_getScaleFactor');
   late final _cv_wechat_qrcode_WeChatQRCode_getScaleFactor =
-      _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              WeChatQRCode, ffi.Pointer<ffi.Float>, imp1.CvCallback_0)>();
+      _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr
+          .asFunction<double Function(WeChatQRCode)>();
 
-  ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_setScaleFactor(
+  void cv_wechat_qrcode_WeChatQRCode_setScaleFactor(
     WeChatQRCode self,
     double scale_factor,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_wechat_qrcode_WeChatQRCode_setScaleFactor(
       self,
       scale_factor,
-      callback,
     );
   }
 
-  late final _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  WeChatQRCode, ffi.Float, imp1.CvCallback_0)>>(
-      'cv_wechat_qrcode_WeChatQRCode_setScaleFactor');
+  late final _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCode, ffi.Float)>>(
+          'cv_wechat_qrcode_WeChatQRCode_setScaleFactor');
   late final _cv_wechat_qrcode_WeChatQRCode_setScaleFactor =
-      _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr.asFunction<
+      _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr
+          .asFunction<void Function(WeChatQRCode, double)>();
+
+  void cv_ximgproc_EdgeBoxes_close(
+    EdgeBoxesPtr self,
+  ) {
+    return _cv_ximgproc_EdgeBoxes_close(
+      self,
+    );
+  }
+
+  late final _cv_ximgproc_EdgeBoxes_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>>(
+          'cv_ximgproc_EdgeBoxes_close');
+  late final _cv_ximgproc_EdgeBoxes_close =
+      _cv_ximgproc_EdgeBoxes_closePtr.asFunction<void Function(EdgeBoxesPtr)>();
+
+  ffi.Pointer<CvStatus> cv_ximgproc_EdgeBoxes_create(
+    double alpha,
+    double beta,
+    double eta,
+    double minScore,
+    int maxBoxes,
+    double edgeMinMag,
+    double edgeMergeThr,
+    double clusterMinMag,
+    double maxAspectRatio,
+    double minBoxArea,
+    double gamma,
+    double kappa,
+    ffi.Pointer<EdgeBoxes> rval,
+  ) {
+    return _cv_ximgproc_EdgeBoxes_create(
+      alpha,
+      beta,
+      eta,
+      minScore,
+      maxBoxes,
+      edgeMinMag,
+      edgeMergeThr,
+      clusterMinMag,
+      maxAspectRatio,
+      minBoxArea,
+      gamma,
+      kappa,
+      rval,
+    );
+  }
+
+  late final _cv_ximgproc_EdgeBoxes_createPtr = _lookup<
+      ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              WeChatQRCode, double, imp1.CvCallback_0)>();
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Int,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Float,
+              ffi.Pointer<EdgeBoxes>)>>('cv_ximgproc_EdgeBoxes_create');
+  late final _cv_ximgproc_EdgeBoxes_create =
+      _cv_ximgproc_EdgeBoxes_createPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              double,
+              double,
+              double,
+              double,
+              int,
+              double,
+              double,
+              double,
+              double,
+              double,
+              double,
+              double,
+              ffi.Pointer<EdgeBoxes>)>();
 
   double cv_ximgproc_EdgeBoxes_getAlpha(
     EdgeBoxes self,
@@ -3243,7 +3310,7 @@ class CvNativeContrib {
     Mat orientation_image,
     Mat dst,
     int r,
-    int s,
+    int s_,
     double m,
     bool isParallel,
     imp1.CvCallback_0 callback,
@@ -3254,7 +3321,7 @@ class CvNativeContrib {
       orientation_image,
       dst,
       r,
-      s,
+      s_,
       m,
       isParallel,
       callback,
@@ -3758,6 +3825,9 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>
       get cv_wechat_qrcode_WeChatQRCode_close =>
           _library._cv_wechat_qrcode_WeChatQRCode_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>>
+      get cv_ximgproc_EdgeBoxes_close =>
+          _library._cv_ximgproc_EdgeBoxes_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>
       get cv_ximgproc_EdgeDrawing_close =>
           _library._cv_ximgproc_EdgeDrawing_closePtr;
