@@ -911,12 +911,16 @@ class CvNativeDnn {
     Net net,
     Mat blob,
     ffi.Pointer<ffi.Char> name,
+    double scalefactor,
+    Scalar mean,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_dnn_Net_setInput(
       net,
       blob,
       name,
+      scalefactor,
+      mean,
       callback,
     );
   }
@@ -924,10 +928,10 @@ class CvNativeDnn {
   late final _cv_dnn_Net_setInputPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Net, Mat, ffi.Pointer<ffi.Char>,
-              imp1.CvCallback_0)>>('cv_dnn_Net_setInput');
+              ffi.Double, Scalar, imp1.CvCallback_0)>>('cv_dnn_Net_setInput');
   late final _cv_dnn_Net_setInput = _cv_dnn_Net_setInputPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Net, Mat, ffi.Pointer<ffi.Char>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Net, Mat, ffi.Pointer<ffi.Char>, double,
+          Scalar, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_dnn_Net_setPreferableBackend(
     Net net,
