@@ -34,14 +34,14 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   factory CascadeClassifier.empty() {
     final p = calloc<cvg.CascadeClassifier>();
-    cvRun(() => cobjdetect.CascadeClassifier_New(p));
+    cvRun(() => cobjdetect.cv_CascadeClassifier_create(p));
     return CascadeClassifier._(p);
   }
 
   factory CascadeClassifier.fromFile(String filename) {
     final p = calloc<cvg.CascadeClassifier>();
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.CascadeClassifier_NewFromFile(cp, p));
+    cvRun(() => cobjdetect.cv_CascadeClassifier_create_1(cp, p));
     calloc.free(cp);
     return CascadeClassifier._(p);
   }
@@ -53,7 +53,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   bool load(String name) {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<ffi.Int>();
-    cvRun(() => cobjdetect.CascadeClassifier_Load(ref, cname, p));
+    cvRun(() => cobjdetect.cv_CascadeClassifier_load(ref, cname, p));
     calloc.free(cname);
     return p.value != 0;
   }
@@ -73,7 +73,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }) {
     final ret = calloc<cvg.VecRect>();
     cvRun(
-      () => cobjdetect.CascadeClassifier_DetectMultiScaleWithParams(
+      () => cobjdetect.cv_CascadeClassifier_detectMultiScale_1(
         ref,
         image.ref,
         ret,
@@ -82,6 +82,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         flags,
         minSize.cvd.ref,
         maxSize.cvd.ref,
+        ffi.nullptr,
       ),
     );
     return VecRect.fromPointer(ret);
@@ -98,7 +99,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     final ret = calloc<cvg.VecRect>();
     final pnums = calloc<cvg.VecI32>();
     cvRun(
-      () => cobjdetect.CascadeClassifier_DetectMultiScale2(
+      () => cobjdetect.cv_CascadeClassifier_detectMultiScale_2(
         ref,
         image.ref,
         ret,
@@ -108,6 +109,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         flags,
         minSize.cvd.ref,
         maxSize.cvd.ref,
+        ffi.nullptr,
       ),
     );
     return (VecRect.fromPointer(ret), VecI32.fromPointer(pnums));
@@ -126,7 +128,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     final rejectLevels = calloc<cvg.VecI32>();
     final levelWeights = calloc<cvg.VecF64>();
     cvRun(
-      () => cobjdetect.CascadeClassifier_DetectMultiScale3(
+      () => cobjdetect.cv_CascadeClassifier_detectMultiScale_3(
         ref,
         image.ref,
         objects,
@@ -138,6 +140,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         minSize.cvd.ref,
         maxSize.cvd.ref,
         outputRejectLevels,
+        ffi.nullptr,
       ),
     );
     return (VecRect.fromPointer(objects), VecI32.fromPointer(rejectLevels), VecF64.fromPointer(levelWeights));
@@ -146,49 +149,28 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   /// Checks whether the classifier has been loaded.
   ///
   /// https://docs.opencv.org/4.x/d1/de5/classcv_1_1CascadeClassifier.html#a1753ebe58554fe0673ce46cb4e83f08a
-  bool empty() {
-    return using<bool>((arena) {
-      final p = arena<ffi.Bool>();
-      cvRun(() => cobjdetect.CascadeClassifier_Empty(ref, p));
-      return p.value;
-    });
-  }
+  bool empty() => cobjdetect.cv_CascadeClassifier_empty(ref);
 
   /// https://docs.opencv.org/4.x/d1/de5/classcv_1_1CascadeClassifier.html#a0bab6de516c685ba879a4b1f1debdef1
-  int getFeatureType() {
-    return using<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => cobjdetect.CascadeClassifier_getFeatureType(ref, p));
-      return p.value;
-    });
-  }
+  int getFeatureType() => cobjdetect.cv_CascadeClassifier_getFeatureType(ref);
 
   /// https://docs.opencv.org/4.x/d1/de5/classcv_1_1CascadeClassifier.html#a7a131d319ab42a444ff2bcbb433b7b41
   (int, int) getOriginalWindowSize() {
-    final p = calloc<cvg.CvSize>();
-    cvRun(() => cobjdetect.CascadeClassifier_getOriginalWindowSize(ref, p));
-    final ret = (p.ref.width, p.ref.height);
-    calloc.free(p);
-    return ret;
+    final p = cobjdetect.cv_CascadeClassifier_getOriginalWindowSize(ref);
+    return (p.width, p.height);
   }
 
   /// https://docs.opencv.org/4.x/d1/de5/classcv_1_1CascadeClassifier.html#a556bdd8738ba96aac07628ec38ff46da
-  bool isOldFormatCascade() {
-    return using<bool>((arena) {
-      final p = arena<ffi.Bool>();
-      cvRun(() => cobjdetect.CascadeClassifier_isOldFormatCascade(ref, p));
-      return p.value;
-    });
-  }
+  bool isOldFormatCascade() => cobjdetect.cv_CascadeClassifier_isOldFormatCascade(ref);
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
   static final finalizer =
-      OcvFinalizer<cvg.CascadeClassifierPtr>(cobjdetect.addresses.CascadeClassifier_Close);
+      OcvFinalizer<cvg.CascadeClassifierPtr>(cobjdetect.addresses.cv_CascadeClassifier_close);
 
   void dispose() {
     finalizer.detach(this);
-    cobjdetect.CascadeClassifier_Close(ptr);
+    cobjdetect.cv_CascadeClassifier_close(ptr);
   }
 }
 
@@ -206,7 +188,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 
   factory HOGDescriptor.empty() {
     final p = calloc<cvg.HOGDescriptor>();
-    cvRun(() => cobjdetect.HOGDescriptor_New(p));
+    cvRun(() => cobjdetect.cv_HOGDescriptor_create(p));
     return HOGDescriptor._(p);
   }
 
@@ -218,7 +200,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   factory HOGDescriptor.fromFile(String filename) {
     final p = calloc<cvg.HOGDescriptor>();
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.HOGDescriptor_NewFromFile(cp, p));
+    cvRun(() => cobjdetect.cv_HOGDescriptor_create_1(cp, p));
     calloc.free(cp);
     return HOGDescriptor._(p);
   }
@@ -227,7 +209,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     return using<bool>((arena) {
       final cname = name.toNativeUtf8(allocator: arena);
       final p = arena<ffi.Bool>();
-      cvRun(() => cobjdetect.HOGDescriptor_Load(ref, cname.cast(), p));
+      cvRun(() => cobjdetect.cv_HOGDescriptor_load(ref, cname.cast(), p));
       return p.value;
     });
   }
@@ -243,13 +225,14 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     final descriptors = calloc<cvg.VecF32>();
     final locations = calloc<cvg.VecPoint>();
     cvRun(
-      () => cobjdetect.HOGDescriptor_Compute(
+      () => cobjdetect.cv_HOGDescriptor_compute(
         ref,
         img.ref,
         descriptors,
         winStride.cvd.ref,
         padding.cvd.ref,
         locations,
+        ffi.nullptr,
       ),
     );
     return (
@@ -269,13 +252,14 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     final grad = Mat.empty();
     final angleOfs = Mat.empty();
     cvRun(
-      () => cobjdetect.HOGDescriptor_computeGradient(
+      () => cobjdetect.cv_HOGDescriptor_computeGradient(
         ref,
         img.ref,
         grad.ref,
         angleOfs.ref,
         paddingTL.cvd.ref,
         paddingBR.cvd.ref,
+        ffi.nullptr,
       ),
     );
     return (grad, angleOfs);
@@ -294,7 +278,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     final searchLocations = calloc<cvg.VecPoint>();
     final weights = calloc<cvg.VecF64>();
     cvRun(
-      () => cobjdetect.HOGDescriptor_Detect(
+      () => cobjdetect.cv_HOGDescriptor_detect(
         ref,
         img.ref,
         foundLocations,
@@ -303,6 +287,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         winStride.cvd.ref,
         padding.cvd.ref,
         searchLocations,
+        ffi.nullptr,
       ),
     );
     return (
@@ -324,7 +309,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     final foundLocations = calloc<cvg.VecPoint>();
     final searchLocations = calloc<cvg.VecPoint>();
     cvRun(
-      () => cobjdetect.HOGDescriptor_Detect2(
+      () => cobjdetect.cv_HOGDescriptor_detect2(
         ref,
         img.ref,
         foundLocations,
@@ -332,6 +317,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         winStride.cvd.ref,
         padding.cvd.ref,
         searchLocations,
+        ffi.nullptr,
       ),
     );
     return (VecPoint.fromPointer(foundLocations), VecPoint.fromPointer(searchLocations));
@@ -354,7 +340,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }) {
     final rects = calloc<cvg.VecRect>();
     cvRun(
-      () => cobjdetect.HOGDescriptor_DetectMultiScaleWithParams(
+      () => cobjdetect.cv_HOGDescriptor_detectMultiScale_1(
         ref,
         image.ref,
         hitThreshold,
@@ -364,6 +350,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         groupThreshold,
         useMeanshiftGrouping,
         rects,
+        ffi.nullptr,
       ),
     );
     return VecRect.fromPointer(rects);
@@ -375,32 +362,20 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a660e5cd036fd5ddf0f5767b352acd948
   static VecF32 getDefaultPeopleDetector() {
     final v = calloc<cvg.VecF32>();
-    cvRun(() => cobjdetect.HOG_GetDefaultPeopleDetector(v));
+    cvRun(() => cobjdetect.cv_HOGDescriptor_getDefaultPeopleDetector(v));
     return VecF32.fromPointer(v);
   }
 
   static VecF32 getDaimlerPeopleDetector() {
     final v = calloc<cvg.VecF32>();
-    cvRun(() => cobjdetect.HOGDescriptor_getDaimlerPeopleDetector(v));
+    cvRun(() => cobjdetect.cv_HOGDescriptor_getDaimlerPeopleDetector(v));
     return VecF32.fromPointer(v);
   }
 
-  int getDescriptorSize() {
-    return using<int>((arena) {
-      final p = arena<ffi.Size>(); // size_t
-      cvRun(() => cobjdetect.HOGDescriptor_getDescriptorSize(ref, p));
-      return p.value;
-    });
-  }
+  int getDescriptorSize() => cobjdetect.cv_HOGDescriptor_getDescriptorSize(ref);
 
   /// Returns winSigma value.
-  double getWinSigma() {
-    return using<double>((arena) {
-      final p = arena<ffi.Double>();
-      cvRun(() => cobjdetect.HOGDescriptor_getWinSigma(ref, p));
-      return p.value;
-    });
-  }
+  double getWinSigma() => cobjdetect.cv_HOGDescriptor_getWinSigma(ref);
 
   /// Groups the object candidate rectangles.
   ///
@@ -412,12 +387,13 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
     double eps,
   ) {
     cvRun(
-      () => cobjdetect.HOGDescriptor_groupRectangles(
+      () => cobjdetect.cv_HOGDescriptor_groupRectangles(
         ref,
         rectList.ptr,
         weights.ptr,
         groupThreshold,
         eps,
+        ffi.nullptr,
       ),
     );
     rectList.reattach();
@@ -430,16 +406,16 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d5/d33/structcv_1_1HOGDescriptor.html#a09e354ad701f56f9c550dc0385dc36f1
   void setSVMDetector(VecF32 det) {
-    cvRun(() => cobjdetect.HOGDescriptor_SetSVMDetector(ref, det.ref));
+    cvRun(() => cobjdetect.cv_HOGDescriptor_setSVMDetector(ref, det.ref));
   }
 
   @override
   cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(cobjdetect.addresses.HOGDescriptor_Close);
+  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(cobjdetect.addresses.cv_HOGDescriptor_close);
 
   void dispose() {
     finalizer.detach(this);
-    cobjdetect.HOGDescriptor_Close(ptr);
+    cobjdetect.cv_HOGDescriptor_close(ptr);
   }
 }
 
@@ -448,7 +424,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
 // For further details, please see:
 // https://docs.opencv.org/master/d5/d54/group__objdetect.html#ga3dba897ade8aa8227edda66508e16ab9
 VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
-  cvRun(() => cobjdetect.GroupRectangles(rects.ptr, groupThreshold, eps));
+  cvRun(() => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, ffi.nullptr));
   rects.reattach();
   return rects;
 }
@@ -471,7 +447,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 
   factory QRCodeDetector.empty() {
     final p = calloc<cvg.QRCodeDetector>();
-    cvRun(() => cobjdetect.QRCodeDetector_New(p));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_create(p));
     return QRCodeDetector._(p);
   }
 
@@ -487,7 +463,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }) {
     final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cobjdetect.QRCodeDetector_decodeCurved(ref, img.ref, points.ref, s, v));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_decodeCurved(ref, img.ref, points.ref, s, v, ffi.nullptr));
     final ss = v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (ss, Mat.fromPointer(s));
@@ -504,7 +480,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final p = points?.ptr ?? calloc<cvg.VecPoint>();
     final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cobjdetect.QRCodeDetector_detectAndDecodeCurved(ref, img.ref, p, s, v));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(ref, img.ref, p, s, v, ffi.nullptr));
     final ss = v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (ss, points ?? VecPoint.fromPointer(p), Mat.fromPointer(s));
@@ -523,7 +499,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final code = straightCode?.ptr ?? calloc<cvg.Mat>();
     final points = calloc<cvg.VecPoint>();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cobjdetect.QRCodeDetector_DetectAndDecode(ref, img.ref, points, code, v));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_detectAndDecode(ref, img.ref, points, code, v, ffi.nullptr));
     final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (s, VecPoint.fromPointer(points), Mat.fromPointer(code));
@@ -534,12 +510,12 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#a64373f7d877d27473f64fe04bb57d22b
   (bool ret, VecPoint points) detect(InputArray input, {VecPoint? points}) {
-    return cvRunArena<(bool, VecPoint)>((arena) {
-      final pts = calloc<cvg.VecPoint>();
-      final ret = arena<ffi.Bool>();
-      cvRun(() => cobjdetect.QRCodeDetector_Detect(ref, input.ref, pts, ret));
-      return (ret.value, VecPoint.fromPointer(pts));
-    });
+    final pts = calloc<cvg.VecPoint>();
+    final ret = calloc<ffi.Bool>();
+    cvRun(() => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, pts, ret, ffi.nullptr));
+    final rval = (ret.value, VecPoint.fromPointer(pts));
+    calloc.free(ret);
+    return rval;
   }
 
   /// Decode decodes QR code in image once it's found by the detect() method. Returns UTF8-encoded output string or empty string if the code cannot be decoded.
@@ -554,7 +530,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final p = points?.ptr ?? calloc<cvg.VecPoint>();
     final ret = calloc<ffi.Pointer<ffi.Char>>();
     straightCode ??= Mat.empty();
-    cvRun(() => cobjdetect.QRCodeDetector_Decode(ref, img.ref, p, straightCode!.ref, ret));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, p, straightCode!.ref, ret, ffi.nullptr));
     final info = ret.value.cast<Utf8>().toDartString();
     calloc.free(ret);
     return (info, VecPoint.fromPointer(p), straightCode);
@@ -568,12 +544,12 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html#aaf2b6b2115b8e8fbc9acf3a8f68872b6
   (bool, VecPoint points) detectMulti(InputArray img, {VecPoint? points}) {
-    return cvRunArena<(bool, VecPoint)>((arena) {
-      final p = points?.ptr ?? calloc<cvg.VecPoint>();
-      final ret = arena<ffi.Bool>();
-      cvRun(() => cobjdetect.QRCodeDetector_DetectMulti(ref, img.ref, p, ret));
-      return (ret.value, VecPoint.fromPointer(p));
-    });
+    final p = points?.ptr ?? calloc<cvg.VecPoint>();
+    final ret = calloc<ffi.Bool>();
+    cvRun(() => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, p, ret, ffi.nullptr));
+    final rval = (ret.value, VecPoint.fromPointer(p));
+    calloc.free(ret);
+    return rval;
   }
 
   /// Detects QR codes in image, finds the quadrangles containing the codes, and decodes the QRCodes to strings.
@@ -588,7 +564,17 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final points = calloc<cvg.VecPoint>();
     final codes = calloc<cvg.VecMat>();
     final rval = calloc<ffi.Bool>();
-    cvRun(() => cobjdetect.QRCodeDetector_DetectAndDecodeMulti(ref, img.ref, info, points, codes, rval));
+    cvRun(
+      () => cobjdetect.cv_QRCodeDetector_detectAndDecodeMulti(
+        ref,
+        img.ref,
+        info,
+        points,
+        codes,
+        rval,
+        ffi.nullptr,
+      ),
+    );
     final ret = (
       rval.value,
       VecVecChar.fromPointer(info).asStringList(),
@@ -599,23 +585,18 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     return ret;
   }
 
-  void setEpsX(double epsX) {
-    cvRun(() => cobjdetect.QRCodeDetector_setEpsX(ref, epsX));
-  }
+  void setEpsX(double epsX) => cobjdetect.cv_QRCodeDetector_setEpsX(ref, epsX);
 
-  void setEpsY(double epsY) {
-    cvRun(() => cobjdetect.QRCodeDetector_setEpsY(ref, epsY));
-  }
+  void setEpsY(double epsY) => cobjdetect.cv_QRCodeDetector_setEpsY(ref, epsY);
 
-  void setUseAlignmentMarkers(bool useAlignmentMarkers) {
-    cvRun(() => cobjdetect.QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers));
-  }
+  void setUseAlignmentMarkers(bool useAlignmentMarkers) =>
+      cobjdetect.cv_QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers);
 
-  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(cobjdetect.addresses.QRCodeDetector_Close);
+  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(cobjdetect.addresses.cv_QRCodeDetector_close);
 
   void dispose() {
     finalizer.detach(this);
-    cobjdetect.QRCodeDetector_Close(ptr);
+    cobjdetect.cv_QRCodeDetector_close(ptr);
   }
 
   @override
@@ -670,7 +651,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     cvRun(
-      () => cobjdetect.FaceDetectorYN_New(
+      () => cobjdetect.cv_FaceDetectorYN_create(
         cModel,
         cConfig,
         inputSize.cvd.ref,
@@ -724,7 +705,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
     cvRun(
-      () => cobjdetect.FaceDetectorYN_NewFromBuffer(
+      () => cobjdetect.cv_FaceDetectorYN_create_1(
         cFramework,
         bufM.ref,
         bufC.ref,
@@ -745,39 +726,19 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a68b6fb9bffbed0f3d5c104996113f247
   (int, int) getInputSize() {
-    final p = calloc<cvg.CvSize>();
-    cvRun(() => cobjdetect.FaceDetectorYN_GetInputSize(ref, p));
-    final ret = (p.ref.width, p.ref.height);
-    calloc.free(p);
+    final p = cobjdetect.cv_FaceDetectorYN_getInputSize(ref);
+    final ret = (p.width, p.height);
     return ret;
   }
 
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a5329744e10441e1c01526f1ff10b80de
-  double getScoreThreshold() {
-    return using<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(() => cobjdetect.FaceDetectorYN_GetScoreThreshold(ref, p));
-      return p.value;
-    });
-  }
+  double getScoreThreshold() => cobjdetect.cv_FaceDetectorYN_getScoreThreshold(ref);
 
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a40749dc04b9578631d55122be9ab10c3
-  double getNmsThreshold() {
-    return using<double>((arena) {
-      final p = arena<ffi.Float>();
-      cvRun(() => cobjdetect.FaceDetectorYN_GetNMSThreshold(ref, p));
-      return p.value;
-    });
-  }
+  double getNmsThreshold() => cobjdetect.cv_FaceDetectorYN_getNMSThreshold(ref);
 
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#acc6139ba763acd67f4aa738cee45b7ec
-  int getTopK() {
-    return using<int>((arena) {
-      final p = arena<ffi.Int>();
-      cvRun(() => cobjdetect.FaceDetectorYN_GetTopK(ref, p));
-      return p.value;
-    });
-  }
+  int getTopK() => cobjdetect.cv_FaceDetectorYN_getTopK(ref);
 
   /// Detects faces in the input image. Following is an example output.
   ///
@@ -797,7 +758,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ac05bd075ca3e6edc0e328927aae6f45b
   Mat detect(Mat image) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => cobjdetect.FaceDetectorYN_Detect(ref, image.ref, p));
+    cvRun(() => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, p, ffi.nullptr));
     return Mat.fromPointer(p);
   }
 
@@ -808,9 +769,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// [inputSize]	the size of the input image
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a072418e5ce7beeb69c41edda75c41d2e
-  void setInputSize((int, int) inputSize) {
-    cvRun(() => cobjdetect.FaceDetectorYN_SetInputSize(ref, inputSize.cvd.ref));
-  }
+  void setInputSize((int, int) inputSize) =>
+      cobjdetect.cv_FaceDetectorYN_setInputSize(ref, inputSize.cvd.ref);
 
   /// Set the score threshold to filter out bounding boxes of score less than
   /// the given value.
@@ -818,9 +778,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// [scoreThreshold]	threshold for filtering out bounding boxes
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a37f3c23b82158fac7fdad967d315f85a
-  void setScoreThreshold(double scoreThreshold) {
-    cvRun(() => cobjdetect.FaceDetectorYN_SetScoreThreshold(ref, scoreThreshold));
-  }
+  void setScoreThreshold(double scoreThreshold) =>
+      cobjdetect.cv_FaceDetectorYN_setScoreThreshold(ref, scoreThreshold);
 
   /// Set the Non-maximum-suppression threshold to suppress
   /// bounding boxes that have IoU greater than the given value.
@@ -828,27 +787,24 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// [nmsThreshold]	threshold for NMS operation
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#ab6011efee7e12dca3857d82de5269ac5
-  void setNMSThreshold(double nmsThreshold) {
-    cvRun(() => cobjdetect.FaceDetectorYN_SetNMSThreshold(ref, nmsThreshold));
-  }
+  void setNMSThreshold(double nmsThreshold) =>
+      cobjdetect.cv_FaceDetectorYN_setNMSThreshold(ref, nmsThreshold);
 
   /// Set the number of bounding boxes preserved before NMS.
   ///
   /// [topK]	the number of bounding boxes to preserve from top rank based on score
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#aa88d20e1e2df75ea36b851534089856a
-  void setTopK(int topK) {
-    cvRun(() => cobjdetect.FaceDetectorYN_SetTopK(ref, topK));
-  }
+  void setTopK(int topK) => cobjdetect.cv_FaceDetectorYN_setTopK(ref, topK);
 
   @override
   cvg.FaceDetectorYN get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(cobjdetect.addresses.FaceDetectorYN_Close);
+  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(cobjdetect.addresses.cv_FaceDetectorYN_close);
 
   void dispose() {
     finalizer.detach(this);
-    cobjdetect.FaceDetectorYN_Close(ptr);
+    cobjdetect.cv_FaceDetectorYN_close(ptr);
   }
 }
 
@@ -881,7 +837,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     final p = calloc<cvg.FaceRecognizerSF>();
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.FaceRecognizerSF_New(cModel, cConfig, backendId, targetId, p));
+    cvRun(() => cobjdetect.cv_FaceRecognizerSF_create(cModel, cConfig, backendId, targetId, p));
     calloc.free(cModel);
     calloc.free(cConfig);
     return FaceRecognizerSF._(p);
@@ -895,7 +851,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a84492908abecbc9362b4ddc8d46b8345
   Mat alignCrop(Mat srcImg, Mat faceBox) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => cobjdetect.FaceRecognizerSF_AlignCrop(ref, srcImg.ref, faceBox.ref, p));
+    cvRun(() => cobjdetect.cv_FaceRecognizerSF_alignCrop(ref, srcImg.ref, faceBox.ref, p, ffi.nullptr));
     return Mat.fromPointer(p);
   }
 
@@ -908,7 +864,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#ab1b4a3c12213e89091a490c573dc5aba
   Mat feature(Mat alignedImg, {bool clone = false}) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => cobjdetect.FaceRecognizerSF_Feature(ref, alignedImg.ref, clone, p));
+    cvRun(() => cobjdetect.cv_FaceRecognizerSF_feature(ref, alignedImg.ref, clone, p, ffi.nullptr));
     return Mat.fromPointer(p);
   }
 
@@ -921,29 +877,31 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   ///
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
   double match(Mat faceFeature1, Mat faceFeature2, {int disType = FR_COSINE}) {
-    return using<double>((arena) {
-      final distance = arena<ffi.Double>();
-      cvRun(
-        () => cobjdetect.FaceRecognizerSF_Match(
-          ref,
-          faceFeature1.ref,
-          faceFeature2.ref,
-          disType,
-          distance,
-        ),
-      );
-      return distance.value;
-    });
+    final distance = calloc<ffi.Double>();
+    cvRun(
+      () => cobjdetect.cv_FaceRecognizerSF_match(
+        ref,
+        faceFeature1.ref,
+        faceFeature2.ref,
+        disType,
+        distance,
+        ffi.nullptr,
+      ),
+    );
+    final rval = distance.value;
+    calloc.free(distance);
+    return rval;
   }
 
   @override
   cvg.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(cobjdetect.addresses.FaceRecognizerSF_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.FaceRecognizerSFPtr>(cobjdetect.addresses.cv_FaceRecognizerSF_close);
 
   void dispose() {
     finalizer.detach(this);
-    cobjdetect.FaceRecognizerSF_Close(ptr);
+    cobjdetect.cv_FaceRecognizerSF_close(ptr);
   }
 
   @Deprecated("Use [FR_COSINE] instead.")

@@ -269,83 +269,64 @@ class CvNativeObjdetect {
               bool,
               imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_CascadeClassifier_empty(
+  bool cv_CascadeClassifier_empty(
     CascadeClassifier self,
-    ffi.Pointer<ffi.Bool> rval,
   ) {
     return _cv_CascadeClassifier_empty(
       self,
-      rval,
     );
   }
 
-  late final _cv_CascadeClassifier_emptyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(CascadeClassifier,
-              ffi.Pointer<ffi.Bool>)>>('cv_CascadeClassifier_empty');
-  late final _cv_CascadeClassifier_empty =
-      _cv_CascadeClassifier_emptyPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              CascadeClassifier, ffi.Pointer<ffi.Bool>)>();
+  late final _cv_CascadeClassifier_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(CascadeClassifier)>>(
+          'cv_CascadeClassifier_empty');
+  late final _cv_CascadeClassifier_empty = _cv_CascadeClassifier_emptyPtr
+      .asFunction<bool Function(CascadeClassifier)>();
 
-  ffi.Pointer<CvStatus> cv_CascadeClassifier_getFeatureType(
+  int cv_CascadeClassifier_getFeatureType(
     CascadeClassifier self,
-    ffi.Pointer<ffi.Int> rval,
   ) {
     return _cv_CascadeClassifier_getFeatureType(
       self,
-      rval,
     );
   }
 
-  late final _cv_CascadeClassifier_getFeatureTypePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(CascadeClassifier,
-              ffi.Pointer<ffi.Int>)>>('cv_CascadeClassifier_getFeatureType');
+  late final _cv_CascadeClassifier_getFeatureTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(CascadeClassifier)>>(
+          'cv_CascadeClassifier_getFeatureType');
   late final _cv_CascadeClassifier_getFeatureType =
-      _cv_CascadeClassifier_getFeatureTypePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              CascadeClassifier, ffi.Pointer<ffi.Int>)>();
+      _cv_CascadeClassifier_getFeatureTypePtr
+          .asFunction<int Function(CascadeClassifier)>();
 
-  ffi.Pointer<CvStatus> cv_CascadeClassifier_getOriginalWindowSize(
+  CvSize cv_CascadeClassifier_getOriginalWindowSize(
     CascadeClassifier self,
-    ffi.Pointer<CvSize> rval,
   ) {
     return _cv_CascadeClassifier_getOriginalWindowSize(
       self,
-      rval,
     );
   }
 
-  late final _cv_CascadeClassifier_getOriginalWindowSizePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  CascadeClassifier, ffi.Pointer<CvSize>)>>(
-      'cv_CascadeClassifier_getOriginalWindowSize');
+  late final _cv_CascadeClassifier_getOriginalWindowSizePtr =
+      _lookup<ffi.NativeFunction<CvSize Function(CascadeClassifier)>>(
+          'cv_CascadeClassifier_getOriginalWindowSize');
   late final _cv_CascadeClassifier_getOriginalWindowSize =
-      _cv_CascadeClassifier_getOriginalWindowSizePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              CascadeClassifier, ffi.Pointer<CvSize>)>();
+      _cv_CascadeClassifier_getOriginalWindowSizePtr
+          .asFunction<CvSize Function(CascadeClassifier)>();
 
-  ffi.Pointer<CvStatus> cv_CascadeClassifier_isOldFormatCascade(
+  bool cv_CascadeClassifier_isOldFormatCascade(
     CascadeClassifier self,
-    ffi.Pointer<ffi.Bool> rval,
   ) {
     return _cv_CascadeClassifier_isOldFormatCascade(
       self,
-      rval,
     );
   }
 
-  late final _cv_CascadeClassifier_isOldFormatCascadePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  CascadeClassifier, ffi.Pointer<ffi.Bool>)>>(
-      'cv_CascadeClassifier_isOldFormatCascade');
+  late final _cv_CascadeClassifier_isOldFormatCascadePtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(CascadeClassifier)>>(
+          'cv_CascadeClassifier_isOldFormatCascade');
   late final _cv_CascadeClassifier_isOldFormatCascade =
-      _cv_CascadeClassifier_isOldFormatCascadePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              CascadeClassifier, ffi.Pointer<ffi.Bool>)>();
+      _cv_CascadeClassifier_isOldFormatCascadePtr
+          .asFunction<bool Function(CascadeClassifier)>();
 
   ffi.Pointer<CvStatus> cv_CascadeClassifier_load(
     CascadeClassifier self,
@@ -509,83 +490,66 @@ class CvNativeObjdetect {
           ffi.Pointer<CvStatus> Function(
               FaceDetectorYN, Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_getInputSize(
+  CvSize cv_FaceDetectorYN_getInputSize(
     FaceDetectorYN self,
-    ffi.Pointer<CvSize> input_size,
   ) {
     return _cv_FaceDetectorYN_getInputSize(
       self,
-      input_size,
     );
   }
 
-  late final _cv_FaceDetectorYN_getInputSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
-              ffi.Pointer<CvSize>)>>('cv_FaceDetectorYN_getInputSize');
+  late final _cv_FaceDetectorYN_getInputSizePtr =
+      _lookup<ffi.NativeFunction<CvSize Function(FaceDetectorYN)>>(
+          'cv_FaceDetectorYN_getInputSize');
   late final _cv_FaceDetectorYN_getInputSize =
-      _cv_FaceDetectorYN_getInputSizePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Pointer<CvSize>)>();
+      _cv_FaceDetectorYN_getInputSizePtr
+          .asFunction<CvSize Function(FaceDetectorYN)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_getNMSThreshold(
+  double cv_FaceDetectorYN_getNMSThreshold(
     FaceDetectorYN self,
-    ffi.Pointer<ffi.Float> nms_threshold,
   ) {
     return _cv_FaceDetectorYN_getNMSThreshold(
       self,
-      nms_threshold,
     );
   }
 
-  late final _cv_FaceDetectorYN_getNMSThresholdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
-              ffi.Pointer<ffi.Float>)>>('cv_FaceDetectorYN_getNMSThreshold');
+  late final _cv_FaceDetectorYN_getNMSThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(FaceDetectorYN)>>(
+          'cv_FaceDetectorYN_getNMSThreshold');
   late final _cv_FaceDetectorYN_getNMSThreshold =
-      _cv_FaceDetectorYN_getNMSThresholdPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+      _cv_FaceDetectorYN_getNMSThresholdPtr
+          .asFunction<double Function(FaceDetectorYN)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_getScoreThreshold(
+  double cv_FaceDetectorYN_getScoreThreshold(
     FaceDetectorYN self,
-    ffi.Pointer<ffi.Float> score_threshold,
   ) {
     return _cv_FaceDetectorYN_getScoreThreshold(
       self,
-      score_threshold,
     );
   }
 
-  late final _cv_FaceDetectorYN_getScoreThresholdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
-              ffi.Pointer<ffi.Float>)>>('cv_FaceDetectorYN_getScoreThreshold');
+  late final _cv_FaceDetectorYN_getScoreThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(FaceDetectorYN)>>(
+          'cv_FaceDetectorYN_getScoreThreshold');
   late final _cv_FaceDetectorYN_getScoreThreshold =
-      _cv_FaceDetectorYN_getScoreThresholdPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Pointer<ffi.Float>)>();
+      _cv_FaceDetectorYN_getScoreThresholdPtr
+          .asFunction<double Function(FaceDetectorYN)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_getTopK(
+  int cv_FaceDetectorYN_getTopK(
     FaceDetectorYN self,
-    ffi.Pointer<ffi.Int> top_k,
   ) {
     return _cv_FaceDetectorYN_getTopK(
       self,
-      top_k,
     );
   }
 
-  late final _cv_FaceDetectorYN_getTopKPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
-              ffi.Pointer<ffi.Int>)>>('cv_FaceDetectorYN_getTopK');
+  late final _cv_FaceDetectorYN_getTopKPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FaceDetectorYN)>>(
+          'cv_FaceDetectorYN_getTopK');
   late final _cv_FaceDetectorYN_getTopK =
-      _cv_FaceDetectorYN_getTopKPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Pointer<ffi.Int>)>();
+      _cv_FaceDetectorYN_getTopKPtr.asFunction<int Function(FaceDetectorYN)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_setInputSize(
+  void cv_FaceDetectorYN_setInputSize(
     FaceDetectorYN self,
     CvSize input_size,
   ) {
@@ -595,15 +559,14 @@ class CvNativeObjdetect {
     );
   }
 
-  late final _cv_FaceDetectorYN_setInputSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, CvSize)>>('cv_FaceDetectorYN_setInputSize');
+  late final _cv_FaceDetectorYN_setInputSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceDetectorYN, CvSize)>>(
+          'cv_FaceDetectorYN_setInputSize');
   late final _cv_FaceDetectorYN_setInputSize =
       _cv_FaceDetectorYN_setInputSizePtr
-          .asFunction<ffi.Pointer<CvStatus> Function(FaceDetectorYN, CvSize)>();
+          .asFunction<void Function(FaceDetectorYN, CvSize)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_setNMSThreshold(
+  void cv_FaceDetectorYN_setNMSThreshold(
     FaceDetectorYN self,
     double nms_threshold,
   ) {
@@ -613,15 +576,14 @@ class CvNativeObjdetect {
     );
   }
 
-  late final _cv_FaceDetectorYN_setNMSThresholdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Float)>>('cv_FaceDetectorYN_setNMSThreshold');
+  late final _cv_FaceDetectorYN_setNMSThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceDetectorYN, ffi.Float)>>(
+          'cv_FaceDetectorYN_setNMSThreshold');
   late final _cv_FaceDetectorYN_setNMSThreshold =
       _cv_FaceDetectorYN_setNMSThresholdPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(FaceDetectorYN, double)>();
+          .asFunction<void Function(FaceDetectorYN, double)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_setScoreThreshold(
+  void cv_FaceDetectorYN_setScoreThreshold(
     FaceDetectorYN self,
     double score_threshold,
   ) {
@@ -631,15 +593,14 @@ class CvNativeObjdetect {
     );
   }
 
-  late final _cv_FaceDetectorYN_setScoreThresholdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(FaceDetectorYN,
-              ffi.Float)>>('cv_FaceDetectorYN_setScoreThreshold');
+  late final _cv_FaceDetectorYN_setScoreThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceDetectorYN, ffi.Float)>>(
+          'cv_FaceDetectorYN_setScoreThreshold');
   late final _cv_FaceDetectorYN_setScoreThreshold =
       _cv_FaceDetectorYN_setScoreThresholdPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(FaceDetectorYN, double)>();
+          .asFunction<void Function(FaceDetectorYN, double)>();
 
-  ffi.Pointer<CvStatus> cv_FaceDetectorYN_setTopK(
+  void cv_FaceDetectorYN_setTopK(
     FaceDetectorYN self,
     int top_k,
   ) {
@@ -649,12 +610,11 @@ class CvNativeObjdetect {
     );
   }
 
-  late final _cv_FaceDetectorYN_setTopKPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              FaceDetectorYN, ffi.Int)>>('cv_FaceDetectorYN_setTopK');
+  late final _cv_FaceDetectorYN_setTopKPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FaceDetectorYN, ffi.Int)>>(
+          'cv_FaceDetectorYN_setTopK');
   late final _cv_FaceDetectorYN_setTopK = _cv_FaceDetectorYN_setTopKPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(FaceDetectorYN, int)>();
+      .asFunction<void Function(FaceDetectorYN, int)>();
 
   ffi.Pointer<CvStatus> cv_FaceRecognizerSF_alignCrop(
     FaceRecognizerSF self,
@@ -1085,79 +1045,64 @@ class CvNativeObjdetect {
 
   ffi.Pointer<CvStatus> cv_HOGDescriptor_getDaimlerPeopleDetector(
     ffi.Pointer<VecF32> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_HOGDescriptor_getDaimlerPeopleDetector(
       rval,
-      callback,
     );
   }
 
   late final _cv_HOGDescriptor_getDaimlerPeopleDetectorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>,
-              imp1.CvCallback_0)>>('cv_HOGDescriptor_getDaimlerPeopleDetector');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
+      'cv_HOGDescriptor_getDaimlerPeopleDetector');
   late final _cv_HOGDescriptor_getDaimlerPeopleDetector =
-      _cv_HOGDescriptor_getDaimlerPeopleDetectorPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecF32>, imp1.CvCallback_0)>();
+      _cv_HOGDescriptor_getDaimlerPeopleDetectorPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
 
   ffi.Pointer<CvStatus> cv_HOGDescriptor_getDefaultPeopleDetector(
     ffi.Pointer<VecF32> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_HOGDescriptor_getDefaultPeopleDetector(
       rval,
-      callback,
     );
   }
 
   late final _cv_HOGDescriptor_getDefaultPeopleDetectorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>,
-              imp1.CvCallback_0)>>('cv_HOGDescriptor_getDefaultPeopleDetector');
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>>(
+      'cv_HOGDescriptor_getDefaultPeopleDetector');
   late final _cv_HOGDescriptor_getDefaultPeopleDetector =
-      _cv_HOGDescriptor_getDefaultPeopleDetectorPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VecF32>, imp1.CvCallback_0)>();
+      _cv_HOGDescriptor_getDefaultPeopleDetectorPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecF32>)>();
 
-  ffi.Pointer<CvStatus> cv_HOGDescriptor_getDescriptorSize(
+  int cv_HOGDescriptor_getDescriptorSize(
     HOGDescriptor self,
-    ffi.Pointer<ffi.Size> rval,
   ) {
     return _cv_HOGDescriptor_getDescriptorSize(
       self,
-      rval,
     );
   }
 
-  late final _cv_HOGDescriptor_getDescriptorSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(HOGDescriptor,
-              ffi.Pointer<ffi.Size>)>>('cv_HOGDescriptor_getDescriptorSize');
+  late final _cv_HOGDescriptor_getDescriptorSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Size Function(HOGDescriptor)>>(
+          'cv_HOGDescriptor_getDescriptorSize');
   late final _cv_HOGDescriptor_getDescriptorSize =
-      _cv_HOGDescriptor_getDescriptorSizePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, ffi.Pointer<ffi.Size>)>();
+      _cv_HOGDescriptor_getDescriptorSizePtr
+          .asFunction<int Function(HOGDescriptor)>();
 
-  ffi.Pointer<CvStatus> cv_HOGDescriptor_getWinSigma(
+  double cv_HOGDescriptor_getWinSigma(
     HOGDescriptor self,
-    ffi.Pointer<ffi.Double> rval,
   ) {
     return _cv_HOGDescriptor_getWinSigma(
       self,
-      rval,
     );
   }
 
-  late final _cv_HOGDescriptor_getWinSigmaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(HOGDescriptor,
-              ffi.Pointer<ffi.Double>)>>('cv_HOGDescriptor_getWinSigma');
-  late final _cv_HOGDescriptor_getWinSigma =
-      _cv_HOGDescriptor_getWinSigmaPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              HOGDescriptor, ffi.Pointer<ffi.Double>)>();
+  late final _cv_HOGDescriptor_getWinSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(HOGDescriptor)>>(
+          'cv_HOGDescriptor_getWinSigma');
+  late final _cv_HOGDescriptor_getWinSigma = _cv_HOGDescriptor_getWinSigmaPtr
+      .asFunction<double Function(HOGDescriptor)>();
 
   ffi.Pointer<CvStatus> cv_HOGDescriptor_groupRectangles(
     HOGDescriptor self,
@@ -1514,7 +1459,7 @@ class CvNativeObjdetect {
               ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_QRCodeDetector_setEpsX(
+  void cv_QRCodeDetector_setEpsX(
     QRCodeDetector self,
     double epsX,
   ) {
@@ -1525,13 +1470,12 @@ class CvNativeObjdetect {
   }
 
   late final _cv_QRCodeDetector_setEpsXPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              QRCodeDetector, ffi.Double)>>('cv_QRCodeDetector_setEpsX');
+          ffi.NativeFunction<ffi.Void Function(QRCodeDetector, ffi.Double)>>(
+      'cv_QRCodeDetector_setEpsX');
   late final _cv_QRCodeDetector_setEpsX = _cv_QRCodeDetector_setEpsXPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(QRCodeDetector, double)>();
+      .asFunction<void Function(QRCodeDetector, double)>();
 
-  ffi.Pointer<CvStatus> cv_QRCodeDetector_setEpsY(
+  void cv_QRCodeDetector_setEpsY(
     QRCodeDetector self,
     double epsY,
   ) {
@@ -1542,13 +1486,12 @@ class CvNativeObjdetect {
   }
 
   late final _cv_QRCodeDetector_setEpsYPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              QRCodeDetector, ffi.Double)>>('cv_QRCodeDetector_setEpsY');
+          ffi.NativeFunction<ffi.Void Function(QRCodeDetector, ffi.Double)>>(
+      'cv_QRCodeDetector_setEpsY');
   late final _cv_QRCodeDetector_setEpsY = _cv_QRCodeDetector_setEpsYPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(QRCodeDetector, double)>();
+      .asFunction<void Function(QRCodeDetector, double)>();
 
-  ffi.Pointer<CvStatus> cv_QRCodeDetector_setUseAlignmentMarkers(
+  void cv_QRCodeDetector_setUseAlignmentMarkers(
     QRCodeDetector self,
     bool useAlignmentMarkers,
   ) {
@@ -1558,13 +1501,12 @@ class CvNativeObjdetect {
     );
   }
 
-  late final _cv_QRCodeDetector_setUseAlignmentMarkersPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(QRCodeDetector,
-              ffi.Bool)>>('cv_QRCodeDetector_setUseAlignmentMarkers');
+  late final _cv_QRCodeDetector_setUseAlignmentMarkersPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(QRCodeDetector, ffi.Bool)>>(
+          'cv_QRCodeDetector_setUseAlignmentMarkers');
   late final _cv_QRCodeDetector_setUseAlignmentMarkers =
       _cv_QRCodeDetector_setUseAlignmentMarkersPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(QRCodeDetector, bool)>();
+          .asFunction<void Function(QRCodeDetector, bool)>();
 
   ffi.Pointer<CvStatus> cv_groupRectangles(
     ffi.Pointer<VecRect> rects,
