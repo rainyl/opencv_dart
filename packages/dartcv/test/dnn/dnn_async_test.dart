@@ -6,8 +6,8 @@ import 'package:test/test.dart';
 
 Future<bool> checkCaffeNetAsync(cv.Net net) async {
   expect(net.isEmpty, false);
-  await net.setPreferableBackendAsync(cv.DNN_BACKEND_DEFAULT);
-  await net.setPreferableTargetAsync(cv.DNN_TARGET_CPU);
+  net.setPreferableBackend(cv.DNN_BACKEND_DEFAULT);
+  net.setPreferableTarget(cv.DNN_TARGET_CPU);
 
   final img = await cv.imreadAsync("test/images/space_shuttle.jpg", flags: cv.IMREAD_COLOR);
   expect(img.isEmpty, false);
@@ -23,9 +23,9 @@ Future<bool> checkCaffeNetAsync(cv.Net net) async {
   expect(blob.isEmpty, false);
 
   await net.setInputAsync(blob, name: "data");
-  final layer = await net.getLayerAsync(0);
-  expect(await layer.inputNameToIndexAsync("notthere"), -1);
-  expect(await layer.outputNameToIndexAsync("notthere"), -1);
+  final layer = net.getLayer(0);
+  expect(layer.inputNameToIndex("notthere"), -1);
+  expect(layer.outputNameToIndex("notthere"), -1);
 
   final ids = await net.getUnconnectedOutLayersAsync();
   expect((ids.length, ids.first), (1, 142));
@@ -135,7 +135,7 @@ Future<bool> checkTfliteAsync(cv.Net net) async {
 
 void main() async {
   test('cv.NetAsync.fromFileAsync', () async {
-    final net = await cv.NetAsync.emptyAsync();
+    final net = cv.Net.empty();
     expect(net.isEmpty, true);
 
     final model = await cv.NetAsync.fromFileAsync(
@@ -143,7 +143,7 @@ void main() async {
       config: "test/models/bvlc_googlenet.prototxt",
     );
     await checkCaffeNetAsync(model);
-    expect(await model.dumpAsync(), isNotEmpty);
+    expect(model.dump(), isNotEmpty);
 
     model.dispose();
   });
@@ -226,7 +226,7 @@ void main() async {
 
     final blob = await cv.blobFromImagesAsync(imgs);
     expect(blob.isEmpty, false);
-    expect(await cv.getBlobSizeAsync(blob), cv.Scalar(2, 3, 480, 512));
+    expect(cv.getBlobSize(blob), cv.Scalar(2, 3, 480, 512));
 
     final images = await cv.imagesFromBlobAsync(blob);
     expect(images.length, 2);
@@ -246,7 +246,7 @@ void main() async {
 
     final blob = await cv.blobFromImagesAsync(imgs);
     expect(blob.isEmpty, false);
-    expect(await cv.getBlobSizeAsync(blob), cv.Scalar(2, 1, 480, 512));
+    expect(cv.getBlobSize(blob), cv.Scalar(2, 1, 480, 512));
   });
 
   test('cv.NMSBoxesAsync', () async {

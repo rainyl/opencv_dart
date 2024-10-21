@@ -73,7 +73,7 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
       newImgSize.cvd.ref,
       validPixROI,
       centerPrincipalPoint,
-      rval.ref,
+      rval.ptr,
       callback,
     ),
     (c) => c.complete((rval, Rect.fromPointer(validPixROI))),
@@ -208,19 +208,19 @@ Future<(bool success, Mat corners)> findChessboardCornersAsync(
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
-Future<(bool, Mat corners)> findChessboardCornersSBAsync(
+Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
   InputArray image,
   (int, int) patternSize,
   int flags, {
-  OutputArray? corners,
+  VecPoint2f? corners,
 }) async {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
       (callback) => ccalib3d.cv_findChessboardCornersSB(
             image.ref,
             patternSize.cvd.ref,
-            corners!.ref,
+            corners!.ptr,
             flags,
             b,
             callback,
@@ -233,21 +233,21 @@ Future<(bool, Mat corners)> findChessboardCornersSBAsync(
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
-Future<(bool, Mat corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
+Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsync(
   InputArray image,
   (int, int) patternSize,
   int flags, {
-  OutputArray? corners,
+  VecPoint2f? corners,
   OutputArray? meta,
 }) async {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
       (callback) => ccalib3d.cv_FindChessboardCornersSB_1(
             image.ref,
             patternSize.cvd.ref,
-            corners!.ref,
+            corners!.ptr,
             flags,
             meta!.ref,
             b,
@@ -308,7 +308,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
       maxIters,
       confidence,
       refineIters,
-      rval.ref,
+      rval.ptr,
       callback,
     ),
     (c) => c.complete((rval, inliers!)),
@@ -341,7 +341,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
       maxIters,
       confidence,
       refineIters,
-      rval.ref,
+      rval.ptr,
       callback,
     ),
     (c) => c.complete((rval, inliers!)),
@@ -372,7 +372,7 @@ Future<(Mat, Mat)> findHomographyAsync(
       mask!.ref,
       maxIters,
       confidence,
-      mat.ref,
+      mat.ptr,
       callback,
     ),
     (c) => c.complete((mat, mask!)),

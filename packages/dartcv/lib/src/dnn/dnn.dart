@@ -281,7 +281,7 @@ class Net extends CvStruct<cvg.Net> {
   Mat forward({String outputName = ""}) {
     final m = Mat.empty();
     final cOutName = outputName.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ref, ffi.nullptr));
+    cvRun(() => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ptr, ffi.nullptr));
     calloc.free(cOutName);
     return m;
   }
@@ -471,7 +471,7 @@ List<Mat> imagesFromBlob(Mat blob) {
 ///	a bones structure from pose detection, or a color plane from Colorization)
 Mat getBlobChannel(Mat blob, int imgidx, int chnidx) {
   final m = Mat.empty();
-  cvRun(() => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ref, ffi.nullptr));
+  cvRun(() => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, ffi.nullptr));
   return m;
 }
 

@@ -27,16 +27,16 @@ import '../native_lib.dart' show cimgcodecs;
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   final dst = Mat.empty();
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => cimgcodecs.cv_imread(cname, flags, dst.ref, ffi.nullptr));
+  cvRun(() => cimgcodecs.cv_imread(cname, flags, dst.ptr, ffi.nullptr));
   calloc.free(cname);
   return dst;
 }
 
-Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) {
+Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
   final dst = Mat.empty();
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
   return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imread(cname, flags, dst.ref, callback),
+    (callback) => cimgcodecs.cv_imread(cname, flags, dst.ptr, callback),
     (c) {
       calloc.free(cname);
       return c.complete(dst);
@@ -61,7 +61,7 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
   return rval;
 }
 
-Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) {
+Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) async {
   final fname = filename.toNativeUtf8().cast<ffi.Char>();
   final p = calloc<ffi.Bool>();
   void completeFunc(Completer<bool> c) {
@@ -114,7 +114,7 @@ Future<(bool, Uint8List)> imencodeAsync(
   String ext,
   InputArray img, {
   VecI32? params,
-}) {
+}) async {
   final buffer = calloc<cvg.VecUChar>();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -153,15 +153,15 @@ Future<(bool, Uint8List)> imencodeAsync(
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
-  cvRun(() => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ref, ffi.nullptr));
+  cvRun(() => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, ffi.nullptr));
   return dst;
 }
 
-Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) {
+Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) async {
   final vec = VecUChar.fromList(buf);
   dst ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ref, callback),
+    (callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback),
     (c) {
       return c.complete(dst);
     },

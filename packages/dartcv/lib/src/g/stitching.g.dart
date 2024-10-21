@@ -30,157 +30,6 @@ class CvNativeStitching {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<CvStatus> Stitcher_Component(
-    Stitcher self,
-    ffi.Pointer<VecI32> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_Component(
-      self,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_ComponentPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecI32>,
-              imp1.CvCallback_0)>>('Stitcher_Component');
-  late final _Stitcher_Component = _Stitcher_ComponentPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Stitcher, ffi.Pointer<VecI32>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> Stitcher_ComposePanorama(
-    Stitcher self,
-    Mat rpano,
-    ffi.Pointer<ffi.Int> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_ComposePanorama(
-      self,
-      rpano,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_ComposePanoramaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, Mat, ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>>('Stitcher_ComposePanorama');
-  late final _Stitcher_ComposePanorama =
-      _Stitcher_ComposePanoramaPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Stitcher, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> Stitcher_ComposePanorama_1(
-    Stitcher self,
-    VecMat mats,
-    Mat rpano,
-    ffi.Pointer<ffi.Int> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_ComposePanorama_1(
-      self,
-      mats,
-      rpano,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_ComposePanorama_1Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Stitcher,
-              VecMat,
-              Mat,
-              ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>>('Stitcher_ComposePanorama_1');
-  late final _Stitcher_ComposePanorama_1 =
-      _Stitcher_ComposePanorama_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat,
-              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> Stitcher_EstimateTransform(
-    Stitcher self,
-    VecMat mats,
-    VecMat masks,
-    ffi.Pointer<ffi.Int> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_EstimateTransform(
-      self,
-      mats,
-      masks,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_EstimateTransformPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Stitcher,
-              VecMat,
-              VecMat,
-              ffi.Pointer<ffi.Int>,
-              imp1.CvCallback_0)>>('Stitcher_EstimateTransform');
-  late final _Stitcher_EstimateTransform =
-      _Stitcher_EstimateTransformPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat,
-              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> Stitcher_Stitch(
-    Stitcher self,
-    VecMat mats,
-    Mat rpano,
-    ffi.Pointer<ffi.Int> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_Stitch(
-      self,
-      mats,
-      rpano,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_StitchPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat,
-              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>>('Stitcher_Stitch');
-  late final _Stitcher_Stitch = _Stitcher_StitchPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> Stitcher_Stitch_1(
-    Stitcher self,
-    VecMat mats,
-    VecMat masks,
-    Mat rpano,
-    ffi.Pointer<ffi.Int> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _Stitcher_Stitch_1(
-      self,
-      mats,
-      masks,
-      rpano,
-      rval,
-      callback,
-    );
-  }
-
-  late final _Stitcher_Stitch_1Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, Mat,
-              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>>('Stitcher_Stitch_1');
-  late final _Stitcher_Stitch_1 = _Stitcher_Stitch_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, Mat,
-          ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
-
   void cv_Stitcher_close(
     StitcherPtr stitcher,
   ) {
@@ -194,6 +43,78 @@ class CvNativeStitching {
           'cv_Stitcher_close');
   late final _cv_Stitcher_close =
       _cv_Stitcher_closePtr.asFunction<void Function(StitcherPtr)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_component(
+    Stitcher self,
+    ffi.Pointer<VecI32> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_component(
+      self,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_componentPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, ffi.Pointer<VecI32>,
+              imp1.CvCallback_0)>>('cv_Stitcher_component');
+  late final _cv_Stitcher_component = _cv_Stitcher_componentPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Stitcher, ffi.Pointer<VecI32>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_composePanorama(
+    Stitcher self,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_composePanorama(
+      self,
+      rpano,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_composePanoramaPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, Mat, ffi.Pointer<ffi.Int>,
+              imp1.CvCallback_0)>>('cv_Stitcher_composePanorama');
+  late final _cv_Stitcher_composePanorama =
+      _cv_Stitcher_composePanoramaPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_composePanorama_1(
+    Stitcher self,
+    VecMat mats,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_composePanorama_1(
+      self,
+      mats,
+      rpano,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_composePanorama_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher,
+              VecMat,
+              Mat,
+              ffi.Pointer<ffi.Int>,
+              imp1.CvCallback_0)>>('cv_Stitcher_composePanorama_1');
+  late final _cv_Stitcher_composePanorama_1 =
+      _cv_Stitcher_composePanorama_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat,
+              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_Stitcher_create(
     int mode,
@@ -211,6 +132,35 @@ class CvNativeStitching {
               ffi.Int, ffi.Pointer<Stitcher>)>>('cv_Stitcher_create');
   late final _cv_Stitcher_create = _cv_Stitcher_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(int, ffi.Pointer<Stitcher>)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_estimateTransform(
+    Stitcher self,
+    VecMat mats,
+    VecMat masks,
+    ffi.Pointer<ffi.Int> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_estimateTransform(
+      self,
+      mats,
+      masks,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_estimateTransformPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher,
+              VecMat,
+              VecMat,
+              ffi.Pointer<ffi.Int>,
+              imp1.CvCallback_0)>>('cv_Stitcher_estimateTransform');
+  late final _cv_Stitcher_estimateTransform =
+      _cv_Stitcher_estimateTransformPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat,
+              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
 
   double cv_Stitcher_get_compositingResol(
     Stitcher self,
@@ -433,6 +383,61 @@ class CvNativeStitching {
   late final _cv_Stitcher_set_waveCorrection =
       _cv_Stitcher_set_waveCorrectionPtr
           .asFunction<void Function(Stitcher, bool)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_stitch(
+    Stitcher self,
+    VecMat mats,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_stitch(
+      self,
+      mats,
+      rpano,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_stitchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Stitcher, VecMat, Mat,
+              ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>>('cv_Stitcher_stitch');
+  late final _cv_Stitcher_stitch = _cv_Stitcher_stitchPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_Stitcher_stitch_1(
+    Stitcher self,
+    VecMat mats,
+    VecMat masks,
+    Mat rpano,
+    ffi.Pointer<ffi.Int> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Stitcher_stitch_1(
+      self,
+      mats,
+      masks,
+      rpano,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Stitcher_stitch_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Stitcher,
+              VecMat,
+              VecMat,
+              Mat,
+              ffi.Pointer<ffi.Int>,
+              imp1.CvCallback_0)>>('cv_Stitcher_stitch_1');
+  late final _cv_Stitcher_stitch_1 = _cv_Stitcher_stitch_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, Mat,
+          ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
 
   late final addresses = _SymbolAddresses(this);
 }

@@ -87,7 +87,7 @@ typedef VoidPtr = ffi.Pointer<ffi.Void>;
 Future<T> cvRunAsync0<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
   void Function(Completer<T> completer) onComplete,
-) {
+) async {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   void onResponse() {
@@ -100,7 +100,9 @@ Future<T> cvRunAsync0<T>(
   return completer.future;
 }
 
-Future<T> cvRunAsync<T>(
+const cvRunAsync = cvRunAsync0;
+
+Future<T> cvRunAsync1<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
   void Function(Completer<T> completer, VoidPtr p) onComplete,
 ) {
@@ -115,8 +117,6 @@ Future<T> cvRunAsync<T>(
   throwIfFailed(func(ccallback.nativeFunction));
   return completer.future;
 }
-
-const cvRunAsync1 = cvRunAsync;
 
 Future<T> cvRunAsync2<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_2 callback) func,

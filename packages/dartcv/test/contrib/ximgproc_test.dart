@@ -272,7 +272,7 @@ void main() async {
     }
     {
       final kernel = await cv.ximgproc_rl.createRLEImageAsync(runs.cvd);
-      expect(await cv.ximgproc_rl.isRLMorphologyPossibleAsync(kernel), true);
+      expect(cv.ximgproc_rl.isRLMorphologyPossible(kernel), true);
     }
   });
 

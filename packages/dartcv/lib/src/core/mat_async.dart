@@ -18,7 +18,7 @@ import 'scalar.dart';
 extension MatAsync on Mat {
   static Future<Mat> emptyAsync() async => Mat.empty();
 
-  static Future<Mat> fromScalarAsync(int rows, int cols, MatType type, Scalar s) {
+  static Future<Mat> fromScalarAsync(int rows, int cols, MatType type, Scalar s) async {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, callback),
@@ -68,7 +68,7 @@ extension MatAsync on Mat {
   Future<Mat> cloneAsync() async {
     final dst = Mat.empty();
     return cvRunAsync0(
-      (callback) => ccore.cv_Mat_clone(ref, dst.ref, callback),
+      (callback) => ccore.cv_Mat_clone(ref, dst.ptr, callback),
       (c) => c.complete(dst),
     );
   }
@@ -91,7 +91,7 @@ extension MatAsync on Mat {
   Future<Mat> regionAsync(Rect rect) async {
     final dst = Mat.empty();
     return cvRunAsync0<Mat>(
-      (callback) => ccore.cv_Mat_region(ref, rect.ref, dst.ref, callback),
+      (callback) => ccore.cv_Mat_region(ref, rect.ref, dst.ptr, callback),
       (c) => c.complete(dst),
     );
   }
@@ -99,7 +99,7 @@ extension MatAsync on Mat {
   Future<Mat> reshapeAsync(int cn, [int rows = 0]) async {
     final dst = Mat.empty();
     return cvRunAsync0<Mat>(
-      (callback) => ccore.cv_Mat_reshape(ref, cn, rows, dst.ref, callback),
+      (callback) => ccore.cv_Mat_reshape(ref, cn, rows, dst.ptr, callback),
       (c) => c.complete(dst),
     );
   }
@@ -115,7 +115,7 @@ extension MatAsync on Mat {
   Future<Mat> rowRangeAsync(int start, int end) async {
     final dst = Mat.empty();
     return cvRunAsync0<Mat>(
-      (callback) => ccore.cv_rowRange(ref, start, end, dst.ref, callback),
+      (callback) => ccore.cv_rowRange(ref, start, end, dst.ptr, callback),
       (c) => c.complete(dst),
     );
   }
@@ -123,12 +123,12 @@ extension MatAsync on Mat {
   Future<Mat> colRangeAsync(int start, int end) async {
     final dst = Mat.empty();
     return cvRunAsync0<Mat>(
-      (callback) => ccore.cv_colRange(ref, start, end, dst.ref, callback),
+      (callback) => ccore.cv_colRange(ref, start, end, dst.ptr, callback),
       (c) => c.complete(dst),
     );
   }
 
-  Future<Scalar> meanAsync({Mat? mask}) {
+  Future<Scalar> meanAsync({Mat? mask}) async {
     final s = calloc<cvg.Scalar>();
     return cvRunAsync0<Scalar>(
       (callback) {

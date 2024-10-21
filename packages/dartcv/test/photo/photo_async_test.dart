@@ -122,12 +122,12 @@ void main() {
       cv.Mat.zeros(20, 20, cv.MatType.CV_8UC3),
       cv.Mat.zeros(20, 20, cv.MatType.CV_8UC3),
     ];
-    final mertens = await cv.MergeMertensAsync.emptyNewAsync();
+    final mertens = cv.MergeMertens.empty();
     final dst = await mertens.processAsync(src.cvd);
     expect(dst.isEmpty, false);
     expect((dst.rows, dst.cols), (src[0].rows, src[0].cols));
 
-    final mertens1 = await cv.MergeMertensAsync.createAsync();
+    final mertens1 = cv.MergeMertens.create();
     final dst1 = await mertens1.processAsync(src.cvd);
     expect(dst1.isEmpty, false);
     expect((dst1.rows, dst1.cols), (src[0].rows, src[0].cols));
@@ -142,11 +142,11 @@ void main() {
       cv.Mat.zeros(20, 20, cv.MatType.CV_8UC3),
     ];
 
-    final alignmtb = await cv.AlignMTBAsync.emptyNewAsync();
+    final alignmtb = cv.AlignMTB.empty();
     final dst = await alignmtb.processAsync(src.cvd);
     expect(dst.length, greaterThan(0));
 
-    final alignmtb1 = await cv.AlignMTBAsync.createAsync();
+    final alignmtb1 = cv.AlignMTB.create();
     final dst1 = await alignmtb1.processAsync(src.cvd);
     expect(dst1.length, greaterThan(0));
 

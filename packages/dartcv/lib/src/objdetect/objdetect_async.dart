@@ -27,12 +27,12 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
   }) {
-    final ret = calloc<cvg.VecRect>();
-    return cvRunAsync0(
+    final pObjects = calloc<cvg.VecRect>();
+    return cvRunAsync0<VecRect>(
       (callback) => cobjdetect.cv_CascadeClassifier_detectMultiScale_1(
         ref,
         image.ref,
-        ret,
+        pObjects,
         scaleFactor,
         minNeighbors,
         flags,
@@ -41,7 +41,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
         callback,
       ),
       (c) {
-        return c.complete(VecRect.fromPointer(ret));
+        return c.complete(VecRect());
       },
     );
   }
@@ -140,13 +140,13 @@ extension HOGDescriptorAsync on HOGDescriptor {
     );
   }
 
-  Future<(Mat grad, Mat angleOfs)> computeGradientAsync(
-    InputArray img, {
+  Future<void> computeGradientAsync(
+    InputArray img,
+    InputOutputArray grad,
+    InputOutputArray angleOfs, {
     (int, int) paddingTL = (0, 0),
     (int, int) paddingBR = (0, 0),
   }) {
-    final grad = Mat.empty();
-    final angleOfs = Mat.empty();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_computeGradient(
         ref,
@@ -158,7 +158,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
         callback,
       ),
       (c) {
-        return c.complete((grad, angleOfs));
+        return c.complete();
       },
     );
   }
@@ -275,7 +275,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
   }
 }
 
-Future<VecRect> groupRectanglesAsync(VecRect rects, int groupThreshold, double eps) {
+Future<VecRect> groupRectanglesAsync(VecRect rects, int groupThreshold, double eps) async {
   return cvRunAsync0(
     (callback) => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, callback),
     (c) {
@@ -339,7 +339,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     );
   }
 
-  Future<(bool ret, VecPoint points)> detectAsync(InputArray input, {VecPoint? points}) {
+  Future<(bool ret, VecPoint points)> detectAsync(InputArray input, {VecPoint? points}) async {
     final pts = calloc<cvg.VecPoint>();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
@@ -370,7 +370,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     );
   }
 
-  Future<(bool ret, VecPoint points)> detectMultiAsync(InputArray img, {VecPoint? points}) {
+  Future<(bool ret, VecPoint points)> detectMultiAsync(InputArray img, {VecPoint? points}) async {
     final p = points?.ptr ?? calloc<cvg.VecPoint>();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
@@ -383,7 +383,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     );
   }
 
-  Future<(bool, List<String>, VecPoint, VecMat)> detectAndDecodeMultiAsync(InputArray img) {
+  Future<(bool, List<String>, VecPoint, VecMat)> detectAndDecodeMultiAsync(InputArray img) async {
     final info = calloc<cvg.VecVecChar>();
     final points = calloc<cvg.VecPoint>();
     final codes = calloc<cvg.VecMat>();
@@ -413,7 +413,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
 }
 
 extension FaceDetectorYNAsync on FaceDetectorYN {
-  Future<Mat> detectAsync(Mat image) {
+  Future<Mat> detectAsync(Mat image) async {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, p, callback),
@@ -425,7 +425,7 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
 }
 
 extension FaceRecognizerSFAsync on FaceRecognizerSF {
-  Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) {
+  Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) async {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_alignCrop(ref, srcImg.ref, faceBox.ref, p, callback),
@@ -435,7 +435,7 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
     );
   }
 
-  Future<Mat> featureAsync(Mat alignedImg, {bool clone = false}) {
+  Future<Mat> featureAsync(Mat alignedImg, {bool clone = false}) async {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_feature(ref, alignedImg.ref, clone, p, callback),
@@ -445,7 +445,8 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
     );
   }
 
-  Future<double> matchAsync(Mat faceFeature1, Mat faceFeature2, {int disType = FaceRecognizerSF.FR_COSINE}) {
+  Future<double> matchAsync(Mat faceFeature1, Mat faceFeature2,
+      {int disType = FaceRecognizerSF.FR_COSINE}) async {
     final distance = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_match(

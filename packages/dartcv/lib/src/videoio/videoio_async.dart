@@ -4,7 +4,6 @@
 
 library cv.videoio;
 
-import 'dart:convert';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -17,90 +16,126 @@ import '../native_lib.dart' show cvideoio;
 import 'videoio.dart';
 
 extension VideoCaptureAsync on VideoCapture {
-  static Future<VideoCapture> emptyAsync() async => cvRunAsync(
-        cvideoio.VideoCapture_New_Async,
-        (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
-      );
-
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
   static Future<VideoCapture> fromFileAsync(String filename, {int apiPreference = CAP_ANY}) async {
+    final p = calloc<cvg.VideoCapture>();
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    final rval = cvRunAsync<VideoCapture>(
-      (callback) => cvideoio.VideoCapture_NewFromFile_Async(cname, apiPreference, callback),
-      (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, callback),
+      (c) {
+        calloc.free(cname);
+        return c.complete(VideoCapture.fromPointer(p));
+      },
     );
-    calloc.free(cname);
-    return rval;
   }
 
-  static Future<VideoCapture> fromDeviceAsync(int device, {int apiPreference = CAP_ANY}) async => cvRunAsync(
-        (callback) => cvideoio.VideoCapture_NewFromIndex_Async(device, apiPreference, callback),
-        (completer, p) => completer.complete(VideoCapture.fromPointer(p.cast<cvg.VideoCapture>())),
-      );
+  static Future<VideoCapture> fromDeviceAsync(int device, {int apiPreference = CAP_ANY}) async {
+    final p = calloc<cvg.VideoCapture>();
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, callback),
+      (c) {
+        return c.complete(VideoCapture.fromPointer(p));
+      },
+    );
+  }
 
-  /// Grabs the next frame from video file or capturing device.
-  ///
-  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  Future<bool> grabAsync() async =>
-      cvRunAsync((callback) => cvideoio.VideoCapture_Grab_Async(ref, callback), boolCompleter);
-
-  Future<(bool, Mat)> readAsync() async =>
-      cvRunAsync2((callback) => cvideoio.VideoCapture_Read_Async(ref, callback), (completer, p, p1) {
-        final rval = p.cast<ffi.Bool>().value;
+  Future<(bool, Mat)> readAsync({Mat? m}) async {
+    m ??= Mat.empty();
+    final p = calloc<ffi.Bool>();
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, callback),
+      (c) {
+        final rval = (p.value, m!);
         calloc.free(p);
-        completer.complete((rval, Mat.fromPointer(p1.cast<cvg.Mat>())));
-      });
+        return c.complete(rval);
+      },
+    );
+  }
 
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters.
   ///
   /// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  Future<bool> openAsync(String uri, {int apiPreference = CAP_ANY}) {
+  Future<bool> openAsync(String uri, {int apiPreference = CAP_ANY}) async {
     final cname = uri.toNativeUtf8().cast<ffi.Char>();
-    final rval = cvRunAsync<bool>(
-      (callback) => cvideoio.VideoCapture_OpenWithAPI_Async(ref, cname, apiPreference, callback),
-      boolCompleter,
+    final success = calloc<ffi.Bool>();
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoCapture_open_1(ref, cname, apiPreference, success, callback),
+      (c) {
+        final rval = success.value;
+        calloc.free(cname);
+        calloc.free(success);
+        return c.complete(rval);
+      },
     );
-    calloc.free(cname);
-    return rval;
   }
 
   /// Opens a camera for video capturing with API Preference and parameters.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a10867868137c2d142aac30a0648d00fe
-  Future<bool> openIndexAsync(int index, {int apiPreference = CAP_ANY}) async => cvRunAsync(
-        (callback) => cvideoio.VideoCapture_OpenDeviceWithAPI_Async(ref, index, apiPreference, callback),
-        boolCompleter,
-      );
-
-  Future<void> releaseAsync() async => cvRunAsync0(
-        (callback) => cvideoio.VideoCapture_Release_Async(ref, callback),
-        (completer) => completer.complete(),
-      );
+  Future<bool> openIndexAsync(int index, {int apiPreference = CAP_ANY}) async {
+    final success = calloc<ffi.Bool>();
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoCapture_open_3(ref, index, apiPreference, success, callback),
+      (c) {
+        final rval = success.value;
+        calloc.free(success);
+        return c.complete(rval);
+      },
+    );
+  }
 }
 
 extension VideoWriterAsync on VideoWriter {
-  static Future<VideoWriter> emptyAsync() async => cvRunAsync(
-        cvideoio.VideoWriter_New_Async,
-        (c, p) => c.complete(VideoWriter.fromPointer(p.cast<cvg.VideoWriter>())),
-      );
-
   static Future<VideoWriter> fromFileAsync(
     String filename,
     String codec,
     double fps,
     (int, int) frameSize, {
+    int? apiPreference,
     bool isColor = true,
-  }) async {
-    final vw = await cvRunAsync<VideoWriter>(
-      cvideoio.VideoWriter_New_Async,
-      (c, p) => c.complete(VideoWriter.fromPointer(p.cast<cvg.VideoWriter>())),
+  }) {
+    final p = calloc<cvg.VideoWriter>();
+    final cname = filename.toNativeUtf8();
+    final codec_ = VideoWriter.fourcc(codec);
+    if (apiPreference == null) {
+      return cvRunAsync0(
+        (callback) => cvideoio.cv_VideoWriter_create_1(
+          cname.cast(),
+          codec_,
+          fps,
+          frameSize.$1,
+          frameSize.$2,
+          isColor,
+          p,
+          callback,
+        ),
+        (c) {
+          calloc.free(cname);
+          return c.complete(VideoWriter.fromPointer(p));
+        },
+      );
+    }
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoWriter_create_2(
+        cname.cast(),
+        apiPreference,
+        codec_,
+        fps,
+        frameSize.$1,
+        frameSize.$2,
+        isColor,
+        p,
+        callback,
+      ),
+      (c) {
+        calloc.free(cname);
+        return c.complete(VideoWriter.fromPointer(p));
+      },
     );
-    await vw.openAsync(filename, codec, fps, frameSize, isColor: isColor);
-    return vw;
   }
 
   Future<bool> openAsync(
@@ -108,34 +143,53 @@ extension VideoWriterAsync on VideoWriter {
     String codec,
     double fps,
     (int, int) frameSize, {
+    int? apiPreference,
     bool isColor = true,
-  }) async {
-    final name = filename.toNativeUtf8().cast<ffi.Char>();
-    final codec_ = codec.toNativeUtf8().cast<ffi.Char>();
-    final rval = cvRunAsync<bool>(
-      (callback) =>
-          cvideoio.VideoWriter_Open_Async(ref, name, codec_, fps, frameSize.$1, frameSize.$2, isColor, callback),
-      boolCompleter,
-    );
-    calloc.free(name);
-    calloc.free(codec_);
-    return rval;
-  }
-
-  Future<void> writeAsync(InputArray image) async =>
-      cvRunAsync0((callback) => cvideoio.VideoWriter_Write_Async(ref, image.ref, callback), voidCompleter);
-
-  static Future<int> fourccAsync(String cc) async {
-    final cc_ = ascii.encode(cc);
-    if (cc_.length != 4) return -1;
-    return cvRunAsync(
-      (callback) => cvideoio.VideoWriter_Fourcc_Async(cc_[0], cc_[1], cc_[2], cc_[3], callback),
-      intCompleter,
-    );
-  }
-
-  Future<void> releaseAsync() async => cvRunAsync0(
-        (callback) => cvideoio.VideoWriter_Release_Async(ref, callback),
-        voidCompleter,
+  }) {
+    final cname = filename.toNativeUtf8();
+    final codec_ = VideoWriter.fourcc(codec);
+    if (apiPreference == null) {
+      return cvRunAsync0(
+        (callback) => cvideoio.cv_VideoWriter_open(
+          ref,
+          cname.cast(),
+          codec_,
+          fps,
+          frameSize.$1,
+          frameSize.$2,
+          isColor,
+          callback,
+        ),
+        (c) {
+          calloc.free(cname);
+        },
       );
+    }
+
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoWriter_open_1(
+        ref,
+        cname.cast(),
+        apiPreference,
+        codec_,
+        fps,
+        frameSize.$1,
+        frameSize.$2,
+        isColor,
+        callback,
+      ),
+      (c) {
+        calloc.free(cname);
+      },
+    );
+  }
+
+  Future<void> writeAsync(InputArray image) async {
+    return cvRunAsync0(
+      (callback) => cvideoio.cv_VideoWriter_write(ref, image.ref, callback),
+      (c) {
+        c.complete();
+      },
+    );
+  }
 }

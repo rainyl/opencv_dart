@@ -30,7 +30,7 @@ import '../native_lib.dart' show cimgproc;
 /// For further details, please see:
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
-Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) {
+Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) async {
   final vec = calloc<cvg.VecPoint>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec, callback),
@@ -45,7 +45,7 @@ Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) 
 /// For further details, please see:
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
-Future<double> arcLengthAsync(VecPoint curve, bool closed) {
+Future<double> arcLengthAsync(VecPoint curve, bool closed) async {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_arcLength(curve.ref, closed, p, callback),
@@ -61,7 +61,7 @@ Future<double> arcLengthAsync(VecPoint curve, bool closed) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
-Future<Mat> convexHullAsync(VecPoint points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) {
+Future<Mat> convexHullAsync(VecPoint points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) async {
   hull ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_convexHull(points.ref, hull!.ref, clockwise, returnPoints, callback),
@@ -75,7 +75,7 @@ Future<Mat> convexHullAsync(VecPoint points, {Mat? hull, bool clockwise = false,
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
-Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
+Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDefects}) async {
   convexityDefects ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_convexityDefects(contour.ref, hull.ref, convexityDefects!.ref, callback),
@@ -91,7 +91,7 @@ Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDef
 ///
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
-Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) {
+Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_cvtColor(src.ref, dst!.ref, code, callback),
@@ -105,7 +105,7 @@ Future<Mat> cvtColorAsync(Mat src, int code, {Mat? dst}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#ga7e54091f0c937d49bf84152a16f76d6e
-Future<Mat> equalizeHistAsync(Mat src, {Mat? dst}) {
+Future<Mat> equalizeHistAsync(Mat src, {Mat? dst}) async {
   cvAssert(src.channels == 1, "src must be grayscale");
   dst ??= Mat.empty();
   return cvRunAsync0(
@@ -180,7 +180,7 @@ Future<Mat> calcBackProjectAsync(
 /// mode: HistCompMethods
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
-Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) {
+Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) async {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, callback),
@@ -195,7 +195,7 @@ Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0}) {
 /// ClipLine clips the line against the image rectangle.
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
-Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) {
+Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) async {
   final p = calloc<ffi.Bool>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, callback),
@@ -217,7 +217,7 @@ Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
-Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace, {Mat? dst}) {
+Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace, {Mat? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_bilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace, callback),
@@ -231,7 +231,7 @@ Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, doubl
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
-Future<Mat> blurAsync(Mat src, (int, int) ksize, {Mat? dst}) {
+Future<Mat> blurAsync(Mat src, (int, int) ksize, {Mat? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvd.ref, callback),
@@ -459,7 +459,7 @@ Future<Rect> boundingRectAsync(VecPoint points) async {
 /// return: [bottom left, top left, top right, bottom right]
 /// For further Details, please see:
 /// https://docs.opencv.org/4.10.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
-Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts}) {
+Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts}) async {
   if (pts == null) {
     final p = calloc<cvg.VecPoint2f>();
     return cvRunAsync0(
@@ -481,7 +481,7 @@ Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
-Future<double> contourAreaAsync(VecPoint contour) {
+Future<double> contourAreaAsync(VecPoint contour) async {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_contourArea(contour.ref, p, callback),
@@ -497,7 +497,7 @@ Future<double> contourAreaAsync(VecPoint contour) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
-Future<RotatedRect> minAreaRectAsync(VecPoint points) {
+Future<RotatedRect> minAreaRectAsync(VecPoint points) async {
   final p = calloc<cvg.RotatedRect>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_minAreaRect(points.ref, p, callback),
@@ -511,7 +511,7 @@ Future<RotatedRect> minAreaRectAsync(VecPoint points) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
-Future<RotatedRect> fitEllipseAsync(VecPoint points) {
+Future<RotatedRect> fitEllipseAsync(VecPoint points) async {
   final p = calloc<cvg.RotatedRect>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_fitEllipse(points.ref, p, callback),
@@ -525,7 +525,7 @@ Future<RotatedRect> fitEllipseAsync(VecPoint points) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
-Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points) {
+Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points) async {
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
   return cvRunAsync0(
@@ -542,7 +542,7 @@ Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points)
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
-Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) {
+Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) async {
   final hierarchy = Mat.empty();
   final v = calloc<cvg.VecVecPoint>();
   return cvRunAsync0(
@@ -557,7 +557,7 @@ Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, 
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
-Future<double> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDist) {
+Future<double> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDist) async {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, p, callback),
@@ -638,7 +638,7 @@ Future<int> connectedComponentsWithStatsAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/df/dfb/group__imgproc__object.html#ga586ebfb0a7fb604b35a23d85391329be
-Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {OutputArray? result, Mat? mask}) {
+Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {OutputArray? result, Mat? mask}) async {
   mask ??= Mat.empty();
   result ??= Mat.empty();
   return cvRunAsync0(
@@ -654,7 +654,7 @@ Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {OutputArray? r
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
-Future<Moments> momentsAsync(Mat src, {bool binaryImage = false}) {
+Future<Moments> momentsAsync(Mat src, {bool binaryImage = false}) async {
   final m = calloc<cvg.Moment>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_moments(src.ref, binaryImage, m, callback),
@@ -754,11 +754,11 @@ Future<Mat> morphologyExAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
-Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Point? anchor}) {
+Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Point? anchor}) async {
   anchor ??= Point(-1, -1);
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ref, callback),
+    (callback) => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
@@ -793,10 +793,10 @@ Future<Mat> gaussianBlurAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa
-Future<Mat> getGaussianKernelAsync(int ksize, double sigma, {int ktype = 6}) {
+Future<Mat> getGaussianKernelAsync(int ksize, double sigma, {int ktype = 6}) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getGaussianKernel(ksize, sigma, ktype, mat.ref, callback),
+    (callback) => cimgproc.cv_getGaussianKernel(ksize, sigma, ktype, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
@@ -898,7 +898,7 @@ Future<Mat> scharrAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
-Future<Mat> medianBlurAsync(Mat src, int ksize, {OutputArray? dst}) {
+Future<Mat> medianBlurAsync(Mat src, int ksize, {OutputArray? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_medianBlur(src.ref, dst!.ref, ksize, callback),
@@ -1582,10 +1582,10 @@ Future<Mat> getRectSubPixAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
-Future<Mat> getRotationMatrix2DAsync(Point2f center, double angle, double scale) {
+Future<Mat> getRotationMatrix2DAsync(Point2f center, double angle, double scale) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getRotationMatrix2D(center.ref, angle, scale, mat.ref, callback),
+    (callback) => cimgproc.cv_getRotationMatrix2D(center.ref, angle, scale, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
@@ -1661,7 +1661,7 @@ Future<Mat> warpPerspectiveAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/d47/group__imgproc__segmentation.html#ga3267243e4d3f95165d55a618c65ac6e1
-Future<Mat> watershedAsync(InputArray image, InputOutputArray markers) {
+Future<Mat> watershedAsync(InputArray image, InputOutputArray markers) async {
   return cvRunAsync0(
     (callback) => cimgproc.cv_watershed(image.ref, markers.ref, callback),
     (c) {
@@ -1674,7 +1674,7 @@ Future<Mat> watershedAsync(InputArray image, InputOutputArray markers) {
 /// colormap: ColormapTypes
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gadf478a5e5ff49d8aa24e726ea6f65d15
-Future<Mat> applyColorMapAsync(InputArray src, int colormap, {OutputArray? dst}) {
+Future<Mat> applyColorMapAsync(InputArray src, int colormap, {OutputArray? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_applyColorMap(src.ref, dst!.ref, colormap, callback),
@@ -1688,7 +1688,7 @@ Future<Mat> applyColorMapAsync(InputArray src, int colormap, {OutputArray? dst})
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gacb22288ddccc55f9bd9e6d492b409cae
-Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor, {OutputArray? dst}) {
+Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor, {OutputArray? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_applyColorMap_1(src.ref, dst!.ref, userColor.ref, callback),
@@ -1703,10 +1703,10 @@ Future<Mat> applyCustomColorMapAsync(InputArray src, InputArray userColor, {Outp
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
-Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) {
+Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getPerspectiveTransform(src.ref, dst.ref, mat.ref, solveMethod, callback),
+    (callback) => cimgproc.cv_getPerspectiveTransform(src.ref, dst.ref, mat.ptr, solveMethod, callback),
     (c) {
       return c.complete(mat);
     },
@@ -1718,10 +1718,10 @@ Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveM
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
-Future<Mat> getPerspectiveTransform2fAsync(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) {
+Future<Mat> getPerspectiveTransform2fAsync(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ref, solveMethod, callback),
+    (callback) => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ptr, solveMethod, callback),
     (c) {
       return c.complete(mat);
     },
@@ -1733,20 +1733,20 @@ Future<Mat> getPerspectiveTransform2fAsync(VecPoint2f src, VecPoint2f dst, [int 
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999
-Future<Mat> getAffineTransformAsync(VecPoint src, VecPoint dst) {
+Future<Mat> getAffineTransformAsync(VecPoint src, VecPoint dst) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getAffineTransform(src.ref, dst.ref, mat.ref, callback),
+    (callback) => cimgproc.cv_getAffineTransform(src.ref, dst.ref, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
   );
 }
 
-Future<Mat> getAffineTransform2fAsync(VecPoint2f src, VecPoint2f dst) {
+Future<Mat> getAffineTransform2fAsync(VecPoint2f src, VecPoint2f dst) async {
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getAffineTransform2f(src.ref, dst.ref, mat.ref, callback),
+    (callback) => cimgproc.cv_getAffineTransform2f(src.ref, dst.ref, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
@@ -1891,7 +1891,7 @@ Future<Mat> sepFilter2DAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaec3a0b126a85b5ca2c667b16e0ae022d
-Future<Mat> logPolarAsync(InputArray src, Point2f center, double M, int flags, {OutputArray? dst}) {
+Future<Mat> logPolarAsync(InputArray src, Point2f center, double M, int flags, {OutputArray? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_logPolar(src.ref, dst!.ref, center.ref, M, flags, callback),
@@ -1946,7 +1946,7 @@ Future<Mat> fitLineAsync(
 /// method: ShapeMatchModes
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
-Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) {
+Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method, double parameter) async {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, p, callback),
@@ -1964,7 +1964,7 @@ Future<double> matchShapesAsync(VecPoint contour1, VecPoint contour2, int method
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga57d3505a878a7e1a636645727ca08f51
-Future<Mat> invertAffineTransformAsync(InputArray M, {OutputArray? iM}) {
+Future<Mat> invertAffineTransformAsync(InputArray M, {OutputArray? iM}) async {
   iM ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_invertAffineTransform(M.ref, iM!.ref, callback),
@@ -2001,7 +2001,7 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga1a567a79901513811ff3b9976923b199
 ///
-Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) {
+Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async {
   if (mask == null) {
     return cvRunAsync0(
       (callback) => cimgproc.cv_accumulate(src.ref, dst.ref, callback),
@@ -2023,7 +2023,7 @@ Future<Mat> accumulateAsync(InputArray src, InputOutputArray dst, {InputArray? m
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
-Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) {
+Future<Mat> accumulateSquareAsync(InputArray src, InputOutputArray dst, {InputArray? mask}) async {
   if (mask == null) {
     return cvRunAsync0(
       (callback) => cimgproc.cv_accumulateSquare(src.ref, dst.ref, callback),
@@ -2072,7 +2072,7 @@ Future<Mat> accumulateProductAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
-Future<Mat> accumulateWeightedAsync(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) {
+Future<Mat> accumulateWeightedAsync(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) async {
   if (mask == null) {
     return cvRunAsync0(
       (callback) => cimgproc.cv_accumulatedWeighted(src.ref, dst.ref, alpha, callback),

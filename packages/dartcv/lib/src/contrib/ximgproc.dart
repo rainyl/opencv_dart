@@ -83,14 +83,19 @@ class ximgproc {
   /// DOI: 10.5220/0006509000850094.
   ///
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga86fcda65ced0aafa2741088d82e9161c
-  static Future<Mat> edgePreservingFilterAsync(InputArray src, int d, double threshold,
-      {OutputArray? dst}) async {
+  static Future<Mat> edgePreservingFilterAsync(
+    InputArray src,
+    int d,
+    double threshold, {
+    OutputArray? dst,
+  }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_edgePreservingFilter(src.ref, dst!.ref, d, threshold, callback),
-        (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_edgePreservingFilter(src.ref, dst!.ref, d, threshold, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Finds ellipses fastly in an image using projective invariant pruning.
@@ -839,7 +844,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
   static Mat getStructuringElement(int shape, (int, int) ksize) {
     final dst = Mat.empty();
-    cvRun(() => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -849,7 +854,7 @@ class ximgproc_rl {
   static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ref, callback),
+        (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, callback),
         (c) {
       return c.complete(dst);
     });

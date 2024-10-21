@@ -50,7 +50,7 @@ class GComputation extends CvStruct<cvg.GComputation> {
   }
 
   Future<Mat> apply(Mat inMat) async =>
-      cvRunAsync((callback) => cgapi.gapi_GComputation_apply(ref, inMat.ref, callback), matCompleter);
+      cvRunAsync1((callback) => cgapi.gapi_GComputation_apply(ref, inMat.ref, callback), matCompleter);
 
   // Mat applyMIMO(Mat inMat) => apply(inMat);
 

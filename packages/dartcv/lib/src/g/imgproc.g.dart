@@ -2332,7 +2332,7 @@ class CvNativeImgproc {
   ffi.Pointer<CvStatus> cv_getAffineTransform(
     VecPoint src,
     VecPoint dst,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getAffineTransform(
@@ -2345,16 +2345,16 @@ class CvNativeImgproc {
 
   late final _cv_getAffineTransformPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint, VecPoint, Mat,
+          ffi.Pointer<CvStatus> Function(VecPoint, VecPoint, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_getAffineTransform');
   late final _cv_getAffineTransform = _cv_getAffineTransformPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecPoint, VecPoint, Mat, imp1.CvCallback_0)>();
+          VecPoint, VecPoint, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getAffineTransform2f(
     VecPoint2f src,
     VecPoint2f dst,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getAffineTransform2f(
@@ -2367,17 +2367,17 @@ class CvNativeImgproc {
 
   late final _cv_getAffineTransform2fPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat,
-              imp1.CvCallback_0)>>('cv_getAffineTransform2f');
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_getAffineTransform2f');
   late final _cv_getAffineTransform2f = _cv_getAffineTransform2fPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecPoint2f, VecPoint2f, Mat, imp1.CvCallback_0)>();
+          VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getGaussianKernel(
     int ksize,
     double sigma,
     int ktype,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getGaussianKernel(
@@ -2391,16 +2391,16 @@ class CvNativeImgproc {
 
   late final _cv_getGaussianKernelPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Double, ffi.Int, Mat,
-              imp1.CvCallback_0)>>('cv_getGaussianKernel');
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Double, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_getGaussianKernel');
   late final _cv_getGaussianKernel = _cv_getGaussianKernelPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          int, double, int, Mat, imp1.CvCallback_0)>();
+          int, double, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getPerspectiveTransform(
     VecPoint src,
     VecPoint dst,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     int solveMethod,
     imp1.CvCallback_0 callback,
   ) {
@@ -2415,17 +2415,17 @@ class CvNativeImgproc {
 
   late final _cv_getPerspectiveTransformPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint, VecPoint, Mat, ffi.Int,
-              imp1.CvCallback_0)>>('cv_getPerspectiveTransform');
+          ffi.Pointer<CvStatus> Function(VecPoint, VecPoint, ffi.Pointer<Mat>,
+              ffi.Int, imp1.CvCallback_0)>>('cv_getPerspectiveTransform');
   late final _cv_getPerspectiveTransform =
       _cv_getPerspectiveTransformPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecPoint, VecPoint, Mat, int, imp1.CvCallback_0)>();
+              VecPoint, VecPoint, ffi.Pointer<Mat>, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getPerspectiveTransform2f(
     VecPoint2f src,
     VecPoint2f dst,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     int solveMethod,
     imp1.CvCallback_0 callback,
   ) {
@@ -2440,12 +2440,16 @@ class CvNativeImgproc {
 
   late final _cv_getPerspectiveTransform2fPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, ffi.Int,
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f,
+              VecPoint2f,
+              ffi.Pointer<Mat>,
+              ffi.Int,
               imp1.CvCallback_0)>>('cv_getPerspectiveTransform2f');
   late final _cv_getPerspectiveTransform2f =
       _cv_getPerspectiveTransform2fPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint2f, VecPoint2f, Mat, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f,
+              ffi.Pointer<Mat>, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getRectSubPix(
     Mat src,
@@ -2475,7 +2479,7 @@ class CvNativeImgproc {
     CvPoint2f center,
     double angle,
     double scale,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getRotationMatrix2D(
@@ -2489,16 +2493,16 @@ class CvNativeImgproc {
 
   late final _cv_getRotationMatrix2DPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(CvPoint2f, ffi.Double, ffi.Double, Mat,
-              imp1.CvCallback_0)>>('cv_getRotationMatrix2D');
+          ffi.Pointer<CvStatus> Function(CvPoint2f, ffi.Double, ffi.Double,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_getRotationMatrix2D');
   late final _cv_getRotationMatrix2D = _cv_getRotationMatrix2DPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          CvPoint2f, double, double, Mat, imp1.CvCallback_0)>();
+          CvPoint2f, double, double, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getStructuringElement(
     int shape,
     CvSize ksize,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getStructuringElement(
@@ -2511,12 +2515,12 @@ class CvNativeImgproc {
 
   late final _cv_getStructuringElementPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, CvSize, Mat,
+          ffi.Pointer<CvStatus> Function(ffi.Int, CvSize, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_getStructuringElement');
   late final _cv_getStructuringElement =
       _cv_getStructuringElementPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              int, CvSize, Mat, imp1.CvCallback_0)>();
+              int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_getTextSize(
     ffi.Pointer<ffi.Char> text,

@@ -37,7 +37,7 @@ void main() async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
-    cv.absDiff(mat0, mat1, dst);
+    cv.absDiff(mat0, mat1, dst: dst);
     expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
@@ -828,7 +828,7 @@ void main() async {
 
   test('cv.setIdentity', () {
     final src = cv.Mat.randu(4, 3, cv.MatType.CV_64FC1);
-    cv.setIdentity(src, s: 2.5);
+    cv.setIdentity(src, s: cv.Scalar.all(2.5));
     expect(src.isEmpty, false);
     expect((src.at<double>(0, 0), src.at<double>(1, 1), src.at<double>(2, 2)), (2.5, 2.5, 2.5));
   });

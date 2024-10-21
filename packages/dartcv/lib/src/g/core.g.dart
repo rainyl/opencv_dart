@@ -71,7 +71,7 @@ class CvNativeCore {
     int dbottom,
     int dleft,
     int dright,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_adjustROI(
@@ -87,11 +87,17 @@ class CvNativeCore {
 
   late final _cv_Mat_adjustROIPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Int, Mat, imp1.CvCallback_0)>>('cv_Mat_adjustROI');
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_adjustROI');
   late final _cv_Mat_adjustROI = _cv_Mat_adjustROIPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, int, int, int, Mat, imp1.CvCallback_0)>();
+          Mat, int, int, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   int cv_Mat_channels(
     Mat self,
@@ -108,7 +114,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> cv_Mat_clone(
     Mat self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_clone(
@@ -121,9 +127,10 @@ class CvNativeCore {
   late final _cv_Mat_clonePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_Mat_clone');
+              Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_Mat_clone');
   late final _cv_Mat_clone = _cv_Mat_clonePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   void cv_Mat_close(
     imp1.MatPtr self,
@@ -156,7 +163,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> cv_Mat_col(
     Mat self,
     int x,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_col(
@@ -169,10 +176,11 @@ class CvNativeCore {
 
   late final _cv_Mat_colPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_Mat_col');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_col');
   late final _cv_Mat_col = _cv_Mat_colPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   int cv_Mat_cols(
     Mat self,
@@ -1667,7 +1675,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> cv_Mat_mul(
     Mat self,
     Mat val,
-    Mat dst,
+    ffi.Pointer<Mat> dst,
     double scale,
   ) {
     return _cv_Mat_mul(
@@ -1681,9 +1689,9 @@ class CvNativeCore {
   late final _cv_Mat_mulPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Double)>>('cv_Mat_mul');
-  late final _cv_Mat_mul = _cv_Mat_mulPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double)>();
+              Mat, Mat, ffi.Pointer<Mat>, ffi.Double)>>('cv_Mat_mul');
+  late final _cv_Mat_mul = _cv_Mat_mulPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<Mat>, double)>();
 
   ffi.Pointer<CvStatus> cv_Mat_ones(
     int rows,
@@ -2299,7 +2307,7 @@ class CvNativeCore {
   ffi.Pointer<CvStatus> cv_Mat_region(
     Mat self,
     CvRect r,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_region(
@@ -2312,10 +2320,11 @@ class CvNativeCore {
 
   late final _cv_Mat_regionPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, CvRect, Mat, imp1.CvCallback_0)>>('cv_Mat_region');
+          ffi.Pointer<CvStatus> Function(Mat, CvRect, ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_region');
   late final _cv_Mat_region = _cv_Mat_regionPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, CvRect, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, CvRect, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_Mat_release(
     Mat self,
@@ -2335,7 +2344,7 @@ class CvNativeCore {
     Mat self,
     int cn,
     int rows,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_reshape(
@@ -2349,16 +2358,17 @@ class CvNativeCore {
 
   late final _cv_Mat_reshapePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Mat,
-              imp1.CvCallback_0)>>('cv_Mat_reshape');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_Mat_reshape');
   late final _cv_Mat_reshape = _cv_Mat_reshapePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, int, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_Mat_reshape_1(
     Mat self,
     int cn,
     VecI32 newshape,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_reshape_1(
@@ -2372,16 +2382,16 @@ class CvNativeCore {
 
   late final _cv_Mat_reshape_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, VecI32, Mat,
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, VecI32, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_Mat_reshape_1');
   late final _cv_Mat_reshape_1 = _cv_Mat_reshape_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Mat, int, VecI32, Mat, imp1.CvCallback_0)>();
+          Mat, int, VecI32, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_Mat_row(
     Mat self,
     int y,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_row(
@@ -2394,10 +2404,11 @@ class CvNativeCore {
 
   late final _cv_Mat_rowPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_Mat_row');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_row');
   late final _cv_Mat_row = _cv_Mat_rowPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   int cv_Mat_rows(
     Mat self,
@@ -3356,7 +3367,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> cv_Mat_t(
     Mat self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_t(
@@ -3369,9 +3380,10 @@ class CvNativeCore {
   late final _cv_Mat_tPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_Mat_t');
+              Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_Mat_t');
   late final _cv_Mat_t = _cv_Mat_tPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_Mat_toFmtString(
     Mat self,
@@ -4421,7 +4433,7 @@ class CvNativeCore {
     Mat self,
     int start,
     int end,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_colRange(
@@ -4435,10 +4447,11 @@ class CvNativeCore {
 
   late final _cv_colRangePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Int, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_colRange');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_colRange');
   late final _cv_colRange = _cv_colRangePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, int, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_compare(
     Mat src1,
@@ -5904,7 +5917,7 @@ class CvNativeCore {
     Mat self,
     int start,
     int end,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_rowRange(
@@ -5918,10 +5931,11 @@ class CvNativeCore {
 
   late final _cv_rowRangePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Int, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_rowRange');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_rowRange');
   late final _cv_rowRange = _cv_rowRangePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, int, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_scaleAdd(
     Mat src1,
@@ -5949,7 +5963,7 @@ class CvNativeCore {
 
   ffi.Pointer<CvStatus> cv_setIdentity(
     Mat src,
-    double scalar,
+    Scalar scalar,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_setIdentity(
@@ -5962,9 +5976,9 @@ class CvNativeCore {
   late final _cv_setIdentityPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Double, imp1.CvCallback_0)>>('cv_setIdentity');
+              Mat, Scalar, imp1.CvCallback_0)>>('cv_setIdentity');
   late final _cv_setIdentity = _cv_setIdentityPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, double, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, Scalar, imp1.CvCallback_0)>();
 
   void cv_setNumThreads(
     int n,

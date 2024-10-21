@@ -90,7 +90,7 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [computeFeatures]
-  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) => cvRunAsync0<Mat>(
+  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>(
         (callback) {
           features ??= Mat.empty();
           return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);

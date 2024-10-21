@@ -111,12 +111,12 @@ void main() {
 
   test('cv.Subdiv2D Async', () async {
     {
-      final sub1 = await cv.Subdiv2DAsync.emptyAsync();
+      final sub1 = cv.Subdiv2D.empty();
       await sub1.initDelaunayAsync(cv.Rect(0, 0, src.width, src.height));
       await sub1.insertAsync(cv.Point2f(241, 241));
     }
 
-    final subdiv = await cv.Subdiv2DAsync.fromRectAsync(cv.Rect(0, 0, src.width, src.height));
+    final subdiv = cv.Subdiv2D.fromRect(cv.Rect(0, 0, src.width, src.height));
     await subdiv.insertVecAsync(points.cvd);
     {
       final (rval, pt) = await subdiv.edgeDstAsync(1);

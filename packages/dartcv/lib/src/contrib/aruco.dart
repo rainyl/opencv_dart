@@ -35,10 +35,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
     return ArucoDetector._(p);
   }
 
-  factory ArucoDetector.create(
-    ArucoDictionary dictionary,
-    ArucoDetectorParameters parameters,
-  ) {
+  factory ArucoDetector.create(ArucoDictionary dictionary, ArucoDetectorParameters parameters) {
     final p = calloc<cvg.ArucoDetector>();
     cvRun(
       () => ccontrib.cv_aruco_arucoDetector_create_1(
@@ -47,7 +44,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
         p,
       ),
     );
-    return ArucoDetector._(p);
+    return ArucoDetector.fromPointer(p);
   }
 
   @override

@@ -45,7 +45,7 @@ bool checkCaffeNet(cv.Net net) {
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
 
-  final perf = net.getPerfProfile();
+  final (perf, _) = net.getPerfProfile();
   expect(perf, greaterThan(0));
 
   return true;
@@ -76,7 +76,7 @@ bool checkTensorflow(cv.Net net) {
   expect((minLoc.x, minLoc.y), (481, 0));
   expect((maxLoc.x, maxLoc.y), (234, 0));
 
-  final perf = net.getPerfProfile();
+  final (perf, _) = net.getPerfProfile();
   expect(perf, greaterThan(0));
 
   return true;
@@ -112,7 +112,7 @@ bool checkOnnx(cv.Net net) {
   // final probMatAsync = probAsync.get();
   // expect(probMatAsync.isEmpty, false);
 
-  final perf = net.getPerfProfile();
+  final (perf, _) = net.getPerfProfile();
   expect(perf, greaterThan(0));
   return true;
 }
@@ -230,7 +230,7 @@ void main() async {
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
-    expect(cv.getBlobSize(blob), cv.Scalar(2, 3, 480, 512));
+    expect(cv.getBlobSize(blob), [2, 3, 480, 512]);
 
     final images = cv.imagesFromBlob(blob);
     expect(images.length, 2);
@@ -250,7 +250,7 @@ void main() async {
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
-    expect(cv.getBlobSize(blob), cv.Scalar(2, 1, 480, 512));
+    expect(cv.getBlobSize(blob), [2, 1, 480, 512]);
   });
 
   test('cv.NMSBoxes', () {

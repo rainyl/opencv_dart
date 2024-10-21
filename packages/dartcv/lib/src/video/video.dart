@@ -29,7 +29,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   }
   factory BackgroundSubtractorMOG2.empty() {
     final p = calloc<cvg.BackgroundSubtractorMOG2>();
-    cvRun(() => cvideo.BackgroundSubtractorMOG2_Create(p));
+    cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create(p));
     return BackgroundSubtractorMOG2(p);
   }
   factory BackgroundSubtractorMOG2.create({
@@ -39,7 +39,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   }) {
     final p = calloc<cvg.BackgroundSubtractorMOG2>();
     cvRun(
-      () => cvideo.BackgroundSubtractorMOG2_CreateWithParams(
+      () => cvideo.cv_BackgroundSubtractorMOG2_create_1(
         history,
         varThreshold,
         detectShadows,
@@ -51,18 +51,18 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 
   Mat apply(Mat src) {
     final dst = Mat.empty();
-    cvRun(() => cvideo.BackgroundSubtractorMOG2_Apply(ref, src.ref, dst.ref));
+    cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_apply(ref, src.ref, dst.ref, ffi.nullptr));
     return dst;
   }
 
   @override
   cvg.BackgroundSubtractorMOG2 get ref => ptr.ref;
   static final finalizer =
-      OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(cvideo.addresses.BackgroundSubtractorMOG2_Close);
+      OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(cvideo.addresses.cv_BackgroundSubtractorMOG2_close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.BackgroundSubtractorMOG2_Close(ptr);
+    cvideo.cv_BackgroundSubtractorMOG2_close(ptr);
   }
 }
 
@@ -74,16 +74,16 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
   }
 
   static final finalizer =
-      OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(cvideo.addresses.BackgroundSubtractorKNN_Close);
+      OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(cvideo.addresses.cv_BackgroundSubtractorKNN_close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.BackgroundSubtractorKNN_Close(ptr);
+    cvideo.cv_BackgroundSubtractorKNN_close(ptr);
   }
 
   factory BackgroundSubtractorKNN.empty() {
     final p = calloc<cvg.BackgroundSubtractorKNN>();
-    cvRun(() => cvideo.BackgroundSubtractorKNN_Create(p));
+    cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create(p));
     return BackgroundSubtractorKNN(p);
   }
   factory BackgroundSubtractorKNN.create({
@@ -93,7 +93,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
   }) {
     final p = calloc<cvg.BackgroundSubtractorKNN>();
     cvRun(
-      () => cvideo.BackgroundSubtractorKNN_CreateWithParams(
+      () => cvideo.cv_BackgroundSubtractorKNN_create_1(
         history,
         varThreshold,
         detectShadows,
@@ -105,7 +105,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
 
   Mat apply(Mat src) {
     final dst = Mat.empty();
-    cvRun(() => cvideo.BackgroundSubtractorKNN_Apply(ref, src.ref, dst.ref));
+    cvRun(() => cvideo.cv_BackgroundSubtractorKNN_apply(ref, src.ref, dst.ref, ffi.nullptr));
     return dst;
   }
 
@@ -127,7 +127,7 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
 }) {
   final p = calloc<cvg.BackgroundSubtractorMOG2>();
   cvRun(
-    () => cvideo.BackgroundSubtractorMOG2_CreateWithParams(
+    () => cvideo.cv_BackgroundSubtractorMOG2_create_1(
       history,
       varThreshold,
       detectShadows,
@@ -160,7 +160,7 @@ Mat calcOpticalFlowFarneback(
   int flags,
 ) {
   cvRun(
-    () => cvideo.CalcOpticalFlowFarneback(
+    () => cvideo.cv_calcOpticalFlowFarneback(
       prev.ref,
       next.ref,
       flow.ref,
@@ -171,6 +171,7 @@ Mat calcOpticalFlowFarneback(
       polyN,
       polySigma,
       flags,
+      ffi.nullptr,
     ),
   );
   return flow;
@@ -197,7 +198,7 @@ Mat calcOpticalFlowFarneback(
   final s = status?.ptr ?? calloc<cvg.VecUChar>();
   final e = err?.ptr ?? calloc<cvg.VecF32>();
   cvRun(
-    () => cvideo.CalcOpticalFlowPyrLKWithParams(
+    () => cvideo.cv_calcOpticalFlowPyrLK_1(
       prevImg.ref,
       nextImg.ref,
       prevPts.ref,
@@ -209,6 +210,7 @@ Mat calcOpticalFlowFarneback(
       criteria.toTermCriteria().ref,
       flags,
       minEigThreshold,
+      ffi.nullptr,
     ),
   );
   nextPts.reattach();
@@ -228,23 +230,23 @@ Mat calcOpticalFlowFarneback(
   InputArray inputMask,
   int gaussFiltSize,
 ) {
-  final ret = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(
-      () => cvideo.FindTransformECC(
-        templateImage.ref,
-        inputImage.ref,
-        warpMatrix.ref,
-        motionType,
-        criteria.toTermCriteria().ref,
-        inputMask.ref,
-        gaussFiltSize,
-        p,
-      ),
-    );
-    return p.value;
-  });
-  return (ret, warpMatrix);
+  final p = calloc<ffi.Double>();
+  cvRun(
+    () => cvideo.cv_findTransformECC(
+      templateImage.ref,
+      inputImage.ref,
+      warpMatrix.ref,
+      motionType,
+      criteria.toTermCriteria().ref,
+      inputMask.ref,
+      gaussFiltSize,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = (p.value, warpMatrix);
+  calloc.free(p);
+  return rval;
 }
 
 /// Tracker is the base interface for object tracking.
@@ -258,7 +260,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
   }
   factory TrackerMIL.create() {
     final p = calloc<cvg.TrackerMIL>();
-    cvRun(() => cvideo.TrackerMIL_Create(p));
+    cvRun(() => cvideo.cv_TrackerMIL_create(p));
     return TrackerMIL(p);
   }
 
@@ -274,25 +276,25 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
       "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
     );
 
-    cvRun(() => cvideo.TrackerMIL_Init(ref, image.ref, boundingBox.ref));
+    cvRun(() => cvideo.cv_TrackerMIL_init(ref, image.ref, boundingBox.ref, ffi.nullptr));
   }
 
   /// Update the tracker, find the new most likely bounding box for the target.
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
   (bool, Rect) update(Mat img) {
-    return cvRunArena<(bool, Rect)>((arena) {
-      final bBox = calloc<cvg.CvRect>();
-      final p = arena<ffi.Bool>();
-      cvRun(() => cvideo.TrackerMIL_Update(ref, img.ref, bBox, p));
-      return (p.value, Rect.fromPointer(bBox));
-    });
+    final bBox = calloc<cvg.CvRect>();
+    final p = calloc<ffi.Bool>();
+    cvRun(() => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, ffi.nullptr));
+    final rval = (p.value, Rect.fromPointer(bBox));
+    calloc.free(p);
+    return rval;
   }
 
-  static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(cvideo.addresses.TrackerMIL_Close);
+  static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(cvideo.addresses.cv_TrackerMIL_close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.TrackerMIL_Close(ptr);
+    cvideo.cv_TrackerMIL_close(ptr);
   }
 
   @override
@@ -319,22 +321,22 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     int type = MatType.CV_32F,
   }) {
     final p = calloc<cvg.KalmanFilter>();
-    cvRun(() => cvideo.KalmanFilter_New(dynamParams, measureParams, controlParams, type, p));
+    cvRun(() => cvideo.cv_KalmanFilter_create(dynamParams, measureParams, controlParams, type, p));
     return KalmanFilter(p);
   }
 
   Mat correct(Mat measurement) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_Correct(ref, measurement.ref, p));
-    return Mat.fromPointer(p);
+    final dst = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_correct(ref, measurement.ref, dst.ptr, ffi.nullptr));
+    return dst;
   }
 
   Mat predict({Mat? control}) {
-    final p = calloc<cvg.Mat>();
+    final dst = Mat.empty();
     control == null
-        ? cvRun(() => cvideo.KalmanFilter_Predict(ref, p))
-        : cvRun(() => cvideo.KalmanFilter_PredictWithParams(ref, control.ref, p));
-    return Mat.fromPointer(p);
+        ? cvRun(() => cvideo.cv_KalmanFilter_predict(ref, dst.ptr, ffi.nullptr))
+        : cvRun(() => cvideo.cv_KalmanFilter_predict_1(ref, control.ref, dst.ptr, ffi.nullptr));
+    return dst;
   }
 
   void init(
@@ -343,146 +345,147 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    cvRun(() => cvideo.KalmanFilter_InitWithParams(ref, dynamParams, measureParams, controlParams, type));
+    cvRun(() =>
+        cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, ffi.nullptr));
   }
 
   @override
   cvg.KalmanFilter get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.KalmanFilterPtr>(cvideo.addresses.KalmanFilter_Close);
+  static final finalizer = OcvFinalizer<cvg.KalmanFilterPtr>(cvideo.addresses.cv_KalmanFilter_close);
 
   void dispose() {
     finalizer.detach(this);
-    cvideo.KalmanFilter_Close(ptr);
+    cvideo.cv_KalmanFilter_close(ptr);
   }
 
   // corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
   Mat get statePost {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetStatePost(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_statePost(ref, p.ptr));
+    return p;
   }
 
   set statePost(Mat state) {
-    cvRun(() => cvideo.KalmanFilter_SetStatePost(ref, state.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_statePost(ref, state.ref));
   }
 
   Mat get statePre {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetStatePre(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_statePre(ref, p.ptr));
+    return p;
   }
 
   set statePre(Mat state) {
-    cvRun(() => cvideo.KalmanFilter_SetStatePre(ref, state.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_statePre(ref, state.ref));
   }
 
   Mat get transitionMatrix {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTransitionMatrix(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_transitionMatrix(ref, p.ptr));
+    return p;
   }
 
   set transitionMatrix(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetTransitionMatrix(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_transitionMatrix(ref, m.ref));
   }
 
   Mat get temp1 {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTemp1(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_temp1(ref, p.ptr));
+    return p;
   }
 
   Mat get temp2 {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTemp2(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_temp2(ref, p.ptr));
+    return p;
   }
 
   Mat get temp3 {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTemp3(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_temp3(ref, p.ptr));
+    return p;
   }
 
   Mat get temp4 {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTemp4(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_temp4(ref, p.ptr));
+    return p;
   }
 
   Mat get temp5 {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetTemp5(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_temp5(ref, p.ptr));
+    return p;
   }
 
   Mat get processNoiseCov {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetProcessNoiseCov(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_processNoiseCov(ref, p.ptr));
+    return p;
   }
 
   set processNoiseCov(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetProcessNoiseCov(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_processNoiseCov(ref, m.ref));
   }
 
   Mat get measurementNoiseCov {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetMeasurementNoiseCov(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_measurementNoiseCov(ref, p.ptr));
+    return p;
   }
 
   set measurementNoiseCov(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetMeasurementNoiseCov(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_measurementNoiseCov(ref, m.ref));
   }
 
   Mat get measurementMatrix {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetMeasurementMatrix(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_measurementMatrix(ref, p.ptr));
+    return p;
   }
 
   set measurementMatrix(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetMeasurementMatrix(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_measurementMatrix(ref, m.ref));
   }
 
   Mat get gain {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetGain(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_gain(ref, p.ptr));
+    return p;
   }
 
   set gain(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetGain(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_gain(ref, m.ref));
   }
 
   Mat get errorCovPre {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetErrorCovPre(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_errorCovPre(ref, p.ptr));
+    return p;
   }
 
   set errorCovPre(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetErrorCovPre(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_errorCovPre(ref, m.ref));
   }
 
   Mat get errorCovPost {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetErrorCovPost(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_errorCovPost(ref, p.ptr));
+    return p;
   }
 
   set errorCovPost(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetErrorCovPost(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_errorCovPost(ref, m.ref));
   }
 
   Mat get controlMatrix {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvideo.KalmanFilter_GetControlMatrix(ref, p));
-    return Mat.fromPointer(p);
+    final p = Mat.empty();
+    cvRun(() => cvideo.cv_KalmanFilter_get_controlMatrix(ref, p.ptr));
+    return p;
   }
 
   set controlMatrix(Mat m) {
-    cvRun(() => cvideo.KalmanFilter_SetControlMatrix(ref, m.ref));
+    cvRun(() => cvideo.cv_KalmanFilter_set_controlMatrix(ref, m.ref));
   }
 }

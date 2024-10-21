@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('cv.WeChatQRCode.empty', () async {
-    final qr = await cv.WeChatQRCodeAsync.emptyAsync();
+    final qr = cv.WeChatQRCode.empty();
     expect(qr.ptr, isNotNull);
     final (res, points) = await qr.detectAndDecodeAsync(cv.imread("test/images/qrcode.png"));
     expect(res.length, 1);
@@ -14,7 +14,7 @@ void main() {
   });
 
   test('cv.WeChatQRCode', tags: ["no-local-files"], () async {
-    final qr = await cv.WeChatQRCodeAsync.createAsync(
+    final qr =  cv.WeChatQRCode(
       "test/models/detect.prototxt",
       "test/models/detect.caffemodel",
       "test/models/sr.prototxt",

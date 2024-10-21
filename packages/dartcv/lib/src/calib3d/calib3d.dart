@@ -74,7 +74,7 @@ import '../native_lib.dart' show ccalib3d;
       newImgSize.cvd.ref,
       validPixROI,
       centerPrincipalPoint,
-      rval.ref,
+      rval.ptr,
       ffi.nullptr,
     ),
   );
@@ -209,46 +209,46 @@ Mat undistortPoints(
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
-(bool, Mat corners) findChessboardCornersSB(
+(bool, VecPoint2f corners) findChessboardCornersSB(
   InputArray image,
-  (int, int) patternSize,
-  int flags, {
-  OutputArray? corners,
+  (int, int) patternSize, {
+  int flags = 0,
+  VecPoint2f? corners,
 }) {
-  corners ??= Mat.empty();
-  final b = calloc<ffi.Bool>();
+  corners ??= VecPoint2f();
+  final p = calloc<ffi.Bool>();
   cvRun(
     () => ccalib3d.cv_findChessboardCornersSB(
       image.ref,
-      patternSize.cvd.ref,
-      corners!.ref,
+      patternSize.toSize().ref,
+      corners!.ptr,
       flags,
-      b,
+      p,
       ffi.nullptr,
     ),
   );
-  final rval = b.value;
-  calloc.free(b);
+  final rval = p.value;
+  calloc.free(p);
   return (rval, corners);
 }
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
 // https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#gadc5bcb05cb21cf1e50963df26986d7c9
-(bool, Mat corners, Mat meta) findChessboardCornersSBWithMeta(
+(bool, VecPoint2f corners, Mat meta) findChessboardCornersSBWithMeta(
   InputArray image,
   (int, int) patternSize,
   int flags, {
-  OutputArray? corners,
+  VecPoint2f? corners,
   OutputArray? meta,
 }) {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   cvRun(
     () => ccalib3d.cv_FindChessboardCornersSB_1(
       image.ref,
       patternSize.cvd.ref,
-      corners!.ref,
+      corners!.ptr,
       flags,
       meta!.ref,
       b,
@@ -309,7 +309,7 @@ Mat drawChessboardCorners(
       maxIters,
       confidence,
       refineIters,
-      rval.ref,
+      rval.ptr,
       ffi.nullptr,
     ),
   );
@@ -342,7 +342,7 @@ Mat drawChessboardCorners(
       maxIters,
       confidence,
       refineIters,
-      rval.ref,
+      rval.ptr,
       ffi.nullptr,
     ),
   );
@@ -373,7 +373,7 @@ Mat findHomography(
       mask!.ref,
       maxIters,
       confidence,
-      mat.ref,
+      mat.ptr,
       ffi.nullptr,
     ),
   );

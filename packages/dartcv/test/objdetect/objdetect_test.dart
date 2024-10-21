@@ -91,7 +91,9 @@ void main() async {
     expect(descriptors.length, greaterThanOrEqualTo(0));
     expect(locations.length, greaterThanOrEqualTo(0));
 
-    final (grad, angle) = hog1.computeGradient(img);
+    final grad = cv.Mat.empty();
+    final angle = cv.Mat.empty();
+    hog1.computeGradient(img, grad, angle);
     expect(grad.isEmpty, false);
     expect(angle.isEmpty, false);
 

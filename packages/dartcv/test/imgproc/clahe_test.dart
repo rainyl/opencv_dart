@@ -11,7 +11,7 @@ void main() {
     }
 
     {
-      final clahe = await cv.CLAHEAsync.createAsync();
+      final clahe = cv.CLAHE.create();
       final dst = await clahe.applyAsync(mat);
       expect(dst.isEmpty, false);
     }

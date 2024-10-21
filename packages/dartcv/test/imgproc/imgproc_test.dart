@@ -968,11 +968,10 @@ void main() async {
     final (affineMatrix, _) = cv.estimateAffinePartial2D(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
     final invMask = cv.warpAffine(mask, affineMatrix, (2048, 2048));
-    for (int i = 0; i < 2047; i++) {
-      for (int j = 0; j < 2047; j++) {
-        final val = invMask.at<double>(i, j);
-        expect(val == 0 || val == 1, true);
-      }
-    }
+    expect(invMask.type, cv.MatType.CV_32FC1);
+    invMask.convertTo(cv.MatType.CV_8UC1, inplace: true);
+    invMask.forEachPixel((r, c, p) {
+      expect(p[0], isIn([0, 1]));
+    });
   });
 }

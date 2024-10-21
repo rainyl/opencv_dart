@@ -282,7 +282,7 @@ class CvNativeVideoIO {
   ffi.Pointer<CvStatus> cv_VideoCapture_read(
     VideoCapture self,
     Mat buf,
-    ffi.Pointer<ffi.Int> rval,
+    ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_VideoCapture_read(
@@ -298,11 +298,11 @@ class CvNativeVideoIO {
           ffi.Pointer<CvStatus> Function(
               VideoCapture,
               Mat,
-              ffi.Pointer<ffi.Int>,
+              ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoCapture_read');
   late final _cv_VideoCapture_read = _cv_VideoCapture_readPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VideoCapture, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>();
+          VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_release(
     VideoCapture self,

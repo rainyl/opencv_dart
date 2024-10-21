@@ -207,7 +207,7 @@ class CvNativeVideo {
   ffi.Pointer<CvStatus> cv_KalmanFilter_correct(
     KalmanFilter self,
     Mat measurement,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_KalmanFilter_correct(
@@ -220,11 +220,11 @@ class CvNativeVideo {
 
   late final _cv_KalmanFilter_correctPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, Mat,
+          ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_KalmanFilter_correct');
   late final _cv_KalmanFilter_correct = _cv_KalmanFilter_correctPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          KalmanFilter, Mat, Mat, imp1.CvCallback_0)>();
+          KalmanFilter, Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_create(
     int dynamParams,
@@ -252,7 +252,7 @@ class CvNativeVideo {
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_controlMatrix(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_controlMatrix(
       self,
@@ -261,16 +261,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_controlMatrixPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_controlMatrix');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_controlMatrix');
   late final _cv_KalmanFilter_get_controlMatrix =
-      _cv_KalmanFilter_get_controlMatrixPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_controlMatrixPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_errorCovPost(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_errorCovPost(
       self,
@@ -279,16 +279,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_errorCovPostPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_errorCovPost');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_errorCovPost');
   late final _cv_KalmanFilter_get_errorCovPost =
-      _cv_KalmanFilter_get_errorCovPostPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_errorCovPostPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_errorCovPre(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_errorCovPre(
       self,
@@ -297,16 +297,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_errorCovPrePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_errorCovPre');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_errorCovPre');
   late final _cv_KalmanFilter_get_errorCovPre =
-      _cv_KalmanFilter_get_errorCovPrePtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_errorCovPrePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_gain(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_gain(
       self,
@@ -315,15 +315,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_gainPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_gain');
-  late final _cv_KalmanFilter_get_gain = _cv_KalmanFilter_get_gainPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_gain');
+  late final _cv_KalmanFilter_get_gain =
+      _cv_KalmanFilter_get_gainPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_measurementMatrix(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_measurementMatrix(
       self,
@@ -332,16 +333,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_measurementMatrixPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_measurementMatrix');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_measurementMatrix');
   late final _cv_KalmanFilter_get_measurementMatrix =
-      _cv_KalmanFilter_get_measurementMatrixPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_measurementMatrixPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_measurementNoiseCov(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_measurementNoiseCov(
       self,
@@ -350,16 +351,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_measurementNoiseCovPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_measurementNoiseCov');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_measurementNoiseCov');
   late final _cv_KalmanFilter_get_measurementNoiseCov =
-      _cv_KalmanFilter_get_measurementNoiseCovPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_measurementNoiseCovPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_processNoiseCov(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_processNoiseCov(
       self,
@@ -368,16 +369,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_processNoiseCovPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_processNoiseCov');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_processNoiseCov');
   late final _cv_KalmanFilter_get_processNoiseCov =
-      _cv_KalmanFilter_get_processNoiseCovPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_processNoiseCovPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_statePost(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_statePost(
       self,
@@ -386,15 +387,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_statePostPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_statePost');
-  late final _cv_KalmanFilter_get_statePost = _cv_KalmanFilter_get_statePostPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_statePost');
+  late final _cv_KalmanFilter_get_statePost =
+      _cv_KalmanFilter_get_statePostPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_statePre(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_statePre(
       self,
@@ -403,15 +405,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_statePrePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_statePre');
-  late final _cv_KalmanFilter_get_statePre = _cv_KalmanFilter_get_statePrePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_statePre');
+  late final _cv_KalmanFilter_get_statePre =
+      _cv_KalmanFilter_get_statePrePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_temp1(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_temp1(
       self,
@@ -420,15 +423,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_temp1Ptr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_temp1');
-  late final _cv_KalmanFilter_get_temp1 = _cv_KalmanFilter_get_temp1Ptr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_temp1');
+  late final _cv_KalmanFilter_get_temp1 =
+      _cv_KalmanFilter_get_temp1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_temp2(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_temp2(
       self,
@@ -437,15 +441,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_temp2Ptr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_temp2');
-  late final _cv_KalmanFilter_get_temp2 = _cv_KalmanFilter_get_temp2Ptr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_temp2');
+  late final _cv_KalmanFilter_get_temp2 =
+      _cv_KalmanFilter_get_temp2Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_temp3(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_temp3(
       self,
@@ -454,15 +459,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_temp3Ptr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_temp3');
-  late final _cv_KalmanFilter_get_temp3 = _cv_KalmanFilter_get_temp3Ptr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_temp3');
+  late final _cv_KalmanFilter_get_temp3 =
+      _cv_KalmanFilter_get_temp3Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_temp4(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_temp4(
       self,
@@ -471,15 +477,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_temp4Ptr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_temp4');
-  late final _cv_KalmanFilter_get_temp4 = _cv_KalmanFilter_get_temp4Ptr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_temp4');
+  late final _cv_KalmanFilter_get_temp4 =
+      _cv_KalmanFilter_get_temp4Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_temp5(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_temp5(
       self,
@@ -488,15 +495,16 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_temp5Ptr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_temp5');
-  late final _cv_KalmanFilter_get_temp5 = _cv_KalmanFilter_get_temp5Ptr
-      .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              KalmanFilter, ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_temp5');
+  late final _cv_KalmanFilter_get_temp5 =
+      _cv_KalmanFilter_get_temp5Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_get_transitionMatrix(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
   ) {
     return _cv_KalmanFilter_get_transitionMatrix(
       self,
@@ -505,12 +513,12 @@ class CvNativeVideo {
   }
 
   late final _cv_KalmanFilter_get_transitionMatrixPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>>(
-      'cv_KalmanFilter_get_transitionMatrix');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter,
+              ffi.Pointer<Mat>)>>('cv_KalmanFilter_get_transitionMatrix');
   late final _cv_KalmanFilter_get_transitionMatrix =
-      _cv_KalmanFilter_get_transitionMatrixPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>();
+      _cv_KalmanFilter_get_transitionMatrixPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_init(
     KalmanFilter self,
@@ -562,7 +570,7 @@ class CvNativeVideo {
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_predict(
     KalmanFilter self,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_KalmanFilter_predict(
@@ -574,15 +582,16 @@ class CvNativeVideo {
 
   late final _cv_KalmanFilter_predictPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(KalmanFilter, Mat,
+          ffi.Pointer<CvStatus> Function(KalmanFilter, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_KalmanFilter_predict');
   late final _cv_KalmanFilter_predict = _cv_KalmanFilter_predictPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          KalmanFilter, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_predict_1(
     KalmanFilter self,
     Mat control,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_KalmanFilter_predict_1(
@@ -595,12 +604,12 @@ class CvNativeVideo {
 
   late final _cv_KalmanFilter_predict_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, Mat,
+          ffi.Pointer<CvStatus> Function(KalmanFilter, Mat, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_KalmanFilter_predict_1');
   late final _cv_KalmanFilter_predict_1 =
       _cv_KalmanFilter_predict_1Ptr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              KalmanFilter, Mat, Mat, imp1.CvCallback_0)>();
+              KalmanFilter, Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_KalmanFilter_set_controlMatrix(
     KalmanFilter self,

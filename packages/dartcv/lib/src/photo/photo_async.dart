@@ -16,10 +16,10 @@ import '../native_lib.dart' show cphoto;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {
-  Future<Mat> processAsync(VecMat src) {
+  Future<Mat> processAsync(VecMat src) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-      (callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, ffi.nullptr),
+      (callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, callback),
       (c) {
         return c.complete(dst);
       },
@@ -31,7 +31,7 @@ extension AlignMTBAsync on AlignMTB {
   Future<VecMat> processAsync(VecMat src) async {
     final dst = calloc<cvg.VecMat>();
     return cvRunAsync0(
-      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst, ffi.nullptr),
+      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst, callback),
       (c) {
         return c.complete(VecMat.fromPointer(dst));
       },
@@ -48,7 +48,7 @@ Future<Mat> colorChangeAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_colorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul, ffi.nullptr),
+    (callback) => cphoto.cv_colorChange(src.ref, mask.ref, dst.ref, redMul, greenMul, blueMul, callback),
     (c) {
       return c.complete(dst);
     },
@@ -64,7 +64,7 @@ Future<Mat> seamlessCloneAsync(
 ) async {
   final blend = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, ffi.nullptr),
+    (callback) => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, callback),
     (c) {
       return c.complete(blend);
     },
@@ -79,7 +79,7 @@ Future<Mat> illuminationChangeAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_illuminationChange(src.ref, mask.ref, dst.ref, alpha, beta, ffi.nullptr),
+    (callback) => cphoto.cv_illuminationChange(src.ref, mask.ref, dst.ref, alpha, beta, callback),
     (c) {
       return c.complete(dst);
     },
@@ -102,7 +102,7 @@ Future<Mat> textureFlatteningAsync(
       lowThreshold,
       highThreshold,
       kernelSize,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete(dst);
@@ -124,7 +124,7 @@ Future<Mat> fastNlMeansDenoisingAsync(
       h,
       templateWindowSize,
       searchWindowSize,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete(dst);
@@ -148,7 +148,7 @@ Future<Mat> fastNlMeansDenoisingColoredAsync(
       hColor,
       templateWindowSize,
       searchWindowSize,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete(dst);
@@ -176,7 +176,7 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
       hColor,
       templateWindowSize,
       searchWindowSize,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete(dst);
@@ -191,7 +191,7 @@ Future<Mat> detailEnhanceAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr),
+    (callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, callback),
     (c) {
       return c.complete(dst);
     },
@@ -206,7 +206,7 @@ Future<Mat> edgePreservingFilterAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_edgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR, ffi.nullptr),
+    (callback) => cphoto.cv_edgePreservingFilter(src.ref, dst.ref, flags, sigmaS, sigmaR, callback),
     (c) {
       return c.complete(dst);
     },
@@ -229,7 +229,7 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
       sigmaS,
       sigmaR,
       shadeFactor,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete((dst1, dst2));
@@ -244,7 +244,7 @@ Future<Mat> stylizationAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, ffi.nullptr),
+    (callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, callback),
     (c) {
       return c.complete(dst);
     },
@@ -265,7 +265,7 @@ Future<Mat> inpaintAsync(
       dst.ref,
       inpaintRadius,
       flags,
-      ffi.nullptr,
+      callback,
     ),
     (c) {
       return c.complete(dst);

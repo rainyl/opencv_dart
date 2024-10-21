@@ -31,13 +31,13 @@ class CvNativeHighgui {
       : _lookup = lookup;
 
   ffi.Pointer<CvStatus> cv_createTrackbar(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     int max,
   ) {
     return _cv_createTrackbar(
-      winname,
       trackname,
+      winname,
       max,
     );
   }
@@ -51,16 +51,16 @@ class CvNativeHighgui {
           ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, int)>();
 
   ffi.Pointer<CvStatus> cv_createTrackbar_1(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Int> value,
     int max,
     cv_TrackbarCallback onChange,
     ffi.Pointer<ffi.Void> userdata,
   ) {
     return _cv_createTrackbar_1(
-      winname,
       trackname,
+      winname,
       value,
       max,
       onChange,
@@ -136,13 +136,13 @@ class CvNativeHighgui {
       _cv_getMouseWheelDeltaPtr.asFunction<int Function(int)>();
 
   ffi.Pointer<CvStatus> cv_getTrackbarPos(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Int> rval,
   ) {
     return _cv_getTrackbarPos(
-      winname,
       trackname,
+      winname,
       rval,
     );
   }
@@ -377,13 +377,13 @@ class CvNativeHighgui {
           ffi.Pointer<ffi.Char>, cv_MouseCallback, ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<CvStatus> cv_setTrackbarMax(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     int val,
   ) {
     return _cv_setTrackbarMax(
-      winname,
       trackname,
+      winname,
       val,
     );
   }
@@ -397,13 +397,13 @@ class CvNativeHighgui {
           ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, int)>();
 
   ffi.Pointer<CvStatus> cv_setTrackbarMin(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     int val,
   ) {
     return _cv_setTrackbarMin(
-      winname,
       trackname,
+      winname,
       val,
     );
   }
@@ -417,13 +417,13 @@ class CvNativeHighgui {
           ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, int)>();
 
   ffi.Pointer<CvStatus> cv_setTrackbarPos(
-    ffi.Pointer<ffi.Char> winname,
     ffi.Pointer<ffi.Char> trackname,
+    ffi.Pointer<ffi.Char> winname,
     int pos,
   ) {
     return _cv_setTrackbarPos(
-      winname,
       trackname,
+      winname,
       pos,
     );
   }

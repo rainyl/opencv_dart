@@ -77,7 +77,7 @@ class CvNativeImgcodecs {
   ffi.Pointer<CvStatus> cv_imdecode(
     VecUChar buf,
     int flags,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_imdecode(
@@ -90,10 +90,11 @@ class CvNativeImgcodecs {
 
   late final _cv_imdecodePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecUChar, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_imdecode');
+          ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int, ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_imdecode');
   late final _cv_imdecode = _cv_imdecodePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VecUChar, int, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          VecUChar, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imencode(
     ffi.Pointer<ffi.Char> fileExt,
@@ -157,7 +158,7 @@ class CvNativeImgcodecs {
   ffi.Pointer<CvStatus> cv_imread(
     ffi.Pointer<ffi.Char> filename,
     int flags,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_imread(
@@ -170,11 +171,11 @@ class CvNativeImgcodecs {
 
   late final _cv_imreadPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, Mat,
-              imp1.CvCallback_0)>>('cv_imread');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_imread');
   late final _cv_imread = _cv_imreadPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, int, Mat, imp1.CvCallback_0)>();
+          ffi.Pointer<ffi.Char>, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imwrite(
     ffi.Pointer<ffi.Char> filename,

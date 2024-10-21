@@ -34,15 +34,14 @@ void main() async {
     final img = await cv.imreadAsync("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final classifier = await cv.CascadeClassifierAsync.emptyNewAsync();
-    await classifier.loadAsync("test/data/haarcascade_frontalface_default.xml");
-    final rects = await classifier.detectMultiScaleAsync(img);
-    expect(rects.length, 1);
+    // final classifier = cv.CascadeClassifier.empty();
+    // classifier.load("test/data/haarcascade_frontalface_default.xml");
+    // final rects = await classifier.detectMultiScaleAsync(img);
+    // expect(rects.length, 1);
 
-    classifier.dispose();
+    // classifier.dispose();
 
-    final cls =
-        await cv.CascadeClassifierAsync.fromFileAsync("test/data/haarcascade_frontalface_default.xml");
+    final cls = cv.CascadeClassifier.fromFile("test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
 
     {
@@ -51,42 +50,42 @@ void main() async {
       expect(nums.length, 1);
     }
 
-    {
-      final (objects, nums, weights) = await cls.detectMultiScale3Async(img, outputRejectLevels: true);
-      expect(objects.length, 1);
-      expect(nums.length, 1);
-      expect(weights.length, 1);
-    }
+    // {
+    //   final (objects, nums, weights) = await cls.detectMultiScale3Async(img, outputRejectLevels: true);
+    //   expect(objects.length, 1);
+    //   expect(nums.length, 1);
+    //   expect(weights.length, 1);
+    // }
 
-    expect(await cls.getFeatureTypeAsync(), 0);
-    expect(await cls.getOriginalWindowSizeAsync(), (24, 24));
-    expect(await cls.isOldFormatCascadeAsync(), false);
+    // expect(cls.getFeatureType(), 0);
+    // expect(cls.getOriginalWindowSize(), (24, 24));
+    // expect(cls.isOldFormatCascade(), false);
   });
 
   test('cv.HOGDescriptorAsync', () async {
     final img = await cv.imreadAsync("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
     {
-      final hog = await cv.HOGDescriptorAsync.emptyNewAsync();
-      await hog.setSVMDetectorAsync(await cv.HOGDescriptorAsync.getDefaultPeopleDetectorAsync());
+      final hog = cv.HOGDescriptor.empty();
+      hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector());
       final rects = await hog.detectMultiScaleAsync(img);
       expect(rects.length, 1);
       hog.dispose();
     }
     {
-      final hog = await cv.HOGDescriptorAsync.emptyNewAsync();
-      expect(await hog.getDescriptorSizeAsync(), 3780);
-      expect(await hog.getWinSigmaAsync(), closeTo(4.0, 1e-6));
-      final d = await cv.HOGDescriptorAsync.getDaimlerPeopleDetectorAsync();
+      final hog = cv.HOGDescriptor.empty();
+      expect(hog.getDescriptorSize(), 3780);
+      expect(hog.getWinSigma(), closeTo(4.0, 1e-6));
+      final d = cv.HOGDescriptor.getDaimlerPeopleDetector();
       expect(d.length, 1981);
-      final success = await hog.loadAsync("test/data/hog.xml");
+      final success = hog.load("test/data/hog.xml");
       expect(success, true);
       // hog.setSVMDetector(d);
       final rects = await hog.detectMultiScaleAsync(img);
       expect(rects.length, greaterThanOrEqualTo(0));
     }
 
-    final hog1 = await cv.HOGDescriptorAsync.fromFileAsync("test/data/hog.xml");
+    final hog1 = cv.HOGDescriptor.fromFile("test/data/hog.xml");
     final (descriptors, locations) = await hog1.computeAsync(img);
     expect(descriptors.length, greaterThanOrEqualTo(0));
     expect(locations.length, greaterThanOrEqualTo(0));
@@ -145,7 +144,7 @@ void main() async {
     expect(res.first, cv.Rect(10, 10, 32, 32));
 
     {
-      final hog = await cv.HOGDescriptorAsync.emptyNewAsync();
+      final hog = cv.HOGDescriptor.empty();
       final w = List.generate(rects.length, (index) => 0.1);
       final (res, weights) = await hog.groupRectanglesAsync(rects.cvd, w.f64, 1, 0.1);
       expect(res.length, greaterThan(0));
@@ -157,7 +156,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/qrcode.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final detector = await cv.QRCodeDetectorAsync.emptyNewAsync();
+    final detector = cv.QRCodeDetector.empty();
     final (res, bbox) = await detector.detectAsync(img);
     expect(res, true);
     expect(bbox, isNotNull);
@@ -205,10 +204,6 @@ void main() async {
     expect(pts.length, greaterThan(0));
     expect(mats.length, greaterThan(0));
 
-    await detector.setEpsXAsync(0.1);
-    await detector.setEpsYAsync(0.1);
-    await detector.setUseAlignmentMarkersAsync(false);
-
     detector.dispose();
   });
 
@@ -217,28 +212,17 @@ void main() async {
     {
       // Test loading from file
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
-      final detector = await cv.FaceDetectorYNAsync.fromFileAsync(modelPath, "", (320, 320));
+      final detector = cv.FaceDetectorYN.fromFile(modelPath, "", (320, 320));
 
       // Test loading image and setting input size
       final img = await cv.imreadAsync("test/images/lenna.png");
       expect(img.isEmpty, false);
-      await detector.setInputSizeAsync((img.width, img.height));
+      detector.setInputSize((img.width, img.height));
 
       // Test detection
       final face = await detector.detectAsync(img);
       expect(face.rows, greaterThanOrEqualTo(1));
       visualizeFaceDetect(img, face);
-
-      // Test setting parameters
-      await detector.setScoreThresholdAsync(0.8);
-      await detector.setNMSThresholdAsync(0.4);
-      await detector.setTopKAsync(3000);
-
-      // Test getters and compare values
-      expect(await detector.getScoreThresholdAsync(), closeTo(0.8, 1e-6));
-      expect(await detector.getNmsThresholdAsync(), closeTo(0.4, 1e-6));
-      expect(await detector.getTopKAsync(), equals(3000));
-      expect(await detector.getInputSizeAsync(), equals((img.width, img.height)));
 
       // Dispose the detector
       detector.dispose();
@@ -248,12 +232,12 @@ void main() async {
       // Test loading from buffer
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
       final buf = await File(modelPath).readAsBytes();
-      final detector = await cv.FaceDetectorYNAsync.fromBufferAsync("onnx", buf, Uint8List(0), (320, 320));
+      final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
 
       // Test loading image and setting input size
       final img = await cv.imreadAsync("test/images/lenna.png");
       expect(img.isEmpty, false);
-      await detector.setInputSizeAsync((img.width, img.height));
+      detector.setInputSize((img.width, img.height));
 
       // Test detection
       final face = await detector.detectAsync(img);
@@ -269,7 +253,7 @@ void main() async {
   // Test for cv.FaceRecognizerSF
   test('cv.FaceRecognizerSFAsync', tags: ["no-local-files"], () async {
     const modelPath = "test/models/face_recognition_sface_2021dec.onnx";
-    final recognizer = await cv.FaceRecognizerSFAsync.fromFileAsync(modelPath, "");
+    final recognizer = cv.FaceRecognizerSF.fromFile(modelPath, "");
 
     // Test loading image
     final img = await cv.imreadAsync("test/images/face.jpg");

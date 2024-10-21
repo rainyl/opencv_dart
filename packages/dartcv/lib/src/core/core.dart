@@ -1094,8 +1094,9 @@ Mat scaleAdd(InputArray src1, double alpha, InputArray src2, {OutputArray? dst})
 /// For further details, please see:
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
-Mat setIdentity(InputOutputArray mtx, {double s = 1}) {
-  cvRun(() => ccore.cv_setIdentity(mtx.ref, s, ffi.nullptr));
+Mat setIdentity(InputOutputArray mtx, {Scalar? s}) {
+  s ??= Scalar.all(1.0);
+  cvRun(() => ccore.cv_setIdentity(mtx.ref, s!.ref, ffi.nullptr));
   return mtx;
 }
 

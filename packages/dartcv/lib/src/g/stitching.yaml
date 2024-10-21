@@ -16,22 +16,18 @@ files:
         name: STITCHING_PANORAMA
       c:@Ea@STITCHING_PANORAMA@STITCHING_SCANS:
         name: STITCHING_SCANS
-      c:@F@Stitcher_Component:
-        name: Stitcher_Component
-      c:@F@Stitcher_ComposePanorama:
-        name: Stitcher_ComposePanorama
-      c:@F@Stitcher_ComposePanorama_1:
-        name: Stitcher_ComposePanorama_1
-      c:@F@Stitcher_EstimateTransform:
-        name: Stitcher_EstimateTransform
-      c:@F@Stitcher_Stitch:
-        name: Stitcher_Stitch
-      c:@F@Stitcher_Stitch_1:
-        name: Stitcher_Stitch_1
       c:@F@cv_Stitcher_close:
         name: cv_Stitcher_close
+      c:@F@cv_Stitcher_component:
+        name: cv_Stitcher_component
+      c:@F@cv_Stitcher_composePanorama:
+        name: cv_Stitcher_composePanorama
+      c:@F@cv_Stitcher_composePanorama_1:
+        name: cv_Stitcher_composePanorama_1
       c:@F@cv_Stitcher_create:
         name: cv_Stitcher_create
+      c:@F@cv_Stitcher_estimateTransform:
+        name: cv_Stitcher_estimateTransform
       c:@F@cv_Stitcher_get_compositingResol:
         name: cv_Stitcher_get_compositingResol
       c:@F@cv_Stitcher_get_interpolationFlags:
@@ -60,6 +56,10 @@ files:
         name: cv_Stitcher_set_waveCorrectKind
       c:@F@cv_Stitcher_set_waveCorrection:
         name: cv_Stitcher_set_waveCorrection
+      c:@F@cv_Stitcher_stitch:
+        name: cv_Stitcher_stitch
+      c:@F@cv_Stitcher_stitch_1:
+        name: cv_Stitcher_stitch_1
       c:@S@Stitcher:
         name: Stitcher
       c:stitching.h@T@StitcherPtr:

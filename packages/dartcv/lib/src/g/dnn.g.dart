@@ -374,7 +374,7 @@ class CvNativeDnn {
   ffi.Pointer<CvStatus> cv_dnn_Net_forward(
     Net net,
     ffi.Pointer<ffi.Char> outputName,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_dnn_Net_forward(
@@ -387,11 +387,11 @@ class CvNativeDnn {
 
   late final _cv_dnn_Net_forwardPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Char>, Mat,
-              imp1.CvCallback_0)>>('cv_dnn_Net_forward');
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_dnn_Net_forward');
   late final _cv_dnn_Net_forward = _cv_dnn_Net_forwardPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          Net, ffi.Pointer<ffi.Char>, Mat, imp1.CvCallback_0)>();
+          Net, ffi.Pointer<ffi.Char>, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_dnn_Net_forwardAsync(
     Net net,
@@ -460,7 +460,7 @@ class CvNativeDnn {
     Mat blob,
     int imgidx,
     int chnidx,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_dnn_Net_getBlobChannel(
@@ -474,12 +474,16 @@ class CvNativeDnn {
 
   late final _cv_dnn_Net_getBlobChannelPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, Mat,
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_dnn_Net_getBlobChannel');
   late final _cv_dnn_Net_getBlobChannel =
       _cv_dnn_Net_getBlobChannelPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, int, int, Mat, imp1.CvCallback_0)>();
+              Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_dnn_Net_getBlobSize(
     Mat blob,

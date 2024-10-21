@@ -170,7 +170,7 @@ extension NetAsync on Net {
   Future<Mat> forwardAsync({String outputName = ""}) async {
     final m = Mat.empty();
     final cOutName = outputName.toNativeUtf8().cast<ffi.Char>();
-    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ref, callback), (c) {
+    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ptr, callback), (c) {
       calloc.free(cOutName);
       return c.complete(m);
     });
@@ -299,7 +299,7 @@ Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
 Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
   final m = Mat.empty();
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ref, callback),
+    (callback) => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, callback),
     (c) {
       return c.complete(m);
     },

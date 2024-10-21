@@ -33,7 +33,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_FindChessboardCornersSB_1(
     Mat image,
     CvSize patternSize,
-    Mat corners,
+    ffi.Pointer<VecPoint2f> corners,
     int flags,
     Mat meta,
     ffi.Pointer<ffi.Bool> rval,
@@ -55,15 +55,15 @@ class CvNativeCalib3d {
           ffi.Pointer<CvStatus> Function(
               Mat,
               CvSize,
-              Mat,
+              ffi.Pointer<VecPoint2f>,
               ffi.Int,
               Mat,
               ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_FindChessboardCornersSB_1');
   late final _cv_FindChessboardCornersSB_1 =
       _cv_FindChessboardCornersSB_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, CvSize, Mat, int, Mat,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
+              int, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_calibrateCamera(
     VecVecPoint3f objectPoints,
@@ -149,7 +149,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_estimateAffine2D(
     VecPoint2f from,
     VecPoint2f to,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_estimateAffine2D(
@@ -162,11 +162,11 @@ class CvNativeCalib3d {
 
   late final _cv_estimateAffine2DPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat,
-              imp1.CvCallback_0)>>('cv_estimateAffine2D');
+          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_estimateAffine2D');
   late final _cv_estimateAffine2D = _cv_estimateAffine2DPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          VecPoint2f, VecPoint2f, Mat, imp1.CvCallback_0)>();
+          VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_estimateAffine2D_1(
     VecPoint2f from,
@@ -177,7 +177,7 @@ class CvNativeCalib3d {
     int maxIters,
     double confidence,
     int refineIters,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_estimateAffine2D_1(
@@ -205,16 +205,16 @@ class CvNativeCalib3d {
               ffi.Size,
               ffi.Double,
               ffi.Size,
-              Mat,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_estimateAffine2D_1');
   late final _cv_estimateAffine2D_1 = _cv_estimateAffine2D_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, int, double,
-          int, double, int, Mat, imp1.CvCallback_0)>();
+          int, double, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_estimateAffinePartial2D(
     VecPoint2f from,
     VecPoint2f to,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_estimateAffinePartial2D(
@@ -227,12 +227,15 @@ class CvNativeCalib3d {
 
   late final _cv_estimateAffinePartial2DPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat,
+          ffi.Pointer<CvStatus> Function(
+              VecPoint2f,
+              VecPoint2f,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_estimateAffinePartial2D');
   late final _cv_estimateAffinePartial2D =
       _cv_estimateAffinePartial2DPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              VecPoint2f, VecPoint2f, Mat, imp1.CvCallback_0)>();
+              VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_estimateAffinePartial2D_1(
     VecPoint2f from,
@@ -243,7 +246,7 @@ class CvNativeCalib3d {
     int maxIters,
     double confidence,
     int refineIters,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_estimateAffinePartial2D_1(
@@ -271,12 +274,12 @@ class CvNativeCalib3d {
               ffi.Size,
               ffi.Double,
               ffi.Size,
-              Mat,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_estimateAffinePartial2D_1');
   late final _cv_estimateAffinePartial2D_1 =
       _cv_estimateAffinePartial2D_1Ptr.asFunction<
           ffi.Pointer<CvStatus> Function(VecPoint2f, VecPoint2f, Mat, int,
-              double, int, double, int, Mat, imp1.CvCallback_0)>();
+              double, int, double, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_findChessboardCorners(
     Mat image,
@@ -313,7 +316,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
     Mat image,
     CvSize patternSize,
-    Mat corners,
+    ffi.Pointer<VecPoint2f> corners,
     int flags,
     ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
@@ -333,14 +336,14 @@ class CvNativeCalib3d {
           ffi.Pointer<CvStatus> Function(
               Mat,
               CvSize,
-              Mat,
+              ffi.Pointer<VecPoint2f>,
               ffi.Int,
               ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_findChessboardCornersSB');
   late final _cv_findChessboardCornersSB =
       _cv_findChessboardCornersSBPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, CvSize, Mat, int,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
+              int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_findHomography(
     Mat src,
@@ -350,7 +353,7 @@ class CvNativeCalib3d {
     Mat mask,
     int maxIters,
     double confidence,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_findHomography(
@@ -376,11 +379,11 @@ class CvNativeCalib3d {
               Mat,
               ffi.Int,
               ffi.Double,
-              Mat,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_findHomography');
   late final _cv_findHomography = _cv_findHomographyPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, int, double, Mat, int, double, Mat, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, Mat, int, double, Mat, int, double,
+          ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
     Mat k,
@@ -508,7 +511,7 @@ class CvNativeCalib3d {
     CvSize newImgSize,
     ffi.Pointer<CvRect> validPixROI,
     bool centerPrincipalPoint,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_getOptimalNewCameraMatrix(
@@ -534,12 +537,20 @@ class CvNativeCalib3d {
               CvSize,
               ffi.Pointer<CvRect>,
               ffi.Bool,
-              Mat,
+              ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_getOptimalNewCameraMatrix');
   late final _cv_getOptimalNewCameraMatrix =
       _cv_getOptimalNewCameraMatrixPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, CvSize, double, CvSize,
-              ffi.Pointer<CvRect>, bool, Mat, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              CvSize,
+              double,
+              CvSize,
+              ffi.Pointer<CvRect>,
+              bool,
+              ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_initUndistortRectifyMap(
     Mat cameraMatrix,

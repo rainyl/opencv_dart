@@ -641,7 +641,7 @@ Mat morphologyEx(
 Mat getStructuringElement(int shape, (int, int) ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ptr, ffi.nullptr));
   return mat;
 }
 
@@ -672,7 +672,7 @@ Mat gaussianBlur(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa
 Mat getGaussianKernel(int ksize, double sigma, {int ktype = 6}) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getGaussianKernel(ksize, sigma, ktype, mat.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getGaussianKernel(ksize, sigma, ktype, mat.ptr, ffi.nullptr));
   return mat;
 }
 
@@ -1379,7 +1379,7 @@ Mat getRectSubPix(
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
 Mat getRotationMatrix2D(Point2f center, double angle, double scale) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getRotationMatrix2D(center.ref, angle, scale, mat.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getRotationMatrix2D(center.ref, angle, scale, mat.ptr, ffi.nullptr));
   return mat;
 }
 
@@ -1480,7 +1480,7 @@ Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getPerspectiveTransform(src.ref, dst.ref, mat.ref, solveMethod, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getPerspectiveTransform(src.ref, dst.ref, mat.ptr, solveMethod, ffi.nullptr));
   return mat;
 }
 
@@ -1491,7 +1491,7 @@ Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOM
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ref, solveMethod, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ptr, solveMethod, ffi.nullptr));
   return mat;
 }
 
@@ -1502,13 +1502,13 @@ Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod =
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999
 Mat getAffineTransform(VecPoint src, VecPoint dst) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getAffineTransform(src.ref, dst.ref, mat.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getAffineTransform(src.ref, dst.ref, mat.ptr, ffi.nullptr));
   return mat;
 }
 
 Mat getAffineTransform2f(VecPoint2f src, VecPoint2f dst) {
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getAffineTransform2f(src.ref, dst.ref, mat.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getAffineTransform2f(src.ref, dst.ref, mat.ptr, ffi.nullptr));
   return mat;
 }
 

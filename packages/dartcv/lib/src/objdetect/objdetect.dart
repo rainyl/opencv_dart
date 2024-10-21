@@ -244,13 +244,13 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Computes gradients and quantized gradient orientations.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a1f76c51c08d69f2b8a0f079efc4bd093
-  (Mat grad, Mat angleOfs) computeGradient(
-    InputArray img, {
+  void computeGradient(
+    InputArray img,
+    InputOutputArray grad,
+    InputOutputArray angleOfs, {
     (int, int) paddingTL = (0, 0),
     (int, int) paddingBR = (0, 0),
   }) {
-    final grad = Mat.empty();
-    final angleOfs = Mat.empty();
     cvRun(
       () => cobjdetect.cv_HOGDescriptor_computeGradient(
         ref,
@@ -262,7 +262,6 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         ffi.nullptr,
       ),
     );
-    return (grad, angleOfs);
   }
 
   /// Performs object detection without a multi-scale window.

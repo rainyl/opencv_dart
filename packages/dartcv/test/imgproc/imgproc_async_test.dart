@@ -367,7 +367,8 @@ void main() async {
   // connectedComponents
   test('cv.connectedComponentsAsync', () async {
     final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
-    final (res, dst) = await cv.connectedComponentsAsync(src, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final dst = cv.Mat.empty();
+    final res = await cv.connectedComponentsAsync(src, dst, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
     expect(dst.isEmpty, false);
     expect(res, greaterThan(1));
   });
@@ -375,8 +376,14 @@ void main() async {
   // connectedComponentsWithStats
   test('cv.connectedComponentsWithStatsAsync', () async {
     final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
-    final (res, dst, stats, centroids) = await cv.connectedComponentsWithStatsAsync(
+    final dst = cv.Mat.empty();
+    final stats = cv.Mat.empty();
+    final centroids = cv.Mat.empty();
+    final res = await cv.connectedComponentsWithStatsAsync(
       src,
+      dst,
+      stats,
+      centroids,
       8,
       cv.MatType.CV_32SC1.value,
       cv.CCL_DEFAULT,
@@ -656,9 +663,9 @@ void main() async {
     expect(gray.isEmpty, false);
 
     final (_, imgThresh) = await cv.thresholdAsync(gray, 5, 50, cv.THRESH_OTSU + cv.THRESH_BINARY);
-
-    final (_, markers) =
-        await cv.connectedComponentsAsync(imgThresh, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final markers = cv.Mat.empty();
+    final _ =
+        await cv.connectedComponentsAsync(imgThresh, markers, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
     await cv.watershedAsync(src, markers);
     expect(markers.isEmpty, false);
     expect((markers.rows, markers.cols), (src.rows, src.cols));
@@ -936,11 +943,9 @@ void main() async {
         await cv.estimateAffinePartial2DAsync(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
     final invMask = await cv.warpAffineAsync(mask, affineMatrix, (2048, 2048));
-    for (int i = 0; i < 2047; i++) {
-      for (int j = 0; j < 2047; j++) {
-        final val = invMask.at<double>(i, j);
-        expect(val == 0 || val == 1, true);
-      }
-    }
+    invMask.convertTo(cv.MatType.CV_8UC1, inplace: true);
+    invMask.forEachPixel((r, c, p) {
+      expect(p[0], isIn([0, 1]));
+    });
   });
 }

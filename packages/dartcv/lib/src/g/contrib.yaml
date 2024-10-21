@@ -8,6 +8,30 @@ files:
         name: BLOCK_MEAN_HASH_MODE_0
       c:@Ea@BLOCK_MEAN_HASH_MODE_0@BLOCK_MEAN_HASH_MODE_1:
         name: BLOCK_MEAN_HASH_MODE_1
+      c:@F@cv_aruco_Dictionary_close:
+        name: cv_aruco_Dictionary_close
+      c:@F@cv_aruco_Dictionary_create:
+        name: cv_aruco_Dictionary_create
+      c:@F@cv_aruco_Dictionary_create_1:
+        name: cv_aruco_Dictionary_create_1
+      c:@F@cv_aruco_Dictionary_generateImageMarker:
+        name: cv_aruco_Dictionary_generateImageMarker
+      c:@F@cv_aruco_Dictionary_getDistanceToId:
+        name: cv_aruco_Dictionary_getDistanceToId
+      c:@F@cv_aruco_Dictionary_get_bytesList:
+        name: cv_aruco_Dictionary_get_bytesList
+      c:@F@cv_aruco_Dictionary_get_markerSize:
+        name: cv_aruco_Dictionary_get_markerSize
+      c:@F@cv_aruco_Dictionary_get_maxCorrectionBits:
+        name: cv_aruco_Dictionary_get_maxCorrectionBits
+      c:@F@cv_aruco_Dictionary_identify:
+        name: cv_aruco_Dictionary_identify
+      c:@F@cv_aruco_Dictionary_set_bytesList:
+        name: cv_aruco_Dictionary_set_bytesList
+      c:@F@cv_aruco_Dictionary_set_markerSize:
+        name: cv_aruco_Dictionary_set_markerSize
+      c:@F@cv_aruco_Dictionary_set_maxCorrectionBits:
+        name: cv_aruco_Dictionary_set_maxCorrectionBits
       c:@F@cv_aruco_arucoDetector_close:
         name: cv_aruco_arucoDetector_close
       c:@F@cv_aruco_arucoDetector_create:
@@ -16,8 +40,6 @@ files:
         name: cv_aruco_arucoDetector_create_1
       c:@F@cv_aruco_arucoDetector_detectMarkers:
         name: cv_aruco_arucoDetector_detectMarkers
-      c:@F@cv_aruco_arucoDictionary_close:
-        name: cv_aruco_arucoDictionary_close
       c:@F@cv_aruco_detectorParameters_close:
         name: cv_aruco_detectorParameters_close
       c:@F@cv_aruco_detectorParameters_create:

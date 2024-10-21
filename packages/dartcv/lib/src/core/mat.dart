@@ -1037,7 +1037,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9e8ea7f2a254814de7713286b6640d77
   Mat adjustROI(int dtop, int dbottom, int dleft, int dright) {
     final p = Mat.empty();
-    cvRun(() => ccore.cv_Mat_adjustROI(ref, dtop, dbottom, dleft, dright, p.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_adjustROI(ref, dtop, dbottom, dleft, dright, p.ptr, ffi.nullptr));
     return p;
   }
 
@@ -1069,7 +1069,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a23df02a07ffbfa4aa59c19bc003919fe
   Mat col(int x) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_col(ref, x, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_col(ref, x, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1091,19 +1091,19 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4b22e1c23af7a7f2eef8fa478cfa7434
   Mat row(int y) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_row(ref, y, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_row(ref, y, dst.ptr, ffi.nullptr));
     return dst;
   }
 
   Mat transpose({bool inplace = false}) {
     final dst = inplace ? this : Mat.empty();
-    cvRun(() => ccore.cv_Mat_t(ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_t(ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 
   Mat clone() {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_clone(ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_clone(ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1147,8 +1147,8 @@ class Mat extends CvStruct<cvg.Mat> {
   ///     [beta]	optional delta added to the scaled values.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#adf88c60c5b4980e05bb556080916978b
-  Mat convertTo(MatType type, {double alpha = 1, double beta = 0}) {
-    final dst = Mat.empty();
+  Mat convertTo(MatType type, {bool inplace = false, double alpha = 1, double beta = 0}) {
+    final dst = inplace ? this : Mat.empty();
     cvRun(() => ccore.cv_Mat_convertTo_1(ref, dst.ref, type.value, alpha, beta, ffi.nullptr));
     return dst;
   }
@@ -1162,7 +1162,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a385c09827713dc3e6d713bfad8460706
   Mat mul(Mat other, {bool inplace = false, double scale = 1.0}) {
     final dst = inplace ? this : Mat.empty();
-    cvRun(() => ccore.cv_Mat_mul(ref, other.ref, dst.ref, scale));
+    cvRun(() => ccore.cv_Mat_mul(ref, other.ref, dst.ptr, scale));
     return dst;
   }
 
@@ -1170,7 +1170,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat region(Rect rect) {
     cvAssert(rect.right <= width && rect.bottom <= height);
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_region(ref, rect.ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_region(ref, rect.ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1188,14 +1188,14 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a4eb96e3251417fa88b78e2abd6cfd7d8
   Mat reshape(int cn, [int rows = 0]) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_reshape(ref, cn, rows, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_reshape(ref, cn, rows, dst.ptr, ffi.nullptr));
     return dst;
   }
 
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#ab2e41a510891e548f744832cf9b8ab89
   Mat reshapeTo(int cn, List<int> newshape) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_reshape_1(ref, cn, newshape.i32.ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_reshape_1(ref, cn, newshape.i32.ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1213,7 +1213,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa6542193430356ad631a9beabc624107
   Mat rowRange(int start, int end) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_rowRange(ref, start, end, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_rowRange(ref, start, end, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1225,7 +1225,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aadc8f9210fe4dec50513746c246fa8d9
   Mat colRange(int start, int end) {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_colRange(ref, start, end, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_colRange(ref, start, end, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -1301,7 +1301,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aaa428c60ccb6d8ea5de18f63dfac8e11
   Mat t() {
     final dst = Mat.empty();
-    cvRun(() => ccore.cv_Mat_t(ref, dst.ref, ffi.nullptr));
+    cvRun(() => ccore.cv_Mat_t(ref, dst.ptr, ffi.nullptr));
     return dst;
   }
 

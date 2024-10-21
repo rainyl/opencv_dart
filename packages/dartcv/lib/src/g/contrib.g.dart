@@ -30,11 +30,240 @@ class CvNativeContrib {
           lookup)
       : _lookup = lookup;
 
+  void cv_aruco_Dictionary_close(
+    ArucoDictionaryPtr self,
+  ) {
+    return _cv_aruco_Dictionary_close(
+      self,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>(
+          'cv_aruco_Dictionary_close');
+  late final _cv_aruco_Dictionary_close = _cv_aruco_Dictionary_closePtr
+      .asFunction<void Function(ArucoDictionaryPtr)>();
+
+  ffi.Pointer<CvStatus> cv_aruco_Dictionary_create(
+    ffi.Pointer<ArucoDictionary> rval,
+  ) {
+    return _cv_aruco_Dictionary_create(
+      rval,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ArucoDictionary>)>>('cv_aruco_Dictionary_create');
+  late final _cv_aruco_Dictionary_create =
+      _cv_aruco_Dictionary_createPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDictionary>)>();
+
+  ffi.Pointer<CvStatus> cv_aruco_Dictionary_create_1(
+    Mat bytesList,
+    int markerSize,
+    int maxCorr,
+    ffi.Pointer<ArucoDictionary> rval,
+  ) {
+    return _cv_aruco_Dictionary_create_1(
+      bytesList,
+      markerSize,
+      maxCorr,
+      rval,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<ArucoDictionary>)>>('cv_aruco_Dictionary_create_1');
+  late final _cv_aruco_Dictionary_create_1 =
+      _cv_aruco_Dictionary_create_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, int, int, ffi.Pointer<ArucoDictionary>)>();
+
+  ffi.Pointer<CvStatus> cv_aruco_Dictionary_generateImageMarker(
+    ArucoDictionary self,
+    int id,
+    int sidePixels,
+    Mat _img,
+    int borderBits,
+  ) {
+    return _cv_aruco_Dictionary_generateImageMarker(
+      self,
+      id,
+      sidePixels,
+      _img,
+      borderBits,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_generateImageMarkerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Int, ffi.Int, Mat,
+              ffi.Int)>>('cv_aruco_Dictionary_generateImageMarker');
+  late final _cv_aruco_Dictionary_generateImageMarker =
+      _cv_aruco_Dictionary_generateImageMarkerPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDictionary, int, int, Mat, int)>();
+
+  int cv_aruco_Dictionary_getDistanceToId(
+    ArucoDictionary self,
+    Mat bits,
+    int id,
+    bool allRotations,
+  ) {
+    return _cv_aruco_Dictionary_getDistanceToId(
+      self,
+      bits,
+      id,
+      allRotations,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_getDistanceToIdPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ArucoDictionary, Mat, ffi.Int,
+              ffi.Bool)>>('cv_aruco_Dictionary_getDistanceToId');
+  late final _cv_aruco_Dictionary_getDistanceToId =
+      _cv_aruco_Dictionary_getDistanceToIdPtr
+          .asFunction<int Function(ArucoDictionary, Mat, int, bool)>();
+
+  ffi.Pointer<CvStatus> cv_aruco_Dictionary_get_bytesList(
+    ArucoDictionary self,
+    ffi.Pointer<Mat> rval,
+  ) {
+    return _cv_aruco_Dictionary_get_bytesList(
+      self,
+      rval,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_get_bytesListPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDictionary,
+              ffi.Pointer<Mat>)>>('cv_aruco_Dictionary_get_bytesList');
+  late final _cv_aruco_Dictionary_get_bytesList =
+      _cv_aruco_Dictionary_get_bytesListPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Pointer<Mat>)>();
+
+  int cv_aruco_Dictionary_get_markerSize(
+    ArucoDictionary self,
+  ) {
+    return _cv_aruco_Dictionary_get_markerSize(
+      self,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_get_markerSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary)>>(
+          'cv_aruco_Dictionary_get_markerSize');
+  late final _cv_aruco_Dictionary_get_markerSize =
+      _cv_aruco_Dictionary_get_markerSizePtr
+          .asFunction<int Function(ArucoDictionary)>();
+
+  int cv_aruco_Dictionary_get_maxCorrectionBits(
+    ArucoDictionary self,
+  ) {
+    return _cv_aruco_Dictionary_get_maxCorrectionBits(
+      self,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_get_maxCorrectionBitsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary)>>(
+          'cv_aruco_Dictionary_get_maxCorrectionBits');
+  late final _cv_aruco_Dictionary_get_maxCorrectionBits =
+      _cv_aruco_Dictionary_get_maxCorrectionBitsPtr
+          .asFunction<int Function(ArucoDictionary)>();
+
+  bool cv_aruco_Dictionary_identify(
+    ArucoDictionary self,
+    Mat onlyBits,
+    ffi.Pointer<ffi.Int> idx,
+    ffi.Pointer<ffi.Int> rotation,
+    double maxCorrectionRate,
+  ) {
+    return _cv_aruco_Dictionary_identify(
+      self,
+      onlyBits,
+      idx,
+      rotation,
+      maxCorrectionRate,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_identifyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Bool Function(
+              ArucoDictionary,
+              Mat,
+              ffi.Pointer<ffi.Int>,
+              ffi.Pointer<ffi.Int>,
+              ffi.Double)>>('cv_aruco_Dictionary_identify');
+  late final _cv_aruco_Dictionary_identify =
+      _cv_aruco_Dictionary_identifyPtr.asFunction<
+          bool Function(ArucoDictionary, Mat, ffi.Pointer<ffi.Int>,
+              ffi.Pointer<ffi.Int>, double)>();
+
+  ffi.Pointer<CvStatus> cv_aruco_Dictionary_set_bytesList(
+    ArucoDictionary self,
+    Mat value,
+  ) {
+    return _cv_aruco_Dictionary_set_bytesList(
+      self,
+      value,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_set_bytesListPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ArucoDictionary, Mat)>>('cv_aruco_Dictionary_set_bytesList');
+  late final _cv_aruco_Dictionary_set_bytesList =
+      _cv_aruco_Dictionary_set_bytesListPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, Mat)>();
+
+  void cv_aruco_Dictionary_set_markerSize(
+    ArucoDictionary self,
+    int value,
+  ) {
+    return _cv_aruco_Dictionary_set_markerSize(
+      self,
+      value,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_set_markerSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionary, ffi.Int)>>(
+          'cv_aruco_Dictionary_set_markerSize');
+  late final _cv_aruco_Dictionary_set_markerSize =
+      _cv_aruco_Dictionary_set_markerSizePtr
+          .asFunction<void Function(ArucoDictionary, int)>();
+
+  void cv_aruco_Dictionary_set_maxCorrectionBits(
+    ArucoDictionary self,
+    int value,
+  ) {
+    return _cv_aruco_Dictionary_set_maxCorrectionBits(
+      self,
+      value,
+    );
+  }
+
+  late final _cv_aruco_Dictionary_set_maxCorrectionBitsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionary, ffi.Int)>>(
+          'cv_aruco_Dictionary_set_maxCorrectionBits');
+  late final _cv_aruco_Dictionary_set_maxCorrectionBits =
+      _cv_aruco_Dictionary_set_maxCorrectionBitsPtr
+          .asFunction<void Function(ArucoDictionary, int)>();
+
   void cv_aruco_arucoDetector_close(
-    ArucoDetectorPtr ad,
+    ArucoDetectorPtr self,
   ) {
     return _cv_aruco_arucoDetector_close(
-      ad,
+      self,
     );
   }
 
@@ -81,7 +310,7 @@ class CvNativeContrib {
               ffi.Pointer<ArucoDetector>)>();
 
   ffi.Pointer<CvStatus> cv_aruco_arucoDetector_detectMarkers(
-    ArucoDetector ad,
+    ArucoDetector self,
     Mat inputArr,
     ffi.Pointer<VecVecPoint2f> markerCorners,
     ffi.Pointer<VecI32> markerIds,
@@ -89,7 +318,7 @@ class CvNativeContrib {
     imp1.CvCallback_0 callback,
   ) {
     return _cv_aruco_arucoDetector_detectMarkers(
-      ad,
+      self,
       inputArr,
       markerCorners,
       markerIds,
@@ -116,21 +345,6 @@ class CvNativeContrib {
               ffi.Pointer<VecI32>,
               ffi.Pointer<VecVecPoint2f>,
               imp1.CvCallback_0)>();
-
-  void cv_aruco_arucoDictionary_close(
-    ArucoDictionaryPtr self,
-  ) {
-    return _cv_aruco_arucoDictionary_close(
-      self,
-    );
-  }
-
-  late final _cv_aruco_arucoDictionary_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>(
-          'cv_aruco_arucoDictionary_close');
-  late final _cv_aruco_arucoDictionary_close =
-      _cv_aruco_arucoDictionary_closePtr
-          .asFunction<void Function(ArucoDictionaryPtr)>();
 
   void cv_aruco_detectorParameters_close(
     ArucoDetectorParamsPtr ap,
@@ -3542,7 +3756,7 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> cv_ximgproc_rl_getStructuringElement(
     int shape,
     CvSize ksize,
-    Mat rval,
+    ffi.Pointer<Mat> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_ximgproc_rl_getStructuringElement(
@@ -3555,12 +3769,12 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_rl_getStructuringElementPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, CvSize, Mat,
+          ffi.Pointer<CvStatus> Function(ffi.Int, CvSize, ffi.Pointer<Mat>,
               imp1.CvCallback_0)>>('cv_ximgproc_rl_getStructuringElement');
   late final _cv_ximgproc_rl_getStructuringElement =
       _cv_ximgproc_rl_getStructuringElementPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              int, CvSize, Mat, imp1.CvCallback_0)>();
+              int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   bool cv_ximgproc_rl_isRLMorphologyPossible(
     Mat rlStructuringElement,
@@ -3795,12 +4009,11 @@ class CvNativeContrib {
 class _SymbolAddresses {
   final CvNativeContrib _library;
   _SymbolAddresses(this._library);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>
+      get cv_aruco_Dictionary_close => _library._cv_aruco_Dictionary_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>
       get cv_aruco_arucoDetector_close =>
           _library._cv_aruco_arucoDetector_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>
-      get cv_aruco_arucoDictionary_close =>
-          _library._cv_aruco_arucoDictionary_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParamsPtr)>>
       get cv_aruco_detectorParameters_close =>
           _library._cv_aruco_detectorParameters_closePtr;

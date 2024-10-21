@@ -95,7 +95,7 @@ void main() async {
 
   test('cv.countNonZero async', () async {
     final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_8UC1);
-    final n = await cv.countNonZeroAsync(mat1);
+    final n = cv.countNonZero(mat1);
     expect(n, equals(101 * 102));
   });
 
