@@ -124,7 +124,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_drawChessboardCorners(
     Mat image,
     CvSize patternSize,
-    Mat corners,
+    VecPoint2f corners,
     bool patternWasFound,
     imp1.CvCallback_0 callback,
   ) {
@@ -139,12 +139,12 @@ class CvNativeCalib3d {
 
   late final _cv_drawChessboardCornersPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, CvSize, Mat, ffi.Bool,
+          ffi.Pointer<CvStatus> Function(Mat, CvSize, VecPoint2f, ffi.Bool,
               imp1.CvCallback_0)>>('cv_drawChessboardCorners');
   late final _cv_drawChessboardCorners =
       _cv_drawChessboardCornersPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, CvSize, Mat, bool, imp1.CvCallback_0)>();
+              Mat, CvSize, VecPoint2f, bool, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_estimateAffine2D(
     VecPoint2f from,
@@ -284,7 +284,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_findChessboardCorners(
     Mat image,
     CvSize patternSize,
-    Mat corners,
+    ffi.Pointer<VecPoint2f> corners,
     int flags,
     ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
@@ -304,14 +304,14 @@ class CvNativeCalib3d {
           ffi.Pointer<CvStatus> Function(
               Mat,
               CvSize,
-              Mat,
+              ffi.Pointer<VecPoint2f>,
               ffi.Int,
               ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_findChessboardCorners');
   late final _cv_findChessboardCorners =
       _cv_findChessboardCornersPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, CvSize, Mat, int,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
+              int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
     Mat image,

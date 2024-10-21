@@ -232,11 +232,11 @@ void main() async {
   });
 
   test('cv.findChessboardCornersSB', () async {
-    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
+    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     // {
-    final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), flags: cv.CALIB_CB_EXHAUSTIVE | cv.CALIB_CB_ACCURACY);
+    final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), flags: 0);
     expect(found, true);
     // expect(corners.isEmpty, false);
 
@@ -256,7 +256,7 @@ void main() async {
   });
 
   test('cv.findChessboardCornersSBWithMeta', () async {
-    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_UNCHANGED);
+    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     {
@@ -297,9 +297,7 @@ void main() async {
       }
     }
     final objectPointsVector = cv.Contours3f.fromList([pts]);
-    final imagePointsVector = cv.Contours2f.fromList([
-      cv.VecPoint2f.fromMat(corners).toList(),
-    ]);
+    final imagePointsVector = cv.Contours2f.fromList([corners.toList()]);
 
     {
       final cameraMatrix = cv.Mat.empty();

@@ -184,19 +184,19 @@ Mat undistortPoints(
 //
 // For further details, please see:
 // https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga93efa9b0aa890de240ca32b11253dd4a
-(bool success, Mat corners) findChessboardCorners(
+(bool success, VecPoint2f corners) findChessboardCorners(
   InputArray image,
   (int, int) patternSize, {
-  OutputArray? corners,
+  VecPoint2f? corners,
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
 }) {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   final r = calloc<ffi.Bool>();
   cvRun(
     () => ccalib3d.cv_findChessboardCorners(
       image.ref,
       patternSize.cvd.ref,
-      corners!.ref,
+      corners!.ptr,
       flags,
       r,
       ffi.nullptr,
@@ -267,7 +267,7 @@ Mat undistortPoints(
 Mat drawChessboardCorners(
   InputOutputArray image,
   (int, int) patternSize,
-  InputArray corners,
+  VecPoint2f corners,
   bool patternWasFound,
 ) {
   cvRun(

@@ -183,19 +183,19 @@ Future<Mat> undistortPointsAsync(
 //
 // For further details, please see:
 // https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga93efa9b0aa890de240ca32b11253dd4a
-Future<(bool success, Mat corners)> findChessboardCornersAsync(
+Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
   InputArray image,
   (int, int) patternSize, {
-  OutputArray? corners,
+  VecPoint2f? corners,
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
 }) async {
-  corners ??= Mat.empty();
+  corners ??= VecPoint2f();
   final r = calloc<ffi.Bool>();
   return cvRunAsync0(
       (callback) => ccalib3d.cv_findChessboardCorners(
             image.ref,
             patternSize.cvd.ref,
-            corners!.ref,
+            corners!.ptr,
             flags,
             r,
             callback,
@@ -266,7 +266,7 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
 Future<Mat> drawChessboardCornersAsync(
   InputOutputArray image,
   (int, int) patternSize,
-  InputArray corners,
+  VecPoint2f corners,
   bool patternWasFound,
 ) async {
   return cvRunAsync0(
