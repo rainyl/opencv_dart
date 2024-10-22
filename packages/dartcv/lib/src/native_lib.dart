@@ -5,6 +5,9 @@
 // coverage:ignore-file
 import 'dart:ffi' as ffi;
 import 'dart:io';
+
+import 'package:logging/logging.dart';
+
 import 'g/calib3d.g.dart' as calib3d;
 import 'g/contrib.g.dart' as contrib;
 import 'g/core.g.dart' as core;
@@ -23,7 +26,7 @@ import 'g/videoio.g.dart' as videoio;
 
 // load native library
 ffi.DynamicLibrary loadNativeLibrary(String libName) {
-  if (Platform.isIOS || Platform.isMacOS) return ffi.DynamicLibrary.process();
+  if (Platform.isIOS) return ffi.DynamicLibrary.process();
   final defaultLibPath = switch (Platform.operatingSystem) {
     "windows" => "$libName.dll",
     "linux" || "android" || "fuchsia" => "lib$libName.so",
@@ -32,7 +35,18 @@ ffi.DynamicLibrary loadNativeLibrary(String libName) {
         "Platform ${Platform.operatingSystem} not supported",
       )
   };
-  final libPath = Platform.environment["dartcv_core_LIB_PATH"] ?? defaultLibPath;
+
+  final libPath = Platform.environment["DARTCV_LIB_PATH"] ?? defaultLibPath;
+  // MacOS has both DartCvMacOS and dylib
+  if (Platform.isMacOS) {
+    try {
+      return ffi.DynamicLibrary.open(libPath);
+    } catch (e) {
+      Logger("dartcv").warning("$e");
+      return ffi.DynamicLibrary.process();
+    }
+  }
+
   return ffi.DynamicLibrary.open(libPath);
 }
 

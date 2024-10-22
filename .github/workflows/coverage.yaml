@@ -36,7 +36,7 @@ jobs:
           cd "${{github.workspace}}\packages\dartcv"
           $env:PATH="${{github.workspace}}\packages\dartcv\libdartcv\lib;$env:PATH"
           dart pub global activate coverage
-          dart pub global run coverage:test_with_coverage --package . --package-name opencv_dart
+          dart pub global run coverage:test_with_coverage --package . --package-name dartcv
       - name: Upload to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:

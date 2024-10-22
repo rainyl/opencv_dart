@@ -35,12 +35,12 @@ void main() async {
     final img = await cv.imreadAsync("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    // final classifier = cv.CascadeClassifier.empty();
-    // classifier.load("test/data/haarcascade_frontalface_default.xml");
-    // final rects = await classifier.detectMultiScaleAsync(img);
-    // expect(rects.length, 1);
+    final classifier = cv.CascadeClassifier.empty();
+    classifier.load("test/data/haarcascade_frontalface_default.xml");
+    final rects = await classifier.detectMultiScaleAsync(img);
+    expect(rects.length, 1);
 
-    // classifier.dispose();
+    classifier.dispose();
 
     final cls = cv.CascadeClassifier.fromFile("test/data/haarcascade_frontalface_default.xml");
     expect(cls.empty(), false);
@@ -51,16 +51,16 @@ void main() async {
       expect(nums.length, 1);
     }
 
-    // {
-    //   final (objects, nums, weights) = await cls.detectMultiScale3Async(img, outputRejectLevels: true);
-    //   expect(objects.length, 1);
-    //   expect(nums.length, 1);
-    //   expect(weights.length, 1);
-    // }
+    {
+      final (objects, nums, weights) = await cls.detectMultiScale3Async(img, outputRejectLevels: true);
+      expect(objects.length, 1);
+      expect(nums.length, 1);
+      expect(weights.length, 1);
+    }
 
-    // expect(cls.getFeatureType(), 0);
-    // expect(cls.getOriginalWindowSize(), (24, 24));
-    // expect(cls.isOldFormatCascade(), false);
+    expect(cls.getFeatureType(), 0);
+    expect(cls.getOriginalWindowSize(), (24, 24));
+    expect(cls.isOldFormatCascade(), false);
   });
 
   test('cv.HOGDescriptorAsync', () async {

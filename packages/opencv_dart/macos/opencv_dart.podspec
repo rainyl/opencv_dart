@@ -20,7 +20,10 @@ Pod::Spec.new do |s|
   s.source       = { :path => '.' }
   # s.source_files  = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
-  s.dependency 'DartCvMacOS', '4.10.0+1'
+  s.dependency 'DartCvMacOS', '4.10.0+2'
+  s.dependency 'DartCvMacOS/dnn', '4.10.0+2'
+  s.dependency 'DartCvMacOS/videoio', '4.10.0+2'
+
   s.platform = :osx, '10.15'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'

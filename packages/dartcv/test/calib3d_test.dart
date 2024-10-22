@@ -231,58 +231,69 @@ void main() async {
     }
   });
 
-  test('cv.findChessboardCornersSB', () async {
-    // FIXME
-    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
-    expect(img.isEmpty, false);
+  test(
+    'cv.findChessboardCornersSB',
+    onPlatform: {
+      "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
+    },
+    () async {
+      // FIXME
+      final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
+      expect(img.isEmpty, false);
 
-    {
-      final (found, corners) = cv.findChessboardCornersSB(img, (3, 3), flags: 0);
-      expect(found, true);
-      expect(corners.isEmpty, false);
-      print(corners);
+      {
+        final (found, corners) = cv.findChessboardCornersSB(img, (3, 3), flags: 0);
+        expect(found, true);
+        expect(corners.isEmpty, false);
 
-      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-      cv.drawChessboardCorners(img2, (4, 6), corners, true);
-      expect(img2.isEmpty, false);
-    }
-    {
-      final (found, corners) = await cv.findChessboardCornersSBAsync(img, (4, 6), 0);
-      expect(found, true);
-      expect(corners.isEmpty, false);
+        final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+        cv.drawChessboardCorners(img2, (4, 6), corners, true);
+        expect(img2.isEmpty, false);
+      }
+      {
+        final (found, corners) = await cv.findChessboardCornersSBAsync(img, (4, 6), 0);
+        expect(found, true);
+        expect(corners.isEmpty, false);
 
-      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-      await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
-      expect(img2.isEmpty, false);
-    }
-  });
+        final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+        await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+        expect(img2.isEmpty, false);
+      }
+    },
+  );
 
-  test('cv.findChessboardCornersSBWithMeta', () async {
-    // FIXME
-    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
-    expect(img.isEmpty, false);
+  test(
+    'cv.findChessboardCornersSBWithMeta',
+    onPlatform: {
+      "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
+    },
+    () async {
+      // FIXME
+      final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
+      expect(img.isEmpty, false);
 
-    {
-      final (found, corners, meta) = cv.findChessboardCornersSBWithMeta(img, (4, 6), 0);
-      expect(found, true);
-      expect(corners.isEmpty, false);
-      expect(meta.isEmpty, false);
+      {
+        final (found, corners, meta) = cv.findChessboardCornersSBWithMeta(img, (4, 6), 0);
+        expect(found, true);
+        expect(corners.isEmpty, false);
+        expect(meta.isEmpty, false);
 
-      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-      cv.drawChessboardCorners(img2, (4, 6), corners, true);
-      expect(img2.isEmpty, false);
-    }
-    {
-      final (found, corners, meta) = await cv.findChessboardCornersSBWithMetaAsync(img, (4, 6), 0);
-      expect(found, true);
-      expect(corners.isEmpty, false);
-      expect(meta.isEmpty, false);
+        final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+        cv.drawChessboardCorners(img2, (4, 6), corners, true);
+        expect(img2.isEmpty, false);
+      }
+      {
+        final (found, corners, meta) = await cv.findChessboardCornersSBWithMetaAsync(img, (4, 6), 0);
+        expect(found, true);
+        expect(corners.isEmpty, false);
+        expect(meta.isEmpty, false);
 
-      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-      await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
-      expect(img2.isEmpty, false);
-    }
-  });
+        final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+        await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+        expect(img2.isEmpty, false);
+      }
+    },
+  );
 
   test('cv.calibrateCamera', () async {
     final img = cv.imread("test/images/chessboard_4x6_distort.png", flags: cv.IMREAD_GRAYSCALE);

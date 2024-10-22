@@ -41,7 +41,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
         callback,
       ),
       (c) {
-        return c.complete(VecRect());
+        return c.complete(VecRect.fromPointer(pObjects));
       },
     );
   }

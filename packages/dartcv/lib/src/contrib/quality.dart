@@ -116,7 +116,7 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   /// https://docs.opencv.org/4.x/d8/d81/classcv_1_1quality_1_1QualityGMSD.html#af1c9e3cdf594358f47504a8b6b42f583
   factory QualityGMSD.create(Mat img) {
     final p = calloc<cvg.QualityGMSD>();
-    // cvRun(() => ccontrib.cv_quality_QualityGMSD_create(img.ref, p));
+    cvRun(() => ccontrib.cv_quality_QualityGMSD_create(img.ref, p));
     return QualityGMSD.fromPointer(p);
   }
 

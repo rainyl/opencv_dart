@@ -54,19 +54,19 @@ void main() async {
     // FIXME: wont exit, someting wrong
     {
       final qualifier = cv.QualityGMSD.create(refImg);
-      // var value = qualifier.compute(target);
-      // checkResult(value, [0.0616, 0.0711, 0.05983]);
+      var value = qualifier.compute(target);
+      checkResult(value, [0.0616, 0.0711, 0.05983]);
 
-      // value = await qualifier.computeAsync(target);
-      // checkResult(value, [0.0616, 0.0711, 0.05983]);
+      value = await qualifier.computeAsync(target);
+      checkResult(value, [0.0616, 0.0711, 0.05983]);
     }
-    // {
-    //   var (value, qualityMap) = cv.QualityGMSD.compute1(refImg, target);
-    //   checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
+    {
+      var (value, qualityMap) = cv.QualityGMSD.compute1(refImg, target);
+      checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
 
-    //   (value, qualityMap) = await cv.QualityGMSD.compute1Async(refImg, target);
-    //   checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
-    // }
+      (value, qualityMap) = await cv.QualityGMSD.compute1Async(refImg, target);
+      checkResult(value, [0.0616, 0.0711, 0.05983], qualityMap: qualityMap);
+    }
   });
 
   test("cv.quality.QualityMSE", () async {
