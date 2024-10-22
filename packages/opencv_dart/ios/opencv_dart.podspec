@@ -20,9 +20,9 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   # s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'DartCvIOS', '4.10.0+2'
-  s.dependency 'DartCvIOS/dnn', '4.10.0+2'
-  s.dependency 'DartCvIOS/videoio', '4.10.0+2'
+  s.dependency 'DartCvIOS', '=4.10.0+2'
+  s.dependency 'DartCvIOS/dnn', '=4.10.0+2'
+  s.dependency 'DartCvIOS/videoio', '=4.10.0+2'
 
   s.platform = :ios, '12.0'
 
