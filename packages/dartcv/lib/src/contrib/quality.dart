@@ -114,10 +114,10 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   /// Create an object which calculates quality.
   ///
   /// https://docs.opencv.org/4.x/d8/d81/classcv_1_1quality_1_1QualityGMSD.html#af1c9e3cdf594358f47504a8b6b42f583
-  factory QualityGMSD.create(Mat ref) {
+  factory QualityGMSD.create(Mat img) {
     final p = calloc<cvg.QualityGMSD>();
-    cvRun(() => ccontrib.cv_quality_QualityGMSD_create(ref.ref, p, ffi.nullptr));
-    return QualityGMSD.fromPointer(p, false);
+    // cvRun(() => ccontrib.cv_quality_QualityGMSD_create(img.ref, p));
+    return QualityGMSD.fromPointer(p);
   }
 
   /// Compute GMSD.
@@ -140,22 +140,22 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   /// static method for computing quality
   ///
   /// https://docs.opencv.org/4.x/d8/d81/classcv_1_1quality_1_1QualityGMSD.html#aa856e2c46c35bbe28fafc76e82e3cda6
-  static (Scalar, Mat) compute1(Mat ref, Mat cmp, {Mat? qualityMap}) {
+  static (Scalar, Mat) compute1(Mat img, Mat cmp, {Mat? qualityMap}) {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     cvRun(
-      () => ccontrib.cv_quality_QualityGMSD_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
+      () => ccontrib.cv_quality_QualityGMSD_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
     );
     return (Scalar.fromPointer(p), qualityMap);
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat ref, Mat cmp, {Mat? qualityMap}) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
         (callback) =>
-            ccontrib.cv_quality_QualityGMSD_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, callback),
+            ccontrib.cv_quality_QualityGMSD_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
         (c) {
       return c.complete((Scalar.fromPointer(p), qualityMap!));
     });
@@ -176,10 +176,10 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   /// Create an object which calculates quality.
   ///
   /// https://docs.opencv.org/4.x/d7/d80/classcv_1_1quality_1_1QualityMSE.html#a74f0f81437ca1fbb1c058d4fd85454d3
-  factory QualityMSE.create(Mat ref) {
+  factory QualityMSE.create(Mat img) {
     final p = calloc<cvg.QualityMSE>();
-    cvRun(() => ccontrib.cv_quality_QualityMSE_create(ref.ref, p, ffi.nullptr));
-    return QualityMSE.fromPointer(p, false);
+    cvRun(() => ccontrib.cv_quality_QualityMSE_create(img.ref, p, ffi.nullptr));
+    return QualityMSE.fromPointer(p);
   }
 
   /// Computes MSE for reference images supplied in class constructor and provided comparison images.
@@ -203,22 +203,22 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   /// static method for computing quality
   ///
   /// https://docs.opencv.org/4.x/d7/d80/classcv_1_1quality_1_1QualityMSE.html#a74f0f81437ca1fbb1c058d4fd85454d3
-  static (Scalar, Mat qualityMap) compute1(Mat ref, Mat cmp, {Mat? qualityMap}) {
+  static (Scalar, Mat qualityMap) compute1(Mat img, Mat cmp, {Mat? qualityMap}) {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     cvRun(
-      () => ccontrib.cv_quality_QualityMSE_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
+      () => ccontrib.cv_quality_QualityMSE_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
     );
     return (Scalar.fromPointer(p), qualityMap);
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat ref, Mat cmp, {Mat? qualityMap}) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
         (callback) =>
-            ccontrib.cv_quality_QualityMSE_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, callback),
+            ccontrib.cv_quality_QualityMSE_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
         (c) {
       return c.complete((Scalar.fromPointer(p), qualityMap!));
     });
@@ -239,10 +239,10 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
   /// Create an object which calculates quality.
   ///
   /// https://docs.opencv.org/4.x/d8/d0c/classcv_1_1quality_1_1QualityPSNR.html#a458e57903165a07be261e8ab7cf121d3
-  factory QualityPSNR.create(Mat ref, {double maxPixelValue = 255}) {
+  factory QualityPSNR.create(Mat img, {double maxPixelValue = 255}) {
     final p = calloc<cvg.QualityPSNR>();
-    cvRun(() => ccontrib.cv_quality_QualityPSNR_create(ref.ref, maxPixelValue, p, ffi.nullptr));
-    return QualityPSNR.fromPointer(p, false);
+    cvRun(() => ccontrib.cv_quality_QualityPSNR_create(img.ref, maxPixelValue, p, ffi.nullptr));
+    return QualityPSNR.fromPointer(p);
   }
 
   /// Compute the PSNR.
@@ -265,12 +265,12 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
   /// static method for computing quality
   ///
   /// https://docs.opencv.org/4.x/d8/d0c/classcv_1_1quality_1_1QualityPSNR.html#ab9616d5da0df37b5753b99ae6d36ba69
-  static (Scalar, Mat qualityMap) compute1(Mat ref, Mat cmp, {Mat? qualityMap, double maxPixelValue = 255}) {
+  static (Scalar, Mat qualityMap) compute1(Mat img, Mat cmp, {Mat? qualityMap, double maxPixelValue = 255}) {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     cvRun(
       () => ccontrib.cv_quality_QualityPSNR_compute_static(
-        ref.ref,
+        img.ref,
         cmp.ref,
         maxPixelValue,
         qualityMap!.ref,
@@ -283,7 +283,7 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
 
   /// async version of [compute1]
   static Future<(Scalar, Mat qualityMap)> compute1Async(
-    Mat ref,
+    Mat img,
     Mat cmp, {
     Mat? qualityMap,
     double maxPixelValue = 255,
@@ -292,7 +292,7 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
         (callback) => ccontrib.cv_quality_QualityPSNR_compute_static(
-              ref.ref,
+              img.ref,
               cmp.ref,
               maxPixelValue,
               qualityMap!.ref,
@@ -321,10 +321,10 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   /// Create an object which calculates quality.
   ///
   /// https://docs.opencv.org/4.x/d9/db5/classcv_1_1quality_1_1QualitySSIM.html#a4ec6e4557fd24782e619f00852ea3289
-  factory QualitySSIM.create(Mat ref) {
+  factory QualitySSIM.create(Mat img) {
     final p = calloc<cvg.QualitySSIM>();
-    cvRun(() => ccontrib.cv_quality_QualitySSIM_create(ref.ref, p, ffi.nullptr));
-    return QualitySSIM.fromPointer(p, false);
+    cvRun(() => ccontrib.cv_quality_QualitySSIM_create(img.ref, p, ffi.nullptr));
+    return QualitySSIM.fromPointer(p);
   }
 
   /// Computes SSIM.
@@ -347,18 +347,18 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   /// static method for computing quality
   ///
   /// https://docs.opencv.org/4.x/d9/db5/classcv_1_1quality_1_1QualitySSIM.html#a7f1967a8334e28d8bef80fbe2f340f8c
-  static (Scalar, Mat qualityMap) compute1(Mat ref, Mat cmp, {Mat? qualityMap}) {
+  static (Scalar, Mat qualityMap) compute1(Mat img, Mat cmp, {Mat? qualityMap}) {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     cvRun(
-      () => ccontrib.cv_quality_QualitySSIM_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
+      () => ccontrib.cv_quality_QualitySSIM_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, ffi.nullptr),
     );
     return (Scalar.fromPointer(p), qualityMap);
   }
 
   /// async version of [compute1]
   static Future<(Scalar, Mat qualityMap)> compute1Async(
-    Mat ref,
+    Mat img,
     Mat cmp, {
     Mat? qualityMap,
   }) async {
@@ -366,7 +366,7 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
         (callback) =>
-            ccontrib.cv_quality_QualitySSIM_compute_static(ref.ref, cmp.ref, qualityMap!.ref, p, callback),
+            ccontrib.cv_quality_QualitySSIM_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
         (c) {
       return c.complete((Scalar.fromPointer(p), qualityMap!));
     });

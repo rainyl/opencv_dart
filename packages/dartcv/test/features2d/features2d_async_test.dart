@@ -98,8 +98,7 @@ void main() async {
     gf.dispose();
   });
 
-  test('cv.ORBAsync', skip: true, () async {
-    // FIXME: some thing wrong...
+  test('cv.ORBAsync', () async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 

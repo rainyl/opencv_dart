@@ -215,13 +215,13 @@ Mat undistortPoints(
   int flags = 0,
   VecPoint2f? corners,
 }) {
-  corners ??= VecPoint2f();
+  final pCorners = calloc<cvg.VecPoint2f>();
   final p = calloc<ffi.Bool>();
   cvRun(
     () => ccalib3d.cv_findChessboardCornersSB(
       image.ref,
       patternSize.toSize().ref,
-      corners!.ptr,
+      pCorners,
       flags,
       p,
       ffi.nullptr,
@@ -229,7 +229,7 @@ Mat undistortPoints(
   );
   final rval = p.value;
   calloc.free(p);
-  return (rval, corners);
+  return (rval, VecPoint2f.fromPointer(pCorners));
 }
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.

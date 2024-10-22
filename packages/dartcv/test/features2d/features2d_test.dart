@@ -98,23 +98,22 @@ void main() async {
 
   test('cv.ORB', () {
     // FIXME: wont exit, someting wrong
-    // final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-    final img = cv.Mat.randu(100,100,cv.MatType.CV_8UC3);
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ka = cv.ORB.empty();
     final kp = ka.detect(img);
 
-    // expect(kp.length, 500);
+    expect(kp.length, 500);
 
     final orb = cv.ORB.create();
-    // final kp1 = orb.detect(img);
-    // expect(kp1.length, 500);
+    final kp1 = orb.detect(img);
+    expect(kp1.length, 500);
 
     final mask = cv.Mat.empty();
-    // final (kp2, desc) = ka.detectAndCompute(img, mask);
-    // expect(kp2.length, 500);
-    // expect(desc.isEmpty, false);
+    final (kp2, desc) = ka.detectAndCompute(img, mask);
+    expect(kp2.length, 500);
+    expect(desc.isEmpty, false);
 
     orb.dispose();
   });

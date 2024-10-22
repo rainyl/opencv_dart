@@ -1977,23 +1977,20 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> cv_quality_QualityGMSD_create(
     Mat ref,
     ffi.Pointer<QualityGMSD> rval,
-    imp1.CvCallback_0 callback,
   ) {
     return _cv_quality_QualityGMSD_create(
       ref,
       rval,
-      callback,
     );
   }
 
   late final _cv_quality_QualityGMSD_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>,
-              imp1.CvCallback_0)>>('cv_quality_QualityGMSD_create');
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<QualityGMSD>)>>('cv_quality_QualityGMSD_create');
   late final _cv_quality_QualityGMSD_create =
       _cv_quality_QualityGMSD_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<QualityGMSD>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>();
 
   void cv_quality_QualityMSE_close(
     QualityMSEPtr self,
