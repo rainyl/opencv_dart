@@ -15,48 +15,53 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - name: opencv_dart
-        run: |
-          cd packages/opencv_dart/example
-          flutter build windows
       - name: opencv_core
         run: |
           cd packages/opencv_core/example
           flutter build windows
-  ubuntu:
-    name: ubuntu
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build windows
+  android:
+    name: android
     runs-on: ubuntu-latest
     steps:
-      - name: setup
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl git wget python3 unzip build-essential \
-            libgtk-3-dev ninja-build
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: opencv_core
+        run: |
+          cd packages/opencv_core/example
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
       - name: opencv_dart
         run: |
           cd packages/opencv_dart/example
-          flutter build linux
           flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+  ubuntu:
+    name: ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
       - name: opencv_core
         run: |
           cd packages/opencv_core/example
           flutter build linux
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build linux
   macos:
     name: macos
     runs-on: macos-13
@@ -65,18 +70,14 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: opencv_dart
-        run: |
-          cd packages/opencv_dart/example
-          flutter build macos
-          flutter build ios --release --no-codesign
       - name: opencv_core
         run: |
           cd packages/opencv_core/example
           flutter build macos
-          flutter build ios --release --no-codesign
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
   macos-arm:
     name: macos-arm
     runs-on: macos-14
@@ -85,15 +86,27 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: opencv_dart
-        run: |
-          cd packages/opencv_dart/example
-          flutter build macos
-          flutter build ios --release --no-codesign
       - name: opencv_core
         run: |
           cd packages/opencv_core/example
           flutter build macos
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
+  ios:
+    name: ios
+    runs-on: macos-14
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+      - name: opencv_core
+        run: |
+          cd packages/opencv_core/example
+          flutter build ios --release --no-codesign
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
           flutter build ios --release --no-codesign
