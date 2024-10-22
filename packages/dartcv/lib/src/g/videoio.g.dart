@@ -529,6 +529,7 @@ class CvNativeVideoIO {
     int width,
     int height,
     bool isColor,
+    ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_VideoWriter_open(
@@ -539,6 +540,7 @@ class CvNativeVideoIO {
       width,
       height,
       isColor,
+      rval,
       callback,
     );
   }
@@ -553,10 +555,11 @@ class CvNativeVideoIO {
               ffi.Int,
               ffi.Int,
               ffi.Bool,
+              ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoWriter_open');
   late final _cv_VideoWriter_open = _cv_VideoWriter_openPtr.asFunction<
       ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int,
-          double, int, int, bool, imp1.CvCallback_0)>();
+          double, int, int, bool, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_open_1(
     VideoWriter self,
@@ -567,6 +570,7 @@ class CvNativeVideoIO {
     int width,
     int height,
     bool isColor,
+    ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_VideoWriter_open_1(
@@ -578,6 +582,7 @@ class CvNativeVideoIO {
       width,
       height,
       isColor,
+      rval,
       callback,
     );
   }
@@ -593,10 +598,20 @@ class CvNativeVideoIO {
               ffi.Int,
               ffi.Int,
               ffi.Bool,
+              ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoWriter_open_1');
   late final _cv_VideoWriter_open_1 = _cv_VideoWriter_open_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int,
-          int, double, int, int, bool, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          VideoWriter,
+          ffi.Pointer<ffi.Char>,
+          int,
+          int,
+          double,
+          int,
+          int,
+          bool,
+          ffi.Pointer<ffi.Bool>,
+          imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_release(
     VideoWriter self,

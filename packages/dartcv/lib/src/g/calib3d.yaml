@@ -4,8 +4,6 @@ files:
     used-config:
       ffi-native: false
     symbols:
-      c:@F@cv_FindChessboardCornersSB_1:
-        name: cv_FindChessboardCornersSB_1
       c:@F@cv_calibrateCamera:
         name: cv_calibrateCamera
       c:@F@cv_drawChessboardCorners:
@@ -22,6 +20,8 @@ files:
         name: cv_findChessboardCorners
       c:@F@cv_findChessboardCornersSB:
         name: cv_findChessboardCornersSB
+      c:@F@cv_findChessboardCornersSB_1:
+        name: cv_findChessboardCornersSB_1
       c:@F@cv_findHomography:
         name: cv_findHomography
       c:@F@cv_fisheye_estimateNewCameraMatrixForUndistortRectify:

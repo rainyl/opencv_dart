@@ -148,6 +148,7 @@ extension VideoWriterAsync on VideoWriter {
   }) {
     final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
+    final p = calloc<ffi.Bool>();
     if (apiPreference == null) {
       return cvRunAsync0(
         (callback) => cvideoio.cv_VideoWriter_open(
@@ -158,10 +159,14 @@ extension VideoWriterAsync on VideoWriter {
           frameSize.$1,
           frameSize.$2,
           isColor,
+          p,
           callback,
         ),
         (c) {
           calloc.free(cname);
+          final rval = p.value;
+          calloc.free(p);
+          c.complete(rval);
         },
       );
     }
@@ -176,10 +181,14 @@ extension VideoWriterAsync on VideoWriter {
         frameSize.$1,
         frameSize.$2,
         isColor,
+        p,
         callback,
       ),
       (c) {
         calloc.free(cname);
+        final rval = p.value;
+        calloc.free(p);
+        c.complete(rval);
       },
     );
   }

@@ -542,14 +542,14 @@ class CvNativeCore {
 
   /// @brief Create Mat with Scalar values
   ///
-  /// @param ar array of values to initialize the matrix with
+  /// @param scalar array of values to initialize the matrix with
   /// @param rows number of rows
   /// @param cols number of columns
   /// @param type type of the created matrix
   /// @param rval Mat*
   /// @return CvStatus
   ffi.Pointer<CvStatus> cv_Mat_create_5(
-    Scalar ar,
+    Scalar scalar,
     int rows,
     int cols,
     int type,
@@ -557,7 +557,7 @@ class CvNativeCore {
     imp1.CvCallback_0 callback,
   ) {
     return _cv_Mat_create_5(
-      ar,
+      scalar,
       rows,
       cols,
       type,

@@ -1200,8 +1200,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Mat rotate(int rotationCode, {bool inplace = false}) {
-    final dst = inplace ? this : clone();
-    cvRun(() => ccore.cv_rotate(ref, ref, rotationCode, ffi.nullptr));
+    final dst = inplace ? this : Mat.empty();
+    cvRun(() => ccore.cv_rotate(ref, dst.ref, rotationCode, ffi.nullptr));
     return dst;
   }
 

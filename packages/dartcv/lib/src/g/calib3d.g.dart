@@ -30,41 +30,6 @@ class CvNativeCalib3d {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<CvStatus> cv_FindChessboardCornersSB_1(
-    Mat image,
-    CvSize patternSize,
-    ffi.Pointer<VecPoint2f> corners,
-    int flags,
-    Mat meta,
-    ffi.Pointer<ffi.Bool> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _cv_FindChessboardCornersSB_1(
-      image,
-      patternSize,
-      corners,
-      flags,
-      meta,
-      rval,
-      callback,
-    );
-  }
-
-  late final _cv_FindChessboardCornersSB_1Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              CvSize,
-              ffi.Pointer<VecPoint2f>,
-              ffi.Int,
-              Mat,
-              ffi.Pointer<ffi.Bool>,
-              imp1.CvCallback_0)>>('cv_FindChessboardCornersSB_1');
-  late final _cv_FindChessboardCornersSB_1 =
-      _cv_FindChessboardCornersSB_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
-              int, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
-
   ffi.Pointer<CvStatus> cv_calibrateCamera(
     VecVecPoint3f objectPoints,
     VecVecPoint2f imagePoints,
@@ -344,6 +309,41 @@ class CvNativeCalib3d {
       _cv_findChessboardCornersSBPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
               int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
+    Mat image,
+    CvSize patternSize,
+    ffi.Pointer<VecPoint2f> corners,
+    int flags,
+    Mat meta,
+    ffi.Pointer<ffi.Bool> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_findChessboardCornersSB_1(
+      image,
+      patternSize,
+      corners,
+      flags,
+      meta,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_findChessboardCornersSB_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              CvSize,
+              ffi.Pointer<VecPoint2f>,
+              ffi.Int,
+              Mat,
+              ffi.Pointer<ffi.Bool>,
+              imp1.CvCallback_0)>>('cv_findChessboardCornersSB_1');
+  late final _cv_findChessboardCornersSB_1 =
+      _cv_findChessboardCornersSB_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
+              int, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_findHomography(
     Mat src,

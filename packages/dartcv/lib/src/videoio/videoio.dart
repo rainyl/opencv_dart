@@ -207,6 +207,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   }) {
     final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
+    final p = calloc<ffi.Bool>();
     apiPreference == null
         ? cvRun(
             () => cvideoio.cv_VideoWriter_open(
@@ -217,6 +218,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
               frameSize.$1,
               frameSize.$2,
               isColor,
+              p,
               ffi.nullptr,
             ),
           )
@@ -230,10 +232,12 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
               frameSize.$1,
               frameSize.$2,
               isColor,
+              p,
               ffi.nullptr,
             ),
           );
     calloc.free(cname);
+    calloc.free(p);
   }
 
   void write(InputArray image) {

@@ -244,19 +244,21 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_FindChessboardCornersSB_1(
-            image.ref,
-            patternSize.cvd.ref,
-            corners!.ptr,
-            flags,
-            meta!.ref,
-            b,
-            callback,
-          ), (c) {
-    final rval = b.value;
-    calloc.free(b);
-    return c.complete((rval, corners!, meta!));
-  });
+    (callback) => ccalib3d.cv_findChessboardCornersSB_1(
+      image.ref,
+      patternSize.cvd.ref,
+      corners!.ptr,
+      flags,
+      meta!.ref,
+      b,
+      callback,
+    ),
+    (c) {
+      final rval = b.value;
+      calloc.free(b);
+      return c.complete((rval, corners!, meta!));
+    },
+  );
 }
 
 // DrawChessboardCorners renders the detected chessboard corners.

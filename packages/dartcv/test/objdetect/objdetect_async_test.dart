@@ -31,6 +31,7 @@ cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
 
 void main() async {
   test('cv.CascadeClassifierAsync', () async {
+    // FIXME: wont exit, someting wrong
     final img = await cv.imreadAsync("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
@@ -63,6 +64,7 @@ void main() async {
   });
 
   test('cv.HOGDescriptorAsync', () async {
+    // FIXME: wont exit, someting wrong
     final img = await cv.imreadAsync("test/images/face.jpg", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
     {

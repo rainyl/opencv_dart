@@ -3,6 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('cv.Stitcher', () {
+    // FIXME: wont exit, someting wrong
     final stitcher = cv.Stitcher.create(mode: cv.StitcherMode.PANORAMA);
     final images = [
       cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
@@ -17,6 +18,7 @@ void main() {
   });
 
   test('cv.Stitcher with mask', () {
+    // FIXME: wont exit, someting wrong
     final stitcher = cv.Stitcher.create(mode: cv.StitcherMode.PANORAMA);
     final images = [
       cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
@@ -60,6 +62,7 @@ void main() {
   });
 
   test('Issue 48', () {
+    // FIXME: wont exit, someting wrong
     final images = [
       cv.imread("test/images/barcode1.png", flags: cv.IMREAD_COLOR),
       cv.imread("test/images/barcode2.png", flags: cv.IMREAD_COLOR),

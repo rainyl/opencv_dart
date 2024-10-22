@@ -31,7 +31,7 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
     cvRun(() => ccontrib.cv_quality_QualityBRISQUE_create(cm, cr, p, ffi.nullptr));
     calloc.free(cm);
     calloc.free(cr);
-    return QualityBRISQUE.fromPointer(p, false);
+    return QualityBRISQUE.fromPointer(p);
   }
 
   /// Computes BRISQUE quality score for input image.

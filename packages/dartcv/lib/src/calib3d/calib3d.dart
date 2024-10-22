@@ -245,7 +245,7 @@ Mat undistortPoints(
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
   cvRun(
-    () => ccalib3d.cv_FindChessboardCornersSB_1(
+    () => ccalib3d.cv_findChessboardCornersSB_1(
       image.ref,
       patternSize.cvd.ref,
       corners!.ptr,

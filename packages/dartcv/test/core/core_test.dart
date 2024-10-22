@@ -785,12 +785,7 @@ void main() async {
   });
 
   test('cv.reduceArgMax', () {
-    final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
-    for (var i = 0; i < src.rows; i++) {
-      for (var j = 0; j < src.cols; j++) {
-        src.set(i, j, j + 1);
-      }
-    }
+    final src = cv.Mat.fromList(2, 3, cv.MatType.CV_8UC1, List.generate(2 * 3, (i) => i));
     final dst = cv.reduceArgMax(src, 1);
     expect((dst.rows, dst.cols), equals((2, 1)));
     expect((dst.at<int>(0, 0), dst.at<int>(1, 0)), (2, 2));
