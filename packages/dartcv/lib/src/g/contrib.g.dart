@@ -3474,7 +3474,7 @@ class CvNativeContrib {
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_create_1(
     ffi.Pointer<ffi.Char> model,
-    RFFeatureGetter howToGetFeatures,
+    ffi.Pointer<RFFeatureGetter> howToGetFeatures,
     ffi.Pointer<StructuredEdgeDetection> rval,
   ) {
     return _cv_ximgproc_StructuredEdgeDetection_create_1(
@@ -3486,12 +3486,16 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_StructuredEdgeDetection_create_1Ptr = _lookup<
           ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
-                  RFFeatureGetter, ffi.Pointer<StructuredEdgeDetection>)>>(
+              ffi.Pointer<CvStatus> Function(
+                  ffi.Pointer<ffi.Char>,
+                  ffi.Pointer<RFFeatureGetter>,
+                  ffi.Pointer<StructuredEdgeDetection>)>>(
       'cv_ximgproc_StructuredEdgeDetection_create_1');
   late final _cv_ximgproc_StructuredEdgeDetection_create_1 =
       _cv_ximgproc_StructuredEdgeDetection_create_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, RFFeatureGetter,
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<RFFeatureGetter>,
               ffi.Pointer<StructuredEdgeDetection>)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_detectEdges(

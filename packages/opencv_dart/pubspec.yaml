@@ -17,7 +17,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dartcv: 0.0.1
+  dartcv4:
+    path: ../dartcv
 
 dev_dependencies:
   test: ^1.25.2

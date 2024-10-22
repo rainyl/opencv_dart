@@ -45,8 +45,9 @@ bool checkCaffeNet(cv.Net net) {
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
 
-  final (perf, _) = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
 
   return true;
 }
@@ -76,8 +77,9 @@ bool checkTensorflow(cv.Net net) {
   expect((minLoc.x, minLoc.y), (481, 0));
   expect((maxLoc.x, maxLoc.y), (234, 0));
 
-  final (perf, _) = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
 
   return true;
 }
@@ -112,8 +114,9 @@ bool checkOnnx(cv.Net net) {
   // final probMatAsync = probAsync.get();
   // expect(probMatAsync.isEmpty, false);
 
-  final (perf, _) = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
   return true;
 }
 

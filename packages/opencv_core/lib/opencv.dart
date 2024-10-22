@@ -5,4 +5,4 @@
 /// OpenCV bindings for Flutter
 library cv;
 
-export 'package:dartcv/dartcv.dart';
+export 'package:dartcv4/dartcv.dart';

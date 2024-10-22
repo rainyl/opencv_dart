@@ -447,12 +447,10 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   }
 
   /// https://docs.opencv.org/4.x/de/d51/group__ximgproc__edge.html#ga2aad8b0b32e05d82200348dcf5b32066
-  factory StructuredEdgeDetection.create(String model, {RFFeatureGetter? howToGetFeatures}) {
+  factory StructuredEdgeDetection.create(String model) {
     final cmodel = model.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<cvg.StructuredEdgeDetection>();
-    howToGetFeatures == null
-        ? cvRun(() => ccontrib.cv_ximgproc_StructuredEdgeDetection_create(cmodel, p))
-        : cvRun(() => ccontrib.cv_ximgproc_StructuredEdgeDetection_create_1(cmodel, howToGetFeatures.ref, p));
+    cvRun(() => ccontrib.cv_ximgproc_StructuredEdgeDetection_create(cmodel, p));
     calloc.free(cmodel);
     return StructuredEdgeDetection.fromPointer(p);
   }

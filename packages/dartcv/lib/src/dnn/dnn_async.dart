@@ -28,13 +28,17 @@ extension NetAsync on Net {
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<cvg.Net>();
-    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNet(cPath, cConfig, cFramework, p, callback), (c) {
-      calloc.free(cPath);
-      calloc.free(cConfig);
-      calloc.free(cFramework);
-      final net = Net.fromPointer(p);
-      return c.complete(net);
-    });
+    final rval = cvRunAsync0<Net>(
+      (callback) => cdnn.cv_dnn_Net_readNet(cPath, cConfig, cFramework, p, callback),
+      (c) {
+        final net = Net.fromPointer(p);
+        return c.complete(net);
+      },
+    );
+    calloc.free(cPath);
+    calloc.free(cConfig);
+    calloc.free(cFramework);
+    return rval;
   }
 
   static Future<Net> fromBytesAsync(
@@ -163,6 +167,7 @@ extension NetAsync on Net {
       (callback) => cdnn.cv_dnn_Net_setInput(ref, blob.ref, cname.cast(), scalefactor, mean!.ref, callback),
       (c) {
         calloc.free(cname);
+        c.complete();
       },
     );
   }

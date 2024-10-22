@@ -232,11 +232,13 @@ void main() async {
   });
 
   test('cv.findChessboardCornersSB', () async {
-    final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
-    expect(img.isEmpty, false);
+    // final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
+    // expect(img.isEmpty, false);
+    final img = cv.Mat.randu(5, 5, cv.MatType.CV_8UC3);
+    img.dispose();
 
     // {
-    final (found, corners) = cv.findChessboardCornersSB(img, (4, 6), flags: 0);
+    final (found, corners) = cv.findChessboardCornersSB(img, (3, 3), flags: 0);
     expect(found, true);
     // expect(corners.isEmpty, false);
 

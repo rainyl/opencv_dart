@@ -78,8 +78,10 @@ class Layer extends CvStruct<cvg.Layer> {
     final cName = name.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<ffi.Int>();
     cvRun(() => cdnn.cv_dnn_Layer_outputNameToIndex(ref, cName, p));
+    final rval = p.value;
     calloc.free(p);
-    return p.value;
+    calloc.free(cName);
+    return rval;
   }
 
   @override

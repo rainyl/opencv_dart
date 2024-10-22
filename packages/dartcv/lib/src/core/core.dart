@@ -1368,6 +1368,7 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
     ),
   );
   final rval = p.value;
+  calloc.free(p);
   return (rval, bestLabels, centers);
 }
 

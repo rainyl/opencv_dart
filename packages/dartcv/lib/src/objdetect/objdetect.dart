@@ -54,8 +54,10 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     final cname = name.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<ffi.Int>();
     cvRun(() => cobjdetect.cv_CascadeClassifier_load(ref, cname, p));
+    final rval = p.value != 0;
+    calloc.free(p);
     calloc.free(cname);
-    return p.value != 0;
+    return rval;
   }
 
   /// DetectMultiScale detects objects of different sizes in the input Mat image.
