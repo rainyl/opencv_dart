@@ -61,7 +61,8 @@ Future<double> arcLengthAsync(VecPoint curve, bool closed) async {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
-Future<Mat> convexHullAsync(VecPoint points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) async {
+Future<Mat> convexHullAsync(VecPoint points,
+    {Mat? hull, bool clockwise = false, bool returnPoints = true}) async {
   hull ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_convexHull(points.ref, hull!.ref, clockwise, returnPoints, callback),
@@ -217,7 +218,8 @@ Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2) a
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
-Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace, {Mat? dst}) async {
+Future<Mat> bilateralFilterAsync(Mat src, int diameter, double sigmaColor, double sigmaSpace,
+    {Mat? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_bilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace, callback),
@@ -1718,7 +1720,8 @@ Future<Mat> getPerspectiveTransformAsync(VecPoint src, VecPoint dst, [int solveM
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
-Future<Mat> getPerspectiveTransform2fAsync(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) async {
+Future<Mat> getPerspectiveTransform2fAsync(VecPoint2f src, VecPoint2f dst,
+    [int solveMethod = DECOMP_LU]) async {
   final mat = Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ptr, solveMethod, callback),
@@ -2072,7 +2075,8 @@ Future<Mat> accumulateProductAsync(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
-Future<Mat> accumulateWeightedAsync(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) async {
+Future<Mat> accumulateWeightedAsync(InputArray src, InputOutputArray dst, double alpha,
+    {InputArray? mask}) async {
   if (mask == null) {
     return cvRunAsync0(
       (callback) => cimgproc.cv_accumulatedWeighted(src.ref, dst.ref, alpha, callback),
