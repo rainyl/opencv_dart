@@ -5,7 +5,9 @@ void main() {
   test('Point', () {
     final point = cv.Point(1, 2);
     expect((point.x, point.y), (1, 2));
-    expect(point.toString(), "Point(1, 2)");
+    point.x = 3;
+    point.y = 4;
+    expect(point.toString(), "Point(3, 4)");
 
     {
       final p = cv.Point.fromNative(point.ref);
@@ -16,7 +18,9 @@ void main() {
     final point1 = cv.Point2f(1.50, 2.3);
     closeTo(point1.x, 1.50);
     closeTo(point1.y, 2.3);
-    expect(point1.toString(), "Point2f(1.500, 2.300)");
+    point1.x = 3.0;
+    point1.y = 4.0;
+    expect(point1.toString(), "Point2f(3.000, 4.000)");
     {
       final p = cv.Point2f.fromNative(point1.ref);
       expect(p, cv.Point2f(1.5, 2.3));
@@ -27,13 +31,31 @@ void main() {
     closeTo(point2.x, 1.50);
     closeTo(point2.y, 2.3);
     closeTo(point2.z, 3.4);
-    expect(point2.toString(), "Point3f(1.500, 2.300, 3.400)");
-
+    point2.x = 3.0;
+    point2.y = 4.0;
+    point2.z = 5.0;
+    expect(point2.toString(), "Point3f(3.000, 4.000, 5.000)");
     {
       final p = cv.Point3f.fromNative(point2.ref);
       expect(p, cv.Point3f(1.50, 2.3, 3.4));
       expect(p.ref.x, 1.50);
     }
+    point2.dispose();
+
+    final point3 = cv.Point3i(1, 2, 3);
+    closeTo(point3.x, 1);
+    closeTo(point3.y, 2);
+    closeTo(point3.z, 3);
+    point3.x = 3;
+    point3.y = 4;
+    point3.z = 5;
+    expect(point3.toString(), "Point3i(3, 4, 5)");
+    {
+      final p = cv.Point3i.fromNative(point3.ref);
+      expect(p, cv.Point3i(1, 2, 3));
+      expect(p.ref.x, 1);
+    }
+    point3.dispose();
   });
 
   test('VecPoint', () {

@@ -2,7 +2,6 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
@@ -809,13 +808,3 @@ extension ListFloatExtension on List<double> {
 extension ListStringExtension on List<String> {
   VecVecChar get i8 => VecVecChar.fromList(map((e) => e.i8.toList()).toList());
 }
-
-// async completers
-void vecI32Completer(Completer<VecI32> completer, VoidPtr p) =>
-    completer.complete(VecI32.fromPointer(p.cast<cvg.VecI32>()));
-
-void vecF32Completer(Completer<VecF32> completer, VoidPtr p) =>
-    completer.complete(VecF32.fromPointer(p.cast<cvg.VecF32>()));
-
-void vecF64Completer(Completer<VecF64> completer, VoidPtr p) =>
-    completer.complete(VecF64.fromPointer(p.cast<cvg.VecF64>()));

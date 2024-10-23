@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
 //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
