@@ -20,7 +20,8 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   # s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'DartCvIOS', '=4.10.0+2'
+  s.dependency 'DartCvIOS', '4.10.0+2'
+  s.dependency 'DartCvIOS/dnn', '4.10.0+2'
   s.platform = :ios, '12.0'
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
