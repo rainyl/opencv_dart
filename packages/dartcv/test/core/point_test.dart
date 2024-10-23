@@ -11,8 +11,8 @@ void main() {
 
     {
       final p = cv.Point.fromNative(point.ref);
-      expect(p, cv.Point(1, 2));
-      expect(p.ref.x, 1);
+      expect(p, cv.Point(3, 4));
+      expect(p.ref.x, 3);
     }
 
     final point1 = cv.Point2f(1.50, 2.3);
@@ -23,8 +23,8 @@ void main() {
     expect(point1.toString(), "Point2f(3.000, 4.000)");
     {
       final p = cv.Point2f.fromNative(point1.ref);
-      expect(p, cv.Point2f(1.5, 2.3));
-      expect(p.ref.x, 1.5);
+      expect(p, cv.Point2f(3.0, 4.0));
+      expect(p.ref.x, 3.0);
     }
 
     final point2 = cv.Point3f(1.50, 2.3, 3.4);
@@ -37,8 +37,8 @@ void main() {
     expect(point2.toString(), "Point3f(3.000, 4.000, 5.000)");
     {
       final p = cv.Point3f.fromNative(point2.ref);
-      expect(p, cv.Point3f(1.50, 2.3, 3.4));
-      expect(p.ref.x, 1.50);
+      expect(p, cv.Point3f(3.000, 4.000, 5.000));
+      expect(p.ref.x, 3.0);
     }
     point2.dispose();
 
@@ -52,8 +52,8 @@ void main() {
     expect(point3.toString(), "Point3i(3, 4, 5)");
     {
       final p = cv.Point3i.fromNative(point3.ref);
-      expect(p, cv.Point3i(1, 2, 3));
-      expect(p.ref.x, 1);
+      expect(p, cv.Point3i(3, 4, 5));
+      expect(p.ref.x, 3);
     }
     point3.dispose();
   });
