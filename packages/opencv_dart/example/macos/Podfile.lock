@@ -1,0 +1,67 @@
+PODS:
+  - "DartCvMacOS (4.10.0+2)":
+    - "DartCvMacOS/calib3d (= 4.10.0+2)"
+    - "DartCvMacOS/contrib (= 4.10.0+2)"
+    - "DartCvMacOS/core (= 4.10.0+2)"
+    - "DartCvMacOS/features2d (= 4.10.0+2)"
+    - "DartCvMacOS/imgproc (= 4.10.0+2)"
+    - "DartCvMacOS/objdetect (= 4.10.0+2)"
+    - "DartCvMacOS/photo (= 4.10.0+2)"
+    - "DartCvMacOS/stitching (= 4.10.0+2)"
+    - "DartCvMacOS/video (= 4.10.0+2)"
+  - "DartCvMacOS/calib3d (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/contrib (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/core (4.10.0+2)"
+  - "DartCvMacOS/dnn (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/features2d (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/imgproc (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/objdetect (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/photo (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/stitching (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/video (4.10.0+2)":
+    - DartCvMacOS/core
+  - "DartCvMacOS/videoio (4.10.0+2)":
+    - DartCvMacOS/core
+  - file_selector_macos (0.0.1):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+  - opencv_dart (0.0.1):
+    - "DartCvMacOS (= 4.10.0+2)"
+    - "DartCvMacOS/dnn (= 4.10.0+2)"
+    - "DartCvMacOS/videoio (= 4.10.0+2)"
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - opencv_dart (from `Flutter/ephemeral/.symlinks/plugins/opencv_dart/macos`)
+
+SPEC REPOS:
+  trunk:
+    - DartCvMacOS
+
+EXTERNAL SOURCES:
+  file_selector_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  opencv_dart:
+    :path: Flutter/ephemeral/.symlinks/plugins/opencv_dart/macos
+
+SPEC CHECKSUMS:
+  DartCvMacOS: 9dfb2345a8d97cdddd49620385f9d848a05aa80a
+  file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  opencv_dart: b2c040bac530fad54c8146ffed77e86fae930ea9
+
+PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
+
+COCOAPODS: 1.15.2

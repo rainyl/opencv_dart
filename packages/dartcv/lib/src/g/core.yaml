@@ -1,0 +1,716 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/core.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      ErrorCallbackFunction:
+        name: ErrorCallbackFunction
+      c:@F@CvStatus_close:
+        name: CvStatus_close
+      c:@F@cv_LUT:
+        name: cv_LUT
+      c:@F@cv_Mat_adjustROI:
+        name: cv_Mat_adjustROI
+      c:@F@cv_Mat_channels:
+        name: cv_Mat_channels
+      c:@F@cv_Mat_clone:
+        name: cv_Mat_clone
+      c:@F@cv_Mat_close:
+        name: cv_Mat_close
+      c:@F@cv_Mat_closeVoid:
+        name: cv_Mat_closeVoid
+      c:@F@cv_Mat_col:
+        name: cv_Mat_col
+      c:@F@cv_Mat_cols:
+        name: cv_Mat_cols
+      c:@F@cv_Mat_convertFp16:
+        name: cv_Mat_convertFp16
+      c:@F@cv_Mat_convertTo:
+        name: cv_Mat_convertTo
+      c:@F@cv_Mat_convertTo_1:
+        name: cv_Mat_convertTo_1
+      c:@F@cv_Mat_copyTo:
+        name: cv_Mat_copyTo
+      c:@F@cv_Mat_copyTo_1:
+        name: cv_Mat_copyTo_1
+      c:@F@cv_Mat_create:
+        name: cv_Mat_create
+      c:@F@cv_Mat_create_1:
+        name: cv_Mat_create_1
+      c:@F@cv_Mat_create_10:
+        name: cv_Mat_create_10
+      c:@F@cv_Mat_create_11:
+        name: cv_Mat_create_11
+      c:@F@cv_Mat_create_12:
+        name: cv_Mat_create_12
+      c:@F@cv_Mat_create_2:
+        name: cv_Mat_create_2
+      c:@F@cv_Mat_create_3:
+        name: cv_Mat_create_3
+      c:@F@cv_Mat_create_4:
+        name: cv_Mat_create_4
+      c:@F@cv_Mat_create_5:
+        name: cv_Mat_create_5
+      c:@F@cv_Mat_create_6:
+        name: cv_Mat_create_6
+      c:@F@cv_Mat_create_7:
+        name: cv_Mat_create_7
+      c:@F@cv_Mat_create_8:
+        name: cv_Mat_create_8
+      c:@F@cv_Mat_create_9:
+        name: cv_Mat_create_9
+      c:@F@cv_Mat_data:
+        name: cv_Mat_data
+      c:@F@cv_Mat_dims:
+        name: cv_Mat_dims
+      c:@F@cv_Mat_elemSize:
+        name: cv_Mat_elemSize
+      c:@F@cv_Mat_elemSize1:
+        name: cv_Mat_elemSize1
+      c:@F@cv_Mat_empty:
+        name: cv_Mat_empty
+      c:@F@cv_Mat_eye:
+        name: cv_Mat_eye
+      c:@F@cv_Mat_flags:
+        name: cv_Mat_flags
+      c:@F@cv_Mat_get_Vec2b:
+        name: cv_Mat_get_Vec2b
+      c:@F@cv_Mat_get_Vec2d:
+        name: cv_Mat_get_Vec2d
+      c:@F@cv_Mat_get_Vec2f:
+        name: cv_Mat_get_Vec2f
+      c:@F@cv_Mat_get_Vec2i:
+        name: cv_Mat_get_Vec2i
+      c:@F@cv_Mat_get_Vec2s:
+        name: cv_Mat_get_Vec2s
+      c:@F@cv_Mat_get_Vec2w:
+        name: cv_Mat_get_Vec2w
+      c:@F@cv_Mat_get_Vec3b:
+        name: cv_Mat_get_Vec3b
+      c:@F@cv_Mat_get_Vec3d:
+        name: cv_Mat_get_Vec3d
+      c:@F@cv_Mat_get_Vec3f:
+        name: cv_Mat_get_Vec3f
+      c:@F@cv_Mat_get_Vec3i:
+        name: cv_Mat_get_Vec3i
+      c:@F@cv_Mat_get_Vec3s:
+        name: cv_Mat_get_Vec3s
+      c:@F@cv_Mat_get_Vec3w:
+        name: cv_Mat_get_Vec3w
+      c:@F@cv_Mat_get_Vec4b:
+        name: cv_Mat_get_Vec4b
+      c:@F@cv_Mat_get_Vec4d:
+        name: cv_Mat_get_Vec4d
+      c:@F@cv_Mat_get_Vec4f:
+        name: cv_Mat_get_Vec4f
+      c:@F@cv_Mat_get_Vec4i:
+        name: cv_Mat_get_Vec4i
+      c:@F@cv_Mat_get_Vec4s:
+        name: cv_Mat_get_Vec4s
+      c:@F@cv_Mat_get_Vec4w:
+        name: cv_Mat_get_Vec4w
+      c:@F@cv_Mat_get_Vec6d:
+        name: cv_Mat_get_Vec6d
+      c:@F@cv_Mat_get_Vec6f:
+        name: cv_Mat_get_Vec6f
+      c:@F@cv_Mat_get_Vec6i:
+        name: cv_Mat_get_Vec6i
+      c:@F@cv_Mat_get_Vec8i:
+        name: cv_Mat_get_Vec8i
+      c:@F@cv_Mat_get_f32_1:
+        name: cv_Mat_get_f32_1
+      c:@F@cv_Mat_get_f32_2:
+        name: cv_Mat_get_f32_2
+      c:@F@cv_Mat_get_f32_3:
+        name: cv_Mat_get_f32_3
+      c:@F@cv_Mat_get_f64_1:
+        name: cv_Mat_get_f64_1
+      c:@F@cv_Mat_get_f64_2:
+        name: cv_Mat_get_f64_2
+      c:@F@cv_Mat_get_f64_3:
+        name: cv_Mat_get_f64_3
+      c:@F@cv_Mat_get_i16_1:
+        name: cv_Mat_get_i16_1
+      c:@F@cv_Mat_get_i16_2:
+        name: cv_Mat_get_i16_2
+      c:@F@cv_Mat_get_i16_3:
+        name: cv_Mat_get_i16_3
+      c:@F@cv_Mat_get_i32_1:
+        name: cv_Mat_get_i32_1
+      c:@F@cv_Mat_get_i32_2:
+        name: cv_Mat_get_i32_2
+      c:@F@cv_Mat_get_i32_3:
+        name: cv_Mat_get_i32_3
+      c:@F@cv_Mat_get_i8_1:
+        name: cv_Mat_get_i8_1
+      c:@F@cv_Mat_get_i8_2:
+        name: cv_Mat_get_i8_2
+      c:@F@cv_Mat_get_i8_3:
+        name: cv_Mat_get_i8_3
+      c:@F@cv_Mat_get_u16_1:
+        name: cv_Mat_get_u16_1
+      c:@F@cv_Mat_get_u16_2:
+        name: cv_Mat_get_u16_2
+      c:@F@cv_Mat_get_u16_3:
+        name: cv_Mat_get_u16_3
+      c:@F@cv_Mat_get_u8_1:
+        name: cv_Mat_get_u8_1
+      c:@F@cv_Mat_get_u8_2:
+        name: cv_Mat_get_u8_2
+      c:@F@cv_Mat_get_u8_3:
+        name: cv_Mat_get_u8_3
+      c:@F@cv_Mat_isContinuous:
+        name: cv_Mat_isContinuous
+      c:@F@cv_Mat_isSubmatrix:
+        name: cv_Mat_isSubmatrix
+      c:@F@cv_Mat_locateROI:
+        name: cv_Mat_locateROI
+      c:@F@cv_Mat_mean:
+        name: cv_Mat_mean
+      c:@F@cv_Mat_mean_1:
+        name: cv_Mat_mean_1
+      c:@F@cv_Mat_mul:
+        name: cv_Mat_mul
+      c:@F@cv_Mat_ones:
+        name: cv_Mat_ones
+      c:@F@cv_Mat_op_add_f32:
+        name: cv_Mat_op_add_f32
+      c:@F@cv_Mat_op_add_f64:
+        name: cv_Mat_op_add_f64
+      c:@F@cv_Mat_op_add_i16:
+        name: cv_Mat_op_add_i16
+      c:@F@cv_Mat_op_add_i32:
+        name: cv_Mat_op_add_i32
+      c:@F@cv_Mat_op_add_i8:
+        name: cv_Mat_op_add_i8
+      c:@F@cv_Mat_op_add_mat:
+        name: cv_Mat_op_add_mat
+      c:@F@cv_Mat_op_add_u16:
+        name: cv_Mat_op_add_u16
+      c:@F@cv_Mat_op_add_u8:
+        name: cv_Mat_op_add_u8
+      c:@F@cv_Mat_op_div_f32:
+        name: cv_Mat_op_div_f32
+      c:@F@cv_Mat_op_div_f64:
+        name: cv_Mat_op_div_f64
+      c:@F@cv_Mat_op_div_i16:
+        name: cv_Mat_op_div_i16
+      c:@F@cv_Mat_op_div_i32:
+        name: cv_Mat_op_div_i32
+      c:@F@cv_Mat_op_div_i8:
+        name: cv_Mat_op_div_i8
+      c:@F@cv_Mat_op_div_mat:
+        name: cv_Mat_op_div_mat
+      c:@F@cv_Mat_op_div_u16:
+        name: cv_Mat_op_div_u16
+      c:@F@cv_Mat_op_div_u8:
+        name: cv_Mat_op_div_u8
+      c:@F@cv_Mat_op_mul_f32:
+        name: cv_Mat_op_mul_f32
+      c:@F@cv_Mat_op_mul_f64:
+        name: cv_Mat_op_mul_f64
+      c:@F@cv_Mat_op_mul_i16:
+        name: cv_Mat_op_mul_i16
+      c:@F@cv_Mat_op_mul_i32:
+        name: cv_Mat_op_mul_i32
+      c:@F@cv_Mat_op_mul_i8:
+        name: cv_Mat_op_mul_i8
+      c:@F@cv_Mat_op_mul_mat:
+        name: cv_Mat_op_mul_mat
+      c:@F@cv_Mat_op_mul_u16:
+        name: cv_Mat_op_mul_u16
+      c:@F@cv_Mat_op_mul_u8:
+        name: cv_Mat_op_mul_u8
+      c:@F@cv_Mat_op_sub_f32:
+        name: cv_Mat_op_sub_f32
+      c:@F@cv_Mat_op_sub_f64:
+        name: cv_Mat_op_sub_f64
+      c:@F@cv_Mat_op_sub_i16:
+        name: cv_Mat_op_sub_i16
+      c:@F@cv_Mat_op_sub_i32:
+        name: cv_Mat_op_sub_i32
+      c:@F@cv_Mat_op_sub_i8:
+        name: cv_Mat_op_sub_i8
+      c:@F@cv_Mat_op_sub_mat:
+        name: cv_Mat_op_sub_mat
+      c:@F@cv_Mat_op_sub_u16:
+        name: cv_Mat_op_sub_u16
+      c:@F@cv_Mat_op_sub_u8:
+        name: cv_Mat_op_sub_u8
+      c:@F@cv_Mat_patchNaNs:
+        name: cv_Mat_patchNaNs
+      c:@F@cv_Mat_ptr_uchar_1:
+        name: cv_Mat_ptr_uchar_1
+      c:@F@cv_Mat_ptr_uchar_2:
+        name: cv_Mat_ptr_uchar_2
+      c:@F@cv_Mat_ptr_uchar_3:
+        name: cv_Mat_ptr_uchar_3
+      c:@F@cv_Mat_region:
+        name: cv_Mat_region
+      c:@F@cv_Mat_release:
+        name: cv_Mat_release
+      c:@F@cv_Mat_reshape:
+        name: cv_Mat_reshape
+      c:@F@cv_Mat_reshape_1:
+        name: cv_Mat_reshape_1
+      c:@F@cv_Mat_row:
+        name: cv_Mat_row
+      c:@F@cv_Mat_rows:
+        name: cv_Mat_rows
+      c:@F@cv_Mat_setTo:
+        name: cv_Mat_setTo
+      c:@F@cv_Mat_set_Vec2b:
+        name: cv_Mat_set_Vec2b
+      c:@F@cv_Mat_set_Vec2d:
+        name: cv_Mat_set_Vec2d
+      c:@F@cv_Mat_set_Vec2f:
+        name: cv_Mat_set_Vec2f
+      c:@F@cv_Mat_set_Vec2i:
+        name: cv_Mat_set_Vec2i
+      c:@F@cv_Mat_set_Vec2s:
+        name: cv_Mat_set_Vec2s
+      c:@F@cv_Mat_set_Vec2w:
+        name: cv_Mat_set_Vec2w
+      c:@F@cv_Mat_set_Vec3b:
+        name: cv_Mat_set_Vec3b
+      c:@F@cv_Mat_set_Vec3d:
+        name: cv_Mat_set_Vec3d
+      c:@F@cv_Mat_set_Vec3f:
+        name: cv_Mat_set_Vec3f
+      c:@F@cv_Mat_set_Vec3i:
+        name: cv_Mat_set_Vec3i
+      c:@F@cv_Mat_set_Vec3s:
+        name: cv_Mat_set_Vec3s
+      c:@F@cv_Mat_set_Vec3w:
+        name: cv_Mat_set_Vec3w
+      c:@F@cv_Mat_set_Vec4b:
+        name: cv_Mat_set_Vec4b
+      c:@F@cv_Mat_set_Vec4d:
+        name: cv_Mat_set_Vec4d
+      c:@F@cv_Mat_set_Vec4f:
+        name: cv_Mat_set_Vec4f
+      c:@F@cv_Mat_set_Vec4i:
+        name: cv_Mat_set_Vec4i
+      c:@F@cv_Mat_set_Vec4s:
+        name: cv_Mat_set_Vec4s
+      c:@F@cv_Mat_set_Vec4w:
+        name: cv_Mat_set_Vec4w
+      c:@F@cv_Mat_set_Vec6d:
+        name: cv_Mat_set_Vec6d
+      c:@F@cv_Mat_set_Vec6f:
+        name: cv_Mat_set_Vec6f
+      c:@F@cv_Mat_set_Vec6i:
+        name: cv_Mat_set_Vec6i
+      c:@F@cv_Mat_set_Vec8i:
+        name: cv_Mat_set_Vec8i
+      c:@F@cv_Mat_set_f32_1:
+        name: cv_Mat_set_f32_1
+      c:@F@cv_Mat_set_f32_2:
+        name: cv_Mat_set_f32_2
+      c:@F@cv_Mat_set_f32_3:
+        name: cv_Mat_set_f32_3
+      c:@F@cv_Mat_set_f64_1:
+        name: cv_Mat_set_f64_1
+      c:@F@cv_Mat_set_f64_2:
+        name: cv_Mat_set_f64_2
+      c:@F@cv_Mat_set_f64_3:
+        name: cv_Mat_set_f64_3
+      c:@F@cv_Mat_set_i16_1:
+        name: cv_Mat_set_i16_1
+      c:@F@cv_Mat_set_i16_2:
+        name: cv_Mat_set_i16_2
+      c:@F@cv_Mat_set_i16_3:
+        name: cv_Mat_set_i16_3
+      c:@F@cv_Mat_set_i32_1:
+        name: cv_Mat_set_i32_1
+      c:@F@cv_Mat_set_i32_2:
+        name: cv_Mat_set_i32_2
+      c:@F@cv_Mat_set_i32_3:
+        name: cv_Mat_set_i32_3
+      c:@F@cv_Mat_set_i8_1:
+        name: cv_Mat_set_i8_1
+      c:@F@cv_Mat_set_i8_2:
+        name: cv_Mat_set_i8_2
+      c:@F@cv_Mat_set_i8_3:
+        name: cv_Mat_set_i8_3
+      c:@F@cv_Mat_set_u16_1:
+        name: cv_Mat_set_u16_1
+      c:@F@cv_Mat_set_u16_2:
+        name: cv_Mat_set_u16_2
+      c:@F@cv_Mat_set_u16_3:
+        name: cv_Mat_set_u16_3
+      c:@F@cv_Mat_set_u8_1:
+        name: cv_Mat_set_u8_1
+      c:@F@cv_Mat_set_u8_2:
+        name: cv_Mat_set_u8_2
+      c:@F@cv_Mat_set_u8_3:
+        name: cv_Mat_set_u8_3
+      c:@F@cv_Mat_size:
+        name: cv_Mat_size
+      c:@F@cv_Mat_sqrt:
+        name: cv_Mat_sqrt
+      c:@F@cv_Mat_step:
+        name: cv_Mat_step
+      c:@F@cv_Mat_t:
+        name: cv_Mat_t
+      c:@F@cv_Mat_toFmtString:
+        name: cv_Mat_toFmtString
+      c:@F@cv_Mat_toVecChar:
+        name: cv_Mat_toVecChar
+      c:@F@cv_Mat_toVecPoint:
+        name: cv_Mat_toVecPoint
+      c:@F@cv_Mat_toVecPoint2f:
+        name: cv_Mat_toVecPoint2f
+      c:@F@cv_Mat_toVecPoint3f:
+        name: cv_Mat_toVecPoint3f
+      c:@F@cv_Mat_toVecPoint3i:
+        name: cv_Mat_toVecPoint3i
+      c:@F@cv_Mat_toVecUChar:
+        name: cv_Mat_toVecUChar
+      c:@F@cv_Mat_total:
+        name: cv_Mat_total
+      c:@F@cv_Mat_type:
+        name: cv_Mat_type
+      c:@F@cv_Mat_zeros:
+        name: cv_Mat_zeros
+      c:@F@cv_PCABackProject:
+        name: cv_PCABackProject
+      c:@F@cv_PCACompute:
+        name: cv_PCACompute
+      c:@F@cv_PCACompute_1:
+        name: cv_PCACompute_1
+      c:@F@cv_PCAProject:
+        name: cv_PCAProject
+      c:@F@cv_PSNR:
+        name: cv_PSNR
+      c:@F@cv_RNG_close:
+        name: cv_RNG_close
+      c:@F@cv_RNG_create:
+        name: cv_RNG_create
+      c:@F@cv_RNG_create_1:
+        name: cv_RNG_create_1
+      c:@F@cv_RNG_fill:
+        name: cv_RNG_fill
+      c:@F@cv_RNG_gaussian:
+        name: cv_RNG_gaussian
+      c:@F@cv_RNG_next:
+        name: cv_RNG_next
+      c:@F@cv_RNG_uniform:
+        name: cv_RNG_uniform
+      c:@F@cv_RNG_uniformDouble:
+        name: cv_RNG_uniformDouble
+      c:@F@cv_RotatedRect_boundingRect:
+        name: cv_RotatedRect_boundingRect
+      c:@F@cv_RotatedRect_boundingRect2f:
+        name: cv_RotatedRect_boundingRect2f
+      c:@F@cv_RotatedRect_points:
+        name: cv_RotatedRect_points
+      c:@F@cv_SVBackSubst:
+        name: cv_SVBackSubst
+      c:@F@cv_SVD_Compute:
+        name: cv_SVD_Compute
+      c:@F@cv_SVD_backSubst:
+        name: cv_SVD_backSubst
+      c:@F@cv_SVDecomp:
+        name: cv_SVDecomp
+      c:@F@cv_absdiff:
+        name: cv_absdiff
+      c:@F@cv_add:
+        name: cv_add
+      c:@F@cv_addWeighted:
+        name: cv_addWeighted
+      c:@F@cv_batchDistance:
+        name: cv_batchDistance
+      c:@F@cv_bitwise_and:
+        name: cv_bitwise_and
+      c:@F@cv_bitwise_and_1:
+        name: cv_bitwise_and_1
+      c:@F@cv_bitwise_not:
+        name: cv_bitwise_not
+      c:@F@cv_bitwise_not_1:
+        name: cv_bitwise_not_1
+      c:@F@cv_bitwise_or:
+        name: cv_bitwise_or
+      c:@F@cv_bitwise_or_1:
+        name: cv_bitwise_or_1
+      c:@F@cv_bitwise_xor:
+        name: cv_bitwise_xor
+      c:@F@cv_bitwise_xor_1:
+        name: cv_bitwise_xor_1
+      c:@F@cv_borderInterpolate:
+        name: cv_borderInterpolate
+      c:@F@cv_calcCovarMatrix:
+        name: cv_calcCovarMatrix
+      c:@F@cv_cartToPolar:
+        name: cv_cartToPolar
+      c:@F@cv_checkRange:
+        name: cv_checkRange
+      c:@F@cv_colRange:
+        name: cv_colRange
+      c:@F@cv_compare:
+        name: cv_compare
+      c:@F@cv_completeSymm:
+        name: cv_completeSymm
+      c:@F@cv_convertScaleAbs:
+        name: cv_convertScaleAbs
+      c:@F@cv_copyMakeBorder:
+        name: cv_copyMakeBorder
+      c:@F@cv_copyTo:
+        name: cv_copyTo
+      c:@F@cv_countNonZero:
+        name: cv_countNonZero
+      c:@F@cv_dct:
+        name: cv_dct
+      c:@F@cv_determinant:
+        name: cv_determinant
+      c:@F@cv_dft:
+        name: cv_dft
+      c:@F@cv_divide:
+        name: cv_divide
+      c:@F@cv_eigen:
+        name: cv_eigen
+      c:@F@cv_eigenNonSymmetric:
+        name: cv_eigenNonSymmetric
+      c:@F@cv_exp:
+        name: cv_exp
+      c:@F@cv_extractChannel:
+        name: cv_extractChannel
+      c:@F@cv_findNonZero:
+        name: cv_findNonZero
+      c:@F@cv_flip:
+        name: cv_flip
+      c:@F@cv_flipND:
+        name: cv_flipND
+      c:@F@cv_gemm:
+        name: cv_gemm
+      c:@F@cv_getNumThreads:
+        name: cv_getNumThreads
+      c:@F@cv_getOptimalDFTSize:
+        name: cv_getOptimalDFTSize
+      c:@F@cv_getTickCount:
+        name: cv_getTickCount
+      c:@F@cv_getTickFrequency:
+        name: cv_getTickFrequency
+      c:@F@cv_hasNonZero:
+        name: cv_hasNonZero
+      c:@F@cv_hconcat:
+        name: cv_hconcat
+      c:@F@cv_idct:
+        name: cv_idct
+      c:@F@cv_idft:
+        name: cv_idft
+      c:@F@cv_inRange:
+        name: cv_inRange
+      c:@F@cv_inRange_1:
+        name: cv_inRange_1
+      c:@F@cv_insertChannel:
+        name: cv_insertChannel
+      c:@F@cv_invert:
+        name: cv_invert
+      c:@F@cv_kmeans:
+        name: cv_kmeans
+      c:@F@cv_kmeans_points:
+        name: cv_kmeans_points
+      c:@F@cv_log:
+        name: cv_log
+      c:@F@cv_magnitude:
+        name: cv_magnitude
+      c:@F@cv_max:
+        name: cv_max
+      c:@F@cv_mean:
+        name: cv_mean
+      c:@F@cv_meanStdDev:
+        name: cv_meanStdDev
+      c:@F@cv_meanStdDev_1:
+        name: cv_meanStdDev_1
+      c:@F@cv_mean_1:
+        name: cv_mean_1
+      c:@F@cv_merge:
+        name: cv_merge
+      c:@F@cv_min:
+        name: cv_min
+      c:@F@cv_minMaxIdx:
+        name: cv_minMaxIdx
+      c:@F@cv_minMaxLoc:
+        name: cv_minMaxLoc
+      c:@F@cv_mixChannels:
+        name: cv_mixChannels
+      c:@F@cv_mulSpectrums:
+        name: cv_mulSpectrums
+      c:@F@cv_mulTransposed:
+        name: cv_mulTransposed
+      c:@F@cv_multiply:
+        name: cv_multiply
+      c:@F@cv_norm:
+        name: cv_norm
+      c:@F@cv_norm_1:
+        name: cv_norm_1
+      c:@F@cv_normalize:
+        name: cv_normalize
+      c:@F@cv_patchNaNs:
+        name: cv_patchNaNs
+      c:@F@cv_perspectiveTransform:
+        name: cv_perspectiveTransform
+      c:@F@cv_phase:
+        name: cv_phase
+      c:@F@cv_polarToCart:
+        name: cv_polarToCart
+      c:@F@cv_pow:
+        name: cv_pow
+      c:@F@cv_randShuffle:
+        name: cv_randShuffle
+      c:@F@cv_randShuffle_1:
+        name: cv_randShuffle_1
+      c:@F@cv_randn:
+        name: cv_randn
+      c:@F@cv_randu:
+        name: cv_randu
+      c:@F@cv_reduce:
+        name: cv_reduce
+      c:@F@cv_reduceArgMax:
+        name: cv_reduceArgMax
+      c:@F@cv_reduceArgMin:
+        name: cv_reduceArgMin
+      c:@F@cv_repeat:
+        name: cv_repeat
+      c:@F@cv_rotate:
+        name: cv_rotate
+      c:@F@cv_rowRange:
+        name: cv_rowRange
+      c:@F@cv_scaleAdd:
+        name: cv_scaleAdd
+      c:@F@cv_setIdentity:
+        name: cv_setIdentity
+      c:@F@cv_setNumThreads:
+        name: cv_setNumThreads
+      c:@F@cv_setRNGSeed:
+        name: cv_setRNGSeed
+      c:@F@cv_solve:
+        name: cv_solve
+      c:@F@cv_solveCubic:
+        name: cv_solveCubic
+      c:@F@cv_solvePoly:
+        name: cv_solvePoly
+      c:@F@cv_sort:
+        name: cv_sort
+      c:@F@cv_sortIdx:
+        name: cv_sortIdx
+      c:@F@cv_split:
+        name: cv_split
+      c:@F@cv_sqrt:
+        name: cv_sqrt
+      c:@F@cv_subtract:
+        name: cv_subtract
+      c:@F@cv_sum:
+        name: cv_sum
+      c:@F@cv_theRNG:
+        name: cv_theRNG
+      c:@F@cv_trace:
+        name: cv_trace
+      c:@F@cv_transform:
+        name: cv_transform
+      c:@F@cv_transpose:
+        name: cv_transpose
+      c:@F@cv_transposeND:
+        name: cv_transposeND
+      c:@F@cv_vconcat:
+        name: cv_vconcat
+      c:@F@getBuildInfo:
+        name: getBuildInfo
+      c:@F@getCvVersion:
+        name: getCvVersion
+      c:@F@getLogLevel:
+        name: getLogLevel
+      c:@F@registerErrorCallback:
+        name: registerErrorCallback
+      c:@F@setLogLevel:
+        name: setLogLevel
+      c:@T@double_t:
+        name: double_t
+      c:@T@float_t:
+        name: float_t
+      c:exception.h@T@ErrorCallback:
+        name: ErrorCallback
+      c:types.h@T@CvPoint:
+        name: CvPoint
+      c:types.h@T@CvRect:
+        name: CvRect
+      c:types.h@T@CvRect2f:
+        name: CvRect2f
+      c:types.h@T@CvSize:
+        name: CvSize
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@MatStep:
+        name: MatStep
+      c:types.h@T@RNG:
+        name: RNG
+      c:types.h@T@RotatedRect:
+        name: RotatedRect
+      c:types.h@T@Scalar:
+        name: Scalar
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@Vec2b:
+        name: Vec2b
+      c:types.h@T@Vec2d:
+        name: Vec2d
+      c:types.h@T@Vec2f:
+        name: Vec2f
+      c:types.h@T@Vec2i:
+        name: Vec2i
+      c:types.h@T@Vec2s:
+        name: Vec2s
+      c:types.h@T@Vec2w:
+        name: Vec2w
+      c:types.h@T@Vec3b:
+        name: Vec3b
+      c:types.h@T@Vec3d:
+        name: Vec3d
+      c:types.h@T@Vec3f:
+        name: Vec3f
+      c:types.h@T@Vec3i:
+        name: Vec3i
+      c:types.h@T@Vec3s:
+        name: Vec3s
+      c:types.h@T@Vec3w:
+        name: Vec3w
+      c:types.h@T@Vec4b:
+        name: Vec4b
+      c:types.h@T@Vec4d:
+        name: Vec4d
+      c:types.h@T@Vec4f:
+        name: Vec4f
+      c:types.h@T@Vec4i:
+        name: Vec4i
+      c:types.h@T@Vec4s:
+        name: Vec4s
+      c:types.h@T@Vec4w:
+        name: Vec4w
+      c:types.h@T@Vec6d:
+        name: Vec6d
+      c:types.h@T@Vec6f:
+        name: Vec6f
+      c:types.h@T@Vec6i:
+        name: Vec6i
+      c:types.h@T@Vec8i:
+        name: Vec8i
+      c:types.h@T@VecChar:
+        name: VecChar
+      c:types.h@T@VecI32:
+        name: VecI32
+      c:types.h@T@VecMat:
+        name: VecMat
+      c:types.h@T@VecPoint:
+        name: VecPoint
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecPoint3f:
+        name: VecPoint3f
+      c:types.h@T@VecPoint3i:
+        name: VecPoint3i
+      c:types.h@T@VecUChar:
+        name: VecUChar

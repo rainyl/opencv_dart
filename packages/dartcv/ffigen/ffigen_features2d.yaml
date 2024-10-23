@@ -1,0 +1,40 @@
+name: CvNativeFeatures2d
+description: |
+  Native bindings for OpenCV - features2d
+output:
+  bindings: ../lib/src/g/features2d.g.dart
+  symbol-file:
+    output: 'package:dartcv4/src/g/features2d.yaml'
+    import-path: 'package:dartcv4/src/g/features2d.g.dart'
+# ffi-native:
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+import:
+  symbol-files:
+    - 'package:dartcv4/src/g/types.yaml'
+compiler-opts: "-Isrc -Idartcv"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - ../src/dartcv/features2d/features2d.h
+  include-directives:
+    - ../src/dartcv/features2d/features2d.h
+
+functions:
+  symbol-address:
+    include:
+      - ".*_Close.*"
+      - ".*_close.*"
+
+preamble: |
+  // coverage:ignore-file
+  // opencv_dart - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).

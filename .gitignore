@@ -30,6 +30,7 @@ gh-md-toc
 publish/
 *.tar.gz
 *.exe
+libdartcv*
 
 # Files and directories created by pub
 .dart_tool/

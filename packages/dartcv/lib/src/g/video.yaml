@@ -1,0 +1,142 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/video.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_BackgroundSubtractorKNN_apply:
+        name: cv_BackgroundSubtractorKNN_apply
+      c:@F@cv_BackgroundSubtractorKNN_close:
+        name: cv_BackgroundSubtractorKNN_close
+      c:@F@cv_BackgroundSubtractorKNN_create:
+        name: cv_BackgroundSubtractorKNN_create
+      c:@F@cv_BackgroundSubtractorKNN_create_1:
+        name: cv_BackgroundSubtractorKNN_create_1
+      c:@F@cv_BackgroundSubtractorMOG2_apply:
+        name: cv_BackgroundSubtractorMOG2_apply
+      c:@F@cv_BackgroundSubtractorMOG2_close:
+        name: cv_BackgroundSubtractorMOG2_close
+      c:@F@cv_BackgroundSubtractorMOG2_create:
+        name: cv_BackgroundSubtractorMOG2_create
+      c:@F@cv_BackgroundSubtractorMOG2_create_1:
+        name: cv_BackgroundSubtractorMOG2_create_1
+      c:@F@cv_KalmanFilter_close:
+        name: cv_KalmanFilter_close
+      c:@F@cv_KalmanFilter_correct:
+        name: cv_KalmanFilter_correct
+      c:@F@cv_KalmanFilter_create:
+        name: cv_KalmanFilter_create
+      c:@F@cv_KalmanFilter_get_controlMatrix:
+        name: cv_KalmanFilter_get_controlMatrix
+      c:@F@cv_KalmanFilter_get_errorCovPost:
+        name: cv_KalmanFilter_get_errorCovPost
+      c:@F@cv_KalmanFilter_get_errorCovPre:
+        name: cv_KalmanFilter_get_errorCovPre
+      c:@F@cv_KalmanFilter_get_gain:
+        name: cv_KalmanFilter_get_gain
+      c:@F@cv_KalmanFilter_get_measurementMatrix:
+        name: cv_KalmanFilter_get_measurementMatrix
+      c:@F@cv_KalmanFilter_get_measurementNoiseCov:
+        name: cv_KalmanFilter_get_measurementNoiseCov
+      c:@F@cv_KalmanFilter_get_processNoiseCov:
+        name: cv_KalmanFilter_get_processNoiseCov
+      c:@F@cv_KalmanFilter_get_statePost:
+        name: cv_KalmanFilter_get_statePost
+      c:@F@cv_KalmanFilter_get_statePre:
+        name: cv_KalmanFilter_get_statePre
+      c:@F@cv_KalmanFilter_get_temp1:
+        name: cv_KalmanFilter_get_temp1
+      c:@F@cv_KalmanFilter_get_temp2:
+        name: cv_KalmanFilter_get_temp2
+      c:@F@cv_KalmanFilter_get_temp3:
+        name: cv_KalmanFilter_get_temp3
+      c:@F@cv_KalmanFilter_get_temp4:
+        name: cv_KalmanFilter_get_temp4
+      c:@F@cv_KalmanFilter_get_temp5:
+        name: cv_KalmanFilter_get_temp5
+      c:@F@cv_KalmanFilter_get_transitionMatrix:
+        name: cv_KalmanFilter_get_transitionMatrix
+      c:@F@cv_KalmanFilter_init:
+        name: cv_KalmanFilter_init
+      c:@F@cv_KalmanFilter_init_1:
+        name: cv_KalmanFilter_init_1
+      c:@F@cv_KalmanFilter_predict:
+        name: cv_KalmanFilter_predict
+      c:@F@cv_KalmanFilter_predict_1:
+        name: cv_KalmanFilter_predict_1
+      c:@F@cv_KalmanFilter_set_controlMatrix:
+        name: cv_KalmanFilter_set_controlMatrix
+      c:@F@cv_KalmanFilter_set_errorCovPost:
+        name: cv_KalmanFilter_set_errorCovPost
+      c:@F@cv_KalmanFilter_set_errorCovPre:
+        name: cv_KalmanFilter_set_errorCovPre
+      c:@F@cv_KalmanFilter_set_gain:
+        name: cv_KalmanFilter_set_gain
+      c:@F@cv_KalmanFilter_set_measurementMatrix:
+        name: cv_KalmanFilter_set_measurementMatrix
+      c:@F@cv_KalmanFilter_set_measurementNoiseCov:
+        name: cv_KalmanFilter_set_measurementNoiseCov
+      c:@F@cv_KalmanFilter_set_processNoiseCov:
+        name: cv_KalmanFilter_set_processNoiseCov
+      c:@F@cv_KalmanFilter_set_statePost:
+        name: cv_KalmanFilter_set_statePost
+      c:@F@cv_KalmanFilter_set_statePre:
+        name: cv_KalmanFilter_set_statePre
+      c:@F@cv_KalmanFilter_set_transitionMatrix:
+        name: cv_KalmanFilter_set_transitionMatrix
+      c:@F@cv_TrackerMIL_close:
+        name: cv_TrackerMIL_close
+      c:@F@cv_TrackerMIL_create:
+        name: cv_TrackerMIL_create
+      c:@F@cv_TrackerMIL_init:
+        name: cv_TrackerMIL_init
+      c:@F@cv_TrackerMIL_update:
+        name: cv_TrackerMIL_update
+      c:@F@cv_calcOpticalFlowFarneback:
+        name: cv_calcOpticalFlowFarneback
+      c:@F@cv_calcOpticalFlowPyrLK:
+        name: cv_calcOpticalFlowPyrLK
+      c:@F@cv_calcOpticalFlowPyrLK_1:
+        name: cv_calcOpticalFlowPyrLK_1
+      c:@F@cv_findTransformECC:
+        name: cv_findTransformECC
+      c:@S@BackgroundSubtractorKNN:
+        name: BackgroundSubtractorKNN
+      c:@S@BackgroundSubtractorMOG2:
+        name: BackgroundSubtractorMOG2
+      c:@S@KalmanFilter:
+        name: KalmanFilter
+      c:@S@Tracker:
+        name: Tracker
+      c:@S@TrackerGOTURN:
+        name: TrackerGOTURN
+      c:@S@TrackerMIL:
+        name: TrackerMIL
+      c:types.h@T@CvRect:
+        name: CvRect
+      c:types.h@T@CvSize:
+        name: CvSize
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecUChar:
+        name: VecUChar
+      c:video.h@T@BackgroundSubtractorKNNPtr:
+        name: BackgroundSubtractorKNNPtr
+      c:video.h@T@BackgroundSubtractorMOG2Ptr:
+        name: BackgroundSubtractorMOG2Ptr
+      c:video.h@T@KalmanFilterPtr:
+        name: KalmanFilterPtr
+      c:video.h@T@TrackerGOTURNPtr:
+        name: TrackerGOTURNPtr
+      c:video.h@T@TrackerMILPtr:
+        name: TrackerMILPtr
+      c:video.h@T@TrackerPtr:
+        name: TrackerPtr

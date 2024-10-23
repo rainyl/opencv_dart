@@ -3,51 +3,73 @@ name: Examples
 on:
   push:
     branches: ["main"]
-  # pull_request:
-  #   branches: ["main"]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+  pull_request:
+    branches: ["main"]
 
 jobs:
   windows:
     name: windows
     runs-on: windows-2019
     steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: opencv_core
+        run: |
+          cd packages/opencv_core/example
+          flutter build windows
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build windows
+  android:
+    name: android
+    runs-on: ubuntu-latest
+    steps:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          submodules: true
-      - name: build
+          distribution: 'temurin'
+          java-version: '17'
+      - name: opencv_core
         run: |
-          cd example
-          flutter build windows
+          cd packages/opencv_core/example
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
   ubuntu:
     name: ubuntu
     runs-on: ubuntu-latest
     steps:
       - name: setup
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl git wget python3 unzip build-essential \
-            libgtk-3-dev ffmpeg libavcodec-dev \
-            cmake ninja-build nasm libavformat-dev libavutil-dev \
-            libswscale-dev libgflags-dev \
-            libjpeg-dev libpng-dev libtiff-dev python3-pip
+          sudo apt-get update -y
+          sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
+          sudo apt-get install clang cmake git \
+            ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev \
+            libstdc++-12-dev
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-      - name: build
+      - name: opencv_core
         run: |
-          cd example
+          cd packages/opencv_core/example
           flutter build linux
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build linux
   macos:
     name: macos
     runs-on: macos-13
@@ -56,13 +78,14 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: build
+      - name: opencv_core
         run: |
-          cd example
+          cd packages/opencv_core/example
           flutter build macos
-          flutter build ios --release --no-codesign
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
   macos-arm:
     name: macos-arm
     runs-on: macos-14
@@ -71,10 +94,27 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: build
+      - name: opencv_core
         run: |
-          cd example
+          cd packages/opencv_core/example
           flutter build macos
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
+  ios:
+    name: ios
+    runs-on: macos-14
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+      - name: opencv_core
+        run: |
+          cd packages/opencv_core/example
+          flutter build ios --release --no-codesign
+      - name: opencv_dart
+        run: |
+          cd packages/opencv_dart/example
           flutter build ios --release --no-codesign

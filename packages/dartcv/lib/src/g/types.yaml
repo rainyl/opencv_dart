@@ -1,0 +1,266 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/types.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      CvCallback_0Function:
+        name: CvCallback_0Function
+      CvCallback_1Function:
+        name: CvCallback_1Function
+      CvCallback_2Function:
+        name: CvCallback_2Function
+      CvCallback_3Function:
+        name: CvCallback_3Function
+      CvCallback_4Function:
+        name: CvCallback_4Function
+      CvCallback_5Function:
+        name: CvCallback_5Function
+      CvCallback_6Function:
+        name: CvCallback_6Function
+      CvCallback_7Function:
+        name: CvCallback_7Function
+      CvCallback_8Function:
+        name: CvCallback_8Function
+      CvCallback_9Function:
+        name: CvCallback_9Function
+      c:@S@CvPoint:
+        name: CvPoint
+      c:@S@CvPoint2f:
+        name: CvPoint2f
+      c:@S@CvPoint3f:
+        name: CvPoint3f
+      c:@S@CvPoint3i:
+        name: CvPoint3i
+      c:@S@CvRect:
+        name: CvRect
+      c:@S@CvRect2f:
+        name: CvRect2f
+      c:@S@CvSize:
+        name: CvSize
+      c:@S@CvSize2f:
+        name: CvSize2f
+      c:@S@CvStatus:
+        name: CvStatus
+      c:@S@DMatch:
+        name: DMatch
+      c:@S@InputOutputArray:
+        name: InputOutputArray
+      c:@S@KeyPoint:
+        name: KeyPoint
+      c:@S@Mat:
+        name: Mat
+      c:@S@MatStep:
+        name: MatStep
+      c:@S@Moment:
+        name: Moment
+      c:@S@RNG:
+        name: RNG
+      c:@S@RotatedRect:
+        name: RotatedRect
+      c:@S@Scalar:
+        name: Scalar
+      c:@S@TermCriteria:
+        name: TermCriteria
+      c:@S@Vec2b:
+        name: Vec2b
+      c:@S@Vec2d:
+        name: Vec2d
+      c:@S@Vec2f:
+        name: Vec2f
+      c:@S@Vec2i:
+        name: Vec2i
+      c:@S@Vec2s:
+        name: Vec2s
+      c:@S@Vec2w:
+        name: Vec2w
+      c:@S@Vec3b:
+        name: Vec3b
+      c:@S@Vec3d:
+        name: Vec3d
+      c:@S@Vec3f:
+        name: Vec3f
+      c:@S@Vec3i:
+        name: Vec3i
+      c:@S@Vec3s:
+        name: Vec3s
+      c:@S@Vec3w:
+        name: Vec3w
+      c:@S@Vec4b:
+        name: Vec4b
+      c:@S@Vec4d:
+        name: Vec4d
+      c:@S@Vec4f:
+        name: Vec4f
+      c:@S@Vec4i:
+        name: Vec4i
+      c:@S@Vec4s:
+        name: Vec4s
+      c:@S@Vec4w:
+        name: Vec4w
+      c:@S@Vec6d:
+        name: Vec6d
+      c:@S@Vec6f:
+        name: Vec6f
+      c:@S@Vec6i:
+        name: Vec6i
+      c:@S@Vec8i:
+        name: Vec8i
+      c:@S@VecChar:
+        name: VecChar
+      c:@S@VecDMatch:
+        name: VecDMatch
+      c:@S@VecF16:
+        name: VecF16
+      c:@S@VecF32:
+        name: VecF32
+      c:@S@VecF64:
+        name: VecF64
+      c:@S@VecI16:
+        name: VecI16
+      c:@S@VecI32:
+        name: VecI32
+      c:@S@VecI8:
+        name: VecI8
+      c:@S@VecKeyPoint:
+        name: VecKeyPoint
+      c:@S@VecMat:
+        name: VecMat
+      c:@S@VecPoint:
+        name: VecPoint
+      c:@S@VecPoint2f:
+        name: VecPoint2f
+      c:@S@VecPoint3f:
+        name: VecPoint3f
+      c:@S@VecPoint3i:
+        name: VecPoint3i
+      c:@S@VecRect:
+        name: VecRect
+      c:@S@VecRotatedRect:
+        name: VecRotatedRect
+      c:@S@VecU16:
+        name: VecU16
+      c:@S@VecU8:
+        name: VecU8
+      c:@S@VecUChar:
+        name: VecUChar
+      c:@S@VecVec4f:
+        name: VecVec4f
+      c:@S@VecVec4i:
+        name: VecVec4i
+      c:@S@VecVec6f:
+        name: VecVec6f
+      c:@S@VecVecChar:
+        name: VecVecChar
+      c:@S@VecVecDMatch:
+        name: VecVecDMatch
+      c:@S@VecVecPoint:
+        name: VecVecPoint
+      c:@S@VecVecPoint2f:
+        name: VecVecPoint2f
+      c:@S@VecVecPoint3f:
+        name: VecVecPoint3f
+      c:@S@VecVecPoint3i:
+        name: VecVecPoint3i
+      c:@U@Cv16suf_C:
+        name: Cv16suf_C
+      c:@U@Cv32suf_C:
+        name: Cv32suf_C
+      c:types.h@T@Contour:
+        name: Contour
+      c:types.h@T@Contour2f:
+        name: Contour2f
+      c:types.h@T@Contour3f:
+        name: Contour3f
+      c:types.h@T@Contours:
+        name: Contours
+      c:types.h@T@Contours2f:
+        name: Contours2f
+      c:types.h@T@Contours3f:
+        name: Contours3f
+      c:types.h@T@CvCallback_0:
+        name: CvCallback_0
+      c:types.h@T@CvCallback_1:
+        name: CvCallback_1
+      c:types.h@T@CvCallback_2:
+        name: CvCallback_2
+      c:types.h@T@CvCallback_3:
+        name: CvCallback_3
+      c:types.h@T@CvCallback_4:
+        name: CvCallback_4
+      c:types.h@T@CvCallback_5:
+        name: CvCallback_5
+      c:types.h@T@CvCallback_6:
+        name: CvCallback_6
+      c:types.h@T@CvCallback_7:
+        name: CvCallback_7
+      c:types.h@T@CvCallback_8:
+        name: CvCallback_8
+      c:types.h@T@CvCallback_9:
+        name: CvCallback_9
+      c:types.h@T@InputOutputArrayPtr:
+        name: InputOutputArrayPtr
+      c:types.h@T@MatPtr:
+        name: MatPtr
+      c:types.h@T@RNGPtr:
+        name: RNGPtr
+      c:types.h@T@VecCharPtr:
+        name: VecCharPtr
+      c:types.h@T@VecDMatchPtr:
+        name: VecDMatchPtr
+      c:types.h@T@VecF16Ptr:
+        name: VecF16Ptr
+      c:types.h@T@VecF32Ptr:
+        name: VecF32Ptr
+      c:types.h@T@VecF64Ptr:
+        name: VecF64Ptr
+      c:types.h@T@VecI16Ptr:
+        name: VecI16Ptr
+      c:types.h@T@VecI32Ptr:
+        name: VecI32Ptr
+      c:types.h@T@VecI8Ptr:
+        name: VecI8Ptr
+      c:types.h@T@VecKeyPointPtr:
+        name: VecKeyPointPtr
+      c:types.h@T@VecMatPtr:
+        name: VecMatPtr
+      c:types.h@T@VecPoint2fPtr:
+        name: VecPoint2fPtr
+      c:types.h@T@VecPoint3fPtr:
+        name: VecPoint3fPtr
+      c:types.h@T@VecPoint3iPtr:
+        name: VecPoint3iPtr
+      c:types.h@T@VecPointPtr:
+        name: VecPointPtr
+      c:types.h@T@VecRectPtr:
+        name: VecRectPtr
+      c:types.h@T@VecRotatedRectPtr:
+        name: VecRotatedRectPtr
+      c:types.h@T@VecU16Ptr:
+        name: VecU16Ptr
+      c:types.h@T@VecU8Ptr:
+        name: VecU8Ptr
+      c:types.h@T@VecUCharPtr:
+        name: VecUCharPtr
+      c:types.h@T@VecVec4fPtr:
+        name: VecVec4fPtr
+      c:types.h@T@VecVec4iPtr:
+        name: VecVec4iPtr
+      c:types.h@T@VecVec6fPtr:
+        name: VecVec6fPtr
+      c:types.h@T@VecVecCharPtr:
+        name: VecVecCharPtr
+      c:types.h@T@VecVecDMatchPtr:
+        name: VecVecDMatchPtr
+      c:types.h@T@VecVecPoint2fPtr:
+        name: VecVecPoint2fPtr
+      c:types.h@T@VecVecPoint3fPtr:
+        name: VecVecPoint3fPtr
+      c:types.h@T@VecVecPoint3iPtr:
+        name: VecVecPoint3iPtr
+      c:types.h@T@VecVecPointPtr:
+        name: VecVecPointPtr
+      c:types.h@T@uchar:
+        name: uchar
+      c:types.h@T@ushort:
+        name: ushort

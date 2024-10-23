@@ -1,0 +1,72 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/videoio.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_VideoCapture_close:
+        name: cv_VideoCapture_close
+      c:@F@cv_VideoCapture_create:
+        name: cv_VideoCapture_create
+      c:@F@cv_VideoCapture_create_1:
+        name: cv_VideoCapture_create_1
+      c:@F@cv_VideoCapture_create_2:
+        name: cv_VideoCapture_create_2
+      c:@F@cv_VideoCapture_get:
+        name: cv_VideoCapture_get
+      c:@F@cv_VideoCapture_getBackendName:
+        name: cv_VideoCapture_getBackendName
+      c:@F@cv_VideoCapture_grab:
+        name: cv_VideoCapture_grab
+      c:@F@cv_VideoCapture_isOpened:
+        name: cv_VideoCapture_isOpened
+      c:@F@cv_VideoCapture_open:
+        name: cv_VideoCapture_open
+      c:@F@cv_VideoCapture_open_1:
+        name: cv_VideoCapture_open_1
+      c:@F@cv_VideoCapture_open_2:
+        name: cv_VideoCapture_open_2
+      c:@F@cv_VideoCapture_open_3:
+        name: cv_VideoCapture_open_3
+      c:@F@cv_VideoCapture_read:
+        name: cv_VideoCapture_read
+      c:@F@cv_VideoCapture_release:
+        name: cv_VideoCapture_release
+      c:@F@cv_VideoCapture_retrieve:
+        name: cv_VideoCapture_retrieve
+      c:@F@cv_VideoCapture_set:
+        name: cv_VideoCapture_set
+      c:@F@cv_VideoWriter_close:
+        name: cv_VideoWriter_close
+      c:@F@cv_VideoWriter_create:
+        name: cv_VideoWriter_create
+      c:@F@cv_VideoWriter_create_1:
+        name: cv_VideoWriter_create_1
+      c:@F@cv_VideoWriter_create_2:
+        name: cv_VideoWriter_create_2
+      c:@F@cv_VideoWriter_fourcc:
+        name: cv_VideoWriter_fourcc
+      c:@F@cv_VideoWriter_getBackendName:
+        name: cv_VideoWriter_getBackendName
+      c:@F@cv_VideoWriter_isOpened:
+        name: cv_VideoWriter_isOpened
+      c:@F@cv_VideoWriter_open:
+        name: cv_VideoWriter_open
+      c:@F@cv_VideoWriter_open_1:
+        name: cv_VideoWriter_open_1
+      c:@F@cv_VideoWriter_release:
+        name: cv_VideoWriter_release
+      c:@F@cv_VideoWriter_write:
+        name: cv_VideoWriter_write
+      c:@S@VideoCapture:
+        name: VideoCapture
+      c:@S@VideoWriter:
+        name: VideoWriter
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:videoio.h@T@VideoCapturePtr:
+        name: VideoCapturePtr
+      c:videoio.h@T@VideoWriterPtr:
+        name: VideoWriterPtr

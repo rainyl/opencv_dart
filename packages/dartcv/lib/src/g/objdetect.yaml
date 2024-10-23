@@ -1,0 +1,164 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/objdetect.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_CascadeClassifier_close:
+        name: cv_CascadeClassifier_close
+      c:@F@cv_CascadeClassifier_create:
+        name: cv_CascadeClassifier_create
+      c:@F@cv_CascadeClassifier_create_1:
+        name: cv_CascadeClassifier_create_1
+      c:@F@cv_CascadeClassifier_detectMultiScale:
+        name: cv_CascadeClassifier_detectMultiScale
+      c:@F@cv_CascadeClassifier_detectMultiScale_1:
+        name: cv_CascadeClassifier_detectMultiScale_1
+      c:@F@cv_CascadeClassifier_detectMultiScale_2:
+        name: cv_CascadeClassifier_detectMultiScale_2
+      c:@F@cv_CascadeClassifier_detectMultiScale_3:
+        name: cv_CascadeClassifier_detectMultiScale_3
+      c:@F@cv_CascadeClassifier_empty:
+        name: cv_CascadeClassifier_empty
+      c:@F@cv_CascadeClassifier_getFeatureType:
+        name: cv_CascadeClassifier_getFeatureType
+      c:@F@cv_CascadeClassifier_getOriginalWindowSize:
+        name: cv_CascadeClassifier_getOriginalWindowSize
+      c:@F@cv_CascadeClassifier_isOldFormatCascade:
+        name: cv_CascadeClassifier_isOldFormatCascade
+      c:@F@cv_CascadeClassifier_load:
+        name: cv_CascadeClassifier_load
+      c:@F@cv_FaceDetectorYN_close:
+        name: cv_FaceDetectorYN_close
+      c:@F@cv_FaceDetectorYN_create:
+        name: cv_FaceDetectorYN_create
+      c:@F@cv_FaceDetectorYN_create_1:
+        name: cv_FaceDetectorYN_create_1
+      c:@F@cv_FaceDetectorYN_detect:
+        name: cv_FaceDetectorYN_detect
+      c:@F@cv_FaceDetectorYN_getInputSize:
+        name: cv_FaceDetectorYN_getInputSize
+      c:@F@cv_FaceDetectorYN_getNMSThreshold:
+        name: cv_FaceDetectorYN_getNMSThreshold
+      c:@F@cv_FaceDetectorYN_getScoreThreshold:
+        name: cv_FaceDetectorYN_getScoreThreshold
+      c:@F@cv_FaceDetectorYN_getTopK:
+        name: cv_FaceDetectorYN_getTopK
+      c:@F@cv_FaceDetectorYN_setInputSize:
+        name: cv_FaceDetectorYN_setInputSize
+      c:@F@cv_FaceDetectorYN_setNMSThreshold:
+        name: cv_FaceDetectorYN_setNMSThreshold
+      c:@F@cv_FaceDetectorYN_setScoreThreshold:
+        name: cv_FaceDetectorYN_setScoreThreshold
+      c:@F@cv_FaceDetectorYN_setTopK:
+        name: cv_FaceDetectorYN_setTopK
+      c:@F@cv_FaceRecognizerSF_alignCrop:
+        name: cv_FaceRecognizerSF_alignCrop
+      c:@F@cv_FaceRecognizerSF_close:
+        name: cv_FaceRecognizerSF_close
+      c:@F@cv_FaceRecognizerSF_create:
+        name: cv_FaceRecognizerSF_create
+      c:@F@cv_FaceRecognizerSF_feature:
+        name: cv_FaceRecognizerSF_feature
+      c:@F@cv_FaceRecognizerSF_match:
+        name: cv_FaceRecognizerSF_match
+      c:@F@cv_HOGDescriptor_close:
+        name: cv_HOGDescriptor_close
+      c:@F@cv_HOGDescriptor_compute:
+        name: cv_HOGDescriptor_compute
+      c:@F@cv_HOGDescriptor_computeGradient:
+        name: cv_HOGDescriptor_computeGradient
+      c:@F@cv_HOGDescriptor_create:
+        name: cv_HOGDescriptor_create
+      c:@F@cv_HOGDescriptor_create_1:
+        name: cv_HOGDescriptor_create_1
+      c:@F@cv_HOGDescriptor_detect:
+        name: cv_HOGDescriptor_detect
+      c:@F@cv_HOGDescriptor_detect2:
+        name: cv_HOGDescriptor_detect2
+      c:@F@cv_HOGDescriptor_detectMultiScale:
+        name: cv_HOGDescriptor_detectMultiScale
+      c:@F@cv_HOGDescriptor_detectMultiScale_1:
+        name: cv_HOGDescriptor_detectMultiScale_1
+      c:@F@cv_HOGDescriptor_getDaimlerPeopleDetector:
+        name: cv_HOGDescriptor_getDaimlerPeopleDetector
+      c:@F@cv_HOGDescriptor_getDefaultPeopleDetector:
+        name: cv_HOGDescriptor_getDefaultPeopleDetector
+      c:@F@cv_HOGDescriptor_getDescriptorSize:
+        name: cv_HOGDescriptor_getDescriptorSize
+      c:@F@cv_HOGDescriptor_getWinSigma:
+        name: cv_HOGDescriptor_getWinSigma
+      c:@F@cv_HOGDescriptor_groupRectangles:
+        name: cv_HOGDescriptor_groupRectangles
+      c:@F@cv_HOGDescriptor_load:
+        name: cv_HOGDescriptor_load
+      c:@F@cv_HOGDescriptor_setSVMDetector:
+        name: cv_HOGDescriptor_setSVMDetector
+      c:@F@cv_QRCodeDetector_close:
+        name: cv_QRCodeDetector_close
+      c:@F@cv_QRCodeDetector_create:
+        name: cv_QRCodeDetector_create
+      c:@F@cv_QRCodeDetector_decode:
+        name: cv_QRCodeDetector_decode
+      c:@F@cv_QRCodeDetector_decodeCurved:
+        name: cv_QRCodeDetector_decodeCurved
+      c:@F@cv_QRCodeDetector_detect:
+        name: cv_QRCodeDetector_detect
+      c:@F@cv_QRCodeDetector_detectAndDecode:
+        name: cv_QRCodeDetector_detectAndDecode
+      c:@F@cv_QRCodeDetector_detectAndDecodeCurved:
+        name: cv_QRCodeDetector_detectAndDecodeCurved
+      c:@F@cv_QRCodeDetector_detectAndDecodeMulti:
+        name: cv_QRCodeDetector_detectAndDecodeMulti
+      c:@F@cv_QRCodeDetector_detectMulti:
+        name: cv_QRCodeDetector_detectMulti
+      c:@F@cv_QRCodeDetector_setEpsX:
+        name: cv_QRCodeDetector_setEpsX
+      c:@F@cv_QRCodeDetector_setEpsY:
+        name: cv_QRCodeDetector_setEpsY
+      c:@F@cv_QRCodeDetector_setUseAlignmentMarkers:
+        name: cv_QRCodeDetector_setUseAlignmentMarkers
+      c:@F@cv_groupRectangles:
+        name: cv_groupRectangles
+      c:@S@CascadeClassifier:
+        name: CascadeClassifier
+      c:@S@FaceDetectorYN:
+        name: FaceDetectorYN
+      c:@S@FaceRecognizerSF:
+        name: FaceRecognizerSF
+      c:@S@HOGDescriptor:
+        name: HOGDescriptor
+      c:@S@QRCodeDetector:
+        name: QRCodeDetector
+      c:objdetect.h@T@CascadeClassifierPtr:
+        name: CascadeClassifierPtr
+      c:objdetect.h@T@FaceDetectorYNPtr:
+        name: FaceDetectorYNPtr
+      c:objdetect.h@T@FaceRecognizerSFPtr:
+        name: FaceRecognizerSFPtr
+      c:objdetect.h@T@HOGDescriptorPtr:
+        name: HOGDescriptorPtr
+      c:objdetect.h@T@QRCodeDetectorPtr:
+        name: QRCodeDetectorPtr
+      c:types.h@T@CvSize:
+        name: CvSize
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
+      c:types.h@T@VecI32:
+        name: VecI32
+      c:types.h@T@VecMat:
+        name: VecMat
+      c:types.h@T@VecPoint:
+        name: VecPoint
+      c:types.h@T@VecRect:
+        name: VecRect
+      c:types.h@T@VecUChar:
+        name: VecUChar
+      c:types.h@T@VecVecChar:
+        name: VecVecChar

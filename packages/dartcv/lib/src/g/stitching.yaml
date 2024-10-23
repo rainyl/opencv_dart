@@ -1,0 +1,74 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/stitching.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@Ea@STITCHING_OK@STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL:
+        name: STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_HOMOGRAPHY_EST_FAIL:
+        name: STITCHING_ERR_HOMOGRAPHY_EST_FAIL
+      c:@Ea@STITCHING_OK@STITCHING_ERR_NEED_MORE_IMGS:
+        name: STITCHING_ERR_NEED_MORE_IMGS
+      c:@Ea@STITCHING_OK@STITCHING_OK:
+        name: STITCHING_OK
+      c:@Ea@STITCHING_PANORAMA@STITCHING_PANORAMA:
+        name: STITCHING_PANORAMA
+      c:@Ea@STITCHING_PANORAMA@STITCHING_SCANS:
+        name: STITCHING_SCANS
+      c:@F@cv_Stitcher_close:
+        name: cv_Stitcher_close
+      c:@F@cv_Stitcher_component:
+        name: cv_Stitcher_component
+      c:@F@cv_Stitcher_composePanorama:
+        name: cv_Stitcher_composePanorama
+      c:@F@cv_Stitcher_composePanorama_1:
+        name: cv_Stitcher_composePanorama_1
+      c:@F@cv_Stitcher_create:
+        name: cv_Stitcher_create
+      c:@F@cv_Stitcher_estimateTransform:
+        name: cv_Stitcher_estimateTransform
+      c:@F@cv_Stitcher_get_compositingResol:
+        name: cv_Stitcher_get_compositingResol
+      c:@F@cv_Stitcher_get_interpolationFlags:
+        name: cv_Stitcher_get_interpolationFlags
+      c:@F@cv_Stitcher_get_panoConfidenceThresh:
+        name: cv_Stitcher_get_panoConfidenceThresh
+      c:@F@cv_Stitcher_get_registrationResol:
+        name: cv_Stitcher_get_registrationResol
+      c:@F@cv_Stitcher_get_seamEstimationResol:
+        name: cv_Stitcher_get_seamEstimationResol
+      c:@F@cv_Stitcher_get_waveCorrectKind:
+        name: cv_Stitcher_get_waveCorrectKind
+      c:@F@cv_Stitcher_get_waveCorrection:
+        name: cv_Stitcher_get_waveCorrection
+      c:@F@cv_Stitcher_set_compositingResol:
+        name: cv_Stitcher_set_compositingResol
+      c:@F@cv_Stitcher_set_interpolationFlags:
+        name: cv_Stitcher_set_interpolationFlags
+      c:@F@cv_Stitcher_set_panoConfidenceThresh:
+        name: cv_Stitcher_set_panoConfidenceThresh
+      c:@F@cv_Stitcher_set_registrationResol:
+        name: cv_Stitcher_set_registrationResol
+      c:@F@cv_Stitcher_set_seamEstimationResol:
+        name: cv_Stitcher_set_seamEstimationResol
+      c:@F@cv_Stitcher_set_waveCorrectKind:
+        name: cv_Stitcher_set_waveCorrectKind
+      c:@F@cv_Stitcher_set_waveCorrection:
+        name: cv_Stitcher_set_waveCorrection
+      c:@F@cv_Stitcher_stitch:
+        name: cv_Stitcher_stitch
+      c:@F@cv_Stitcher_stitch_1:
+        name: cv_Stitcher_stitch_1
+      c:@S@Stitcher:
+        name: Stitcher
+      c:stitching.h@T@StitcherPtr:
+        name: StitcherPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@VecI32:
+        name: VecI32
+      c:types.h@T@VecMat:
+        name: VecMat

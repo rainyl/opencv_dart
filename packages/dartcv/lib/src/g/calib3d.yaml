@@ -1,0 +1,58 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/calib3d.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_calibrateCamera:
+        name: cv_calibrateCamera
+      c:@F@cv_drawChessboardCorners:
+        name: cv_drawChessboardCorners
+      c:@F@cv_estimateAffine2D:
+        name: cv_estimateAffine2D
+      c:@F@cv_estimateAffine2D_1:
+        name: cv_estimateAffine2D_1
+      c:@F@cv_estimateAffinePartial2D:
+        name: cv_estimateAffinePartial2D
+      c:@F@cv_estimateAffinePartial2D_1:
+        name: cv_estimateAffinePartial2D_1
+      c:@F@cv_findChessboardCorners:
+        name: cv_findChessboardCorners
+      c:@F@cv_findChessboardCornersSB:
+        name: cv_findChessboardCornersSB
+      c:@F@cv_findChessboardCornersSB_1:
+        name: cv_findChessboardCornersSB_1
+      c:@F@cv_findHomography:
+        name: cv_findHomography
+      c:@F@cv_fisheye_estimateNewCameraMatrixForUndistortRectify:
+        name: cv_fisheye_estimateNewCameraMatrixForUndistortRectify
+      c:@F@cv_fisheye_undistortImage:
+        name: cv_fisheye_undistortImage
+      c:@F@cv_fisheye_undistortImage_1:
+        name: cv_fisheye_undistortImage_1
+      c:@F@cv_fisheye_undistortPoints:
+        name: cv_fisheye_undistortPoints
+      c:@F@cv_getOptimalNewCameraMatrix:
+        name: cv_getOptimalNewCameraMatrix
+      c:@F@cv_initUndistortRectifyMap:
+        name: cv_initUndistortRectifyMap
+      c:@F@cv_undistort:
+        name: cv_undistort
+      c:@F@cv_undistortPoints:
+        name: cv_undistortPoints
+      c:types.h@T@CvRect:
+        name: CvRect
+      c:types.h@T@CvSize:
+        name: CvSize
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@VecPoint2f:
+        name: VecPoint2f
+      c:types.h@T@VecVecPoint2f:
+        name: VecVecPoint2f
+      c:types.h@T@VecVecPoint3f:
+        name: VecVecPoint3f

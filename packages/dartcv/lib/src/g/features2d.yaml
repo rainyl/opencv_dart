@@ -1,0 +1,168 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/features2d.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_AKAZE_close:
+        name: cv_AKAZE_close
+      c:@F@cv_AKAZE_create:
+        name: cv_AKAZE_create
+      c:@F@cv_AKAZE_detect:
+        name: cv_AKAZE_detect
+      c:@F@cv_AKAZE_detectAndCompute:
+        name: cv_AKAZE_detectAndCompute
+      c:@F@cv_AgastFeatureDetector_close:
+        name: cv_AgastFeatureDetector_close
+      c:@F@cv_AgastFeatureDetector_create:
+        name: cv_AgastFeatureDetector_create
+      c:@F@cv_AgastFeatureDetector_detect:
+        name: cv_AgastFeatureDetector_detect
+      c:@F@cv_BFMatcher_close:
+        name: cv_BFMatcher_close
+      c:@F@cv_BFMatcher_create:
+        name: cv_BFMatcher_create
+      c:@F@cv_BFMatcher_create_1:
+        name: cv_BFMatcher_create_1
+      c:@F@cv_BFMatcher_knnMatch:
+        name: cv_BFMatcher_knnMatch
+      c:@F@cv_BFMatcher_match:
+        name: cv_BFMatcher_match
+      c:@F@cv_BRISK_close:
+        name: cv_BRISK_close
+      c:@F@cv_BRISK_create:
+        name: cv_BRISK_create
+      c:@F@cv_BRISK_detect:
+        name: cv_BRISK_detect
+      c:@F@cv_BRISK_detectAndCompute:
+        name: cv_BRISK_detectAndCompute
+      c:@F@cv_FastFeatureDetector_close:
+        name: cv_FastFeatureDetector_close
+      c:@F@cv_FastFeatureDetector_create:
+        name: cv_FastFeatureDetector_create
+      c:@F@cv_FastFeatureDetector_create_1:
+        name: cv_FastFeatureDetector_create_1
+      c:@F@cv_FastFeatureDetector_detect:
+        name: cv_FastFeatureDetector_detect
+      c:@F@cv_FlannBasedMatcher_close:
+        name: cv_FlannBasedMatcher_close
+      c:@F@cv_FlannBasedMatcher_create:
+        name: cv_FlannBasedMatcher_create
+      c:@F@cv_FlannBasedMatcher_knnMatch:
+        name: cv_FlannBasedMatcher_knnMatch
+      c:@F@cv_GFTTDetector_close:
+        name: cv_GFTTDetector_close
+      c:@F@cv_GFTTDetector_create:
+        name: cv_GFTTDetector_create
+      c:@F@cv_GFTTDetector_detect:
+        name: cv_GFTTDetector_detect
+      c:@F@cv_KAZE_close:
+        name: cv_KAZE_close
+      c:@F@cv_KAZE_create:
+        name: cv_KAZE_create
+      c:@F@cv_KAZE_detect:
+        name: cv_KAZE_detect
+      c:@F@cv_KAZE_detectAndCompute:
+        name: cv_KAZE_detectAndCompute
+      c:@F@cv_MSER_close:
+        name: cv_MSER_close
+      c:@F@cv_MSER_create:
+        name: cv_MSER_create
+      c:@F@cv_MSER_detect:
+        name: cv_MSER_detect
+      c:@F@cv_ORB_close:
+        name: cv_ORB_close
+      c:@F@cv_ORB_create:
+        name: cv_ORB_create
+      c:@F@cv_ORB_create_1:
+        name: cv_ORB_create_1
+      c:@F@cv_ORB_detect:
+        name: cv_ORB_detect
+      c:@F@cv_ORB_detectAndCompute:
+        name: cv_ORB_detectAndCompute
+      c:@F@cv_SIFT_close:
+        name: cv_SIFT_close
+      c:@F@cv_SIFT_create:
+        name: cv_SIFT_create
+      c:@F@cv_SIFT_detect:
+        name: cv_SIFT_detect
+      c:@F@cv_SIFT_detectAndCompute:
+        name: cv_SIFT_detectAndCompute
+      c:@F@cv_SimpleBlobDetectorParams_create:
+        name: cv_SimpleBlobDetectorParams_create
+      c:@F@cv_SimpleBlobDetector_close:
+        name: cv_SimpleBlobDetector_close
+      c:@F@cv_SimpleBlobDetector_create:
+        name: cv_SimpleBlobDetector_create
+      c:@F@cv_SimpleBlobDetector_create_1:
+        name: cv_SimpleBlobDetector_create_1
+      c:@F@cv_SimpleBlobDetector_detect:
+        name: cv_SimpleBlobDetector_detect
+      c:@F@cv_drawKeyPoints:
+        name: cv_drawKeyPoints
+      c:@F@cv_drawMatches:
+        name: cv_drawMatches
+      c:@S@AKAZE:
+        name: AKAZE
+      c:@S@AgastFeatureDetector:
+        name: AgastFeatureDetector
+      c:@S@BFMatcher:
+        name: BFMatcher
+      c:@S@BRISK:
+        name: BRISK
+      c:@S@FastFeatureDetector:
+        name: FastFeatureDetector
+      c:@S@FlannBasedMatcher:
+        name: FlannBasedMatcher
+      c:@S@GFTTDetector:
+        name: GFTTDetector
+      c:@S@KAZE:
+        name: KAZE
+      c:@S@MSER:
+        name: MSER
+      c:@S@ORB:
+        name: ORB
+      c:@S@SIFT:
+        name: SIFT
+      c:@S@SimpleBlobDetector:
+        name: SimpleBlobDetector
+      c:@S@SimpleBlobDetectorParams:
+        name: SimpleBlobDetectorParams
+      c:features2d.h@T@AKAZEPtr:
+        name: AKAZEPtr
+      c:features2d.h@T@AgastFeatureDetectorPtr:
+        name: AgastFeatureDetectorPtr
+      c:features2d.h@T@BFMatcherPtr:
+        name: BFMatcherPtr
+      c:features2d.h@T@BRISKPtr:
+        name: BRISKPtr
+      c:features2d.h@T@FastFeatureDetectorPtr:
+        name: FastFeatureDetectorPtr
+      c:features2d.h@T@FlannBasedMatcherPtr:
+        name: FlannBasedMatcherPtr
+      c:features2d.h@T@GFTTDetectorPtr:
+        name: GFTTDetectorPtr
+      c:features2d.h@T@KAZEPtr:
+        name: KAZEPtr
+      c:features2d.h@T@MSERPtr:
+        name: MSERPtr
+      c:features2d.h@T@ORBPtr:
+        name: ORBPtr
+      c:features2d.h@T@SIFTPtr:
+        name: SIFTPtr
+      c:features2d.h@T@SimpleBlobDetectorPtr:
+        name: SimpleBlobDetectorPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@Scalar:
+        name: Scalar
+      c:types.h@T@VecChar:
+        name: VecChar
+      c:types.h@T@VecDMatch:
+        name: VecDMatch
+      c:types.h@T@VecKeyPoint:
+        name: VecKeyPoint
+      c:types.h@T@VecVecDMatch:
+        name: VecVecDMatch

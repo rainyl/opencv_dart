@@ -1,0 +1,68 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/photo.g.dart:
+    used-config:
+      ffi-native: false
+    symbols:
+      c:@F@cv_AlignMTB_close:
+        name: cv_AlignMTB_close
+      c:@F@cv_AlignMTB_process:
+        name: cv_AlignMTB_process
+      c:@F@cv_MergeMertens_close:
+        name: cv_MergeMertens_close
+      c:@F@cv_MergeMertens_process:
+        name: cv_MergeMertens_process
+      c:@F@cv_colorChange:
+        name: cv_colorChange
+      c:@F@cv_createAlignMTB:
+        name: cv_createAlignMTB
+      c:@F@cv_createAlignMTB_1:
+        name: cv_createAlignMTB_1
+      c:@F@cv_createMergeMertens:
+        name: cv_createMergeMertens
+      c:@F@cv_createMergeMertens_1:
+        name: cv_createMergeMertens_1
+      c:@F@cv_detailEnhance:
+        name: cv_detailEnhance
+      c:@F@cv_edgePreservingFilter:
+        name: cv_edgePreservingFilter
+      c:@F@cv_fastNlMeansDenoising:
+        name: cv_fastNlMeansDenoising
+      c:@F@cv_fastNlMeansDenoisingColored:
+        name: cv_fastNlMeansDenoisingColored
+      c:@F@cv_fastNlMeansDenoisingColoredMulti:
+        name: cv_fastNlMeansDenoisingColoredMulti
+      c:@F@cv_fastNlMeansDenoisingColoredMulti_1:
+        name: cv_fastNlMeansDenoisingColoredMulti_1
+      c:@F@cv_fastNlMeansDenoisingColored_1:
+        name: cv_fastNlMeansDenoisingColored_1
+      c:@F@cv_fastNlMeansDenoising_1:
+        name: cv_fastNlMeansDenoising_1
+      c:@F@cv_illuminationChange:
+        name: cv_illuminationChange
+      c:@F@cv_inpaint:
+        name: cv_inpaint
+      c:@F@cv_pencilSketch:
+        name: cv_pencilSketch
+      c:@F@cv_seamlessClone:
+        name: cv_seamlessClone
+      c:@F@cv_stylization:
+        name: cv_stylization
+      c:@F@cv_textureFlattening:
+        name: cv_textureFlattening
+      c:@S@AlignMTB:
+        name: AlignMTB
+      c:@S@MergeMertens:
+        name: MergeMertens
+      c:photo.h@T@AlignMTBPtr:
+        name: AlignMTBPtr
+      c:photo.h@T@MergeMertensPtr:
+        name: MergeMertensPtr
+      c:types.h@T@CvPoint:
+        name: CvPoint
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@VecMat:
+        name: VecMat

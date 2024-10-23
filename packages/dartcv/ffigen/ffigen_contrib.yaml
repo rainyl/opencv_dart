@@ -1,0 +1,50 @@
+name: CvNativeContrib
+description: |
+  Native bindings for OpenCV - Contrib
+output:
+  bindings: ../lib/src/g/contrib.g.dart
+  symbol-file:
+    output: "package:dartcv4/src/g/contrib.yaml"
+    import-path: "package:dartcv4/src/g/contrib.g.dart"
+# ffi-native:
+#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+import:
+  symbol-files:
+    - "package:dartcv4/src/g/types.yaml"
+compiler-opts: "-Isrc -Idartcv"
+sort: true
+include-unused-typedefs: true
+headers:
+  entry-points:
+    - ../src/dartcv/contrib/aruco.h
+    - ../src/dartcv/contrib/img_hash.h
+    - ../src/dartcv/contrib/quality.h
+    - ../src/dartcv/contrib/wechat_qrcode.h
+    - ../src/dartcv/contrib/ximgproc.h
+    - ../src/dartcv/contrib/xobjdetect.h
+  include-directives:
+    - ../src/dartcv/contrib/aruco.h
+    - ../src/dartcv/contrib/img_hash.h
+    - ../src/dartcv/contrib/quality.h
+    - ../src/dartcv/contrib/wechat_qrcode.h
+    - ../src/dartcv/contrib/ximgproc.h
+    - ../src/dartcv/contrib/xobjdetect.h
+
+functions:
+  symbol-address:
+    include:
+      - ".*_Close.*"
+      - ".*_close.*"
+
+preamble: |
+  // coverage:ignore-file
+  // opencv_dart - OpenCV bindings for Dart language
+  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
+  //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
+  // Author: Rainyl
+  // License: Apache-2.0
+  // Date: 2024/01/28
+
+comments:
+  style: doxygen # Options - doxygen(default) / any.
+  length: full # Options - brief / full(default).
