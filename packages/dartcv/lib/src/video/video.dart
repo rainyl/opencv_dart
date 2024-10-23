@@ -345,8 +345,9 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    cvRun(() =>
-        cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, ffi.nullptr));
+    cvRun(
+      () => cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, ffi.nullptr),
+    );
   }
 
   @override

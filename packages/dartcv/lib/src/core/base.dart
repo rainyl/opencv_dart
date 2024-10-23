@@ -195,33 +195,6 @@ Future<T> cvRunAsync5<T>(
   return completer.future;
 }
 
-// async completers
-void voidCompleter(Completer<void> completer) => completer.complete();
-
-void boolCompleter(Completer<bool> completer, VoidPtr p) {
-  final value = p.cast<ffi.Bool>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void intCompleter(Completer<int> completer, VoidPtr p) {
-  final value = p.cast<ffi.Int>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void doubleCompleter(Completer<double> completer, VoidPtr p) {
-  final value = p.cast<ffi.Double>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void floatCompleter(Completer<double> completer, VoidPtr p) {
-  final value = p.cast<ffi.Float>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
 // Arena wrapper
 R cvRunArena<R>(
   R Function(Arena arena) computation, [

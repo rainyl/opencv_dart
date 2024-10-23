@@ -194,7 +194,7 @@ void main() async {
 
     for (var i = 0; i < segments.length; i++) {
       final color = cv.Scalar.fromRgb(Random().nextInt(256), Random().nextInt(256), Random().nextInt(256));
-      cv.polylines(ssrc, segments.elementAt(i).toVecVecPoint, false, color);
+      cv.polylines(ssrc, segments[i].asVecVec(), false, color);
     }
     // cv.imwrite("test/images_out/EdgeDrawing_segments.png", ssrc);
 

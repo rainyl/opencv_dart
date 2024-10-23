@@ -1,6 +1,5 @@
 on:
   push:
-  pull_request:
 
 name: Format Code
 
@@ -16,7 +15,7 @@ jobs:
       - name: Format code
         run: |
           dart format --line-length 110 \
-            $(find lib test -name '*.dart' -not -name '*.g.dart' -and -not -name '*.freezed.dart')
+            $(find packages -name '*.dart' -not -name '*.g.dart' -and -not -name '*.freezed.dart')
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

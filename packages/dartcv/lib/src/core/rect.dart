@@ -2,7 +2,6 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -253,10 +252,3 @@ extension ListRectExtension on List<Rect> {
   VecRect get cvd => asVec();
   VecRect asVec() => VecRect.fromList(this);
 }
-
-// Completers for async
-void rectCompleter(Completer<Rect> completer, VoidPtr p) =>
-    completer.complete(Rect.fromPointer(p.cast<cvg.CvRect>()));
-
-void rotatedRectCompleter(Completer<RotatedRect> completer, VoidPtr p) =>
-    completer.complete(RotatedRect.fromPointer(p.cast<cvg.RotatedRect>()));

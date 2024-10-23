@@ -12,8 +12,6 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -36,10 +34,13 @@ jobs:
           cd "${{github.workspace}}\packages\dartcv"
           $env:PATH="${{github.workspace}}\packages\dartcv\libdartcv\lib;$env:PATH"
           dart pub global activate coverage
-          dart pub global run coverage:test_with_coverage --package . --package-name dartcv
+          dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
       - name: Upload to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: rainyl/opencv_dart
-          file: ./coverage/lcov.info
+          fail_ci_if_error: true
+          flags: unittests
+          directory: ${{github.workspace}}/packages/dartcv/coverage
+          file: ${{github.workspace}}/packages/dartcv/coverage/lcov.info
+          verbose: true

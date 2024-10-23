@@ -556,8 +556,12 @@ Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCACompute1Async(
   });
 }
 
-Future<(Mat mean, Mat result)> PCAProjectAsync(Mat data, Mat mean, Mat eigenvectors,
-    {OutputArray? result}) async {
+Future<(Mat mean, Mat result)> PCAProjectAsync(
+  Mat data,
+  Mat mean,
+  Mat eigenvectors, {
+  OutputArray? result,
+}) async {
   result ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccore.cv_PCAProject(data.ref, mean.ref, eigenvectors.ref, result!.ref, callback),

@@ -77,7 +77,7 @@ extension MatAsync on Mat {
         (callback) => mask == null
             ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
             : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
-        voidCompleter,
+        (c) => c.complete(),
       );
 
   Future<Mat> convertToAsync(MatType type, {double alpha = 1, double beta = 0}) async {
@@ -158,5 +158,5 @@ extension MatAsync on Mat {
 
   /// PatchNaNs converts NaN's to zeros.
   Future<void> patchNaNsAsync({double val = 0.0}) async =>
-      cvRunAsync0<void>((callback) => ccore.cv_Mat_patchNaNs(ref, val, callback), voidCompleter);
+      cvRunAsync0<void>((callback) => ccore.cv_Mat_patchNaNs(ref, val, callback), (c) => c.complete());
 }

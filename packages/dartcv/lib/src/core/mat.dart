@@ -2,7 +2,6 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
@@ -1336,7 +1335,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }) {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(
-        () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p));
+      () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p),
+    );
     final rval = p.value.toDartString();
     calloc.free(p);
     return rval;
@@ -1444,17 +1444,3 @@ extension ListMatExtension on List<Mat> {
   VecMat asVecMat() => asVec();
   VecMat asVec() => VecMat.fromList(this);
 }
-
-// Completers for async
-void matCompleter(Completer<Mat> completer, VoidPtr p) =>
-    completer.complete(Mat.fromPointer(p.cast<cvg.Mat>()));
-void matCompleter2(Completer<(Mat, Mat)> completer, VoidPtr p, VoidPtr p1) =>
-    completer.complete((Mat.fromPointer(p.cast<cvg.Mat>()), Mat.fromPointer(p1.cast<cvg.Mat>())));
-void matCompleter3(Completer<(Mat, Mat, Mat)> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) =>
-    completer.complete(
-      (
-        Mat.fromPointer(p.cast<cvg.Mat>()),
-        Mat.fromPointer(p1.cast<cvg.Mat>()),
-        Mat.fromPointer(p2.cast<cvg.Mat>())
-      ),
-    );

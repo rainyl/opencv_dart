@@ -60,7 +60,7 @@ class ximgproc {
   /// Smoothes an image using the Edge-Preserving filter.
   ///
   /// The function smoothes Gaussian noise as well as salt & pepper noise.
-  /// For more details about this implementation, please see [ReiWoe18] Reich,
+  /// For more details about this implementation, please see ReiWoe18 Reich,
   /// S. and Wörgötter, F. and Dellen, B. (2018). A Real-Time Edge-Preserving Denoising Filter.
   /// Proceedings of the 13th International Joint Conference on Computer Vision,
   /// Imaging and Computer Graphics Theory and Applications (VISIGRAPP): Visapp, 85-94, 4.
@@ -76,7 +76,7 @@ class ximgproc {
   /// Smoothes an image using the Edge-Preserving filter.
   ///
   /// The function smoothes Gaussian noise as well as salt & pepper noise.
-  /// For more details about this implementation, please see [ReiWoe18] Reich,
+  /// For more details about this implementation, please see ReiWoe18 Reich,
   /// S. and Wörgötter, F. and Dellen, B. (2018). A Real-Time Edge-Preserving Denoising Filter.
   /// Proceedings of the 13th International Joint Conference on Computer Vision,
   /// Imaging and Computer Graphics Theory and Applications (VISIGRAPP): Visapp, 85-94, 4.

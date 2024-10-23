@@ -2,7 +2,6 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -743,10 +742,3 @@ extension Point3fRecordExtension on (double x, double y, double z) {
   Point3f get asPoint3f => Point3f(this.$1, this.$2, this.$3);
   Point3f toPoint3f() => Point3f(this.$1, this.$2, this.$3);
 }
-
-// completers
-void vecPointCompleter(Completer<VecPoint> completer, VoidPtr p) =>
-    completer.complete(VecPoint.fromPointer(p.cast<cvg.VecPoint>()));
-
-void vecPoint2fCompleter(Completer<VecPoint2f> completer, VoidPtr p) =>
-    completer.complete(VecPoint2f.fromPointer(p.cast<cvg.VecPoint2f>()));
