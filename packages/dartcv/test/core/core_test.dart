@@ -321,7 +321,7 @@ void main() async {
     test('cv.divide with scalar', () {
       final mat = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
       mat.setTo(cv.Scalar.all(10.0));
-      final scalar = 2.0;
+      const scalar = 2.0;
       final dst1 = mat.divide(scalar);
 
       expect(dst1.isEmpty, equals(false));
@@ -355,7 +355,7 @@ void main() async {
     test('cv.divide with scale', () {
       final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
       final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
-      final scale = 2.0;
+      const scale = 2.0;
       final dst = cv.divide(mat1, mat2, scale: scale);
       expect(dst.isEmpty, equals(false));
       for (int i = 0; i < dst.rows; i++) {
@@ -368,7 +368,7 @@ void main() async {
     test('cv.divide with dtype', () {
       final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
       final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
-      final dtype = cv.MatType.CV_16S;
+      const dtype = cv.MatType.CV_16S;
       final dst = cv.divide(mat1, mat2, dtype: dtype);
       expect(dst.isEmpty, equals(false));
       for (int i = 0; i < dst.rows; i++) {

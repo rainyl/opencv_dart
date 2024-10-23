@@ -32,7 +32,7 @@ void main() async {
 
     final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
     final params = cv.ArucoDetectorParameters.empty();
-    final detector = await cv.ArucoDetector.create(dict, params);
+    final detector = cv.ArucoDetector.create(dict, params);
 
     final (corners, ids, _) = await detector.detectMarkersAsync(img);
     expect(corners.length, greaterThan(0));

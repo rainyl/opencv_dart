@@ -14,7 +14,7 @@ void main() {
   });
 
   test('cv.WeChatQRCode', tags: ["no-local-files"], () async {
-    final qr =  cv.WeChatQRCode(
+    final qr = cv.WeChatQRCode(
       "test/models/detect.prototxt",
       "test/models/detect.caffemodel",
       "test/models/sr.prototxt",

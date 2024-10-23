@@ -36,18 +36,19 @@ Future<(Mat, Mat)> initUndistortRectifyMapAsync(
   map1 ??= Mat.empty();
   map2 ??= Mat.empty();
   return cvRunAsync0<(Mat, Mat)>(
-      (callback) => ccalib3d.cv_initUndistortRectifyMap(
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            R.ref,
-            newCameraMatrix.ref,
-            size.cvd.ref,
-            m1type,
-            map1!.ref,
-            map2!.ref,
-            callback,
-          ),
-      (c) => c.complete((map1!, map2!)));
+    (callback) => ccalib3d.cv_initUndistortRectifyMap(
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      R.ref,
+      newCameraMatrix.ref,
+      size.cvd.ref,
+      m1type,
+      map1!.ref,
+      map2!.ref,
+      callback,
+    ),
+    (c) => c.complete((map1!, map2!)),
+  );
 }
 
 /// GetOptimalNewCameraMatrixWithParams computes and returns the optimal new camera matrix based on the free scaling parameter.

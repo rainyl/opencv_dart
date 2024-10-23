@@ -445,8 +445,11 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
     );
   }
 
-  Future<double> matchAsync(Mat faceFeature1, Mat faceFeature2,
-      {int disType = FaceRecognizerSF.FR_COSINE}) async {
+  Future<double> matchAsync(
+    Mat faceFeature1,
+    Mat faceFeature2, {
+    int disType = FaceRecognizerSF.FR_COSINE,
+  }) async {
     final distance = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_match(

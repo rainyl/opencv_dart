@@ -49,9 +49,9 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   ///
   /// return:
   ///
-  /// [bboxes]	Bounding boxes coordinates output vector
+  /// bboxes	Bounding boxes coordinates output vector
   ///
-  /// [confidences]	Confidence values for bounding boxes output vector
+  /// confidences	Confidence values for bounding boxes output vector
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#ad19680e6545f49a9ca42dfc3457319e2
   (VecRect bboxes, VecF64 confidences) detect(Mat img) {

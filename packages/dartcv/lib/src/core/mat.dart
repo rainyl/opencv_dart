@@ -1336,7 +1336,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }) {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(
-        () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p));
+      () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p),
+    );
     final rval = p.value.toDartString();
     calloc.free(p);
     return rval;
