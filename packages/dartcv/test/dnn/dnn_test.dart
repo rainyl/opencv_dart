@@ -205,7 +205,7 @@ void main() async {
 
   test('cv.Net.fromTFLite', skip: true, () {
     final model = cv.Net.fromTFLite("test/models/face_landmark.tflite");
-    print(model.getUnconnectedOutLayersNames());
+    expect(model.getUnconnectedOutLayersNames(), isNotEmpty);
     checkTflite(model);
   });
 
