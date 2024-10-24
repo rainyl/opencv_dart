@@ -1,6 +1,6 @@
-# opencv_core
+# opencv_dart
 
-core module of opencv for Flutter, included modules:
+opencv for Flutter, included modules:
 
 - calib3d
 - core
@@ -13,12 +13,14 @@ core module of opencv for Flutter, included modules:
   - quality
 - dnn
 - features2d
+- highgui
 - imgcodecs
 - imgproc
 - objdetect
 - photo
 - stitching
 - video
+- videoio
 
-If `highgui` or `videoio` is required, use [opencv_dart](https://pub.dev/packages/opencv_dart)
+If `highgui` or `videoio` is NOT required, use [opencv_core](https://pub.dev/packages/opencv_core)
 

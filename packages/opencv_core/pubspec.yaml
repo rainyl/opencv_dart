@@ -3,7 +3,7 @@ description: |
   OpenCV4 bindings for Flutter.
   This plugin does NOT include highgui and videoio modules,
   if you need them, please use opencv_dart instead.
-version: 1.2.6
+version: 0.0.1
 opencv_version: 4.10.0+9
 dartcv_version: 4.10.0+2
 homepage: https://github.com/rainyl/opencv_dart
