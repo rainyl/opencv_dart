@@ -220,6 +220,33 @@ void main() {
     vec1.dispose();
   });
 
+  test('VecRect2f', () {
+    final points = List.generate(
+      100,
+      (index) => cv.Rect2f(index.toDouble(), index.toDouble(), index + 10, index + 20),
+    );
+    final vec = points.asVec();
+    expect(vec.length, points.length);
+    expect(vec.first, points.first);
+    expect(vec.last, points.last);
+    expect(vec.first.toString(), "Rect2f(0.000, 0.000, 10.000, 20.000)");
+
+    // get the reference
+    final rect = vec[1]; // cv.Rect2f(1, 1, 11, 21)
+    expect(rect, cv.Rect2f(1, 1, 11, 21));
+    // change the reference will affect the original value
+    rect.x = 100;
+    expect(rect, cv.Rect2f(100, 1, 11, 21));
+    // change the value
+    vec[1] = cv.Rect2f(100, 100, 11, 21);
+    expect(vec[1], cv.Rect2f(100, 100, 11, 21));
+
+    final vec1 = vec.clone();
+    expect(vec1, vecElementEquals(vec));
+
+    vec1.dispose();
+  });
+
   test('RotatedRect', () {
     final rect = cv.RotatedRect(cv.Point2f(1, 1), (10, 10), 60);
     expect(rect.points.length, greaterThan(0));

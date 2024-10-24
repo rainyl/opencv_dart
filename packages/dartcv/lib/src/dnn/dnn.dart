@@ -370,6 +370,17 @@ class Net extends CvStruct<cvg.Net> {
     return VecI32.fromPointer(ids).toList();
   }
 
+  /// getUnconnectedOutLayersNames
+  ///
+  /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a9f699cf9710abd63339b5b8e1937f171
+  List<String> getUnconnectedOutLayersNames() {
+    final vec = calloc<cvg.VecVecChar>();
+    cvRun(() => cdnn.cv_dnn_Net_getUnconnectedOutLayersNames(ref, vec, ffi.nullptr));
+    final rval = VecVecChar.fromPointer(vec).asStringList();
+    calloc.free(vec);
+    return rval;
+  }
+
   /// Returns input scale and zeropoint for a quantized Net.
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
   (VecF32, VecI32) getInputDetails() {
@@ -390,6 +401,29 @@ class Net extends CvStruct<cvg.Net> {
   cvg.Net get ref => ptr.ref;
 }
 
+void enableModelDiagnostics(bool isDiagnosticsMode) => cdnn.cv_dnn_enableModelDiagnostics(isDiagnosticsMode);
+
+/// getAvailableBackends
+///
+/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gab691d0cb65a60adcb0291ea5bf98f438
+List<(int backend, int target)> getAvailableBackends() {
+  final p = calloc<cvg.VecPoint>();
+  cdnn.cv_dnn_getAvailableBackends(p);
+  final rval = List.generate(p.ref.length, (i) => (p.ref.ptr[i].x, p.ref.ptr[i].y));
+  calloc.free(p);
+  return rval;
+}
+
+/// getAvailableTargets
+/// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga711e5056b6642b33d9480c98c6889f56
+List<int> getAvailableTargets(int backend) {
+  final p = calloc<cvg.VecI32>();
+  cvRun(() => cdnn.cv_dnn_getAvailableTargets(backend, p));
+  final rval = List.generate(p.ref.length, (i) => p.ref.ptr[i]);
+  calloc.free(p);
+  return rval;
+}
+
 /// Creates 4-dimensional blob from image.
 /// Optionally resizes and crops image from center,
 /// subtract mean values, scales values by scalefactor, swap Blue and Red channels.
@@ -408,7 +442,7 @@ Mat blobFromImage(
   mean ??= Scalar.zeros;
   final blob = Mat.empty();
   cvRun(
-    () => cdnn.cv_dnn_Net_blobFromImage(
+    () => cdnn.cv_dnn_blobFromImage(
       image.ref,
       blob.ref,
       scalefactor,
@@ -441,7 +475,7 @@ Mat blobFromImages(
   blob ??= Mat.empty();
   mean ??= Scalar.zeros;
   cvRun(
-    () => cdnn.cv_dnn_Net_blobFromImages(
+    () => cdnn.cv_dnn_blobFromImages(
       images.ref,
       blob!.ref,
       scalefactor,
@@ -463,7 +497,7 @@ Mat blobFromImages(
 /// https://docs.opencv.org/master/d6/d0f/group__dnn.html#ga4051b5fa2ed5f54b76c059a8625df9f5
 List<Mat> imagesFromBlob(Mat blob) {
   final mats = calloc<cvg.VecMat>();
-  cvRun(() => cdnn.cv_dnn_Net_imagesFromBlob(blob.ref, mats, ffi.nullptr));
+  cvRun(() => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats, ffi.nullptr));
   return VecMat.fromPointer(mats).toList();
 }
 
@@ -473,14 +507,14 @@ List<Mat> imagesFromBlob(Mat blob) {
 ///	a bones structure from pose detection, or a color plane from Colorization)
 Mat getBlobChannel(Mat blob, int imgidx, int chnidx) {
   final m = Mat.empty();
-  cvRun(() => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, ffi.nullptr));
+  cvRun(() => cdnn.cv_dnn_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, ffi.nullptr));
   return m;
 }
 
 /// GetBlobSize retrieves the 4 dimensional size information in (N,C,H,W) order
 VecI32 getBlobSize(Mat blob) {
   final s = calloc<cvg.VecI32>();
-  cvRun(() => cdnn.cv_dnn_Net_getBlobSize(blob.ref, s));
+  cvRun(() => cdnn.cv_dnn_getBlobSize(blob.ref, s));
   return VecI32.fromPointer(s);
 }
 

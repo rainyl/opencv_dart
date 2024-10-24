@@ -827,6 +827,14 @@ final class VecRect extends ffi.Struct {
   external int length;
 }
 
+final class VecRect2f extends ffi.Struct {
+  external ffi.Pointer<CvRect2f> ptr;
+
+  @ffi.Size()
+  external int length;
+}
+
+typedef VecRect2fPtr = ffi.Pointer<VecRect2f>;
 typedef VecRectPtr = ffi.Pointer<VecRect>;
 
 final class VecRotatedRect extends ffi.Struct {

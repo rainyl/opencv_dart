@@ -1,3 +1,16 @@
+## 1.2.6
+
+* breaking change: local build. Will download opencv sdk (~100M) from remote, set `DARTCV_CACHE_PATH` to cache it and avoid downloading in every build.
+* breaking change: many async class constructors and getters/setters were removed.
+* Breaking change: highgui, remove Window and Trackbar class, use functions like opencv c++ and python directly, e.g., cv.namedWindow("TestWindow"), more examples refer to: https://github.com/rainyl/opencv_dart/blob/split-dartcv/packages/dartcv/test/highgui_test.dart
+* macos: support 10.15 and above
+* android: API level 24 and above
+* ios: 12.0 and above
+* support custom linked ffmpeg 6.1 for windows, linux, android, macos
+* add DartCvMacOS dependency for macos
+* add DartCvIOS for ios
+* move all dart code to independent plugin `dartcv4`
+
 ## 1.2.5
 
 * add quality module by @rainyl in https://github.com/rainyl/opencv_dart/pull/239

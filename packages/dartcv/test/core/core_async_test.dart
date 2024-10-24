@@ -117,6 +117,13 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.copyTo async', () async {
+    final src = cv.Mat.randn(100, 100, cv.MatType.CV_8UC3);
+    final dst = cv.Mat.empty();
+    await cv.copyToAsync(src, dst);
+    expect(src.at<cv.Vec3b>(0, 0), dst.at<cv.Vec3b>(0, 0));
+  });
+
   test('cv.dct async', () async {
     final src = cv.Mat.randn(100, 100, cv.MatType.CV_32FC1);
     final dst = await cv.dctAsync(src);
@@ -170,6 +177,21 @@ void main() async {
     expect(eigenvectors.rows, equals(2));
   });
 
+  test('cv.PCACompute1 async', () async {
+    final src = cv.Mat.randn(10, 10, cv.MatType.CV_32FC1);
+    final mean0 = cv.Mat.empty();
+    final (mean, eigenvalues, eigenvectors) = await cv.PCACompute1Async(src, mean0, 0.8);
+    expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
+    expect(eigenvectors.rows, greaterThan(1));
+  });
+
+  test('cv.PSNR async', () async {
+    final src = await cv.imreadAsync("test/images/lenna.png");
+    final blur = await cv.gaussianBlurAsync(src, (5, 5), 10);
+    final psnr = await cv.PSNRAsync(src, blur);
+    expect(psnr, closeTo(29.26, 0.1));
+  });
+
   test('cv.exp async', () async {
     final src = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
     final dst = await cv.expAsync(src);
@@ -192,6 +214,12 @@ void main() async {
   test('cv.flip async', () async {
     final src = cv.Mat.randu(10, 10, cv.MatType.CV_8UC1);
     final dst = await cv.flipAsync(src, 0);
+    expect(dst.isEmpty, equals(false));
+  });
+
+  test('cv.flipND async', () async {
+    final src = cv.Mat.randu(10, 10, cv.MatType.CV_8UC3);
+    final dst = await cv.flipNDAsync(src, 0);
     expect(dst.isEmpty, equals(false));
   });
 
@@ -434,6 +462,20 @@ void main() async {
     expect(mat3.at<double>(0, 0), equals(mat1.at<double>(0, 0) * mat2.at<double>(0, 0)));
   });
 
+  test('cv.mulTransposed async', () async {
+    final src = cv.Mat.randu(2, 3, cv.MatType.CV_32FC1, low: cv.Scalar.all(0), high: cv.Scalar.all(1));
+    final srcT = src.t();
+
+    final dst = cv.Mat.empty();
+    await cv.mulTransposedAsync(src, dst, true);
+    expect(dst.isEmpty, equals(false));
+
+    final dst1 = srcT.multiply(src);
+
+    final diff = cv.absDiff(dst, dst1);
+    expect(cv.sum(diff), cv.Scalar.all(0));
+  });
+
   test('cv.normalize async', () async {
     final src = cv.Mat.randn(101, 102, cv.MatType.CV_8UC1);
     final dst = cv.Mat.empty();
@@ -591,8 +633,8 @@ void main() async {
   });
 
   test('cv.split async', () async {
-    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
-    final chans = cv.split(src);
+    final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final chans = await cv.splitAsync(src);
     expect(chans.length, equals(src.channels));
 
     final dst = await cv.mergeAsync(chans);
@@ -601,8 +643,14 @@ void main() async {
     final diff = await cv.absDiffAsync(src, dst);
     expect(diff.isEmpty, false);
 
-    final sum = diff.sum();
+    final sum = await cv.sumAsync(diff);
     expect(sum, equals(cv.Scalar.black));
+  });
+
+  test('cv.sqrt async', () async {
+    final src = cv.Mat.fromScalar(3, 3, cv.MatType.CV_32FC1, cv.Scalar.all(9));
+    final dst = await cv.sqrtAsync(src);
+    expect(dst.at<double>(0, 0), 3);
   });
 
   test('cv.subtract async', () async {
@@ -638,6 +686,14 @@ void main() async {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     final dst = await cv.transposeAsync(src);
     expect((dst.rows, dst.cols), (src.cols, src.rows));
+  });
+
+  test('cv.transposeND async', () async {
+    final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final blob = await cv.blobFromImageAsync(src); // N C H W
+    final dst = await cv.transposeNDAsync(blob, [0, 2, 3, 1]);
+    final blobSize = blob.size;
+    expect(dst.size, [blobSize[0], blobSize[2], blobSize[3], blobSize[1]]);
   });
 
   test('cv.pow async', () async {

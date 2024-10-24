@@ -230,88 +230,6 @@ class CvNativeDnn {
       ffi.Pointer<CvStatus> Function(VecRect, VecF32, double, double,
           ffi.Pointer<VecI32>, double, int, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_dnn_Net_blobFromImage(
-    Mat image,
-    Mat blob,
-    double scalefactor,
-    CvSize size,
-    Scalar mean,
-    bool swapRB,
-    bool crop,
-    int ddepth,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _cv_dnn_Net_blobFromImage(
-      image,
-      blob,
-      scalefactor,
-      size,
-      mean,
-      swapRB,
-      crop,
-      ddepth,
-      callback,
-    );
-  }
-
-  late final _cv_dnn_Net_blobFromImagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Double,
-              CvSize,
-              Scalar,
-              ffi.Bool,
-              ffi.Bool,
-              ffi.Int,
-              imp1.CvCallback_0)>>('cv_dnn_Net_blobFromImage');
-  late final _cv_dnn_Net_blobFromImage =
-      _cv_dnn_Net_blobFromImagePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, double, CvSize, Scalar, bool,
-              bool, int, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> cv_dnn_Net_blobFromImages(
-    VecMat images,
-    Mat blob,
-    double scalefactor,
-    CvSize size,
-    Scalar mean,
-    bool swapRB,
-    bool crop,
-    int ddepth,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _cv_dnn_Net_blobFromImages(
-      images,
-      blob,
-      scalefactor,
-      size,
-      mean,
-      swapRB,
-      crop,
-      ddepth,
-      callback,
-    );
-  }
-
-  late final _cv_dnn_Net_blobFromImagesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat,
-              Mat,
-              ffi.Double,
-              CvSize,
-              Scalar,
-              ffi.Bool,
-              ffi.Bool,
-              ffi.Int,
-              imp1.CvCallback_0)>>('cv_dnn_Net_blobFromImages');
-  late final _cv_dnn_Net_blobFromImages =
-      _cv_dnn_Net_blobFromImagesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, Mat, double, CvSize, Scalar,
-              bool, bool, int, imp1.CvCallback_0)>();
-
   void cv_dnn_Net_close(
     NetPtr net,
   ) {
@@ -456,52 +374,6 @@ class CvNativeDnn {
       ffi.Pointer<CvStatus> Function(
           Net, ffi.Pointer<Net>, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_dnn_Net_getBlobChannel(
-    Mat blob,
-    int imgidx,
-    int chnidx,
-    ffi.Pointer<Mat> rval,
-    imp1.CvCallback_0 callback,
-  ) {
-    return _cv_dnn_Net_getBlobChannel(
-      blob,
-      imgidx,
-      chnidx,
-      rval,
-      callback,
-    );
-  }
-
-  late final _cv_dnn_Net_getBlobChannelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<Mat>,
-              imp1.CvCallback_0)>>('cv_dnn_Net_getBlobChannel');
-  late final _cv_dnn_Net_getBlobChannel =
-      _cv_dnn_Net_getBlobChannelPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
-
-  ffi.Pointer<CvStatus> cv_dnn_Net_getBlobSize(
-    Mat blob,
-    ffi.Pointer<VecI32> rval,
-  ) {
-    return _cv_dnn_Net_getBlobSize(
-      blob,
-      rval,
-    );
-  }
-
-  late final _cv_dnn_Net_getBlobSizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecI32>)>>('cv_dnn_Net_getBlobSize');
-  late final _cv_dnn_Net_getBlobSize = _cv_dnn_Net_getBlobSizePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecI32>)>();
-
   ffi.Pointer<CvStatus> cv_dnn_Net_getInputDetails(
     Net net,
     ffi.Pointer<VecF32> scales,
@@ -615,26 +487,26 @@ class CvNativeDnn {
           ffi.Pointer<CvStatus> Function(
               Net, ffi.Pointer<VecI32>, imp1.CvCallback_0)>();
 
-  ffi.Pointer<CvStatus> cv_dnn_Net_imagesFromBlob(
-    Mat blob,
-    ffi.Pointer<VecMat> rval,
+  ffi.Pointer<CvStatus> cv_dnn_Net_getUnconnectedOutLayersNames(
+    Net net,
+    ffi.Pointer<VecVecChar> rval,
     imp1.CvCallback_0 callback,
   ) {
-    return _cv_dnn_Net_imagesFromBlob(
-      blob,
+    return _cv_dnn_Net_getUnconnectedOutLayersNames(
+      net,
       rval,
       callback,
     );
   }
 
-  late final _cv_dnn_Net_imagesFromBlobPtr = _lookup<
+  late final _cv_dnn_Net_getUnconnectedOutLayersNamesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecMat>,
-              imp1.CvCallback_0)>>('cv_dnn_Net_imagesFromBlob');
-  late final _cv_dnn_Net_imagesFromBlob =
-      _cv_dnn_Net_imagesFromBlobPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(Net, ffi.Pointer<VecVecChar>,
+              imp1.CvCallback_0)>>('cv_dnn_Net_getUnconnectedOutLayersNames');
+  late final _cv_dnn_Net_getUnconnectedOutLayersNames =
+      _cv_dnn_Net_getUnconnectedOutLayersNamesPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>();
+              Net, ffi.Pointer<VecVecChar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_dnn_Net_readNet(
     ffi.Pointer<ffi.Char> model,
@@ -971,6 +843,192 @@ class CvNativeDnn {
       _cv_dnn_Net_setPreferableTargetPtr
           .asFunction<ffi.Pointer<CvStatus> Function(Net, int)>();
 
+  ffi.Pointer<CvStatus> cv_dnn_blobFromImage(
+    Mat image,
+    Mat blob,
+    double scalefactor,
+    CvSize size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_dnn_blobFromImage(
+      image,
+      blob,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+      callback,
+    );
+  }
+
+  late final _cv_dnn_blobFromImagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              ffi.Double,
+              CvSize,
+              Scalar,
+              ffi.Bool,
+              ffi.Bool,
+              ffi.Int,
+              imp1.CvCallback_0)>>('cv_dnn_blobFromImage');
+  late final _cv_dnn_blobFromImage = _cv_dnn_blobFromImagePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, CvSize, Scalar, bool,
+          bool, int, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_dnn_blobFromImages(
+    VecMat images,
+    Mat blob,
+    double scalefactor,
+    CvSize size,
+    Scalar mean,
+    bool swapRB,
+    bool crop,
+    int ddepth,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_dnn_blobFromImages(
+      images,
+      blob,
+      scalefactor,
+      size,
+      mean,
+      swapRB,
+      crop,
+      ddepth,
+      callback,
+    );
+  }
+
+  late final _cv_dnn_blobFromImagesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecMat,
+              Mat,
+              ffi.Double,
+              CvSize,
+              Scalar,
+              ffi.Bool,
+              ffi.Bool,
+              ffi.Int,
+              imp1.CvCallback_0)>>('cv_dnn_blobFromImages');
+  late final _cv_dnn_blobFromImages = _cv_dnn_blobFromImagesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecMat, Mat, double, CvSize, Scalar, bool,
+          bool, int, imp1.CvCallback_0)>();
+
+  void cv_dnn_enableModelDiagnostics(
+    bool isDiagnosticsMode,
+  ) {
+    return _cv_dnn_enableModelDiagnostics(
+      isDiagnosticsMode,
+    );
+  }
+
+  late final _cv_dnn_enableModelDiagnosticsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Bool)>>(
+          'cv_dnn_enableModelDiagnostics');
+  late final _cv_dnn_enableModelDiagnostics =
+      _cv_dnn_enableModelDiagnosticsPtr.asFunction<void Function(bool)>();
+
+  void cv_dnn_getAvailableBackends(
+    ffi.Pointer<VecPoint> rval,
+  ) {
+    return _cv_dnn_getAvailableBackends(
+      rval,
+    );
+  }
+
+  late final _cv_dnn_getAvailableBackendsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<VecPoint>)>>(
+          'cv_dnn_getAvailableBackends');
+  late final _cv_dnn_getAvailableBackends = _cv_dnn_getAvailableBackendsPtr
+      .asFunction<void Function(ffi.Pointer<VecPoint>)>();
+
+  ffi.Pointer<CvStatus> cv_dnn_getAvailableTargets(
+    int be,
+    ffi.Pointer<VecI32> rval,
+  ) {
+    return _cv_dnn_getAvailableTargets(
+      be,
+      rval,
+    );
+  }
+
+  late final _cv_dnn_getAvailableTargetsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int, ffi.Pointer<VecI32>)>>('cv_dnn_getAvailableTargets');
+  late final _cv_dnn_getAvailableTargets = _cv_dnn_getAvailableTargetsPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> cv_dnn_getBlobChannel(
+    Mat blob,
+    int imgidx,
+    int chnidx,
+    ffi.Pointer<Mat> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_dnn_getBlobChannel(
+      blob,
+      imgidx,
+      chnidx,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_dnn_getBlobChannelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
+              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_dnn_getBlobChannel');
+  late final _cv_dnn_getBlobChannel = _cv_dnn_getBlobChannelPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_dnn_getBlobSize(
+    Mat blob,
+    ffi.Pointer<VecI32> rval,
+  ) {
+    return _cv_dnn_getBlobSize(
+      blob,
+      rval,
+    );
+  }
+
+  late final _cv_dnn_getBlobSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<VecI32>)>>('cv_dnn_getBlobSize');
+  late final _cv_dnn_getBlobSize = _cv_dnn_getBlobSizePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecI32>)>();
+
+  ffi.Pointer<CvStatus> cv_dnn_imagesFromBlob(
+    Mat blob,
+    ffi.Pointer<VecMat> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_dnn_imagesFromBlob(
+      blob,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_dnn_imagesFromBlobPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecMat>,
+              imp1.CvCallback_0)>>('cv_dnn_imagesFromBlob');
+  late final _cv_dnn_imagesFromBlob = _cv_dnn_imagesFromBlobPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -1010,6 +1068,7 @@ typedef VecF32 = imp1.VecF32;
 typedef VecF64 = imp1.VecF64;
 typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
+typedef VecPoint = imp1.VecPoint;
 typedef VecRect = imp1.VecRect;
 typedef VecUChar = imp1.VecUChar;
 typedef VecVecChar = imp1.VecVecChar;

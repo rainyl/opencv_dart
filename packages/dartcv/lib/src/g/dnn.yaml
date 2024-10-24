@@ -24,10 +24,6 @@ files:
         name: cv_dnn_NMSBoxes
       c:@F@cv_dnn_NMSBoxes_1:
         name: cv_dnn_NMSBoxes_1
-      c:@F@cv_dnn_Net_blobFromImage:
-        name: cv_dnn_Net_blobFromImage
-      c:@F@cv_dnn_Net_blobFromImages:
-        name: cv_dnn_Net_blobFromImages
       c:@F@cv_dnn_Net_close:
         name: cv_dnn_Net_close
       c:@F@cv_dnn_Net_create:
@@ -44,10 +40,6 @@ files:
         name: cv_dnn_Net_forwardLayers
       c:@F@cv_dnn_Net_fromNet:
         name: cv_dnn_Net_fromNet
-      c:@F@cv_dnn_Net_getBlobChannel:
-        name: cv_dnn_Net_getBlobChannel
-      c:@F@cv_dnn_Net_getBlobSize:
-        name: cv_dnn_Net_getBlobSize
       c:@F@cv_dnn_Net_getInputDetails:
         name: cv_dnn_Net_getInputDetails
       c:@F@cv_dnn_Net_getLayer:
@@ -58,8 +50,8 @@ files:
         name: cv_dnn_Net_getPerfProfile
       c:@F@cv_dnn_Net_getUnconnectedOutLayers:
         name: cv_dnn_Net_getUnconnectedOutLayers
-      c:@F@cv_dnn_Net_imagesFromBlob:
-        name: cv_dnn_Net_imagesFromBlob
+      c:@F@cv_dnn_Net_getUnconnectedOutLayersNames:
+        name: cv_dnn_Net_getUnconnectedOutLayersNames
       c:@F@cv_dnn_Net_readNet:
         name: cv_dnn_Net_readNet
       c:@F@cv_dnn_Net_readNetBytes:
@@ -88,6 +80,22 @@ files:
         name: cv_dnn_Net_setPreferableBackend
       c:@F@cv_dnn_Net_setPreferableTarget:
         name: cv_dnn_Net_setPreferableTarget
+      c:@F@cv_dnn_blobFromImage:
+        name: cv_dnn_blobFromImage
+      c:@F@cv_dnn_blobFromImages:
+        name: cv_dnn_blobFromImages
+      c:@F@cv_dnn_enableModelDiagnostics:
+        name: cv_dnn_enableModelDiagnostics
+      c:@F@cv_dnn_getAvailableBackends:
+        name: cv_dnn_getAvailableBackends
+      c:@F@cv_dnn_getAvailableTargets:
+        name: cv_dnn_getAvailableTargets
+      c:@F@cv_dnn_getBlobChannel:
+        name: cv_dnn_getBlobChannel
+      c:@F@cv_dnn_getBlobSize:
+        name: cv_dnn_getBlobSize
+      c:@F@cv_dnn_imagesFromBlob:
+        name: cv_dnn_imagesFromBlob
       c:@S@AsyncArray:
         name: AsyncArray
       c:@S@Layer:
@@ -116,6 +124,8 @@ files:
         name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
+      c:types.h@T@VecPoint:
+        name: VecPoint
       c:types.h@T@VecRect:
         name: VecRect
       c:types.h@T@VecUChar:

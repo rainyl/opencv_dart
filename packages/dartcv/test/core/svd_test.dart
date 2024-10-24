@@ -55,6 +55,11 @@ void main() async {
       final (w, u, vt) = await cv.SVD.computeAsync(src);
       checkSVD(w, u, vt);
     }
+
+    {
+      final (w, u, vt) = cv.SVDecomp(src);
+      checkSVD(w, u, vt);
+    }
   });
 
   test('cv.SVD.backSubst', () async {
@@ -77,6 +82,13 @@ void main() async {
       final (w, u, vt) = await cv.SVD.computeAsync(src);
       checkSVD(w, u, vt);
       final dst = await cv.SVD.backSubstAsync(w, u, vt, src);
+      expect(dst.isEmpty, false);
+    }
+
+    {
+      final (w, u, vt) = cv.SVDecomp(src);
+      checkSVD(w, u, vt);
+      final dst = cv.SVBackSubst(w, u, vt, src);
       expect(dst.isEmpty, false);
     }
   });

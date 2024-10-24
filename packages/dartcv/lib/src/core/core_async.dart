@@ -381,6 +381,20 @@ Future<Mat> copyMakeBorderAsync(
   );
 }
 
+/// CopyTo
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga931a49489330f998452fc53e96e1719a
+Future<Mat> copyToAsync(
+  InputArray src,
+  InputArray dst, {
+  InputArray? mask,
+}) async {
+  mask ??= Mat.empty();
+  return cvRunAsync0((callback) => ccore.cv_copyTo(src.ref, dst.ref, mask!.ref, callback), (c) {
+    return c.complete(dst);
+  });
+}
+
 /// DCT performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 ///
 /// For further details, please see:
@@ -569,6 +583,18 @@ Future<(Mat mean, Mat result)> PCAProjectAsync(
       return c.complete((mean, result!));
     },
   );
+}
+
+/// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3119e3ea73010a6f810bb05aa36ac8d6
+Future<double> PSNRAsync(InputArray src1, InputArray src2, {double R = 255.0}) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0((callback) => ccore.cv_PSNR(src1.ref, src2.ref, R, p, callback), (c) {
+    final rval = p.value;
+    calloc.free(p);
+    return c.complete(rval);
+  });
 }
 
 /// Exp calculates the exponent of every array element.
@@ -1119,6 +1145,24 @@ Future<Mat> multiplyAsync(
       return c.complete(dst);
     },
   );
+}
+
+/// mulTransposed
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gadc4e49f8f7a155044e3be1b9e3b270ab
+Future<Mat> mulTransposedAsync(
+  InputArray src,
+  OutputArray dst,
+  bool aTa, {
+  InputArray? delta,
+  double scale = 1,
+  int dtype = -1,
+}) async {
+  delta ??= Mat.empty();
+  return cvRunAsync0(
+      (callback) => ccore.cv_mulTransposed(src.ref, dst.ref, aTa, delta!.ref, scale, dtype, callback), (c) {
+    return c.complete(dst);
+  });
 }
 
 /// Normalize normalizes the norm or value range of an array.
