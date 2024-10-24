@@ -1,24 +1,36 @@
 # opencv_core
 
-core module of opencv for Flutter, included modules:
+OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](https://pub.dev/packages/opencv_dart)
 
-- calib3d
-- core
-- contrib
-  - aruco
-  - img_hash
-  - wechat_qrcode
-  - ximgproc
-  - xobjdetect
-  - quality
-- dnn
-- features2d
-- imgcodecs
-- imgproc
-- objdetect
-- photo
-- stitching
-- video
+> [!IMPORTANT]
+>
+> OpenCV SDK (~100M) will be downloaded via `FetchContent` of cmake, you can
+> set `DARTCV_CACHE_PATH` environment variable to cache it and avoid downloading it again.
 
-If `highgui` or `videoio` is required, use [opencv_dart](https://pub.dev/packages/opencv_dart)
+## Supported platforms
 
+| Platform | Supported          | Tested             | Platforms                      |
+| -------- | ------------------ | ------------------ | ------------------------------ |
+| Android  | :white_check_mark: | :white_check_mark: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64(Simulator)          |
+| Linux    | :white_check_mark: | :white_check_mark: | x64, arm64                     |
+| Windows  | :white_check_mark: | :white_check_mark: | x64, arm64                     |
+| macOS    | :white_check_mark: | :white_check_mark: | x64, arm64                     |
+
+## Supported modules
+
+[Supported modules](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#status)
+
+## Examples
+
+see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
+
+![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
+
+More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
+
+![DNN MNIST](https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png)
+
+## License
+
+Apache-2.0 License

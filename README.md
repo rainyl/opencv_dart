@@ -12,31 +12,6 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 <a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a>
 </p>
 
-> [!IMPORTANT]
-> For `v1.0.6` and later, libs will be downloaded from
-> [Releases](https://github.com/rainyl/opencv_dart/releases) automatically.
->
-> 1. If you want to setup manually, please set `OPENCV_DART_DISABLE_AUTO_BUILD` environment variable,
-> e.g., `export OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Unix-like)
-> or `$env:OPENCV_DART_DISABLE_AUTO_BUILD=1`(for Windows)
->
-> For `v1.0.4` and below, make sure run the following setup commands before running your app:
->
-> 1. `flutter pub add opencv_dart` or `dart pub add opencv_dart`
-> 2. `dart run opencv_dart:setup <platform> --arch <arch>`
->
-> | `platform` | `arch`                             |
-> | ---------- | ---------------------------------- |
-> | `android`  | `x86_64` `arm64-v8a` `armeabi-v7a` |
-> | `linux`    | `x64`                              |
-> | `windows`  | `x64`                              |
-> | `macos`    | `x64` `arm64`                      |
-> | `ios`      | `os64` (universal framework)       |
->
-> - More questions: refer to [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
-> - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)
->
-
 > [!NOTE]
 > WIP, APIs may change in the future, contributions are welcome!
 
@@ -50,12 +25,6 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
       - [Pure Dart](#pure-dart)
       - [Flutter](#flutter)
     - [TODO](#todo)
-  - [For Developers](#for-developers)
-    - [How to compile](#how-to-compile)
-      - [1. Install dependencies](#1-install-dependencies)
-      - [2. clone this repo](#2-clone-this-repo)
-      - [3. compile](#3-compile)
-      - [4. test](#4-test)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
@@ -69,13 +38,13 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
 ## Supported Platforms
 
-| Platform | Supported          | Tested                  | Prebuilt Binaries              |
-| -------- | ------------------ | ----------------------- | ------------------------------ |
-| Android  | :white_check_mark: | :ballot_box_with_check: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :white_check_mark: | :ballot_box_with_check: | arm64, x64(Simulator)          |
-| Linux    | :white_check_mark: | :white_check_mark:      | x64                            |
-| Windows  | :white_check_mark: | :white_check_mark:      | x64                            |
-| macOS    | :white_check_mark: | :white_check_mark:      | x64, arm64                     |
+| Platform | Supported          | Tested             | Platforms                      |
+| -------- | ------------------ | ------------------ | ------------------------------ |
+| Android  | :white_check_mark: | :white_check_mark: | x86_64, arm64-v8a, armeabi-v7a |
+| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64(Simulator)          |
+| Linux    | :white_check_mark: | :white_check_mark: | x64, arm64                     |
+| Windows  | :white_check_mark: | :white_check_mark: | x64, arm64                     |
+| macOS    | :white_check_mark: | :white_check_mark: | x64, arm64                     |
 
 ## Status
 
@@ -113,6 +82,7 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 | ximgproc      | :white_check_mark: | :white_check_mark: |                      |
 | xobjdetect    | :white_check_mark: | :white_check_mark: |                      |
 | xphoto        | :x:                | :x:                |                      |
+| quality       | :white_check_mark: | :white_check_mark: |                      |
 
 - :x: : not finished
 - :ballot_box_with_check: : partially supported
@@ -122,30 +92,10 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
 ### Usage
 
-> [!WARNING]
-> Since `v1.0.0`, nearly ALL APIs were changed to compitable with **opencv-python**,
-> for example:
->
-> ```dart
-> // old API
-> void cvtColor(Mat src, Mat dst, int code);
-> // new API
-> Mat cvtColor(Mat src, int code, {Mat? dst});
->
-> // then usage will be changed from:
-> cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-> // to:
-> final dst = cvtColor(src, cv.COLOR_BGR2GRAY);
-> // or:
-> cvtColor(src, cv.COLOR_BGR2GRAY, dst: dst);
-> ```
->
-> If you really need updates for `v0.6.x`, open PRs and it will be merged to `v0.6` branch.
-
 #### Pure Dart
 
 ```dart
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 
 void main() {
   final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
@@ -173,95 +123,6 @@ see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 - [x] async
 - [x] more/full test coverage
 - [x] ~~directly include opencv source code, refactor cmakelists.txt~~
-
-## For Developers
-
-> [!NOTE]
-> since v1.0.1, to speed up compile in CI, opencv is precompiled in [opencv.full](https://github.com/rainyl/opencv.full),
-> and this repo will download the prebuilt static libraries from it's release,
-> if you want to compile entirely by yourself,
-> you can compile opencv and explicitly set `-o opencv_dir=<path to opencv>` for the
-> below commands or set `OpenCV_DIR` environment variable.
-
-### How to compile
-
-#### 1. Install dependencies
-
-- Windows: Install Visual Studio 2019 or Later, install [Conan](https://conan.io/)
-
-  ```pwsh
-   python3 -m pip install conan
-   conan profile detect -f
-  ```
-
-  If you are usin [Scoop](https://scoop.sh/):
-
-  ```pwsh
-  scoop install conan
-  ```
-
-- Linux: Ubuntu as example, note `opencv.full` is built on Ubuntu 22.04 with ffmpeg 4.4
-
-  ```bash
-  sudo apt-get install build-essential libgtk-3-dev ffmpeg libavcodec-dev cmake \
-    ninja-build libavformat-dev libavutil-dev libswscale-dev \
-    libgflags-dev python3 libjpeg-dev libpng-dev libtiff-dev python3-pip
-
-  python3 -m pip install conan
-  conan profile detect -f
-  ```
-
-- macOS: XCode is required
-
-  ```bash
-  brew install --force --overwrite ninja ffmpeg@6 conan
-  brew link --overwrite ffmpeg@6
-  conan profile detect -f
-  ```
-
-#### 2. clone this repo
-
-```bash
-git clone https://github.com/rainyl/opencv_dart.git
-cd opencv_dart
-```
-
-#### 3. compile
-
-- Windows:
-
-   ```pwsh
-   conan build . -b missing -s compiler.cppstd=20
-   ```
-
-- Linux, macos:
-
-    ```bash
-    conan build . -b missing
-    ```
-
-- android
-
-If you want to use your own NDK instead of conan maintained one, please set `ANDROID_NDK_HOME`
-or `ANDROID_NDK_ROOT` environment variable, e.g., `export ANDROID_NDK_HOME=/opt/android-ndk-r26c`
-
-  ```bash
-  conan build . -b missing -pr:h profiles/android-<arch> -c tools.android:ndk_path="<ABSOLUTE path for ndk>"
-  ```
-
-- ios:
-
-  ```bash
-  conan build . -b missing -pr:h profiles/ios-<arch>
-  ```
-
-#### 4. test
-
-- Set `OPENCV_DART_LIB_PATH` environment variable to the path of the compiled dynamic library,
-e.g., `export OPENCV_DART_LIB_PATH=`pwd`/linux/libopencv_dart.so`
-or `$ENV:OPENCV_DART_LIB_PATH=$PWD\windows\opencv_dart.dll`
-- or append the lib path to the library search path of your system
-- If you want to test using vscode, add above variable to `"dart.env"` in `settings.json`
 
 ## Contributors
 

@@ -1,12 +1,12 @@
 name: opencv_core
 description: |
   OpenCV4 bindings for Flutter.
-  This plugin does NOT include highgui and videoio modules,
-  if you need them, please use opencv_dart instead.
+  This plugin does NOT include `highgui` and `videoio`,
+  if you need them, please use `opencv_dart` instead.
 version: 0.0.1
 opencv_version: 4.10.0+9
 dartcv_version: 4.10.0+2
-homepage: https://github.com/rainyl/opencv_dart
+homepage: https://github.com/rainyl/opencv_dart/tree/main/packages/opencv_core
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -15,7 +15,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dartcv4: ^0.0.1
+  dartcv4: ^0.0.2
 
 dev_dependencies:
   test: ^1.25.2
