@@ -244,7 +244,7 @@ Future<Mat> blobFromImageAsync(
   mean ??= Scalar.zeros;
   final blob = Mat.empty();
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_Net_blobFromImage(
+    (callback) => cdnn.cv_dnn_blobFromImage(
       image.ref,
       blob.ref,
       scalefactor,
@@ -274,7 +274,7 @@ Future<Mat> blobFromImagesAsync(
   blob ??= Mat.empty();
   mean ??= Scalar.zeros;
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_Net_blobFromImages(
+    (callback) => cdnn.cv_dnn_blobFromImages(
       images.ref,
       blob!.ref,
       scalefactor,
@@ -294,7 +294,7 @@ Future<Mat> blobFromImagesAsync(
 Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
   final mats = calloc<cvg.VecMat>();
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_Net_imagesFromBlob(blob.ref, mats, callback),
+    (callback) => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats, callback),
     (c) {
       return c.complete(VecMat.fromPointer(mats).toList());
     },
@@ -304,7 +304,7 @@ Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
 Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
   final m = Mat.empty();
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_Net_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, callback),
+    (callback) => cdnn.cv_dnn_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, callback),
     (c) {
       return c.complete(m);
     },

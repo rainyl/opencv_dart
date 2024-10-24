@@ -204,7 +204,8 @@ void main() async {
   });
 
   test('cv.Net.fromTFLite', skip: true, () {
-    final model = cv.Net.fromTFLite("test/models/googlenet_float32.tflite");
+    final model = cv.Net.fromTFLite("test/models/face_landmark.tflite");
+    print(model.getUnconnectedOutLayersNames());
     checkTflite(model);
   });
 
@@ -223,6 +224,14 @@ void main() async {
       crop: false,
     );
     expect(blob.isEmpty, false);
+  });
+
+  test("cv.getAvailableBackends, getAvailableTargets", () {
+    cv.enableModelDiagnostics(true);
+    final backends = cv.getAvailableBackends();
+    expect(backends, isNotEmpty);
+    final targets = cv.getAvailableTargets(cv.DNN_BACKEND_DEFAULT);
+    expect(targets, isNotEmpty);
   });
 
   test('cv.blobFromImages, cv.imagesFromBlob, cv.getBlobChannel', () {

@@ -4906,18 +4906,22 @@ class CvNativeCore {
   late final _cv_getTickFrequency =
       _cv_getTickFrequencyPtr.asFunction<double Function()>();
 
-  bool cv_hasNonZero(
+  ffi.Pointer<CvStatus> cv_hasNonZero(
     Mat src,
+    ffi.Pointer<ffi.Bool> rval,
   ) {
     return _cv_hasNonZero(
       src,
+      rval,
     );
   }
 
-  late final _cv_hasNonZeroPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('cv_hasNonZero');
-  late final _cv_hasNonZero =
-      _cv_hasNonZeroPtr.asFunction<bool Function(Mat)>();
+  late final _cv_hasNonZeroPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<ffi.Bool>)>>('cv_hasNonZero');
+  late final _cv_hasNonZero = _cv_hasNonZeroPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Bool>)>();
 
   ffi.Pointer<CvStatus> cv_hconcat(
     Mat src1,
