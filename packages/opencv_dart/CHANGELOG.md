@@ -1,6 +1,6 @@
 ## 1.2.6
 
-* breaking change: local build. Will download opencv sdk (~100M) from remote, set `DARTCV_CACHE_PATH` to cache it and avoid downloading in every build.
+* breaking change: local build. Will download opencv sdk (~100M) from remote, set `DARTCV_CACHE_DIR` to cache it and avoid downloading in every build.
 * breaking change: many async class constructors and getters/setters were removed.
 * Breaking change: highgui, remove Window and Trackbar class, use functions like opencv c++ and python directly, e.g., cv.namedWindow("TestWindow"), more examples refer to: https://github.com/rainyl/opencv_dart/blob/split-dartcv/packages/dartcv/test/highgui_test.dart
 * macos: support 10.15 and above

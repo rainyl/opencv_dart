@@ -47,6 +47,10 @@ void main() async {
 }
 ```
 
+### Q&A
+
+- Refer to [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
+
 ### More examples
 
 Refer to [tests](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv/test)
@@ -54,3 +58,7 @@ Refer to [tests](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv
 ## Build libdartcv from source
 
 Refer to [dartcv](https://github.com/rainyl/dartcv/blob/main/README.md)
+
+## License
+
+[Apache-2.0 License](LICENSE)
