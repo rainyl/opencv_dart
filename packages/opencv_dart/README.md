@@ -7,7 +7,7 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 >
 > From `v1.3.0`, dynamic libraries will be built locally, invoked by flutter during the build.
 > Note: OpenCV SDK (~100M) will be downloaded via `FetchContent` of cmake, you can
-> set `DARTCV_CACHE_PATH` environment variable to cache it and avoid downloading it again.
+> set `DARTCV_CACHE_DIR` environment variable to cache it and avoid downloading it again.
 >
 > `v1.0.4 ~ v1.0.6`, libs will be downloaded from
 > [Releases](https://github.com/rainyl/opencv_dart/releases) automatically.
@@ -51,12 +51,12 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
-![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
-
 More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
-![DNN MNIST](https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png)
+## Screenshots
+
+see [Screenshots](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Screenshots)
 
 ## License
 
-Apache-2.0 License
+[Apache-2.0 License](LICENSE)
