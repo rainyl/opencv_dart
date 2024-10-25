@@ -2,15 +2,15 @@
 
 OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
-<p align="center">
-<a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>
-<a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a>
-<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
-<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
-<a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
-<a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a>
-<a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a>
-</p>
+| | | | | |
+|:-:|:----:|:----:|:----:|:----:|
+| <a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a> | <a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a> | <a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a> | <a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a> | <a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a> |
+
+| Package | Popularity | Link |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<a href="https://pub.dev/packages/dartcv4"><img src="https://img.shields.io/pub/v/dartcv4.svg?logo=dart&label=dartcv4" alt="https://pub.dev/packages/dartcv4"></a>|<a href="https://pub.dev/packages/dartcv4"><img src="https://img.shields.io/pub/popularity/dartcv4?logo=dart" alt="https://pub.dev/packages/dartcv4"></a>| <a href="https://pub.dev/packages/dartcv4">dartcv4</a> |
+|<a href="https://pub.dev/packages/opencv_core"><img src="https://img.shields.io/pub/v/opencv_core.svg?logo=dart&label=opencv_core" alt="https://pub.dev/packages/opencv_core"></a>|<a href="https://pub.dev/packages/opencv_core"><img src="https://img.shields.io/pub/popularity/opencv_core?logo=dart" alt="https://pub.dev/packages/opencv_core"></a>| <a href="https://pub.dev/packages/opencv_core">opencv_core</a> |
+|<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart&label=opencv_dart" alt="https://pub.dev/packages/opencv_dart"></a>|<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>| <a href="https://pub.dev/packages/opencv_dart">opencv_dart</a> |
 
 > [!NOTE]
 > WIP, APIs may change in the future, contributions are welcome!
