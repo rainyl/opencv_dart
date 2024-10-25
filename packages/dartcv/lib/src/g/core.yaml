@@ -44,6 +44,8 @@ files:
         name: cv_Mat_create_11
       c:@F@cv_Mat_create_12:
         name: cv_Mat_create_12
+      c:@F@cv_Mat_create_13:
+        name: cv_Mat_create_13
       c:@F@cv_Mat_create_2:
         name: cv_Mat_create_2
       c:@F@cv_Mat_create_3:

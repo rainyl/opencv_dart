@@ -1,4 +1,4 @@
-## 1.2.6
+## 1.3.0
 
 * breaking change: local build. Will download opencv sdk (~100M) from remote, set `DARTCV_CACHE_DIR` to cache it and avoid downloading in every build.
 * breaking change: many async class constructors and getters/setters were removed.
@@ -10,6 +10,8 @@
 * add DartCvMacOS dependency for macos
 * add DartCvIOS for ios
 * move all dart code to independent plugin `dartcv4`
+* bump dartcv to 1.0.1
+* add `cv.Mat.fromMat`
 
 ## 1.2.5
 

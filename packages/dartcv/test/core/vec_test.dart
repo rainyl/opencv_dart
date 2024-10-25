@@ -274,7 +274,10 @@ void main() {
     expect(dm, cv.DMatch(1, 1, 1, 1.0));
     // change the reference will affect the original value
     dm.queryIdx = 100;
-    expect(dm, cv.DMatch(100, 1, 1, 1.0));
+    dm.trainIdx = 2;
+    dm.imgIdx = 3;
+    dm.distance = 241.0;
+    expect(dm, cv.DMatch(100, 2, 3, 241.0));
     // change the value
     vec[1] = cv.DMatch(100, 100, 11, 21.0);
     expect(vec[1], cv.DMatch(100, 100, 11, 21.0));
@@ -330,7 +333,13 @@ void main() {
     expect(kp, cv.KeyPoint(1.000, 1.000, 1.000, 1.000, 1.000, 1, 1));
     // change the reference will affect the original value
     kp.x = 100.0;
-    expect(kp, cv.KeyPoint(100.0, 1.000, 1.000, 1.000, 1.000, 1, 1));
+    kp.y = 100.0;
+    kp.size = 100.0;
+    kp.angle = 100.0;
+    kp.response = 100.0;
+    kp.octave = 100;
+    kp.classID = 100;
+    expect(kp, cv.KeyPoint(100.0, 100.0, 100.0, 100.0, 100.0, 100, 100));
     // change the value
     vec[1] = cv.KeyPoint(5.000, 2.000, 5.000, 4.000, 1.000, 0, 0);
     expect(vec[1], cv.KeyPoint(5.000, 2.000, 5.000, 4.000, 1.000, 0, 0));

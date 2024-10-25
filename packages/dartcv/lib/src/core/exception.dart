@@ -25,7 +25,7 @@ class CvException implements Exception {
 
   @override
   String toString() {
-    return "CvException(code: $code, err: $err, msg:$msg) in $func of file $file:$line";
+    return "CvException(code: $code, msg:$msg) in $func of file $file:$line";
   }
 }
 
