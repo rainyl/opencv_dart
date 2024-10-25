@@ -53,9 +53,9 @@ see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
 More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
-![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
+## Screenshots
 
-![DNN MNIST](https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png)
+see [Screenshots](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Screenshots)
 
 ## License
 
