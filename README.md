@@ -16,7 +16,7 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 > WIP, APIs may change in the future, contributions are welcome!
 
 - [opencv\_dart](#opencv_dart)
-  - [Example](#example)
+  - [Screenshots](#screenshots)
   - [Supported Platforms](#supported-platforms)
   - [Status](#status)
     - [Core Modules](#core-modules)
@@ -24,7 +24,6 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
     - [Usage](#usage)
       - [Pure Dart](#pure-dart)
       - [Flutter](#flutter)
-    - [Screenshots](#screenshots)
     - [TODO](#todo)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
@@ -33,9 +32,12 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
-## Example
+## Screenshots
 
-![example](https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png)
+| | |
+|:-------------------------:|:-------------------------:|
+|<img width="480" alt="example" src="https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png"> |  <img width="480" alt="dnn_minist" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png">|
+|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/30fa0f501cea4a8a77d7c2f0e30c2b0c64b7dbec/examples/texture_renderer/texture_rgba_renderer.gif">|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/stitching/stitching_demo.png">|
 
 ## Supported Platforms
 
@@ -112,13 +114,6 @@ void main() {
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
 ~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
-
-### Screenshots
-
-| | |
-|:-------------------------:|:-------------------------:|
-|<img width="480" alt="example" src="https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png"> |  <img width="480" alt="dnn_minist" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png">|
-|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/30fa0f501cea4a8a77d7c2f0e30c2b0c64b7dbec/examples/texture_renderer/texture_rgba_renderer.gif">|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/stitching/stitching_demo.png">|
 
 ### TODO
 
