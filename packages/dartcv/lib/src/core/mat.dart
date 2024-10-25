@@ -28,9 +28,13 @@ class Mat extends CvStruct<cvg.Mat> {
 
   //SECTION - Constructors
 
-  factory Mat.fromNative(cvg.Mat mat) {
-    final p = calloc<cvg.Mat>()..ref = mat;
-    return Mat._(p);
+  factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
+    roi ??= Rect(0, 0, mat.cols, mat.rows);
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.cv_Mat_create_13(mat.ref, roi!.ref, p, ffi.nullptr));
+    final dst = Mat._(p, false);
+    if (copy) return dst.clone();
+    return dst;
   }
 
   /// Create a Mat from a list of data
@@ -167,12 +171,16 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   factory Mat.create({int rows = 0, int cols = 0, int r = 0, int g = 0, int b = 0, MatType? type}) {
-    type = type ?? MatType.CV_8UC3;
-    final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_5(scalar.ref, rows, cols, type!.value, p, ffi.nullptr));
-    final mat = Mat._(p);
-    return mat;
+    if (rows == 0 && cols == 0) {
+      return Mat.empty();
+    } else {
+      type = type ?? MatType.CV_8UC3;
+      final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
+      final p = calloc<cvg.Mat>();
+      cvRun(() => ccore.cv_Mat_create_5(scalar.ref, rows, cols, type!.value, p, ffi.nullptr));
+      final mat = Mat._(p);
+      return mat;
+    }
   }
 
   /// Create [Mat] from another [Mat] with range
@@ -317,7 +325,10 @@ class Mat extends CvStruct<cvg.Mat> {
     return (ms.p[0], ms.p[1], ms.p[2]);
   }
 
+  /// Returns the matrix element size in bytes.
   int get elemSize => ccore.cv_Mat_elemSize(ref);
+
+  /// Returns the size of each matrix element channel in bytes.
   int get elemSize1 => ccore.cv_Mat_elemSize1(ref);
   int get dims => ccore.cv_Mat_dims(ref);
 

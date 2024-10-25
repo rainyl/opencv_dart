@@ -450,6 +450,28 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(
           Mat, int, int, int, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_Mat_create_13(
+    Mat self,
+    CvRect roi,
+    ffi.Pointer<Mat> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Mat_create_13(
+      self,
+      roi,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Mat_create_13Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, CvRect, ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_create_13');
+  late final _cv_Mat_create_13 = _cv_Mat_create_13Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, CvRect, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+
   /// @brief Create Mat with specified sizes and type
   ///
   /// @param sizes array of integers, each describing a dimension

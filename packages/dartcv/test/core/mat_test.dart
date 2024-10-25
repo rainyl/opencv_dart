@@ -18,6 +18,9 @@ void main() async {
     expect(mat1.isContinus, equals(true));
     expect(mat1.step.$1, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
+    expect(mat1.elemSize1, 1);
+    expect(mat1.dims, 2);
+    expect(mat1.flags, isA<int>());
     expect(mat1.at<int>(0, 0, 0), 255);
 
     final mat2 = cv.Mat.zeros(3, 3, cv.MatType.CV_8UC1);
@@ -43,6 +46,36 @@ void main() async {
     final mat5 = mat4.convertTo(cv.MatType.CV_8UC1);
     mat5.setTo(cv.Scalar.all(255));
     expect(mat5.at<int>(0, 0), equals(255));
+  });
+
+  test('cv.Mat.fromMat', () {
+    final src = cv.Mat.fromScalar(100, 200, cv.MatType.CV_8UC3, cv.Scalar.white);
+    final mat1 = cv.Mat.fromMat(src); // A reference of src
+    expect(mat1.size, [100, 200]);
+    expect(mat1.at<cv.Vec3b>(0, 0), cv.Vec3b(255, 255, 255));
+
+    final diff = mat1.subtract(src);
+    expect(diff.sum(), cv.Scalar.zeros);
+
+    mat1.set<int>(0, 0, 241);
+    expect(mat1.at<int>(0, 0), equals(241));
+    mat1.dispose();
+    expect(src.at<int>(0, 0), equals(241));
+
+    final mat2 = cv.Mat.fromMat(src, roi: cv.Rect(10, 10, 20, 20));
+    expect(mat2.size, [20, 20]);
+    expect(mat2.at<cv.Vec3b>(0, 0), cv.Vec3b(255, 255, 255));
+    mat2.set<cv.Vec3b>(0, 0, cv.Vec3b(2, 4, 1));
+    expect(mat2.at<cv.Vec3b>(0, 0), cv.Vec3b(2, 4, 1));
+    expect(src.at<cv.Vec3b>(10, 10), cv.Vec3b(2, 4, 1));
+
+    final mat3 = cv.Mat.fromMat(src, roi: cv.Rect(21, 21, 20, 20), copy: true);
+    expect(mat3.size, [20, 20]);
+    expect(mat3.at<cv.Vec3b>(0, 0), cv.Vec3b(255, 255, 255));
+    mat3.set<cv.Vec3b>(0, 0, cv.Vec3b(2, 4, 1));
+    expect(mat3.at<cv.Vec3b>(0, 0), cv.Vec3b(2, 4, 1));
+    mat3.dispose();
+    expect(src.at<cv.Vec3b>(21, 21), cv.Vec3b(255, 255, 255));
   });
 
   test('Mat.fromBytes', () {
@@ -180,11 +213,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
   });
 
   test('Mat operations Add', () {
-    final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(128);
-    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127));
+    final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).multiplyU8(128); // 128
+    final mat1 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3).setTo(cv.Scalar.all(127)); // 127
 
     // Mat
-    final mat2 = mat1.add<cv.Mat>(mat0);
+    final mat2 = mat1.add<cv.Mat>(mat0); // 255
     expect((mat2.width, mat2.height, mat2.channels), (100, 100, 3));
     expect(mat2.at<int>(0, 0), equals(255));
     expect(() => mat2.add<double>(0.1), throwsUnsupportedError);
@@ -194,16 +227,21 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat2_1.at<int>(0, 0), equals(255));
 
     // int
-    final mat3 = mat1.add<int>(3);
-    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
-    expect(mat3.at<int>(0, 0), equals(130));
-    mat3.add<int>(1, inplace: true);
-    expect(mat3.at<int>(0, 0), equals(131));
+    const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
+    for (final type in types) {
+      final mat4 = mat1.convertTo(type).add<int>(54);
+      expect(mat4.at<int>(0, 0), equals(181));
+      mat4.add<int>(1, inplace: true);
+      expect(mat4.at<int>(0, 0), equals(182));
+      mat4.dispose();
+    }
 
-    final mat4 = mat1.convertTo(cv.MatType.CV_32SC3).add<int>(54);
-    expect(mat4.at<int>(0, 0), equals(181));
-    mat4.add<int>(1, inplace: true);
-    expect(mat4.at<int>(0, 0), equals(182));
+    {
+      final mat4_1 = mat1.convertTo(cv.MatType.CV_8SC3).add<int>(54); // 127+54, overflow, 127
+      expect(mat4_1.at<int>(0, 0), equals(127));
+      mat4_1.add<int>(1, inplace: true);
+      expect(mat4_1.at<int>(0, 0), equals(127));
+    }
 
     // float
     final mat5 = mat1.convertTo(cv.MatType.CV_32FC3).add<double>(54.5);
@@ -232,16 +270,21 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat2_1.at<int>(0, 0), equals(128));
 
     // int
-    final mat3 = mat0.subtract<int>(13);
-    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
-    expect(mat3.at<int>(0, 0), equals(242));
-    mat3.subtract<int>(1, inplace: true);
-    expect(mat3.at<int>(0, 0), equals(241));
+    const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
+    for (final type in types) {
+      final mat4 = mat0.convertTo(type).subtract<int>(14);
+      expect(mat4.at<int>(0, 0), equals(241));
+      mat4.subtract<int>(1, inplace: true);
+      expect(mat4.at<int>(0, 0), equals(240));
+      mat4.dispose();
+    }
 
-    final mat4 = mat0.convertTo(cv.MatType.CV_32SC3).subtract<int>(14);
-    expect(mat4.at<int>(0, 0), equals(241));
-    mat4.subtract<int>(1, inplace: true);
-    expect(mat4.at<int>(0, 0), equals(240));
+    {
+      final mat4_1 = mat0.convertTo(cv.MatType.CV_8SC3).subtract<int>(14);
+      expect(mat4_1.at<int>(0, 0), equals(113));
+      mat4_1.subtract<int>(1, inplace: true);
+      expect(mat4_1.at<int>(0, 0), equals(112));
+    }
 
     // float
     final mat5 = mat0.convertTo(cv.MatType.CV_32FC3).subtract<double>(54.5);
@@ -270,16 +313,22 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat2_1.at<int>(0, 0), equals(200));
 
     // int
-    final mat3 = mat0.multiply<int>(2);
-    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
-    expect(mat3.at<int>(0, 0), equals(200));
-    mat3.multiply<int>(1, inplace: true);
-    expect(mat3.at<int>(0, 0), equals(200));
+    const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
+    for (final type in types) {
+      final mat3 = mat0.convertTo(type).multiply<int>(2);
+      expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
+      expect(mat3.at<int>(0, 0), equals(200));
+      mat3.multiply<int>(1, inplace: true);
+      expect(mat3.at<int>(0, 0), equals(200));
+      mat3.dispose();
+    }
 
-    final mat4 = mat0.convertTo(cv.MatType.CV_32SC3).multiply<int>(2);
-    expect(mat4.at<int>(0, 0), equals(200));
-    mat4.multiply<int>(1, inplace: true);
-    expect(mat4.at<int>(0, 0), equals(200));
+    {
+      final mat4 = mat0.convertTo(cv.MatType.CV_8SC3).multiply<int>(2);
+      expect(mat4.at<int>(0, 0), equals(127));
+      mat4.multiply<int>(1, inplace: true);
+      expect(mat4.at<int>(0, 0), equals(127));
+    }
 
     // float
     final mat5 = mat0.convertTo(cv.MatType.CV_32FC3).multiply<double>(1.5);
@@ -313,16 +362,21 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat2_1.at<int>(0, 0), equals(100));
 
     // int
-    final mat3 = mat0.divide<int>(2);
-    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
-    expect(mat3.at<int>(0, 0), equals(100));
-    mat3.divide<int>(2, inplace: true);
-    expect(mat3.at<int>(0, 0), equals(50));
+    const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
+    for (final type in types) {
+      final mat4 = mat0.convertTo(type).divide<int>(2);
+      expect(mat4.at<int>(0, 0), equals(100));
+      mat4.divide<int>(2, inplace: true);
+      expect(mat4.at<int>(0, 0), equals(50));
+      mat4.dispose();
+    }
 
-    final mat4 = mat0.convertTo(cv.MatType.CV_32SC3).divide<int>(2);
-    expect(mat4.at<int>(0, 0), equals(100));
-    mat4.divide<int>(2, inplace: true);
-    expect(mat4.at<int>(0, 0), equals(50));
+    {
+      final mat4 = mat0.convertTo(cv.MatType.CV_8SC3).divide<int>(2);
+      expect(mat4.at<int>(0, 0), equals(64));
+      mat4.divide<int>(2, inplace: true);
+      expect(mat4.at<int>(0, 0), equals(32));
+    }
 
     // float
     final mat5 = mat0.convertTo(cv.MatType.CV_32FC3).divide<double>(5.0);
