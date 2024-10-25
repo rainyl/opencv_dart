@@ -226,7 +226,9 @@ void main() async {
     expect(blob.isEmpty, false);
   });
 
-  test("cv.getAvailableBackends, getAvailableTargets", () {
+  test("cv.getAvailableBackends, getAvailableTargets", onPlatform: {
+    "windows": const Skip("github actions does not support vulkan"),
+  }, () {
     cv.enableModelDiagnostics(true);
     final backends = cv.getAvailableBackends();
     expect(backends, isNotEmpty);
