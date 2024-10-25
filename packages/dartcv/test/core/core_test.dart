@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -214,6 +213,13 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.copyTo', () {
+    final src = cv.Mat.randn(100, 100, cv.MatType.CV_8UC3);
+    final dst = cv.Mat.empty();
+    cv.copyTo(src, dst);
+    expect(src.at<cv.Vec3b>(0, 0), dst.at<cv.Vec3b>(0, 0));
+  });
+
   test('cv.dct', () {
     final src = cv.Mat.randn(100, 100, cv.MatType.CV_32FC1);
     final dst = cv.dct(src);
@@ -411,6 +417,21 @@ void main() async {
     expect(eigenvectors.rows, equals(2));
   });
 
+  test('cv.PCACompute1', () {
+    final src = cv.Mat.randn(10, 10, cv.MatType.CV_32FC1);
+    final mean0 = cv.Mat.empty();
+    final (mean, eigenvalues, eigenvectors) = cv.PCACompute1(src, mean0, 0.8);
+    expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
+    expect(eigenvectors.rows, greaterThan(1));
+  });
+
+  test('cv.PSNR', () {
+    final src = cv.imread("test/images/lenna.png");
+    final blur = cv.gaussianBlur(src, (5, 5), 10);
+    final psnr = cv.PSNR(src, blur);
+    expect(psnr, closeTo(29.26, 0.1));
+  });
+
   test('cv.exp', () {
     final src = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
     final dst = cv.exp(src);
@@ -436,6 +457,12 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.flipND', () {
+    final src = cv.Mat.randu(10, 10, cv.MatType.CV_8UC3);
+    final dst = cv.flipND(src, 0);
+    expect(dst.isEmpty, equals(false));
+  });
+
   test('cv.gemm', () {
     final src1 = cv.Mat.randu(3, 4, cv.MatType.CV_32FC1);
     final src2 = cv.Mat.randu(4, 3, cv.MatType.CV_32FC1);
@@ -450,6 +477,11 @@ void main() async {
     final dst = cv.hconcat(src, src);
     expect(dst.isEmpty, equals(false));
     expect(dst.cols, equals(src.cols * 2));
+  });
+
+  test('cv.hasNonZero', () {
+    final src = cv.Mat.ones(100, 100, cv.MatType.CV_8UC1);
+    expect(cv.hasNonZero(src), equals(true));
   });
 
   test('cv.vconcat', () {
@@ -645,6 +677,13 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.mean', () {
+    final data = List.generate(3 * 3 * 3, (i) => i.toDouble());
+    final src = cv.Mat.fromList(3, 3, cv.MatType.CV_32FC3, data);
+    final mean = cv.mean(src);
+    expect(mean.val1, closeTo(12, 1e-3));
+  });
+
   test('cv.meanStdDev', () {
     final src = cv.Mat.randu(101, 102, cv.MatType.CV_8UC3);
     final (mean, stdDev) = cv.meanStdDev(src);
@@ -704,6 +743,20 @@ void main() async {
     final mat3 = cv.multiply(mat1, mat2);
     expect(mat3.isEmpty, equals(false));
     expect(mat3.at<double>(0, 0), equals(mat1.at<double>(0, 0) * mat2.at<double>(0, 0)));
+  });
+
+  test('cv.mulTransposed', () {
+    final src = cv.Mat.randu(2, 3, cv.MatType.CV_32FC1, low: cv.Scalar.all(0), high: cv.Scalar.all(1));
+    final srcT = src.t();
+
+    final dst = cv.Mat.empty();
+    cv.mulTransposed(src, dst, true);
+    expect(dst.isEmpty, equals(false));
+
+    final dst1 = srcT.multiply(src);
+
+    final diff = cv.absDiff(dst, dst1);
+    expect(cv.sum(diff), cv.Scalar.all(0));
   });
 
   test('cv.normalize', () {
@@ -908,6 +961,14 @@ void main() async {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     final dst = cv.transpose(src);
     expect((dst.rows, dst.cols), (src.cols, src.rows));
+  });
+
+  test('cv.transposeND', () {
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final blob = cv.blobFromImage(src); // N C H W
+    final dst = cv.transposeND(blob, [0, 2, 3, 1]);
+    final blobSize = blob.size;
+    expect(dst.size, [blobSize[0], blobSize[2], blobSize[3], blobSize[1]]);
   });
 
   test('cv.pow', () {

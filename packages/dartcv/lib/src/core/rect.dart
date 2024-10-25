@@ -248,7 +248,88 @@ class VecRectIterator extends VecIterator<Rect> {
   Rect operator [](int idx) => Rect.fromPointer(ref.ptr + idx, false);
 }
 
+class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
+  VecRect2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+    if (attach) {
+      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+    }
+  }
+
+  factory VecRect2f([int length = 0, double x = 0, double y = 0, double width = 0, double height = 0]) =>
+      VecRect2f.generate(length, (i) => Rect2f(x, y, width, height));
+
+  factory VecRect2f.fromList(List<Rect2f> pts) =>
+      VecRect2f.generate(pts.length, (i) => pts[i], dispose: false);
+
+  factory VecRect2f.generate(int length, Rect2f Function(int i) generator, {bool dispose = true}) {
+    final pp = calloc<cvg.VecRect2f>()..ref.length = length;
+    pp.ref.ptr = calloc<cvg.CvRect2f>(length);
+    for (var i = 0; i < length; i++) {
+      final v = generator(i);
+      pp.ref.ptr[i] = v.ref;
+      if (dispose) v.dispose();
+    }
+    return VecRect2f.fromPointer(pp);
+  }
+
+  @override
+  VecRect2f clone() => VecRect2f.generate(length, (idx) => this[idx], dispose: false);
+
+  @override
+  int get length => ref.length;
+
+  @override
+  Iterator<Rect2f> get iterator => VecRect2fIterator(ref);
+
+  @override
+  cvg.VecRect2f get ref => ptr.ref;
+
+  @override
+  void dispose() {
+    Vec.finalizer.detach(this);
+    calloc.free(ptr.ref.ptr);
+    calloc.free(ptr);
+  }
+
+  @override
+  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+
+  @override
+  void reattach({ffi.Pointer<cvg.VecRect2f>? newPtr}) {
+    super.reattach(newPtr: newPtr);
+    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+  }
+
+  @override
+  void operator []=(int idx, Rect2f value) {
+    ref.ptr[idx].x = value.x;
+    ref.ptr[idx].y = value.y;
+    ref.ptr[idx].width = value.width;
+    ref.ptr[idx].height = value.height;
+  }
+
+  @override
+  Rect2f operator [](int idx) => Rect2f.fromPointer(ref.ptr + idx, false);
+}
+
+class VecRect2fIterator extends VecIterator<Rect2f> {
+  VecRect2fIterator(this.ref);
+  cvg.VecRect2f ref;
+
+  @override
+  int get length => ref.length;
+
+  @override
+  Rect2f operator [](int idx) => Rect2f.fromPointer(ref.ptr + idx, false);
+}
+
 extension ListRectExtension on List<Rect> {
   VecRect get cvd => asVec();
   VecRect asVec() => VecRect.fromList(this);
+}
+
+extension ListRect2fExtension on List<Rect2f> {
+  VecRect2f get cvd => asVec();
+  VecRect2f asVec() => VecRect2f.fromList(this);
 }

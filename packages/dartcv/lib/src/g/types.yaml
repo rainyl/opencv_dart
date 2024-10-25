@@ -136,6 +136,8 @@ files:
         name: VecPoint3i
       c:@S@VecRect:
         name: VecRect
+      c:@S@VecRect2f:
+        name: VecRect2f
       c:@S@VecRotatedRect:
         name: VecRotatedRect
       c:@S@VecU16:
@@ -232,6 +234,8 @@ files:
         name: VecPoint3iPtr
       c:types.h@T@VecPointPtr:
         name: VecPointPtr
+      c:types.h@T@VecRect2fPtr:
+        name: VecRect2fPtr
       c:types.h@T@VecRectPtr:
         name: VecRectPtr
       c:types.h@T@VecRotatedRectPtr:

@@ -509,8 +509,21 @@ int getOptimalDFTSize(int vecsize) {
   return rval;
 }
 
-/// has non zero
-bool hasNonZero(InputArray src) => ccore.cv_hasNonZero(src.ref);
+/// Checks for the presence of at least one non-zero array element.
+///
+/// The function returns whether there are non-zero elements in src
+///
+/// The function do not work with multi-channel arrays. If you need to check non-zero array
+/// elements across all the channels, use Mat::reshape first to reinterpret the array
+/// as single-channel. Or you may extract the particular channel using either
+/// extractImageCOI, or mixChannels, or split.
+bool hasNonZero(InputArray src) {
+  final p = calloc<ffi.Bool>();
+  cvRun(() => ccore.cv_hasNonZero(src.ref, p));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
+}
 
 /// Hconcat applies horizontal concatenation to given matrices.
 ///
