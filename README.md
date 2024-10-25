@@ -2,29 +2,30 @@
 
 OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
-<p align="center">
-<a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>
-<a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a>
-<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
-<a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/popularity/opencv_dart?logo=dart" alt="https://pub.dev/packages/opencv_dart"></a>
-<a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>
-<a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a>
-<a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a>
-</p>
+|                                                                                                                                                                                                                                           |                                                                                                                                                                                    |                                                                                                                                                                       |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                          <a href="https://codecov.io/github/rainyl/opencv_dart" ><img src="https://codecov.io/github/rainyl/opencv_dart/graph/badge.svg?token=2H0WWT39SN"/></a>                                           | <a href="https://github.com/rainyl/opencv_dart"><img src="https://img.shields.io/github/stars/rainyl/opencv_dart.svg?style=flat&logo=github&label=stars" alt="Star on Github"></a> |        <a href="https://opensource.org/license/apache-2-0"><img src="https://img.shields.io/github/license/rainyl/opencv_dart" alt="License: Apache-2.0"></a>         |
+| <a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a> |                    <a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a>                    | [![Examples](https://github.com/rainyl/opencv_dart/actions/workflows/examples.yaml/badge.svg)](https://github.com/rainyl/opencv_dart/actions/workflows/examples.yaml) |
+
+|                                                                  Package                                                                  |                        Link                         |              Description              |
+| :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------: | :-----------------------------------: |
+|       <a href="https://pub.dev/packages/dartcv4"><img src="https://img.shields.io/pub/v/dartcv4.svg?logo=dart&label=dartcv4"/></a>        |     [dartcv4](https://pub.dev/packages/dartcv4)     |  OpenCV bindings for Dart Language.   |
+| <a href="https://pub.dev/packages/opencv_core"><img src="https://img.shields.io/pub/v/opencv_core.svg?logo=dart&label=opencv_core" /></a> | [opencv_core](https://pub.dev/packages/opencv_core) | OpenCV for Flutter, without `videoio` |
+| <a href="https://pub.dev/packages/opencv_dart"><img src="https://img.shields.io/pub/v/opencv_dart.svg?logo=dart&label=opencv_dart"/></a>  | [opencv_dart](https://pub.dev/packages/opencv_dart) | OpenCV for Flutter, with all modules  |
 
 > [!NOTE]
 > WIP, APIs may change in the future, contributions are welcome!
 
 - [opencv\_dart](#opencv_dart)
-  - [Screenshots](#screenshots)
+  - [Demos](#demos)
   - [Supported Platforms](#supported-platforms)
   - [Status](#status)
     - [Core Modules](#core-modules)
     - [Contrib Modules](#contrib-modules)
-    - [Usage](#usage)
-      - [Pure Dart](#pure-dart)
-      - [Flutter](#flutter)
-    - [TODO](#todo)
+  - [Usage](#usage)
+    - [Pure Dart](#pure-dart)
+    - [Flutter](#flutter)
+  - [TODO](#todo)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
   - [Star History](#star-history)
@@ -32,12 +33,14 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
-## Screenshots
+## Demos
 
-| | |
-|:-------------------------:|:-------------------------:|
-|<img width="480" alt="example" src="https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png"> |  <img width="480" alt="dnn_minist" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png">|
-|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/30fa0f501cea4a8a77d7c2f0e30c2b0c64b7dbec/examples/texture_renderer/texture_rgba_renderer.gif">|<img width="480" alt="videoio texture renderer" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/stitching/stitching_demo.png">|
+|                                                                           Screenshot                                                                            |                                                     Link                                                      |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+|                       <img height="256" alt="example" src="https://raw.githubusercontent.com/rainyl/opencv_dart/main/images/example.png">                       |                                   [example](packages/opencv_core/example/)                                    |
+|      <img height="256" alt="" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/main/examples/texture_renderer/texture_rgba_renderer.gif">      | [videoio texture renderer](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/texture_renderer) |
+| <img height="256" alt="dnn_minist" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png"> |       [DNN MNIST inference](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/dnn_mnist)       |
+|   <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/stitching/stitching_demo.png">   |            [stitching](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/stitching)            |
 
 ## Supported Platforms
 
@@ -93,9 +96,9 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 - modules not in the above table are not considered, contributions are welcome
 - ~~videoio: `cv.VideoCapture` from file is not supported yet~~ supported now.
 
-### Usage
+## Usage
 
-#### Pure Dart
+### Pure Dart
 
 ```dart
 import 'package:dartcv4/dartcv.dart' as cv;
@@ -109,13 +112,13 @@ void main() {
 }
 ```
 
-#### Flutter
+### Flutter
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
 
 ~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
-### TODO
+## TODO
 
 - [x] ~~compile libs for android, linux~~
 - [x] ~~support for iOS, macOS~~

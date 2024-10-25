@@ -55,7 +55,7 @@ More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-o
 
 ## Screenshots
 
-see [Screenshots](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Screenshots)
+see [Demos](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Demos)
 
 ## License
 
