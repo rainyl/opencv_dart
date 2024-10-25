@@ -57,7 +57,7 @@ Refer to [tests](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv
 
 ## Screenshots
 
-see [Screenshots](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Screenshots)
+see [Demos](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Demos)
 
 ## Build libdartcv from source
 
