@@ -443,150 +443,401 @@ jobs:
         with:
           name: macos-arm-size-report
           path: macos_arm_size_report.json
+
   combine-reports:
+    name: Generate Combined Size Reports
     needs: [windows, android, ios, linux, macos, macos-arm]
     runs-on: ubuntu-latest
+    
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: size-reports
+          pattern: '*-size-report'
+          merge-multiple: true
 
-      - name: Generate Combined JSON Report
+      - name: Generate Combined Report
+        id: combine-reports
         run: |
-          cat << 'EOF' > generate_combined_json.py
+          cat << 'EOF' > generate_combined_report.py
           import json
           import os
           import glob
           from datetime import datetime
+          from typing import Dict, Any, Union
+          import pandas as pd
+          import numpy as np
 
-          def convert_to_mb(value):
+          def format_size(size: Union[float, str, dict, None]) -> tuple[str, float]:
+              """Format size values with appropriate units and return both display and raw values."""
               try:
-                  return round(float(value) / 1024, 2)
-              except (ValueError, TypeError):
-                  return value
+                  if isinstance(size, (int, float)):
+                      raw_value = float(size)
+                      if size > 1024:
+                          return f"{size/1024:.2f} GB", raw_value
+                      return f"{size:.2f} MB", raw_value
+                  elif isinstance(size, str):
+                      try:
+                          float_val = float(size)
+                          return format_size(float_val)
+                      except ValueError:
+                          return size, 0.0
+                  elif isinstance(size, dict):
+                      return "N/A (nested)", 0.0
+                  return "N/A", 0.0
+              except Exception:
+                  return "Error", 0.0
 
-          def process_dict(data):
-              if isinstance(data, dict):
-                  return {k: process_dict(v) for k, v in data.items()}
-              elif isinstance(data, list):
-                  return [process_dict(item) for item in data]
-              else:
-                  return convert_to_mb(data)
+          def process_platform_data(data: Dict[str, Any]) -> Dict[str, Any]:
+              """Process and validate platform-specific data."""
+              processed = {}
+              for key, value in data.items():
+                  if isinstance(value, dict):
+                      processed[key] = {
+                          k: format_size(v)[0] if not isinstance(v, dict) else process_platform_data(v)
+                          for k, v in value.items()
+                      }
+                  else:
+                      processed[key] = format_size(value)[0]
+              return processed
 
-          def consolidate_data(reports):
-              combined = {"timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")}
-              packages_data = {}
+          def generate_trend_data(data: Dict[str, Any]) -> Dict[str, Any]:
+              """Generate trend analysis from historical data."""
+              trends = {}
+              for package, platforms in data.items():
+                  if package == "platform":
+                      continue
+                  trends[package] = {}
+                  for platform, sizes in platforms.items():
+                      if isinstance(sizes, dict):
+                          if "total_size" in sizes:
+                              _, raw_size = format_size(sizes["total_size"])
+                              trends[package][platform] = raw_size
+                          else:
+                              platform_avg = np.mean([
+                                  format_size(s.get("total_size", 0))[1]
+                                  for s in sizes.values()
+                                  if isinstance(s, dict)
+                              ])
+                              trends[package][platform] = platform_avg
+                      else:
+                          _, raw_size = format_size(sizes)
+                          trends[package][platform] = raw_size
+              return trends
 
+          def consolidate_data(reports: list) -> Dict[str, Any]:
+              """Consolidate all report data with additional analytics."""
+              combined = {
+                  "metadata": {
+                      "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                      "report_count": len(reports),
+                      "generated_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+                  },
+                  "packages": {}
+              }
+              
               for report_path in reports:
                   platform = os.path.basename(os.path.dirname(report_path)).replace('-size-report', '')
-                  with open(report_path) as f:
-                      data = json.load(f)
-                      processed_data = process_dict(data)
-                      for package, sizes in processed_data.items():
-                          if package not in packages_data:
-                              packages_data[package] = {}
-                          packages_data[package][platform] = sizes
+                  try:
+                      with open(report_path) as f:
+                          data = json.load(f)
+                          for package, sizes in data.items():
+                              if package not in combined["packages"]:
+                                  combined["packages"][package] = {}
+                              combined["packages"][package][platform] = process_platform_data(sizes)
+                  except Exception as e:
+                      print(f"Error processing {report_path}: {str(e)}")
+                      continue
 
-              combined["packages"] = packages_data
+              # Generate trends and statistics
+              trends = generate_trend_data(combined["packages"])
+              combined["analytics"] = {
+                  "trends": trends,
+                  "summary": {
+                      package: {
+                          "average_size": f"{np.mean(list(platforms.values())):.2f} MB",
+                          "size_range": f"{min(platforms.values()):.2f} - {max(platforms.values()):.2f} MB"
+                      }
+                      for package, platforms in trends.items()
+                  }
+              }
+
               return combined
 
-          reports = glob.glob('size-reports/*/*.json')
-          combined_data = consolidate_data(reports)
+          def main():
+              try:
+                  reports = glob.glob('size-reports/*/*.json')
+                  if not reports:
+                      raise Exception("No report files found")
 
-          with open("combined_size_report.json", "w") as f:
-              json.dump(combined_data, f, indent=2)
+                  combined_data = consolidate_data(reports)
+                  
+                  # Save combined report
+                  with open("combined_size_report.json", "w") as f:
+                      json.dump(combined_data, f, indent=2)
+                  
+                  print("::set-output name=status::success")
+                  print(f"::set-output name=report_count::{len(reports)}")
+                  
+              except Exception as e:
+                  print(f"::error::Error generating combined report: {str(e)}")
+                  print("::set-output name=status::failure")
+                  raise
+
+          if __name__ == "__main__":
+              main()
           EOF
 
-          python3 generate_combined_json.py
+          python generate_combined_report.py
 
-      - name: Display Combined JSON Report
-        run: |
-          echo "Combined JSON Report:"
-          cat combined_size_report.json
-
-      - name: Upload Combined JSON Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: combined-size-report
-          path: combined_size_report.json
-
-      - name: Generate SVGs for Each Package
+      - name: Generate SVG Reports
+        if: steps.combine-reports.outputs.status == 'success'
+        id: generate-svgs
         run: |
           cat << 'EOF' > generate_svgs.py
           import json
           from pathlib import Path
+          from typing import Union, Dict, Any
+          import math
 
-          def generate_svg_for_package(package_name, data):
-              platforms = list(data.keys())
-              max_archs = 0
-              for platform_data in data.values():
-                  if isinstance(platform_data, dict):
-                      max_archs = max(max_archs, len(platform_data))
-
-              svg_height = len(platforms) * (40 + max_archs * 20) + 100
-              svg_width = 800
-              svg_content = f'''
-              <svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}">
-                <style>
-                  .title {{ font-size: 24px; font-weight: bold; fill: #333; text-anchor: middle; }}
-                  .header {{ font-size: 16px; font-weight: bold; fill: #444; }}
-                  .platform {{ font-size: 14px; font-weight: bold; fill: #222; }}
-                  .arch-header {{ font-size: 12px; font-weight: bold; fill: #666; }}
-                  .row {{ font-size: 12px; fill: #555; }}
-                  .table {{ border-collapse: collapse; }}
-                  .table th, .table td {{ border: 1px solid #ddd; padding: 8px; }}
-                </style>
-                <text x="{svg_width/2}" y="40" class="title">Consolidated Size Report for {package_name}</text>
-                <table class="table" x="10" y="80">
-                  <tr>
-                    <th>Platform</th>
-                    <th>Architecture</th>
-                    <th>Total Size (MB)</th>
-                    <th>Package Size (MB)</th>
-                  </tr>
+          def create_gradient_definitions() -> str:
+              """Create gradient definitions for various visual elements."""
+              return '''
+                <defs>
+                  <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#2d3748;stop-opacity:0.1" />
+                    <stop offset="100%" style="stop-color:#2d3748;stop-opacity:0.05" />
+                  </linearGradient>
+                  <filter id="dropShadow">
+                    <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/>
+                  </filter>
+                  <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+                    .title { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 600; }
+                    .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; fill: #666; }
+                    .platform-name { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500; }
+                    .data-row { font-family: 'Inter', sans-serif; font-size: 14px; }
+                    .metric-value { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
+                    .trend-indicator { font-family: 'Inter', sans-serif; font-size: 12px; }
+                    .section-header { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; }
+                  </style>
+                </defs>
               '''
-              for platform, sizes in data.items():
-                  if isinstance(sizes, dict):
-                      for arch, arch_sizes in sizes.items():
-                            total_size = arch_sizes.get("total_size", "N/A") if isinstance(arch_sizes, dict) else arch_sizes
-                            package_size = arch_sizes.get("package_size", "N/A") if isinstance(arch_sizes, dict) else "N/A"
-                            svg_content += f'''
-                            <tr>
-                                <td>{platform}</td>
-                                <td>{arch}</td>
-                                <td>{total_size}</td>
-                                <td>{package_size}</td>
-                            </tr>'''
 
+          def create_platform_icon(platform: str, x: int, y: int) -> str:
+              """Create platform-specific icon."""
+              icons = {
+                  'windows': '''
+                    <path d="M0,0 L9,0 9,9 0,9 Z" fill="#00A4EF"/>
+                    <path d="M10,0 L19,0 19,9 10,9 Z" fill="#7FBA00"/>
+                    <path d="M0,10 L9,10 9,19 0,19 Z" fill="#F25022"/>
+                    <path d="M10,10 L19,10 19,19 10,19 Z" fill="#FFB900"/>
+                  ''',
+                  'apple': '''
+                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5M13 5.96C13.63 5.19 14.51 4.2 14.24 2.87C13.11 2.96 11.76 3.55 11.12 4.3C10.54 4.98 9.96 5.99 10.27 7.29C11.53 7.33 12.65 6.72 13 5.96" fill="currentColor"/>
+                  ''',
+                  'linux': '''
+                    <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.135-.658.35-.864.602-.09.11-.176.223-.258.337l-.003.005c-.146.207-.382.434-.558.663-.177.229-.253.375-.539.524l-.73.379c-.425.22-1.41.576-1.788 1.03-.38.456-.537.827-.644 1.346-.037.18.005.347.123.525.269.394.489.749.688 1.095.252.442.495.892.215 1.419-.122.22-.272.418-.43.586-.158.169-.346.306-.568.407-.205.114-.412.21-.614.305-.53.258-.827.598-1.285.781-.735.293-1.152 1.053-1.214 1.676-.097.935.524 1.803 1.728 2.006.583.095 2.047.198 2.602.178.563-.022.975-.23 1.399-.413.485-.188.987-.352 1.543-.448.425-.075.85-.134 1.276-.158.942-.055 1.975.095 2.747.537.772.443 1.71.592 2.632.43.577-.1 1.065-.293 1.534-.57.314-.186.84-.284 1.175-.453.303-.151.722-.306 1.005-.472.264-.155.487-.363.66-.613.188-.266.334-.592.416-.944.154-.577.195-1.23.407-1.769.24-.607.573-1.087.881-1.622.059-.106.172-.27.182-.386.03-.303-.072-.567-.206-.84l-.223-.468c-.418-.956-.585-2.128-.217-3.113.208-.555.517-1.072.867-1.515.194-.247.43-.457.654-.664l.023-.022c.119-.115.287-.245.534-.303.195-.048.375.003.472.064.172.108.318.29.463.439l.314.318c.284.277.558.553.843.821.206.191.44.353.697.487.472.252.93.482 1.446.582.268.053.545.074.814.051.213-.02.426-.084.603-.19.333-.202.514-.532.628-.863.172-.503.193-1.037.216-1.565.022-.499.05-1.018-.075-1.495-.125-.481-.328-.932-.593-1.344-.212-.335-.485-.638-.72-.963l-.105-.145c-.135-.202-.278-.405-.356-.627-.066-.193-.073-.399-.074-.605 0-.163-.015-.327-.027-.492l-.05-.694c-.072-.963-.148-1.957.147-2.884.16-.499.418-.949.742-1.35.257-.32.528-.593.739-.923.136-.207.237-.439.314-.683.081-.244.155-.499.247-.737.127-.323.368-.603.397-.968.014-.156.004-.315-.022-.47-.059-.364-.207-.689-.347-1.015l-.342-.786c-.103-.213-.248-.412-.378-.618-.437-.677-.849-1.371-1.156-2.112C14.89.813 14.31.195 13.441.064c-.294-.042-.592-.043-.888-.043zm1.054 1.779c.096.019.19.042.279.066.299.079.599.223.838.412.238.19.487.402.607.645.087.176.147.384.188.583.062.318.123.646.133.96.01.459-.144.883-.38 1.265-.163.262-.367.512-.555.75-.353.45-.604.977-.762 1.523-.242.822-.208 1.773-.147 2.636l.047.694.012.165c.014.355.037.722.148 1.062.14.427.401.805.638 1.17l.087.12c.242.335.516.645.733.986.216.343.387.704.488 1.085.04.111.074.224.107.336.037.154.057.316.075.476.073.582.074 1.165.044 1.748-.029.578-.077 1.208-.307 1.738-.177.404-.478.762-.905.935-.396.159-.916.186-1.327.105-.866 1.523-.381 1.265-.293.584-.39.962-.133.96.01.318.101.726.188.583.12.243.369.455.607.645.239.189.539.333.838.412.089.024.183.047.279.066z" fill="#000"/>
+                  ''',
+                  'android': '''
+                    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="#3DDC84"/>
+                  '''
+              }
+              
+              base_icon = icons.get(platform.lower().replace('-arm', ''), '')
+              if not base_icon:
+                  return ''
+                  
+              return f'''
+                <g transform="translate({x}, {y}) scale(0.8)">
+                  {base_icon}
+                </g>
+              '''
+
+          def generate_svg_for_package(package_name: str, data: Dict[str, Any], analytics: Dict[str, Any]) -> None:
+              """Generate enhanced SVG report for a package with analytics."""
+              platforms = list(data.keys())
+              
+              # Calculate dimensions
+              row_height = 40
+              header_height = 150
+              platform_spacing = 20
+              max_rows_per_platform = max(
+                  len(sizes) if isinstance(sizes, dict) else 1
+                  for sizes in data.values()
+              )
+              
+              svg_height = header_height + (len(platforms) * (row_height * max_rows_per_platform + platform_spacing)) + 100
+              svg_width = 1200
+              
+              svg_content = f'''
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}">
+                {create_gradient_definitions()}
+                
+                <!-- Background -->
+                <rect width="100%" height="100%" fill="#ffffff"/>
+                
+                <!-- Header -->
+                <g transform="translate(40, 40)">
+                  <rect width="{svg_width-80}" height="80" fill="url(#headerGradient)" rx="8"/>
+                  <text class="title" x="20" y="35">{package_name}</text>
+                  <text class="subtitle" x="20" y="60">Size Analysis Report</text>
+                  
+                  <!-- Summary Metrics -->
+                  <g transform="translate({svg_width-400}, 20)">
+                    <text class="metric-value" x="0" y="15">
+                      Avg Size: {analytics['summary'][package_name]['average_size']}
+                    </text>
+                    <text class="metric-value" x="0" y="35">
+                      Range: {analytics['summary'][package_name]['size_range']}
+                    </text>
+                  </g>
+                </g>
+              '''
+              
+              y_offset = header_height
+              
+              # Platform Data
+              for platform in platforms:
+                  platform_color = {
+                      'windows': '#00A4EF',
+                      'macos': '#999999',
+                      'macos-arm': '#666666',
+                      'linux': '#FCC624',
+                      'android': '#3DDC84',
+                      'ios': '#000000'
+                  }.get(platform, '#444444')
+                  
+                  platform_data = data[platform]
+                  
+                  # Platform Header
+                  svg_content += f'''
+                  <g transform="translate(40, {y_offset})" filter="url(#dropShadow)">
+                    <rect width="{svg_width-80}" height="36" fill="{platform_color}" opacity="0.1" rx="4"/>
+                    {create_platform_icon(platform, 20, 8)}
+                    <text x="50" y="24" class="platform-name" fill="{platform_color}">{platform.upper()}</text>
+                  </g>
+                  '''
+                  
+                  y_offset += 40
+                  
+                  if isinstance(platform_data, dict):
+                      if any(isinstance(v, dict) and 'total_size' in v for v in platform_data.values()):
+                          # Multi-architecture data
+                          for arch, sizes in platform_data.items():
+                              if isinstance(sizes, dict):
+                                  total_size = sizes.get('total_size', 'N/A')
+                                  package_size = sizes.get('package_size', 'N/A')
+                                  
+                                  svg_content += f'''
+                                  <g transform="translate(60, {y_offset})">
+                                    <text class="data-row" x="0" y="15">{arch}</text>
+                                    <text class="data-row" x="200" y="15">Total: </text>
+                                    <text class="metric-value" x="250" y="15">{total_size}</text>
+                                    <text class="data-row" x="400" y="15">Package: </text>
+                                    <text class="metric-value" x="450" y="15">{package_size}</text>
+                                  </g>
+                                  '''
+                                  y_offset += row_height
+                      else:
+                          # Single architecture
+                          total_size = platform_data.get('total_size', 'N/A')
+                          package_size = platform_data.get('package_size', 'N/A')
+                          
+                          svg_content += f'''
+                          <g transform="translate(60, {y_offset})">
+                            <text class="data-row" x="0" y="15">Total: </text>
+                            <text class="metric-value" x="50" y="15">{total_size}</text>
+                            <text class="data-row" x="200" y="15">Package: </text>
+                            <text class="metric-value" x="250" y="15">{package_size}</text>
+                          </g>
+                          '''
+                          y_offset += row_height
                   else:
-                      total_size = sizes if isinstance(sizes, str) else sizes.get("total_size", "N/A")
-                      package_size = "N/A" if isinstance(sizes, str) else sizes.get("package_size", "N/A")
                       svg_content += f'''
-                            <tr>
-                                <td>{platform}</td>
-                                <td>N/A</td>
-                                <td>{total_size}</td>
-                                <td>{package_size}</td>
-                            </tr>'''
-
-              svg_content += '</table></svg>'
-              svg_path = Path("svg-reports") / f"{package_name}_consolidated_size_report.svg"
+                      <g transform="translate(60, {y_offset})">
+                        <text class="data-row" x="0" y="15">Size: </text>
+                        <text class="metric-value" x="50" y="15">{platform_data}</text>
+                      </g>
+                      '''
+                      y_offset += row_height
+                  
+                  y_offset += platform_spacing
+              
+              svg_content += '</svg>'
+              
+              # Save SVG
+              svg_path = Path("svg-reports") / f"{package_name}_size_report.svg"
               svg_path.parent.mkdir(exist_ok=True)
               with svg_path.open("w") as f:
                   f.write(svg_content)
 
-          with open("combined_size_report.json") as f:
-              combined_data = json.load(f)
+          def main():
+              try:
+                  with open("combined_size_report.json") as f:
+                      data = json.load(f)
+                  
+                  Path("svg-reports").mkdir(exist_ok=True)
+                  
+                  for package, package_data in data["packages"].items():
+                      if package != "platform":  # Skip platform mapping
+                          generate_svg_for_package(
+                              package,
+                              package_data,
+                              data["analytics"]
+                          )
+                  
+                  print("::set-output name=status::success")
+                  
+              except Exception as e:
+                  print(f"::error::Error generating SVG reports: {str(e)}")
+                  print("::set-output name=status::failure")
+                  raise
 
-          for package, data in combined_data["packages"].items():
-              generate_svg_for_package(package, data)
-
+          if __name__ == "__main__":
+              main()
           EOF
-          python3 generate_svgs.py
 
-      - name: Upload SVG reports
+          python generate_svgs.py
+
+      - name: Create Report Summary
+        if: always()
+        run: |
+          echo "## Size Report Generation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "### Status" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ steps.generate-svgs.outputs.status }}" == "success" ]]; then
+            echo "✅ Report generation completed successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Report generation failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "### Details" >> $GITHUB_STEP_SUMMARY
+          echo "- Reports processed: ${{ steps.combine-reports.outputs.report_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Generated at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Combined JSON Report
+        if: steps.combine-reports.outputs.status == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-size-report
+          path: combined_size_report.json
+          if-no-files-found: error
+
+      - name: Upload SVG Reports
+        if: steps.generate-svgs.outputs.status == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: svg-size-reports
-          path: svg-reports
+          path: svg-reports/*.svg
+          if-no-files-found: error
