@@ -101,9 +101,9 @@ jobs:
         run: |
           cd packages/opencv_core/example
           flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-          CORE_SIZE_ARM64=$(stat -c%s "build/app/outputs/app-arm64-v8a-release.apk" || echo "0")
-          CORE_SIZE_ARMV7=$(stat -c%s "build/app/outputs/app-armeabi-v7a-release.apk" || echo "0")
-          CORE_SIZE_X64=$(stat -c%s "build/app/outputs/app-x86_64-release.apk" || echo "0")
+          CORE_SIZE_ARM64=$(stat -c%s "build/app/outputs/apk/release/app-arm64-v8a-release.apk" || echo "0")
+          CORE_SIZE_ARMV7=$(stat -c%s "build/app/outputs/apk/release/app-armeabi-v7a-release.apk" || echo "0")
+          CORE_SIZE_X64=$(stat -c%s "build/app/outputs/apk/release/app-x86_64-release.apk" || echo "0")
           echo "CORE_SIZE_ARM64=$CORE_SIZE_ARM64" >> $GITHUB_ENV
           echo "CORE_SIZE_ARMV7=$CORE_SIZE_ARMV7" >> $GITHUB_ENV
           echo "CORE_SIZE_X64=$CORE_SIZE_X64" >> $GITHUB_ENV
@@ -113,9 +113,9 @@ jobs:
         run: |
           cd packages/opencv_dart/example
           flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-          DART_SIZE_ARM64=$(stat -c%s "build/app/outputs/app-arm64-v8a-release.apk" || echo "0")
-          DART_SIZE_ARMV7=$(stat -c%s "build/app/outputs/app-armeabi-v7a-release.apk" || echo "0")
-          DART_SIZE_X64=$(stat -c%s "build/app/outputs/app-x86_64-release.apk" || echo "0")
+          DART_SIZE_ARM64=$(stat -c%s "build/app/outputs/apk/release/app-arm64-v8a-release.apk" || echo "0")
+          DART_SIZE_ARMV7=$(stat -c%s "build/app/outputs/apk/release/app-armeabi-v7a-release.apk" || echo "0")
+          DART_SIZE_X64=$(stat -c%s "build/app/outputs/apk/release/app-x86_64-release.apk" || echo "0")
           echo "DART_SIZE_ARM64=$DART_SIZE_ARM64" >> $GITHUB_ENV
           echo "DART_SIZE_ARMV7=$DART_SIZE_ARMV7" >> $GITHUB_ENV
           echo "DART_SIZE_X64=$DART_SIZE_X64" >> $GITHUB_ENV
