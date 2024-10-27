@@ -26,7 +26,7 @@ jobs:
           flutter create base_project
           cd base_project
           flutter build windows
-          $baseSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
+          $baseSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "BASE_SIZE=$baseSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       # Build and measure opencv_core
@@ -34,7 +34,7 @@ jobs:
         run: |
           cd packages/opencv_core/example
           flutter build windows
-          $coreSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
+          $coreSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "CORE_SIZE=$coreSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       # Build and measure opencv_dart
@@ -42,7 +42,7 @@ jobs:
         run: |
           cd packages/opencv_dart/example
           flutter build windows
-          $dartSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
+          $dartSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "DART_SIZE=$dartSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       # Generate size comparison JSON
@@ -174,7 +174,7 @@ jobs:
           flutter create base_project
           cd base_project
           flutter build linux
-          BASE_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
+          BASE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
 
       # Build and measure opencv_core
@@ -182,7 +182,7 @@ jobs:
         run: |
           cd packages/opencv_core/example
           flutter build linux
-          CORE_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
+          CORE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
 
       # Build and measure opencv_dart
@@ -190,7 +190,7 @@ jobs:
         run: |
           cd packages/opencv_dart/example
           flutter build linux
-          DART_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
+          DART_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
 
       # Generate size comparison JSON
@@ -443,7 +443,7 @@ jobs:
 
           def convert_to_mb(value):
               try:
-                  return round(float(value) / 1024 / 1024, 2)
+                  return round(float(value) / 1024, 2)
               except (ValueError, TypeError):
                   return value
 
