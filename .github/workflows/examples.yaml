@@ -88,47 +88,58 @@ jobs:
           cd size_comparison
           flutter create base_project
           cd base_project
-          flutter build apk --release --target-platform android-arm64
-          BASE_SIZE=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
-          echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          BASE_SIZE_ARM64=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
+          BASE_SIZE_ARMV7=$(stat -c%s "build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk" || echo "0")
+          BASE_SIZE_X64=$(stat -c%s "build/app/outputs/flutter-apk/app-x86_64-release.apk" || echo "0")
+          echo "BASE_SIZE_ARM64=$BASE_SIZE_ARM64" >> $GITHUB_ENV
+          echo "BASE_SIZE_ARMV7=$BASE_SIZE_ARMV7" >> $GITHUB_ENV
+          echo "BASE_SIZE_X64=$BASE_SIZE_X64" >> $GITHUB_ENV
       
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build apk --release --target-platform android-arm64
-          CORE_SIZE=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
-          echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          CORE_SIZE_ARM64=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
+          CORE_SIZE_ARMV7=$(stat -c%s "build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk" || echo "0")
+          CORE_SIZE_X64=$(stat -c%s "build/app/outputs/flutter-apk/app-x86_64-release.apk" || echo "0")
+          echo "CORE_SIZE_ARM64=$CORE_SIZE_ARM64" >> $GITHUB_ENV
+          echo "CORE_SIZE_ARMV7=$CORE_SIZE_ARMV7" >> $GITHUB_ENV
+          echo "CORE_SIZE_X64=$CORE_SIZE_X64" >> $GITHUB_ENV
       
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build apk --release --target-platform android-arm64
-          DART_SIZE=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
-          echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
-      
+          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+          DART_SIZE_ARM64=$(stat -c%s "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" || echo "0")
+          DART_SIZE_ARMV7=$(stat -c%s "build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk" || echo "0")
+          DART_SIZE_X64=$(stat -c%s "build/app/outputs/flutter-apk/app-x86_64-release.apk" || echo "0")
+          echo "DART_SIZE_ARM64=$DART_SIZE_ARM64" >> $GITHUB_ENV
+          echo "DART_SIZE_ARMV7=$DART_SIZE_ARMV7" >> $GITHUB_ENV
+          echo "DART_SIZE_X64=$DART_SIZE_X64" >> $GITHUB_ENV
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
-          base_size=${BASE_SIZE:-0}
-          core_size=${CORE_SIZE:-0}
-          dart_size=${DART_SIZE:-0}
-          
-          core_diff=$((core_size - base_size))
-          dart_diff=$((dart_size - base_size))
-          
           cat > android_size_report.json << EOL
           {
             "platform": "android",
-            "base_size": $base_size,
+            "base_size": {
+              "arm64-v8a": ${BASE_SIZE_ARM64:-0},
+              "armeabi-v7a": ${BASE_SIZE_ARMV7:-0},
+              "x86_64": ${BASE_SIZE_X64:-0}
+            },
             "opencv_core": {
-              "total_size": $core_size,
-              "package_size": $core_diff
+              "arm64-v8a": ${CORE_SIZE_ARM64:-0},
+              "armeabi-v7a": ${CORE_SIZE_ARMV7:-0},
+              "x86_64": ${CORE_SIZE_X64:-0}
             },
             "opencv_dart": {
-              "total_size": $dart_size,
-              "package_size": $dart_diff
+              "arm64-v8a": ${DART_SIZE_ARM64:-0},
+              "armeabi-v7a": ${DART_SIZE_ARMV7:-0},
+              "x86_64": ${DART_SIZE_X64:-0}
             }
           }
           EOL
@@ -138,7 +149,6 @@ jobs:
         with:
           name: android-size-report
           path: android_size_report.json
-
   linux:
     name: linux-size-comparison
     runs-on: ubuntu-latest
