@@ -452,14 +452,13 @@ jobs:
         with:
           path: size-reports
 
-      - name: Combine reports, convert to MB, and generate SVGs
+      - name: Generate Combined JSON Report
         run: |
-          cat << 'EOF' > combine_reports.py
+          cat << 'EOF' > generate_combined_json.py
           import json
           import os
           import glob
           from datetime import datetime
-          from pathlib import Path
 
           def convert_to_mb(value):
               try:
@@ -467,8 +466,13 @@ jobs:
               except (ValueError, TypeError):
                   return value
 
-          def process_dict(d):
-              return {k: process_dict(v) if isinstance(v, dict) else convert_to_mb(v) for k, v in d.items()}
+          def process_dict(data):
+              if isinstance(data, dict):
+                  return {k: process_dict(v) for k, v in data.items()}
+              elif isinstance(data, list):
+                  return [process_dict(item) for item in data]
+              else:
+                  return convert_to_mb(data)
 
           def consolidate_data(reports):
               combined = {"timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")}
@@ -487,6 +491,32 @@ jobs:
               combined["packages"] = packages_data
               return combined
 
+          reports = glob.glob('size-reports/*/*.json')
+          combined_data = consolidate_data(reports)
+
+          with open("combined_size_report.json", "w") as f:
+              json.dump(combined_data, f, indent=2)
+          EOF
+
+          python3 generate_combined_json.py
+
+      - name: Display Combined JSON Report
+        run: |
+          echo "Combined JSON Report:"
+          cat combined_size_report.json
+
+      - name: Upload Combined JSON Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-size-report
+          path: combined_size_report.json
+
+      - name: Generate SVGs for Each Package
+        run: |
+          cat << 'EOF' > generate_svgs.py
+          import json
+          from pathlib import Path
+
           def generate_svg_for_package(package_name, data):
               svg_content = f'''
               <svg xmlns="http://www.w3.org/2000/svg" width="600" height="{len(data) * 30 + 80}">
@@ -502,8 +532,8 @@ jobs:
               '''
               y_pos = 80
               for platform, sizes in data.items():
-                  total_size = sizes.get("total_size", "N/A")
-                  package_size = sizes.get("package_size", "N/A")
+                  total_size = sizes["total_size"] if isinstance(sizes, dict) and "total_size" in sizes else str(sizes)
+                  package_size = sizes["package_size"] if isinstance(sizes, dict) and "package_size" in sizes else "N/A"
                   svg_content += f'''
                     <text x="10" y="{y_pos}" class="row">{platform}</text>
                     <text x="150" y="{y_pos}" class="row">{total_size}</text>
@@ -517,24 +547,14 @@ jobs:
               with svg_path.open("w") as f:
                   f.write(svg_content)
 
-          reports = glob.glob('size-reports/*/*.json')
-          combined_data = consolidate_data(reports)
-
-          with open("combined_size_report.json", "w") as f:
-              json.dump(combined_data, f, indent=2)
+          with open("combined_size_report.json") as f:
+              combined_data = json.load(f)
 
           for package, data in combined_data["packages"].items():
               generate_svg_for_package(package, data)
-
           EOF
 
-          python3 combine_reports.py
-
-      - name: Upload combined JSON report
-        uses: actions/upload-artifact@v4
-        with:
-          name: combined-size-report
-          path: combined_size_report.json
+          python3 generate_svgs.py
 
       - name: Upload SVG reports
         uses: actions/upload-artifact@v4
