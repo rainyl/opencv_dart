@@ -17,7 +17,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -28,7 +28,7 @@ jobs:
           flutter build windows
           $baseSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
           echo "BASE_SIZE=$baseSize" | Out-File -FilePath $env:GITHUB_ENV -Append
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -36,7 +36,7 @@ jobs:
           flutter build windows
           $coreSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
           echo "CORE_SIZE=$coreSize" | Out-File -FilePath $env:GITHUB_ENV -Append
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -44,7 +44,7 @@ jobs:
           flutter build windows
           $dartSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum
           echo "DART_SIZE=$dartSize" | Out-File -FilePath $env:GITHUB_ENV -Append
-      
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
@@ -78,9 +78,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
-      
+          distribution: "temurin"
+          java-version: "17"
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -95,7 +95,7 @@ jobs:
           echo "BASE_SIZE_ARM64=$BASE_SIZE_ARM64" >> $GITHUB_ENV
           echo "BASE_SIZE_ARMV7=$BASE_SIZE_ARMV7" >> $GITHUB_ENV
           echo "BASE_SIZE_X64=$BASE_SIZE_X64" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -107,7 +107,7 @@ jobs:
           echo "CORE_SIZE_ARM64=$CORE_SIZE_ARM64" >> $GITHUB_ENV
           echo "CORE_SIZE_ARMV7=$CORE_SIZE_ARMV7" >> $GITHUB_ENV
           echo "CORE_SIZE_X64=$CORE_SIZE_X64" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -165,7 +165,7 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -176,7 +176,7 @@ jobs:
           flutter build linux
           BASE_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -184,7 +184,7 @@ jobs:
           flutter build linux
           CORE_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -192,17 +192,17 @@ jobs:
           flutter build linux
           DART_SIZE=$(du -sb "build/linux/x64/release/bundle" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
-      
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
           base_size=${BASE_SIZE:-0}
           core_size=${CORE_SIZE:-0}
           dart_size=${DART_SIZE:-0}
-          
+
           core_diff=$((core_size - base_size))
           dart_diff=$((dart_size - base_size))
-          
+
           cat > linux_size_report.json << EOL
           {
             "platform": "linux",
@@ -232,7 +232,7 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -243,7 +243,7 @@ jobs:
           flutter build ios --release --no-codesign
           BASE_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -251,7 +251,7 @@ jobs:
           flutter build ios --release --no-codesign
           CORE_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -259,17 +259,17 @@ jobs:
           flutter build ios --release --no-codesign
           DART_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
-      
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
           base_size=${BASE_SIZE:-0}
           core_size=${CORE_SIZE:-0}
           dart_size=${DART_SIZE:-0}
-          
+
           core_diff=$((core_size - base_size))
           dart_diff=$((dart_size - base_size))
-          
+
           cat > ios_size_report.json << EOL
           {
             "platform": "ios",
@@ -299,7 +299,7 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -310,7 +310,7 @@ jobs:
           flutter build macos
           BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -318,7 +318,7 @@ jobs:
           flutter build macos
           CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -326,17 +326,17 @@ jobs:
           flutter build macos
           DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
-      
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
           base_size=${BASE_SIZE:-0}
           core_size=${CORE_SIZE:-0}
           dart_size=${DART_SIZE:-0}
-          
+
           core_diff=$((core_size - base_size))
           dart_diff=$((dart_size - base_size))
-          
+
           cat > macos_size_report.json << EOL
           {
             "platform": "macos",
@@ -366,7 +366,7 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      
+
       # Create and build base project
       - name: Create base project
         run: |
@@ -377,7 +377,7 @@ jobs:
           flutter build macos
           BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_core
       - name: opencv_core size
         run: |
@@ -385,7 +385,7 @@ jobs:
           flutter build macos
           CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
-      
+
       # Build and measure opencv_dart
       - name: opencv_dart size
         run: |
@@ -393,17 +393,17 @@ jobs:
           flutter build macos
           DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
-      
+
       # Generate size comparison JSON
       - name: Generate size report
         run: |
           base_size=${BASE_SIZE:-0}
           core_size=${CORE_SIZE:-0}
           dart_size=${DART_SIZE:-0}
-          
+
           core_diff=$((core_size - base_size))
           dart_diff=$((dart_size - base_size))
-          
+
           cat > macos_arm_size_report.json << EOL
           {
             "platform": "macos-arm",
@@ -424,7 +424,6 @@ jobs:
         with:
           name: macos-arm-size-report
           path: macos_arm_size_report.json
-
   combine-reports:
     needs: [windows, android, ios, linux, macos, macos-arm]
     runs-on: ubuntu-latest
@@ -433,7 +432,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: size-reports
-
       - name: Combine reports and convert to MB
         run: |
           echo "{" > combined_size_report.json
@@ -449,9 +447,9 @@ jobs:
             fi
 
             platform=$(basename "$report" _size_report.json)
-            
-            # Read the report and convert sizes to MB
-            content=$(jq -c '. | (with_entries(.value |= if type == "object" then with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring )) else . | tonumber | . / 1024 / 1024 | tostring end)) | "    \"\($platform)\": " + .' "$report")
+
+            # Correct way to interpolate shell variable in jq
+            content=$(jq -c '. | (with_entries(.value |= if type == "object" then with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring )) else . | tonumber | . / 1024 / 1024 | tostring end)) | "    \"\('$platform'\)": " + .' "$report")
             echo "$content" >> combined_size_report.json
           done
 
