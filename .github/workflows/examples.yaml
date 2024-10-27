@@ -127,6 +127,69 @@ jobs:
           name: android-size-report
           path: android_size_report.json
 
+  linux:
+    name: linux-size-comparison
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
+          sudo apt-get install clang cmake git \
+            ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev \
+            libstdc++-12-dev
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+      
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build linux
+          echo "BASE_SIZE=$(stat -c%s build/linux/x64/release/bundle/base_project)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_core
+      - name: opencv_core size
+        run: |
+          cd packages/opencv_core/example
+          flutter build linux
+          echo "CORE_SIZE=$(stat -c%s build/linux/x64/release/bundle/opencv_core_example)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_dart
+      - name: opencv_dart size
+        run: |
+          cd packages/opencv_dart/example
+          flutter build linux
+          echo "DART_SIZE=$(stat -c%s build/linux/x64/release/bundle/opencv_dart_example)" >> $GITHUB_ENV
+      
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          echo "{
+            \"platform\": \"linux\",
+            \"base_size\": $BASE_SIZE,
+            \"opencv_core\": {
+              \"total_size\": $CORE_SIZE,
+              \"package_size\": $(($CORE_SIZE - $BASE_SIZE))
+            },
+            \"opencv_dart\": {
+              \"total_size\": $DART_SIZE,
+              \"package_size\": $(($DART_SIZE - $BASE_SIZE))
+            }
+          }" > linux_size_report.json
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-size-report
+          path: linux_size_report.json
+
   ios:
     name: ios-size-comparison
     runs-on: macos-14
@@ -182,8 +245,118 @@ jobs:
           name: ios-size-report
           path: ios_size_report.json
 
+  macos:
+    name: macos-size-comparison
+    runs-on: macos-13
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+      
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build macos
+          echo "BASE_SIZE=$(stat -f%z build/macos/Build/Products/Release/base_project.app)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_core
+      - name: opencv_core size
+        run: |
+          cd packages/opencv_core/example
+          flutter build macos
+          echo "CORE_SIZE=$(stat -f%z build/macos/Build/Products/Release/opencv_core_example.app)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_dart
+      - name: opencv_dart size
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
+          echo "DART_SIZE=$(stat -f%z build/macos/Build/Products/Release/opencv_dart_example.app)" >> $GITHUB_ENV
+      
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          echo "{
+            \"platform\": \"macos\",
+            \"base_size\": $BASE_SIZE,
+            \"opencv_core\": {
+              \"total_size\": $CORE_SIZE,
+              \"package_size\": $(($CORE_SIZE - $BASE_SIZE))
+            },
+            \"opencv_dart\": {
+              \"total_size\": $DART_SIZE,
+              \"package_size\": $(($DART_SIZE - $BASE_SIZE))
+            }
+          }" > macos_size_report.json
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-size-report
+          path: macos_size_report.json
+
+  macos-arm:
+    name: macos-arm-size-comparison
+    runs-on: macos-14
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+      
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build macos
+          echo "BASE_SIZE=$(stat -f%z build/macos/Build/Products/Release/base_project.app)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_core
+      - name: opencv_core size
+        run: |
+          cd packages/opencv_core/example
+          flutter build macos
+          echo "CORE_SIZE=$(stat -f%z build/macos/Build/Products/Release/opencv_core_example.app)" >> $GITHUB_ENV
+      
+      # Build and measure opencv_dart
+      - name: opencv_dart size
+        run: |
+          cd packages/opencv_dart/example
+          flutter build macos
+          echo "DART_SIZE=$(stat -f%z build/macos/Build/Products/Release/opencv_dart_example.app)" >> $GITHUB_ENV
+      
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          echo "{
+            \"platform\": \"macos-arm\",
+            \"base_size\": $BASE_SIZE,
+            \"opencv_core\": {
+              \"total_size\": $CORE_SIZE,
+              \"package_size\": $(($CORE_SIZE - $BASE_SIZE))
+            },
+            \"opencv_dart\": {
+              \"total_size\": $DART_SIZE,
+              \"package_size\": $(($DART_SIZE - $BASE_SIZE))
+            }
+          }" > macos_arm_size_report.json
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm-size-report
+          path: macos_arm_size_report.json
+
   combine-reports:
-    needs: [windows, android, ios]
+    needs: [windows, android, ios, linux, macos, macos-arm]
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
