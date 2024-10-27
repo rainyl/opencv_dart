@@ -434,36 +434,38 @@ jobs:
           path: size-reports
       - name: Combine reports and convert to MB
         run: |
-          echo "{" > combined_size_report.json
-          echo "  \"timestamp\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"," >> combined_size_report.json
-          echo "  \"platforms\": {" >> combined_size_report.json
+          cat << 'EOF' > combine_reports.py
+          import json
+          import sys
+          from datetime import datetime
+          import os
+          import glob
 
-          first=true
-          for report in size-reports/*/*.json; do
-            if [ "$first" = true ]; then
-              first=false
-            else
-              echo "," >> combined_size_report.json
-            fi
+          def convert_to_mb(value):
+              try:
+                  return round(float(value) / 1024 / 1024, 2)
+              except (ValueError, TypeError):
+                  return value
 
-            platform=$(basename "$report" _size_report.json)
-            
-            # Fixed jq command with proper variable handling and formatting
-            content=$(jq -r --arg platform "$platform" '
-              (with_entries(.value |= 
-                if type == "object" then 
-                  with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring))
-                else 
-                  . | tonumber | . / 1024 / 1024 | tostring 
-                end
-              )) | 
-              "    \"" + $platform + "\": " + tostring
-            ' "$report")
-            echo "$content" >> combined_size_report.json
-          done
+          def process_dict(d):
+              return {k: process_dict(v) if isinstance(v, dict) else convert_to_mb(v) for k, v in d.items()}
 
-          echo "  }" >> combined_size_report.json
-          echo "}" >> combined_size_report.json
+          combined = {
+              "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "platforms": {}
+          }
+
+          reports = glob.glob('size-reports/*/*.json')
+          for report_path in reports:
+              platform = os.path.basename(os.path.dirname(report_path)).replace('-size-report', '')
+              with open(report_path) as f:
+                  data = json.load(f)
+                  combined['platforms'][platform] = process_dict(data)
+
+          print(json.dumps(combined, indent=2))
+          EOF
+
+          python3 combine_reports.py > combined_size_report.json
 
       - name: Upload combined report
         uses: actions/upload-artifact@v4
