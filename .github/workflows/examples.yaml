@@ -433,13 +433,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: size-reports
-      
-      - name: Combine reports
+
+      - name: Combine reports and convert to MB
         run: |
           echo "{" > combined_size_report.json
           echo "  \"timestamp\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"," >> combined_size_report.json
           echo "  \"platforms\": {" >> combined_size_report.json
-          
+
           first=true
           for report in size-reports/*/*.json; do
             if [ "$first" = true ]; then
@@ -447,11 +447,14 @@ jobs:
             else
               echo "," >> combined_size_report.json
             fi
+
             platform=$(basename "$report" _size_report.json)
-            content=$(cat "$report" | sed '1s/^/    "'"$platform"'": /')
+            
+            # Read the report and convert sizes to MB
+            content=$(jq -c '. | (with_entries(.value |= if type == "object" then with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring )) else . | tonumber | . / 1024 / 1024 | tostring end)) | "    \"\($platform)\": " + .' "$report")
             echo "$content" >> combined_size_report.json
           done
-          
+
           echo "  }" >> combined_size_report.json
           echo "}" >> combined_size_report.json
 
