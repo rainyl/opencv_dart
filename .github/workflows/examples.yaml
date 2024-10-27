@@ -132,14 +132,32 @@ jobs:
               "x86_64": ${BASE_SIZE_X64:-0}
             },
             "opencv_core": {
-              "arm64-v8a": ${CORE_SIZE_ARM64:-0},
-              "armeabi-v7a": ${CORE_SIZE_ARMV7:-0},
-              "x86_64": ${CORE_SIZE_X64:-0}
+              "arm64-v8a": {
+                "total_size": ${CORE_SIZE_ARM64:-0},
+                "package_size": $(( ${CORE_SIZE_ARM64:-0} - ${BASE_SIZE_ARM64:-0} ))
+              },
+              "armeabi-v7a": {
+                "total_size": ${CORE_SIZE_ARMV7:-0},
+                "package_size": $(( ${CORE_SIZE_ARMV7:-0} - ${BASE_SIZE_ARMV7:-0} ))
+              },
+              "x86_64": {
+                "total_size": ${CORE_SIZE_X64:-0},
+                "package_size": $(( ${CORE_SIZE_X64:-0} - ${BASE_SIZE_X64:-0} ))
+              }
             },
             "opencv_dart": {
-              "arm64-v8a": ${DART_SIZE_ARM64:-0},
-              "armeabi-v7a": ${DART_SIZE_ARMV7:-0},
-              "x86_64": ${DART_SIZE_X64:-0}
+              "arm64-v8a": {
+                "total_size": ${DART_SIZE_ARM64:-0},
+                "package_size": $(( ${DART_SIZE_ARM64:-0} - ${BASE_SIZE_ARM64:-0} ))
+              },
+              "armeabi-v7a": {
+                "total_size": ${DART_SIZE_ARMV7:-0},
+                "package_size": $(( ${DART_SIZE_ARMV7:-0} - ${BASE_SIZE_ARMV7:-0} ))
+              },
+              "x86_64": {
+                "total_size": ${DART_SIZE_X64:-0},
+                "package_size": $(( ${DART_SIZE_X64:-0} - ${BASE_SIZE_X64:-0} ))
+              }
             }
           }
           EOL
@@ -149,6 +167,7 @@ jobs:
         with:
           name: android-size-report
           path: android_size_report.json
+
   linux:
     name: linux-size-comparison
     runs-on: ubuntu-latest
