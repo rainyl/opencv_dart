@@ -451,14 +451,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: size-reports
-      - name: Combine reports and convert to MB
+
+      - name: Combine reports, convert to MB, and generate SVGs
         run: |
           cat << 'EOF' > combine_reports.py
           import json
-          import sys
-          from datetime import datetime
           import os
           import glob
+          from datetime import datetime
+          from pathlib import Path
 
           def convert_to_mb(value):
               try:
@@ -468,6 +469,33 @@ jobs:
 
           def process_dict(d):
               return {k: process_dict(v) if isinstance(v, dict) else convert_to_mb(v) for k, v in d.items()}
+
+          def generate_svg(platform_name, data):
+              svg_content = f'''
+              <svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">
+                <style>
+                  .title {{ font-size: 16px; font-weight: bold; }}
+                  .header {{ font-size: 14px; font-weight: bold; fill: #333; }}
+                  .row {{ font-size: 12px; fill: #555; }}
+                </style>
+                <text x="10" y="20" class="title">Size Report for {platform_name}</text>
+                <text x="10" y="50" class="header">Package</text>
+                <text x="150" y="50" class="header">Total Size (MB)</text>
+                <text x="300" y="50" class="header">Package Size (MB)</text>
+              '''
+              y_pos = 80
+              for package, sizes in data.items():
+                  svg_content += f'''
+                    <text x="10" y="{y_pos}" class="row">{package}</text>
+                    <text x="150" y="{y_pos}" class="row">{sizes.get("total_size", "N/A")}</text>
+                    <text x="300" y="{y_pos}" class="row">{sizes.get("package_size", "N/A")}</text>
+                  '''
+                  y_pos += 20
+              svg_content += '</svg>'
+              svg_path = Path("svg-reports") / f"{platform_name}_size_report.svg"
+              svg_path.parent.mkdir(exist_ok=True)
+              with svg_path.open("w") as f:
+                  f.write(svg_content)
 
           combined = {
               "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -479,15 +507,24 @@ jobs:
               platform = os.path.basename(os.path.dirname(report_path)).replace('-size-report', '')
               with open(report_path) as f:
                   data = json.load(f)
-                  combined['platforms'][platform] = process_dict(data)
+                  processed_data = process_dict(data)
+                  combined['platforms'][platform] = processed_data
+                  generate_svg(platform, processed_data)
 
-          print(json.dumps(combined, indent=2))
+          with open("combined_size_report.json", "w") as f:
+              json.dump(combined, f, indent=2)
           EOF
 
-          python3 combine_reports.py > combined_size_report.json
+          python3 combine_reports.py
 
-      - name: Upload combined report
+      - name: Upload combined JSON report
         uses: actions/upload-artifact@v4
         with:
           name: combined-size-report
           path: combined_size_report.json
+
+      - name: Upload SVG reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: svg-size-reports
+          path: svg-reports
