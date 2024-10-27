@@ -443,8 +443,6 @@ jobs:
         with:
           name: macos-arm-size-report
           path: macos_arm_size_report.json
-
-
   combine-reports:
     needs: [windows, android, ios, linux, macos, macos-arm]
     runs-on: ubuntu-latest
@@ -470,74 +468,64 @@ jobs:
                   return value
 
           def process_dict(d):
-              processed = {}
-              for k, v in d.items():
-                  if isinstance(v, dict):
-                      processed[k] = process_dict(v)
-                  elif isinstance(v, list):
-                      processed[k] = [convert_to_mb(item) for item in v]
-                  else:
-                      processed[k] = convert_to_mb(v)
-              return processed
+              return {k: process_dict(v) if isinstance(v, dict) else convert_to_mb(v) for k, v in d.items()}
 
-          def generate_svg(platform_name, package_name, data):
+          def consolidate_data(reports):
+              combined = {"timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")}
+              packages_data = {}
+
+              for report_path in reports:
+                  platform = os.path.basename(os.path.dirname(report_path)).replace('-size-report', '')
+                  with open(report_path) as f:
+                      data = json.load(f)
+                      processed_data = process_dict(data)
+                      for package, sizes in processed_data.items():
+                          if package not in packages_data:
+                              packages_data[package] = {}
+                          packages_data[package][platform] = sizes
+
+              combined["packages"] = packages_data
+              return combined
+
+          def generate_svg_for_package(package_name, data):
               svg_content = f'''
-              <svg xmlns="http://www.w3.org/2000/svg" width="500" height="150">
+              <svg xmlns="http://www.w3.org/2000/svg" width="600" height="{len(data) * 30 + 80}">
                 <style>
                   .title {{ font-size: 16px; font-weight: bold; }}
                   .header {{ font-size: 14px; font-weight: bold; fill: #333; }}
                   .row {{ font-size: 12px; fill: #555; }}
                 </style>
-                <text x="10" y="20" class="title">Size Report for {platform_name}: {package_name}</text>
+                <text x="10" y="20" class="title">Consolidated Size Report for {package_name}</text>
+                <text x="10" y="50" class="header">Platform</text>
+                <text x="150" y="50" class="header">Total Size (MB)</text>
+                <text x="300" y="50" class="header">Package Size (MB)</text>
               '''
-
-              y_pos = 50
-              if isinstance(data, dict):  # Handle per-architecture data (Android)
-                  for arch, sizes in data.items():
-                      svg_content += f'''
-                        <text x="10" y="{y_pos}" class="header">{arch}:</text>
-                        <text x="100" y="{y_pos}" class="row">Total: {sizes.get('total_size', 'N/A')} MB</text>
-                        <text x="250" y="{y_pos}" class="row">Package: {sizes.get('package_size', 'N/A')} MB</text>
-                      '''
-                      y_pos += 20
-              else: # Handle other platforms (single size value)
+              y_pos = 80
+              for platform, sizes in data.items():
+                  total_size = sizes.get("total_size", "N/A")
+                  package_size = sizes.get("package_size", "N/A")
                   svg_content += f'''
-                      <text x="10" y="{y_pos}" class="header">Total:</text>
-                      <text x="100" y="{y_pos}" class="row">{data.get('total_size', data) if isinstance(data, dict) else data} MB</text>
-                      <text x="10" y="{y_pos + 20}" class="header">Package:</text>
-                      <text x="100" y="{y_pos + 20}" class="row">{data.get('package_size', 'N/A') if isinstance(data, dict) else 'N/A'} MB</text>
-                      '''
-
+                    <text x="10" y="{y_pos}" class="row">{platform}</text>
+                    <text x="150" y="{y_pos}" class="row">{total_size}</text>
+                    <text x="300" y="{y_pos}" class="row">{package_size}</text>
+                  '''
+                  y_pos += 30
 
               svg_content += '</svg>'
-              svg_path = Path("svg-reports") / f"{platform_name}_{package_name}_size_report.svg"
+              svg_path = Path("svg-reports") / f"{package_name}_consolidated_size_report.svg"
               svg_path.parent.mkdir(exist_ok=True)
               with svg_path.open("w") as f:
                   f.write(svg_content)
 
-
-
-          combined = {
-              "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-              "platforms": {}
-          }
-
           reports = glob.glob('size-reports/*/*.json')
-          for report_path in reports:
-              platform = os.path.basename(os.path.dirname(report_path)).replace('-size-report', '')
-              with open(report_path) as f:
-                  data = json.load(f)
-                  processed_data = process_dict(data)
-
-
-                  combined['platforms'][platform] = processed_data
-
-
-                  for package in ["opencv_core", "opencv_dart"]:
-                    generate_svg(platform, package,  processed_data[package])
+          combined_data = consolidate_data(reports)
 
           with open("combined_size_report.json", "w") as f:
-              json.dump(combined, f, indent=2)
+              json.dump(combined_data, f, indent=2)
+
+          for package, data in combined_data["packages"].items():
+              generate_svg_for_package(package, data)
+
           EOF
 
           python3 combine_reports.py
