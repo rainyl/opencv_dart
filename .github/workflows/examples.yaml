@@ -447,9 +447,18 @@ jobs:
             fi
 
             platform=$(basename "$report" _size_report.json)
-
-            # Correct way to interpolate shell variable in jq
-            content=$(jq -c '. | (with_entries(.value |= if type == "object" then with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring )) else . | tonumber | . / 1024 / 1024 | tostring end)) | "    \"\('$platform'\)": " + .' "$report")
+            
+            # Fixed jq command with proper variable handling and formatting
+            content=$(jq -r --arg platform "$platform" '
+              (with_entries(.value |= 
+                if type == "object" then 
+                  with_entries(.value |= (. | tonumber | . / 1024 / 1024 | tostring))
+                else 
+                  . | tonumber | . / 1024 / 1024 | tostring 
+                end
+              )) | 
+              "    \"" + $platform + "\": " + tostring
+            ' "$report")
             echo "$content" >> combined_size_report.json
           done
 
