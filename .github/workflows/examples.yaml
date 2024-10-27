@@ -518,28 +518,45 @@ jobs:
           from pathlib import Path
 
           def generate_svg_for_package(package_name, data):
+              svg_height = len(data) * 60 + 100
               svg_content = f'''
-              <svg xmlns="http://www.w3.org/2000/svg" width="600" height="{len(data) * 30 + 80}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="600" height="{svg_height}">
                 <style>
-                  .title {{ font-size: 16px; font-weight: bold; }}
-                  .header {{ font-size: 14px; font-weight: bold; fill: #333; }}
+                  .title {{ font-size: 18px; font-weight: bold; fill: #333; }}
+                  .header {{ font-size: 14px; font-weight: bold; fill: #444; }}
+                  .arch-header {{ font-size: 12px; font-weight: bold; fill: #666; }}
                   .row {{ font-size: 12px; fill: #555; }}
+                  .platform {{ font-size: 14px; font-weight: bold; fill: #222; }}
                 </style>
-                <text x="10" y="20" class="title">Consolidated Size Report for {package_name}</text>
-                <text x="10" y="50" class="header">Platform</text>
-                <text x="150" y="50" class="header">Total Size (MB)</text>
-                <text x="300" y="50" class="header">Package Size (MB)</text>
+                <text x="10" y="30" class="title">Consolidated Size Report for {package_name}</text>
+                <text x="10" y="60" class="header">Platform</text>
+                <text x="150" y="60" class="header">Architecture</text>
+                <text x="300" y="60" class="header">Total Size (MB)</text>
+                <text x="450" y="60" class="header">Package Size (MB)</text>
               '''
-              y_pos = 80
+              y_pos = 90
               for platform, sizes in data.items():
-                  total_size = sizes["total_size"] if isinstance(sizes, dict) and "total_size" in sizes else str(sizes)
-                  package_size = sizes["package_size"] if isinstance(sizes, dict) and "package_size" in sizes else "N/A"
-                  svg_content += f'''
-                    <text x="10" y="{y_pos}" class="row">{platform}</text>
-                    <text x="150" y="{y_pos}" class="row">{total_size}</text>
-                    <text x="300" y="{y_pos}" class="row">{package_size}</text>
-                  '''
-                  y_pos += 30
+                  if isinstance(sizes, dict):  # Handle platforms with multiple architectures
+                      svg_content += f'<text x="10" y="{y_pos}" class="platform">{platform}</text>'
+                      y_pos += 20
+                      for arch, arch_sizes in sizes.items():
+                          total_size = arch_sizes["total_size"] if isinstance(arch_sizes, dict) and "total_size" in arch_sizes else str(arch_sizes)
+                          package_size = arch_sizes["package_size"] if isinstance(arch_sizes, dict) and "package_size" in arch_sizes else "N/A"
+                          svg_content += f'''
+                            <text x="150" y="{y_pos}" class="arch-header">{arch}</text>
+                            <text x="300" y="{y_pos}" class="row">{total_size}</text>
+                            <text x="450" y="{y_pos}" class="row">{package_size}</text>
+                          '''
+                          y_pos += 20
+                  else:  # Handle single architecture platforms
+                      total_size = sizes if isinstance(sizes, str) else sizes.get("total_size", "N/A")
+                      package_size = "N/A" if isinstance(sizes, str) else sizes.get("package_size", "N/A")
+                      svg_content += f'''
+                        <text x="10" y="{y_pos}" class="platform">{platform}</text>
+                        <text x="300" y="{y_pos}" class="row">{total_size}</text>
+                        <text x="450" y="{y_pos}" class="row">{package_size}</text>
+                      '''
+                      y_pos += 20
 
               svg_content += '</svg>'
               svg_path = Path("svg-reports") / f"{package_name}_consolidated_size_report.svg"
