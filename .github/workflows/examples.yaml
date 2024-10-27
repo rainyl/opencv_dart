@@ -468,11 +468,18 @@ jobs:
                   return value
 
           def process_dict(d):
-              return {k: process_dict(v) if isinstance(v, dict) else convert_to_mb(v) for k, v in d.items()}
+              # Convert all sizes to MB in nested dictionaries
+              processed = {}
+              for k, v in d.items():
+                  if isinstance(v, dict):
+                      processed[k] = process_dict(v)
+                  else:
+                      processed[k] = convert_to_mb(v)
+              return processed
 
           def generate_svg(platform_name, data):
               svg_content = f'''
-              <svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="400" height="{100 + len(data) * 20}">
                 <style>
                   .title {{ font-size: 16px; font-weight: bold; }}
                   .header {{ font-size: 14px; font-weight: bold; fill: #333; }}
@@ -485,10 +492,12 @@ jobs:
               '''
               y_pos = 80
               for package, sizes in data.items():
+                  total_size = sizes.get("total_size", "N/A") if isinstance(sizes, dict) else sizes
+                  package_size = sizes.get("package_size", "N/A") if isinstance(sizes, dict) else "N/A"
                   svg_content += f'''
                     <text x="10" y="{y_pos}" class="row">{package}</text>
-                    <text x="150" y="{y_pos}" class="row">{sizes.get("total_size", "N/A")}</text>
-                    <text x="300" y="{y_pos}" class="row">{sizes.get("package_size", "N/A")}</text>
+                    <text x="150" y="{y_pos}" class="row">{total_size}</text>
+                    <text x="300" y="{y_pos}" class="row">{package_size}</text>
                   '''
                   y_pos += 20
               svg_content += '</svg>'
