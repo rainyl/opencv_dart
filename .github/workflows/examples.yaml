@@ -466,8 +466,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: size-reports
-          pattern: '*-size-report'
-          merge-multiple: true
 
       - name: Generate Combined Report
         id: combine-reports
