@@ -632,43 +632,60 @@ jobs:
               """Generate enhanced SVG report for a package."""
               platforms = list(data.keys())
               
-              # Calculate dimensions
-              row_height = 35
-              header_height = 150
-              platform_spacing = 20
-              platform_header_height = 40
-              spacing = 40
-              # Calculate max rows needed for each platform
-              max_rows_per_platform = {}
+              # SVG Dimensions and Spacing Constants
+              HEADER_HEIGHT = 150
+              PLATFORM_HEADER_HEIGHT = 40
+              ROW_HEIGHT = 35
+              PLATFORM_SPACING = 20
+              ROW_SPACING = 15
+              SECTION_SPACING = 30
+              SIDE_PADDING = 40
+              
+              # Calculate rows needed for each platform
+              platform_rows = {}
               total_rows = 0
               for platform, platform_data in data.items():
                   if platform == 'android':
                       rows = len(platform_data)  # One row per architecture
                   else:
                       rows = 1  # One row for total and package size
-                  max_rows_per_platform[platform] = rows
+                  platform_rows[platform] = rows
                   total_rows += rows
-
-              svg_height = header_height + (total_rows * row_height) + (total_rows * platform_spacing) + (platform_header_height * len(platforms))
-              # svg_height= svg_height *1.2
+              
+              # Calculate total height components
+              content_height = (
+                  HEADER_HEIGHT +                                    # Header section
+                  (len(platforms) * PLATFORM_HEADER_HEIGHT) +        # Platform headers
+                  (total_rows * ROW_HEIGHT) +                       # Data rows
+                  (len(platforms) * PLATFORM_SPACING) +             # Spacing between platform sections
+                  (total_rows * ROW_SPACING) +                      # Spacing between rows
+                  (len(platforms) * SECTION_SPACING)                # Additional section spacing
+              )
+              
+              # Add padding to total height
+              svg_height = content_height + (2 * SIDE_PADDING)
               svg_width = 800
+
+              # Create directory for package SVGs
+              package_dir = Path("packages") / package_name / "images"
+              package_dir.mkdir(parents=True, exist_ok=True)
               
               svg_content = f'''
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}">
-                {create_gradient_definitions()}
-                
-                <!-- Background -->
-                <rect width="100%" height="100%" fill="#ffffff"/>
-                
-                <!-- Header -->
-                <g transform="translate(40, 40)">
-                  <rect width="{svg_width-80}" height="80" fill="url(#headerGradient)" rx="8"/>
-                  <text class="title" x="20" y="35">{package_name}</text>
-                  <text class="subtitle" x="20" y="60">Size Analysis Report</text>
-                </g>
+                  {create_gradient_definitions()}
+                  
+                  <!-- Background -->
+                  <rect width="100%" height="100%" fill="#ffffff"/>
+                  
+                  <!-- Header -->
+                  <g transform="translate({SIDE_PADDING}, {SIDE_PADDING})">
+                      <rect width="{svg_width-2*SIDE_PADDING}" height="80" fill="url(#headerGradient)" rx="8"/>
+                      <text class="title" x="20" y="35">{package_name}</text>
+                      <text class="subtitle" x="20" y="60">Size Analysis Report</text>
+                  </g>
               '''
               
-              y_offset = header_height
+              y_offset = HEADER_HEIGHT
               
               # Platform Data
               for platform in platforms:
@@ -685,49 +702,51 @@ jobs:
                   
                   # Platform Header
                   svg_content += f'''
-                  <g transform="translate(40, {y_offset})" filter="url(#dropShadow)">
-                    <rect width="{svg_width-80}" height="{platform_header_height}" fill="{platform_color}" opacity="0.1" rx="4"/>
-                    {create_platform_icon(platform, 20, 8)}
-                    <text x="50" y="24" class="platform-name" fill="{platform_color}">{platform.upper()}</text>
+                  <g transform="translate({SIDE_PADDING}, {y_offset})" filter="url(#dropShadow)">
+                      <rect width="{svg_width-2*SIDE_PADDING}" height="{PLATFORM_HEADER_HEIGHT}" fill="{platform_color}" opacity="0.1" rx="4"/>
+                      {create_platform_icon(platform, 20, 8)}
+                      <text x="50" y="24" class="platform-name" fill="{platform_color}">{platform.upper()}</text>
                   </g>
                   '''
                   
-                  y_offset += spacing
+                  y_offset += PLATFORM_SPACING + PLATFORM_HEADER_HEIGHT
                   
                   if platform == 'android':
-                      # Handle Android's multiple architectures
                       for arch, sizes in platform_data.items():
                           svg_content += f'''
-                          <g transform="translate(60, {y_offset})">
-                            <text class="data-row" x="0" y="15">{arch}</text>
-                            <text class="data-row" x="200" y="15">Total: </text>
-                            <text class="metric-value" x="250" y="15">{sizes['total_size']}</text>
-                            <text class="data-row" x="400" y="15">Package: </text>
-                            <text class="metric-value" x="500" y="15">{sizes['package_size']}</text>
+                          <g transform="translate({SIDE_PADDING + 20}, {y_offset})">
+                              <text class="data-row" x="0" y="15">{arch}</text>
+                              <text class="data-row" x="200" y="15">Total: </text>
+                              <text class="metric-value" x="250" y="15">{sizes['total_size']}</text>
+                              <text class="data-row" x="400" y="15">Package: </text>
+                              <text class="metric-value" x="500" y="15">{sizes['package_size']}</text>
                           </g>
                           '''
-                          y_offset += row_height
+                          y_offset += ROW_HEIGHT + ROW_SPACING
                   else:
-                      # Handle other platforms
                       svg_content += f'''
-                      <g transform="translate(60, {y_offset})">
-                        <text class="data-row" x="0" y="15">Total: </text>
-                        <text class="metric-value" x="50" y="15">{platform_data['total_size']}</text>
-                        <text class="data-row" x="200" y="15">Package: </text>
-                        <text class="metric-value" x="280" y="15">{platform_data['package_size']}</text>
+                      <g transform="translate({SIDE_PADDING + 20}, {y_offset})">
+                          <text class="data-row" x="0" y="15">Total: </text>
+                          <text class="metric-value" x="50" y="15">{platform_data['total_size']}</text>
+                          <text class="data-row" x="200" y="15">Package: </text>
+                          <text class="metric-value" x="280" y="15">{platform_data['package_size']}</text>
                       </g>
                       '''
-                      y_offset += row_height
+                      y_offset += ROW_HEIGHT + ROW_SPACING
                   
-                  # y_offset += platform_spacing
+                  y_offset += SECTION_SPACING
               
               svg_content += '</svg>'
               
-              # Save SVG
-              svg_path = Path("svg-reports") / f"{package_name}_size_report.svg"
-              svg_path.parent.mkdir(exist_ok=True)
+              # Save SVG to package-specific directory
+              svg_path = package_dir / f"{package_name}_size_report.svg"
               with svg_path.open("w") as f:
-                f.write(svg_content)
+                  f.write(svg_content)
+
+              # Also save to main svg-reports directory for backward compatibility
+              main_svg_path = Path("svg-reports") / f"{package_name}_size_report.svg"
+              with main_svg_path.open("w") as f:
+                  f.write(svg_content)
 
           def calculate_package_analytics(package_data: Dict[str, Any]) -> Dict[str, Any]:
               """Calculate analytics for a package across all platforms."""
@@ -810,3 +829,10 @@ jobs:
           name: svg-size-reports
           path: svg-reports/*.svg
           if-no-files-found: error
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Commit SVG reports"
+          branch: ${{ github.head_ref }}
+          file_pattern: 'packages/*/*.svg'
+
