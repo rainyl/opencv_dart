@@ -154,7 +154,7 @@ jobs:
                 "arm64-v8a": ${BASE_SIZE_ARM64:-0},
                 "armeabi-v7a": ${BASE_SIZE_ARMV7:-0},
                 "x86_64": ${BASE_SIZE_X64:-0},
-                "full_apk_size": ${BASE_FULL_SIZE:-0},
+                "full_apk_size": ${BASE_FULL_SIZE:-0}
               },
               "opencv_core": {
                 "arm64-v8a": {
