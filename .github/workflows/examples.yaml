@@ -670,9 +670,9 @@ jobs:
               HEADER_HEIGHT = 150
               PLATFORM_HEADER_HEIGHT = 40
               ROW_HEIGHT = 35
-              PLATFORM_SPACING = 20
-              ROW_SPACING = 15
-              SECTION_SPACING = 30
+              PLATFORM_SPACING = 5
+              ROW_SPACING = 10
+              SECTION_SPACING = 20
               SIDE_PADDING = 40
               
               # Calculate rows needed for each platform

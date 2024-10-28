@@ -21,6 +21,10 @@ OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](htt
 
 [Supported modules](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#status)
 
+## Package Size
+
+![opencv_dart_size_report](images/opencv_core_size_report.svg)
+
 ## Examples
 
 see [example](https://github.com/rainyl/opencv_core/tree/main/example)
