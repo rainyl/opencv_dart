@@ -1,5 +1,5 @@
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 930">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1025">
         
       <defs>
         <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -44,14 +44,14 @@
             <text x="50" y="24" class="platform-name" fill="#999999">MACOS</text>
         </g>
         
-            <g transform="translate(60, 210)">
+            <g transform="translate(60, 195)">
                 <text class="data-row" x="0" y="15">Total: </text>
                 <text class="metric-value" x="50" y="15">125.26 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
                 <text class="metric-value" x="280" y="15">81.21 MB</text>
             </g>
             
-        <g transform="translate(40, 290)" filter="url(#dropShadow)">
+        <g transform="translate(40, 260)" filter="url(#dropShadow)">
             <rect width="720" height="40" fill="#00A4EF" opacity="0.1" rx="4"/>
             
       <g transform="translate(20, 8) scale(0.8)">
@@ -66,14 +66,58 @@
             <text x="50" y="24" class="platform-name" fill="#00A4EF">WINDOWS</text>
         </g>
         
-            <g transform="translate(60, 350)">
+            <g transform="translate(60, 305)">
                 <text class="data-row" x="0" y="15">Total: </text>
                 <text class="metric-value" x="50" y="15">70.61 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
                 <text class="metric-value" x="280" y="15">47.41 MB</text>
             </g>
             
-        <g transform="translate(40, 430)" filter="url(#dropShadow)">
+        <g transform="translate(40, 370)" filter="url(#dropShadow)">
+            <rect width="720" height="40" fill="#3DDC84" opacity="0.1" rx="4"/>
+            
+      <g transform="translate(20, 8) scale(0.8)">
+        
+          <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="#3DDC84"/>
+        
+      </g>
+    
+            <text x="50" y="24" class="platform-name" fill="#3DDC84">ANDROID</text>
+        </g>
+        
+                <g transform="translate(60, 415)">
+                    <text class="data-row" x="0" y="15">arm64-v8a</text>
+                    <text class="data-row" x="200" y="15">Total: </text>
+                    <text class="metric-value" x="250" y="15">48.00 MB</text>
+                    <text class="data-row" x="400" y="15">Package: </text>
+                    <text class="metric-value" x="500" y="15">41.50 MB</text>
+                </g>
+                
+                <g transform="translate(60, 460)">
+                    <text class="data-row" x="0" y="15">armeabi-v7a</text>
+                    <text class="data-row" x="200" y="15">Total: </text>
+                    <text class="metric-value" x="250" y="15">35.96 MB</text>
+                    <text class="data-row" x="400" y="15">Package: </text>
+                    <text class="metric-value" x="500" y="15">30.02 MB</text>
+                </g>
+                
+                <g transform="translate(60, 505)">
+                    <text class="data-row" x="0" y="15">x86_64</text>
+                    <text class="data-row" x="200" y="15">Total: </text>
+                    <text class="metric-value" x="250" y="15">53.21 MB</text>
+                    <text class="data-row" x="400" y="15">Package: </text>
+                    <text class="metric-value" x="500" y="15">46.60 MB</text>
+                </g>
+                
+                <g transform="translate(60, 550)">
+                    <text class="data-row" x="0" y="15">full_apk_size</text>
+                    <text class="data-row" x="200" y="15">Total: </text>
+                    <text class="metric-value" x="250" y="15">135.06 MB</text>
+                    <text class="data-row" x="400" y="15">Package: </text>
+                    <text class="metric-value" x="500" y="15">117.19 MB</text>
+                </g>
+                
+        <g transform="translate(40, 615)" filter="url(#dropShadow)">
             <rect width="720" height="40" fill="#666666" opacity="0.1" rx="4"/>
             
       <g transform="translate(20, 8) scale(0.8)">
@@ -85,14 +129,14 @@
             <text x="50" y="24" class="platform-name" fill="#666666">MACOS_ARM</text>
         </g>
         
-            <g transform="translate(60, 490)">
+            <g transform="translate(60, 660)">
                 <text class="data-row" x="0" y="15">Total: </text>
                 <text class="metric-value" x="50" y="15">125.28 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
                 <text class="metric-value" x="280" y="15">81.21 MB</text>
             </g>
             
-        <g transform="translate(40, 570)" filter="url(#dropShadow)">
+        <g transform="translate(40, 725)" filter="url(#dropShadow)">
             <rect width="720" height="40" fill="#FCC624" opacity="0.1" rx="4"/>
             
       <g transform="translate(20, 8) scale(0.8)">
@@ -102,14 +146,14 @@
             <text x="50" y="24" class="platform-name" fill="#FCC624">LINUX</text>
         </g>
         
-            <g transform="translate(60, 630)">
+            <g transform="translate(60, 770)">
                 <text class="data-row" x="0" y="15">Total: </text>
                 <text class="metric-value" x="50" y="15">84.71 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
                 <text class="metric-value" x="280" y="15">64.55 MB</text>
             </g>
             
-        <g transform="translate(40, 710)" filter="url(#dropShadow)">
+        <g transform="translate(40, 835)" filter="url(#dropShadow)">
             <rect width="720" height="40" fill="#000000" opacity="0.1" rx="4"/>
             
       <g transform="translate(20, 8) scale(0.8)">
@@ -121,7 +165,7 @@
             <text x="50" y="24" class="platform-name" fill="#000000">IOS</text>
         </g>
         
-            <g transform="translate(60, 770)">
+            <g transform="translate(60, 880)">
                 <text class="data-row" x="0" y="15">Total: </text>
                 <text class="metric-value" x="50" y="15">71.34 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
