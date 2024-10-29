@@ -169,8 +169,8 @@
         
             <g transform="translate(60, 880)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">71.58 MB</text>
+                <text class="metric-value" x="50" y="15">71.56 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">21.97 MB</text>
+                <text class="metric-value" x="280" y="15">21.95 MB</text>
             </g>
             </svg>
