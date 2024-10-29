@@ -6,7 +6,7 @@ from typing import Dict, Any, Union
 import pandas as pd
 import numpy as np
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def format_size(size: Union[float, str, dict, None]) -> tuple[str, float]:
     """Format size values with appropriate units and return both display and raw values."""
@@ -74,7 +74,7 @@ def main():
     try:
         reports = glob.glob(f"{ROOT_DIR}/size-reports/*/*.json")
         if not reports:
-            raise Exception("No report files found")
+            raise Exception(f"No report files found in {ROOT_DIR}/size-reports")
 
         combined_data = consolidate_data(reports)
 
