@@ -1,4 +1,0 @@
-[submodule "packages/dartcv/src"]
-	path = packages/dartcv/src
-	url = https://github.com/rainyl/dartcv.git
-	branch = main
