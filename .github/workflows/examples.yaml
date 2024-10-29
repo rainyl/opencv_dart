@@ -1,8 +1,7 @@
-name: Examples
-
+name: Size Comparison
 on:
   push:
-    branches: ["main"]
+    branches: ["main","sizes"]
     paths-ignore:
       - "**.md"
       - "LICENSE"
@@ -11,46 +10,203 @@ on:
 
 jobs:
   windows:
-    name: windows
+    name: windows-size-comparison
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - name: opencv_core
+
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build windows --release
+          $baseSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
+          echo "BASE_SIZE=$baseSize" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Build and measure opencv_core
+      - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build windows
-      - name: opencv_dart
+          flutter build windows --release
+          $coreSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
+          echo "CORE_SIZE=$coreSize" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Build and measure opencv_dart
+      - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build windows
+          flutter build windows --release
+          $dartSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
+          echo "DART_SIZE=$dartSize" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          $report = @{
+            'platform' = 'windows'
+            'base_size' = $env:BASE_SIZE
+            'opencv_core' = @{
+              'total_size' = $env:CORE_SIZE
+              'package_size' = [int]$env:CORE_SIZE - [int]$env:BASE_SIZE
+            }
+            'opencv_dart' = @{
+              'total_size' = $env:DART_SIZE
+              'package_size' = [int]$env:DART_SIZE - [int]$env:BASE_SIZE
+            }
+          }
+          $report | ConvertTo-Json | Out-File windows_size_report.json
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-size-report
+          path: windows_size_report.json
+
   android:
-    name: android
+      name: android-size-comparison
+      runs-on: ubuntu-latest
+      steps:
+        - uses: subosito/flutter-action@v2
+          with:
+            channel: "stable"
+        - uses: actions/checkout@v4
+        - uses: actions/setup-java@v4
+          with:
+            distribution: "temurin"
+            java-version: "17"
+
+        # Create and build base project with split-per-abi
+        - name: Create base project (split-per-abi)
+          run: |
+            mkdir size_comparison
+            cd size_comparison
+            flutter create base_project
+            cd base_project
+            flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+            BASE_SIZE_ARM64=$(($(stat -c%s "build/app/outputs/apk/release/app-arm64-v8a-release.apk" || echo "0") / 1024))
+            BASE_SIZE_ARMV7=$(($(stat -c%s "build/app/outputs/apk/release/app-armeabi-v7a-release.apk" || echo "0") / 1024))
+            BASE_SIZE_X64=$(($(stat -c%s "build/app/outputs/apk/release/app-x86_64-release.apk" || echo "0") / 1024))
+            echo "BASE_SIZE_ARM64=$BASE_SIZE_ARM64" >> $GITHUB_ENV
+            echo "BASE_SIZE_ARMV7=$BASE_SIZE_ARMV7" >> $GITHUB_ENV
+            echo "BASE_SIZE_X64=$BASE_SIZE_X64" >> $GITHUB_ENV
+
+        # Build full APK for base project (universal)
+        - name: Create base project (universal APK)
+          run: |
+            cd size_comparison/base_project
+            flutter build apk --release
+            BASE_FULL_SIZE=$(($(stat -c%s "build/app/outputs/apk/release/app-release.apk" || echo "0") / 1024))
+            echo "BASE_FULL_SIZE=$BASE_FULL_SIZE" >> $GITHUB_ENV
+
+        # Build and measure opencv_core with split-per-abi
+        - name: opencv_core size (split-per-abi)
+          run: |
+            cd packages/opencv_core/example
+            flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+            CORE_SIZE_ARM64=$(($(stat -c%s "build/app/outputs/apk/release/app-arm64-v8a-release.apk" || echo "0") / 1024))
+            CORE_SIZE_ARMV7=$(($(stat -c%s "build/app/outputs/apk/release/app-armeabi-v7a-release.apk" || echo "0") / 1024))
+            CORE_SIZE_X64=$(($(stat -c%s "build/app/outputs/apk/release/app-x86_64-release.apk" || echo "0") / 1024))
+            echo "CORE_SIZE_ARM64=$CORE_SIZE_ARM64" >> $GITHUB_ENV
+            echo "CORE_SIZE_ARMV7=$CORE_SIZE_ARMV7" >> $GITHUB_ENV
+            echo "CORE_SIZE_X64=$CORE_SIZE_X64" >> $GITHUB_ENV
+
+        # Build full APK for opencv_core (universal)
+        - name: opencv_core full apk size
+          run: |
+            cd packages/opencv_core/example
+            flutter build apk --release
+            CORE_FULL_SIZE=$(($(stat -c%s "build/app/outputs/apk/release/app-release.apk" || echo "0") / 1024))
+            echo "CORE_FULL_SIZE=$CORE_FULL_SIZE" >> $GITHUB_ENV
+
+        # Build and measure opencv_dart with split-per-abi
+        - name: opencv_dart size (split-per-abi)
+          run: |
+            cd packages/opencv_dart/example
+            flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
+            DART_SIZE_ARM64=$(($(stat -c%s "build/app/outputs/apk/release/app-arm64-v8a-release.apk" || echo "0") / 1024))
+            DART_SIZE_ARMV7=$(($(stat -c%s "build/app/outputs/apk/release/app-armeabi-v7a-release.apk" || echo "0") / 1024))
+            DART_SIZE_X64=$(($(stat -c%s "build/app/outputs/apk/release/app-x86_64-release.apk" || echo "0") / 1024))
+            echo "DART_SIZE_ARM64=$DART_SIZE_ARM64" >> $GITHUB_ENV
+            echo "DART_SIZE_ARMV7=$DART_SIZE_ARMV7" >> $GITHUB_ENV
+            echo "DART_SIZE_X64=$DART_SIZE_X64" >> $GITHUB_ENV
+
+        # Build full APK for opencv_dart (universal)
+        - name: opencv_dart full apk size
+          run: |
+            cd packages/opencv_dart/example
+            flutter build apk --release
+            DART_FULL_SIZE=$(($(stat -c%s "build/app/outputs/apk/release/app-release.apk" || echo "0") / 1024))
+            echo "DART_FULL_SIZE=$DART_FULL_SIZE" >> $GITHUB_ENV
+
+        # Generate size comparison JSON
+        - name: Generate size report
+          run: |
+            cat > android_size_report.json << EOL
+            {
+              "platform": "android",
+              "base_size": {
+                "arm64-v8a": ${BASE_SIZE_ARM64:-0},
+                "armeabi-v7a": ${BASE_SIZE_ARMV7:-0},
+                "x86_64": ${BASE_SIZE_X64:-0},
+                "full_apk_size": ${BASE_FULL_SIZE:-0}
+              },
+              "opencv_core": {
+                "arm64-v8a": {
+                  "total_size": ${CORE_SIZE_ARM64:-0},
+                  "package_size": $(( ${CORE_SIZE_ARM64:-0} - ${BASE_SIZE_ARM64:-0} ))
+                },
+                "armeabi-v7a": {
+                  "total_size": ${CORE_SIZE_ARMV7:-0},
+                  "package_size": $(( ${CORE_SIZE_ARMV7:-0} - ${BASE_SIZE_ARMV7:-0} ))
+                },
+                "x86_64": {
+                  "total_size": ${CORE_SIZE_X64:-0},
+                  "package_size": $(( ${CORE_SIZE_X64:-0} - ${BASE_SIZE_X64:-0} ))
+                },
+                "full_apk_size": {
+                  "total_size": ${CORE_FULL_SIZE:-0},
+                  "package_size": $(( ${CORE_FULL_SIZE:-0} - ${BASE_FULL_SIZE:-0} ))
+                }
+              },
+              "opencv_dart": {
+                "arm64-v8a": {
+                  "total_size": ${DART_SIZE_ARM64:-0},
+                  "package_size": $(( ${DART_SIZE_ARM64:-0} - ${BASE_SIZE_ARM64:-0} ))
+                },
+                "armeabi-v7a": {
+                  "total_size": ${DART_SIZE_ARMV7:-0},
+                  "package_size": $(( ${DART_SIZE_ARMV7:-0} - ${BASE_SIZE_ARMV7:-0} ))
+                },
+                "x86_64": {
+                  "total_size": ${DART_SIZE_X64:-0},
+                  "package_size": $(( ${DART_SIZE_X64:-0} - ${BASE_SIZE_X64:-0} ))
+                },
+                "full_apk_size": {
+                  "total_size": ${DART_FULL_SIZE:-0},
+                  "package_size": $(( ${DART_FULL_SIZE:-0} - ${BASE_FULL_SIZE:-0} ))
+                }
+              }
+            }
+            EOL
+
+        - name: Upload size report
+          uses: actions/upload-artifact@v4
+          with:
+            name: android-size-report
+            path: android_size_report.json
+
+
+  linux:
+    name: linux-size-comparison
     runs-on: ubuntu-latest
     steps:
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: opencv_core
-        run: |
-          cd packages/opencv_core/example
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-      - name: opencv_dart
-        run: |
-          cd packages/opencv_dart/example
-          flutter build apk --release --target-platform android-arm64,android-arm,android-x64 --split-per-abi
-  ubuntu:
-    name: ubuntu
-    runs-on: ubuntu-latest
-    steps:
-      - name: setup
+      - name: Setup dependencies
         run: |
           sudo apt-get update -y
           sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
@@ -62,59 +218,333 @@ jobs:
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      - name: opencv_core
+
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build linux --release
+          BASE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
+          echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_core
+      - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build linux
-      - name: opencv_dart
+          flutter build linux --release
+          CORE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
+          echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_dart
+      - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build linux
+          flutter build linux --release
+          DART_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
+          echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
+
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          base_size=${BASE_SIZE:-0}
+          core_size=${CORE_SIZE:-0}
+          dart_size=${DART_SIZE:-0}
+
+          core_diff=$((core_size - base_size))
+          dart_diff=$((dart_size - base_size))
+
+          cat > linux_size_report.json << EOL
+          {
+            "platform": "linux",
+            "base_size": $base_size,
+            "opencv_core": {
+              "total_size": $core_size,
+              "package_size": $core_diff
+            },
+            "opencv_dart": {
+              "total_size": $dart_size,
+              "package_size": $dart_diff
+            }
+          }
+          EOL
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-size-report
+          path: linux_size_report.json
+
+  ios:
+    name: ios-size-comparison
+    runs-on: macos-14
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/checkout@v4
+
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build ios --release --no-codesign
+          BASE_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
+          echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_core
+      - name: opencv_core size
+        run: |
+          cd packages/opencv_core/example
+          flutter build ios --release --no-codesign
+          CORE_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
+          echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_dart
+      - name: opencv_dart size
+        run: |
+          cd packages/opencv_dart/example
+          flutter build ios --release --no-codesign
+          DART_SIZE=$(du -sk "build/ios/iphoneos/Runner.app" | cut -f1)
+          echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
+
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          base_size=${BASE_SIZE:-0}
+          core_size=${CORE_SIZE:-0}
+          dart_size=${DART_SIZE:-0}
+
+          core_diff=$((core_size - base_size))
+          dart_diff=$((dart_size - base_size))
+
+          cat > ios_size_report.json << EOL
+          {
+            "platform": "ios",
+            "base_size": $base_size,
+            "opencv_core": {
+              "total_size": $core_size,
+              "package_size": $core_diff
+            },
+            "opencv_dart": {
+              "total_size": $dart_size,
+              "package_size": $dart_diff
+            }
+          }
+          EOL
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-size-report
+          path: ios_size_report.json
+
   macos:
-    name: macos
+    name: macos-size-comparison
     runs-on: macos-13
     steps:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      - name: opencv_core
+
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build macos --release
+          BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
+          echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_core
+      - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build macos
-      - name: opencv_dart
+          flutter build macos --release
+          CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
+          echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_dart
+      - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build macos
+          flutter build macos --release
+          DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
+          echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
+
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          base_size=${BASE_SIZE:-0}
+          core_size=${CORE_SIZE:-0}
+          dart_size=${DART_SIZE:-0}
+
+          core_diff=$((core_size - base_size))
+          dart_diff=$((dart_size - base_size))
+
+          cat > macos_size_report.json << EOL
+          {
+            "platform": "macos",
+            "base_size": $base_size,
+            "opencv_core": {
+              "total_size": $core_size,
+              "package_size": $core_diff
+            },
+            "opencv_dart": {
+              "total_size": $dart_size,
+              "package_size": $dart_diff
+            }
+          }
+          EOL
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-size-report
+          path: macos_size_report.json
+
   macos-arm:
-    name: macos-arm
+    name: macos-arm-size-comparison
     runs-on: macos-14
     steps:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - uses: actions/checkout@v4
-      - name: opencv_core
+
+      # Create and build base project
+      - name: Create base project
+        run: |
+          mkdir size_comparison
+          cd size_comparison
+          flutter create base_project
+          cd base_project
+          flutter build macos --release
+          BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
+          echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_core
+      - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build macos
-      - name: opencv_dart
+          flutter build macos --release
+          CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
+          echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
+
+      # Build and measure opencv_dart
+      - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build macos
-  ios:
-    name: ios
-    runs-on: macos-14
-    steps:
-      - uses: subosito/flutter-action@v2
+          flutter build macos --release
+          DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
+          echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
+
+      # Generate size comparison JSON
+      - name: Generate size report
+        run: |
+          base_size=${BASE_SIZE:-0}
+          core_size=${CORE_SIZE:-0}
+          dart_size=${DART_SIZE:-0}
+
+          core_diff=$((core_size - base_size))
+          dart_diff=$((dart_size - base_size))
+
+          cat > macos_arm_size_report.json << EOL
+          {
+            "platform": "macos-arm",
+            "base_size": $base_size,
+            "opencv_core": {
+              "total_size": $core_size,
+              "package_size": $core_diff
+            },
+            "opencv_dart": {
+              "total_size": $dart_size,
+              "package_size": $dart_diff
+            }
+          }
+          EOL
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
         with:
-          channel: "stable"
+          name: macos-arm-size-report
+          path: macos_arm_size_report.json
+
+  combine-reports:
+    name: Generate Combined Size Reports
+    needs: [windows, android, ios, linux, macos, macos-arm]
+    runs-on: ubuntu-latest
+
+    steps:
       - uses: actions/checkout@v4
-      - name: opencv_core
+        with:
+          ref: ${{ github.head_ref }}
+
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.11'
+
+      - name: Install dependencies
         run: |
-          cd packages/opencv_core/example
-          flutter build ios --release --no-codesign
-      - name: opencv_dart
+          python -m pip install --upgrade pip
+          pip install pandas numpy
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: size-reports
+
+      - name: Generate Combined Report
+        id: combine-reports
         run: |
-          cd packages/opencv_dart/example
-          flutter build ios --release --no-codesign
+          python scripts/generate_combined_report.py
+
+      - name: Generate SVG Reports
+        if: steps.combine-reports.outputs.status == 'success'
+        id: generate-svgs
+        run: |
+          python scripts/generate_svgs.py
+
+      - name: Create Report Summary
+        if: always()
+        run: |
+          echo "## Size Report Generation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "### Status" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ steps.generate-svgs.outputs.status }}" == "success" ]]; then
+            echo "✅ Report generation completed successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Report generation failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "### Details" >> $GITHUB_STEP_SUMMARY
+          echo "- Reports processed: ${{ steps.combine-reports.outputs.report_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Generated at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Combined JSON Report
+        if: steps.combine-reports.outputs.status == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-size-report
+          path: combined_size_report.json
+          if-no-files-found: error
+
+      - name: Upload SVG Reports
+        if: steps.generate-svgs.outputs.status == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: svg-size-reports
+          path: images/*_size_report.svg
+          if-no-files-found: warn
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Commit SVG reports"
+          file_pattern: 'packages/*/images/*_size_report.svg'

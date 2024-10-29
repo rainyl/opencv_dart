@@ -47,6 +47,9 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 
 [Supported modules](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#status)
 
+## Package Size
+![opencv_dart_size_report](images/opencv_dart_size_report.svg)
+
 ## Examples
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
