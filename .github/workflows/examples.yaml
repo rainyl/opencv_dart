@@ -25,7 +25,7 @@ jobs:
           cd size_comparison
           flutter create base_project
           cd base_project
-          flutter build windows
+          flutter build windows --release
           $baseSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "BASE_SIZE=$baseSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -33,7 +33,7 @@ jobs:
       - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build windows
+          flutter build windows --release
           $coreSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "CORE_SIZE=$coreSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -41,7 +41,7 @@ jobs:
       - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build windows
+          flutter build windows --release
           $dartSize = (Get-ChildItem -Recurse "build\windows\x64\runner\Release\" | Measure-Object -Property Length -Sum).Sum / 1KB
           echo "DART_SIZE=$dartSize" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -226,7 +226,7 @@ jobs:
           cd size_comparison
           flutter create base_project
           cd base_project
-          flutter build linux
+          flutter build linux --release
           BASE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
 
@@ -234,7 +234,7 @@ jobs:
       - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build linux
+          flutter build linux --release
           CORE_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
 
@@ -242,7 +242,7 @@ jobs:
       - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build linux
+          flutter build linux --release
           DART_SIZE=$(du -sk "build/linux/x64/release/bundle" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
 
@@ -360,7 +360,7 @@ jobs:
           cd size_comparison
           flutter create base_project
           cd base_project
-          flutter build macos
+          flutter build macos --release
           BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
 
@@ -368,7 +368,7 @@ jobs:
       - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build macos
+          flutter build macos --release
           CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
 
@@ -376,7 +376,7 @@ jobs:
       - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build macos
+          flutter build macos --release
           DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
 
@@ -427,7 +427,7 @@ jobs:
           cd size_comparison
           flutter create base_project
           cd base_project
-          flutter build macos
+          flutter build macos --release
           BASE_SIZE=$(du -sk "build/macos/Build/Products/Release/base_project.app" | cut -f1)
           echo "BASE_SIZE=$BASE_SIZE" >> $GITHUB_ENV
 
@@ -435,7 +435,7 @@ jobs:
       - name: opencv_core size
         run: |
           cd packages/opencv_core/example
-          flutter build macos
+          flutter build macos --release
           CORE_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_core_example.app" | cut -f1)
           echo "CORE_SIZE=$CORE_SIZE" >> $GITHUB_ENV
 
@@ -443,7 +443,7 @@ jobs:
       - name: opencv_dart size
         run: |
           cd packages/opencv_dart/example
-          flutter build macos
+          flutter build macos --release
           DART_SIZE=$(du -sk "build/macos/Build/Products/Release/opencv_dart_example.app" | cut -f1)
           echo "DART_SIZE=$DART_SIZE" >> $GITHUB_ENV
 
@@ -504,335 +504,13 @@ jobs:
       - name: Generate Combined Report
         id: combine-reports
         run: |
-          cat << 'EOF' > generate_combined_report.py
-          import json
-          import os
-          import glob
-          from datetime import datetime
-          from typing import Dict, Any, Union
-          import pandas as pd
-          import numpy as np
-
-          def format_size(size: Union[float, str, dict, None]) -> tuple[str, float]:
-              """Format size values with appropriate units and return both display and raw values."""
-              try:
-                  if isinstance(size, (int, float,str)):
-                      raw_value = float(size) / 1024
-                      return f"{raw_value:.2f} MB", raw_value
-                  elif isinstance(size, dict):
-                      return "N/A (nested)", 0.0
-                  return "N/A", 0.0
-              except Exception as e:
-                  print(f"Error formatting size: {str(e)}")
-                  return "Error", 0.0
-
-          def process_platform_data(data: Dict[str, Any]) -> Dict[str, Any]:
-              """Process and validate platform-specific data."""
-              if not isinstance(data, dict):
-                  print(f"Unexpected type: {type(data).__name__} for data: {data}")
-                  return {}
-
-              processed = {}
-              for key, value in data.items():
-                  if isinstance(value, dict):
-                      # Extract total_size and package_size directly for better structure
-                      processed[key] = {
-                          "total_size": format_size(value.get("total_size"))[0],
-                          "package_size": format_size(value.get("package_size"))[0]
-                      }
-                  elif isinstance(value, (int, float, str)):
-                      processed[key] = format_size(value)[0]
-                  else:
-                      processed[key] = "N/A"
-              return processed
-
-
-
-          def consolidate_data(reports: list) -> Dict[str, Any]:
-              """Consolidate all report data with additional analytics."""
-              combined = {}
-
-              for report_path in reports:
-                  platform = os.path.basename(report_path).replace('_size_report.json', '')
-                  try:
-                      with open(report_path) as f:
-                          data = json.load(f)
-                          for package, sizes in data.items():
-                              if package == 'base_size' or package == 'platform':  # Skip platform mapping
-                                  continue
-                              if package not in combined:
-                                  combined[package] = {}
-                              if sizes is isinstance(sizes, str):
-                                  continue
-                              combined[package][platform] = process_platform_data(sizes)
-
-                  except Exception as e:
-                      print(f"Error processing {report_path}: {str(e)}")
-                      continue
-
-              return combined
-
-
-          def main():
-              try:
-                  reports = glob.glob('size-reports/*/*.json')
-                  if not reports:
-                      raise Exception("No report files found")
-
-                  combined_data = consolidate_data(reports)
-
-                  with open("combined_size_report.json", "w") as f:
-                      json.dump(combined_data, f, indent=2)
-
-                  print("::set-output name=status::success")
-                  print(f"::set-output name=report_count::{len(reports)}")
-
-              except Exception as e:
-                  print(f"::error::Error generating combined report: {str(e)}")
-                  print("::set-output name=status::failure")
-                  raise
-
-
-          if __name__ == "__main__":
-              main()
-          EOF
-
-          python generate_combined_report.py
+          python scripts/generate_combined_report.py
 
       - name: Generate SVG Reports
         if: steps.combine-reports.outputs.status == 'success'
         id: generate-svgs
         run: |
-          cat << 'EOF' > generate_svgs.py
-          import json
-          from pathlib import Path
-          from typing import Union, Dict, Any
-
-          def create_gradient_definitions() -> str:
-              """Create gradient definitions for various visual elements."""
-              return '''
-                <defs>
-                  <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#2d3748;stop-opacity:0.1" />
-                    <stop offset="100%" style="stop-color:#2d3748;stop-opacity:0.05" />
-                  </linearGradient>
-                  <filter id="dropShadow">
-                    <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/>
-                  </filter>
-                  <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
-                    .title { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 600; }
-                    .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; fill: #666; }
-                    .platform-name { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500; }
-                    .data-row { font-family: 'Inter', sans-serif; font-size: 14px; }
-                    .metric-value { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
-                    .trend-indicator { font-family: 'Inter', sans-serif; font-size: 12px; }
-                    .section-header { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; }
-                  </style>
-                </defs>
-              '''
-
-          def create_platform_icon(platform: str, x: int, y: int) -> str:
-              """Create platform-specific icon."""
-              icons = {
-                  'windows': '''
-                    <path d="M0,0 L9,0 9,9 0,9 Z" fill="#00A4EF"/>
-                    <path d="M10,0 L19,0 19,9 10,9 Z" fill="#7FBA00"/>
-                    <path d="M0,10 L9,10 9,19 0,19 Z" fill="#F25022"/>
-                    <path d="M10,10 L19,10 19,19 10,19 Z" fill="#FFB900"/>
-                  ''',
-                  'macos': '''
-                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5M13 5.96C13.63 5.19 14.51 4.2 14.24 2.87C13.11 2.96 11.76 3.55 11.12 4.3C10.54 4.98 9.96 5.99 10.27 7.29C11.53 7.33 12.65 6.72 13 5.96" fill="currentColor"/>
-                  ''',
-                  # 'linux': '''
-                  #   <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.135-.658.35-.864.602-.09.11-.176.223-.258.337l-.003.005c-.146.207-.382.434-.558.663-.177.229-.253.375-.539.524l-.73.379c-.425.22-1.41.576-1.788 1.03-.38.456-.537.827-.644 1.346-.037.18.005.347.123.525.269.394.489.749.688 1.095.252.442.495.892.215 1.419-.122.22-.272.418-.43.586-.158.169-.346.306-.568.407-.205.114-.412.21-.614.305-.53.258-.827.598-1.285.781-.735.293-1.152 1.053-1.214 1.676-.097.935.524 1.803 1.728 2.006.583.095 2.047.198 2.602.178.563-.022.975-.23 1.399-.413.485-.188.987-.352 1.543-.448.425-.075.85-.134 1.276-.158.942-.055 1.975.095 2.747.537.772.443 1.71.592 2.632.43.577-.1 1.065-.293 1.534-.57.314-.186.84-.284 1.175-.453.303-.151.722-.306 1.005-.472.264-.155.487-.363.66-.613.188-.266.334-.592.416-.944.154-.577.195-1.23.407-1.769.24-.607.573-1.087.881-1.622.059-.106.172-.27.182-.386.03-.303-.072-.567-.206-.84l-.223-.468c-.418-.956-.585-2.128-.217-3.113.208-.555.517-1.072.867-1.515.194-.247.43-.457.654-.664l.023-.022c.119-.115.287-.245.534-.303.195-.048.375.003.472.064.172.108.318.29.463.439l.314.318c.284.277.558.553.843.821.206.191.44.353.697.487.472.252.93.482 1.446.582.268.053.545.074.814.051.213-.02.426-.084.603-.19.333-.202.514-.532.628-.863.172-.503.193-1.037.216-1.565.022-.499.05-1.018-.075-1.495-.125-.481-.328-.932-.593-1.344-.212-.335-.485-.638-.72-.963l-.105-.145c-.135-.202-.278-.405-.356-.627-.066-.193-.073-.399-.074-.605 0-.163-.015-.327-.027-.492l-.05-.694c-.072-.963-.148-1.957.147-2.884.16-.499.418-.949.742-1.35.257-.32.528-.593.739-.923.136-.207.237-.439.314-.683.081-.244.155-.499.247-.737.127-.323.368-.603.397-.968.014-.156.004-.315-.022-.47-.059-.364-.207-.689-.347-1.015l-.342-.786c-.103-.213-.248-.412-.378-.618-.437-.677-.849-1.371-1.156-2.112C14.89.813 14.31.195 13.441.064c-.294-.042-.592-.043-.888-.043z" fill="#000"/>
-                  # ''',
-                  'android': '''
-                    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="#3DDC84"/>
-                  ''',
-                  'ios': '''
-                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5M13 5.96C13.63 5.19 14.51 4.2 14.24 2.87C13.11 2.96 11.76 3.55 11.12 4.3C10.54 4.98 9.96 5.99 10.27 7.29C11.53 7.33 12.65 6.72 13 5.96" fill="currentColor"/>
-                  '''
-              }
-              
-              platform_key = platform.lower().replace('_arm', '')
-              return f'''
-                <g transform="translate({x}, {y}) scale(0.8)">
-                  {icons.get(platform_key, '')}
-                </g>
-              '''
-
-          def generate_svg_for_package(package_name: str, data: Dict[str, Any]) -> None:
-              """Generate enhanced SVG report for a package."""
-              platforms = list(data.keys())
-              
-              # SVG Dimensions and Spacing Constants
-              HEADER_HEIGHT = 150
-              PLATFORM_HEADER_HEIGHT = 40
-              ROW_HEIGHT = 35
-              PLATFORM_SPACING = 5
-              ROW_SPACING = 10
-              SECTION_SPACING = 20
-              SIDE_PADDING = 40
-              
-              # Calculate rows needed for each platform
-              platform_rows = {}
-              total_rows = 0
-              for platform, platform_data in data.items():
-                  if platform == 'android':
-                      rows = len(platform_data)  # One row per architecture
-                  else:
-                      rows = 1  # One row for total and package size
-                  platform_rows[platform] = rows
-                  total_rows += rows
-              
-              # Calculate total height components
-              content_height = (
-                  HEADER_HEIGHT +                                    # Header section
-                  (len(platforms) * PLATFORM_HEADER_HEIGHT) +        # Platform headers
-                  (total_rows * ROW_HEIGHT) +                       # Data rows
-                  (len(platforms) * PLATFORM_SPACING) +             # Spacing between platform sections
-                  (total_rows * ROW_SPACING) +                      # Spacing between rows
-                  (len(platforms) * SECTION_SPACING)                # Additional section spacing
-              )
-              
-              # Add padding to total height
-              svg_height = content_height + (2 * SIDE_PADDING)
-              svg_width = 800
-
-              # Create directory for package SVGs
-              package_dir = Path("packages") / package_name / "images"
-              package_dir.mkdir(parents=True, exist_ok=True)
-              
-              svg_content = f'''
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}">
-                  {create_gradient_definitions()}
-                  
-                  <!-- Background -->
-                  <rect width="100%" height="100%" fill="#ffffff"/>
-                  
-                  <!-- Header -->
-                  <g transform="translate({SIDE_PADDING}, {SIDE_PADDING})">
-                      <rect width="{svg_width-2*SIDE_PADDING}" height="80" fill="url(#headerGradient)" rx="8"/>
-                      <text class="title" x="20" y="35">{package_name}</text>
-                      <text class="subtitle" x="20" y="60">Size Analysis Report</text>
-                  </g>
-              '''
-              
-              y_offset = HEADER_HEIGHT
-              
-              # Platform Data
-              for platform in platforms:
-                  platform_color = {
-                      'windows': '#00A4EF',
-                      'macos': '#999999',
-                      'macos_arm': '#666666',
-                      'linux': '#FCC624',
-                      'android': '#3DDC84',
-                      'ios': '#000000'
-                  }.get(platform, '#444444')
-                  
-                  platform_data = data[platform]
-                  
-                  # Platform Header
-                  svg_content += f'''
-                  <g transform="translate({SIDE_PADDING}, {y_offset})" filter="url(#dropShadow)">
-                      <rect width="{svg_width-2*SIDE_PADDING}" height="{PLATFORM_HEADER_HEIGHT}" fill="{platform_color}" opacity="0.1" rx="4"/>
-                      {create_platform_icon(platform, 20, 8)}
-                      <text x="50" y="24" class="platform-name" fill="{platform_color}">{platform.upper()}</text>
-                  </g>
-                  '''
-                  
-                  y_offset += PLATFORM_SPACING + PLATFORM_HEADER_HEIGHT
-                  
-                  if platform == 'android':
-                      for arch, sizes in platform_data.items():
-                          svg_content += f'''
-                          <g transform="translate({SIDE_PADDING + 20}, {y_offset})">
-                              <text class="data-row" x="0" y="15">{arch}</text>
-                              <text class="data-row" x="200" y="15">Total: </text>
-                              <text class="metric-value" x="250" y="15">{sizes['total_size']}</text>
-                              <text class="data-row" x="400" y="15">Package: </text>
-                              <text class="metric-value" x="500" y="15">{sizes['package_size']}</text>
-                          </g>
-                          '''
-                          y_offset += ROW_HEIGHT + ROW_SPACING
-                  else:
-                      svg_content += f'''
-                      <g transform="translate({SIDE_PADDING + 20}, {y_offset})">
-                          <text class="data-row" x="0" y="15">Total: </text>
-                          <text class="metric-value" x="50" y="15">{platform_data['total_size']}</text>
-                          <text class="data-row" x="200" y="15">Package: </text>
-                          <text class="metric-value" x="280" y="15">{platform_data['package_size']}</text>
-                      </g>
-                      '''
-                      y_offset += ROW_HEIGHT + ROW_SPACING
-                  
-                  y_offset += SECTION_SPACING
-              
-              svg_content += '</svg>'
-              
-              # Save SVG to package-specific directory
-              svg_path = package_dir / f"{package_name}_size_report.svg"
-              with svg_path.open("w") as f:
-                  f.write(svg_content)
-
-              # Also save to main svg-reports directory for backward compatibility
-              main_svg_path = Path("svg-reports") / f"{package_name}_size_report.svg"
-              with main_svg_path.open("w") as f:
-                  f.write(svg_content)
-
-          def calculate_package_analytics(package_data: Dict[str, Any]) -> Dict[str, Any]:
-              """Calculate analytics for a package across all platforms."""
-              all_sizes = []
-              
-              for platform, data in package_data.items():
-                  if platform == 'android':
-                      # For Android, include all architecture sizes
-                      for arch_data in data.values():
-                          all_sizes.append(float(arch_data['total_size'].replace(' MB', '')))
-                          all_sizes.append(float(arch_data['package_size'].replace(' MB', '')))
-                  else:
-                      # For other platforms, include total and package sizes
-                      all_sizes.append(float(data['total_size'].replace(' MB', '')))
-                      all_sizes.append(float(data['package_size'].replace(' MB', '')))
-              
-              return {
-                  'average_size': f"{sum(all_sizes) / len(all_sizes):.2f} MB",
-                  'size_range': f"{min(all_sizes):.2f} MB - {max(all_sizes):.2f} MB"
-              }
-
-          def main():
-              try:
-                  # Create output directory
-                  Path("svg-reports").mkdir(exist_ok=True)
-                  
-                  # Read the JSON data
-                  with open("combined_size_report.json") as f:
-                      data = json.load(f)
-                  
-                  # Process each package
-                  for package_name, package_data in data.items():
-                      # Generate analytics for the package
-                      analytics = calculate_package_analytics(package_data)
-                      
-                      # Generate SVG report
-                      generate_svg_for_package(package_name, package_data)
-                      
-                      print(f"Generated SVG report for {package_name}")
-                  
-                  print("::set-output name=status::success")
-                  
-              except Exception as e:
-                  print(f"::error::Error generating SVG reports: {str(e)}")
-                  print("::set-output name=status::failure")
-                  raise
-
-          if __name__ == "__main__":
-              main()
-          EOF
-
-          python generate_svgs.py
+          python scripts/generate_svgs.py
 
       - name: Create Report Summary
         if: always()
@@ -868,5 +546,4 @@ jobs:
         with:
           commit_message: "Commit SVG reports"
           branch: ${{ github.head_ref }}
-          file_pattern: 'packages/*/*.svg'
-
+          file_pattern: 'packages/*/images/*_size_report.svg'
