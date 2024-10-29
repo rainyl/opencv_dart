@@ -539,8 +539,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: svg-size-reports
-          path: svg-reports/*.svg
-          if-no-files-found: error
+          path: images/*_size_report.svg
+          if-no-files-found: warn
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
