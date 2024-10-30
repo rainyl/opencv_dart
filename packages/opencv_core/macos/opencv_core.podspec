@@ -2,6 +2,13 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint opencv_core.podspec` to validate before publishing.
 #
+require 'psych'
+
+proj_dir = File.dirname(File.dirname(__FILE__))
+pubspec_path = File.join(proj_dir, "pubspec.yaml")
+pubspec = Psych.load(File.read(pubspec_path))
+dartcv_version = pubspec["dartcv_version"]
+
 Pod::Spec.new do |s|
   s.name         = 'opencv_core'
   s.version      = '0.0.1'
@@ -10,7 +17,7 @@ Pod::Spec.new do |s|
     OpenCV bindings for Dart, without highgui and videoio.
   DESC
   s.homepage     = 'https://github.com/rainyl/opencv_dart'
-  s.license      = { :file => '../LICENSE' }
+  s.license      = { :type => 'Apache License 2.0', :file => '../LICENSE' }
   s.author       = { 'Rainyl' => 'rainyliusy3@gmail.com' }
 
   # This will ensure the source files in Classes/ are included in the native
@@ -20,8 +27,8 @@ Pod::Spec.new do |s|
   s.source       = { :path => '.' }
   # s.source_files  = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
-  s.dependency 'DartCvMacOS', '4.10.0+2'
-  s.dependency 'DartCvMacOS/dnn', '4.10.0+2'
+  s.dependency 'DartCvMacOS', "#{dartcv_version}"
+  s.dependency 'DartCvMacOS/dnn', "#{dartcv_version}"
   s.platform = :osx, '10.15'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'

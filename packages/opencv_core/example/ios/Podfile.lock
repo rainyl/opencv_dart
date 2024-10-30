@@ -1,0 +1,64 @@
+PODS:
+  - DartCvIOS (4.10.0.3):
+    - DartCvIOS/calib3d (= 4.10.0.3)
+    - DartCvIOS/contrib (= 4.10.0.3)
+    - DartCvIOS/core (= 4.10.0.3)
+    - DartCvIOS/features2d (= 4.10.0.3)
+    - DartCvIOS/imgproc (= 4.10.0.3)
+    - DartCvIOS/objdetect (= 4.10.0.3)
+    - DartCvIOS/photo (= 4.10.0.3)
+    - DartCvIOS/stitching (= 4.10.0.3)
+    - DartCvIOS/video (= 4.10.0.3)
+  - DartCvIOS/calib3d (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/contrib (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/core (4.10.0.3)
+  - DartCvIOS/dnn (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/features2d (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/imgproc (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/objdetect (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/photo (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/stitching (4.10.0.3):
+    - DartCvIOS/core
+  - DartCvIOS/video (4.10.0.3):
+    - DartCvIOS/core
+  - Flutter (1.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - opencv_core (0.0.1):
+    - DartCvIOS (= 4.10.0.3)
+    - DartCvIOS/dnn (= 4.10.0.3)
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - opencv_core (from `.symlinks/plugins/opencv_core/ios`)
+
+SPEC REPOS:
+  trunk:
+    - DartCvIOS
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  opencv_core:
+    :path: ".symlinks/plugins/opencv_core/ios"
+
+SPEC CHECKSUMS:
+  DartCvIOS: a92134352b918dd2525d2b856fc1d0fe461f7e5d
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  opencv_core: c077e770a9c7442bb28ad53e66485fc794d056ba
+
+PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
+
+COCOAPODS: 1.16.1
