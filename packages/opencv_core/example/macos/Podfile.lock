@@ -1,36 +1,39 @@
 PODS:
-  - "DartCvMacOS (4.10.0+2)":
-    - "DartCvMacOS/calib3d (= 4.10.0+2)"
-    - "DartCvMacOS/contrib (= 4.10.0+2)"
-    - "DartCvMacOS/core (= 4.10.0+2)"
-    - "DartCvMacOS/features2d (= 4.10.0+2)"
-    - "DartCvMacOS/imgproc (= 4.10.0+2)"
-    - "DartCvMacOS/objdetect (= 4.10.0+2)"
-    - "DartCvMacOS/photo (= 4.10.0+2)"
-    - "DartCvMacOS/stitching (= 4.10.0+2)"
-    - "DartCvMacOS/video (= 4.10.0+2)"
-  - "DartCvMacOS/calib3d (4.10.0+2)":
+  - DartCvMacOS (4.10.0.3):
+    - DartCvMacOS/calib3d (= 4.10.0.3)
+    - DartCvMacOS/contrib (= 4.10.0.3)
+    - DartCvMacOS/core (= 4.10.0.3)
+    - DartCvMacOS/features2d (= 4.10.0.3)
+    - DartCvMacOS/imgproc (= 4.10.0.3)
+    - DartCvMacOS/objdetect (= 4.10.0.3)
+    - DartCvMacOS/photo (= 4.10.0.3)
+    - DartCvMacOS/stitching (= 4.10.0.3)
+    - DartCvMacOS/video (= 4.10.0.3)
+  - DartCvMacOS/calib3d (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/contrib (4.10.0+2)":
+  - DartCvMacOS/contrib (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/core (4.10.0+2)"
-  - "DartCvMacOS/features2d (4.10.0+2)":
+  - DartCvMacOS/core (4.10.0.3)
+  - DartCvMacOS/dnn (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/imgproc (4.10.0+2)":
+  - DartCvMacOS/features2d (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/objdetect (4.10.0+2)":
+  - DartCvMacOS/imgproc (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/photo (4.10.0+2)":
+  - DartCvMacOS/objdetect (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/stitching (4.10.0+2)":
+  - DartCvMacOS/photo (4.10.0.3):
     - DartCvMacOS/core
-  - "DartCvMacOS/video (4.10.0+2)":
+  - DartCvMacOS/stitching (4.10.0.3):
+    - DartCvMacOS/core
+  - DartCvMacOS/video (4.10.0.3):
     - DartCvMacOS/core
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - opencv_core (0.0.1):
-    - "DartCvMacOS (= 4.10.0+2)"
+    - DartCvMacOS (= 4.10.0.3)
+    - DartCvMacOS/dnn (= 4.10.0.3)
     - FlutterMacOS
 
 DEPENDENCIES:
@@ -51,11 +54,11 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/opencv_core/macos
 
 SPEC CHECKSUMS:
-  DartCvMacOS: 9dfb2345a8d97cdddd49620385f9d848a05aa80a
+  DartCvMacOS: 203fec6e3ad5ee9f4b1b83c593f2239ab3c1294f
   file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  opencv_core: 3384a05cdbe7d464ac615e961c9fd882628898d2
+  opencv_core: e34947c8ed2e43b8071add614a97de2447474582
 
 PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.1
