@@ -1,3 +1,8 @@
+## 1.3.1
+
+* breaking change: hide `highgui`
+* bump DartCvMacOS and DartCvIOS to 4.10.0.3, conditionally add link option `-ld_classic`
+
 ## 1.3.0
 
 * bump dartcv to 0.0.3

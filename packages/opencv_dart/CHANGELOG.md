@@ -1,3 +1,8 @@
+## 1.3.1
+
+* breaking change: hide `highgui`
+* bump DartCvMacOS and DartCvIOS to 4.10.0.3, conditionally add link option `-ld_classic`
+
 ## 1.3.0
 
 * breaking change: local build. Will download opencv sdk (~100M) from remote, set `DARTCV_CACHE_DIR` to cache it and avoid downloading in every build.
