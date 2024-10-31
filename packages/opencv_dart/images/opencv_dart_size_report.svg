@@ -46,9 +46,9 @@
         
             <g transform="translate(60, 195)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">141.36 MB</text>
+                <text class="metric-value" x="50" y="15">141.89 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">97.30 MB</text>
+                <text class="metric-value" x="280" y="15">97.83 MB</text>
             </g>
             
         <g transform="translate(40, 260)" filter="url(#dropShadow)">
@@ -131,9 +131,9 @@
         
             <g transform="translate(60, 660)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">141.36 MB</text>
+                <text class="metric-value" x="50" y="15">141.89 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">97.29 MB</text>
+                <text class="metric-value" x="280" y="15">97.82 MB</text>
             </g>
             
         <g transform="translate(40, 725)" filter="url(#dropShadow)">
@@ -169,8 +169,8 @@
         
             <g transform="translate(60, 880)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">70.85 MB</text>
+                <text class="metric-value" x="50" y="15">70.94 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">21.24 MB</text>
+                <text class="metric-value" x="280" y="15">21.33 MB</text>
             </g>
             </svg>
