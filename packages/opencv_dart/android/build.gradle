@@ -81,5 +81,15 @@ android {
                   "-DDARTCV_WITH_GAPI=OFF"
             }
         }
+
+        buildTypes {
+          release {
+            externalNativeBuild {
+              cmake {
+                arguments "-DCMAKE_BUILD_TYPE=Release"
+              }
+            }
+          }
+      }
     }
 }

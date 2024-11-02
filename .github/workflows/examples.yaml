@@ -115,6 +115,7 @@ jobs:
             echo "CORE_SIZE_ARM64=$CORE_SIZE_ARM64" >> $GITHUB_ENV
             echo "CORE_SIZE_ARMV7=$CORE_SIZE_ARMV7" >> $GITHUB_ENV
             echo "CORE_SIZE_X64=$CORE_SIZE_X64" >> $GITHUB_ENV
+            dir ${{ github.workspace}}/packages/opencv_core/android/.cxx
 
         # Build full APK for opencv_core (universal)
         - name: opencv_core full apk size
@@ -135,6 +136,7 @@ jobs:
             echo "DART_SIZE_ARM64=$DART_SIZE_ARM64" >> $GITHUB_ENV
             echo "DART_SIZE_ARMV7=$DART_SIZE_ARMV7" >> $GITHUB_ENV
             echo "DART_SIZE_X64=$DART_SIZE_X64" >> $GITHUB_ENV
+            dir ${{ github.workspace}}/packages/opencv_core/android/.cxx
 
         # Build full APK for opencv_dart (universal)
         - name: opencv_dart full apk size
