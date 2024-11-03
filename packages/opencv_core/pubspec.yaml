@@ -5,7 +5,7 @@ description: |
   if you need them, please use `opencv_dart` instead.
 version: 1.3.2
 opencv_version: 4.10.0+9
-dartcv_version: 4.10.0.4
+dartcv_version: 4.10.0.5
 repository: https://github.com/rainyl/opencv_dart
 homepage: https://github.com/rainyl/opencv_dart/tree/main/packages/opencv_core
 
