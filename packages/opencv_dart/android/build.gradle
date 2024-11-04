@@ -67,19 +67,7 @@ android {
             cmake {
                 arguments "-DANDROID_ARM_NEON=TRUE",
                   "-DANDROID_STL=c++_static",
-                  "-DCMAKE_INSTALL_PREFIX=$SOURCE_DIR/src/main/jniLibs",
-                  "-DDARTCV_WITH_CALIB3D=ON",
-                  "-DDARTCV_WITH_CONTRIB=ON",
-                  "-DDARTCV_WITH_DNN=ON",
-                  "-DDARTCV_WITH_FEATURE2D=ON",
-                  "-DDARTCV_WITH_HIGHGUI=ON",
-                  "-DDARTCV_WITH_IMGPROC=ON",
-                  "-DDARTCV_WITH_OBJDETECT=ON",
-                  "-DDARTCV_WITH_PHOTO=ON",
-                  "-DDARTCV_WITH_STITCHING=ON",
-                  "-DDARTCV_WITH_VIDEO=ON",
-                  "-DDARTCV_WITH_VIDEOIO=ON",
-                  "-DDARTCV_WITH_GAPI=OFF"
+                  "-DCMAKE_INSTALL_PREFIX=$SOURCE_DIR/src/main/jniLibs"
             }
         }
 
