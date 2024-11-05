@@ -4,7 +4,6 @@ on:
     paths-ignore:
       - "**.md"
       - "LICENSE"
-  pull_request:
 
 jobs:
   windows:
