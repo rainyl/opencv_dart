@@ -51,7 +51,7 @@ def consolidate_data(reports: list) -> Dict[str, Any]:
                 data = json.load(f)
                 for package, sizes in data.items():
                     if (
-                        package == "base_size" or package == "platform"
+                        package == "base_size" or package == "platform" or platform.lower() == "macos_arm"
                     ):  # Skip platform mapping
                         continue
                     if package not in combined:
