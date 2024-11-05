@@ -478,11 +478,11 @@ jobs:
           }
           EOL
 
-      # - name: Upload size report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: macos-arm-size-report
-      #     path: macos_arm_size_report.json
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm-size-report
+          path: macos_arm_size_report.json
 
   combine-reports:
     name: Generate Combined Size Reports
