@@ -1,12 +1,9 @@
 name: Size Comparison
 on:
   push:
-    branches: ["main","sizes"]
     paths-ignore:
       - "**.md"
       - "LICENSE"
-  pull_request:
-    branches: ["main"]
 
 jobs:
   windows:
@@ -504,6 +501,7 @@ jobs:
           # Checkout the branch made in the fork. Will automatically push changes
           # back to this branch.
           ref: ${{ github.head_ref }}
+          token: ${{ secrets.COMMIT_PAT }}
 
       # - name: Set up Python
       #   uses: actions/setup-python@v5
