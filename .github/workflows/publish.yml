@@ -1,0 +1,82 @@
+name: Publish to pub.dev and release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v{{version}'
+      - 'dartcv4-v[0-9]+.[0-9]+.[0-9]+*'
+  # pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "packages/dartcv/test/"
+          extract: true
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/dartcv"
+          latest: true
+          fileName: "libdartcv-linux-x64.tar.gz"
+          out-file-path: "packages/dartcv/libdartcv"
+          extract: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: test
+        env:
+          LD_LIBRARY_PATH: "${{github.workspace}}/packages/dartcv/libdartcv/lib"
+        run: |
+          cd "${{github.workspace}}/packages/dartcv"
+          dart test -x skip-workflow
+  publish-dartcv4:
+    if: startsWith(github.ref, 'refs/tags/dartcv4-v')
+    name: Publish dartcv4
+    needs: [test]
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      # Specify the github actions deployment environment
+      environment: pub.dev
+      working-directory: packages/dartcv
+  publish-opencv-core:
+    if: startsWith(github.ref, 'refs/tags/v')
+    name: Publish opencv_core
+    needs: [test]
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      # Specify the github actions deployment environment
+      environment: pub.dev
+      working-directory: packages/opencv_core
+  publish-opencv-dart:
+    if: startsWith(github.ref, 'refs/tags/v')
+    name: Publish opencv_dart
+    needs: [test]
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      # Specify the github actions deployment environment
+      environment: pub.dev
+      working-directory: packages/opencv_dart
+  release:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: false
+          prerelease: false
