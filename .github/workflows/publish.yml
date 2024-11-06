@@ -23,7 +23,7 @@ jobs:
         with:
           repository: "rainyl/dartcv"
           latest: true
-          fileName: "libdartcv-windows-x64-vs2019.tar.gz"
+          fileName: "libdartcv-linux-x64.tar.gz"
           out-file-path: "packages/dartcv/libdartcv"
           extract: true
       - uses: subosito/flutter-action@v2
