@@ -69,7 +69,7 @@ jobs:
       environment: pub.dev
       working-directory: packages/opencv_dart
   release:
-    needs: [test]
+    needs: [test, publish-opencv-dart, publish-opencv-core]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
