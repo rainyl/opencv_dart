@@ -36,38 +36,62 @@ jobs:
           cd "${{github.workspace}}/packages/dartcv"
           dart test -x skip-workflow
   publish-dartcv4:
-    if: startsWith(github.ref, 'refs/tags/dartcv4-v')
     name: Publish dartcv4
+    if: startsWith(github.ref, 'refs/tags/dartcv4-v')
     needs: [test]
     permissions:
       id-token: write # Required for authentication using OIDC
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    with:
-      # Specify the github actions deployment environment
-      environment: pub.dev
-      working-directory: packages/dartcv
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Install dependencies
+        working-directory: packages/dartcv
+        run: flutter pub get
+      - name: Publish
+        working-directory: packages/dartcv
+        run: flutter pub publish --force
   publish-opencv-core:
     if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_core
     needs: [test]
     permissions:
       id-token: write # Required for authentication using OIDC
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    with:
-      # Specify the github actions deployment environment
-      environment: pub.dev
-      working-directory: packages/opencv_core
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Install dependencies
+        working-directory: packages/opencv_core
+        run: flutter pub get
+      - name: Publish
+        working-directory: packages/opencv_core
+        run: flutter pub publish --force
   publish-opencv-dart:
     if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_dart
     needs: [test]
     permissions:
       id-token: write # Required for authentication using OIDC
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    with:
-      # Specify the github actions deployment environment
-      environment: pub.dev
-      working-directory: packages/opencv_dart
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Install dependencies
+        working-directory: packages/opencv_dart
+        run: flutter pub get
+      - name: Publish
+        working-directory: packages/opencv_dart
+        run: flutter pub publish --force
   release:
     needs: [test, publish-opencv-dart, publish-opencv-core]
     runs-on: ubuntu-latest
