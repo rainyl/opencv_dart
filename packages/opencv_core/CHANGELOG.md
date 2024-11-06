@@ -1,5 +1,8 @@
 ## 1.3.2
 
+* Fix: minEnclosingCircle
+* hide highgui from building, cache options
+* [Android] Remove debug info in release build to reduce package size
 * bump DartCvIOS and DartCvMacOS to 4.10.0.4, remove `-Wl,-ld_classic` for ios and macos
 
 ## 1.3.1
