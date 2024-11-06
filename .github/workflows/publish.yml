@@ -5,10 +5,11 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.*' # tag pattern on pub.dev: 'v{{version}'
       - 'dartcv4-v[0-9]+.[0-9]+.*'
+  pull_request:
 
 jobs:
   test:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: robinraju/release-downloader@v1.10
@@ -29,11 +30,11 @@ jobs:
         with:
           channel: "stable"
       - name: test
+        env:
+          LD_LIBRARY_PATH: "${{github.workspace}}/packages/dartcv/libdartcv/lib"
         run: |
-          cd "${{github.workspace}}\packages\dartcv"
-          $env:PATH="${{github.workspace}}\packages\dartcv\libdartcv\lib;$env:PATH"
-          dart pub global activate coverage
-          dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
+          cd "${{github.workspace}}/packages/dartcv"
+          dart test -x skip-workflow
   publish-dartcv4:
     if: startsWith(github.ref, 'refs/tags/dartcv4-v')
     name: Publish dartcv4
