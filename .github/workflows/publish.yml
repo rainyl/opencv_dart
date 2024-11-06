@@ -45,15 +45,13 @@ jobs:
     environment: pub.dev
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
+      - uses: dart-lang/setup-dart@v1
       - name: Install dependencies
         working-directory: packages/dartcv
-        run: flutter pub get
+        run: dart pub get
       - name: Publish
         working-directory: packages/dartcv
-        run: flutter pub publish --force
+        run: dart pub publish --force
   publish-opencv-core:
     if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_core
@@ -64,6 +62,7 @@ jobs:
     environment: pub.dev
     steps:
       - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -83,6 +82,7 @@ jobs:
     environment: pub.dev
     steps:
       - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
