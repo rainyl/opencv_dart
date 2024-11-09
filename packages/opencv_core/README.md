@@ -27,7 +27,7 @@ OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](htt
 
 ## Examples
 
-see [example](https://github.com/rainyl/opencv_core/tree/main/example)
+see [example](https://github.com/rainyl/opencv_dart/tree/main/packages/opencv_core/example)
 
 More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
