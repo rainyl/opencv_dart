@@ -52,7 +52,7 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 
 ## Examples
 
-see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
+see [example](https://github.com/rainyl/opencv_dart/tree/main/packages/opencv_dart/example)
 
 More examples refet to [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 

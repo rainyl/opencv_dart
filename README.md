@@ -114,9 +114,7 @@ void main() {
 
 ### Flutter
 
-see [example](https://github.com/rainyl/opencv_dart/tree/main/example)
-
-~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
+see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
 ## TODO
 
