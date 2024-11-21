@@ -31,6 +31,7 @@ publish/
 *.tar.gz
 *.exe
 libdartcv*
+.DS_STORE
 
 # Files and directories created by pub
 .dart_tool/
