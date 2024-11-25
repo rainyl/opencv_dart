@@ -1,3 +1,13 @@
+## 1.3.3
+
+* Fix example link in readme
+* [Android] Support 16KB Page Size
+* Fix: `minEnclosingCircle`
+* Fix: requested object not found in `glob_rec`
+* Exclude system paths from search paths in `ffmpeg-config.cmake`
+* bump dartcv to 4.10.0.5
+* bump opencv to 4.10.0+10
+
 ## 1.3.2
 
 * Fix: minEnclosingCircle

@@ -6,6 +6,7 @@ OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](htt
 >
 > OpenCV SDK (~100M) will be downloaded via `FetchContent` of cmake, you can
 > set `DARTCV_CACHE_DIR` environment variable to cache it and avoid downloading it again.
+> e.g., `export DARTCV_CACHE_DIR=$HOME/.cache/dartcv`
 
 ## Supported platforms
 
