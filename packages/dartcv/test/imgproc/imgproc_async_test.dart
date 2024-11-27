@@ -949,7 +949,7 @@ void main() async {
     });
   });
 
-  test('cv.intersectConvexConvexAsync', () {
+  test('cv.intersectConvexConvexAsync', () async {
     // TODO add test
   });
 }

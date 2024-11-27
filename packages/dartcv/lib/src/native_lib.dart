@@ -6,8 +6,6 @@
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
-import 'package:logging/logging.dart';
-
 import 'g/calib3d.g.dart' as calib3d;
 import 'g/contrib.g.dart' as contrib;
 import 'g/core.g.dart' as core;
@@ -42,7 +40,7 @@ ffi.DynamicLibrary loadNativeLibrary(String libName) {
     try {
       return ffi.DynamicLibrary.open(libPath);
     } catch (e) {
-      Logger("dartcv").warning("$e");
+      print("Error loading $libPath, error: $e fallback to process.");
       return ffi.DynamicLibrary.process();
     }
   }
