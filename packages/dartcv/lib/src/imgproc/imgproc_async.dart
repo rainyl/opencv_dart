@@ -2109,3 +2109,24 @@ Future<Mat> accumulateWeightedAsync(
     );
   }
 }
+
+/// Finds intersection of two convex polygons.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga06eed475945f155030f2135a7f25f11d
+Future<(double rval, VecPoint p12)> intersectConvexConvexAsync(
+  VecPoint p1,
+  VecPoint p2, {
+  VecPoint? p12,
+  bool handleNested = true,
+}) {
+  final r = calloc<ffi.Float>();
+  final pP12 = p12?.ptr ?? calloc<cvg.VecPoint>();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, pP12, handleNested, r, callback),
+    (c) {
+      final rval = (r.value, p12 ?? VecPoint.fromPointer(pP12));
+      calloc.free(r);
+      return c.complete(rval);
+    },
+  );
+}

@@ -1758,3 +1758,29 @@ Mat accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, {Inpu
   }
   return dst;
 }
+
+/// Tests a contour convexity.
+///
+/// The function tests whether the input contour is convex or not.
+/// The contour must be simple, that is, without self-intersections.
+/// Otherwise, the function output is undefined.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga8abf8010377b58cbc16db6734d92941b
+bool isContourConvex(VecPoint contour) => cimgproc.cv_isContourConvex(contour.ref);
+
+/// Finds intersection of two convex polygons.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga06eed475945f155030f2135a7f25f11d
+(double rval, VecPoint p12) intersectConvexConvex(
+  VecPoint p1,
+  VecPoint p2, {
+  VecPoint? p12,
+  bool handleNested = true,
+}) {
+  final r = calloc<ffi.Float>();
+  final pP12 = p12?.ptr ?? calloc<cvg.VecPoint>();
+  cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, pP12, handleNested, r, ffi.nullptr));
+  final rval = (r.value, p12 ?? VecPoint.fromPointer(pP12));
+  calloc.free(r);
+  return rval;
+}

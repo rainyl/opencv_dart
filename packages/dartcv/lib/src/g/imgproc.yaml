@@ -206,8 +206,12 @@ files:
         name: cv_grabCut
       c:@F@cv_integral:
         name: cv_integral
+      c:@F@cv_intersectConvexConvex:
+        name: cv_intersectConvexConvex
       c:@F@cv_invertAffineTransform:
         name: cv_invertAffineTransform
+      c:@F@cv_isContourConvex:
+        name: cv_isContourConvex
       c:@F@cv_line:
         name: cv_line
       c:@F@cv_linearPolar:

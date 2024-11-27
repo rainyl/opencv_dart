@@ -948,4 +948,8 @@ void main() async {
       expect(p[0], isIn([0, 1]));
     });
   });
+
+  test('cv.intersectConvexConvexAsync', () {
+    // TODO add test
+  });
 }

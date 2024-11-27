@@ -974,4 +974,14 @@ void main() async {
       expect(p[0], isIn([0, 1]));
     });
   });
+
+  test('cv.isContourConvex', () {
+    final contour = [cv.Point(0, 0), cv.Point(0, 100), cv.Point(100, 0), cv.Point(100, 100)].asVec();
+    final res = cv.isContourConvex(contour);
+    expect(res, true);
+  });
+
+  test('cv.intersectConvexConvex', () {
+    // TODO add test
+  });
 }
