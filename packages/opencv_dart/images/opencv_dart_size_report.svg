@@ -68,9 +68,9 @@
         
             <g transform="translate(60, 305)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">176.22 MB</text>
+                <text class="metric-value" x="50" y="15">176.23 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">153.02 MB</text>
+                <text class="metric-value" x="280" y="15">153.03 MB</text>
             </g>
             
         <g transform="translate(40, 370)" filter="url(#dropShadow)">
