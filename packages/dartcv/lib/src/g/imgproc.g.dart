@@ -2714,6 +2714,43 @@ class CvNativeImgproc {
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, Mat, Mat, int, int, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_intersectConvexConvex(
+    VecPoint p1,
+    VecPoint p2,
+    ffi.Pointer<VecPoint> p12,
+    bool handleNested,
+    ffi.Pointer<ffi.Float> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_intersectConvexConvex(
+      p1,
+      p2,
+      p12,
+      handleNested,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_intersectConvexConvexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint,
+              VecPoint,
+              ffi.Pointer<VecPoint>,
+              ffi.Bool,
+              ffi.Pointer<ffi.Float>,
+              imp1.CvCallback_0)>>('cv_intersectConvexConvex');
+  late final _cv_intersectConvexConvex =
+      _cv_intersectConvexConvexPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              VecPoint,
+              VecPoint,
+              ffi.Pointer<VecPoint>,
+              bool,
+              ffi.Pointer<ffi.Float>,
+              imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_invertAffineTransform(
     Mat src,
     Mat dst,
@@ -2733,6 +2770,20 @@ class CvNativeImgproc {
   late final _cv_invertAffineTransform =
       _cv_invertAffineTransformPtr.asFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+
+  bool cv_isContourConvex(
+    VecPoint contour,
+  ) {
+    return _cv_isContourConvex(
+      contour,
+    );
+  }
+
+  late final _cv_isContourConvexPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(VecPoint)>>(
+          'cv_isContourConvex');
+  late final _cv_isContourConvex =
+      _cv_isContourConvexPtr.asFunction<bool Function(VecPoint)>();
 
   ffi.Pointer<CvStatus> cv_line(
     Mat img,
