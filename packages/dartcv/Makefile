@@ -1,6 +1,7 @@
-.PHONY: ffigen ffigen_test
+.PHONY: ffigen ffigen_test clone_repo clean_repo
 
-ffigen:
+
+ffigen: clone_repo
 	dart run ffigen --config ffigen/ffigen_const.yaml
 	dart run ffigen --config ffigen/ffigen_types.yaml
 	dart run ffigen --config ffigen/ffigen_core.yaml
@@ -18,6 +19,14 @@ ffigen:
 	dart run ffigen --config ffigen/ffigen_video.yaml
 	dart run ffigen --config ffigen/ffigen_videoio.yaml
 
-ffigen_test:
+
+clone_repo:
+	echo "Getting submodules"
+	@git submodule update --init --recursive
+
+	echo "Updating submodules"
+	@git submodule update --remote
+
+ffigen_test: clone_repo
 	dart run ffigen --config ffigen/ffigen_types.yaml
 	dart run ffigen --config ffigen/ffigen_core.yaml
