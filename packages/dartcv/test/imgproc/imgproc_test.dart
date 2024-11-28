@@ -976,12 +976,134 @@ void main() async {
   });
 
   test('cv.isContourConvex', () {
-    final contour = [cv.Point(0, 0), cv.Point(0, 100), cv.Point(100, 0), cv.Point(100, 100)].asVec();
-    final res = cv.isContourConvex(contour);
+    final rectangle = [cv.Point(0, 0), cv.Point(100, 0), cv.Point(100, 100), cv.Point(0, 100)].asVec();
+    final res = cv.isContourConvex(rectangle);
     expect(res, true);
+
+    final notConvex = [
+      cv.Point(25, 560),
+      cv.Point(25, 590),
+      cv.Point(45, 580),
+      cv.Point(60, 600),
+      cv.Point(60, 550),
+      cv.Point(45, 570),
+    ].asVec();
+    expect(cv.isContourConvex(notConvex), false);
   });
 
+  // https://docs.opencv.org/4.x/df/da5/samples_2cpp_2intersectExample_8cpp-example.html
   test('cv.intersectConvexConvex', () {
-    // TODO add test
+    // helper functions
+    cv.VecPoint makeRectangle(cv.Point topLeft, cv.Point bottomRiht) =>
+        [topLeft, cv.Point(bottomRiht.x, topLeft.y), bottomRiht, cv.Point(topLeft.x, bottomRiht.y)].asVec();
+
+    double drawIntersection(cv.Mat image, cv.VecPoint p1, cv.VecPoint p2, {bool handleNested = true}) {
+      final (intersectArea, intersectionPolygon) =
+          cv.intersectConvexConvex(p1, p2, handleNested: handleNested);
+      if (intersectArea > 0) {
+        final fillColor =
+            !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
+        cv.fillPoly(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), fillColor);
+      }
+      cv.polylines(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), true, cv.Scalar.black);
+      return intersectArea;
+    }
+
+    void drawDescription(cv.Mat image, int intersectionArea, String description, cv.Point origin) {
+      final caption = "Intersection area: $intersectionArea$description";
+      cv.putText(image, caption, origin, cv.FONT_HERSHEY_SIMPLEX, 0.6, cv.Scalar.black);
+    }
+
+    // start testing
+    final image = cv.Mat.fromScalar(610, 550, cv.MatType.CV_8UC3, cv.Scalar.white);
+    double intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 10), cv.Point(50, 50)),
+      makeRectangle(cv.Point(20, 20), cv.Point(60, 60)),
+    );
+    drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 40));
+
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 70), cv.Point(35, 95)),
+      makeRectangle(cv.Point(35, 95), cv.Point(60, 120)),
+    );
+    drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 100));
+
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 130), cv.Point(60, 180)),
+      makeRectangle(cv.Point(20, 140), cv.Point(50, 170)),
+      handleNested: true,
+    );
+    drawDescription(image, intersectionArea.toInt(), " (handleNested true)", cv.Point(70, 160));
+
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 250), cv.Point(60, 300)),
+      makeRectangle(cv.Point(20, 250), cv.Point(50, 290)),
+      handleNested: true,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), " (handleNested true)", cv.Point(70, 280));
+
+    // These rectangles share an edge so handleNested can be false and an intersection is still found
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 310), cv.Point(60, 360)),
+      makeRectangle(cv.Point(20, 310), cv.Point(50, 350)),
+      handleNested: false,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 340));
+
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 370), cv.Point(60, 420)),
+      makeRectangle(cv.Point(20, 371), cv.Point(50, 410)),
+      handleNested: false,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 400));
+
+    // A vertex of the triangle lies on an edge of the rectangle so handleNested can be false and an intersection is still found
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 430), cv.Point(60, 480)),
+      [cv.Point(35, 430), cv.Point(20, 470), cv.Point(50, 470)].asVec(),
+      handleNested: false,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 460));
+
+    // Show intersection of overlapping rectangle and triangle
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 490), cv.Point(40, 540)),
+      [cv.Point(25, 500), cv.Point(25, 530), cv.Point(60, 515)].asVec(),
+      handleNested: false,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 520));
+
+    // This concave polygon is invalid input to intersectConvexConvex so it returns an invalid intersection
+    final cv.VecPoint notConvex = [
+      cv.Point(25, 560),
+      cv.Point(25, 590),
+      cv.Point(45, 580),
+      cv.Point(60, 600),
+      cv.Point(60, 550),
+      cv.Point(45, 570),
+    ].asVec();
+    intersectionArea = drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 550), cv.Point(50, 600)),
+      notConvex,
+      handleNested: false,
+    );
+
+    drawDescription(image, intersectionArea.toInt(), " (invalid input: not convex)", cv.Point(70, 580));
+
+    cv.imwrite("test/images_out/intersections.png", image);
   });
 }
