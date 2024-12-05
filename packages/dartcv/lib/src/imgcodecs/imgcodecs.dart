@@ -153,6 +153,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   final vec = VecUChar.fromPointer(buffer);
   return (success, vec);
 }
+
 /// async version of [imencode]
 Future<(bool, Uint8List)> imencodeAsync(
   String ext,
