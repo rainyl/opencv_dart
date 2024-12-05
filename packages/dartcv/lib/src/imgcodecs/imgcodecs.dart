@@ -17,6 +17,38 @@ import '../g/constants.g.dart';
 import '../g/imgcodecs.g.dart' as cvg;
 import '../native_lib.dart' show cimgcodecs;
 
+/// Returns true if the specified image can be decoded by OpenCV.
+///
+/// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#ga65d3569d8845d1210e1aeab8c199031c
+bool haveImageReader(String filename) {
+  final cname = filename.toNativeUtf8().cast<ffi.Char>();
+  final rval = cimgcodecs.cv_haveImageReader(cname);
+  calloc.free(cname);
+  return rval;
+}
+
+/// Returns true if an image with the specified filename can be encoded by OpenCV.
+///
+/// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#gac4fa9c4c32b58c55059752c0490d3f20
+bool haveImageWriter(String filename) {
+  final cname = filename.toNativeUtf8().cast<ffi.Char>();
+  final rval = cimgcodecs.cv_haveImageWriter(cname);
+  calloc.free(cname);
+  return rval;
+}
+
+/// Returns the number of images inside the give file.
+///
+/// The function imcount will return the number of pages in a multi-page image, or 1 for single-page images
+///
+/// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#ga02237b2aad2d4ae41c9489a83781f202
+int imcount(String filename, {int flags = IMREAD_ANYCOLOR}) {
+  final cname = filename.toNativeUtf8().cast<ffi.Char>();
+  final rval = cimgcodecs.cv_imcount(cname, flags);
+  calloc.free(cname);
+  return rval;
+}
+
 /// read an image from a file into a Mat.
 /// The flags param is one of the IMReadFlag flags.
 /// If the image cannot be read (because of missing file, improper permissions,
@@ -32,6 +64,7 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
   return dst;
 }
 
+/// async version of [imread]
 Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
   final dst = Mat.empty();
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
@@ -61,6 +94,7 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
   return rval;
 }
 
+/// async version of [imwrite]
 Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) async {
   final fname = filename.toNativeUtf8().cast<ffi.Char>();
   final p = calloc<ffi.Bool>();
@@ -82,13 +116,25 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   );
 }
 
-/// IMEncode encodes an image Mat into a memory buffer.
+/// imencode encodes an image Mat into a memory buffer.
 /// This function compresses the image and stores it in the returned memory buffer,
 /// using the image format passed in in the form of a file extension string.
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
 (bool, Uint8List) imencode(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+}) {
+  final (success, vec) = imencodeVec(ext, img, params: params);
+  final u8List = vec.toU8List(); // will copy data
+  vec.dispose();
+  return (success, u8List);
+}
+
+/// Same as [imencode] but returns [VecUChar]
+(bool, VecUChar) imencodeVec(
   String ext,
   InputArray img, {
   VecI32? params,
@@ -105,11 +151,9 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   calloc.free(pSuccess);
 
   final vec = VecUChar.fromPointer(buffer);
-  final u8List = vec.toU8List(); // will copy data
-  vec.dispose();
-  return (success, u8List);
+  return (success, vec);
 }
-
+/// async version of [imencode]
 Future<(bool, Uint8List)> imencodeAsync(
   String ext,
   InputArray img, {
@@ -142,23 +186,66 @@ Future<(bool, Uint8List)> imencodeAsync(
   );
 }
 
+/// Same as [imencodeAsync] but returns [VecUChar]
+Future<(bool, VecUChar)> imencodeVecAsync(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+}) async {
+  final buffer = calloc<cvg.VecUChar>();
+  final pSuccess = calloc<ffi.Bool>();
+  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
+
+  void completeFunc(Completer<(bool, VecUChar)> c) {
+    final success = pSuccess.value;
+    calloc.free(cExt);
+    calloc.free(pSuccess);
+
+    final vec = VecUChar.fromPointer(buffer);
+    return c.complete((success, vec));
+  }
+
+  if (params == null) {
+    return cvRunAsync0(
+      (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer, callback),
+      completeFunc,
+    );
+  }
+  return cvRunAsync0(
+    (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer, callback),
+    completeFunc,
+  );
+}
+
 /// imdecode reads an image from a buffer in memory.
 /// The function imdecode reads an image from the specified buffer in memory.
 /// If the buffer is too short or contains invalid data, the function
 /// returns an empty matrix.
 /// @param buf Input array or vector of bytes.
 /// @param flags The same flags as in cv::imread, see cv::ImreadModes.
+///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga26a67788faa58ade337f8d28ba0eb19e
 Mat imdecode(Uint8List buf, int flags, {Mat? dst}) {
   final vec = VecUChar.fromList(buf);
+  return imdecodeVec(vec, flags, dst: dst);
+}
+
+/// Same as [imdecode] but accepts [VecUChar]
+Mat imdecodeVec(VecUChar buf, int flags, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, ffi.nullptr));
+  cvRun(() => cimgcodecs.cv_imdecode(buf.ref, flags, dst!.ptr, ffi.nullptr));
   return dst;
 }
 
+/// async version of [imdecode]
 Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) async {
   final vec = VecUChar.fromList(buf);
+  return imdecodeVecAsync(vec, flags, dst: dst);
+}
+
+/// Same as [imdecodeAsync] but accepts [VecUChar]
+Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback),
