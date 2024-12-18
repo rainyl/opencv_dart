@@ -60,9 +60,10 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     InputArray img, [
     VecMat? points,
   ]) {
-    points  ??= VecMat();
+    points ??= VecMat();
     final strs = VecVecChar();
-    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, points!.ptr, strs.ptr, ffi.nullptr));
+    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+        ref, img.ref, points!.ptr, strs.ptr, ffi.nullptr));
     final rval = (strs.asStringList(), points);
     strs.dispose();
     return rval;
@@ -75,8 +76,8 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     points ??= VecMat();
     final strs = VecVecChar();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, points!.ptr, strs.ptr, callback),
-        (c) {
+        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+            ref, img.ref, points!.ptr, strs.ptr, callback), (c) {
       final rval = (strs.asStringList(), points!);
       strs.dispose();
       return c.complete(rval);

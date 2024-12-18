@@ -472,13 +472,13 @@ Future<Rect> boundingRectAsync(VecPoint points) async {
 /// For further Details, please see:
 /// https://docs.opencv.org/4.10.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts}) async {
-    pts ??= VecPoint2f();
-    return cvRunAsync0(
-      (callback) => cimgproc.cv_boxPoints(rect.ref, pts!.ptr, callback),
-      (c) {
-        return c.complete(pts);
-      },
-    );
+  pts ??= VecPoint2f();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_boxPoints(rect.ref, pts!.ptr, callback),
+    (c) {
+      return c.complete(pts);
+    },
+  );
 }
 
 /// ContourArea calculates a contour area.

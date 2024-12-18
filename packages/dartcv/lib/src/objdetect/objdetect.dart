@@ -508,7 +508,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     straightCode ??= Mat.empty();
     final points = VecPoint();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cobjdetect.cv_QRCodeDetector_detectAndDecode(ref, img.ref, points.ptr, straightCode!.ptr, v, ffi.nullptr));
+    cvRun(() => cobjdetect.cv_QRCodeDetector_detectAndDecode(
+        ref, img.ref, points.ptr, straightCode!.ptr, v, ffi.nullptr));
     final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (s, points, straightCode);
