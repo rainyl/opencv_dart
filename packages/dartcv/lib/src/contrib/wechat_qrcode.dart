@@ -60,26 +60,26 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     InputArray img, [
     VecMat? points,
   ]) {
-    final p = calloc<cvg.VecMat>();
-    final rval = calloc<cvg.VecVecChar>();
-    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, p, rval, ffi.nullptr));
-    final vec = VecVecChar.fromPointer(rval);
-    final points = VecMat.fromPointer(p);
-    return (vec.asStringList(), points);
+    points  ??= VecMat();
+    final strs = VecVecChar();
+    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, points!.ptr, strs.ptr, ffi.nullptr));
+    final rval = (strs.asStringList(), points);
+    strs.dispose();
+    return rval;
   }
 
   Future<(List<String>, VecMat)> detectAndDecodeAsync(
     InputArray img, [
     VecMat? points,
   ]) async {
-    final p = calloc<cvg.VecMat>();
-    final rval = calloc<cvg.VecVecChar>();
+    points ??= VecMat();
+    final strs = VecVecChar();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, p, rval, callback),
+        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(ref, img.ref, points!.ptr, strs.ptr, callback),
         (c) {
-      final vec = VecVecChar.fromPointer(rval);
-      final points = VecMat.fromPointer(p);
-      return c.complete((vec.asStringList(), points));
+      final rval = (strs.asStringList(), points!);
+      strs.dispose();
+      return c.complete(rval);
     });
   }
 

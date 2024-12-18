@@ -21,6 +21,8 @@ headers:
     - ../src/dartcv/core/logging.h
     - ../src/dartcv/core/mat.h
     - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/stdvec.h
+    - ../src/dartcv/core/utils.h
     - ../src/dartcv/core/version.h
   include-directives:
     - ../src/dartcv/core/core.h
@@ -28,6 +30,8 @@ headers:
     - ../src/dartcv/core/logging.h
     - ../src/dartcv/core/mat.h
     - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/stdvec.h
+    - ../src/dartcv/core/utils.h
     - ../src/dartcv/core/version.h
 functions:
   leaf:
@@ -53,6 +57,9 @@ functions:
     include:
       - ".*_Close.*"
       - ".*_close.*"
+      - ".*_destroy.*"
+      - ".*_delete.*"
+      - ".*_free.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

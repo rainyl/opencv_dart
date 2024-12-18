@@ -1,7 +1,7 @@
 .PHONY: ffigen ffigen_test clone_repo clean_repo
 
 
-ffigen: clone_repo
+ffigen:
 	dart run ffigen --config ffigen/ffigen_const.yaml
 	dart run ffigen --config ffigen/ffigen_types.yaml
 	dart run ffigen --config ffigen/ffigen_core.yaml

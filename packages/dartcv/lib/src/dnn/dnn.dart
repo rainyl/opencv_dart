@@ -14,6 +14,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
+import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
@@ -307,9 +308,9 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/3.4.1/db/d30/classcv_1_1dnn_1_1Net.html#adb34d7650e555264c7da3b47d967311b
   VecMat forwardLayers(List<String> names) {
     final vecName = names.i8;
-    final vecMat = calloc<cvg.VecMat>();
-    cvRun(() => cdnn.cv_dnn_Net_forwardLayers(ref, vecMat, vecName.ref, ffi.nullptr));
-    return VecMat.fromPointer(vecMat);
+    final vecMat = VecMat();
+    cvRun(() => cdnn.cv_dnn_Net_forwardLayers(ref, vecMat.ptr, vecName.ref, ffi.nullptr));
+    return vecMat;
   }
 
   /// SetPreferableBackend ask network to use specific computation backend.
@@ -341,10 +342,11 @@ class Net extends CvStruct<cvg.Net> {
   /// For furtherdetails, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae8be9806024a0d1d41aba687cce99e6b
   List<String> getLayerNames() {
-    final cNames = calloc<cvg.VecVecChar>();
-    cvRun(() => cdnn.cv_dnn_Net_getLayerNames(ref, cNames, ffi.nullptr));
-    final vec = VecVecChar.fromPointer(cNames);
-    return vec.asStringList();
+    final cNames = VecVecChar();
+    cvRun(() => cdnn.cv_dnn_Net_getLayerNames(ref, cNames.ptr, ffi.nullptr));
+    final vec = cNames.asStringList();
+    cNames.dispose();
+    return vec;
   }
 
   /// GetPerfProfile returns overall time for inference and timings (in ticks) for layers
@@ -353,11 +355,11 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a06ce946f675f75d1c020c5ddbc78aedc
   (int, VecF64 layersTimes) getPerfProfile() {
     final p = calloc<ffi.Int64>();
-    final p1 = calloc<cvg.VecF64>();
-    cvRun(() => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1, ffi.nullptr));
+    final p1 = VecF64();
+    cvRun(() => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1.ptr, ffi.nullptr));
     final rval = p.value;
     calloc.free(p);
-    return (rval, VecF64.fromPointer(p1));
+    return (rval, p1);
   }
 
   /// GetUnconnectedOutLayers returns indexes of layers with unconnected outputs.
@@ -365,29 +367,29 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#ae62a73984f62c49fd3e8e689405b056a
   List<int> getUnconnectedOutLayers() {
-    final ids = calloc<cvg.VecI32>();
-    cvRun(() => cdnn.cv_dnn_Net_getUnconnectedOutLayers(ref, ids, ffi.nullptr));
-    return VecI32.fromPointer(ids).toList();
+    final ids = VecI32();
+    cvRun(() => cdnn.cv_dnn_Net_getUnconnectedOutLayers(ref, ids.ptr, ffi.nullptr));
+    return ids.toList();
   }
 
   /// getUnconnectedOutLayersNames
   ///
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a9f699cf9710abd63339b5b8e1937f171
   List<String> getUnconnectedOutLayersNames() {
-    final vec = calloc<cvg.VecVecChar>();
-    cvRun(() => cdnn.cv_dnn_Net_getUnconnectedOutLayersNames(ref, vec, ffi.nullptr));
-    final rval = VecVecChar.fromPointer(vec).asStringList();
-    calloc.free(vec);
+    final vec = VecVecChar();
+    cvRun(() => cdnn.cv_dnn_Net_getUnconnectedOutLayersNames(ref, vec.ptr, ffi.nullptr));
+    final rval = vec.asStringList();
+    vec.dispose();
     return rval;
   }
 
   /// Returns input scale and zeropoint for a quantized Net.
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#af82a1c7e7de19712370a34667056102d
   (VecF32, VecI32) getInputDetails() {
-    final sc = calloc<cvg.VecF32>();
-    final zp = calloc<cvg.VecI32>();
-    cvRun(() => cdnn.cv_dnn_Net_getInputDetails(ref, sc, zp, ffi.nullptr));
-    return (VecF32.fromPointer(sc), VecI32.fromPointer(zp));
+    final sc = VecF32();
+    final zp = VecI32();
+    cvRun(() => cdnn.cv_dnn_Net_getInputDetails(ref, sc.ptr, zp.ptr, ffi.nullptr));
+    return (sc, zp);
   }
 
   static final finalizer = OcvFinalizer<cvg.NetPtr>(cdnn.addresses.cv_dnn_Net_close);
@@ -407,20 +409,19 @@ void enableModelDiagnostics(bool isDiagnosticsMode) => cdnn.cv_dnn_enableModelDi
 ///
 /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gab691d0cb65a60adcb0291ea5bf98f438
 List<(int backend, int target)> getAvailableBackends() {
-  final p = calloc<cvg.VecPoint>();
-  cdnn.cv_dnn_getAvailableBackends(p);
-  final rval = List.generate(p.ref.length, (i) => (p.ref.ptr[i].x, p.ref.ptr[i].y));
-  calloc.free(p);
+  final p = VecPoint();
+  cdnn.cv_dnn_getAvailableBackends(p.ptr);
+  final rval = List.generate(p.length, (i) => (p[i].x, p[i].y));
+  p.dispose();
   return rval;
 }
 
 /// getAvailableTargets
 /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga711e5056b6642b33d9480c98c6889f56
 List<int> getAvailableTargets(int backend) {
-  final p = calloc<cvg.VecI32>();
-  cvRun(() => cdnn.cv_dnn_getAvailableTargets(backend, p));
-  final rval = List.generate(p.ref.length, (i) => p.ref.ptr[i]);
-  calloc.free(p);
+  final p = VecI32();
+  cvRun(() => cdnn.cv_dnn_getAvailableTargets(backend, p.ptr));
+  final rval = p.toList();
   return rval;
 }
 
@@ -495,10 +496,10 @@ Mat blobFromImages(
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d6/d0f/group__dnn.html#ga4051b5fa2ed5f54b76c059a8625df9f5
-List<Mat> imagesFromBlob(Mat blob) {
-  final mats = calloc<cvg.VecMat>();
-  cvRun(() => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats, ffi.nullptr));
-  return VecMat.fromPointer(mats).toList();
+VecMat imagesFromBlob(Mat blob) {
+  final mats = VecMat();
+  cvRun(() => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats.ptr, ffi.nullptr));
+  return mats;
 }
 
 /// GetBlobChannel extracts a single (2d)channel from a 4 dimensional blob structure
@@ -513,9 +514,9 @@ Mat getBlobChannel(Mat blob, int imgidx, int chnidx) {
 
 /// GetBlobSize retrieves the 4 dimensional size information in (N,C,H,W) order
 VecI32 getBlobSize(Mat blob) {
-  final s = calloc<cvg.VecI32>();
-  cvRun(() => cdnn.cv_dnn_getBlobSize(blob.ref, s));
-  return VecI32.fromPointer(s);
+  final s = VecI32();
+  cvRun(() => cdnn.cv_dnn_getBlobSize(blob.ref, s.ptr));
+  return s;
 }
 
 /// NMSBoxes performs non maximum suppression given boxes and corresponding scores.
@@ -530,20 +531,20 @@ List<int> NMSBoxes(
   double eta = 1.0,
   int topK = 0,
 }) {
-  final indices = calloc<cvg.VecI32>();
+  final indices = VecI32();
   cvRun(
     () => cdnn.cv_dnn_NMSBoxes_1(
       bboxes.ref,
       scores.ref,
       scoreThreshold,
       nmsThreshold,
-      indices,
+      indices.ptr,
       eta,
       topK,
       ffi.nullptr,
     ),
   );
-  return VecI32.fromPointer(indices).toList();
+  return indices.toList();
 }
 
 // Constants

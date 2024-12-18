@@ -322,19 +322,19 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   ///
   /// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#a822e422556f8103d01a0a4db6815f0e5
   (VecRect boxes, VecF32 scores) getBoundingBoxes(InputArray edge_map, InputArray orientation_map) {
-    final pvr = calloc<cvg.VecRect>();
-    final pvf = calloc<cvg.VecF32>();
+    final pvr = VecRect();
+    final pvf = VecF32();
     cvRun(
       () => ccontrib.cv_ximgproc_EdgeBoxes_getBoundingBoxes(
         ref,
         edge_map.ref,
         orientation_map.ref,
-        pvr,
-        pvf,
+        pvr.ptr,
+        pvf.ptr,
         ffi.nullptr,
       ),
     );
-    return (VecRect.fromPointer(pvr), VecF32.fromPointer(pvf));
+    return (pvr, pvf);
   }
 
   double get alpha => ccontrib.cv_ximgproc_EdgeBoxes_getAlpha(ref);
@@ -714,15 +714,15 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   }
 
   VecI32 getSegmentIndicesOfLines() {
-    final p = calloc<cvg.VecI32>();
-    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(ref, p, ffi.nullptr));
-    return VecI32.fromPointer(p);
+    final v = VecI32();
+    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(ref, v.ptr, ffi.nullptr));
+    return v;
   }
 
   VecVecPoint getSegments() {
-    final p = calloc<cvg.VecVecPoint>();
-    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getSegments(ref, p, ffi.nullptr));
-    return VecVecPoint.fromPointer(p);
+    final p = VecVecPoint();
+    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getSegments(ref, p.ptr, ffi.nullptr));
+    return p;
   }
 
   EdgeDrawingParams get params {

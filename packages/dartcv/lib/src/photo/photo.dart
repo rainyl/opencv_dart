@@ -135,9 +135,9 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   }
 
   VecMat process(VecMat src) {
-    final dst = calloc<cvg.VecMat>();
-    cvRun(() => cphoto.cv_AlignMTB_process(ref, src.ref, dst, ffi.nullptr));
-    return VecMat.fromPointer(dst);
+    final dst = VecMat();
+    cvRun(() => cphoto.cv_AlignMTB_process(ref, src.ref, dst.ptr, ffi.nullptr));
+    return dst;
   }
 
   @override

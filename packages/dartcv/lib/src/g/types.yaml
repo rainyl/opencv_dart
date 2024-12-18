@@ -120,6 +120,8 @@ files:
         name: VecI16
       c:@S@VecI32:
         name: VecI32
+      c:@S@VecI64:
+        name: VecI64
       c:@S@VecI8:
         name: VecI8
       c:@S@VecKeyPoint:
@@ -142,6 +144,10 @@ files:
         name: VecRotatedRect
       c:@S@VecU16:
         name: VecU16
+      c:@S@VecU32:
+        name: VecU32
+      c:@S@VecU64:
+        name: VecU64
       c:@S@VecU8:
         name: VecU8
       c:@S@VecUChar:
@@ -220,6 +226,8 @@ files:
         name: VecI16Ptr
       c:types.h@T@VecI32Ptr:
         name: VecI32Ptr
+      c:types.h@T@VecI64Ptr:
+        name: VecI64Ptr
       c:types.h@T@VecI8Ptr:
         name: VecI8Ptr
       c:types.h@T@VecKeyPointPtr:
@@ -242,6 +250,10 @@ files:
         name: VecRotatedRectPtr
       c:types.h@T@VecU16Ptr:
         name: VecU16Ptr
+      c:types.h@T@VecU32Ptr:
+        name: VecU32Ptr
+      c:types.h@T@VecU64Ptr:
+        name: VecU64Ptr
       c:types.h@T@VecU8Ptr:
         name: VecU8Ptr
       c:types.h@T@VecUCharPtr:

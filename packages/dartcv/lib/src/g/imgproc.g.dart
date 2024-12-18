@@ -2205,29 +2205,34 @@ class CvNativeImgproc {
 
   ffi.Pointer<CvStatus> cv_findContours(
     Mat src,
-    Mat hierarchy,
+    ffi.Pointer<VecVecPoint> out_contours,
+    ffi.Pointer<VecVec4i> out_hierarchy,
     int mode,
     int method,
-    ffi.Pointer<VecVecPoint> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_findContours(
       src,
-      hierarchy,
+      out_contours,
+      out_hierarchy,
       mode,
       method,
-      rval,
       callback,
     );
   }
 
   late final _cv_findContoursPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Int,
-              ffi.Pointer<VecVecPoint>, imp1.CvCallback_0)>>('cv_findContours');
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              ffi.Pointer<VecVecPoint>,
+              ffi.Pointer<VecVec4i>,
+              ffi.Int,
+              ffi.Int,
+              imp1.CvCallback_0)>>('cv_findContours');
   late final _cv_findContours = _cv_findContoursPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, int, int, ffi.Pointer<VecVecPoint>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<VecVecPoint>,
+          ffi.Pointer<VecVec4i>, int, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fitEllipse(
     VecPoint pts,
@@ -3701,5 +3706,6 @@ typedef VecI32 = imp1.VecI32;
 typedef VecMat = imp1.VecMat;
 typedef VecPoint = imp1.VecPoint;
 typedef VecPoint2f = imp1.VecPoint2f;
+typedef VecVec4i = imp1.VecVec4i;
 typedef VecVecPoint = imp1.VecVecPoint;
 typedef VecVecPoint2f = imp1.VecVecPoint2f;

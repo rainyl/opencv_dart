@@ -44,9 +44,9 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// DetectAndCompute keypoints and compute in an image using AKAZE.
@@ -55,11 +55,11 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint ret, Mat desc) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, ffi.nullptr),
+      () => cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
     );
-    return (VecKeyPoint.fromPointer(ret), desc);
+    return (ret, desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.AKAZEPtr>(cfeatures2d.addresses.cv_AKAZE_close);
@@ -98,9 +98,9 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.AgastFeatureDetectorPtr>(
@@ -140,9 +140,9 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// DetectAndCompute keypoints and compute in an image using BRISK.
@@ -151,11 +151,11 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, ffi.nullptr),
+      () => cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
     );
-    return (VecKeyPoint.fromPointer(ret), desc);
+    return (ret, desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.BRISKPtr>(cfeatures2d.addresses.cv_BRISK_close);
@@ -229,9 +229,9 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.FastFeatureDetectorPtr>(
@@ -272,9 +272,9 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.GFTTDetectorPtr>(cfeatures2d.addresses.cv_GFTTDetector_close);
@@ -312,9 +312,9 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// DetectAndCompute keypoints and compute in an image using KAZE.
@@ -323,11 +323,11 @@ class KAZE extends CvStruct<cvg.KAZE> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, ffi.nullptr),
+      () => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
     );
-    return (VecKeyPoint.fromPointer(ret), desc);
+    return (ret, desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.KAZEPtr>(cfeatures2d.addresses.cv_KAZE_close);
@@ -365,9 +365,9 @@ class MSER extends CvStruct<cvg.MSER> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_MSER_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.MSERPtr>(cfeatures2d.addresses.cv_MSER_close);
@@ -446,20 +446,36 @@ class ORB extends CvStruct<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_ORB_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// DetectAndCompute keypoints and compute in an image using ORB.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final pdesc = calloc<cvg.Mat>();
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_ORB_detectAndCompute(ref, src.ref, mask.ref, pdesc, ret, ffi.nullptr));
-    return (VecKeyPoint.fromPointer(ret), Mat.fromPointer(pdesc));
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? description,
+    bool useProvidedKeypoints = false,
+  }) {
+    keypoints ??= VecKeyPoint();
+    description ??= Mat.empty();
+    cvRun(
+      () => cfeatures2d.cv_ORB_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        keypoints!.ptr,
+        description!.ref,
+        useProvidedKeypoints,
+        ffi.nullptr,
+      ),
+    );
+    return (keypoints, description);
   }
 
   static final finalizer = OcvFinalizer<cvg.ORBPtr>(cfeatures2d.addresses.cv_ORB_close);
@@ -683,9 +699,9 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.SimpleBlobDetectorPtr>(
@@ -731,9 +747,9 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
   VecDMatch match(Mat query, Mat train) {
-    final ret = calloc<cvg.VecDMatch>();
-    cvRun(() => cfeatures2d.cv_BFMatcher_match(ref, query.ref, train.ref, ret, ffi.nullptr));
-    return VecDMatch.fromPointer(ret);
+    final ret = VecDMatch();
+    cvRun(() => cfeatures2d.cv_BFMatcher_match(ref, query.ref, train.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// KnnMatch Finds the k best matches for each descriptor from a query set.
@@ -741,9 +757,9 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    final ret = calloc<cvg.VecVecDMatch>();
-    cvRun(() => cfeatures2d.cv_BFMatcher_knnMatch(ref, query.ref, train.ref, k, ret, ffi.nullptr));
-    return VecVecDMatch.fromPointer(ret);
+    final ret = VecVecDMatch();
+    cvRun(() => cfeatures2d.cv_BFMatcher_knnMatch(ref, query.ref, train.ref, k, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.BFMatcherPtr>(cfeatures2d.addresses.cv_BFMatcher_close);
@@ -782,11 +798,11 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   VecVecDMatch knnMatch(Mat query, Mat train, int k) {
-    final ret = calloc<cvg.VecVecDMatch>();
+    final ret = VecVecDMatch();
     cvRun(
-      () => cfeatures2d.cv_FlannBasedMatcher_knnMatch(ref, query.ref, train.ref, k, ret, ffi.nullptr),
+      () => cfeatures2d.cv_FlannBasedMatcher_knnMatch(ref, query.ref, train.ref, k, ret.ptr, ffi.nullptr),
     );
-    return VecVecDMatch.fromPointer(ret);
+    return ret;
   }
 
   static final finalizer = OcvFinalizer<cvg.FlannBasedMatcherPtr>(
@@ -843,9 +859,9 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   VecKeyPoint detect(Mat src) {
-    final ret = calloc<cvg.VecKeyPoint>();
-    cvRun(() => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret, ffi.nullptr));
-    return VecKeyPoint.fromPointer(ret);
+    final ret = VecKeyPoint();
+    cvRun(() => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   /// DetectAndCompute keypoints and compute in an image using SIFT.
@@ -854,11 +870,11 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, ffi.nullptr),
+      () => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
     );
-    return (VecKeyPoint.fromPointer(ret), desc);
+    return (ret, desc);
   }
 
   static final finalizer = OcvFinalizer<cvg.SIFTPtr>(cfeatures2d.addresses.cv_SIFT_close);

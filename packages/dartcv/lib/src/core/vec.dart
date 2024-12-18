@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'float16.dart';
 
@@ -18,7 +19,6 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
 
   ffi.Pointer<N> ptr;
   N get ref;
-  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
   int get length;
@@ -28,11 +28,14 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
 
   void dispose();
   Vec clone();
-  void reattach({ffi.Pointer<N>? newPtr}) {
-    if (newPtr != null) this.ptr = newPtr;
-    finalizer.detach(this);
-    finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-  }
+  int size();
+  void add(T element);
+  void pushBack(T element);
+  void resize(int newSize);
+  void reserve(int newCapacity);
+  void clear();
+  void shrinkToFit();
+  void extend(Vec other);
 
   ffi.Pointer<ffi.Void> asVoid();
 
@@ -74,36 +77,39 @@ abstract class VecIterator<T> implements Iterator<T> {
 class VecUChar extends Vec<cvg.VecUChar, int> {
   VecUChar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecUChar([int length = 0, int value = 0]) => VecUChar.generate(length, (i) => value);
+  factory VecUChar([int length = 0, int value = 0]) =>
+      VecUChar.fromPointer(ccore.std_VecUChar_new_1(length, value));
+
   factory VecUChar.fromList(List<int> pts) {
     final length = pts.length;
-    final pdata = calloc<ffi.UnsignedChar>(length);
-    pdata.cast<U8>().asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecUChar>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecUChar_new(length);
+    final pdata = ccore.std_VecUChar_data(p);
+    pdata.cast<U8>().asTypedList(length).setAll(0, pts);
     return VecUChar.fromPointer(p);
   }
 
   factory VecUChar.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecUChar>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.UnsignedChar>(length);
+    final p = ccore.std_VecUChar_new(length);
     for (var i = 0; i < length; i++) {
-      pp.ref.ptr[i] = generator(i);
+      ccore.std_VecUChar_set(p, i, generator(i));
     }
-    return VecUChar.fromPointer(pp);
+    return VecUChar.fromPointer(p);
   }
 
+  static final finalizer = OcvFinalizer<cvg.VecUCharPtr>(ccore.addresses.std_VecUChar_free);
+
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecUChar_length(ptr);
+
+  ffi.Pointer<ffi.UnsignedChar> get dataPtr => ccore.std_VecUChar_data(ptr);
 
   /// Returns a view of native pointer
-  Uint8List get data => ref.ptr.cast<ffi.Uint8>().asTypedList(length);
+  Uint8List get data => dataPtr.cast<ffi.Uint8>().asTypedList(length);
+  Uint8List get dataView => dataPtr.cast<ffi.Uint8>().asTypedList(length);
 
   /// ~~alias of data~~
   ///
@@ -113,150 +119,189 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
   Uint8List toU8List() => Uint8List.fromList(data);
 
   @override
-  VecUChar clone() => VecUChar.generate(length, (idx) => this[idx]);
+  VecUChar clone() => VecUChar.fromPointer(ccore.std_VecUChar_clone(ptr));
 
   @override
-  Iterator<int> get iterator => VecUCharIterator(ref);
+  Iterator<int> get iterator => VecUCharIterator(dataView);
 
   @override
   cvg.VecUChar get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecUChar_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecUChar>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, int value) => ccore.std_VecUChar_set(ptr, idx, value);
 
   @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
+  int operator [](int idx) => ccore.std_VecUChar_get(ptr, idx);
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  void add(int element) => ccore.std_VecUChar_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecUChar_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecUChar_extend(ptr, (other as VecUChar).ptr);
+
+  @override
+  void pushBack(int element) => ccore.std_VecUChar_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecUChar_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecUChar_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecUChar_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecUChar_length(ptr);
 }
 
 class VecUCharIterator extends VecIterator<int> {
-  VecUCharIterator(this.ref);
-  cvg.VecUChar ref;
+  VecUCharIterator(this.dataView);
+  Uint8List dataView;
 
   @override
-  int get length => ref.length;
+  int get length => dataView.length;
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  int operator [](int idx) => dataView[idx];
 }
 
 class VecChar extends Vec<cvg.VecChar, int> {
   VecChar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecChar([int length = 0, int value = 0]) => VecChar.generate(length, (i) => value);
+  factory VecChar([int length = 0, int value = 0]) =>
+      VecChar.fromPointer(ccore.std_VecChar_new_1(length, value));
   factory VecChar.fromList(List<int> pts) {
     final length = pts.length;
-    final pdata = calloc<ffi.Char>(length);
-    pdata.cast<I8>().asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecChar>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecChar_new(length);
+    final pdata = ccore.std_VecChar_data(p);
+    pdata.cast<I8>().asTypedList(length).setAll(0, pts);
     return VecChar.fromPointer(p);
   }
 
   factory VecChar.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecChar>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Char>(length);
+    final p = ccore.std_VecChar_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
+      ccore.std_VecChar_set(p, i, generator(i));
     }
-    return VecChar.fromPointer(pp);
+    return VecChar.fromPointer(p);
   }
 
-  @override
-  int get length => ref.length;
+  static final finalizer = OcvFinalizer<cvg.VecCharPtr>(ccore.addresses.std_VecChar_free);
 
-  Uint8List get data => ref.ptr.cast<ffi.Uint8>().asTypedList(length);
+  @override
+  int get length => ccore.std_VecChar_length(ptr);
+
+  ffi.Pointer<ffi.Char> get dataPtr => ccore.std_VecChar_data(ptr);
+
+  Uint8List get data => dataPtr.cast<ffi.Uint8>().asTypedList(length);
+  Int8List get dataView => dataPtr.cast<ffi.Int8>().asTypedList(length);
 
   String asString() => utf8.decode(data);
 
   @override
-  VecChar clone() => VecChar.generate(length, (idx) => this[idx]);
+  VecChar clone() => VecChar.fromPointer(ccore.std_VecChar_clone(ptr));
 
   @override
-  Iterator<int> get iterator => VecCharIterator(ref);
+  Iterator<int> get iterator => VecCharIterator(dataView);
 
   @override
   cvg.VecChar get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecChar_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecChar>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, int value) => ccore.std_VecChar_set(ptr, idx, value);
 
   @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
+  int operator [](int idx) => ccore.std_VecChar_get(ptr, idx);
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  void add(int element) => ccore.std_VecChar_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecChar_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecChar_extend(ptr, (other as VecChar).ptr);
+
+  @override
+  void pushBack(int element) => ccore.std_VecChar_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecChar_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecChar_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecChar_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecChar_length(ptr);
 }
 
 class VecCharIterator extends VecIterator<int> {
-  VecCharIterator(this.ref);
-  cvg.VecChar ref;
+  VecCharIterator(this.dataView);
+  Int8List dataView;
 
   @override
-  int get length => ref.length;
+  int get length => dataView.length;
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  int operator [](int idx) => dataView[idx];
 }
 
 class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   VecVecChar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVecChar([int length = 0]) => VecVecChar.fromPointer(ccore.std_VecVecChar_new(length));
 
   factory VecVecChar.fromList(List<List<int>> pts) => VecVecChar.generate(pts.length, (i) => pts[i]);
 
   factory VecVecChar.generate(int length, Iterable<int> Function(int i) generator) {
-    final pp = calloc<cvg.VecVecChar>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.VecChar>(length);
+    final p = ccore.std_VecVecChar_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i].ptr = calloc<ffi.Char>(v.length);
-      pp.ref.ptr[i].length = v.length;
-      for (var j = 0; j < v.length; j++) {
-        pp.ref.ptr[i].ptr[j] = v.elementAt(j);
-      }
+      final pts = generator(i);
+      final pp = ccore.std_VecChar_new(pts.length);
+      final ppData = ccore.std_VecChar_data(pp);
+      ppData.cast<I8>().asTypedList(pts.length).setAll(0, pts);
+      ccore.std_VecVecChar_set(p, i, pp);
     }
-    return VecVecChar.fromPointer(pp);
+    return VecVecChar.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecVecCharPtr>(ccore.addresses.std_VecVecChar_free);
+
+  @override
+  int get length => ccore.std_VecVecChar_length(ptr);
 
   List<String> asStringList() {
     return map(String.fromCharCodes).toList();
@@ -266,430 +311,535 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   VecVecChar clone() => VecVecChar.generate(length, (idx) => this[idx]);
 
   @override
-  Iterator<VecChar> get iterator => VecVecCharIterator(ref);
+  Iterator<VecChar> get iterator => VecVecCharIterator(ptr);
   @override
   cvg.VecVecChar get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVecChar_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
-
-  @override
-  void reattach({ffi.Pointer<cvg.VecVecChar>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  ffi.Pointer<ffi.Void> asVoid() => throw UnsupportedError('Not supported');
 
   // TODO: add support
   @override
-  void operator []=(int idx, VecChar value) =>
-      throw UnsupportedError("VecVecChar does not support operator []=");
+  void operator []=(int idx, VecChar value) => ccore.std_VecVecChar_set(ptr, idx, value.ptr);
 
   @override
-  VecChar operator [](int idx) => VecChar.fromPointer(ref.ptr + idx, false);
+  VecChar operator [](int idx) => VecChar.fromPointer(ccore.std_VecVecChar_get(ptr, idx), false);
+
+  @override
+  void add(VecChar element) => ccore.std_VecVecChar_push_back(ptr, element.ref);
+
+  @override
+  void clear() => ccore.std_VecVecChar_clear(ptr);
+
+  @override
+  void extend(Vec other) => throw UnsupportedError("Not supported");
+
+  @override
+  void pushBack(VecChar element) => ccore.std_VecVecChar_push_back(ptr, element.ref);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecVecChar_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecVecChar_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecVecChar_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecVecChar_length(ptr);
 }
 
 class VecVecCharIterator extends VecIterator<VecChar> {
-  VecVecCharIterator(this.ref);
-  cvg.VecVecChar ref;
+  VecVecCharIterator(this.ptr);
+  cvg.VecVecCharPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVecChar_length(ptr);
 
   /// return the reference
   @override
-  VecChar operator [](int idx) => VecChar.fromPointer(ref.ptr + idx, false);
+  VecChar operator [](int idx) => VecChar.fromPointer(ccore.std_VecVecChar_get(ptr, idx), false);
 }
 
 class VecU16 extends Vec<cvg.VecU16, int> {
   VecU16.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecU16([int length = 0, int value = 0]) => VecU16.generate(length, (i) => value);
+  factory VecU16([int length = 0, int value = 0]) =>
+      VecU16.fromPointer(ccore.std_VecU16_new_1(length, value));
+
   factory VecU16.fromList(List<int> pts) {
     final length = pts.length;
-    final pdata = calloc<U16>(length);
-    pdata.asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecU16>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecU16_new(length);
+    final pdata = ccore.std_VecU16_data(p);
+    pdata.asTypedList(length).setAll(0, pts);
     return VecU16.fromPointer(p);
   }
 
   factory VecU16.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecU16>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Uint16>(length);
+    final p = ccore.std_VecU16_new(length);
     for (var i = 0; i < length; i++) {
-      pp.ref.ptr[i] = generator(i);
+      ccore.std_VecU16_set(p, i, generator(i));
     }
-    return VecU16.fromPointer(pp);
+    return VecU16.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecU16Ptr>(ccore.addresses.std_VecU16_free);
 
   @override
   VecU16 clone() => VecU16.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecU16_length(ptr);
 
-  Uint16List get data => ref.ptr.cast<ffi.Uint16>().asTypedList(length);
+  ffi.Pointer<ffi.Uint16> get dataPtr => ccore.std_VecU16_data(ptr);
+
+  Uint16List get data => dataPtr.cast<ffi.Uint16>().asTypedList(length);
+
   @override
-  Iterator<int> get iterator => VecU16Iterator(ref);
+  Iterator<int> get iterator => VecU16Iterator(data);
   @override
   cvg.VecU16 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecU16_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecU16>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, int value) => data[idx] = value;
 
   @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
+  int operator [](int idx) => data[idx];
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  void add(int element) => ccore.std_VecU16_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecU16_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecU16_extend(ptr, (other as VecU16).ptr);
+
+  @override
+  void pushBack(int element) => ccore.std_VecU16_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecU16_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecU16_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecU16_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecU16_length(ptr);
 }
 
 class VecU16Iterator extends VecIterator<int> {
-  VecU16Iterator(this.ref);
-  cvg.VecU16 ref;
+  VecU16Iterator(this.data);
+  Uint16List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  int operator [](int idx) => data[idx];
 }
 
 class VecI16 extends Vec<cvg.VecI16, int> {
   VecI16.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecI16([int length = 0, int value = 0]) => VecI16.generate(length, (i) => value);
+  factory VecI16([int length = 0, int value = 0]) =>
+      VecI16.fromPointer(ccore.std_VecI16_new_1(length, value));
+
   factory VecI16.fromList(List<int> pts) {
     final length = pts.length;
-    final pdata = calloc<I16>(length);
-    pdata.asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecI16>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecI16_new(length);
+    final pdata = ccore.std_VecI16_data(p);
+    pdata.asTypedList(length).setAll(0, pts);
     return VecI16.fromPointer(p);
   }
 
   factory VecI16.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecI16>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Int16>(length);
+    final p = ccore.std_VecI16_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
+      ccore.std_VecI16_set(p, i, generator(i));
     }
-    return VecI16.fromPointer(pp);
+    return VecI16.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecI16Ptr>(ccore.addresses.std_VecI16_free);
 
   @override
   VecI16 clone() => VecI16.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecI16_length(ptr);
 
-  Int16List get data => ref.ptr.cast<ffi.Int16>().asTypedList(length);
+  ffi.Pointer<ffi.Int16> get dataPtr => ccore.std_VecI16_data(ptr);
+
+  Int16List get data => dataPtr.cast<ffi.Int16>().asTypedList(length);
   @override
-  Iterator<int> get iterator => VecI16Iterator(ref);
+  Iterator<int> get iterator => VecI16Iterator(data);
   @override
   cvg.VecI16 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecI16_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecI16>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, int value) => data[idx] = value;
 
   @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
+  int operator [](int idx) => data[idx];
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  void add(int element) => ccore.std_VecI16_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecI16_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecI16_extend(ptr, (other as VecI16).ptr);
+
+  @override
+  void pushBack(int element) => ccore.std_VecI16_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecI16_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecI16_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecI16_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecI16_length(ptr);
 }
 
 class VecI16Iterator extends VecIterator<int> {
-  VecI16Iterator(this.ref);
-  cvg.VecI16 ref;
+  VecI16Iterator(this.data);
+  Int16List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  int operator [](int idx) => data[idx];
 }
 
 class VecI32 extends Vec<cvg.VecI32, int> {
   VecI32.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecI32([int length = 0, int value = 0]) => VecI32.generate(length, (i) => value);
+  factory VecI32([int length = 0, int value = 0]) =>
+      VecI32.fromPointer(ccore.std_VecI32_new_1(length, value));
+
   factory VecI32.fromList(List<int> pts) {
     final length = pts.length;
-    final pdata = calloc<I32>(length);
-    pdata.asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecI32>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecI32_new(length);
+    final pdata = ccore.std_VecI32_data(p);
+    pdata.asTypedList(length).setAll(0, pts);
     return VecI32.fromPointer(p);
   }
 
   factory VecI32.generate(int length, int Function(int i) generator) {
-    final pp = calloc<cvg.VecI32>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Int32>(length);
+    final p = ccore.std_VecI32_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
+      ccore.std_VecI32_set(p, i, generator(i));
     }
-    return VecI32.fromPointer(pp);
+    return VecI32.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecI32Ptr>(ccore.addresses.std_VecI32_free);
 
   @override
   VecI32 clone() => VecI32.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecI32_length(ptr);
 
-  Int32List get data => ref.ptr.cast<ffi.Int32>().asTypedList(length);
+  ffi.Pointer<ffi.Int32> get dataPtr => ccore.std_VecI32_data(ptr);
+
+  Int32List get data => dataPtr.cast<ffi.Int32>().asTypedList(length);
 
   @override
-  Iterator<int> get iterator => VecI32Iterator(ref);
+  Iterator<int> get iterator => VecI32Iterator(data);
 
   @override
   cvg.VecI32 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecI32_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecI32>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, int value) => ccore.std_VecI32_set(ptr, idx, value);
 
   @override
-  void operator []=(int idx, int value) => ref.ptr[idx] = value;
+  int operator [](int idx) => ccore.std_VecI32_get(ptr, idx);
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  void add(int element) => ccore.std_VecI32_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecI32_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecI32_extend(ptr, (other as VecI32).ptr);
+
+  @override
+  void pushBack(int element) => ccore.std_VecI32_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecI32_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecI32_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecI32_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecI32_length(ptr);
 }
 
 class VecI32Iterator extends VecIterator<int> {
-  VecI32Iterator(this.ref);
-  cvg.VecI32 ref;
+  VecI32Iterator(this.data);
+  Int32List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  int operator [](int idx) => ref.ptr[idx];
+  int operator [](int idx) => data[idx];
 }
 
 class VecF32 extends Vec<cvg.VecF32, double> {
   VecF32.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecF32([int length = 0, double value = 0.0]) => VecF32.generate(length, (i) => value);
+  factory VecF32([int length = 0, double value = 0.0]) =>
+      VecF32.fromPointer(ccore.std_VecF32_new_1(length, value));
   factory VecF32.fromList(List<double> pts) {
     final length = pts.length;
-    final pdata = calloc<F32>(length);
-    pdata.asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecF32>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecF32_new(length);
+    final pdata = ccore.std_VecF32_data(p);
+    pdata.asTypedList(length).setAll(0, pts);
     return VecF32.fromPointer(p);
   }
 
   factory VecF32.generate(int length, double Function(int i) generator) {
-    final pp = calloc<cvg.VecF32>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Float>(length);
+    final p = ccore.std_VecF32_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
+      ccore.std_VecF32_set(p, i, generator(i));
     }
-    return VecF32.fromPointer(pp);
+    return VecF32.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecF32Ptr>(ccore.addresses.std_VecF32_free);
 
   @override
   VecF32 clone() => VecF32.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecF32_length(ptr);
 
-  Float32List get data => ref.ptr.cast<ffi.Float>().asTypedList(length);
+  ffi.Pointer<ffi.Float> get dataPtr => ccore.std_VecF32_data(ptr);
+
+  Float32List get data => dataPtr.cast<ffi.Float>().asTypedList(length);
   @override
-  Iterator<double> get iterator => VecF32Iterator(ref);
+  Iterator<double> get iterator => VecF32Iterator(data);
   @override
   cvg.VecF32 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecF32_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecF32>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, double value) => ccore.std_VecF32_set(ptr, idx, value);
 
   @override
-  void operator []=(int idx, double value) => ref.ptr[idx] = value;
+  double operator [](int idx) => ccore.std_VecF32_get(ptr, idx);
 
   @override
-  double operator [](int idx) => ref.ptr[idx];
+  void add(double element) => ccore.std_VecF32_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecF32_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecF32_extend(ptr, (other as VecF32).ptr);
+
+  @override
+  void pushBack(double element) => ccore.std_VecF32_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecF32_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecF32_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecF32_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecF32_length(ptr);
 }
 
 class VecF32Iterator extends VecIterator<double> {
-  VecF32Iterator(this.ref);
-  cvg.VecF32 ref;
+  VecF32Iterator(this.data);
+  Float32List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  double operator [](int idx) => ref.ptr[idx];
+  double operator [](int idx) => data[idx];
 }
 
 class VecF64 extends Vec<cvg.VecF64, double> {
   VecF64.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
-  factory VecF64([int length = 0, double value = 0.0]) => VecF64.generate(length, (i) => value);
+  factory VecF64([int length = 0, double value = 0.0]) =>
+      VecF64.fromPointer(ccore.std_VecF64_new_1(length, value));
   factory VecF64.fromList(List<double> pts) {
     final length = pts.length;
-    final pdata = calloc<F64>(length);
-    pdata.asTypedList(length).setRange(0, length, pts);
-    final p = calloc<cvg.VecF64>()
-      ..ref.length = length
-      ..ref.ptr = pdata;
+    final p = ccore.std_VecF64_new(length);
+    final pdata = ccore.std_VecF64_data(p);
+    pdata.asTypedList(length).setAll(0, pts);
     return VecF64.fromPointer(p);
   }
 
   factory VecF64.generate(int length, double Function(int i) generator) {
-    final pp = calloc<cvg.VecF64>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Double>(length);
+    final p = ccore.std_VecF64_new(length);
     for (var i = 0; i < length; i++) {
-      final v = generator(i);
-      pp.ref.ptr[i] = v;
+      ccore.std_VecF64_set(p, i, generator(i));
     }
-    return VecF64.fromPointer(pp);
+    return VecF64.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecF64Ptr>(ccore.addresses.std_VecF64_free);
 
   @override
   VecF64 clone() => VecF64.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecF64_length(ptr);
 
-  Float64List get data => ref.ptr.cast<ffi.Double>().asTypedList(length);
+  ffi.Pointer<ffi.Double> get dataPtr => ccore.std_VecF64_data(ptr);
+
+  Float64List get data => dataPtr.cast<ffi.Double>().asTypedList(length);
 
   @override
-  Iterator<double> get iterator => VecF64Iterator(ref);
+  Iterator<double> get iterator => VecF64Iterator(data);
 
   @override
   cvg.VecF64 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecF64_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecF64>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, double value) => data[idx] = value;
 
   @override
-  void operator []=(int idx, double value) => ref.ptr[idx] = value;
+  double operator [](int idx) => data[idx];
 
   @override
-  double operator [](int idx) => ref.ptr[idx];
+  void add(double element) => ccore.std_VecF64_push_back(ptr, element);
+
+  @override
+  void clear() => ccore.std_VecF64_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecF64_extend(ptr, (other as VecF64).ptr);
+
+  @override
+  void pushBack(double element) => ccore.std_VecF64_push_back(ptr, element);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecF64_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecF64_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecF64_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecF64_length(ptr);
 }
 
 class VecF64Iterator extends VecIterator<double> {
-  VecF64Iterator(this.ref);
-  cvg.VecF64 ref;
+  VecF64Iterator(this.data);
+  Float64List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  double operator [](int idx) => ref.ptr[idx];
+  double operator [](int idx) => data[idx];
 }
 
 class VecF16 extends Vec<cvg.VecF16, double> {
   VecF16.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -698,60 +848,80 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   factory VecF16.fromList(List<double> pts) => VecF16.generate(pts.length, (i) => pts[i]);
 
   factory VecF16.generate(int length, double Function(int i) generator) {
-    final pp = calloc<cvg.VecF16>()..ref.length = length;
-    pp.ref.ptr = calloc<ffi.Uint16>(length);
+    final p = ccore.std_VecF16_new(length);
     for (var i = 0; i < length; i++) {
-      pp.ref.ptr[i] = generator(i).fp16;
+      ccore.std_VecF16_set(p, i, generator(i).fp16);
     }
-    return VecF16.fromPointer(pp);
+    return VecF16.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecF16Ptr>(ccore.addresses.std_VecF16_free);
 
   @override
   VecF16 clone() => VecF16.generate(length, (idx) => this[idx]);
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecF16_length(ptr);
 
-  Uint16List get data => ref.ptr.cast<ffi.Uint16>().asTypedList(length);
+  ffi.Pointer<ffi.Uint16> get dataPtr => ccore.std_VecF16_data(ptr);
+
+  Uint16List get data => dataPtr.cast<ffi.Uint16>().asTypedList(length);
   Iterable<double> get dataFp16 => data.map(float16);
 
   @override
-  Iterator<double> get iterator => VecF16Iterator(ref);
+  Iterator<double> get iterator => VecF16Iterator(data);
   @override
   cvg.VecF16 get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecF16_free(ptr);
   }
 
   @override
-  ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
+  ffi.Pointer<ffi.Void> asVoid() => dataPtr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecF16>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, double value) => ccore.std_VecF16_set(ptr, idx, value.fp16);
 
   @override
-  void operator []=(int idx, double value) => ref.ptr[idx] = value.fp16;
+  double operator [](int idx) => ccore.std_VecF16_get(ptr, idx).fp16;
 
   @override
-  double operator [](int idx) => ref.ptr[idx].fp16;
+  void add(double element) => ccore.std_VecF16_push_back(ptr, element.fp16);
+
+  @override
+  void clear() => ccore.std_VecF16_clear(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecF16_extend(ptr, (other as VecF16).ptr);
+
+  @override
+  void pushBack(double element) => ccore.std_VecF16_push_back(ptr, element.fp16);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecF16_reserve(ptr, newCapacity);
+
+  @override
+  void resize(int newSize) => ccore.std_VecF16_resize(ptr, newSize);
+
+  @override
+  void shrinkToFit() => ccore.std_VecF16_shrink_to_fit(ptr);
+
+  @override
+  int size() => ccore.std_VecF16_length(ptr);
 }
 
 class VecF16Iterator extends VecIterator<double> {
-  VecF16Iterator(this.ref);
-  cvg.VecF16 ref;
+  VecF16Iterator(this.data);
+  Uint16List data;
 
   @override
-  int get length => ref.length;
+  int get length => data.length;
 
   @override
-  double operator [](int idx) => float16(ref.ptr[idx]);
+  double operator [](int idx) => data[idx].fp16;
 }
 
 extension DoubleFp16Extension on double {
