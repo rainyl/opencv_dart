@@ -308,7 +308,7 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   }
 
   @override
-  VecVecChar clone() => VecVecChar.generate(length, (idx) => this[idx]);
+  VecVecChar clone() => VecVecChar.fromPointer(ccore.std_VecVecChar_clone(ptr));
 
   @override
   Iterator<VecChar> get iterator => VecVecCharIterator(ptr);
@@ -397,7 +397,7 @@ class VecU16 extends Vec<cvg.VecU16, int> {
   static final finalizer = OcvFinalizer<cvg.VecU16Ptr>(ccore.addresses.std_VecU16_free);
 
   @override
-  VecU16 clone() => VecU16.generate(length, (idx) => this[idx]);
+  VecU16 clone() => VecU16.fromPointer(ccore.std_VecU16_clone(ptr));
 
   @override
   int get length => ccore.std_VecU16_length(ptr);
@@ -491,7 +491,7 @@ class VecI16 extends Vec<cvg.VecI16, int> {
   static final finalizer = OcvFinalizer<cvg.VecI16Ptr>(ccore.addresses.std_VecI16_free);
 
   @override
-  VecI16 clone() => VecI16.generate(length, (idx) => this[idx]);
+  VecI16 clone() => VecI16.fromPointer(ccore.std_VecI16_clone(ptr));
 
   @override
   int get length => ccore.std_VecI16_length(ptr);
@@ -584,7 +584,7 @@ class VecI32 extends Vec<cvg.VecI32, int> {
   static final finalizer = OcvFinalizer<cvg.VecI32Ptr>(ccore.addresses.std_VecI32_free);
 
   @override
-  VecI32 clone() => VecI32.generate(length, (idx) => this[idx]);
+  VecI32 clone() => VecI32.fromPointer(ccore.std_VecI32_clone(ptr));
 
   @override
   int get length => ccore.std_VecI32_length(ptr);
@@ -678,7 +678,7 @@ class VecF32 extends Vec<cvg.VecF32, double> {
   static final finalizer = OcvFinalizer<cvg.VecF32Ptr>(ccore.addresses.std_VecF32_free);
 
   @override
-  VecF32 clone() => VecF32.generate(length, (idx) => this[idx]);
+  VecF32 clone() => VecF32.fromPointer(ccore.std_VecF32_clone(ptr));
 
   @override
   int get length => ccore.std_VecF32_length(ptr);
@@ -770,7 +770,7 @@ class VecF64 extends Vec<cvg.VecF64, double> {
   static final finalizer = OcvFinalizer<cvg.VecF64Ptr>(ccore.addresses.std_VecF64_free);
 
   @override
-  VecF64 clone() => VecF64.generate(length, (idx) => this[idx]);
+  VecF64 clone() => VecF64.fromPointer(ccore.std_VecF64_clone(ptr));
 
   @override
   int get length => ccore.std_VecF64_length(ptr);
@@ -858,7 +858,7 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   static final finalizer = OcvFinalizer<cvg.VecF16Ptr>(ccore.addresses.std_VecF16_free);
 
   @override
-  VecF16 clone() => VecF16.generate(length, (idx) => this[idx]);
+  VecF16 clone() => VecF16.fromPointer(ccore.std_VecF16_clone(ptr));
 
   @override
   int get length => ccore.std_VecF16_length(ptr);
