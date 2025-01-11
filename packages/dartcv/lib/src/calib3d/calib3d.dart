@@ -300,7 +300,7 @@ Mat drawChessboardCorners(
   inliers ??= Mat.empty();
   final rval = Mat.empty();
   cvRun(
-    () => ccalib3d.cv_estimateAffine2D_1(
+    () => ccalib3d.cv_estimateAffinePartial2D_1(
       from.ref,
       to.ref,
       inliers!.ref,
