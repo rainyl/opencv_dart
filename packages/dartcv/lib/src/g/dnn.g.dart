@@ -172,7 +172,7 @@ class CvNativeDnn {
     VecF32 scores,
     double score_threshold,
     double nms_threshold,
-    ffi.Pointer<VecI32> indices,
+    ffi.Pointer<VecI32> out_indices,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_dnn_NMSBoxes(
@@ -180,7 +180,7 @@ class CvNativeDnn {
       scores,
       score_threshold,
       nms_threshold,
-      indices,
+      out_indices,
       callback,
     );
   }

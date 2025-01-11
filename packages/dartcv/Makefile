@@ -1,7 +1,7 @@
 .PHONY: ffigen ffigen_test clone_repo clean_repo
 
 
-ffigen: clone_repo
+ffigen:
 	dart run ffigen --config ffigen/ffigen_const.yaml
 	dart run ffigen --config ffigen/ffigen_types.yaml
 	dart run ffigen --config ffigen/ffigen_core.yaml
@@ -30,3 +30,9 @@ clone_repo:
 ffigen_test: clone_repo
 	dart run ffigen --config ffigen/ffigen_types.yaml
 	dart run ffigen --config ffigen/ffigen_core.yaml
+
+test:
+	dart test
+
+test_coverage:
+	dart pub global run coverage:test_with_coverage

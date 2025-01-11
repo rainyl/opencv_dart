@@ -181,9 +181,9 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
 
   /// https://docs.opencv.org/4.x/df/d55/classcv_1_1img__hash_1_1BlockMeanHash.html#ad5aef85f58315551cac14bcabe05f0c3
   VecF64 getMean() {
-    final ret = calloc<cvg.VecF64>();
-    cvRun(() => ccontrib.cv_img_hash_BlockMeanHash_getMean(ref, ret, ffi.nullptr));
-    return VecF64.fromPointer(ret);
+    final ret = VecF64();
+    cvRun(() => ccontrib.cv_img_hash_BlockMeanHash_getMean(ref, ret.ptr, ffi.nullptr));
+    return ret;
   }
 
   @override
@@ -210,11 +210,11 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   Future<VecF64> getMeanAsync() async {
-    final ret = calloc<cvg.VecF64>();
+    final ret = VecF64();
     return cvRunAsync0<VecF64>(
-      (callback) => ccontrib.cv_img_hash_BlockMeanHash_getMean(ref, ret, callback),
+      (callback) => ccontrib.cv_img_hash_BlockMeanHash_getMean(ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecF64.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }

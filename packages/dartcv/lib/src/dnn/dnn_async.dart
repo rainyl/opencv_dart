@@ -183,50 +183,51 @@ extension NetAsync on Net {
 
   Future<VecMat> forwardLayersAsync(List<String> names) async {
     final vecName = names.i8;
-    final vecMat = calloc<cvg.VecMat>();
+    final vecMat = VecMat();
     return cvRunAsync0(
-      (callback) => cdnn.cv_dnn_Net_forwardLayers(ref, vecMat, vecName.ref, callback),
+      (callback) => cdnn.cv_dnn_Net_forwardLayers(ref, vecMat.ptr, vecName.ref, callback),
       (c) {
-        return c.complete(VecMat.fromPointer(vecMat));
+        return c.complete(vecMat);
       },
     );
   }
 
   Future<(int, VecF64 layersTimes)> getPerfProfileAsync() async {
     final p = calloc<ffi.Int64>();
-    final p1 = calloc<cvg.VecF64>();
-    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1, callback), (c) {
+    final p1 = VecF64();
+    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1.ptr, callback), (c) {
       final rval = p.value;
       calloc.free(p);
-      return c.complete((rval, VecF64.fromPointer(p1)));
+      return c.complete((rval, p1));
     });
   }
 
   Future<VecI32> getUnconnectedOutLayersAsync() async {
-    final ids = calloc<cvg.VecI32>();
-    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getUnconnectedOutLayers(ref, ids, callback), (c) {
-      return c.complete(VecI32.fromPointer(ids));
+    final ids = VecI32();
+    return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getUnconnectedOutLayers(ref, ids.ptr, callback), (c) {
+      return c.complete(ids);
     });
   }
 
   Future<List<String>> getLayerNamesAsync() async {
-    final cNames = calloc<cvg.VecVecChar>();
+    final cNames = VecVecChar();
     return cvRunAsync0(
-      (callback) => cdnn.cv_dnn_Net_getLayerNames(ref, cNames, callback),
+      (callback) => cdnn.cv_dnn_Net_getLayerNames(ref, cNames.ptr, callback),
       (c) {
-        final vec = VecVecChar.fromPointer(cNames);
-        return c.complete(vec.asStringList());
+        final vec = cNames.asStringList();
+        cNames.dispose();
+        return c.complete(vec);
       },
     );
   }
 
   Future<(VecF32, VecI32)> getInputDetailsAsync() async {
-    final sc = calloc<cvg.VecF32>();
-    final zp = calloc<cvg.VecI32>();
+    final sc = VecF32();
+    final zp = VecI32();
     return cvRunAsync0(
-      (callback) => cdnn.cv_dnn_Net_getInputDetails(ref, sc, zp, callback),
+      (callback) => cdnn.cv_dnn_Net_getInputDetails(ref, sc.ptr, zp.ptr, callback),
       (c) {
-        return c.complete((VecF32.fromPointer(sc), VecI32.fromPointer(zp)));
+        return c.complete((sc, zp));
       },
     );
   }
@@ -291,12 +292,12 @@ Future<Mat> blobFromImagesAsync(
   );
 }
 
-Future<List<Mat>> imagesFromBlobAsync(Mat blob) async {
-  final mats = calloc<cvg.VecMat>();
+Future<VecMat> imagesFromBlobAsync(Mat blob) async {
+  final mats = VecMat();
   return cvRunAsync0(
-    (callback) => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats, callback),
+    (callback) => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats.ptr, callback),
     (c) {
-      return c.complete(VecMat.fromPointer(mats).toList());
+      return c.complete(mats);
     },
   );
 }
@@ -319,20 +320,20 @@ Future<List<int>> NMSBoxesAsync(
   double eta = 1.0,
   int topK = 0,
 }) async {
-  final indices = calloc<cvg.VecI32>();
+  final indices = VecI32();
   return cvRunAsync0(
     (callback) => cdnn.cv_dnn_NMSBoxes_1(
       bboxes.ref,
       scores.ref,
       scoreThreshold,
       nmsThreshold,
-      indices,
+      indices.ptr,
       eta,
       topK,
       callback,
     ),
     (c) {
-      return c.complete(VecI32.fromPointer(indices).toList());
+      return c.complete(indices.toList());
     },
   );
 }

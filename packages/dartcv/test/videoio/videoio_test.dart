@@ -1,22 +1,26 @@
+import 'dart:io';
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
+
+final apiPreference = Platform.isMacOS ? cv.CAP_AVFOUNDATION : cv.CAP_FFMPEG;
 
 void main() async {
   // videoio
   test('cv.VideoWriter.empty', () {
     final writer = cv.VideoWriter.empty();
     expect(writer.isOpened, equals(false));
-    writer.open("test/images/small2.mp4", "mp4v", 60, (400, 300));
+    expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
+    writer.open("test/images/small2.avi", "mp4v", 60, (400, 300));
     writer.open("test/images/small2.mp4", "mp4v", 60, (400, 300), apiPreference: cv.CAP_FFMPEG);
     writer.release();
-
-    expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
 
     writer.dispose();
   });
 
   test('cv.VideoWriter.fromFile', () {
-    final writer = cv.VideoWriter.fromFile("test/images/small2.mp4", "mp4v", 60, (400, 300));
+    final writer =
+        cv.VideoWriter.fromFile("test/images/small2.mp4", "mp4v", 60, (400, 300), apiPreference: cv.CAP_ANY);
     final frame = cv.Mat.ones(400, 300, cv.MatType.CV_8UC3);
     writer.write(frame);
     writer.release();
@@ -25,7 +29,7 @@ void main() async {
       "mp4v",
       60,
       (400, 300),
-      apiPreference: cv.CAP_FFMPEG,
+      apiPreference: cv.CAP_ANY,
     );
     expect(writer1.isOpened, true);
   });

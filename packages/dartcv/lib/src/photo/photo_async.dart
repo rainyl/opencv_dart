@@ -4,14 +4,9 @@
 
 library cv.photo;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../g/photo.g.dart' as cvg;
 import '../native_lib.dart' show cphoto;
 import './photo.dart';
 
@@ -29,11 +24,11 @@ extension MergeMertensAsync on MergeMertens {
 
 extension AlignMTBAsync on AlignMTB {
   Future<VecMat> processAsync(VecMat src) async {
-    final dst = calloc<cvg.VecMat>();
+    final dst = VecMat();
     return cvRunAsync0(
-      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst, callback),
+      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst.ptr, callback),
       (c) {
-        return c.complete(VecMat.fromPointer(dst));
+        return c.complete(dst);
       },
     );
   }

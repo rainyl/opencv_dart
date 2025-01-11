@@ -783,16 +783,18 @@ class CvNativeFeatures2d {
     ORB self,
     Mat src,
     Mat mask,
-    ffi.Pointer<Mat> desc,
-    ffi.Pointer<VecKeyPoint> rval,
+    ffi.Pointer<VecKeyPoint> out_keypoints,
+    Mat desc,
+    bool useProvidedKeypoints,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_ORB_detectAndCompute(
       self,
       src,
       mask,
+      out_keypoints,
       desc,
-      rval,
+      useProvidedKeypoints,
       callback,
     );
   }
@@ -803,12 +805,13 @@ class CvNativeFeatures2d {
               ORB,
               Mat,
               Mat,
-              ffi.Pointer<Mat>,
               ffi.Pointer<VecKeyPoint>,
+              Mat,
+              ffi.Bool,
               imp1.CvCallback_0)>>('cv_ORB_detectAndCompute');
   late final _cv_ORB_detectAndCompute = _cv_ORB_detectAndComputePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<Mat>,
-          ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<VecKeyPoint>,
+          Mat, bool, imp1.CvCallback_0)>();
 
   void cv_SIFT_close(
     SIFTPtr self,

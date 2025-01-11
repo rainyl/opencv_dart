@@ -1423,11 +1423,11 @@ Future<Mat> sortIdxAsync(InputArray src, int flags, {OutputArray? dst}) async {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 Future<VecMat> splitAsync(InputArray m) async {
-  final vec = calloc<cvg.VecMat>();
+  final vec = VecMat();
   return cvRunAsync0(
-    (callback) => ccore.cv_split(m.ref, vec, callback),
+    (callback) => ccore.cv_split(m.ref, vec.ptr, callback),
     (c) {
-      return c.complete(VecMat.fromPointer(vec));
+      return c.complete(vec);
     },
   );
 }

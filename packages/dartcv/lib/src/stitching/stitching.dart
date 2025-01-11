@@ -127,9 +127,9 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a7fed80561a9b46a1a924ac6cb334ac85
   VecI32 get component {
-    final rptr = calloc<cvg.VecI32>();
-    cvRun(() => cstitching.cv_Stitcher_component(ref, rptr, ffi.nullptr));
-    return VecI32.fromPointer(rptr);
+    final v = VecI32();
+    cvRun(() => cstitching.cv_Stitcher_component(ref, v.ptr, ffi.nullptr));
+    return v;
   }
 
   static final finalizer = OcvFinalizer<cvg.StitcherPtr>(cstitching.addresses.cv_Stitcher_close);

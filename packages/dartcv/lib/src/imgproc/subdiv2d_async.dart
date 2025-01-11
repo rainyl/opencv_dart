@@ -124,11 +124,11 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
   Future<VecI32> getLeadingEdgeListAsync() async {
-    final pv = calloc<cvg.VecI32>();
+    final pv = VecI32();
     return cvRunAsync0(
-      (callback) => cimgproc.cv_Subdiv2D_getLeadingEdgeList(ref, pv, callback),
+      (callback) => cimgproc.cv_Subdiv2D_getLeadingEdgeList(ref, pv.ptr, callback),
       (c) {
-        return c.complete(VecI32.fromPointer(pv));
+        return c.complete(pv);
       },
     );
   }
@@ -176,12 +176,12 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
   Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecI32 idx) async {
-    final pf = calloc<cvg.VecVecPoint2f>();
-    final pfc = calloc<cvg.VecPoint2f>();
+    final pf = VecVecPoint2f();
+    final pfc = VecPoint2f();
     return cvRunAsync0(
-      (callback) => cimgproc.cv_Subdiv2D_getVoronoiFacetList(ref, idx.ref, pf, pfc, callback),
+      (callback) => cimgproc.cv_Subdiv2D_getVoronoiFacetList(ref, idx.ref, pf.ptr, pfc.ptr, callback),
       (c) {
-        return c.complete((VecVecPoint2f.fromPointer(pf), VecPoint2f.fromPointer(pfc)));
+        return c.complete((pf, pfc));
       },
     );
   }

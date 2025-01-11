@@ -168,11 +168,11 @@ VecRect selectROIs(
   bool fromCenter = false,
   bool printNotice = true,
 }) {
-  final p = calloc<cvg.VecRect>();
+  final p = VecRect();
   final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_selectROIs(cWinName, img.ref, p, showCrosshair, fromCenter, printNotice));
+  cvRun(() => chighgui.cv_selectROIs(cWinName, img.ref, p.ptr, showCrosshair, fromCenter, printNotice));
   calloc.free(cWinName);
-  return VecRect.fromPointer(p);
+  return p;
 }
 
 // https://stackoverflow.com/a/48055987/18539998

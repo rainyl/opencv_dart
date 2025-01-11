@@ -618,6 +618,8 @@ files:
         name: cv_transposeND
       c:@F@cv_vconcat:
         name: cv_vconcat
+      c:@F@cv_yuv420_888_to_nv21:
+        name: cv_yuv420_888_to_nv21
       c:@F@getBuildInfo:
         name: getBuildInfo
       c:@F@getCvVersion:
@@ -628,6 +630,1002 @@ files:
         name: registerErrorCallback
       c:@F@setLogLevel:
         name: setLogLevel
+      c:@F@std_VecChar_clear:
+        name: std_VecChar_clear
+      c:@F@std_VecChar_clone:
+        name: std_VecChar_clone
+      c:@F@std_VecChar_data:
+        name: std_VecChar_data
+      c:@F@std_VecChar_extend:
+        name: std_VecChar_extend
+      c:@F@std_VecChar_free:
+        name: std_VecChar_free
+      c:@F@std_VecChar_get:
+        name: std_VecChar_get
+      c:@F@std_VecChar_length:
+        name: std_VecChar_length
+      c:@F@std_VecChar_new:
+        name: std_VecChar_new
+      c:@F@std_VecChar_new_1:
+        name: std_VecChar_new_1
+      c:@F@std_VecChar_new_2:
+        name: std_VecChar_new_2
+      c:@F@std_VecChar_push_back:
+        name: std_VecChar_push_back
+      c:@F@std_VecChar_reserve:
+        name: std_VecChar_reserve
+      c:@F@std_VecChar_resize:
+        name: std_VecChar_resize
+      c:@F@std_VecChar_set:
+        name: std_VecChar_set
+      c:@F@std_VecChar_shrink_to_fit:
+        name: std_VecChar_shrink_to_fit
+      c:@F@std_VecDMatch_clear:
+        name: std_VecDMatch_clear
+      c:@F@std_VecDMatch_clone:
+        name: std_VecDMatch_clone
+      c:@F@std_VecDMatch_data:
+        name: std_VecDMatch_data
+      c:@F@std_VecDMatch_extend:
+        name: std_VecDMatch_extend
+      c:@F@std_VecDMatch_free:
+        name: std_VecDMatch_free
+      c:@F@std_VecDMatch_get:
+        name: std_VecDMatch_get
+      c:@F@std_VecDMatch_get_p:
+        name: std_VecDMatch_get_p
+      c:@F@std_VecDMatch_length:
+        name: std_VecDMatch_length
+      c:@F@std_VecDMatch_new:
+        name: std_VecDMatch_new
+      c:@F@std_VecDMatch_new_1:
+        name: std_VecDMatch_new_1
+      c:@F@std_VecDMatch_new_2:
+        name: std_VecDMatch_new_2
+      c:@F@std_VecDMatch_push_back:
+        name: std_VecDMatch_push_back
+      c:@F@std_VecDMatch_reserve:
+        name: std_VecDMatch_reserve
+      c:@F@std_VecDMatch_resize:
+        name: std_VecDMatch_resize
+      c:@F@std_VecDMatch_set:
+        name: std_VecDMatch_set
+      c:@F@std_VecDMatch_shrink_to_fit:
+        name: std_VecDMatch_shrink_to_fit
+      c:@F@std_VecF16_clear:
+        name: std_VecF16_clear
+      c:@F@std_VecF16_clone:
+        name: std_VecF16_clone
+      c:@F@std_VecF16_data:
+        name: std_VecF16_data
+      c:@F@std_VecF16_extend:
+        name: std_VecF16_extend
+      c:@F@std_VecF16_free:
+        name: std_VecF16_free
+      c:@F@std_VecF16_get:
+        name: std_VecF16_get
+      c:@F@std_VecF16_length:
+        name: std_VecF16_length
+      c:@F@std_VecF16_new:
+        name: std_VecF16_new
+      c:@F@std_VecF16_new_1:
+        name: std_VecF16_new_1
+      c:@F@std_VecF16_new_2:
+        name: std_VecF16_new_2
+      c:@F@std_VecF16_push_back:
+        name: std_VecF16_push_back
+      c:@F@std_VecF16_reserve:
+        name: std_VecF16_reserve
+      c:@F@std_VecF16_resize:
+        name: std_VecF16_resize
+      c:@F@std_VecF16_set:
+        name: std_VecF16_set
+      c:@F@std_VecF16_shrink_to_fit:
+        name: std_VecF16_shrink_to_fit
+      c:@F@std_VecF32_clear:
+        name: std_VecF32_clear
+      c:@F@std_VecF32_clone:
+        name: std_VecF32_clone
+      c:@F@std_VecF32_data:
+        name: std_VecF32_data
+      c:@F@std_VecF32_extend:
+        name: std_VecF32_extend
+      c:@F@std_VecF32_free:
+        name: std_VecF32_free
+      c:@F@std_VecF32_get:
+        name: std_VecF32_get
+      c:@F@std_VecF32_length:
+        name: std_VecF32_length
+      c:@F@std_VecF32_new:
+        name: std_VecF32_new
+      c:@F@std_VecF32_new_1:
+        name: std_VecF32_new_1
+      c:@F@std_VecF32_new_2:
+        name: std_VecF32_new_2
+      c:@F@std_VecF32_push_back:
+        name: std_VecF32_push_back
+      c:@F@std_VecF32_reserve:
+        name: std_VecF32_reserve
+      c:@F@std_VecF32_resize:
+        name: std_VecF32_resize
+      c:@F@std_VecF32_set:
+        name: std_VecF32_set
+      c:@F@std_VecF32_shrink_to_fit:
+        name: std_VecF32_shrink_to_fit
+      c:@F@std_VecF64_clear:
+        name: std_VecF64_clear
+      c:@F@std_VecF64_clone:
+        name: std_VecF64_clone
+      c:@F@std_VecF64_data:
+        name: std_VecF64_data
+      c:@F@std_VecF64_extend:
+        name: std_VecF64_extend
+      c:@F@std_VecF64_free:
+        name: std_VecF64_free
+      c:@F@std_VecF64_get:
+        name: std_VecF64_get
+      c:@F@std_VecF64_length:
+        name: std_VecF64_length
+      c:@F@std_VecF64_new:
+        name: std_VecF64_new
+      c:@F@std_VecF64_new_1:
+        name: std_VecF64_new_1
+      c:@F@std_VecF64_new_2:
+        name: std_VecF64_new_2
+      c:@F@std_VecF64_push_back:
+        name: std_VecF64_push_back
+      c:@F@std_VecF64_reserve:
+        name: std_VecF64_reserve
+      c:@F@std_VecF64_resize:
+        name: std_VecF64_resize
+      c:@F@std_VecF64_set:
+        name: std_VecF64_set
+      c:@F@std_VecF64_shrink_to_fit:
+        name: std_VecF64_shrink_to_fit
+      c:@F@std_VecI16_clear:
+        name: std_VecI16_clear
+      c:@F@std_VecI16_clone:
+        name: std_VecI16_clone
+      c:@F@std_VecI16_data:
+        name: std_VecI16_data
+      c:@F@std_VecI16_extend:
+        name: std_VecI16_extend
+      c:@F@std_VecI16_free:
+        name: std_VecI16_free
+      c:@F@std_VecI16_get:
+        name: std_VecI16_get
+      c:@F@std_VecI16_length:
+        name: std_VecI16_length
+      c:@F@std_VecI16_new:
+        name: std_VecI16_new
+      c:@F@std_VecI16_new_1:
+        name: std_VecI16_new_1
+      c:@F@std_VecI16_new_2:
+        name: std_VecI16_new_2
+      c:@F@std_VecI16_push_back:
+        name: std_VecI16_push_back
+      c:@F@std_VecI16_reserve:
+        name: std_VecI16_reserve
+      c:@F@std_VecI16_resize:
+        name: std_VecI16_resize
+      c:@F@std_VecI16_set:
+        name: std_VecI16_set
+      c:@F@std_VecI16_shrink_to_fit:
+        name: std_VecI16_shrink_to_fit
+      c:@F@std_VecI32_clear:
+        name: std_VecI32_clear
+      c:@F@std_VecI32_clone:
+        name: std_VecI32_clone
+      c:@F@std_VecI32_data:
+        name: std_VecI32_data
+      c:@F@std_VecI32_extend:
+        name: std_VecI32_extend
+      c:@F@std_VecI32_free:
+        name: std_VecI32_free
+      c:@F@std_VecI32_get:
+        name: std_VecI32_get
+      c:@F@std_VecI32_length:
+        name: std_VecI32_length
+      c:@F@std_VecI32_new:
+        name: std_VecI32_new
+      c:@F@std_VecI32_new_1:
+        name: std_VecI32_new_1
+      c:@F@std_VecI32_new_2:
+        name: std_VecI32_new_2
+      c:@F@std_VecI32_push_back:
+        name: std_VecI32_push_back
+      c:@F@std_VecI32_reserve:
+        name: std_VecI32_reserve
+      c:@F@std_VecI32_resize:
+        name: std_VecI32_resize
+      c:@F@std_VecI32_set:
+        name: std_VecI32_set
+      c:@F@std_VecI32_shrink_to_fit:
+        name: std_VecI32_shrink_to_fit
+      c:@F@std_VecI64_clear:
+        name: std_VecI64_clear
+      c:@F@std_VecI64_clone:
+        name: std_VecI64_clone
+      c:@F@std_VecI64_data:
+        name: std_VecI64_data
+      c:@F@std_VecI64_extend:
+        name: std_VecI64_extend
+      c:@F@std_VecI64_free:
+        name: std_VecI64_free
+      c:@F@std_VecI64_get:
+        name: std_VecI64_get
+      c:@F@std_VecI64_length:
+        name: std_VecI64_length
+      c:@F@std_VecI64_new:
+        name: std_VecI64_new
+      c:@F@std_VecI64_new_1:
+        name: std_VecI64_new_1
+      c:@F@std_VecI64_new_2:
+        name: std_VecI64_new_2
+      c:@F@std_VecI64_push_back:
+        name: std_VecI64_push_back
+      c:@F@std_VecI64_reserve:
+        name: std_VecI64_reserve
+      c:@F@std_VecI64_resize:
+        name: std_VecI64_resize
+      c:@F@std_VecI64_set:
+        name: std_VecI64_set
+      c:@F@std_VecI64_shrink_to_fit:
+        name: std_VecI64_shrink_to_fit
+      c:@F@std_VecI8_clear:
+        name: std_VecI8_clear
+      c:@F@std_VecI8_clone:
+        name: std_VecI8_clone
+      c:@F@std_VecI8_data:
+        name: std_VecI8_data
+      c:@F@std_VecI8_extend:
+        name: std_VecI8_extend
+      c:@F@std_VecI8_free:
+        name: std_VecI8_free
+      c:@F@std_VecI8_get:
+        name: std_VecI8_get
+      c:@F@std_VecI8_length:
+        name: std_VecI8_length
+      c:@F@std_VecI8_new:
+        name: std_VecI8_new
+      c:@F@std_VecI8_new_1:
+        name: std_VecI8_new_1
+      c:@F@std_VecI8_new_2:
+        name: std_VecI8_new_2
+      c:@F@std_VecI8_push_back:
+        name: std_VecI8_push_back
+      c:@F@std_VecI8_reserve:
+        name: std_VecI8_reserve
+      c:@F@std_VecI8_resize:
+        name: std_VecI8_resize
+      c:@F@std_VecI8_set:
+        name: std_VecI8_set
+      c:@F@std_VecI8_shrink_to_fit:
+        name: std_VecI8_shrink_to_fit
+      c:@F@std_VecKeyPoint_clear:
+        name: std_VecKeyPoint_clear
+      c:@F@std_VecKeyPoint_clone:
+        name: std_VecKeyPoint_clone
+      c:@F@std_VecKeyPoint_data:
+        name: std_VecKeyPoint_data
+      c:@F@std_VecKeyPoint_extend:
+        name: std_VecKeyPoint_extend
+      c:@F@std_VecKeyPoint_free:
+        name: std_VecKeyPoint_free
+      c:@F@std_VecKeyPoint_get:
+        name: std_VecKeyPoint_get
+      c:@F@std_VecKeyPoint_get_p:
+        name: std_VecKeyPoint_get_p
+      c:@F@std_VecKeyPoint_length:
+        name: std_VecKeyPoint_length
+      c:@F@std_VecKeyPoint_new:
+        name: std_VecKeyPoint_new
+      c:@F@std_VecKeyPoint_new_1:
+        name: std_VecKeyPoint_new_1
+      c:@F@std_VecKeyPoint_new_2:
+        name: std_VecKeyPoint_new_2
+      c:@F@std_VecKeyPoint_push_back:
+        name: std_VecKeyPoint_push_back
+      c:@F@std_VecKeyPoint_reserve:
+        name: std_VecKeyPoint_reserve
+      c:@F@std_VecKeyPoint_resize:
+        name: std_VecKeyPoint_resize
+      c:@F@std_VecKeyPoint_set:
+        name: std_VecKeyPoint_set
+      c:@F@std_VecKeyPoint_shrink_to_fit:
+        name: std_VecKeyPoint_shrink_to_fit
+      c:@F@std_VecMat_clear:
+        name: std_VecMat_clear
+      c:@F@std_VecMat_clone:
+        name: std_VecMat_clone
+      c:@F@std_VecMat_data:
+        name: std_VecMat_data
+      c:@F@std_VecMat_extend:
+        name: std_VecMat_extend
+      c:@F@std_VecMat_free:
+        name: std_VecMat_free
+      c:@F@std_VecMat_get:
+        name: std_VecMat_get
+      c:@F@std_VecMat_get_p:
+        name: std_VecMat_get_p
+      c:@F@std_VecMat_length:
+        name: std_VecMat_length
+      c:@F@std_VecMat_new:
+        name: std_VecMat_new
+      c:@F@std_VecMat_new_1:
+        name: std_VecMat_new_1
+      c:@F@std_VecMat_new_2:
+        name: std_VecMat_new_2
+      c:@F@std_VecMat_push_back:
+        name: std_VecMat_push_back
+      c:@F@std_VecMat_reserve:
+        name: std_VecMat_reserve
+      c:@F@std_VecMat_resize:
+        name: std_VecMat_resize
+      c:@F@std_VecMat_set:
+        name: std_VecMat_set
+      c:@F@std_VecMat_shrink_to_fit:
+        name: std_VecMat_shrink_to_fit
+      c:@F@std_VecPoint2f_clear:
+        name: std_VecPoint2f_clear
+      c:@F@std_VecPoint2f_clone:
+        name: std_VecPoint2f_clone
+      c:@F@std_VecPoint2f_data:
+        name: std_VecPoint2f_data
+      c:@F@std_VecPoint2f_extend:
+        name: std_VecPoint2f_extend
+      c:@F@std_VecPoint2f_free:
+        name: std_VecPoint2f_free
+      c:@F@std_VecPoint2f_get:
+        name: std_VecPoint2f_get
+      c:@F@std_VecPoint2f_get_p:
+        name: std_VecPoint2f_get_p
+      c:@F@std_VecPoint2f_length:
+        name: std_VecPoint2f_length
+      c:@F@std_VecPoint2f_new:
+        name: std_VecPoint2f_new
+      c:@F@std_VecPoint2f_new_1:
+        name: std_VecPoint2f_new_1
+      c:@F@std_VecPoint2f_new_2:
+        name: std_VecPoint2f_new_2
+      c:@F@std_VecPoint2f_push_back:
+        name: std_VecPoint2f_push_back
+      c:@F@std_VecPoint2f_reserve:
+        name: std_VecPoint2f_reserve
+      c:@F@std_VecPoint2f_resize:
+        name: std_VecPoint2f_resize
+      c:@F@std_VecPoint2f_set:
+        name: std_VecPoint2f_set
+      c:@F@std_VecPoint2f_shrink_to_fit:
+        name: std_VecPoint2f_shrink_to_fit
+      c:@F@std_VecPoint3f_clear:
+        name: std_VecPoint3f_clear
+      c:@F@std_VecPoint3f_clone:
+        name: std_VecPoint3f_clone
+      c:@F@std_VecPoint3f_data:
+        name: std_VecPoint3f_data
+      c:@F@std_VecPoint3f_extend:
+        name: std_VecPoint3f_extend
+      c:@F@std_VecPoint3f_free:
+        name: std_VecPoint3f_free
+      c:@F@std_VecPoint3f_get:
+        name: std_VecPoint3f_get
+      c:@F@std_VecPoint3f_get_p:
+        name: std_VecPoint3f_get_p
+      c:@F@std_VecPoint3f_length:
+        name: std_VecPoint3f_length
+      c:@F@std_VecPoint3f_new:
+        name: std_VecPoint3f_new
+      c:@F@std_VecPoint3f_new_1:
+        name: std_VecPoint3f_new_1
+      c:@F@std_VecPoint3f_new_2:
+        name: std_VecPoint3f_new_2
+      c:@F@std_VecPoint3f_push_back:
+        name: std_VecPoint3f_push_back
+      c:@F@std_VecPoint3f_reserve:
+        name: std_VecPoint3f_reserve
+      c:@F@std_VecPoint3f_resize:
+        name: std_VecPoint3f_resize
+      c:@F@std_VecPoint3f_set:
+        name: std_VecPoint3f_set
+      c:@F@std_VecPoint3f_shrink_to_fit:
+        name: std_VecPoint3f_shrink_to_fit
+      c:@F@std_VecPoint3i_clear:
+        name: std_VecPoint3i_clear
+      c:@F@std_VecPoint3i_clone:
+        name: std_VecPoint3i_clone
+      c:@F@std_VecPoint3i_data:
+        name: std_VecPoint3i_data
+      c:@F@std_VecPoint3i_extend:
+        name: std_VecPoint3i_extend
+      c:@F@std_VecPoint3i_free:
+        name: std_VecPoint3i_free
+      c:@F@std_VecPoint3i_get:
+        name: std_VecPoint3i_get
+      c:@F@std_VecPoint3i_get_p:
+        name: std_VecPoint3i_get_p
+      c:@F@std_VecPoint3i_length:
+        name: std_VecPoint3i_length
+      c:@F@std_VecPoint3i_new:
+        name: std_VecPoint3i_new
+      c:@F@std_VecPoint3i_new_1:
+        name: std_VecPoint3i_new_1
+      c:@F@std_VecPoint3i_new_2:
+        name: std_VecPoint3i_new_2
+      c:@F@std_VecPoint3i_push_back:
+        name: std_VecPoint3i_push_back
+      c:@F@std_VecPoint3i_reserve:
+        name: std_VecPoint3i_reserve
+      c:@F@std_VecPoint3i_resize:
+        name: std_VecPoint3i_resize
+      c:@F@std_VecPoint3i_set:
+        name: std_VecPoint3i_set
+      c:@F@std_VecPoint3i_shrink_to_fit:
+        name: std_VecPoint3i_shrink_to_fit
+      c:@F@std_VecPoint_clear:
+        name: std_VecPoint_clear
+      c:@F@std_VecPoint_clone:
+        name: std_VecPoint_clone
+      c:@F@std_VecPoint_data:
+        name: std_VecPoint_data
+      c:@F@std_VecPoint_extend:
+        name: std_VecPoint_extend
+      c:@F@std_VecPoint_free:
+        name: std_VecPoint_free
+      c:@F@std_VecPoint_get:
+        name: std_VecPoint_get
+      c:@F@std_VecPoint_get_p:
+        name: std_VecPoint_get_p
+      c:@F@std_VecPoint_length:
+        name: std_VecPoint_length
+      c:@F@std_VecPoint_new:
+        name: std_VecPoint_new
+      c:@F@std_VecPoint_new_1:
+        name: std_VecPoint_new_1
+      c:@F@std_VecPoint_new_2:
+        name: std_VecPoint_new_2
+      c:@F@std_VecPoint_push_back:
+        name: std_VecPoint_push_back
+      c:@F@std_VecPoint_reserve:
+        name: std_VecPoint_reserve
+      c:@F@std_VecPoint_resize:
+        name: std_VecPoint_resize
+      c:@F@std_VecPoint_set:
+        name: std_VecPoint_set
+      c:@F@std_VecPoint_shrink_to_fit:
+        name: std_VecPoint_shrink_to_fit
+      c:@F@std_VecRect2f_clear:
+        name: std_VecRect2f_clear
+      c:@F@std_VecRect2f_clone:
+        name: std_VecRect2f_clone
+      c:@F@std_VecRect2f_data:
+        name: std_VecRect2f_data
+      c:@F@std_VecRect2f_extend:
+        name: std_VecRect2f_extend
+      c:@F@std_VecRect2f_free:
+        name: std_VecRect2f_free
+      c:@F@std_VecRect2f_get:
+        name: std_VecRect2f_get
+      c:@F@std_VecRect2f_get_p:
+        name: std_VecRect2f_get_p
+      c:@F@std_VecRect2f_length:
+        name: std_VecRect2f_length
+      c:@F@std_VecRect2f_new:
+        name: std_VecRect2f_new
+      c:@F@std_VecRect2f_new_1:
+        name: std_VecRect2f_new_1
+      c:@F@std_VecRect2f_new_2:
+        name: std_VecRect2f_new_2
+      c:@F@std_VecRect2f_push_back:
+        name: std_VecRect2f_push_back
+      c:@F@std_VecRect2f_reserve:
+        name: std_VecRect2f_reserve
+      c:@F@std_VecRect2f_resize:
+        name: std_VecRect2f_resize
+      c:@F@std_VecRect2f_set:
+        name: std_VecRect2f_set
+      c:@F@std_VecRect2f_shrink_to_fit:
+        name: std_VecRect2f_shrink_to_fit
+      c:@F@std_VecRect_clear:
+        name: std_VecRect_clear
+      c:@F@std_VecRect_clone:
+        name: std_VecRect_clone
+      c:@F@std_VecRect_data:
+        name: std_VecRect_data
+      c:@F@std_VecRect_extend:
+        name: std_VecRect_extend
+      c:@F@std_VecRect_free:
+        name: std_VecRect_free
+      c:@F@std_VecRect_get:
+        name: std_VecRect_get
+      c:@F@std_VecRect_get_p:
+        name: std_VecRect_get_p
+      c:@F@std_VecRect_length:
+        name: std_VecRect_length
+      c:@F@std_VecRect_new:
+        name: std_VecRect_new
+      c:@F@std_VecRect_new_1:
+        name: std_VecRect_new_1
+      c:@F@std_VecRect_new_2:
+        name: std_VecRect_new_2
+      c:@F@std_VecRect_push_back:
+        name: std_VecRect_push_back
+      c:@F@std_VecRect_reserve:
+        name: std_VecRect_reserve
+      c:@F@std_VecRect_resize:
+        name: std_VecRect_resize
+      c:@F@std_VecRect_set:
+        name: std_VecRect_set
+      c:@F@std_VecRect_shrink_to_fit:
+        name: std_VecRect_shrink_to_fit
+      c:@F@std_VecRotatedRect_clear:
+        name: std_VecRotatedRect_clear
+      c:@F@std_VecRotatedRect_clone:
+        name: std_VecRotatedRect_clone
+      c:@F@std_VecRotatedRect_data:
+        name: std_VecRotatedRect_data
+      c:@F@std_VecRotatedRect_extend:
+        name: std_VecRotatedRect_extend
+      c:@F@std_VecRotatedRect_free:
+        name: std_VecRotatedRect_free
+      c:@F@std_VecRotatedRect_get:
+        name: std_VecRotatedRect_get
+      c:@F@std_VecRotatedRect_get_p:
+        name: std_VecRotatedRect_get_p
+      c:@F@std_VecRotatedRect_length:
+        name: std_VecRotatedRect_length
+      c:@F@std_VecRotatedRect_new:
+        name: std_VecRotatedRect_new
+      c:@F@std_VecRotatedRect_new_1:
+        name: std_VecRotatedRect_new_1
+      c:@F@std_VecRotatedRect_new_2:
+        name: std_VecRotatedRect_new_2
+      c:@F@std_VecRotatedRect_push_back:
+        name: std_VecRotatedRect_push_back
+      c:@F@std_VecRotatedRect_reserve:
+        name: std_VecRotatedRect_reserve
+      c:@F@std_VecRotatedRect_resize:
+        name: std_VecRotatedRect_resize
+      c:@F@std_VecRotatedRect_set:
+        name: std_VecRotatedRect_set
+      c:@F@std_VecRotatedRect_shrink_to_fit:
+        name: std_VecRotatedRect_shrink_to_fit
+      c:@F@std_VecU16_clear:
+        name: std_VecU16_clear
+      c:@F@std_VecU16_clone:
+        name: std_VecU16_clone
+      c:@F@std_VecU16_data:
+        name: std_VecU16_data
+      c:@F@std_VecU16_extend:
+        name: std_VecU16_extend
+      c:@F@std_VecU16_free:
+        name: std_VecU16_free
+      c:@F@std_VecU16_get:
+        name: std_VecU16_get
+      c:@F@std_VecU16_length:
+        name: std_VecU16_length
+      c:@F@std_VecU16_new:
+        name: std_VecU16_new
+      c:@F@std_VecU16_new_1:
+        name: std_VecU16_new_1
+      c:@F@std_VecU16_new_2:
+        name: std_VecU16_new_2
+      c:@F@std_VecU16_push_back:
+        name: std_VecU16_push_back
+      c:@F@std_VecU16_reserve:
+        name: std_VecU16_reserve
+      c:@F@std_VecU16_resize:
+        name: std_VecU16_resize
+      c:@F@std_VecU16_set:
+        name: std_VecU16_set
+      c:@F@std_VecU16_shrink_to_fit:
+        name: std_VecU16_shrink_to_fit
+      c:@F@std_VecU32_clear:
+        name: std_VecU32_clear
+      c:@F@std_VecU32_clone:
+        name: std_VecU32_clone
+      c:@F@std_VecU32_data:
+        name: std_VecU32_data
+      c:@F@std_VecU32_extend:
+        name: std_VecU32_extend
+      c:@F@std_VecU32_free:
+        name: std_VecU32_free
+      c:@F@std_VecU32_get:
+        name: std_VecU32_get
+      c:@F@std_VecU32_length:
+        name: std_VecU32_length
+      c:@F@std_VecU32_new:
+        name: std_VecU32_new
+      c:@F@std_VecU32_new_1:
+        name: std_VecU32_new_1
+      c:@F@std_VecU32_new_2:
+        name: std_VecU32_new_2
+      c:@F@std_VecU32_push_back:
+        name: std_VecU32_push_back
+      c:@F@std_VecU32_reserve:
+        name: std_VecU32_reserve
+      c:@F@std_VecU32_resize:
+        name: std_VecU32_resize
+      c:@F@std_VecU32_set:
+        name: std_VecU32_set
+      c:@F@std_VecU32_shrink_to_fit:
+        name: std_VecU32_shrink_to_fit
+      c:@F@std_VecU64_clear:
+        name: std_VecU64_clear
+      c:@F@std_VecU64_clone:
+        name: std_VecU64_clone
+      c:@F@std_VecU64_data:
+        name: std_VecU64_data
+      c:@F@std_VecU64_extend:
+        name: std_VecU64_extend
+      c:@F@std_VecU64_free:
+        name: std_VecU64_free
+      c:@F@std_VecU64_get:
+        name: std_VecU64_get
+      c:@F@std_VecU64_length:
+        name: std_VecU64_length
+      c:@F@std_VecU64_new:
+        name: std_VecU64_new
+      c:@F@std_VecU64_new_1:
+        name: std_VecU64_new_1
+      c:@F@std_VecU64_new_2:
+        name: std_VecU64_new_2
+      c:@F@std_VecU64_push_back:
+        name: std_VecU64_push_back
+      c:@F@std_VecU64_reserve:
+        name: std_VecU64_reserve
+      c:@F@std_VecU64_resize:
+        name: std_VecU64_resize
+      c:@F@std_VecU64_set:
+        name: std_VecU64_set
+      c:@F@std_VecU64_shrink_to_fit:
+        name: std_VecU64_shrink_to_fit
+      c:@F@std_VecU8_clear:
+        name: std_VecU8_clear
+      c:@F@std_VecU8_clone:
+        name: std_VecU8_clone
+      c:@F@std_VecU8_data:
+        name: std_VecU8_data
+      c:@F@std_VecU8_extend:
+        name: std_VecU8_extend
+      c:@F@std_VecU8_free:
+        name: std_VecU8_free
+      c:@F@std_VecU8_get:
+        name: std_VecU8_get
+      c:@F@std_VecU8_length:
+        name: std_VecU8_length
+      c:@F@std_VecU8_new:
+        name: std_VecU8_new
+      c:@F@std_VecU8_new_1:
+        name: std_VecU8_new_1
+      c:@F@std_VecU8_new_2:
+        name: std_VecU8_new_2
+      c:@F@std_VecU8_push_back:
+        name: std_VecU8_push_back
+      c:@F@std_VecU8_reserve:
+        name: std_VecU8_reserve
+      c:@F@std_VecU8_resize:
+        name: std_VecU8_resize
+      c:@F@std_VecU8_set:
+        name: std_VecU8_set
+      c:@F@std_VecU8_shrink_to_fit:
+        name: std_VecU8_shrink_to_fit
+      c:@F@std_VecUChar_clear:
+        name: std_VecUChar_clear
+      c:@F@std_VecUChar_clone:
+        name: std_VecUChar_clone
+      c:@F@std_VecUChar_data:
+        name: std_VecUChar_data
+      c:@F@std_VecUChar_extend:
+        name: std_VecUChar_extend
+      c:@F@std_VecUChar_free:
+        name: std_VecUChar_free
+      c:@F@std_VecUChar_get:
+        name: std_VecUChar_get
+      c:@F@std_VecUChar_length:
+        name: std_VecUChar_length
+      c:@F@std_VecUChar_new:
+        name: std_VecUChar_new
+      c:@F@std_VecUChar_new_1:
+        name: std_VecUChar_new_1
+      c:@F@std_VecUChar_new_2:
+        name: std_VecUChar_new_2
+      c:@F@std_VecUChar_push_back:
+        name: std_VecUChar_push_back
+      c:@F@std_VecUChar_reserve:
+        name: std_VecUChar_reserve
+      c:@F@std_VecUChar_resize:
+        name: std_VecUChar_resize
+      c:@F@std_VecUChar_set:
+        name: std_VecUChar_set
+      c:@F@std_VecUChar_shrink_to_fit:
+        name: std_VecUChar_shrink_to_fit
+      c:@F@std_VecVec4f_clear:
+        name: std_VecVec4f_clear
+      c:@F@std_VecVec4f_clone:
+        name: std_VecVec4f_clone
+      c:@F@std_VecVec4f_data:
+        name: std_VecVec4f_data
+      c:@F@std_VecVec4f_extend:
+        name: std_VecVec4f_extend
+      c:@F@std_VecVec4f_free:
+        name: std_VecVec4f_free
+      c:@F@std_VecVec4f_get:
+        name: std_VecVec4f_get
+      c:@F@std_VecVec4f_get_p:
+        name: std_VecVec4f_get_p
+      c:@F@std_VecVec4f_length:
+        name: std_VecVec4f_length
+      c:@F@std_VecVec4f_new:
+        name: std_VecVec4f_new
+      c:@F@std_VecVec4f_new_1:
+        name: std_VecVec4f_new_1
+      c:@F@std_VecVec4f_new_2:
+        name: std_VecVec4f_new_2
+      c:@F@std_VecVec4f_push_back:
+        name: std_VecVec4f_push_back
+      c:@F@std_VecVec4f_reserve:
+        name: std_VecVec4f_reserve
+      c:@F@std_VecVec4f_resize:
+        name: std_VecVec4f_resize
+      c:@F@std_VecVec4f_set:
+        name: std_VecVec4f_set
+      c:@F@std_VecVec4f_shrink_to_fit:
+        name: std_VecVec4f_shrink_to_fit
+      c:@F@std_VecVec4i_clear:
+        name: std_VecVec4i_clear
+      c:@F@std_VecVec4i_clone:
+        name: std_VecVec4i_clone
+      c:@F@std_VecVec4i_data:
+        name: std_VecVec4i_data
+      c:@F@std_VecVec4i_extend:
+        name: std_VecVec4i_extend
+      c:@F@std_VecVec4i_free:
+        name: std_VecVec4i_free
+      c:@F@std_VecVec4i_get:
+        name: std_VecVec4i_get
+      c:@F@std_VecVec4i_get_p:
+        name: std_VecVec4i_get_p
+      c:@F@std_VecVec4i_length:
+        name: std_VecVec4i_length
+      c:@F@std_VecVec4i_new:
+        name: std_VecVec4i_new
+      c:@F@std_VecVec4i_new_1:
+        name: std_VecVec4i_new_1
+      c:@F@std_VecVec4i_new_2:
+        name: std_VecVec4i_new_2
+      c:@F@std_VecVec4i_push_back:
+        name: std_VecVec4i_push_back
+      c:@F@std_VecVec4i_reserve:
+        name: std_VecVec4i_reserve
+      c:@F@std_VecVec4i_resize:
+        name: std_VecVec4i_resize
+      c:@F@std_VecVec4i_set:
+        name: std_VecVec4i_set
+      c:@F@std_VecVec4i_shrink_to_fit:
+        name: std_VecVec4i_shrink_to_fit
+      c:@F@std_VecVec6f_clear:
+        name: std_VecVec6f_clear
+      c:@F@std_VecVec6f_clone:
+        name: std_VecVec6f_clone
+      c:@F@std_VecVec6f_data:
+        name: std_VecVec6f_data
+      c:@F@std_VecVec6f_extend:
+        name: std_VecVec6f_extend
+      c:@F@std_VecVec6f_free:
+        name: std_VecVec6f_free
+      c:@F@std_VecVec6f_get:
+        name: std_VecVec6f_get
+      c:@F@std_VecVec6f_get_p:
+        name: std_VecVec6f_get_p
+      c:@F@std_VecVec6f_length:
+        name: std_VecVec6f_length
+      c:@F@std_VecVec6f_new:
+        name: std_VecVec6f_new
+      c:@F@std_VecVec6f_new_1:
+        name: std_VecVec6f_new_1
+      c:@F@std_VecVec6f_new_2:
+        name: std_VecVec6f_new_2
+      c:@F@std_VecVec6f_push_back:
+        name: std_VecVec6f_push_back
+      c:@F@std_VecVec6f_reserve:
+        name: std_VecVec6f_reserve
+      c:@F@std_VecVec6f_resize:
+        name: std_VecVec6f_resize
+      c:@F@std_VecVec6f_set:
+        name: std_VecVec6f_set
+      c:@F@std_VecVec6f_shrink_to_fit:
+        name: std_VecVec6f_shrink_to_fit
+      c:@F@std_VecVecChar_clear:
+        name: std_VecVecChar_clear
+      c:@F@std_VecVecChar_clone:
+        name: std_VecVecChar_clone
+      c:@F@std_VecVecChar_data:
+        name: std_VecVecChar_data
+      c:@F@std_VecVecChar_free:
+        name: std_VecVecChar_free
+      c:@F@std_VecVecChar_get:
+        name: std_VecVecChar_get
+      c:@F@std_VecVecChar_length:
+        name: std_VecVecChar_length
+      c:@F@std_VecVecChar_new:
+        name: std_VecVecChar_new
+      c:@F@std_VecVecChar_new_1:
+        name: std_VecVecChar_new_1
+      c:@F@std_VecVecChar_new_2:
+        name: std_VecVecChar_new_2
+      c:@F@std_VecVecChar_new_3:
+        name: std_VecVecChar_new_3
+      c:@F@std_VecVecChar_push_back:
+        name: std_VecVecChar_push_back
+      c:@F@std_VecVecChar_reserve:
+        name: std_VecVecChar_reserve
+      c:@F@std_VecVecChar_resize:
+        name: std_VecVecChar_resize
+      c:@F@std_VecVecChar_set:
+        name: std_VecVecChar_set
+      c:@F@std_VecVecChar_shrink_to_fit:
+        name: std_VecVecChar_shrink_to_fit
+      c:@F@std_VecVecDMatch_clear:
+        name: std_VecVecDMatch_clear
+      c:@F@std_VecVecDMatch_clone:
+        name: std_VecVecDMatch_clone
+      c:@F@std_VecVecDMatch_data:
+        name: std_VecVecDMatch_data
+      c:@F@std_VecVecDMatch_extend:
+        name: std_VecVecDMatch_extend
+      c:@F@std_VecVecDMatch_free:
+        name: std_VecVecDMatch_free
+      c:@F@std_VecVecDMatch_get:
+        name: std_VecVecDMatch_get
+      c:@F@std_VecVecDMatch_get_p:
+        name: std_VecVecDMatch_get_p
+      c:@F@std_VecVecDMatch_length:
+        name: std_VecVecDMatch_length
+      c:@F@std_VecVecDMatch_new:
+        name: std_VecVecDMatch_new
+      c:@F@std_VecVecDMatch_new_1:
+        name: std_VecVecDMatch_new_1
+      c:@F@std_VecVecDMatch_new_2:
+        name: std_VecVecDMatch_new_2
+      c:@F@std_VecVecDMatch_push_back:
+        name: std_VecVecDMatch_push_back
+      c:@F@std_VecVecDMatch_reserve:
+        name: std_VecVecDMatch_reserve
+      c:@F@std_VecVecDMatch_resize:
+        name: std_VecVecDMatch_resize
+      c:@F@std_VecVecDMatch_set:
+        name: std_VecVecDMatch_set
+      c:@F@std_VecVecDMatch_shrink_to_fit:
+        name: std_VecVecDMatch_shrink_to_fit
+      c:@F@std_VecVecPoint2f_clear:
+        name: std_VecVecPoint2f_clear
+      c:@F@std_VecVecPoint2f_clone:
+        name: std_VecVecPoint2f_clone
+      c:@F@std_VecVecPoint2f_data:
+        name: std_VecVecPoint2f_data
+      c:@F@std_VecVecPoint2f_extend:
+        name: std_VecVecPoint2f_extend
+      c:@F@std_VecVecPoint2f_free:
+        name: std_VecVecPoint2f_free
+      c:@F@std_VecVecPoint2f_get:
+        name: std_VecVecPoint2f_get
+      c:@F@std_VecVecPoint2f_get_p:
+        name: std_VecVecPoint2f_get_p
+      c:@F@std_VecVecPoint2f_length:
+        name: std_VecVecPoint2f_length
+      c:@F@std_VecVecPoint2f_new:
+        name: std_VecVecPoint2f_new
+      c:@F@std_VecVecPoint2f_new_1:
+        name: std_VecVecPoint2f_new_1
+      c:@F@std_VecVecPoint2f_new_2:
+        name: std_VecVecPoint2f_new_2
+      c:@F@std_VecVecPoint2f_push_back:
+        name: std_VecVecPoint2f_push_back
+      c:@F@std_VecVecPoint2f_reserve:
+        name: std_VecVecPoint2f_reserve
+      c:@F@std_VecVecPoint2f_resize:
+        name: std_VecVecPoint2f_resize
+      c:@F@std_VecVecPoint2f_set:
+        name: std_VecVecPoint2f_set
+      c:@F@std_VecVecPoint2f_shrink_to_fit:
+        name: std_VecVecPoint2f_shrink_to_fit
+      c:@F@std_VecVecPoint3f_clear:
+        name: std_VecVecPoint3f_clear
+      c:@F@std_VecVecPoint3f_clone:
+        name: std_VecVecPoint3f_clone
+      c:@F@std_VecVecPoint3f_data:
+        name: std_VecVecPoint3f_data
+      c:@F@std_VecVecPoint3f_extend:
+        name: std_VecVecPoint3f_extend
+      c:@F@std_VecVecPoint3f_free:
+        name: std_VecVecPoint3f_free
+      c:@F@std_VecVecPoint3f_get:
+        name: std_VecVecPoint3f_get
+      c:@F@std_VecVecPoint3f_get_p:
+        name: std_VecVecPoint3f_get_p
+      c:@F@std_VecVecPoint3f_length:
+        name: std_VecVecPoint3f_length
+      c:@F@std_VecVecPoint3f_new:
+        name: std_VecVecPoint3f_new
+      c:@F@std_VecVecPoint3f_new_1:
+        name: std_VecVecPoint3f_new_1
+      c:@F@std_VecVecPoint3f_new_2:
+        name: std_VecVecPoint3f_new_2
+      c:@F@std_VecVecPoint3f_push_back:
+        name: std_VecVecPoint3f_push_back
+      c:@F@std_VecVecPoint3f_reserve:
+        name: std_VecVecPoint3f_reserve
+      c:@F@std_VecVecPoint3f_resize:
+        name: std_VecVecPoint3f_resize
+      c:@F@std_VecVecPoint3f_set:
+        name: std_VecVecPoint3f_set
+      c:@F@std_VecVecPoint3f_shrink_to_fit:
+        name: std_VecVecPoint3f_shrink_to_fit
+      c:@F@std_VecVecPoint3i_clear:
+        name: std_VecVecPoint3i_clear
+      c:@F@std_VecVecPoint3i_clone:
+        name: std_VecVecPoint3i_clone
+      c:@F@std_VecVecPoint3i_data:
+        name: std_VecVecPoint3i_data
+      c:@F@std_VecVecPoint3i_extend:
+        name: std_VecVecPoint3i_extend
+      c:@F@std_VecVecPoint3i_free:
+        name: std_VecVecPoint3i_free
+      c:@F@std_VecVecPoint3i_get:
+        name: std_VecVecPoint3i_get
+      c:@F@std_VecVecPoint3i_get_p:
+        name: std_VecVecPoint3i_get_p
+      c:@F@std_VecVecPoint3i_length:
+        name: std_VecVecPoint3i_length
+      c:@F@std_VecVecPoint3i_new:
+        name: std_VecVecPoint3i_new
+      c:@F@std_VecVecPoint3i_new_1:
+        name: std_VecVecPoint3i_new_1
+      c:@F@std_VecVecPoint3i_new_2:
+        name: std_VecVecPoint3i_new_2
+      c:@F@std_VecVecPoint3i_push_back:
+        name: std_VecVecPoint3i_push_back
+      c:@F@std_VecVecPoint3i_reserve:
+        name: std_VecVecPoint3i_reserve
+      c:@F@std_VecVecPoint3i_resize:
+        name: std_VecVecPoint3i_resize
+      c:@F@std_VecVecPoint3i_set:
+        name: std_VecVecPoint3i_set
+      c:@F@std_VecVecPoint3i_shrink_to_fit:
+        name: std_VecVecPoint3i_shrink_to_fit
+      c:@F@std_VecVecPoint_clear:
+        name: std_VecVecPoint_clear
+      c:@F@std_VecVecPoint_clone:
+        name: std_VecVecPoint_clone
+      c:@F@std_VecVecPoint_data:
+        name: std_VecVecPoint_data
+      c:@F@std_VecVecPoint_extend:
+        name: std_VecVecPoint_extend
+      c:@F@std_VecVecPoint_free:
+        name: std_VecVecPoint_free
+      c:@F@std_VecVecPoint_get:
+        name: std_VecVecPoint_get
+      c:@F@std_VecVecPoint_get_p:
+        name: std_VecVecPoint_get_p
+      c:@F@std_VecVecPoint_length:
+        name: std_VecVecPoint_length
+      c:@F@std_VecVecPoint_new:
+        name: std_VecVecPoint_new
+      c:@F@std_VecVecPoint_new_1:
+        name: std_VecVecPoint_new_1
+      c:@F@std_VecVecPoint_new_2:
+        name: std_VecVecPoint_new_2
+      c:@F@std_VecVecPoint_push_back:
+        name: std_VecVecPoint_push_back
+      c:@F@std_VecVecPoint_reserve:
+        name: std_VecVecPoint_reserve
+      c:@F@std_VecVecPoint_resize:
+        name: std_VecVecPoint_resize
+      c:@F@std_VecVecPoint_set:
+        name: std_VecVecPoint_set
+      c:@F@std_VecVecPoint_shrink_to_fit:
+        name: std_VecVecPoint_shrink_to_fit
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
       c:math.h@T@double_t:
@@ -636,6 +1634,12 @@ files:
         name: float_t
       c:types.h@T@CvPoint:
         name: CvPoint
+      c:types.h@T@CvPoint2f:
+        name: CvPoint2f
+      c:types.h@T@CvPoint3f:
+        name: CvPoint3f
+      c:types.h@T@CvPoint3i:
+        name: CvPoint3i
       c:types.h@T@CvRect:
         name: CvRect
       c:types.h@T@CvRect2f:
@@ -644,6 +1648,10 @@ files:
         name: CvSize
       c:types.h@T@CvStatus:
         name: CvStatus
+      c:types.h@T@DMatch:
+        name: DMatch
+      c:types.h@T@KeyPoint:
+        name: KeyPoint
       c:types.h@T@Mat:
         name: Mat
       c:types.h@T@MatStep:
@@ -702,8 +1710,24 @@ files:
         name: Vec8i
       c:types.h@T@VecChar:
         name: VecChar
+      c:types.h@T@VecDMatch:
+        name: VecDMatch
+      c:types.h@T@VecF16:
+        name: VecF16
+      c:types.h@T@VecF32:
+        name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
+      c:types.h@T@VecI16:
+        name: VecI16
       c:types.h@T@VecI32:
         name: VecI32
+      c:types.h@T@VecI64:
+        name: VecI64
+      c:types.h@T@VecI8:
+        name: VecI8
+      c:types.h@T@VecKeyPoint:
+        name: VecKeyPoint
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecPoint:
@@ -714,5 +1738,37 @@ files:
         name: VecPoint3f
       c:types.h@T@VecPoint3i:
         name: VecPoint3i
+      c:types.h@T@VecRect:
+        name: VecRect
+      c:types.h@T@VecRect2f:
+        name: VecRect2f
+      c:types.h@T@VecRotatedRect:
+        name: VecRotatedRect
+      c:types.h@T@VecU16:
+        name: VecU16
+      c:types.h@T@VecU32:
+        name: VecU32
+      c:types.h@T@VecU64:
+        name: VecU64
+      c:types.h@T@VecU8:
+        name: VecU8
       c:types.h@T@VecUChar:
         name: VecUChar
+      c:types.h@T@VecVec4f:
+        name: VecVec4f
+      c:types.h@T@VecVec4i:
+        name: VecVec4i
+      c:types.h@T@VecVec6f:
+        name: VecVec6f
+      c:types.h@T@VecVecChar:
+        name: VecVecChar
+      c:types.h@T@VecVecDMatch:
+        name: VecVecDMatch
+      c:types.h@T@VecVecPoint:
+        name: VecVecPoint
+      c:types.h@T@VecVecPoint2f:
+        name: VecVecPoint2f
+      c:types.h@T@VecVecPoint3f:
+        name: VecVecPoint3f
+      c:types.h@T@VecVecPoint3i:
+        name: VecVecPoint3i

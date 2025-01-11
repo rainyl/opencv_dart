@@ -13,6 +13,7 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/contours.dart';
+import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/moments.dart';
 import '../core/point.dart';
@@ -31,9 +32,9 @@ import '../native_lib.dart' show cimgproc;
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
-  final vec = calloc<cvg.VecPoint>();
-  cvRun(() => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec, ffi.nullptr));
-  return VecPoint.fromPointer(vec);
+  final vec = VecPoint();
+  cvRun(() => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec.ptr, ffi.nullptr));
+  return vec;
 }
 
 /// ArcLength calculates a contour perimeter or a curve length.
@@ -405,12 +406,8 @@ Rect boundingRect(VecPoint points) {
 /// For further Details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
-  if (pts == null) {
-    final p = calloc<cvg.VecPoint2f>();
-    cvRun(() => cimgproc.cv_boxPoints(rect.ref, p, ffi.nullptr));
-    return VecPoint2f.fromPointer(p);
-  }
-  cvRun(() => cimgproc.cv_boxPoints(rect.ref, pts.ptr, ffi.nullptr));
+  pts ??= VecPoint2f();
+  cvRun(() => cimgproc.cv_boxPoints(rect.ref, pts!.ptr, ffi.nullptr));
   return pts;
 }
 
@@ -463,11 +460,11 @@ RotatedRect fitEllipse(VecPoint points) {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
-(Contours contours, Mat hierarchy) findContours(Mat src, int mode, int method) {
-  final hierarchy = Mat.empty();
-  final v = calloc<cvg.VecVecPoint>();
-  cvRun(() => cimgproc.cv_findContours(src.ref, hierarchy.ref, mode, method, v, ffi.nullptr));
-  return (Contours.fromPointer(v), hierarchy);
+(Contours contours, VecVec4i hierarchy) findContours(Mat src, int mode, int method) {
+  final hierarchy = VecVec4i();
+  final contours = VecVecPoint();
+  cvRun(() => cimgproc.cv_findContours(src.ref, contours.ptr, hierarchy.ptr, mode, method, ffi.nullptr));
+  return (contours, hierarchy);
 }
 
 /// PointPolygonTest performs a point-in-contour test.
@@ -831,13 +828,13 @@ VecPoint2f goodFeaturesToTrack(
   bool useHarrisDetector = false,
   double k = 0.04,
 }) {
-  final c = corners?.ptr ?? calloc<cvg.VecPoint2f>();
+  corners ??= VecPoint2f();
   mask ??= Mat.empty();
   if (gradientSize == null) {
     cvRun(
       () => cimgproc.cv_goodFeaturesToTrack(
         image.ref,
-        c,
+        corners!.ptr,
         maxCorners,
         qualityLevel,
         minDistance,
@@ -852,7 +849,7 @@ VecPoint2f goodFeaturesToTrack(
     cvRun(
       () => cimgproc.cv_goodFeaturesToTrack_1(
         image.ref,
-        c,
+        corners!.ptr,
         maxCorners,
         qualityLevel,
         minDistance,
@@ -865,7 +862,7 @@ VecPoint2f goodFeaturesToTrack(
       ),
     );
   }
-  return corners ?? VecPoint2f.fromPointer(c);
+  return corners;
 }
 
 /// Grabcut runs the GrabCut algorithm.
@@ -1778,9 +1775,9 @@ bool isContourConvex(VecPoint contour) => cimgproc.cv_isContourConvex(contour.re
   bool handleNested = true,
 }) {
   final r = calloc<ffi.Float>();
-  final pP12 = p12?.ptr ?? calloc<cvg.VecPoint>();
-  cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, pP12, handleNested, r, ffi.nullptr));
-  final rval = (r.value, p12 ?? VecPoint.fromPointer(pP12));
+  p12 ??= VecPoint();
+  cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, ffi.nullptr));
+  final rval = (r.value, p12);
   calloc.free(r);
   return rval;
 }

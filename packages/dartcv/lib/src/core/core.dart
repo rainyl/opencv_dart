@@ -1187,9 +1187,9 @@ Mat sortIdx(InputArray src, int flags, {OutputArray? dst}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
 VecMat split(InputArray m) {
-  final vec = calloc<cvg.VecMat>();
-  cvRun(() => ccore.cv_split(m.ref, vec, ffi.nullptr));
-  return VecMat.fromPointer(vec);
+  final vec = VecMat();
+  cvRun(() => ccore.cv_split(m.ref, vec.ptr, ffi.nullptr));
+  return vec;
 }
 
 /// Calculates a square root of array elements.

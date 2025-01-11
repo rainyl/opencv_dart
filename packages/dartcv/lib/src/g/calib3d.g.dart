@@ -281,7 +281,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
     Mat image,
     CvSize patternSize,
-    ffi.Pointer<VecPoint2f> corners,
+    ffi.Pointer<VecPoint2f> out_corners,
     int flags,
     ffi.Pointer<ffi.Bool> rval,
     imp1.CvCallback_0 callback,
@@ -289,7 +289,7 @@ class CvNativeCalib3d {
     return _cv_findChessboardCornersSB(
       image,
       patternSize,
-      corners,
+      out_corners,
       flags,
       rval,
       callback,
@@ -313,7 +313,7 @@ class CvNativeCalib3d {
   ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
     Mat image,
     CvSize patternSize,
-    ffi.Pointer<VecPoint2f> corners,
+    ffi.Pointer<VecPoint2f> out_corners,
     int flags,
     Mat meta,
     ffi.Pointer<ffi.Bool> rval,
@@ -322,7 +322,7 @@ class CvNativeCalib3d {
     return _cv_findChessboardCornersSB_1(
       image,
       patternSize,
-      corners,
+      out_corners,
       flags,
       meta,
       rval,

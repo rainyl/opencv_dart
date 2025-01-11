@@ -312,17 +312,17 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> cv_aruco_arucoDetector_detectMarkers(
     ArucoDetector self,
     Mat inputArr,
-    ffi.Pointer<VecVecPoint2f> markerCorners,
-    ffi.Pointer<VecI32> markerIds,
-    ffi.Pointer<VecVecPoint2f> rejectedCandidates,
+    ffi.Pointer<VecVecPoint2f> out_markerCorners,
+    ffi.Pointer<VecI32> out_markerIds,
+    ffi.Pointer<VecVecPoint2f> out_rejectedCandidates,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_aruco_arucoDetector_detectMarkers(
       self,
       inputArr,
-      markerCorners,
-      markerIds,
-      rejectedCandidates,
+      out_markerCorners,
+      out_markerIds,
+      out_rejectedCandidates,
       callback,
     );
   }
@@ -2356,14 +2356,14 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
     WeChatQRCode self,
     Mat img,
-    ffi.Pointer<VecMat> points,
+    ffi.Pointer<VecMat> out_points,
     ffi.Pointer<VecVecChar> rval,
     imp1.CvCallback_0 callback,
   ) {
     return _cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
       self,
       img,
-      points,
+      out_points,
       rval,
       callback,
     );
@@ -2527,7 +2527,7 @@ class CvNativeContrib {
     EdgeBoxes self,
     Mat edge_map,
     Mat orientation_map,
-    ffi.Pointer<VecRect> boxes,
+    ffi.Pointer<VecRect> out_boxes,
     ffi.Pointer<VecF32> scores,
     imp1.CvCallback_0 callback,
   ) {
@@ -2535,7 +2535,7 @@ class CvNativeContrib {
       self,
       edge_map,
       orientation_map,
-      boxes,
+      out_boxes,
       scores,
       callback,
     );
@@ -3922,13 +3922,13 @@ class CvNativeContrib {
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_detect(
     PtrWBDetector self,
     Mat img,
-    ffi.Pointer<VecRect> bbox,
+    ffi.Pointer<VecRect> out_bbox,
     ffi.Pointer<VecF64> confidences,
   ) {
     return _cv_xobjdetect_WBDetector_detect(
       self,
       img,
-      bbox,
+      out_bbox,
       confidences,
     );
   }

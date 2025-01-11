@@ -13,6 +13,7 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/contours.dart';
+import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/moments.dart';
 import '../core/point.dart';
@@ -31,11 +32,11 @@ import '../native_lib.dart' show cimgproc;
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) async {
-  final vec = calloc<cvg.VecPoint>();
+  final vec = VecPoint();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec, callback),
+    (callback) => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec.ptr, callback),
     (c) {
-      return c.complete(VecPoint.fromPointer(vec));
+      return c.complete(vec);
     },
   );
 }
@@ -471,17 +472,9 @@ Future<Rect> boundingRectAsync(VecPoint points) async {
 /// For further Details, please see:
 /// https://docs.opencv.org/4.10.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts}) async {
-  if (pts == null) {
-    final p = calloc<cvg.VecPoint2f>();
-    return cvRunAsync0(
-      (callback) => cimgproc.cv_boxPoints(rect.ref, p, callback),
-      (c) {
-        return c.complete(VecPoint2f.fromPointer(p));
-      },
-    );
-  }
+  pts ??= VecPoint2f();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_boxPoints(rect.ref, pts.ptr, callback),
+    (callback) => cimgproc.cv_boxPoints(rect.ref, pts!.ptr, callback),
     (c) {
       return c.complete(pts);
     },
@@ -553,13 +546,13 @@ Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points)
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
-Future<(Contours contours, Mat hierarchy)> findContoursAsync(Mat src, int mode, int method) async {
-  final hierarchy = Mat.empty();
-  final v = calloc<cvg.VecVecPoint>();
+Future<(Contours contours, VecVec4i hierarchy)> findContoursAsync(Mat src, int mode, int method) async {
+  final hierarchy = VecVec4i();
+  final contours = VecVecPoint();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_findContours(src.ref, hierarchy.ref, mode, method, v, callback),
+    (callback) => cimgproc.cv_findContours(src.ref, contours.ptr, hierarchy.ptr, mode, method, callback),
     (c) {
-      return c.complete((Contours.fromPointer(v), hierarchy));
+      return c.complete((contours, hierarchy));
     },
   );
 }
@@ -994,13 +987,13 @@ Future<VecPoint2f> goodFeaturesToTrackAsync(
   bool useHarrisDetector = false,
   double k = 0.04,
 }) {
-  final pCorners = corners?.ptr ?? calloc<cvg.VecPoint2f>();
+  corners ??= VecPoint2f();
   mask ??= Mat.empty();
   if (gradientSize == null) {
     return cvRunAsync0(
       (callback) => cimgproc.cv_goodFeaturesToTrack(
         image.ref,
-        pCorners,
+        corners!.ptr,
         maxCorners,
         qualityLevel,
         minDistance,
@@ -1011,14 +1004,14 @@ Future<VecPoint2f> goodFeaturesToTrackAsync(
         callback,
       ),
       (c) {
-        return c.complete(corners ?? VecPoint2f.fromPointer(pCorners));
+        return c.complete(corners);
       },
     );
   }
   return cvRunAsync0(
     (callback) => cimgproc.cv_goodFeaturesToTrack_1(
       image.ref,
-      pCorners,
+      corners!.ptr,
       maxCorners,
       qualityLevel,
       minDistance,
@@ -1030,7 +1023,7 @@ Future<VecPoint2f> goodFeaturesToTrackAsync(
       callback,
     ),
     (c) {
-      return c.complete(corners ?? VecPoint2f.fromPointer(pCorners));
+      return c.complete(corners);
     },
   );
 }
@@ -2120,11 +2113,11 @@ Future<(double rval, VecPoint p12)> intersectConvexConvexAsync(
   bool handleNested = true,
 }) {
   final r = calloc<ffi.Float>();
-  final pP12 = p12?.ptr ?? calloc<cvg.VecPoint>();
+  p12 ??= VecPoint();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, pP12, handleNested, r, callback),
+    (callback) => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, callback),
     (c) {
-      final rval = (r.value, p12 ?? VecPoint.fromPointer(pP12));
+      final rval = (r.value, p12!);
       calloc.free(r);
       return c.complete(rval);
     },

@@ -55,10 +55,10 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#ad19680e6545f49a9ca42dfc3457319e2
   (VecRect bboxes, VecF64 confidences) detect(Mat img) {
-    final bboxesPtr = calloc<cvg.VecRect>();
-    final confidencesPtr = calloc<cvg.VecF64>();
-    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_detect(ref, img.ref, bboxesPtr, confidencesPtr));
-    return (VecRect.fromPointer(bboxesPtr), VecF64.fromPointer(confidencesPtr));
+    final bboxes = VecRect();
+    final confidences = VecF64();
+    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_detect(ref, img.ref, bboxes.ptr, confidences.ptr));
+    return (bboxes, confidences);
   }
 
   /// Train WaldBoost detector.

@@ -14,7 +14,6 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../g/imgcodecs.g.dart' as cvg;
 import '../native_lib.dart' show cimgcodecs;
 
 /// Returns true if the specified image can be decoded by OpenCV.
@@ -139,19 +138,18 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   InputArray img, {
   VecI32? params,
 }) {
-  final buffer = calloc<cvg.VecUChar>();
+  final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
   params == null
-      ? cvRun(() => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer, ffi.nullptr))
-      : cvRun(() => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer, ffi.nullptr));
+      ? cvRun(() => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, ffi.nullptr))
+      : cvRun(() => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, ffi.nullptr));
   final success = pSuccess.value;
   calloc.free(cExt);
   calloc.free(pSuccess);
 
-  final vec = VecUChar.fromPointer(buffer);
-  return (success, vec);
+  return (success, buffer);
 }
 
 /// async version of [imencode]
@@ -160,7 +158,7 @@ Future<(bool, Uint8List)> imencodeAsync(
   InputArray img, {
   VecI32? params,
 }) async {
-  final buffer = calloc<cvg.VecUChar>();
+  final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
@@ -169,20 +167,19 @@ Future<(bool, Uint8List)> imencodeAsync(
     calloc.free(cExt);
     calloc.free(pSuccess);
 
-    final vec = VecUChar.fromPointer(buffer);
-    final u8List = vec.toU8List(); // will copy data
-    vec.dispose();
+    final u8List = buffer.toU8List(); // will copy data
+    buffer.dispose();
     return c.complete((success, u8List));
   }
 
   if (params == null) {
     return cvRunAsync0(
-      (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer, callback),
+      (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
     );
   }
   return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer, callback),
+    (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, callback),
     completeFunc,
   );
 }
@@ -193,7 +190,7 @@ Future<(bool, VecUChar)> imencodeVecAsync(
   InputArray img, {
   VecI32? params,
 }) async {
-  final buffer = calloc<cvg.VecUChar>();
+  final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
 
@@ -202,18 +199,17 @@ Future<(bool, VecUChar)> imencodeVecAsync(
     calloc.free(cExt);
     calloc.free(pSuccess);
 
-    final vec = VecUChar.fromPointer(buffer);
-    return c.complete((success, vec));
+    return c.complete((success, buffer));
   }
 
   if (params == null) {
     return cvRunAsync0(
-      (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer, callback),
+      (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
     );
   }
   return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer, callback),
+    (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, callback),
     completeFunc,
   );
 }
