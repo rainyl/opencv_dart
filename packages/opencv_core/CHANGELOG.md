@@ -5,6 +5,8 @@
 * fix reference of estimateAffinePartial2D
 * support `VideoWriter.get()` and `VideoWriter.set()`
 * use native implementation of 8U/8S -> F16 for `cv.LUT()`
+* make `VecVecChar` unmodifible
+* more tests
 
 ## 1.3.3
 

@@ -1,3 +1,8 @@
+## 1.1.1
+
+* make `VecVecChar` unmodifible
+* more tests
+
 ## 1.1.0
 
 * update to OpenCV 4.11.0
