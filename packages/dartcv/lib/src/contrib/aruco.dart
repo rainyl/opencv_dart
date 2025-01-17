@@ -62,24 +62,20 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d9/d6a/group__aruco.html#ga3bc50d61fe4db7bce8d26d56b5a6428a
   (VecVecPoint2f corners, VecI32 ids, VecVecPoint2f rejectedImgPoints) detectMarkers(InputArray image) {
-    final pCorners = calloc<cvg.VecVecPoint2f>();
-    final pRejected = calloc<cvg.VecVecPoint2f>();
-    final pIds = calloc<cvg.VecI32>();
+    final corners = VecVecPoint2f();
+    final rejected = VecVecPoint2f();
+    final ids = VecI32();
     cvRun(
       () => ccontrib.cv_aruco_arucoDetector_detectMarkers(
         ref,
         image.ref,
-        pCorners,
-        pIds,
-        pRejected,
+        corners.ptr,
+        ids.ptr,
+        rejected.ptr,
         ffi.nullptr,
       ),
     );
-    return (
-      VecVecPoint2f.fromPointer(pCorners),
-      VecI32.fromPointer(pIds),
-      VecVecPoint2f.fromPointer(pRejected)
-    );
+    return (corners, ids, rejected);
   }
 }
 

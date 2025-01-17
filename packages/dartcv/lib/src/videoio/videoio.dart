@@ -205,14 +205,14 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     int? apiPreference,
     bool isColor = true,
   }) {
-    final cname = filename.toNativeUtf8();
+    final cname = filename.toNativeUtf8().cast<ffi.Char>();
     final codec_ = VideoWriter.fourcc(codec);
     final p = calloc<ffi.Bool>();
     apiPreference == null
         ? cvRun(
             () => cvideoio.cv_VideoWriter_open(
               ref,
-              cname.cast(),
+              cname,
               codec_,
               fps,
               frameSize.$1,
@@ -225,7 +225,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
         : cvRun(
             () => cvideoio.cv_VideoWriter_open_1(
               ref,
-              cname.cast(),
+              cname,
               apiPreference,
               codec_,
               fps,

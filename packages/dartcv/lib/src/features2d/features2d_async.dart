@@ -6,17 +6,12 @@
 
 library cv.features2d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/dmatch.dart';
 import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/features2d.g.dart' as cvg;
 import '../native_lib.dart' show cfeatures2d;
 import './features2d.dart';
 
@@ -26,11 +21,11 @@ extension AKAZEAsync on AKAZE {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0<VecKeyPoint>(
-      (callback) => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -41,11 +36,12 @@ extension AKAZEAsync on AKAZE {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, callback),
+      (callback) =>
+          cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
       (c) {
-        return c.complete((VecKeyPoint.fromPointer(ret), desc));
+        return c.complete((ret, desc));
       },
     );
   }
@@ -57,11 +53,11 @@ extension AgastFeatureDetectorAsync on AgastFeatureDetector {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -73,11 +69,11 @@ extension BRISKAsync on BRISK {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -88,11 +84,12 @@ extension BRISKAsync on BRISK {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, callback),
+      (callback) =>
+          cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
       (c) {
-        return c.complete((VecKeyPoint.fromPointer(ret), desc));
+        return c.complete((ret, desc));
       },
     );
   }
@@ -104,11 +101,11 @@ extension FastFeatureDetectorAsync on FastFeatureDetector {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -120,11 +117,11 @@ extension GFTTDetectorAsync on GFTTDetector {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -136,11 +133,11 @@ extension KAZEAsync on KAZE {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -151,11 +148,11 @@ extension KAZEAsync on KAZE {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, callback),
+      (callback) => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
       (c) {
-        return c.complete((VecKeyPoint.fromPointer(ret), desc));
+        return c.complete((ret, desc));
       },
     );
   }
@@ -167,11 +164,11 @@ extension MSERAsync on MSER {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -183,11 +180,11 @@ extension ORBAsync on ORB {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -196,13 +193,27 @@ extension ORBAsync on ORB {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final pdesc = calloc<cvg.Mat>();
-    final ret = calloc<cvg.VecKeyPoint>();
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? description,
+    bool useProvidedKeypoints = false,
+  }) async {
+    keypoints ??= VecKeyPoint();
+    description ??= Mat.empty();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_ORB_detectAndCompute(ref, src.ref, mask.ref, pdesc, ret, callback),
+      (callback) => cfeatures2d.cv_ORB_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        keypoints!.ptr,
+        description!.ref,
+        useProvidedKeypoints,
+        callback,
+      ),
       (c) {
-        return c.complete((VecKeyPoint.fromPointer(ret), Mat.fromPointer(pdesc)));
+        return c.complete((keypoints!, description!));
       },
     );
   }
@@ -214,11 +225,11 @@ extension SimpleBlobDetectorAsync on SimpleBlobDetector {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -230,11 +241,11 @@ extension BFMatcherAsync on BFMatcher {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
   Future<VecDMatch> matchAsync(Mat query, Mat train) async {
-    final ret = calloc<cvg.VecDMatch>();
+    final ret = VecDMatch();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_BFMatcher_match(ref, query.ref, train.ref, ret, callback),
+      (callback) => cfeatures2d.cv_BFMatcher_match(ref, query.ref, train.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecDMatch.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -244,11 +255,11 @@ extension BFMatcherAsync on BFMatcher {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
-    final ret = calloc<cvg.VecVecDMatch>();
+    final ret = VecVecDMatch();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_BFMatcher_knnMatch(ref, query.ref, train.ref, k, ret, callback),
+      (callback) => cfeatures2d.cv_BFMatcher_knnMatch(ref, query.ref, train.ref, k, ret.ptr, callback),
       (c) {
-        return c.complete(VecVecDMatch.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -260,11 +271,12 @@ extension FlannBasedMatcherAsync on FlannBasedMatcher {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
   Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
-    final ret = calloc<cvg.VecVecDMatch>();
+    final ret = VecVecDMatch();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_FlannBasedMatcher_knnMatch(ref, query.ref, train.ref, k, ret, callback),
+      (callback) =>
+          cfeatures2d.cv_FlannBasedMatcher_knnMatch(ref, query.ref, train.ref, k, ret.ptr, callback),
       (c) {
-        return c.complete(VecVecDMatch.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -276,11 +288,11 @@ extension SIFTAsync on SIFT {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret, callback),
+      (callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, callback),
       (c) {
-        return c.complete(VecKeyPoint.fromPointer(ret));
+        return c.complete(ret);
       },
     );
   }
@@ -291,11 +303,11 @@ extension SIFTAsync on SIFT {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
   Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
     final desc = Mat.empty();
-    final ret = calloc<cvg.VecKeyPoint>();
+    final ret = VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret, callback),
+      (callback) => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
       (c) {
-        return c.complete((VecKeyPoint.fromPointer(ret), desc));
+        return c.complete((ret, desc));
       },
     );
   }

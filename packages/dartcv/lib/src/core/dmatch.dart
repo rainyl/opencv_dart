@@ -9,6 +9,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -60,39 +61,62 @@ class DMatch extends CvStruct<cvg.DMatch> {
 class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
   VecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecDMatch([int length = 0]) => VecDMatch.fromPointer(ccore.std_VecDMatch_new(length));
 
   factory VecDMatch.fromList(List<DMatch> pts) =>
       VecDMatch.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecDMatch.generate(int length, DMatch Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecDMatch>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.DMatch>(length);
+    final p = ccore.std_VecDMatch_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecDMatch_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecDMatch.fromPointer(pp);
+    return VecDMatch.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecDMatchPtr>(ccore.addresses.std_VecDMatch_free);
 
   @override
   VecDMatch clone() => VecDMatch.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  int get length => ref.length;
+  void resize(int newSize) => ccore.std_VecDMatch_resize(ptr, newSize);
 
   @override
-  Iterator<DMatch> get iterator => VecDMatchIterator(ref);
+  void reserve(int newCapacity) => ccore.std_VecDMatch_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecDMatch_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecDMatch_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecDMatch_extend(ptr, (other as VecDMatch).ptr);
+
+  @override
+  void add(DMatch element) => ccore.std_VecDMatch_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecDMatch_length(ptr);
+
+  @override
+  int get length => ccore.std_VecDMatch_length(ptr);
+
+  @override
+  Iterator<DMatch> get iterator => VecDMatchIterator(ptr);
   @override
   cvg.VecDMatch get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
+    finalizer.detach(this);
     calloc.free(ptr.ref.ptr);
     calloc.free(ptr);
   }
@@ -101,97 +125,91 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecDMatch>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, DMatch value) => ccore.std_VecDMatch_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, DMatch value) {
-    ref.ptr[idx].queryIdx = value.queryIdx;
-    ref.ptr[idx].trainIdx = value.trainIdx;
-    ref.ptr[idx].imgIdx = value.imgIdx;
-    ref.ptr[idx].distance = value.distance;
-  }
-
-  @override
-  DMatch operator [](int idx) => DMatch.fromPointer(ref.ptr + idx, false);
+  DMatch operator [](int idx) => DMatch.fromPointer(ccore.std_VecDMatch_get_p(ptr, idx));
 }
 
 class VecDMatchIterator extends VecIterator<DMatch> {
-  VecDMatchIterator(this.ref);
-  cvg.VecDMatch ref;
+  VecDMatchIterator(this.ptr);
+  cvg.VecDMatchPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecDMatch_length(ptr);
 
   @override
-  DMatch operator [](int idx) => DMatch.fromPointer(ref.ptr + idx, false);
+  DMatch operator [](int idx) => DMatch.fromPointer(ccore.std_VecDMatch_get_p(ptr, idx));
 }
 
-class VecVecDMatch extends Vec<cvg.VecVecDMatch, VecDMatch> {
+class VecVecDMatch extends VecUnmodifible<cvg.VecVecDMatch, VecDMatch> {
   VecVecDMatch.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVecDMatch([int length = 0]) => VecVecDMatch.fromPointer(ccore.std_VecVecDMatch_new(length));
 
   factory VecVecDMatch.fromList(List<List<DMatch>> pts) =>
       VecVecDMatch.generate(pts.length, (i) => VecDMatch.fromList(pts[i]), dispose: false);
 
   factory VecVecDMatch.generate(int length, VecDMatch Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVecDMatch>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.VecDMatch>(length);
+    final p = ccore.std_VecVecDMatch_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVecDMatch_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecDMatch.fromPointer(pp);
+    return VecVecDMatch.fromPointer(p);
   }
 
-  @override
-  VecVecDMatch clone() => VecVecDMatch.generate(length, (idx) => this[idx], dispose: false);
+  static final finalizer = OcvFinalizer<cvg.VecVecDMatchPtr>(ccore.addresses.std_VecVecDMatch_free);
 
   @override
-  Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ref);
+  VecVecDMatch clone() => VecVecDMatch.generate(length, (i) => this[i], dispose: false);
+
+  @override
+  int size() => ccore.std_VecVecDMatch_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVecDMatch_length(ptr);
+
+  @override
+  Iterator<VecDMatch> get iterator => VecVecDMatchIterator(ptr);
   @override
   cvg.VecVecDMatch get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVecDMatch_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVecDMatch>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ccore.std_VecVecDMatch_get_p(ptr, idx), false);
 
-  // TODO: add support
-  @override
-  void operator []=(int idx, VecDMatch value) => throw UnsupportedError("");
-
-  @override
-  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ref.ptr + idx, false);
+  List<List<DMatch>> copyToList() => List.generate(
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecDMatch_length_i(ptr, i),
+          (j) => DMatch.fromPointer(ccore.std_VecVecDMatch_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {
-  VecVecDMatchIterator(this.ref);
-  cvg.VecVecDMatch ref;
+  VecVecDMatchIterator(this.ptr);
+  cvg.VecVecDMatchPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVecDMatch_length(ptr);
 
   @override
-  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ref.ptr + idx, false);
+  VecDMatch operator [](int idx) => VecDMatch.fromPointer(ccore.std_VecVecDMatch_get_p(ptr, idx), false);
 }
 
 extension ListDMatchExtension on List<DMatch> {

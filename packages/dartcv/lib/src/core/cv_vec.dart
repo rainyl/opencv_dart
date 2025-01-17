@@ -7,6 +7,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -1405,210 +1406,250 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
   VecVec4i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVec4i([int length = 0]) => VecVec4i.fromPointer(ccore.std_VecVec4i_new(length));
 
   factory VecVec4i.fromList(List<Vec4i> pts) => VecVec4i.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecVec4i.generate(int length, Vec4i Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVec4i>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.Vec4i>(length);
+    final p = ccore.std_VecVec4i_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVec4i_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec4i.fromPointer(pp);
+    return VecVec4i.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecVec4iPtr>(ccore.addresses.std_VecVec4i_free);
 
   @override
   VecVec4i clone() => VecVec4i.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  Iterator<Vec4i> get iterator => VecVec4iIterator(ref);
+  void resize(int newSize) => ccore.std_VecVec4i_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecVec4i_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecVec4i_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecVec4i_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecVec4i_extend(ptr, (other as VecVec4i).ptr);
+
+  @override
+  void add(Vec4i element) => ccore.std_VecVec4i_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecVec4i_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVec4i_length(ptr);
+
+  @override
+  Iterator<Vec4i> get iterator => VecVec4iIterator(ptr);
 
   @override
   cvg.VecVec4i get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVec4i_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVec4i>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Vec4i value) => ccore.std_VecVec4i_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Vec4i value) {
-    ref.ptr[idx].val1 = value.val1;
-    ref.ptr[idx].val2 = value.val2;
-    ref.ptr[idx].val3 = value.val3;
-    ref.ptr[idx].val4 = value.val4;
-  }
-
-  @override
-  Vec4i operator [](int idx) => Vec4i.fromPointer(ref.ptr + idx, false);
+  Vec4i operator [](int idx) => Vec4i.fromPointer(ccore.std_VecVec4i_get_p(ptr, idx));
 }
 
 class VecVec4iIterator extends VecIterator<Vec4i> {
-  VecVec4iIterator(this.ref);
-  cvg.VecVec4i ref;
+  VecVec4iIterator(this.ptr);
+  cvg.VecVec4iPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVec4i_length(ptr);
 
   @override
-  Vec4i operator [](int idx) => Vec4i.fromPointer(ref.ptr + idx, false);
+  Vec4i operator [](int idx) => Vec4i.fromPointer(ccore.std_VecVec4i_get_p(ptr, idx));
 }
 
 class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
   VecVec4f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVec4f([int length = 0]) => VecVec4f.fromPointer(ccore.std_VecVec4f_new(length));
 
   factory VecVec4f.fromList(List<Vec4f> pts) => VecVec4f.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecVec4f.generate(int length, Vec4f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVec4f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.Vec4f>(length);
+    final p = ccore.std_VecVec4f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVec4f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec4f.fromPointer(pp);
+    return VecVec4f.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.std_VecVec4f_free);
 
   @override
   VecVec4f clone() => VecVec4f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  Iterator<Vec4f> get iterator => VecVec4fIterator(ref);
+  void resize(int newSize) => ccore.std_VecVec4f_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecVec4f_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecVec4f_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecVec4f_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecVec4f_extend(ptr, (other as VecVec4f).ptr);
+
+  @override
+  void add(Vec4f element) => ccore.std_VecVec4f_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecVec4f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVec4f_length(ptr);
+
+  @override
+  Iterator<Vec4f> get iterator => VecVec4fIterator(ptr);
 
   @override
   cvg.VecVec4f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVec4f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVec4f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Vec4f value) => ccore.std_VecVec4f_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Vec4f value) {
-    ref.ptr[idx].val1 = value.val1;
-    ref.ptr[idx].val2 = value.val2;
-    ref.ptr[idx].val3 = value.val3;
-    ref.ptr[idx].val4 = value.val4;
-  }
-
-  @override
-  Vec4f operator [](int idx) => Vec4f.fromPointer(ref.ptr + idx, false);
+  Vec4f operator [](int idx) => Vec4f.fromPointer(ccore.std_VecVec4f_get_p(ptr, idx));
 }
 
 class VecVec4fIterator extends VecIterator<Vec4f> {
-  VecVec4fIterator(this.ref);
-  cvg.VecVec4f ref;
+  VecVec4fIterator(this.ptr);
+  cvg.VecVec4fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVec4f_length(ptr);
 
   @override
-  Vec4f operator [](int idx) => Vec4f.fromPointer(ref.ptr + idx, false);
+  Vec4f operator [](int idx) => Vec4f.fromPointer(ccore.std_VecVec4f_get_p(ptr, idx));
 }
 
 class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
   VecVec6f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVec6f([int length = 0]) => VecVec6f.fromPointer(ccore.std_VecVec6f_new(length));
 
   factory VecVec6f.fromList(List<Vec6f> pts) => VecVec6f.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecVec6f.generate(int length, Vec6f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVec6f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.Vec6f>(length);
+    final p = ccore.std_VecVec6f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVec6f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec6f.fromPointer(pp);
+    return VecVec6f.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.std_VecVec4f_free);
 
   @override
   VecVec6f clone() => VecVec6f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  Iterator<Vec6f> get iterator => VecVec6fIterator(ref);
+  void resize(int newSize) => ccore.std_VecVec6f_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecVec6f_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecVec6f_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecVec6f_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecVec6f_extend(ptr, (other as VecVec6f).ptr);
+
+  @override
+  void add(Vec6f element) => ccore.std_VecVec6f_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecVec6f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVec6f_length(ptr);
+
+  @override
+  Iterator<Vec6f> get iterator => VecVec6fIterator(ptr);
 
   @override
   cvg.VecVec6f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVec6f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVec6f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Vec6f value) => ccore.std_VecVec6f_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Vec6f value) {
-    ref.ptr[idx].val1 = value.val1;
-    ref.ptr[idx].val2 = value.val2;
-    ref.ptr[idx].val3 = value.val3;
-    ref.ptr[idx].val4 = value.val4;
-    ref.ptr[idx].val5 = value.val5;
-    ref.ptr[idx].val6 = value.val6;
-  }
-
-  @override
-  Vec6f operator [](int idx) => Vec6f.fromPointer(ref.ptr + idx, false);
+  Vec6f operator [](int idx) => Vec6f.fromPointer(ccore.std_VecVec6f_get_p(ptr, idx));
 }
 
 class VecVec6fIterator extends VecIterator<Vec6f> {
-  VecVec6fIterator(this.ref);
-  cvg.VecVec6f ref;
+  VecVec6fIterator(this.ptr);
+  cvg.VecVec6fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVec6f_length(ptr);
 
   @override
-  Vec6f operator [](int idx) => Vec6f.fromPointer(ref.ptr + idx, false);
+  Vec6f operator [](int idx) => Vec6f.fromPointer(ccore.std_VecVec6f_get_p(ptr, idx));
 }
 
 extension VecVec4iExtension on List<Vec4i> {

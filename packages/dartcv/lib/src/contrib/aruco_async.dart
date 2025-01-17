@@ -4,36 +4,30 @@
 
 library cv.contrib;
 
-import 'dart:ffi' as ffi;
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
 import '../native_lib.dart' show ccontrib;
 import 'aruco.dart';
 import 'aruco_dict.dart';
 
 extension ArucoDetectorAsync on ArucoDetector {
   Future<(VecVecPoint2f, VecI32, VecVecPoint2f)> detectMarkersAsync(InputArray image) async {
-    final pCorners = calloc<cvg.VecVecPoint2f>();
-    final pRejected = calloc<cvg.VecVecPoint2f>();
-    final pIds = calloc<cvg.VecI32>();
+    final corners = VecVecPoint2f();
+    final rejected = VecVecPoint2f();
+    final ids = VecI32();
     return cvRunAsync0(
         (callback) => ccontrib.cv_aruco_arucoDetector_detectMarkers(
               ref,
               image.ref,
-              pCorners,
-              pIds,
-              pRejected,
+              corners.ptr,
+              ids.ptr,
+              rejected.ptr,
               callback,
             ), (c) {
-      return c.complete(
-        (VecVecPoint2f.fromPointer(pCorners), VecI32.fromPointer(pIds), VecVecPoint2f.fromPointer(pRejected)),
-      );
+      return c.complete((corners, ids, rejected));
     });
   }
 }

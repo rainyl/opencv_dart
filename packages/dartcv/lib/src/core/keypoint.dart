@@ -9,6 +9,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/types.g.dart' as cvg;
+import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -86,77 +87,85 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
 class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
   VecKeyPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecKeyPoint([int length = 0]) => VecKeyPoint.fromPointer(ccore.std_VecKeyPoint_new(length));
 
   factory VecKeyPoint.fromList(List<KeyPoint> pts) =>
       VecKeyPoint.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecKeyPoint.generate(int length, KeyPoint Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecKeyPoint>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.KeyPoint>(length);
+    final p = ccore.std_VecKeyPoint_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecKeyPoint_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecKeyPoint.fromPointer(pp);
+    return VecKeyPoint.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecKeyPointPtr>(ccore.addresses.std_VecKeyPoint_free);
 
   @override
   VecKeyPoint clone() => VecKeyPoint.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  int get length => ref.length;
+  void resize(int newSize) => ccore.std_VecKeyPoint_resize(ptr, newSize);
 
   @override
-  Iterator<KeyPoint> get iterator => VecKeyPointIterator(ref);
+  void reserve(int newCapacity) => ccore.std_VecKeyPoint_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecKeyPoint_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecKeyPoint_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecKeyPoint_extend(ptr, (other as VecKeyPoint).ptr);
+
+  @override
+  void add(KeyPoint element) => ccore.std_VecKeyPoint_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecKeyPoint_length(ptr);
+
+  @override
+  int get length => ccore.std_VecKeyPoint_length(ptr);
+
+  @override
+  Iterator<KeyPoint> get iterator => VecKeyPointIterator(ptr);
 
   @override
   cvg.VecKeyPoint get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecKeyPoint_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecKeyPoint>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, KeyPoint value) => ccore.std_VecKeyPoint_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, KeyPoint value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-    ref.ptr[idx].size = value.size;
-    ref.ptr[idx].angle = value.angle;
-    ref.ptr[idx].octave = value.octave;
-    ref.ptr[idx].classID = value.classID;
-    ref.ptr[idx].response = value.response;
-  }
-
-  @override
-  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ref.ptr + idx, false);
+  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ccore.std_VecKeyPoint_get_p(ptr, idx));
 }
 
 class VecKeyPointIterator extends VecIterator<KeyPoint> {
-  VecKeyPointIterator(this.ref);
-  cvg.VecKeyPoint ref;
+  VecKeyPointIterator(this.ptr);
+  cvg.VecKeyPointPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecKeyPoint_length(ptr);
 
   @override
-  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ref.ptr + idx, false);
+  KeyPoint operator [](int idx) => KeyPoint.fromPointer(ccore.std_VecKeyPoint_get_p(ptr, idx));
 }
 
 extension ListKeyPointExtension on List<KeyPoint> {

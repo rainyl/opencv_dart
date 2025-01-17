@@ -163,8 +163,7 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
 class VecPoint extends Vec<cvg.VecPoint, Point> {
   VecPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -173,37 +172,58 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
   factory VecPoint.fromList(List<Point> pts) => VecPoint.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecPoint.generate(int length, Point Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecPoint>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvPoint>(length);
+    final p = ccore.std_VecPoint_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecPoint_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint.fromPointer(pp);
-  }
-
-  factory VecPoint.fromMat(Mat mat) {
-    final p = calloc<cvg.VecPoint>();
-    cvRun(() => ccore.cv_Mat_toVecPoint(mat.ref, p, ffi.nullptr));
     return VecPoint.fromPointer(p);
   }
 
-  @override
-  VecPoint clone() => VecPoint.generate(length, (idx) => this[idx], dispose: false);
+  factory VecPoint.fromMat(Mat mat) {
+    final p = VecPoint();
+    cvRun(() => ccore.cv_Mat_toVecPoint(mat.ref, p.ptr, ffi.nullptr));
+    return p;
+  }
+
+  static final finalizer = OcvFinalizer<cvg.VecPointPtr>(ccore.addresses.std_VecPoint_free);
 
   @override
-  int get length => ref.length;
+  VecPoint clone() => VecPoint.generate(length, (idx) => this[idx], dispose: true);
+
+  @override
+  void resize(int newSize) => ccore.std_VecPoint_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecPoint_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecPoint_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecPoint_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecPoint_extend(ptr, (other as VecPoint).ptr);
+
+  @override
+  void add(Point element) => ccore.std_VecPoint_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecPoint_length(ptr);
+
+  @override
+  int get length => ccore.std_VecPoint_length(ptr);
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecPoint_free(ptr);
   }
 
   @override
-  Iterator<Point> get iterator => VecPointIterator(ref);
+  Iterator<Point> get iterator => VecPointIterator(ptr);
 
   @override
   cvg.VecPoint get ref => ptr.ref;
@@ -212,37 +232,27 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecPoint>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Point value) => ccore.std_VecPoint_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Point value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-  }
-
-  @override
-  Point operator [](int idx) => Point.fromPointer(ref.ptr + idx, false);
+  Point operator [](int idx) => Point.fromPointer(ccore.std_VecPoint_get_p(ptr, idx));
 }
 
 class VecPointIterator extends VecIterator<Point> {
-  VecPointIterator(this.ref);
-  cvg.VecPoint ref;
+  VecPointIterator(this.ptr);
+  cvg.VecPointPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecPoint_length(ptr);
 
   @override
-  Point operator [](int idx) => Point.fromPointer(ref.ptr + idx, false);
+  Point operator [](int idx) => Point.fromPointer(ccore.std_VecPoint_get_p(ptr, idx));
 }
 
 class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
   VecPoint2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -253,76 +263,87 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
       VecPoint2f.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecPoint2f.generate(int length, Point2f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecPoint2f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvPoint2f>(length);
+    final p = ccore.std_VecPoint2f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecPoint2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint2f.fromPointer(pp);
-  }
-
-  factory VecPoint2f.fromMat(Mat mat) {
-    final p = calloc<cvg.VecPoint2f>();
-    cvRun(() => ccore.cv_Mat_toVecPoint2f(mat.ref, p, ffi.nullptr));
     return VecPoint2f.fromPointer(p);
   }
 
-  @override
-  VecPoint2f clone() => VecPoint2f.generate(length, (idx) => this[idx], dispose: false);
+  factory VecPoint2f.fromMat(Mat mat) {
+    final p = VecPoint2f();
+    cvRun(() => ccore.cv_Mat_toVecPoint2f(mat.ref, p.ptr, ffi.nullptr));
+    return p;
+  }
+
+  static final finalizer = OcvFinalizer<cvg.VecPoint2fPtr>(ccore.addresses.std_VecPoint2f_free);
 
   @override
-  int get length => ref.length;
+  VecPoint2f clone() => VecPoint2f.generate(length, (idx) => this[idx], dispose: true);
 
   @override
-  Iterator<Point2f> get iterator => VecPoint2fIterator(ref);
+  void resize(int newSize) => ccore.std_VecPoint2f_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecPoint2f_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecPoint2f_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecPoint2f_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecPoint2f_extend(ptr, (other as VecPoint2f).ptr);
+
+  @override
+  void add(Point2f element) => ccore.std_VecPoint2f_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecPoint2f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecPoint2f_length(ptr);
+
+  @override
+  Iterator<Point2f> get iterator => VecPoint2fIterator(ptr);
 
   @override
   cvg.VecPoint2f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
-  }
-
-  @override
-  void reattach({ffi.Pointer<cvg.VecPoint2f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
+    finalizer.detach(this);
+    ccore.std_VecPoint2f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void operator []=(int idx, Point2f value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-  }
+  void operator []=(int idx, Point2f value) => ccore.std_VecPoint2f_set(ptr, idx, value.ref);
 
   @override
-  Point2f operator [](int idx) => Point2f.fromPointer(ref.ptr + idx, false);
+  Point2f operator [](int idx) => Point2f.fromPointer(ccore.std_VecPoint2f_get_p(ptr, idx));
 }
 
 class VecPoint2fIterator extends VecIterator<Point2f> {
-  VecPoint2fIterator(this.ref);
-  cvg.VecPoint2f ref;
+  VecPoint2fIterator(this.ptr);
+  cvg.VecPoint2fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecPoint2f_length(ptr);
 
   @override
-  Point2f operator [](int idx) => Point2f.fromPointer(ref.ptr + idx, false);
+  Point2f operator [](int idx) => Point2f.fromPointer(ccore.std_VecPoint2f_get_p(ptr, idx));
 }
 
 class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
   VecPoint3f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -333,77 +354,87 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
       VecPoint3f.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecPoint3f.generate(int length, Point3f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecPoint3f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvPoint3f>(length);
+    final p = ccore.std_VecPoint3f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecPoint3f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint3f.fromPointer(pp);
-  }
-
-  factory VecPoint3f.fromMat(Mat mat) {
-    final p = calloc<cvg.VecPoint3f>();
-    cvRun(() => ccore.cv_Mat_toVecPoint3f(mat.ref, p, ffi.nullptr));
     return VecPoint3f.fromPointer(p);
   }
 
-  @override
-  VecPoint3f clone() => VecPoint3f.generate(length, (idx) => this[idx], dispose: false);
+  factory VecPoint3f.fromMat(Mat mat) {
+    final p = VecPoint3f();
+    cvRun(() => ccore.cv_Mat_toVecPoint3f(mat.ref, p.ptr, ffi.nullptr));
+    return p;
+  }
+
+  static final finalizer = OcvFinalizer<cvg.VecPoint3fPtr>(ccore.addresses.std_VecPoint3f_free);
 
   @override
-  int get length => ref.length;
+  VecPoint3f clone() => VecPoint3f.generate(length, (idx) => this[idx], dispose: true);
 
   @override
-  Iterator<Point3f> get iterator => VecPoint3fIterator(ref);
+  void resize(int newSize) => ccore.std_VecPoint3f_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecPoint3f_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecPoint3f_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecPoint3f_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecPoint3f_extend(ptr, (other as VecPoint3f).ptr);
+
+  @override
+  void add(Point3f element) => ccore.std_VecPoint3f_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecPoint3f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecPoint3f_length(ptr);
+
+  @override
+  Iterator<Point3f> get iterator => VecPoint3fIterator(ptr);
 
   @override
   cvg.VecPoint3f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecPoint3f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecPoint3f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Point3f value) => ccore.std_VecPoint3f_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Point3f value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-    ref.ptr[idx].z = value.z;
-  }
-
-  @override
-  Point3f operator [](int idx) => Point3f.fromPointer(ref.ptr + idx, false);
+  Point3f operator [](int idx) => Point3f.fromPointer(ccore.std_VecPoint3f_get_p(ptr, idx));
 }
 
 class VecPoint3fIterator extends VecIterator<Point3f> {
-  VecPoint3fIterator(this.ref);
-  cvg.VecPoint3f ref;
+  VecPoint3fIterator(this.ptr);
+  cvg.VecPoint3fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecPoint3f_length(ptr);
 
   @override
-  Point3f operator [](int idx) => Point3f.fromPointer(ref.ptr + idx, false);
+  Point3f operator [](int idx) => Point3f.fromPointer(ccore.std_VecPoint3f_get_p(ptr, idx));
 }
 
 class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
   VecPoint3i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -414,80 +445,92 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
       VecPoint3i.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecPoint3i.generate(int length, Point3i Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecPoint3i>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvPoint3i>(length);
+    final p = ccore.std_VecPoint3i_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecPoint3i_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint3i.fromPointer(pp);
-  }
-
-  factory VecPoint3i.fromMat(Mat mat) {
-    final p = calloc<cvg.VecPoint3i>();
-    cvRun(() => ccore.cv_Mat_toVecPoint3i(mat.ref, p, ffi.nullptr));
     return VecPoint3i.fromPointer(p);
   }
 
-  @override
-  VecPoint3i clone() => VecPoint3i.generate(length, (idx) => this[idx], dispose: false);
+  factory VecPoint3i.fromMat(Mat mat) {
+    final p = VecPoint3i();
+    cvRun(() => ccore.cv_Mat_toVecPoint3i(mat.ref, p.ptr, ffi.nullptr));
+    return p;
+  }
+
+  static final finalizer = OcvFinalizer<cvg.VecPoint3iPtr>(ccore.addresses.std_VecPoint3i_free);
 
   @override
-  int get length => ref.length;
+  VecPoint3i clone() => VecPoint3i.generate(length, (idx) => this[idx], dispose: true);
 
   @override
-  Iterator<Point3i> get iterator => VecPoint3iIterator(ref);
+  void resize(int newSize) => ccore.std_VecPoint3i_resize(ptr, newSize);
+
+  @override
+  void reserve(int newCapacity) => ccore.std_VecPoint3i_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecPoint3i_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecPoint3i_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecPoint3i_extend(ptr, (other as VecPoint3i).ptr);
+
+  @override
+  void add(Point3i element) => ccore.std_VecPoint3i_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecPoint3i_length(ptr);
+
+  @override
+  int get length => ccore.std_VecPoint3i_length(ptr);
+
+  @override
+  Iterator<Point3i> get iterator => VecPoint3iIterator(ptr);
 
   @override
   cvg.VecPoint3i get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecPoint3i_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecPoint3i>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Point3i value) => ccore.std_VecPoint3i_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Point3i value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-    ref.ptr[idx].z = value.z;
-  }
-
-  @override
-  Point3i operator [](int idx) => Point3i.fromPointer(ref.ptr + idx, false);
+  Point3i operator [](int idx) => Point3i.fromPointer(ccore.std_VecPoint3i_get_p(ptr, idx));
 }
 
 class VecPoint3iIterator extends VecIterator<Point3i> {
-  VecPoint3iIterator(this.ref);
-  cvg.VecPoint3i ref;
+  VecPoint3iIterator(this.ptr);
+  cvg.VecPoint3iPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecPoint3i_length(ptr);
 
   @override
-  Point3i operator [](int idx) => Point3i.fromPointer(ref.ptr + idx, false);
+  Point3i operator [](int idx) => Point3i.fromPointer(ccore.std_VecPoint3i_get_p(ptr, idx));
 }
 
 // VecVecPoint
-class VecVecPoint extends Vec<cvg.VecVecPoint, VecPoint> {
+class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   VecVecPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVecPoint([int length = 0]) => VecVecPoint.fromPointer(ccore.std_VecVecPoint_new(length));
 
   factory VecVecPoint.fromVecPoint(VecPoint v) => VecVecPoint.generate(1, (i) => v, dispose: false);
 
@@ -495,67 +538,73 @@ class VecVecPoint extends Vec<cvg.VecVecPoint, VecPoint> {
       VecVecPoint.generate(pts.length, (i) => pts[i].cvd, dispose: false);
 
   factory VecVecPoint.generate(int length, VecPoint Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVecPoint>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.VecPoint>(length);
+    final p = ccore.std_VecVecPoint_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVecPoint_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint.fromPointer(pp);
+    return VecVecPoint.fromPointer(p);
   }
 
-  @override
-  VecVecPoint clone() => VecVecPoint.generate(length, (idx) => this[idx], dispose: false);
+  static final finalizer = OcvFinalizer<cvg.VecVecPointPtr>(ccore.addresses.std_VecVecPoint_free);
 
   @override
-  Iterator<VecPoint> get iterator => VecVecPointIterator(ref);
+  VecVecPoint clone() => VecVecPoint.generate(length, (i) => this[i], dispose: false);
+
+  @override
+  int size() => ccore.std_VecVecPoint_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVecPoint_length(ptr);
+
+  @override
+  Iterator<VecPoint> get iterator => VecVecPointIterator(ptr);
 
   @override
   cvg.VecVecPoint get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVecPoint_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVecPoint>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), false);
 
-  @override
-  void operator []=(int idx, VecPoint value) => throw UnsupportedError("VecVecPoint is read-only");
-
-  @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ref.ptr + idx, false);
+  List<List<Point>> copyToList() => List.generate(
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint_length_i(ptr, i),
+          (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
-  VecVecPointIterator(this.ref);
-  cvg.VecVecPoint ref;
+  VecVecPointIterator(this.ptr);
+  cvg.VecVecPointPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVecPoint_length(ptr);
 
   /// return the reference
   @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ref.ptr + idx, false);
+  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), false);
 }
 
-class VecVecPoint2f extends Vec<cvg.VecVecPoint2f, VecPoint2f> {
+class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
   VecVecPoint2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVecPoint2f([int length = 0]) => VecVecPoint2f.fromPointer(ccore.std_VecVecPoint2f_new(length));
 
   factory VecVecPoint2f.fromVecPoint(VecPoint2f v) => VecVecPoint2f.generate(1, (i) => v);
 
@@ -563,125 +612,137 @@ class VecVecPoint2f extends Vec<cvg.VecVecPoint2f, VecPoint2f> {
       VecVecPoint2f.generate(pts.length, (i) => pts[i].cvd, dispose: false);
 
   factory VecVecPoint2f.generate(int length, VecPoint2f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVecPoint2f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.VecPoint2f>(length);
+    final p = ccore.std_VecVecPoint2f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVecPoint2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint2f.fromPointer(pp);
+    return VecVecPoint2f.fromPointer(p);
   }
 
-  @override
-  VecVecPoint2f clone() => VecVecPoint2f.generate(length, (idx) => this[idx], dispose: false);
+  static final finalizer = OcvFinalizer<cvg.VecVecPoint2fPtr>(ccore.addresses.std_VecVecPoint2f_free);
 
   @override
-  Iterator<VecPoint2f> get iterator => VecVecPoint2fIterator(ref);
+  VecVecPoint2f clone() => VecVecPoint2f.generate(length, (i) => this[i], dispose: false);
+
+  @override
+  int size() => ccore.std_VecVecPoint2f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVecPoint2f_length(ptr);
+
+  @override
+  Iterator<VecPoint2f> get iterator => VecVecPoint2fIterator(ptr);
 
   @override
   cvg.VecVecPoint2f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVecPoint2f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVecPoint2f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), false);
 
-  @override
-  void operator []=(int idx, VecPoint2f value) => throw UnsupportedError("VecVecPoint2f is read-only");
-
-  @override
-  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ref.ptr + idx, false);
+  List<List<Point2f>> copyToList() => List.generate(
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint2f_length_i(ptr, i),
+          (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
-  VecVecPoint2fIterator(this.ref);
-  cvg.VecVecPoint2f ref;
+  VecVecPoint2fIterator(this.ptr);
+  cvg.VecVecPoint2fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVecPoint2f_length(ptr);
 
   /// return the reference
   @override
-  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ref.ptr + idx, false);
+  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), false);
 }
 
-class VecVecPoint3f extends Vec<cvg.VecVecPoint3f, VecPoint3f> {
+class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
   VecVecPoint3f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecVecPoint3f([int length = 0]) => VecVecPoint3f.fromPointer(ccore.std_VecVecPoint3f_new(length));
+
   factory VecVecPoint3f.fromVecPoint(VecPoint3f v) => VecVecPoint3f.generate(1, (i) => v);
 
   factory VecVecPoint3f.fromList(List<List<Point3f>> pts) =>
       VecVecPoint3f.generate(pts.length, (i) => pts[i].cvd, dispose: false);
 
   factory VecVecPoint3f.generate(int length, VecPoint3f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecVecPoint3f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.VecPoint3f>(length);
+    final p = ccore.std_VecVecPoint3f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecVecPoint3f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint3f.fromPointer(pp);
+    return VecVecPoint3f.fromPointer(p);
   }
 
-  @override
-  VecVecPoint3f clone() => VecVecPoint3f.generate(length, (idx) => this[idx], dispose: false);
+  static final finalizer = OcvFinalizer<cvg.VecVecPoint3fPtr>(ccore.addresses.std_VecVecPoint3f_free);
 
   @override
-  Iterator<VecPoint3f> get iterator => VecVecPoint3fIterator(ref);
+  VecVecPoint3f clone() => VecVecPoint3f.generate(length, (i) => this[i], dispose: false);
+
+  @override
+  int size() => ccore.std_VecVecPoint3f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecVecPoint3f_length(ptr);
+
+  @override
+  Iterator<VecPoint3f> get iterator => VecVecPoint3fIterator(ptr);
 
   @override
   cvg.VecVecPoint3f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecVecPoint3f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecVecPoint3f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), false);
 
-  @override
-  void operator []=(int idx, VecPoint3f value) => throw UnsupportedError("VecVecPoint3f is read-only");
-
-  @override
-  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ref.ptr + idx, false);
+  List<List<Point3f>> copyToList() => List.generate(
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint3f_length_i(ptr, i),
+          (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
-  VecVecPoint3fIterator(this.ref);
-  cvg.VecVecPoint3f ref;
+  VecVecPoint3fIterator(this.ptr);
+  cvg.VecVecPoint3fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecVecPoint3f_length(ptr);
 
   /// return the reference
   @override
-  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ref.ptr + idx, false);
+  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), false);
 }
 
 extension ListPointExtension on List<Point> {

@@ -40,7 +40,7 @@ ffi.DynamicLibrary loadNativeLibrary(String libName) {
     try {
       return ffi.DynamicLibrary.open(libPath);
     } catch (e) {
-      print("Error loading $libPath, error: $e fallback to process.");
+      print("Error loading $libPath, error: $e\nfallback to process.");
       return ffi.DynamicLibrary.process();
     }
   }

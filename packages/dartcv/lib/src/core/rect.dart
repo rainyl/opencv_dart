@@ -139,9 +139,9 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
   }
 
   VecPoint2f get points {
-    final pts = calloc<cvg.VecPoint2f>();
-    cvRun(() => ccore.cv_RotatedRect_points(ptr.ref, pts));
-    return VecPoint2f.fromPointer(pts);
+    final pts = VecPoint2f();
+    cvRun(() => ccore.cv_RotatedRect_points(ptr.ref, pts.ptr));
+    return pts;
   }
 
   Rect get boundingRect {
@@ -176,8 +176,7 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 class VecRect extends Vec<cvg.VecRect, Rect> {
   VecRect.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -187,72 +186,81 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
   factory VecRect.fromList(List<Rect> pts) => VecRect.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecRect.generate(int length, Rect Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecRect>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvRect>(length);
+    final p = ccore.std_VecRect_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecRect_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecRect.fromPointer(pp);
+    return VecRect.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ccore.addresses.std_VecRect_free);
 
   @override
   VecRect clone() => VecRect.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  int get length => ref.length;
+  void resize(int newSize) => ccore.std_VecRect_resize(ptr, newSize);
 
   @override
-  Iterator<Rect> get iterator => VecRectIterator(ref);
+  void reserve(int newCapacity) => ccore.std_VecRect_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecRect_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecRect_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecRect_extend(ptr, (other as VecRect).ptr);
+
+  @override
+  void add(Rect element) => ccore.std_VecRect_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecRect_length(ptr);
+
+  @override
+  int get length => ccore.std_VecRect_length(ptr);
+
+  @override
+  Iterator<Rect> get iterator => VecRectIterator(ptr);
 
   @override
   cvg.VecRect get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecRect_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecRect>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Rect value) => ccore.std_VecRect_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Rect value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-    ref.ptr[idx].width = value.width;
-    ref.ptr[idx].height = value.height;
-  }
-
-  @override
-  Rect operator [](int idx) => Rect.fromPointer(ref.ptr + idx, false);
+  Rect operator [](int idx) => Rect.fromPointer(ccore.std_VecRect_get_p(ptr, idx));
 }
 
 class VecRectIterator extends VecIterator<Rect> {
-  VecRectIterator(this.ref);
-  cvg.VecRect ref;
+  VecRectIterator(this.ptr);
+  cvg.VecRectPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecRect_length(ptr);
 
   @override
-  Rect operator [](int idx) => Rect.fromPointer(ref.ptr + idx, false);
+  Rect operator [](int idx) => Rect.fromPointer(ccore.std_VecRect_get_p(ptr, idx));
 }
 
 class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
   VecRect2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
 
@@ -263,65 +271,75 @@ class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
       VecRect2f.generate(pts.length, (i) => pts[i], dispose: false);
 
   factory VecRect2f.generate(int length, Rect2f Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecRect2f>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.CvRect2f>(length);
+    final p = ccore.std_VecRect2f_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecRect2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecRect2f.fromPointer(pp);
+    return VecRect2f.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecRect2fPtr>(ccore.addresses.std_VecRect2f_free);
 
   @override
   VecRect2f clone() => VecRect2f.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  int get length => ref.length;
+  void resize(int newSize) => ccore.std_VecRect2f_resize(ptr, newSize);
 
   @override
-  Iterator<Rect2f> get iterator => VecRect2fIterator(ref);
+  void reserve(int newCapacity) => ccore.std_VecRect2f_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecRect2f_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecRect2f_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecRect2f_extend(ptr, (other as VecRect2f).ptr);
+
+  @override
+  void add(Rect2f element) => ccore.std_VecRect2f_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecRect2f_length(ptr);
+
+  @override
+  int get length => ccore.std_VecRect2f_length(ptr);
+
+  @override
+  Iterator<Rect2f> get iterator => VecRect2fIterator(ptr);
 
   @override
   cvg.VecRect2f get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecRect2f_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecRect2f>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Rect2f value) => ccore.std_VecRect2f_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Rect2f value) {
-    ref.ptr[idx].x = value.x;
-    ref.ptr[idx].y = value.y;
-    ref.ptr[idx].width = value.width;
-    ref.ptr[idx].height = value.height;
-  }
-
-  @override
-  Rect2f operator [](int idx) => Rect2f.fromPointer(ref.ptr + idx, false);
+  Rect2f operator [](int idx) => Rect2f.fromPointer(ccore.std_VecRect2f_get_p(ptr, idx));
 }
 
 class VecRect2fIterator extends VecIterator<Rect2f> {
-  VecRect2fIterator(this.ref);
-  cvg.VecRect2f ref;
+  VecRect2fIterator(this.ptr);
+  cvg.VecRect2fPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecRect2f_length(ptr);
 
   @override
-  Rect2f operator [](int idx) => Rect2f.fromPointer(ref.ptr + idx, false);
+  Rect2f operator [](int idx) => Rect2f.fromPointer(ccore.std_VecRect2f_get_p(ptr, idx));
 }
 
 extension ListRectExtension on List<Rect> {

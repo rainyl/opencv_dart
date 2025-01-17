@@ -14,7 +14,6 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/objdetect.g.dart' as cvg;
 import '../native_lib.dart' show cobjdetect;
 import './objdetect.dart';
 
@@ -27,12 +26,12 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
   }) {
-    final pObjects = calloc<cvg.VecRect>();
+    final pObjects = VecRect();
     return cvRunAsync0<VecRect>(
       (callback) => cobjdetect.cv_CascadeClassifier_detectMultiScale_1(
         ref,
         image.ref,
-        pObjects,
+        pObjects.ptr,
         scaleFactor,
         minNeighbors,
         flags,
@@ -41,7 +40,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
         callback,
       ),
       (c) {
-        return c.complete(VecRect.fromPointer(pObjects));
+        return c.complete(pObjects);
       },
     );
   }
@@ -54,14 +53,14 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
   }) {
-    final ret = calloc<cvg.VecRect>();
-    final pnums = calloc<cvg.VecI32>();
+    final ret = VecRect();
+    final pnums = VecI32();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_CascadeClassifier_detectMultiScale_2(
         ref,
         image.ref,
-        ret,
-        pnums,
+        ret.ptr,
+        pnums.ptr,
         scaleFactor,
         minNeighbors,
         flags,
@@ -70,7 +69,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
         callback,
       ),
       (c) {
-        return c.complete((VecRect.fromPointer(ret), VecI32.fromPointer(pnums)));
+        return c.complete((ret, pnums));
       },
     );
   }
@@ -84,16 +83,16 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) maxSize = (0, 0),
     bool outputRejectLevels = false,
   }) {
-    final objects = calloc<cvg.VecRect>();
-    final rejectLevels = calloc<cvg.VecI32>();
-    final levelWeights = calloc<cvg.VecF64>();
+    final objects = VecRect();
+    final rejectLevels = VecI32();
+    final levelWeights = VecF64();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_CascadeClassifier_detectMultiScale_3(
         ref,
         image.ref,
-        objects,
-        rejectLevels,
-        levelWeights,
+        objects.ptr,
+        rejectLevels.ptr,
+        levelWeights.ptr,
         scaleFactor,
         minNeighbors,
         flags,
@@ -103,9 +102,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
         callback,
       ),
       (c) {
-        return c.complete(
-          (VecRect.fromPointer(objects), VecI32.fromPointer(rejectLevels), VecF64.fromPointer(levelWeights)),
-        );
+        return c.complete((objects, rejectLevels, levelWeights));
       },
     );
   }
@@ -117,25 +114,20 @@ extension HOGDescriptorAsync on HOGDescriptor {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) {
-    final descriptors = calloc<cvg.VecF32>();
-    final locations = calloc<cvg.VecPoint>();
+    final descriptors = VecF32();
+    final locations = VecPoint();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_compute(
         ref,
         img.ref,
-        descriptors,
+        descriptors.ptr,
         winStride.cvd.ref,
         padding.cvd.ref,
-        locations,
+        locations.ptr,
         callback,
       ),
       (c) {
-        return c.complete(
-          (
-            VecF32.fromPointer(descriptors),
-            VecPoint.fromPointer(locations),
-          ),
-        );
+        return c.complete((descriptors, locations));
       },
     );
   }
@@ -169,29 +161,23 @@ extension HOGDescriptorAsync on HOGDescriptor {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) {
-    final foundLocations = calloc<cvg.VecPoint>();
-    final searchLocations = calloc<cvg.VecPoint>();
-    final weights = calloc<cvg.VecF64>();
+    final foundLocations = VecPoint();
+    final searchLocations = VecPoint();
+    final weights = VecF64();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_detect(
         ref,
         img.ref,
-        foundLocations,
-        weights,
+        foundLocations.ptr,
+        weights.ptr,
         hitThreshold,
         winStride.cvd.ref,
         padding.cvd.ref,
-        searchLocations,
+        searchLocations.ptr,
         callback,
       ),
       (c) {
-        return c.complete(
-          (
-            VecPoint.fromPointer(foundLocations),
-            VecF64.fromPointer(weights),
-            VecPoint.fromPointer(searchLocations),
-          ),
-        );
+        return c.complete((foundLocations, weights, searchLocations));
       },
     );
   }
@@ -202,21 +188,21 @@ extension HOGDescriptorAsync on HOGDescriptor {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
   }) {
-    final foundLocations = calloc<cvg.VecPoint>();
-    final searchLocations = calloc<cvg.VecPoint>();
+    final foundLocations = VecPoint();
+    final searchLocations = VecPoint();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_detect2(
         ref,
         img.ref,
-        foundLocations,
+        foundLocations.ptr,
         hitThreshold,
         winStride.cvd.ref,
         padding.cvd.ref,
-        searchLocations,
+        searchLocations.ptr,
         callback,
       ),
       (c) {
-        return c.complete((VecPoint.fromPointer(foundLocations), VecPoint.fromPointer(searchLocations)));
+        return c.complete((foundLocations, searchLocations));
       },
     );
   }
@@ -231,7 +217,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     double groupThreshold = 2.0,
     bool useMeanshiftGrouping = false,
   }) {
-    final rects = calloc<cvg.VecRect>();
+    final rects = VecRect();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_detectMultiScale_1(
         ref,
@@ -242,11 +228,11 @@ extension HOGDescriptorAsync on HOGDescriptor {
         scale,
         groupThreshold,
         useMeanshiftGrouping,
-        rects,
+        rects.ptr,
         callback,
       ),
       (c) {
-        return c.complete(VecRect.fromPointer(rects));
+        return c.complete(rects);
       },
     );
   }
@@ -267,8 +253,6 @@ extension HOGDescriptorAsync on HOGDescriptor {
         callback,
       ),
       (c) {
-        rectList.reattach();
-        weights.reattach();
         return c.complete((rectList, weights));
       },
     );
@@ -279,7 +263,6 @@ Future<VecRect> groupRectanglesAsync(VecRect rects, int groupThreshold, double e
   return cvRunAsync0(
     (callback) => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, callback),
     (c) {
-      rects.reattach();
       return c.complete(rects);
     },
   );
@@ -291,14 +274,15 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     VecPoint points, {
     OutputArray? straightQRcode,
   }) {
-    final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
+    straightQRcode ??= Mat.empty();
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_decodeCurved(ref, img.ref, points.ref, s, v, callback),
+      (callback) => cobjdetect.cv_QRCodeDetector_decodeCurved(
+          ref, img.ref, points.ref, straightQRcode!.ptr, v, callback),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
-        return c.complete((ss, Mat.fromPointer(s)));
+        return c.complete((ss, straightQRcode!));
       },
     );
   }
@@ -308,15 +292,16 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     VecPoint? points,
     Mat? straightQRcode,
   }) {
-    final p = points?.ptr ?? calloc<cvg.VecPoint>();
-    final s = straightQRcode?.ptr ?? calloc<cvg.Mat>();
+    points ??= VecPoint();
+    straightQRcode ??= Mat.empty();
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(ref, img.ref, p, s, v, callback),
+      (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(
+          ref, img.ref, points!.ptr, straightQRcode!.ptr, v, callback),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
-        return c.complete((ss, points ?? VecPoint.fromPointer(p), Mat.fromPointer(s)));
+        return c.complete((ss, points!, straightQRcode!));
       },
     );
   }
@@ -326,26 +311,27 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     VecPoint? points,
     OutputArray? straightCode,
   }) {
-    final code = straightCode?.ptr ?? calloc<cvg.Mat>();
-    final points = calloc<cvg.VecPoint>();
+    straightCode ??= Mat.empty();
+    final points = VecPoint();
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecode(ref, img.ref, points, code, v, callback),
+      (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecode(
+          ref, img.ref, points.ptr, straightCode!.ptr, v, callback),
       (c) {
         final s = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
-        return c.complete((s, VecPoint.fromPointer(points), Mat.fromPointer(code)));
+        return c.complete((s, points, straightCode!));
       },
     );
   }
 
   Future<(bool ret, VecPoint points)> detectAsync(InputArray input, {VecPoint? points}) async {
-    final pts = calloc<cvg.VecPoint>();
+    final pts = VecPoint();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, pts, ret, callback),
+      (callback) => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, pts.ptr, ret, callback),
       (c) {
-        final rval = (ret.value, VecPoint.fromPointer(pts));
+        final rval = (ret.value, pts);
         calloc.free(ret);
         return c.complete(rval);
       },
@@ -357,26 +343,27 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     VecPoint? points,
     Mat? straightCode,
   }) {
-    final p = points?.ptr ?? calloc<cvg.VecPoint>();
+    points ??= VecPoint();
     final ret = calloc<ffi.Pointer<ffi.Char>>();
     straightCode ??= Mat.empty();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, p, straightCode!.ref, ret, callback),
+      (callback) =>
+          cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, callback),
       (c) {
         final info = ret.value.cast<Utf8>().toDartString();
         calloc.free(ret);
-        return c.complete((info, VecPoint.fromPointer(p), straightCode));
+        return c.complete((info, points, straightCode));
       },
     );
   }
 
   Future<(bool ret, VecPoint points)> detectMultiAsync(InputArray img, {VecPoint? points}) async {
-    final p = points?.ptr ?? calloc<cvg.VecPoint>();
+    points ??= VecPoint();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, p, ret, callback),
+      (callback) => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, points!.ptr, ret, callback),
       (c) {
-        final rval = (ret.value, VecPoint.fromPointer(p));
+        final rval = (ret.value, points!);
         calloc.free(ret);
         return c.complete(rval);
       },
@@ -384,28 +371,29 @@ extension QRCodeDetectorAsync on QRCodeDetector {
   }
 
   Future<(bool, List<String>, VecPoint, VecMat)> detectAndDecodeMultiAsync(InputArray img) async {
-    final info = calloc<cvg.VecVecChar>();
-    final points = calloc<cvg.VecPoint>();
-    final codes = calloc<cvg.VecMat>();
+    final info = VecVecChar();
+    final points = VecPoint();
+    final codes = VecMat();
     final rval = calloc<ffi.Bool>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecodeMulti(
         ref,
         img.ref,
-        info,
-        points,
-        codes,
+        info.ptr,
+        points.ptr,
+        codes.ptr,
         rval,
         callback,
       ),
       (c) {
         final ret = (
           rval.value,
-          VecVecChar.fromPointer(info).asStringList(),
-          VecPoint.fromPointer(points),
-          VecMat.fromPointer(codes),
+          info.asStringList(),
+          points,
+          codes,
         );
         calloc.free(rval);
+        info.dispose();
         return c.complete(ret);
       },
     );
@@ -414,11 +402,11 @@ extension QRCodeDetectorAsync on QRCodeDetector {
 
 extension FaceDetectorYNAsync on FaceDetectorYN {
   Future<Mat> detectAsync(Mat image) async {
-    final p = calloc<cvg.Mat>();
+    final ret = Mat.empty();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, p, callback),
+      (callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, ret.ptr, callback),
       (c) {
-        return c.complete(Mat.fromPointer(p));
+        return c.complete(ret);
       },
     );
   }
@@ -426,21 +414,21 @@ extension FaceDetectorYNAsync on FaceDetectorYN {
 
 extension FaceRecognizerSFAsync on FaceRecognizerSF {
   Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) async {
-    final p = calloc<cvg.Mat>();
+    final ret = Mat.empty();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_FaceRecognizerSF_alignCrop(ref, srcImg.ref, faceBox.ref, p, callback),
+      (callback) => cobjdetect.cv_FaceRecognizerSF_alignCrop(ref, srcImg.ref, faceBox.ref, ret.ptr, callback),
       (c) {
-        return c.complete(Mat.fromPointer(p));
+        return c.complete(ret);
       },
     );
   }
 
   Future<Mat> featureAsync(Mat alignedImg, {bool clone = false}) async {
-    final p = calloc<cvg.Mat>();
+    final ret = Mat.empty();
     return cvRunAsync0(
-      (callback) => cobjdetect.cv_FaceRecognizerSF_feature(ref, alignedImg.ref, clone, p, callback),
+      (callback) => cobjdetect.cv_FaceRecognizerSF_feature(ref, alignedImg.ref, clone, ret.ptr, callback),
       (c) {
-        return c.complete(Mat.fromPointer(p));
+        return c.complete(ret);
       },
     );
   }

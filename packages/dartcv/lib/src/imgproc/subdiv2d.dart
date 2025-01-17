@@ -128,9 +128,9 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
   VecI32 getLeadingEdgeList() {
-    final pv = calloc<cvg.VecI32>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getLeadingEdgeList(ref, pv, ffi.nullptr));
-    return VecI32.fromPointer(pv);
+    final pv = VecI32();
+    cvRun(() => cimgproc.cv_Subdiv2D_getLeadingEdgeList(ref, pv.ptr, ffi.nullptr));
+    return pv;
   }
 
   /// Returns a list of all triangles.
@@ -168,10 +168,10 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
   (VecVecPoint2f facetList, VecPoint2f facetCenters) getVoronoiFacetList(VecI32 idx) {
-    final pf = calloc<cvg.VecVecPoint2f>();
-    final pfc = calloc<cvg.VecPoint2f>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getVoronoiFacetList(ref, idx.ref, pf, pfc, ffi.nullptr));
-    return (VecVecPoint2f.fromPointer(pf), VecPoint2f.fromPointer(pfc));
+    final pf = VecVecPoint2f();
+    final pfc = VecPoint2f();
+    cvRun(() => cimgproc.cv_Subdiv2D_getVoronoiFacetList(ref, idx.ref, pf.ptr, pfc.ptr, ffi.nullptr));
+    return (pf, pfc);
   }
 
   /// Creates a new empty Delaunay subdivision.

@@ -2,8 +2,8 @@
 
 OpenCV bindings for Dart language.
 
-[dartcv4](https://pub.dev/packages/dartcv4) is only for pure dart, for Flutter, use [opencv_core](https://pub.dev/packages/opencv_core),
-if videoio module is required, use [opencv_dart](https://pub.dev/packages/opencv_dart)
+[dartcv4](https://pub.dev/packages/dartcv4) is only for pure dart, for Flutter, use [opencv_core](https://pub.dev/packages/opencv_core) (if `videoio` module is NOT required) or [opencv_dart](https://pub.dev/packages/opencv_dart)
+ (if videoio module IS required).
 
 ## Install
 

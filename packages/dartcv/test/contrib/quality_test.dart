@@ -51,7 +51,6 @@ void main() async {
   });
 
   test("cv.quality.QualityGMSD", () async {
-    // FIXME: wont exit, someting wrong
     {
       final qualifier = cv.QualityGMSD.create(refImg);
       var value = qualifier.compute(target);
@@ -70,7 +69,6 @@ void main() async {
   });
 
   test("cv.quality.QualityMSE", () async {
-    // FIXME: wont exit, someting wrong
     {
       final qualifier = cv.QualityMSE.create(refImg);
       var value = qualifier.compute(target);
@@ -89,7 +87,6 @@ void main() async {
   });
 
   test("cv.quality.QualityPSNR", () async {
-    // FIXME: wont exit, someting wrong
     {
       final qualifier = cv.QualityPSNR.create(refImg);
       var value = qualifier.compute(target);
@@ -111,7 +108,6 @@ void main() async {
   });
 
   test("cv.quality.QualitySSIM", () async {
-    // FIXME: wont exit, someting wrong
     {
       final qualifier = cv.QualitySSIM.create(refImg);
       var value = qualifier.compute(target);

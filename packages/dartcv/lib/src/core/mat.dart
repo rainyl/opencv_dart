@@ -1385,68 +1385,84 @@ typedef InputOutputArray = Mat;
 class VecMat extends Vec<cvg.VecMat, Mat> {
   VecMat.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      Vec.finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
-      Vec.finalizer.attach(this, ptr.ref.ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
     }
   }
+
+  factory VecMat([int length = 0]) => VecMat.fromPointer(ccore.std_VecMat_new(length));
 
   factory VecMat.fromList(List<Mat> mats) => VecMat.generate(mats.length, (i) => mats[i], dispose: false);
 
   factory VecMat.generate(int length, Mat Function(int i) generator, {bool dispose = true}) {
-    final pp = calloc<cvg.VecMat>()..ref.length = length;
-    pp.ref.ptr = calloc<cvg.Mat>(length);
+    final p = ccore.std_VecMat_new(length);
     for (var i = 0; i < length; i++) {
       final v = generator(i);
-      pp.ref.ptr[i] = v.ref;
+      ccore.std_VecMat_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecMat.fromPointer(pp);
+    return VecMat.fromPointer(p);
   }
+
+  static final finalizer = OcvFinalizer<cvg.VecMatPtr>(ccore.addresses.std_VecMat_free);
 
   @override
   VecMat clone() => VecMat.generate(length, (idx) => this[idx], dispose: false);
 
   @override
-  int get length => ref.length;
+  void resize(int newSize) => ccore.std_VecMat_resize(ptr, newSize);
 
   @override
-  Iterator<Mat> get iterator => VecMatIterator(ref);
+  void reserve(int newCapacity) => ccore.std_VecMat_reserve(ptr, newCapacity);
+
+  @override
+  void clear() => ccore.std_VecMat_clear(ptr);
+
+  @override
+  void shrinkToFit() => ccore.std_VecMat_shrink_to_fit(ptr);
+
+  @override
+  void extend(Vec other) => ccore.std_VecMat_extend(ptr, (other as VecMat).ptr);
+
+  @override
+  void add(Mat element) => ccore.std_VecMat_push_back(ptr, element.ref);
+
+  @override
+  int size() => ccore.std_VecMat_length(ptr);
+
+  @override
+  int get length => ccore.std_VecMat_length(ptr);
+
+  @override
+  Iterator<Mat> get iterator => VecMatIterator(ptr);
 
   @override
   cvg.VecMat get ref => ptr.ref;
 
   @override
   void dispose() {
-    Vec.finalizer.detach(this);
-    calloc.free(ptr.ref.ptr);
-    calloc.free(ptr);
+    finalizer.detach(this);
+    ccore.std_VecMat_free(ptr);
   }
 
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  void reattach({ffi.Pointer<cvg.VecMat>? newPtr}) {
-    super.reattach(newPtr: newPtr);
-    Vec.finalizer.attach(this, ref.ptr.cast<ffi.Void>(), detach: this);
-  }
+  void operator []=(int idx, Mat value) => ccore.std_VecMat_set(ptr, idx, value.ref);
 
   @override
-  void operator []=(int idx, Mat value) => throw UnsupportedError("VecMat is read-only");
-
-  @override
-  Mat operator [](int idx) => Mat.fromPointer(ref.ptr + idx, false);
+  Mat operator [](int idx) => Mat.fromPointer(ccore.std_VecMat_get_p(ptr, idx));
 }
 
 class VecMatIterator extends VecIterator<Mat> {
-  VecMatIterator(this.ref);
-  cvg.VecMat ref;
+  VecMatIterator(this.ptr);
+  cvg.VecMatPtr ptr;
 
   @override
-  int get length => ref.length;
+  int get length => ccore.std_VecMat_length(ptr);
 
   @override
-  Mat operator [](int idx) => Mat.fromPointer(ref.ptr + idx, false);
+  Mat operator [](int idx) => Mat.fromPointer(ccore.std_VecMat_get_p(ptr, idx));
 }
 
 extension ListMatExtension on List<Mat> {

@@ -318,6 +318,8 @@ files:
         name: VecPoint
       c:types.h@T@VecPoint2f:
         name: VecPoint2f
+      c:types.h@T@VecVec4i:
+        name: VecVec4i
       c:types.h@T@VecVecPoint:
         name: VecVecPoint
       c:types.h@T@VecVecPoint2f:
