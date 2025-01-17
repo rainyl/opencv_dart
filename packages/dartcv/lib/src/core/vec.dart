@@ -288,7 +288,7 @@ class VecCharIterator extends VecIterator<int> {
   int operator [](int idx) => dataView[idx];
 }
 
-class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
+class VecVecChar extends VecUnmodifible<cvg.VecVecChar, VecChar> {
   VecVecChar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
@@ -337,30 +337,8 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => throw UnsupportedError('Not supported');
 
-  // TODO: add support
-  @override
-  void operator []=(int idx, VecChar value) => ccore.std_VecVecChar_set(ptr, idx, value.ptr);
-
   @override
   VecChar operator [](int idx) => VecChar.fromPointer(ccore.std_VecVecChar_get(ptr, idx), false);
-
-  @override
-  void add(VecChar element) => ccore.std_VecVecChar_push_back(ptr, element.ref);
-
-  @override
-  void clear() => ccore.std_VecVecChar_clear(ptr);
-
-  @override
-  void extend(Vec other) => throw UnsupportedError("Not supported");
-
-  @override
-  void reserve(int newCapacity) => ccore.std_VecVecChar_reserve(ptr, newCapacity);
-
-  @override
-  void resize(int newSize) => ccore.std_VecVecChar_resize(ptr, newSize);
-
-  @override
-  void shrinkToFit() => ccore.std_VecVecChar_shrink_to_fit(ptr);
 
   @override
   int size() => ccore.std_VecVecChar_length(ptr);
@@ -839,6 +817,7 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   }
 
   factory VecF16([int length = 0, double value = 0.0]) => VecF16.generate(length, (i) => value);
+
   // TODO: use setRange if dart ffi supports float16
   factory VecF16.fromList(List<double> pts) => VecF16.generate(pts.length, (i) => pts[i]);
 
