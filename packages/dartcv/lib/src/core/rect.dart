@@ -219,9 +219,6 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
   void add(Rect element) => ccore.std_VecRect_push_back(ptr, element.ref);
 
   @override
-  void pushBack(Rect element) => ccore.std_VecRect_push_back(ptr, element.ref);
-
-  @override
   int size() => ccore.std_VecRect_length(ptr);
 
   @override
@@ -305,9 +302,6 @@ class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
 
   @override
   void add(Rect2f element) => ccore.std_VecRect2f_push_back(ptr, element.ref);
-
-  @override
-  void pushBack(Rect2f element) => ccore.std_VecRect2f_push_back(ptr, element.ref);
 
   @override
   int size() => ccore.std_VecRect2f_length(ptr);

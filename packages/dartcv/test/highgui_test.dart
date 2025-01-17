@@ -1,4 +1,10 @@
 @Tags(['skip-workflow'])
+@OnPlatform({
+  "mac-os": Skip(
+    "NSWindow should only be instantiated on the main thread! https://github.com/dart-lang/sdk/issues/38315",
+  ),
+})
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 

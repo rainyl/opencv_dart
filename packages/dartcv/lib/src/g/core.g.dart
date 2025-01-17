@@ -6686,21 +6686,6 @@ class CvNativeCore {
   late final _std_VecDMatch_clear = _std_VecDMatch_clearPtr
       .asFunction<void Function(ffi.Pointer<VecDMatch>)>();
 
-  ffi.Pointer<VecDMatch> std_VecDMatch_clone(
-    ffi.Pointer<VecDMatch> self,
-  ) {
-    return _std_VecDMatch_clone(
-      self,
-    );
-  }
-
-  late final _std_VecDMatch_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecDMatch> Function(
-              ffi.Pointer<VecDMatch>)>>('std_VecDMatch_clone');
-  late final _std_VecDMatch_clone = _std_VecDMatch_clonePtr
-      .asFunction<ffi.Pointer<VecDMatch> Function(ffi.Pointer<VecDMatch>)>();
-
   ffi.Pointer<DMatch> std_VecDMatch_data(
     ffi.Pointer<VecDMatch> self,
   ) {
@@ -8580,21 +8565,6 @@ class CvNativeCore {
   late final _std_VecKeyPoint_clear = _std_VecKeyPoint_clearPtr
       .asFunction<void Function(ffi.Pointer<VecKeyPoint>)>();
 
-  ffi.Pointer<VecKeyPoint> std_VecKeyPoint_clone(
-    ffi.Pointer<VecKeyPoint> self,
-  ) {
-    return _std_VecKeyPoint_clone(
-      self,
-    );
-  }
-
-  late final _std_VecKeyPoint_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecKeyPoint> Function(
-              ffi.Pointer<VecKeyPoint>)>>('std_VecKeyPoint_clone');
-  late final _std_VecKeyPoint_clone = _std_VecKeyPoint_clonePtr.asFunction<
-      ffi.Pointer<VecKeyPoint> Function(ffi.Pointer<VecKeyPoint>)>();
-
   ffi.Pointer<KeyPoint> std_VecKeyPoint_data(
     ffi.Pointer<VecKeyPoint> self,
   ) {
@@ -8835,21 +8805,6 @@ class CvNativeCore {
   late final _std_VecMat_clear =
       _std_VecMat_clearPtr.asFunction<void Function(ffi.Pointer<VecMat>)>();
 
-  ffi.Pointer<VecMat> std_VecMat_clone(
-    ffi.Pointer<VecMat> self,
-  ) {
-    return _std_VecMat_clone(
-      self,
-    );
-  }
-
-  late final _std_VecMat_clonePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<VecMat> Function(ffi.Pointer<VecMat>)>>(
-      'std_VecMat_clone');
-  late final _std_VecMat_clone = _std_VecMat_clonePtr
-      .asFunction<ffi.Pointer<VecMat> Function(ffi.Pointer<VecMat>)>();
-
   ffi.Pointer<Mat> std_VecMat_data(
     ffi.Pointer<VecMat> self,
   ) {
@@ -9083,21 +9038,6 @@ class CvNativeCore {
           'std_VecPoint2f_clear');
   late final _std_VecPoint2f_clear = _std_VecPoint2f_clearPtr
       .asFunction<void Function(ffi.Pointer<VecPoint2f>)>();
-
-  ffi.Pointer<VecPoint2f> std_VecPoint2f_clone(
-    ffi.Pointer<VecPoint2f> self,
-  ) {
-    return _std_VecPoint2f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecPoint2f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecPoint2f> Function(
-              ffi.Pointer<VecPoint2f>)>>('std_VecPoint2f_clone');
-  late final _std_VecPoint2f_clone = _std_VecPoint2f_clonePtr
-      .asFunction<ffi.Pointer<VecPoint2f> Function(ffi.Pointer<VecPoint2f>)>();
 
   ffi.Pointer<CvPoint2f> std_VecPoint2f_data(
     ffi.Pointer<VecPoint2f> self,
@@ -9339,21 +9279,6 @@ class CvNativeCore {
   late final _std_VecPoint3f_clear = _std_VecPoint3f_clearPtr
       .asFunction<void Function(ffi.Pointer<VecPoint3f>)>();
 
-  ffi.Pointer<VecPoint3f> std_VecPoint3f_clone(
-    ffi.Pointer<VecPoint3f> self,
-  ) {
-    return _std_VecPoint3f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecPoint3f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecPoint3f> Function(
-              ffi.Pointer<VecPoint3f>)>>('std_VecPoint3f_clone');
-  late final _std_VecPoint3f_clone = _std_VecPoint3f_clonePtr
-      .asFunction<ffi.Pointer<VecPoint3f> Function(ffi.Pointer<VecPoint3f>)>();
-
   ffi.Pointer<CvPoint3f> std_VecPoint3f_data(
     ffi.Pointer<VecPoint3f> self,
   ) {
@@ -9593,21 +9518,6 @@ class CvNativeCore {
           'std_VecPoint3i_clear');
   late final _std_VecPoint3i_clear = _std_VecPoint3i_clearPtr
       .asFunction<void Function(ffi.Pointer<VecPoint3i>)>();
-
-  ffi.Pointer<VecPoint3i> std_VecPoint3i_clone(
-    ffi.Pointer<VecPoint3i> self,
-  ) {
-    return _std_VecPoint3i_clone(
-      self,
-    );
-  }
-
-  late final _std_VecPoint3i_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecPoint3i> Function(
-              ffi.Pointer<VecPoint3i>)>>('std_VecPoint3i_clone');
-  late final _std_VecPoint3i_clone = _std_VecPoint3i_clonePtr
-      .asFunction<ffi.Pointer<VecPoint3i> Function(ffi.Pointer<VecPoint3i>)>();
 
   ffi.Pointer<CvPoint3i> std_VecPoint3i_data(
     ffi.Pointer<VecPoint3i> self,
@@ -9849,21 +9759,6 @@ class CvNativeCore {
   late final _std_VecPoint_clear =
       _std_VecPoint_clearPtr.asFunction<void Function(ffi.Pointer<VecPoint>)>();
 
-  ffi.Pointer<VecPoint> std_VecPoint_clone(
-    ffi.Pointer<VecPoint> self,
-  ) {
-    return _std_VecPoint_clone(
-      self,
-    );
-  }
-
-  late final _std_VecPoint_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecPoint> Function(
-              ffi.Pointer<VecPoint>)>>('std_VecPoint_clone');
-  late final _std_VecPoint_clone = _std_VecPoint_clonePtr
-      .asFunction<ffi.Pointer<VecPoint> Function(ffi.Pointer<VecPoint>)>();
-
   ffi.Pointer<CvPoint> std_VecPoint_data(
     ffi.Pointer<VecPoint> self,
   ) {
@@ -10103,21 +9998,6 @@ class CvNativeCore {
           'std_VecRect2f_clear');
   late final _std_VecRect2f_clear = _std_VecRect2f_clearPtr
       .asFunction<void Function(ffi.Pointer<VecRect2f>)>();
-
-  ffi.Pointer<VecRect2f> std_VecRect2f_clone(
-    ffi.Pointer<VecRect2f> self,
-  ) {
-    return _std_VecRect2f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecRect2f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecRect2f> Function(
-              ffi.Pointer<VecRect2f>)>>('std_VecRect2f_clone');
-  late final _std_VecRect2f_clone = _std_VecRect2f_clonePtr
-      .asFunction<ffi.Pointer<VecRect2f> Function(ffi.Pointer<VecRect2f>)>();
 
   ffi.Pointer<CvRect2f> std_VecRect2f_data(
     ffi.Pointer<VecRect2f> self,
@@ -10359,21 +10239,6 @@ class CvNativeCore {
   late final _std_VecRect_clear =
       _std_VecRect_clearPtr.asFunction<void Function(ffi.Pointer<VecRect>)>();
 
-  ffi.Pointer<VecRect> std_VecRect_clone(
-    ffi.Pointer<VecRect> self,
-  ) {
-    return _std_VecRect_clone(
-      self,
-    );
-  }
-
-  late final _std_VecRect_clonePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Pointer<VecRect> Function(ffi.Pointer<VecRect>)>>(
-      'std_VecRect_clone');
-  late final _std_VecRect_clone = _std_VecRect_clonePtr
-      .asFunction<ffi.Pointer<VecRect> Function(ffi.Pointer<VecRect>)>();
-
   ffi.Pointer<CvRect> std_VecRect_data(
     ffi.Pointer<VecRect> self,
   ) {
@@ -10610,22 +10475,6 @@ class CvNativeCore {
       'std_VecRotatedRect_clear');
   late final _std_VecRotatedRect_clear = _std_VecRotatedRect_clearPtr
       .asFunction<void Function(ffi.Pointer<VecRotatedRect>)>();
-
-  ffi.Pointer<VecRotatedRect> std_VecRotatedRect_clone(
-    ffi.Pointer<VecRotatedRect> self,
-  ) {
-    return _std_VecRotatedRect_clone(
-      self,
-    );
-  }
-
-  late final _std_VecRotatedRect_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecRotatedRect> Function(
-              ffi.Pointer<VecRotatedRect>)>>('std_VecRotatedRect_clone');
-  late final _std_VecRotatedRect_clone =
-      _std_VecRotatedRect_clonePtr.asFunction<
-          ffi.Pointer<VecRotatedRect> Function(ffi.Pointer<VecRotatedRect>)>();
 
   ffi.Pointer<RotatedRect> std_VecRotatedRect_data(
     ffi.Pointer<VecRotatedRect> self,
@@ -12052,21 +11901,6 @@ class CvNativeCore {
   late final _std_VecVec4f_clear =
       _std_VecVec4f_clearPtr.asFunction<void Function(ffi.Pointer<VecVec4f>)>();
 
-  ffi.Pointer<VecVec4f> std_VecVec4f_clone(
-    ffi.Pointer<VecVec4f> self,
-  ) {
-    return _std_VecVec4f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVec4f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVec4f> Function(
-              ffi.Pointer<VecVec4f>)>>('std_VecVec4f_clone');
-  late final _std_VecVec4f_clone = _std_VecVec4f_clonePtr
-      .asFunction<ffi.Pointer<VecVec4f> Function(ffi.Pointer<VecVec4f>)>();
-
   ffi.Pointer<Vec4f> std_VecVec4f_data(
     ffi.Pointer<VecVec4f> self,
   ) {
@@ -12304,21 +12138,6 @@ class CvNativeCore {
   late final _std_VecVec4i_clear =
       _std_VecVec4i_clearPtr.asFunction<void Function(ffi.Pointer<VecVec4i>)>();
 
-  ffi.Pointer<VecVec4i> std_VecVec4i_clone(
-    ffi.Pointer<VecVec4i> self,
-  ) {
-    return _std_VecVec4i_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVec4i_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVec4i> Function(
-              ffi.Pointer<VecVec4i>)>>('std_VecVec4i_clone');
-  late final _std_VecVec4i_clone = _std_VecVec4i_clonePtr
-      .asFunction<ffi.Pointer<VecVec4i> Function(ffi.Pointer<VecVec4i>)>();
-
   ffi.Pointer<Vec4i> std_VecVec4i_data(
     ffi.Pointer<VecVec4i> self,
   ) {
@@ -12555,21 +12374,6 @@ class CvNativeCore {
           'std_VecVec6f_clear');
   late final _std_VecVec6f_clear =
       _std_VecVec6f_clearPtr.asFunction<void Function(ffi.Pointer<VecVec6f>)>();
-
-  ffi.Pointer<VecVec6f> std_VecVec6f_clone(
-    ffi.Pointer<VecVec6f> self,
-  ) {
-    return _std_VecVec6f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVec6f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVec6f> Function(
-              ffi.Pointer<VecVec6f>)>>('std_VecVec6f_clone');
-  late final _std_VecVec6f_clone = _std_VecVec6f_clonePtr
-      .asFunction<ffi.Pointer<VecVec6f> Function(ffi.Pointer<VecVec6f>)>();
 
   ffi.Pointer<Vec6f> std_VecVec6f_data(
     ffi.Pointer<VecVec6f> self,
@@ -13045,21 +12849,6 @@ class CvNativeCore {
   late final _std_VecVecDMatch_clear = _std_VecVecDMatch_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecDMatch>)>();
 
-  ffi.Pointer<VecVecDMatch> std_VecVecDMatch_clone(
-    ffi.Pointer<VecVecDMatch> self,
-  ) {
-    return _std_VecVecDMatch_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVecDMatch_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVecDMatch> Function(
-              ffi.Pointer<VecVecDMatch>)>>('std_VecVecDMatch_clone');
-  late final _std_VecVecDMatch_clone = _std_VecVecDMatch_clonePtr.asFunction<
-      ffi.Pointer<VecVecDMatch> Function(ffi.Pointer<VecVecDMatch>)>();
-
   ffi.Pointer<VecDMatch> std_VecVecDMatch_data(
     ffi.Pointer<VecVecDMatch> self,
   ) {
@@ -13123,6 +12912,25 @@ class CvNativeCore {
   late final _std_VecVecDMatch_get = _std_VecVecDMatch_getPtr
       .asFunction<VecDMatch Function(ffi.Pointer<VecVecDMatch>, int)>();
 
+  ffi.Pointer<DMatch> std_VecVecDMatch_get_ij(
+    ffi.Pointer<VecVecDMatch> self,
+    int i,
+    int j,
+  ) {
+    return _std_VecVecDMatch_get_ij(
+      self,
+      i,
+      j,
+    );
+  }
+
+  late final _std_VecVecDMatch_get_ijPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<DMatch> Function(ffi.Pointer<VecVecDMatch>, ffi.Size,
+              ffi.Size)>>('std_VecVecDMatch_get_ij');
+  late final _std_VecVecDMatch_get_ij = _std_VecVecDMatch_get_ijPtr.asFunction<
+      ffi.Pointer<DMatch> Function(ffi.Pointer<VecVecDMatch>, int, int)>();
+
   ffi.Pointer<VecDMatch> std_VecVecDMatch_get_p(
     ffi.Pointer<VecVecDMatch> self,
     int index,
@@ -13153,6 +12961,23 @@ class CvNativeCore {
           'std_VecVecDMatch_length');
   late final _std_VecVecDMatch_length = _std_VecVecDMatch_lengthPtr
       .asFunction<int Function(ffi.Pointer<VecVecDMatch>)>();
+
+  int std_VecVecDMatch_length_i(
+    ffi.Pointer<VecVecDMatch> self,
+    int i,
+  ) {
+    return _std_VecVecDMatch_length_i(
+      self,
+      i,
+    );
+  }
+
+  late final _std_VecVecDMatch_length_iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<VecVecDMatch>,
+              ffi.Size)>>('std_VecVecDMatch_length_i');
+  late final _std_VecVecDMatch_length_i = _std_VecVecDMatch_length_iPtr
+      .asFunction<int Function(ffi.Pointer<VecVecDMatch>, int)>();
 
   ffi.Pointer<VecVecDMatch> std_VecVecDMatch_new(
     int length,
@@ -13301,21 +13126,6 @@ class CvNativeCore {
   late final _std_VecVecPoint2f_clear = _std_VecVecPoint2f_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecPoint2f>)>();
 
-  ffi.Pointer<VecVecPoint2f> std_VecVecPoint2f_clone(
-    ffi.Pointer<VecVecPoint2f> self,
-  ) {
-    return _std_VecVecPoint2f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVecPoint2f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVecPoint2f> Function(
-              ffi.Pointer<VecVecPoint2f>)>>('std_VecVecPoint2f_clone');
-  late final _std_VecVecPoint2f_clone = _std_VecVecPoint2f_clonePtr.asFunction<
-      ffi.Pointer<VecVecPoint2f> Function(ffi.Pointer<VecVecPoint2f>)>();
-
   ffi.Pointer<VecPoint2f> std_VecVecPoint2f_data(
     ffi.Pointer<VecVecPoint2f> self,
   ) {
@@ -13381,6 +13191,27 @@ class CvNativeCore {
   late final _std_VecVecPoint2f_get = _std_VecVecPoint2f_getPtr
       .asFunction<VecPoint2f Function(ffi.Pointer<VecVecPoint2f>, int)>();
 
+  ffi.Pointer<CvPoint2f> std_VecVecPoint2f_get_ij(
+    ffi.Pointer<VecVecPoint2f> self,
+    int i,
+    int j,
+  ) {
+    return _std_VecVecPoint2f_get_ij(
+      self,
+      i,
+      j,
+    );
+  }
+
+  late final _std_VecVecPoint2f_get_ijPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvPoint2f> Function(ffi.Pointer<VecVecPoint2f>, ffi.Size,
+              ffi.Size)>>('std_VecVecPoint2f_get_ij');
+  late final _std_VecVecPoint2f_get_ij =
+      _std_VecVecPoint2f_get_ijPtr.asFunction<
+          ffi.Pointer<CvPoint2f> Function(
+              ffi.Pointer<VecVecPoint2f>, int, int)>();
+
   ffi.Pointer<VecPoint2f> std_VecVecPoint2f_get_p(
     ffi.Pointer<VecVecPoint2f> self,
     int index,
@@ -13411,6 +13242,23 @@ class CvNativeCore {
       'std_VecVecPoint2f_length');
   late final _std_VecVecPoint2f_length = _std_VecVecPoint2f_lengthPtr
       .asFunction<int Function(ffi.Pointer<VecVecPoint2f>)>();
+
+  int std_VecVecPoint2f_length_i(
+    ffi.Pointer<VecVecPoint2f> self,
+    int i,
+  ) {
+    return _std_VecVecPoint2f_length_i(
+      self,
+      i,
+    );
+  }
+
+  late final _std_VecVecPoint2f_length_iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<VecVecPoint2f>,
+              ffi.Size)>>('std_VecVecPoint2f_length_i');
+  late final _std_VecVecPoint2f_length_i = _std_VecVecPoint2f_length_iPtr
+      .asFunction<int Function(ffi.Pointer<VecVecPoint2f>, int)>();
 
   ffi.Pointer<VecVecPoint2f> std_VecVecPoint2f_new(
     int length,
@@ -13559,21 +13407,6 @@ class CvNativeCore {
   late final _std_VecVecPoint3f_clear = _std_VecVecPoint3f_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecPoint3f>)>();
 
-  ffi.Pointer<VecVecPoint3f> std_VecVecPoint3f_clone(
-    ffi.Pointer<VecVecPoint3f> self,
-  ) {
-    return _std_VecVecPoint3f_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVecPoint3f_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVecPoint3f> Function(
-              ffi.Pointer<VecVecPoint3f>)>>('std_VecVecPoint3f_clone');
-  late final _std_VecVecPoint3f_clone = _std_VecVecPoint3f_clonePtr.asFunction<
-      ffi.Pointer<VecVecPoint3f> Function(ffi.Pointer<VecVecPoint3f>)>();
-
   ffi.Pointer<VecPoint3f> std_VecVecPoint3f_data(
     ffi.Pointer<VecVecPoint3f> self,
   ) {
@@ -13639,6 +13472,27 @@ class CvNativeCore {
   late final _std_VecVecPoint3f_get = _std_VecVecPoint3f_getPtr
       .asFunction<VecPoint3f Function(ffi.Pointer<VecVecPoint3f>, int)>();
 
+  ffi.Pointer<CvPoint3f> std_VecVecPoint3f_get_ij(
+    ffi.Pointer<VecVecPoint3f> self,
+    int i,
+    int j,
+  ) {
+    return _std_VecVecPoint3f_get_ij(
+      self,
+      i,
+      j,
+    );
+  }
+
+  late final _std_VecVecPoint3f_get_ijPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvPoint3f> Function(ffi.Pointer<VecVecPoint3f>, ffi.Size,
+              ffi.Size)>>('std_VecVecPoint3f_get_ij');
+  late final _std_VecVecPoint3f_get_ij =
+      _std_VecVecPoint3f_get_ijPtr.asFunction<
+          ffi.Pointer<CvPoint3f> Function(
+              ffi.Pointer<VecVecPoint3f>, int, int)>();
+
   ffi.Pointer<VecPoint3f> std_VecVecPoint3f_get_p(
     ffi.Pointer<VecVecPoint3f> self,
     int index,
@@ -13669,6 +13523,23 @@ class CvNativeCore {
       'std_VecVecPoint3f_length');
   late final _std_VecVecPoint3f_length = _std_VecVecPoint3f_lengthPtr
       .asFunction<int Function(ffi.Pointer<VecVecPoint3f>)>();
+
+  int std_VecVecPoint3f_length_i(
+    ffi.Pointer<VecVecPoint3f> self,
+    int i,
+  ) {
+    return _std_VecVecPoint3f_length_i(
+      self,
+      i,
+    );
+  }
+
+  late final _std_VecVecPoint3f_length_iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<VecVecPoint3f>,
+              ffi.Size)>>('std_VecVecPoint3f_length_i');
+  late final _std_VecVecPoint3f_length_i = _std_VecVecPoint3f_length_iPtr
+      .asFunction<int Function(ffi.Pointer<VecVecPoint3f>, int)>();
 
   ffi.Pointer<VecVecPoint3f> std_VecVecPoint3f_new(
     int length,
@@ -13817,21 +13688,6 @@ class CvNativeCore {
   late final _std_VecVecPoint3i_clear = _std_VecVecPoint3i_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecPoint3i>)>();
 
-  ffi.Pointer<VecVecPoint3i> std_VecVecPoint3i_clone(
-    ffi.Pointer<VecVecPoint3i> self,
-  ) {
-    return _std_VecVecPoint3i_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVecPoint3i_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVecPoint3i> Function(
-              ffi.Pointer<VecVecPoint3i>)>>('std_VecVecPoint3i_clone');
-  late final _std_VecVecPoint3i_clone = _std_VecVecPoint3i_clonePtr.asFunction<
-      ffi.Pointer<VecVecPoint3i> Function(ffi.Pointer<VecVecPoint3i>)>();
-
   ffi.Pointer<VecPoint3i> std_VecVecPoint3i_data(
     ffi.Pointer<VecVecPoint3i> self,
   ) {
@@ -13897,6 +13753,27 @@ class CvNativeCore {
   late final _std_VecVecPoint3i_get = _std_VecVecPoint3i_getPtr
       .asFunction<VecPoint3i Function(ffi.Pointer<VecVecPoint3i>, int)>();
 
+  ffi.Pointer<CvPoint3i> std_VecVecPoint3i_get_ij(
+    ffi.Pointer<VecVecPoint3i> self,
+    int i,
+    int j,
+  ) {
+    return _std_VecVecPoint3i_get_ij(
+      self,
+      i,
+      j,
+    );
+  }
+
+  late final _std_VecVecPoint3i_get_ijPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvPoint3i> Function(ffi.Pointer<VecVecPoint3i>, ffi.Size,
+              ffi.Size)>>('std_VecVecPoint3i_get_ij');
+  late final _std_VecVecPoint3i_get_ij =
+      _std_VecVecPoint3i_get_ijPtr.asFunction<
+          ffi.Pointer<CvPoint3i> Function(
+              ffi.Pointer<VecVecPoint3i>, int, int)>();
+
   ffi.Pointer<VecPoint3i> std_VecVecPoint3i_get_p(
     ffi.Pointer<VecVecPoint3i> self,
     int index,
@@ -13927,6 +13804,23 @@ class CvNativeCore {
       'std_VecVecPoint3i_length');
   late final _std_VecVecPoint3i_length = _std_VecVecPoint3i_lengthPtr
       .asFunction<int Function(ffi.Pointer<VecVecPoint3i>)>();
+
+  int std_VecVecPoint3i_length_i(
+    ffi.Pointer<VecVecPoint3i> self,
+    int i,
+  ) {
+    return _std_VecVecPoint3i_length_i(
+      self,
+      i,
+    );
+  }
+
+  late final _std_VecVecPoint3i_length_iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<VecVecPoint3i>,
+              ffi.Size)>>('std_VecVecPoint3i_length_i');
+  late final _std_VecVecPoint3i_length_i = _std_VecVecPoint3i_length_iPtr
+      .asFunction<int Function(ffi.Pointer<VecVecPoint3i>, int)>();
 
   ffi.Pointer<VecVecPoint3i> std_VecVecPoint3i_new(
     int length,
@@ -14075,21 +13969,6 @@ class CvNativeCore {
   late final _std_VecVecPoint_clear = _std_VecVecPoint_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecPoint>)>();
 
-  ffi.Pointer<VecVecPoint> std_VecVecPoint_clone(
-    ffi.Pointer<VecVecPoint> self,
-  ) {
-    return _std_VecVecPoint_clone(
-      self,
-    );
-  }
-
-  late final _std_VecVecPoint_clonePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<VecVecPoint> Function(
-              ffi.Pointer<VecVecPoint>)>>('std_VecVecPoint_clone');
-  late final _std_VecVecPoint_clone = _std_VecVecPoint_clonePtr.asFunction<
-      ffi.Pointer<VecVecPoint> Function(ffi.Pointer<VecVecPoint>)>();
-
   ffi.Pointer<VecPoint> std_VecVecPoint_data(
     ffi.Pointer<VecVecPoint> self,
   ) {
@@ -14153,6 +14032,25 @@ class CvNativeCore {
   late final _std_VecVecPoint_get = _std_VecVecPoint_getPtr
       .asFunction<VecPoint Function(ffi.Pointer<VecVecPoint>, int)>();
 
+  ffi.Pointer<CvPoint> std_VecVecPoint_get_ij(
+    ffi.Pointer<VecVecPoint> self,
+    int i,
+    int j,
+  ) {
+    return _std_VecVecPoint_get_ij(
+      self,
+      i,
+      j,
+    );
+  }
+
+  late final _std_VecVecPoint_get_ijPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvPoint> Function(ffi.Pointer<VecVecPoint>, ffi.Size,
+              ffi.Size)>>('std_VecVecPoint_get_ij');
+  late final _std_VecVecPoint_get_ij = _std_VecVecPoint_get_ijPtr.asFunction<
+      ffi.Pointer<CvPoint> Function(ffi.Pointer<VecVecPoint>, int, int)>();
+
   ffi.Pointer<VecPoint> std_VecVecPoint_get_p(
     ffi.Pointer<VecVecPoint> self,
     int index,
@@ -14183,6 +14081,23 @@ class CvNativeCore {
           'std_VecVecPoint_length');
   late final _std_VecVecPoint_length = _std_VecVecPoint_lengthPtr
       .asFunction<int Function(ffi.Pointer<VecVecPoint>)>();
+
+  int std_VecVecPoint_length_i(
+    ffi.Pointer<VecVecPoint> self,
+    int i,
+  ) {
+    return _std_VecVecPoint_length_i(
+      self,
+      i,
+    );
+  }
+
+  late final _std_VecVecPoint_length_iPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(
+              ffi.Pointer<VecVecPoint>, ffi.Size)>>('std_VecVecPoint_length_i');
+  late final _std_VecVecPoint_length_i = _std_VecVecPoint_length_iPtr
+      .asFunction<int Function(ffi.Pointer<VecVecPoint>, int)>();
 
   ffi.Pointer<VecVecPoint> std_VecVecPoint_new(
     int length,

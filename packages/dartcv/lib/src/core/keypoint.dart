@@ -130,9 +130,6 @@ class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
   void add(KeyPoint element) => ccore.std_VecKeyPoint_push_back(ptr, element.ref);
 
   @override
-  void pushBack(KeyPoint element) => ccore.std_VecKeyPoint_push_back(ptr, element.ref);
-
-  @override
   int size() => ccore.std_VecKeyPoint_length(ptr);
 
   @override

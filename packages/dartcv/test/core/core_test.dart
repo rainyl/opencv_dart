@@ -616,7 +616,7 @@ void main() async {
       cv.MatType.CV_32S,
       cv.MatType.CV_32F,
       cv.MatType.CV_64F,
-      cv.MatType.CV_16F, // TODO: Not supported by official opencv, replace if they support it
+      cv.MatType.CV_16F,
     ];
     for (final int channel in [1, 2, 3, 4]) {
       for (final depth in depthSrc) {

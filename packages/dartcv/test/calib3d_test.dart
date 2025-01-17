@@ -233,11 +233,10 @@ void main() async {
 
   test(
     'cv.findChessboardCornersSB',
-    onPlatform: {
-      "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
-    },
+    // onPlatform: {
+    //   "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
+    // },
     () async {
-      // FIXME
       final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
       expect(img.isEmpty, false);
 
@@ -264,11 +263,10 @@ void main() async {
 
   test(
     'cv.findChessboardCornersSBWithMeta',
-    onPlatform: {
-      "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
-    },
+    // onPlatform: {
+    //   "mac-os": const Skip("https://github.com/opencv/opencv/issues/20202"),
+    // },
     () async {
-      // FIXME
       final img = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_COLOR);
       expect(img.isEmpty, false);
 

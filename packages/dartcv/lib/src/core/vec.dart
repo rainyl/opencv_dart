@@ -30,7 +30,6 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
   Vec clone();
   int size();
   void add(T element);
-  void pushBack(T element);
   void resize(int newSize);
   void reserve(int newCapacity);
   void clear();
@@ -72,6 +71,26 @@ abstract class VecIterator<T> implements Iterator<T> {
     }
     return false;
   }
+}
+
+abstract class VecUnmodifible<N extends ffi.Struct, T> extends Vec<N, T> {
+  VecUnmodifible.fromPointer(super.ptr) : super.fromPointer();
+
+  @override
+  void operator []=(int idx, T value) => throw UnsupportedError("Unmodifiable Vec");
+
+  @override
+  void add(T element) => throw UnsupportedError("Unmodifiable Vec");
+  @override
+  void resize(int newSize) => throw UnsupportedError("Unmodifiable Vec");
+  @override
+  void reserve(int newCapacity) => throw UnsupportedError("Unmodifiable Vec");
+  @override
+  void clear() => throw UnsupportedError("Unmodifiable Vec");
+  @override
+  void shrinkToFit() => throw UnsupportedError("Unmodifiable Vec");
+  @override
+  void extend(Vec other) => throw UnsupportedError("Unmodifiable Vec");
 }
 
 class VecUChar extends Vec<cvg.VecUChar, int> {
@@ -150,9 +169,6 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
 
   @override
   void extend(Vec other) => ccore.std_VecUChar_extend(ptr, (other as VecUChar).ptr);
-
-  @override
-  void pushBack(int element) => ccore.std_VecUChar_push_back(ptr, element);
 
   @override
   void reserve(int newCapacity) => ccore.std_VecUChar_reserve(ptr, newCapacity);
@@ -249,9 +265,6 @@ class VecChar extends Vec<cvg.VecChar, int> {
   void extend(Vec other) => ccore.std_VecChar_extend(ptr, (other as VecChar).ptr);
 
   @override
-  void pushBack(int element) => ccore.std_VecChar_push_back(ptr, element);
-
-  @override
   void reserve(int newCapacity) => ccore.std_VecChar_reserve(ptr, newCapacity);
 
   @override
@@ -339,9 +352,6 @@ class VecVecChar extends Vec<cvg.VecVecChar, VecChar> {
 
   @override
   void extend(Vec other) => throw UnsupportedError("Not supported");
-
-  @override
-  void pushBack(VecChar element) => ccore.std_VecVecChar_push_back(ptr, element.ref);
 
   @override
   void reserve(int newCapacity) => ccore.std_VecVecChar_reserve(ptr, newCapacity);
@@ -436,9 +446,6 @@ class VecU16 extends Vec<cvg.VecU16, int> {
   void extend(Vec other) => ccore.std_VecU16_extend(ptr, (other as VecU16).ptr);
 
   @override
-  void pushBack(int element) => ccore.std_VecU16_push_back(ptr, element);
-
-  @override
   void reserve(int newCapacity) => ccore.std_VecU16_reserve(ptr, newCapacity);
 
   @override
@@ -527,9 +534,6 @@ class VecI16 extends Vec<cvg.VecI16, int> {
 
   @override
   void extend(Vec other) => ccore.std_VecI16_extend(ptr, (other as VecI16).ptr);
-
-  @override
-  void pushBack(int element) => ccore.std_VecI16_push_back(ptr, element);
 
   @override
   void reserve(int newCapacity) => ccore.std_VecI16_reserve(ptr, newCapacity);
@@ -624,9 +628,6 @@ class VecI32 extends Vec<cvg.VecI32, int> {
   void extend(Vec other) => ccore.std_VecI32_extend(ptr, (other as VecI32).ptr);
 
   @override
-  void pushBack(int element) => ccore.std_VecI32_push_back(ptr, element);
-
-  @override
   void reserve(int newCapacity) => ccore.std_VecI32_reserve(ptr, newCapacity);
 
   @override
@@ -714,9 +715,6 @@ class VecF32 extends Vec<cvg.VecF32, double> {
 
   @override
   void extend(Vec other) => ccore.std_VecF32_extend(ptr, (other as VecF32).ptr);
-
-  @override
-  void pushBack(double element) => ccore.std_VecF32_push_back(ptr, element);
 
   @override
   void reserve(int newCapacity) => ccore.std_VecF32_reserve(ptr, newCapacity);
@@ -810,9 +808,6 @@ class VecF64 extends Vec<cvg.VecF64, double> {
   void extend(Vec other) => ccore.std_VecF64_extend(ptr, (other as VecF64).ptr);
 
   @override
-  void pushBack(double element) => ccore.std_VecF64_push_back(ptr, element);
-
-  @override
   void reserve(int newCapacity) => ccore.std_VecF64_reserve(ptr, newCapacity);
 
   @override
@@ -896,9 +891,6 @@ class VecF16 extends Vec<cvg.VecF16, double> {
 
   @override
   void extend(Vec other) => ccore.std_VecF16_extend(ptr, (other as VecF16).ptr);
-
-  @override
-  void pushBack(double element) => ccore.std_VecF16_push_back(ptr, element.fp16);
 
   @override
   void reserve(int newCapacity) => ccore.std_VecF16_reserve(ptr, newCapacity);

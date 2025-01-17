@@ -1448,9 +1448,6 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
   void add(Vec4i element) => ccore.std_VecVec4i_push_back(ptr, element.ref);
 
   @override
-  void pushBack(Vec4i element) => ccore.std_VecVec4i_push_back(ptr, element.ref);
-
-  @override
   int size() => ccore.std_VecVec4i_length(ptr);
 
   @override
@@ -1534,9 +1531,6 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
   void add(Vec4f element) => ccore.std_VecVec4f_push_back(ptr, element.ref);
 
   @override
-  void pushBack(Vec4f element) => ccore.std_VecVec4f_push_back(ptr, element.ref);
-
-  @override
   int size() => ccore.std_VecVec4f_length(ptr);
 
   @override
@@ -1618,9 +1612,6 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
 
   @override
   void add(Vec6f element) => ccore.std_VecVec6f_push_back(ptr, element.ref);
-
-  @override
-  void pushBack(Vec6f element) => ccore.std_VecVec6f_push_back(ptr, element.ref);
 
   @override
   int size() => ccore.std_VecVec6f_length(ptr);

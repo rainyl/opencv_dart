@@ -1427,9 +1427,6 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
   void add(Mat element) => ccore.std_VecMat_push_back(ptr, element.ref);
 
   @override
-  void pushBack(Mat element) => ccore.std_VecMat_push_back(ptr, element.ref);
-
-  @override
   int size() => ccore.std_VecMat_length(ptr);
 
   @override

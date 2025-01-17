@@ -239,8 +239,10 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
+    final elem = vec[0];
+    expect(elem[0], points[0][0]);
+    elem[0] = cv.Point(-1, -1);
+    expect(elem[0], cv.Point(-1, -1));
 
     vec.dispose();
   });
@@ -257,9 +259,6 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
-
     vec.dispose();
   });
 
@@ -274,9 +273,6 @@ void main() {
     expect(vec.first.length, points.first.length);
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
-
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
 
     vec.dispose();
   });

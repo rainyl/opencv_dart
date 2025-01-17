@@ -662,8 +662,6 @@ files:
         name: std_VecChar_shrink_to_fit
       c:@F@std_VecDMatch_clear:
         name: std_VecDMatch_clear
-      c:@F@std_VecDMatch_clone:
-        name: std_VecDMatch_clone
       c:@F@std_VecDMatch_data:
         name: std_VecDMatch_data
       c:@F@std_VecDMatch_extend:
@@ -904,8 +902,6 @@ files:
         name: std_VecI8_shrink_to_fit
       c:@F@std_VecKeyPoint_clear:
         name: std_VecKeyPoint_clear
-      c:@F@std_VecKeyPoint_clone:
-        name: std_VecKeyPoint_clone
       c:@F@std_VecKeyPoint_data:
         name: std_VecKeyPoint_data
       c:@F@std_VecKeyPoint_extend:
@@ -936,8 +932,6 @@ files:
         name: std_VecKeyPoint_shrink_to_fit
       c:@F@std_VecMat_clear:
         name: std_VecMat_clear
-      c:@F@std_VecMat_clone:
-        name: std_VecMat_clone
       c:@F@std_VecMat_data:
         name: std_VecMat_data
       c:@F@std_VecMat_extend:
@@ -968,8 +962,6 @@ files:
         name: std_VecMat_shrink_to_fit
       c:@F@std_VecPoint2f_clear:
         name: std_VecPoint2f_clear
-      c:@F@std_VecPoint2f_clone:
-        name: std_VecPoint2f_clone
       c:@F@std_VecPoint2f_data:
         name: std_VecPoint2f_data
       c:@F@std_VecPoint2f_extend:
@@ -1000,8 +992,6 @@ files:
         name: std_VecPoint2f_shrink_to_fit
       c:@F@std_VecPoint3f_clear:
         name: std_VecPoint3f_clear
-      c:@F@std_VecPoint3f_clone:
-        name: std_VecPoint3f_clone
       c:@F@std_VecPoint3f_data:
         name: std_VecPoint3f_data
       c:@F@std_VecPoint3f_extend:
@@ -1032,8 +1022,6 @@ files:
         name: std_VecPoint3f_shrink_to_fit
       c:@F@std_VecPoint3i_clear:
         name: std_VecPoint3i_clear
-      c:@F@std_VecPoint3i_clone:
-        name: std_VecPoint3i_clone
       c:@F@std_VecPoint3i_data:
         name: std_VecPoint3i_data
       c:@F@std_VecPoint3i_extend:
@@ -1064,8 +1052,6 @@ files:
         name: std_VecPoint3i_shrink_to_fit
       c:@F@std_VecPoint_clear:
         name: std_VecPoint_clear
-      c:@F@std_VecPoint_clone:
-        name: std_VecPoint_clone
       c:@F@std_VecPoint_data:
         name: std_VecPoint_data
       c:@F@std_VecPoint_extend:
@@ -1096,8 +1082,6 @@ files:
         name: std_VecPoint_shrink_to_fit
       c:@F@std_VecRect2f_clear:
         name: std_VecRect2f_clear
-      c:@F@std_VecRect2f_clone:
-        name: std_VecRect2f_clone
       c:@F@std_VecRect2f_data:
         name: std_VecRect2f_data
       c:@F@std_VecRect2f_extend:
@@ -1128,8 +1112,6 @@ files:
         name: std_VecRect2f_shrink_to_fit
       c:@F@std_VecRect_clear:
         name: std_VecRect_clear
-      c:@F@std_VecRect_clone:
-        name: std_VecRect_clone
       c:@F@std_VecRect_data:
         name: std_VecRect_data
       c:@F@std_VecRect_extend:
@@ -1160,8 +1142,6 @@ files:
         name: std_VecRect_shrink_to_fit
       c:@F@std_VecRotatedRect_clear:
         name: std_VecRotatedRect_clear
-      c:@F@std_VecRotatedRect_clone:
-        name: std_VecRotatedRect_clone
       c:@F@std_VecRotatedRect_data:
         name: std_VecRotatedRect_data
       c:@F@std_VecRotatedRect_extend:
@@ -1342,8 +1322,6 @@ files:
         name: std_VecUChar_shrink_to_fit
       c:@F@std_VecVec4f_clear:
         name: std_VecVec4f_clear
-      c:@F@std_VecVec4f_clone:
-        name: std_VecVec4f_clone
       c:@F@std_VecVec4f_data:
         name: std_VecVec4f_data
       c:@F@std_VecVec4f_extend:
@@ -1374,8 +1352,6 @@ files:
         name: std_VecVec4f_shrink_to_fit
       c:@F@std_VecVec4i_clear:
         name: std_VecVec4i_clear
-      c:@F@std_VecVec4i_clone:
-        name: std_VecVec4i_clone
       c:@F@std_VecVec4i_data:
         name: std_VecVec4i_data
       c:@F@std_VecVec4i_extend:
@@ -1406,8 +1382,6 @@ files:
         name: std_VecVec4i_shrink_to_fit
       c:@F@std_VecVec6f_clear:
         name: std_VecVec6f_clear
-      c:@F@std_VecVec6f_clone:
-        name: std_VecVec6f_clone
       c:@F@std_VecVec6f_data:
         name: std_VecVec6f_data
       c:@F@std_VecVec6f_extend:
@@ -1468,8 +1442,6 @@ files:
         name: std_VecVecChar_shrink_to_fit
       c:@F@std_VecVecDMatch_clear:
         name: std_VecVecDMatch_clear
-      c:@F@std_VecVecDMatch_clone:
-        name: std_VecVecDMatch_clone
       c:@F@std_VecVecDMatch_data:
         name: std_VecVecDMatch_data
       c:@F@std_VecVecDMatch_extend:
@@ -1478,10 +1450,14 @@ files:
         name: std_VecVecDMatch_free
       c:@F@std_VecVecDMatch_get:
         name: std_VecVecDMatch_get
+      c:@F@std_VecVecDMatch_get_ij:
+        name: std_VecVecDMatch_get_ij
       c:@F@std_VecVecDMatch_get_p:
         name: std_VecVecDMatch_get_p
       c:@F@std_VecVecDMatch_length:
         name: std_VecVecDMatch_length
+      c:@F@std_VecVecDMatch_length_i:
+        name: std_VecVecDMatch_length_i
       c:@F@std_VecVecDMatch_new:
         name: std_VecVecDMatch_new
       c:@F@std_VecVecDMatch_new_1:
@@ -1500,8 +1476,6 @@ files:
         name: std_VecVecDMatch_shrink_to_fit
       c:@F@std_VecVecPoint2f_clear:
         name: std_VecVecPoint2f_clear
-      c:@F@std_VecVecPoint2f_clone:
-        name: std_VecVecPoint2f_clone
       c:@F@std_VecVecPoint2f_data:
         name: std_VecVecPoint2f_data
       c:@F@std_VecVecPoint2f_extend:
@@ -1510,10 +1484,14 @@ files:
         name: std_VecVecPoint2f_free
       c:@F@std_VecVecPoint2f_get:
         name: std_VecVecPoint2f_get
+      c:@F@std_VecVecPoint2f_get_ij:
+        name: std_VecVecPoint2f_get_ij
       c:@F@std_VecVecPoint2f_get_p:
         name: std_VecVecPoint2f_get_p
       c:@F@std_VecVecPoint2f_length:
         name: std_VecVecPoint2f_length
+      c:@F@std_VecVecPoint2f_length_i:
+        name: std_VecVecPoint2f_length_i
       c:@F@std_VecVecPoint2f_new:
         name: std_VecVecPoint2f_new
       c:@F@std_VecVecPoint2f_new_1:
@@ -1532,8 +1510,6 @@ files:
         name: std_VecVecPoint2f_shrink_to_fit
       c:@F@std_VecVecPoint3f_clear:
         name: std_VecVecPoint3f_clear
-      c:@F@std_VecVecPoint3f_clone:
-        name: std_VecVecPoint3f_clone
       c:@F@std_VecVecPoint3f_data:
         name: std_VecVecPoint3f_data
       c:@F@std_VecVecPoint3f_extend:
@@ -1542,10 +1518,14 @@ files:
         name: std_VecVecPoint3f_free
       c:@F@std_VecVecPoint3f_get:
         name: std_VecVecPoint3f_get
+      c:@F@std_VecVecPoint3f_get_ij:
+        name: std_VecVecPoint3f_get_ij
       c:@F@std_VecVecPoint3f_get_p:
         name: std_VecVecPoint3f_get_p
       c:@F@std_VecVecPoint3f_length:
         name: std_VecVecPoint3f_length
+      c:@F@std_VecVecPoint3f_length_i:
+        name: std_VecVecPoint3f_length_i
       c:@F@std_VecVecPoint3f_new:
         name: std_VecVecPoint3f_new
       c:@F@std_VecVecPoint3f_new_1:
@@ -1564,8 +1544,6 @@ files:
         name: std_VecVecPoint3f_shrink_to_fit
       c:@F@std_VecVecPoint3i_clear:
         name: std_VecVecPoint3i_clear
-      c:@F@std_VecVecPoint3i_clone:
-        name: std_VecVecPoint3i_clone
       c:@F@std_VecVecPoint3i_data:
         name: std_VecVecPoint3i_data
       c:@F@std_VecVecPoint3i_extend:
@@ -1574,10 +1552,14 @@ files:
         name: std_VecVecPoint3i_free
       c:@F@std_VecVecPoint3i_get:
         name: std_VecVecPoint3i_get
+      c:@F@std_VecVecPoint3i_get_ij:
+        name: std_VecVecPoint3i_get_ij
       c:@F@std_VecVecPoint3i_get_p:
         name: std_VecVecPoint3i_get_p
       c:@F@std_VecVecPoint3i_length:
         name: std_VecVecPoint3i_length
+      c:@F@std_VecVecPoint3i_length_i:
+        name: std_VecVecPoint3i_length_i
       c:@F@std_VecVecPoint3i_new:
         name: std_VecVecPoint3i_new
       c:@F@std_VecVecPoint3i_new_1:
@@ -1596,8 +1578,6 @@ files:
         name: std_VecVecPoint3i_shrink_to_fit
       c:@F@std_VecVecPoint_clear:
         name: std_VecVecPoint_clear
-      c:@F@std_VecVecPoint_clone:
-        name: std_VecVecPoint_clone
       c:@F@std_VecVecPoint_data:
         name: std_VecVecPoint_data
       c:@F@std_VecVecPoint_extend:
@@ -1606,10 +1586,14 @@ files:
         name: std_VecVecPoint_free
       c:@F@std_VecVecPoint_get:
         name: std_VecVecPoint_get
+      c:@F@std_VecVecPoint_get_ij:
+        name: std_VecVecPoint_get_ij
       c:@F@std_VecVecPoint_get_p:
         name: std_VecVecPoint_get_p
       c:@F@std_VecVecPoint_length:
         name: std_VecVecPoint_length
+      c:@F@std_VecVecPoint_length_i:
+        name: std_VecVecPoint_length_i
       c:@F@std_VecVecPoint_new:
         name: std_VecVecPoint_new
       c:@F@std_VecVecPoint_new_1:

@@ -121,10 +121,6 @@ void main() {
     expect(vec.first, points.first);
     expect(vec.last, points.last);
 
-    // TODO: add support
-    // vec[24] = cv.VecChar();
-    // expect(vec[24], );
-
     final vec1 = vec.clone();
     expect(vec1.length, vec.length);
     expect(vec1.first, vecElementEquals(vec.first));
@@ -297,9 +293,6 @@ void main() {
     expect(vec.length, points.length);
     expect(vec.first, points.first);
     expect(vec.last, points.last);
-
-    // TODO: add support
-    // vec[1] = cv.VecDMatch();
 
     final vec1 = vec.clone();
     expect(vec1.length, vec.length);
