@@ -1,3 +1,11 @@
+## 1.1.0
+
+* update to OpenCV 4.11.0
+* change vector wrappers to std::vector
+* fix reference of estimateAffinePartial2D
+* support `VideoWriter.get()` and `VideoWriter.set()`
+* use native implementation of 8U/8S -> F16 for `cv.LUT()`
+
 ## 1.0.1
 
 * add example
