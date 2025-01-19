@@ -79,12 +79,6 @@ Mat convertPointsFromHomogeneous(InputArray src, {OutputArray? dst}) {
   return dst;
 }
 
-Mat convertPointsHomogeneous(InputArray src, {OutputArray? dst}) {
-  dst ??= Mat.empty();
-  cvRun(() => ccalib3d.cv_convertPointsHomogeneous(src.ref, dst!.ref, ffi.nullptr));
-  return dst;
-}
-
 // void cv::convertPointsToHomogeneous (InputArray src, OutputArray dst);
 Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
@@ -573,7 +567,7 @@ bool find4QuadCornerSubpix(
 }
 
 // Mat cv::findEssentialMat (InputArray points1, InputArray points2, double focal=1.0, Point2d pp=Point2d(0, 0), int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
-(Mat rval, Mat mask) findEssentialMat(
+Mat findEssentialMat(
   InputArray points1,
   InputArray points2, {
   double focal = 1.0,
@@ -602,7 +596,7 @@ bool find4QuadCornerSubpix(
       ffi.nullptr,
     ),
   );
-  return (Mat.fromPointer(prval), mask);
+  return Mat.fromPointer(prval);
 }
 
 // Mat cv::findEssentialMat (InputArray points1, InputArray points2, InputArray cameraMatrix, int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
@@ -664,7 +658,7 @@ Mat findFundamentalMat(
 }
 
 // Mat cv::findFundamentalMat (InputArray points1, InputArray points2, OutputArray mask, const UsacParams &params)
-Mat findFundamentalMatByUsacParams(
+Mat findFundamentalMatUsac(
   InputArray points1,
   InputArray points2,
   UsacParams params, {
@@ -1599,24 +1593,25 @@ Mat undistortPoints(
 /// stereo correspondence algorithm
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga214b498b8d01d0417e0d08be64c54eb5
-void validateDisparity(
-  InputOutputArray disparity,
-  InputArray cost,
-  int minDisparity,
-  int numberOfDisparities, {
-  int disp12MaxDisp = 1,
-}) {
-  return cvRun(
-    () => ccalib3d.cv_validateDisparity(
-      disparity.ref,
-      cost.ref,
-      minDisparity,
-      numberOfDisparities,
-      disp12MaxDisp,
-      ffi.nullptr,
-    ),
-  );
-}
+/// TODO: add Stereo mathcers
+// void validateDisparity(
+//   InputOutputArray disparity,
+//   InputArray cost,
+//   int minDisparity,
+//   int numberOfDisparities, {
+//   int disp12MaxDisp = 1,
+// }) {
+//   return cvRun(
+//     () => ccalib3d.cv_validateDisparity(
+//       disparity.ref,
+//       cost.ref,
+//       minDisparity,
+//       numberOfDisparities,
+//       disp12MaxDisp,
+//       ffi.nullptr,
+//     ),
+//   );
+// }
 
 // constants
 const int PROJ_SPHERICAL_ORTHO = 0;
