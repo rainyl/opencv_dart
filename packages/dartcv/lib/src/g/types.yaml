@@ -26,6 +26,8 @@ files:
         name: CvCallback_9Function
       c:@S@CvPoint:
         name: CvPoint
+      c:@S@CvPoint2d:
+        name: CvPoint2d
       c:@S@CvPoint2f:
         name: CvPoint2f
       c:@S@CvPoint3f:
@@ -62,6 +64,8 @@ files:
         name: Scalar
       c:@S@TermCriteria:
         name: TermCriteria
+      c:@S@UsacParams:
+        name: UsacParams
       c:@S@Vec2b:
         name: Vec2b
       c:@S@Vec2d:
@@ -208,6 +212,12 @@ files:
         name: CvCallback_9
       c:types.h@T@InputOutputArrayPtr:
         name: InputOutputArrayPtr
+      c:types.h@T@MatIn:
+        name: MatIn
+      c:types.h@T@MatInOut:
+        name: MatInOut
+      c:types.h@T@MatOut:
+        name: MatOut
       c:types.h@T@MatPtr:
         name: MatPtr
       c:types.h@T@RNGPtr:

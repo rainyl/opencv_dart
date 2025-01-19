@@ -493,6 +493,22 @@ class CvNativeVideoIO {
   late final _cv_VideoWriter_fourcc =
       _cv_VideoWriter_fourccPtr.asFunction<int Function(int, int, int, int)>();
 
+  double cv_VideoWriter_get(
+    VideoWriter self,
+    int propId,
+  ) {
+    return _cv_VideoWriter_get(
+      self,
+      propId,
+    );
+  }
+
+  late final _cv_VideoWriter_getPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(VideoWriter, ffi.Int)>>(
+          'cv_VideoWriter_get');
+  late final _cv_VideoWriter_get =
+      _cv_VideoWriter_getPtr.asFunction<double Function(VideoWriter, int)>();
+
   ffi.Pointer<ffi.Char> cv_VideoWriter_getBackendName(
     VideoWriter self,
   ) {
@@ -626,6 +642,25 @@ class CvNativeVideoIO {
           'cv_VideoWriter_release');
   late final _cv_VideoWriter_release = _cv_VideoWriter_releasePtr
       .asFunction<ffi.Pointer<CvStatus> Function(VideoWriter)>();
+
+  void cv_VideoWriter_set(
+    VideoWriter self,
+    int propId,
+    double val,
+  ) {
+    return _cv_VideoWriter_set(
+      self,
+      propId,
+      val,
+    );
+  }
+
+  late final _cv_VideoWriter_setPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(VideoWriter, ffi.Int, ffi.Double)>>(
+      'cv_VideoWriter_set');
+  late final _cv_VideoWriter_set = _cv_VideoWriter_setPtr
+      .asFunction<void Function(VideoWriter, int, double)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_write(
     VideoWriter self,

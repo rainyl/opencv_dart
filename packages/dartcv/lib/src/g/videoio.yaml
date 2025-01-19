@@ -46,6 +46,8 @@ files:
         name: cv_VideoWriter_create_2
       c:@F@cv_VideoWriter_fourcc:
         name: cv_VideoWriter_fourcc
+      c:@F@cv_VideoWriter_get:
+        name: cv_VideoWriter_get
       c:@F@cv_VideoWriter_getBackendName:
         name: cv_VideoWriter_getBackendName
       c:@F@cv_VideoWriter_isOpened:
@@ -56,6 +58,8 @@ files:
         name: cv_VideoWriter_open_1
       c:@F@cv_VideoWriter_release:
         name: cv_VideoWriter_release
+      c:@F@cv_VideoWriter_set:
+        name: cv_VideoWriter_set
       c:@F@cv_VideoWriter_write:
         name: cv_VideoWriter_write
       c:@S@VideoCapture:

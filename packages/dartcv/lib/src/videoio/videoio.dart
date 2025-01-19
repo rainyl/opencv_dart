@@ -250,6 +250,17 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     return cvideoio.cv_VideoWriter_fourcc(cc_[0], cc_[1], cc_[2], cc_[3]);
   }
 
+  /// Returns the specified VideoWriter property.
+  ///
+  /// [propId] Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY) or one of Additional flags for video I/O API backends
+  ///
+  /// Returns
+  /// Value for the specified property. Value 0 is returned when querying a property that is not supported by the backend used by the VideoWriter instance.
+  double get(int propId) => cvideoio.cv_VideoWriter_get(ref, propId);
+
+  /// Sets a property in the VideoWriter.
+  void set(int propId, double value) => cvideoio.cv_VideoWriter_set(ref, propId, value);
+
   void release() {
     cvRun(() => cvideoio.cv_VideoWriter_release(ref));
   }
@@ -265,3 +276,43 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
 
   bool get isOpened => cvideoio.cv_VideoWriter_isOpened(ref);
 }
+
+// constants
+/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
+const int VIDEOWRITER_PROP_QUALITY = 1;
+
+/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
+const int VIDEOWRITER_PROP_FRAMEBYTES = 2;
+
+/// Number of stripes for parallel encoding. -1 for auto detection.
+const int VIDEOWRITER_PROP_NSTRIPES = 3;
+
+/// If it is not zero, the encoder will expect and encode color frames, otherwise it will work with grayscale frames.
+const int VIDEOWRITER_PROP_IS_COLOR = 4;
+
+/// Defaults to CV_8U.
+const int VIDEOWRITER_PROP_DEPTH = 5;
+
+/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
+const int VIDEOWRITER_PROP_HW_ACCELERATION = 6;
+
+/// (**open-only**) Hardware device index (select GPU if multiple available). Device enumeration is acceleration type specific.
+const int VIDEOWRITER_PROP_HW_DEVICE = 7;
+
+/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between cv::UMat and HW accelerated encoder.
+const int VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL = 8;
+
+/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the VIDEOWRITER_PROP_KEY_FLAG with VideoWriter::set() before writing each frame. FFMpeg backend only.
+const int VIDEOWRITER_PROP_RAW_VIDEO = 9;
+
+/// (**open-only**) Set the key frame interval using raw video encapsulation (VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFmpeg back-end only.
+const int VIDEOWRITER_PROP_KEY_INTERVAL = 10;
+
+/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (VIDEOWRITER_PROP_RAW_VIDEO != 0). FFmpeg back-end only.
+const int VIDEOWRITER_PROP_KEY_FLAG = 11;
+
+/// Specifies the frame presentation timestamp for each frame using the FPS time base. This property is **only** necessary when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be provided by your external encoder and for video sources with fixed frame rates it is equivalent to dividing the current frame's presentation time (CAP_PROP_POS_MSEC) by the frame duration (1000.0 / VideoCapture::get(CAP_PROP_FPS)). It can be queried from the resulting encapsulated video file using VideoCapture::get(CAP_PROP_PTS). FFmpeg back-end only.
+const int VIDEOWRITER_PROP_PTS = 12;
+
+/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
+const int VIDEOWRITER_PROP_DTS_DELAY = 13;

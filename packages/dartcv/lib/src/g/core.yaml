@@ -1442,6 +1442,8 @@ files:
         name: std_VecVecChar_shrink_to_fit
       c:@F@std_VecVecDMatch_clear:
         name: std_VecVecDMatch_clear
+      c:@F@std_VecVecDMatch_clone:
+        name: std_VecVecDMatch_clone
       c:@F@std_VecVecDMatch_data:
         name: std_VecVecDMatch_data
       c:@F@std_VecVecDMatch_extend:

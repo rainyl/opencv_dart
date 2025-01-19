@@ -153,6 +153,14 @@ final class CvPoint extends ffi.Struct {
   external int y;
 }
 
+final class CvPoint2d extends ffi.Struct {
+  @ffi.Double()
+  external double x;
+
+  @ffi.Double()
+  external double y;
+}
+
 final class CvPoint2f extends ffi.Struct {
   @ffi.Float()
   external double x;
@@ -290,6 +298,9 @@ final class Mat extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
+typedef MatIn = Mat;
+typedef MatInOut = Mat;
+typedef MatOut = Mat;
 typedef MatPtr = ffi.Pointer<Mat>;
 
 final class MatStep extends ffi.Struct {
@@ -409,6 +420,47 @@ final class TermCriteria extends ffi.Struct {
 
   @ffi.Double()
   external double epsilon;
+}
+
+final class UsacParams extends ffi.Struct {
+  @ffi.Double()
+  external double confidence;
+
+  @ffi.Bool()
+  external bool isParallel;
+
+  @ffi.Int()
+  external int loIterations;
+
+  @ffi.Int()
+  external int loMethod;
+
+  @ffi.Int()
+  external int loSampleSize;
+
+  @ffi.Int()
+  external int maxIterations;
+
+  @ffi.Int()
+  external int neighborsSearch;
+
+  @ffi.Int()
+  external int randomGeneratorState;
+
+  @ffi.Int()
+  external int sampler;
+
+  @ffi.Int()
+  external int score;
+
+  @ffi.Double()
+  external double threshold;
+
+  @ffi.Int()
+  external int final_polisher;
+
+  @ffi.Int()
+  external int final_polisher_iterations;
 }
 
 final class Vec2b extends ffi.Struct {
