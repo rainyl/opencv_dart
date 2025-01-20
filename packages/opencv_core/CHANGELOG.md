@@ -7,6 +7,8 @@
 * use native implementation of 8U/8S -> F16 for `cv.LUT()`
 * make `VecVecChar` unmodifible
 * more tests
+* add more functions in `calib3d`
+* make the version of `dartcv4` fixed
 
 ## 1.3.3
 
