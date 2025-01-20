@@ -1,3 +1,7 @@
+## 1.1.2
+
+* add more functions in `calib3d`
+
 ## 1.1.1
 
 * make `VecVecChar` unmodifible

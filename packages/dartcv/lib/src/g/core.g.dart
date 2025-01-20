@@ -12849,6 +12849,21 @@ class CvNativeCore {
   late final _std_VecVecDMatch_clear = _std_VecVecDMatch_clearPtr
       .asFunction<void Function(ffi.Pointer<VecVecDMatch>)>();
 
+  ffi.Pointer<VecVecDMatch> std_VecVecDMatch_clone(
+    ffi.Pointer<VecVecDMatch> self,
+  ) {
+    return _std_VecVecDMatch_clone(
+      self,
+    );
+  }
+
+  late final _std_VecVecDMatch_clonePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<VecVecDMatch> Function(
+              ffi.Pointer<VecVecDMatch>)>>('std_VecVecDMatch_clone');
+  late final _std_VecVecDMatch_clone = _std_VecVecDMatch_clonePtr.asFunction<
+      ffi.Pointer<VecVecDMatch> Function(ffi.Pointer<VecVecDMatch>)>();
+
   ffi.Pointer<VecDMatch> std_VecVecDMatch_data(
     ffi.Pointer<VecVecDMatch> self,
   ) {

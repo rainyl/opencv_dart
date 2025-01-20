@@ -82,6 +82,41 @@ class Point2f extends CvStruct<cvg.CvPoint2f> {
   List<double> get props => [x, y];
 }
 
+class Point2d extends CvStruct<cvg.CvPoint2d> {
+  Point2d.fromPointer(ffi.Pointer<cvg.CvPoint2d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
+    if (attach) {
+      finalizer.attach(this, ptr.cast(), detach: this);
+    }
+  }
+  factory Point2d(double x, double y) {
+    final ptr = calloc<cvg.CvPoint2d>()
+      ..ref.x = x
+      ..ref.y = y;
+    return Point2d.fromPointer(ptr);
+  }
+  factory Point2d.fromNative(cvg.CvPoint2d p) => Point2d(p.x, p.y);
+
+  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  void dispose() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
+  double get x => ptr.ref.x;
+  set x(double value) => ref.x = value;
+
+  double get y => ptr.ref.y;
+  set y(double value) => ref.y = value;
+
+  @override
+  cvg.CvPoint2d get ref => ptr.ref;
+  @override
+  String toString() => 'Point2d(${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)})';
+  @override
+  List<double> get props => [x, y];
+}
+
 class Point3f extends CvStruct<cvg.CvPoint3f> {
   Point3f.fromPointer(ffi.Pointer<cvg.CvPoint3f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
