@@ -835,7 +835,7 @@ void main() async {
     }
   });
 
-  test('cv.recoverPose', () {
+  test('cv.recoverPoseCameraMatrix', () {
     final essential = cv.Mat.from2DList(
       [
         [1.503247056657373e-16, -7.074103796034695e-16, -7.781514175638166e-16],
@@ -882,10 +882,70 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
 
-    final (rval, r, t, _) = cv.recoverPoseWithCameraMatrix(essential, p1, p2, k);
+    final (rval, r, t, _) = cv.recoverPoseCameraMatrix(essential, p1, p2, k);
     expect(rval, 0);
     expect(r.isEmpty, false);
     expect(t.isEmpty, false);
+  });
+
+  test('cv.recoverPose', () {
+    final points1 = cv.Mat.from2DList(
+      [
+        <double>[150, 200],
+        <double>[130, 210],
+        <double>[120, 230],
+        <double>[110, 250],
+        <double>[200, 100],
+        <double>[210, 120],
+        <double>[230, 140],
+        <double>[250, 160],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+
+    final points2 = cv.Mat.from2DList(
+      [
+        <double>[152, 202],
+        <double>[132, 212],
+        <double>[122, 232],
+        <double>[112, 252],
+        <double>[202, 102],
+        <double>[212, 122],
+        <double>[232, 142],
+        <double>[252, 162],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+
+    final K = cv.Mat.from2DList(
+      [
+        <double>[1000, 0, 320],
+        <double>[0, 1000, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+
+    final E = cv.findEssentialMatCameraMatrix(points1, points2, K, method: cv.FM_RANSAC);
+    final (rval, r, t) = cv.recoverPose(E, points1, points2);
+    expect(rval, 4);
+    expect(r.isEmpty, false);
+    expect(t.isEmpty, false);
+  });
+
+  test('cv.RQDecomp3x3', () {
+    final K = cv.Mat.from2DList(
+      [
+        <double>[1000, 0, 320],
+        <double>[0, 1000, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final (rval, R, Q) = cv.RQDecomp3x3(K);
+    expect(rval, cv.Vec3d(0, 0, 0));
+    expect(R.isEmpty, false);
+    expect(Q.isEmpty, false);
   });
 
   test('cv.Rodrigues', () {
@@ -911,6 +971,70 @@ void main() async {
     expect(jacobian.isEmpty, false);
     expect(jacobian.rows, 9);
     expect(jacobian.cols, 3);
+  });
+
+  test('cv.sampsonDistance', () {
+    final points1 = cv.Mat.from2DList(
+      [
+        <double>[150, 200, 1],
+        <double>[130, 210, 1],
+        <double>[120, 230, 1],
+        <double>[110, 250, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final points2 = cv.Mat.from2DList(
+      [
+        <double>[152, 202, 1],
+        <double>[132, 212, 1],
+        <double>[122, 232, 1],
+        <double>[112, 252, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final F = cv.Mat.from2DList(
+      [
+        <double>[1.292e-6, 3.303e-5, -0.004],
+        <double>[-3.299e-5, 1.120e-6, 0.017],
+        <double>[0.004, -0.017, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final sampsonDistances = cv.sampsonDistance(points1, points2, F);
+    expect(sampsonDistances, closeTo(4034.6767, 1e-3));
+  });
+
+  test('cv.solveP3P', () {
+    final objectPoints = cv.Mat.from2DList(
+      [
+        <double>[0, 0, 0],
+        <double>[1, 0, 0],
+        <double>[0, 1, 0],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final imagePoints = cv.Mat.from2DList(
+      [
+        <double>[320, 240],
+        <double>[400, 240],
+        <double>[320, 320],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final cameraMatrix = cv.Mat.from2DList(
+      [
+        <double>[800, 0, 320],
+        <double>[0, 800, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final distCoeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
+    final (ret, rvecs, tvecs) =
+        cv.solveP3P(objectPoints, imagePoints, cameraMatrix, distCoeffs, cv.SOLVEPNP_P3P);
+    expect(ret, 2);
+    expect(rvecs.isEmpty, false);
+    expect(tvecs.isEmpty, false);
   });
 
   test('cv.solvePnP', () async {
@@ -944,6 +1068,45 @@ void main() async {
     expect(rval, true);
     expect(rv.isEmpty, false);
     expect(tv.isEmpty, false);
+  });
+
+  test('cv.solvePnPGeneric', () {
+    final objectPoints = cv.Mat.from2DList(
+      [
+        <double>[0, 0, 0],
+        <double>[1, 0, 0],
+        <double>[0, 1, 0],
+        <double>[1, 1, 0],
+        <double>[0.5, 0.5, 1],
+        <double>[0, 0.5, 1]
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final imagePoints = cv.Mat.from2DList(
+      [
+        <double>[320, 240],
+        <double>[400, 240],
+        <double>[320, 320],
+        <double>[400, 320],
+        <double>[360, 270],
+        <double>[300, 250]
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final cameraMatrix = cv.Mat.from2DList(
+      [
+        <double>[800, 0, 320],
+        <double>[0, 800, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final distCoeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
+    final (ret, rvecs, tvecs, err) = cv.solvePnPGeneric(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+    expect(ret, 1);
+    expect(rvecs.length, 1);
+    expect(tvecs.length, 1);
+    expect(err.isEmpty, false);
   });
 
   test('cv.triangulatePoints', () {

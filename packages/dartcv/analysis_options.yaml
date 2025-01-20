@@ -36,6 +36,7 @@ analyzer:
     constant_identifier_names: ignore
     missing_required_param: error
     missing_return: error
+    non_constant_identifier_names: ignore
     parameter_assignments: error
 linter:
   rules:

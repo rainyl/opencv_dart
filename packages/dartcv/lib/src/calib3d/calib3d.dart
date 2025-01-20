@@ -902,7 +902,7 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
 }
 
 // int cv::recoverPose (InputArray E, InputArray points1, InputArray points2, InputArray cameraMatrix, OutputArray R, OutputArray t, double distanceThresh, InputOutputArray mask=noArray(), OutputArray triangulatedPoints=noArray())
-(int rval, Mat R, Mat t, Mat triangulatedPoints) recoverPoseWithCameraMatrix(
+(int rval, Mat R, Mat t, Mat triangulatedPoints) recoverPoseCameraMatrix(
   InputArray E,
   InputArray points1,
   InputArray points2,
@@ -974,26 +974,27 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
 }
 
 // void cv::reprojectImageTo3D (InputArray disparity, OutputArray _3dImage, InputArray Q, bool handleMissingValues=false, int ddepth=-1)
-Mat reprojectImageTo3D(
-  InputArray disparity,
-  InputArray Q, {
-  OutputArray? out3dImage,
-  bool handleMissingValues = false,
-  int ddepth = -1,
-}) {
-  out3dImage ??= Mat.empty();
-  cvRun(
-    () => ccalib3d.cv_reprojectImageTo3D(
-      disparity.ref,
-      out3dImage!.ref,
-      Q.ref,
-      handleMissingValues,
-      ddepth,
-      ffi.nullptr,
-    ),
-  );
-  return out3dImage;
-}
+// TODO: add Stereo
+// Mat reprojectImageTo3D(
+//   InputArray disparity,
+//   InputArray Q, {
+//   OutputArray? out3dImage,
+//   bool handleMissingValues = false,
+//   int ddepth = -1,
+// }) {
+//   out3dImage ??= Mat.empty();
+//   cvRun(
+//     () => ccalib3d.cv_reprojectImageTo3D(
+//       disparity.ref,
+//       out3dImage!.ref,
+//       Q.ref,
+//       handleMissingValues,
+//       ddepth,
+//       ffi.nullptr,
+//     ),
+//   );
+//   return out3dImage;
+// }
 
 // void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
 Mat Rodrigues(
@@ -1118,7 +1119,7 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
 /// Finds an object pose from 3D-2D point correspondences.
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga624af8a6641b9bdb487f63f694e8bb90
-(int rval, VecMat rvecs, VecMat tvecs, Mat rvec, Mat tvec, Mat reprojectionError) solvePnPGeneric(
+(int rval, VecMat rvecs, VecMat tvecs, Mat reprojectionError) solvePnPGeneric(
   InputArray objectPoints,
   InputArray imagePoints,
   InputArray cameraMatrix,
@@ -1156,7 +1157,7 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   );
   final rval = prval.value;
   calloc.free(prval);
-  return (rval, rvecs, tvecs, rvec, tvec, reprojectionError);
+  return (rval, rvecs, tvecs, reprojectionError);
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -1593,7 +1594,7 @@ Mat undistortPoints(
 /// stereo correspondence algorithm
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga214b498b8d01d0417e0d08be64c54eb5
-/// TODO: add Stereo mathcers
+/// TODO: add Stereo matchers
 // void validateDisparity(
 //   InputOutputArray disparity,
 //   InputArray cost,
