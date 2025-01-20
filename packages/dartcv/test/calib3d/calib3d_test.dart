@@ -87,7 +87,7 @@ void main() async {
     expect(cv.checkChessboard(img1, patternSize), false);
   });
 
-  test('cv.computeCorrespondEpilines', () {
+  test('cv.computeCorrespondEpilines', () async {
     final points1 = cv.VecPoint2f.fromList([
       cv.Point2f(330, 123),
       cv.Point2f(330, 240),
@@ -110,32 +110,59 @@ void main() async {
     ]);
     final mat1 = cv.Mat.fromVec(points1);
     final mat2 = cv.Mat.fromVec(points2);
-    final fundamentalMat = cv.findFundamentalMat(mat1, mat2, method: cv.FM_8POINT);
-    final dst = cv.computeCorrespondEpilines(mat1, 1, fundamentalMat);
-    expect(dst.isEmpty, false);
-    expect(dst.rows, 8);
-    expect(dst.cols, 1);
-    expect(dst.channels, 3);
+    {
+      final fundamentalMat = cv.findFundamentalMat(mat1, mat2, method: cv.FM_8POINT);
+      final dst = cv.computeCorrespondEpilines(mat1, 1, fundamentalMat);
+      expect(dst.isEmpty, false);
+      expect(dst.rows, 8);
+      expect(dst.cols, 1);
+      expect(dst.channels, 3);
+    }
+
+    {
+      final fundamentalMat = await cv.findFundamentalMatAsync(mat1, mat2, method: cv.FM_8POINT);
+      final dst = await cv.computeCorrespondEpilinesAsync(mat1, 1, fundamentalMat);
+      expect(dst.isEmpty, false);
+      expect(dst.rows, 8);
+      expect(dst.cols, 1);
+      expect(dst.channels, 3);
+    }
   });
 
-  test('cv.convertPointsFromHomogeneous', () {
+  test('cv.convertPointsFromHomogeneous', () async {
     final homogeneous = cv.Mat.fromList(1, 4, cv.MatType.CV_32FC1, <double>[1, 2, 4, 2]);
-    final euclidean = cv.convertPointsFromHomogeneous(homogeneous);
-    expect(euclidean.isEmpty, false);
+    {
+      final euclidean = cv.convertPointsFromHomogeneous(homogeneous);
+      expect(euclidean.isEmpty, false);
+      expect(euclidean.rows, 1);
+      expect(euclidean.atNum(0, 0), closeTo(0.5, 1e-3));
+      expect(euclidean.atNum(0, 1), closeTo(1.0, 1e-3));
+      expect(euclidean.atNum(0, 2), closeTo(2.0, 1e-3));
 
-    expect(euclidean.rows, 1);
-    expect(euclidean.atNum(0, 0), closeTo(0.5, 1e-3));
-    expect(euclidean.atNum(0, 1), closeTo(1.0, 1e-3));
-    expect(euclidean.atNum(0, 2), closeTo(2.0, 1e-3));
+      final homogeneous1 = cv.convertPointsToHomogeneous(euclidean);
+      expect(homogeneous1.atNum(0, 0), closeTo(0.5, 1e-3));
+      expect(homogeneous1.atNum(0, 1), closeTo(1, 1e-3));
+      expect(homogeneous1.atNum(0, 2), closeTo(2, 1e-3));
+      expect(homogeneous1.atNum(0, 3), closeTo(1, 1e-3));
+    }
 
-    final homogeneous1 = cv.convertPointsToHomogeneous(euclidean);
-    expect(homogeneous1.atNum(0, 0), closeTo(0.5, 1e-3));
-    expect(homogeneous1.atNum(0, 1), closeTo(1, 1e-3));
-    expect(homogeneous1.atNum(0, 2), closeTo(2, 1e-3));
-    expect(homogeneous1.atNum(0, 3), closeTo(1, 1e-3));
+    {
+      final euclidean = await cv.convertPointsFromHomogeneousAsync(homogeneous);
+      expect(euclidean.isEmpty, false);
+      expect(euclidean.rows, 1);
+      expect(euclidean.atNum(0, 0), closeTo(0.5, 1e-3));
+      expect(euclidean.atNum(0, 1), closeTo(1.0, 1e-3));
+      expect(euclidean.atNum(0, 2), closeTo(2.0, 1e-3));
+
+      final homogeneous1 = await cv.convertPointsToHomogeneousAsync(euclidean);
+      expect(homogeneous1.atNum(0, 0), closeTo(0.5, 1e-3));
+      expect(homogeneous1.atNum(0, 1), closeTo(1, 1e-3));
+      expect(homogeneous1.atNum(0, 2), closeTo(2, 1e-3));
+      expect(homogeneous1.atNum(0, 3), closeTo(1, 1e-3));
+    }
   });
 
-  test('cv.correctMatches', () {
+  test('cv.correctMatches', () async {
     final mat = cv.Mat.from2DList(
       [
         [133.28685454, 201.58760058, 126.28483141],
@@ -161,12 +188,20 @@ void main() async {
       cv.MatType.CV_32FC1,
     ).reshape(2, 1);
 
-    final (newPoints1, newPoints2) = cv.correctMatches(mat, points2, points3);
-    expect(newPoints1.isEmpty, false);
-    expect(newPoints2.isEmpty, false);
+    {
+      final (newPoints1, newPoints2) = cv.correctMatches(mat, points2, points3);
+      expect(newPoints1.isEmpty, false);
+      expect(newPoints2.isEmpty, false);
+    }
+
+    {
+      final (newPoints1, newPoints2) = await cv.correctMatchesAsync(mat, points2, points3);
+      expect(newPoints1.isEmpty, false);
+      expect(newPoints2.isEmpty, false);
+    }
   });
 
-  test('cv.decomposeEssentialMat', () {
+  test('cv.decomposeEssentialMat', () async {
     final E = cv.Mat.from2DList(
       [
         [0.0, -1.0, 0.0],
@@ -175,13 +210,22 @@ void main() async {
       ],
       cv.MatType.CV_64FC1,
     );
-    final (r1, r2, t) = cv.decomposeEssentialMat(E);
-    expect(r1.isEmpty, false);
-    expect(r2.isEmpty, false);
-    expect(t.isEmpty, false);
+    {
+      final (r1, r2, t) = cv.decomposeEssentialMat(E);
+      expect(r1.isEmpty, false);
+      expect(r2.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
+
+    {
+      final (r1, r2, t) = await cv.decomposeEssentialMatAsync(E);
+      expect(r1.isEmpty, false);
+      expect(r2.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
   });
 
-  test('cv.decomposeHomographyMat', () {
+  test('cv.decomposeHomographyMat', () async {
     final H = cv.Mat.from2DList(
       [
         [1.0, 0.2, 100.0],
@@ -199,14 +243,24 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
 
-    final (numSolutions, rotations, translations, normals) = cv.decomposeHomographyMat(H, K);
-    expect(numSolutions, greaterThan(0));
-    expect(rotations.isEmpty, false);
-    expect(translations.isEmpty, false);
-    expect(normals.isEmpty, false);
+    {
+      final (numSolutions, rotations, translations, normals) = cv.decomposeHomographyMat(H, K);
+      expect(numSolutions, greaterThan(0));
+      expect(rotations.isEmpty, false);
+      expect(translations.isEmpty, false);
+      expect(normals.isEmpty, false);
+    }
+
+    {
+      final (numSolutions, rotations, translations, normals) = await cv.decomposeHomographyMatAsync(H, K);
+      expect(numSolutions, greaterThan(0));
+      expect(rotations.isEmpty, false);
+      expect(translations.isEmpty, false);
+      expect(normals.isEmpty, false);
+    }
   });
 
-  test('cv.decomposeProjectionMatrix', () {
+  test('cv.decomposeProjectionMatrix', () async {
     final P = cv.Mat.from2DList(
       [
         <double>[500, 0, 320, 0],
@@ -215,13 +269,22 @@ void main() async {
       ],
       cv.MatType.CV_64FC1,
     );
-    final (cameraMatrix, rotMatrix, transVec) = cv.decomposeProjectionMatrix(P);
-    expect(cameraMatrix.isEmpty, false);
-    expect(rotMatrix.isEmpty, false);
-    expect(transVec.isEmpty, false);
+    {
+      final (cameraMatrix, rotMatrix, transVec) = cv.decomposeProjectionMatrix(P);
+      expect(cameraMatrix.isEmpty, false);
+      expect(rotMatrix.isEmpty, false);
+      expect(transVec.isEmpty, false);
+    }
+
+    {
+      final (cameraMatrix, rotMatrix, transVec) = await cv.decomposeProjectionMatrixAsync(P);
+      expect(cameraMatrix.isEmpty, false);
+      expect(rotMatrix.isEmpty, false);
+      expect(transVec.isEmpty, false);
+    }
   });
 
-  test('cv.drawFrameAxes', () {
+  test('cv.drawFrameAxes', () async {
     final image = cv.imread("test/images/lenna.png");
     final cameraMatrix = cv.Mat.from2DList(
       [
@@ -248,8 +311,14 @@ void main() async {
       ],
       cv.MatType.CV_64FC1,
     );
-    cv.drawFrameAxes(image, cameraMatrix, distCoeffs, rvec, tvec, 3.0);
-    // cv.imwrite("a.png", image);
+    {
+      cv.drawFrameAxes(image, cameraMatrix, distCoeffs, rvec, tvec, 3.0);
+      // cv.imwrite("a.png", image);
+    }
+
+    {
+      await cv.drawFrameAxesAsync(image, cameraMatrix, distCoeffs, rvec, tvec, 3.0);
+    }
   });
 
   test('cv.estimateAffinePartial2D', () async {
@@ -351,7 +420,7 @@ void main() async {
     }
   });
 
-  test('cv.estimateTranslation3D', () {
+  test('cv.estimateTranslation3D', () async {
     final src = cv.Mat.from3DList(
       [
         [
@@ -386,23 +455,39 @@ void main() async {
       ],
       cv.MatType.CV_32FC3,
     );
-    final (ret, translation, inliers) = cv.estimateTranslation3D(src, dst);
-    expect(ret, 1);
-    expect(translation.isEmpty, false);
-    expect(inliers.isEmpty, false);
+    {
+      final (ret, translation, inliers) = cv.estimateTranslation3D(src, dst);
+      expect(ret, 1);
+      expect(translation.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
+
+    {
+      final (ret, translation, inliers) = await cv.estimateTranslation3DAsync(src, dst);
+      expect(ret, 1);
+      expect(translation.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
   });
 
-  test('cv.estimateChessboardSharpness', () {
+  test('cv.estimateChessboardSharpness', () async {
     final img = cv.imread("test/images/chessboard_4x6_distort.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
     final (ret, corners) = cv.findChessboardCorners(img, (4, 6));
     expect(ret, true);
     expect(corners.isEmpty, false);
-    final rval = cv.estimateChessboardSharpness(img, (4, 6), cv.Mat.fromVec(corners));
-    expect(rval.val1, closeTo(2.148, 1e-3));
+    {
+      final rval = cv.estimateChessboardSharpness(img, (4, 6), cv.Mat.fromVec(corners));
+      expect(rval.val1, closeTo(2.148, 1e-3));
+    }
+
+    {
+      final rval = await cv.estimateChessboardSharpnessAsync(img, (4, 6), cv.Mat.fromVec(corners));
+      expect(rval.val1, closeTo(2.148, 1e-3));
+    }
   });
 
-  test('cv.filterHomographyDecompByVisibleRefpoints', () {
+  test('cv.filterHomographyDecompByVisibleRefpoints', () async {
     final H = cv.Mat.from2DList(
       [
         [1.0, 0.2, 100.0],
@@ -419,7 +504,6 @@ void main() async {
       ],
       cv.MatType.CV_64FC1,
     );
-    final (numSolutions, rotations, translations, normals) = cv.decomposeHomographyMat(H, K);
     final refPoints = cv.Mat.from3DList(
       [
         [
@@ -437,28 +521,54 @@ void main() async {
       ],
       cv.MatType.CV_32FC2,
     );
-    final projPoints = cv.perspectiveTransform(refPoints, H);
-    expect(projPoints.isEmpty, false);
-    final goodIndices =
-        cv.filterHomographyDecompByVisibleRefpoints(rotations, normals, refPoints, projPoints);
-    expect(goodIndices.isEmpty, false);
+
+    {
+      final (numSolutions, rotations, translations, normals) = cv.decomposeHomographyMat(H, K);
+      final projPoints = cv.perspectiveTransform(refPoints, H);
+      expect(projPoints.isEmpty, false);
+      final goodIndices =
+          cv.filterHomographyDecompByVisibleRefpoints(rotations, normals, refPoints, projPoints);
+      expect(goodIndices.isEmpty, false);
+    }
+
+    {
+      final (numSolutions, rotations, translations, normals) = await cv.decomposeHomographyMatAsync(H, K);
+      final projPoints = await cv.perspectiveTransformAsync(refPoints, H);
+      expect(projPoints.isEmpty, false);
+      final goodIndices =
+          await cv.filterHomographyDecompByVisibleRefpointsAsync(rotations, normals, refPoints, projPoints);
+      expect(goodIndices.isEmpty, false);
+    }
   });
 
-  test('cv.filterSpeckles', () {
+  test('cv.filterSpeckles', () async {
     final image = cv.Mat.randu(480, 640, cv.MatType.CV_8UC1, low: cv.Scalar.black, high: cv.Scalar.white);
-    cv.filterSpeckles(image, 0, 50, 16);
-    cv.imwrite("a.png", image);
+    {
+      cv.filterSpeckles(image, 0, 50, 16);
+    }
+
+    {
+      await cv.filterSpecklesAsync(image, 0, 50, 16);
+    }
   });
 
-  test('cv.find4QuadCornerSubpix', () {
+  test('cv.find4QuadCornerSubpix', () async {
     final image = cv.imread("test/images/chessboard_4x6.png", flags: cv.IMREAD_GRAYSCALE);
     final (ret, corners) = cv.findChessboardCorners(image, (4, 6));
     expect(ret, true);
 
     final _corners = cv.Mat.fromVec(corners);
-    final refinedCorners = cv.find4QuadCornerSubpix(image, _corners, (5, 5));
-    expect(refinedCorners, true);
-    expect(_corners.isEmpty, false);
+    {
+      final refinedCorners = cv.find4QuadCornerSubpix(image, _corners, (5, 5));
+      expect(refinedCorners, true);
+      expect(_corners.isEmpty, false);
+    }
+
+    {
+      final refinedCorners = await cv.find4QuadCornerSubpixAsync(image, _corners, (5, 5));
+      expect(refinedCorners, true);
+      expect(_corners.isEmpty, false);
+    }
   });
 
   test('cv.findChessboardCorners, cv.drawChessboardCorners', () async {
@@ -479,9 +589,9 @@ void main() async {
       expect(found, true);
       expect(corners.isEmpty, false);
 
-      // final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
-      // await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
-      // expect(img2.isEmpty, false);
+      final img2 = cv.Mat.zeros(150, 150, cv.MatType.CV_8UC1);
+      await cv.drawChessboardCornersAsync(img2, (4, 6), corners, true);
+      expect(img2.isEmpty, false);
     }
   });
 
@@ -547,15 +657,24 @@ void main() async {
     },
   );
 
-  test('cv.findCirclesGrid', () {
+  test('cv.findCirclesGrid', () async {
     final image = cv.imread("test/images/circles_grid.jpg", flags: cv.IMREAD_GRAYSCALE);
-    final (found, centers) = cv.findCirclesGrid(image, cv.Size(8, 12));
-    expect(found, true);
-    expect(centers.isEmpty, false);
-    expect(centers.total, 8 * 12);
+    {
+      final (found, centers) = cv.findCirclesGrid(image, cv.Size(8, 12));
+      expect(found, true);
+      expect(centers.isEmpty, false);
+      expect(centers.total, 8 * 12);
+    }
+
+    {
+      final (found, centers) = await cv.findCirclesGridAsync(image, cv.Size(8, 12));
+      expect(found, true);
+      expect(centers.isEmpty, false);
+      expect(centers.total, 8 * 12);
+    }
   });
 
-  test('cv.findEssentialMat', () {
+  test('cv.findEssentialMat', () async {
     final points1 = cv.Mat.from2DList(
       [
         <double>[150, 200],
@@ -590,7 +709,17 @@ void main() async {
     }
 
     {
+      final E = await cv.findEssentialMatCameraMatrixAsync(points1, points2, K);
+      expect(E.isEmpty, false);
+    }
+
+    {
       final E = cv.findEssentialMat(points1, points2);
+      expect(E.isEmpty, false);
+    }
+
+    {
+      final E = await cv.findEssentialMatAsync(points1, points2);
       expect(E.isEmpty, false);
     }
   });
@@ -644,24 +773,89 @@ void main() async {
   });
 
   test('cv.findHomographyUsac', () async {
-    final points1 = cv.VecPoint2f.generate(5, (i) => cv.Point2f(i * 10, i * 20));
-    final points2 = points1.map((p) => cv.Point2f(p.x + p.x / 10, p.y + p.y / 10)).toList(growable: false);
+    final points1 = cv.Mat.from3DList(
+      [
+        [
+          <double>[150, 200],
+        ],
+        [
+          <double>[130, 210],
+        ],
+        [
+          <double>[120, 230],
+        ],
+        [
+          <double>[110, 250],
+        ],
+        [
+          <double>[200, 100],
+        ],
+        [
+          <double>[210, 120],
+        ],
+        [
+          <double>[230, 140],
+        ],
+        [
+          <double>[250, 160],
+        ],
+      ],
+      cv.MatType.CV_32FC2,
+    );
 
-    final m1 = cv.Mat.fromVec(points1);
-    final m2 = cv.Mat.fromVec(points2.asVec());
+    final points2 = cv.Mat.from3DList(
+      [
+        [
+          <double>[152, 202],
+        ],
+        [
+          <double>[132, 212],
+        ],
+        [
+          <double>[122, 232],
+        ],
+        [
+          <double>[112, 252],
+        ],
+        [
+          <double>[202, 102],
+        ],
+        [
+          <double>[212, 122],
+        ],
+        [
+          <double>[232, 142],
+        ],
+        [
+          <double>[252, 162],
+        ],
+      ],
+      cv.MatType.CV_32FC2,
+    );
+    final mask = cv.Mat.empty();
+
     {
-      final mask = cv.Mat.empty();
-      final _ = cv.findHomographyUsac(
-        m1,
-        m2,
-        cv.UsacParams(),
+      final m = cv.findHomographyUsac(
+        points1,
+        points2,
+        cv.UsacParams(confidence: 0.99, maxIterations: 1000, threshold: 0.5, sampler: cv.SAMPLING_UNIFORM),
         mask: mask,
       );
-      // expect(m.isEmpty, false);
+      expect(m.isEmpty, false);
+    }
+
+    {
+      final m = await cv.findHomographyUsacAsync(
+        points1,
+        points2,
+        cv.UsacParams(confidence: 0.99, maxIterations: 1000, threshold: 0.5, sampler: cv.SAMPLING_UNIFORM),
+        mask: mask,
+      );
+      expect(m.isEmpty, false);
     }
   });
 
-  test('cv.findFundamentalMat', () {
+  test('cv.findFundamentalMat', () async {
     final imgPt1 = cv.Mat.from2DList(
       [
         <double>[150, 200],
@@ -696,7 +890,21 @@ void main() async {
     }
 
     {
+      final m = await cv.findFundamentalMatAsync(imgPt1, imgPt2, method: cv.FM_RANSAC);
+      expect(m.isEmpty, false);
+    }
+
+    {
       final m = cv.findFundamentalMatUsac(
+        imgPt1,
+        imgPt2,
+        cv.UsacParams(confidence: 0.999, maxIterations: 2000, threshold: 1.0),
+      );
+      expect(m.isEmpty, false);
+    }
+
+    {
+      final m = await cv.findFundamentalMatUsacAsync(
         imgPt1,
         imgPt2,
         cv.UsacParams(confidence: 0.999, maxIterations: 2000, threshold: 1.0),
@@ -705,7 +913,7 @@ void main() async {
     }
   });
 
-  test('cv.getDefaultNewCameraMatrix', () {
+  test('cv.getDefaultNewCameraMatrix', () async {
     final cameraMatrix = cv.Mat.from2DList(
       [
         <double>[800, 0, 320],
@@ -714,23 +922,37 @@ void main() async {
       ],
       cv.MatType.CV_32FC1,
     );
-    final newCameraMatrix =
-        cv.getDefaultNewCameraMatrix(cameraMatrix, imgsize: cv.Size(640, 480), centerPrincipalPoint: true);
-    expect(newCameraMatrix.isEmpty, false);
-    expect(newCameraMatrix.rows, 3);
-    expect(newCameraMatrix.cols, 3);
-
     final distCoeffs = cv.Mat.from2DList(
       [
         <double>[-0.1, 0.1, 0, 0],
       ],
       cv.MatType.CV_32FC1,
     );
+    {
+      final newCameraMatrix =
+          cv.getDefaultNewCameraMatrix(cameraMatrix, imgsize: cv.Size(640, 480), centerPrincipalPoint: true);
+      expect(newCameraMatrix.isEmpty, false);
+      expect(newCameraMatrix.rows, 3);
+      expect(newCameraMatrix.cols, 3);
 
-    final (_, map1, map2) =
-        cv.initWideAngleProjMap(cameraMatrix, distCoeffs, cv.Size(640, 480), 480, cv.MatType.CV_32FC1.value);
-    expect(map1.isEmpty, false);
-    expect(map2.isEmpty, false);
+      final (_, map1, map2) = cv.initWideAngleProjMap(
+          cameraMatrix, distCoeffs, cv.Size(640, 480), 480, cv.MatType.CV_32FC1.value);
+      expect(map1.isEmpty, false);
+      expect(map2.isEmpty, false);
+    }
+
+    {
+      final newCameraMatrix = await cv.getDefaultNewCameraMatrixAsync(cameraMatrix,
+          imgsize: cv.Size(640, 480), centerPrincipalPoint: true);
+      expect(newCameraMatrix.isEmpty, false);
+      expect(newCameraMatrix.rows, 3);
+      expect(newCameraMatrix.cols, 3);
+
+      final (_, map1, map2) = await cv.initWideAngleProjMapAsync(
+          cameraMatrix, distCoeffs, cv.Size(640, 480), 480, cv.MatType.CV_32FC1.value);
+      expect(map1.isEmpty, false);
+      expect(map2.isEmpty, false);
+    }
   });
 
   test('cv.initUndistortRectifyMap', () async {
@@ -783,12 +1005,20 @@ void main() async {
     }
   });
 
-  test('cv.matMulDeriv', () {
+  test('cv.matMulDeriv', () async {
     final A = cv.Mat.fromList(2, 2, cv.MatType.CV_32FC1, <double>[1, 2, 3, 4]);
     final B = cv.Mat.fromList(2, 2, cv.MatType.CV_32FC1, <double>[5, 6, 7, 8]);
-    final (dABdA, dABdB) = cv.matMulDeriv(A, B);
-    expect(dABdA.isEmpty, false);
-    expect(dABdB.isEmpty, false);
+    {
+      final (dABdA, dABdB) = cv.matMulDeriv(A, B);
+      expect(dABdA.isEmpty, false);
+      expect(dABdB.isEmpty, false);
+    }
+
+    {
+      final (dABdA, dABdB) = await cv.matMulDerivAsync(A, B);
+      expect(dABdA.isEmpty, false);
+      expect(dABdB.isEmpty, false);
+    }
   });
 
   // from https://github.com/shimat/opencvsharp/blob/main/test/OpenCvSharp.Tests/calib3d/Calib3dTest.cs
@@ -835,7 +1065,7 @@ void main() async {
     }
   });
 
-  test('cv.recoverPoseCameraMatrix', () {
+  test('cv.recoverPoseCameraMatrix', () async {
     final essential = cv.Mat.from2DList(
       [
         [1.503247056657373e-16, -7.074103796034695e-16, -7.781514175638166e-16],
@@ -882,13 +1112,22 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
 
-    final (rval, r, t, _) = cv.recoverPoseCameraMatrix(essential, p1, p2, k);
-    expect(rval, 0);
-    expect(r.isEmpty, false);
-    expect(t.isEmpty, false);
+    {
+      final (rval, r, t, _) = cv.recoverPoseCameraMatrix(essential, p1, p2, k);
+      expect(rval, 0);
+      expect(r.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
+
+    {
+      final (rval, r, t, _) = await cv.recoverPoseCameraMatrixAsync(essential, p1, p2, k);
+      expect(rval, 0);
+      expect(r.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
   });
 
-  test('cv.recoverPose', () {
+  test('cv.recoverPose', () async {
     final points1 = cv.Mat.from2DList(
       [
         <double>[150, 200],
@@ -926,14 +1165,24 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
 
-    final E = cv.findEssentialMatCameraMatrix(points1, points2, K, method: cv.FM_RANSAC);
-    final (rval, r, t) = cv.recoverPose(E, points1, points2);
-    expect(rval, 4);
-    expect(r.isEmpty, false);
-    expect(t.isEmpty, false);
+    {
+      final E = cv.findEssentialMatCameraMatrix(points1, points2, K, method: cv.FM_RANSAC);
+      final (rval, r, t) = cv.recoverPose(E, points1, points2);
+      expect(rval, 4);
+      expect(r.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
+
+    {
+      final E = await cv.findEssentialMatCameraMatrixAsync(points1, points2, K, method: cv.FM_RANSAC);
+      final (rval, r, t) = await cv.recoverPoseAsync(E, points1, points2);
+      expect(rval, 4);
+      expect(r.isEmpty, false);
+      expect(t.isEmpty, false);
+    }
   });
 
-  test('cv.RQDecomp3x3', () {
+  test('cv.RQDecomp3x3', () async {
     final K = cv.Mat.from2DList(
       [
         <double>[1000, 0, 320],
@@ -942,13 +1191,22 @@ void main() async {
       ],
       cv.MatType.CV_64FC1,
     );
-    final (rval, R, Q) = cv.RQDecomp3x3(K);
-    expect(rval, cv.Vec3d(0, 0, 0));
-    expect(R.isEmpty, false);
-    expect(Q.isEmpty, false);
+    {
+      final (rval, R, Q) = cv.RQDecomp3x3(K);
+      expect(rval, cv.Vec3d(0, 0, 0));
+      expect(R.isEmpty, false);
+      expect(Q.isEmpty, false);
+    }
+
+    {
+      final (rval, R, Q) = await cv.RQDecomp3x3Async(K);
+      expect(rval, cv.Vec3d(0, 0, 0));
+      expect(R.isEmpty, false);
+      expect(Q.isEmpty, false);
+    }
   });
 
-  test('cv.Rodrigues', () {
+  test('cv.Rodrigues', () async {
     const double angle = 45;
     final cos = math.cos(angle * math.pi / 180);
     final sin = math.sin(angle * math.pi / 180);
@@ -958,19 +1216,37 @@ void main() async {
     matrix.set<double>(1, 0, sin);
     matrix.set<double>(1, 1, cos);
     matrix.set<double>(2, 2, 1.0);
-    final jacobian = cv.Mat.empty();
-    final vector = cv.Rodrigues(matrix, jacobian: jacobian);
-    expect(vector.isEmpty, false);
-    expect(vector.total, 3);
-    expect(vector.rows, 3);
-    expect(vector.cols, 1);
-    expect(vector.atNum(0, 0), closeTo(0, 1e-3));
-    expect(vector.atNum(1, 0), closeTo(0, 1e-3));
-    expect(vector.atNum(2, 0), closeTo(0.785, 1e-3));
+    {
+      final jacobian = cv.Mat.empty();
+      final vector = cv.Rodrigues(matrix, jacobian: jacobian);
+      expect(vector.isEmpty, false);
+      expect(vector.total, 3);
+      expect(vector.rows, 3);
+      expect(vector.cols, 1);
+      expect(vector.atNum(0, 0), closeTo(0, 1e-3));
+      expect(vector.atNum(1, 0), closeTo(0, 1e-3));
+      expect(vector.atNum(2, 0), closeTo(0.785, 1e-3));
 
-    expect(jacobian.isEmpty, false);
-    expect(jacobian.rows, 9);
-    expect(jacobian.cols, 3);
+      expect(jacobian.isEmpty, false);
+      expect(jacobian.rows, 9);
+      expect(jacobian.cols, 3);
+    }
+
+    {
+      final jacobian = cv.Mat.empty();
+      final vector = await cv.RodriguesAsync(matrix, jacobian: jacobian);
+      expect(vector.isEmpty, false);
+      expect(vector.total, 3);
+      expect(vector.rows, 3);
+      expect(vector.cols, 1);
+      expect(vector.atNum(0, 0), closeTo(0, 1e-3));
+      expect(vector.atNum(1, 0), closeTo(0, 1e-3));
+      expect(vector.atNum(2, 0), closeTo(0.785, 1e-3));
+
+      expect(jacobian.isEmpty, false);
+      expect(jacobian.rows, 9);
+      expect(jacobian.cols, 3);
+    }
   });
 
   test('cv.sampsonDistance', () {
@@ -1004,7 +1280,7 @@ void main() async {
     expect(sampsonDistances, closeTo(4034.6767, 1e-3));
   });
 
-  test('cv.solveP3P', () {
+  test('cv.solveP3P', () async {
     final objectPoints = cv.Mat.from2DList(
       [
         <double>[0, 0, 0],
@@ -1030,11 +1306,21 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
     final distCoeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
-    final (ret, rvecs, tvecs) =
-        cv.solveP3P(objectPoints, imagePoints, cameraMatrix, distCoeffs, cv.SOLVEPNP_P3P);
-    expect(ret, 2);
-    expect(rvecs.isEmpty, false);
-    expect(tvecs.isEmpty, false);
+    {
+      final (ret, rvecs, tvecs) =
+          cv.solveP3P(objectPoints, imagePoints, cameraMatrix, distCoeffs, cv.SOLVEPNP_P3P);
+      expect(ret, 2);
+      expect(rvecs.isEmpty, false);
+      expect(tvecs.isEmpty, false);
+    }
+
+    {
+      final (ret, rvecs, tvecs) =
+          await cv.solveP3PAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs, cv.SOLVEPNP_P3P);
+      expect(ret, 2);
+      expect(rvecs.isEmpty, false);
+      expect(tvecs.isEmpty, false);
+    }
   });
 
   test('cv.solvePnP', () async {
@@ -1060,17 +1346,38 @@ void main() async {
       ],
       cv.MatType.CV_32FC1,
     );
-    final (imgPts, jacobian) = cv.projectPoints(objPts, rvec, tvec, cameraMatrix, dist);
-    expect(imgPts.isEmpty, false);
-    expect(jacobian.isEmpty, false);
+    {
+      final (imgPts, jacobian) = cv.projectPoints(objPts, rvec, tvec, cameraMatrix, dist);
+      expect(imgPts.isEmpty, false);
+      expect(jacobian.isEmpty, false);
 
-    final (rval, rv, tv) = cv.solvePnP(objPts, imgPts, cameraMatrix, dist);
-    expect(rval, true);
-    expect(rv.isEmpty, false);
-    expect(tv.isEmpty, false);
+      final (rval, rv, tv) = cv.solvePnP(objPts, imgPts, cameraMatrix, dist);
+      expect(rval, true);
+      expect(rv.isEmpty, false);
+      expect(tv.isEmpty, false);
+
+      cv.solvePnPRefineLM(objPts, imgPts, cameraMatrix, dist, rv, tv);
+      expect(rv.isEmpty, false);
+      expect(tv.isEmpty, false);
+    }
+
+    {
+      final (imgPts, jacobian) = await cv.projectPointsAsync(objPts, rvec, tvec, cameraMatrix, dist);
+      expect(imgPts.isEmpty, false);
+      expect(jacobian.isEmpty, false);
+
+      final (rval, rv, tv) = await cv.solvePnPAsync(objPts, imgPts, cameraMatrix, dist);
+      expect(rval, true);
+      expect(rv.isEmpty, false);
+      expect(tv.isEmpty, false);
+
+      await cv.solvePnPRefineLMAsync(objPts, imgPts, cameraMatrix, dist, rv, tv);
+      expect(rv.isEmpty, false);
+      expect(tv.isEmpty, false);
+    }
   });
 
-  test('cv.solvePnPGeneric', () {
+  test('cv.solvePnPGeneric', () async {
     final objectPoints = cv.Mat.from2DList(
       [
         <double>[0, 0, 0],
@@ -1078,7 +1385,7 @@ void main() async {
         <double>[0, 1, 0],
         <double>[1, 1, 0],
         <double>[0.5, 0.5, 1],
-        <double>[0, 0.5, 1]
+        <double>[0, 0.5, 1],
       ],
       cv.MatType.CV_64FC1,
     );
@@ -1089,7 +1396,7 @@ void main() async {
         <double>[320, 320],
         <double>[400, 320],
         <double>[360, 270],
-        <double>[300, 250]
+        <double>[300, 250],
       ],
       cv.MatType.CV_64FC1,
     );
@@ -1102,14 +1409,117 @@ void main() async {
       cv.MatType.CV_64FC1,
     );
     final distCoeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
-    final (ret, rvecs, tvecs, err) = cv.solvePnPGeneric(objectPoints, imagePoints, cameraMatrix, distCoeffs);
-    expect(ret, 1);
-    expect(rvecs.length, 1);
-    expect(tvecs.length, 1);
-    expect(err.isEmpty, false);
+    {
+      final (ret, rvecs, tvecs, err) =
+          cv.solvePnPGeneric(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(ret, 1);
+      expect(rvecs.length, 1);
+      expect(tvecs.length, 1);
+      expect(err.isEmpty, false);
+    }
+
+    {
+      final (ret, rvecs, tvecs, err) =
+          await cv.solvePnPGenericAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(ret, 1);
+      expect(rvecs.length, 1);
+      expect(tvecs.length, 1);
+      expect(err.isEmpty, false);
+    }
   });
 
-  test('cv.triangulatePoints', () {
+  test('cv.solvePnPRansac', () async {
+    final objectPoints = cv.Mat.from2DList(
+      [
+        <double>[0, 0, 0],
+        <double>[1, 0, 0],
+        <double>[0, 1, 0],
+        <double>[1, 1, 0],
+        <double>[0.5, 0.5, 1],
+        <double>[0, 0.5, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final imagePoints = cv.Mat.from2DList(
+      [
+        <double>[320, 240],
+        <double>[400, 240],
+        <double>[320, 320],
+        <double>[400, 320],
+        <double>[360, 270],
+        <double>[300, 250],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final cameraMatrix = cv.Mat.from2DList(
+      [
+        <double>[800, 0, 320],
+        <double>[0, 800, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final distCoeffs = cv.Mat.zeros(1, 4, cv.MatType.CV_64FC1);
+    {
+      final (ret, rvec, tvec, inliers) =
+          cv.solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(ret, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+
+      cv.solvePnPRefineVVS(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+    }
+
+    {
+      final (ret, rvec, tvec, inliers) =
+          await cv.solvePnPRansacAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(ret, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+
+      await cv.solvePnPRefineVVSAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+    }
+
+    {
+      final usac = cv.UsacParams(
+        confidence: 0.99,
+        maxIterations: 1000,
+        threshold: 0.5,
+        loMethod: cv.LOCAL_OPTIM_NULL,
+        sampler: cv.SAMPLING_UNIFORM,
+      );
+      final (ret, rvec, tvec, inliers) =
+          cv.solvePnPRansacUsac(objectPoints, imagePoints, cameraMatrix, distCoeffs, params: usac);
+      expect(ret, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
+
+    {
+      final usac = cv.UsacParams(
+        confidence: 0.99,
+        maxIterations: 1000,
+        threshold: 0.5,
+        loMethod: cv.LOCAL_OPTIM_NULL,
+        sampler: cv.SAMPLING_UNIFORM,
+      );
+      final (ret, rvec, tvec, inliers) =
+          await cv.solvePnPRansacUsacAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs, params: usac);
+      expect(ret, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
+  });
+
+  test('cv.triangulatePoints', () async {
     final projMat1 = cv.Mat.zeros(3, 4, cv.MatType.CV_64FC1);
     final projMat2 = cv.Mat.zeros(3, 4, cv.MatType.CV_64FC1);
 
@@ -1129,8 +1539,15 @@ void main() async {
       ],
       cv.MatType.CV_64FC2,
     );
-    final homogeneous = cv.triangulatePoints(projMat1, projMat2, projPoints1, projPoints2);
-    expect(homogeneous.isEmpty, false);
+    {
+      final homogeneous = cv.triangulatePoints(projMat1, projMat2, projPoints1, projPoints2);
+      expect(homogeneous.isEmpty, false);
+    }
+
+    {
+      final homogeneous = await cv.triangulatePointsAsync(projMat1, projMat2, projPoints1, projPoints2);
+      expect(homogeneous.isEmpty, false);
+    }
   });
 
   test('cv.undistortPoints', () async {
@@ -1187,6 +1604,38 @@ void main() async {
       expect(dst.isEmpty, false);
       expect(dst.at<double>(0, 0), lessThan(480));
       expect(dst.at<double>(0, 1), lessThan(270));
+    }
+  });
+
+  test('cv.undistortImagePoints', () async {
+    final cameraMatrix = cv.Mat.from2DList(
+      [
+        <double>[800, 0, 320],
+        <double>[0, 800, 240],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+    );
+    final distCoeffs = cv.Mat.fromList(1, 4, cv.MatType.CV_64FC1, [-0.2, 0.1, 0.0, 0.0]);
+    final distortedPoints = cv.Mat.from3DList(
+      [
+        [
+          <double>[320, 240],
+          <double>[400, 240],
+          <double>[320, 320],
+          <double>[400, 320],
+        ]
+      ],
+      cv.MatType.CV_64FC2,
+    );
+    {
+      final undistorted = cv.undistortImagePoints(distortedPoints, cameraMatrix, distCoeffs);
+      expect(undistorted.isEmpty, false);
+    }
+
+    {
+      final undistorted = await cv.undistortImagePointsAsync(distortedPoints, cameraMatrix, distCoeffs);
+      expect(undistorted.isEmpty, false);
     }
   });
 }

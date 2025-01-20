@@ -73,20 +73,31 @@ Mat computeCorrespondEpilines(InputArray points, int whichImage, InputArray F, {
   return lines;
 }
 
+/// Converts points from homogeneous to Euclidean space.
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gac42edda3a3a0f717979589fcd6ac0035
 Mat convertPointsFromHomogeneous(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
   cvRun(() => ccalib3d.cv_convertPointsFromHomogeneous(src.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
-// void cv::convertPointsToHomogeneous (InputArray src, OutputArray dst);
+/// Converts points from Euclidean to homogeneous space.
+///
+/// `void cv::convertPointsToHomogeneous (InputArray src, OutputArray dst);`
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga13159f129eec8a7d9bd8501f012d5543
 Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   dst ??= Mat.empty();
   cvRun(() => ccalib3d.cv_convertPointsToHomogeneous(src.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
-// void cv::correctMatches (InputArray F, InputArray points1, InputArray points2, OutputArray newPoints1, OutputArray newPoints2);
+/// Refines coordinates of corresponding points.
+///
+/// void cv::correctMatches (InputArray F, InputArray points1, InputArray points2, OutputArray newPoints1, OutputArray newPoints2);
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gaf32c99d17908e175ac71e7a08fad587b
 (Mat newPoints1, Mat newPoints2) correctMatches(
   Mat F,
   InputArray points1,
@@ -109,7 +120,11 @@ Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   return (newPoints1, newPoints2);
 }
 
-// void cv::decomposeEssentialMat (InputArray E, OutputArray R1, OutputArray R2, OutputArray t);
+/// Decompose an essential matrix to possible rotations and translation.
+///
+/// void cv::decomposeEssentialMat (InputArray E, OutputArray R1, OutputArray R2, OutputArray t);
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga54a2f5b3f8aeaf6c76d4a31dece85d5d
 (Mat r1, Mat r2, Mat t) decomposeEssentialMat(
   Mat E, {
   OutputArray? R1,
@@ -131,7 +146,11 @@ Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   return (R1, R2, t);
 }
 
-// int cv::decomposeHomographyMat (InputArray H, InputArray K, OutputArrayOfArrays rotations, OutputArrayOfArrays translations, OutputArrayOfArrays normals)
+/// Decompose a homography matrix to rotation(s), translation(s) and plane normal(s).
+///
+/// int cv::decomposeHomographyMat (InputArray H, InputArray K, OutputArrayOfArrays rotations, OutputArrayOfArrays translations, OutputArrayOfArrays normals)
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga7f60bdff78833d1e3fd6d9d0fd538d92
 (int rval, VecMat rotations, VecMat translations, VecMat normals) decomposeHomographyMat(
   Mat H,
   Mat K, {
@@ -159,7 +178,11 @@ Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   return (rval, rotations, translations, normals);
 }
 
-// void cv::decomposeProjectionMatrix (InputArray projMatrix, OutputArray cameraMatrix, OutputArray rotMatrix, OutputArray transVect, OutputArray rotMatrixX=noArray(), OutputArray rotMatrixY=noArray(), OutputArray rotMatrixZ=noArray(), OutputArray eulerAngles=noArray())
+/// Decomposes a projection matrix into a rotation matrix and a camera intrinsic matrix.
+///
+/// void cv::decomposeProjectionMatrix (InputArray projMatrix, OutputArray cameraMatrix, OutputArray rotMatrix, OutputArray transVect, OutputArray rotMatrixX=noArray(), OutputArray rotMatrixY=noArray(), OutputArray rotMatrixZ=noArray(), OutputArray eulerAngles=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gaaae5a7899faa1ffdf268cd9088940248
 (Mat cameraMatrix, Mat rotMatrix, Mat transVect) decomposeProjectionMatrix(
   Mat projMatrix, {
   OutputArray? cameraMatrix,
@@ -340,7 +363,11 @@ void drawFrameAxes(
   return (rval, out, inliers);
 }
 
-// Scalar cv::estimateChessboardSharpness (InputArray image, Size patternSize, InputArray corners, float rise_distance=0.8F, bool vertical=false, OutputArray sharpness=noArray())
+/// Estimates the sharpness of a detected chessboard.
+///
+/// Scalar cv::estimateChessboardSharpness (InputArray image, Size patternSize, InputArray corners, float rise_distance=0.8F, bool vertical=false, OutputArray sharpness=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga1b976b476cd2083edd4323a34e9e1ffa
 Scalar estimateChessboardSharpness(
   InputArray image,
   (int, int) patternSize,
@@ -366,7 +393,11 @@ Scalar estimateChessboardSharpness(
   return Scalar.fromPointer(prval);
 }
 
-// int cv::estimateTranslation3D (InputArray src, InputArray dst, OutputArray out, OutputArray inliers, double ransacThreshold=3, double confidence=0.99)
+/// Computes an optimal translation between two 3D point sets.
+///
+/// int cv::estimateTranslation3D (InputArray src, InputArray dst, OutputArray out, OutputArray inliers, double ransacThreshold=3, double confidence=0.99)
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga0ea15af08887dd5afa68d81711d395ff
 (int rval, Mat out, Mat inliers) estimateTranslation3D(
   InputArray src,
   InputArray dst, {
@@ -390,10 +421,16 @@ Scalar estimateChessboardSharpness(
       ffi.nullptr,
     ),
   );
-  return (prval.value, out, inliers);
+  final rval = prval.value;
+  calloc.free(prval);
+  return (rval, out, inliers);
 }
 
-// void cv::filterHomographyDecompByVisibleRefpoints (InputArrayOfArrays rotations, InputArrayOfArrays normals, InputArray beforePoints, InputArray afterPoints, OutputArray possibleSolutions, InputArray pointsMask=noArray())
+/// Filters homography decompositions based on additional information.
+///
+/// void cv::filterHomographyDecompByVisibleRefpoints (InputArrayOfArrays rotations, InputArrayOfArrays normals, InputArray beforePoints, InputArray afterPoints, OutputArray possibleSolutions, InputArray pointsMask=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga32f867159200f7bd55e72dca92d8494c
 Mat filterHomographyDecompByVisibleRefpoints(
   VecMat rotations,
   VecMat normals,
@@ -418,7 +455,11 @@ Mat filterHomographyDecompByVisibleRefpoints(
   return possibleSolutions;
 }
 
-// void cv::filterSpeckles (InputOutputArray img, double newVal, int maxSpeckleSize, double maxDiff, InputOutputArray buf=noArray())
+/// Filters off small noise blobs (speckles) in the disparity map.
+///
+/// void cv::filterSpeckles (InputOutputArray img, double newVal, int maxSpeckleSize, double maxDiff, InputOutputArray buf=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gabe331f205a6dd7a9aa5db8a38157d25b
 void filterSpeckles(
   InputOutputArray img,
   double newVal,
@@ -439,7 +480,11 @@ void filterSpeckles(
   );
 }
 
-// bool cv::find4QuadCornerSubpix (InputArray img, InputOutputArray corners, Size region_size)
+/// finds subpixel-accurate positions of the chessboard corners
+///
+/// bool cv::find4QuadCornerSubpix (InputArray img, InputOutputArray corners, Size region_size)
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gab8816c8a176e1d78893b843b3f01557a
 bool find4QuadCornerSubpix(
   InputArray img,
   InputOutputArray corners,
@@ -542,7 +587,11 @@ bool find4QuadCornerSubpix(
   return (rval, corners, meta);
 }
 
-// bool cv::findCirclesGrid (InputArray image, Size patternSize, OutputArray centers, int flags=CALIB_CB_SYMMETRIC_GRID, const Ptr< FeatureDetector > &blobDetector=SimpleBlobDetector::create())
+/// Finds centers in the grid of circles.
+///
+/// bool cv::findCirclesGrid (InputArray image, Size patternSize, OutputArray centers, int flags=CALIB_CB_SYMMETRIC_GRID, const Ptr< FeatureDetector > &blobDetector=SimpleBlobDetector::create())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga7f02cd21c8352142890190227628fa80
 (bool, Mat) findCirclesGrid(
   InputArray image,
   Size patternSize, {
@@ -566,7 +615,11 @@ bool find4QuadCornerSubpix(
   return (rval, centers);
 }
 
-// Mat cv::findEssentialMat (InputArray points1, InputArray points2, double focal=1.0, Point2d pp=Point2d(0, 0), int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
+/// Calculates an essential matrix from the corresponding points in two images.
+///
+/// Mat cv::findEssentialMat (InputArray points1, InputArray points2, double focal=1.0, Point2d pp=Point2d(0, 0), int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gab39a252d16802e86d7d712b1065a1a51
 Mat findEssentialMat(
   InputArray points1,
   InputArray points2, {
@@ -599,7 +652,11 @@ Mat findEssentialMat(
   return Mat.fromPointer(prval);
 }
 
-// Mat cv::findEssentialMat (InputArray points1, InputArray points2, InputArray cameraMatrix, int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
+/// Calculates an essential matrix from the corresponding points in two images.
+///
+/// Mat cv::findEssentialMat (InputArray points1, InputArray points2, InputArray cameraMatrix, int method=RANSAC, double prob=0.999, double threshold=1.0, int maxIters=1000, OutputArray mask=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gad245d60e64d0c1270dbfd0520847bb87
 Mat findEssentialMatCameraMatrix(
   InputArray points1,
   InputArray points2,
@@ -629,7 +686,11 @@ Mat findEssentialMatCameraMatrix(
   return Mat.fromPointer(prval);
 }
 
-// Mat cv::findFundamentalMat (InputArray points1, InputArray points2, int method=FM_RANSAC, double ransacReprojThreshold=3., double confidence=0.99, OutputArray mask=noArray())
+/// Calculates a fundamental matrix from the corresponding points in two images.
+///
+/// Mat cv::findFundamentalMat (InputArray points1, InputArray points2, int method=FM_RANSAC, double ransacReprojThreshold=3., double confidence=0.99, OutputArray mask=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga59b0d57f46f8677fb5904294a23d404a
 Mat findFundamentalMat(
   InputArray points1,
   InputArray points2, {
@@ -657,7 +718,11 @@ Mat findFundamentalMat(
   return Mat.fromPointer(prval);
 }
 
-// Mat cv::findFundamentalMat (InputArray points1, InputArray points2, OutputArray mask, const UsacParams &params)
+/// Calculates a fundamental matrix from the corresponding points in two images.
+///
+/// Mat cv::findFundamentalMat (InputArray points1, InputArray points2, OutputArray mask, const UsacParams &params)
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gae850fad056e407befb9e2db04dd9e509
 Mat findFundamentalMatUsac(
   InputArray points1,
   InputArray points2,
@@ -710,7 +775,11 @@ Mat findHomography(
   return mat;
 }
 
-// Mat cv::findHomography (InputArray srcPoints, InputArray dstPoints, OutputArray mask, const UsacParams &params)
+/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
+///
+/// Mat cv::findHomography (InputArray srcPoints, InputArray dstPoints, OutputArray mask, const UsacParams &params)
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga4b3841447530523e5272ec05c5d1e411
 Mat findHomographyUsac(
   InputArray srcPoints,
   InputArray dstPoints,
@@ -901,7 +970,50 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
   return (imagePoints, jacobian);
 }
 
-// int cv::recoverPose (InputArray E, InputArray points1, InputArray points2, InputArray cameraMatrix, OutputArray R, OutputArray t, double distanceThresh, InputOutputArray mask=noArray(), OutputArray triangulatedPoints=noArray())
+/// Recovers the relative camera rotation and the translation from an estimated essential matrix and the corresponding points in two images, using chirality check. Returns the number of inliers that pass the check.
+///
+/// int cv::recoverPose (InputArray E, InputArray points1, InputArray points2, OutputArray R, OutputArray t, double focal=1.0, Point2d pp=Point2d(0, 0), InputOutputArray mask=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga40919d0c7eaf77b0df67dd76d5d24fa1
+(int rval, Mat R, Mat t) recoverPose(
+  InputArray E,
+  InputArray points1,
+  InputArray points2, {
+  OutputArray? R,
+  OutputArray? t,
+  double focal = 1,
+  Point2d? pp,
+  InputOutputArray? mask,
+}) {
+  R ??= Mat.empty();
+  t ??= Mat.empty();
+  mask ??= Mat.empty();
+  pp ??= Point2d(0, 0);
+  final prval = calloc<ffi.Int>();
+  cvRun(
+    () => ccalib3d.cv_recoverPose_1(
+      E.ref,
+      points1.ref,
+      points2.ref,
+      R!.ref,
+      t!.ref,
+      focal,
+      pp!.ref,
+      mask!.ref,
+      prval,
+      ffi.nullptr,
+    ),
+  );
+  final rval = prval.value;
+  calloc.free(prval);
+  return (rval, R, t);
+}
+
+// Recovers the relative camera rotation and the translation from an estimated essential matrix and the corresponding points in two images, using chirality check. Returns the number of inliers that pass the check.
+///
+/// int cv::recoverPose (InputArray E, InputArray points1, InputArray points2, InputArray cameraMatrix, OutputArray R, OutputArray t, double distanceThresh, InputOutputArray mask=noArray(), OutputArray triangulatedPoints=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gadb7d2dfcc184c1d2f496d8639f4371c0
 (int rval, Mat R, Mat t, Mat triangulatedPoints) recoverPoseCameraMatrix(
   InputArray E,
   InputArray points1,
@@ -938,41 +1050,6 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
   return (rval, R, t, triangulatedPoints);
 }
 
-// int cv::recoverPose (InputArray E, InputArray points1, InputArray points2, OutputArray R, OutputArray t, double focal=1.0, Point2d pp=Point2d(0, 0), InputOutputArray mask=noArray())
-(int rval, Mat R, Mat t) recoverPose(
-  InputArray E,
-  InputArray points1,
-  InputArray points2, {
-  OutputArray? R,
-  OutputArray? t,
-  double focal = 1,
-  Point2d? pp,
-  InputOutputArray? mask,
-}) {
-  R ??= Mat.empty();
-  t ??= Mat.empty();
-  mask ??= Mat.empty();
-  pp ??= Point2d(0, 0);
-  final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_recoverPose_1(
-      E.ref,
-      points1.ref,
-      points2.ref,
-      R!.ref,
-      t!.ref,
-      focal,
-      pp!.ref,
-      mask!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, R, t);
-}
-
 // void cv::reprojectImageTo3D (InputArray disparity, OutputArray _3dImage, InputArray Q, bool handleMissingValues=false, int ddepth=-1)
 // TODO: add Stereo
 // Mat reprojectImageTo3D(
@@ -996,7 +1073,11 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
 //   return out3dImage;
 // }
 
-// void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
+/// Converts a rotation matrix to a rotation vector or vice versa.
+///
+/// void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga61585db663d9da06b68e70cfbf6a1eac
 Mat Rodrigues(
   InputArray src, {
   OutputArray? dst,
@@ -1015,7 +1096,11 @@ Mat Rodrigues(
   return dst;
 }
 
-// Vec3d cv::RQDecomp3x3 (InputArray src, OutputArray mtxR, OutputArray mtxQ, OutputArray Qx=noArray(), OutputArray Qy=noArray(), OutputArray Qz=noArray())
+/// Computes an RQ decomposition of 3x3 matrices.
+///
+/// Vec3d cv::RQDecomp3x3 (InputArray src, OutputArray mtxR, OutputArray mtxQ, OutputArray Qx=noArray(), OutputArray Qy=noArray(), OutputArray Qz=noArray())
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga1aaacb6224ec7b99d34866f8f9baac83
 (Vec3d rval, Mat mtxR, Mat mtxQ) RQDecomp3x3(
   InputArray src, {
   OutputArray? mtxR,
@@ -1045,6 +1130,9 @@ Mat Rodrigues(
   return (Vec3d.fromPointer(prval), mtxR, mtxQ);
 }
 
+/// Calculates the Sampson Distance between two points.
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gacbba2ee98258ca81d352a31faa15a021
 double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
     ccalib3d.cv_sampsonDistance(pt1.ref, pt2.ref, F.ref);
 
@@ -1207,7 +1295,7 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gab14667ec49eda61b4a3f14eb9704373b
-(bool rval, Mat rvec, Mat tvec, Mat inliers) solvePnPRansacCameraMatrix(
+(bool rval, Mat rvec, Mat tvec, Mat inliers) solvePnPRansacUsac(
   InputArray objectPoints,
   InputArray imagePoints,
   InputOutputArray cameraMatrix,
@@ -1304,186 +1392,191 @@ void solvePnPRefineVVS(
   );
 }
 
+// TODO: add Stereo
 // double cv::stereoCalibrate (InputArrayOfArrays objectPoints, InputArrayOfArrays imagePoints1, InputArrayOfArrays imagePoints2, InputOutputArray cameraMatrix1, InputOutputArray distCoeffs1, InputOutputArray cameraMatrix2, InputOutputArray distCoeffs2, Size imageSize, InputOutputArray R, InputOutputArray T, OutputArray E, OutputArray F, OutputArrayOfArrays rvecs, OutputArrayOfArrays tvecs, OutputArray perViewErrors, int flags=CALIB_FIX_INTRINSIC, TermCriteria criteria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6));
-(
-  double rval,
-  Mat cameraMatrix1,
-  Mat distCoeffs1,
-  Mat cameraMatrix2,
-  Mat distCoeffs2,
-  Mat R,
-  Mat T,
-  Mat E,
-  Mat F,
-  VecMat rvecs,
-  VecMat tvecs,
-  Mat perViewErrors
-) stereoCalibrate(
-  VecMat objectPoints,
-  VecMat imagePoints1,
-  VecMat imagePoints2,
-  InputOutputArray cameraMatrix1,
-  InputOutputArray distCoeffs1,
-  InputOutputArray cameraMatrix2,
-  InputOutputArray distCoeffs2,
-  Size imageSize,
-  InputOutputArray R,
-  InputOutputArray T, {
-  OutputArray? E,
-  OutputArray? F,
-  VecMat? rvecs,
-  VecMat? tvecs,
-  OutputArray? perViewErrors,
-  int flags = CALIB_FIX_INTRINSIC,
-  TermCriteria? criteria,
-}) {
-  E ??= Mat.empty();
-  F ??= Mat.empty();
-  rvecs ??= VecMat();
-  tvecs ??= VecMat();
-  perViewErrors ??= Mat.empty();
-  criteria ??= TermCriteria(TERM_EPS + TERM_COUNT, 30, 1e-6);
-  final prval = calloc<ffi.Double>();
-  cvRun(
-    () => ccalib3d.cv_stereoCalibrate(
-      objectPoints.ref,
-      imagePoints1.ref,
-      imagePoints2.ref,
-      cameraMatrix1.ref,
-      distCoeffs1.ref,
-      cameraMatrix2.ref,
-      distCoeffs2.ref,
-      imageSize.ref,
-      R.ref,
-      T.ref,
-      E!.ref,
-      F!.ref,
-      rvecs!.ref,
-      tvecs!.ref,
-      perViewErrors!.ref,
-      flags,
-      criteria!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (
-    rval,
-    cameraMatrix1,
-    distCoeffs1,
-    cameraMatrix2,
-    distCoeffs2,
-    R,
-    T,
-    E,
-    F,
-    rvecs,
-    tvecs,
-    perViewErrors
-  );
-}
+// (
+//   double rval,
+//   Mat cameraMatrix1,
+//   Mat distCoeffs1,
+//   Mat cameraMatrix2,
+//   Mat distCoeffs2,
+//   Mat R,
+//   Mat T,
+//   Mat E,
+//   Mat F,
+//   VecMat rvecs,
+//   VecMat tvecs,
+//   Mat perViewErrors
+// ) stereoCalibrate(
+//   VecMat objectPoints,
+//   VecMat imagePoints1,
+//   VecMat imagePoints2,
+//   InputOutputArray cameraMatrix1,
+//   InputOutputArray distCoeffs1,
+//   InputOutputArray cameraMatrix2,
+//   InputOutputArray distCoeffs2,
+//   Size imageSize,
+//   InputOutputArray R,
+//   InputOutputArray T, {
+//   OutputArray? E,
+//   OutputArray? F,
+//   VecMat? rvecs,
+//   VecMat? tvecs,
+//   OutputArray? perViewErrors,
+//   int flags = CALIB_FIX_INTRINSIC,
+//   TermCriteria? criteria,
+// }) {
+//   E ??= Mat.empty();
+//   F ??= Mat.empty();
+//   rvecs ??= VecMat();
+//   tvecs ??= VecMat();
+//   perViewErrors ??= Mat.empty();
+//   criteria ??= TermCriteria(TERM_EPS + TERM_COUNT, 30, 1e-6);
+//   final prval = calloc<ffi.Double>();
+//   cvRun(
+//     () => ccalib3d.cv_stereoCalibrate(
+//       objectPoints.ref,
+//       imagePoints1.ref,
+//       imagePoints2.ref,
+//       cameraMatrix1.ref,
+//       distCoeffs1.ref,
+//       cameraMatrix2.ref,
+//       distCoeffs2.ref,
+//       imageSize.ref,
+//       R.ref,
+//       T.ref,
+//       E!.ref,
+//       F!.ref,
+//       rvecs!.ref,
+//       tvecs!.ref,
+//       perViewErrors!.ref,
+//       flags,
+//       criteria!.ref,
+//       prval,
+//       ffi.nullptr,
+//     ),
+//   );
+//   final rval = prval.value;
+//   calloc.free(prval);
+//   return (
+//     rval,
+//     cameraMatrix1,
+//     distCoeffs1,
+//     cameraMatrix2,
+//     distCoeffs2,
+//     R,
+//     T,
+//     E,
+//     F,
+//     rvecs,
+//     tvecs,
+//     perViewErrors
+//   );
+// }
 
-// void cv::stereoRectify (InputArray cameraMatrix1, InputArray distCoeffs1, InputArray cameraMatrix2, InputArray distCoeffs2, Size imageSize, InputArray R, InputArray T, OutputArray R1, OutputArray R2, OutputArray P1, OutputArray P2, OutputArray Q, int flags=CALIB_ZERO_DISPARITY, double alpha=-1, Size newImageSize=Size(), Rect *validPixROI1=0, Rect *validPixROI2=0);
-(Mat R1, Mat R2, Mat P1, Mat P2, Mat Q) stereoRectify(
-  InputArray cameraMatrix1,
-  InputArray distCoeffs1,
-  InputArray cameraMatrix2,
-  InputArray distCoeffs2,
-  Size imageSize,
-  InputArray R,
-  InputArray T, {
-  OutputArray? R1,
-  OutputArray? R2,
-  OutputArray? P1,
-  OutputArray? P2,
-  OutputArray? Q,
-  int flags = CALIB_ZERO_DISPARITY,
-  double alpha = -1,
-  Size? newImageSize,
-  Rect? validPixROI1,
-  Rect? validPixROI2,
-}) {
-  R1 ??= Mat.empty();
-  R2 ??= Mat.empty();
-  P1 ??= Mat.empty();
-  P2 ??= Mat.empty();
-  Q ??= Mat.empty();
-  newImageSize ??= Size(0, 0);
-  final pValidPixROI1 = validPixROI1 == null ? ffi.nullptr : calloc<cvg.CvRect>();
-  final pValidPixROI2 = validPixROI2 == null ? ffi.nullptr : calloc<cvg.CvRect>();
-  cvRun(
-    () => ccalib3d.cv_stereoRectify(
-      cameraMatrix1.ref,
-      distCoeffs1.ref,
-      cameraMatrix2.ref,
-      distCoeffs2.ref,
-      imageSize.ref,
-      R.ref,
-      T.ref,
-      R1!.ref,
-      R2!.ref,
-      P1!.ref,
-      P2!.ref,
-      Q!.ref,
-      flags,
-      alpha,
-      newImageSize!.ref,
-      pValidPixROI1,
-      pValidPixROI2,
-      ffi.nullptr,
-    ),
-  );
-  if (validPixROI1 != null && pValidPixROI1 != ffi.nullptr) {
-    validPixROI1.x = pValidPixROI1.ref.x;
-    validPixROI1.y = pValidPixROI1.ref.y;
-    validPixROI1.width = pValidPixROI1.ref.width;
-    validPixROI1.height = pValidPixROI1.ref.height;
-    calloc.free(pValidPixROI1);
-  }
-  if (validPixROI2 != null && pValidPixROI2 != ffi.nullptr) {
-    validPixROI2.x = pValidPixROI2.ref.x;
-    validPixROI2.y = pValidPixROI2.ref.y;
-    validPixROI2.width = pValidPixROI2.ref.width;
-    validPixROI2.height = pValidPixROI2.ref.height;
-    calloc.free(pValidPixROI2);
-  }
-  return (R1, R2, P1, P2, Q);
-}
+// // void cv::stereoRectify (InputArray cameraMatrix1, InputArray distCoeffs1, InputArray cameraMatrix2, InputArray distCoeffs2, Size imageSize, InputArray R, InputArray T, OutputArray R1, OutputArray R2, OutputArray P1, OutputArray P2, OutputArray Q, int flags=CALIB_ZERO_DISPARITY, double alpha=-1, Size newImageSize=Size(), Rect *validPixROI1=0, Rect *validPixROI2=0);
+// (Mat R1, Mat R2, Mat P1, Mat P2, Mat Q) stereoRectify(
+//   InputArray cameraMatrix1,
+//   InputArray distCoeffs1,
+//   InputArray cameraMatrix2,
+//   InputArray distCoeffs2,
+//   Size imageSize,
+//   InputArray R,
+//   InputArray T, {
+//   OutputArray? R1,
+//   OutputArray? R2,
+//   OutputArray? P1,
+//   OutputArray? P2,
+//   OutputArray? Q,
+//   int flags = CALIB_ZERO_DISPARITY,
+//   double alpha = -1,
+//   Size? newImageSize,
+//   Rect? validPixROI1,
+//   Rect? validPixROI2,
+// }) {
+//   R1 ??= Mat.empty();
+//   R2 ??= Mat.empty();
+//   P1 ??= Mat.empty();
+//   P2 ??= Mat.empty();
+//   Q ??= Mat.empty();
+//   newImageSize ??= Size(0, 0);
+//   final pValidPixROI1 = validPixROI1 == null ? ffi.nullptr : calloc<cvg.CvRect>();
+//   final pValidPixROI2 = validPixROI2 == null ? ffi.nullptr : calloc<cvg.CvRect>();
+//   cvRun(
+//     () => ccalib3d.cv_stereoRectify(
+//       cameraMatrix1.ref,
+//       distCoeffs1.ref,
+//       cameraMatrix2.ref,
+//       distCoeffs2.ref,
+//       imageSize.ref,
+//       R.ref,
+//       T.ref,
+//       R1!.ref,
+//       R2!.ref,
+//       P1!.ref,
+//       P2!.ref,
+//       Q!.ref,
+//       flags,
+//       alpha,
+//       newImageSize!.ref,
+//       pValidPixROI1,
+//       pValidPixROI2,
+//       ffi.nullptr,
+//     ),
+//   );
+//   if (validPixROI1 != null && pValidPixROI1 != ffi.nullptr) {
+//     validPixROI1.x = pValidPixROI1.ref.x;
+//     validPixROI1.y = pValidPixROI1.ref.y;
+//     validPixROI1.width = pValidPixROI1.ref.width;
+//     validPixROI1.height = pValidPixROI1.ref.height;
+//     calloc.free(pValidPixROI1);
+//   }
+//   if (validPixROI2 != null && pValidPixROI2 != ffi.nullptr) {
+//     validPixROI2.x = pValidPixROI2.ref.x;
+//     validPixROI2.y = pValidPixROI2.ref.y;
+//     validPixROI2.width = pValidPixROI2.ref.width;
+//     validPixROI2.height = pValidPixROI2.ref.height;
+//     calloc.free(pValidPixROI2);
+//   }
+//   return (R1, R2, P1, P2, Q);
+// }
 
-// bool cv::stereoRectifyUncalibrated (InputArray points1, InputArray points2, InputArray F, Size imgSize, OutputArray H1, OutputArray H2, double threshold=5);
-(bool rval, Mat H1, Mat H2) stereoRectifyUncalibrated(
-  InputArray points1,
-  InputArray points2,
-  InputArray F,
-  Size imgSize, {
-  OutputArray? H1,
-  OutputArray? H2,
-  double threshold = 5,
-}) {
-  H1 ??= Mat.empty();
-  H2 ??= Mat.empty();
-  final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_stereoRectifyUncalibrated(
-      points1.ref,
-      points2.ref,
-      F.ref,
-      imgSize.ref,
-      H1!.ref,
-      H2!.ref,
-      threshold,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, H1, H2);
-}
+// // bool cv::stereoRectifyUncalibrated (InputArray points1, InputArray points2, InputArray F, Size imgSize, OutputArray H1, OutputArray H2, double threshold=5);
+// (bool rval, Mat H1, Mat H2) stereoRectifyUncalibrated(
+//   InputArray points1,
+//   InputArray points2,
+//   InputArray F,
+//   Size imgSize, {
+//   OutputArray? H1,
+//   OutputArray? H2,
+//   double threshold = 5,
+// }) {
+//   H1 ??= Mat.empty();
+//   H2 ??= Mat.empty();
+//   final prval = calloc<ffi.Bool>();
+//   cvRun(
+//     () => ccalib3d.cv_stereoRectifyUncalibrated(
+//       points1.ref,
+//       points2.ref,
+//       F.ref,
+//       imgSize.ref,
+//       H1!.ref,
+//       H2!.ref,
+//       threshold,
+//       prval,
+//       ffi.nullptr,
+//     ),
+//   );
+//   final rval = prval.value;
+//   calloc.free(prval);
+//   return (rval, H1, H2);
+// }
 
-// void cv::triangulatePoints (InputArray projMatr1, InputArray projMatr2, InputArray projPoints1, InputArray projPoints2, OutputArray points4D);
+/// This function reconstructs 3-dimensional points (in homogeneous coordinates) by using their observations with a stereo camera.
+///
+/// void cv::triangulatePoints (InputArray projMatr1, InputArray projMatr2, InputArray projPoints1, InputArray projPoints2, OutputArray points4D);
+///
+/// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gad3fc9a0c82b08df034234979960b778c
 Mat triangulatePoints(
   InputArray projMatr1,
   InputArray projMatr2,
@@ -1505,12 +1598,12 @@ Mat triangulatePoints(
   return points4D;
 }
 
-// Transforms an image to compensate for lens distortion.
-// The function transforms an image to compensate radial and tangential lens distortion.
-// The function is simply a combination of initUndistortRectifyMap (with unity R ) and remap (with bilinear interpolation). See the former function for details of the transformation being performed.
-// Those pixels in the destination image, for which there is no correspondent pixels in the source image, are filled with zeros (black color).
-// A particular subset of the source image that will be visible in the corrected image can be regulated by newCameraMatrix. You can use getOptimalNewCameraMatrix to compute the appropriate newCameraMatrix depending on your requirements.
-// The camera matrix and the distortion parameters can be determined using calibrateCamera. If the resolution of images is different from the resolution used at the calibration stage, fx,fy,cx and cy need to be scaled accordingly, while the distortion coefficients remain the same.
+/// Transforms an image to compensate for lens distortion.
+/// The function transforms an image to compensate radial and tangential lens distortion.
+/// The function is simply a combination of initUndistortRectifyMap (with unity R ) and remap (with bilinear interpolation). See the former function for details of the transformation being performed.
+/// Those pixels in the destination image, for which there is no correspondent pixels in the source image, are filled with zeros (black color).
+/// A particular subset of the source image that will be visible in the corrected image can be regulated by newCameraMatrix. You can use getOptimalNewCameraMatrix to compute the appropriate newCameraMatrix depending on your requirements.
+/// The camera matrix and the distortion parameters can be determined using calibrateCamera. If the resolution of images is different from the resolution used at the calibration stage, fx,fy,cx and cy need to be scaled accordingly, while the distortion coefficients remain the same.
 Mat undistort(
   InputArray src,
   InputArray cameraMatrix,
@@ -1558,10 +1651,10 @@ Mat undistortImagePoints(
   return dst;
 }
 
-// UndistortPoints transforms points to compensate for lens distortion
-//
-// For further details, please see:
-// https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga55c716492470bfe86b0ee9bf3a1f0f7e
+/// UndistortPoints transforms points to compensate for lens distortion
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d9/d0c/group__calib3d.html#ga55c716492470bfe86b0ee9bf3a1f0f7e
 Mat undistortPoints(
   InputArray src,
   InputArray cameraMatrix,
