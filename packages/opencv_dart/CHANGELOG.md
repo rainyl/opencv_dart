@@ -1,4 +1,4 @@
-## 1.3.5
+## 1.4.0
 
 * update to OpenCV 4.11.0
 * change vector wrappers to std::vector
