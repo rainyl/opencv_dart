@@ -6,6 +6,10 @@
 version: 2
 updates:
   - package-ecosystem: "pub"
-    directory: "/"
+    directories:
+      - "packages/dartcv"
+      - "packages/opencv_core"
+      - "packages/opencv_dart"
+
     schedule:
       interval: "weekly"
