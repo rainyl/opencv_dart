@@ -38,6 +38,8 @@ void main() async {
     expect(frame.isEmpty, false);
     expect(vc.codec, "h264");
 
+    await vc.grabAsync();
+
     expect(cv.VideoCapture.toCodec("h264"), closeTo(875967080, 1e-3));
     // cv.imwrite("cv.VideoCapture.fromFile.png", frame);
   });

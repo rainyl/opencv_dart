@@ -82,8 +82,8 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
   /// Grabs the next frame from video file or capturing device.
   ///
-  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  void grab() => cvideoio.cv_VideoCapture_grab(ref, ffi.nullptr);
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#ae38c2a053d39d6b20c9c649e08ff0146
+  void grab() => cvRun(() => cvideoio.cv_VideoCapture_grab(ref, ffi.nullptr));
 
   (bool, Mat) read({Mat? m}) {
     m ??= Mat.empty();

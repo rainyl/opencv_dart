@@ -50,6 +50,8 @@ void main() async {
     expect(success, true);
     expect(frame.isEmpty, false);
 
+    vc.grab();
+
     expect(vc.getBackendName(), isNotEmpty);
 
     expect(vc.codec, "h264");
