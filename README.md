@@ -156,6 +156,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Gold872">
+                    <img src="https://avatars.githubusercontent.com/u/91761103?v=4" width="100;" alt="Gold872"/>
+                    <br />
+                    <sub><b>Gold87</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Jiinwoo">
                     <img src="https://avatars.githubusercontent.com/u/46522752?v=4" width="100;" alt="Jiinwoo"/>
                     <br />
@@ -169,6 +176,8 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>Escaton615</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/mdeleau">
                     <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
@@ -176,8 +185,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>mdeleau</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/totemat">
                     <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
