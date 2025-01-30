@@ -1,3 +1,7 @@
+## 1.1.3-WIP
+
+* add `VideoCapture.grabAsync`
+
 ## 1.1.2
 
 * add more functions in `calib3d`
