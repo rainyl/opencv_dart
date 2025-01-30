@@ -90,9 +90,9 @@
         
             <g transform="translate(60, 440)">
                 <text class="data-row" x="0" y="15">Total: </text>
-                <text class="metric-value" x="50" y="15">86.55 MB</text>
+                <text class="metric-value" x="50" y="15">85.64 MB</text>
                 <text class="data-row" x="200" y="15">Package: </text>
-                <text class="metric-value" x="280" y="15">66.30 MB</text>
+                <text class="metric-value" x="280" y="15">65.39 MB</text>
             </g>
             
         <g transform="translate(40, 505)" filter="url(#dropShadow)">
