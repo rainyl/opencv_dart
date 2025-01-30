@@ -41,6 +41,14 @@ extension VideoCaptureAsync on VideoCapture {
     );
   }
 
+  /// Grabs the next frame from video file or capturing device.
+  ///
+  /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
+  Future<void> grabAsync() => cvRunAsync0(
+        (callback) => cvideoio.cv_VideoCapture_grab(ref, callback),
+        (c) => c.complete(),
+      );
+
   Future<(bool, Mat)> readAsync({Mat? m}) async {
     m ??= Mat.empty();
     final p = calloc<ffi.Bool>();
@@ -196,9 +204,7 @@ extension VideoWriterAsync on VideoWriter {
   Future<void> writeAsync(InputArray image) async {
     return cvRunAsync0(
       (callback) => cvideoio.cv_VideoWriter_write(ref, image.ref, callback),
-      (c) {
-        c.complete();
-      },
+      (c) => c.complete(),
     );
   }
 }
