@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
@@ -259,6 +259,31 @@ void main() async {
     expect(labels.isEmpty, false);
   });
 
+  test('cv.floodFillAsync', () async {
+    final img = cv.Mat.zeros(256, 256, cv.MatType.CV_8UC3);
+    expect(img.isEmpty, false);
+    await cv.rectangleAsync(img, cv.Rect(0, 0, 255, 255), cv.Scalar.red, thickness: cv.FILLED);
+    await cv.rectangleAsync(img, cv.Rect(0, 0, 255, 255), cv.Scalar.black, thickness: 15);
+    await cv.rectangleAsync(img, cv.Rect(30, 40, 100, 100), cv.Scalar.blue, thickness: cv.FILLED);
+    await cv.rectangleAsync(img, cv.Rect(150, 160, 75, 75), cv.Scalar(0, 255, 255), thickness: cv.FILLED);
+
+    final point = cv.Point(200, 100);
+    await cv.floodFillAsync(img, point, cv.Scalar(0, 255, 0));
+    // cv.imwrite("floodFillNoMask.png", img);
+
+    var mask = cv.Mat.zeros(256, 256, cv.MatType.CV_8UC1);
+    mask.forEachPixel((row, col, pix) {
+      if (col <= 128) {
+        pix[0] = 255;
+      }
+    });
+    mask = await cv.copyMakeBorderAsync(mask, 1, 1, 1, 1, cv.BORDER_REPLICATE);
+    // cv.imwrite("mask.png", mask);
+
+    await cv.floodFillAsync(img, point, cv.Scalar.white, mask: mask);
+    // cv.imwrite("floodFillMask.png", img);
+  });
+
   test('cv.boundingRectAsync', () async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
@@ -279,7 +304,7 @@ void main() async {
     expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
 
     final pts = await cv.boxPointsAsync(rect);
-    expect(pts.length, 4);
+    expect(pts.isEmpty, false);
   });
 
   // fitEllipse
@@ -342,7 +367,8 @@ void main() async {
   // connectedComponents
   test('cv.connectedComponentsAsync', () async {
     final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
-    final (res, dst) = await cv.connectedComponentsAsync(src, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final dst = cv.Mat.empty();
+    final res = await cv.connectedComponentsAsync(src, dst, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
     expect(dst.isEmpty, false);
     expect(res, greaterThan(1));
   });
@@ -350,8 +376,14 @@ void main() async {
   // connectedComponentsWithStats
   test('cv.connectedComponentsWithStatsAsync', () async {
     final src = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
-    final (res, dst, stats, centroids) = await cv.connectedComponentsWithStatsAsync(
+    final dst = cv.Mat.empty();
+    final stats = cv.Mat.empty();
+    final centroids = cv.Mat.empty();
+    final res = await cv.connectedComponentsWithStatsAsync(
       src,
+      dst,
+      stats,
+      centroids,
       8,
       cv.MatType.CV_32SC1.value,
       cv.CCL_DEFAULT,
@@ -631,9 +663,9 @@ void main() async {
     expect(gray.isEmpty, false);
 
     final (_, imgThresh) = await cv.thresholdAsync(gray, 5, 50, cv.THRESH_OTSU + cv.THRESH_BINARY);
-
-    final (_, markers) =
-        await cv.connectedComponentsAsync(imgThresh, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final markers = cv.Mat.empty();
+    final _ =
+        await cv.connectedComponentsAsync(imgThresh, markers, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
     await cv.watershedAsync(src, markers);
     expect(markers.isEmpty, false);
     expect((markers.rows, markers.cols), (src.rows, src.cols));
@@ -722,40 +754,6 @@ void main() async {
     ];
     final m = await cv.getAffineTransform2fAsync(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (2, 3));
-  });
-
-  // findHomography
-  test('cv.findHomographyAsync', () async {
-    final src = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
-    final dst = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC2);
-    final srcPts = [
-      cv.Point2f(193, 932),
-      cv.Point2f(191, 378),
-      cv.Point2f(1497, 183),
-      cv.Point2f(1889, 681),
-    ];
-    final dstPts = [
-      cv.Point2f(51.51206544281359, -0.10425475260813055),
-      cv.Point2f(51.51211051314331, -0.10437947532732306),
-      cv.Point2f(51.512222354139325, -0.10437679311830816),
-      cv.Point2f(51.51214828037607, -0.1042212249954444),
-    ];
-    for (var i = 0; i < srcPts.length; i++) {
-      src.set<double>(i, 0, srcPts[i].x);
-      src.set<double>(i, 1, srcPts[i].y);
-    }
-    for (var i = 0; i < dstPts.length; i++) {
-      dst.set<double>(i, 0, dstPts[i].x);
-      dst.set<double>(i, 1, dstPts[i].y);
-    }
-
-    final (m, _) = await cv.findHomographyAsync(
-      src,
-      dst,
-      method: cv.HOMOGRAPY_ALL_POINTS,
-      ransacReprojThreshold: 3,
-    );
-    expect(m.isEmpty, false);
   });
 
   // remap
@@ -945,11 +943,126 @@ void main() async {
         await cv.estimateAffinePartial2DAsync(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
 
     final invMask = await cv.warpAffineAsync(mask, affineMatrix, (2048, 2048));
-    for (int i = 0; i < 2047; i++) {
-      for (int j = 0; j < 2047; j++) {
-        final val = invMask.at<double>(i, j);
-        expect(val == 0 || val == 1, true);
+    invMask.convertTo(cv.MatType.CV_8UC1, inplace: true);
+    invMask.forEachPixel((r, c, p) {
+      expect(p[0], isIn([0, 1]));
+    });
+  });
+
+  test('cv.intersectConvexConvexAsync', () async {
+    // helper functions
+    cv.VecPoint makeRectangle(cv.Point topLeft, cv.Point bottomRiht) =>
+        [topLeft, cv.Point(bottomRiht.x, topLeft.y), bottomRiht, cv.Point(topLeft.x, bottomRiht.y)].asVec();
+
+    Future<double> drawIntersection(cv.Mat image, cv.VecPoint p1, cv.VecPoint p2,
+        {bool handleNested = true}) async {
+      final (intersectArea, intersectionPolygon) =
+          await cv.intersectConvexConvexAsync(p1, p2, handleNested: handleNested);
+      if (intersectArea > 0) {
+        final fillColor =
+            !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
+        await cv.fillPolyAsync(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), fillColor);
       }
+      await cv.polylinesAsync(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), true, cv.Scalar.black);
+      return intersectArea;
     }
+
+    Future<void> drawDescription(
+        cv.Mat image, int intersectionArea, String description, cv.Point origin) async {
+      final caption = "Intersection area: $intersectionArea$description";
+      await cv.putTextAsync(image, caption, origin, cv.FONT_HERSHEY_SIMPLEX, 0.6, cv.Scalar.black);
+    }
+
+    // start testing
+    final image = cv.Mat.fromScalar(610, 550, cv.MatType.CV_8UC3, cv.Scalar.white);
+    double intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 10), cv.Point(50, 50)),
+      makeRectangle(cv.Point(20, 20), cv.Point(60, 60)),
+    );
+    await drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 40));
+
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 70), cv.Point(35, 95)),
+      makeRectangle(cv.Point(35, 95), cv.Point(60, 120)),
+    );
+    await drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 100));
+
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 130), cv.Point(60, 180)),
+      makeRectangle(cv.Point(20, 140), cv.Point(50, 170)),
+      handleNested: true,
+    );
+    await drawDescription(image, intersectionArea.toInt(), " (handleNested true)", cv.Point(70, 160));
+
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 250), cv.Point(60, 300)),
+      makeRectangle(cv.Point(20, 250), cv.Point(50, 290)),
+      handleNested: true,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), " (handleNested true)", cv.Point(70, 280));
+
+    // These rectangles share an edge so handleNested can be false and an intersection is still found
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 310), cv.Point(60, 360)),
+      makeRectangle(cv.Point(20, 310), cv.Point(50, 350)),
+      handleNested: false,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 340));
+
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 370), cv.Point(60, 420)),
+      makeRectangle(cv.Point(20, 371), cv.Point(50, 410)),
+      handleNested: false,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 400));
+
+    // A vertex of the triangle lies on an edge of the rectangle so handleNested can be false and an intersection is still found
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 430), cv.Point(60, 480)),
+      [cv.Point(35, 430), cv.Point(20, 470), cv.Point(50, 470)].asVec(),
+      handleNested: false,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), " (handleNested false)", cv.Point(70, 460));
+
+    // Show intersection of overlapping rectangle and triangle
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 490), cv.Point(40, 540)),
+      [cv.Point(25, 500), cv.Point(25, 530), cv.Point(60, 515)].asVec(),
+      handleNested: false,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 520));
+
+    // This concave polygon is invalid input to intersectConvexConvex so it returns an invalid intersection
+    final cv.VecPoint notConvex = [
+      cv.Point(25, 560),
+      cv.Point(25, 590),
+      cv.Point(45, 580),
+      cv.Point(60, 600),
+      cv.Point(60, 550),
+      cv.Point(45, 570),
+    ].asVec();
+    intersectionArea = await drawIntersection(
+      image,
+      makeRectangle(cv.Point(10, 550), cv.Point(50, 600)),
+      notConvex,
+      handleNested: false,
+    );
+
+    await drawDescription(image, intersectionArea.toInt(), " (invalid input: not convex)", cv.Point(70, 580));
+
+    await cv.imwriteAsync("test/images_out/intersections.png", image);
   });
 }

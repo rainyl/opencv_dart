@@ -1,7 +1,7 @@
 @Tags(["no-local-files"])
 import 'dart:io';
 
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 bool checkCaffeNet(cv.Net net) {
@@ -45,8 +45,9 @@ bool checkCaffeNet(cv.Net net) {
   expect((minLoc.x, minLoc.y), (955, 0));
   expect((maxLoc.x, maxLoc.y), (812, 0));
 
-  final perf = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
 
   return true;
 }
@@ -76,8 +77,9 @@ bool checkTensorflow(cv.Net net) {
   expect((minLoc.x, minLoc.y), (481, 0));
   expect((maxLoc.x, maxLoc.y), (234, 0));
 
-  final perf = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
 
   return true;
 }
@@ -112,8 +114,9 @@ bool checkOnnx(cv.Net net) {
   // final probMatAsync = probAsync.get();
   // expect(probMatAsync.isEmpty, false);
 
-  final perf = net.getPerfProfile();
+  final (perf, layerTimes) = net.getPerfProfile();
   expect(perf, greaterThan(0));
+  expect(layerTimes, isNotEmpty);
   return true;
 }
 
@@ -201,7 +204,8 @@ void main() async {
   });
 
   test('cv.Net.fromTFLite', skip: true, () {
-    final model = cv.Net.fromTFLite("test/models/googlenet_float32.tflite");
+    final model = cv.Net.fromTFLite("test/models/face_landmark.tflite");
+    expect(model.getUnconnectedOutLayersNames(), isNotEmpty);
     checkTflite(model);
   });
 
@@ -222,6 +226,14 @@ void main() async {
     expect(blob.isEmpty, false);
   });
 
+  test("cv.getAvailableBackends, getAvailableTargets", skip: true, () {
+    cv.enableModelDiagnostics(true);
+    final backends = cv.getAvailableBackends();
+    expect(backends, isNotEmpty);
+    final targets = cv.getAvailableTargets(cv.DNN_BACKEND_DEFAULT);
+    expect(targets, isNotEmpty);
+  });
+
   test('cv.blobFromImages, cv.imagesFromBlob, cv.getBlobChannel', () {
     final imgs = [
       cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
@@ -230,7 +242,7 @@ void main() async {
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
-    expect(cv.getBlobSize(blob), cv.Scalar(2, 3, 480, 512));
+    expect(cv.getBlobSize(blob), [2, 3, 480, 512]);
 
     final images = cv.imagesFromBlob(blob);
     expect(images.length, 2);
@@ -250,7 +262,7 @@ void main() async {
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
-    expect(cv.getBlobSize(blob), cv.Scalar(2, 1, 480, 512));
+    expect(cv.getBlobSize(blob), [2, 1, 480, 512]);
   });
 
   test('cv.NMSBoxes', () {

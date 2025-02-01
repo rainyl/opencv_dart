@@ -4,30 +4,27 @@ description: |
 output:
   bindings: ../lib/src/g/dnn.g.dart
   symbol-file:
-    output: 'package:opencv_dart/src/g/dnn.yaml'
-    import-path: 'package:opencv_dart/src/g/dnn.g.dart'
+    output: 'package:dartcv4/src/g/dnn.yaml'
+    import-path: 'package:dartcv4/src/g/dnn.g.dart'
 ffi-native:
-  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+  assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:opencv_dart/src/g/types.yaml'
-compiler-opts: "-Isrc"
+    - 'package:dartcv4/src/g/types.yaml'
+compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dnn/asyncarray.h
-    - ../src/dnn/dnn.h
-    - ../src/dnn/dnn_async.h
+    - ../src/dartcv/dnn/dnn.h
   include-directives:
-    - ../src/dnn/asyncarray.h
-    - ../src/dnn/dnn.h
-    - ../src/dnn/dnn_async.h
+    - ../src/dartcv/dnn/dnn.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

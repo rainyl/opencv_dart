@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
@@ -97,12 +97,12 @@ void main() async {
   });
 
   test('cv.ORB', () {
-    // FIXME: wont exit, someting wrong
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
     final ka = cv.ORB.empty();
     final kp = ka.detect(img);
+
     expect(kp.length, 500);
 
     final orb = cv.ORB.create();

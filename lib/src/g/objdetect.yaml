@@ -1,231 +1,125 @@
 format_version: 1.0.0
 files:
-  package:opencv_dart/src/g/objdetect.g.dart:
+  package:dartcv4/src/g/objdetect.g.dart:
     used-config:
       ffi-native: true
     symbols:
-      c:@F@CascadeClassifier_Close:
-        name: CascadeClassifier_Close
-      c:@F@CascadeClassifier_DetectMultiScale:
-        name: CascadeClassifier_DetectMultiScale
-      c:@F@CascadeClassifier_DetectMultiScale2:
-        name: CascadeClassifier_DetectMultiScale2
-      c:@F@CascadeClassifier_DetectMultiScale2_Async:
-        name: CascadeClassifier_DetectMultiScale2_Async
-      c:@F@CascadeClassifier_DetectMultiScale3:
-        name: CascadeClassifier_DetectMultiScale3
-      c:@F@CascadeClassifier_DetectMultiScale3_Async:
-        name: CascadeClassifier_DetectMultiScale3_Async
-      c:@F@CascadeClassifier_DetectMultiScaleWithParams:
-        name: CascadeClassifier_DetectMultiScaleWithParams
-      c:@F@CascadeClassifier_DetectMultiScaleWithParams_Async:
-        name: CascadeClassifier_DetectMultiScaleWithParams_Async
-      c:@F@CascadeClassifier_DetectMultiScale_Async:
-        name: CascadeClassifier_DetectMultiScale_Async
-      c:@F@CascadeClassifier_Empty:
-        name: CascadeClassifier_Empty
-      c:@F@CascadeClassifier_Empty_Async:
-        name: CascadeClassifier_Empty_Async
-      c:@F@CascadeClassifier_Load:
-        name: CascadeClassifier_Load
-      c:@F@CascadeClassifier_Load_Async:
-        name: CascadeClassifier_Load_Async
-      c:@F@CascadeClassifier_New:
-        name: CascadeClassifier_New
-      c:@F@CascadeClassifier_NewFromFile:
-        name: CascadeClassifier_NewFromFile
-      c:@F@CascadeClassifier_NewFromFile_Async:
-        name: CascadeClassifier_NewFromFile_Async
-      c:@F@CascadeClassifier_New_Async:
-        name: CascadeClassifier_New_Async
-      c:@F@CascadeClassifier_getFeatureType:
-        name: CascadeClassifier_getFeatureType
-      c:@F@CascadeClassifier_getFeatureType_Async:
-        name: CascadeClassifier_getFeatureType_Async
-      c:@F@CascadeClassifier_getOriginalWindowSize:
-        name: CascadeClassifier_getOriginalWindowSize
-      c:@F@CascadeClassifier_getOriginalWindowSize_Async:
-        name: CascadeClassifier_getOriginalWindowSize_Async
-      c:@F@CascadeClassifier_isOldFormatCascade:
-        name: CascadeClassifier_isOldFormatCascade
-      c:@F@CascadeClassifier_isOldFormatCascade_Async:
-        name: CascadeClassifier_isOldFormatCascade_Async
-      c:@F@FaceDetectorYN_Close:
-        name: FaceDetectorYN_Close
-      c:@F@FaceDetectorYN_Detect:
-        name: FaceDetectorYN_Detect
-      c:@F@FaceDetectorYN_Detect_Async:
-        name: FaceDetectorYN_Detect_Async
-      c:@F@FaceDetectorYN_GetInputSize:
-        name: FaceDetectorYN_GetInputSize
-      c:@F@FaceDetectorYN_GetInputSize_Async:
-        name: FaceDetectorYN_GetInputSize_Async
-      c:@F@FaceDetectorYN_GetNMSThreshold:
-        name: FaceDetectorYN_GetNMSThreshold
-      c:@F@FaceDetectorYN_GetNMSThreshold_Async:
-        name: FaceDetectorYN_GetNMSThreshold_Async
-      c:@F@FaceDetectorYN_GetScoreThreshold:
-        name: FaceDetectorYN_GetScoreThreshold
-      c:@F@FaceDetectorYN_GetScoreThreshold_Async:
-        name: FaceDetectorYN_GetScoreThreshold_Async
-      c:@F@FaceDetectorYN_GetTopK:
-        name: FaceDetectorYN_GetTopK
-      c:@F@FaceDetectorYN_GetTopK_Async:
-        name: FaceDetectorYN_GetTopK_Async
-      c:@F@FaceDetectorYN_New:
-        name: FaceDetectorYN_New
-      c:@F@FaceDetectorYN_NewFromBuffer:
-        name: FaceDetectorYN_NewFromBuffer
-      c:@F@FaceDetectorYN_NewFromBuffer_Async:
-        name: FaceDetectorYN_NewFromBuffer_Async
-      c:@F@FaceDetectorYN_New_Async:
-        name: FaceDetectorYN_New_Async
-      c:@F@FaceDetectorYN_SetInputSize:
-        name: FaceDetectorYN_SetInputSize
-      c:@F@FaceDetectorYN_SetInputSize_Async:
-        name: FaceDetectorYN_SetInputSize_Async
-      c:@F@FaceDetectorYN_SetNMSThreshold:
-        name: FaceDetectorYN_SetNMSThreshold
-      c:@F@FaceDetectorYN_SetNMSThreshold_Async:
-        name: FaceDetectorYN_SetNMSThreshold_Async
-      c:@F@FaceDetectorYN_SetScoreThreshold:
-        name: FaceDetectorYN_SetScoreThreshold
-      c:@F@FaceDetectorYN_SetScoreThreshold_Async:
-        name: FaceDetectorYN_SetScoreThreshold_Async
-      c:@F@FaceDetectorYN_SetTopK:
-        name: FaceDetectorYN_SetTopK
-      c:@F@FaceDetectorYN_SetTopK_Async:
-        name: FaceDetectorYN_SetTopK_Async
-      c:@F@FaceRecognizerSF_AlignCrop:
-        name: FaceRecognizerSF_AlignCrop
-      c:@F@FaceRecognizerSF_AlignCrop_Async:
-        name: FaceRecognizerSF_AlignCrop_Async
-      c:@F@FaceRecognizerSF_Close:
-        name: FaceRecognizerSF_Close
-      c:@F@FaceRecognizerSF_Feature:
-        name: FaceRecognizerSF_Feature
-      c:@F@FaceRecognizerSF_Feature_Async:
-        name: FaceRecognizerSF_Feature_Async
-      c:@F@FaceRecognizerSF_Match:
-        name: FaceRecognizerSF_Match
-      c:@F@FaceRecognizerSF_Match_Async:
-        name: FaceRecognizerSF_Match_Async
-      c:@F@FaceRecognizerSF_New:
-        name: FaceRecognizerSF_New
-      c:@F@FaceRecognizerSF_New_Async:
-        name: FaceRecognizerSF_New_Async
-      c:@F@GroupRectangles:
-        name: GroupRectangles
-      c:@F@GroupRectangles_Async:
-        name: GroupRectangles_Async
-      c:@F@HOGDescriptor_Close:
-        name: HOGDescriptor_Close
-      c:@F@HOGDescriptor_Compute:
-        name: HOGDescriptor_Compute
-      c:@F@HOGDescriptor_Compute_Async:
-        name: HOGDescriptor_Compute_Async
-      c:@F@HOGDescriptor_Detect:
-        name: HOGDescriptor_Detect
-      c:@F@HOGDescriptor_Detect2:
-        name: HOGDescriptor_Detect2
-      c:@F@HOGDescriptor_Detect2_Async:
-        name: HOGDescriptor_Detect2_Async
-      c:@F@HOGDescriptor_DetectMultiScale:
-        name: HOGDescriptor_DetectMultiScale
-      c:@F@HOGDescriptor_DetectMultiScaleWithParams:
-        name: HOGDescriptor_DetectMultiScaleWithParams
-      c:@F@HOGDescriptor_DetectMultiScaleWithParams_Async:
-        name: HOGDescriptor_DetectMultiScaleWithParams_Async
-      c:@F@HOGDescriptor_DetectMultiScale_Async:
-        name: HOGDescriptor_DetectMultiScale_Async
-      c:@F@HOGDescriptor_Detect_Async:
-        name: HOGDescriptor_Detect_Async
-      c:@F@HOGDescriptor_Load:
-        name: HOGDescriptor_Load
-      c:@F@HOGDescriptor_Load_Async:
-        name: HOGDescriptor_Load_Async
-      c:@F@HOGDescriptor_New:
-        name: HOGDescriptor_New
-      c:@F@HOGDescriptor_NewFromFile:
-        name: HOGDescriptor_NewFromFile
-      c:@F@HOGDescriptor_NewFromFile_Async:
-        name: HOGDescriptor_NewFromFile_Async
-      c:@F@HOGDescriptor_New_Async:
-        name: HOGDescriptor_New_Async
-      c:@F@HOGDescriptor_SetSVMDetector:
-        name: HOGDescriptor_SetSVMDetector
-      c:@F@HOGDescriptor_SetSVMDetector_Async:
-        name: HOGDescriptor_SetSVMDetector_Async
-      c:@F@HOGDescriptor_computeGradient:
-        name: HOGDescriptor_computeGradient
-      c:@F@HOGDescriptor_computeGradient_Async:
-        name: HOGDescriptor_computeGradient_Async
-      c:@F@HOGDescriptor_getDaimlerPeopleDetector:
-        name: HOGDescriptor_getDaimlerPeopleDetector
-      c:@F@HOGDescriptor_getDaimlerPeopleDetector_Async:
-        name: HOGDescriptor_getDaimlerPeopleDetector_Async
-      c:@F@HOGDescriptor_getDescriptorSize:
-        name: HOGDescriptor_getDescriptorSize
-      c:@F@HOGDescriptor_getDescriptorSize_Async:
-        name: HOGDescriptor_getDescriptorSize_Async
-      c:@F@HOGDescriptor_getWinSigma:
-        name: HOGDescriptor_getWinSigma
-      c:@F@HOGDescriptor_getWinSigma_Async:
-        name: HOGDescriptor_getWinSigma_Async
-      c:@F@HOGDescriptor_groupRectangles:
-        name: HOGDescriptor_groupRectangles
-      c:@F@HOGDescriptor_groupRectangles_Async:
-        name: HOGDescriptor_groupRectangles_Async
-      c:@F@HOG_GetDefaultPeopleDetector:
-        name: HOG_GetDefaultPeopleDetector
-      c:@F@HOG_GetDefaultPeopleDetector_Async:
-        name: HOG_GetDefaultPeopleDetector_Async
-      c:@F@QRCodeDetector_Close:
-        name: QRCodeDetector_Close
-      c:@F@QRCodeDetector_Decode:
-        name: QRCodeDetector_Decode
-      c:@F@QRCodeDetector_Decode_Async:
-        name: QRCodeDetector_Decode_Async
-      c:@F@QRCodeDetector_Detect:
-        name: QRCodeDetector_Detect
-      c:@F@QRCodeDetector_DetectAndDecode:
-        name: QRCodeDetector_DetectAndDecode
-      c:@F@QRCodeDetector_DetectAndDecodeMulti:
-        name: QRCodeDetector_DetectAndDecodeMulti
-      c:@F@QRCodeDetector_DetectAndDecodeMulti_Async:
-        name: QRCodeDetector_DetectAndDecodeMulti_Async
-      c:@F@QRCodeDetector_DetectAndDecode_Async:
-        name: QRCodeDetector_DetectAndDecode_Async
-      c:@F@QRCodeDetector_DetectMulti:
-        name: QRCodeDetector_DetectMulti
-      c:@F@QRCodeDetector_DetectMulti_Async:
-        name: QRCodeDetector_DetectMulti_Async
-      c:@F@QRCodeDetector_Detect_Async:
-        name: QRCodeDetector_Detect_Async
-      c:@F@QRCodeDetector_New:
-        name: QRCodeDetector_New
-      c:@F@QRCodeDetector_New_Async:
-        name: QRCodeDetector_New_Async
-      c:@F@QRCodeDetector_decodeCurved:
-        name: QRCodeDetector_decodeCurved
-      c:@F@QRCodeDetector_decodeCurved_Async:
-        name: QRCodeDetector_decodeCurved_Async
-      c:@F@QRCodeDetector_detectAndDecodeCurved:
-        name: QRCodeDetector_detectAndDecodeCurved
-      c:@F@QRCodeDetector_detectAndDecodeCurved_Async:
-        name: QRCodeDetector_detectAndDecodeCurved_Async
-      c:@F@QRCodeDetector_setEpsX:
-        name: QRCodeDetector_setEpsX
-      c:@F@QRCodeDetector_setEpsX_Async:
-        name: QRCodeDetector_setEpsX_Async
-      c:@F@QRCodeDetector_setEpsY:
-        name: QRCodeDetector_setEpsY
-      c:@F@QRCodeDetector_setEpsY_Async:
-        name: QRCodeDetector_setEpsY_Async
-      c:@F@QRCodeDetector_setUseAlignmentMarkers:
-        name: QRCodeDetector_setUseAlignmentMarkers
-      c:@F@QRCodeDetector_setUseAlignmentMarkers_Async:
-        name: QRCodeDetector_setUseAlignmentMarkers_Async
+      c:@F@cv_CascadeClassifier_close:
+        name: cv_CascadeClassifier_close
+      c:@F@cv_CascadeClassifier_create:
+        name: cv_CascadeClassifier_create
+      c:@F@cv_CascadeClassifier_create_1:
+        name: cv_CascadeClassifier_create_1
+      c:@F@cv_CascadeClassifier_detectMultiScale:
+        name: cv_CascadeClassifier_detectMultiScale
+      c:@F@cv_CascadeClassifier_detectMultiScale_1:
+        name: cv_CascadeClassifier_detectMultiScale_1
+      c:@F@cv_CascadeClassifier_detectMultiScale_2:
+        name: cv_CascadeClassifier_detectMultiScale_2
+      c:@F@cv_CascadeClassifier_detectMultiScale_3:
+        name: cv_CascadeClassifier_detectMultiScale_3
+      c:@F@cv_CascadeClassifier_empty:
+        name: cv_CascadeClassifier_empty
+      c:@F@cv_CascadeClassifier_getFeatureType:
+        name: cv_CascadeClassifier_getFeatureType
+      c:@F@cv_CascadeClassifier_getOriginalWindowSize:
+        name: cv_CascadeClassifier_getOriginalWindowSize
+      c:@F@cv_CascadeClassifier_isOldFormatCascade:
+        name: cv_CascadeClassifier_isOldFormatCascade
+      c:@F@cv_CascadeClassifier_load:
+        name: cv_CascadeClassifier_load
+      c:@F@cv_FaceDetectorYN_close:
+        name: cv_FaceDetectorYN_close
+      c:@F@cv_FaceDetectorYN_create:
+        name: cv_FaceDetectorYN_create
+      c:@F@cv_FaceDetectorYN_create_1:
+        name: cv_FaceDetectorYN_create_1
+      c:@F@cv_FaceDetectorYN_detect:
+        name: cv_FaceDetectorYN_detect
+      c:@F@cv_FaceDetectorYN_getInputSize:
+        name: cv_FaceDetectorYN_getInputSize
+      c:@F@cv_FaceDetectorYN_getNMSThreshold:
+        name: cv_FaceDetectorYN_getNMSThreshold
+      c:@F@cv_FaceDetectorYN_getScoreThreshold:
+        name: cv_FaceDetectorYN_getScoreThreshold
+      c:@F@cv_FaceDetectorYN_getTopK:
+        name: cv_FaceDetectorYN_getTopK
+      c:@F@cv_FaceDetectorYN_setInputSize:
+        name: cv_FaceDetectorYN_setInputSize
+      c:@F@cv_FaceDetectorYN_setNMSThreshold:
+        name: cv_FaceDetectorYN_setNMSThreshold
+      c:@F@cv_FaceDetectorYN_setScoreThreshold:
+        name: cv_FaceDetectorYN_setScoreThreshold
+      c:@F@cv_FaceDetectorYN_setTopK:
+        name: cv_FaceDetectorYN_setTopK
+      c:@F@cv_FaceRecognizerSF_alignCrop:
+        name: cv_FaceRecognizerSF_alignCrop
+      c:@F@cv_FaceRecognizerSF_close:
+        name: cv_FaceRecognizerSF_close
+      c:@F@cv_FaceRecognizerSF_create:
+        name: cv_FaceRecognizerSF_create
+      c:@F@cv_FaceRecognizerSF_feature:
+        name: cv_FaceRecognizerSF_feature
+      c:@F@cv_FaceRecognizerSF_match:
+        name: cv_FaceRecognizerSF_match
+      c:@F@cv_HOGDescriptor_close:
+        name: cv_HOGDescriptor_close
+      c:@F@cv_HOGDescriptor_compute:
+        name: cv_HOGDescriptor_compute
+      c:@F@cv_HOGDescriptor_computeGradient:
+        name: cv_HOGDescriptor_computeGradient
+      c:@F@cv_HOGDescriptor_create:
+        name: cv_HOGDescriptor_create
+      c:@F@cv_HOGDescriptor_create_1:
+        name: cv_HOGDescriptor_create_1
+      c:@F@cv_HOGDescriptor_detect:
+        name: cv_HOGDescriptor_detect
+      c:@F@cv_HOGDescriptor_detect2:
+        name: cv_HOGDescriptor_detect2
+      c:@F@cv_HOGDescriptor_detectMultiScale:
+        name: cv_HOGDescriptor_detectMultiScale
+      c:@F@cv_HOGDescriptor_detectMultiScale_1:
+        name: cv_HOGDescriptor_detectMultiScale_1
+      c:@F@cv_HOGDescriptor_getDaimlerPeopleDetector:
+        name: cv_HOGDescriptor_getDaimlerPeopleDetector
+      c:@F@cv_HOGDescriptor_getDefaultPeopleDetector:
+        name: cv_HOGDescriptor_getDefaultPeopleDetector
+      c:@F@cv_HOGDescriptor_getDescriptorSize:
+        name: cv_HOGDescriptor_getDescriptorSize
+      c:@F@cv_HOGDescriptor_getWinSigma:
+        name: cv_HOGDescriptor_getWinSigma
+      c:@F@cv_HOGDescriptor_groupRectangles:
+        name: cv_HOGDescriptor_groupRectangles
+      c:@F@cv_HOGDescriptor_load:
+        name: cv_HOGDescriptor_load
+      c:@F@cv_HOGDescriptor_setSVMDetector:
+        name: cv_HOGDescriptor_setSVMDetector
+      c:@F@cv_QRCodeDetector_close:
+        name: cv_QRCodeDetector_close
+      c:@F@cv_QRCodeDetector_create:
+        name: cv_QRCodeDetector_create
+      c:@F@cv_QRCodeDetector_decode:
+        name: cv_QRCodeDetector_decode
+      c:@F@cv_QRCodeDetector_decodeCurved:
+        name: cv_QRCodeDetector_decodeCurved
+      c:@F@cv_QRCodeDetector_detect:
+        name: cv_QRCodeDetector_detect
+      c:@F@cv_QRCodeDetector_detectAndDecode:
+        name: cv_QRCodeDetector_detectAndDecode
+      c:@F@cv_QRCodeDetector_detectAndDecodeCurved:
+        name: cv_QRCodeDetector_detectAndDecodeCurved
+      c:@F@cv_QRCodeDetector_detectAndDecodeMulti:
+        name: cv_QRCodeDetector_detectAndDecodeMulti
+      c:@F@cv_QRCodeDetector_detectMulti:
+        name: cv_QRCodeDetector_detectMulti
+      c:@F@cv_QRCodeDetector_setEpsX:
+        name: cv_QRCodeDetector_setEpsX
+      c:@F@cv_QRCodeDetector_setEpsY:
+        name: cv_QRCodeDetector_setEpsY
+      c:@F@cv_QRCodeDetector_setUseAlignmentMarkers:
+        name: cv_QRCodeDetector_setUseAlignmentMarkers
+      c:@F@cv_groupRectangles:
+        name: cv_groupRectangles
       c:@S@CascadeClassifier:
         name: CascadeClassifier
       c:@S@FaceDetectorYN:
@@ -246,12 +140,12 @@ files:
         name: HOGDescriptorPtr
       c:objdetect.h@T@QRCodeDetectorPtr:
         name: QRCodeDetectorPtr
+      c:types.h@T@CvSize:
+        name: CvSize
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
-      c:types.h@T@Size:
-        name: Size
       c:types.h@T@VecF32:
         name: VecF32
       c:types.h@T@VecF64:

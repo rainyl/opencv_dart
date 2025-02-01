@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // ignore_for_file: non_constant_identifier_names
 
 library cv.imgproc;
@@ -9,6 +13,7 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/contours.dart';
+import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/moments.dart';
 import '../core/point.dart';
@@ -18,6 +23,7 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
+import '../g/imgproc.g.dart' as cvg;
 import '../g/imgproc.g.dart' as cimgproc;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
@@ -26,9 +32,9 @@ import '../g/imgproc.g.dart' as cimgproc;
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
-  final vec = calloc<cimgproc.VecPoint>();
-  cvRun(() => cimgproc.ApproxPolyDP(curve.ref, epsilon, closed, vec));
-  return VecPoint.fromPointer(vec);
+  final vec = VecPoint();
+  cvRun(() => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec.ptr, ffi.nullptr));
+  return vec;
 }
 
 /// ArcLength calculates a contour perimeter or a curve length.
@@ -37,11 +43,11 @@ VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 double arcLength(VecPoint curve, bool closed) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cimgproc.ArcLength(curve.ref, closed, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_arcLength(curve.ref, closed, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// ConvexHull finds the convex hull of a point set.
@@ -50,7 +56,7 @@ double arcLength(VecPoint curve, bool closed) {
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
 Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) {
   hull ??= Mat.empty();
-  cvRun(() => cimgproc.ConvexHull(points.ref, hull!.ref, clockwise, returnPoints));
+  cvRun(() => cimgproc.cv_convexHull(points.ref, hull!.ref, clockwise, returnPoints, ffi.nullptr));
   return hull;
 }
 
@@ -60,7 +66,7 @@ Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnP
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
 Mat convexityDefects(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
   convexityDefects ??= Mat.empty();
-  cvRun(() => cimgproc.ConvexityDefects(contour.ref, hull.ref, convexityDefects!.ref));
+  cvRun(() => cimgproc.cv_convexityDefects(contour.ref, hull.ref, convexityDefects!.ref, ffi.nullptr));
   return convexityDefects;
 }
 
@@ -72,7 +78,7 @@ Mat convexityDefects(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
 /// http:///docs.opencv.org/master/d7/d1b/group__imgproc__misc.html#ga4e0972be5de079fed4e3a10e24ef5ef0
 Mat cvtColor(Mat src, int code, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.CvtColor(src.ref, dst!.ref, code));
+  cvRun(() => cimgproc.cv_cvtColor(src.ref, dst!.ref, code, ffi.nullptr));
   return dst;
 }
 
@@ -83,7 +89,7 @@ Mat cvtColor(Mat src, int code, {Mat? dst}) {
 Mat equalizeHist(Mat src, {Mat? dst}) {
   cvAssert(src.channels == 1, "src must be grayscale");
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.EqualizeHist(src.ref, dst!.ref));
+  cvRun(() => cimgproc.cv_equalizeHist(src.ref, dst!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -102,7 +108,7 @@ Mat calcHist(
 }) {
   hist ??= Mat.empty();
   cvRun(
-    () => cimgproc.CalcHist(
+    () => cimgproc.cv_calcHist(
       src.ref,
       channels.ref,
       mask.ref,
@@ -110,6 +116,7 @@ Mat calcHist(
       histSize.ref,
       ranges.ref,
       accumulate,
+      ffi.nullptr,
     ),
   );
 
@@ -128,9 +135,19 @@ Mat calcBackProject(
   Mat? dst,
   double scale = 1.0,
 }) {
-  final p = dst?.ptr ?? calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.CalcBackProject(src.ref, channels.ref, hist.ref, p, ranges.ref, scale));
-  return dst ?? Mat.fromPointer(p);
+  dst ??= Mat.empty();
+  cvRun(
+    () => cimgproc.cv_calcBackProject(
+      src.ref,
+      channels.ref,
+      hist.ref,
+      dst!.ref,
+      ranges.ref,
+      scale,
+      ffi.nullptr,
+    ),
+  );
+  return dst;
 }
 
 /// CompareHist Compares two histograms.
@@ -138,23 +155,22 @@ Mat calcBackProject(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
-  return cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cimgproc.CompareHist(hist1.ref, hist2.ref, method, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// ClipLine clips the line against the image rectangle.
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 (bool, Point, Point) clipLine(Rect imgRect, Point pt1, Point pt2) {
-  final bool r = using<bool>((arena) {
-    final rval = arena<ffi.Bool>();
-    cvRun(() => cimgproc.ClipLine(imgRect.ref, pt1.ref, pt2.ref, rval));
-    return rval.value;
-  });
-  return (r, pt1, pt2);
+  final p = calloc<ffi.Bool>();
+  cvRun(() => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return (rval, pt1, pt2);
 }
 
 /// BilateralFilter applies a bilateral filter to an image.
@@ -169,7 +185,7 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga9d7064d478c95d60003cf839430737ed
 Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.BilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace));
+  cvRun(() => cimgproc.cv_bilateralFilter(src.ref, dst!.ref, diameter, sigmaColor, sigmaSpace, ffi.nullptr));
   return dst;
 }
 
@@ -179,7 +195,7 @@ Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace,
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
 Mat blur(Mat src, (int, int) ksize, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Blur(src.ref, dst!.ref, ksize.cvd.ref));
+  cvRun(() => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvd.ref, ffi.nullptr));
   return dst;
 }
 
@@ -199,7 +215,16 @@ Mat boxFilter(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.BoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+    () => cimgproc.cv_boxFilter(
+      src.ref,
+      dst!.ref,
+      depth,
+      ksize.cvd.ref,
+      anchor!.ref,
+      normalize,
+      borderType,
+      ffi.nullptr,
+    ),
   );
   return dst;
 }
@@ -220,7 +245,16 @@ Mat sqrBoxFilter(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.SqBoxFilter(src.ref, dst!.ref, depth, ksize.cvd.ref, anchor!.ref, normalize, borderType),
+    () => cimgproc.cv_sqrBoxFilter(
+      src.ref,
+      dst!.ref,
+      depth,
+      ksize.cvd.ref,
+      anchor!.ref,
+      normalize,
+      borderType,
+      ffi.nullptr,
+    ),
   );
   return dst;
 }
@@ -242,7 +276,7 @@ Mat dilate(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.DilateWithParams(
+    () => cimgproc.cv_dilate_1(
       src.ref,
       dst!.ref,
       kernel.ref,
@@ -250,6 +284,7 @@ Mat dilate(
       iterations,
       borderType,
       borderValue!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -272,7 +307,7 @@ Mat erode(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.ErodeWithParams(
+    () => cimgproc.cv_erode_1(
       src.ref,
       dst!.ref,
       kernel.ref,
@@ -280,6 +315,7 @@ Mat erode(
       iterations,
       borderType,
       borderValue!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -304,8 +340,54 @@ Mat erode(
 }) {
   dst ??= Mat.empty();
   labels ??= Mat.empty();
-  cvRun(() => cimgproc.DistanceTransform(src.ref, dst!.ref, labels!.ref, distanceType, maskSize, labelType));
+  cvRun(
+    () => cimgproc.cv_distanceTransform(
+      src.ref,
+      dst!.ref,
+      labels!.ref,
+      distanceType,
+      maskSize,
+      labelType,
+      ffi.nullptr,
+    ),
+  );
   return (dst, labels);
+}
+
+/// Fills a connected component with the given color.
+///
+/// https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga366aae45a6c1289b341d140839f18717
+(int rval, Mat image, Mat mask, Rect rect) floodFill(
+  InputOutputArray image,
+  Point seedPoint,
+  Scalar newVal, {
+  InputOutputArray? mask,
+  Scalar? loDiff,
+  Scalar? upDiff,
+  int flags = 4,
+}) {
+  loDiff ??= Scalar();
+  upDiff ??= Scalar();
+  mask ??= Mat.empty();
+  final pRect = calloc<cvg.CvRect>();
+  final pRval = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.cv_floodFill(
+      image.ref,
+      mask!.ref,
+      seedPoint.ref,
+      newVal.ref,
+      pRect,
+      loDiff!.ref,
+      upDiff!.ref,
+      flags,
+      pRval,
+      ffi.nullptr,
+    ),
+  );
+  final rval = pRval.value;
+  calloc.free(pRval);
+  return (rval, image, mask, Rect.fromPointer(pRect));
 }
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -313,8 +395,8 @@ Mat erode(
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Rect boundingRect(VecPoint points) {
-  final rect = calloc<cimgproc.Rect>();
-  cvRun(() => cimgproc.BoundingRect(points.ref, rect));
+  final rect = calloc<cvg.CvRect>();
+  cvRun(() => cimgproc.cv_boundingRect(points.ref, rect, ffi.nullptr));
   return Rect.fromPointer(rect);
 }
 
@@ -324,12 +406,8 @@ Rect boundingRect(VecPoint points) {
 /// For further Details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gaf78d467e024b4d7936cf9397185d2f5c
 VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
-  if (pts == null) {
-    final p = calloc<cimgproc.VecPoint2f>();
-    cvRun(() => cimgproc.BoxPoints(rect.ref, p));
-    return VecPoint2f.fromPointer(p);
-  }
-  cvRun(() => cimgproc.BoxPoints(rect.ref, pts.ptr));
+  pts ??= VecPoint2f();
+  cvRun(() => cimgproc.cv_boxPoints(rect.ref, pts!.ptr, ffi.nullptr));
   return pts;
 }
 
@@ -338,11 +416,11 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 double contourArea(VecPoint contour) {
-  return cvRunArena<double>((arena) {
-    final area = arena<ffi.Double>();
-    cvRun(() => cimgproc.ContourArea(contour.ref, area));
-    return area.value;
-  });
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_contourArea(contour.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -350,8 +428,8 @@ double contourArea(VecPoint contour) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 RotatedRect minAreaRect(VecPoint points) {
-  final p = calloc<cimgproc.RotatedRect>();
-  cvRun(() => cimgproc.MinAreaRect(points.ref, p));
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => cimgproc.cv_minAreaRect(points.ref, p, ffi.nullptr));
   return RotatedRect.fromPointer(p);
 }
 
@@ -360,8 +438,8 @@ RotatedRect minAreaRect(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 RotatedRect fitEllipse(VecPoint points) {
-  final p = calloc<cimgproc.RotatedRect>();
-  cvRun(() => cimgproc.FitEllipse(points.ref, p));
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => cimgproc.cv_fitEllipse(points.ref, p, ffi.nullptr));
   return RotatedRect.fromPointer(p);
 }
 
@@ -370,23 +448,23 @@ RotatedRect fitEllipse(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 (Point2f center, double radius) minEnclosingCircle(VecPoint points) {
-  return cvRunArena<(Point2f, double)>((arena) {
-    final center = calloc<cimgproc.Point2f>();
-    final radius = arena<ffi.Float>();
-    cvRun(() => cimgproc.MinEnclosingCircle(points.ref, center, radius));
-    return (Point2f.fromPointer(center), radius.value);
-  });
+  final center = calloc<cvg.CvPoint2f>();
+  final pRadius = calloc<ffi.Float>();
+  cvRun(() => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, ffi.nullptr));
+  final rval = (Point2f.fromPointer(center), pRadius.value);
+  calloc.free(pRadius);
+  return rval;
 }
 
 /// FindContours finds contours in a binary image.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
-(Contours contours, Mat hierarchy) findContours(Mat src, int mode, int method) {
-  final hierarchy = Mat.empty();
-  final v = calloc<cimgproc.VecVecPoint>();
-  cvRun(() => cimgproc.FindContours(src.ref, hierarchy.ref, mode, method, v));
-  return (Contours.fromPointer(v), hierarchy);
+(Contours contours, VecVec4i hierarchy) findContours(Mat src, int mode, int method) {
+  final hierarchy = VecVec4i();
+  final contours = VecVecPoint();
+  cvRun(() => cimgproc.cv_findContours(src.ref, contours.ptr, hierarchy.ptr, mode, method, ffi.nullptr));
+  return (contours, hierarchy);
 }
 
 /// PointPolygonTest performs a point-in-contour test.
@@ -394,11 +472,11 @@ RotatedRect fitEllipse(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
-  return cvRunArena<double>((arena) {
-    final r = arena<ffi.Double>();
-    cvRun(() => cimgproc.PointPolygonTest(points.ref, pt.ref, measureDist, r));
-    return r.value;
-  });
+  final r = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, r, ffi.nullptr));
+  final rval = r.value;
+  calloc.free(r);
+  return rval;
 }
 
 /// ConnectedComponents computes the connected components labeled image of boolean image.
@@ -406,11 +484,21 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaedef8c7340499ca391d459122e51bef5
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(() => cimgproc.ConnectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p));
-    return p.value;
-  });
+  final p = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.cv_connectedComponents(
+      image.ref,
+      labels.ref,
+      connectivity,
+      ltype,
+      ccltype,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// ConnectedComponentsWithStats computes the connected components labeled image of boolean
@@ -427,22 +515,23 @@ int connectedComponentsWithStats(
   int ltype,
   int ccltype,
 ) {
-  return cvRunArena<int>((arena) {
-    final p = arena<ffi.Int>();
-    cvRun(
-      () => cimgproc.ConnectedComponentsWithStats(
-        src.ref,
-        labels.ref,
-        stats.ref,
-        centroids.ref,
-        connectivity,
-        ltype,
-        ccltype,
-        p,
-      ),
-    );
-    return p.value;
-  });
+  final p = calloc<ffi.Int>();
+  cvRun(
+    () => cimgproc.cv_connectedComponents_1(
+      src.ref,
+      labels.ref,
+      stats.ref,
+      centroids.ref,
+      connectivity,
+      ltype,
+      ccltype,
+      p,
+      ffi.nullptr,
+    ),
+  );
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
 }
 
 /// MatchTemplate compares a template against overlapped image regions.
@@ -452,7 +541,7 @@ int connectedComponentsWithStats(
 Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? mask}) {
   mask ??= Mat.empty();
   result ??= Mat.empty();
-  cvRun(() => cimgproc.MatchTemplate(image.ref, templ.ref, result!.ref, method, mask!.ref));
+  cvRun(() => cimgproc.cv_matchTemplate(image.ref, templ.ref, result!.ref, method, mask!.ref, ffi.nullptr));
   return result;
 }
 
@@ -462,8 +551,8 @@ Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? m
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Moments moments(Mat src, {bool binaryImage = false}) {
-  final m = calloc<cimgproc.Moment>();
-  cvRun(() => cimgproc.Moments(src.ref, binaryImage, m));
+  final m = calloc<cvg.Moment>();
+  cvRun(() => cimgproc.cv_moments(src.ref, binaryImage, m, ffi.nullptr));
   return Moments.fromPointer(m);
 }
 
@@ -478,7 +567,7 @@ Mat pyrDown(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.PyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType));
+  cvRun(() => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -493,7 +582,7 @@ Mat pyrUp(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.PyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType));
+  cvRun(() => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -503,8 +592,8 @@ Mat pyrUp(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Scalar morphologyDefaultBorderValue() {
-  final s = calloc<cimgproc.Scalar>();
-  cvRun(() => cimgproc.MorphologyDefaultBorderValue(s));
+  final s = calloc<cvg.Scalar>();
+  cvRun(() => cimgproc.cv_morphologyDefaultBorderValue(s, ffi.nullptr));
   return Scalar.fromPointer(s);
 }
 
@@ -526,7 +615,7 @@ Mat morphologyEx(
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(
-    () => cimgproc.MorphologyExWithParams(
+    () => cimgproc.cv_morphologyEx_1(
       src.ref,
       dst!.ref,
       op,
@@ -535,6 +624,7 @@ Mat morphologyEx(
       iterations,
       borderType,
       borderValue!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -547,9 +637,9 @@ Mat morphologyEx(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac342a1bb6eabf6f55c803b09268e36dc
 Mat getStructuringElement(int shape, (int, int) ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
-  final r = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetStructuringElement(shape, ksize.cvd.ref, r));
-  return Mat.fromPointer(r);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ptr, ffi.nullptr));
+  return mat;
 }
 
 /// GaussianBlur blurs an image Mat using a Gaussian filter.
@@ -567,7 +657,9 @@ Mat gaussianBlur(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.GaussianBlur(src.ref, dst!.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType));
+  cvRun(
+    () => cimgproc.cv_GaussianBlur(src.ref, dst!.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, ffi.nullptr),
+  );
   return dst;
 }
 
@@ -576,9 +668,9 @@ Mat gaussianBlur(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa
 Mat getGaussianKernel(int ksize, double sigma, {int ktype = 6}) {
-  final r = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetGaussianKernel(ksize, sigma, ktype, r));
-  return Mat.fromPointer(r);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getGaussianKernel(ksize, sigma, ktype, mat.ptr, ffi.nullptr));
+  return mat;
 }
 
 /// Sobel calculates the first, second, third, or mixed image derivatives using an extended Sobel operator
@@ -597,7 +689,9 @@ Mat sobel(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Sobel(src.ref, dst!.ref, ddepth, dx, dy, ksize, scale, delta, borderType));
+  cvRun(
+    () => cimgproc.cv_Sobel(src.ref, dst!.ref, ddepth, dx, dy, ksize, scale, delta, borderType, ffi.nullptr),
+  );
   return dst;
 }
 
@@ -614,7 +708,7 @@ Mat sobel(
 }) {
   dx ??= Mat.empty();
   dy ??= Mat.empty();
-  cvRun(() => cimgproc.SpatialGradient(src.ref, dx!.ref, dy!.ref, ksize, borderType));
+  cvRun(() => cimgproc.cv_spatialGradient(src.ref, dx!.ref, dy!.ref, ksize, borderType, ffi.nullptr));
   return (dx, dy);
 }
 
@@ -632,7 +726,7 @@ Mat laplacian(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Laplacian(src.ref, dst!.ref, ddepth, ksize, scale, delta, borderType));
+  cvRun(() => cimgproc.cv_Laplacian(src.ref, dst!.ref, ddepth, ksize, scale, delta, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -651,7 +745,7 @@ Mat scharr(
   int borderType = BORDER_DEFAULT,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Scharr(src.ref, dst!.ref, ddepth, dx, dy, scale, delta, borderType));
+  cvRun(() => cimgproc.cv_Scharr(src.ref, dst!.ref, ddepth, dx, dy, scale, delta, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -661,7 +755,7 @@ Mat scharr(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9
 Mat medianBlur(Mat src, int ksize, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.MedianBlur(src.ref, dst!.ref, ksize));
+  cvRun(() => cimgproc.cv_medianBlur(src.ref, dst!.ref, ksize, ffi.nullptr));
   return dst;
 }
 
@@ -684,7 +778,17 @@ Mat canny(
   bool l2gradient = false,
 }) {
   edges ??= Mat.empty();
-  cvRun(() => cimgproc.Canny(image.ref, edges!.ref, threshold1, threshold2, apertureSize, l2gradient));
+  cvRun(
+    () => cimgproc.cv_canny(
+      image.ref,
+      edges!.ref,
+      threshold1,
+      threshold2,
+      apertureSize,
+      l2gradient,
+      ffi.nullptr,
+    ),
+  );
   return edges;
 }
 
@@ -703,7 +807,7 @@ VecPoint2f cornerSubPix(
   final size = winSize.cvd;
   final zone = zeroZone.cvd;
   final c = criteria.toTermCriteria();
-  cvRun(() => cimgproc.CornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref));
+  cvRun(() => cimgproc.cv_cornerSubPix(image.ref, corners.ref, size.ref, zone.ref, c.ref, ffi.nullptr));
   return corners;
 }
 
@@ -724,13 +828,13 @@ VecPoint2f goodFeaturesToTrack(
   bool useHarrisDetector = false,
   double k = 0.04,
 }) {
-  final c = corners?.ptr ?? calloc<cimgproc.VecPoint2f>();
+  corners ??= VecPoint2f();
   mask ??= Mat.empty();
   if (gradientSize == null) {
     cvRun(
-      () => cimgproc.GoodFeaturesToTrack(
+      () => cimgproc.cv_goodFeaturesToTrack(
         image.ref,
-        c,
+        corners!.ptr,
         maxCorners,
         qualityLevel,
         minDistance,
@@ -738,13 +842,14 @@ VecPoint2f goodFeaturesToTrack(
         blockSize,
         useHarrisDetector,
         k,
+        ffi.nullptr,
       ),
     );
   } else {
     cvRun(
-      () => cimgproc.GoodFeaturesToTrackWithGradient(
+      () => cimgproc.cv_goodFeaturesToTrack_1(
         image.ref,
-        c,
+        corners!.ptr,
         maxCorners,
         qualityLevel,
         minDistance,
@@ -753,10 +858,11 @@ VecPoint2f goodFeaturesToTrack(
         gradientSize,
         useHarrisDetector,
         k,
+        ffi.nullptr,
       ),
     );
   }
-  return corners ?? VecPoint2f.fromPointer(c);
+  return corners;
 }
 
 /// Grabcut runs the GrabCut algorithm.
@@ -772,7 +878,18 @@ VecPoint2f goodFeaturesToTrack(
   int iterCount, {
   int mode = GC_EVAL,
 }) {
-  cvRun(() => cimgproc.GrabCut(img.ref, mask.ref, rect.ref, bgdModel.ref, fgdModel.ref, iterCount, mode));
+  cvRun(
+    () => cimgproc.cv_grabCut(
+      img.ref,
+      mask.ref,
+      rect.ref,
+      bgdModel.ref,
+      fgdModel.ref,
+      iterCount,
+      mode,
+      ffi.nullptr,
+    ),
+  );
   return (mask, bgdModel, fgdModel);
 }
 
@@ -795,7 +912,7 @@ Mat HoughCircles(
 }) {
   circles ??= Mat.empty();
   cvRun(
-    () => cimgproc.HoughCirclesWithParams(
+    () => cimgproc.cv_HoughCircles_1(
       image.ref,
       circles!.ref,
       method,
@@ -805,6 +922,7 @@ Mat HoughCircles(
       param2,
       minRadius,
       maxRadius,
+      ffi.nullptr,
     ),
   );
   return circles;
@@ -828,8 +946,20 @@ Mat HoughLines(
   double max_theta = CV_PI,
 }) {
   lines ??= Mat.empty();
-  cvRun(() =>
-      cimgproc.HoughLines(image.ref, lines!.ref, rho, theta, threshold, srn, stn, min_theta, max_theta));
+  cvRun(
+    () => cimgproc.cv_HoughLines(
+      image.ref,
+      lines!.ref,
+      rho,
+      theta,
+      threshold,
+      srn,
+      stn,
+      min_theta,
+      max_theta,
+      ffi.nullptr,
+    ),
+  );
   return lines;
 }
 
@@ -850,7 +980,7 @@ Mat HoughLinesP(
 }) {
   lines ??= Mat.empty();
   cvRun(
-    () => cimgproc.HoughLinesPWithParams(
+    () => cimgproc.cv_HoughLinesP_1(
       image.ref,
       lines!.ref,
       rho,
@@ -858,6 +988,7 @@ Mat HoughLinesP(
       threshold,
       minLineLength,
       maxLineGap,
+      ffi.nullptr,
     ),
   );
   return lines;
@@ -883,7 +1014,7 @@ Mat HoughLinesPointSet(
 }) {
   lines ??= Mat.empty();
   cvRun(
-    () => cimgproc.HoughLinesPointSet(
+    () => cimgproc.cv_HoughLinesPointSet(
       point.ref,
       lines!.ref,
       lines_max,
@@ -894,6 +1025,7 @@ Mat HoughLinesPointSet(
       min_theta,
       max_theta,
       theta_step,
+      ffi.nullptr,
     ),
   );
   return lines;
@@ -913,7 +1045,7 @@ Mat HoughLinesPointSet(
   sum ??= Mat.empty();
   sqsum ??= Mat.empty();
   tilted ??= Mat.empty();
-  cvRun(() => cimgproc.Integral(src.ref, sum!.ref, sqsum!.ref, tilted!.ref, sdepth, sqdepth));
+  cvRun(() => cimgproc.cv_integral(src.ref, sum!.ref, sqsum!.ref, tilted!.ref, sdepth, sqdepth, ffi.nullptr));
   return (sum, sqsum, tilted);
 }
 
@@ -929,12 +1061,11 @@ Mat HoughLinesPointSet(
   OutputArray? dst,
 }) {
   dst ??= Mat.empty();
-  final rval = cvRunArena<double>((arena) {
-    final p = arena<ffi.Double>();
-    cvRun(() => cimgproc.Threshold(src.ref, dst!.ref, thresh, maxval, type, p));
-    return p.value;
-  });
-  return (rval, dst);
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
+  final rval = (p.value, dst);
+  calloc.free(p);
+  return rval;
 }
 
 /// AdaptiveThreshold applies a fixed-level threshold to each array element.
@@ -952,7 +1083,7 @@ Mat adaptiveThreshold(
 }) {
   dst ??= Mat.empty();
   cvRun(
-    () => cimgproc.AdaptiveThreshold(
+    () => cimgproc.cv_adaptiveThreshold(
       src.ref,
       dst!.ref,
       maxValue,
@@ -960,6 +1091,7 @@ Mat adaptiveThreshold(
       thresholdType,
       blockSize,
       C,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -980,8 +1112,19 @@ Mat arrowedLine(
   int shift = 0,
   double tipLength = 0.1,
 }) {
-  cvRun(() =>
-      cimgproc.ArrowedLine(img.ref, pt1.ref, pt2.ref, color.ref, thickness, line_type, shift, tipLength));
+  cvRun(
+    () => cimgproc.cv_arrowedLine(
+      img.ref,
+      pt1.ref,
+      pt2.ref,
+      color.ref,
+      thickness,
+      line_type,
+      shift,
+      tipLength,
+      ffi.nullptr,
+    ),
+  );
   return img;
 }
 
@@ -998,7 +1141,18 @@ Mat circle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => cimgproc.CircleWithParams(img.ref, center.ref, radius, color.ref, thickness, lineType, shift));
+  cvRun(
+    () => cimgproc.cv_circle_1(
+      img.ref,
+      center.ref,
+      radius,
+      color.ref,
+      thickness,
+      lineType,
+      shift,
+      ffi.nullptr,
+    ),
+  );
   return img;
 }
 
@@ -1019,7 +1173,7 @@ Mat ellipse(
   int shift = 0,
 }) {
   cvRun(
-    () => cimgproc.EllipseWithParams(
+    () => cimgproc.cv_ellipse_1(
       img.ref,
       center.ref,
       axes.ref,
@@ -1030,6 +1184,7 @@ Mat ellipse(
       thickness,
       lineType,
       shift,
+      ffi.nullptr,
     ),
   );
   return img;
@@ -1048,7 +1203,9 @@ Mat line(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => cimgproc.Line(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift));
+  cvRun(
+    () => cimgproc.cv_line(img.ref, pt1.ref, pt2.ref, color.ref, thickness, lineType, shift, ffi.nullptr),
+  );
   return img;
 }
 
@@ -1065,7 +1222,9 @@ Mat rectangle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => cimgproc.RectangleWithParams(img.ref, rect.ref, color.ref, thickness, lineType, shift));
+  cvRun(
+    () => cimgproc.cv_rectangle_1(img.ref, rect.ref, color.ref, thickness, lineType, shift, ffi.nullptr),
+  );
   return img;
 }
 
@@ -1082,7 +1241,9 @@ Mat fillPoly(
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  cvRun(() => cimgproc.FillPolyWithParams(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref));
+  cvRun(
+    () => cimgproc.cv_fillPoly_1(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref, ffi.nullptr),
+  );
   return img;
 }
 
@@ -1099,7 +1260,7 @@ Mat polylines(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(() => cimgproc.Polylines(img.ref, pts.ref, isClosed, color.ref, thickness));
+  cvRun(() => cimgproc.cv_polylines(img.ref, pts.ref, isClosed, color.ref, thickness, ffi.nullptr));
   return img;
 }
 
@@ -1115,14 +1276,23 @@ Mat polylines(
   double fontScale,
   int thickness,
 ) {
-  return using<(Size, int)>((arena) {
-    final baseline = arena<ffi.Int>();
-    final size = calloc<cimgproc.Size>();
-    final textPtr = text.toNativeUtf8(allocator: arena);
-    cvRun(() =>
-        cimgproc.GetTextSizeWithBaseline(textPtr.cast(), fontFace, fontScale, thickness, baseline, size));
-    return (Size.fromPointer(size), baseline.value);
-  });
+  final pBaseline = calloc<ffi.Int>();
+  final size = calloc<cvg.CvSize>();
+  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
+  cvRun(
+    () => cimgproc.cv_getTextSize(
+      textPtr,
+      fontFace,
+      fontScale,
+      thickness,
+      pBaseline,
+      size,
+      ffi.nullptr,
+    ),
+  );
+  final rval = (Size.fromPointer(size), pBaseline.value);
+  calloc.free(pBaseline);
+  return rval;
 }
 
 /// PutTextWithParams draws a text string.
@@ -1145,7 +1315,7 @@ Mat putText(
 }) {
   final textPtr = text.toNativeUtf8().cast<ffi.Char>();
   cvRun(
-    () => cimgproc.PutTextWithParams(
+    () => cimgproc.cv_putText_1(
       img.ref,
       textPtr,
       org.ref,
@@ -1155,6 +1325,7 @@ Mat putText(
       thickness,
       lineType,
       bottomLeftOrigin,
+      ffi.nullptr,
     ),
   );
   calloc.free(textPtr);
@@ -1179,7 +1350,7 @@ Mat resize(
   int interpolation = INTER_LINEAR,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.Resize(src.ref, dst!.ref, dsize.cvd.ref, fx, fy, interpolation));
+  cvRun(() => cimgproc.cv_resize(src.ref, dst!.ref, dsize.cvd.ref, fx, fy, interpolation, ffi.nullptr));
   return dst;
 }
 
@@ -1195,7 +1366,7 @@ Mat getRectSubPix(
   int patchType = -1,
 }) {
   patch ??= Mat.empty();
-  cvRun(() => cimgproc.GetRectSubPix(image.ref, patchSize.cvd.ref, center.ref, patch!.ref));
+  cvRun(() => cimgproc.cv_getRectSubPix(image.ref, patchSize.cvd.ref, center.ref, patch!.ref, ffi.nullptr));
   return patch;
 }
 
@@ -1204,9 +1375,9 @@ Mat getRectSubPix(
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gafbbc470ce83812914a70abfb604f4326
 Mat getRotationMatrix2D(Point2f center, double angle, double scale) {
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetRotationMatrix2D(center.ref, angle, scale, mat));
-  return Mat.fromPointer(mat);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getRotationMatrix2D(center.ref, angle, scale, mat.ptr, ffi.nullptr));
+  return mat;
 }
 
 /// WarpAffine applies an affine transformation to an image.
@@ -1225,7 +1396,7 @@ Mat warpAffine(
   dst ??= Mat.empty();
   borderValue ??= Scalar();
   cvRun(
-    () => cimgproc.WarpAffineWithParams(
+    () => cimgproc.cv_warpAffine_1(
       src.ref,
       dst!.ref,
       M.ref,
@@ -1233,6 +1404,7 @@ Mat warpAffine(
       flags,
       borderMode,
       borderValue!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -1255,7 +1427,7 @@ Mat warpPerspective(
   dst ??= Mat.empty();
   borderValue ??= Scalar();
   cvRun(
-    () => cimgproc.WarpPerspectiveWithParams(
+    () => cimgproc.cv_warpPerspective_1(
       src.ref,
       dst!.ref,
       M.ref,
@@ -1263,6 +1435,7 @@ Mat warpPerspective(
       flags,
       borderMode,
       borderValue!.ref,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -1273,7 +1446,7 @@ Mat warpPerspective(
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/d47/group__imgproc__segmentation.html#ga3267243e4d3f95165d55a618c65ac6e1
 Mat watershed(InputArray image, InputOutputArray markers) {
-  cvRun(() => cimgproc.Watershed(image.ref, markers.ref));
+  cvRun(() => cimgproc.cv_watershed(image.ref, markers.ref, ffi.nullptr));
   return markers;
 }
 
@@ -1283,7 +1456,7 @@ Mat watershed(InputArray image, InputOutputArray markers) {
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gadf478a5e5ff49d8aa24e726ea6f65d15
 Mat applyColorMap(InputArray src, int colormap, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.ApplyColorMap(src.ref, dst!.ref, colormap));
+  cvRun(() => cimgproc.cv_applyColorMap(src.ref, dst!.ref, colormap, ffi.nullptr));
   return dst;
 }
 
@@ -1293,7 +1466,7 @@ Mat applyColorMap(InputArray src, int colormap, {OutputArray? dst}) {
 /// https:///docs.opencv.org/master/d3/d50/group__imgproc__colormap.html#gacb22288ddccc55f9bd9e6d492b409cae
 Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.ApplyCustomColorMap(src.ref, dst!.ref, userColor.ref));
+  cvRun(() => cimgproc.cv_applyColorMap_1(src.ref, dst!.ref, userColor.ref, ffi.nullptr));
   return dst;
 }
 
@@ -1303,9 +1476,9 @@ Mat applyCustomColorMap(InputArray src, InputArray userColor, {OutputArray? dst}
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOMP_LU]) {
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetPerspectiveTransform(src.ref, dst.ref, mat, solveMethod));
-  return Mat.fromPointer(mat);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getPerspectiveTransform(src.ref, dst.ref, mat.ptr, solveMethod, ffi.nullptr));
+  return mat;
 }
 
 /// GetPerspectiveTransform2f returns 3x3 perspective transformation for the
@@ -1314,9 +1487,9 @@ Mat getPerspectiveTransform(VecPoint src, VecPoint dst, [int solveMethod = DECOM
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043
 Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod = DECOMP_LU]) {
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetPerspectiveTransform2f(src.ref, dst.ref, mat, solveMethod));
-  return Mat.fromPointer(mat);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getPerspectiveTransform2f(src.ref, dst.ref, mat.ptr, solveMethod, ffi.nullptr));
+  return mat;
 }
 
 /// GetAffineTransform returns a 2x3 affine transformation matrix for the
@@ -1325,45 +1498,15 @@ Mat getPerspectiveTransform2f(VecPoint2f src, VecPoint2f dst, [int solveMethod =
 /// For further details, please see:
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999
 Mat getAffineTransform(VecPoint src, VecPoint dst) {
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetAffineTransform(src.ref, dst.ref, mat));
-  return Mat.fromPointer(mat);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getAffineTransform(src.ref, dst.ref, mat.ptr, ffi.nullptr));
+  return mat;
 }
 
 Mat getAffineTransform2f(VecPoint2f src, VecPoint2f dst) {
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(() => cimgproc.GetAffineTransform2f(src.ref, dst.ref, mat));
-  return Mat.fromPointer(mat);
-}
-
-/// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780
-Mat findHomography(
-  InputArray srcPoints,
-  InputArray dstPoints, {
-  int method = 0,
-  double ransacReprojThreshold = 3,
-  OutputArray? mask,
-  int maxIters = 2000,
-  double confidence = 0.995,
-}) {
-  mask ??= Mat.empty();
-  final mat = calloc<cimgproc.Mat>();
-  cvRun(
-    () => cimgproc.FindHomography(
-      srcPoints.ref,
-      dstPoints.ref,
-      method,
-      ransacReprojThreshold,
-      mask!.ref,
-      maxIters,
-      confidence,
-      mat,
-    ),
-  );
-  return Mat.fromPointer(mat);
+  final mat = Mat.empty();
+  cvRun(() => cimgproc.cv_getAffineTransform2f(src.ref, dst.ref, mat.ptr, ffi.nullptr));
+  return mat;
 }
 
 /// DrawContours draws contours outlines or filled contours.
@@ -1384,7 +1527,7 @@ Mat drawContours(
   offset ??= Point(0, 0);
   hierarchy ??= Mat.empty();
   cvRun(
-    () => cimgproc.DrawContoursWithParams(
+    () => cimgproc.cv_drawContours_1(
       image.ref,
       contours.ref,
       contourIdx,
@@ -1394,6 +1537,7 @@ Mat drawContours(
       hierarchy!.ref,
       maxLevel,
       offset!.ref,
+      ffi.nullptr,
     ),
   );
   return image;
@@ -1414,8 +1558,18 @@ Mat remap(
 }) {
   borderValue ??= Scalar();
   dst ??= Mat.empty();
-  cvRun(() =>
-      cimgproc.Remap(src.ref, dst!.ref, map1.ref, map2.ref, interpolation, borderMode, borderValue!.ref));
+  cvRun(
+    () => cimgproc.cv_remap(
+      src.ref,
+      dst!.ref,
+      map1.ref,
+      map2.ref,
+      interpolation,
+      borderMode,
+      borderValue!.ref,
+      ffi.nullptr,
+    ),
+  );
   return dst;
 }
 
@@ -1434,7 +1588,18 @@ Mat filter2D(
 }) {
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
-  cvRun(() => cimgproc.Filter2D(src.ref, dst!.ref, ddepth, kernel.ref, anchor!.ref, delta, borderType));
+  cvRun(
+    () => cimgproc.cv_filter2D(
+      src.ref,
+      dst!.ref,
+      ddepth,
+      kernel.ref,
+      anchor!.ref,
+      delta,
+      borderType,
+      ffi.nullptr,
+    ),
+  );
   return dst;
 }
 
@@ -1455,7 +1620,7 @@ Mat sepFilter2D(
   anchor ??= Point(-1, -1);
   dst ??= Mat.empty();
   cvRun(
-    () => cimgproc.SepFilter2D(
+    () => cimgproc.cv_sepFilter2D(
       src.ref,
       dst!.ref,
       ddepth,
@@ -1464,6 +1629,7 @@ Mat sepFilter2D(
       anchor!.ref,
       delta,
       borderType,
+      ffi.nullptr,
     ),
   );
   return dst;
@@ -1475,7 +1641,7 @@ Mat sepFilter2D(
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaec3a0b126a85b5ca2c667b16e0ae022d
 Mat logPolar(InputArray src, Point2f center, double M, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.LogPolar(src.ref, dst!.ref, center.ref, M, flags));
+  cvRun(() => cimgproc.cv_logPolar(src.ref, dst!.ref, center.ref, M, flags, ffi.nullptr));
   return dst;
 }
 
@@ -1485,7 +1651,7 @@ Mat logPolar(InputArray src, Point2f center, double M, int flags, {OutputArray? 
 /// https:///docs.opencv.org/master/da/d54/group__imgproc__transform.html#gaa38a6884ac8b6e0b9bed47939b5362f3
 Mat linearPolar(InputArray src, Point2f center, double maxRadius, int flags, {OutputArray? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.LinearPolar(src.ref, dst!.ref, center.ref, maxRadius, flags));
+  cvRun(() => cimgproc.cv_linearPolar(src.ref, dst!.ref, center.ref, maxRadius, flags, ffi.nullptr));
   return dst;
 }
 
@@ -1495,7 +1661,7 @@ Mat linearPolar(InputArray src, Point2f center, double maxRadius, int flags, {Ou
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf849da1fdafa67ee84b1e9a23b93f91f
 Mat fitLine(VecPoint points, int distType, double param, double reps, double aeps, {OutputArray? line}) {
   line ??= Mat.empty();
-  cvRun(() => cimgproc.FitLine(points.ref, line!.ref, distType, param, reps, aeps));
+  cvRun(() => cimgproc.cv_fitLine(points.ref, line!.ref, distType, param, reps, aeps, ffi.nullptr));
   return line;
 }
 
@@ -1504,11 +1670,11 @@ Mat fitLine(VecPoint points, int distType, double param, double reps, double aep
 /// For further details, please see:
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
 double matchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter) {
-  return cvRunArena<double>((arena) {
-    final r = arena<ffi.Double>();
-    cvRun(() => cimgproc.MatchShapes(contour1.ref, contour2.ref, method, parameter, r));
-    return r.value;
-  });
+  final r = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, r, ffi.nullptr));
+  final rval = r.value;
+  calloc.free(r);
+  return rval;
 }
 
 /// Inverts an affine transformation.
@@ -1519,7 +1685,7 @@ double matchShapes(VecPoint contour1, VecPoint contour2, int method, double para
 /// https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga57d3505a878a7e1a636645727ca08f51
 Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
   iM ??= Mat.empty();
-  cvRun(() => cimgproc.InvertAffineTransform(M.ref, iM!.ref));
+  cvRun(() => cimgproc.cv_invertAffineTransform(M.ref, iM!.ref, ffi.nullptr));
   return iM;
 }
 
@@ -1529,12 +1695,12 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga552420a2ace9ef3fb053cd630fdb4952
 (Point2f rval, double response) phaseCorrelate(InputArray src1, InputArray src2, {InputArray? window}) {
   window ??= Mat.empty();
-  return cvRunArena<(Point2f, double)>((arena) {
-    final p = arena<ffi.Double>();
-    final pp = calloc<cimgproc.Point2f>();
-    cvRun(() => cimgproc.PhaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp));
-    return (Point2f.fromPointer(pp), p.value);
-  });
+  final p = calloc<ffi.Double>();
+  final pp = calloc<cvg.CvPoint2f>();
+  cvRun(() => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, ffi.nullptr));
+  final rval = (Point2f.fromPointer(pp), p.value);
+  calloc.free(p);
+  return rval;
 }
 
 /// Adds the square of a source image to the accumulator image.
@@ -1544,9 +1710,9 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 ///
 Mat accumulate(InputArray src, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => cimgproc.Mat_Accumulate(src.ref, dst.ref));
+    cvRun(() => cimgproc.cv_accumulate(src.ref, dst.ref, ffi.nullptr));
   } else {
-    cvRun(() => cimgproc.Mat_AccumulateWithMask(src.ref, dst.ref, mask.ref));
+    cvRun(() => cimgproc.cv_accumulate_1(src.ref, dst.ref, mask.ref, ffi.nullptr));
   }
   return dst;
 }
@@ -1557,9 +1723,9 @@ Mat accumulate(InputArray src, InputOutputArray dst, {InputArray? mask}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#gacb75e7ffb573227088cef9ceaf80be8c
 Mat accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => cimgproc.Mat_AccumulateSquare(src.ref, dst.ref));
+    cvRun(() => cimgproc.cv_accumulateSquare(src.ref, dst.ref, ffi.nullptr));
   } else {
-    cvRun(() => cimgproc.Mat_AccumulateSquareWithMask(src.ref, dst.ref, mask.ref));
+    cvRun(() => cimgproc.cv_accumulateSquare_1(src.ref, dst.ref, mask.ref, ffi.nullptr));
   }
   return dst;
 }
@@ -1570,9 +1736,9 @@ Mat accumulateSquare(InputArray src, InputOutputArray dst, {InputArray? mask}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga82518a940ecfda49460f66117ac82520
 Mat accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => cimgproc.Mat_AccumulateProduct(src1.ref, src2.ref, dst.ref));
+    cvRun(() => cimgproc.cv_accumulateProduct(src1.ref, src2.ref, dst.ref, ffi.nullptr));
   } else {
-    cvRun(() => cimgproc.Mat_AccumulateProductWithMask(src1.ref, src2.ref, dst.ref, mask.ref));
+    cvRun(() => cimgproc.cv_accumulateProduct_1(src1.ref, src2.ref, dst.ref, mask.ref, ffi.nullptr));
   }
   return dst;
 }
@@ -1583,9 +1749,35 @@ Mat accumulateProduct(InputArray src1, InputArray src2, InputOutputArray dst, {I
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga4f9552b541187f61f6818e8d2d826bc7
 Mat accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, {InputArray? mask}) {
   if (mask == null) {
-    cvRun(() => cimgproc.Mat_AccumulatedWeighted(src.ref, dst.ref, alpha));
+    cvRun(() => cimgproc.cv_accumulatedWeighted(src.ref, dst.ref, alpha, ffi.nullptr));
   } else {
-    cvRun(() => cimgproc.Mat_AccumulatedWeightedWithMask(src.ref, dst.ref, alpha, mask.ref));
+    cvRun(() => cimgproc.cv_accumulatedWeighted_1(src.ref, dst.ref, alpha, mask.ref, ffi.nullptr));
   }
   return dst;
+}
+
+/// Tests a contour convexity.
+///
+/// The function tests whether the input contour is convex or not.
+/// The contour must be simple, that is, without self-intersections.
+/// Otherwise, the function output is undefined.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga8abf8010377b58cbc16db6734d92941b
+bool isContourConvex(VecPoint contour) => cimgproc.cv_isContourConvex(contour.ref);
+
+/// Finds intersection of two convex polygons.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga06eed475945f155030f2135a7f25f11d
+(double rval, VecPoint p12) intersectConvexConvex(
+  VecPoint p1,
+  VecPoint p2, {
+  VecPoint? p12,
+  bool handleNested = true,
+}) {
+  final r = calloc<ffi.Float>();
+  p12 ??= VecPoint();
+  cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, ffi.nullptr));
+  final rval = (r.value, p12);
+  calloc.free(r);
+  return rval;
 }

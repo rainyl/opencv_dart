@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() {
@@ -11,7 +11,7 @@ void main() {
     }
 
     {
-      final clahe = await cv.CLAHEAsync.createAsync();
+      final clahe = cv.CLAHE.create();
       final dst = await clahe.applyAsync(mat);
       expect(dst.isEmpty, false);
     }

@@ -4,42 +4,37 @@ description: |
 output:
   bindings: ../lib/src/g/contrib.g.dart
   symbol-file:
-    output: 'package:opencv_dart/src/g/contrib.yaml'
-    import-path: 'package:opencv_dart/src/g/contrib.g.dart'
+    output: "package:dartcv4/src/g/contrib.yaml"
+    import-path: "package:dartcv4/src/g/contrib.g.dart"
 ffi-native:
-  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+  assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:opencv_dart/src/g/types.yaml'
-compiler-opts: "-Isrc"
+    - "package:dartcv4/src/g/types.yaml"
+compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/extra/aruco.h
-    - ../src/extra/aruco_async.h
-    - ../src/extra/img_hash.h
-    - ../src/extra/img_hash_async.h
-    - ../src/extra/wechat_qrcode.h
-    - ../src/extra/ximgproc.h
-    - ../src/extra/ximgproc_async.h
-    - ../src/extra/xobjdetect.h
-    - ../src/extra/wechat_qrcode_async.h
+    - ../src/dartcv/contrib/aruco.h
+    - ../src/dartcv/contrib/img_hash.h
+    - ../src/dartcv/contrib/quality.h
+    - ../src/dartcv/contrib/wechat_qrcode.h
+    - ../src/dartcv/contrib/ximgproc.h
+    - ../src/dartcv/contrib/xobjdetect.h
   include-directives:
-    - ../src/extra/aruco.h
-    - ../src/extra/aruco_async.h
-    - ../src/extra/img_hash.h
-    - ../src/extra/img_hash_async.h
-    - ../src/extra/wechat_qrcode.h
-    - ../src/extra/ximgproc.h
-    - ../src/extra/ximgproc_async.h
-    - ../src/extra/xobjdetect.h
-    - ../src/extra/wechat_qrcode_async.h
+    - ../src/dartcv/contrib/aruco.h
+    - ../src/dartcv/contrib/img_hash.h
+    - ../src/dartcv/contrib/quality.h
+    - ../src/dartcv/contrib/wechat_qrcode.h
+    - ../src/dartcv/contrib/ximgproc.h
+    - ../src/dartcv/contrib/xobjdetect.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file

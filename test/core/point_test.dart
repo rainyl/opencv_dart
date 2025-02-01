@@ -1,39 +1,61 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() {
   test('Point', () {
     final point = cv.Point(1, 2);
     expect((point.x, point.y), (1, 2));
-    expect(point.toString(), "Point(1, 2)");
+    point.x = 3;
+    point.y = 4;
+    expect(point.toString(), "Point(3, 4)");
 
     {
       final p = cv.Point.fromNative(point.ref);
-      expect(p, cv.Point(1, 2));
-      expect(p.ref.x, 1);
+      expect(p, cv.Point(3, 4));
+      expect(p.ref.x, 3);
     }
 
     final point1 = cv.Point2f(1.50, 2.3);
     closeTo(point1.x, 1.50);
     closeTo(point1.y, 2.3);
-    expect(point1.toString(), "Point2f(1.500, 2.300)");
+    point1.x = 3.0;
+    point1.y = 4.0;
+    expect(point1.toString(), "Point2f(3.000, 4.000)");
     {
       final p = cv.Point2f.fromNative(point1.ref);
-      expect(p, cv.Point2f(1.5, 2.3));
-      expect(p.ref.x, 1.5);
+      expect(p, cv.Point2f(3.0, 4.0));
+      expect(p.ref.x, 3.0);
     }
 
     final point2 = cv.Point3f(1.50, 2.3, 3.4);
     closeTo(point2.x, 1.50);
     closeTo(point2.y, 2.3);
     closeTo(point2.z, 3.4);
-    expect(point2.toString(), "Point3f(1.500, 2.300, 3.400)");
-
+    point2.x = 3.0;
+    point2.y = 4.0;
+    point2.z = 5.0;
+    expect(point2.toString(), "Point3f(3.000, 4.000, 5.000)");
     {
       final p = cv.Point3f.fromNative(point2.ref);
-      expect(p, cv.Point3f(1.50, 2.3, 3.4));
-      expect(p.ref.x, 1.50);
+      expect(p, cv.Point3f(3.000, 4.000, 5.000));
+      expect(p.ref.x, 3.0);
     }
+    point2.dispose();
+
+    final point3 = cv.Point3i(1, 2, 3);
+    closeTo(point3.x, 1);
+    closeTo(point3.y, 2);
+    closeTo(point3.z, 3);
+    point3.x = 3;
+    point3.y = 4;
+    point3.z = 5;
+    expect(point3.toString(), "Point3i(3, 4, 5)");
+    {
+      final p = cv.Point3i.fromNative(point3.ref);
+      expect(p, cv.Point3i(3, 4, 5));
+      expect(p.ref.x, 3);
+    }
+    point3.dispose();
   });
 
   test('VecPoint', () {
@@ -58,6 +80,23 @@ void main() {
     // change the value
     vec1[1] = cv.Point(100, 100);
     expect(vec1[1], cv.Point(100, 100));
+
+    final vec2 = vec1.clone();
+    vec2.add(cv.Point(10, 10));
+    expect(vec2.length, points.length + 1);
+    expect(vec2[vec2.length - 1], cv.Point(10, 10));
+
+    final vec3 = cv.VecPoint.generate(vec2.length, (i) => vec2[i]);
+    vec2.extend(vec3);
+    expect(vec2.length, vec3.length * 2);
+
+    vec3.reserve(21);
+    vec3.resize(21);
+    expect(vec3.length, 21);
+    expect(vec3.size(), 21);
+    vec3.clear();
+    vec3.shrinkToFit();
+    expect(vec3.length, 0);
 
     vec.dispose();
   });
@@ -102,6 +141,23 @@ void main() {
     expect(points2.length, 0);
     expect(points2.firstOrNull, null);
 
+    final vec2 = vec1.clone();
+    vec2.add(cv.Point2f(10, 10));
+    expect(vec2.length, points.length + 1);
+    expect(vec2[vec2.length - 1], cv.Point2f(10, 10));
+
+    final vec3 = cv.VecPoint2f.generate(vec2.length, (i) => vec2[i]);
+    vec2.extend(vec3);
+    expect(vec2.length, vec3.length * 2);
+
+    vec3.reserve(21);
+    vec3.resize(21);
+    expect(vec3.length, 21);
+    expect(vec3.size(), 21);
+    vec3.clear();
+    vec3.shrinkToFit();
+    expect(vec3.length, 0);
+
     vec.dispose();
   });
 
@@ -139,6 +195,23 @@ void main() {
     // change the value
     vec1[1] = cv.Point3f(3, 4, 100);
     expect(vec1[1], cv.Point3f(3, 4, 100));
+
+    final vec2 = vec1.clone();
+    vec2.add(cv.Point3f(10, 10, 10));
+    expect(vec2.length, points.length + 1);
+    expect(vec2[vec2.length - 1], cv.Point3f(10, 10, 10));
+
+    final vec3 = cv.VecPoint3f.generate(vec2.length, (i) => vec2[i]);
+    vec2.extend(vec3);
+    expect(vec2.length, vec3.length * 2);
+
+    vec3.reserve(21);
+    vec3.resize(21);
+    expect(vec3.length, 21);
+    expect(vec3.size(), 21);
+    vec3.clear();
+    vec3.shrinkToFit();
+    expect(vec3.length, 0);
 
     vec.dispose();
   });
@@ -183,9 +256,26 @@ void main() {
     vec1[1] = cv.Point3i(3, 4, 100);
     expect(vec1[1], cv.Point3i(3, 4, 100));
 
-    final vec2 = cv.VecPoint3i(10);
-    expect(vec2.length, 10);
-    expect(vec2.first, cv.Point3i(0, 0, 0));
+    final vec0 = cv.VecPoint3i(10);
+    expect(vec0.length, 10);
+    expect(vec0.first, cv.Point3i(0, 0, 0));
+
+    final vec2 = vec1.clone();
+    vec2.add(cv.Point3i(10, 10, 10));
+    expect(vec2.length, points.length + 1);
+    expect(vec2[vec2.length - 1], cv.Point3i(10, 10, 10));
+
+    final vec3 = cv.VecPoint3i.generate(vec2.length, (i) => vec2[i]);
+    vec2.extend(vec3);
+    expect(vec2.length, vec3.length * 2);
+
+    vec3.reserve(21);
+    vec3.resize(21);
+    expect(vec3.length, 21);
+    expect(vec3.size(), 21);
+    vec3.clear();
+    vec3.shrinkToFit();
+    expect(vec3.length, 0);
 
     vec.dispose();
   });
@@ -217,8 +307,13 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
+    final elem = vec[0];
+    expect(elem[0], points[0][0]);
+    elem[0] = cv.Point(-1, -1);
+    expect(elem[0], cv.Point(-1, -1));
+
+    final list = vec.copyToList();
+    expect(list[0][0], vec[0][0]);
 
     vec.dispose();
   });
@@ -235,8 +330,8 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
+    final list = vec.copyToList();
+    expect(list[0][0], vec[0][0]);
 
     vec.dispose();
   });
@@ -253,8 +348,8 @@ void main() {
     expect(vec.first.first, points.first.first);
     expect(vec.last.last, points.last.last);
 
-    // TODO: add support
-    // vec[1] = cv.VecPoint(10);
+    final list = vec.copyToList();
+    expect(list[0][0], vec[0][0]);
 
     vec.dispose();
   });

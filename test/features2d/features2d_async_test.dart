@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
@@ -6,7 +6,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ak = await cv.AKAZEAsync.emptyAsync();
+    final ak = cv.AKAZE.empty();
     final kp = await ak.detectAsync(img);
     expect(kp.length, greaterThan(512));
 
@@ -22,7 +22,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ad = await cv.AgastFeatureDetectorAsync.emptyAsync();
+    final ad = cv.AgastFeatureDetector.empty();
     final kp = await ad.detectAsync(img);
     expect(kp.length, greaterThan(2800));
 
@@ -33,7 +33,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final br = await cv.BRISKAsync.emptyAsync();
+    final br = cv.BRISK.empty();
     final kp = await br.detectAsync(img);
     expect(kp.length, greaterThan(512));
 
@@ -49,11 +49,11 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final fd = await cv.FastFeatureDetectorAsync.emptyAsync();
+    final fd = cv.FastFeatureDetector.empty();
     final kp = await fd.detectAsync(img);
     expect(kp.length, greaterThan(2690));
 
-    final fd1 = await cv.FastFeatureDetectorAsync.createAsync();
+    final fd1 = cv.FastFeatureDetector.create();
     final kp1 = await fd1.detectAsync(img);
     expect(kp1.length, greaterThan(2690));
 
@@ -64,7 +64,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final gf = await cv.GFTTDetectorAsync.emptyAsync();
+    final gf = cv.GFTTDetector.empty();
     final kp = await gf.detectAsync(img);
     expect(kp.length, greaterThan(512));
 
@@ -75,7 +75,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ka = await cv.KAZEAsync.emptyAsync();
+    final ka = cv.KAZE.empty();
     final kp = await ka.detectAsync(img);
     expect(kp.length, greaterThan(0));
 
@@ -91,23 +91,22 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final gf = await cv.MSERAsync.emptyAsync();
+    final gf = cv.MSER.empty();
     final kp = await gf.detectAsync(img);
     expect(kp.length, greaterThan(0));
 
     gf.dispose();
   });
 
-  test('cv.ORBAsync', skip: true, () async {
-    // FIXME: some thing wrong...
+  test('cv.ORBAsync', () async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ka = await cv.ORBAsync.emptyAsync();
+    final ka = cv.ORB.empty();
     final kp = await ka.detectAsync(img);
     expect(kp.length, 500);
 
-    final orb = await cv.ORBAsync.createAsync();
+    final orb = cv.ORB.create();
     final kp1 = await orb.detectAsync(img);
     expect(kp1.length, 500);
 
@@ -123,7 +122,7 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final detector = await cv.SimpleBlobDetectorAsync.emptyAsync();
+    final detector = cv.SimpleBlobDetector.empty();
     final kp = await detector.detectAsync(img);
     expect(kp.length, 1);
 
@@ -247,7 +246,7 @@ void main() async {
     final thresholdStep = params.thresholdStep;
     expect(thresholdStep, closeTo(1.0, 1e-4));
 
-    final detector1 = await cv.SimpleBlobDetectorAsync.createAsync(params);
+    final detector1 = cv.SimpleBlobDetector.create(params);
     final kp1 = await detector1.detectAsync(img);
     expect(kp1.length, 0);
 
@@ -267,11 +266,11 @@ void main() async {
     );
     expect(desc2.isEmpty, false);
 
-    final matcher = await cv.BFMatcherAsync.emptyAsync();
+    final matcher = cv.BFMatcher.empty();
     final dmatches = await matcher.knnMatchAsync(desc1, desc2, 2);
     expect(dmatches.length, greaterThan(0));
 
-    final matcher1 = await cv.BFMatcherAsync.createAsync();
+    final matcher1 = cv.BFMatcher.create();
     final dmatches1 = await matcher1.knnMatchAsync(desc1, desc2, 2);
     expect(dmatches1.length, greaterThan(0));
 
@@ -296,7 +295,7 @@ void main() async {
     final desc11 = desc1.convertTo(cv.MatType.CV_32FC1);
     final desc21 = desc2.convertTo(cv.MatType.CV_32FC1);
 
-    final matcher = await cv.FlannBasedMatcherAsync.emptyAsync();
+    final matcher = cv.FlannBasedMatcher.empty();
     final dmatches = await matcher.knnMatchAsync(desc11, desc21, 2);
     expect(dmatches.length, greaterThan(0));
 
@@ -310,7 +309,7 @@ void main() async {
     );
     expect(img.isEmpty, false);
 
-    final si = await cv.SIFTAsync.emptyAsync();
+    final si = cv.SIFT.empty();
     final kp = await si.detectAsync(img);
     expect(kp.length, greaterThan(0));
 
@@ -332,10 +331,10 @@ void main() async {
     expect(train.isEmpty, false);
 
     final m1 = cv.Mat.empty(), m2 = cv.Mat.empty();
-    final (kp1, des1) = await (await cv.SIFTAsync.emptyAsync()).detectAndComputeAsync(query, m1);
-    final (kp2, des2) = await (await cv.SIFTAsync.emptyAsync()).detectAndComputeAsync(train, m2);
+    final (kp1, des1) = await cv.SIFT.empty().detectAndComputeAsync(query, m1);
+    final (kp2, des2) = await cv.SIFT.empty().detectAndComputeAsync(train, m2);
 
-    final bf = await cv.BFMatcherAsync.emptyAsync();
+    final bf = cv.BFMatcher.empty();
     final dmatches = await bf.knnMatchAsync(des1, des2, 2);
     expect(dmatches.length, greaterThan(0));
 

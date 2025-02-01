@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
 //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
@@ -1502,8 +1503,6 @@ const int COVAR_USE_AVG = 2;
 
 const int CV__CAP_PROP_LATEST = 71;
 
-const int CV__VIDEOWRITER_PROP_LATEST = 12;
-
 const int DCT_INVERSE = 1;
 
 const int DCT_ROWS = 4;
@@ -1946,66 +1945,6 @@ const int SORT_EVERY_COLUMN = 1;
 
 const int SORT_EVERY_ROW = 0;
 
-enum SolvePnPMethod {
-  /// !< Pose refinement using non-linear Levenberg-Marquardt minimization scheme @cite Madsen04 @cite Eade13 \n
-  /// !< Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. \n
-  /// !< Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
-  SOLVEPNP_ITERATIVE(0),
-
-  /// !< EPnP: Efficient Perspective-n-Point Camera Pose Estimation @cite lepetit2009epnp
-  SOLVEPNP_EPNP(1),
-
-  /// !< Complete Solution Classification for the Perspective-Three-Point Problem @cite gao2003complete
-  SOLVEPNP_P3P(2),
-
-  /// !< **Broken implementation. Using this flag will fallback to EPnP.** \n
-  /// !< A Direct Least-Squares (DLS) Method for PnP @cite hesch2011direct
-  SOLVEPNP_DLS(3),
-
-  /// !< **Broken implementation. Using this flag will fallback to EPnP.** \n
-  /// !< Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation @cite penate2013exhaustive
-  SOLVEPNP_UPNP(4),
-
-  /// !< An Efficient Algebraic Solution to the Perspective-Three-Point Problem @cite Ke17
-  SOLVEPNP_AP3P(5),
-
-  /// !< Infinitesimal Plane-Based Pose Estimation @cite Collins14 \n
-  /// !< Object points must be coplanar.
-  SOLVEPNP_IPPE(6),
-
-  /// !< Infinitesimal Plane-Based Pose Estimation @cite Collins14 \n
-  /// !< This is a special case suitable for marker pose estimation.\n
-  /// !< 4 coplanar object points must be defined in the following order:
-  /// !<   - point 0: [-squareLength / 2,  squareLength / 2, 0]
-  /// !<   - point 1: [ squareLength / 2,  squareLength / 2, 0]
-  /// !<   - point 2: [ squareLength / 2, -squareLength / 2, 0]
-  /// !<   - point 3: [-squareLength / 2, -squareLength / 2, 0]
-  SOLVEPNP_IPPE_SQUARE(7),
-
-  /// !< SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem @cite Terzakis2020SQPnP
-  SOLVEPNP_SQPNP(8),
-
-  /// !< Used for count
-  SOLVEPNP_MAX_COUNT(9);
-
-  final int value;
-  const SolvePnPMethod(this.value);
-
-  static SolvePnPMethod fromValue(int value) => switch (value) {
-        0 => SOLVEPNP_ITERATIVE,
-        1 => SOLVEPNP_EPNP,
-        2 => SOLVEPNP_P3P,
-        3 => SOLVEPNP_DLS,
-        4 => SOLVEPNP_UPNP,
-        5 => SOLVEPNP_AP3P,
-        6 => SOLVEPNP_IPPE,
-        7 => SOLVEPNP_IPPE_SQUARE,
-        8 => SOLVEPNP_SQPNP,
-        9 => SOLVEPNP_MAX_COUNT,
-        _ => throw ArgumentError("Unknown value for SolvePnPMethod: $value"),
-      };
-}
-
 const int TERM_COUNT = 1;
 
 const int TERM_EPS = 2;
@@ -2053,28 +1992,6 @@ const int USAC_MAGSAC = 38;
 const int USAC_PARALLEL = 33;
 
 const int USAC_PROSAC = 37;
-
-const int VIDEOWRITER_PROP_DEPTH = 5;
-
-const int VIDEOWRITER_PROP_FRAMEBYTES = 2;
-
-const int VIDEOWRITER_PROP_HW_ACCELERATION = 6;
-
-const int VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL = 8;
-
-const int VIDEOWRITER_PROP_HW_DEVICE = 7;
-
-const int VIDEOWRITER_PROP_IS_COLOR = 4;
-
-const int VIDEOWRITER_PROP_KEY_FLAG = 11;
-
-const int VIDEOWRITER_PROP_KEY_INTERVAL = 10;
-
-const int VIDEOWRITER_PROP_NSTRIPES = 3;
-
-const int VIDEOWRITER_PROP_QUALITY = 1;
-
-const int VIDEOWRITER_PROP_RAW_VIDEO = 9;
 
 /// @brief Video Acceleration type
 ///

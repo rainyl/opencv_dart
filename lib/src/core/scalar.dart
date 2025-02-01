@@ -1,4 +1,7 @@
-import 'dart:async';
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 import 'dart:ffi' as ffi;
 import 'dart:math' as math;
 
@@ -102,9 +105,4 @@ class Scalar extends CvStruct<cvg.Scalar> {
 
 extension RecordScalarExtension on (double val1, double val2, double val3, double val4) {
   Scalar get asScalar => Scalar(this.$1, this.$2, this.$3, this.$4);
-}
-
-// async completer
-void scalarCompleter(Completer<Scalar> completer, VoidPtr p) {
-  completer.complete(Scalar.fromPointer(p.cast<cvg.Scalar>()));
 }

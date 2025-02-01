@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -5,7 +9,7 @@ import 'package:ffi/ffi.dart';
 import '../g/types.g.dart' as cvg;
 import 'base.dart';
 
-class Size extends CvStruct<cvg.Size> {
+class Size extends CvStruct<cvg.CvSize> {
   Size.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -13,16 +17,16 @@ class Size extends CvStruct<cvg.Size> {
   }
 
   factory Size(int width, int height) {
-    final p = calloc<cvg.Size>()
+    final p = calloc<cvg.CvSize>()
       ..ref.height = height
       ..ref.width = width;
     return Size.fromPointer(p);
   }
 
-  factory Size.fromNative(cvg.Size sz) => Size(sz.width, sz.height);
+  factory Size.fromNative(cvg.CvSize sz) => Size(sz.width, sz.height);
 
   factory Size.fromRecord((int, int) record) {
-    final p = calloc<cvg.Size>()
+    final p = calloc<cvg.CvSize>()
       ..ref.height = record.$2
       ..ref.width = record.$1;
     return Size.fromPointer(p);
@@ -45,7 +49,7 @@ class Size extends CvStruct<cvg.Size> {
   List<Object?> get props => [width, height];
 
   @override
-  cvg.Size get ref => ptr.ref;
+  cvg.CvSize get ref => ptr.ref;
 
   @override
   String toString() {
@@ -53,7 +57,7 @@ class Size extends CvStruct<cvg.Size> {
   }
 }
 
-class Size2f extends CvStruct<cvg.Size2f> {
+class Size2f extends CvStruct<cvg.CvSize2f> {
   Size2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -61,23 +65,23 @@ class Size2f extends CvStruct<cvg.Size2f> {
   }
 
   factory Size2f(double width, double height) {
-    final p = calloc<cvg.Size2f>()
+    final p = calloc<cvg.CvSize2f>()
       ..ref.height = height
       ..ref.width = width;
     return Size2f.fromPointer(p);
   }
 
-  factory Size2f.fromNative(cvg.Size2f sz) => Size2f(sz.width, sz.height);
+  factory Size2f.fromNative(cvg.CvSize2f sz) => Size2f(sz.width, sz.height);
 
   factory Size2f.fromRecord((double, double) record) {
-    final p = calloc<cvg.Size2f>()
+    final p = calloc<cvg.CvSize2f>()
       ..ref.height = record.$2
       ..ref.width = record.$1;
     return Size2f.fromPointer(p);
   }
 
   factory Size2f.fromSize(Size size) {
-    final p = calloc<cvg.Size2f>()
+    final p = calloc<cvg.CvSize2f>()
       ..ref.height = size.height.toDouble()
       ..ref.width = size.width.toDouble();
     return Size2f.fromPointer(p);
@@ -100,7 +104,7 @@ class Size2f extends CvStruct<cvg.Size2f> {
   List<double> get props => [width, height];
 
   @override
-  cvg.Size2f get ref => ptr.ref;
+  cvg.CvSize2f get ref => ptr.ref;
 
   @override
   String toString() {
@@ -109,11 +113,11 @@ class Size2f extends CvStruct<cvg.Size2f> {
 }
 
 extension RecordSizeExtension1 on (int, int) {
-  Size get cvd => Size.fromRecord(this);
-  Size get toSize => Size.fromRecord(this);
+  Size get cvd => toSize();
+  Size toSize() => Size.fromRecord(this);
 }
 
 extension RecordSize2fExtension1 on (double, double) {
-  Size2f get cvd => Size2f.fromRecord(this);
-  Size2f get toSize2f => Size2f.fromRecord(this);
+  Size2f get cvd => toSize2f();
+  Size2f toSize2f() => Size2f.fromRecord(this);
 }

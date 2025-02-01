@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // ignore_for_file: constant_identifier_names
 
 library cv.contrib;
@@ -7,6 +11,8 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
+import '../core/mat.dart';
+import '../g/contrib.g.dart' as cvg;
 import '../g/contrib.g.dart' as ccontrib;
 
 enum PredefinedDictionaryType {
@@ -80,25 +86,72 @@ enum PredefinedDictionaryType {
   final int value;
 }
 
-class ArucoDictionary extends CvStruct<ccontrib.ArucoDictionary> {
-  ArucoDictionary._(ccontrib.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
+  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
-    final p = calloc<ccontrib.ArucoDictionary>();
-    cvRun(() => ccontrib.getPredefinedDictionary(type.value, p));
+  factory ArucoDictionary.empty() {
+    final p = calloc<cvg.ArucoDictionary>();
+    cvRun(() => ccontrib.cv_aruco_Dictionary_create(p));
     return ArucoDictionary._(p);
   }
 
+  factory ArucoDictionary.fromBytesList(Mat bytesList, int markerSize, {int maxCorr = 0}) {
+    final p = calloc<cvg.ArucoDictionary>();
+    cvRun(() => ccontrib.cv_aruco_Dictionary_create_1(bytesList.ref, markerSize, maxCorr, p));
+    return ArucoDictionary._(p);
+  }
+
+  factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
+    final p = calloc<cvg.ArucoDictionary>();
+    cvRun(() => ccontrib.cv_aruco_getPredefinedDictionary(type.value, p));
+    return ArucoDictionary._(p);
+  }
+
+  Mat generateImageMarker(int id, int sidePixels, {OutputArray? dst, int borderBits = 1}) {
+    dst ??= Mat.empty();
+    cvRun(() => ccontrib.cv_aruco_Dictionary_generateImageMarker(ref, id, sidePixels, dst!.ref, borderBits));
+    return dst;
+  }
+
+  int getDistanceToId(InputArray bits, int id, {bool allRotations = true}) =>
+      ccontrib.cv_aruco_Dictionary_getDistanceToId(ref, bits.ref, id, allRotations);
+
+  (bool rval, int idx, int rotation) identify(InputArray onlyBits, double maxCorrectionRate) {
+    final pIdx = calloc<ffi.Int>();
+    final pRotation = calloc<ffi.Int>();
+    final rval = ccontrib.cv_aruco_Dictionary_identify(ref, onlyBits.ref, pIdx, pRotation, maxCorrectionRate);
+    final ret = (rval, pIdx.value, pRotation.value);
+    calloc.free(pIdx);
+    calloc.free(pRotation);
+    return ret;
+  }
+
+  Mat get bytesList {
+    final dst = Mat.empty();
+    cvRun(() => ccontrib.cv_aruco_Dictionary_get_bytesList(ref, dst.ptr));
+    return dst;
+  }
+
+  set bytesList(Mat value) => ccontrib.cv_aruco_Dictionary_set_bytesList(ref, value.ref);
+
+  int get markerSize => ccontrib.cv_aruco_Dictionary_get_markerSize(ref);
+
+  set markerSize(int value) => ccontrib.cv_aruco_Dictionary_set_markerSize(ref, value);
+
+  int get maxCorrectionBits => ccontrib.cv_aruco_Dictionary_get_maxCorrectionBits(ref);
+
+  set maxCorrectionBits(int value) => ccontrib.cv_aruco_Dictionary_set_maxCorrectionBits(ref, value);
+
   @override
-  ccontrib.ArucoDictionary get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<ccontrib.ArucoDictionaryPtr>(ccontrib.addresses.ArucoDictionary_Close);
+  cvg.ArucoDictionary get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_Dictionary_close);
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.ArucoDictionary_Close(ptr);
+    ccontrib.cv_aruco_Dictionary_close(ptr);
   }
 }

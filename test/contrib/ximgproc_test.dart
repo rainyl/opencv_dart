@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
@@ -88,18 +88,11 @@ void main() async {
 
   test('cv.StructuredEdgeDetection', tags: ["no-local-files"], () async {
     final src = cv.imread("test/images/circles.jpg");
-    final rf = cv.RFFeatureGetter.empty();
-    final detector =
-        cv.StructuredEdgeDetection.create("test/models/structure_edge_model.yml.gz", howToGetFeatures: rf);
+    final detector = cv.StructuredEdgeDetection.create("test/models/structure_edge_model.yml");
 
     // note the alpha, improper data of src will cause crash internally in opencv
     // without friendly exception
     final src32f = src.convertTo(cv.MatType.CV_32FC3, alpha: 1.0 / 255.0);
-
-    // https://github.com/kyamagu/mexopencv/issues/389#issuecomment-366455127
-    expect(rf.isEmpty(), false);
-    final features = rf.getFeatures(src32f, 4, 2, 2, 13, 4);
-    expect(features.isEmpty, false);
 
     final edges = detector.detectEdges(src32f);
     expect(edges.isEmpty, false);
@@ -158,8 +151,6 @@ void main() async {
     eb.kappa = 1.0;
     expect(eb.kappa, closeTo(1.0, 1e-6));
 
-    rf.clear();
-    rf.dispose();
     detector.dispose();
   });
 
@@ -203,7 +194,7 @@ void main() async {
 
     for (var i = 0; i < segments.length; i++) {
       final color = cv.Scalar.fromRgb(Random().nextInt(256), Random().nextInt(256), Random().nextInt(256));
-      cv.polylines(ssrc, segments.elementAt(i).toVecVecPoint, false, color);
+      cv.polylines(ssrc, segments[i].asVecVec(), false, color);
     }
     // cv.imwrite("test/images_out/EdgeDrawing_segments.png", ssrc);
 
@@ -272,7 +263,7 @@ void main() async {
     }
     {
       final kernel = await cv.ximgproc_rl.createRLEImageAsync(runs.cvd);
-      expect(await cv.ximgproc_rl.isRLMorphologyPossibleAsync(kernel), true);
+      expect(cv.ximgproc_rl.isRLMorphologyPossible(kernel), true);
     }
   });
 

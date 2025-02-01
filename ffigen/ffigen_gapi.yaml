@@ -4,26 +4,27 @@ description: |
 output:
   bindings: ../lib/src/g/gapi.g.dart
   symbol-file:
-    output: 'package:opencv_dart/src/g/gapi.yaml'
-    import-path: 'package:opencv_dart/src/g/gapi.g.dart'
+    output: 'package:dartcv4/src/g/gapi.yaml'
+    import-path: 'package:dartcv4/src/g/gapi.g.dart'
 ffi-native:
-  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+  assetId: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
-    - 'package:opencv_dart/src/g/types.yaml'
-compiler-opts: "-Isrc"
+    - 'package:dartcv4/src/g/types.yaml'
+compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/gapi/gapi.h
+    - ../src/dartcv/gapi/gapi.h
   include-directives:
-    - ../src/gapi/gapi.h
+    - ../src/dartcv/gapi/gapi.h
 
 functions:
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
 
 preamble: |
   // coverage:ignore-file

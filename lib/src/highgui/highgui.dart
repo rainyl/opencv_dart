@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // ignore_for_file: constant_identifier_names
 
 library cv.highgui;
@@ -9,265 +13,235 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
+import '../g/highgui.g.dart' as cvg;
 import '../g/highgui.g.dart' as chighgui;
 
-/// [Window] is a wrapper around OpenCV's "HighGUI" named windows.
-/// While OpenCV was designed for use in full-scale applications and can be used
-/// within functionally rich UI frameworks (such as Qt*, WinForms*, or Cocoa*)
-/// or without any UI at all, sometimes there it is required to try functionality
-/// quickly and visualize the results. This is what the HighGUI module has been designed for.
+String currentUIFramework() => chighgui.cv_currentUIFramework().toDartString();
+
+int getMouseWheelDelta(int flags) => chighgui.cv_getMouseWheelDelta(flags);
+
+int pollKey() => chighgui.cv_pollKey();
+
+/// waits for a pressed key.
+/// This function is the only method in OpenCV's HighGUI that can fetch
+/// and handle events, so it needs to be called periodically
+/// for normal event processing
 ///
 /// For further details, please see:
-/// http://docs.opencv.org/master/d7/dfc/group__highgui.html
-class Window {
-  /// creates a new named OpenCV window
-  ///
-  /// For further details, please see:
-  /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
-  Window(this.name, [int flags = 0]) {
-    cvRunArena((arena) {
-      cvRun(() => chighgui.Window_New(name.toNativeUtf8(allocator: arena).cast(), flags));
-    });
-  }
+/// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5628525ad33f52eab17feebcfba38bd7
+int waitKey(int delay) => chighgui.cv_waitKey(delay);
+int waitKeyEx(int delay) => chighgui.cv_waitKeyEx(delay);
 
-  void close() {
-    cvRunArena((arena) {
-      chighgui.Window_Close(name.toNativeUtf8(allocator: arena).cast());
-    });
-  }
-
-  /// [getWindowProperty] returns properties of a window.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gaaf9504b8f9cf19024d9d44a14e461656
-  double getWindowProperty(WindowPropertyFlags flag) {
-    return cvRunArena<double>((arena) {
-      final result = arena<ffi.Double>();
-      cvRun(
-        () => chighgui.Window_GetProperty(
-          name.toNativeUtf8(allocator: arena).cast(),
-          flag.value,
-          result,
-        ),
-      );
-      return result.value;
-    });
-  }
-
-  /// [setWindowProperty] changes parameters of a window dynamically.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
-  void setWindowProperty(WindowPropertyFlags flag, double value) {
-    cvRunArena((arena) {
-      cvRun(() => chighgui.Window_SetProperty(name.toNativeUtf8(allocator: arena).cast(), flag.value, value));
-    });
-  }
-
-  /// SetWindowTitle updates window title.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
-  void setWindowTitle(String title) {
-    cvRunArena((arena) {
-      cvRun(
-        () => chighgui.Window_SetTitle(
-          name.toNativeUtf8(allocator: arena).cast(),
-          title.toNativeUtf8(allocator: arena).cast(),
-        ),
-      );
-    });
-  }
-
-  /// IMShow displays an image Mat in the specified window.
-  /// This function should be followed by the WaitKey function which displays
-  /// the image for specified milliseconds. Otherwise, it won't display the image.
-  ///
-  /// For further details, please see:
-  /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
-  void imshow(Mat img) {
-    cvRunArena((arena) {
-      cvRun(() => chighgui.Window_IMShow(name.toNativeUtf8(allocator: arena).cast(), img.ref));
-    });
-  }
-
-  /// WaitKey waits for a pressed key.
-  /// This function is the only method in OpenCV's HighGUI that can fetch
-  /// and handle events, so it needs to be called periodically
-  /// for normal event processing
-  ///
-  /// For further details, please see:
-  /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5628525ad33f52eab17feebcfba38bd7
-  int waitKey(int delay) {
-    return cvRunArena<int>((arena) {
-      final ret = arena<ffi.Int>();
-      cvRun(() => chighgui.Window_WaitKey(delay, ret));
-      return ret.value;
-    });
-  }
-
-  /// MoveWindow moves window to the specified position.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
-  void moveWindow(int x, int y) {
-    cvRunArena((arena) {
-      cvRun(() => chighgui.Window_Move(name.toNativeUtf8(allocator: arena).cast(), x, y));
-    });
-  }
-
-  /// ResizeWindow resizes window to the specified size.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
-  void resizeWindow(int width, int height) {
-    cvRunArena((arena) {
-      cvRun(() => chighgui.Window_Resize(name.toNativeUtf8(allocator: arena).cast(), width, height));
-    });
-  }
-
-  /// SelectROI selects a Region Of Interest (ROI) on the given image.
-  /// It creates a window and allows user to select a ROI cvRunArena mouse.
-  ///
-  /// Controls:
-  /// use space or enter to finish selection,
-  /// use key c to cancel selection (function will return a zero Rect).
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8daf4730d3adf7035b6de9be4c469af5
-  Rect selectROI(Mat img) {
-    final result = calloc<chighgui.Rect>();
-    final cname = name.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => chighgui.Window_SelectROI(cname, img.ref, result));
-    calloc.free(cname);
-    return Rect.fromPointer(result);
-  }
-
-  /// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
-  /// It creates a window and allows user to select ROIs cvRunArena mouse.
-  ///
-  /// Controls:
-  /// use space or enter to finish current selection and start a new one
-  /// use esc to terminate multiple ROI selection process
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga0f11fad74a6432b8055fb21621a0f893
-  VecRect selectROIs(Mat img) {
-    return cvRunArena<VecRect>((arena) {
-      final result = calloc<chighgui.VecRect>();
-      final cname = name.toNativeUtf8().cast<ffi.Char>();
-      cvRun(() => chighgui.Window_SelectROIs(cname, img.ref, result));
-      calloc.free(cname);
-      return VecRect.fromPointer(result);
-    });
-  }
-
-  String name;
-  // https://stackoverflow.com/a/48055987/18539998
-  bool get isOpen {
-    final ret = getWindowProperty(WindowPropertyFlags.WND_PROP_VISIBLE).toInt();
-    return ret != 0;
-  }
+/// creates a new named OpenCV window
+///
+/// For further details, please see:
+/// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
+void namedWindow(String winName, [int flags = 0]) {
+  final cname = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_namedWindow(cname, flags));
+  calloc.free(cname);
 }
 
-/// WaitKey that is not attached to a specific Window.
-/// Only use when no Window exists in your application, e.g. command line app.
-int waitKey(int delay) {
-  return cvRunArena<int>((arena) {
-    final ret = arena<ffi.Int>();
-    cvRun(() => chighgui.Window_WaitKey(delay, ret));
-    return ret.value;
-  });
-}
-
-class Trackbar {
-  Trackbar(this.name, this.parent, this.max, {int? value}) {
-    cvRunArena((arena) {
-      final ppname = parent.name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      final cname = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-      cvRun(() => chighgui.Trackbar_Create(ppname, cname, max));
-      if (value != null) {
-        pos = value;
-      }
-    });
-  }
-
-  /// pos returns the trackbar position.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga122632e9e91b9ec06943472c55d9cda8
-  int get pos {
-    return cvRunArena<int>((arena) {
-      final result = arena<ffi.Int>();
-      cvRun(
-        () => chighgui.Trackbar_GetPos(
-          parent.name.toNativeUtf8(allocator: arena).cast(),
-          name.toNativeUtf8(allocator: arena).cast(),
-          result,
-        ),
-      );
-      return result.value;
-    });
-  }
-
-  /// pos sets the trackbar position.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga67d73c4c9430f13481fd58410d01bd8d
-  set pos(int pos) {
-    cvRunArena((arena) {
-      cvRun(
-        () => chighgui.Trackbar_SetPos(
-          parent.name.toNativeUtf8(allocator: arena).cast(),
-          name.toNativeUtf8(allocator: arena).cast(),
-          pos,
-        ),
-      );
-    });
-  }
-
-  /// SetMin sets the trackbar minimum position.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gabe26ffe8d2b60cc678895595a581b7aa
-  // ignore: avoid_setters_without_getters
-  set minPos(int pos) {
-    cvRunArena((arena) {
-      cvRun(
-        () => chighgui.Trackbar_SetMin(
-          parent.name.toNativeUtf8(allocator: arena).cast(),
-          name.toNativeUtf8(allocator: arena).cast(),
-          pos,
-        ),
-      );
-    });
-  }
-
-  /// SetMax sets the trackbar maximum position.
-  ///
-  /// For further details, please see:
-  /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga7e5437ccba37f1154b65210902fc4480
-  // ignore: avoid_setters_without_getters
-  set maxPos(int pos) {
-    cvRunArena((arena) {
-      cvRun(
-        () => chighgui.Trackbar_SetMax(
-          parent.name.toNativeUtf8(allocator: arena).cast(),
-          name.toNativeUtf8(allocator: arena).cast(),
-          pos,
-        ),
-      );
-    });
-  }
-
-  String name;
-  Window parent;
-  int max;
+void destroyWindow(String winName) {
+  final cname = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_destroyWindow(cname));
+  calloc.free(cname);
 }
 
 /// destroy all windows.
 void destroyAllWindows() {
-  cvRun(chighgui.destroyAllWindows);
+  cvRun(chighgui.cv_destroyAllWindows);
+}
+
+/// displays an image Mat in the specified window.
+/// This function should be followed by the WaitKey function which displays
+/// the image for specified milliseconds. Otherwise, it won't display the image.
+///
+/// For further details, please see:
+/// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
+void imshow(String winName, Mat img) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_imshow(cWinName, img.ref));
+  calloc.free(cWinName);
+}
+
+Rect getWindowImageRect(String winName) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  final p = calloc<cvg.CvRect>();
+  cvRun(() => chighgui.cv_getWindowImageRect(cWinName, p));
+  calloc.free(cWinName);
+  return Rect.fromPointer(p);
+}
+
+/// [getWindowProperty] returns properties of a window.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gaaf9504b8f9cf19024d9d44a14e461656
+double getWindowProperty(String winName, WindowPropertyFlags flag) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  final p = calloc<ffi.Double>();
+  cvRun(() => chighgui.cv_getWindowProperty(cWinName, flag.value, p));
+  final rval = p.value;
+  calloc.free(p);
+  calloc.free(cWinName);
+  return rval;
+}
+
+/// [setWindowProperty] changes parameters of a window dynamically.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
+void setWindowProperty(String winName, WindowPropertyFlags flag, double value) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_setWindowProperty(cWinName, flag.value, value));
+  calloc.free(cWinName);
+}
+
+/// SetWindowTitle updates window title.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
+void setWindowTitle(String winName, String title) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  final ctitle = title.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_setWindowTitle(cWinName, ctitle));
+  calloc.free(ctitle);
+  calloc.free(cWinName);
+}
+
+/// MoveWindow moves window to the specified position.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
+void moveWindow(String winName, int x, int y) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_moveWindow(cWinName, x, y));
+  calloc.free(cWinName);
+}
+
+/// ResizeWindow resizes window to the specified size.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
+void resizeWindow(String winName, int width, int height) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_resizeWindow(cWinName, width, height));
+  calloc.free(cWinName);
+}
+
+/// SelectROI selects a Region Of Interest (ROI) on the given image.
+/// It creates a window and allows user to select a ROI cvRunArena mouse.
+///
+/// Controls:
+/// use space or enter to finish selection,
+/// use key c to cancel selection (function will return a zero Rect).
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8daf4730d3adf7035b6de9be4c469af5
+Rect selectROI(
+  String winName,
+  Mat img, {
+  bool showCrosshair = true,
+  bool fromCenter = false,
+  bool printNotice = true,
+}) {
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  final p = calloc<cvg.CvRect>();
+  cvRun(() => chighgui.cv_selectROI(cWinName, img.ref, showCrosshair, fromCenter, printNotice, p));
+  calloc.free(cWinName);
+  return Rect.fromPointer(p);
+}
+
+/// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
+/// It creates a window and allows user to select ROIs cvRunArena mouse.
+///
+/// Controls:
+/// use space or enter to finish current selection and start a new one
+/// use esc to terminate multiple ROI selection process
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga0f11fad74a6432b8055fb21621a0f893
+VecRect selectROIs(
+  String winName,
+  Mat img, {
+  bool showCrosshair = true,
+  bool fromCenter = false,
+  bool printNotice = true,
+}) {
+  final p = VecRect();
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_selectROIs(cWinName, img.ref, p.ptr, showCrosshair, fromCenter, printNotice));
+  calloc.free(cWinName);
+  return p;
+}
+
+// https://stackoverflow.com/a/48055987/18539998
+bool isWindowOpen(String winName) {
+  final ret = getWindowProperty(winName, WindowPropertyFlags.WND_PROP_VISIBLE).toInt();
+  return ret != 0;
+}
+
+void createTrackbar(
+  String trackbarName,
+  String winName,
+  int maxval, {
+  cvg.Dartcv_TrackbarCallbackFunction? onChange,
+}) {
+  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
+  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
+  if (onChange == null) {
+    cvRun(() => chighgui.cv_createTrackbar(cTrackName, cWinName, maxval));
+  } else {
+    final funcPointer = ffi.NativeCallable<cvg.cv_TrackbarCallbackFunction>.isolateLocal(onChange);
+    cvRun(
+      () => chighgui.cv_createTrackbar_1(
+        cTrackName,
+        cWinName,
+        ffi.nullptr,
+        maxval,
+        funcPointer.nativeFunction,
+        ffi.nullptr,
+      ),
+    );
+  }
+  calloc.free(cTrackName);
+  calloc.free(cWinName);
+}
+
+int getTrackbarPos(String trackbarName, String winName) {
+  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
+  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
+  final p = calloc<ffi.Int>();
+  cvRun(() => chighgui.cv_getTrackbarPos(cTrackName, cwinname, p));
+  final rval = p.value;
+  calloc.free(p);
+  calloc.free(cTrackName);
+  calloc.free(cwinname);
+  return rval;
+}
+
+void setTrackbarPos(String trackbarName, String winName, int pos) {
+  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
+  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_setTrackbarPos(cTrackName, cwinname, pos));
+  calloc.free(cTrackName);
+  calloc.free(cwinname);
+}
+
+void setTrackbarMin(String trackbarName, String winName, int minval) {
+  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
+  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_setTrackbarMin(cTrackName, cwinname, minval));
+  calloc.free(cTrackName);
+  calloc.free(cwinname);
+}
+
+void setTrackbarMax(String trackbarName, String winName, int maxval) {
+  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
+  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
+  cvRun(() => chighgui.cv_setTrackbarMax(cTrackName, cwinname, maxval));
+  calloc.free(cTrackName);
+  calloc.free(cwinname);
 }
 
 enum WindowFlag {

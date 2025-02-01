@@ -1,203 +1,107 @@
 format_version: 1.0.0
 files:
-  package:opencv_dart/src/g/features2d.g.dart:
+  package:dartcv4/src/g/features2d.g.dart:
     used-config:
       ffi-native: true
     symbols:
-      c:@F@AKAZE_Close:
-        name: AKAZE_Close
-      c:@F@AKAZE_Close_Async:
-        name: AKAZE_Close_Async
-      c:@F@AKAZE_Create:
-        name: AKAZE_Create
-      c:@F@AKAZE_Create_Async:
-        name: AKAZE_Create_Async
-      c:@F@AKAZE_Detect:
-        name: AKAZE_Detect
-      c:@F@AKAZE_DetectAndCompute:
-        name: AKAZE_DetectAndCompute
-      c:@F@AKAZE_DetectAndCompute_Async:
-        name: AKAZE_DetectAndCompute_Async
-      c:@F@AKAZE_Detect_Async:
-        name: AKAZE_Detect_Async
-      c:@F@AgastFeatureDetector_Close:
-        name: AgastFeatureDetector_Close
-      c:@F@AgastFeatureDetector_Close_Async:
-        name: AgastFeatureDetector_Close_Async
-      c:@F@AgastFeatureDetector_Create:
-        name: AgastFeatureDetector_Create
-      c:@F@AgastFeatureDetector_Create_Async:
-        name: AgastFeatureDetector_Create_Async
-      c:@F@AgastFeatureDetector_Detect:
-        name: AgastFeatureDetector_Detect
-      c:@F@AgastFeatureDetector_Detect_Async:
-        name: AgastFeatureDetector_Detect_Async
-      c:@F@BFMatcher_Close:
-        name: BFMatcher_Close
-      c:@F@BFMatcher_Close_Async:
-        name: BFMatcher_Close_Async
-      c:@F@BFMatcher_Create:
-        name: BFMatcher_Create
-      c:@F@BFMatcher_CreateWithParams:
-        name: BFMatcher_CreateWithParams
-      c:@F@BFMatcher_CreateWithParams_Async:
-        name: BFMatcher_CreateWithParams_Async
-      c:@F@BFMatcher_Create_Async:
-        name: BFMatcher_Create_Async
-      c:@F@BFMatcher_KnnMatch:
-        name: BFMatcher_KnnMatch
-      c:@F@BFMatcher_KnnMatch_Async:
-        name: BFMatcher_KnnMatch_Async
-      c:@F@BFMatcher_Match:
-        name: BFMatcher_Match
-      c:@F@BFMatcher_Match_Async:
-        name: BFMatcher_Match_Async
-      c:@F@BRISK_Close:
-        name: BRISK_Close
-      c:@F@BRISK_Close_Async:
-        name: BRISK_Close_Async
-      c:@F@BRISK_Create:
-        name: BRISK_Create
-      c:@F@BRISK_Create_Async:
-        name: BRISK_Create_Async
-      c:@F@BRISK_Detect:
-        name: BRISK_Detect
-      c:@F@BRISK_DetectAndCompute:
-        name: BRISK_DetectAndCompute
-      c:@F@BRISK_DetectAndCompute_Async:
-        name: BRISK_DetectAndCompute_Async
-      c:@F@BRISK_Detect_Async:
-        name: BRISK_Detect_Async
-      c:@F@DrawKeyPoints:
-        name: DrawKeyPoints
-      c:@F@DrawKeyPoints_Async:
-        name: DrawKeyPoints_Async
-      c:@F@DrawMatches:
-        name: DrawMatches
-      c:@F@DrawMatches_Async:
-        name: DrawMatches_Async
-      c:@F@FastFeatureDetector_Close:
-        name: FastFeatureDetector_Close
-      c:@F@FastFeatureDetector_Close_Async:
-        name: FastFeatureDetector_Close_Async
-      c:@F@FastFeatureDetector_Create:
-        name: FastFeatureDetector_Create
-      c:@F@FastFeatureDetector_CreateWithParams:
-        name: FastFeatureDetector_CreateWithParams
-      c:@F@FastFeatureDetector_CreateWithParams_Async:
-        name: FastFeatureDetector_CreateWithParams_Async
-      c:@F@FastFeatureDetector_Create_Async:
-        name: FastFeatureDetector_Create_Async
-      c:@F@FastFeatureDetector_Detect:
-        name: FastFeatureDetector_Detect
-      c:@F@FastFeatureDetector_Detect_Async:
-        name: FastFeatureDetector_Detect_Async
-      c:@F@FlannBasedMatcher_Close:
-        name: FlannBasedMatcher_Close
-      c:@F@FlannBasedMatcher_Close_Async:
-        name: FlannBasedMatcher_Close_Async
-      c:@F@FlannBasedMatcher_Create:
-        name: FlannBasedMatcher_Create
-      c:@F@FlannBasedMatcher_Create_Async:
-        name: FlannBasedMatcher_Create_Async
-      c:@F@FlannBasedMatcher_KnnMatch:
-        name: FlannBasedMatcher_KnnMatch
-      c:@F@FlannBasedMatcher_KnnMatch_Async:
-        name: FlannBasedMatcher_KnnMatch_Async
-      c:@F@GFTTDetector_Close:
-        name: GFTTDetector_Close
-      c:@F@GFTTDetector_Close_Async:
-        name: GFTTDetector_Close_Async
-      c:@F@GFTTDetector_Create:
-        name: GFTTDetector_Create
-      c:@F@GFTTDetector_Create_Async:
-        name: GFTTDetector_Create_Async
-      c:@F@GFTTDetector_Detect:
-        name: GFTTDetector_Detect
-      c:@F@GFTTDetector_Detect_Async:
-        name: GFTTDetector_Detect_Async
-      c:@F@KAZE_Close:
-        name: KAZE_Close
-      c:@F@KAZE_Close_Async:
-        name: KAZE_Close_Async
-      c:@F@KAZE_Create:
-        name: KAZE_Create
-      c:@F@KAZE_Create_Async:
-        name: KAZE_Create_Async
-      c:@F@KAZE_Detect:
-        name: KAZE_Detect
-      c:@F@KAZE_DetectAndCompute:
-        name: KAZE_DetectAndCompute
-      c:@F@KAZE_DetectAndCompute_Async:
-        name: KAZE_DetectAndCompute_Async
-      c:@F@KAZE_Detect_Async:
-        name: KAZE_Detect_Async
-      c:@F@MSER_Close:
-        name: MSER_Close
-      c:@F@MSER_Close_Async:
-        name: MSER_Close_Async
-      c:@F@MSER_Create:
-        name: MSER_Create
-      c:@F@MSER_Create_Async:
-        name: MSER_Create_Async
-      c:@F@MSER_Detect:
-        name: MSER_Detect
-      c:@F@MSER_Detect_Async:
-        name: MSER_Detect_Async
-      c:@F@ORB_Close:
-        name: ORB_Close
-      c:@F@ORB_Close_Async:
-        name: ORB_Close_Async
-      c:@F@ORB_Create:
-        name: ORB_Create
-      c:@F@ORB_CreateWithParams:
-        name: ORB_CreateWithParams
-      c:@F@ORB_CreateWithParams_Async:
-        name: ORB_CreateWithParams_Async
-      c:@F@ORB_Create_Async:
-        name: ORB_Create_Async
-      c:@F@ORB_Detect:
-        name: ORB_Detect
-      c:@F@ORB_DetectAndCompute:
-        name: ORB_DetectAndCompute
-      c:@F@ORB_DetectAndCompute_Async:
-        name: ORB_DetectAndCompute_Async
-      c:@F@ORB_Detect_Async:
-        name: ORB_Detect_Async
-      c:@F@SIFT_Close:
-        name: SIFT_Close
-      c:@F@SIFT_Close_Async:
-        name: SIFT_Close_Async
-      c:@F@SIFT_Create:
-        name: SIFT_Create
-      c:@F@SIFT_Create_Async:
-        name: SIFT_Create_Async
-      c:@F@SIFT_Detect:
-        name: SIFT_Detect
-      c:@F@SIFT_DetectAndCompute:
-        name: SIFT_DetectAndCompute
-      c:@F@SIFT_DetectAndCompute_Async:
-        name: SIFT_DetectAndCompute_Async
-      c:@F@SIFT_Detect_Async:
-        name: SIFT_Detect_Async
-      c:@F@SimpleBlobDetectorParams_Create:
-        name: SimpleBlobDetectorParams_Create
-      c:@F@SimpleBlobDetector_Close:
-        name: SimpleBlobDetector_Close
-      c:@F@SimpleBlobDetector_Close_Async:
-        name: SimpleBlobDetector_Close_Async
-      c:@F@SimpleBlobDetector_Create:
-        name: SimpleBlobDetector_Create
-      c:@F@SimpleBlobDetector_Create_Async:
-        name: SimpleBlobDetector_Create_Async
-      c:@F@SimpleBlobDetector_Create_WithParams:
-        name: SimpleBlobDetector_Create_WithParams
-      c:@F@SimpleBlobDetector_Create_WithParams_Async:
-        name: SimpleBlobDetector_Create_WithParams_Async
-      c:@F@SimpleBlobDetector_Detect:
-        name: SimpleBlobDetector_Detect
-      c:@F@SimpleBlobDetector_Detect_Async:
-        name: SimpleBlobDetector_Detect_Async
+      c:@F@cv_AKAZE_close:
+        name: cv_AKAZE_close
+      c:@F@cv_AKAZE_create:
+        name: cv_AKAZE_create
+      c:@F@cv_AKAZE_detect:
+        name: cv_AKAZE_detect
+      c:@F@cv_AKAZE_detectAndCompute:
+        name: cv_AKAZE_detectAndCompute
+      c:@F@cv_AgastFeatureDetector_close:
+        name: cv_AgastFeatureDetector_close
+      c:@F@cv_AgastFeatureDetector_create:
+        name: cv_AgastFeatureDetector_create
+      c:@F@cv_AgastFeatureDetector_detect:
+        name: cv_AgastFeatureDetector_detect
+      c:@F@cv_BFMatcher_close:
+        name: cv_BFMatcher_close
+      c:@F@cv_BFMatcher_create:
+        name: cv_BFMatcher_create
+      c:@F@cv_BFMatcher_create_1:
+        name: cv_BFMatcher_create_1
+      c:@F@cv_BFMatcher_knnMatch:
+        name: cv_BFMatcher_knnMatch
+      c:@F@cv_BFMatcher_match:
+        name: cv_BFMatcher_match
+      c:@F@cv_BRISK_close:
+        name: cv_BRISK_close
+      c:@F@cv_BRISK_create:
+        name: cv_BRISK_create
+      c:@F@cv_BRISK_detect:
+        name: cv_BRISK_detect
+      c:@F@cv_BRISK_detectAndCompute:
+        name: cv_BRISK_detectAndCompute
+      c:@F@cv_FastFeatureDetector_close:
+        name: cv_FastFeatureDetector_close
+      c:@F@cv_FastFeatureDetector_create:
+        name: cv_FastFeatureDetector_create
+      c:@F@cv_FastFeatureDetector_create_1:
+        name: cv_FastFeatureDetector_create_1
+      c:@F@cv_FastFeatureDetector_detect:
+        name: cv_FastFeatureDetector_detect
+      c:@F@cv_FlannBasedMatcher_close:
+        name: cv_FlannBasedMatcher_close
+      c:@F@cv_FlannBasedMatcher_create:
+        name: cv_FlannBasedMatcher_create
+      c:@F@cv_FlannBasedMatcher_knnMatch:
+        name: cv_FlannBasedMatcher_knnMatch
+      c:@F@cv_GFTTDetector_close:
+        name: cv_GFTTDetector_close
+      c:@F@cv_GFTTDetector_create:
+        name: cv_GFTTDetector_create
+      c:@F@cv_GFTTDetector_detect:
+        name: cv_GFTTDetector_detect
+      c:@F@cv_KAZE_close:
+        name: cv_KAZE_close
+      c:@F@cv_KAZE_create:
+        name: cv_KAZE_create
+      c:@F@cv_KAZE_detect:
+        name: cv_KAZE_detect
+      c:@F@cv_KAZE_detectAndCompute:
+        name: cv_KAZE_detectAndCompute
+      c:@F@cv_MSER_close:
+        name: cv_MSER_close
+      c:@F@cv_MSER_create:
+        name: cv_MSER_create
+      c:@F@cv_MSER_detect:
+        name: cv_MSER_detect
+      c:@F@cv_ORB_close:
+        name: cv_ORB_close
+      c:@F@cv_ORB_create:
+        name: cv_ORB_create
+      c:@F@cv_ORB_create_1:
+        name: cv_ORB_create_1
+      c:@F@cv_ORB_detect:
+        name: cv_ORB_detect
+      c:@F@cv_ORB_detectAndCompute:
+        name: cv_ORB_detectAndCompute
+      c:@F@cv_SIFT_close:
+        name: cv_SIFT_close
+      c:@F@cv_SIFT_create:
+        name: cv_SIFT_create
+      c:@F@cv_SIFT_detect:
+        name: cv_SIFT_detect
+      c:@F@cv_SIFT_detectAndCompute:
+        name: cv_SIFT_detectAndCompute
+      c:@F@cv_SimpleBlobDetectorParams_create:
+        name: cv_SimpleBlobDetectorParams_create
+      c:@F@cv_SimpleBlobDetector_close:
+        name: cv_SimpleBlobDetector_close
+      c:@F@cv_SimpleBlobDetector_create:
+        name: cv_SimpleBlobDetector_create
+      c:@F@cv_SimpleBlobDetector_create_1:
+        name: cv_SimpleBlobDetector_create_1
+      c:@F@cv_SimpleBlobDetector_detect:
+        name: cv_SimpleBlobDetector_detect
+      c:@F@cv_drawKeyPoints:
+        name: cv_drawKeyPoints
+      c:@F@cv_drawMatches:
+        name: cv_drawMatches
       c:@S@AKAZE:
         name: AKAZE
       c:@S@AgastFeatureDetector:

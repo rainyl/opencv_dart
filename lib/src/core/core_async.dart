@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // ignore_for_file: non_constant_identifier_names
 
 library cv;
@@ -7,6 +11,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/constants.g.dart';
+import '../g/core.g.dart' as cvg;
 import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
@@ -22,19 +27,28 @@ import 'vec.dart';
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6fef31bc8c4071cbc114a758a2b79c14
-Future<Mat> absDiffAsync(Mat src1, Mat src2) async => cvRunAsync(
-      (callback) => ccore.core_AbsDiff_Async(src1.ref, src2.ref, callback),
-      matCompleter,
-    );
+Future<Mat> absDiffAsync(Mat src1, Mat src2, {Mat? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_absdiff(src1.ref, src2.ref, dst!.ref, callback),
+    (c) => c.complete(dst),
+  );
+}
 
 /// Add calculates the per-element sum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga10ac1bfb180e2cfda1701d06c24fdbd6
-Future<Mat> addAsync(Mat src1, Mat src2, {Mat? mask, int dtype = -1}) async => cvRunAsync(
-      (callback) => ccore.core_Add_Async(src1.ref, src2.ref, mask?.ref ?? Mat.empty().ref, dtype, callback),
-      matCompleter,
-    );
+Future<Mat> addAsync(Mat src1, Mat src2, {Mat? dst, int dtype = -1, Mat? mask}) async {
+  dst ??= Mat.empty();
+  mask ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_add(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// AddWeighted calculates the weighted sum of two arrays.
 ///
@@ -46,12 +60,17 @@ Future<Mat> addWeightedAsync(
   InputArray src2,
   double beta,
   double gamma, {
+  OutputArray? dst,
   int dtype = -1,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_AddWeighted_Async(src1.ref, alpha, src2.ref, beta, gamma, dtype, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_addWeighted(src1.ref, alpha, src2.ref, beta, gamma, dst!.ref, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// BitwiseAnd computes bitwise conjunction of the two arrays (dst = src1 & src2).
 /// Calculates the per-element bit-wise conjunction of two arrays
@@ -62,49 +81,99 @@ Future<Mat> addWeightedAsync(
 Future<Mat> bitwiseANDAsync(
   InputArray src1,
   InputArray src2, {
+  OutputArray? dst,
   InputArray? mask,
-}) async =>
-    cvRunAsync(
-      (callback) => mask == null
-          ? ccore.core_BitwiseAnd_Async(src1.ref, src2.ref, callback)
-          : ccore.core_BitwiseAndWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  return mask == null
+      ? cvRunAsync0(
+          (callback) => ccore.cv_bitwise_and(src1.ref, src2.ref, dst!.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_bitwise_and_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        );
+}
 
 /// BitwiseNot inverts every bit of an array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0002cf8b418479f4cb49a75442baee2f
-Future<Mat> bitwiseNOTAsync(InputArray src, {InputArray? mask}) async => cvRunAsync(
-      (callback) => mask == null
-          ? ccore.core_BitwiseNot_Async(src.ref, callback)
-          : ccore.core_BitwiseNotWithMask_Async(src.ref, mask.ref, callback),
-      matCompleter,
-    );
+Future<Mat> bitwiseNOTAsync(InputArray src, {OutputArray? dst, InputArray? mask}) async {
+  dst ??= Mat.empty();
+  return mask == null
+      ? cvRunAsync0(
+          (callback) => ccore.cv_bitwise_not(src.ref, dst!.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_bitwise_not_1(src.ref, dst!.ref, mask.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        );
+}
 
 /// BitwiseOr calculates the per-element bit-wise disjunction of two arrays
 /// or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gab85523db362a4e26ff0c703793a719b4
-Future<Mat> bitwiseORAsync(InputArray src1, InputArray src2, {InputArray? mask}) async => cvRunAsync(
-      (callback) => mask == null
-          ? ccore.core_BitwiseOr_Async(src1.ref, src2.ref, callback)
-          : ccore.core_BitwiseOrWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
-      matCompleter,
-    );
+Future<Mat> bitwiseORAsync(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+}) async {
+  dst ??= Mat.empty();
+  return mask == null
+      ? cvRunAsync0(
+          (callback) => ccore.cv_bitwise_or(src1.ref, src2.ref, dst!.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_bitwise_or_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        );
+}
 
 /// BitwiseXor calculates the per-element bit-wise "exclusive or" operation
 /// on two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga84b2d8188ce506593dcc3f8cd00e8e2c
-Future<Mat> bitwiseXORAsync(InputArray src1, InputArray src2, {InputArray? mask}) async => cvRunAsync(
-      (callback) => mask == null
-          ? ccore.core_BitwiseXor_Async(src1.ref, src2.ref, callback)
-          : ccore.core_BitwiseXorWithMask_Async(src1.ref, src2.ref, mask.ref, callback),
-      matCompleter,
-    );
+Future<Mat> bitwiseXORAsync(
+  InputArray src1,
+  InputArray src2, {
+  OutputArray? dst,
+  InputArray? mask,
+}) async {
+  dst ??= Mat.empty();
+  return mask == null
+      ? cvRunAsync0(
+          (callback) => ccore.cv_bitwise_xor(src1.ref, src2.ref, dst!.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_bitwise_xor_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback),
+          (c) {
+            return c.complete(dst);
+          },
+        );
+}
 
 /// BatchDistance is a naive nearest neighbor finder.
 ///
@@ -114,35 +183,52 @@ Future<(Mat dist, Mat nidx)> batchDistanceAsync(
   InputArray src1,
   InputArray src2,
   int dtype, {
+  OutputArray? dist,
+  OutputArray? nidx,
   int normType = NORM_L2,
   int K = 0,
   InputArray? mask,
   int update = 0,
   bool crosscheck = false,
-}) async =>
-    cvRunAsync2<(Mat, Mat)>(
-      (callback) => ccore.core_BatchDistance_Async(
-        src1.ref,
-        src2.ref,
-        dtype,
-        normType,
-        K,
-        mask?.ref ?? Mat.empty().ref,
-        update,
-        crosscheck,
-        callback,
-      ),
-      matCompleter2,
-    );
+}) async {
+  dist ??= Mat.empty();
+  nidx ??= Mat.empty();
+  mask ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_batchDistance(
+      src1.ref,
+      src2.ref,
+      dist!.ref,
+      dtype,
+      nidx!.ref,
+      normType,
+      K,
+      mask!.ref,
+      update,
+      crosscheck,
+      callback,
+    ),
+    (c) {
+      return c.complete((dist!, nidx!));
+    },
+  );
+}
 
 /// BorderInterpolate computes the source location of an extrapolated pixel.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
-Future<int> borderInterpolateAsync(int p, int len, int borderType) async => cvRunAsync(
-      (callback) => ccore.core_BorderInterpolate_Async(p, len, borderType, callback),
-      intCompleter,
-    );
+Future<int> borderInterpolateAsync(int p, int len, int borderType) async {
+  final ptr = calloc<ffi.Int>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_borderInterpolate(p, len, borderType, ptr, callback),
+    (c) {
+      final v = ptr.value;
+      calloc.free(ptr);
+      return c.complete(v);
+    },
+  );
+}
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
 ///
@@ -152,18 +238,24 @@ Future<(Mat covar, Mat mean)> calcCovarMatrixAsync(
   InputArray samples,
   InputOutputArray mean,
   int flags, {
+  OutputArray? covar,
   int ctype = MatType.CV_64F,
-}) async =>
-    cvRunAsync<(Mat, Mat)>(
-      (callback) => ccore.core_CalcCovarMatrix_Async(
-        samples.ref,
-        mean.ref,
-        flags,
-        ctype,
-        callback,
-      ),
-      (c, p) => c.complete((Mat.fromPointer(p.cast<ccore.Mat>()), mean)),
-    );
+}) async {
+  covar ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_calcCovarMatrix(
+      samples.ref,
+      covar!.ref,
+      mean.ref,
+      flags,
+      ctype,
+      callback,
+    ),
+    (c) {
+      return c.complete((covar!, mean));
+    },
+  );
+}
 
 /// CartToPolar calculates the magnitude and angle of 2D vectors.
 ///
@@ -172,17 +264,19 @@ Future<(Mat covar, Mat mean)> calcCovarMatrixAsync(
 Future<(Mat magnitude, Mat angle)> cartToPolarAsync(
   InputArray x,
   InputArray y, {
+  OutputArray? magnitude,
+  OutputArray? angle,
   bool angleInDegrees = false,
-}) async =>
-    cvRunAsync2<(Mat, Mat)>(
-      (callback) => ccore.core_CartToPolar_Async(
-        x.ref,
-        y.ref,
-        angleInDegrees,
-        callback,
-      ),
-      matCompleter2,
-    );
+}) async {
+  magnitude ??= Mat.empty();
+  angle ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_cartToPolar(x.ref, y.ref, magnitude!.ref, angle!.ref, angleInDegrees, callback),
+    (c) {
+      return c.complete((magnitude!, angle!));
+    },
+  );
+}
 
 /// CheckRange checks every element of an input array for invalid values.
 ///
@@ -193,37 +287,46 @@ Future<(bool, Point)> checkRangeAsync(
   bool quiet = true,
   double minVal = -CV_F64_MAX,
   double maxVal = CV_F64_MAX,
-}) async =>
-    cvRunAsync2((callback) => ccore.core_CheckRange_Async(a.ref, quiet, minVal, maxVal, callback),
-        (completer, p, p1) {
-      final rval = p.cast<ffi.Bool>().value;
-      calloc.free(p);
-      completer.complete((rval, Point.fromPointer(p1.cast<ccore.Point>())));
-    });
+}) async {
+  final pos = calloc<cvg.CvPoint>();
+  final pRval = calloc<ffi.Bool>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, callback),
+    (c) {
+      final rval = pRval.value;
+      calloc.free(pRval);
+      return c.complete((rval, Point.fromPointer(pos)));
+    },
+  );
+}
 
 /// Compare performs the per-element comparison of two arrays
 /// or an array and scalar value.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga303cfb72acf8cbb36d884650c09a3a97
-Future<Mat> compareAsync(InputArray src1, InputArray src2, int cmpop) async =>
-    cvRunAsync((callback) => ccore.core_Compare_Async(src1.ref, src2.ref, cmpop, callback), matCompleter);
-
-/// CountNonZero counts non-zero array elements.
-///
-/// For further details, please see:
-/// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa4b89393263bb4d604e0fe5986723914
-Future<int> countNonZeroAsync(Mat src) async =>
-    cvRunAsync((callback) => ccore.core_CountNonZero_Async(src.ref, callback), intCompleter);
+Future<Mat> compareAsync(InputArray src1, InputArray src2, int cmpop, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_compare(src1.ref, src2.ref, dst!.ref, cmpop, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// CompleteSymm copies the lower or the upper half of a square matrix to its another half.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga6847337c0c55769e115a70e0f011b5ca
-Future<Mat> completeSymmAsync(InputOutputArray m, {bool lowerToUpper = false}) async => cvRunAsync0(
-      (callback) => ccore.core_CompleteSymm_Async(m.ref, lowerToUpper, callback),
-      (c) => c.complete(m),
-    );
+Future<Mat> completeSymmAsync(InputOutputArray m, {bool lowerToUpper = false}) async {
+  return cvRunAsync0(
+    (callback) => ccore.cv_completeSymm(m.ref, lowerToUpper, callback),
+    (c) {
+      return c.complete(m);
+    },
+  );
+}
 
 /// ConvertScaleAbs scales, calculates absolute values, and converts the result to 8-bit.
 ///
@@ -231,10 +334,18 @@ Future<Mat> completeSymmAsync(InputOutputArray m, {bool lowerToUpper = false}) a
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3460e9c9f37b563ab9dd550c4d8c4e7d
 Future<Mat> convertScaleAbsAsync(
   InputArray src, {
+  OutputArray? dst,
   double alpha = 1,
   double beta = 0,
-}) async =>
-    cvRunAsync((callback) => ccore.core_ConvertScaleAbs_Async(src.ref, alpha, beta, callback), matCompleter);
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_convertScaleAbs(src.ref, dst!.ref, alpha, beta, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// CopyMakeBorder forms a border around an image (applies padding).
 ///
@@ -247,47 +358,87 @@ Future<Mat> copyMakeBorderAsync(
   int left,
   int right,
   int borderType, {
+  OutputArray? dst,
   Scalar? value,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_CopyMakeBorder_Async(
-        src.ref,
-        top,
-        bottom,
-        left,
-        right,
-        borderType,
-        value?.ref ?? Scalar().ref,
-        callback,
-      ),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  value ??= Scalar();
+  return cvRunAsync0(
+    (callback) => ccore.cv_copyMakeBorder(
+      src.ref,
+      dst!.ref,
+      top,
+      bottom,
+      left,
+      right,
+      borderType,
+      value!.ref,
+      callback,
+    ),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+/// CopyTo
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga931a49489330f998452fc53e96e1719a
+Future<Mat> copyToAsync(
+  InputArray src,
+  InputArray dst, {
+  InputArray? mask,
+}) async {
+  mask ??= Mat.empty();
+  return cvRunAsync0((callback) => ccore.cv_copyTo(src.ref, dst.ref, mask!.ref, callback), (c) {
+    return c.complete(dst);
+  });
+}
 
 /// DCT performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga85aad4d668c01fbd64825f589e3696d4
-Future<Mat> dctAsync(InputArray src, {int flags = 0}) async =>
-    cvRunAsync((callback) => ccore.core_DCT_Async(src.ref, flags, callback), matCompleter);
+Future<Mat> dctAsync(InputArray src, {OutputArray? dst, int flags = 0}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_dct(src.ref, dst!.ref, flags, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Determinant returns the determinant of a square floating-point matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf802bd9ca3e07b8b6170645ef0611d0c
-Future<double> determinantAsync(InputArray mtx) async =>
-    cvRunAsync((callback) => ccore.core_Determinant_Async(mtx.ref, callback), doubleCompleter);
+Future<double> determinantAsync(InputArray mtx) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_determinant(mtx.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// DFT performs a forward or inverse Discrete Fourier Transform (DFT)
 /// of a 1D or 2D floating-point array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadd6cf9baf2b8b704a11b5f04aaf4f39d
-Future<Mat> dftAsync(
-  InputArray src, {
-  int flags = 0,
-  int nonzeroRows = 0,
-}) async =>
-    cvRunAsync((callback) => ccore.core_DFT_Async(src.ref, flags, nonzeroRows, callback), matCompleter);
+Future<Mat> dftAsync(InputArray src, {OutputArray? dst, int flags = 0, int nonzeroRows = 0}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_dft(src.ref, dst!.ref, flags, nonzeroRows, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Divide performs the per-element division
 /// on two arrays or an array and a scalar.
@@ -297,38 +448,74 @@ Future<Mat> dftAsync(
 Future<Mat> divideAsync(
   InputArray src1,
   InputArray src2, {
+  OutputArray? dst,
   double scale = 1,
   int dtype = -1,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_Divide_Async(src1.ref, src2.ref, scale, dtype, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_divide(src1.ref, src2.ref, dst!.ref, scale, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Eigen calculates eigenvalues and eigenvectors of a symmetric matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9fa0d58657f60eaa6c71f6fbb40456e3
-Future<(bool ret, Mat eigenvalues, Mat eigenvectors)> eigenAsync(InputArray src) async =>
-    cvRunAsync3((callback) => ccore.core_Eigen_Async(src.ref, callback), (completer, p, p1, p2) {
-      final rval = p.cast<ffi.Bool>().value;
+Future<(bool ret, Mat eigenvalues, Mat eigenvectors)> eigenAsync(
+  InputArray src, {
+  OutputArray? eigenvalues,
+  OutputArray? eigenvectors,
+}) async {
+  eigenvalues ??= Mat.empty();
+  eigenvectors ??= Mat.empty();
+  final p = calloc<ffi.Bool>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p, callback),
+    (c) {
+      final ret = p.value;
       calloc.free(p);
-      completer.complete((rval, Mat.fromPointer(p1.cast<ccore.Mat>()), Mat.fromPointer(p2.cast<ccore.Mat>())));
-    });
+      return c.complete((ret, eigenvalues!, eigenvectors!));
+    },
+  );
+}
 
 /// EigenNonSymmetric calculates eigenvalues and eigenvectors of a non-symmetric matrix (real eigenvalues only).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf51987e03cac8d171fbd2b327cf966f6
-Future<(Mat eigenvalues, Mat eigenvectors)> eigenNonSymmetricAsync(InputArray src) async => cvRunAsync2(
-      (callback) => ccore.core_EigenNonSymmetric_Async(src.ref, callback),
-      matCompleter2,
-    );
+Future<(Mat eigenvalues, Mat eigenvectors)> eigenNonSymmetricAsync(
+  InputArray src, {
+  OutputArray? eigenvalues,
+  OutputArray? eigenvectors,
+}) async {
+  eigenvalues ??= Mat.empty();
+  eigenvectors ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_eigenNonSymmetric(src.ref, eigenvalues!.ref, eigenvectors!.ref, callback),
+    (c) {
+      return c.complete((eigenvalues!, eigenvectors!));
+    },
+  );
+}
 
-Future<(Mat mean, Mat result)> PCABackProjectAsync(Mat src, Mat mean, Mat eigenVectors) async => cvRunAsync(
-      (callback) => ccore.core_PCABackProject_Async(src.ref, mean.ref, eigenVectors.ref, callback),
-      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<ccore.Mat>()))),
-    );
+Future<Mat> PCABackProjectAsync(
+  InputArray data,
+  InputArray mean,
+  InputArray eigenvectors, {
+  OutputArray? dst,
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_PCABackProject(data.ref, mean.ref, eigenvectors.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst!);
+    },
+  );
+}
 
 /// PCACompute performs PCA.
 ///
@@ -342,83 +529,139 @@ Future<(Mat mean, Mat result)> PCABackProjectAsync(Mat src, Mat mean, Mat eigenV
 Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCAComputeAsync(
   InputArray data,
   InputOutputArray mean, {
+  OutputArray? eigenvectors,
+  OutputArray? eigenvalues,
   int maxComponents = 0,
-}) async =>
-    cvRunAsync2((callback) => ccore.core_PCACompute_Async(data.ref, mean.ref, maxComponents, callback),
-        (completer, p, p1) {
-      completer.complete(
-        (
-          mean,
-          Mat.fromPointer(p.cast<ccore.Mat>()),
-          Mat.fromPointer(p1.cast<ccore.Mat>()),
-        ),
-      );
-    });
+}) async {
+  eigenvalues ??= Mat.empty();
+  eigenvectors ??= Mat.empty();
+  return cvRunAsync0(
+      (callback) => ccore.cv_PCACompute(
+            data.ref,
+            mean.ref,
+            eigenvectors!.ref,
+            eigenvalues!.ref,
+            maxComponents,
+            callback,
+          ), (c) {
+    return c.complete((mean, eigenvalues!, eigenvectors!));
+  });
+}
 
-Future<(Mat mean, Mat eigenvectors)> PCACompute1Async(
+Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCACompute1Async(
   InputArray data,
-  InputOutputArray mean, {
-  int maxComponents = 0,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_PCACompute_1_Async(data.ref, mean.ref, maxComponents, callback),
-      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<ccore.Mat>()))),
-    );
+  InputOutputArray mean,
+  double retainedVariance, {
+  OutputArray? eigenvectors,
+  OutputArray? eigenvalues,
+}) async {
+  eigenvectors ??= Mat.empty();
+  eigenvalues ??= Mat.empty();
+  return cvRunAsync0(
+      (callback) => ccore.cv_PCACompute_1(
+            data.ref,
+            mean.ref,
+            eigenvectors!.ref,
+            eigenvalues!.ref,
+            retainedVariance,
+            callback,
+          ), (c) {
+    return c.complete((mean, eigenvalues!, eigenvectors!));
+  });
+}
 
-Future<(Mat mean, Mat eigenvectors)> PCACompute2Async(
-  InputArray data,
-  InputOutputArray mean, {
-  double retainedVariance = 0,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_PCACompute_3_Async(data.ref, mean.ref, retainedVariance, callback),
-      (completer, p) => completer.complete((mean, Mat.fromPointer(p.cast<ccore.Mat>()))),
-    );
+Future<(Mat mean, Mat result)> PCAProjectAsync(
+  Mat data,
+  Mat mean,
+  Mat eigenvectors, {
+  OutputArray? result,
+}) async {
+  result ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_PCAProject(data.ref, mean.ref, eigenvectors.ref, result!.ref, callback),
+    (c) {
+      return c.complete((mean, result!));
+    },
+  );
+}
 
-Future<(Mat mean, Mat eigenvalues, Mat eigenvectors)> PCACompute3Async(
-  InputArray data,
-  InputOutputArray mean, {
-  double retainedVariance = 0,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccore.core_PCACompute_2_Async(data.ref, mean.ref, retainedVariance, callback),
-      (completer, p, p1) =>
-          completer.complete((mean, Mat.fromPointer(p.cast<ccore.Mat>()), Mat.fromPointer(p1.cast<ccore.Mat>()))),
-    );
-
-Future<(Mat mean, Mat result)> PCAProjectAsync(InputArray src, InputArray mean, InputArray eigenVectors) =>
-    cvRunAsync((callback) => ccore.core_PCAProject_Async(src.ref, mean.ref, eigenVectors.ref, callback),
-        (completer, p) {
-      completer.complete((mean, Mat.fromPointer(p.cast<ccore.Mat>())));
-    });
+/// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3119e3ea73010a6f810bb05aa36ac8d6
+Future<double> PSNRAsync(InputArray src1, InputArray src2, {double R = 255.0}) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0((callback) => ccore.cv_PSNR(src1.ref, src2.ref, R, p, callback), (c) {
+    final rval = p.value;
+    calloc.free(p);
+    return c.complete(rval);
+  });
+}
 
 /// Exp calculates the exponent of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3e10108e2162c338f1b848af619f39e5
-Future<Mat> expAsync(InputArray src) async =>
-    cvRunAsync((callback) => ccore.core_Exp_Async(src.ref, callback), matCompleter);
+Future<Mat> expAsync(InputArray src, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_exp(src.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// ExtractChannel extracts a single channel from src (coi is 0-based index).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc6158574aa1f0281878c955bcf35642
-Future<Mat> extractChannelAsync(InputArray src, int coi) async =>
-    cvRunAsync((callback) => ccore.core_ExtractChannel_Async(src.ref, coi, callback), matCompleter);
+Future<Mat> extractChannelAsync(InputArray src, int coi, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_extractChannel(src.ref, dst!.ref, coi, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// FindNonZero returns the list of locations of non-zero pixels.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaed7df59a3539b4cc0fe5c9c8d7586190
-Future<Mat> findNonZeroAsync(InputArray src) async =>
-    cvRunAsync((callback) => ccore.core_FindNonZero_Async(src.ref, callback), matCompleter);
+Future<Mat> findNonZeroAsync(InputArray src, {OutputArray? idx}) async {
+  idx ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_findNonZero(src.ref, idx!.ref, callback),
+    (c) {
+      return c.complete(idx);
+    },
+  );
+}
 
 /// Flip flips a 2D array around horizontal(0), vertical(1), or both axes(-1).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaca7be533e3dac7feb70fc60635adf441
-Future<Mat> flipAsync(InputArray src, int flipCode) async =>
-    cvRunAsync((callback) => ccore.core_Flip_Async(src.ref, flipCode, callback), matCompleter);
+Future<Mat> flipAsync(InputArray src, int flipCode, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_flip(src.ref, dst!.ref, flipCode, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+Future<Mat> flipNDAsync(InputArray src, int axis, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_flipND(src.ref, dst!.ref, axis, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Gemm performs generalized matrix multiplication.
 ///
@@ -430,41 +673,76 @@ Future<Mat> gemmAsync(
   double alpha,
   InputArray src3,
   double beta, {
+  OutputArray? dst,
   int flags = 0,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_Gemm_Async(src1.ref, src2.ref, alpha, src3.ref, beta, flags, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_gemm(src1.ref, src2.ref, alpha, src3.ref, beta, dst!.ref, flags, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// GetOptimalDFTSize returns the optimal Discrete Fourier Transform (DFT) size
 /// for a given vector size.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6577a2e59968936ae02eb2edde5de299
-Future<int> getOptimalDFTSizeAsync(int vecsize) async =>
-    cvRunAsync((callback) => ccore.core_GetOptimalDFTSize_Async(vecsize, callback), intCompleter);
+Future<int> getOptimalDFTSizeAsync(int vecsize) async {
+  final p = calloc<ffi.Int>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_getOptimalDFTSize(vecsize, p, callback),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// Hconcat applies horizontal concatenation to given matrices.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaab5ceee39e0580f879df645a872c6bf7
-Future<Mat> hconcatAsync(InputArray src1, InputArray src2) async =>
-    cvRunAsync((callback) => ccore.core_Hconcat_Async(src1.ref, src2.ref, callback), matCompleter);
+Future<Mat> hconcatAsync(InputArray src1, InputArray src2, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_hconcat(src1.ref, src2.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Vconcat applies vertical concatenation to given matrices.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gaad07cede730cdde64b90e987aad179b8
-Future<Mat> vconcatAsync(InputArray src1, InputArray src2) async =>
-    cvRunAsync((callback) => ccore.core_Vconcat_Async(src1.ref, src2.ref, callback), matCompleter);
+Future<Mat> vconcatAsync(InputArray src1, InputArray src2, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_vconcat(src1.ref, src2.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Rotate rotates a 2D array in multiples of 90 degrees
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4ad01c0978b0ce64baa246811deeac24
-Future<Mat> rotateAsync(InputArray src, int rotateCode) async =>
-    cvRunAsync((callback) => ccore.core_Rotate_Async(src.ref, rotateCode, callback), matCompleter);
+Future<Mat> rotateAsync(InputArray src, int rotateCode, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_rotate(src.ref, dst!.ref, rotateCode, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// IDCT calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
 ///
@@ -472,9 +750,17 @@ Future<Mat> rotateAsync(InputArray src, int rotateCode) async =>
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga77b168d84e564c50228b69730a227ef2
 Future<Mat> idctAsync(
   InputArray src, {
+  OutputArray? dst,
   int flags = 0,
-}) async =>
-    cvRunAsync((callback) => ccore.core_Idct_Async(src.ref, flags, callback), matCompleter);
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_idct(src.ref, dst!.ref, flags, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// IDFT calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
 ///
@@ -482,10 +768,18 @@ Future<Mat> idctAsync(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa708aa2d2e57a508f968eb0f69aa5ff1
 Future<Mat> idftAsync(
   InputArray src, {
+  OutputArray? dst,
   int flags = 0,
   int nonzeroRows = 0,
-}) async =>
-    cvRunAsync((callback) => ccore.core_Idft_Async(src.ref, flags, nonzeroRows, callback), matCompleter);
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_idft(src.ref, dst!.ref, flags, nonzeroRows, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// InRange checks if array elements lie between the elements of two Mat arrays.
 ///
@@ -494,12 +788,17 @@ Future<Mat> idftAsync(
 Future<Mat> inRangeAsync(
   InputArray src,
   InputArray lowerb,
-  InputArray upperb,
-) async =>
-    cvRunAsync(
-      (callback) => ccore.core_InRange_Async(src.ref, lowerb.ref, upperb.ref, callback),
-      matCompleter,
-    );
+  InputArray upperb, {
+  OutputArray? dst,
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_inRange(src.ref, lowerb.ref, upperb.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// InRangeWithScalar checks if array elements lie between the elements of two Scalars
 ///
@@ -508,22 +807,31 @@ Future<Mat> inRangeAsync(
 Future<Mat> inRangebyScalarAsync(
   InputArray src,
   Scalar lowerb,
-  Scalar upperb,
-) async =>
-    cvRunAsync(
-      (callback) => ccore.core_InRangeWithScalar_Async(src.ref, lowerb.ref, upperb.ref, callback),
-      matCompleter,
-    );
+  Scalar upperb, {
+  OutputArray? dst,
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_inRange_1(src.ref, lowerb.ref, upperb.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// InsertChannel inserts a single channel to dst (coi is 0-based index)
 /// (it replaces channel i with another in dst).
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1d4bd886d35b00ec0b764cb4ce6eb515
-Future<Mat> insertChannelAsync(InputArray src, InputOutputArray dst, int coi) async => cvRunAsync0(
-      (callback) => ccore.core_InsertChannel_Async(src.ref, dst.ref, coi, callback),
-      (c) => c.complete(dst),
-    );
+Future<Mat> insertChannelAsync(InputArray src, InputOutputArray dst, int coi) async {
+  return cvRunAsync0(
+    (callback) => ccore.cv_insertChannel(src.ref, dst.ref, coi, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Invert finds the inverse or pseudo-inverse of a matrix.
 ///
@@ -531,13 +839,20 @@ Future<Mat> insertChannelAsync(InputArray src, InputOutputArray dst, int coi) as
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad278044679d4ecf20f7622cc151aaaa2
 Future<(double rval, Mat dst)> invertAsync(
   InputArray src, {
+  OutputArray? dst,
   int flags = DECOMP_LU,
-}) async =>
-    cvRunAsync2<(double, Mat)>((callback) => ccore.core_Invert_Async(src.ref, flags, callback), (c, p, p1) {
-      final rval = p.cast<ffi.Double>().value;
+}) async {
+  dst ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_invert(src.ref, dst!.ref, flags, p, callback),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      c.complete((rval, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, dst!));
+    },
+  );
+}
 
 /// KMeans finds centers of clusters and groups input samples around the clusters.
 ///
@@ -549,16 +864,30 @@ Future<(double rval, Mat bestLabels, Mat centers)> kmeansAsync(
   InputOutputArray bestLabels,
   (int, int, double) criteria,
   int attempts,
-  int flags,
-) async =>
-    cvRunAsync2(
-        (callback) =>
-            ccore.core_KMeans_Async(data.ref, K, bestLabels.ref, criteria.cvd.ref, attempts, flags, callback),
-        (completer, p, p1) {
-      final rval = p.cast<ffi.Double>().value;
+  int flags, {
+  OutputArray? centers,
+}) async {
+  centers ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_kmeans(
+      data.ref,
+      K,
+      bestLabels.ref,
+      TermCriteria.fromRecord(criteria).ref,
+      attempts,
+      flags,
+      centers!.ref,
+      p,
+      callback,
+    ),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      completer.complete((rval, bestLabels, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, bestLabels, centers!));
+    },
+  );
+}
 
 /// KMeansPoints finds centers of clusters and groups input samples around the clusters.
 ///
@@ -570,29 +899,44 @@ Future<(double rval, Mat bestLabels, Mat centers)> kmeansByPointsAsync(
   InputOutputArray bestLabels,
   (int, int, double) criteria,
   int attempts,
-  int flags,
-) async =>
-    cvRunAsync2(
-        (callback) => ccore.core_KMeans_Points_Async(
-              pts.ref,
-              K,
-              bestLabels.ref,
-              criteria.cvd.ref,
-              attempts,
-              flags,
-              callback,
-            ), (completer, p, p1) {
-      final rval = p.cast<ffi.Double>().value;
+  int flags, {
+  OutputArray? centers,
+}) async {
+  centers ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_kmeans_points(
+      pts.ref,
+      K,
+      bestLabels.ref,
+      TermCriteria.fromRecord(criteria).ref,
+      attempts,
+      flags,
+      centers!.ref,
+      p,
+      callback,
+    ),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      completer.complete((rval, bestLabels, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, bestLabels, centers!));
+    },
+  );
+}
 
 /// Log calculates the natural logarithm of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga937ecdce4679a77168730830a955bea7
-Future<Mat> logAsync(InputArray src) async =>
-    cvRunAsync((callback) => ccore.core_Log_Async(src.ref, callback), matCompleter);
+Future<Mat> logAsync(InputArray src, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_log(src.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Performs a look-up table transform of an array. Support CV_8U, CV_8S, CV_16U, CV_16S
 ///
@@ -611,48 +955,93 @@ Future<Mat> logAsync(InputArray src) async =>
 /// number of channels as in the input array.
 ///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
-Future<Mat> LUTAsync(InputArray src, InputArray lut) async =>
-    cvRunAsync((callback) => ccore.core_LUT_Async(src.ref, lut.ref, callback), matCompleter);
+Future<Mat> LUTAsync(InputArray src, InputArray lut, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_LUT(src.ref, lut.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Magnitude calculates the magnitude of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6d3b097586bca4409873d64a90fe64c3
-Future<Mat> magnitudeAsync(InputArray x, InputArray y) async =>
-    cvRunAsync((callback) => ccore.core_Magnitude_Async(x.ref, y.ref, callback), matCompleter);
+Future<Mat> magnitudeAsync(InputArray x, InputArray y, {OutputArray? magnitude}) async {
+  magnitude ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_magnitude(x.ref, y.ref, magnitude!.ref, callback),
+    (c) {
+      return c.complete(magnitude);
+    },
+  );
+}
 
 /// Max calculates per-element maximum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gacc40fa15eac0fb83f8ca70b7cc0b588d
-Future<Mat> maxAsync(InputArray src1, InputArray src2) async =>
-    cvRunAsync((callback) => ccore.core_Max_Async(src1.ref, src2.ref, callback), matCompleter);
+Future<Mat> maxAsync(InputArray src1, InputArray src2, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_max(src1.ref, src2.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// MeanStdDev calculates a mean and standard deviation of array elements.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
-Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(InputArray src, {InputArray? mask}) async => cvRunAsync2(
-      (callback) => mask == null
-          ? ccore.core_MeanStdDev_Async(src.ref, callback)
-          : ccore.core_MeanStdDevWithMask_Async(src.ref, mask.ref, callback),
-      (c, p, p1) =>
-          c.complete((Scalar.fromPointer(p.cast<ccore.Scalar>()), Scalar.fromPointer(p1.cast<ccore.Scalar>()))),
-    );
+Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(InputArray src, {InputArray? mask}) async {
+  final mean = calloc<cvg.Scalar>();
+  final stddev = calloc<cvg.Scalar>();
+  return mask == null
+      ? cvRunAsync0(
+          (callback) => ccore.cv_meanStdDev(src.ref, mean, stddev, callback),
+          (c) {
+            return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, callback),
+          (c) {
+            return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+          },
+        );
+}
 
 /// Merge creates one multi-channel array out of several single-channel ones.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7d7b4d6c6ee504b30a20b1680029c7b4
-Future<Mat> mergeAsync(VecMat mv) async =>
-    cvRunAsync((callback) => ccore.core_Merge_Async(mv.ref, callback), matCompleter);
+Future<Mat> mergeAsync(VecMat mv, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_merge(mv.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Min calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9af368f182ee76d0463d0d8d5330b764
-Future<Mat> minAsync(InputArray src1, InputArray src2) async =>
-    cvRunAsync((callback) => ccore.core_Min_Async(src1.ref, src2.ref, callback), matCompleter);
+Future<Mat> minAsync(InputArray src1, InputArray src2, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_min(src1.ref, src2.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// MinMaxIdx finds the global minimum and maximum in an array.
 ///
@@ -661,21 +1050,24 @@ Future<Mat> minAsync(InputArray src1, InputArray src2) async =>
 Future<(double minVal, double maxVal, int minIdx, int maxIdx)> minMaxIdxAsync(
   InputArray src, {
   InputArray? mask,
-}) async =>
-    cvRunAsync4(
-        (callback) => mask == null
-            ? ccore.core_MinMaxIdx_Async(src.ref, callback)
-            : ccore.core_MinMaxIdx_Mask_Async(src.ref, mask.ref, callback), (c, p, p1, p2, p3) {
-      final minv = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      final maxv = p1.cast<ffi.Double>().value;
-      calloc.free(p1);
-      final mini = p2.cast<ffi.Int>().value;
-      calloc.free(p2);
-      final maxi = p3.cast<ffi.Int>().value;
-      calloc.free(p3);
-      c.complete((minv, maxv, mini, maxi));
-    });
+}) async {
+  mask ??= Mat.empty();
+  final minValP = calloc<ffi.Double>();
+  final maxValP = calloc<ffi.Double>();
+  final minIdxP = calloc<ffi.Int>();
+  final maxIdxP = calloc<ffi.Int>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_minMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP, mask!.ref, callback),
+    (c) {
+      final rval = (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
+      calloc.free(minValP);
+      calloc.free(maxValP);
+      calloc.free(minIdxP);
+      calloc.free(maxIdxP);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
 ///
@@ -684,26 +1076,35 @@ Future<(double minVal, double maxVal, int minIdx, int maxIdx)> minMaxIdxAsync(
 Future<(double minVal, double maxVal, Point minLoc, Point maxLoc)> minMaxLocAsync(
   InputArray src, {
   InputArray? mask,
-}) async =>
-    cvRunAsync4(
-        (callback) => mask == null
-            ? ccore.core_MinMaxLoc_Async(src.ref, callback)
-            : ccore.core_MinMaxLoc_Mask_Async(src.ref, mask.ref, callback), (c, p, p1, p2, p3) {
-      final minv = p.cast<ffi.Double>().value;
-      calloc.free(p);
-      final maxv = p1.cast<ffi.Double>().value;
-      calloc.free(p1);
-      c.complete((minv, maxv, Point.fromPointer(p2.cast()), Point.fromPointer(p3.cast())));
-    });
+}) async {
+  mask ??= Mat.empty();
+  final minValP = calloc<ffi.Double>();
+  final maxValP = calloc<ffi.Double>();
+  final minLocP = calloc<cvg.CvPoint>();
+  final maxLocP = calloc<cvg.CvPoint>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, callback),
+    (c) {
+      final rval = (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
+      calloc.free(minValP);
+      calloc.free(maxValP);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// Copies specified channels from input arrays to the specified channels of output arrays.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga51d768c270a1cdd3497255017c4504be
-Future<VecMat> mixChannelsAsync(VecMat src, VecMat dst, VecI32 fromTo) async => cvRunAsync0(
-      (callback) => ccore.core_MixChannels_Async(src.ref, dst.ref, fromTo.ref, callback),
-      (c) => c.complete(dst),
-    );
+Future<VecMat> mixChannelsAsync(VecMat src, VecMat dst, VecI32 fromTo) async {
+  return cvRunAsync0(
+    (callback) => ccore.cv_mixChannels(src.ref, dst.ref, fromTo.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Mulspectrums performs the per-element multiplication of two Fourier spectrums.
 ///
@@ -713,12 +1114,17 @@ Future<Mat> mulSpectrumsAsync(
   InputArray a,
   InputArray b,
   int flags, {
+  OutputArray? c,
   bool conjB = false,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_MulSpectrums_Async(a.ref, b.ref, flags, conjB, callback),
-      matCompleter,
-    );
+}) async {
+  c ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_mulSpectrums(a.ref, b.ref, c!.ref, flags, conjB, callback),
+    (completer) {
+      return completer.complete(c);
+    },
+  );
+}
 
 /// Multiply calculates the per-element scaled product of two arrays.
 /// Both input arrays must be of the same size and the same type.
@@ -728,13 +1134,36 @@ Future<Mat> mulSpectrumsAsync(
 Future<Mat> multiplyAsync(
   InputArray src1,
   InputArray src2, {
+  OutputArray? dst,
   double scale = 1,
   int dtype = -1,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_MultiplyWithParams_Async(src1.ref, src2.ref, scale, dtype, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_multiply(src1.ref, src2.ref, dst!.ref, scale, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+/// mulTransposed
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gadc4e49f8f7a155044e3be1b9e3b270ab
+Future<Mat> mulTransposedAsync(
+  InputArray src,
+  OutputArray dst,
+  bool aTa, {
+  InputArray? delta,
+  double scale = 1,
+  int dtype = -1,
+}) async {
+  delta ??= Mat.empty();
+  return cvRunAsync0(
+      (callback) => ccore.cv_mulTransposed(src.ref, dst.ref, aTa, delta!.ref, scale, dtype, callback), (c) {
+    return c.complete(dst);
+  });
+}
 
 /// Normalize normalizes the norm or value range of an array.
 ///
@@ -748,22 +1177,15 @@ Future<Mat> normalizeAsync(
   int normType = NORM_L2,
   int dtype = -1,
   InputArray? mask,
-}) async =>
-    cvRunAsync0(
-      (callback) => mask == null
-          ? ccore.core_Normalize_Async(src.ref, dst.ref, alpha, beta, normType, dtype, callback)
-          : ccore.core_Normalize_Mask_Async(
-              src.ref,
-              dst.ref,
-              alpha,
-              beta,
-              normType,
-              dtype,
-              mask.ref,
-              callback,
-            ),
-      (c) => c.complete(dst),
-    );
+}) async {
+  mask ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_normalize(src.ref, dst.ref, alpha, beta, normType, dtype, mask!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Norm calculates the absolute norm of an array.
 ///
@@ -773,13 +1195,18 @@ Future<double> normAsync(
   InputArray src1, {
   int normType = NORM_L2,
   InputArray? mask,
-}) async =>
-    cvRunAsync(
-      (callback) => mask == null
-          ? ccore.core_Norm_Async(src1.ref, normType, callback)
-          : ccore.core_Norm_Mask_Async(src1.ref, normType, mask.ref, callback),
-      doubleCompleter,
-    );
+}) async {
+  mask ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_norm(src1.ref, normType, mask!.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
 ///
@@ -789,19 +1216,33 @@ Future<double> norm1Async(
   InputArray src1,
   InputArray src2, {
   int normType = NORM_L2,
-  // InputArray? mask,
-}) async =>
-    cvRunAsync(
-      (callback) => ccore.core_NormWithMats_Async(src1.ref, src2.ref, normType, callback),
-      doubleCompleter,
-    );
+  InputArray? mask,
+}) async {
+  final p = calloc<ffi.Double>();
+  mask ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+}
 
 /// PerspectiveTransform performs the perspective matrix transformation of vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad327659ac03e5fd6894b90025e6900a7
-Future<Mat> perspectiveTransformAsync(InputArray src, InputArray m) async =>
-    cvRunAsync((callback) => ccore.core_PerspectiveTransform_Async(src.ref, m.ref, callback), matCompleter);
+Future<Mat> perspectiveTransformAsync(InputArray src, InputArray m, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_perspectiveTransform(src.ref, dst!.ref, m.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Solve solves one or more linear systems or least-squares problems.
 ///
@@ -810,24 +1251,37 @@ Future<Mat> perspectiveTransformAsync(InputArray src, InputArray m) async =>
 Future<(bool ret, Mat dst)> solveAsync(
   InputArray src1,
   InputArray src2, {
+  OutputArray? dst,
   int flags = DECOMP_LU,
-}) async =>
-    cvRunAsync2((callback) => ccore.core_Solve_Async(src1.ref, src2.ref, flags, callback), (c, p, p1) {
-      final rval = p.cast<ffi.Bool>().value;
+}) async {
+  dst ??= Mat.empty();
+  final p = calloc<ffi.Bool>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, callback),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      c.complete((rval, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, dst!));
+    },
+  );
+}
 
 /// SolveCubic finds the real roots of a cubic equation.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
-Future<(int rval, Mat roots)> solveCubicAsync(InputArray coeffs) async =>
-    cvRunAsync2((callback) => ccore.core_SolveCubic_Async(coeffs.ref, callback), (c, p, p1) {
-      final rval = p.cast<ffi.Int>().value;
+Future<(int rval, Mat roots)> solveCubicAsync(InputArray coeffs, {OutputArray? roots}) async {
+  roots ??= Mat.empty();
+  final p = calloc<ffi.Int>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, callback),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      c.complete((rval, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, roots!));
+    },
+  );
+}
 
 /// SolvePoly finds the real or complex roots of a polynomial equation.
 ///
@@ -835,82 +1289,165 @@ Future<(int rval, Mat roots)> solveCubicAsync(InputArray coeffs) async =>
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
 Future<(double rval, Mat roots)> solvePolyAsync(
   InputArray coeffs, {
+  OutputArray? roots,
   int maxIters = 300,
-}) async =>
-    cvRunAsync2((callback) => ccore.core_SolvePoly_Async(coeffs.ref, maxIters, callback), (c, p, p1) {
-      final rval = p.cast<ffi.Double>().value;
+}) async {
+  roots ??= Mat.empty();
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, callback),
+    (c) {
+      final rval = p.value;
       calloc.free(p);
-      c.complete((rval, Mat.fromPointer(p1.cast<ccore.Mat>())));
-    });
+      return c.complete((rval, roots!));
+    },
+  );
+}
 
 /// Reduce reduces a matrix to a vector.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga4b78072a303f29d9031d56e5638da78e
-Future<Mat> reduceAsync(InputArray src, int dim, int rtype, {int dtype = -1}) async =>
-    cvRunAsync((callback) => ccore.core_Reduce_Async(src.ref, dim, rtype, dtype, callback), matCompleter);
+Future<Mat> reduceAsync(InputArray src, int dim, int rtype, {OutputArray? dst, int dtype = -1}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_reduce(src.ref, dst!.ref, dim, rtype, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Finds indices of max elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaa87ea34d99bcc5bf9695048355163da0
-Future<Mat> reduceArgMaxAsync(InputArray src, int axis, {bool lastIndex = false}) async =>
-    cvRunAsync((callback) => ccore.core_ReduceArgMax_Async(src.ref, axis, lastIndex, callback), matCompleter);
+Future<Mat> reduceArgMaxAsync(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_reduceArgMax(src.ref, dst!.ref, axis, lastIndex, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Finds indices of min elements along provided axis.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeecd548276bfb91b938989e66b722088
-Future<Mat> reduceArgMinAsync(InputArray src, int axis, {bool lastIndex = false}) async =>
-    cvRunAsync((callback) => ccore.core_ReduceArgMin_Async(src.ref, axis, lastIndex, callback), matCompleter);
+Future<Mat> reduceArgMinAsync(InputArray src, int axis, {OutputArray? dst, bool lastIndex = false}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_reduceArgMin(src.ref, dst!.ref, axis, lastIndex, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Repeat fills the output array with repeated copies of the input array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga496c3860f3ac44c40b48811333cfda2d
-Future<Mat> repeatAsync(InputArray src, int ny, int nx) async =>
-    cvRunAsync((callback) => ccore.core_Repeat_Async(src.ref, ny, nx, callback), matCompleter);
+Future<Mat> repeatAsync(InputArray src, int ny, int nx, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_repeat(src.ref, ny, nx, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Calculates the sum of a scaled array and another array.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9e0845db4135f55dcf20227402f00d98
-Future<Mat> scaleAddAsync(InputArray src1, double alpha, InputArray src2) async =>
-    cvRunAsync((callback) => ccore.core_ScaleAdd_Async(src1.ref, alpha, src2.ref, callback), matCompleter);
+Future<Mat> scaleAddAsync(InputArray src1, double alpha, InputArray src2, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_scaleAdd(src1.ref, alpha, src2.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// SetIdentity initializes a scaled identity matrix.
 /// For further details, please see:
 ///
 ///	https://docs.opencv.org/master/d2/de8/group__core__array.html#ga388d7575224a4a277ceb98ccaa327c99
-Future<Mat> setIdentityAsync(InputOutputArray mtx, {Scalar? s}) async => cvRunAsync0(
-      (callback) => ccore.core_SetIdentity_Async(mtx.ref, s?.ref ?? Scalar.all(1).ref, callback),
-      (c) => c.complete(mtx),
-    );
+Future<Mat> setIdentityAsync(InputOutputArray mtx, {Scalar? s}) async {
+  s ??= Scalar.all(1.0);
+  return cvRunAsync0(
+    (callback) => ccore.cv_setIdentity(mtx.ref, s!.ref, callback),
+    (c) {
+      return c.complete(mtx);
+    },
+  );
+}
 
 /// Sort sorts each row or each column of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga45dd56da289494ce874be2324856898f
-Future<Mat> sortAsync(InputArray src, int flags) async =>
-    cvRunAsync((callback) => ccore.core_Sort_Async(src.ref, flags, callback), matCompleter);
+Future<Mat> sortAsync(InputArray src, int flags, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_sort(src.ref, dst!.ref, flags, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// SortIdx sorts each row or each column of a matrix.
 /// Instead of reordering the elements themselves, it stores the indices of sorted elements in the output array
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gadf35157cbf97f3cb85a545380e383506
-Future<Mat> sortIdxAsync(InputArray src, int flags) async =>
-    cvRunAsync((callback) => ccore.core_SortIdx_Async(src.ref, flags, callback), matCompleter);
+Future<Mat> sortIdxAsync(InputArray src, int flags, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_sortIdx(src.ref, dst!.ref, flags, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Split creates an array of single channel images from a multi-channel image
 /// Created images should be closed manualy to avoid memory leaks.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga0547c7fed86152d7e9d0096029c8518a
-Future<VecMat> splitAsync(InputArray m) async => cvRunAsync(
-      (callback) => ccore.core_Split_Async(m.ref, callback),
-      (c, p) => VecMat.fromPointer(p.cast<ccore.VecMat>()),
-    );
+Future<VecMat> splitAsync(InputArray m) async {
+  final vec = VecMat();
+  return cvRunAsync0(
+    (callback) => ccore.cv_split(m.ref, vec.ptr, callback),
+    (c) {
+      return c.complete(vec);
+    },
+  );
+}
+
+/// Calculates a square root of array elements.
+///
+/// The function cv::sqrt calculates a square root of each input array element.
+/// In case of multi-channel arrays, each channel is processed independently.
+/// The accuracy is approximately the same as of the built-in std::sqrt .
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga186222c3919657890f88df5a1f64a7d7
+Future<Mat> sqrtAsync(Mat src, {Mat? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_sqrt(src.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Subtract calculates the per-element subtraction of two arrays or an array and a scalar.
 ///
@@ -919,42 +1456,107 @@ Future<VecMat> splitAsync(InputArray m) async => cvRunAsync(
 Future<Mat> subtractAsync(
   InputArray src1,
   InputArray src2, {
+  OutputArray? dst,
   InputArray? mask,
   int dtype = -1,
-}) async =>
-    cvRunAsync(
-      (callback) =>
-          ccore.core_Subtract_Async(src1.ref, src2.ref, mask?.ref ?? Mat.empty().ref, dtype, callback),
-      matCompleter,
-    );
+}) async {
+  dst ??= Mat.empty();
+  mask ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_subtract(src1.ref, src2.ref, dst!.ref, mask!.ref, dtype, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+/// Calculates the sum of array elements.
+///
+/// The function cv::sum calculates and returns the sum of array elements,
+/// independently for each channel.
+///
+/// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
+Future<Scalar> sumAsync(Mat src) async {
+  final p = calloc<cvg.Scalar>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_sum(src.ref, p, callback),
+    (c) {
+      return c.complete(Scalar.fromPointer(p));
+    },
+  );
+}
 
 /// Trace returns the trace of a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
-Future<Scalar> traceAsync(InputArray mtx) async =>
-    cvRunAsync((callback) => ccore.core_Trace_Async(mtx.ref, callback), scalarCompleter);
+Future<Scalar> traceAsync(InputArray mtx) async {
+  final ptr = calloc<cvg.Scalar>();
+  return cvRunAsync0(
+    (callback) => ccore.cv_trace(mtx.ref, ptr, callback),
+    (c) {
+      return c.complete(Scalar.fromPointer(ptr));
+    },
+  );
+}
 
 /// Transform performs the matrix transformation of every array element.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga393164aa54bb9169ce0a8cc44e08ff22
-Future<Mat> transformAsync(InputArray src, InputArray m) async =>
-    cvRunAsync((callback) => ccore.core_Transform_Async(src.ref, m.ref, callback), matCompleter);
+Future<Mat> transformAsync(InputArray src, InputArray m, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_transform(src.ref, dst!.ref, m.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Transpose transposes a matrix.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
-Future<Mat> transposeAsync(InputArray src) async =>
-    cvRunAsync((callback) => ccore.core_Transpose_Async(src.ref, callback), matCompleter);
+Future<Mat> transposeAsync(InputArray src, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_transpose(src.ref, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+/// Transpose for n-dimensional matrices.
+///
+/// Input should be continuous single-channel matrix.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga46630ed6c0ea6254a35f447289bd7404
+Future<Mat> transposeNDAsync(InputArray src, List<int> order, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_transposeND(src.ref, dst!.ref, order.i32.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// Pow raises every array element to a power.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf0d056b5bd1dc92500d6f6cf6bac41ef
-Future<Mat> powAsync(InputArray src, double power) async =>
-    cvRunAsync((callback) => ccore.core_Pow_Async(src.ref, power, callback), matCompleter);
+Future<Mat> powAsync(InputArray src, double power, {OutputArray? dst}) async {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_pow(src.ref, power, dst!.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// PolatToCart calculates x and y coordinates of 2D vectors from their magnitude and angle.
 ///
@@ -963,28 +1565,46 @@ Future<Mat> powAsync(InputArray src, double power) async =>
 Future<(Mat x, Mat y)> polarToCartAsync(
   InputArray magnitude,
   InputArray angle, {
+  OutputArray? x,
+  OutputArray? y,
   bool angleInDegrees = false,
-}) async =>
-    cvRunAsync2(
-      (callback) => ccore.core_PolarToCart_Async(magnitude.ref, angle.ref, angleInDegrees, callback),
-      matCompleter2,
-    );
+}) async {
+  x ??= Mat.empty();
+  y ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_polarToCart(magnitude.ref, angle.ref, x!.ref, y!.ref, angleInDegrees, callback),
+    (c) {
+      return c.complete((x!, y!));
+    },
+  );
+}
 
 /// Phase calculates the rotation angle of 2D vectors.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga9db9ca9b4d81c3bde5677b8f64dc0137
-Future<Mat> phaseAsync(InputArray x, InputArray y, {bool angleInDegrees = false}) async =>
-    cvRunAsync((callback) => ccore.core_Phase_Async(x.ref, y.ref, angleInDegrees, callback), matCompleter);
+Future<Mat> phaseAsync(InputArray x, InputArray y, {OutputArray? angle, bool angleInDegrees = false}) async {
+  angle ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => ccore.cv_phase(x.ref, y.ref, angle!.ref, angleInDegrees, callback),
+    (c) {
+      return c.complete(angle);
+    },
+  );
+}
 
 /// RandN Fills the array with normally distributed random numbers.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaeff1f61e972d133a04ce3a5f81cf6808
-Future<Mat> randnAsync(InputOutputArray dst, Scalar mean, Scalar stddev) async => cvRunAsync0(
-      (callback) => ccore.RandN_Async(dst.ref, mean.ref, stddev.ref, callback),
-      (c) => c.complete(dst),
-    );
+Future<Mat> randnAsync(InputOutputArray dst, Scalar mean, Scalar stddev) async {
+  return cvRunAsync0(
+    (callback) => ccore.cv_randn(dst.ref, mean.ref, stddev.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
 
 /// RandShuffle Shuffles the array elements randomly.
 ///
@@ -994,20 +1614,34 @@ Future<Mat> randShuffleAsync(
   InputOutputArray dst, {
   double iterFactor = 1,
   Rng? rng,
-}) async =>
-    cvRunAsync0(
-      (callback) => rng == null
-          ? ccore.RandShuffle_Async(dst.ref, callback)
-          : ccore.RandShuffleWithParams_Async(dst.ref, iterFactor, rng.ref, callback),
-      (c) => c.complete(dst),
+}) async {
+  if (rng == null) {
+    return cvRunAsync0(
+      (callback) => ccore.cv_randShuffle(dst.ref, callback),
+      (c) {
+        return c.complete(dst);
+      },
     );
+  } else {
+    return cvRunAsync0(
+      (callback) => ccore.cv_randShuffle_1(dst.ref, iterFactor, rng.ref, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
+  }
+}
 
 /// RandU Generates a single uniformly-distributed random
 /// number or an array of random numbers.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1ba1026dca0807b27057ba6a49d258c0
-Future<Mat> randuAsync(InputOutputArray dst, Scalar low, Scalar high) async => cvRunAsync0(
-      (callback) => ccore.RandU_Async(dst.ref, low.ref, high.ref, callback),
-      (c) => c.complete(dst),
-    );
+Future<Mat> randuAsync(InputOutputArray dst, Scalar low, Scalar high) async {
+  return cvRunAsync0(
+    (callback) => ccore.cv_randu(dst.ref, low.ref, high.ref, callback),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}

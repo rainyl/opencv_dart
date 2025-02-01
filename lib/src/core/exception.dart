@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // coverage:ignore-file
 // ignore_for_file: avoid_print
 import 'error_code.dart';
@@ -21,7 +25,7 @@ class CvException implements Exception {
 
   @override
   String toString() {
-    return "CvException(code: $code, err: $err, msg:$msg) in $func of file $file:$line";
+    return "CvException(code: $code, msg:$msg) in $func of file $file:$line";
   }
 }
 

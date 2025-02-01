@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 const testImage = "test/images/space_shuttle.jpg";
@@ -34,8 +34,8 @@ void main() async {
   test('cv.AverageHash', () => testHash(cv.AverageHash()));
   test('cv.BlockMeanHash', () => testHash(cv.BlockMeanHash()));
   test('cv.ColorMomentHash', () => testHash(cv.ColorMomentHash()));
-  test('cv.NewMarrHildrethHash', () => testHash(cv.NewMarrHildrethHash()));
-  test('cv.NewRadialVarianceHash', () => testHash(cv.NewRadialVarianceHash()));
+  test('cv.NewMarrHildrethHash', () => testHash(cv.MarrHildrethHash()));
+  test('cv.NewRadialVarianceHash', () => testHash(cv.RadialVarianceHash()));
 
   test("cv.BlockMeanHash more", () {
     final bmh = cv.BlockMeanHash();

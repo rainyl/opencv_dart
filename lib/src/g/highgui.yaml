@@ -1,50 +1,80 @@
 format_version: 1.0.0
 files:
-  package:opencv_dart/src/g/highgui.g.dart:
+  package:dartcv4/src/g/highgui.g.dart:
     used-config:
       ffi-native: true
     symbols:
-      c:@F@Trackbar_Create:
-        name: Trackbar_Create
-      c:@F@Trackbar_CreateWithValue:
-        name: Trackbar_CreateWithValue
-      c:@F@Trackbar_GetPos:
-        name: Trackbar_GetPos
-      c:@F@Trackbar_SetMax:
-        name: Trackbar_SetMax
-      c:@F@Trackbar_SetMin:
-        name: Trackbar_SetMin
-      c:@F@Trackbar_SetPos:
-        name: Trackbar_SetPos
-      c:@F@Window_Close:
-        name: Window_Close
-      c:@F@Window_GetProperty:
-        name: Window_GetProperty
-      c:@F@Window_IMShow:
-        name: Window_IMShow
-      c:@F@Window_Move:
-        name: Window_Move
-      c:@F@Window_New:
-        name: Window_New
-      c:@F@Window_Resize:
-        name: Window_Resize
-      c:@F@Window_SelectROI:
-        name: Window_SelectROI
-      c:@F@Window_SelectROIs:
-        name: Window_SelectROIs
-      c:@F@Window_SetProperty:
-        name: Window_SetProperty
-      c:@F@Window_SetTitle:
-        name: Window_SetTitle
-      c:@F@Window_WaitKey:
-        name: Window_WaitKey
-      c:@F@destroyAllWindows:
-        name: destroyAllWindows
+      c:@F@cv_createTrackbar:
+        name: cv_createTrackbar
+      c:@F@cv_createTrackbar_1:
+        name: cv_createTrackbar_1
+      c:@F@cv_currentUIFramework:
+        name: cv_currentUIFramework
+      c:@F@cv_destroyAllWindows:
+        name: cv_destroyAllWindows
+      c:@F@cv_destroyWindow:
+        name: cv_destroyWindow
+      c:@F@cv_getMouseWheelDelta:
+        name: cv_getMouseWheelDelta
+      c:@F@cv_getTrackbarPos:
+        name: cv_getTrackbarPos
+      c:@F@cv_getWindowImageRect:
+        name: cv_getWindowImageRect
+      c:@F@cv_getWindowProperty:
+        name: cv_getWindowProperty
+      c:@F@cv_imshow:
+        name: cv_imshow
+      c:@F@cv_moveWindow:
+        name: cv_moveWindow
+      c:@F@cv_namedWindow:
+        name: cv_namedWindow
+      c:@F@cv_pollKey:
+        name: cv_pollKey
+      c:@F@cv_resizeWindow:
+        name: cv_resizeWindow
+      c:@F@cv_selectROI:
+        name: cv_selectROI
+      c:@F@cv_selectROI_1:
+        name: cv_selectROI_1
+      c:@F@cv_selectROIs:
+        name: cv_selectROIs
+      c:@F@cv_setMouseCallback:
+        name: cv_setMouseCallback
+      c:@F@cv_setTrackbarMax:
+        name: cv_setTrackbarMax
+      c:@F@cv_setTrackbarMin:
+        name: cv_setTrackbarMin
+      c:@F@cv_setTrackbarPos:
+        name: cv_setTrackbarPos
+      c:@F@cv_setWindowProperty:
+        name: cv_setWindowProperty
+      c:@F@cv_setWindowTitle:
+        name: cv_setWindowTitle
+      c:@F@cv_waitKey:
+        name: cv_waitKey
+      c:@F@cv_waitKeyEx:
+        name: cv_waitKeyEx
+      c:highgui.h@T@cv_ButtonCallback:
+        name: cv_ButtonCallback
+      c:highgui.h@T@cv_MouseCallback:
+        name: cv_MouseCallback
+      c:highgui.h@T@cv_OpenGlDrawCallback:
+        name: cv_OpenGlDrawCallback
+      c:highgui.h@T@cv_TrackbarCallback:
+        name: cv_TrackbarCallback
+      c:types.h@T@CvRect:
+        name: CvRect
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
-      c:types.h@T@Rect:
-        name: Rect
       c:types.h@T@VecRect:
         name: VecRect
+      cv_ButtonCallbackFunction:
+        name: cv_ButtonCallbackFunction
+      cv_MouseCallbackFunction:
+        name: cv_MouseCallbackFunction
+      cv_OpenGlDrawCallbackFunction:
+        name: cv_OpenGlDrawCallbackFunction
+      cv_TrackbarCallbackFunction:
+        name: cv_TrackbarCallbackFunction

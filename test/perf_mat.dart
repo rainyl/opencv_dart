@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable, avoid_print
 
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 
 const counts = 10000;
 

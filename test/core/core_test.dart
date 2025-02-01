@@ -1,13 +1,12 @@
 // ignore_for_file: avoid_print
-
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
   test('setLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_WARNING);
+    cv.setLogLevel(cv.LOG_LEVEL_ERROR);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_WARNING));
+    expect(level, equals(cv.LOG_LEVEL_ERROR));
   });
 
   test('getLogLevel', () {
@@ -37,7 +36,7 @@ void main() async {
     final mat0 = cv.Mat.ones(100, 100, cv.MatType.CV_8UC3);
     final mat1 = cv.Mat.zeros(100, 100, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
-    cv.absDiff(mat0, mat1, dst);
+    cv.absDiff(mat0, mat1, dst: dst);
     expect(dst.at<int>(0, 0, 0), equals(1));
   });
 
@@ -214,6 +213,13 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.copyTo', () {
+    final src = cv.Mat.randn(100, 100, cv.MatType.CV_8UC3);
+    final dst = cv.Mat.empty();
+    cv.copyTo(src, dst);
+    expect(src.at<cv.Vec3b>(0, 0), dst.at<cv.Vec3b>(0, 0));
+  });
+
   test('cv.dct', () {
     final src = cv.Mat.randn(100, 100, cv.MatType.CV_32FC1);
     final dst = cv.dct(src);
@@ -321,7 +327,7 @@ void main() async {
     test('cv.divide with scalar', () {
       final mat = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1);
       mat.setTo(cv.Scalar.all(10.0));
-      final scalar = 2.0;
+      const scalar = 2.0;
       final dst1 = mat.divide(scalar);
 
       expect(dst1.isEmpty, equals(false));
@@ -355,7 +361,7 @@ void main() async {
     test('cv.divide with scale', () {
       final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
       final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
-      final scale = 2.0;
+      const scale = 2.0;
       final dst = cv.divide(mat1, mat2, scale: scale);
       expect(dst.isEmpty, equals(false));
       for (int i = 0; i < dst.rows; i++) {
@@ -368,7 +374,7 @@ void main() async {
     test('cv.divide with dtype', () {
       final mat1 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(10.0));
       final mat2 = cv.Mat.ones(101, 102, cv.MatType.CV_32FC1).setTo(cv.Scalar.all(2.0));
-      final dtype = cv.MatType.CV_16S;
+      const dtype = cv.MatType.CV_16S;
       final dst = cv.divide(mat1, mat2, dtype: dtype);
       expect(dst.isEmpty, equals(false));
       for (int i = 0; i < dst.rows; i++) {
@@ -411,6 +417,21 @@ void main() async {
     expect(eigenvectors.rows, equals(2));
   });
 
+  test('cv.PCACompute1', () {
+    final src = cv.Mat.randn(10, 10, cv.MatType.CV_32FC1);
+    final mean0 = cv.Mat.empty();
+    final (mean, eigenvalues, eigenvectors) = cv.PCACompute1(src, mean0, 0.8);
+    expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
+    expect(eigenvectors.rows, greaterThan(1));
+  });
+
+  test('cv.PSNR', () {
+    final src = cv.imread("test/images/lenna.png");
+    final blur = cv.gaussianBlur(src, (5, 5), 10);
+    final psnr = cv.PSNR(src, blur);
+    expect(psnr, closeTo(29.26, 0.1));
+  });
+
   test('cv.exp', () {
     final src = cv.Mat.zeros(10, 10, cv.MatType.CV_32FC1);
     final dst = cv.exp(src);
@@ -436,6 +457,12 @@ void main() async {
     expect(dst.isEmpty, equals(false));
   });
 
+  test('cv.flipND', () {
+    final src = cv.Mat.randu(10, 10, cv.MatType.CV_8UC3);
+    final dst = cv.flipND(src, 0);
+    expect(dst.isEmpty, equals(false));
+  });
+
   test('cv.gemm', () {
     final src1 = cv.Mat.randu(3, 4, cv.MatType.CV_32FC1);
     final src2 = cv.Mat.randu(4, 3, cv.MatType.CV_32FC1);
@@ -450,6 +477,11 @@ void main() async {
     final dst = cv.hconcat(src, src);
     expect(dst.isEmpty, equals(false));
     expect(dst.cols, equals(src.cols * 2));
+  });
+
+  test('cv.hasNonZero', () {
+    final src = cv.Mat.ones(100, 100, cv.MatType.CV_8UC1);
+    expect(cv.hasNonZero(src), equals(true));
   });
 
   test('cv.vconcat', () {
@@ -584,7 +616,7 @@ void main() async {
       cv.MatType.CV_32S,
       cv.MatType.CV_32F,
       cv.MatType.CV_64F,
-      cv.MatType.CV_16F, // TODO: Not supported by official opencv, replace if they support it
+      cv.MatType.CV_16F,
     ];
     for (final int channel in [1, 2, 3, 4]) {
       for (final depth in depthSrc) {
@@ -643,6 +675,13 @@ void main() async {
     final src2 = cv.Mat.randu(4, 4, cv.MatType.CV_32FC1);
     final dst = cv.min(src1, src2);
     expect(dst.isEmpty, equals(false));
+  });
+
+  test('cv.mean', () {
+    final data = List.generate(3 * 3 * 3, (i) => i.toDouble());
+    final src = cv.Mat.fromList(3, 3, cv.MatType.CV_32FC3, data);
+    final mean = cv.mean(src);
+    expect(mean.val1, closeTo(12, 1e-3));
   });
 
   test('cv.meanStdDev', () {
@@ -704,6 +743,20 @@ void main() async {
     final mat3 = cv.multiply(mat1, mat2);
     expect(mat3.isEmpty, equals(false));
     expect(mat3.at<double>(0, 0), equals(mat1.at<double>(0, 0) * mat2.at<double>(0, 0)));
+  });
+
+  test('cv.mulTransposed', () {
+    final src = cv.Mat.randu(2, 3, cv.MatType.CV_32FC1, low: cv.Scalar.all(0), high: cv.Scalar.all(1));
+    final srcT = src.t();
+
+    final dst = cv.Mat.empty();
+    cv.mulTransposed(src, dst, true);
+    expect(dst.isEmpty, equals(false));
+
+    final dst1 = srcT.multiply(src);
+
+    final diff = cv.absDiff(dst, dst1);
+    expect(cv.sum(diff), cv.Scalar.all(0));
   });
 
   test('cv.normalize', () {
@@ -785,12 +838,7 @@ void main() async {
   });
 
   test('cv.reduceArgMax', () {
-    final src = cv.Mat.randu(2, 3, cv.MatType.CV_8UC1);
-    for (var i = 0; i < src.rows; i++) {
-      for (var j = 0; j < src.cols; j++) {
-        src.set(i, j, j + 1);
-      }
-    }
+    final src = cv.Mat.fromList(2, 3, cv.MatType.CV_8UC1, List.generate(2 * 3, (i) => i));
     final dst = cv.reduceArgMax(src, 1);
     expect((dst.rows, dst.cols), equals((2, 1)));
     expect((dst.at<int>(0, 0), dst.at<int>(1, 0)), (2, 2));
@@ -828,7 +876,7 @@ void main() async {
 
   test('cv.setIdentity', () {
     final src = cv.Mat.randu(4, 3, cv.MatType.CV_64FC1);
-    cv.setIdentity(src, s: 2.5);
+    cv.setIdentity(src, s: cv.Scalar.all(2.5));
     expect(src.isEmpty, false);
     expect((src.at<double>(0, 0), src.at<double>(1, 1), src.at<double>(2, 2)), (2.5, 2.5, 2.5));
   });
@@ -913,6 +961,14 @@ void main() async {
     final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     final dst = cv.transpose(src);
     expect((dst.rows, dst.cols), (src.cols, src.rows));
+  });
+
+  test('cv.transposeND', () {
+    final src = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
+    final blob = cv.blobFromImage(src); // N C H W
+    final dst = cv.transposeND(blob, [0, 2, 3, 1]);
+    final blobSize = blob.size;
+    expect(dst.size, [blobSize[0], blobSize[2], blobSize[3], blobSize[1]]);
   });
 
   test('cv.pow', () {

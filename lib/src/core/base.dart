@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 // coverage:ignore-file
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
@@ -8,7 +12,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import '../g/core.g.dart' show CvStatus_Close;
+import '../g/core.g.dart' as ccore;
 import "../g/types.g.dart" as cvg;
 import "exception.dart" show CvException, CvdException;
 
@@ -69,7 +73,7 @@ void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final file = s.ref.file.cast<Utf8>().toDartString();
   final funcName = s.ref.func.cast<Utf8>().toDartString();
   final line = s.ref.line;
-  CvStatus_Close(s);
+  ccore.CvStatus_close(s);
   if (code != 0) {
     throw CvException(code, msg: msg, file: file, func: funcName, line: line);
   }
@@ -83,7 +87,7 @@ typedef VoidPtr = ffi.Pointer<ffi.Void>;
 Future<T> cvRunAsync0<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
   void Function(Completer<T> completer) onComplete,
-) {
+) async {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   void onResponse() {
@@ -96,7 +100,9 @@ Future<T> cvRunAsync0<T>(
   return completer.future;
 }
 
-Future<T> cvRunAsync<T>(
+const cvRunAsync = cvRunAsync0;
+
+Future<T> cvRunAsync1<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
   void Function(Completer<T> completer, VoidPtr p) onComplete,
 ) {
@@ -111,8 +117,6 @@ Future<T> cvRunAsync<T>(
   throwIfFailed(func(ccallback.nativeFunction));
   return completer.future;
 }
-
-const cvRunAsync1 = cvRunAsync;
 
 Future<T> cvRunAsync2<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_2 callback) func,
@@ -189,33 +193,6 @@ Future<T> cvRunAsync5<T>(
   ccallback = ffi.NativeCallable.listener(onResponse);
   throwIfFailed(func(ccallback.nativeFunction));
   return completer.future;
-}
-
-// async completers
-void voidCompleter(Completer<void> completer) => completer.complete();
-
-void boolCompleter(Completer<bool> completer, VoidPtr p) {
-  final value = p.cast<ffi.Bool>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void intCompleter(Completer<int> completer, VoidPtr p) {
-  final value = p.cast<ffi.Int>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void doubleCompleter(Completer<double> completer, VoidPtr p) {
-  final value = p.cast<ffi.Double>().value;
-  calloc.free(p);
-  completer.complete(value);
-}
-
-void floatCompleter(Completer<double> completer, VoidPtr p) {
-  final value = p.cast<ffi.Float>().value;
-  calloc.free(p);
-  completer.complete(value);
 }
 
 // Arena wrapper

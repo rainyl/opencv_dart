@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 const arucoImage6x6_250 = "test/images/aruco_6X6_250_6.png";
@@ -7,6 +7,21 @@ const arucoImage6x6_250_contour = "test/images/aruco_6X6_250_6_contour.png";
 const arucoImage6x6_250_1 = "test/images/aruco_6X6_250_1.png";
 
 void main() async {
+  test("cv.ArucoDictionary", () {
+    final dict = cv.ArucoDictionary.empty();
+    expect(dict.bytesList.isEmpty, true);
+
+    final dict1 = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
+    expect(dict1.bytesList.type, cv.MatType.CV_8UC4);
+    expect(dict1.markerSize, isA<int>());
+    expect(dict1.maxCorrectionBits, isA<int>());
+
+    final dict3 = cv.ArucoDictionary.fromBytesList(dict1.bytesList, dict1.markerSize);
+    dict3.maxCorrectionBits = dict1.maxCorrectionBits;
+    expect(dict3.markerSize, dict1.markerSize);
+    expect(dict3.maxCorrectionBits, dict1.maxCorrectionBits);
+  });
+
   test('cv.ArucoDetector', () {
     final img = cv.imread(arucoImage6x6_250);
     expect(img.isEmpty, false);
@@ -38,7 +53,7 @@ void main() async {
     expect(corners.length, greaterThan(0));
     cv.arucoDrawDetectedMarkers(img, corners, ids, cv.Scalar(200, 0, 0, 0));
     var diff = cv.Mat.empty();
-    cv.absDiff(img, imgExpected, diff);
+    cv.absDiff(img, imgExpected, dst: diff);
     diff = cv.cvtColor(diff, cv.COLOR_BGR2GRAY);
     expect(cv.countNonZero(diff), 0);
   });
@@ -50,7 +65,7 @@ void main() async {
     final img = cv.arucoGenerateImageMarker(cv.PredefinedDictionaryType.DICT_6X6_250, 1, 200, 1);
 
     final diff = cv.Mat.empty();
-    cv.absDiff(img, imgExpected, diff);
+    cv.absDiff(img, imgExpected, dst: diff);
     expect(cv.countNonZero(diff), 0);
   });
 

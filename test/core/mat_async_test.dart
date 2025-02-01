@@ -1,4 +1,4 @@
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
@@ -43,21 +43,21 @@ void main() async {
 
   test('cv.MatAsync.fromVecAsync', () async {
     final points = [cv.Point(1, 2), cv.Point(3, 4), cv.Point(5, 6), cv.Point(7, 8)];
-    final mat = await cv.MatAsync.fromVecAsync(points.cvd);
+    final mat = cv.Mat.fromVec(points.cvd);
     expect(mat.rows, equals(4));
     expect(mat.cols, equals(1));
     expect(mat.channels, equals(2));
     expect(mat.at<int>(0, 0), 1);
 
     final points1 = [cv.Point2f(1, 2), cv.Point2f(3, 4), cv.Point2f(5, 6), cv.Point2f(7, 8)];
-    final mat1 = await cv.MatAsync.fromVecAsync(points1.cvd);
+    final mat1 = cv.Mat.fromVec(points1.cvd);
     expect(mat1.rows, equals(4));
     expect(mat1.cols, equals(1));
     expect(mat1.channels, equals(2));
     expect(mat1.at<double>(0, 0), 1);
 
     final points2 = [cv.Point3f(1, 2, 1), cv.Point3f(3, 4, 3), cv.Point3f(5, 6, 5), cv.Point3f(7, 8, 7)];
-    final mat2 = await cv.MatAsync.fromVecAsync(points2.cvd);
+    final mat2 = cv.Mat.fromVec(points2.cvd);
     expect(mat2.rows, equals(4));
     expect(mat2.cols, equals(1));
     expect(mat2.channels, equals(3));

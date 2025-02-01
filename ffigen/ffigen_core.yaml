@@ -4,60 +4,62 @@ description: |
 output:
   bindings: ../lib/src/g/core.g.dart
   symbol-file:
-    output: 'package:opencv_dart/src/g/core.yaml'
-    import-path: 'package:opencv_dart/src/g/core.g.dart'
+    output: 'package:dartcv4/src/g/core.yaml'
+    import-path: 'package:dartcv4/src/g/core.g.dart'
 import:
   symbol-files:
-    - 'package:opencv_dart/src/g/types.yaml'
+    - 'package:dartcv4/src/g/types.yaml'
 ffi-native:
-  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
-compiler-opts: "-Isrc"
+  assetId: 'package:dartcv4/dartcv.dart' # Optional.
+compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/core/core.h
-    - ../src/core/core_async.h
-    - ../src/core/exception.h
-    - ../src/core/svd.h
-    - ../src/core/svd_async.h
-    - ../src/core/version.h
-    - ../src/core/logging.h
+    - ../src/dartcv/core/core.h
+    - ../src/dartcv/core/exception.h
+    - ../src/dartcv/core/logging.h
+    - ../src/dartcv/core/mat.h
+    - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/stdvec.h
+    - ../src/dartcv/core/utils.h
+    - ../src/dartcv/core/version.h
   include-directives:
-    - ../src/core/core.h
-    - ../src/core/core_async.h
-    - ../src/core/exception.h
-    - ../src/core/svd.h
-    - ../src/core/svd_async.h
-    - ../src/core/version.h
-    - ../src/core/logging.h
+    - ../src/dartcv/core/core.h
+    - ../src/dartcv/core/exception.h
+    - ../src/dartcv/core/logging.h
+    - ../src/dartcv/core/mat.h
+    - ../src/dartcv/core/svd.h
+    - ../src/dartcv/core/stdvec.h
+    - ../src/dartcv/core/utils.h
+    - ../src/dartcv/core/version.h
 functions:
   leaf:
     include:
-      - "Mat_Flags"
-      - "Mat_Type"
-      - "Mat_IsContinuous"
-      - "Mat_IsSubmatrix"
-      - "Mat_Rows"
-      - "Mat_Cols"
-      - "Mat_Channels"
-      - "Mat_Step"
-      - "Mat_Total"
-      - "Mat_Size"
-      - "Mat_ElemSize.*"
-      - "Mat_Dims"
-      - "Mat_Data"
-      - "Mat_Get.*"
-      - "Mat_Set.*"
-      # - ""
-      # - ""
-      # - ""
-      # - ""
-      # - ""
+      - ".*_Mat_flags"
+      - ".*_Mat_type"
+      - ".*_Mat_countNonZero"
+      - ".*_Mat_isContinuous"
+      - ".*_Mat_isSubmatrix"
+      - ".*_Mat_rows"
+      - ".*_Mat_cols"
+      - ".*_Mat_channels"
+      - ".*_Mat_step"
+      - ".*_Mat_total"
+      - ".*_Mat_size"
+      - ".*_Mat_elemSize.*"
+      - ".*_Mat_dims"
+      - ".*_Mat_data"
+      - ".*_Mat_get.*"
+      - ".*_Mat_set.*"
 
   symbol-address:
     include:
       - ".*_Close.*"
+      - ".*_close.*"
+      - ".*_destroy.*"
+      - ".*_delete.*"
+      - ".*_free.*"
 #     exclude: # If you only use exclude, then everything not excluded is generated.
 #       - "dispose"
 

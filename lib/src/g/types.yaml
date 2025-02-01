@@ -1,6 +1,6 @@
 format_version: 1.0.0
 files:
-  package:opencv_dart/src/g/types.g.dart:
+  package:dartcv4/src/g/types.g.dart:
     used-config:
       ffi-native: false
     symbols:
@@ -24,6 +24,24 @@ files:
         name: CvCallback_8Function
       CvCallback_9Function:
         name: CvCallback_9Function
+      c:@S@CvPoint:
+        name: CvPoint
+      c:@S@CvPoint2d:
+        name: CvPoint2d
+      c:@S@CvPoint2f:
+        name: CvPoint2f
+      c:@S@CvPoint3f:
+        name: CvPoint3f
+      c:@S@CvPoint3i:
+        name: CvPoint3i
+      c:@S@CvRect:
+        name: CvRect
+      c:@S@CvRect2f:
+        name: CvRect2f
+      c:@S@CvSize:
+        name: CvSize
+      c:@S@CvSize2f:
+        name: CvSize2f
       c:@S@CvStatus:
         name: CvStatus
       c:@S@DMatch:
@@ -38,30 +56,16 @@ files:
         name: MatStep
       c:@S@Moment:
         name: Moment
-      c:@S@Point:
-        name: Point
-      c:@S@Point2f:
-        name: Point2f
-      c:@S@Point3f:
-        name: Point3f
-      c:@S@Point3i:
-        name: Point3i
       c:@S@RNG:
         name: RNG
-      c:@S@Rect:
-        name: Rect
-      c:@S@Rect2f:
-        name: Rect2f
       c:@S@RotatedRect:
         name: RotatedRect
       c:@S@Scalar:
         name: Scalar
-      c:@S@Size:
-        name: Size
-      c:@S@Size2f:
-        name: Size2f
       c:@S@TermCriteria:
         name: TermCriteria
+      c:@S@UsacParams:
+        name: UsacParams
       c:@S@Vec2b:
         name: Vec2b
       c:@S@Vec2d:
@@ -120,6 +124,8 @@ files:
         name: VecI16
       c:@S@VecI32:
         name: VecI32
+      c:@S@VecI64:
+        name: VecI64
       c:@S@VecI8:
         name: VecI8
       c:@S@VecKeyPoint:
@@ -136,10 +142,16 @@ files:
         name: VecPoint3i
       c:@S@VecRect:
         name: VecRect
+      c:@S@VecRect2f:
+        name: VecRect2f
       c:@S@VecRotatedRect:
         name: VecRotatedRect
       c:@S@VecU16:
         name: VecU16
+      c:@S@VecU32:
+        name: VecU32
+      c:@S@VecU64:
+        name: VecU64
       c:@S@VecU8:
         name: VecU8
       c:@S@VecUChar:
@@ -200,6 +212,12 @@ files:
         name: CvCallback_9
       c:types.h@T@InputOutputArrayPtr:
         name: InputOutputArrayPtr
+      c:types.h@T@MatIn:
+        name: MatIn
+      c:types.h@T@MatInOut:
+        name: MatInOut
+      c:types.h@T@MatOut:
+        name: MatOut
       c:types.h@T@MatPtr:
         name: MatPtr
       c:types.h@T@RNGPtr:
@@ -218,6 +236,8 @@ files:
         name: VecI16Ptr
       c:types.h@T@VecI32Ptr:
         name: VecI32Ptr
+      c:types.h@T@VecI64Ptr:
+        name: VecI64Ptr
       c:types.h@T@VecI8Ptr:
         name: VecI8Ptr
       c:types.h@T@VecKeyPointPtr:
@@ -232,12 +252,18 @@ files:
         name: VecPoint3iPtr
       c:types.h@T@VecPointPtr:
         name: VecPointPtr
+      c:types.h@T@VecRect2fPtr:
+        name: VecRect2fPtr
       c:types.h@T@VecRectPtr:
         name: VecRectPtr
       c:types.h@T@VecRotatedRectPtr:
         name: VecRotatedRectPtr
       c:types.h@T@VecU16Ptr:
         name: VecU16Ptr
+      c:types.h@T@VecU32Ptr:
+        name: VecU32Ptr
+      c:types.h@T@VecU64Ptr:
+        name: VecU64Ptr
       c:types.h@T@VecU8Ptr:
         name: VecU8Ptr
       c:types.h@T@VecUCharPtr:

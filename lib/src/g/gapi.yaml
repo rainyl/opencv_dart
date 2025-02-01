@@ -1,6 +1,6 @@
 format_version: 1.0.0
 files:
-  package:opencv_dart/src/g/gapi.g.dart:
+  package:dartcv4/src/g/gapi.g.dart:
     used-config:
       ffi-native: true
     symbols:
@@ -354,18 +354,18 @@ files:
         name: VecGMatPtr
       c:gapi.h@T@VecPrimPtr:
         name: VecPrimPtr
+      c:types.h@T@CvPoint:
+        name: CvPoint
+      c:types.h@T@CvRect:
+        name: CvRect
+      c:types.h@T@CvSize:
+        name: CvSize
       c:types.h@T@CvStatus:
         name: CvStatus
       c:types.h@T@Mat:
         name: Mat
-      c:types.h@T@Point:
-        name: Point
-      c:types.h@T@Rect:
-        name: Rect
       c:types.h@T@Scalar:
         name: Scalar
-      c:types.h@T@Size:
-        name: Size
       c:types.h@T@VecPoint:
         name: VecPoint
       c:types.h@T@VecVec4i:

@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 library cv.contrib;
 
 import 'dart:ffi' as ffi;
@@ -7,23 +11,24 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
+import '../g/contrib.g.dart' as cvg;
 import '../g/contrib.g.dart' as ccontrib;
 
-class WeChatQRCode extends CvStruct<ccontrib.WeChatQRCode> {
+class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   WeChatQRCode._(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
   factory WeChatQRCode.fromPointer(
-    ccontrib.WeChatQRCodePtr ptr, [
+    cvg.WeChatQRCodePtr ptr, [
     bool attach = true,
   ]) =>
       WeChatQRCode._(ptr, attach);
 
   factory WeChatQRCode.empty() {
-    final p = calloc<ccontrib.WeChatQRCode>();
-    cvRun(() => ccontrib.WeChatQRCode_New(p));
+    final p = calloc<cvg.WeChatQRCode>();
+    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_create(p));
     return WeChatQRCode._(p);
   }
 
@@ -39,12 +44,12 @@ class WeChatQRCode extends CvStruct<ccontrib.WeChatQRCode> {
     String superResolutionCaffeModelPath = "",
   ]) {
     final arena = Arena();
-    final p = calloc<ccontrib.WeChatQRCode>();
+    final p = calloc<cvg.WeChatQRCode>();
     final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    cvRun(() => ccontrib.WeChatQRCode_NewWithParams(dp, dm, srp, srm, p));
+    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_create_1(dp, dm, srp, srm, p, ffi.nullptr));
     arena.releaseAll();
     return WeChatQRCode._(p);
   }
@@ -55,22 +60,32 @@ class WeChatQRCode extends CvStruct<ccontrib.WeChatQRCode> {
     InputArray img, [
     VecMat? points,
   ]) {
-    final p = calloc<ccontrib.VecMat>();
-    final rval = calloc<ccontrib.VecVecChar>();
-    cvRun(() => ccontrib.WeChatQRCode_DetectAndDecode(ptr, img.ref, p, rval));
-    final vec = VecVecChar.fromPointer(rval);
-    final points = VecMat.fromPointer(p);
-    return (vec.asStringList(), points);
+    points ??= VecMat();
+    final strs = VecVecChar();
+    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+        ref, img.ref, points!.ptr, strs.ptr, ffi.nullptr));
+    final rval = (strs.asStringList(), points);
+    strs.dispose();
+    return rval;
+  }
+
+  Future<(List<String>, VecMat)> detectAndDecodeAsync(
+    InputArray img, [
+    VecMat? points,
+  ]) async {
+    points ??= VecMat();
+    final strs = VecVecChar();
+    return cvRunAsync0(
+        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+            ref, img.ref, points!.ptr, strs.ptr, callback), (c) {
+      final rval = (strs.asStringList(), points!);
+      strs.dispose();
+      return c.complete(rval);
+    });
   }
 
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#abf807138abc2626c159abd3e9a80e791
-  double get scaleFactor {
-    return cvRunArena<double>((arena) {
-      final p = calloc<ffi.Float>();
-      cvRun(() => ccontrib.WeChatQRCode_GetScaleFactor(ptr, p));
-      return p.value;
-    });
-  }
+  double get scaleFactor => ccontrib.cv_wechat_qrcode_WeChatQRCode_getScaleFactor(ref);
 
   /// set scale factor QR code detector use neural network to detect QR.
   /// Before running the neural network, the input image is pre-processed by scaling.
@@ -83,17 +98,17 @@ class WeChatQRCode extends CvStruct<ccontrib.WeChatQRCode> {
   /// use default scaled to an image with an area of 160000 pixels.
   ///
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#a084f9aa8693fa0a62c43dd10d2533ab8
-  set scaleFactor(double scaleFactor) {
-    cvRun(() => ccontrib.WeChatQRCode_SetScaleFactor(ptr, scaleFactor));
-  }
+  set scaleFactor(double scaleFactor) =>
+      ccontrib.cv_wechat_qrcode_WeChatQRCode_setScaleFactor(ref, scaleFactor);
 
-  static final finalizer = OcvFinalizer<ccontrib.WeChatQRCodePtr>(ccontrib.addresses.WeChatQRCode_Close);
+  static final finalizer =
+      OcvFinalizer<cvg.WeChatQRCodePtr>(ccontrib.addresses.cv_wechat_qrcode_WeChatQRCode_close);
 
   void dispose() {
     finalizer.detach(this);
-    ccontrib.WeChatQRCode_Close(ptr);
+    ccontrib.cv_wechat_qrcode_WeChatQRCode_close(ptr);
   }
 
   @override
-  ccontrib.WeChatQRCode get ref => ptr.ref;
+  cvg.WeChatQRCode get ref => ptr.ref;
 }

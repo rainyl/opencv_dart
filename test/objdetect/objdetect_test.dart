@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'package:opencv_dart/src/core/mat_type.dart';
+import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:dartcv4/src/core/mat_type.dart';
 import 'package:test/test.dart';
 
 cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
@@ -91,7 +91,9 @@ void main() async {
     expect(descriptors.length, greaterThanOrEqualTo(0));
     expect(locations.length, greaterThanOrEqualTo(0));
 
-    final (grad, angle) = hog1.computeGradient(img);
+    final grad = cv.Mat.empty();
+    final angle = cv.Mat.empty();
+    hog1.computeGradient(img, grad, angle);
     expect(grad.isEmpty, false);
     expect(angle.isEmpty, false);
 

@@ -1,3 +1,7 @@
+// Copyright (c) 2024, rainyl and all contributors. All rights reserved.
+// Use of this source code is governed by a Apache-2.0 license
+// that can be found in the LICENSE file.
+
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -48,6 +52,6 @@ class TermCriteria extends CvStruct<cvg.TermCriteria> {
 }
 
 extension TermCriteriaExtension on (int, int, double) {
+  TermCriteria get cvd => toTermCriteria();
   TermCriteria toTermCriteria() => TermCriteria(this.$1, this.$2, this.$3);
-  TermCriteria get cvd => TermCriteria(this.$1, this.$2, this.$3);
 }

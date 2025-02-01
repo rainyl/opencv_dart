@@ -1,66 +1,73 @@
 @Tags(['skip-workflow'])
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+@OnPlatform({
+  "mac-os": Skip(
+    "NSWindow should only be instantiated on the main thread! https://github.com/dart-lang/sdk/issues/38315",
+  ),
+})
+
+import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
+const String winName = "Test";
+
 void main() async {
-  test('cv.Window', () {
-    final win = cv.Window("Test");
-    expect(win.name, "Test");
+  test('cv.highgui', () {
+    cv.namedWindow(winName);
 
-    win.setWindowTitle("NewName");
+    cv.setWindowTitle(winName, "NewName");
 
-    final val = win.waitKey(1);
+    final val = cv.waitKey(1);
     expect(val, -1);
-    expect(win.isOpen, true);
+    expect(cv.isWindowOpen(winName), true);
 
-    win.setWindowProperty(
+    cv.setWindowProperty(
+      winName,
       cv.WindowPropertyFlags.WND_PROP_FULLSCREEN,
       cv.WindowFlag.WINDOW_FULLSCREEN.value,
     );
     expect(
-      win.getWindowProperty(cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
+      cv.getWindowProperty(winName, cv.WindowPropertyFlags.WND_PROP_FULLSCREEN),
       cv.WindowFlag.WINDOW_FULLSCREEN.value,
     );
-    win.moveWindow(100, 100);
-    win.resizeWindow(100, 100);
+    cv.moveWindow(winName, 100, 100);
+    cv.resizeWindow(winName, 100, 100);
 
-    win.close();
+    cv.destroyWindow(winName);
   });
 
-  test('cv.Window().imshow', () {
-    final win = cv.Window("imshow");
+  test('cv.imshow', () {
+    cv.namedWindow("imshow");
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
-    win.imshow(img);
-    final val = win.waitKey(1);
+    cv.imshow("imshow", img);
+    final val = cv.waitKey(1);
     expect(val, -1);
-    win.close();
+    cv.destroyWindow("imshow");
   });
 
-  test('cv.Window().selectROI', () {
-    final win = cv.Window("selectROI");
-    expect(win.name, "selectROI");
+  test('cv.selectROI', () {
+    cv.namedWindow(winName);
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    // final rect = win.selectROI(img);
+    // final rect = cv.selectROI(winName, img);
     // expect(rect.width, greaterThan(0));
     // expect(rect.height, greaterThan(0));
 
-    win.close();
+    cv.destroyAllWindows();
   });
 
   test('cv.Trackbar', () {
-    final win = cv.Window("TrackbarWin");
-    final trackbar = cv.Trackbar("Trackbar", win, 10, value: 1);
-    trackbar.pos = 3;
-    expect(trackbar.pos, 3);
+    const winName = "TrackbarWin";
+    const trackbarName = "Trackbar";
+    cv.namedWindow(winName);
+    cv.createTrackbar(trackbarName, winName, 10);
+    cv.setTrackbarPos(trackbarName, winName, 3);
+    expect(cv.getTrackbarPos(trackbarName, winName), 3);
+    cv.setTrackbarMin(trackbarName, winName, 5);
+    cv.setTrackbarMax(trackbarName, winName, 15);
+    // cv.waitKey(1000);
 
-    trackbar.minPos = 5;
-    trackbar.maxPos = 15;
-
-    // win.waitKey(1000);
-
-    win.close();
+    cv.destroyAllWindows();
   });
 }

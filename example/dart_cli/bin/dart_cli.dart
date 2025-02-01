@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:opencv_dart/opencv_dart.dart' as cv;
+import 'package:dartcv4/dartcv.dart' as cv;
 
 const String version = '0.0.1';
 
@@ -69,10 +69,11 @@ void main(List<String> arguments) {
 
 void showImage(String path) {
   final mat = cv.imread(path);
-  final win = cv.Window(path);
-  win.imshow(mat);
-  final gray = cv.cvtColor(mat, cv.COLOR_BGR2GRAY);
-  win.waitKey(3000);
-  win.imshow(gray);
-  win.waitKey(0);
+  print(mat);
+  // final win = cv.Window(path);
+  // win.imshow(mat);
+  // final gray = cv.cvtColor(mat, cv.COLOR_BGR2GRAY);
+  // win.waitKey(3000);
+  // win.imshow(gray);
+  // win.waitKey(0);
 }

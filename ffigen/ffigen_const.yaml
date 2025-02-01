@@ -4,17 +4,18 @@ description: |
 output:
   bindings: ../lib/src/g/constants.g.dart
 ffi-native:
-  assetId: 'package:opencv_dart/opencv_dart.dart' # Optional.
+  assetId: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: ""
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/core/constants.h
+    - ../src/dartcv/core/constants.h
   include-directives:
-    - ../src/core/constants.h
+    - ../src/dartcv/core/constants.h
 
 preamble: |
+  // coverage:ignore-file
   // opencv_dart - OpenCV bindings for Dart language
   //    c wrappers were from gocv: https://github.com/hybridgroup/gocv
   //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
