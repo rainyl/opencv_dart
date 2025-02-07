@@ -92,6 +92,30 @@ void main() async {
     }
   });
 
+  test('Mat.fromBuff', () {
+    const int rows = 3;
+    const int cols = 3;
+    const int channels = 3;
+    const int len = rows * cols * channels;
+
+    for (var i = 0; i < 100; i++) {
+      final buff = calloc<ffi.Uint8>(len);
+      for (var i = 0; i < len; i++) {
+        buff[i] = i;
+      }
+
+      final mat = cv.Mat.fromBuff(
+        rows,
+        cols,
+        const cv.MatType.CV_8UC(channels),
+        buff.cast(),
+      );
+      expect(mat.isEmpty, false);
+      expect(mat.shape, [rows, cols, channels]);
+      expect(mat.at<cv.Vec3b>(0, 0), cv.Vec3b(0, 1, 2));
+    }
+  });
+
   test('Mat.fromVec', () {
     const int rows = 3;
     const int cols = 3;

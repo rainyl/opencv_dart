@@ -64,6 +64,24 @@ class Mat extends CvStruct<cvg.Mat> {
     return Mat._(p);
   }
 
+  /// Create a Mat from self-allocated buffer
+  ///
+  /// [data] should be raw pixels values with exactly same length of channels * [rows] * [cols]
+  ///
+  /// Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
+  factory Mat.fromBuff(
+      int rows, int cols, MatType type, ffi.Pointer<ffi.Void> buff) {
+    final p = calloc<cvg.Mat>();
+    final sizes = VecI32(2);
+    sizes[0] = rows;
+    sizes[1] = cols;
+    cvRun(() =>
+        ccore.cv_Mat_create_4(sizes.ref, type.value, buff, p, ffi.nullptr));
+    return Mat._(p);
+  }
+
   /// Create a Mat from a 2D list
   ///
   /// [data] should be a 2D list of numbers with a shape of (rows, cols).
