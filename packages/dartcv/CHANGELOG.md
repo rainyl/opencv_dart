@@ -1,6 +1,8 @@
 ## 1.1.3-WIP
 
 * add `VideoCapture.grabAsync`
+* add `Mat.fromBuffer` to allow creating `Mat` from self-managed buffer
+* add `copyData` parameter to `Mat.fromVec`
 
 ## 1.1.2
 

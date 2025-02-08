@@ -41,6 +41,9 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// [data] should be raw pixels values with exactly same length of channels * [rows] * [cols]
   ///
+  /// [data] will be copied **2** times, use [Mat.fromVec] or [Mat.fromBuffer] if better performance
+  /// is needed.
+  ///
   /// Mat (Size size, int type, void *data, size_t step=AUTO_STEP)
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a9fa74fb14362d87cb183453d2441948f
@@ -121,6 +124,26 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
+  /// Create a Mat from self-allocated buffer
+  ///
+  /// [data] should be raw pixels values with exactly same length of [channels] * [rows] * [cols]
+  ///
+  /// Be careful when using this constructor, as you are responsible for
+  /// managing the native pointer yourself.
+  /// Improper handling may lead to memory leaks or undefined behavior.
+  ///
+  /// This function can throw exception, so make sure to free the allocated
+  /// memory inside a `try-finally` block!
+  ///
+  /// Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
+  factory Mat.fromBuffer(int rows, int cols, MatType type, ffi.Pointer<ffi.Void> buff) {
+    final p = calloc<cvg.Mat>();
+    cvRun(() => ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, buff, p, ffi.nullptr));
+    return Mat._(p);
+  }
+
   /// [rows]	Number of rows in a 2D array.
   ///
   /// [cols]	Number of columns in a 2D array.
@@ -143,8 +166,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [vec] can be an instance of [VecPoint], [VecPoint2f], [VecPoint3f], [VecPoint3i],
   /// [VecU8], [VecI8], [VecU16], [VecI16], [VecI32], [VecF32], [VecF64], [VecF16]
   ///
-  /// data will be copied, if [vec] is large, remember to dispose it.
-  factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type}) {
+  /// data will be copied if [copyData] is true, if [vec] is large, remember to dispose it.
+  factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type, bool copyData = true}) {
     final p = calloc<cvg.Mat>();
     switch (vec) {
       case VecPoint():
@@ -163,7 +186,11 @@ class Mat extends CvStruct<cvg.Mat> {
       case VecF32() when rows != null && cols != null && type != null:
       case VecF64() when rows != null && cols != null && type != null:
       case VecF16() when rows != null && cols != null && type != null:
-        cvRun(() => ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr));
+        cvRun(
+          () => copyData
+              ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
+              : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
+        );
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
     }
