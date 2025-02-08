@@ -68,17 +68,28 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// [data] should be raw pixels values with exactly same length of channels * [rows] * [cols]
   ///
+  /// Be careful when using this constructor, as you are responsible for
+  /// managing the native pointer yourself.
+  /// Improper handling may lead to memory leaks or undefined behavior.
+  ///
+  /// This function can throw exception, so make sure to free the allocated
+  /// memory inside a `try-finally` block!
+  ///
   /// Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
-  factory Mat.fromBuff(
+  factory Mat.fromBuffer(
       int rows, int cols, MatType type, ffi.Pointer<ffi.Void> buff) {
     final p = calloc<cvg.Mat>();
     final sizes = VecI32(2);
-    sizes[0] = rows;
-    sizes[1] = cols;
-    cvRun(() =>
-        ccore.cv_Mat_create_4(sizes.ref, type.value, buff, p, ffi.nullptr));
+    try {
+      sizes[0] = rows;
+      sizes[1] = cols;
+      cvRun(() =>
+          ccore.cv_Mat_create_4(sizes.ref, type.value, buff, p, ffi.nullptr));
+    } finally {
+      sizes.dispose();
+    }
     return Mat._(p);
   }
 
