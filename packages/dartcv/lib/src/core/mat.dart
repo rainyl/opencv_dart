@@ -61,10 +61,16 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_16F => VecF16.fromList(data.cast<double>()) as Vec,
       _ => throw UnsupportedError("Mat.fromList for MatType ${type.asString()} unsupported"),
     };
-    // copy
-    cvRun(() => ccore.cv_Mat_create_6(rows, cols, type.value, xdata.asVoid(), p, ffi.nullptr));
-    xdata.dispose();
-    return Mat._(p);
+    try {
+      // copy
+      cvRun(() => ccore.cv_Mat_create_6(rows, cols, type.value, xdata.asVoid(), p, ffi.nullptr));
+      return Mat._(p);
+    } catch (e) {
+      calloc.free(p);
+      rethrow;
+    } finally {
+      xdata.dispose();
+    }
   }
 
   /// Create a Mat from a 2D list
