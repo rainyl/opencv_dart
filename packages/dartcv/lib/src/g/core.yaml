@@ -56,6 +56,8 @@ files:
         name: cv_Mat_create_5
       c:@F@cv_Mat_create_6:
         name: cv_Mat_create_6
+      c:@F@cv_Mat_create_6_no_copy:
+        name: cv_Mat_create_6_no_copy
       c:@F@cv_Mat_create_7:
         name: cv_Mat_create_7
       c:@F@cv_Mat_create_8:

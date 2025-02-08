@@ -634,6 +634,37 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(int, int, int, ffi.Pointer<ffi.Void>,
           ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_Mat_create_6_no_copy(
+    int rows,
+    int cols,
+    int type,
+    ffi.Pointer<ffi.Void> buf,
+    ffi.Pointer<Mat> rval,
+    imp1.CvCallback_0 callback,
+  ) {
+    return _cv_Mat_create_6_no_copy(
+      rows,
+      cols,
+      type,
+      buf,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Mat_create_6_no_copyPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<Mat>,
+              imp1.CvCallback_0)>>('cv_Mat_create_6_no_copy');
+  late final _cv_Mat_create_6_no_copy = _cv_Mat_create_6_no_copyPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, int, int, ffi.Pointer<ffi.Void>,
+          ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+
   /// @brief Create Mat with specified vector of points
   ///
   /// @param vec array of points
