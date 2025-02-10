@@ -55,6 +55,9 @@ void main() async {
     expect(mat1.size, [100, 200]);
     expect(mat1.at<cv.Vec3b>(0, 0), cv.Vec3b(255, 255, 255));
 
+    mat1.setVec(0, 0, cv.Vec3b(2, 4, 1));
+    expect(src.atVec<cv.Vec3b>(0, 0), cv.Vec3b(2, 4, 1));
+
     final diff = mat1.subtract(src);
     expect(diff.sum(), cv.Scalar.zeros);
 
@@ -999,10 +1002,10 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       final mtype = mat.type;
       for (var row = 0; row < mat.rows; row++) {
         for (var col = 0; col < mat.cols; col++) {
-          // mat.atNum(row, col, mtype: mtype);
+          mat.atNum(row, col, mtype: mtype);
           // mat.atI32(row, i1: col);
           // mat.atVec<cv.Vec3i>(row, col);
-          mat.atPixel(row, col, mtype: mtype);
+          // mat.atPixel(row, col, mtype: mtype);
         }
       }
       sw.stop();

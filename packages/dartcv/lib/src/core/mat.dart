@@ -28,10 +28,15 @@ class Mat extends CvStruct<cvg.Mat> {
 
   //SECTION - Constructors
 
+  /// create a [Mat] **reference** from another [Mat] if [copy] is false,
+  /// otherwise a copy will be created.
   factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
-    roi ??= Rect(0, 0, mat.cols, mat.rows);
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_13(mat.ref, roi!.ref, p, ffi.nullptr));
+    cvRun(
+      () => roi == null
+          ? ccore.cv_Mat_create_11(mat.ref, mat.rows, mat.cols, mat.type.value, 0, 0, p, ffi.nullptr)
+          : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
+    );
     final dst = Mat._(p, false);
     if (copy) return dst.clone();
     return dst;
@@ -120,7 +125,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return Mat.fromList(rows, cols, type, flatData);
   }
 
-  /// This method is different from [Mat.fromPtr], will construct from pointer directly
+  /// construct from pointer directly
   factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, attach);
 
   factory Mat.empty() {
@@ -316,24 +321,6 @@ class Mat extends CvStruct<cvg.Mat> {
     high ??= Scalar.all(256);
     final mat = Mat.create(rows: rows, cols: cols, type: type);
     cvRun(() => ccore.cv_randu(mat.ref, low!.ref, high!.ref, ffi.nullptr));
-    return mat;
-  }
-
-  /// this constructor is a wrapper of
-  /// `Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)`
-  ///
-  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
-  factory Mat.fromPtr(
-    cvg.Mat m,
-    int rows,
-    int cols,
-    int type,
-    int prows,
-    int pcols,
-  ) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_11(m, rows, cols, type, prows, pcols, p, ffi.nullptr));
-    final mat = Mat._(p);
     return mat;
   }
 
@@ -1240,11 +1227,6 @@ class Mat extends CvStruct<cvg.Mat> {
       ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
       : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
 
-  @Deprecated("use copyTo instead")
-  void copyToWithMask(Mat dst, Mat mask) {
-    cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
-  }
-
   /// Converts an array to another data type with optional scaling.
   ///
   /// The method converts source pixel values to the target data type.
@@ -1568,7 +1550,6 @@ class VecMatIterator extends VecIterator<Mat> {
 
 extension ListMatExtension on List<Mat> {
   VecMat get cvd => asVec();
-  @Deprecated("Use asVec() instead")
-  VecMat asVecMat() => asVec();
+
   VecMat asVec() => VecMat.fromList(this);
 }
