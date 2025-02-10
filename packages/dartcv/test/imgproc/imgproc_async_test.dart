@@ -1063,6 +1063,6 @@ void main() async {
 
     await drawDescription(image, intersectionArea.toInt(), " (invalid input: not convex)", cv.Point(70, 580));
 
-    await cv.imwriteAsync("test/images_out/intersections.png", image);
+    // await cv.imwriteAsync("test/images_out/intersections.png", image);
   });
 }
