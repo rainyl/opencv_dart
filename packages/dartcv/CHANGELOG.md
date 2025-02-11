@@ -5,6 +5,7 @@
 * add `copyData` parameter to `Mat.fromVec`
 * remove `Mat.fromPtr`, merge it to `Mat.fromMat`
 * add `Mat.atU8`, `Mat.setU8`, etc.
+* remove deprecated `Mat.copyToWithMask`, `List<Mat>.asVecMat()`
 
 ## 1.1.2
 
