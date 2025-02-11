@@ -1,4 +1,4 @@
-## 1.1.3-WIP
+## 1.1.3
 
 * add `VideoCapture.grabAsync`
 * add `Mat.fromBuffer` to allow creating `Mat` from self-managed buffer
