@@ -19,6 +19,7 @@ __pycache__
 *.lib
 .cache/
 small2.mp4
+small2.avi
 test/models/
 *.dylib
 CMakeUserPresets*

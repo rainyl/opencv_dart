@@ -28,10 +28,15 @@ class Mat extends CvStruct<cvg.Mat> {
 
   //SECTION - Constructors
 
+  /// create a [Mat] **reference** from another [Mat] if [copy] is false,
+  /// otherwise a copy will be created.
   factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
-    roi ??= Rect(0, 0, mat.cols, mat.rows);
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_13(mat.ref, roi!.ref, p, ffi.nullptr));
+    cvRun(
+      () => roi == null
+          ? ccore.cv_Mat_create_11(mat.ref, mat.rows, mat.cols, mat.type.value, 0, 0, p, ffi.nullptr)
+          : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
+    );
     final dst = Mat._(p, false);
     if (copy) return dst.clone();
     return dst;
@@ -120,7 +125,7 @@ class Mat extends CvStruct<cvg.Mat> {
     return Mat.fromList(rows, cols, type, flatData);
   }
 
-  /// This method is different from [Mat.fromPtr], will construct from pointer directly
+  /// construct from pointer directly
   factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, attach);
 
   factory Mat.empty() {
@@ -319,24 +324,6 @@ class Mat extends CvStruct<cvg.Mat> {
     return mat;
   }
 
-  /// this constructor is a wrapper of
-  /// `Mat (int rows, int cols, int type, void *data, size_t step=AUTO_STEP)`
-  ///
-  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
-  factory Mat.fromPtr(
-    cvg.Mat m,
-    int rows,
-    int cols,
-    int type,
-    int prows,
-    int pcols,
-  ) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_11(m, rows, cols, type, prows, pcols, p, ffi.nullptr));
-    final mat = Mat._(p);
-    return mat;
-  }
-
   //!SECTION Constructors
 
   //SECTION - Properties
@@ -386,14 +373,43 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   //!SECTION - Properties
-
   //SECTION - At Set
+
+  int atU8(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_u8_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_u8_2(ref, i0, i1) : ccore.cv_Mat_get_u8_3(ref, i0, i1, i2));
+
+  int atI8(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i8_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i8_2(ref, i0, i1) : ccore.cv_Mat_get_i8_3(ref, i0, i1, i2));
+
+  int atU16(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_u16_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_u16_2(ref, i0, i1) : ccore.cv_Mat_get_u16_3(ref, i0, i1, i2));
+
+  int atI16(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i16_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i16_2(ref, i0, i1) : ccore.cv_Mat_get_i16_3(ref, i0, i1, i2));
+
+  int atI32(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i32_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i32_2(ref, i0, i1) : ccore.cv_Mat_get_i32_3(ref, i0, i1, i2));
+
+  double atF32(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_f32_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_f32_2(ref, i0, i1) : ccore.cv_Mat_get_f32_3(ref, i0, i1, i2));
+
+  double atF64(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_f64_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_f64_2(ref, i0, i1) : ccore.cv_Mat_get_f64_3(ref, i0, i1, i2));
 
   /// wrapper of cv::Mat::at()
   ///
-  num atNum(int i0, int i1, [int? i2]) {
+  /// [mtype] : cached MatType to speedup pixel access
+  num atNum(int i0, int i1, {int? i2, MatType? mtype}) {
     // https://github.com/opencv/opencv/blob/71d3237a093b60a27601c20e9ee6c3e52154e8b1/modules/core/include/opencv2/core/mat.inl.hpp#L968
-    return switch (type.depth) {
+    mtype ??= type;
+    return switch (mtype.depth) {
       MatType.CV_8U => i2 == null ? (ptrAt<U8>(i0) + i1).value : ptrAt<U8>(i0, i1, i2).value,
       MatType.CV_8S => i2 == null ? (ptrAt<I8>(i0) + i1).value : ptrAt<I8>(i0, i1, i2).value,
       MatType.CV_16U => i2 == null ? (ptrAt<U16>(i0) + i1).value : ptrAt<U16>(i0, i1, i2).value,
@@ -409,11 +425,12 @@ class Mat extends CvStruct<cvg.Mat> {
   /// Get pixel value via [row], [col], returns a view of native data
   ///
   /// Note: No bound check under **release** mode
-  List<num> atPixel(int row, int col) {
+  List<num> atPixel(int row, int col, {MatType? mtype}) {
     assert(0 <= row && row < rows, "row must be less than $rows");
     assert(0 <= col && col < cols, "col must be less than $cols");
 
-    switch (type.depth) {
+    mtype ??= type;
+    switch (mtype.depth) {
       case MatType.CV_8U:
         return ptrAt<U8>(row, col).asTypedList(channels);
       case MatType.CV_8S:
@@ -509,7 +526,7 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a7a6d7e3696b8b19b9dfac3f209118c40
   T at<T>(int i0, int i1, [int? i2]) {
     if (T == int || T == double || T == num) {
-      return atNum(i0, i1, i2) as T;
+      return atNum(i0, i1, i2: i2) as T;
     } else if (isSubtype<T, CvVec>()) {
       return atVec<T>(i0, i1);
     } else {
@@ -520,6 +537,44 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION At
 
   //SECTION - Set
+  void setU8(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_u8_1(ref, i0, val)
+      : (i2 == null ? ccore.cv_Mat_set_u8_2(ref, i0, i1, val) : ccore.cv_Mat_set_u8_3(ref, i0, i1, i2, val));
+
+  void setI8(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i8_1(ref, i0, val)
+      : (i2 == null ? ccore.cv_Mat_set_i8_2(ref, i0, i1, val) : ccore.cv_Mat_set_i8_3(ref, i0, i1, i2, val));
+
+  void setU16(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_u16_1(ref, i0, val)
+      : (i2 == null
+          ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
+          : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
+
+  void setI16(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i16_1(ref, i0, val)
+      : (i2 == null
+          ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
+          : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
+
+  void setI32(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i32_1(ref, i0, val)
+      : (i2 == null
+          ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
+          : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
+
+  void setF32(int i0, double val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_f32_1(ref, i0, val)
+      : (i2 == null
+          ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
+          : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
+
+  void setF64(int i0, double val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_f64_1(ref, i0, val)
+      : (i2 == null
+          ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
+          : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
+
   void setVec<T extends CvVec>(int row, int col, T val) {
     switch (val) {
       // Vec2b, Vec3b, Vec4b
@@ -1172,11 +1227,6 @@ class Mat extends CvStruct<cvg.Mat> {
       ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
       : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
 
-  @Deprecated("use copyTo instead")
-  void copyToWithMask(Mat dst, Mat mask) {
-    cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
-  }
-
   /// Converts an array to another data type with optional scaling.
   ///
   /// The method converts source pixel values to the target data type.
@@ -1500,7 +1550,6 @@ class VecMatIterator extends VecIterator<Mat> {
 
 extension ListMatExtension on List<Mat> {
   VecMat get cvd => asVec();
-  @Deprecated("Use asVec() instead")
-  VecMat asVecMat() => asVec();
+
   VecMat asVec() => VecMat.fromList(this);
 }

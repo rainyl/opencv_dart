@@ -55,6 +55,9 @@ void main() async {
     expect(mat1.size, [100, 200]);
     expect(mat1.at<cv.Vec3b>(0, 0), cv.Vec3b(255, 255, 255));
 
+    mat1.setVec(0, 0, cv.Vec3b(2, 4, 1));
+    expect(src.atVec<cv.Vec3b>(0, 0), cv.Vec3b(2, 4, 1));
+
     final diff = mat1.subtract(src);
     expect(diff.sum(), cv.Scalar.zeros);
 
@@ -620,9 +623,15 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final ptr0 = mat.ptrAt<cv.U8>(0);
     expect(ptr0.address, greaterThan(0));
     expect(ptr0[0], 1);
+
     ptr0[0] = 21;
     expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
+
+    mat.setU8(0, 1);
+    expect(mat.atU8(0), 1);
+    mat.setU8(0, 21, i1: 0);
+    expect(mat.atU8(0, i1: 0), 21);
 
     final ptr1 = mat.ptrAt<cv.U8>(0, 0);
     expect(ptr1.address, greaterThan(0));
@@ -638,6 +647,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     ptr0[0] = 21;
     expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
+
+    mat.setI8(0, 1);
+    expect(mat.atI8(0), 1);
+    mat.setI8(0, 21, i1: 0);
+    expect(mat.atI8(0, i1: 0), 21);
 
     final ptr1 = mat.ptrAt<cv.I8>(0, 0);
     expect(ptr1.address, greaterThan(0));
@@ -657,6 +671,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
 
+    mat.setU16(0, 1);
+    expect(mat.atU16(0), 1);
+    mat.setU16(0, 21, i1: 0);
+    expect(mat.atU16(0, i1: 0), 21);
+
     final ptr1 = mat.ptrAt<cv.U16>(0, 0);
     expect(ptr1.address, greaterThan(0));
     expect(ptr1[0], 21);
@@ -671,6 +690,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     ptr0[0] = 21;
     expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
+
+    mat.setI16(0, 1);
+    expect(mat.atI16(0), 1);
+    mat.setI16(0, 21, i1: 0);
+    expect(mat.atI16(0, i1: 0), 21);
 
     final ptr1 = mat.ptrAt<cv.I16>(0, 0);
     expect(ptr1.address, greaterThan(0));
@@ -687,6 +711,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(mat.at<int>(0, 0), 21);
     expect(ptr0[0], 21);
 
+    mat.setI32(0, 1);
+    expect(mat.atI32(0), 1);
+    mat.setI32(0, 21, i1: 0);
+    expect(mat.atI32(0, i1: 0), 21);
+
     final ptr1 = mat.ptrAt<cv.I32>(0, 0);
     expect(ptr1.address, greaterThan(0));
     expect(ptr1[0], 21);
@@ -701,6 +730,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     ptr0[0] = 21.0;
     expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
     expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    mat.setF32(0, 1);
+    expect(mat.atF32(0), closeTo(1.0, 1e-6));
+    mat.setF32(0, 21, i1: 0);
+    expect(mat.atF32(0, i1: 0), closeTo(21.0, 1e-6));
 
     final ptr1 = mat.ptrAt<cv.F32>(0, 0);
     expect(ptr1.address, greaterThan(0));
@@ -718,6 +752,11 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     ptr0[0] = 21.0;
     expect(mat.at<double>(0, 0), closeTo(21.0, 1e-6));
     expect(ptr0[0], closeTo(21.0, 1e-6));
+
+    mat.setF64(0, 1);
+    expect(mat.atF64(0), closeTo(1.0, 1e-6));
+    mat.setF64(0, 21, i1: 0);
+    expect(mat.atF64(0, i1: 0), closeTo(21, 1e-6));
 
     final ptr1 = mat.ptrAt<cv.F64>(0, 0);
     expect(ptr1.address, greaterThan(0));
@@ -955,6 +994,22 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
       }
       sw.stop();
       print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).at<int>: ${sw.elapsedMilliseconds}ms');
+    }
+
+    {
+      sw.reset();
+      sw.start();
+      final mtype = mat.type;
+      for (var row = 0; row < mat.rows; row++) {
+        for (var col = 0; col < mat.cols; col++) {
+          mat.atNum(row, col, mtype: mtype);
+          // mat.atI32(row, i1: col);
+          // mat.atVec<cv.Vec3i>(row, col);
+          // mat.atPixel(row, col, mtype: mtype);
+        }
+      }
+      sw.stop();
+      print('Mat(${mat.rows}, ${mat.cols}, ${mat.channels}).atNum: ${sw.elapsedMilliseconds}ms');
     }
 
     {
