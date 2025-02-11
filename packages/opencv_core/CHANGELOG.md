@@ -1,3 +1,12 @@
+## 1.4.1
+
+* add `VideoCapture.grabAsync`
+* add `Mat.fromBuffer` to allow creating `Mat` from self-managed buffer
+* add `copyData` parameter to `Mat.fromVec`
+* remove `Mat.fromPtr`, merge it to `Mat.fromMat`
+* add `Mat.atU8`, `Mat.setU8`, etc.
+* remove deprecated `Mat.copyToWithMask`, `List<Mat>.asVecMat()`
+
 ## 1.4.0
 
 * update to OpenCV 4.11.0
