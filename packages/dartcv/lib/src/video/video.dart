@@ -22,7 +22,7 @@ import '../native_lib.dart' show cvideo;
 
 class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -38,14 +38,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
     bool detectShadows = true,
   }) {
     final p = calloc<cvg.BackgroundSubtractorMOG2>();
-    cvRun(
-      () => cvideo.cv_BackgroundSubtractorMOG2_create_1(
-        history,
-        varThreshold,
-        detectShadows,
-        p,
-      ),
-    );
+    cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
     return BackgroundSubtractorMOG2(p);
   }
 
@@ -57,8 +50,9 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
 
   @override
   cvg.BackgroundSubtractorMOG2 get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(cvideo.addresses.cv_BackgroundSubtractorMOG2_close);
+  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(
+    cvideo.addresses.cv_BackgroundSubtractorMOG2_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -73,8 +67,9 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
     }
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(cvideo.addresses.cv_BackgroundSubtractorKNN_close);
+  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(
+    cvideo.addresses.cv_BackgroundSubtractorKNN_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -92,14 +87,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
     bool detectShadows = true,
   }) {
     final p = calloc<cvg.BackgroundSubtractorKNN>();
-    cvRun(
-      () => cvideo.cv_BackgroundSubtractorKNN_create_1(
-        history,
-        varThreshold,
-        detectShadows,
-        p,
-      ),
-    );
+    cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create_1(history, varThreshold, detectShadows, p));
     return BackgroundSubtractorKNN(p);
   }
 
@@ -126,14 +114,7 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   bool detectShadows = true,
 }) {
   final p = calloc<cvg.BackgroundSubtractorMOG2>();
-  cvRun(
-    () => cvideo.cv_BackgroundSubtractorMOG2_create_1(
-      history,
-      varThreshold,
-      detectShadows,
-      p,
-    ),
-  );
+  cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
   return BackgroundSubtractorMOG2(p);
 }
 
@@ -338,12 +319,7 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     return dst;
   }
 
-  void init(
-    int dynamParams,
-    int measureParams, {
-    int controlParams = 0,
-    int type = MatType.CV_32F,
-  }) {
+  void init(int dynamParams, int measureParams, {int controlParams = 0, int type = MatType.CV_32F}) {
     cvRun(
       () => cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, ffi.nullptr),
     );

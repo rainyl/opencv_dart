@@ -260,12 +260,11 @@ extension HOGDescriptorAsync on HOGDescriptor {
 }
 
 Future<VecRect> groupRectanglesAsync(VecRect rects, int groupThreshold, double eps) async {
-  return cvRunAsync0(
-    (callback) => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, callback),
-    (c) {
-      return c.complete(rects);
-    },
-  );
+  return cvRunAsync0((callback) => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, callback), (
+    c,
+  ) {
+    return c.complete(rects);
+  });
 }
 
 extension QRCodeDetectorAsync on QRCodeDetector {
@@ -278,7 +277,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_decodeCurved(
-          ref, img.ref, points.ref, straightQRcode!.ptr, v, callback),
+        ref,
+        img.ref,
+        points.ref,
+        straightQRcode!.ptr,
+        v,
+        callback,
+      ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
@@ -297,7 +302,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(
-          ref, img.ref, points!.ptr, straightQRcode!.ptr, v, callback),
+        ref,
+        img.ref,
+        points!.ptr,
+        straightQRcode!.ptr,
+        v,
+        callback,
+      ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
@@ -316,7 +327,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     final v = calloc<ffi.Pointer<ffi.Char>>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_detectAndDecode(
-          ref, img.ref, points.ptr, straightCode!.ptr, v, callback),
+        ref,
+        img.ref,
+        points.ptr,
+        straightCode!.ptr,
+        v,
+        callback,
+      ),
       (c) {
         final s = v.value.cast<Utf8>().toDartString();
         calloc.free(v);
@@ -386,12 +403,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
         callback,
       ),
       (c) {
-        final ret = (
-          rval.value,
-          info.asStringList(),
-          points,
-          codes,
-        );
+        final ret = (rval.value, info.asStringList(), points, codes);
         calloc.free(rval);
         info.dispose();
         return c.complete(ret);
@@ -403,12 +415,11 @@ extension QRCodeDetectorAsync on QRCodeDetector {
 extension FaceDetectorYNAsync on FaceDetectorYN {
   Future<Mat> detectAsync(Mat image) async {
     final ret = Mat.empty();
-    return cvRunAsync0(
-      (callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, ret.ptr, callback), (
+      c,
+    ) {
+      return c.complete(ret);
+    });
   }
 }
 

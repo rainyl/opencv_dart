@@ -26,10 +26,7 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory CascadeClassifier.fromPointer(
-    cvg.CascadeClassifierPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory CascadeClassifier.fromPointer(cvg.CascadeClassifierPtr ptr, [bool attach = true]) =>
       CascadeClassifier._(ptr, attach);
 
   factory CascadeClassifier.empty() {
@@ -167,8 +164,9 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
 
   @override
   cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.CascadeClassifierPtr>(cobjdetect.addresses.cv_CascadeClassifier_close);
+  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(
+    cobjdetect.addresses.cv_CascadeClassifier_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -182,10 +180,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory HOGDescriptor.fromPointer(
-    cvg.HOGDescriptorPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory HOGDescriptor.fromPointer(cvg.HOGDescriptorPtr ptr, [bool attach = true]) =>
       HOGDescriptor._(ptr, attach);
 
   factory HOGDescriptor.empty() {
@@ -430,10 +425,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory QRCodeDetector.fromPointer(
-    cvg.QRCodeDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory QRCodeDetector.fromPointer(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) =>
       QRCodeDetector._(ptr, attach);
 
   factory QRCodeDetector.empty() {
@@ -508,8 +500,16 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     straightCode ??= Mat.empty();
     final points = VecPoint();
     final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cobjdetect.cv_QRCodeDetector_detectAndDecode(
-        ref, img.ref, points.ptr, straightCode!.ptr, v, ffi.nullptr));
+    cvRun(
+      () => cobjdetect.cv_QRCodeDetector_detectAndDecode(
+        ref,
+        img.ref,
+        points.ptr,
+        straightCode!.ptr,
+        v,
+        ffi.nullptr,
+      ),
+    );
     final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
     calloc.free(v);
     return (s, points, straightCode);
@@ -621,10 +621,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FaceDetectorYN.fromPointer(
-    cvg.FaceDetectorYNPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory FaceDetectorYN.fromPointer(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) =>
       FaceDetectorYN._(ptr, attach);
 
   /// Creates an instance of face detector class with given parameters.
@@ -837,12 +834,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   /// [targetId]	the id of target device
   ///
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
-  factory FaceRecognizerSF.fromFile(
-    String model,
-    String config, {
-    int backendId = 0,
-    int targetId = 0,
-  }) {
+  factory FaceRecognizerSF.fromFile(String model, String config, {int backendId = 0, int targetId = 0}) {
     final p = calloc<cvg.FaceRecognizerSF>();
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
@@ -905,8 +897,9 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   @override
   cvg.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer =
-      OcvFinalizer<cvg.FaceRecognizerSFPtr>(cobjdetect.addresses.cv_FaceRecognizerSF_close);
+  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(
+    cobjdetect.addresses.cv_FaceRecognizerSF_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

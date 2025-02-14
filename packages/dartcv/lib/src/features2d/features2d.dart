@@ -213,14 +213,7 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
     FastFeatureDetectorType type = FastFeatureDetectorType.TYPE_9_16,
   }) {
     final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(
-      () => cfeatures2d.cv_FastFeatureDetector_create_1(
-        threshold,
-        nonmaxSuppression,
-        type.value,
-        p,
-      ),
-    );
+    cvRun(() => cfeatures2d.cv_FastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p));
     return FastFeatureDetector._(p);
   }
 
@@ -324,9 +317,7 @@ class KAZE extends CvStruct<cvg.KAZE> {
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
     final ret = VecKeyPoint();
-    cvRun(
-      () => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
-    );
+    cvRun(() => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr));
     return (ret, desc);
   }
 
@@ -490,10 +481,8 @@ class ORB extends CvStruct<cvg.ORB> {
 }
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(
-    ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [
-    bool attach = true,
-  ]) : super.fromPointer(ptr) {
+  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -555,31 +544,30 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   }
 
   factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
-        blobColor: r.blobColor,
-        filterByArea: r.filterByArea,
-        filterByCircularity: r.filterByCircularity,
-        filterByColor: r.filterByColor,
-        filterByConvexity: r.filterByConvexity,
-        filterByInertia: r.filterByInertia,
-        maxArea: r.maxArea,
-        maxCircularity: r.maxCircularity,
-        maxConvexity: r.maxConvexity,
-        maxInertiaRatio: r.maxInertiaRatio,
-        maxThreshold: r.maxThreshold,
-        minArea: r.minArea,
-        minCircularity: r.minCircularity,
-        minConvexity: r.minConvexity,
-        minDistBetweenBlobs: r.minDistBetweenBlobs,
-        minInertiaRatio: r.minInertiaRatio,
-        minRepeatability: r.minRepeatability,
-        minThreshold: r.minThreshold,
-        thresholdStep: r.thresholdStep,
-      );
+    blobColor: r.blobColor,
+    filterByArea: r.filterByArea,
+    filterByCircularity: r.filterByCircularity,
+    filterByColor: r.filterByColor,
+    filterByConvexity: r.filterByConvexity,
+    filterByInertia: r.filterByInertia,
+    maxArea: r.maxArea,
+    maxCircularity: r.maxCircularity,
+    maxConvexity: r.maxConvexity,
+    maxInertiaRatio: r.maxInertiaRatio,
+    maxThreshold: r.maxThreshold,
+    minArea: r.minArea,
+    minCircularity: r.minCircularity,
+    minConvexity: r.minConvexity,
+    minDistBetweenBlobs: r.minDistBetweenBlobs,
+    minInertiaRatio: r.minInertiaRatio,
+    minRepeatability: r.minRepeatability,
+    minThreshold: r.minThreshold,
+    thresholdStep: r.thresholdStep,
+  );
   factory SimpleBlobDetectorParams.fromPointer(
     ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
     bool attach = true,
-  ]) =>
-      SimpleBlobDetectorParams._(p, attach);
+  ]) => SimpleBlobDetectorParams._(p, attach);
 
   @override
   cvg.SimpleBlobDetectorParams get ref => ptr.ref;
@@ -650,21 +638,21 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
   @override
   List<num> get props => [
-        maxArea,
-        minArea,
-        minConvexity,
-        maxConvexity,
-        minInertiaRatio,
-        maxInertiaRatio,
-        minThreshold,
-        maxThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-        minRepeatability,
-        minThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-      ];
+    maxArea,
+    minArea,
+    minConvexity,
+    maxConvexity,
+    minInertiaRatio,
+    maxInertiaRatio,
+    minThreshold,
+    maxThreshold,
+    thresholdStep,
+    minDistBetweenBlobs,
+    minRepeatability,
+    minThreshold,
+    thresholdStep,
+    minDistBetweenBlobs,
+  ];
 }
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
@@ -871,9 +859,7 @@ class SIFT extends CvStruct<cvg.SIFT> {
   (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
     final desc = Mat.empty();
     final ret = VecKeyPoint();
-    cvRun(
-      () => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
-    );
+    cvRun(() => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr));
     return (ret, desc);
   }
 
@@ -888,22 +874,9 @@ class SIFT extends CvStruct<cvg.SIFT> {
   cvg.SIFT get ref => ptr.ref;
 }
 
-void drawKeyPoints(
-  Mat src,
-  VecKeyPoint keypoints,
-  Mat dst,
-  Scalar color,
-  DrawMatchesFlag flag,
-) {
+void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color, DrawMatchesFlag flag) {
   cvRun(
-    () => cfeatures2d.cv_drawKeyPoints(
-      src.ref,
-      keypoints.ref,
-      dst.ref,
-      color.ref,
-      flag.value,
-      ffi.nullptr,
-    ),
+    () => cfeatures2d.cv_drawKeyPoints(src.ref, keypoints.ref, dst.ref, color.ref, flag.value, ffi.nullptr),
   );
 }
 

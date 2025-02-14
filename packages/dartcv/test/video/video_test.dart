@@ -10,11 +10,7 @@ void main() async {
     final dst = bgSubtractor.apply(img);
     expect(dst.isEmpty, false);
 
-    final bgSub1 = cv.BackgroundSubtractorMOG2.create(
-      history: 250,
-      varThreshold: 8,
-      detectShadows: false,
-    );
+    final bgSub1 = cv.BackgroundSubtractorMOG2.create(history: 250, varThreshold: 8, detectShadows: false);
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
 
@@ -28,11 +24,7 @@ void main() async {
     final dst = bgSubtractor.apply(img);
     expect(dst.isEmpty, false);
 
-    final bgSub1 = cv.BackgroundSubtractorKNN.create(
-      history: 250,
-      varThreshold: 8,
-      detectShadows: false,
-    );
+    final bgSub1 = cv.BackgroundSubtractorKNN.create(history: 250, varThreshold: 8, detectShadows: false);
     final dst1 = bgSub1.apply(img);
     expect(dst1.isEmpty, false);
 
@@ -82,20 +74,9 @@ void main() async {
     final mapTranslation = cv.Mat.eye(2, 3, cv.MatType.CV_32FC1);
     const criteria = (cv.TERM_COUNT + cv.TERM_EPS, 50, 0.01);
     final inputMask = cv.Mat.empty();
-    cv.findTransformECC(
-      wrappedImage,
-      testImg,
-      mapTranslation,
-      cv.MOTION_TRANSLATION,
-      criteria,
-      inputMask,
-      5,
-    );
+    cv.findTransformECC(wrappedImage, testImg, mapTranslation, cv.MOTION_TRANSLATION, criteria, inputMask, 5);
 
-    expect(
-      (mapTranslation.rows, mapTranslation.cols),
-      (translationGround.rows, translationGround.cols),
-    );
+    expect((mapTranslation.rows, mapTranslation.cols), (translationGround.rows, translationGround.cols));
   });
 
   test('cv.TrackerMIL', () {

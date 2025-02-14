@@ -33,9 +33,10 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
     final p = calloc<cvg.Mat>();
     cvRun(
-      () => roi == null
-          ? ccore.cv_Mat_create_11(mat.ref, mat.rows, mat.cols, mat.type.value, 0, 0, p, ffi.nullptr)
-          : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
+      () =>
+          roi == null
+              ? ccore.cv_Mat_create_11(mat.ref, mat.rows, mat.cols, mat.type.value, 0, 0, p, ffi.nullptr)
+              : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
     );
     final dst = Mat._(p, false);
     if (copy) return dst.clone();
@@ -198,9 +199,10 @@ class Mat extends CvStruct<cvg.Mat> {
       case VecF64() when rows != null && cols != null && type != null:
       case VecF16() when rows != null && cols != null && type != null:
         cvRun(
-          () => copyData
-              ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
-              : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
+          () =>
+              copyData
+                  ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
+                  : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
         );
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
@@ -375,33 +377,40 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION - Properties
   //SECTION - At Set
 
-  int atU8(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_u8_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_u8_2(ref, i0, i1) : ccore.cv_Mat_get_u8_3(ref, i0, i1, i2));
+  int atU8(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_u8_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_u8_2(ref, i0, i1) : ccore.cv_Mat_get_u8_3(ref, i0, i1, i2));
 
-  int atI8(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_i8_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_i8_2(ref, i0, i1) : ccore.cv_Mat_get_i8_3(ref, i0, i1, i2));
+  int atI8(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_i8_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_i8_2(ref, i0, i1) : ccore.cv_Mat_get_i8_3(ref, i0, i1, i2));
 
-  int atU16(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_u16_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_u16_2(ref, i0, i1) : ccore.cv_Mat_get_u16_3(ref, i0, i1, i2));
+  int atU16(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_u16_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_u16_2(ref, i0, i1) : ccore.cv_Mat_get_u16_3(ref, i0, i1, i2));
 
-  int atI16(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_i16_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_i16_2(ref, i0, i1) : ccore.cv_Mat_get_i16_3(ref, i0, i1, i2));
+  int atI16(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_i16_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_i16_2(ref, i0, i1) : ccore.cv_Mat_get_i16_3(ref, i0, i1, i2));
 
-  int atI32(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_i32_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_i32_2(ref, i0, i1) : ccore.cv_Mat_get_i32_3(ref, i0, i1, i2));
+  int atI32(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_i32_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_i32_2(ref, i0, i1) : ccore.cv_Mat_get_i32_3(ref, i0, i1, i2));
 
-  double atF32(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_f32_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_f32_2(ref, i0, i1) : ccore.cv_Mat_get_f32_3(ref, i0, i1, i2));
+  double atF32(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_f32_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_f32_2(ref, i0, i1) : ccore.cv_Mat_get_f32_3(ref, i0, i1, i2));
 
-  double atF64(int i0, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_get_f64_1(ref, i0)
-      : (i2 == null ? ccore.cv_Mat_get_f64_2(ref, i0, i1) : ccore.cv_Mat_get_f64_3(ref, i0, i1, i2));
+  double atF64(int i0, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_get_f64_1(ref, i0)
+          : (i2 == null ? ccore.cv_Mat_get_f64_2(ref, i0, i1) : ccore.cv_Mat_get_f64_3(ref, i0, i1, i2));
 
   /// wrapper of cv::Mat::at()
   ///
@@ -418,7 +427,7 @@ class Mat extends CvStruct<cvg.Mat> {
       MatType.CV_32F => i2 == null ? (ptrAt<F32>(i0) + i1).value : ptrAt<F32>(i0, i1, i2).value,
       MatType.CV_64F => i2 == null ? (ptrAt<F64>(i0) + i1).value : ptrAt<F64>(i0, i1, i2).value,
       MatType.CV_16F => (i2 == null ? ptrAt<U16>(i0) + i1 : ptrAt<U16>(i0, i1, i2)).asFp16().value,
-      _ => throw UnsupportedError("Unsupported type: ${type.asString()}")
+      _ => throw UnsupportedError("Unsupported type: ${type.asString()}"),
     };
   }
 
@@ -537,43 +546,54 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION At
 
   //SECTION - Set
-  void setU8(int i0, int val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_u8_1(ref, i0, val)
-      : (i2 == null ? ccore.cv_Mat_set_u8_2(ref, i0, i1, val) : ccore.cv_Mat_set_u8_3(ref, i0, i1, i2, val));
+  void setU8(int i0, int val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_u8_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_u8_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_u8_3(ref, i0, i1, i2, val));
 
-  void setI8(int i0, int val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_i8_1(ref, i0, val)
-      : (i2 == null ? ccore.cv_Mat_set_i8_2(ref, i0, i1, val) : ccore.cv_Mat_set_i8_3(ref, i0, i1, i2, val));
+  void setI8(int i0, int val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_i8_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_i8_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_i8_3(ref, i0, i1, i2, val));
 
-  void setU16(int i0, int val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_u16_1(ref, i0, val)
-      : (i2 == null
-          ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
+  void setU16(int i0, int val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_u16_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
 
-  void setI16(int i0, int val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_i16_1(ref, i0, val)
-      : (i2 == null
-          ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
+  void setI16(int i0, int val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_i16_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
 
-  void setI32(int i0, int val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_i32_1(ref, i0, val)
-      : (i2 == null
-          ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
+  void setI32(int i0, int val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_i32_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
 
-  void setF32(int i0, double val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_f32_1(ref, i0, val)
-      : (i2 == null
-          ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
+  void setF32(int i0, double val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_f32_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
 
-  void setF64(int i0, double val, {int? i1, int? i2}) => i1 == null
-      ? ccore.cv_Mat_set_f64_1(ref, i0, val)
-      : (i2 == null
-          ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
+  void setF64(int i0, double val, {int? i1, int? i2}) =>
+      i1 == null
+          ? ccore.cv_Mat_set_f64_1(ref, i0, val)
+          : (i2 == null
+              ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
+              : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
 
   void setVec<T extends CvVec>(int row, int col, T val) {
     switch (val) {
@@ -797,11 +817,7 @@ class Mat extends CvStruct<cvg.Mat> {
   //   ccore.Mat_AddUChar(ref, v);
   // }
 
-  Mat _opInt(
-    int val,
-    ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, int val) func, {
-    bool inplace = false,
-  }) {
+  Mat _opInt(int val, ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, int val) func, {bool inplace = false}) {
     if (inplace) {
       cvRun(() => func(ref, val));
       return this;
@@ -827,11 +843,7 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
-  Mat _opMat(
-    Mat other,
-    ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, cvg.Mat) func, {
-    bool inplace = false,
-  }) {
+  Mat _opMat(Mat other, ffi.Pointer<cvg.CvStatus> Function(cvg.Mat, cvg.Mat) func, {bool inplace = false}) {
     assert(other.type == type, "${type.asString()} != ${other.type.asString()}");
     if (inplace) {
       cvRun(() => func(ref, other.ref));
@@ -850,19 +862,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => addMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => addU8(val as int, inplace: inplace),
-          MatType.CV_8S => addI8(val as int, inplace: inplace),
-          MatType.CV_16U => addU16(val as int, inplace: inplace),
-          MatType.CV_16S => addI16(val as int, inplace: inplace),
-          MatType.CV_32S => addI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("add int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => addU8(val as int, inplace: inplace),
+        MatType.CV_8S => addI8(val as int, inplace: inplace),
+        MatType.CV_16U => addU16(val as int, inplace: inplace),
+        MatType.CV_16S => addI16(val as int, inplace: inplace),
+        MatType.CV_32S => addI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("add int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => addF32(val as double, inplace: inplace),
-          MatType.CV_64F => addF64(val as double, inplace: inplace),
-          // MatType.CV_16F => addF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("add double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => addF32(val as double, inplace: inplace),
+        MatType.CV_64F => addF64(val as double, inplace: inplace),
+        // MatType.CV_16F => addF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("add double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -916,19 +928,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => subtractMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => subtractU8(val as int, inplace: inplace),
-          MatType.CV_8S => subtractI8(val as int, inplace: inplace),
-          MatType.CV_16U => subtractU16(val as int, inplace: inplace),
-          MatType.CV_16S => subtractI16(val as int, inplace: inplace),
-          MatType.CV_32S => subtractI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("subtract int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => subtractU8(val as int, inplace: inplace),
+        MatType.CV_8S => subtractI8(val as int, inplace: inplace),
+        MatType.CV_16U => subtractU16(val as int, inplace: inplace),
+        MatType.CV_16S => subtractI16(val as int, inplace: inplace),
+        MatType.CV_32S => subtractI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("subtract int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => subtractF32(val as double, inplace: inplace),
-          MatType.CV_64F => subtractF64(val as double, inplace: inplace),
-          // MatType.CV_16F => subtractF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("subtract double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => subtractF32(val as double, inplace: inplace),
+        MatType.CV_64F => subtractF64(val as double, inplace: inplace),
+        // MatType.CV_16F => subtractF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("subtract double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -983,19 +995,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => multiplyMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
-          MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
-          MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
-          MatType.CV_16S => multiplyI16(val as int, inplace: inplace),
-          MatType.CV_32S => multiplyI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("multiply int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
+        MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
+        MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
+        MatType.CV_16S => multiplyI16(val as int, inplace: inplace),
+        MatType.CV_32S => multiplyI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("multiply int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => multiplyF32(val as double, inplace: inplace),
-          MatType.CV_64F => multiplyF64(val as double, inplace: inplace),
-          // MatType.CV_16F => multiplyF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("multiply double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => multiplyF32(val as double, inplace: inplace),
+        MatType.CV_64F => multiplyF64(val as double, inplace: inplace),
+        // MatType.CV_16F => multiplyF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("multiply double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -1051,19 +1063,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => divideMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => divideU8(val as int, inplace: inplace),
-          MatType.CV_8S => divideI8(val as int, inplace: inplace),
-          MatType.CV_16U => divideU16(val as int, inplace: inplace),
-          MatType.CV_16S => divideI16(val as int, inplace: inplace),
-          MatType.CV_32S => divideI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("divide int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => divideU8(val as int, inplace: inplace),
+        MatType.CV_8S => divideI8(val as int, inplace: inplace),
+        MatType.CV_16U => divideU16(val as int, inplace: inplace),
+        MatType.CV_16S => divideI16(val as int, inplace: inplace),
+        MatType.CV_32S => divideI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("divide int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => divideF32(val as double, inplace: inplace),
-          MatType.CV_64F => divideF64(val as double, inplace: inplace),
-          // MatType.CV_16F => divideF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("divide double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => divideF32(val as double, inplace: inplace),
+        MatType.CV_64F => divideF64(val as double, inplace: inplace),
+        // MatType.CV_16F => divideF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("divide double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -1223,9 +1235,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// zeros before copying the data.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a33fd5d125b4c302b0c9aa86980791a77
-  void copyTo(Mat dst, {Mat? mask}) => mask == null
-      ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
-      : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
+  void copyTo(Mat dst, {Mat? mask}) =>
+      mask == null
+          ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
+          : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
 
   /// Converts an array to another data type with optional scaling.
   ///
@@ -1437,7 +1450,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   @override
-  String toString() => "Mat(addr=0x${ptr.address.toRadixString(16)}, "
+  String toString() =>
+      "Mat(addr=0x${ptr.address.toRadixString(16)}, "
       "type=${type.asString()}, rows=$rows, cols=$cols, channels=$channels)";
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.cv_Mat_close);

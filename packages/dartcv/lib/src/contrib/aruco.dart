@@ -23,10 +23,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory ArucoDetector.fromPointer(
-    cvg.ArucoDetectorPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory ArucoDetector.fromPointer(cvg.ArucoDetectorPtr ptr, [bool attach = true]) =>
       ArucoDetector._(ptr, attach);
 
   factory ArucoDetector.empty() {
@@ -37,20 +34,15 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
 
   factory ArucoDetector.create(ArucoDictionary dictionary, ArucoDetectorParameters parameters) {
     final p = calloc<cvg.ArucoDetector>();
-    cvRun(
-      () => ccontrib.cv_aruco_arucoDetector_create_1(
-        dictionary.ref,
-        parameters.ref,
-        p,
-      ),
-    );
+    cvRun(() => ccontrib.cv_aruco_arucoDetector_create_1(dictionary.ref, parameters.ref, p));
     return ArucoDetector.fromPointer(p);
   }
 
   @override
   cvg.ArucoDetector get ref => ptr.ref;
-  static final finalizer =
-      OcvFinalizer<cvg.ArucoDetectorPtr>(ccontrib.addresses.cv_aruco_arucoDetector_close);
+  static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(
+    ccontrib.addresses.cv_aruco_arucoDetector_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -79,12 +71,7 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
   }
 }
 
-void arucoDrawDetectedMarkers(
-  Mat img,
-  VecVecPoint2f markerCorners,
-  VecI32 markerIds,
-  Scalar borderColor,
-) {
+void arucoDrawDetectedMarkers(Mat img, VecVecPoint2f markerCorners, VecI32 markerIds, Scalar borderColor) {
   cvRun(
     () => ccontrib.cv_aruco_drawDetectedMarkers(
       img.ref,
@@ -118,18 +105,12 @@ Mat arucoGenerateImageMarker(
 }
 
 class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParams> {
-  ArucoDetectorParameters._(
-    cvg.ArucoDetectorParamsPtr ptr, [
-    bool attach = true,
-  ]) : super.fromPointer(ptr) {
+  ArucoDetectorParameters._(cvg.ArucoDetectorParamsPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory ArucoDetectorParameters.fromPointer(
-    cvg.ArucoDetectorParamsPtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory ArucoDetectorParameters.fromPointer(cvg.ArucoDetectorParamsPtr ptr, [bool attach = true]) =>
       ArucoDetectorParameters._(ptr, attach);
 
   factory ArucoDetectorParameters.empty() {

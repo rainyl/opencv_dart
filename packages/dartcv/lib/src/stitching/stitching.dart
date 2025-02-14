@@ -102,8 +102,8 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
     images == null
         ? cvRun(() => cstitching.cv_Stitcher_composePanorama(ref, rpano.ref, rptr, ffi.nullptr))
         : cvRun(
-            () => cstitching.cv_Stitcher_composePanorama_1(ref, images.ref, rpano.ref, rptr, ffi.nullptr),
-          );
+          () => cstitching.cv_Stitcher_composePanorama_1(ref, images.ref, rpano.ref, rptr, ffi.nullptr),
+        );
     final rval = (StitcherStatus.fromInt(rptr.value), rpano);
     calloc.free(rptr);
     return rval;
@@ -118,8 +118,8 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
     masks == null
         ? cvRun(() => cstitching.cv_Stitcher_stitch(ref, images.ref, rpano.ref, rptr, ffi.nullptr))
         : cvRun(
-            () => cstitching.cv_Stitcher_stitch_1(ref, images.ref, masks.ref, rpano.ref, rptr, ffi.nullptr),
-          );
+          () => cstitching.cv_Stitcher_stitch_1(ref, images.ref, masks.ref, rpano.ref, rptr, ffi.nullptr),
+        );
     final rval = (StitcherStatus.fromInt(rptr.value), rpano);
     calloc.free(rptr);
     return rval;

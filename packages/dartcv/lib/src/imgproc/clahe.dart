@@ -35,9 +35,10 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html
   factory CLAHE.create([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
     final p = calloc<cvg.CLAHE>();
-    final size = calloc<cvg.CvSize>()
-      ..ref.width = tileGridSize.$1
-      ..ref.height = tileGridSize.$2;
+    final size =
+        calloc<cvg.CvSize>()
+          ..ref.width = tileGridSize.$1
+          ..ref.height = tileGridSize.$2;
     cimgproc.cv_CLAHE_create_1(clipLimit, size.ref, p);
     calloc.free(size);
     return CLAHE._(p);

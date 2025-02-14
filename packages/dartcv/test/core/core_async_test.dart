@@ -168,11 +168,7 @@ void main() async {
   test('cv.PCACompute async', () async {
     final src = cv.Mat.randn(10, 10, cv.MatType.CV_32FC1);
     final mean = cv.Mat.empty();
-    final (_, eigenvectors, eigenvalues) = await cv.PCAComputeAsync(
-      src,
-      mean,
-      maxComponents: 2,
-    );
+    final (_, eigenvectors, eigenvalues) = await cv.PCAComputeAsync(src, mean, maxComponents: 2);
     expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
     expect(eigenvectors.rows, equals(2));
   });
@@ -308,8 +304,14 @@ void main() async {
     final src = <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(1, 1)].cvd;
     final bestLabels = cv.Mat.empty();
     const criteria = (cv.TERM_COUNT, 10, 1.0);
-    final (_, _, centers) =
-        await cv.kmeansByPointsAsync(src, 2, bestLabels, criteria, 2, cv.KMEANS_RANDOM_CENTERS);
+    final (_, _, centers) = await cv.kmeansByPointsAsync(
+      src,
+      2,
+      bestLabels,
+      criteria,
+      2,
+      cv.KMEANS_RANDOM_CENTERS,
+    );
     expect(centers.isEmpty, equals(false));
   });
 
@@ -355,9 +357,10 @@ void main() async {
           final lutType = cv.MatType.makeType(lutDepth, channel);
           // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
           final lutData = switch (lutDepth) {
-            cv.MatType.CV_32F ||
-            cv.MatType.CV_64F =>
-              List.generate(lutSize * lutType.channels, (i) => (lutSize - (i ~/ channel) - 1).toDouble()),
+            cv.MatType.CV_32F || cv.MatType.CV_64F => List.generate(
+              lutSize * lutType.channels,
+              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+            ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
@@ -407,11 +410,12 @@ void main() async {
   });
 
   test('cv.merge async', () async {
-    final src = [
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-    ].cvd;
+    final src =
+        [
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+        ].cvd;
     final dst = await cv.mergeAsync(src);
     expect(dst.isEmpty, equals(false));
     expect(dst.channels, equals(3));
@@ -503,11 +507,7 @@ void main() async {
   test('cv.solve async', () async {
     final a = cv.Mat.zeros(3, 3, cv.MatType.CV_32FC1);
     final b = cv.Mat.zeros(3, 1, cv.MatType.CV_32FC1);
-    final testPoints = [
-      (1.0, 1.0, 1.0, 0.0),
-      (0.0, 0.0, 1.0, 2.0),
-      (9.0, 3.0, 1.0, 2.0),
-    ];
+    final testPoints = [(1.0, 1.0, 1.0, 0.0), (0.0, 0.0, 1.0, 2.0), (9.0, 3.0, 1.0, 2.0)];
     for (var i = 0; i < testPoints.length; i++) {
       a.set(i, 0, testPoints[i].$1);
       a.set(i, 1, testPoints[i].$2);

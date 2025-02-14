@@ -10,11 +10,7 @@ void main() async {
     final dst = await bgSubtractor.applyAsync(img);
     expect(dst.isEmpty, false);
 
-    final bgSub1 = cv.BackgroundSubtractorMOG2.create(
-      history: 250,
-      varThreshold: 8,
-      detectShadows: false,
-    );
+    final bgSub1 = cv.BackgroundSubtractorMOG2.create(history: 250, varThreshold: 8, detectShadows: false);
     final dst1 = await bgSub1.applyAsync(img);
     expect(dst1.isEmpty, false);
 
@@ -28,11 +24,7 @@ void main() async {
     final dst = await bgSubtractor.applyAsync(img);
     expect(dst.isEmpty, false);
 
-    final bgSub1 = cv.BackgroundSubtractorKNN.create(
-      history: 250,
-      varThreshold: 8,
-      detectShadows: false,
-    );
+    final bgSub1 = cv.BackgroundSubtractorKNN.create(history: 250, varThreshold: 8, detectShadows: false);
     final dst1 = await bgSub1.applyAsync(img);
     expect(dst1.isEmpty, false);
 
@@ -92,10 +84,7 @@ void main() async {
       5,
     );
 
-    expect(
-      (mapTranslation.rows, mapTranslation.cols),
-      (translationGround.rows, translationGround.cols),
-    );
+    expect((mapTranslation.rows, mapTranslation.cols), (translationGround.rows, translationGround.cols));
   });
 
   test('cv.TrackerMILAsync', () async {

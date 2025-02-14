@@ -40,7 +40,6 @@ android {
     // Replace it with a version number if this plugin requires a specific NDK version.
     // (e.g. ndkVersion "23.1.7779620")
     // ndkVersion = android.ndkVersion
-    ndkVersion = "23.1.7779620"
 
     // Invoke the shared CMake build with the Android Gradle Plugin.
     externalNativeBuild {
