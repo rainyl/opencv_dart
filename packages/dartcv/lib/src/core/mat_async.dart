@@ -33,13 +33,12 @@ extension MatAsync on Mat {
     int g = 0,
     int b = 0,
     MatType? type,
-  }) async =>
-      Mat.fromScalar(
-        rows,
-        cols,
-        type ?? MatType.CV_8UC3,
-        Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0),
-      );
+  }) async => Mat.fromScalar(
+    rows,
+    cols,
+    type ?? MatType.CV_8UC3,
+    Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0),
+  );
 
   static Future<Mat> eyeAsync(int rows, int cols, MatType type) async {
     final p = calloc<cvg.Mat>();
@@ -67,18 +66,16 @@ extension MatAsync on Mat {
 
   Future<Mat> cloneAsync() async {
     final dst = Mat.empty();
-    return cvRunAsync0(
-      (callback) => ccore.cv_Mat_clone(ref, dst.ptr, callback),
-      (c) => c.complete(dst),
-    );
+    return cvRunAsync0((callback) => ccore.cv_Mat_clone(ref, dst.ptr, callback), (c) => c.complete(dst));
   }
 
   Future<void> copyToAsync(Mat dst, {Mat? mask}) async => cvRunAsync0(
-        (callback) => mask == null
+    (callback) =>
+        mask == null
             ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
             : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
-        (c) => c.complete(),
-      );
+    (c) => c.complete(),
+  );
 
   Future<Mat> convertToAsync(MatType type, {double alpha = 1, double beta = 0}) async {
     final dst = Mat.empty();
@@ -130,14 +127,11 @@ extension MatAsync on Mat {
 
   Future<Scalar> meanAsync({Mat? mask}) async {
     final s = calloc<cvg.Scalar>();
-    return cvRunAsync0<Scalar>(
-      (callback) {
-        return mask == null
-            ? ccore.cv_Mat_mean(ref, s, callback)
-            : ccore.cv_Mat_mean_1(ref, mask.ref, s, callback);
-      },
-      (c) => c.complete(Scalar.fromPointer(s)),
-    );
+    return cvRunAsync0<Scalar>((callback) {
+      return mask == null
+          ? ccore.cv_Mat_mean(ref, s, callback)
+          : ccore.cv_Mat_mean_1(ref, mask.ref, s, callback);
+    }, (c) => c.complete(Scalar.fromPointer(s)));
   }
 
   /// Calculates a square root of array elements.

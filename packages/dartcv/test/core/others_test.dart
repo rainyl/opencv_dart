@@ -337,12 +337,7 @@ void main() {
   });
 
   test('cv.VecVec4i', () {
-    final v = [
-      cv.Vec4i(1, 2, 3, 4),
-      cv.Vec4i(5, 6, 7, 8),
-      cv.Vec4i(9, 10, 11, 12),
-      cv.Vec4i(13, 14, 15, 16),
-    ];
+    final v = [cv.Vec4i(1, 2, 3, 4), cv.Vec4i(5, 6, 7, 8), cv.Vec4i(9, 10, 11, 12), cv.Vec4i(13, 14, 15, 16)];
     final vv = v.cvd;
     expect(vv.length, v.length);
     expect(vv.first, cv.Vec4i(1, 2, 3, 4));
@@ -365,12 +360,7 @@ void main() {
   });
 
   test('cv.VecVec4f', () {
-    final v = [
-      cv.Vec4f(1, 2, 3, 4),
-      cv.Vec4f(5, 6, 7, 8),
-      cv.Vec4f(9, 10, 11, 12),
-      cv.Vec4f(13, 14, 15, 16),
-    ];
+    final v = [cv.Vec4f(1, 2, 3, 4), cv.Vec4f(5, 6, 7, 8), cv.Vec4f(9, 10, 11, 12), cv.Vec4f(13, 14, 15, 16)];
     final vv = v.cvd;
     expect(vv.length, v.length);
     expect(vv.first, cv.Vec4f(1, 2, 3, 4));

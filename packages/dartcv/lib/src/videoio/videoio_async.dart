@@ -22,44 +22,37 @@ extension VideoCaptureAsync on VideoCapture {
   static Future<VideoCapture> fromFileAsync(String filename, {int apiPreference = CAP_ANY}) async {
     final p = calloc<cvg.VideoCapture>();
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    return cvRunAsync0(
-      (callback) => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, callback),
-      (c) {
-        calloc.free(cname);
-        return c.complete(VideoCapture.fromPointer(p));
-      },
-    );
+    return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, callback), (
+      c,
+    ) {
+      calloc.free(cname);
+      return c.complete(VideoCapture.fromPointer(p));
+    });
   }
 
   static Future<VideoCapture> fromDeviceAsync(int device, {int apiPreference = CAP_ANY}) async {
     final p = calloc<cvg.VideoCapture>();
-    return cvRunAsync0(
-      (callback) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, callback),
-      (c) {
-        return c.complete(VideoCapture.fromPointer(p));
-      },
-    );
+    return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, callback), (
+      c,
+    ) {
+      return c.complete(VideoCapture.fromPointer(p));
+    });
   }
 
   /// Grabs the next frame from video file or capturing device.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  Future<void> grabAsync() => cvRunAsync0(
-        (callback) => cvideoio.cv_VideoCapture_grab(ref, callback),
-        (c) => c.complete(),
-      );
+  Future<void> grabAsync() =>
+      cvRunAsync0((callback) => cvideoio.cv_VideoCapture_grab(ref, callback), (c) => c.complete());
 
   Future<(bool, Mat)> readAsync({Mat? m}) async {
     m ??= Mat.empty();
     final p = calloc<ffi.Bool>();
-    return cvRunAsync0(
-      (callback) => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, callback),
-      (c) {
-        final rval = (p.value, m!);
-        calloc.free(p);
-        return c.complete(rval);
-      },
-    );
+    return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, callback), (c) {
+      final rval = (p.value, m!);
+      calloc.free(p);
+      return c.complete(rval);
+    });
   }
 
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters.

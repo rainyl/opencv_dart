@@ -43,23 +43,25 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   final cRmsErr = calloc<ffi.Double>();
 
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_calibrateCamera(
-            objectPoints.ref,
-            imagePoints.ref,
-            imageSize.cvd.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvecs!.ref,
-            tvecs!.ref,
-            flags,
-            criteria.cvd.ref,
-            cRmsErr,
-            callback,
-          ), (c) {
-    final rmsErr = cRmsErr.value;
-    calloc.free(cRmsErr);
-    return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!));
-  });
+    (callback) => ccalib3d.cv_calibrateCamera(
+      objectPoints.ref,
+      imagePoints.ref,
+      imageSize.cvd.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvecs!.ref,
+      tvecs!.ref,
+      flags,
+      criteria.cvd.ref,
+      cRmsErr,
+      callback,
+    ),
+    (c) {
+      final rmsErr = cRmsErr.value;
+      calloc.free(cRmsErr);
+      return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!));
+    },
+  );
 }
 
 /// For points in an image of a stereo pair, computes the corresponding epilines in the other image.
@@ -144,13 +146,7 @@ Future<(Mat r1, Mat r2, Mat t)> decomposeEssentialMatAsync(
   R2 ??= Mat.empty();
   t ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_decomposeEssentialMat(
-      E.ref,
-      R1!.ref,
-      R2!.ref,
-      t!.ref,
-      callback,
-    ),
+    (callback) => ccalib3d.cv_decomposeEssentialMat(E.ref, R1!.ref, R2!.ref, t!.ref, callback),
     (c) => c.complete((R1!, R2!, t!)),
   );
 }
@@ -172,19 +168,21 @@ Future<(int rval, VecMat rotations, VecMat translations, VecMat normals)> decomp
   normals ??= VecMat();
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_decomposeHomographyMat(
-            H.ref,
-            K.ref,
-            rotations!.ref,
-            translations!.ref,
-            normals!.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rotations!, translations!, normals!));
-  });
+    (callback) => ccalib3d.cv_decomposeHomographyMat(
+      H.ref,
+      K.ref,
+      rotations!.ref,
+      translations!.ref,
+      normals!.ref,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rotations!, translations!, normals!));
+    },
+  );
 }
 
 /// Decomposes a projection matrix into a rotation matrix and a camera intrinsic matrix.
@@ -359,20 +357,22 @@ Future<(int rval, Mat, Mat inliers)> estimateAffine3DAsync(
   inliers ??= Mat.empty();
   final p = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_estimateAffine3D_1(
-            src.ref,
-            dst.ref,
-            out!.ref,
-            inliers!.ref,
-            ransacThreshold,
-            confidence,
-            p,
-            callback,
-          ), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, out!, inliers!));
-  });
+    (callback) => ccalib3d.cv_estimateAffine3D_1(
+      src.ref,
+      dst.ref,
+      out!.ref,
+      inliers!.ref,
+      ransacThreshold,
+      confidence,
+      p,
+      callback,
+    ),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete((rval, out!, inliers!));
+    },
+  );
 }
 
 /// Estimates the sharpness of a detected chessboard.
@@ -422,20 +422,22 @@ Future<(int rval, Mat out, Mat inliers)> estimateTranslation3DAsync(
   inliers ??= Mat.empty();
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_estimateTranslation3D(
-            src.ref,
-            dst.ref,
-            out!.ref,
-            inliers!.ref,
-            ransacThreshold,
-            confidence,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, out!, inliers!));
-  });
+    (callback) => ccalib3d.cv_estimateTranslation3D(
+      src.ref,
+      dst.ref,
+      out!.ref,
+      inliers!.ref,
+      ransacThreshold,
+      confidence,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, out!, inliers!));
+    },
+  );
 }
 
 /// Filters homography decompositions based on additional information.
@@ -481,14 +483,7 @@ Future<void> filterSpecklesAsync(
 }) async {
   buf ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_filterSpeckles(
-      img.ref,
-      newVal,
-      maxSpeckleSize,
-      maxDiff,
-      buf!.ref,
-      callback,
-    ),
+    (callback) => ccalib3d.cv_filterSpeckles(img.ref, newVal, maxSpeckleSize, maxDiff, buf!.ref, callback),
     (c) => c.complete(),
   );
 }
@@ -505,17 +500,14 @@ Future<bool> find4QuadCornerSubpixAsync(
 ) async {
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_find4QuadCornerSubpix(
-            img.ref,
-            corners.ref,
-            regionSize.cvd.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete(rval);
-  });
+    (callback) =>
+        ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvd.ref, prval, callback),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete(rval);
+    },
+  );
 }
 
 // FindChessboardCorners finds the positions of internal corners of the chessboard.
@@ -531,18 +523,14 @@ Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
   corners ??= VecPoint2f();
   final r = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_findChessboardCorners(
-            image.ref,
-            patternSize.cvd.ref,
-            corners!.ptr,
-            flags,
-            r,
-            callback,
-          ), (c) {
-    final rval = r.value;
-    calloc.free(r);
-    return c.complete((rval, corners!));
-  });
+    (callback) =>
+        ccalib3d.cv_findChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ptr, flags, r, callback),
+    (c) {
+      final rval = r.value;
+      calloc.free(r);
+      return c.complete((rval, corners!));
+    },
+  );
 }
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
@@ -556,18 +544,14 @@ Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
   corners ??= VecPoint2f();
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_findChessboardCornersSB(
-            image.ref,
-            patternSize.cvd.ref,
-            corners!.ptr,
-            flags,
-            b,
-            callback,
-          ), (c) {
-    final rval = b.value;
-    calloc.free(b);
-    return c.complete((rval, corners!));
-  });
+    (callback) =>
+        ccalib3d.cv_findChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ptr, flags, b, callback),
+    (c) {
+      final rval = b.value;
+      calloc.free(b);
+      return c.complete((rval, corners!));
+    },
+  );
 }
 
 // Finds the positions of internal corners of the chessboard using a sector based approach.
@@ -614,18 +598,14 @@ Future<(bool, Mat)> findCirclesGridAsync(
   centers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_findCirclesGrid(
-            image.ref,
-            patternSize.ref,
-            centers!.ref,
-            flags,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, centers!));
-  });
+    (callback) =>
+        ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, callback),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, centers!));
+    },
+  );
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -745,14 +725,8 @@ Future<Mat> findFundamentalMatUsacAsync(
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_findFundamentalMat_1(
-      points1.ref,
-      points2.ref,
-      mask!.ref,
-      params.ref,
-      prval,
-      callback,
-    ),
+    (callback) =>
+        ccalib3d.cv_findFundamentalMat_1(points1.ref, points2.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
   );
 }
@@ -802,14 +776,8 @@ Future<Mat> findHomographyUsacAsync(
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_findHomography_1(
-      srcPoints.ref,
-      dstPoints.ref,
-      mask!.ref,
-      params.ref,
-      prval,
-      callback,
-    ),
+    (callback) =>
+        ccalib3d.cv_findHomography_1(srcPoints.ref, dstPoints.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
   );
 }
@@ -919,23 +887,25 @@ Future<(double rval, Mat map1, Mat map2)> initWideAngleProjMapAsync(
   map2 ??= Mat.empty();
   final prval = calloc<ffi.Float>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_initWideAngleProjMap(
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            imageSize.ref,
-            destImageWidth,
-            m1type,
-            map1!.ref,
-            map2!.ref,
-            projType,
-            alpha,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, map1!, map2!));
-  });
+    (callback) => ccalib3d.cv_initWideAngleProjMap(
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      imageSize.ref,
+      destImageWidth,
+      m1type,
+      map1!.ref,
+      map2!.ref,
+      projType,
+      alpha,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, map1!, map2!));
+    },
+  );
 }
 
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
@@ -950,13 +920,7 @@ Future<(Mat dABdA, Mat dABdB)> matMulDerivAsync(
   dABdA ??= Mat.empty();
   dABdB ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_matMulDeriv(
-      A.ref,
-      B.ref,
-      dABdA!.ref,
-      dABdB!.ref,
-      callback,
-    ),
+    (callback) => ccalib3d.cv_matMulDeriv(A.ref, B.ref, dABdA!.ref, dABdB!.ref, callback),
     (c) => c.complete((dABdA!, dABdB!)),
   );
 }
@@ -1013,22 +977,24 @@ Future<(int rval, Mat R, Mat t)> recoverPoseAsync(
   pp ??= Point2d(0, 0);
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_recoverPose_1(
-            E.ref,
-            points1.ref,
-            points2.ref,
-            R!.ref,
-            t!.ref,
-            focal,
-            pp!.ref,
-            mask!.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, R!, t!));
-  });
+    (callback) => ccalib3d.cv_recoverPose_1(
+      E.ref,
+      points1.ref,
+      points2.ref,
+      R!.ref,
+      t!.ref,
+      focal,
+      pp!.ref,
+      mask!.ref,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, R!, t!));
+    },
+  );
 }
 
 // Recovers the relative camera rotation and the translation from an estimated essential matrix and the corresponding points in two images, using chirality check. Returns the number of inliers that pass the check.
@@ -1053,23 +1019,25 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
   triangulatedPoints ??= Mat.empty();
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_recoverPose(
-            E.ref,
-            points1.ref,
-            points2.ref,
-            cameraMatrix.ref,
-            R!.ref,
-            t!.ref,
-            distanceThresh,
-            mask!.ref,
-            triangulatedPoints!.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, R!, t!, triangulatedPoints!));
-  });
+    (callback) => ccalib3d.cv_recoverPose(
+      E.ref,
+      points1.ref,
+      points2.ref,
+      cameraMatrix.ref,
+      R!.ref,
+      t!.ref,
+      distanceThresh,
+      mask!.ref,
+      triangulatedPoints!.ref,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, R!, t!, triangulatedPoints!));
+    },
+  );
 }
 
 /// Converts a rotation matrix to a rotation vector or vice versa.
@@ -1077,20 +1045,11 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
 /// void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga61585db663d9da06b68e70cfbf6a1eac
-Future<Mat> RodriguesAsync(
-  InputArray src, {
-  OutputArray? dst,
-  OutputArray? jacobian,
-}) async {
+Future<Mat> RodriguesAsync(InputArray src, {OutputArray? dst, OutputArray? jacobian}) async {
   dst ??= Mat.empty();
   jacobian ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_Rodrigues(
-      src.ref,
-      dst!.ref,
-      jacobian!.ref,
-      callback,
-    ),
+    (callback) => ccalib3d.cv_Rodrigues(src.ref, dst!.ref, jacobian!.ref, callback),
     (c) => c.complete(dst!),
   );
 }
@@ -1115,16 +1074,8 @@ Future<(Vec3d rval, Mat mtxR, Mat mtxQ)> RQDecomp3x3Async(
   Qz ??= Mat.empty();
   final prval = calloc<cvg.Vec3d>();
   return cvRunAsync0(
-    (callback) => ccalib3d.cv_RQDecomp3x3(
-      src.ref,
-      mtxR!.ref,
-      mtxQ!.ref,
-      Qx!.ref,
-      Qy!.ref,
-      Qz!.ref,
-      prval,
-      callback,
-    ),
+    (callback) =>
+        ccalib3d.cv_RQDecomp3x3(src.ref, mtxR!.ref, mtxQ!.ref, Qx!.ref, Qy!.ref, Qz!.ref, prval, callback),
     (c) => c.complete((Vec3d.fromPointer(prval), mtxR!, mtxQ!)),
   );
 }
@@ -1145,21 +1096,23 @@ Future<(int rval, VecMat rvecs, VecMat tvecs)> solveP3PAsync(
   tvecs ??= VecMat();
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_solveP3P(
-            objectPoints.ref,
-            imagePoints.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvecs!.ptr,
-            tvecs!.ptr,
-            flags,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rvecs!, tvecs!));
-  });
+    (callback) => ccalib3d.cv_solveP3P(
+      objectPoints.ref,
+      imagePoints.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvecs!.ptr,
+      tvecs!.ptr,
+      flags,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rvecs!, tvecs!));
+    },
+  );
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -1179,22 +1132,24 @@ Future<(bool rval, Mat rvec, Mat tvec)> solvePnPAsync(
   tvec ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_solvePnP(
-            objectPoints.ref,
-            imagePoints.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvec!.ref,
-            tvec!.ref,
-            useExtrinsicGuess,
-            flags,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rvec!, tvec!));
-  });
+    (callback) => ccalib3d.cv_solvePnP(
+      objectPoints.ref,
+      imagePoints.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvec!.ref,
+      tvec!.ref,
+      useExtrinsicGuess,
+      flags,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rvec!, tvec!));
+    },
+  );
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -1220,25 +1175,27 @@ Future<(int rval, VecMat rvecs, VecMat tvecs, Mat reprojectionError)> solvePnPGe
   reprojectionError ??= Mat.empty();
   final prval = calloc<ffi.Int>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_solvePnPGeneric(
-            objectPoints.ref,
-            imagePoints.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvecs!.ptr,
-            tvecs!.ptr,
-            useExtrinsicGuess,
-            flags,
-            rvec!.ref,
-            tvec!.ref,
-            reprojectionError!.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rvecs!, tvecs!, reprojectionError!));
-  });
+    (callback) => ccalib3d.cv_solvePnPGeneric(
+      objectPoints.ref,
+      imagePoints.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvecs!.ptr,
+      tvecs!.ptr,
+      useExtrinsicGuess,
+      flags,
+      rvec!.ref,
+      tvec!.ref,
+      reprojectionError!.ref,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rvecs!, tvecs!, reprojectionError!));
+    },
+  );
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -1263,26 +1220,28 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacAsync(
   inliers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_solvePnPRansac(
-            objectPoints.ref,
-            imagePoints.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvec!.ref,
-            tvec!.ref,
-            useExtrinsicGuess,
-            iterationsCount,
-            reprojectionError,
-            confidence,
-            inliers!.ref,
-            flags,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rvec!, tvec!, inliers!));
-  });
+    (callback) => ccalib3d.cv_solvePnPRansac(
+      objectPoints.ref,
+      imagePoints.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvec!.ref,
+      tvec!.ref,
+      useExtrinsicGuess,
+      iterationsCount,
+      reprojectionError,
+      confidence,
+      inliers!.ref,
+      flags,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rvec!, tvec!, inliers!));
+    },
+  );
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -1304,22 +1263,24 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacUsacAsync(
   params ??= UsacParams();
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-      (callback) => ccalib3d.cv_solvePnPRansac_1(
-            objectPoints.ref,
-            imagePoints.ref,
-            cameraMatrix.ref,
-            distCoeffs.ref,
-            rvec!.ref,
-            tvec!.ref,
-            inliers!.ref,
-            params!.ref,
-            prval,
-            callback,
-          ), (c) {
-    final rval = prval.value;
-    calloc.free(prval);
-    return c.complete((rval, rvec!, tvec!, inliers!));
-  });
+    (callback) => ccalib3d.cv_solvePnPRansac_1(
+      objectPoints.ref,
+      imagePoints.ref,
+      cameraMatrix.ref,
+      distCoeffs.ref,
+      rvec!.ref,
+      tvec!.ref,
+      inliers!.ref,
+      params!.ref,
+      prval,
+      callback,
+    ),
+    (c) {
+      final rval = prval.value;
+      calloc.free(prval);
+      return c.complete((rval, rvec!, tvec!, inliers!));
+    },
+  );
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the

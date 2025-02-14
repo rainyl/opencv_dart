@@ -1,5 +1,4 @@
 @Tags(["no-local-files"])
-
 import 'dart:io';
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
@@ -222,10 +221,11 @@ void main() async {
   });
 
   test('cv.blobFromImagesAsync, cv.imagesFromBlobAsync, cv.getBlobChannelAsync', () async {
-    final imgs = [
-      await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
-      await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
-    ].cvd;
+    final imgs =
+        [
+          await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
+          await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_COLOR),
+        ].cvd;
 
     final blob = await cv.blobFromImagesAsync(imgs);
     expect(blob.isEmpty, false);
@@ -242,10 +242,11 @@ void main() async {
   });
 
   test('cv.blobFromImagesAsync GrayScale', () async {
-    final imgs = [
-      await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
-      await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
-    ].cvd;
+    final imgs =
+        [
+          await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
+          await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
+        ].cvd;
 
     final blob = await cv.blobFromImagesAsync(imgs);
     expect(blob.isEmpty, false);
@@ -257,13 +258,14 @@ void main() async {
     expect(img.isEmpty, false);
     img = await img.convertToAsync(cv.MatType.CV_32FC1);
 
-    final bboxes = [
-      cv.Rect(53, 47, 589, 451),
-      cv.Rect(118, 54, 618, 450),
-      cv.Rect(53, 66, 605, 480),
-      cv.Rect(111, 65, 630, 480),
-      cv.Rect(156, 51, 640, 480),
-    ].cvd;
+    final bboxes =
+        [
+          cv.Rect(53, 47, 589, 451),
+          cv.Rect(118, 54, 618, 450),
+          cv.Rect(53, 66, 605, 480),
+          cv.Rect(111, 65, 630, 480),
+          cv.Rect(156, 51, 640, 480),
+        ].cvd;
     final scores = [0.82094115, 0.7998236, 0.9809663, 0.99717456, 0.89628726].f32;
     final indices = await cv.NMSBoxesAsync(bboxes, scores, 0.5, 0.4);
     expect(indices.first, 3);

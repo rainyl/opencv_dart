@@ -5,31 +5,12 @@ void main() async {
   test("cv.approxPolyDPAsync, cv.arcLengthAsync", () async {
     final img = cv.Mat.create(cols: 100, rows: 200, type: cv.MatType.CV_8UC1);
     final color = cv.Scalar.all(255);
-    cv.line(
-      img,
-      cv.Point(25, 25),
-      cv.Point(25, 75),
-      color,
-    );
-    cv.line(
-      img,
-      cv.Point(25, 75),
-      cv.Point(75, 50),
-      color,
-    );
-    cv.line(
-      img,
-      cv.Point(75, 50),
-      cv.Point(25, 25),
-      color,
-    );
+    cv.line(img, cv.Point(25, 25), cv.Point(25, 75), color);
+    cv.line(img, cv.Point(25, 75), cv.Point(75, 50), color);
+    cv.line(img, cv.Point(75, 50), cv.Point(25, 25), color);
     await cv.rectangleAsync(img, cv.Rect(125, 25, 175, 75), color);
 
-    final (contours, _) = await cv.findContoursAsync(
-      img,
-      cv.RETR_EXTERNAL,
-      cv.CHAIN_APPROX_SIMPLE,
-    );
+    final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
     final length = await cv.arcLengthAsync(contours.first, true);
     final triangleContour = await cv.approxPolyDPAsync(contours.first, 0.04 * length, true);
     final expected = <cv.Point>[cv.Point(25, 25), cv.Point(25, 75), cv.Point(75, 50)];
@@ -117,16 +98,14 @@ void main() async {
     expect((src.width, src.height, src.channels), (612, 760, 1));
     cv.bitwiseNOT(src, dst: src);
     expect((src.width, src.height, src.channels), (612, 760, 1));
-    final (contours, hierarchy) = await cv.findContoursAsync(
-      src,
-      cv.RETR_EXTERNAL,
-      cv.CHAIN_APPROX_SIMPLE,
-    );
+    final (contours, hierarchy) = await cv.findContoursAsync(src, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
     expect(contours.length, greaterThan(0));
     expect(hierarchy.isEmpty, equals(false));
     expect(
-      List.generate(contours.length, (index) => contours.elementAt(index).length)
-          .every((element) => element == 4),
+      List.generate(
+        contours.length,
+        (index) => contours.elementAt(index).length,
+      ).every((element) => element == 4),
       equals(true),
     );
 
@@ -156,10 +135,7 @@ void main() async {
     final cvImage = await cv.imreadAsync("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect((cvImage.width, cvImage.height), (512, 512));
     final imgNew = await cv.equalizeHistAsync(cvImage);
-    expect(
-      (cvImage.width, cvImage.height, cvImage.channels),
-      (imgNew.width, imgNew.height, imgNew.channels),
-    );
+    expect((cvImage.width, cvImage.height, cvImage.channels), (imgNew.width, imgNew.height, imgNew.channels));
     expect(await cv.imwriteAsync("test/images_out/circles_equalized.jpg", imgNew), equals(true));
   });
 
@@ -172,53 +148,32 @@ void main() async {
 
   test('cv.erodeAsync', () async {
     final src = await cv.imreadAsync("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
-    final kernel = await cv.getStructuringElementAsync(
-      cv.MORPH_RECT,
-      (3, 3),
-    );
+    final kernel = await cv.getStructuringElementAsync(cv.MORPH_RECT, (3, 3));
     final dst = await cv.erodeAsync(src, kernel);
     expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
   });
 
   test('cv.dilateAsync', () async {
     final src = await cv.imreadAsync("test/images/circles.jpg", flags: cv.IMREAD_GRAYSCALE);
-    final kernel = await cv.getStructuringElementAsync(
-      cv.MORPH_RECT,
-      (3, 3),
-    );
+    final kernel = await cv.getStructuringElementAsync(cv.MORPH_RECT, (3, 3));
     final dst = await cv.dilateAsync(src, kernel);
     expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
   });
 
   // cv.contourAreaAsync
   test('cv.contourAreaAsync', () async {
-    final contour = <cv.Point>[
-      cv.Point(0, 0),
-      cv.Point(100, 0),
-      cv.Point(100, 100),
-      cv.Point(0, 100),
-    ].cvd;
+    final contour = <cv.Point>[cv.Point(0, 0), cv.Point(100, 0), cv.Point(100, 100), cv.Point(0, 100)].cvd;
     expect(await cv.contourAreaAsync(contour), equals(10000));
   });
 
   test('cv.getStructuringElementAsync', () async {
-    final kernel = await cv.getStructuringElementAsync(
-      cv.MORPH_RECT,
-      (3, 3),
-    );
+    final kernel = await cv.getStructuringElementAsync(cv.MORPH_RECT, (3, 3));
     expect(kernel.height == 3 && kernel.width == 3 && !kernel.isEmpty, equals(true));
   });
 
   test('basic drawings Async', () async {
     final src = cv.Mat.create(cols: 100, rows: 100, type: cv.MatType.CV_8UC3);
-    cv.line(
-      src,
-      cv.Point(10, 10),
-      cv.Point(90, 90),
-      cv.Scalar.red,
-      thickness: 2,
-      lineType: cv.LINE_AA,
-    );
+    cv.line(src, cv.Point(10, 10), cv.Point(90, 90), cv.Scalar.red, thickness: 2, lineType: cv.LINE_AA);
     await cv.ellipseAsync(src, cv.Point(50, 50), cv.Point(10, 20), 30.0, 0, 360, cv.Scalar.green);
     await cv.rectangleAsync(src, cv.Rect(20, 20, 30, 50), cv.Scalar.blue);
     final pts = [(10, 5), (20, 30), (70, 20), (50, 10)].map((e) => cv.Point(e.$1, e.$2)).toList();
@@ -253,8 +208,12 @@ void main() async {
 
     final (_, thres) = await cv.thresholdAsync(gray, 25, 255, cv.THRESH_BINARY);
 
-    final (dest, labels) =
-        await cv.distanceTransformAsync(thres, cv.DIST_L2, cv.DIST_MASK_3, cv.DIST_LABEL_CCOMP);
+    final (dest, labels) = await cv.distanceTransformAsync(
+      thres,
+      cv.DIST_L2,
+      cv.DIST_MASK_3,
+      cv.DIST_LABEL_CCOMP,
+    );
     expect(dest.isEmpty || dest.rows != img.rows || dest.cols != img.cols, false);
     expect(labels.isEmpty, false);
   });
@@ -309,17 +268,18 @@ void main() async {
 
   // fitEllipse
   test('cv.fitEllipseAsync', () async {
-    final pv = [
-      cv.Point(1, 1),
-      cv.Point(0, 1),
-      cv.Point(0, 2),
-      cv.Point(1, 3),
-      cv.Point(2, 3),
-      cv.Point(4, 2),
-      cv.Point(4, 1),
-      cv.Point(0, 3),
-      cv.Point(0, 2),
-    ].cvd;
+    final pv =
+        [
+          cv.Point(1, 1),
+          cv.Point(0, 1),
+          cv.Point(0, 2),
+          cv.Point(1, 3),
+          cv.Point(2, 3),
+          cv.Point(4, 2),
+          cv.Point(4, 1),
+          cv.Point(0, 3),
+          cv.Point(0, 2),
+        ].cvd;
     final rect = await cv.fitEllipseAsync(pv);
     expect(rect.center.x, closeTo(1.92, 0.1));
     expect(rect.center.y, closeTo(1.78, 0.1));
@@ -328,13 +288,7 @@ void main() async {
 
   // minEnclosingCircle
   test('cv.minEnclosingCircleAsync', () async {
-    final pts = [
-      cv.Point(0, 2),
-      cv.Point(2, 0),
-      cv.Point(0, -2),
-      cv.Point(-2, 0),
-      cv.Point(1, -1),
-    ].cvd;
+    final pts = [cv.Point(0, 2), cv.Point(2, 0), cv.Point(0, -2), cv.Point(-2, 0), cv.Point(1, -1)].cvd;
 
     final (center, radius) = await cv.minEnclosingCircleAsync(pts);
     expect(radius, closeTo(2.0, 1e-3));
@@ -352,12 +306,7 @@ void main() async {
       ("Outside the polygon - measure=true", 1, cv.Point2f(5, 15), -5.0, true),
       ("On the polygon - measure=true", 1, cv.Point2f(10, 10), 0.0, true),
     ];
-    final pts = [
-      cv.Point(10, 10),
-      cv.Point(10, 80),
-      cv.Point(80, 80),
-      cv.Point(80, 10),
-    ];
+    final pts = [cv.Point(10, 10), cv.Point(10, 80), cv.Point(80, 80), cv.Point(80, 10)];
     for (final t in tests) {
       final r = await cv.pointPolygonTestAsync(pts.cvd, t.$3, t.$5);
       expect(r, closeTo(t.$4, 1e-3));
@@ -635,19 +584,9 @@ void main() async {
   test('cv.warpPerspectiveAsync', () async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_UNCHANGED);
     expect(img.isEmpty, false);
-    final pvs = [
-      cv.Point(0, 0),
-      cv.Point(10, 5),
-      cv.Point(10, 10),
-      cv.Point(5, 10),
-    ];
+    final pvs = [cv.Point(0, 0), cv.Point(10, 5), cv.Point(10, 10), cv.Point(5, 10)];
 
-    final pvd = [
-      cv.Point(0, 0),
-      cv.Point(10, 0),
-      cv.Point(10, 10),
-      cv.Point(0, 10),
-    ];
+    final pvd = [cv.Point(0, 0), cv.Point(10, 0), cv.Point(10, 10), cv.Point(0, 10)];
 
     final m = await cv.getPerspectiveTransformAsync(pvs.cvd, pvd.cvd);
     final dst = await cv.warpPerspectiveAsync(img, m, (img.width, img.height));
@@ -664,8 +603,13 @@ void main() async {
 
     final (_, imgThresh) = await cv.thresholdAsync(gray, 5, 50, cv.THRESH_OTSU + cv.THRESH_BINARY);
     final markers = cv.Mat.empty();
-    final _ =
-        await cv.connectedComponentsAsync(imgThresh, markers, 8, cv.MatType.CV_32SC1.value, cv.CCL_DEFAULT);
+    final _ = await cv.connectedComponentsAsync(
+      imgThresh,
+      markers,
+      8,
+      cv.MatType.CV_32SC1.value,
+      cv.CCL_DEFAULT,
+    );
     await cv.watershedAsync(src, markers);
     expect(markers.isEmpty, false);
     expect((markers.rows, markers.cols), (src.rows, src.cols));
@@ -688,70 +632,34 @@ void main() async {
 
   // getPerspectiveTransform
   test('cv.getPerspectiveTransformAsync', () async {
-    final src = [
-      cv.Point(0, 0),
-      cv.Point(10, 5),
-      cv.Point(10, 10),
-      cv.Point(5, 10),
-    ];
-    final dst = [
-      cv.Point(0, 0),
-      cv.Point(10, 0),
-      cv.Point(10, 10),
-      cv.Point(0, 10),
-    ];
+    final src = [cv.Point(0, 0), cv.Point(10, 5), cv.Point(10, 10), cv.Point(5, 10)];
+    final dst = [cv.Point(0, 0), cv.Point(10, 0), cv.Point(10, 10), cv.Point(0, 10)];
     final m = await cv.getPerspectiveTransformAsync(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (3, 3));
   });
 
   // getPerspectiveTransform2f
   test('cv.getPerspectiveTransform2fAsync', () async {
-    final src = [
-      cv.Point2f(0, 0),
-      cv.Point2f(10, 5),
-      cv.Point2f(10, 10),
-      cv.Point2f(5, 10),
-    ];
-    final dst = [
-      cv.Point2f(0, 0),
-      cv.Point2f(10, 0),
-      cv.Point2f(10, 10),
-      cv.Point2f(0, 10),
-    ];
+    final src = [cv.Point2f(0, 0), cv.Point2f(10, 5), cv.Point2f(10, 10), cv.Point2f(5, 10)];
+    final dst = [cv.Point2f(0, 0), cv.Point2f(10, 0), cv.Point2f(10, 10), cv.Point2f(0, 10)];
     final m = await cv.getPerspectiveTransform2fAsync(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (3, 3));
   });
 
   // getAffineTransform
   test('cv.getAffineTransformAsync', () async {
-    final src = [
-      cv.Point(0, 0),
-      cv.Point(10, 5),
-      cv.Point(10, 10),
-    ];
+    final src = [cv.Point(0, 0), cv.Point(10, 5), cv.Point(10, 10)];
 
-    final dst = [
-      cv.Point(0, 0),
-      cv.Point(10, 0),
-      cv.Point(10, 10),
-    ];
+    final dst = [cv.Point(0, 0), cv.Point(10, 0), cv.Point(10, 10)];
     final m = await cv.getAffineTransformAsync(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (2, 3));
   });
 
   // getAffineTransform2f
   test('cv.getAffineTransform2fAsync', () async {
-    final src = [
-      cv.Point2f(0, 0),
-      cv.Point2f(10, 5),
-      cv.Point2f(10, 10),
-    ];
+    final src = [cv.Point2f(0, 0), cv.Point2f(10, 5), cv.Point2f(10, 10)];
 
-    final dst = [
-      cv.Point2f(0, 0),
-      cv.Point2f(10, 0),
-      cv.Point2f(10, 10),
-    ];
+    final dst = [cv.Point2f(0, 0), cv.Point2f(10, 0), cv.Point2f(10, 10)];
     final m = await cv.getAffineTransform2fAsync(src.cvd, dst.cvd);
     expect((m.rows, m.cols), (2, 3));
   });
@@ -811,48 +719,23 @@ void main() async {
 
   // fitLine
   test('cv.fitLineAsync', () async {
-    final pts = [
-      cv.Point(125, 24),
-      cv.Point(124, 75),
-      cv.Point(175, 76),
-      cv.Point(176, 25),
-    ];
+    final pts = [cv.Point(125, 24), cv.Point(124, 75), cv.Point(175, 76), cv.Point(176, 25)];
     final dst = await cv.fitLineAsync(pts.cvd, cv.DIST_L2, 0, 0.01, 0.01);
     expect(dst.isEmpty, false);
   });
 
   // matchShapes
   test('cv.matchShapesAsync', () async {
-    final pts1 = [
-      cv.Point(0, 0),
-      cv.Point(1, 0),
-      cv.Point(2, 2),
-      cv.Point(3, 3),
-      cv.Point(3, 4),
-    ];
-    final pts2 = [
-      cv.Point(0, 0),
-      cv.Point(1, 0),
-      cv.Point(2, 3),
-      cv.Point(3, 3),
-      cv.Point(3, 5),
-    ];
+    final pts1 = [cv.Point(0, 0), cv.Point(1, 0), cv.Point(2, 2), cv.Point(3, 3), cv.Point(3, 4)];
+    final pts2 = [cv.Point(0, 0), cv.Point(1, 0), cv.Point(2, 3), cv.Point(3, 3), cv.Point(3, 5)];
     final similarity = await cv.matchShapesAsync(pts1.cvd, pts2.cvd, cv.CONTOURS_MATCH_I2, 0);
     expect(2.0 <= similarity && similarity <= 3.0, true);
   });
 
   test('cv.invertAffineTransformAsync', () async {
-    final src = [
-      cv.Point(0, 0),
-      cv.Point(10, 5),
-      cv.Point(10, 10),
-    ];
+    final src = [cv.Point(0, 0), cv.Point(10, 5), cv.Point(10, 10)];
 
-    final dst = [
-      cv.Point(0, 0),
-      cv.Point(10, 0),
-      cv.Point(10, 10),
-    ];
+    final dst = [cv.Point(0, 0), cv.Point(10, 0), cv.Point(10, 10)];
     final m = await cv.getAffineTransformAsync(src.cvd, dst.cvd);
     final inv = await cv.invertAffineTransformAsync(m);
     expect(inv.isEmpty, false);
@@ -939,8 +822,11 @@ void main() async {
       cv.Point2f(1167.2201416015625, 693.495068359375),
     ];
 
-    final (affineMatrix, _) =
-        await cv.estimateAffinePartial2DAsync(landmarks.cvd, faceTemplate.cvd, method: cv.LMEDS);
+    final (affineMatrix, _) = await cv.estimateAffinePartial2DAsync(
+      landmarks.cvd,
+      faceTemplate.cvd,
+      method: cv.LMEDS,
+    );
 
     final invMask = await cv.warpAffineAsync(mask, affineMatrix, (2048, 2048));
     invMask.convertTo(cv.MatType.CV_8UC1, inplace: true);
@@ -954,10 +840,17 @@ void main() async {
     cv.VecPoint makeRectangle(cv.Point topLeft, cv.Point bottomRiht) =>
         [topLeft, cv.Point(bottomRiht.x, topLeft.y), bottomRiht, cv.Point(topLeft.x, bottomRiht.y)].asVec();
 
-    Future<double> drawIntersection(cv.Mat image, cv.VecPoint p1, cv.VecPoint p2,
-        {bool handleNested = true}) async {
-      final (intersectArea, intersectionPolygon) =
-          await cv.intersectConvexConvexAsync(p1, p2, handleNested: handleNested);
+    Future<double> drawIntersection(
+      cv.Mat image,
+      cv.VecPoint p1,
+      cv.VecPoint p2, {
+      bool handleNested = true,
+    }) async {
+      final (intersectArea, intersectionPolygon) = await cv.intersectConvexConvexAsync(
+        p1,
+        p2,
+        handleNested: handleNested,
+      );
       if (intersectArea > 0) {
         final fillColor =
             !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
@@ -968,7 +861,11 @@ void main() async {
     }
 
     Future<void> drawDescription(
-        cv.Mat image, int intersectionArea, String description, cv.Point origin) async {
+      cv.Mat image,
+      int intersectionArea,
+      String description,
+      cv.Point origin,
+    ) async {
       final caption = "Intersection area: $intersectionArea$description";
       await cv.putTextAsync(image, caption, origin, cv.FONT_HERSHEY_SIMPLEX, 0.6, cv.Scalar.black);
     }
@@ -1046,14 +943,15 @@ void main() async {
     await drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 520));
 
     // This concave polygon is invalid input to intersectConvexConvex so it returns an invalid intersection
-    final cv.VecPoint notConvex = [
-      cv.Point(25, 560),
-      cv.Point(25, 590),
-      cv.Point(45, 580),
-      cv.Point(60, 600),
-      cv.Point(60, 550),
-      cv.Point(45, 570),
-    ].asVec();
+    final cv.VecPoint notConvex =
+        [
+          cv.Point(25, 560),
+          cv.Point(25, 590),
+          cv.Point(45, 580),
+          cv.Point(60, 600),
+          cv.Point(60, 550),
+          cv.Point(45, 570),
+        ].asVec();
     intersectionArea = await drawIntersection(
       image,
       makeRectangle(cv.Point(10, 550), cv.Point(50, 600)),

@@ -46,9 +46,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Native Packages'),
-        ),
+        appBar: AppBar(title: const Text('Native Packages')),
         body: Container(
           alignment: Alignment.center,
           child: Column(
@@ -98,16 +96,10 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(
-                          child: Image.memory(images[idx]),
-                        ),
+                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
                       ),
                     ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Text(cv.getBuildInformation()),
-                      ),
-                    ),
+                    Expanded(child: SingleChildScrollView(child: Text(cv.getBuildInformation()))),
                   ],
                 ),
               ),

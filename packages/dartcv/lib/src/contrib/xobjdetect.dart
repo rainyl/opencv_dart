@@ -35,8 +35,9 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
     return WBDetector.fromPointer(ptr);
   }
 
-  static final finalizer =
-      OcvFinalizer<cvg.PtrWBDetectorPtr>(ccontrib.addresses.cv_xobjdetect_WBDetector_close);
+  static final finalizer = OcvFinalizer<cvg.PtrWBDetectorPtr>(
+    ccontrib.addresses.cv_xobjdetect_WBDetector_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

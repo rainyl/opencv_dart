@@ -46,8 +46,9 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   /// async version of [compute]
   Future<Scalar> computeAsync(Mat img) async {
     final p = calloc<cvg.Scalar>();
-    return cvRunAsync0((callback) => ccontrib.cv_quality_QualityBRISQUE_compute(ref, img.ref, p, callback),
-        (c) {
+    return cvRunAsync0((callback) => ccontrib.cv_quality_QualityBRISQUE_compute(ref, img.ref, p, callback), (
+      c,
+    ) {
       return c.complete(Scalar.fromPointer(p));
     });
   }
@@ -71,11 +72,13 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
     final cm = modelFile.toNativeUtf8().cast<ffi.Char>();
     final cr = rangeFile.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_quality_QualityBRISQUE_compute_static(img.ref, cm, cr, p, callback), (c) {
-      calloc.free(cm);
-      calloc.free(cr);
-      return c.complete(Scalar.fromPointer(p));
-    });
+      (callback) => ccontrib.cv_quality_QualityBRISQUE_compute_static(img.ref, cm, cr, p, callback),
+      (c) {
+        calloc.free(cm);
+        calloc.free(cr);
+        return c.complete(Scalar.fromPointer(p));
+      },
+    );
   }
 
   /// static method for computing image features used by the BRISQUE algorithm
@@ -90,16 +93,14 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [computeFeatures]
-  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>(
-        (callback) {
-          features ??= Mat.empty();
-          return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
-        },
-        (c) => c.complete(features),
-      );
+  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>((callback) {
+    features ??= Mat.empty();
+    return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
+  }, (c) => c.complete(features));
 
-  static final finalizer =
-      OcvFinalizer<cvg.QualityBRISQUEPtr>(ccontrib.addresses.cv_quality_QualityBRISQUE_close);
+  static final finalizer = OcvFinalizer<cvg.QualityBRISQUEPtr>(
+    ccontrib.addresses.cv_quality_QualityBRISQUE_close,
+  );
   @override
   cvg.QualityBRISQUE get ref => ptr.ref;
 }
@@ -154,11 +155,12 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
-        (callback) =>
-            ccontrib.cv_quality_QualityGMSD_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
-        (c) {
-      return c.complete((Scalar.fromPointer(p), qualityMap!));
-    });
+      (callback) =>
+          ccontrib.cv_quality_QualityGMSD_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
+      (c) {
+        return c.complete((Scalar.fromPointer(p), qualityMap!));
+      },
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityGMSDPtr>(ccontrib.addresses.cv_quality_QualityGMSD_close);
@@ -194,8 +196,9 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   /// async version of [compute]
   Future<Scalar> computeAsync(Mat cmpImgs) async {
     final p = calloc<cvg.Scalar>();
-    return cvRunAsync0((callback) => ccontrib.cv_quality_QualityMSE_compute(ref, cmpImgs.ref, p, callback),
-        (c) {
+    return cvRunAsync0((callback) => ccontrib.cv_quality_QualityMSE_compute(ref, cmpImgs.ref, p, callback), (
+      c,
+    ) {
       return c.complete(Scalar.fromPointer(p));
     });
   }
@@ -217,11 +220,12 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
-        (callback) =>
-            ccontrib.cv_quality_QualityMSE_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
-        (c) {
-      return c.complete((Scalar.fromPointer(p), qualityMap!));
-    });
+      (callback) =>
+          ccontrib.cv_quality_QualityMSE_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
+      (c) {
+        return c.complete((Scalar.fromPointer(p), qualityMap!));
+      },
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityMSEPtr>(ccontrib.addresses.cv_quality_QualityMSE_close);
@@ -291,16 +295,18 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_quality_QualityPSNR_compute_static(
-              img.ref,
-              cmp.ref,
-              maxPixelValue,
-              qualityMap!.ref,
-              p,
-              callback,
-            ), (c) {
-      return c.complete((Scalar.fromPointer(p), qualityMap!));
-    });
+      (callback) => ccontrib.cv_quality_QualityPSNR_compute_static(
+        img.ref,
+        cmp.ref,
+        maxPixelValue,
+        qualityMap!.ref,
+        p,
+        callback,
+      ),
+      (c) {
+        return c.complete((Scalar.fromPointer(p), qualityMap!));
+      },
+    );
   }
 
   double get maxPixelValue => ccontrib.cv_quality_QualityPSNR_getMaxPixelValue(ref);
@@ -357,19 +363,16 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(
-    Mat img,
-    Mat cmp, {
-    Mat? qualityMap,
-  }) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
-        (callback) =>
-            ccontrib.cv_quality_QualitySSIM_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
-        (c) {
-      return c.complete((Scalar.fromPointer(p), qualityMap!));
-    });
+      (callback) =>
+          ccontrib.cv_quality_QualitySSIM_compute_static(img.ref, cmp.ref, qualityMap!.ref, p, callback),
+      (c) {
+        return c.complete((Scalar.fromPointer(p), qualityMap!));
+      },
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.QualitySSIMPtr>(ccontrib.addresses.cv_quality_QualitySSIM_close);

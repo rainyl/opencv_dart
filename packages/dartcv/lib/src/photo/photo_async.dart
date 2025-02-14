@@ -13,24 +13,18 @@ import './photo.dart';
 extension MergeMertensAsync on MergeMertens {
   Future<Mat> processAsync(VecMat src) async {
     final dst = Mat.empty();
-    return cvRunAsync0(
-      (callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, callback),
-      (c) {
-        return c.complete(dst);
-      },
-    );
+    return cvRunAsync0((callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, callback), (c) {
+      return c.complete(dst);
+    });
   }
 }
 
 extension AlignMTBAsync on AlignMTB {
   Future<VecMat> processAsync(VecMat src) async {
     final dst = VecMat();
-    return cvRunAsync0(
-      (callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst.ptr, callback),
-      (c) {
-        return c.complete(dst);
-      },
-    );
+    return cvRunAsync0((callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst.ptr, callback), (c) {
+      return c.complete(dst);
+    });
   }
 }
 
@@ -50,13 +44,7 @@ Future<Mat> colorChangeAsync(
   );
 }
 
-Future<Mat> seamlessCloneAsync(
-  InputArray src,
-  InputArray dst,
-  InputArray mask,
-  Point p,
-  int flags,
-) async {
+Future<Mat> seamlessCloneAsync(InputArray src, InputArray dst, InputArray mask, Point p, int flags) async {
   final blend = Mat.empty();
   return cvRunAsync0(
     (callback) => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, callback),
@@ -113,14 +101,8 @@ Future<Mat> fastNlMeansDenoisingAsync(
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_fastNlMeansDenoising_1(
-      src.ref,
-      dst.ref,
-      h,
-      templateWindowSize,
-      searchWindowSize,
-      callback,
-    ),
+    (callback) =>
+        cphoto.cv_fastNlMeansDenoising_1(src.ref, dst.ref, h, templateWindowSize, searchWindowSize, callback),
     (c) {
       return c.complete(dst);
     },
@@ -179,18 +161,11 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
   );
 }
 
-Future<Mat> detailEnhanceAsync(
-  InputArray src, {
-  double sigmaS = 10,
-  double sigmaR = 0.15,
-}) async {
+Future<Mat> detailEnhanceAsync(InputArray src, {double sigmaS = 10, double sigmaR = 0.15}) async {
   final dst = Mat.empty();
-  return cvRunAsync0(
-    (callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, callback),
-    (c) {
-      return c.complete(dst);
-    },
-  );
+  return cvRunAsync0((callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, callback), (c) {
+    return c.complete(dst);
+  });
 }
 
 Future<Mat> edgePreservingFilterAsync(
@@ -217,51 +192,24 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_pencilSketch(
-      src.ref,
-      dst1.ref,
-      dst2.ref,
-      sigmaS,
-      sigmaR,
-      shadeFactor,
-      callback,
-    ),
+    (callback) => cphoto.cv_pencilSketch(src.ref, dst1.ref, dst2.ref, sigmaS, sigmaR, shadeFactor, callback),
     (c) {
       return c.complete((dst1, dst2));
     },
   );
 }
 
-Future<Mat> stylizationAsync(
-  InputArray src, {
-  double sigmaS = 60,
-  double sigmaR = 0.45,
-}) async {
+Future<Mat> stylizationAsync(InputArray src, {double sigmaS = 60, double sigmaR = 0.45}) async {
   final dst = Mat.empty();
-  return cvRunAsync0(
-    (callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, callback),
-    (c) {
-      return c.complete(dst);
-    },
-  );
+  return cvRunAsync0((callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, callback), (c) {
+    return c.complete(dst);
+  });
 }
 
-Future<Mat> inpaintAsync(
-  InputArray src,
-  InputArray inpaintMask,
-  double inpaintRadius,
-  int flags,
-) async {
+Future<Mat> inpaintAsync(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) async {
   final dst = Mat.empty();
   return cvRunAsync0(
-    (callback) => cphoto.cv_inpaint(
-      src.ref,
-      inpaintMask.ref,
-      dst.ref,
-      inpaintRadius,
-      flags,
-      callback,
-    ),
+    (callback) => cphoto.cv_inpaint(src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags, callback),
     (c) {
       return c.complete(dst);
     },

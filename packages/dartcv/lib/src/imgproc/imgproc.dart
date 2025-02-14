@@ -127,14 +127,7 @@ Mat calcHist(
 ///
 /// For futher details, please see:
 /// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
-Mat calcBackProject(
-  VecMat src,
-  VecI32 channels,
-  Mat hist,
-  VecF32 ranges, {
-  Mat? dst,
-  double scale = 1.0,
-}) {
+Mat calcBackProject(VecMat src, VecI32 channels, Mat hist, VecF32 ranges, {Mat? dst, double scale = 1.0}) {
   dst ??= Mat.empty();
   cvRun(
     () => cimgproc.cv_calcBackProject(
@@ -486,15 +479,8 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
   final p = calloc<ffi.Int>();
   cvRun(
-    () => cimgproc.cv_connectedComponents(
-      image.ref,
-      labels.ref,
-      connectivity,
-      ltype,
-      ccltype,
-      p,
-      ffi.nullptr,
-    ),
+    () =>
+        cimgproc.cv_connectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p, ffi.nullptr),
   );
   final rval = p.value;
   calloc.free(p);
@@ -560,12 +546,7 @@ Moments moments(Mat src, {bool binaryImage = false}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaf9bba239dfca11654cb7f50f889fc2ff
-Mat pyrDown(
-  Mat src, {
-  Mat? dst,
-  (int, int) dstsize = (0, 0),
-  int borderType = BORDER_DEFAULT,
-}) {
+Mat pyrDown(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   cvRun(() => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
@@ -575,12 +556,7 @@ Mat pyrDown(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gada75b59bdaaca411ed6fee10085eb784
-Mat pyrUp(
-  Mat src, {
-  Mat? dst,
-  (int, int) dstsize = (0, 0),
-  int borderType = BORDER_DEFAULT,
-}) {
+Mat pyrUp(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   cvRun(() => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
@@ -1053,13 +1029,7 @@ Mat HoughLinesPointSet(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
-(double, Mat dst) threshold(
-  InputArray src,
-  double thresh,
-  double maxval,
-  int type, {
-  OutputArray? dst,
-}) {
+(double, Mat dst) threshold(InputArray src, double thresh, double maxval, int type, {OutputArray? dst}) {
   dst ??= Mat.empty();
   final p = calloc<ffi.Double>();
   cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
@@ -1142,16 +1112,8 @@ Mat circle(
   int shift = 0,
 }) {
   cvRun(
-    () => cimgproc.cv_circle_1(
-      img.ref,
-      center.ref,
-      radius,
-      color.ref,
-      thickness,
-      lineType,
-      shift,
-      ffi.nullptr,
-    ),
+    () =>
+        cimgproc.cv_circle_1(img.ref, center.ref, radius, color.ref, thickness, lineType, shift, ffi.nullptr),
   );
   return img;
 }
@@ -1222,9 +1184,7 @@ Mat rectangle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(
-    () => cimgproc.cv_rectangle_1(img.ref, rect.ref, color.ref, thickness, lineType, shift, ffi.nullptr),
-  );
+  cvRun(() => cimgproc.cv_rectangle_1(img.ref, rect.ref, color.ref, thickness, lineType, shift, ffi.nullptr));
   return img;
 }
 
@@ -1241,9 +1201,7 @@ Mat fillPoly(
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  cvRun(
-    () => cimgproc.cv_fillPoly_1(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref, ffi.nullptr),
-  );
+  cvRun(() => cimgproc.cv_fillPoly_1(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref, ffi.nullptr));
   return img;
 }
 
@@ -1270,26 +1228,11 @@ Mat polylines(
 ///
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga3d2abfcb995fd2db908c8288199dba82
-(Size size, int baseline) getTextSize(
-  String text,
-  int fontFace,
-  double fontScale,
-  int thickness,
-) {
+(Size size, int baseline) getTextSize(String text, int fontFace, double fontScale, int thickness) {
   final pBaseline = calloc<ffi.Int>();
   final size = calloc<cvg.CvSize>();
   final textPtr = text.toNativeUtf8().cast<ffi.Char>();
-  cvRun(
-    () => cimgproc.cv_getTextSize(
-      textPtr,
-      fontFace,
-      fontScale,
-      thickness,
-      pBaseline,
-      size,
-      ffi.nullptr,
-    ),
-  );
+  cvRun(() => cimgproc.cv_getTextSize(textPtr, fontFace, fontScale, thickness, pBaseline, size, ffi.nullptr));
   final rval = (Size.fromPointer(size), pBaseline.value);
   calloc.free(pBaseline);
   return rval;

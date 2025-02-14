@@ -11,7 +11,7 @@ import 'exception.dart';
 
 extension type const MatType(int value) implements Object {
   const MatType.makeType(int depth, int channels)
-      : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
+    : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
 
   const MatType.CV_8UC(int channels) : this.makeType(CV_8U, channels);
   const MatType.CV_8SC(int channels) : this.makeType(CV_8S, channels);

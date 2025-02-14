@@ -29,9 +29,7 @@ ffi.DynamicLibrary loadNativeLibrary(String libName) {
     "windows" => "$libName.dll",
     "linux" || "android" || "fuchsia" => "lib$libName.so",
     "macos" => "lib$libName.dylib",
-    _ => throw UnsupportedError(
-        "Platform ${Platform.operatingSystem} not supported",
-      )
+    _ => throw UnsupportedError("Platform ${Platform.operatingSystem} not supported"),
   };
 
   final libPath = Platform.environment["DARTCV_LIB_PATH"] ?? defaultLibPath;

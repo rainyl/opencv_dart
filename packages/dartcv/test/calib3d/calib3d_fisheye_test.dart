@@ -48,8 +48,13 @@ void main() async {
     final distCoeffs = cv.Mat.empty();
 
     {
-      final (rval, rotationVectors, translationVectors) =
-          cv.Fisheye.calibrate(objectPoints, imagePoints, patternSize, cameraMatrix, distCoeffs);
+      final (rval, rotationVectors, translationVectors) = cv.Fisheye.calibrate(
+        objectPoints,
+        imagePoints,
+        patternSize,
+        cameraMatrix,
+        distCoeffs,
+      );
 
       expect(rval, greaterThan(10));
       expect(rotationVectors.isEmpty, false);
@@ -69,8 +74,13 @@ void main() async {
     }
 
     {
-      final (rval, rotationVectors, translationVectors) =
-          await cv.Fisheye.calibrateAsync(objectPoints, imagePoints, patternSize, cameraMatrix, distCoeffs);
+      final (rval, rotationVectors, translationVectors) = await cv.Fisheye.calibrateAsync(
+        objectPoints,
+        imagePoints,
+        patternSize,
+        cameraMatrix,
+        distCoeffs,
+      );
 
       expect(rval, greaterThan(10));
       expect(rotationVectors.isEmpty, false);
@@ -112,28 +122,46 @@ void main() async {
     final distCoeffs = cv.Mat.zeros(4, 1, cv.MatType.CV_64FC1);
 
     {
-      final (imagePoints, jacobian) =
-          cv.Fisheye.projectPoints(objectPoints, rvec, tvec, intrisicMat, distCoeffs);
+      final (imagePoints, jacobian) = cv.Fisheye.projectPoints(
+        objectPoints,
+        rvec,
+        tvec,
+        intrisicMat,
+        distCoeffs,
+      );
 
       expect(imagePoints.isEmpty, false);
       expect(jacobian.isEmpty, false);
 
-      final (rval, rv, tv) =
-          cv.Fisheye.solvePnP(objectPoints, imagePoints, cv.Mat.eye(3, 3, cv.MatType.CV_64FC1), distCoeffs);
+      final (rval, rv, tv) = cv.Fisheye.solvePnP(
+        objectPoints,
+        imagePoints,
+        cv.Mat.eye(3, 3, cv.MatType.CV_64FC1),
+        distCoeffs,
+      );
       expect(rval, true);
       expect(rv.isEmpty, false);
       expect(tv.isEmpty, false);
     }
 
     {
-      final (imagePoints, jacobian) =
-          await cv.Fisheye.projectPointsAsync(objectPoints, rvec, tvec, intrisicMat, distCoeffs);
+      final (imagePoints, jacobian) = await cv.Fisheye.projectPointsAsync(
+        objectPoints,
+        rvec,
+        tvec,
+        intrisicMat,
+        distCoeffs,
+      );
 
       expect(imagePoints.isEmpty, false);
       expect(jacobian.isEmpty, false);
 
       final (rval, rv, tv) = await cv.Fisheye.solvePnPAsync(
-          objectPoints, imagePoints, cv.Mat.eye(3, 3, cv.MatType.CV_64FC1), distCoeffs);
+        objectPoints,
+        imagePoints,
+        cv.Mat.eye(3, 3, cv.MatType.CV_64FC1),
+        distCoeffs,
+      );
       expect(rval, true);
       expect(rv.isEmpty, false);
       expect(tv.isEmpty, false);

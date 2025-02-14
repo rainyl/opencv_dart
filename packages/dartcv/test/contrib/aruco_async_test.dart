@@ -36,12 +36,7 @@ void main() async {
 
     final (corners, ids, _) = await detector.detectMarkersAsync(img);
     expect(corners.length, greaterThan(0));
-    await cv.arucoDrawDetectedMarkersAsync(
-      img,
-      corners,
-      ids,
-      cv.Scalar(200, 0, 0, 0),
-    );
+    await cv.arucoDrawDetectedMarkersAsync(img, corners, ids, cv.Scalar(200, 0, 0, 0));
     var diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, dst: diff);
     diff = cv.cvtColor(diff, cv.COLOR_BGR2GRAY);
@@ -52,12 +47,7 @@ void main() async {
     final imgExpected = cv.imread(arucoImage6x6_250_1, flags: cv.IMREAD_GRAYSCALE);
     expect(imgExpected.isEmpty, false);
 
-    final img = await cv.arucoGenerateImageMarkerAsync(
-      cv.PredefinedDictionaryType.DICT_6X6_250,
-      1,
-      200,
-      1,
-    );
+    final img = await cv.arucoGenerateImageMarkerAsync(cv.PredefinedDictionaryType.DICT_6X6_250, 1, 200, 1);
 
     final diff = cv.Mat.empty();
     cv.absDiff(img, imgExpected, dst: diff);

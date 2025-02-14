@@ -178,12 +178,11 @@ extension TrackerMILAsync on TrackerMIL {
       "boundingBox.bottom=${boundingBox.bottom} must be <= image.rows=${image.rows}",
     );
 
-    return cvRunAsync0(
-      (callback) => cvideo.cv_TrackerMIL_init(ref, image.ref, boundingBox.ref, callback),
-      (c) {
-        c.complete();
-      },
-    );
+    return cvRunAsync0((callback) => cvideo.cv_TrackerMIL_init(ref, image.ref, boundingBox.ref, callback), (
+      c,
+    ) {
+      c.complete();
+    });
   }
 
   /// Update the tracker, find the new most likely bounding box for the target.
@@ -191,14 +190,11 @@ extension TrackerMILAsync on TrackerMIL {
   Future<(bool, Rect)> updateAsync(Mat img) async {
     final bBox = calloc<cvg.CvRect>();
     final p = calloc<ffi.Bool>();
-    return cvRunAsync0(
-      (callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback),
-      (c) {
-        final rval = (p.value, Rect.fromPointer(bBox));
-        calloc.free(p);
-        return c.complete(rval);
-      },
-    );
+    return cvRunAsync0((callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback), (c) {
+      final rval = (p.value, Rect.fromPointer(bBox));
+      calloc.free(p);
+      return c.complete(rval);
+    });
   }
 }
 
@@ -222,19 +218,15 @@ extension KalmanFilterAsync on KalmanFilter {
   Future<Mat> predictAsync({Mat? control}) async {
     final dst = Mat.empty();
     if (control == null) {
-      return cvRunAsync0(
-        (callback) => cvideo.cv_KalmanFilter_predict(ref, dst.ptr, callback),
-        (c) {
-          return c.complete(dst);
-        },
-      );
-    }
-    return cvRunAsync0(
-      (callback) => cvideo.cv_KalmanFilter_predict_1(ref, control.ref, dst.ptr, callback),
-      (c) {
+      return cvRunAsync0((callback) => cvideo.cv_KalmanFilter_predict(ref, dst.ptr, callback), (c) {
         return c.complete(dst);
-      },
-    );
+      });
+    }
+    return cvRunAsync0((callback) => cvideo.cv_KalmanFilter_predict_1(ref, control.ref, dst.ptr, callback), (
+      c,
+    ) {
+      return c.complete(dst);
+    });
   }
 
   Future<void> initAsync(
