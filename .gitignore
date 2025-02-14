@@ -32,6 +32,7 @@ gh-md-toc
 publish/
 *.tar.gz
 *.exe
+.DS_Store
 packages/
 
 # Files and directories created by pub
