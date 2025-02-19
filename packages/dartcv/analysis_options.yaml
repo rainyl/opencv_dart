@@ -38,6 +38,9 @@ analyzer:
     missing_return: error
     non_constant_identifier_names: ignore
     parameter_assignments: error
+formatter:
+  pagewidth: 110
+
 linter:
   rules:
     - always_declare_return_types
