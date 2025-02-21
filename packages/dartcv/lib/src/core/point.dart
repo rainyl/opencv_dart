@@ -15,14 +15,13 @@ import 'vec.dart';
 class Point extends CvStruct<cvg.CvPoint> {
   Point.fromPointer(ffi.Pointer<cvg.CvPoint> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvPoint>());
     }
   }
   factory Point(int x, int y) {
-    final ptr =
-        calloc<cvg.CvPoint>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point.fromPointer(ptr);
   }
   factory Point.fromNative(cvg.CvPoint p) => Point(p.x, p.y);
@@ -51,14 +50,13 @@ class Point extends CvStruct<cvg.CvPoint> {
 class Point2f extends CvStruct<cvg.CvPoint2f> {
   Point2f.fromPointer(ffi.Pointer<cvg.CvPoint2f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvPoint2f>());
     }
   }
   factory Point2f(double x, double y) {
-    final ptr =
-        calloc<cvg.CvPoint2f>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint2f>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point2f.fromPointer(ptr);
   }
   factory Point2f.fromNative(cvg.CvPoint2f p) => Point2f(p.x, p.y);
@@ -87,14 +85,13 @@ class Point2f extends CvStruct<cvg.CvPoint2f> {
 class Point2d extends CvStruct<cvg.CvPoint2d> {
   Point2d.fromPointer(ffi.Pointer<cvg.CvPoint2d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvPoint2d>());
     }
   }
   factory Point2d(double x, double y) {
-    final ptr =
-        calloc<cvg.CvPoint2d>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint2d>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point2d.fromPointer(ptr);
   }
   factory Point2d.fromNative(cvg.CvPoint2d p) => Point2d(p.x, p.y);
@@ -123,15 +120,14 @@ class Point2d extends CvStruct<cvg.CvPoint2d> {
 class Point3f extends CvStruct<cvg.CvPoint3f> {
   Point3f.fromPointer(ffi.Pointer<cvg.CvPoint3f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvPoint3f>());
     }
   }
   factory Point3f(double x, double y, double z) {
-    final ptr =
-        calloc<cvg.CvPoint3f>()
-          ..ref.x = x
-          ..ref.y = y
-          ..ref.z = z;
+    final ptr = calloc<cvg.CvPoint3f>()
+      ..ref.x = x
+      ..ref.y = y
+      ..ref.z = z;
     return Point3f.fromPointer(ptr);
   }
   factory Point3f.fromNative(cvg.CvPoint3f p) => Point3f(p.x, p.y, p.z);
@@ -163,15 +159,14 @@ class Point3f extends CvStruct<cvg.CvPoint3f> {
 class Point3i extends CvStruct<cvg.CvPoint3i> {
   Point3i.fromPointer(ffi.Pointer<cvg.CvPoint3i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvPoint3i>());
     }
   }
   factory Point3i(int x, int y, int z) {
-    final ptr =
-        calloc<cvg.CvPoint3i>()
-          ..ref.x = x
-          ..ref.y = y
-          ..ref.z = z;
+    final ptr = calloc<cvg.CvPoint3i>()
+      ..ref.x = x
+      ..ref.y = y
+      ..ref.z = z;
     return Point3i.fromPointer(ptr);
   }
   factory Point3i.fromNative(cvg.CvPoint3i p) => Point3i(p.x, p.y, p.z);
@@ -201,9 +196,14 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
 }
 
 class VecPoint extends Vec<cvg.VecPoint, Point> {
-  VecPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecPoint.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvPoint>(),
+      );
     }
   }
 
@@ -218,7 +218,7 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
       ccore.std_VecPoint_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint.fromPointer(p);
+    return VecPoint.fromPointer(p, length: length);
   }
 
   factory VecPoint.fromMat(Mat mat) {
@@ -290,9 +290,14 @@ class VecPointIterator extends VecIterator<Point> {
 }
 
 class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
-  VecPoint2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecPoint2f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvPoint2f>(),
+      );
     }
   }
 
@@ -309,7 +314,7 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
       ccore.std_VecPoint2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint2f.fromPointer(p);
+    return VecPoint2f.fromPointer(p, length: length);
   }
 
   factory VecPoint2f.fromMat(Mat mat) {
@@ -381,9 +386,14 @@ class VecPoint2fIterator extends VecIterator<Point2f> {
 }
 
 class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
-  VecPoint3f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecPoint3f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvPoint3f>(),
+      );
     }
   }
 
@@ -400,7 +410,7 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
       ccore.std_VecPoint3f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint3f.fromPointer(p);
+    return VecPoint3f.fromPointer(p, length: length);
   }
 
   factory VecPoint3f.fromMat(Mat mat) {
@@ -472,9 +482,14 @@ class VecPoint3fIterator extends VecIterator<Point3f> {
 }
 
 class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
-  VecPoint3i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecPoint3i.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvPoint3i>(),
+      );
     }
   }
 
@@ -491,7 +506,7 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
       ccore.std_VecPoint3i_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecPoint3i.fromPointer(p);
+    return VecPoint3i.fromPointer(p, length: length);
   }
 
   factory VecPoint3i.fromMat(Mat mat) {
@@ -564,9 +579,9 @@ class VecPoint3iIterator extends VecIterator<Point3i> {
 
 // VecVecPoint
 class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
-  VecVecPoint.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVecPoint.fromPointer(super.ptr, {bool attach = true, int? externalSize}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this, externalSize: externalSize);
     }
   }
 
@@ -579,12 +594,14 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
 
   factory VecVecPoint.generate(int length, VecPoint Function(int i) generator, {bool dispose = true}) {
     final p = ccore.std_VecVecPoint_new(length);
+    int count = 0;
     for (var i = 0; i < length; i++) {
       final v = generator(i);
+      count += v.length;
       ccore.std_VecVecPoint_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint.fromPointer(p);
+    return VecVecPoint.fromPointer(p, externalSize: count * ffi.sizeOf<cvg.CvPoint>());
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVecPointPtr>(ccore.addresses.std_VecVecPoint_free);
@@ -614,15 +631,15 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), false);
+  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
 
   List<List<Point>> copyToList() => List.generate(
-    length,
-    (i) => List.generate(
-      ccore.std_VecVecPoint_length_i(ptr, i),
-      (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
-    ),
-  );
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint_length_i(ptr, i),
+          (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
@@ -634,13 +651,13 @@ class VecVecPointIterator extends VecIterator<VecPoint> {
 
   /// return the reference
   @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), false);
+  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
 }
 
 class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
-  VecVecPoint2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVecPoint2f.fromPointer(super.ptr, {bool attach = true, int? externalSize}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this, externalSize: externalSize);
     }
   }
 
@@ -653,12 +670,14 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
 
   factory VecVecPoint2f.generate(int length, VecPoint2f Function(int i) generator, {bool dispose = true}) {
     final p = ccore.std_VecVecPoint2f_new(length);
+    int count = 0;
     for (var i = 0; i < length; i++) {
       final v = generator(i);
+      count += v.length;
       ccore.std_VecVecPoint2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint2f.fromPointer(p);
+    return VecVecPoint2f.fromPointer(p, externalSize: count * ffi.sizeOf<cvg.CvPoint2f>());
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVecPoint2fPtr>(ccore.addresses.std_VecVecPoint2f_free);
@@ -688,15 +707,16 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), false);
+  VecPoint2f operator [](int idx) =>
+      VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
 
   List<List<Point2f>> copyToList() => List.generate(
-    length,
-    (i) => List.generate(
-      ccore.std_VecVecPoint2f_length_i(ptr, i),
-      (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
-    ),
-  );
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint2f_length_i(ptr, i),
+          (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
@@ -708,13 +728,14 @@ class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
 
   /// return the reference
   @override
-  VecPoint2f operator [](int idx) => VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), false);
+  VecPoint2f operator [](int idx) =>
+      VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
 }
 
 class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
-  VecVecPoint3f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVecPoint3f.fromPointer(super.ptr, {bool attach = true, int? externalSize}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this, externalSize: externalSize);
     }
   }
 
@@ -727,12 +748,14 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
 
   factory VecVecPoint3f.generate(int length, VecPoint3f Function(int i) generator, {bool dispose = true}) {
     final p = ccore.std_VecVecPoint3f_new(length);
+    int count = 0;
     for (var i = 0; i < length; i++) {
       final v = generator(i);
+      count += v.length;
       ccore.std_VecVecPoint3f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVecPoint3f.fromPointer(p);
+    return VecVecPoint3f.fromPointer(p, externalSize: count * ffi.sizeOf<cvg.CvPoint3f>());
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVecPoint3fPtr>(ccore.addresses.std_VecVecPoint3f_free);
@@ -762,15 +785,16 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
   @override
-  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), false);
+  VecPoint3f operator [](int idx) =>
+      VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
 
   List<List<Point3f>> copyToList() => List.generate(
-    length,
-    (i) => List.generate(
-      ccore.std_VecVecPoint3f_length_i(ptr, i),
-      (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
-    ),
-  );
+        length,
+        (i) => List.generate(
+          ccore.std_VecVecPoint3f_length_i(ptr, i),
+          (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
+        ),
+      );
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
@@ -782,7 +806,8 @@ class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
 
   /// return the reference
   @override
-  VecPoint3f operator [](int idx) => VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), false);
+  VecPoint3f operator [](int idx) =>
+      VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
 }
 
 extension ListPointExtension on List<Point> {
@@ -811,8 +836,6 @@ extension ListListPointExtension on List<List<Point>> {
 }
 
 extension VecPointExtension on VecPoint {
-  @Deprecated("use asVecVec() instead")
-  VecVecPoint get toVecVecPoint => VecVecPoint.fromVecPoint(this);
   VecVecPoint asVecVec() => VecVecPoint.fromVecPoint(this);
 }
 
@@ -827,19 +850,13 @@ extension ListListPoint3fExtension on List<List<Point3f>> {
 }
 
 extension PointRecordExtension on (int x, int y) {
-  @Deprecated("use toPoint() instead")
-  Point get asPoint => Point(this.$1, this.$2);
   Point toPoint() => Point(this.$1, this.$2);
 }
 
 extension Point2fRecordExtension on (double x, double y) {
-  @Deprecated("use toPoint2f() instead")
-  Point2f get asPoint2f => Point2f(this.$1, this.$2);
   Point2f toPoint2f() => Point2f(this.$1, this.$2);
 }
 
 extension Point3fRecordExtension on (double x, double y, double z) {
-  @Deprecated("use toPoint3f() instead")
-  Point3f get asPoint3f => Point3f(this.$1, this.$2, this.$3);
   Point3f toPoint3f() => Point3f(this.$1, this.$2, this.$3);
 }

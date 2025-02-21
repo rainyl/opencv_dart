@@ -18,16 +18,15 @@ import 'base.dart';
 class TermCriteria extends CvStruct<cvg.TermCriteria> {
   TermCriteria.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.TermCriteria>());
     }
   }
 
   factory TermCriteria(int type, int cound, double eps) {
-    final p =
-        calloc<cvg.TermCriteria>()
-          ..ref.type = type
-          ..ref.maxCount = cound
-          ..ref.epsilon = eps;
+    final p = calloc<cvg.TermCriteria>()
+      ..ref.type = type
+      ..ref.maxCount = cound
+      ..ref.epsilon = eps;
     return TermCriteria.fromPointer(p);
   }
 

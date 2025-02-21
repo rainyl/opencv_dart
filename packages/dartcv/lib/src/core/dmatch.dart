@@ -14,9 +14,9 @@ import 'base.dart';
 import 'vec.dart';
 
 class DMatch extends CvStruct<cvg.DMatch> {
-  DMatch._(ffi.Pointer<cvg.DMatch> ptr, {bool attach = true, int? externalSize}) : super.fromPointer(ptr) {
+  DMatch._(ffi.Pointer<cvg.DMatch> ptr, {bool attach = true}) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this, externalSize: externalSize);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.DMatch>());
     }
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
@@ -25,11 +25,10 @@ class DMatch extends CvStruct<cvg.DMatch> {
       ..ref.trainIdx = trainIdx
       ..ref.imgIdx = imgIdx
       ..ref.distance = distance;
-    return DMatch._(ptr, externalSize: ffi.sizeOf<cvg.DMatch>());
+    return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);
-  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, {bool attach = true, int? externalSize}) =>
-      DMatch._(p, attach: attach, externalSize: externalSize);
+  factory DMatch.fromPointer(ffi.Pointer<cvg.DMatch> p, {bool attach = true}) => DMatch._(p, attach: attach);
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 

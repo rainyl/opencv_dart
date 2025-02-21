@@ -7,11 +7,13 @@
 
 library cv;
 
+import 'dart:ffi';
+
 import 'exception.dart';
 
 extension type const MatType(int value) implements Object {
   const MatType.makeType(int depth, int channels)
-    : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
+      : value = (depth & (CV_DEPTH_MAX - 1)) | ((channels - 1) << CV_CN_SHIFT);
 
   const MatType.CV_8UC(int channels) : this.makeType(CV_8U, channels);
   const MatType.CV_8SC(int channels) : this.makeType(CV_8S, channels);
@@ -22,16 +24,25 @@ extension type const MatType(int value) implements Object {
   const MatType.CV_64FC(int channels) : this.makeType(CV_64F, channels);
   const MatType.CV_16FC(int channels) : this.makeType(CV_16F, channels);
 
-  int get depth => value & (CV_DEPTH_MAX - 1);
+  int get depth => value & CV_MAT_DEPTH_MASK;
   bool get isInteger => depth < CV_32F;
   int get channels => (value >> CV_CN_SHIFT) + 1;
 
-  @Deprecated("Use value instead")
-  int toInt32() => value;
+  // https://github.com/opencv/opencv/blob/a256886838c00f0c7397a4c28c3b009aad3f127c/modules/gapi/include/opencv2/gapi/own/cvdefs.hpp#L124
+  // 0x3a50 = 11 10 10 01 01 00 00 ~ array of log2(sizeof(arr_type_elem))
+  // #define CV_ELEM_SIZE(type) \
+  // (CV_MAT_CN(type) << ((((sizeof(size_t)/4+1)*16384|0x3a50) >> CV_MAT_DEPTH(type)*2) & 3))
+  int get elemSize => channels << (((((sizeOf<Size>() / 4).toInt() + 1) * 16384 | 0x3a50) >> depth * 2) & 3);
+  // Size of each channel item,
+  // 0x8442211 = 1000 0100 0100 0010 0010 0001 0001 ~ array of sizeof(arr_type_elem) */
+  // #define CV_ELEM_SIZE1(type) \
+  //  ((((sizeof(size_t)<<28)|0x8442211) >> CV_MAT_DEPTH(type)*4) & 15)
+  int get elemSize1 => (((sizeOf<Size>() << 28) | 0x8442211) >> depth * 4) & 15;
 
   static const int CV_CN_MAX = 512;
   static const int CV_CN_SHIFT = 3;
   static const int CV_DEPTH_MAX = 1 << CV_CN_SHIFT;
+  static const int CV_MAT_DEPTH_MASK = CV_DEPTH_MAX - 1;
 
   // type depth constants
   static const int CV_8U = 0;

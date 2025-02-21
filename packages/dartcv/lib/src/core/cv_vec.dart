@@ -1404,13 +1404,13 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 }
 
 class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
-  VecVec4i.fromPointer(super.ptr, {bool attach = true, int length = 0}) : super.fromPointer() {
+  VecVec4i.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
       finalizer.attach(
         this,
         ptr.cast<ffi.Void>(),
         detach: this,
-        externalSize: length * ffi.sizeOf<cvg.Vec4i>(),
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec4i>(),
       );
     }
   }
@@ -1492,9 +1492,14 @@ class VecVec4iIterator extends VecIterator<Vec4i> {
 }
 
 class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
-  VecVec4f.fromPointer(super.ptr, {bool attach = true, int length = 0}) : super.fromPointer() {
+  VecVec4f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4f>());
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec4f>(),
+      );
     }
   }
 
@@ -1575,13 +1580,13 @@ class VecVec4fIterator extends VecIterator<Vec4f> {
 }
 
 class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
-  VecVec6f.fromPointer(super.ptr, {bool attach = true, int length = 0}) : super.fromPointer() {
+  VecVec6f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
       finalizer.attach(
         this,
         ptr.cast<ffi.Void>(),
         detach: this,
-        externalSize: length * ffi.sizeOf<cvg.Vec6f>(),
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec6f>(),
       );
     }
   }

@@ -12,25 +12,23 @@ import 'base.dart';
 class Size extends CvStruct<cvg.CvSize> {
   Size.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvSize>());
     }
   }
 
   factory Size(int width, int height) {
-    final p =
-        calloc<cvg.CvSize>()
-          ..ref.height = height
-          ..ref.width = width;
+    final p = calloc<cvg.CvSize>()
+      ..ref.height = height
+      ..ref.width = width;
     return Size.fromPointer(p);
   }
 
   factory Size.fromNative(cvg.CvSize sz) => Size(sz.width, sz.height);
 
   factory Size.fromRecord((int, int) record) {
-    final p =
-        calloc<cvg.CvSize>()
-          ..ref.height = record.$2
-          ..ref.width = record.$1;
+    final p = calloc<cvg.CvSize>()
+      ..ref.height = record.$2
+      ..ref.width = record.$1;
     return Size.fromPointer(p);
   }
 
@@ -62,33 +60,30 @@ class Size extends CvStruct<cvg.CvSize> {
 class Size2f extends CvStruct<cvg.CvSize2f> {
   Size2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvSize2f>());
     }
   }
 
   factory Size2f(double width, double height) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = height
-          ..ref.width = width;
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = height
+      ..ref.width = width;
     return Size2f.fromPointer(p);
   }
 
   factory Size2f.fromNative(cvg.CvSize2f sz) => Size2f(sz.width, sz.height);
 
   factory Size2f.fromRecord((double, double) record) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = record.$2
-          ..ref.width = record.$1;
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = record.$2
+      ..ref.width = record.$1;
     return Size2f.fromPointer(p);
   }
 
   factory Size2f.fromSize(Size size) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = size.height.toDouble()
-          ..ref.width = size.width.toDouble();
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = size.height.toDouble()
+      ..ref.width = size.width.toDouble();
     return Size2f.fromPointer(p);
   }
 
