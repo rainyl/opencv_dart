@@ -20,11 +20,12 @@ class DMatch extends CvStruct<cvg.DMatch> {
     }
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
-    final ptr = calloc<cvg.DMatch>()
-      ..ref.queryIdx = queryIdx
-      ..ref.trainIdx = trainIdx
-      ..ref.imgIdx = imgIdx
-      ..ref.distance = distance;
+    final ptr =
+        calloc<cvg.DMatch>()
+          ..ref.queryIdx = queryIdx
+          ..ref.trainIdx = trainIdx
+          ..ref.imgIdx = imgIdx
+          ..ref.distance = distance;
     return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);
@@ -151,9 +152,9 @@ class VecVecDMatch extends VecUnmodifible<cvg.VecVecDMatch, VecDMatch> {
   }
 
   factory VecVecDMatch([int length = 0]) => VecVecDMatch.fromPointer(
-        ccore.std_VecVecDMatch_new(length),
-        externalSize: length * ffi.sizeOf<cvg.VecDMatch>(), // TODO: this is not accurate
-      );
+    ccore.std_VecVecDMatch_new(length),
+    externalSize: length * ffi.sizeOf<cvg.VecDMatch>(), // TODO: this is not accurate
+  );
 
   factory VecVecDMatch.fromList(List<List<DMatch>> pts) =>
       VecVecDMatch.generate(pts.length, (i) => VecDMatch.fromList(pts[i]), dispose: false);
@@ -200,12 +201,12 @@ class VecVecDMatch extends VecUnmodifible<cvg.VecVecDMatch, VecDMatch> {
       VecDMatch.fromPointer(ccore.std_VecVecDMatch_get_p(ptr, idx), attach: false);
 
   List<List<DMatch>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecDMatch_length_i(ptr, i),
-          (j) => DMatch.fromPointer(ccore.std_VecVecDMatch_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecDMatch_length_i(ptr, i),
+      (j) => DMatch.fromPointer(ccore.std_VecVecDMatch_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecDMatchIterator extends VecIterator<VecDMatch> {

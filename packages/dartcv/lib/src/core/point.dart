@@ -19,9 +19,10 @@ class Point extends CvStruct<cvg.CvPoint> {
     }
   }
   factory Point(int x, int y) {
-    final ptr = calloc<cvg.CvPoint>()
-      ..ref.x = x
-      ..ref.y = y;
+    final ptr =
+        calloc<cvg.CvPoint>()
+          ..ref.x = x
+          ..ref.y = y;
     return Point.fromPointer(ptr);
   }
   factory Point.fromNative(cvg.CvPoint p) => Point(p.x, p.y);
@@ -54,9 +55,10 @@ class Point2f extends CvStruct<cvg.CvPoint2f> {
     }
   }
   factory Point2f(double x, double y) {
-    final ptr = calloc<cvg.CvPoint2f>()
-      ..ref.x = x
-      ..ref.y = y;
+    final ptr =
+        calloc<cvg.CvPoint2f>()
+          ..ref.x = x
+          ..ref.y = y;
     return Point2f.fromPointer(ptr);
   }
   factory Point2f.fromNative(cvg.CvPoint2f p) => Point2f(p.x, p.y);
@@ -89,9 +91,10 @@ class Point2d extends CvStruct<cvg.CvPoint2d> {
     }
   }
   factory Point2d(double x, double y) {
-    final ptr = calloc<cvg.CvPoint2d>()
-      ..ref.x = x
-      ..ref.y = y;
+    final ptr =
+        calloc<cvg.CvPoint2d>()
+          ..ref.x = x
+          ..ref.y = y;
     return Point2d.fromPointer(ptr);
   }
   factory Point2d.fromNative(cvg.CvPoint2d p) => Point2d(p.x, p.y);
@@ -124,10 +127,11 @@ class Point3f extends CvStruct<cvg.CvPoint3f> {
     }
   }
   factory Point3f(double x, double y, double z) {
-    final ptr = calloc<cvg.CvPoint3f>()
-      ..ref.x = x
-      ..ref.y = y
-      ..ref.z = z;
+    final ptr =
+        calloc<cvg.CvPoint3f>()
+          ..ref.x = x
+          ..ref.y = y
+          ..ref.z = z;
     return Point3f.fromPointer(ptr);
   }
   factory Point3f.fromNative(cvg.CvPoint3f p) => Point3f(p.x, p.y, p.z);
@@ -163,10 +167,11 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
     }
   }
   factory Point3i(int x, int y, int z) {
-    final ptr = calloc<cvg.CvPoint3i>()
-      ..ref.x = x
-      ..ref.y = y
-      ..ref.z = z;
+    final ptr =
+        calloc<cvg.CvPoint3i>()
+          ..ref.x = x
+          ..ref.y = y
+          ..ref.z = z;
     return Point3i.fromPointer(ptr);
   }
   factory Point3i.fromNative(cvg.CvPoint3i p) => Point3i(p.x, p.y, p.z);
@@ -634,12 +639,12 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
 
   List<List<Point>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint_length_i(ptr, i),
-          (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint_length_i(ptr, i),
+      (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
@@ -711,12 +716,12 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
       VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
 
   List<List<Point2f>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint2f_length_i(ptr, i),
-          (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint2f_length_i(ptr, i),
+      (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
@@ -789,12 +794,12 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
       VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
 
   List<List<Point3f>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint3f_length_i(ptr, i),
-          (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint3f_length_i(ptr, i),
+      (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
