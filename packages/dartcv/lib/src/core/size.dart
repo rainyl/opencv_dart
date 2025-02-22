@@ -12,7 +12,7 @@ import 'base.dart';
 class Size extends CvStruct<cvg.CvSize> {
   Size.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvSize>());
     }
   }
 
@@ -62,7 +62,7 @@ class Size extends CvStruct<cvg.CvSize> {
 class Size2f extends CvStruct<cvg.CvSize2f> {
   Size2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvSize2f>());
     }
   }
 

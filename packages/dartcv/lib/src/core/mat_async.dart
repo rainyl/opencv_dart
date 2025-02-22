@@ -22,7 +22,7 @@ extension MatAsync on Mat {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, callback),
-      (c) => c.complete(Mat.fromPointer(p)),
+      (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
     );
   }
 
@@ -44,7 +44,7 @@ extension MatAsync on Mat {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_eye(rows, cols, type.value, p, callback),
-      (c) => c.complete(Mat.fromPointer(p)),
+      (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
     );
   }
 
@@ -52,7 +52,7 @@ extension MatAsync on Mat {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_zeros(rows, cols, type.value, p, callback),
-      (c) => c.complete(Mat.fromPointer(p)),
+      (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
     );
   }
 
@@ -60,7 +60,7 @@ extension MatAsync on Mat {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_ones(rows, cols, type.value, p, callback),
-      (c) => c.complete(Mat.fromPointer(p)),
+      (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
     );
   }
 

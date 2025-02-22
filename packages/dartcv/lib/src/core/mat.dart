@@ -20,9 +20,9 @@ import 'size.dart';
 import 'vec.dart';
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  Mat._(cvg.MatPtr ptr, {bool attach = true, int? externalSize}) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: externalSize);
     }
   }
 
@@ -32,13 +32,14 @@ class Mat extends CvStruct<cvg.Mat> {
   /// otherwise a copy will be created.
   factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
     final p = calloc<cvg.Mat>();
+    final (rows, cols, elemsize) = (mat.rows, mat.cols, mat.elemSize);
     cvRun(
       () =>
           roi == null
-              ? ccore.cv_Mat_create_11(mat.ref, mat.rows, mat.cols, mat.type.value, 0, 0, p, ffi.nullptr)
+              ? ccore.cv_Mat_create_11(mat.ref, rows, cols, mat.type.value, 0, 0, p, ffi.nullptr)
               : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
     );
-    final dst = Mat._(p, false);
+    final dst = Mat._(p, attach: false, externalSize: rows * cols * elemsize);
     if (copy) return dst.clone();
     return dst;
   }
@@ -70,7 +71,7 @@ class Mat extends CvStruct<cvg.Mat> {
     try {
       // copy
       cvRun(() => ccore.cv_Mat_create_6(rows, cols, type.value, xdata.asVoid(), p, ffi.nullptr));
-      return Mat._(p);
+      return Mat._(p, externalSize: rows * cols * type.elemSize);
     } catch (e) {
       calloc.free(p);
       rethrow;
@@ -127,12 +128,13 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   /// construct from pointer directly
-  factory Mat.fromPointer(cvg.MatPtr mat, [bool attach = true]) => Mat._(mat, attach);
+  factory Mat.fromPointer(cvg.MatPtr mat, {bool attach = true, int? externalSize}) =>
+      Mat._(mat, attach: attach, externalSize: externalSize);
 
   factory Mat.empty() {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_create(p));
-    final mat = Mat._(p);
+    final mat = Mat._(p); // Mat created from Mat.empty tends to be changed, we can't know the size.
     return mat;
   }
 
@@ -153,7 +155,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.fromBuffer(int rows, int cols, MatType type, ffi.Pointer<ffi.Void> buff) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, buff, p, ffi.nullptr));
-    return Mat._(p);
+    return Mat._(p); // external data is not managed by OpenCV
   }
 
   /// [rows]	Number of rows in a 2D array.
@@ -169,7 +171,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p);
+    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
     return mat;
   }
 
@@ -218,7 +220,7 @@ class Mat extends CvStruct<cvg.Mat> {
       final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
       final p = calloc<cvg.Mat>();
       cvRun(() => ccore.cv_Mat_create_5(scalar.ref, rows, cols, type!.value, p, ffi.nullptr));
-      final mat = Mat._(p);
+      final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
       return mat;
     }
   }
@@ -230,7 +232,7 @@ class Mat extends CvStruct<cvg.Mat> {
     final p = calloc<cvg.Mat>();
     colEnd ??= mat.cols;
     cvRun(() => ccore.cv_Mat_create_12(mat.ref, rowStart, rowEnd, colStart, colEnd!, p, ffi.nullptr));
-    return Mat._(p);
+    return Mat._(p, externalSize: (rowEnd - rowStart) * (colEnd - colStart) * mat.type.elemSize);
   }
 
   /// Returns an identity matrix of the specified size and type.
@@ -255,7 +257,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.eye(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_eye(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p);
+    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
     return mat;
   }
 
@@ -282,7 +284,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.zeros(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_zeros(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p);
+    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
     return mat;
   }
 
@@ -306,7 +308,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.ones(int rows, int cols, MatType type) {
     final p = calloc<cvg.Mat>();
     cvRun(() => ccore.cv_Mat_ones(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p);
+    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
     return mat;
   }
 
@@ -1456,7 +1458,6 @@ class Mat extends CvStruct<cvg.Mat> {
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.cv_Mat_close);
 
-  @Deprecated("NOT recommended, call [dispose] instead")
   void release() => cvRun(() => ccore.cv_Mat_release(ref));
 
   void dispose() {

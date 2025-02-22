@@ -1,3 +1,10 @@
+## 1.1.4
+
+* remove deprecated `MatType.toInt()`, should use MatType.value instead
+* add `MatType.elemSize` `MatType.elemSize1`
+* remove deprecated `(double x, double y, double z).asPoint3f`
+  `(double x, double y).asPoint2f` `(int x, int y).asPoint` `VecPoint.toVecVecPoint`
+
 ## 1.1.3
 
 * add `VideoCapture.grabAsync`

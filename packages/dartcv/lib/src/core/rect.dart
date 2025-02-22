@@ -16,7 +16,7 @@ import 'vec.dart';
 class Rect extends CvStruct<cvg.CvRect> {
   Rect._(ffi.Pointer<cvg.CvRect> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvRect>());
     }
   }
   factory Rect(int x, int y, int width, int height) {
@@ -64,7 +64,7 @@ class Rect extends CvStruct<cvg.CvRect> {
 class Rect2f extends CvStruct<cvg.CvRect2f> {
   Rect2f._(ffi.Pointer<cvg.CvRect2f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.CvRect2f>());
     }
   }
   factory Rect2f(double x, double y, double width, double height) {
@@ -113,7 +113,7 @@ class Rect2f extends CvStruct<cvg.CvRect2f> {
 class RotatedRect extends CvStruct<cvg.RotatedRect> {
   RotatedRect._(ffi.Pointer<cvg.RotatedRect> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.RotatedRect>());
     }
   }
   factory RotatedRect(Point2f center, (double, double) size, double angle) {
@@ -178,9 +178,14 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 }
 
 class VecRect extends Vec<cvg.VecRect, Rect> {
-  VecRect.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecRect.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvRect>(),
+      );
     }
   }
 
@@ -196,7 +201,7 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
       ccore.std_VecRect_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecRect.fromPointer(p);
+    return VecRect.fromPointer(p, length: length);
   }
 
   static final finalizer = OcvFinalizer<cvg.VecRectPtr>(ccore.addresses.std_VecRect_free);
@@ -262,9 +267,14 @@ class VecRectIterator extends VecIterator<Rect> {
 }
 
 class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
-  VecRect2f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecRect2f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.CvRect2f>(),
+      );
     }
   }
 
@@ -281,7 +291,7 @@ class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
       ccore.std_VecRect2f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecRect2f.fromPointer(p);
+    return VecRect2f.fromPointer(p, length: length);
   }
 
   static final finalizer = OcvFinalizer<cvg.VecRect2fPtr>(ccore.addresses.std_VecRect2f_free);

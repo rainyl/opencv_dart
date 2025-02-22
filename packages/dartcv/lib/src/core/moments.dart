@@ -15,7 +15,7 @@ import 'base.dart';
 class Moments extends CvStruct<cvg.Moment> {
   Moments._(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Moment>());
     }
   }
 
