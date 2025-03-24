@@ -78,6 +78,36 @@ android {
               }
             }
           }
+
+          def targetPlatforms = project.getProperty('target-platform').split(',') as List
+          if (!targetPlatforms.isEmpty()) {
+            // ignore not use abi
+            def excludeList = ['arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64']
+
+            targetPlatforms.each { platform ->
+              if (platform.equals('android-arm64')) {
+                excludeList.remove('arm64-v8a')
+              }
+              if (platform.equals('android-arm')) {
+                excludeList.remove('armeabi-v7a')
+              }
+              if (platform.equals('android-x86')) {
+                excludeList.remove('x86')
+              }
+              if (platform.equals('android-x64')) {
+                excludeList.remove('x86_64')
+              }
+            }
+
+            println "[OPENCV_CORE] only support platform : $targetPlatforms"
+            println "[OPENCV_CORE] exclude abi : $excludeList"
+            packagingOptions {
+              excludeList.each {
+                exclude "lib/$it/*"
+              }
+            }
+          }
+        }
       }
     }
 }
