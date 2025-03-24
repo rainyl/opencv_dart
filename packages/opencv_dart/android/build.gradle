@@ -2,22 +2,22 @@ group 'dev.rainyl.opencv_dart'
 version '1.0'
 
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 
-    dependencies {
-        // The Android Gradle Plugin knows how to build native code with the NDK.
-        classpath("com.android.tools.build:gradle:8.1.0")
-    }
+  dependencies {
+    // The Android Gradle Plugin knows how to build native code with the NDK.
+    classpath("com.android.tools.build:gradle:8.1.0")
+  }
 }
 
 rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 }
 
 apply plugin: 'com.android.library'
@@ -25,88 +25,83 @@ apply plugin: 'com.android.library'
 def SOURCE_DIR = project.buildscript.sourceFile.parentFile
 
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace 'dev.rainyl.opencv_dart'
+  if (project.android.hasProperty("namespace")) {
+    namespace 'dev.rainyl.opencv_dart'
+  }
+
+  // Bumping the plugin compileSdk version requires all clients of this plugin
+  // to bump the version in their app.
+  compileSdk 33
+
+  // Use the NDK version declared in /android/app/build.gradle file of the Flutter project.
+  // Replace it with a version number if this plugin requires a specific NDK version.
+  // (e.g. ndkVersion "23.1.7779620")
+  // ndkVersion = android.ndkVersion
+
+  // Invoke the shared CMake build with the Android Gradle Plugin.
+  externalNativeBuild {
+    cmake {
+      path "../src/CMakeLists.txt"
+
+      // The default CMake version for the Android Gradle Plugin is 3.10.2.
+      // https://developer.android.com/studio/projects/install-ndk#vanilla_cmake
+      //
+      // The Flutter tooling requires that developers have CMake 3.10 or later
+      // installed. You should not increase this version, as doing so will cause
+      // the plugin to fail to compile for some customers of the plugin.
+      // version "3.10.2"
     }
+  }
 
-    // Bumping the plugin compileSdk version requires all clients of this plugin
-    // to bump the version in their app.
-    compileSdk 33
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 
-    // Use the NDK version declared in /android/app/build.gradle file of the Flutter project.
-    // Replace it with a version number if this plugin requires a specific NDK version.
-    // (e.g. ndkVersion "23.1.7779620")
-    // ndkVersion = android.ndkVersion
+  defaultConfig {
+    minSdkVersion 24
 
     // Invoke the shared CMake build with the Android Gradle Plugin.
     externalNativeBuild {
-        cmake {
-            path "../src/CMakeLists.txt"
-
-            // The default CMake version for the Android Gradle Plugin is 3.10.2.
-            // https://developer.android.com/studio/projects/install-ndk#vanilla_cmake
-            //
-            // The Flutter tooling requires that developers have CMake 3.10 or later
-            // installed. You should not increase this version, as doing so will cause
-            // the plugin to fail to compile for some customers of the plugin.
-            // version "3.10.2"
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        minSdkVersion 24
-
-        // Invoke the shared CMake build with the Android Gradle Plugin.
-        externalNativeBuild {
-            cmake {
-                arguments "-DANDROID_ARM_NEON=TRUE",
-                  "-DANDROID_STL=c++_static",
-                  "-DCMAKE_INSTALL_PREFIX=$SOURCE_DIR/src/main/jniLibs"
-            }
-        }
-
-        buildTypes {
-          release {
-            externalNativeBuild {
-              cmake {
-                arguments "-DCMAKE_BUILD_TYPE=Release"
-              }
-            }
-
-            def targetPlatforms = project.getProperty('target-platform').split(',') as List
-            if (!targetPlatforms.isEmpty()) {
-              // ignore not use abi
-              def excludeList = ['arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64']
-
-              targetPlatforms.each { platform ->
-                if (platform.equals('android-arm64')) {
-                  excludeList.remove('arm64-v8a')
-                }
-                if (platform.equals('android-arm')) {
-                  excludeList.remove('armeabi-v7a')
-                }
-                if (platform.equals('android-x86')) {
-                  excludeList.remove('x86')
-                }
-                if (platform.equals('android-x64')) {
-                  excludeList.remove('x86_64')
-                }
-              }
-
-              println "[OPENCV_CORE] only support platform : $targetPlatforms"
-              println "[OPENCV_CORE] exclude abi : $excludeList"
-              packagingOptions {
-                excludeList.each {
-                  exclude "lib/$it/*"
-                }
-              }
-            }
-          }
+      cmake {
+        arguments "-DANDROID_ARM_NEON=TRUE",
+          "-DANDROID_STL=c++_static",
+          "-DCMAKE_INSTALL_PREFIX=$SOURCE_DIR/src/main/jniLibs"
       }
     }
+
+    buildTypes {
+      release {
+        externalNativeBuild {
+          cmake {
+            arguments "-DCMAKE_BUILD_TYPE=Release"
+          }
+        }
+
+        def targetPlatforms = project.getProperty('target-platform').split(',') as List
+        if (!targetPlatforms.isEmpty()) {
+          def platformAbiMap = [
+            'android-arm64': 'arm64-v8a',
+            'android-arm'  : 'armeabi-v7a',
+            'android-x86'  : 'x86',
+            'android-x64'  : 'x86_64'
+          ]
+
+          def excludeList = platformAbiMap.values() as List
+
+          targetPlatforms.each { platform ->
+            excludeList.remove(platformAbiMap[platform])
+          }
+
+          logger.info "[OPENCV_DART] building for platforms: $targetPlatforms"
+          logger.info "[OPENCV_DART] excluded abis: $excludeList"
+          packagingOptions {
+            excludeList.each { abi ->
+              exclude "lib/$abi/*"
+            }
+          }
+        }
+      }
+    }
+  }
 }
