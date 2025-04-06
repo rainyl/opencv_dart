@@ -12,6 +12,7 @@ src/dart_api/
 *.lib
 src/test/
 pkgs/
+packages/
 CMakePresets.json
 CMakeUserPresets*
 *.framework
