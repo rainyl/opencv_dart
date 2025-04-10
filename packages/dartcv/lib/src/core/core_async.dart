@@ -11,8 +11,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/constants.g.dart';
-import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';
@@ -244,7 +243,7 @@ Future<(bool, Point)> checkRangeAsync(
   double minVal = -CV_F64_MAX,
   double maxVal = CV_F64_MAX,
 }) async {
-  final pos = calloc<cvg.CvPoint>();
+  final pos = calloc<ccore.CvPoint>();
   final pRval = calloc<ffi.Bool>();
   return cvRunAsync0((callback) => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, callback), (
     c,
@@ -852,8 +851,8 @@ Future<Mat> maxAsync(InputArray src1, InputArray src2, {OutputArray? dst}) async
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(InputArray src, {InputArray? mask}) async {
-  final mean = calloc<cvg.Scalar>();
-  final stddev = calloc<cvg.Scalar>();
+  final mean = calloc<ccore.Scalar>();
+  final stddev = calloc<ccore.Scalar>();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_meanStdDev(src.ref, mean, stddev, callback), (c) {
         return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
@@ -922,8 +921,8 @@ Future<(double minVal, double maxVal, Point minLoc, Point maxLoc)> minMaxLocAsyn
   mask ??= Mat.empty();
   final minValP = calloc<ffi.Double>();
   final maxValP = calloc<ffi.Double>();
-  final minLocP = calloc<cvg.CvPoint>();
-  final maxLocP = calloc<cvg.CvPoint>();
+  final minLocP = calloc<ccore.CvPoint>();
+  final maxLocP = calloc<ccore.CvPoint>();
   return cvRunAsync0(
     (callback) => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, callback),
     (c) {
@@ -1266,7 +1265,7 @@ Future<Mat> subtractAsync(
 ///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
 Future<Scalar> sumAsync(Mat src) async {
-  final p = calloc<cvg.Scalar>();
+  final p = calloc<ccore.Scalar>();
   return cvRunAsync0((callback) => ccore.cv_sum(src.ref, p, callback), (c) {
     return c.complete(Scalar.fromPointer(p));
   });
@@ -1277,7 +1276,7 @@ Future<Scalar> sumAsync(Mat src) async {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Future<Scalar> traceAsync(InputArray mtx) async {
-  final ptr = calloc<cvg.Scalar>();
+  final ptr = calloc<ccore.Scalar>();
   return cvRunAsync0((callback) => ccore.cv_trace(mtx.ref, ptr, callback), (c) {
     return c.complete(Scalar.fromPointer(ptr));
   });

@@ -9,7 +9,7 @@ import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 import 'aruco.dart';
 import 'aruco_dict.dart';
 

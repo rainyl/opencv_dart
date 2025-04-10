@@ -17,8 +17,7 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../g/video.g.dart' as cvg;
-import '../native_lib.dart' show cvideo;
+import '../g/video.g.dart' as cvideo;
 import 'video.dart';
 
 extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
@@ -188,7 +187,7 @@ extension TrackerMILAsync on TrackerMIL {
   /// Update the tracker, find the new most likely bounding box for the target.
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
   Future<(bool, Rect)> updateAsync(Mat img) async {
-    final bBox = calloc<cvg.CvRect>();
+    final bBox = calloc<cvideo.CvRect>();
     final p = calloc<ffi.Bool>();
     return cvRunAsync0((callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback), (c) {
       final rval = (p.value, Rect.fromPointer(bBox));

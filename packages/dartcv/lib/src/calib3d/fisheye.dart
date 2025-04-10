@@ -12,8 +12,8 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
+import '../g/calib3d.g.dart' as ccalib3d;
 import '../g/constants.g.dart';
-import '../native_lib.dart' show ccalib3d;
 import 'calib3d.dart';
 
 class Fisheye {

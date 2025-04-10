@@ -11,20 +11,19 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
-class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
+class WeChatQRCode extends CvStruct<ccontrib.WeChatQRCode> {
   WeChatQRCode._(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory WeChatQRCode.fromPointer(cvg.WeChatQRCodePtr ptr, [bool attach = true]) =>
+  factory WeChatQRCode.fromPointer(ccontrib.WeChatQRCodePtr ptr, [bool attach = true]) =>
       WeChatQRCode._(ptr, attach);
 
   factory WeChatQRCode.empty() {
-    final p = calloc<cvg.WeChatQRCode>();
+    final p = calloc<ccontrib.WeChatQRCode>();
     cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_create(p));
     return WeChatQRCode._(p);
   }
@@ -41,7 +40,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     String superResolutionCaffeModelPath = "",
   ]) {
     final arena = Arena();
-    final p = calloc<cvg.WeChatQRCode>();
+    final p = calloc<ccontrib.WeChatQRCode>();
     final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
     final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
@@ -106,7 +105,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   set scaleFactor(double scaleFactor) =>
       ccontrib.cv_wechat_qrcode_WeChatQRCode_setScaleFactor(ref, scaleFactor);
 
-  static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(
+  static final finalizer = OcvFinalizer<ccontrib.WeChatQRCodePtr>(
     ccontrib.addresses.cv_wechat_qrcode_WeChatQRCode_close,
   );
 
@@ -116,5 +115,5 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   }
 
   @override
-  cvg.WeChatQRCode get ref => ptr.ref;
+  ccontrib.WeChatQRCode get ref => ptr.ref;
 }

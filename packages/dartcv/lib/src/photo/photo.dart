@@ -11,8 +11,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../g/photo.g.dart' as cvg;
-import '../native_lib.dart' show cphoto;
+import '../g/photo.g.dart' as cphoto;
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //
@@ -20,16 +19,16 @@ import '../native_lib.dart' show cphoto;
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/dd6/classcv_1_1MergeMertens.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga79d59aa3cb3a7c664e59a4b5acc1ccb6
-class MergeMertens extends CvStruct<cvg.MergeMertens> {
-  MergeMertens._(cvg.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class MergeMertens extends CvStruct<cphoto.MergeMertens> {
+  MergeMertens._(cphoto.MergeMertensPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory MergeMertens.fromPointer(cvg.MergeMertensPtr ptr, [bool attach = true]) =>
+  factory MergeMertens.fromPointer(cphoto.MergeMertensPtr ptr, [bool attach = true]) =>
       MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
-    final p = calloc<cvg.MergeMertens>();
+    final p = calloc<cphoto.MergeMertens>();
     cvRun(() => cphoto.cv_createMergeMertens(p));
     return MergeMertens._(p);
   }
@@ -39,12 +38,12 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double saturationWeight = 1.0,
     double exposureWeight = 0.0,
   }) {
-    final p = calloc<cvg.MergeMertens>();
+    final p = calloc<cphoto.MergeMertens>();
     cvRun(() => cphoto.cv_createMergeMertens_1(contrastWeight, saturationWeight, exposureWeight, p));
     return MergeMertens._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(cphoto.addresses.cv_MergeMertens_close);
+  static final finalizer = OcvFinalizer<cphoto.MergeMertensPtr>(cphoto.addresses.cv_MergeMertens_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -62,7 +61,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   }
 
   @override
-  cvg.MergeMertens get ref => ptr.ref;
+  cphoto.MergeMertens get ref => ptr.ref;
 }
 
 /// AlignMTB for converts images to median threshold bitmaps.
@@ -73,13 +72,13 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html
 /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
 /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
-class AlignMTB extends CvStruct<cvg.AlignMTB> {
-  AlignMTB._(cvg.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class AlignMTB extends CvStruct<cphoto.AlignMTB> {
+  AlignMTB._(cphoto.AlignMTBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory AlignMTB.fromPointer(cvg.AlignMTBPtr ptr, [bool attach = true]) => AlignMTB._(ptr.cast(), attach);
+  factory AlignMTB.fromPointer(cphoto.AlignMTBPtr ptr, [bool attach = true]) => AlignMTB._(ptr.cast(), attach);
 
   /// AlignMTB for converts images to median threshold bitmaps.
   /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels
@@ -90,7 +89,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
-    final p = calloc<cvg.AlignMTB>();
+    final p = calloc<cphoto.AlignMTB>();
     cvRun(() => cphoto.cv_createAlignMTB(p));
     return AlignMTB._(p);
   }
@@ -104,12 +103,12 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.create({int maxBits = 6, int excludeRange = 4, bool cut = true}) {
-    final p = calloc<cvg.AlignMTB>();
+    final p = calloc<cphoto.AlignMTB>();
     cvRun(() => cphoto.cv_createAlignMTB_1(maxBits, excludeRange, cut, p));
     return AlignMTB._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(cphoto.addresses.cv_AlignMTB_close);
+  static final finalizer = OcvFinalizer<cphoto.AlignMTBPtr>(cphoto.addresses.cv_AlignMTB_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -123,7 +122,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   }
 
   @override
-  cvg.AlignMTB get ref => ptr.ref;
+  cphoto.AlignMTB get ref => ptr.ref;
 }
 
 /// ColorChange mix two differently colored versions of an image seamlessly.

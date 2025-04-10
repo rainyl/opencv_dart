@@ -6,8 +6,8 @@ output:
   symbol-file:
     output: 'package:dartcv4/src/g/imgproc.yaml'
     import-path: 'package:dartcv4/src/g/imgproc.g.dart'
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
     - 'package:dartcv4/src/g/types.yaml'
@@ -16,9 +16,9 @@ sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dartcv/imgproc/imgproc.h
+    - ../src/imgproc/imgproc.h
   include-directives:
-    - ../src/dartcv/imgproc/imgproc.h
+    - ../src/imgproc/imgproc.h
 
 functions:
   symbol-address:

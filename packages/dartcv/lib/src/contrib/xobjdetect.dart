@@ -15,11 +15,10 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 /// WaldBoost detector.
-class WBDetector extends CvStruct<cvg.PtrWBDetector> {
+class WBDetector extends CvStruct<ccontrib.PtrWBDetector> {
   WBDetector.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
       finalizer.attach(this, ptr.cast());
@@ -30,12 +29,12 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#a58377ae61694aac08ad842ac830972d9
   factory WBDetector.create() {
-    final ptr = calloc<cvg.PtrWBDetector>();
+    final ptr = calloc<ccontrib.PtrWBDetector>();
     cvRun(() => ccontrib.cv_xobjdetect_WBDetector_create(ptr));
     return WBDetector.fromPointer(ptr);
   }
 
-  static final finalizer = OcvFinalizer<cvg.PtrWBDetectorPtr>(
+  static final finalizer = OcvFinalizer<ccontrib.PtrWBDetectorPtr>(
     ccontrib.addresses.cv_xobjdetect_WBDetector_close,
   );
 
@@ -88,5 +87,5 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   }
 
   @override
-  cvg.PtrWBDetector get ref => ptr.ref;
+  ccontrib.PtrWBDetector get ref => ptr.ref;
 }

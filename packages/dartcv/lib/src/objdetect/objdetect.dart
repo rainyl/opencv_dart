@@ -17,26 +17,25 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/objdetect.g.dart' as cvg;
-import '../native_lib.dart' show cobjdetect;
+import '../g/objdetect.g.dart' as cobjdetect;
 
-class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
-  CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class CascadeClassifier extends CvStruct<cobjdetect.CascadeClassifier> {
+  CascadeClassifier._(cobjdetect.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory CascadeClassifier.fromPointer(cvg.CascadeClassifierPtr ptr, [bool attach = true]) =>
+  factory CascadeClassifier.fromPointer(cobjdetect.CascadeClassifierPtr ptr, [bool attach = true]) =>
       CascadeClassifier._(ptr, attach);
 
   factory CascadeClassifier.empty() {
-    final p = calloc<cvg.CascadeClassifier>();
+    final p = calloc<cobjdetect.CascadeClassifier>();
     cvRun(() => cobjdetect.cv_CascadeClassifier_create(p));
     return CascadeClassifier._(p);
   }
 
   factory CascadeClassifier.fromFile(String filename) {
-    final p = calloc<cvg.CascadeClassifier>();
+    final p = calloc<cobjdetect.CascadeClassifier>();
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cobjdetect.cv_CascadeClassifier_create_1(cp, p));
     calloc.free(cp);
@@ -163,8 +162,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   bool isOldFormatCascade() => cobjdetect.cv_CascadeClassifier_isOldFormatCascade(ref);
 
   @override
-  cvg.CascadeClassifier get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.CascadeClassifierPtr>(
+  cobjdetect.CascadeClassifier get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cobjdetect.CascadeClassifierPtr>(
     cobjdetect.addresses.cv_CascadeClassifier_close,
   );
 
@@ -174,17 +173,17 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   }
 }
 
-class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
-  HOGDescriptor._(cvg.HOGDescriptorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class HOGDescriptor extends CvStruct<cobjdetect.HOGDescriptor> {
+  HOGDescriptor._(cobjdetect.HOGDescriptorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory HOGDescriptor.fromPointer(cvg.HOGDescriptorPtr ptr, [bool attach = true]) =>
+  factory HOGDescriptor.fromPointer(cobjdetect.HOGDescriptorPtr ptr, [bool attach = true]) =>
       HOGDescriptor._(ptr, attach);
 
   factory HOGDescriptor.empty() {
-    final p = calloc<cvg.HOGDescriptor>();
+    final p = calloc<cobjdetect.HOGDescriptor>();
     cvRun(() => cobjdetect.cv_HOGDescriptor_create(p));
     return HOGDescriptor._(p);
   }
@@ -195,7 +194,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a32a635936edaed1b2789caf3dcb09b6e
   factory HOGDescriptor.fromFile(String filename) {
-    final p = calloc<cvg.HOGDescriptor>();
+    final p = calloc<cobjdetect.HOGDescriptor>();
     final cp = filename.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cobjdetect.cv_HOGDescriptor_create_1(cp, p));
     calloc.free(cp);
@@ -397,8 +396,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   }
 
   @override
-  cvg.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(cobjdetect.addresses.cv_HOGDescriptor_close);
+  cobjdetect.HOGDescriptor get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cobjdetect.HOGDescriptorPtr>(cobjdetect.addresses.cv_HOGDescriptor_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -419,17 +418,17 @@ VecRect groupRectangles(VecRect rects, int groupThreshold, double eps) {
 //
 // For further details, please see:
 // https://docs.opencv.org/master/de/dc3/classcv_1_1QRCodeDetector.html
-class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
-  QRCodeDetector._(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class QRCodeDetector extends CvStruct<cobjdetect.QRCodeDetector> {
+  QRCodeDetector._(cobjdetect.QRCodeDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory QRCodeDetector.fromPointer(cvg.QRCodeDetectorPtr ptr, [bool attach = true]) =>
+  factory QRCodeDetector.fromPointer(cobjdetect.QRCodeDetectorPtr ptr, [bool attach = true]) =>
       QRCodeDetector._(ptr, attach);
 
   factory QRCodeDetector.empty() {
-    final p = calloc<cvg.QRCodeDetector>();
+    final p = calloc<cobjdetect.QRCodeDetector>();
     cvRun(() => cobjdetect.cv_QRCodeDetector_create(p));
     return QRCodeDetector._(p);
   }
@@ -601,7 +600,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   void setUseAlignmentMarkers(bool useAlignmentMarkers) =>
       cobjdetect.cv_QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers);
 
-  static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(cobjdetect.addresses.cv_QRCodeDetector_close);
+  static final finalizer = OcvFinalizer<cobjdetect.QRCodeDetectorPtr>(cobjdetect.addresses.cv_QRCodeDetector_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -609,19 +608,19 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }
 
   @override
-  cvg.QRCodeDetector get ref => ptr.ref;
+  cobjdetect.QRCodeDetector get ref => ptr.ref;
 }
 
 /// DNN-based face detector.
 ///
 /// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
-class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
-  FaceDetectorYN._(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class FaceDetectorYN extends CvStruct<cobjdetect.FaceDetectorYN> {
+  FaceDetectorYN._(cobjdetect.FaceDetectorYNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FaceDetectorYN.fromPointer(cvg.FaceDetectorYNPtr ptr, [bool attach = true]) =>
+  factory FaceDetectorYN.fromPointer(cobjdetect.FaceDetectorYNPtr ptr, [bool attach = true]) =>
       FaceDetectorYN._(ptr, attach);
 
   /// Creates an instance of face detector class with given parameters.
@@ -653,7 +652,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int backendId = 0,
     int targetId = 0,
   }) {
-    final p = calloc<cvg.FaceDetectorYN>();
+    final p = calloc<cobjdetect.FaceDetectorYN>();
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     cvRun(
@@ -706,7 +705,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int backendId = 0,
     int targetId = 0,
   }) {
-    final p = calloc<cvg.FaceDetectorYN>();
+    final p = calloc<cobjdetect.FaceDetectorYN>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
@@ -804,9 +803,9 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   void setTopK(int topK) => cobjdetect.cv_FaceDetectorYN_setTopK(ref, topK);
 
   @override
-  cvg.FaceDetectorYN get ref => ptr.ref;
+  cobjdetect.FaceDetectorYN get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(cobjdetect.addresses.cv_FaceDetectorYN_close);
+  static final finalizer = OcvFinalizer<cobjdetect.FaceDetectorYNPtr>(cobjdetect.addresses.cv_FaceDetectorYN_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -817,13 +816,13 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 /// DNN-based face recognizer.
 ///
 /// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
-class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
-  FaceRecognizerSF._(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class FaceRecognizerSF extends CvStruct<cobjdetect.FaceRecognizerSF> {
+  FaceRecognizerSF._(cobjdetect.FaceRecognizerSFPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory FaceRecognizerSF.fromPointer(cvg.FaceRecognizerSFPtr ptr, [bool attach = true]) =>
+  factory FaceRecognizerSF.fromPointer(cobjdetect.FaceRecognizerSFPtr ptr, [bool attach = true]) =>
       FaceRecognizerSF._(ptr, attach);
 
   /// Creates an instance of this class with given parameters.
@@ -835,7 +834,7 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   ///
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
   factory FaceRecognizerSF.fromFile(String model, String config, {int backendId = 0, int targetId = 0}) {
-    final p = calloc<cvg.FaceRecognizerSF>();
+    final p = calloc<cobjdetect.FaceRecognizerSF>();
     final cModel = model.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cobjdetect.cv_FaceRecognizerSF_create(cModel, cConfig, backendId, targetId, p));
@@ -895,9 +894,9 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   }
 
   @override
-  cvg.FaceRecognizerSF get ref => ptr.ref;
+  cobjdetect.FaceRecognizerSF get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cvg.FaceRecognizerSFPtr>(
+  static final finalizer = OcvFinalizer<cobjdetect.FaceRecognizerSFPtr>(
     cobjdetect.addresses.cv_FaceRecognizerSF_close,
   );
 

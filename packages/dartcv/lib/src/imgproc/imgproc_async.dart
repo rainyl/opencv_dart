@@ -23,8 +23,7 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../g/imgproc.g.dart' as cvg;
-import '../native_lib.dart' show cimgproc;
+import '../g/imgproc.g.dart' as cimgproc;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///
@@ -406,7 +405,7 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
   loDiff ??= Scalar();
   upDiff ??= Scalar();
   mask ??= Mat.empty();
-  final pRect = calloc<cvg.CvRect>();
+  final pRect = calloc<cimgproc.CvRect>();
   final pRval = calloc<ffi.Int>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_floodFill(
@@ -434,7 +433,7 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Future<Rect> boundingRectAsync(VecPoint points) async {
-  final rect = calloc<cvg.CvRect>();
+  final rect = calloc<cimgproc.CvRect>();
   return cvRunAsync0((callback) => cimgproc.cv_boundingRect(points.ref, rect, callback), (c) {
     return c.complete(Rect.fromPointer(rect));
   });
@@ -470,7 +469,7 @@ Future<double> contourAreaAsync(VecPoint contour) async {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 Future<RotatedRect> minAreaRectAsync(VecPoint points) async {
-  final p = calloc<cvg.RotatedRect>();
+  final p = calloc<cimgproc.RotatedRect>();
   return cvRunAsync0((callback) => cimgproc.cv_minAreaRect(points.ref, p, callback), (c) {
     return c.complete(RotatedRect.fromPointer(p));
   });
@@ -481,7 +480,7 @@ Future<RotatedRect> minAreaRectAsync(VecPoint points) async {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 Future<RotatedRect> fitEllipseAsync(VecPoint points) async {
-  final p = calloc<cvg.RotatedRect>();
+  final p = calloc<cimgproc.RotatedRect>();
   return cvRunAsync0((callback) => cimgproc.cv_fitEllipse(points.ref, p, callback), (c) {
     return c.complete(RotatedRect.fromPointer(p));
   });
@@ -492,7 +491,7 @@ Future<RotatedRect> fitEllipseAsync(VecPoint points) async {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points) async {
-  final center = calloc<cvg.CvPoint2f>();
+  final center = calloc<cimgproc.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
   return cvRunAsync0((callback) => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, callback), (
     c,
@@ -613,7 +612,7 @@ Future<Mat> matchTemplateAsync(Mat image, Mat templ, int method, {OutputArray? r
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Future<Moments> momentsAsync(Mat src, {bool binaryImage = false}) async {
-  final m = calloc<cvg.Moment>();
+  final m = calloc<cimgproc.Moment>();
   return cvRunAsync0((callback) => cimgproc.cv_moments(src.ref, binaryImage, m, callback), (c) {
     return c.complete(Moments.fromPointer(m));
   });
@@ -653,7 +652,7 @@ Future<Mat> pyrUpAsync(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int bord
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Future<Scalar> morphologyDefaultBorderValueAsync() async {
-  final s = calloc<cvg.Scalar>();
+  final s = calloc<cimgproc.Scalar>();
   return cvRunAsync0((callback) => cimgproc.cv_morphologyDefaultBorderValue(s, callback), (c) {
     return c.complete(Scalar.fromPointer(s));
   });
@@ -1399,7 +1398,7 @@ Future<(Size size, int baseline)> getTextSizeAsync(
   int thickness,
 ) {
   final pBaseline = calloc<ffi.Int>();
-  final size = calloc<cvg.CvSize>();
+  final size = calloc<cimgproc.CvSize>();
   final textPtr = text.toNativeUtf8().cast<ffi.Char>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_getTextSize(textPtr, fontFace, fontScale, thickness, pBaseline, size, callback),
@@ -1884,7 +1883,7 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
 }) {
   window ??= Mat.empty();
   final p = calloc<ffi.Double>();
-  final pp = calloc<cvg.CvPoint2f>();
+  final pp = calloc<cimgproc.CvPoint2f>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, callback),
     (c) {

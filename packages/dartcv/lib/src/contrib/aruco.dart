@@ -13,34 +13,33 @@ import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 import 'aruco_dict.dart';
 
-class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
-  ArucoDetector._(cvg.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ArucoDetector extends CvStruct<ccontrib.ArucoDetector> {
+  ArucoDetector._(ccontrib.ArucoDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory ArucoDetector.fromPointer(cvg.ArucoDetectorPtr ptr, [bool attach = true]) =>
+  factory ArucoDetector.fromPointer(ccontrib.ArucoDetectorPtr ptr, [bool attach = true]) =>
       ArucoDetector._(ptr, attach);
 
   factory ArucoDetector.empty() {
-    final p = calloc<cvg.ArucoDetector>();
+    final p = calloc<ccontrib.ArucoDetector>();
     cvRun(() => ccontrib.cv_aruco_arucoDetector_create(p));
     return ArucoDetector._(p);
   }
 
   factory ArucoDetector.create(ArucoDictionary dictionary, ArucoDetectorParameters parameters) {
-    final p = calloc<cvg.ArucoDetector>();
+    final p = calloc<ccontrib.ArucoDetector>();
     cvRun(() => ccontrib.cv_aruco_arucoDetector_create_1(dictionary.ref, parameters.ref, p));
     return ArucoDetector.fromPointer(p);
   }
 
   @override
-  cvg.ArucoDetector get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorPtr>(
+  ccontrib.ArucoDetector get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<ccontrib.ArucoDetectorPtr>(
     ccontrib.addresses.cv_aruco_arucoDetector_close,
   );
 
@@ -104,24 +103,24 @@ Mat arucoGenerateImageMarker(
   return outImg;
 }
 
-class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParams> {
-  ArucoDetectorParameters._(cvg.ArucoDetectorParamsPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ArucoDetectorParameters extends CvStruct<ccontrib.ArucoDetectorParams> {
+  ArucoDetectorParameters._(ccontrib.ArucoDetectorParamsPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory ArucoDetectorParameters.fromPointer(cvg.ArucoDetectorParamsPtr ptr, [bool attach = true]) =>
+  factory ArucoDetectorParameters.fromPointer(ccontrib.ArucoDetectorParamsPtr ptr, [bool attach = true]) =>
       ArucoDetectorParameters._(ptr, attach);
 
   factory ArucoDetectorParameters.empty() {
-    final p = calloc<cvg.ArucoDetectorParams>();
+    final p = calloc<ccontrib.ArucoDetectorParams>();
     cvRun(() => ccontrib.cv_aruco_detectorParameters_create(p));
     return ArucoDetectorParameters._(p);
   }
 
   @override
-  cvg.ArucoDetectorParams get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDetectorParamsPtr>(
+  ccontrib.ArucoDetectorParams get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<ccontrib.ArucoDetectorParamsPtr>(
     ccontrib.addresses.cv_aruco_detectorParameters_close,
   );
 

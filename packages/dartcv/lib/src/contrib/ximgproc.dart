@@ -18,8 +18,7 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 class ximgproc {
   /// Performs anisotropic diffusion on an image.
@@ -278,7 +277,7 @@ class ximgproc {
 }
 
 /// https://docs.opencv.org/4.x/dd/d65/classcv_1_1ximgproc_1_1EdgeBoxes.html#details
-class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
+class EdgeBoxes extends CvStruct<ccontrib.EdgeBoxes> {
   EdgeBoxes.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
@@ -298,7 +297,7 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
     double gamma = 2,
     double kappa = 1.5,
   }) {
-    final p = calloc<cvg.EdgeBoxes>();
+    final p = calloc<ccontrib.EdgeBoxes>();
     cvRun(
       () => ccontrib.cv_ximgproc_EdgeBoxes_create(
         alpha,
@@ -393,16 +392,16 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   ];
 
   @override
-  cvg.EdgeBoxes get ref => ptr.ref;
+  ccontrib.EdgeBoxes get ref => ptr.ref;
 }
 
-class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
+class RFFeatureGetter extends CvStruct<ccontrib.RFFeatureGetter> {
   RFFeatureGetter.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   factory RFFeatureGetter.empty() {
-    final p = calloc<cvg.RFFeatureGetter>();
+    final p = calloc<ccontrib.RFFeatureGetter>();
     cvRun(() => ccontrib.cv_ximgproc_RFFeatureGetter_create(p));
     return RFFeatureGetter.fromPointer(p);
   }
@@ -429,7 +428,7 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
 
   bool isEmpty() => ccontrib.cv_ximgproc_RFFeatureGetter_empty(ref);
 
-  static final finalizer = OcvFinalizer<cvg.RFFeatureGetterPtr>(
+  static final finalizer = OcvFinalizer<ccontrib.RFFeatureGetterPtr>(
     ccontrib.addresses.cv_ximgproc_RFFeatureGetter_close,
   );
 
@@ -439,11 +438,11 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
   }
 
   @override
-  cvg.RFFeatureGetter get ref => ptr.ref;
+  ccontrib.RFFeatureGetter get ref => ptr.ref;
 }
 
 /// https://docs.opencv.org/4.x/d8/d54/classcv_1_1ximgproc_1_1StructuredEdgeDetection.html#details
-class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
+class StructuredEdgeDetection extends CvStruct<ccontrib.StructuredEdgeDetection> {
   StructuredEdgeDetection.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
@@ -451,7 +450,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   /// https://docs.opencv.org/4.x/de/d51/group__ximgproc__edge.html#ga2aad8b0b32e05d82200348dcf5b32066
   factory StructuredEdgeDetection.create(String model) {
     final cmodel = model.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.StructuredEdgeDetection>();
+    final p = calloc<ccontrib.StructuredEdgeDetection>();
     cvRun(() => ccontrib.cv_ximgproc_StructuredEdgeDetection_create(cmodel, p));
     calloc.free(cmodel);
     return StructuredEdgeDetection.fromPointer(p);
@@ -510,7 +509,7 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
     return dst;
   }
 
-  static final finalizer = OcvFinalizer<cvg.StructuredEdgeDetectionPtr>(
+  static final finalizer = OcvFinalizer<ccontrib.StructuredEdgeDetectionPtr>(
     ccontrib.addresses.cv_ximgproc_StructuredEdgeDetection_close,
   );
 
@@ -520,18 +519,18 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
   }
 
   @override
-  cvg.StructuredEdgeDetection get ref => ptr.ref;
+  ccontrib.StructuredEdgeDetection get ref => ptr.ref;
 }
 
 /// https://docs.opencv.org/4.x/dd/d19/classcv_1_1ximgproc_1_1segmentation_1_1GraphSegmentation.html
-class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
+class GraphSegmentation extends CvStruct<ccontrib.GraphSegmentation> {
   GraphSegmentation.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   /// https://docs.opencv.org/4.x/d5/df0/group__ximgproc__segmentation.html#gae067b832eee0d26aa30269a7ae423d2f
   factory GraphSegmentation.create({double sigma = 0.5, double k = 300, int minSize = 100}) {
-    final p = calloc<cvg.GraphSegmentation>();
+    final p = calloc<ccontrib.GraphSegmentation>();
     cvRun(() => ccontrib.cv_ximgproc_GraphSegmentation_create(sigma, k, minSize, p));
     return GraphSegmentation.fromPointer(p);
   }
@@ -557,7 +556,7 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
 
   set minSize(int value) => ccontrib.cv_ximgproc_GraphSegmentation_setMinSize(ref, value);
 
-  static final finalizer = OcvFinalizer<cvg.GraphSegmentationPtr>(
+  static final finalizer = OcvFinalizer<ccontrib.GraphSegmentationPtr>(
     ccontrib.addresses.cv_ximgproc_GraphSegmentation_close,
   );
 
@@ -567,10 +566,10 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
   }
 
   @override
-  cvg.GraphSegmentation get ref => ptr.ref;
+  ccontrib.GraphSegmentation get ref => ptr.ref;
 }
 
-class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
+class EdgeDrawingParams extends CvStruct<ccontrib.EdgeDrawingParams> {
   EdgeDrawingParams.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
@@ -591,7 +590,7 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
     bool SumFlag = true,
   }) {
     final p =
-        calloc<cvg.EdgeDrawingParams>()
+        calloc<ccontrib.EdgeDrawingParams>()
           ..ref.AnchorThresholdValue = AnchorThresholdValue
           ..ref.EdgeDetectionOperator = EdgeDetectionOperator
           ..ref.GradientThresholdValue = GradientThresholdValue
@@ -667,7 +666,7 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
   ];
 
   @override
-  cvg.EdgeDrawingParams get ref => ptr.ref;
+  ccontrib.EdgeDrawingParams get ref => ptr.ref;
 
   static const int PREWITT = 0;
   static const int SOBEL = 1;
@@ -675,14 +674,14 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
   static const int LSD = 3;
 }
 
-class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
+class EdgeDrawing extends CvStruct<ccontrib.EdgeDrawing> {
   EdgeDrawing.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
 
   /// Creates a smart pointer to a EdgeDrawing object and initializes it.
   factory EdgeDrawing.empty() {
-    final p = calloc<cvg.EdgeDrawing>();
+    final p = calloc<ccontrib.EdgeDrawing>();
     cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_create(p));
     return EdgeDrawing.fromPointer(p);
   }
@@ -730,7 +729,7 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   }
 
   EdgeDrawingParams get params {
-    final p = calloc<cvg.EdgeDrawingParams>();
+    final p = calloc<ccontrib.EdgeDrawingParams>();
     cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getParams(ref, p, ffi.nullptr));
     return EdgeDrawingParams.fromPointer(p);
   }
@@ -738,7 +737,7 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   set params(EdgeDrawingParams value) =>
       cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_setParams(ref, value.ref, ffi.nullptr));
 
-  static final finalizer = OcvFinalizer<cvg.EdgeDrawingPtr>(ccontrib.addresses.cv_ximgproc_EdgeDrawing_close);
+  static final finalizer = OcvFinalizer<ccontrib.EdgeDrawingPtr>(ccontrib.addresses.cv_ximgproc_EdgeDrawing_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -746,7 +745,7 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   }
 
   @override
-  cvg.EdgeDrawing get ref => ptr.ref;
+  ccontrib.EdgeDrawing get ref => ptr.ref;
 }
 
 class ximgproc_rl {

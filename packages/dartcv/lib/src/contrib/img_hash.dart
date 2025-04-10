@@ -13,8 +13,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 abstract class ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo);
@@ -132,14 +131,14 @@ const int BLOCK_MEAN_HASH_MODE_0 = 0;
 const int BLOCK_MEAN_HASH_MODE_1 = 1;
 
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
-class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
-  BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0, bool attach = true])
+class BlockMeanHash extends CvStruct<ccontrib.BlockMeanHash> implements ImgHashBase {
+  BlockMeanHash._(ccontrib.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0, bool attach = true])
     : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  static final finalizer = OcvFinalizer<cvg.BlockMeanHashPtr>(
+  static final finalizer = OcvFinalizer<ccontrib.BlockMeanHashPtr>(
     ccontrib.addresses.cv_img_hash_BlockMeanHash_close,
   );
 
@@ -149,7 +148,7 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   factory BlockMeanHash({int mode = BLOCK_MEAN_HASH_MODE_0}) {
-    final p = calloc<cvg.BlockMeanHash>();
+    final p = calloc<ccontrib.BlockMeanHash>();
     cvRun(() => ccontrib.cv_img_hash_BlockMeanHash_create(mode, p, ffi.nullptr));
     return BlockMeanHash._(p, mode);
   }
@@ -227,7 +226,7 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  cvg.BlockMeanHash get ref => ptr.ref;
+  ccontrib.BlockMeanHash get ref => ptr.ref;
 }
 
 /// ColorMomentHash is implementation of the ColorMomentHash algorithm.

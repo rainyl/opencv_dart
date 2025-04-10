@@ -13,8 +13,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
-import '../g/highgui.g.dart' as cvg;
-import '../native_lib.dart' show chighgui;
+import '../g/highgui.g.dart' as chighgui;
 
 String currentUIFramework() => chighgui.cv_currentUIFramework().toDartString();
 
@@ -67,7 +66,7 @@ void imshow(String winName, Mat img) {
 
 Rect getWindowImageRect(String winName) {
   final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<cvg.CvRect>();
+  final p = calloc<chighgui.CvRect>();
   cvRun(() => chighgui.cv_getWindowImageRect(cWinName, p));
   calloc.free(cWinName);
   return Rect.fromPointer(p);
@@ -146,7 +145,7 @@ Rect selectROI(
   bool printNotice = true,
 }) {
   final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<cvg.CvRect>();
+  final p = calloc<chighgui.CvRect>();
   cvRun(() => chighgui.cv_selectROI(cWinName, img.ref, showCrosshair, fromCenter, printNotice, p));
   calloc.free(cWinName);
   return Rect.fromPointer(p);
@@ -185,14 +184,14 @@ void createTrackbar(
   String trackbarName,
   String winName,
   int maxval, {
-  cvg.Dartcv_TrackbarCallbackFunction? onChange,
+  chighgui.Dartcv_TrackbarCallbackFunction? onChange,
 }) {
   final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
   final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
   if (onChange == null) {
     cvRun(() => chighgui.cv_createTrackbar(cTrackName, cWinName, maxval));
   } else {
-    final funcPointer = ffi.NativeCallable<cvg.cv_TrackbarCallbackFunction>.isolateLocal(onChange);
+    final funcPointer = ffi.NativeCallable<chighgui.cv_TrackbarCallbackFunction>.isolateLocal(onChange);
     cvRun(
       () => chighgui.cv_createTrackbar_1(
         cTrackName,

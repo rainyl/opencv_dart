@@ -12,8 +12,7 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 enum PredefinedDictionaryType {
   ///< 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
@@ -86,27 +85,27 @@ enum PredefinedDictionaryType {
   final int value;
 }
 
-class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
-  ArucoDictionary._(cvg.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class ArucoDictionary extends CvStruct<ccontrib.ArucoDictionary> {
+  ArucoDictionary._(ccontrib.ArucoDictionaryPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory ArucoDictionary.empty() {
-    final p = calloc<cvg.ArucoDictionary>();
+    final p = calloc<ccontrib.ArucoDictionary>();
     cvRun(() => ccontrib.cv_aruco_Dictionary_create(p));
     return ArucoDictionary._(p);
   }
 
   factory ArucoDictionary.fromBytesList(Mat bytesList, int markerSize, {int maxCorr = 0}) {
-    final p = calloc<cvg.ArucoDictionary>();
+    final p = calloc<ccontrib.ArucoDictionary>();
     cvRun(() => ccontrib.cv_aruco_Dictionary_create_1(bytesList.ref, markerSize, maxCorr, p));
     return ArucoDictionary._(p);
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
-    final p = calloc<cvg.ArucoDictionary>();
+    final p = calloc<ccontrib.ArucoDictionary>();
     cvRun(() => ccontrib.cv_aruco_getPredefinedDictionary(type.value, p));
     return ArucoDictionary._(p);
   }
@@ -147,8 +146,8 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
   set maxCorrectionBits(int value) => ccontrib.cv_aruco_Dictionary_set_maxCorrectionBits(ref, value);
 
   @override
-  cvg.ArucoDictionary get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_Dictionary_close);
+  ccontrib.ArucoDictionary get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<ccontrib.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_Dictionary_close);
 
   void dispose() {
     finalizer.detach(this);

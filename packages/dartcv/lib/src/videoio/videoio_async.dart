@@ -11,8 +11,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../g/constants.g.dart';
-import '../g/videoio.g.dart' as cvg;
-import '../native_lib.dart' show cvideoio;
+import '../g/videoio.g.dart' as cvideoio;
 import 'videoio.dart';
 
 extension VideoCaptureAsync on VideoCapture {
@@ -20,7 +19,7 @@ extension VideoCaptureAsync on VideoCapture {
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
   static Future<VideoCapture> fromFileAsync(String filename, {int apiPreference = CAP_ANY}) async {
-    final p = calloc<cvg.VideoCapture>();
+    final p = calloc<cvideoio.VideoCapture>();
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, callback), (
       c,
@@ -31,7 +30,7 @@ extension VideoCaptureAsync on VideoCapture {
   }
 
   static Future<VideoCapture> fromDeviceAsync(int device, {int apiPreference = CAP_ANY}) async {
-    final p = calloc<cvg.VideoCapture>();
+    final p = calloc<cvideoio.VideoCapture>();
     return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, callback), (
       c,
     ) {
@@ -99,7 +98,7 @@ extension VideoWriterAsync on VideoWriter {
     int? apiPreference,
     bool isColor = true,
   }) {
-    final p = calloc<cvg.VideoWriter>();
+    final p = calloc<cvideoio.VideoWriter>();
     final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
     if (apiPreference == null) {

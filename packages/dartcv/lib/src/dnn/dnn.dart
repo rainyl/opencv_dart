@@ -19,20 +19,19 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
+import '../g/dnn.g.dart' as cdnn;
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
-class Layer extends CvStruct<cvg.Layer> {
-  Layer._(cvg.LayerPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class Layer extends CvStruct<cdnn.Layer> {
+  Layer._(cdnn.LayerPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  factory Layer.fromPointer(cvg.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
+  factory Layer.fromPointer(cdnn.LayerPtr ptr, [bool attach = true]) => Layer._(ptr, attach);
 
-  static final finalizer = OcvFinalizer<cvg.LayerPtr>(cdnn.addresses.cv_dnn_Layer_close);
+  static final finalizer = OcvFinalizer<cdnn.LayerPtr>(cdnn.addresses.cv_dnn_Layer_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -86,23 +85,23 @@ class Layer extends CvStruct<cvg.Layer> {
   }
 
   @override
-  cvg.Layer get ref => ptr.ref;
+  cdnn.Layer get ref => ptr.ref;
 }
 
 /// Net allows you to create and manipulate comprehensive artificial neural networks.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html
-class Net extends CvStruct<cvg.Net> {
-  Net._(cvg.NetPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class Net extends CvStruct<cdnn.Net> {
+  Net._(cdnn.NetPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory Net.fromPointer(cvg.NetPtr ptr, [bool attach = true]) => Net._(ptr, attach);
+  factory Net.fromPointer(cdnn.NetPtr ptr, [bool attach = true]) => Net._(ptr, attach);
 
   factory Net.empty() {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_create(p));
     final net = Net._(p);
     return net;
@@ -115,7 +114,7 @@ class Net extends CvStruct<cvg.Net> {
     final cPath = path.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_readNet(cPath, cConfig, cFramework, p, ffi.nullptr));
     calloc.free(cPath);
     calloc.free(cConfig);
@@ -133,7 +132,7 @@ class Net extends CvStruct<cvg.Net> {
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_readNetBytes(cFramework, bufM.ref, bufC.ref, p, ffi.nullptr));
     calloc.free(cFramework);
     final net = Net._(p);
@@ -145,7 +144,7 @@ class Net extends CvStruct<cvg.Net> {
   factory Net.fromCaffe(String prototxt, String caffeModel) {
     final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
     final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromCaffe(cProto, cCaffe, p, ffi.nullptr));
     calloc.free(cProto);
     calloc.free(cCaffe);
@@ -156,7 +155,7 @@ class Net extends CvStruct<cvg.Net> {
   /// Reads a network model stored in Caffe model in memory.
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga5b1fd56ca658f10c3bd544ea46f57164
   factory Net.fromCaffeBytes(Uint8List bufferProto, Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
     cvRun(() => cdnn.cv_dnn_Net_readNetFromCaffeBytes(bufP.ref, bufM.ref, p, ffi.nullptr));
@@ -168,7 +167,7 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gafd98356f905742ff082e3e4e193633a3
   factory Net.fromOnnx(String path) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromONNX(cpath, p, ffi.nullptr));
     calloc.free(cpath);
@@ -180,7 +179,7 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gac1a00e8bae54070e5837c15b1482997d
   factory Net.fromOnnxBytes(Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final bufM = VecUChar.fromList(bufferModel);
     cvRun(() => cdnn.cv_dnn_Net_readNetFromONNXBytes(bufM.ref, p, ffi.nullptr));
     final net = Net._(p);
@@ -191,7 +190,7 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga91c313cd8269ddddaf3cb8299df2d4cb
   factory Net.fromTensorflow(String path, {String config = ""}) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final cconf = config.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromTensorflow(cpath, cconf, p, ffi.nullptr));
@@ -208,7 +207,7 @@ class Net extends CvStruct<cvg.Net> {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromTensorflowBytes(bufM.ref, bufC.ref, p, ffi.nullptr));
     final net = Net._(p);
     return net;
@@ -218,7 +217,7 @@ class Net extends CvStruct<cvg.Net> {
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gae563b9ed2bc79838499a22727ad6c604
   factory Net.fromTFLite(String path) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromTFLite(cpath, p, ffi.nullptr));
     calloc.free(cpath);
@@ -231,7 +230,7 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gab913e8da754b3d8e463389894365bd0c
   factory Net.fromTFLiteBytes(Uint8List bufferModel) {
     final bufM = VecUChar.fromList(bufferModel);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromTFLiteBytes(bufM.ref, p, ffi.nullptr));
     final net = Net._(p);
     return net;
@@ -240,7 +239,7 @@ class Net extends CvStruct<cvg.Net> {
   /// Reads a network model stored in Torch7 framework's format.
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga73785dd1e95cd3070ef36f3109b053fe
   factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cdnn.cv_dnn_Net_readNetFromTorch(cpath, isBinary, evaluate, p, ffi.nullptr));
     calloc.free(cpath);
@@ -327,7 +326,7 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a70aec7f768f38c32b1ee25f3a56526df
   Layer getLayer(int index) {
-    final p = calloc<cvg.Layer>();
+    final p = calloc<cdnn.Layer>();
     cvRun(() => cdnn.cv_dnn_Net_getLayer(ref, index, p));
     final layer = Layer.fromPointer(p);
     return layer;
@@ -388,7 +387,7 @@ class Net extends CvStruct<cvg.Net> {
     return (sc, zp);
   }
 
-  static final finalizer = OcvFinalizer<cvg.NetPtr>(cdnn.addresses.cv_dnn_Net_close);
+  static final finalizer = OcvFinalizer<cdnn.NetPtr>(cdnn.addresses.cv_dnn_Net_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -396,7 +395,7 @@ class Net extends CvStruct<cvg.Net> {
   }
 
   @override
-  cvg.Net get ref => ptr.ref;
+  cdnn.Net get ref => ptr.ref;
 }
 
 void enableModelDiagnostics(bool isDiagnosticsMode) => cdnn.cv_dnn_enableModelDiagnostics(isDiagnosticsMode);

@@ -17,9 +17,9 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
+import '../g/calib3d.g.dart' as ccalib3d;
 import '../g/constants.g.dart';
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccalib3d;
 import 'calib3d.dart';
 import 'usac_params.dart';
 

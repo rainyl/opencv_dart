@@ -18,8 +18,7 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
+import '../g/dnn.g.dart' as cdnn;
 import './dnn.dart';
 
 extension NetAsync on Net {
@@ -27,7 +26,7 @@ extension NetAsync on Net {
     final cPath = path.toNativeUtf8().cast<ffi.Char>();
     final cConfig = config.toNativeUtf8().cast<ffi.Char>();
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final rval = cvRunAsync0<Net>(
       (callback) => cdnn.cv_dnn_Net_readNet(cPath, cConfig, cFramework, p, callback),
       (c) {
@@ -50,7 +49,7 @@ extension NetAsync on Net {
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     return cvRunAsync0(
       (callback) => cdnn.cv_dnn_Net_readNetBytes(cFramework, bufM.ref, bufC.ref, p, callback),
       (c) {
@@ -64,7 +63,7 @@ extension NetAsync on Net {
   static Future<Net> fromCaffeAsync(String prototxt, String caffeModel) async {
     final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
     final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromCaffe(cProto, cCaffe, p, callback), (c) {
       calloc.free(cProto);
       calloc.free(cCaffe);
@@ -74,7 +73,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromCaffeBytesAsync(Uint8List bufferProto, Uint8List bufferModel) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromCaffeBytes(bufP.ref, bufM.ref, p, callback), (
@@ -86,7 +85,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromOnnxAsync(String path) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromONNX(cpath, p, callback), (c) {
       calloc.free(cpath);
@@ -96,7 +95,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final bufM = VecUChar.fromList(bufferModel);
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromONNXBytes(bufM.ref, p, callback), (c) {
       final net = Net.fromPointer(p);
@@ -105,7 +104,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromTensorflowAsync(String path, {String config = ""}) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final cconf = config.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromTensorflow(cpath, cconf, p, callback), (c) {
@@ -120,7 +119,7 @@ extension NetAsync on Net {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     return cvRunAsync0(
       (callback) => cdnn.cv_dnn_Net_readNetFromTensorflowBytes(bufM.ref, bufC.ref, p, callback),
       (c) {
@@ -131,7 +130,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromTFLiteAsync(String path) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromTFLite(cpath, p, callback), (c) {
       calloc.free(cpath);
@@ -142,7 +141,7 @@ extension NetAsync on Net {
 
   static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel) async {
     final bufM = VecUChar.fromList(bufferModel);
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromTFLiteBytes(bufM.ref, p, callback), (c) {
       final net = Net.fromPointer(p);
       return c.complete(net);
@@ -150,7 +149,7 @@ extension NetAsync on Net {
   }
 
   static Future<Net> fromTorchAsync(String path, {bool isBinary = true, bool evaluate = true}) async {
-    final p = calloc<cvg.Net>();
+    final p = calloc<cdnn.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0(
       (callback) => cdnn.cv_dnn_Net_readNetFromTorch(cpath, isBinary, evaluate, p, callback),

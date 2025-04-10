@@ -6,8 +6,8 @@ output:
   symbol-file:
     output: 'package:dartcv4/src/g/highgui.yaml'
     import-path: 'package:dartcv4/src/g/highgui.g.dart'
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
     - 'package:dartcv4/src/g/types.yaml'
@@ -16,9 +16,9 @@ sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dartcv/highgui/highgui.h
+    - ../src/highgui/highgui.h
   include-directives:
-    - ../src/dartcv/highgui/highgui.h
+    - ../src/highgui/highgui.h
 
 functions:
   symbol-address:

@@ -17,18 +17,17 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../g/video.g.dart' as cvg;
-import '../native_lib.dart' show cvideo;
+import '../g/video.g.dart' as cvideo;
 
-class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
-  BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
+class BackgroundSubtractorMOG2 extends CvStruct<cvideo.BackgroundSubtractorMOG2> {
+  BackgroundSubtractorMOG2(cvideo.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
     : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
   factory BackgroundSubtractorMOG2.empty() {
-    final p = calloc<cvg.BackgroundSubtractorMOG2>();
+    final p = calloc<cvideo.BackgroundSubtractorMOG2>();
     cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create(p));
     return BackgroundSubtractorMOG2(p);
   }
@@ -37,7 +36,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    final p = calloc<cvg.BackgroundSubtractorMOG2>();
+    final p = calloc<cvideo.BackgroundSubtractorMOG2>();
     cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
     return BackgroundSubtractorMOG2(p);
   }
@@ -49,8 +48,8 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   }
 
   @override
-  cvg.BackgroundSubtractorMOG2 get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorMOG2Ptr>(
+  cvideo.BackgroundSubtractorMOG2 get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvideo.BackgroundSubtractorMOG2Ptr>(
     cvideo.addresses.cv_BackgroundSubtractorMOG2_close,
   );
 
@@ -60,14 +59,14 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   }
 }
 
-class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
-  BackgroundSubtractorKNN(cvg.BackgroundSubtractorKNNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class BackgroundSubtractorKNN extends CvStruct<cvideo.BackgroundSubtractorKNN> {
+  BackgroundSubtractorKNN(cvideo.BackgroundSubtractorKNNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  static final finalizer = OcvFinalizer<cvg.BackgroundSubtractorKNNPtr>(
+  static final finalizer = OcvFinalizer<cvideo.BackgroundSubtractorKNNPtr>(
     cvideo.addresses.cv_BackgroundSubtractorKNN_close,
   );
 
@@ -77,7 +76,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
   }
 
   factory BackgroundSubtractorKNN.empty() {
-    final p = calloc<cvg.BackgroundSubtractorKNN>();
+    final p = calloc<cvideo.BackgroundSubtractorKNN>();
     cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create(p));
     return BackgroundSubtractorKNN(p);
   }
@@ -86,7 +85,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    final p = calloc<cvg.BackgroundSubtractorKNN>();
+    final p = calloc<cvideo.BackgroundSubtractorKNN>();
     cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create_1(history, varThreshold, detectShadows, p));
     return BackgroundSubtractorKNN(p);
   }
@@ -98,7 +97,7 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
   }
 
   @override
-  cvg.BackgroundSubtractorKNN get ref => ptr.ref;
+  cvideo.BackgroundSubtractorKNN get ref => ptr.ref;
 }
 
 /// NewBackgroundSubtractorMOG2 returns a new BackgroundSubtractor algorithm
@@ -113,7 +112,7 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   double varThreshold = 16,
   bool detectShadows = true,
 }) {
-  final p = calloc<cvg.BackgroundSubtractorMOG2>();
+  final p = calloc<cvideo.BackgroundSubtractorMOG2>();
   cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
   return BackgroundSubtractorMOG2(p);
 }
@@ -232,14 +231,14 @@ Mat calcOpticalFlowFarneback(
 /// Tracker is the base interface for object tracking.
 ///
 /// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
-class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
-  TrackerMIL(cvg.TrackerMILPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class TrackerMIL extends CvStruct<cvideo.TrackerMIL> {
+  TrackerMIL(cvideo.TrackerMILPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
   factory TrackerMIL.create() {
-    final p = calloc<cvg.TrackerMIL>();
+    final p = calloc<cvideo.TrackerMIL>();
     cvRun(() => cvideo.cv_TrackerMIL_create(p));
     return TrackerMIL(p);
   }
@@ -262,7 +261,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
   /// Update the tracker, find the new most likely bounding box for the target.
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
   (bool, Rect) update(Mat img) {
-    final bBox = calloc<cvg.CvRect>();
+    final bBox = calloc<cvideo.CvRect>();
     final p = calloc<ffi.Bool>();
     cvRun(() => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, ffi.nullptr));
     final rval = (p.value, Rect.fromPointer(bBox));
@@ -270,7 +269,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
     return rval;
   }
 
-  static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(cvideo.addresses.cv_TrackerMIL_close);
+  static final finalizer = OcvFinalizer<cvideo.TrackerMILPtr>(cvideo.addresses.cv_TrackerMIL_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -278,7 +277,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
   }
 
   @override
-  cvg.TrackerMIL get ref => ptr.ref;
+  cvideo.TrackerMIL get ref => ptr.ref;
 }
 
 /// KalmanFilter implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter.
@@ -287,8 +286,8 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
-class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
-  KalmanFilter(cvg.KalmanFilterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class KalmanFilter extends CvStruct<cvideo.KalmanFilter> {
+  KalmanFilter(cvideo.KalmanFilterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -300,7 +299,7 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    final p = calloc<cvg.KalmanFilter>();
+    final p = calloc<cvideo.KalmanFilter>();
     cvRun(() => cvideo.cv_KalmanFilter_create(dynamParams, measureParams, controlParams, type, p));
     return KalmanFilter(p);
   }
@@ -326,8 +325,8 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
   }
 
   @override
-  cvg.KalmanFilter get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.KalmanFilterPtr>(cvideo.addresses.cv_KalmanFilter_close);
+  cvideo.KalmanFilter get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvideo.KalmanFilterPtr>(cvideo.addresses.cv_KalmanFilter_close);
 
   void dispose() {
     finalizer.detach(this);

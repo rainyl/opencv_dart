@@ -12,20 +12,19 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../g/constants.g.dart';
-import '../g/videoio.g.dart' as cvg;
-import '../native_lib.dart' show cvideoio;
+import '../g/videoio.g.dart' as cvideoio;
 
-class VideoCapture extends CvStruct<cvg.VideoCapture> {
-  VideoCapture._(cvg.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class VideoCapture extends CvStruct<cvideoio.VideoCapture> {
+  VideoCapture._(cvideoio.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  factory VideoCapture.fromPointer(cvg.VideoCapturePtr ptr) => VideoCapture._(ptr, false);
+  factory VideoCapture.fromPointer(cvideoio.VideoCapturePtr ptr) => VideoCapture._(ptr, false);
 
   factory VideoCapture.empty() {
-    final p = calloc<cvg.VideoCapture>();
+    final p = calloc<cvideoio.VideoCapture>();
     cvRun(() => cvideoio.cv_VideoCapture_create(p));
     return VideoCapture._(p);
   }
@@ -34,7 +33,7 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
   factory VideoCapture.create(String filename, {int apiPreference = CAP_ANY}) {
-    final p = calloc<cvg.VideoCapture>();
+    final p = calloc<cvideoio.VideoCapture>();
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
     cvRun(() => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, ffi.nullptr));
     calloc.free(cname);
@@ -46,14 +45,14 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 
   factory VideoCapture.fromDevice(int device, {int apiPreference = CAP_ANY}) {
-    final p = calloc<cvg.VideoCapture>();
+    final p = calloc<cvideoio.VideoCapture>();
     cvRun(() => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, ffi.nullptr));
     return VideoCapture._(p);
   }
 
   @override
-  cvg.VideoCapture get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(cvideoio.addresses.cv_VideoCapture_close);
+  cvideoio.VideoCapture get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvideoio.VideoCapturePtr>(cvideoio.addresses.cv_VideoCapture_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -141,17 +140,17 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 }
 
-class VideoWriter extends CvStruct<cvg.VideoWriter> {
-  VideoWriter._(cvg.VideoWriterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class VideoWriter extends CvStruct<cvideoio.VideoWriter> {
+  VideoWriter._(cvideoio.VideoWriterPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  factory VideoWriter.fromPointer(cvg.VideoWriterPtr ptr) => VideoWriter._(ptr, false);
+  factory VideoWriter.fromPointer(cvideoio.VideoWriterPtr ptr) => VideoWriter._(ptr, false);
 
   factory VideoWriter.empty() {
-    final p = calloc<cvg.VideoWriter>();
+    final p = calloc<cvideoio.VideoWriter>();
     cvRun(() => cvideoio.cv_VideoWriter_create(p));
     return VideoWriter._(p);
   }
@@ -164,35 +163,35 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     int? apiPreference,
     bool isColor = true,
   }) {
-    final p = calloc<cvg.VideoWriter>();
+    final p = calloc<cvideoio.VideoWriter>();
     final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
     apiPreference == null
         ? cvRun(
-          () => cvideoio.cv_VideoWriter_create_1(
-            cname.cast(),
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        )
+            () => cvideoio.cv_VideoWriter_create_1(
+              cname.cast(),
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          )
         : cvRun(
-          () => cvideoio.cv_VideoWriter_create_2(
-            cname.cast(),
-            apiPreference,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        );
+            () => cvideoio.cv_VideoWriter_create_2(
+              cname.cast(),
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          );
     calloc.free(cname);
     return VideoWriter._(p);
   }
@@ -210,32 +209,32 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     final p = calloc<ffi.Bool>();
     apiPreference == null
         ? cvRun(
-          () => cvideoio.cv_VideoWriter_open(
-            ref,
-            cname,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        )
+            () => cvideoio.cv_VideoWriter_open(
+              ref,
+              cname,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          )
         : cvRun(
-          () => cvideoio.cv_VideoWriter_open_1(
-            ref,
-            cname,
-            apiPreference,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        );
+            () => cvideoio.cv_VideoWriter_open_1(
+              ref,
+              cname,
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          );
     calloc.free(cname);
     calloc.free(p);
   }
@@ -266,8 +265,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   }
 
   @override
-  cvg.VideoWriter get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(cvideoio.addresses.cv_VideoWriter_close);
+  cvideoio.VideoWriter get ref => ptr.ref;
+  static final finalizer = OcvFinalizer<cvideoio.VideoWriterPtr>(cvideoio.addresses.cv_VideoWriter_close);
 
   void dispose() {
     finalizer.detach(this);

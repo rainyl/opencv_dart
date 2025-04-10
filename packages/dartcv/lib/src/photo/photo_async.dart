@@ -7,7 +7,7 @@ library cv.photo;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../native_lib.dart' show cphoto;
+import '../g/photo.g.dart' as cphoto;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {

@@ -3,16 +3,16 @@ description: |
   Constants for color conversion
 output:
   bindings: ../lib/src/g/constants.g.dart
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: ""
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dartcv/core/constants.h
+    - ../src/core/constants.h
   include-directives:
-    - ../src/dartcv/core/constants.h
+    - ../src/core/constants.h
 
 preamble: |
   // coverage:ignore-file

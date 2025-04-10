@@ -6,8 +6,8 @@ output:
   symbol-file:
     output: "package:dartcv4/src/g/contrib.yaml"
     import-path: "package:dartcv4/src/g/contrib.g.dart"
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 import:
   symbol-files:
     - "package:dartcv4/src/g/types.yaml"
@@ -16,19 +16,19 @@ sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dartcv/contrib/aruco.h
-    - ../src/dartcv/contrib/img_hash.h
-    - ../src/dartcv/contrib/quality.h
-    - ../src/dartcv/contrib/wechat_qrcode.h
-    - ../src/dartcv/contrib/ximgproc.h
-    - ../src/dartcv/contrib/xobjdetect.h
+    - ../src/contrib/aruco.h
+    - ../src/contrib/img_hash.h
+    - ../src/contrib/quality.h
+    - ../src/contrib/wechat_qrcode.h
+    - ../src/contrib/ximgproc.h
+    - ../src/contrib/xobjdetect.h
   include-directives:
-    - ../src/dartcv/contrib/aruco.h
-    - ../src/dartcv/contrib/img_hash.h
-    - ../src/dartcv/contrib/quality.h
-    - ../src/dartcv/contrib/wechat_qrcode.h
-    - ../src/dartcv/contrib/ximgproc.h
-    - ../src/dartcv/contrib/xobjdetect.h
+    - ../src/contrib/aruco.h
+    - ../src/contrib/img_hash.h
+    - ../src/contrib/quality.h
+    - ../src/contrib/wechat_qrcode.h
+    - ../src/contrib/ximgproc.h
+    - ../src/contrib/xobjdetect.h
 
 functions:
   symbol-address:

@@ -2,7 +2,7 @@ format_version: 1.0.0
 files:
   package:dartcv4/src/g/videoio.g.dart:
     used-config:
-      ffi-native: false
+      ffi-native: true
     symbols:
       c:@F@cv_VideoCapture_close:
         name: cv_VideoCapture_close

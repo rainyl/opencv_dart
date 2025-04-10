@@ -6,6 +6,10 @@ OpenCV bindings for Dart language.
 use [opencv_core](https://pub.dev/packages/opencv_core) (if `videoio` module is NOT required)
 or [opencv_dart](https://pub.dev/packages/opencv_dart) (if `videoio` module IS required).
 
+> [!IMPORTANT]
+>
+> `v2.x` is prepared for `Native Assets`. Use only if you know what you are doing.
+
 ## Install
 
 - `dart pub add dartcv4` or Add dartcv4 to `pubspec.yaml`

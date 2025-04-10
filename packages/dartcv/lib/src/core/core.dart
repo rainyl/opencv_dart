@@ -11,8 +11,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../g/constants.g.dart';
-import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';
@@ -237,7 +236,7 @@ int borderInterpolate(int p, int len, int borderType) {
   double minVal = -CV_F64_MAX,
   double maxVal = CV_F64_MAX,
 }) {
-  final pos = calloc<cvg.CvPoint>();
+  final pos = calloc<ccore.CvPoint>();
   final pRval = calloc<ffi.Bool>();
   cvRun(() => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, ffi.nullptr));
   final rval = pRval.value;
@@ -624,7 +623,7 @@ Mat max(InputArray src1, InputArray src2, {OutputArray? dst}) {
 
 /// mean
 Scalar mean(InputArray src, {InputArray? mask}) {
-  final p = calloc<cvg.Scalar>();
+  final p = calloc<ccore.Scalar>();
   mask == null
       ? cvRun(() => ccore.cv_mean(src.ref, p, ffi.nullptr))
       : cvRun(() => ccore.cv_mean_1(src.ref, mask.ref, p, ffi.nullptr));
@@ -636,8 +635,8 @@ Scalar mean(InputArray src, {InputArray? mask}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga846c858f4004d59493d7c6a4354b301d
 (Scalar mean, Scalar stddev) meanStdDev(InputArray src, {InputArray? mask}) {
-  final mean = calloc<cvg.Scalar>();
-  final stddev = calloc<cvg.Scalar>();
+  final mean = calloc<ccore.Scalar>();
+  final stddev = calloc<ccore.Scalar>();
   mask == null
       ? cvRun(() => ccore.cv_meanStdDev(src.ref, mean, stddev, ffi.nullptr))
       : cvRun(() => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, ffi.nullptr));
@@ -691,8 +690,8 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   mask ??= Mat.empty();
   final minValP = calloc<ffi.Double>();
   final maxValP = calloc<ffi.Double>();
-  final minLocP = calloc<cvg.CvPoint>();
-  final maxLocP = calloc<cvg.CvPoint>();
+  final minLocP = calloc<ccore.CvPoint>();
+  final maxLocP = calloc<ccore.CvPoint>();
   cvRun(() => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, ffi.nullptr));
   final rval = (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
   calloc.free(minValP);
@@ -1125,7 +1124,7 @@ Mat subtract(InputArray src1, InputArray src2, {OutputArray? dst, InputArray? ma
 ///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
 Scalar sum(Mat src) {
-  final p = calloc<cvg.Scalar>();
+  final p = calloc<ccore.Scalar>();
   cvRun(() => ccore.cv_sum(src.ref, p, ffi.nullptr));
   return Scalar.fromPointer(p);
 }
@@ -1157,7 +1156,7 @@ Mat SVBackSubst(InputArray w, InputArray u, InputArray vh, InputArray rhs, {Outp
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
-  final ptr = calloc<cvg.Scalar>();
+  final ptr = calloc<ccore.Scalar>();
   cvRun(() => ccore.cv_trace(mtx.ref, ptr, ffi.nullptr));
   return Scalar.fromPointer(ptr);
 }
@@ -1200,7 +1199,7 @@ Mat transposeND(InputArray src, List<int> order, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
 /// Disabled: double free
 Rng theRNG() {
-  final p = calloc<cvg.RNG>();
+  final p = calloc<ccore.RNG>();
   cvRun(() => ccore.cv_theRNG(p));
   return Rng.fromTheRng(p);
 }

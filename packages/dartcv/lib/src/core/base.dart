@@ -12,8 +12,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../g/core.g.dart' as ccore;
 import "../g/types.g.dart" as cvg;
-import '../native_lib.dart' show ccore;
 import "exception.dart" show CvException, CvdException;
 
 /* fundamental constants */
@@ -66,7 +66,7 @@ abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
 }
 
 // error handler
-void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
+void throwIfFailed(ffi.Pointer<ccore.CvStatus> s) {
   final code = s.ref.code;
   // String err = s.ref.err.cast<Utf8>().toDartString();
   final msg = s.ref.msg.cast<Utf8>().toDartString();

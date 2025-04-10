@@ -13,8 +13,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/stitching.g.dart' as cvg;
-import '../native_lib.dart' show cstitching;
+import '../g/stitching.g.dart' as cstitching;
 
 /// High level image stitcher.
 ///
@@ -23,18 +22,18 @@ import '../native_lib.dart' show cstitching;
 /// stability and quality of the final images at least being familiar
 /// with the theory is recommended.
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#details
-class Stitcher extends CvStruct<cvg.Stitcher> {
-  Stitcher._(cvg.StitcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+class Stitcher extends CvStruct<cstitching.Stitcher> {
+  Stitcher._(cstitching.StitcherPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory Stitcher.fromPointer(cvg.StitcherPtr ptr, [bool attach = true]) => Stitcher._(ptr.cast(), attach);
+  factory Stitcher.fromPointer(cstitching.StitcherPtr ptr, [bool attach = true]) => Stitcher._(ptr.cast(), attach);
 
   /// Creates a Stitcher configured in one of the stitching modes.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a308a47865a1f381e4429c8ec5e99549f
   factory Stitcher.create({StitcherMode mode = StitcherMode.PANORAMA}) {
-    final ptr_ = calloc<cvg.Stitcher>();
+    final ptr_ = calloc<cstitching.Stitcher>();
     cvRun(() => cstitching.cv_Stitcher_create(mode.index, ptr_));
     return Stitcher._(ptr_);
   }
@@ -132,7 +131,7 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
     return v;
   }
 
-  static final finalizer = OcvFinalizer<cvg.StitcherPtr>(cstitching.addresses.cv_Stitcher_close);
+  static final finalizer = OcvFinalizer<cstitching.StitcherPtr>(cstitching.addresses.cv_Stitcher_close);
 
   void dispose() {
     finalizer.detach(this);
@@ -140,7 +139,7 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
   }
 
   @override
-  cvg.Stitcher get ref => ptr.ref;
+  cstitching.Stitcher get ref => ptr.ref;
 }
 
 /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a507409ce9435dd89857469d12ec06b45

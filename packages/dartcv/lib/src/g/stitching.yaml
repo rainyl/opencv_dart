@@ -2,7 +2,7 @@ format_version: 1.0.0
 files:
   package:dartcv4/src/g/stitching.g.dart:
     used-config:
-      ffi-native: false
+      ffi-native: true
     symbols:
       c:@Ea@STITCHING_OK@STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL:
         name: STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL

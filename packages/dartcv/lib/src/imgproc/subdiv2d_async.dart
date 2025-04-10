@@ -14,8 +14,7 @@ import '../core/cv_vec.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
-import '../g/imgproc.g.dart' as cvg;
-import '../native_lib.dart' show cimgproc;
+import '../g/imgproc.g.dart' as cimgproc;
 import 'subdiv2d.dart';
 
 /// Async version of [Subdiv2D]
@@ -24,7 +23,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aee192f95bf19c74619641496c457586d
   Future<(int rval, Point2f dstpt)> edgeDstAsync(int edge) async {
-    final pp = calloc<cvg.CvPoint2f>();
+    final pp = calloc<cimgproc.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_edgeDst(ref, edge, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
@@ -37,7 +36,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5563e3cae0a9b95df63e72f0c12f9389
   Future<(int rval, Point2f orgpt)> edgeOrgAsync(int edge) async {
-    final pp = calloc<cvg.CvPoint2f>();
+    final pp = calloc<cimgproc.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_edgeOrg(ref, edge, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
@@ -55,7 +54,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3ec256af000e129e08eb5f269ccdeb0f
   Future<(int rval, Point2f nearestPt)> findNearestAsync(Point2f pt) async {
-    final pp = calloc<cvg.CvPoint2f>();
+    final pp = calloc<cimgproc.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_findNearest(ref, pt.ref, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
@@ -92,7 +91,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#ab527c11e9938eed53cf9c790afa9416d
   Future<List<Vec4f>> getEdgeListAsync() async {
-    final pv = calloc<ffi.Pointer<cvg.Vec4f>>();
+    final pv = calloc<ffi.Pointer<cimgproc.Vec4f>>();
     final psize = calloc<ffi.Size>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getEdgeList(ref, pv, psize, callback), (c) {
       final rval = List.generate(psize.value, (i) {
@@ -122,7 +121,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a26bfe32209bc8ae9ecc53e93da01e466
   Future<List<Vec6f>> getTriangleListAsync() async {
-    final pv = calloc<ffi.Pointer<cvg.Vec6f>>();
+    final pv = calloc<ffi.Pointer<cimgproc.Vec6f>>();
     final psize = calloc<ffi.Size>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getTriangleList(ref, pv, psize, callback), (c) {
       final rval = List.generate(psize.value, (i) {
@@ -139,7 +138,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5297daca30f90d1e6d0cc5a75ba76351
   Future<(Point2f rval, int firstEdge)> getVertexAsync(int vertex) async {
-    final pp = calloc<cvg.CvPoint2f>();
+    final pp = calloc<cimgproc.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getVertex(ref, vertex, p, pp, callback), (c) {
       final rval = (Point2f.fromPointer(pp), p.value);

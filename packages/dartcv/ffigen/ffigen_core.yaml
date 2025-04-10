@@ -9,30 +9,30 @@ output:
 import:
   symbol-files:
     - 'package:dartcv4/src/g/types.yaml'
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true
 headers:
   entry-points:
-    - ../src/dartcv/core/core.h
-    - ../src/dartcv/core/exception.h
-    - ../src/dartcv/core/logging.h
-    - ../src/dartcv/core/mat.h
-    - ../src/dartcv/core/svd.h
-    - ../src/dartcv/core/stdvec.h
-    - ../src/dartcv/core/utils.h
-    - ../src/dartcv/core/version.h
+    - ../src/core/core.h
+    - ../src/core/exception.h
+    - ../src/core/logging.h
+    - ../src/core/mat.h
+    - ../src/core/svd.h
+    - ../src/core/stdvec.h
+    - ../src/core/utils.h
+    - ../src/core/version.h
   include-directives:
-    - ../src/dartcv/core/core.h
-    - ../src/dartcv/core/exception.h
-    - ../src/dartcv/core/logging.h
-    - ../src/dartcv/core/mat.h
-    - ../src/dartcv/core/svd.h
-    - ../src/dartcv/core/stdvec.h
-    - ../src/dartcv/core/utils.h
-    - ../src/dartcv/core/version.h
+    - ../src/core/core.h
+    - ../src/core/exception.h
+    - ../src/core/logging.h
+    - ../src/core/mat.h
+    - ../src/core/svd.h
+    - ../src/core/stdvec.h
+    - ../src/core/utils.h
+    - ../src/core/version.h
 functions:
   leaf:
     include:
