@@ -397,7 +397,9 @@ class HOGDescriptor extends CvStruct<cobjdetect.HOGDescriptor> {
 
   @override
   cobjdetect.HOGDescriptor get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<cobjdetect.HOGDescriptorPtr>(cobjdetect.addresses.cv_HOGDescriptor_close);
+  static final finalizer = OcvFinalizer<cobjdetect.HOGDescriptorPtr>(
+    cobjdetect.addresses.cv_HOGDescriptor_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -600,7 +602,9 @@ class QRCodeDetector extends CvStruct<cobjdetect.QRCodeDetector> {
   void setUseAlignmentMarkers(bool useAlignmentMarkers) =>
       cobjdetect.cv_QRCodeDetector_setUseAlignmentMarkers(ref, useAlignmentMarkers);
 
-  static final finalizer = OcvFinalizer<cobjdetect.QRCodeDetectorPtr>(cobjdetect.addresses.cv_QRCodeDetector_close);
+  static final finalizer = OcvFinalizer<cobjdetect.QRCodeDetectorPtr>(
+    cobjdetect.addresses.cv_QRCodeDetector_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -805,7 +809,9 @@ class FaceDetectorYN extends CvStruct<cobjdetect.FaceDetectorYN> {
   @override
   cobjdetect.FaceDetectorYN get ref => ptr.ref;
 
-  static final finalizer = OcvFinalizer<cobjdetect.FaceDetectorYNPtr>(cobjdetect.addresses.cv_FaceDetectorYN_close);
+  static final finalizer = OcvFinalizer<cobjdetect.FaceDetectorYNPtr>(
+    cobjdetect.addresses.cv_FaceDetectorYN_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

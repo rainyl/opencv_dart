@@ -78,7 +78,8 @@ class AlignMTB extends CvStruct<cphoto.AlignMTB> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory AlignMTB.fromPointer(cphoto.AlignMTBPtr ptr, [bool attach = true]) => AlignMTB._(ptr.cast(), attach);
+  factory AlignMTB.fromPointer(cphoto.AlignMTBPtr ptr, [bool attach = true]) =>
+      AlignMTB._(ptr.cast(), attach);
 
   /// AlignMTB for converts images to median threshold bitmaps.
   /// of type AlignMTB converts images to median threshold bitmaps (1 for pixels

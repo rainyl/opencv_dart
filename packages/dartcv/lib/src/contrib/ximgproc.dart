@@ -737,7 +737,9 @@ class EdgeDrawing extends CvStruct<ccontrib.EdgeDrawing> {
   set params(EdgeDrawingParams value) =>
       cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_setParams(ref, value.ref, ffi.nullptr));
 
-  static final finalizer = OcvFinalizer<ccontrib.EdgeDrawingPtr>(ccontrib.addresses.cv_ximgproc_EdgeDrawing_close);
+  static final finalizer = OcvFinalizer<ccontrib.EdgeDrawingPtr>(
+    ccontrib.addresses.cv_ximgproc_EdgeDrawing_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

@@ -147,7 +147,9 @@ class ArucoDictionary extends CvStruct<ccontrib.ArucoDictionary> {
 
   @override
   ccontrib.ArucoDictionary get ref => ptr.ref;
-  static final finalizer = OcvFinalizer<ccontrib.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_Dictionary_close);
+  static final finalizer = OcvFinalizer<ccontrib.ArucoDictionaryPtr>(
+    ccontrib.addresses.cv_aruco_Dictionary_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

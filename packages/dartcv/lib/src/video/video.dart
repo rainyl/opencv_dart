@@ -60,7 +60,8 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvideo.BackgroundSubtractorMOG2>
 }
 
 class BackgroundSubtractorKNN extends CvStruct<cvideo.BackgroundSubtractorKNN> {
-  BackgroundSubtractorKNN(cvideo.BackgroundSubtractorKNNPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  BackgroundSubtractorKNN(cvideo.BackgroundSubtractorKNNPtr ptr, [bool attach = true])
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }

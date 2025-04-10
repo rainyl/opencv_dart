@@ -74,7 +74,8 @@ class AKAZE extends CvStruct<cfeatures2d.AKAZE> {
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
 class AgastFeatureDetector extends CvStruct<cfeatures2d.AgastFeatureDetector> {
-  AgastFeatureDetector._(cfeatures2d.AgastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  AgastFeatureDetector._(cfeatures2d.AgastFeatureDetectorPtr ptr, [bool attach = true])
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -184,7 +185,8 @@ enum FastFeatureDetectorType {
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
 class FastFeatureDetector extends CvStruct<cfeatures2d.FastFeatureDetector> {
-  FastFeatureDetector._(cfeatures2d.FastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
+  FastFeatureDetector._(cfeatures2d.FastFeatureDetectorPtr ptr, [bool attach = true])
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -269,7 +271,9 @@ class GFTTDetector extends CvStruct<cfeatures2d.GFTTDetector> {
     return ret;
   }
 
-  static final finalizer = OcvFinalizer<cfeatures2d.GFTTDetectorPtr>(cfeatures2d.addresses.cv_GFTTDetector_close);
+  static final finalizer = OcvFinalizer<cfeatures2d.GFTTDetectorPtr>(
+    cfeatures2d.addresses.cv_GFTTDetector_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -542,27 +546,28 @@ class SimpleBlobDetectorParams extends CvStruct<cfeatures2d.SimpleBlobDetectorPa
     return SimpleBlobDetectorParams._(p);
   }
 
-  factory SimpleBlobDetectorParams.fromNative(cfeatures2d.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
-    blobColor: r.blobColor,
-    filterByArea: r.filterByArea,
-    filterByCircularity: r.filterByCircularity,
-    filterByColor: r.filterByColor,
-    filterByConvexity: r.filterByConvexity,
-    filterByInertia: r.filterByInertia,
-    maxArea: r.maxArea,
-    maxCircularity: r.maxCircularity,
-    maxConvexity: r.maxConvexity,
-    maxInertiaRatio: r.maxInertiaRatio,
-    maxThreshold: r.maxThreshold,
-    minArea: r.minArea,
-    minCircularity: r.minCircularity,
-    minConvexity: r.minConvexity,
-    minDistBetweenBlobs: r.minDistBetweenBlobs,
-    minInertiaRatio: r.minInertiaRatio,
-    minRepeatability: r.minRepeatability,
-    minThreshold: r.minThreshold,
-    thresholdStep: r.thresholdStep,
-  );
+  factory SimpleBlobDetectorParams.fromNative(cfeatures2d.SimpleBlobDetectorParams r) =>
+      SimpleBlobDetectorParams(
+        blobColor: r.blobColor,
+        filterByArea: r.filterByArea,
+        filterByCircularity: r.filterByCircularity,
+        filterByColor: r.filterByColor,
+        filterByConvexity: r.filterByConvexity,
+        filterByInertia: r.filterByInertia,
+        maxArea: r.maxArea,
+        maxCircularity: r.maxCircularity,
+        maxConvexity: r.maxConvexity,
+        maxInertiaRatio: r.maxInertiaRatio,
+        maxThreshold: r.maxThreshold,
+        minArea: r.minArea,
+        minCircularity: r.minCircularity,
+        minConvexity: r.minConvexity,
+        minDistBetweenBlobs: r.minDistBetweenBlobs,
+        minInertiaRatio: r.minInertiaRatio,
+        minRepeatability: r.minRepeatability,
+        minThreshold: r.minThreshold,
+        thresholdStep: r.thresholdStep,
+      );
   factory SimpleBlobDetectorParams.fromPointer(
     ffi.Pointer<cfeatures2d.SimpleBlobDetectorParams> p, [
     bool attach = true,
@@ -711,7 +716,8 @@ class BFMatcher extends CvStruct<cfeatures2d.BFMatcher> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory BFMatcher.fromPointer(cfeatures2d.BFMatcherPtr ptr, [bool attach = true]) => BFMatcher._(ptr, attach);
+  factory BFMatcher.fromPointer(cfeatures2d.BFMatcherPtr ptr, [bool attach = true]) =>
+      BFMatcher._(ptr, attach);
 
   /// returns a new BFMatcher algorithm
   ///

@@ -28,7 +28,8 @@ class Stitcher extends CvStruct<cstitching.Stitcher> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory Stitcher.fromPointer(cstitching.StitcherPtr ptr, [bool attach = true]) => Stitcher._(ptr.cast(), attach);
+  factory Stitcher.fromPointer(cstitching.StitcherPtr ptr, [bool attach = true]) =>
+      Stitcher._(ptr.cast(), attach);
 
   /// Creates a Stitcher configured in one of the stitching modes.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a308a47865a1f381e4429c8ec5e99549f

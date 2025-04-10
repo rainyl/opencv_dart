@@ -162,7 +162,9 @@ class QualityGMSD extends CvStruct<ccontrib.QualityGMSD> {
     );
   }
 
-  static final finalizer = OcvFinalizer<ccontrib.QualityGMSDPtr>(ccontrib.addresses.cv_quality_QualityGMSD_close);
+  static final finalizer = OcvFinalizer<ccontrib.QualityGMSDPtr>(
+    ccontrib.addresses.cv_quality_QualityGMSD_close,
+  );
   @override
   ccontrib.QualityGMSD get ref => ptr.ref;
 }
@@ -227,7 +229,9 @@ class QualityMSE extends CvStruct<ccontrib.QualityMSE> {
     );
   }
 
-  static final finalizer = OcvFinalizer<ccontrib.QualityMSEPtr>(ccontrib.addresses.cv_quality_QualityMSE_close);
+  static final finalizer = OcvFinalizer<ccontrib.QualityMSEPtr>(
+    ccontrib.addresses.cv_quality_QualityMSE_close,
+  );
   @override
   ccontrib.QualityMSE get ref => ptr.ref;
 }
@@ -311,7 +315,9 @@ class QualityPSNR extends CvStruct<ccontrib.QualityPSNR> {
   double get maxPixelValue => ccontrib.cv_quality_QualityPSNR_getMaxPixelValue(ref);
   set maxPixelValue(double value) => ccontrib.cv_quality_QualityPSNR_setMaxPixelValue(ref, value);
 
-  static final finalizer = OcvFinalizer<ccontrib.QualityPSNRPtr>(ccontrib.addresses.cv_quality_QualityPSNR_close);
+  static final finalizer = OcvFinalizer<ccontrib.QualityPSNRPtr>(
+    ccontrib.addresses.cv_quality_QualityPSNR_close,
+  );
   @override
   ccontrib.QualityPSNR get ref => ptr.ref;
 }
@@ -374,7 +380,9 @@ class QualitySSIM extends CvStruct<ccontrib.QualitySSIM> {
     );
   }
 
-  static final finalizer = OcvFinalizer<ccontrib.QualitySSIMPtr>(ccontrib.addresses.cv_quality_QualitySSIM_close);
+  static final finalizer = OcvFinalizer<ccontrib.QualitySSIMPtr>(
+    ccontrib.addresses.cv_quality_QualitySSIM_close,
+  );
   @override
   ccontrib.QualitySSIM get ref => ptr.ref;
 }
