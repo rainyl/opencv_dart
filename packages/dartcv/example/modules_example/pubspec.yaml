@@ -1,0 +1,34 @@
+name: modules_example
+description: A sample command-line application.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+publish_to: none
+
+environment:
+  sdk: ^3.3.0
+
+# Add regular dependencies here.
+dependencies:
+  dartcv4:
+    path: ../..
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.24.0
+
+hooks:
+  user_defines:
+    dartcv4:
+      exclude_modules:
+        - contrib
+        - calib3d
+        - features2d
+        # - dnn
+        - highgui
+        - flann
+        - objdetect
+        - photo
+        - stitching
+        - video
+        - videoio

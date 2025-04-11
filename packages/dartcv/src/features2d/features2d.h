@@ -26,7 +26,9 @@ CVD_TYPEDEF(cv::Ptr<cv::MSER>, MSER);
 CVD_TYPEDEF(cv::Ptr<cv::ORB>, ORB);
 CVD_TYPEDEF(cv::Ptr<cv::SimpleBlobDetector>, SimpleBlobDetector);
 CVD_TYPEDEF(cv::Ptr<cv::BFMatcher>, BFMatcher);
+#ifdef HAVE_OPENCV_FLANN
 CVD_TYPEDEF(cv::Ptr<cv::FlannBasedMatcher>, FlannBasedMatcher);
+#endif
 CVD_TYPEDEF(cv::Ptr<cv::SIFT>, SIFT);
 #else
 CVD_TYPEDEF(void, AKAZE);
@@ -39,7 +41,9 @@ CVD_TYPEDEF(void, MSER);
 CVD_TYPEDEF(void, ORB);
 CVD_TYPEDEF(void, SimpleBlobDetector);
 CVD_TYPEDEF(void, BFMatcher);
+#ifdef HAVE_OPENCV_FLANN
 CVD_TYPEDEF(void, FlannBasedMatcher);
+#endif
 CVD_TYPEDEF(void, SIFT);
 #endif
 

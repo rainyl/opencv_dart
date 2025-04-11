@@ -190,6 +190,8 @@ files:
         name: cv_Mat_op_add_i8
       c:@F@cv_Mat_op_add_mat:
         name: cv_Mat_op_add_mat
+      c:@F@cv_Mat_op_add_scalar:
+        name: cv_Mat_op_add_scalar
       c:@F@cv_Mat_op_add_u16:
         name: cv_Mat_op_add_u16
       c:@F@cv_Mat_op_add_u8:
@@ -206,6 +208,8 @@ files:
         name: cv_Mat_op_div_i8
       c:@F@cv_Mat_op_div_mat:
         name: cv_Mat_op_div_mat
+      c:@F@cv_Mat_op_div_scalar:
+        name: cv_Mat_op_div_scalar
       c:@F@cv_Mat_op_div_u16:
         name: cv_Mat_op_div_u16
       c:@F@cv_Mat_op_div_u8:
@@ -222,6 +226,8 @@ files:
         name: cv_Mat_op_mul_i8
       c:@F@cv_Mat_op_mul_mat:
         name: cv_Mat_op_mul_mat
+      c:@F@cv_Mat_op_mul_scalar:
+        name: cv_Mat_op_mul_scalar
       c:@F@cv_Mat_op_mul_u16:
         name: cv_Mat_op_mul_u16
       c:@F@cv_Mat_op_mul_u8:
@@ -238,6 +244,8 @@ files:
         name: cv_Mat_op_sub_i8
       c:@F@cv_Mat_op_sub_mat:
         name: cv_Mat_op_sub_mat
+      c:@F@cv_Mat_op_sub_scalar:
+        name: cv_Mat_op_sub_scalar
       c:@F@cv_Mat_op_sub_u16:
         name: cv_Mat_op_sub_u16
       c:@F@cv_Mat_op_sub_u8:

@@ -292,6 +292,11 @@ void cv_Mat_set_Vec3d(Mat self, int i0, int i1, Vec3d val);
 void cv_Mat_set_Vec4d(Mat self, int i0, int i1, Vec4d val);
 void cv_Mat_set_Vec6d(Mat self, int i0, int i1, Vec6d val);
 
+CvStatus* cv_Mat_op_add_scalar(Mat self, Scalar val);
+CvStatus* cv_Mat_op_sub_scalar(Mat self, Scalar val);
+CvStatus* cv_Mat_op_mul_scalar(Mat self, Scalar val);
+CvStatus* cv_Mat_op_div_scalar(Mat self, Scalar val);
+
 CvStatus* cv_Mat_op_add_mat(Mat self, Mat val);
 CvStatus* cv_Mat_op_sub_mat(Mat self, Mat val);
 CvStatus* cv_Mat_op_mul_mat(Mat self, Mat val);

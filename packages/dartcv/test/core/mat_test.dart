@@ -251,6 +251,16 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     mat2_1.add<cv.Mat>(mat0, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(255));
 
+    // Scalar
+    final mat3 = mat1.add<cv.Scalar>(cv.Scalar.all(54));
+    expect(mat3.at<int>(0, 0), equals(181));
+    expect(() => mat3.add<double>(0.1), throwsUnsupportedError);
+    expect(() => mat3.add<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
+    final mat3_1 = mat1.clone();
+    mat3_1.add<cv.Scalar>(cv.Scalar.all(54), inplace: true);
+    expect(mat3_1.at<int>(0, 0), equals(181));
+    mat3_1.dispose();
+
     // int
     const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
     for (final type in types) {
@@ -294,6 +304,16 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     mat2_1.subtract<cv.Mat>(mat1, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(128));
 
+    // Scalar
+    final mat3 = mat0.subtract<cv.Scalar>(cv.Scalar.all(14));
+    expect(mat3.at<int>(0, 0), equals(241));
+    expect(() => mat3.subtract<double>(0.1), throwsUnsupportedError);
+    expect(() => mat3.subtract<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
+    final mat3_1 = mat0.clone();
+    mat3_1.subtract<cv.Scalar>(cv.Scalar.all(14), inplace: true);
+    expect(mat3_1.at<int>(0, 0), equals(241));
+    mat3_1.dispose();
+
     // int
     const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
     for (final type in types) {
@@ -336,6 +356,17 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat2_1 = mat1.clone();
     mat2_1.mul(mat0, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(200));
+
+    // Scalar
+    final mat3 = mat0.multiply(cv.Scalar.all(2));
+    expect((mat3.width, mat3.height, mat3.channels), (100, 100, 3));
+    expect(mat3.at<int>(0, 0), equals(200));
+    expect(() => mat3.multiply<double>(0.1), throwsUnsupportedError);
+    expect(() => mat3.subtract<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
+    final mat3_1 = mat0.clone();
+    mat3_1.multiply(cv.Scalar.all(2), inplace: true);
+    expect(mat3_1.at<int>(0, 0), equals(200));
+    mat3_1.dispose();
 
     // int
     const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];
@@ -385,6 +416,16 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     final mat2_1 = mat0.clone();
     mat2_1.divide<cv.Mat>(mat1, inplace: true);
     expect(mat2_1.at<int>(0, 0), equals(100));
+
+    // Scalar
+    final mat3 = mat0.divide(cv.Scalar.all(2));
+    expect(mat3.at<int>(0, 0), equals(100));
+    expect(() => mat3.divide<double>(0.1), throwsUnsupportedError);
+    expect(() => mat3.divide<cv.Size>(cv.Size(0, 0)), throwsUnsupportedError);
+    final mat3_1 = mat0.clone();
+    mat3_1.divide(cv.Scalar.all(2), inplace: true);
+    expect(mat3_1.at<int>(0, 0), equals(100));
+    mat3_1.dispose();
 
     // int
     const types = [cv.MatType.CV_8UC3, cv.MatType.CV_16UC3, cv.MatType.CV_16SC3, cv.MatType.CV_32SC3];

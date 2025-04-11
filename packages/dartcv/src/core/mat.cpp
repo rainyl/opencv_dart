@@ -847,6 +847,32 @@ void cv_Mat_set_Vec6d(Mat self, int i0, int i1, Vec6d val) {
         cv::Vec6d(val.val1, val.val2, val.val3, val.val4, val.val5, val.val6);
 }
 
+CvStatus* cv_Mat_op_add_scalar(Mat self, Scalar val){
+    BEGIN_WRAP
+    auto _val = cv::Scalar(val.val1, val.val2, val.val3, val.val4);
+    cv::add(CVDEREF(self), _val, CVDEREF(self));
+    END_WRAP
+}
+CvStatus* cv_Mat_op_sub_scalar(Mat self, Scalar val){
+    BEGIN_WRAP
+    auto _val = cv::Scalar(val.val1, val.val2, val.val3, val.val4);
+    cv::subtract(CVDEREF(self), _val, CVDEREF(self));
+    END_WRAP
+}
+CvStatus* cv_Mat_op_mul_scalar(Mat self, Scalar val){
+    BEGIN_WRAP
+    auto _val = cv::Scalar(val.val1, val.val2, val.val3, val.val4);
+    cv::multiply(CVDEREF(self), _val, CVDEREF(self));
+    // CVDEREF(self) *= cv::Scalar(val.val1, val.val2, val.val3, val.val4);
+    END_WRAP
+}
+CvStatus* cv_Mat_op_div_scalar(Mat self, Scalar val){
+    BEGIN_WRAP
+    auto _val = cv::Scalar(val.val1, val.val2, val.val3, val.val4);
+    cv::divide(CVDEREF(self), _val, CVDEREF(self));
+    END_WRAP
+}
+
 CvStatus* cv_Mat_op_add_mat(Mat self, Mat val) {
     BEGIN_WRAP
     CVDEREF(self) += CVDEREF(val);

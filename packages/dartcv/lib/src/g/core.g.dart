@@ -745,6 +745,12 @@ external ffi.Pointer<CvStatus> cv_Mat_op_add_mat(
   Mat val,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar)>()
+external ffi.Pointer<CvStatus> cv_Mat_op_add_scalar(
+  Mat self,
+  Scalar val,
+);
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint16)>()
 external ffi.Pointer<CvStatus> cv_Mat_op_add_u16(
   Mat self,
@@ -791,6 +797,12 @@ external ffi.Pointer<CvStatus> cv_Mat_op_div_i8(
 external ffi.Pointer<CvStatus> cv_Mat_op_div_mat(
   Mat self,
   Mat val,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar)>()
+external ffi.Pointer<CvStatus> cv_Mat_op_div_scalar(
+  Mat self,
+  Scalar val,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint16)>()
@@ -841,6 +853,12 @@ external ffi.Pointer<CvStatus> cv_Mat_op_mul_mat(
   Mat val,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar)>()
+external ffi.Pointer<CvStatus> cv_Mat_op_mul_scalar(
+  Mat self,
+  Scalar val,
+);
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint16)>()
 external ffi.Pointer<CvStatus> cv_Mat_op_mul_u16(
   Mat self,
@@ -887,6 +905,12 @@ external ffi.Pointer<CvStatus> cv_Mat_op_sub_i8(
 external ffi.Pointer<CvStatus> cv_Mat_op_sub_mat(
   Mat self,
   Mat val,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Scalar)>()
+external ffi.Pointer<CvStatus> cv_Mat_op_sub_scalar(
+  Mat self,
+  Scalar val,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Uint16)>()

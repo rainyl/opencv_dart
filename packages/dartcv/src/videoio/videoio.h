@@ -10,7 +10,7 @@
 #define _OPENCV3_VIDEOIO_H_
 
 #ifdef __cplusplus
-#include <opencv2/highgui.hpp>
+#include <opencv2/videoio.hpp>
 extern "C" {
 #endif
 

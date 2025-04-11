@@ -12,9 +12,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 # must include
 # option(DARTCV_WITH_CORE "Include core, imgcodecs models of opencv" ON)
 option(DARTCV_WITH_CALIB3D "Include calib3d module of opencv" OFF)
-# option(DARTCV_WITH_CONTRIB "Include contrib module of opencv" OFF)
+option(DARTCV_WITH_CONTRIB "Include contrib module of opencv" OFF)
 option(DARTCV_WITH_DNN "Include dnn module of opencv" OFF)
 option(DARTCV_WITH_FEATURES2D "Include features2d module of opencv" ON)
+option(DARTCV_WITH_FLANN "Include flann module of opencv" OFF)
 option(DARTCV_WITH_HIGHGUI "Include highgui module of opencv" OFF)
 option(DARTCV_WITH_IMGPROC "Include imgproc module of opencv" ON)
 option(DARTCV_WITH_IMGCODECS "Include imgcodecs module of opencv" ON)
@@ -26,11 +27,7 @@ option(DARTCV_WITH_VIDEOIO "Include objdetect module of opencv" OFF)
 # option(DARTCV_WITH_GAPI "Include gapi of opencv" OFF) # TODO: not finished
 # option(DARTCV_WORLD "Include all modules" OFF) # world means build all modules
 
-option(DARTCV_ENABLE_INSTALL "Enable install" OFF)
-option(DARTCV_ENABLE_TEST "Enable tests" OFF)
-
 option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
-option(DARTCV_DISABLE_DOWNLOAD_OPENCV "Download opencv sdk from opencv.full" OFF)
 
 #set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE INTERNAL "")
 
@@ -126,8 +123,14 @@ set(BUILD_opencv_js OFF)
 set(BUILD_opencv_ts OFF)
 set(BUILD_opencv_python2 OFF)
 set(BUILD_opencv_python3 OFF)
-set(BUILD_opencv_flann OFF)
-set(BUILD_opencv_ml OFF)
+set(BUILD_opencv_flann ${DARTCV_WITH_FLANN})
+set(BUILD_opencv_ml ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_aruco ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_img_hash ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_quality ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_wechat_qrcode ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_ximgproc ${DARTCV_WITH_CONTRIB})
+set(BUILD_opencv_xobjdetect ${DARTCV_WITH_CONTRIB})
 set(BUILD_opencv_calib3d ${DARTCV_WITH_CALIB3D})
 set(BUILD_opencv_dnn ${DARTCV_WITH_DNN})
 set(BUILD_opencv_features2d ${DARTCV_WITH_FEATURES2D})
@@ -142,6 +145,16 @@ set(BUILD_opencv_videoio ${DARTCV_WITH_VIDEOIO})
 
 include(FetchContent)
 if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.28.0")
+  if(DARTCV_WITH_CONTRIB)
+    FetchContent_Declare(
+        libopencv_contrib
+        URL https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz
+        EXCLUDE_FROM_ALL
+    )
+    FetchContent_MakeAvailable(libopencv_contrib)
+    set(OPENCV_EXTRA_MODULES_PATH "${libopencv_contrib_SOURCE_DIR}/modules")
+  endif(DARTCV_WITH_CONTRIB)
+
   FetchContent_Declare(
     libopencv
     # URL "https://github.com/nihui/opencv-mobile/releases/download/v32/opencv-mobile-${OPENCV_VERSION}.zip"
@@ -150,6 +163,19 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.28.0")
   )
   FetchContent_MakeAvailable(libopencv)
 else()
+  if(DARTCV_WITH_CONTRIB)
+    FetchContent_Declare(
+        libopencv_contrib
+        URL https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(libopencv_contrib)
+    if(NOT libopencv_contrib_POPULATED)
+      FetchContent_Populate(libopencv_contrib)
+      add_subdirectory(${libopencv_contrib_SOURCE_DIR} ${libopencv_contrib_BINARY_DIR} EXCLUDE_FROM_ALL)
+    endif()
+    set(OPENCV_EXTRA_MODULES_PATH "${libopencv_contrib_SOURCE_DIR}/modules")
+  endif(DARTCV_WITH_CONTRIB)
+
   FetchContent_Declare(
     libopencv
     # URL "https://github.com/nihui/opencv-mobile/releases/download/v32/opencv-mobile-${OPENCV_VERSION}.zip"
@@ -173,26 +199,26 @@ if (ANDROID)
 elseif (APPLE AND IOS)
     # https://github.com/opencv/opencv/blob/450e741f8d53ff12b4e194c7762adaefb952555a/platforms/ios/build_framework.py#L386
     set(PLATFORM_LIBS ${PLATFORM_LIBS}
-            "-framework UIKit"
-            "-framework AVFoundation"
-            "-framework CoreVideo"
-            "-framework CoreGraphics"
-            "-framework CoreMedia"
-            "-framework CoreImage"
-            "-framework QuartzCore"
-            "-framework Accelerate"
+        "-framework UIKit"
+        "-framework AVFoundation"
+        "-framework CoreVideo"
+        "-framework CoreGraphics"
+        "-framework CoreMedia"
+        "-framework CoreImage"
+        "-framework QuartzCore"
+        "-framework Accelerate"
     )
 elseif (APPLE AND NOT IOS)
     set(PLATFORM_LIBS ${PLATFORM_LIBS}
-            "-framework Cocoa"
-            "-framework AVFoundation"
-            "-framework OpenGL"
-            "-framework CoreVideo"
-            "-framework CoreGraphics"
-            "-framework CoreMedia"
-            "-framework CoreImage"
-            "-framework QuartzCore"
-            "-framework Accelerate"
+        "-framework Cocoa"
+        "-framework AVFoundation"
+        "-framework OpenGL"
+        "-framework CoreVideo"
+        "-framework CoreGraphics"
+        "-framework CoreMedia"
+        "-framework CoreImage"
+        "-framework QuartzCore"
+        "-framework Accelerate"
     )
 endif ()
 
@@ -202,14 +228,14 @@ endif ()
 
 # core includes core, imgcodecs
 set(_cpp_files
-        "core/core.cpp"
-        "core/mat.cpp"
-        "core/exception.cpp"
-        "core/logging.cpp"
-        "core/svd.cpp"
-        "core/utils.cpp"
-        "core/version.cpp"
-        "core/stdvec.cpp"
+    "core/core.cpp"
+    "core/mat.cpp"
+    "core/exception.cpp"
+    "core/logging.cpp"
+    "core/svd.cpp"
+    "core/utils.cpp"
+    "core/version.cpp"
+    "core/stdvec.cpp"
 )
 set(DARTCV_DEPS opencv_core)
 set(OpenCV_INCLUDE_DIRS ${OPENCV_CONFIG_FILE_INCLUDE_DIR} ${OPENCV_MODULE_opencv_core_LOCATION}/include)
@@ -219,6 +245,27 @@ if (DARTCV_WITH_CALIB3D OR DARTCV_WORLD)
     set(_cpp_files ${_cpp_files} "calib3d/calib3d.cpp")
     set(DARTCV_DEPS ${DARTCV_DEPS} opencv_calib3d)
     set(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS} ${OPENCV_MODULE_opencv_calib3d_LOCATION}/include)
+endif ()
+
+#contrib
+if (DARTCV_WITH_CONTRIB OR DARTCV_WORLD)
+    set(_cpp_files ${_cpp_files}
+        "contrib/aruco.cpp" "contrib/img_hash.cpp" "contrib/quality.cpp"
+        "contrib/wechat_qrcode.cpp" "contrib/ximgproc.cpp" "contrib/xobjdetect.cpp"
+    )
+    set(DARTCV_DEPS ${DARTCV_DEPS}
+        opencv_aruco opencv_img_hash opencv_quality
+        opencv_wechat_qrcode opencv_ximgproc opencv_xobjdetect
+    )
+    set(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS}
+        ${OPENCV_MODULE_opencv_aruco_LOCATION}/include
+        ${OPENCV_MODULE_opencv_img_hash_LOCATION}/include
+        ${OPENCV_MODULE_opencv_quality_LOCATION}/include
+        ${OPENCV_MODULE_opencv_wechat_qrcode_LOCATION}/include
+        ${OPENCV_MODULE_opencv_ximgproc_LOCATION}/include
+        ${OPENCV_MODULE_opencv_xobjdetect_LOCATION}/include
+        ${OPENCV_MODULE_opencv_ml_LOCATION}/include
+    )
 endif ()
 
 # dnn
@@ -233,6 +280,10 @@ if (DARTCV_WITH_FEATURES2D OR DARTCV_WORLD)
     set(_cpp_files ${_cpp_files} "features2d/features2d.cpp")
     set(DARTCV_DEPS ${DARTCV_DEPS} opencv_features2d)
     set(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS} ${OPENCV_MODULE_opencv_features2d_LOCATION}/include)
+    if(DARTCV_WITH_FLANN)
+      set(DARTCV_DEPS ${DARTCV_DEPS} opencv_flann)
+      set(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS} ${OPENCV_MODULE_opencv_flann_LOCATION}/include)
+    endif(DARTCV_WITH_FLANN)
 endif ()
 
 # highgui
