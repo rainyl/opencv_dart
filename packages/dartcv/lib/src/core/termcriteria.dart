@@ -23,10 +23,11 @@ class TermCriteria extends CvStruct<cvg.TermCriteria> {
   }
 
   factory TermCriteria(int type, int cound, double eps) {
-    final p = calloc<cvg.TermCriteria>()
-      ..ref.type = type
-      ..ref.maxCount = cound
-      ..ref.epsilon = eps;
+    final p =
+        calloc<cvg.TermCriteria>()
+          ..ref.type = type
+          ..ref.maxCount = cound
+          ..ref.epsilon = eps;
     return TermCriteria.fromPointer(p);
   }
 

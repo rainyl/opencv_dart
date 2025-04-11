@@ -20,11 +20,12 @@ class Rect extends CvStruct<cvg.CvRect> {
     }
   }
   factory Rect(int x, int y, int width, int height) {
-    final ptr = calloc<cvg.CvRect>()
-      ..ref.x = x
-      ..ref.y = y
-      ..ref.width = width
-      ..ref.height = height;
+    final ptr =
+        calloc<cvg.CvRect>()
+          ..ref.x = x
+          ..ref.y = y
+          ..ref.width = width
+          ..ref.height = height;
     return Rect._(ptr);
   }
   factory Rect.fromNative(cvg.CvRect p) => Rect(p.x, p.y, p.width, p.height);
@@ -67,11 +68,12 @@ class Rect2f extends CvStruct<cvg.CvRect2f> {
     }
   }
   factory Rect2f(double x, double y, double width, double height) {
-    final ptr = calloc<cvg.CvRect2f>()
-      ..ref.x = x
-      ..ref.y = y
-      ..ref.width = width
-      ..ref.height = height;
+    final ptr =
+        calloc<cvg.CvRect2f>()
+          ..ref.x = x
+          ..ref.y = y
+          ..ref.width = width
+          ..ref.height = height;
     return Rect2f._(ptr);
   }
   factory Rect2f.fromNative(cvg.CvRect2f p) => Rect2f(p.x, p.y, p.width, p.height);
@@ -115,13 +117,15 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
     }
   }
   factory RotatedRect(Point2f center, (double, double) size, double angle) {
-    final sz = calloc<cvg.CvSize2f>()
-      ..ref.width = size.$1
-      ..ref.height = size.$2;
-    final ptr = calloc<cvg.RotatedRect>()
-      ..ref.center = center.ref
-      ..ref.size = sz.ref
-      ..ref.angle = angle;
+    final sz =
+        calloc<cvg.CvSize2f>()
+          ..ref.width = size.$1
+          ..ref.height = size.$2;
+    final ptr =
+        calloc<cvg.RotatedRect>()
+          ..ref.center = center.ref
+          ..ref.size = sz.ref
+          ..ref.angle = angle;
     final rect = RotatedRect._(ptr);
     calloc.free(sz);
     return rect;

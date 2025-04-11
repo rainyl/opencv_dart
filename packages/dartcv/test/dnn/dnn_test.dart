@@ -237,10 +237,11 @@ void main() async {
   });
 
   test('cv.blobFromImages, cv.imagesFromBlob, cv.getBlobChannel', () {
-    final imgs = [
-      cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
-      cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
-    ].cvd;
+    final imgs =
+        [
+          cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
+          cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR),
+        ].cvd;
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
@@ -257,10 +258,11 @@ void main() async {
   });
 
   test('cv.blobFromImages GrayScale', () {
-    final imgs = [
-      cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
-      cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
-    ].cvd;
+    final imgs =
+        [
+          cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
+          cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE),
+        ].cvd;
 
     final blob = cv.blobFromImages(imgs);
     expect(blob.isEmpty, false);
@@ -273,13 +275,14 @@ void main() async {
 
     img.convertTo(cv.MatType.CV_32FC1);
 
-    final bboxes = [
-      cv.Rect(53, 47, 589, 451),
-      cv.Rect(118, 54, 618, 450),
-      cv.Rect(53, 66, 605, 480),
-      cv.Rect(111, 65, 630, 480),
-      cv.Rect(156, 51, 640, 480),
-    ].cvd;
+    final bboxes =
+        [
+          cv.Rect(53, 47, 589, 451),
+          cv.Rect(118, 54, 618, 450),
+          cv.Rect(53, 66, 605, 480),
+          cv.Rect(111, 65, 630, 480),
+          cv.Rect(156, 51, 640, 480),
+        ].cvd;
     final scores = [0.82094115, 0.7998236, 0.9809663, 0.99717456, 0.89628726].f32;
     final indices = cv.NMSBoxes(bboxes, scores, 0.5, 0.4);
     expect(indices.first, 3);

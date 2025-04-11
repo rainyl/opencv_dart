@@ -105,7 +105,7 @@ Mat arucoGenerateImageMarker(
 
 class ArucoDetectorParameters extends CvStruct<ccontrib.ArucoDetectorParams> {
   ArucoDetectorParameters._(ccontrib.ArucoDetectorParamsPtr ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }

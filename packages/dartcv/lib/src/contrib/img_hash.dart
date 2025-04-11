@@ -133,7 +133,7 @@ const int BLOCK_MEAN_HASH_MODE_1 = 1;
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
 class BlockMeanHash extends CvStruct<ccontrib.BlockMeanHash> implements ImgHashBase {
   BlockMeanHash._(ccontrib.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0, bool attach = true])
-      : super.fromPointer(ptr) {
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
