@@ -75,7 +75,7 @@ class AKAZE extends CvStruct<cfeatures2d.AKAZE> {
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
 class AgastFeatureDetector extends CvStruct<cfeatures2d.AgastFeatureDetector> {
   AgastFeatureDetector._(cfeatures2d.AgastFeatureDetectorPtr ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -186,7 +186,7 @@ enum FastFeatureDetectorType {
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
 class FastFeatureDetector extends CvStruct<cfeatures2d.FastFeatureDetector> {
   FastFeatureDetector._(cfeatures2d.FastFeatureDetectorPtr ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -485,7 +485,7 @@ class ORB extends CvStruct<cfeatures2d.ORB> {
 
 class SimpleBlobDetectorParams extends CvStruct<cfeatures2d.SimpleBlobDetectorParams> {
   SimpleBlobDetectorParams._(ffi.Pointer<cfeatures2d.SimpleBlobDetectorParams> ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -571,7 +571,8 @@ class SimpleBlobDetectorParams extends CvStruct<cfeatures2d.SimpleBlobDetectorPa
   factory SimpleBlobDetectorParams.fromPointer(
     ffi.Pointer<cfeatures2d.SimpleBlobDetectorParams> p, [
     bool attach = true,
-  ]) => SimpleBlobDetectorParams._(p, attach);
+  ]) =>
+      SimpleBlobDetectorParams._(p, attach);
 
   @override
   cfeatures2d.SimpleBlobDetectorParams get ref => ptr.ref;
@@ -642,21 +643,21 @@ class SimpleBlobDetectorParams extends CvStruct<cfeatures2d.SimpleBlobDetectorPa
 
   @override
   List<num> get props => [
-    maxArea,
-    minArea,
-    minConvexity,
-    maxConvexity,
-    minInertiaRatio,
-    maxInertiaRatio,
-    minThreshold,
-    maxThreshold,
-    thresholdStep,
-    minDistBetweenBlobs,
-    minRepeatability,
-    minThreshold,
-    thresholdStep,
-    minDistBetweenBlobs,
-  ];
+        maxArea,
+        minArea,
+        minConvexity,
+        maxConvexity,
+        minInertiaRatio,
+        maxInertiaRatio,
+        minThreshold,
+        maxThreshold,
+        thresholdStep,
+        minDistBetweenBlobs,
+        minRepeatability,
+        minThreshold,
+        thresholdStep,
+        minDistBetweenBlobs,
+      ];
 }
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.

@@ -21,7 +21,7 @@ import '../g/video.g.dart' as cvideo;
 
 class BackgroundSubtractorMOG2 extends CvStruct<cvideo.BackgroundSubtractorMOG2> {
   BackgroundSubtractorMOG2(cvideo.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -61,7 +61,7 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvideo.BackgroundSubtractorMOG2>
 
 class BackgroundSubtractorKNN extends CvStruct<cvideo.BackgroundSubtractorKNN> {
   BackgroundSubtractorKNN(cvideo.BackgroundSubtractorKNNPtr ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
