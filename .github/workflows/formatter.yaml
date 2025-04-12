@@ -12,10 +12,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
+        with:
+          channel: main # or: beta, master (or main)
       - name: Format code
         run: |
-          dart format --line-length 110 \
-            $(find packages -name '*.dart' -not -name '*.g.dart' -and -not -name '*.freezed.dart')
+          cd packages/dartcv
+          dart format .
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

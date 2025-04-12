@@ -172,12 +172,14 @@ void main() async {
       [190.85422998, 55.05627181],
       [240.19097166, 206.9696157],
       [186.65860323, 123.41471593],
-    ], cv.MatType.CV_32FC1).reshape(2, 1);
+    ], cv.MatType.CV_32FC1)
+        .reshape(2, 1);
     final points2 = cv.Mat.from2DList([
       [115.73466756, 63.21138927],
       [84.3030183, 225.45245352],
       [34.09884804, 98.12981797],
-    ], cv.MatType.CV_32FC1).reshape(2, 1);
+    ], cv.MatType.CV_32FC1)
+        .reshape(2, 1);
 
     {
       final (newPoints1, newPoints2) = cv.correctMatches(mat, points2, points3);

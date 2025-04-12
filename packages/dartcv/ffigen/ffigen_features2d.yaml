@@ -11,7 +11,7 @@ ffi-native:
 import:
   symbol-files:
     - 'package:dartcv4/src/g/types.yaml'
-compiler-opts: "-Isrc -Idartcv"
+compiler-opts: "-Isrc -Idartcv -DHAVE_OPENCV_FLANN"
 sort: true
 include-unused-typedefs: true
 headers:

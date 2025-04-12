@@ -6,402 +6,20 @@
 #ifndef OPENCV_DART_LIBRARY_ENUMS_H
 #define OPENCV_DART_LIBRARY_ENUMS_H
 
-/** the color conversion codes
-@see @ref imgproc_color_conversions
-@ingroup imgproc_color_conversions
- */
-enum
-{
-    COLOR_BGR2BGRA = 0, //!< add alpha channel to RGB or BGR image
-    COLOR_RGB2RGBA = COLOR_BGR2BGRA,
-
-    COLOR_BGRA2BGR = 1, //!< remove alpha channel from RGB or BGR image
-    COLOR_RGBA2RGB = COLOR_BGRA2BGR,
-
-    COLOR_BGR2RGBA = 2, //!< convert between RGB and BGR color spaces (with or without alpha channel)
-    COLOR_RGB2BGRA = COLOR_BGR2RGBA,
-
-    COLOR_RGBA2BGR = 3,
-    COLOR_BGRA2RGB = COLOR_RGBA2BGR,
-
-    COLOR_BGR2RGB = 4,
-    COLOR_RGB2BGR = COLOR_BGR2RGB,
-
-    COLOR_BGRA2RGBA = 5,
-    COLOR_RGBA2BGRA = COLOR_BGRA2RGBA,
-
-    COLOR_BGR2GRAY = 6, //!< convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
-    COLOR_RGB2GRAY = 7,
-    COLOR_GRAY2BGR = 8,
-    COLOR_GRAY2RGB = COLOR_GRAY2BGR,
-    COLOR_GRAY2BGRA = 9,
-    COLOR_GRAY2RGBA = COLOR_GRAY2BGRA,
-    COLOR_BGRA2GRAY = 10,
-    COLOR_RGBA2GRAY = 11,
-
-    COLOR_BGR2BGR565 = 12, //!< convert between RGB/BGR and BGR565 (16-bit images)
-    COLOR_RGB2BGR565 = 13,
-    COLOR_BGR5652BGR = 14,
-    COLOR_BGR5652RGB = 15,
-    COLOR_BGRA2BGR565 = 16,
-    COLOR_RGBA2BGR565 = 17,
-    COLOR_BGR5652BGRA = 18,
-    COLOR_BGR5652RGBA = 19,
-
-    COLOR_GRAY2BGR565 = 20, //!< convert between grayscale to BGR565 (16-bit images)
-    COLOR_BGR5652GRAY = 21,
-
-    COLOR_BGR2BGR555 = 22, //!< convert between RGB/BGR and BGR555 (16-bit images)
-    COLOR_RGB2BGR555 = 23,
-    COLOR_BGR5552BGR = 24,
-    COLOR_BGR5552RGB = 25,
-    COLOR_BGRA2BGR555 = 26,
-    COLOR_RGBA2BGR555 = 27,
-    COLOR_BGR5552BGRA = 28,
-    COLOR_BGR5552RGBA = 29,
-
-    COLOR_GRAY2BGR555 = 30, //!< convert between grayscale and BGR555 (16-bit images)
-    COLOR_BGR5552GRAY = 31,
-
-    COLOR_BGR2XYZ = 32, //!< convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
-    COLOR_RGB2XYZ = 33,
-    COLOR_XYZ2BGR = 34,
-    COLOR_XYZ2RGB = 35,
-
-    COLOR_BGR2YCrCb = 36, //!< convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
-    COLOR_RGB2YCrCb = 37,
-    COLOR_YCrCb2BGR = 38,
-    COLOR_YCrCb2RGB = 39,
-
-    COLOR_BGR2HSV = 40, //!< convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
-    COLOR_RGB2HSV = 41,
-
-    COLOR_BGR2Lab = 44, //!< convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
-    COLOR_RGB2Lab = 45,
-
-    COLOR_BGR2Luv = 50, //!< convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
-    COLOR_RGB2Luv = 51,
-    COLOR_BGR2HLS = 52, //!< convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
-    COLOR_RGB2HLS = 53,
-
-    COLOR_HSV2BGR = 54, //!< backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
-    COLOR_HSV2RGB = 55,
-
-    COLOR_Lab2BGR = 56,
-    COLOR_Lab2RGB = 57,
-    COLOR_Luv2BGR = 58,
-    COLOR_Luv2RGB = 59,
-    COLOR_HLS2BGR = 60, //!< backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
-    COLOR_HLS2RGB = 61,
-
-    COLOR_BGR2HSV_FULL = 66, //!< convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
-    COLOR_RGB2HSV_FULL = 67,
-    COLOR_BGR2HLS_FULL = 68, //!< convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
-    COLOR_RGB2HLS_FULL = 69,
-
-    COLOR_HSV2BGR_FULL = 70, //!< backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
-    COLOR_HSV2RGB_FULL = 71,
-    COLOR_HLS2BGR_FULL = 72, //!< backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
-    COLOR_HLS2RGB_FULL = 73,
-
-    COLOR_LBGR2Lab = 74,
-    COLOR_LRGB2Lab = 75,
-    COLOR_LBGR2Luv = 76,
-    COLOR_LRGB2Luv = 77,
-
-    COLOR_Lab2LBGR = 78,
-    COLOR_Lab2LRGB = 79,
-    COLOR_Luv2LBGR = 80,
-    COLOR_Luv2LRGB = 81,
-
-    COLOR_BGR2YUV = 82, //!< convert between RGB/BGR and YUV
-    COLOR_RGB2YUV = 83,
-    COLOR_YUV2BGR = 84,
-    COLOR_YUV2RGB = 85,
-
-    //! YUV 4:2:0 family to RGB
-    COLOR_YUV2RGB_NV12 = 90,
-    COLOR_YUV2BGR_NV12 = 91,
-    COLOR_YUV2RGB_NV21 = 92,
-    COLOR_YUV2BGR_NV21 = 93,
-    COLOR_YUV420sp2RGB = COLOR_YUV2RGB_NV21,
-    COLOR_YUV420sp2BGR = COLOR_YUV2BGR_NV21,
-
-    COLOR_YUV2RGBA_NV12 = 94,
-    COLOR_YUV2BGRA_NV12 = 95,
-    COLOR_YUV2RGBA_NV21 = 96,
-    COLOR_YUV2BGRA_NV21 = 97,
-    COLOR_YUV420sp2RGBA = COLOR_YUV2RGBA_NV21,
-    COLOR_YUV420sp2BGRA = COLOR_YUV2BGRA_NV21,
-
-    COLOR_YUV2RGB_YV12 = 98,
-    COLOR_YUV2BGR_YV12 = 99,
-    COLOR_YUV2RGB_IYUV = 100,
-    COLOR_YUV2BGR_IYUV = 101,
-    COLOR_YUV2RGB_I420 = COLOR_YUV2RGB_IYUV,
-    COLOR_YUV2BGR_I420 = COLOR_YUV2BGR_IYUV,
-    COLOR_YUV420p2RGB = COLOR_YUV2RGB_YV12,
-    COLOR_YUV420p2BGR = COLOR_YUV2BGR_YV12,
-
-    COLOR_YUV2RGBA_YV12 = 102,
-    COLOR_YUV2BGRA_YV12 = 103,
-    COLOR_YUV2RGBA_IYUV = 104,
-    COLOR_YUV2BGRA_IYUV = 105,
-    COLOR_YUV2RGBA_I420 = COLOR_YUV2RGBA_IYUV,
-    COLOR_YUV2BGRA_I420 = COLOR_YUV2BGRA_IYUV,
-    COLOR_YUV420p2RGBA = COLOR_YUV2RGBA_YV12,
-    COLOR_YUV420p2BGRA = COLOR_YUV2BGRA_YV12,
-
-    COLOR_YUV2GRAY_420 = 106,
-    COLOR_YUV2GRAY_NV21 = COLOR_YUV2GRAY_420,
-    COLOR_YUV2GRAY_NV12 = COLOR_YUV2GRAY_420,
-    COLOR_YUV2GRAY_YV12 = COLOR_YUV2GRAY_420,
-    COLOR_YUV2GRAY_IYUV = COLOR_YUV2GRAY_420,
-    COLOR_YUV2GRAY_I420 = COLOR_YUV2GRAY_420,
-    COLOR_YUV420sp2GRAY = COLOR_YUV2GRAY_420,
-    COLOR_YUV420p2GRAY = COLOR_YUV2GRAY_420,
-
-    //! YUV 4:2:2 family to RGB
-    COLOR_YUV2RGB_UYVY = 107,
-    COLOR_YUV2BGR_UYVY = 108,
-    // COLOR_YUV2RGB_VYUY = 109,
-    // COLOR_YUV2BGR_VYUY = 110,
-    COLOR_YUV2RGB_Y422 = COLOR_YUV2RGB_UYVY,
-    COLOR_YUV2BGR_Y422 = COLOR_YUV2BGR_UYVY,
-    COLOR_YUV2RGB_UYNV = COLOR_YUV2RGB_UYVY,
-    COLOR_YUV2BGR_UYNV = COLOR_YUV2BGR_UYVY,
-
-    COLOR_YUV2RGBA_UYVY = 111,
-    COLOR_YUV2BGRA_UYVY = 112,
-    // COLOR_YUV2RGBA_VYUY = 113,
-    // COLOR_YUV2BGRA_VYUY = 114,
-    COLOR_YUV2RGBA_Y422 = COLOR_YUV2RGBA_UYVY,
-    COLOR_YUV2BGRA_Y422 = COLOR_YUV2BGRA_UYVY,
-    COLOR_YUV2RGBA_UYNV = COLOR_YUV2RGBA_UYVY,
-    COLOR_YUV2BGRA_UYNV = COLOR_YUV2BGRA_UYVY,
-
-    COLOR_YUV2RGB_YUY2 = 115,
-    COLOR_YUV2BGR_YUY2 = 116,
-    COLOR_YUV2RGB_YVYU = 117,
-    COLOR_YUV2BGR_YVYU = 118,
-    COLOR_YUV2RGB_YUYV = COLOR_YUV2RGB_YUY2,
-    COLOR_YUV2BGR_YUYV = COLOR_YUV2BGR_YUY2,
-    COLOR_YUV2RGB_YUNV = COLOR_YUV2RGB_YUY2,
-    COLOR_YUV2BGR_YUNV = COLOR_YUV2BGR_YUY2,
-
-    COLOR_YUV2RGBA_YUY2 = 119,
-    COLOR_YUV2BGRA_YUY2 = 120,
-    COLOR_YUV2RGBA_YVYU = 121,
-    COLOR_YUV2BGRA_YVYU = 122,
-    COLOR_YUV2RGBA_YUYV = COLOR_YUV2RGBA_YUY2,
-    COLOR_YUV2BGRA_YUYV = COLOR_YUV2BGRA_YUY2,
-    COLOR_YUV2RGBA_YUNV = COLOR_YUV2RGBA_YUY2,
-    COLOR_YUV2BGRA_YUNV = COLOR_YUV2BGRA_YUY2,
-
-    COLOR_YUV2GRAY_UYVY = 123,
-    COLOR_YUV2GRAY_YUY2 = 124,
-    // CV_YUV2GRAY_VYUY    = CV_YUV2GRAY_UYVY,
-    COLOR_YUV2GRAY_Y422 = COLOR_YUV2GRAY_UYVY,
-    COLOR_YUV2GRAY_UYNV = COLOR_YUV2GRAY_UYVY,
-    COLOR_YUV2GRAY_YVYU = COLOR_YUV2GRAY_YUY2,
-    COLOR_YUV2GRAY_YUYV = COLOR_YUV2GRAY_YUY2,
-    COLOR_YUV2GRAY_YUNV = COLOR_YUV2GRAY_YUY2,
-
-    //! alpha premultiplication
-    COLOR_RGBA2mRGBA = 125,
-    COLOR_mRGBA2RGBA = 126,
-
-    //! RGB to YUV 4:2:0 family
-    COLOR_RGB2YUV_I420 = 127,
-    COLOR_BGR2YUV_I420 = 128,
-    COLOR_RGB2YUV_IYUV = COLOR_RGB2YUV_I420,
-    COLOR_BGR2YUV_IYUV = COLOR_BGR2YUV_I420,
-
-    COLOR_RGBA2YUV_I420 = 129,
-    COLOR_BGRA2YUV_I420 = 130,
-    COLOR_RGBA2YUV_IYUV = COLOR_RGBA2YUV_I420,
-    COLOR_BGRA2YUV_IYUV = COLOR_BGRA2YUV_I420,
-    COLOR_RGB2YUV_YV12 = 131,
-    COLOR_BGR2YUV_YV12 = 132,
-    COLOR_RGBA2YUV_YV12 = 133,
-    COLOR_BGRA2YUV_YV12 = 134,
-
-    //! Demosaicing, see @ref color_convert_bayer "color conversions" for additional information
-    COLOR_BayerBG2BGR = 46, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2BGR = 47, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2BGR = 48, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2BGR = 49, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerRGGB2BGR = COLOR_BayerBG2BGR,
-    COLOR_BayerGRBG2BGR = COLOR_BayerGB2BGR,
-    COLOR_BayerBGGR2BGR = COLOR_BayerRG2BGR,
-    COLOR_BayerGBRG2BGR = COLOR_BayerGR2BGR,
-
-    COLOR_BayerRGGB2RGB = COLOR_BayerBGGR2BGR,
-    COLOR_BayerGRBG2RGB = COLOR_BayerGBRG2BGR,
-    COLOR_BayerBGGR2RGB = COLOR_BayerRGGB2BGR,
-    COLOR_BayerGBRG2RGB = COLOR_BayerGRBG2BGR,
-
-    COLOR_BayerBG2RGB = COLOR_BayerRG2BGR, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2RGB = COLOR_BayerGR2BGR, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2RGB = COLOR_BayerBG2BGR, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2RGB = COLOR_BayerGB2BGR, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerBG2GRAY = 86, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2GRAY = 87, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2GRAY = 88, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2GRAY = 89, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerRGGB2GRAY = COLOR_BayerBG2GRAY,
-    COLOR_BayerGRBG2GRAY = COLOR_BayerGB2GRAY,
-    COLOR_BayerBGGR2GRAY = COLOR_BayerRG2GRAY,
-    COLOR_BayerGBRG2GRAY = COLOR_BayerGR2GRAY,
-
-    //! Demosaicing using Variable Number of Gradients
-    COLOR_BayerBG2BGR_VNG = 62, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2BGR_VNG = 63, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2BGR_VNG = 64, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2BGR_VNG = 65, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerRGGB2BGR_VNG = COLOR_BayerBG2BGR_VNG,
-    COLOR_BayerGRBG2BGR_VNG = COLOR_BayerGB2BGR_VNG,
-    COLOR_BayerBGGR2BGR_VNG = COLOR_BayerRG2BGR_VNG,
-    COLOR_BayerGBRG2BGR_VNG = COLOR_BayerGR2BGR_VNG,
-
-    COLOR_BayerRGGB2RGB_VNG = COLOR_BayerBGGR2BGR_VNG,
-    COLOR_BayerGRBG2RGB_VNG = COLOR_BayerGBRG2BGR_VNG,
-    COLOR_BayerBGGR2RGB_VNG = COLOR_BayerRGGB2BGR_VNG,
-    COLOR_BayerGBRG2RGB_VNG = COLOR_BayerGRBG2BGR_VNG,
-
-    COLOR_BayerBG2RGB_VNG = COLOR_BayerRG2BGR_VNG, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2RGB_VNG = COLOR_BayerGR2BGR_VNG, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2RGB_VNG = COLOR_BayerBG2BGR_VNG, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2RGB_VNG = COLOR_BayerGB2BGR_VNG, //!< equivalent to GBRG Bayer pattern
-
-    //! Edge-Aware Demosaicing
-    COLOR_BayerBG2BGR_EA = 135, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2BGR_EA = 136, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2BGR_EA = 137, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2BGR_EA = 138, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerRGGB2BGR_EA = COLOR_BayerBG2BGR_EA,
-    COLOR_BayerGRBG2BGR_EA = COLOR_BayerGB2BGR_EA,
-    COLOR_BayerBGGR2BGR_EA = COLOR_BayerRG2BGR_EA,
-    COLOR_BayerGBRG2BGR_EA = COLOR_BayerGR2BGR_EA,
-
-    COLOR_BayerRGGB2RGB_EA = COLOR_BayerBGGR2BGR_EA,
-    COLOR_BayerGRBG2RGB_EA = COLOR_BayerGBRG2BGR_EA,
-    COLOR_BayerBGGR2RGB_EA = COLOR_BayerRGGB2BGR_EA,
-    COLOR_BayerGBRG2RGB_EA = COLOR_BayerGRBG2BGR_EA,
-
-    COLOR_BayerBG2RGB_EA = COLOR_BayerRG2BGR_EA, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2RGB_EA = COLOR_BayerGR2BGR_EA, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2RGB_EA = COLOR_BayerBG2BGR_EA, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2RGB_EA = COLOR_BayerGB2BGR_EA, //!< equivalent to GBRG Bayer pattern
-
-    //! Demosaicing with alpha channel
-    COLOR_BayerBG2BGRA = 139, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2BGRA = 140, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2BGRA = 141, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2BGRA = 142, //!< equivalent to GBRG Bayer pattern
-
-    COLOR_BayerRGGB2BGRA = COLOR_BayerBG2BGRA,
-    COLOR_BayerGRBG2BGRA = COLOR_BayerGB2BGRA,
-    COLOR_BayerBGGR2BGRA = COLOR_BayerRG2BGRA,
-    COLOR_BayerGBRG2BGRA = COLOR_BayerGR2BGRA,
-
-    COLOR_BayerRGGB2RGBA = COLOR_BayerBGGR2BGRA,
-    COLOR_BayerGRBG2RGBA = COLOR_BayerGBRG2BGRA,
-    COLOR_BayerBGGR2RGBA = COLOR_BayerRGGB2BGRA,
-    COLOR_BayerGBRG2RGBA = COLOR_BayerGRBG2BGRA,
-
-    COLOR_BayerBG2RGBA = COLOR_BayerRG2BGRA, //!< equivalent to RGGB Bayer pattern
-    COLOR_BayerGB2RGBA = COLOR_BayerGR2BGRA, //!< equivalent to GRBG Bayer pattern
-    COLOR_BayerRG2RGBA = COLOR_BayerBG2BGRA, //!< equivalent to BGGR Bayer pattern
-    COLOR_BayerGR2RGBA = COLOR_BayerGB2BGRA, //!< equivalent to GBRG Bayer pattern
-
-    //! RGB to YUV 4:2:2 family
-
-    COLOR_RGB2YUV_UYVY = 143,
-    COLOR_BGR2YUV_UYVY = 144,
-    COLOR_RGB2YUV_Y422 = COLOR_RGB2YUV_UYVY,
-    COLOR_BGR2YUV_Y422 = COLOR_BGR2YUV_UYVY,
-    COLOR_RGB2YUV_UYNV = COLOR_RGB2YUV_UYVY,
-    COLOR_BGR2YUV_UYNV = COLOR_BGR2YUV_UYVY,
-
-    COLOR_RGBA2YUV_UYVY = 145,
-    COLOR_BGRA2YUV_UYVY = 146,
-    COLOR_RGBA2YUV_Y422 = COLOR_RGBA2YUV_UYVY,
-    COLOR_BGRA2YUV_Y422 = COLOR_BGRA2YUV_UYVY,
-    COLOR_RGBA2YUV_UYNV = COLOR_RGBA2YUV_UYVY,
-    COLOR_BGRA2YUV_UYNV = COLOR_BGRA2YUV_UYVY,
-
-    COLOR_RGB2YUV_YUY2 = 147,
-    COLOR_BGR2YUV_YUY2 = 148,
-    COLOR_RGB2YUV_YVYU = 149,
-    COLOR_BGR2YUV_YVYU = 150,
-    COLOR_RGB2YUV_YUYV = COLOR_RGB2YUV_YUY2,
-    COLOR_BGR2YUV_YUYV = COLOR_BGR2YUV_YUY2,
-    COLOR_RGB2YUV_YUNV = COLOR_RGB2YUV_YUY2,
-    COLOR_BGR2YUV_YUNV = COLOR_BGR2YUV_YUY2,
-
-    COLOR_RGBA2YUV_YUY2 = 151,
-    COLOR_BGRA2YUV_YUY2 = 152,
-    COLOR_RGBA2YUV_YVYU = 153,
-    COLOR_BGRA2YUV_YVYU = 154,
-    COLOR_RGBA2YUV_YUYV = COLOR_RGBA2YUV_YUY2,
-    COLOR_BGRA2YUV_YUYV = COLOR_BGRA2YUV_YUY2,
-    COLOR_RGBA2YUV_YUNV = COLOR_RGBA2YUV_YUY2,
-    COLOR_BGRA2YUV_YUNV = COLOR_BGRA2YUV_YUY2,
-
-    COLOR_COLORCVT_MAX = 155
-};
-
-/** Histogram comparison methods
-  @ingroup imgproc_hist
-*/
-enum
-{
-    /** Correlation
-    \f[d(H_1,H_2) =  \frac{\sum_I (H_1(I) - \bar{H_1}) (H_2(I) - \bar{H_2})}{\sqrt{\sum_I(H_1(I) - \bar{H_1})^2 \sum_I(H_2(I) - \bar{H_2})^2}}\f]
-    where
-    \f[\bar{H_k} =  \frac{1}{N} \sum _J H_k(J)\f]
-    and \f$N\f$ is a total number of histogram bins. */
-    HISTCMP_CORREL = 0,
-    /** Chi-Square
-    \f[d(H_1,H_2) =  \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)}\f] */
-    HISTCMP_CHISQR = 1,
-    /** Intersection
-    \f[d(H_1,H_2) =  \sum _I  \min (H_1(I), H_2(I))\f] */
-    HISTCMP_INTERSECT = 2,
-    /** Bhattacharyya distance
-    (In fact, OpenCV computes Hellinger distance, which is related to Bhattacharyya coefficient.)
-    \f[d(H_1,H_2) =  \sqrt{1 - \frac{1}{\sqrt{\bar{H_1} \bar{H_2} N^2}} \sum_I \sqrt{H_1(I) \cdot H_2(I)}}\f] */
-    HISTCMP_BHATTACHARYYA = 3,
-    HISTCMP_HELLINGER = HISTCMP_BHATTACHARYYA, //!< Synonym for HISTCMP_BHATTACHARYYA
-    /** Alternative Chi-Square
-    \f[d(H_1,H_2) =  2 * \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)+H_2(I)}\f]
-    This alternative formula is regularly used for texture comparison. See e.g. @cite Puzicha1997 */
-    HISTCMP_CHISQR_ALT = 4,
-    /** Kullback-Leibler divergence
-    \f[d(H_1,H_2) = \sum _I H_1(I) \log \left(\frac{H_1(I)}{H_2(I)}\right)\f] */
-    HISTCMP_KL_DIV = 5
-};
-
 //! Various border types, image boundaries are denoted with `|`
 //! @see borderInterpolate, copyMakeBorder
 enum
 {
-    BORDER_CONSTANT = 0,    //!< `iiiiii|abcdefgh|iiiiiii`  with some specified `i`
-    BORDER_REPLICATE = 1,   //!< `aaaaaa|abcdefgh|hhhhhhh`
-    BORDER_REFLECT = 2,     //!< `fedcba|abcdefgh|hgfedcb`
-    BORDER_WRAP = 3,        //!< `cdefgh|abcdefgh|abcdefg`
-    BORDER_REFLECT_101 = 4, //!< `gfedcb|abcdefgh|gfedcba`
-    BORDER_TRANSPARENT = 5, //!< `uvwxyz|abcdefgh|ijklmno` - Treats outliers as transparent.
+  BORDER_CONSTANT    = 0, //!< `iiiiii|abcdefgh|iiiiiii`  with some specified `i`
+  BORDER_REPLICATE   = 1, //!< `aaaaaa|abcdefgh|hhhhhhh`
+  BORDER_REFLECT     = 2, //!< `fedcba|abcdefgh|hgfedcb`
+  BORDER_WRAP        = 3, //!< `cdefgh|abcdefgh|abcdefg`
+  BORDER_REFLECT_101 = 4, //!< `gfedcb|abcdefgh|gfedcba`
+  BORDER_TRANSPARENT = 5, //!< `uvwxyz|abcdefgh|ijklmno`
 
-    BORDER_REFLECT101 = BORDER_REFLECT_101, //!< same as BORDER_REFLECT_101
-    BORDER_DEFAULT = BORDER_REFLECT_101,    //!< same as BORDER_REFLECT_101
-    BORDER_ISOLATED = 16                    //!< Interpolation restricted within the ROI boundaries.
+  BORDER_REFLECT101  = BORDER_REFLECT_101, //!< same as BORDER_REFLECT_101
+  BORDER_DEFAULT     = BORDER_REFLECT_101, //!< same as BORDER_REFLECT_101
+  BORDER_ISOLATED    = 16 //!< do not look outside of ROI
 };
 
 enum
@@ -412,30 +30,30 @@ enum
 //! type of morphological operation
 enum
 {
-    MORPH_ERODE = 0,  //!< see #erode
-    MORPH_DILATE = 1, //!< see #dilate
-    MORPH_OPEN = 2,   //!< an opening operation
-    //!< \f[\texttt{dst} = \mathrm{open} ( \texttt{src} , \texttt{element} )= \mathrm{dilate} ( \mathrm{erode} ( \texttt{src} , \texttt{element} ))\f]
-    MORPH_CLOSE = 3, //!< a closing operation
-    //!< \f[\texttt{dst} = \mathrm{close} ( \texttt{src} , \texttt{element} )= \mathrm{erode} ( \mathrm{dilate} ( \texttt{src} , \texttt{element} ))\f]
-    MORPH_GRADIENT = 4, //!< a morphological gradient
-    //!< \f[\texttt{dst} = \mathrm{morph\_grad} ( \texttt{src} , \texttt{element} )= \mathrm{dilate} ( \texttt{src} , \texttt{element} )- \mathrm{erode} ( \texttt{src} , \texttt{element} )\f]
-    MORPH_TOPHAT = 5, //!< "top hat"
-    //!< \f[\texttt{dst} = \mathrm{tophat} ( \texttt{src} , \texttt{element} )= \texttt{src} - \mathrm{open} ( \texttt{src} , \texttt{element} )\f]
-    MORPH_BLACKHAT = 6, //!< "black hat"
-    //!< \f[\texttt{dst} = \mathrm{blackhat} ( \texttt{src} , \texttt{element} )= \mathrm{close} ( \texttt{src} , \texttt{element} )- \texttt{src}\f]
-    MORPH_HITMISS = 7 //!< "hit or miss"
-    //!<   .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
+  MORPH_ERODE    = 0, //!< see #erode
+  MORPH_DILATE   = 1, //!< see #dilate
+  MORPH_OPEN     = 2, //!< an opening operation
+                      //!< \f[\texttt{dst} = \mathrm{open} ( \texttt{src} , \texttt{element} )= \mathrm{dilate} ( \mathrm{erode} ( \texttt{src} , \texttt{element} ))\f]
+  MORPH_CLOSE    = 3, //!< a closing operation
+                      //!< \f[\texttt{dst} = \mathrm{close} ( \texttt{src} , \texttt{element} )= \mathrm{erode} ( \mathrm{dilate} ( \texttt{src} , \texttt{element} ))\f]
+  MORPH_GRADIENT = 4, //!< a morphological gradient
+                      //!< \f[\texttt{dst} = \mathrm{morph\_grad} ( \texttt{src} , \texttt{element} )= \mathrm{dilate} ( \texttt{src} , \texttt{element} )- \mathrm{erode} ( \texttt{src} , \texttt{element} )\f]
+  MORPH_TOPHAT   = 5, //!< "top hat"
+                      //!< \f[\texttt{dst} = \mathrm{tophat} ( \texttt{src} , \texttt{element} )= \texttt{src} - \mathrm{open} ( \texttt{src} , \texttt{element} )\f]
+  MORPH_BLACKHAT = 6, //!< "black hat"
+                      //!< \f[\texttt{dst} = \mathrm{blackhat} ( \texttt{src} , \texttt{element} )= \mathrm{close} ( \texttt{src} , \texttt{element} )- \texttt{src}\f]
+  MORPH_HITMISS  = 7  //!< "hit or miss"
+                      //!<   .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
 };
 
 //! shape of the structuring element
 enum
 {
-    MORPH_RECT = 0,  //!< a rectangular structuring element:  \f[E_{ij}=1\f]
-    MORPH_CROSS = 1, //!< a cross-shaped structuring element:
-    //!< \f[E_{ij} = \begin{cases} 1 & \texttt{if } {i=\texttt{anchor.y } {or } {j=\texttt{anchor.x}}} \\0 & \texttt{otherwise} \end{cases}\f]
-    MORPH_ELLIPSE = 2 //!< an elliptic structuring element, that is, a filled ellipse inscribed
-    //!< into the rectangle Rect(0, 0, esize.width, 0.esize.height)
+  MORPH_RECT    = 0, //!< a rectangular structuring element:  \f[E_{ij}=1\f]
+  MORPH_CROSS   = 1, //!< a cross-shaped structuring element:
+                     //!< \f[E_{ij} = \begin{cases} 1 & \texttt{if } {i=\texttt{anchor.y } {or } {j=\texttt{anchor.x}}} \\0 & \texttt{otherwise} \end{cases}\f]
+  MORPH_ELLIPSE = 2 //!< an elliptic structuring element, that is, a filled ellipse inscribed
+                    //!< into the rectangle Rect(0, 0, esize.width, esize.height)
 };
 
 //! @} imgproc_filter
@@ -447,34 +65,35 @@ enum
 enum
 {
     /** nearest neighbor interpolation */
-    INTER_NEAREST = 0,
+    INTER_NEAREST        = 0,
     /** bilinear interpolation */
-    INTER_LINEAR = 1,
+    INTER_LINEAR         = 1,
     /** bicubic interpolation */
-    INTER_CUBIC = 2,
+    INTER_CUBIC          = 2,
     /** resampling using pixel area relation. It may be a preferred method for image decimation, as
     it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST
     method. */
-    INTER_AREA = 3,
+    INTER_AREA           = 3,
     /** Lanczos interpolation over 8x8 neighborhood */
-    INTER_LANCZOS4 = 4,
+    INTER_LANCZOS4       = 4,
     /** Bit exact bilinear interpolation */
     INTER_LINEAR_EXACT = 5,
     /** Bit exact nearest neighbor interpolation. This will produce same results as
     the nearest neighbor method in PIL, scikit-image or Matlab. */
-    INTER_NEAREST_EXACT = 6,
+    INTER_NEAREST_EXACT  = 6,
     /** mask for interpolation codes */
-    INTER_MAX = 7,
+    INTER_MAX            = 7,
     /** flag, fills all of the destination image pixels. If some of them correspond to outliers in the
     source image, they are set to zero */
-    WARP_FILL_OUTLIERS = 8,
+    WARP_FILL_OUTLIERS   = 8,
     /** flag, inverse transformation
 
     For example, #linearPolar or #logPolar transforms:
     - flag is __not__ set: \f$dst( \rho , \phi ) = src(x,y)\f$
     - flag is set: \f$dst(x,y) = src( \rho , \phi )\f$
     */
-    WARP_INVERSE_MAP = 16
+    WARP_INVERSE_MAP     = 16,
+    WARP_RELATIVE_MAP    = 32
 };
 
 /** \brief Specify the polar mapping mode
@@ -488,10 +107,10 @@ enum
 
 enum
 {
-    INTER_BITS = 5,
-    INTER_BITS2 = INTER_BITS * 2,
-    INTER_TAB_SIZE = 1 << INTER_BITS,
-    INTER_TAB_SIZE2 = INTER_TAB_SIZE * INTER_TAB_SIZE
+  INTER_BITS      = 5,
+  INTER_BITS2     = INTER_BITS * 2,
+  INTER_TAB_SIZE  = 1 << INTER_BITS,
+  INTER_TAB_SIZE2 = INTER_TAB_SIZE * INTER_TAB_SIZE
 };
 
 //! @} imgproc_transform
@@ -503,36 +122,37 @@ enum
 //! @see distanceTransform, fitLine
 enum
 {
-    DIST_USER = -1,  //!< User defined distance
-    DIST_L1 = 1,     //!< distance = |x1-x2| + |y1-y2|
-    DIST_L2 = 2,     //!< the simple euclidean distance
-    DIST_C = 3,      //!< distance = max(|x1-x2|,|y1-y2|)
-    DIST_L12 = 4,    //!< L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
-    DIST_FAIR = 5,   //!< distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
-    DIST_WELSCH = 6, //!< distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
-    DIST_HUBER = 7   //!< distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
+  DIST_USER    = -1,  //!< User defined distance
+  DIST_L1      = 1,   //!< distance = |x1-x2| + |y1-y2|
+  DIST_L2      = 2,   //!< the simple euclidean distance
+  DIST_C       = 3,   //!< distance = max(|x1-x2|,|y1-y2|)
+  DIST_L12     = 4,   //!< L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
+  DIST_FAIR    = 5,   //!< distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
+  DIST_WELSCH  = 6,   //!< distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
+  DIST_HUBER   = 7    //!< distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
 };
 
 //! Mask size for distance transform
 enum
 {
-    DIST_MASK_3 = 3,      //!< mask=3
-    DIST_MASK_5 = 5,      //!< mask=5
-    DIST_MASK_PRECISE = 0 //!<
+  DIST_MASK_3       = 3, //!< mask=3
+  DIST_MASK_5       = 5, //!< mask=5
+  DIST_MASK_PRECISE = 0  //!<
 };
 
 //! type of the threshold operation
 //! ![threshold types](pics/threshold.png)
 enum
 {
-    THRESH_BINARY = 0,     //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{maxval}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}\f]
-    THRESH_BINARY_INV = 1, //!< \f[\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{maxval}}{otherwise}\f]
-    THRESH_TRUNC = 2,      //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{threshold}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}\f]
-    THRESH_TOZERO = 3,     //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{src}(x,y)}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}\f]
-    THRESH_TOZERO_INV = 4, //!< \f[\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}\f]
-    THRESH_MASK = 7,
-    THRESH_OTSU = 8,     //!< flag, use Otsu algorithm to choose the optimal threshold value
-    THRESH_TRIANGLE = 16 //!< flag, use Triangle algorithm to choose the optimal threshold value
+  THRESH_BINARY     = 0, //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{maxval}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}\f]
+  THRESH_BINARY_INV = 1, //!< \f[\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{maxval}}{otherwise}\f]
+  THRESH_TRUNC      = 2, //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{threshold}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}\f]
+  THRESH_TOZERO     = 3, //!< \f[\texttt{dst} (x,y) =  \fork{\texttt{src}(x,y)}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}\f]
+  THRESH_TOZERO_INV = 4, //!< \f[\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}\f]
+  THRESH_MASK       = 7,
+  THRESH_OTSU       = 8, //!< flag, use Otsu algorithm to choose the optimal threshold value
+  THRESH_TRIANGLE   = 16, //!< flag, use Triangle algorithm to choose the optimal threshold value
+  THRESH_DRYRUN     = 128 //!< flag, compute threshold only (useful for OTSU/TRIANGLE) but does not actually run thresholding
 };
 
 //! adaptive threshold algorithm
@@ -552,10 +172,10 @@ enum
 //! class of the pixel in GrabCut algorithm
 enum
 {
-    GC_BGD = 0,    //!< an obvious background pixels
-    GC_FGD = 1,    //!< an obvious foreground (object) pixel
-    GC_PR_BGD = 2, //!< a possible background pixel
-    GC_PR_FGD = 3  //!< a possible foreground pixel
+  GC_BGD    = 0,  //!< an obvious background pixels
+  GC_FGD    = 1,  //!< an obvious foreground (object) pixel
+  GC_PR_BGD = 2,  //!< a possible background pixel
+  GC_PR_FGD = 3   //!< a possible foreground pixel
 };
 
 //! GrabCut algorithm flags
@@ -593,7 +213,7 @@ enum
     /** If set, the function does not change the image ( newVal is ignored), and only fills the
     mask with the value specified in bits 8-16 of flags as described above. This option only make
     sense in function variants that have the mask parameter. */
-    FLOODFILL_MASK_ONLY = 1 << 17
+    FLOODFILL_MASK_ONLY   = 1 << 17
 };
 
 //! @} imgproc_misc
@@ -602,49 +222,47 @@ enum
 //! @{
 
 //! connected components statistics
-enum
-{
-    CC_STAT_LEFT = 0, //!< The leftmost (x) coordinate which is the inclusive start of the bounding
-    //!< box in the horizontal direction.
-    CC_STAT_TOP = 1, //!< The topmost (y) coordinate which is the inclusive start of the bounding
-    //!< box in the vertical direction.
-    CC_STAT_WIDTH = 2,  //!< The horizontal size of the bounding box
-    CC_STAT_HEIGHT = 3, //!< The vertical size of the bounding box
-    CC_STAT_AREA = 4,   //!< The total area (in pixels) of the connected component
+enum {
+  CC_STAT_LEFT   = 0, //!< The leftmost (x) coordinate which is the inclusive start of the bounding
+                      //!< box in the horizontal direction.
+  CC_STAT_TOP    = 1, //!< The topmost (y) coordinate which is the inclusive start of the bounding
+                      //!< box in the vertical direction.
+  CC_STAT_WIDTH  = 2, //!< The horizontal size of the bounding box
+  CC_STAT_HEIGHT = 3, //!< The vertical size of the bounding box
+  CC_STAT_AREA   = 4, //!< The total area (in pixels) of the connected component
 #ifndef CV_DOXYGEN
-    CC_STAT_MAX = 5 //!< Max enumeration value. Used internally only for memory allocation
+  CC_STAT_MAX    = 5 //!< Max enumeration value. Used internally only for memory allocation
 #endif
 };
 
 //! connected components algorithm
-enum
-{
-    CCL_DEFAULT = -1,  //!< Spaghetti @cite Bolelli2019 algorithm for 8-way connectivity, Spaghetti4C @cite Bolelli2021 algorithm for 4-way connectivity.
-    CCL_WU = 0,        //!< SAUF @cite Wu2009 algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for SAUF.
-    CCL_GRANA = 1,     //!< BBDT @cite Grana2010 algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for both BBDT and SAUF.
-    CCL_BOLELLI = 2,   //!< Spaghetti @cite Bolelli2019 algorithm for 8-way connectivity, Spaghetti4C @cite Bolelli2021 algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for both Spaghetti and Spaghetti4C.
-    CCL_SAUF = 3,      //!< Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
-    CCL_BBDT = 4,      //!< Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
-    CCL_SPAGHETTI = 5, //!< Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
+enum {
+  CCL_DEFAULT   = -1, //!< Spaghetti @cite Bolelli2019 algorithm for 8-way connectivity, Spaghetti4C @cite Bolelli2021 algorithm for 4-way connectivity.
+  CCL_WU        = 0,  //!< SAUF @cite Wu2009 algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for SAUF.
+  CCL_GRANA     = 1,  //!< BBDT @cite Grana2010 algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for both BBDT and SAUF.
+  CCL_BOLELLI   = 2,  //!< Spaghetti @cite Bolelli2019 algorithm for 8-way connectivity, Spaghetti4C @cite Bolelli2021 algorithm for 4-way connectivity. The parallel implementation described in @cite Bolelli2017 is available for both Spaghetti and Spaghetti4C.
+  CCL_SAUF      = 3,  //!< Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
+  CCL_BBDT      = 4,  //!< Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
+  CCL_SPAGHETTI = 5,  //!< Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 };
 
 //! mode of the contour retrieval algorithm
-enum
-{
-    /** retrieves only the extreme outer contours. It sets `hierarchy[i][2]=hierarchy[i][3]=-1` for
-    all the contours. */
-    RETR_EXTERNAL = 0,
-    /** retrieves all of the contours without establishing any hierarchical relationships. */
-    RETR_LIST = 1,
-    /** retrieves all of the contours and organizes them into a two-level hierarchy. At the top
-    level, there are external boundaries of the components. At the second level, there are
-    boundaries of the holes. If there is another contour inside a hole of a connected component, it
-    is still put at the top level. */
-    RETR_CCOMP = 2,
-    /** retrieves all of the contours and reconstructs a full hierarchy of nested contours.*/
-    RETR_TREE = 3,
-    RETR_FLOODFILL = 4 //!<
+enum {
+  /** retrieves only the extreme outer contours. It sets `hierarchy[i][2]=hierarchy[i][3]=-1` for
+  all the contours. */
+  RETR_EXTERNAL  = 0,
+  /** retrieves all of the contours without establishing any hierarchical relationships. */
+  RETR_LIST      = 1,
+  /** retrieves all of the contours and organizes them into a two-level hierarchy. At the top
+  level, there are external boundaries of the components. At the second level, there are
+  boundaries of the holes. If there is another contour inside a hole of a connected component, it
+  is still put at the top level. */
+  RETR_CCOMP     = 2,
+  /** retrieves all of the contours and reconstructs a full hierarchy of nested contours.*/
+  RETR_TREE      = 3,
+  RETR_FLOODFILL = 4 //!<
 };
+
 
 //! the contour approximation algorithm
 enum
@@ -712,6 +330,381 @@ enum
     //!< refined through increase of precision, decrement in size, etc.
 };
 
+/** Histogram comparison methods
+  @ingroup imgproc_hist
+*/
+enum {
+  /** Correlation
+  \f[d(H_1,H_2) =  \frac{\sum_I (H_1(I) - \bar{H_1}) (H_2(I) - \bar{H_2})}{\sqrt{\sum_I(H_1(I) - \bar{H_1})^2 \sum_I(H_2(I) - \bar{H_2})^2}}\f]
+  where
+  \f[\bar{H_k} =  \frac{1}{N} \sum _J H_k(J)\f]
+  and \f$N\f$ is a total number of histogram bins. */
+  HISTCMP_CORREL        = 0,
+  /** Chi-Square
+  \f[d(H_1,H_2) =  \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)}\f] */
+  HISTCMP_CHISQR        = 1,
+  /** Intersection
+  \f[d(H_1,H_2) =  \sum _I  \min (H_1(I), H_2(I))\f] */
+  HISTCMP_INTERSECT     = 2,
+  /** Bhattacharyya distance
+  (In fact, OpenCV computes Hellinger distance, which is related to Bhattacharyya coefficient.)
+  \f[d(H_1,H_2) =  \sqrt{1 - \frac{1}{\sqrt{\bar{H_1} \bar{H_2} N^2}} \sum_I \sqrt{H_1(I) \cdot H_2(I)}}\f] */
+  HISTCMP_BHATTACHARYYA = 3,
+  HISTCMP_HELLINGER     = HISTCMP_BHATTACHARYYA, //!< Synonym for HISTCMP_BHATTACHARYYA
+  /** Alternative Chi-Square
+  \f[d(H_1,H_2) =  2 * \sum _I  \frac{\left(H_1(I)-H_2(I)\right)^2}{H_1(I)+H_2(I)}\f]
+  This alternative formula is regularly used for texture comparison. See e.g. @cite Puzicha1997 */
+  HISTCMP_CHISQR_ALT    = 4,
+  /** Kullback-Leibler divergence
+  \f[d(H_1,H_2) = \sum _I H_1(I) \log \left(\frac{H_1(I)}{H_2(I)}\right)\f] */
+  HISTCMP_KL_DIV        = 5
+};
+
+/** the color conversion codes
+@see @ref imgproc_color_conversions
+@ingroup imgproc_color_conversions
+ */
+ enum {
+  COLOR_BGR2BGRA     = 0, //!< add alpha channel to RGB or BGR image
+  COLOR_RGB2RGBA     = COLOR_BGR2BGRA,
+
+  COLOR_BGRA2BGR     = 1, //!< remove alpha channel from RGB or BGR image
+  COLOR_RGBA2RGB     = COLOR_BGRA2BGR,
+
+  COLOR_BGR2RGBA     = 2, //!< convert between RGB and BGR color spaces (with or without alpha channel)
+  COLOR_RGB2BGRA     = COLOR_BGR2RGBA,
+
+  COLOR_RGBA2BGR     = 3,
+  COLOR_BGRA2RGB     = COLOR_RGBA2BGR,
+
+  COLOR_BGR2RGB      = 4,
+  COLOR_RGB2BGR      = COLOR_BGR2RGB,
+
+  COLOR_BGRA2RGBA    = 5,
+  COLOR_RGBA2BGRA    = COLOR_BGRA2RGBA,
+
+  COLOR_BGR2GRAY     = 6, //!< convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
+  COLOR_RGB2GRAY     = 7,
+  COLOR_GRAY2BGR     = 8,
+  COLOR_GRAY2RGB     = COLOR_GRAY2BGR,
+  COLOR_GRAY2BGRA    = 9,
+  COLOR_GRAY2RGBA    = COLOR_GRAY2BGRA,
+  COLOR_BGRA2GRAY    = 10,
+  COLOR_RGBA2GRAY    = 11,
+
+  COLOR_BGR2BGR565   = 12, //!< convert between RGB/BGR and BGR565 (16-bit images)
+  COLOR_RGB2BGR565   = 13,
+  COLOR_BGR5652BGR   = 14,
+  COLOR_BGR5652RGB   = 15,
+  COLOR_BGRA2BGR565  = 16,
+  COLOR_RGBA2BGR565  = 17,
+  COLOR_BGR5652BGRA  = 18,
+  COLOR_BGR5652RGBA  = 19,
+
+  COLOR_GRAY2BGR565  = 20, //!< convert between grayscale to BGR565 (16-bit images)
+  COLOR_BGR5652GRAY  = 21,
+
+  COLOR_BGR2BGR555   = 22,  //!< convert between RGB/BGR and BGR555 (16-bit images)
+  COLOR_RGB2BGR555   = 23,
+  COLOR_BGR5552BGR   = 24,
+  COLOR_BGR5552RGB   = 25,
+  COLOR_BGRA2BGR555  = 26,
+  COLOR_RGBA2BGR555  = 27,
+  COLOR_BGR5552BGRA  = 28,
+  COLOR_BGR5552RGBA  = 29,
+
+  COLOR_GRAY2BGR555  = 30, //!< convert between grayscale and BGR555 (16-bit images)
+  COLOR_BGR5552GRAY  = 31,
+
+  COLOR_BGR2XYZ      = 32, //!< convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
+  COLOR_RGB2XYZ      = 33,
+  COLOR_XYZ2BGR      = 34,
+  COLOR_XYZ2RGB      = 35,
+
+  COLOR_BGR2YCrCb    = 36, //!< convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
+  COLOR_RGB2YCrCb    = 37,
+  COLOR_YCrCb2BGR    = 38,
+  COLOR_YCrCb2RGB    = 39,
+
+  COLOR_BGR2HSV      = 40, //!< convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+  COLOR_RGB2HSV      = 41,
+
+  COLOR_BGR2Lab      = 44, //!< convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
+  COLOR_RGB2Lab      = 45,
+
+  COLOR_BGR2Luv      = 50, //!< convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
+  COLOR_RGB2Luv      = 51,
+  COLOR_BGR2HLS      = 52, //!< convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+  COLOR_RGB2HLS      = 53,
+
+  COLOR_HSV2BGR      = 54, //!< backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
+  COLOR_HSV2RGB      = 55,
+
+  COLOR_Lab2BGR      = 56,
+  COLOR_Lab2RGB      = 57,
+  COLOR_Luv2BGR      = 58,
+  COLOR_Luv2RGB      = 59,
+  COLOR_HLS2BGR      = 60, //!< backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
+  COLOR_HLS2RGB      = 61,
+
+  COLOR_BGR2HSV_FULL = 66, //!< convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+  COLOR_RGB2HSV_FULL = 67,
+  COLOR_BGR2HLS_FULL = 68, //!< convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+  COLOR_RGB2HLS_FULL = 69,
+
+  COLOR_HSV2BGR_FULL = 70, //!< backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
+  COLOR_HSV2RGB_FULL = 71,
+  COLOR_HLS2BGR_FULL = 72, //!< backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
+  COLOR_HLS2RGB_FULL = 73,
+
+  COLOR_LBGR2Lab     = 74,
+  COLOR_LRGB2Lab     = 75,
+  COLOR_LBGR2Luv     = 76,
+  COLOR_LRGB2Luv     = 77,
+
+  COLOR_Lab2LBGR     = 78,
+  COLOR_Lab2LRGB     = 79,
+  COLOR_Luv2LBGR     = 80,
+  COLOR_Luv2LRGB     = 81,
+
+  COLOR_BGR2YUV      = 82, //!< convert between RGB/BGR and YUV
+  COLOR_RGB2YUV      = 83,
+  COLOR_YUV2BGR      = 84,
+  COLOR_YUV2RGB      = 85,
+
+  COLOR_YUV2RGB_NV12  = 90, //!< convert between 4:2:0-subsampled YUV NV12 and RGB, two planes (in one or separate arrays): Y and U/V interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_NV12  = 91, //!< convert between 4:2:0-subsampled YUV NV12 and BGR, two planes (in one or separate arrays): Y and U/V interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_NV21  = 92, //!< convert between 4:2:0-subsampled YUV NV21 and RGB, two planes (in one or separate arrays): Y and V/U interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_NV21  = 93, //!< convert between 4:2:0-subsampled YUV NV21 and BGR, two planes (in one or separate arrays): Y and V/U interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV420sp2RGB  = COLOR_YUV2RGB_NV21, //!< synonym to NV21
+  COLOR_YUV420sp2BGR  = COLOR_YUV2BGR_NV21, //!< synonym to NV21
+
+  COLOR_YUV2RGBA_NV12 = 94, //!< convert between 4:2:0-subsampled YUV NV12 and RGBA, two planes (in one or separate arrays): Y and U/V interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_NV12 = 95, //!< convert between 4:2:0-subsampled YUV NV12 and BGRA, two planes (in one or separate arrays): Y and U/V interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_NV21 = 96, //!< convert between 4:2:0-subsampled YUV NV21 and RGBA, two planes (in one or separate arrays): Y and V/U interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_NV21 = 97, //!< convert between 4:2:0-subsampled YUV NV21 and BGRA, two planes (in one or separate arrays): Y and V/U interleaved, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV420sp2RGBA = COLOR_YUV2RGBA_NV21, //!< synonym to NV21
+  COLOR_YUV420sp2BGRA = COLOR_YUV2BGRA_NV21, //!< synonym to NV21
+
+  COLOR_YUV2RGB_YV12  =  98, //!< convert between 4:2:0-subsampled YUV YV12 and RGB, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_YV12  =  99, //!< convert between 4:2:0-subsampled YUV YV12 and BGR, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_IYUV  = 100, //!< convert between 4:2:0-subsampled YUV IYUV and RGB, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_IYUV  = 101, //!< convert between 4:2:0-subsampled YUV IYUV and BGR, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_I420  = COLOR_YUV2RGB_IYUV, //!< synonym to IYUV
+  COLOR_YUV2BGR_I420  = COLOR_YUV2BGR_IYUV, //!< synonym to IYUV
+  COLOR_YUV420p2RGB   = COLOR_YUV2RGB_YV12, //!< synonym to YV12
+  COLOR_YUV420p2BGR   = COLOR_YUV2BGR_YV12, //!< synonym to YV12
+
+  COLOR_YUV2RGBA_YV12 = 102, //!< convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_YV12 = 103, //!< convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_IYUV = 104, //!< convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_IYUV = 105, //!< convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_I420 = COLOR_YUV2RGBA_IYUV, //!< synonym to IYUV
+  COLOR_YUV2BGRA_I420 = COLOR_YUV2BGRA_IYUV, //!< synonym to IYUV
+  COLOR_YUV420p2RGBA  = COLOR_YUV2RGBA_YV12, //!< synonym to YV12
+  COLOR_YUV420p2BGRA  = COLOR_YUV2BGRA_YV12, //!< synonym to YV12
+
+  COLOR_YUV2GRAY_420  = 106, //!< extract Y channel from YUV 4:2:0 image
+  COLOR_YUV2GRAY_NV21 = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV2GRAY_NV12 = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV2GRAY_YV12 = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV2GRAY_IYUV = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV2GRAY_I420 = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV420sp2GRAY = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+  COLOR_YUV420p2GRAY  = COLOR_YUV2GRAY_420, //!< synonym to COLOR_YUV2GRAY_420
+
+  COLOR_YUV2RGB_UYVY = 107, //!< convert between YUV UYVY and RGB, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_UYVY = 108, //!< convert between YUV UYVY and BGR, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  //COLOR_YUV2RGB_VYUY = 109, //!< convert between YUV VYUY and RGB, YUV is 4:2:2-subsampled and interleaved as V/Y1/U/Y2, see @ref color_convert_rgb_yuv_42x
+  //COLOR_YUV2BGR_VYUY = 110, //!< convert between YUV VYUY and BGR, YUV is 4:2:2-subsampled and interleaved as V/Y1/U/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_Y422 = COLOR_YUV2RGB_UYVY, //!< synonym to UYVY
+  COLOR_YUV2BGR_Y422 = COLOR_YUV2BGR_UYVY, //!< synonym to UYVY
+  COLOR_YUV2RGB_UYNV = COLOR_YUV2RGB_UYVY, //!< synonym to UYVY
+  COLOR_YUV2BGR_UYNV = COLOR_YUV2BGR_UYVY, //!< synonym to UYVY
+
+  COLOR_YUV2RGBA_UYVY = 111, //!< convert between YUV UYVY and RGBA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_UYVY = 112, //!< convert between YUV UYVY and BGRA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  //COLOR_YUV2RGBA_VYUY = 113, //!< convert between YUV VYUY and RGBA, YUV is 4:2:2-subsampled and interleaved as V/Y1/U/Y2, see @ref color_convert_rgb_yuv_42x
+  //COLOR_YUV2BGRA_VYUY = 114, //!< convert between YUV VYUY and BGRA, YUV is 4:2:2-subsampled and interleaved as V/Y1/U/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_Y422 = COLOR_YUV2RGBA_UYVY, //!< synonym to UYVY
+  COLOR_YUV2BGRA_Y422 = COLOR_YUV2BGRA_UYVY, //!< synonym to UYVY
+  COLOR_YUV2RGBA_UYNV = COLOR_YUV2RGBA_UYVY, //!< synonym to UYVY
+  COLOR_YUV2BGRA_UYNV = COLOR_YUV2BGRA_UYVY, //!< synonym to UYVY
+
+  COLOR_YUV2RGB_YUY2 = 115, //!< convert between YUV YUY2 and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_YUY2 = 116, //!< convert between YUV YUY2 and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_YVYU = 117, //!< convert between YUV YVYU and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGR_YVYU = 118, //!< convert between YUV YVYU and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGB_YUYV = COLOR_YUV2RGB_YUY2, //!< synonym to YUY2
+  COLOR_YUV2BGR_YUYV = COLOR_YUV2BGR_YUY2, //!< synonym to YUY2
+  COLOR_YUV2RGB_YUNV = COLOR_YUV2RGB_YUY2, //!< synonym to YUY2
+  COLOR_YUV2BGR_YUNV = COLOR_YUV2BGR_YUY2, //!< synonym to YUY2
+
+  COLOR_YUV2RGBA_YUY2 = 119, //!< convert between YUV YUY2 and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_YUY2 = 120, //!< convert between YUV YUY2 and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_YVYU = 121, //!< convert between YUV YVYU and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2BGRA_YVYU = 122, //!< convert between YUV YVYU and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_YUV2RGBA_YUYV = COLOR_YUV2RGBA_YUY2, //!< synonym to YUY2
+  COLOR_YUV2BGRA_YUYV = COLOR_YUV2BGRA_YUY2, //!< synonym to YUY2
+  COLOR_YUV2RGBA_YUNV = COLOR_YUV2RGBA_YUY2, //!< synonym to YUY2
+  COLOR_YUV2BGRA_YUNV = COLOR_YUV2BGRA_YUY2, //!< synonym to YUY2
+
+  COLOR_YUV2GRAY_UYVY = 123, //!< extract Y channel from YUV 4:2:2 image
+  COLOR_YUV2GRAY_YUY2 = 124, //!< extract Y channel from YUV 4:2:2 image
+  //CV_YUV2GRAY_VYUY  = CV_YUV2GRAY_UYVY, //!< synonym to COLOR_YUV2GRAY_UYVY
+  COLOR_YUV2GRAY_Y422 = COLOR_YUV2GRAY_UYVY, //!< synonym to COLOR_YUV2GRAY_UYVY
+  COLOR_YUV2GRAY_UYNV = COLOR_YUV2GRAY_UYVY, //!< synonym to COLOR_YUV2GRAY_UYVY
+  COLOR_YUV2GRAY_YVYU = COLOR_YUV2GRAY_YUY2, //!< synonym to COLOR_YUV2GRAY_YUY2
+  COLOR_YUV2GRAY_YUYV = COLOR_YUV2GRAY_YUY2, //!< synonym to COLOR_YUV2GRAY_YUY2
+  COLOR_YUV2GRAY_YUNV = COLOR_YUV2GRAY_YUY2, //!< synonym to COLOR_YUV2GRAY_YUY2
+
+  //! alpha premultiplication
+  COLOR_RGBA2mRGBA    = 125,
+  COLOR_mRGBA2RGBA    = 126,
+
+  COLOR_RGB2YUV_I420  = 127, //!< convert between RGB and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGR2YUV_I420  = 128, //!< convert between BGR and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGB2YUV_IYUV  = COLOR_RGB2YUV_I420, //!< synonym to I420
+  COLOR_BGR2YUV_IYUV  = COLOR_BGR2YUV_I420, //!< synonym to I420
+
+  COLOR_RGBA2YUV_I420 = 129, //!< convert between RGBA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGRA2YUV_I420 = 130, //!< convert between BGRA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGBA2YUV_IYUV = COLOR_RGBA2YUV_I420, //!< synonym to I420
+  COLOR_BGRA2YUV_IYUV = COLOR_BGRA2YUV_I420, //!< synonym to I420
+  COLOR_RGB2YUV_YV12  = 131, //!< convert between RGB and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGR2YUV_YV12  = 132, //!< convert between BGR and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGBA2YUV_YV12 = 133, //!< convert between RGBA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGRA2YUV_YV12 = 134, //!< convert between BGRA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see @ref color_convert_rgb_yuv_42x
+
+  //! Demosaicing, see @ref color_convert_bayer "color conversions" for additional information
+  COLOR_BayerBG2BGR = 46, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2BGR = 47, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2BGR = 48, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2BGR = 49, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerRGGB2BGR = COLOR_BayerBG2BGR,
+  COLOR_BayerGRBG2BGR = COLOR_BayerGB2BGR,
+  COLOR_BayerBGGR2BGR = COLOR_BayerRG2BGR,
+  COLOR_BayerGBRG2BGR = COLOR_BayerGR2BGR,
+
+  COLOR_BayerRGGB2RGB = COLOR_BayerBGGR2BGR,
+  COLOR_BayerGRBG2RGB = COLOR_BayerGBRG2BGR,
+  COLOR_BayerBGGR2RGB = COLOR_BayerRGGB2BGR,
+  COLOR_BayerGBRG2RGB = COLOR_BayerGRBG2BGR,
+
+  COLOR_BayerBG2RGB = COLOR_BayerRG2BGR, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2RGB = COLOR_BayerGR2BGR, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2RGB = COLOR_BayerBG2BGR, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2RGB = COLOR_BayerGB2BGR, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerBG2GRAY = 86, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2GRAY = 87, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2GRAY = 88, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2GRAY = 89, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerRGGB2GRAY = COLOR_BayerBG2GRAY,
+  COLOR_BayerGRBG2GRAY = COLOR_BayerGB2GRAY,
+  COLOR_BayerBGGR2GRAY = COLOR_BayerRG2GRAY,
+  COLOR_BayerGBRG2GRAY = COLOR_BayerGR2GRAY,
+
+  //! Demosaicing using Variable Number of Gradients
+  COLOR_BayerBG2BGR_VNG = 62, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2BGR_VNG = 63, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2BGR_VNG = 64, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2BGR_VNG = 65, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerRGGB2BGR_VNG = COLOR_BayerBG2BGR_VNG,
+  COLOR_BayerGRBG2BGR_VNG = COLOR_BayerGB2BGR_VNG,
+  COLOR_BayerBGGR2BGR_VNG = COLOR_BayerRG2BGR_VNG,
+  COLOR_BayerGBRG2BGR_VNG = COLOR_BayerGR2BGR_VNG,
+
+  COLOR_BayerRGGB2RGB_VNG = COLOR_BayerBGGR2BGR_VNG,
+  COLOR_BayerGRBG2RGB_VNG = COLOR_BayerGBRG2BGR_VNG,
+  COLOR_BayerBGGR2RGB_VNG = COLOR_BayerRGGB2BGR_VNG,
+  COLOR_BayerGBRG2RGB_VNG = COLOR_BayerGRBG2BGR_VNG,
+
+  COLOR_BayerBG2RGB_VNG = COLOR_BayerRG2BGR_VNG, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2RGB_VNG = COLOR_BayerGR2BGR_VNG, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2RGB_VNG = COLOR_BayerBG2BGR_VNG, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2RGB_VNG = COLOR_BayerGB2BGR_VNG, //!< equivalent to GBRG Bayer pattern
+
+  //! Edge-Aware Demosaicing
+  COLOR_BayerBG2BGR_EA  = 135, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2BGR_EA  = 136, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2BGR_EA  = 137, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2BGR_EA  = 138, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerRGGB2BGR_EA  = COLOR_BayerBG2BGR_EA,
+  COLOR_BayerGRBG2BGR_EA  = COLOR_BayerGB2BGR_EA,
+  COLOR_BayerBGGR2BGR_EA  = COLOR_BayerRG2BGR_EA,
+  COLOR_BayerGBRG2BGR_EA  = COLOR_BayerGR2BGR_EA,
+
+  COLOR_BayerRGGB2RGB_EA  = COLOR_BayerBGGR2BGR_EA,
+  COLOR_BayerGRBG2RGB_EA  = COLOR_BayerGBRG2BGR_EA,
+  COLOR_BayerBGGR2RGB_EA  = COLOR_BayerRGGB2BGR_EA,
+  COLOR_BayerGBRG2RGB_EA  = COLOR_BayerGRBG2BGR_EA,
+
+  COLOR_BayerBG2RGB_EA  = COLOR_BayerRG2BGR_EA, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2RGB_EA  = COLOR_BayerGR2BGR_EA, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2RGB_EA  = COLOR_BayerBG2BGR_EA, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2RGB_EA  = COLOR_BayerGB2BGR_EA, //!< equivalent to GBRG Bayer pattern
+
+  //! Demosaicing with alpha channel
+  COLOR_BayerBG2BGRA = 139, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2BGRA = 140, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2BGRA = 141, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2BGRA = 142, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_BayerRGGB2BGRA = COLOR_BayerBG2BGRA,
+  COLOR_BayerGRBG2BGRA = COLOR_BayerGB2BGRA,
+  COLOR_BayerBGGR2BGRA = COLOR_BayerRG2BGRA,
+  COLOR_BayerGBRG2BGRA = COLOR_BayerGR2BGRA,
+
+  COLOR_BayerRGGB2RGBA = COLOR_BayerBGGR2BGRA,
+  COLOR_BayerGRBG2RGBA = COLOR_BayerGBRG2BGRA,
+  COLOR_BayerBGGR2RGBA = COLOR_BayerRGGB2BGRA,
+  COLOR_BayerGBRG2RGBA = COLOR_BayerGRBG2BGRA,
+
+  COLOR_BayerBG2RGBA = COLOR_BayerRG2BGRA, //!< equivalent to RGGB Bayer pattern
+  COLOR_BayerGB2RGBA = COLOR_BayerGR2BGRA, //!< equivalent to GRBG Bayer pattern
+  COLOR_BayerRG2RGBA = COLOR_BayerBG2BGRA, //!< equivalent to BGGR Bayer pattern
+  COLOR_BayerGR2RGBA = COLOR_BayerGB2BGRA, //!< equivalent to GBRG Bayer pattern
+
+  COLOR_RGB2YUV_UYVY = 143, //!< convert between RGB and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGR2YUV_UYVY = 144, //!< convert between BGR and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGB2YUV_Y422 = COLOR_RGB2YUV_UYVY, //!< synonym to UYVY
+  COLOR_BGR2YUV_Y422 = COLOR_BGR2YUV_UYVY, //!< synonym to UYVY
+  COLOR_RGB2YUV_UYNV = COLOR_RGB2YUV_UYVY, //!< synonym to UYVY
+  COLOR_BGR2YUV_UYNV = COLOR_BGR2YUV_UYVY, //!< synonym to UYVY
+
+  COLOR_RGBA2YUV_UYVY = 145, //!< convert between RGBA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGRA2YUV_UYVY = 146, //!< convert between BGRA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGBA2YUV_Y422 = COLOR_RGBA2YUV_UYVY, //!< synonym to UYVY
+  COLOR_BGRA2YUV_Y422 = COLOR_BGRA2YUV_UYVY, //!< synonym to UYVY
+  COLOR_RGBA2YUV_UYNV = COLOR_RGBA2YUV_UYVY, //!< synonym to UYVY
+  COLOR_BGRA2YUV_UYNV = COLOR_BGRA2YUV_UYVY, //!< synonym to UYVY
+
+  COLOR_RGB2YUV_YUY2 = 147, //!< convert between RGB and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGR2YUV_YUY2 = 148, //!< convert between BGR and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGB2YUV_YVYU = 149, //!< convert between RGB and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGR2YUV_YVYU = 150, //!< convert between BGR and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGB2YUV_YUYV = COLOR_RGB2YUV_YUY2, //!< synonym to YUY2
+  COLOR_BGR2YUV_YUYV = COLOR_BGR2YUV_YUY2, //!< synonym to YUY2
+  COLOR_RGB2YUV_YUNV = COLOR_RGB2YUV_YUY2, //!< synonym to YUY2
+  COLOR_BGR2YUV_YUNV = COLOR_BGR2YUV_YUY2, //!< synonym to YUY2
+
+  COLOR_RGBA2YUV_YUY2 = 151, //!< convert between RGBA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGRA2YUV_YUY2 = 152, //!< convert between BGRA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGBA2YUV_YVYU = 153, //!< convert between RGBA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_BGRA2YUV_YVYU = 154, //!< convert between BGRA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see @ref color_convert_rgb_yuv_42x
+  COLOR_RGBA2YUV_YUYV = COLOR_RGBA2YUV_YUY2, //!< synonym to YUY2
+  COLOR_BGRA2YUV_YUYV = COLOR_BGRA2YUV_YUY2, //!< synonym to YUY2
+  COLOR_RGBA2YUV_YUNV = COLOR_RGBA2YUV_YUY2, //!< synonym to YUY2
+  COLOR_BGRA2YUV_YUNV = COLOR_BGRA2YUV_YUY2, //!< synonym to YUY2
+
+  COLOR_COLORCVT_MAX  = 155
+};
+
 //! @addtogroup imgproc_shape
 //! @{
 
@@ -763,6 +756,7 @@ enum
     MARKER_TRIANGLE_UP = 5,  //!< An upwards pointing triangle marker shape
     MARKER_TRIANGLE_DOWN = 6 //!< A downwards pointing triangle marker shape
 };
+
 
 //! matrix decomposition types
 enum
@@ -935,49 +929,64 @@ enum
 //! Imread flags
 enum
 {
-    IMREAD_UNCHANGED = -1,           //!< If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
-    IMREAD_GRAYSCALE = 0,            //!< If set, always convert image to the single channel grayscale image (codec internal conversion).
-    IMREAD_COLOR = 1,                //!< If set, always convert image to the 3 channel BGR color image.
-    IMREAD_ANYDEPTH = 2,             //!< If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
-    IMREAD_ANYCOLOR = 4,             //!< If set, the image is read in any possible color format.
-    IMREAD_LOAD_GDAL = 8,            //!< If set, use the gdal driver for loading the image.
-    IMREAD_REDUCED_GRAYSCALE_2 = 16, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/2.
-    IMREAD_REDUCED_COLOR_2 = 17,     //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/2.
-    IMREAD_REDUCED_GRAYSCALE_4 = 32, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/4.
-    IMREAD_REDUCED_COLOR_4 = 33,     //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/4.
-    IMREAD_REDUCED_GRAYSCALE_8 = 64, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/8.
-    IMREAD_REDUCED_COLOR_8 = 65,     //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/8.
-    IMREAD_IGNORE_ORIENTATION = 128  //!< If set, do not rotate the image according to EXIF's orientation flag.
+    IMREAD_UNCHANGED            = -1, //!< If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
+    IMREAD_GRAYSCALE            = 0,  //!< If set, always convert image to the single channel grayscale image (codec internal conversion).
+    IMREAD_COLOR_BGR            = 1,  //!< If set, always convert image to the 3 channel BGR color image.
+    IMREAD_COLOR                = 1,  //!< Same as IMREAD_COLOR_BGR.
+    IMREAD_ANYDEPTH             = 2,  //!< If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
+    IMREAD_ANYCOLOR             = 4,  //!< If set, the image is read in any possible color format.
+    IMREAD_LOAD_GDAL            = 8,  //!< If set, use the gdal driver for loading the image.
+    IMREAD_REDUCED_GRAYSCALE_2  = 16, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/2.
+    IMREAD_REDUCED_COLOR_2      = 17, //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/2.
+    IMREAD_REDUCED_GRAYSCALE_4  = 32, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/4.
+    IMREAD_REDUCED_COLOR_4      = 33, //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/4.
+    IMREAD_REDUCED_GRAYSCALE_8  = 64, //!< If set, always convert image to the single channel grayscale image and the image size reduced 1/8.
+    IMREAD_REDUCED_COLOR_8      = 65, //!< If set, always convert image to the 3 channel BGR color image and the image size reduced 1/8.
+    IMREAD_IGNORE_ORIENTATION   = 128, //!< If set, do not rotate the image according to EXIF's orientation flag.
+    IMREAD_COLOR_RGB            = 256, //!< If set, always convert image to the 3 channel RGB color image.
 };
 
 //! Imwrite flags
 enum
 {
-    IMWRITE_JPEG_QUALITY = 1,                                  //!< For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
-    IMWRITE_JPEG_PROGRESSIVE = 2,                              //!< Enable JPEG features, 0 or 1, default is False.
-    IMWRITE_JPEG_OPTIMIZE = 3,                                 //!< Enable JPEG features, 0 or 1, default is False.
-    IMWRITE_JPEG_RST_INTERVAL = 4,                             //!< JPEG restart interval, 0 - 65535, default is 0 - no restart.
-    IMWRITE_JPEG_LUMA_QUALITY = 5,                             //!< Separate luma quality level, 0 - 100, default is -1 - don't use.
-    IMWRITE_JPEG_CHROMA_QUALITY = 6,                           //!< Separate chroma quality level, 0 - 100, default is -1 - don't use.
-    IMWRITE_JPEG_SAMPLING_FACTOR = 7,                          //!< For JPEG, set sampling factor. See cv::ImwriteJPEGSamplingFactorParams.
-    IMWRITE_PNG_COMPRESSION = 16,                              //!< For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
-    IMWRITE_PNG_STRATEGY = 17,                                 //!< One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
-    IMWRITE_PNG_BILEVEL = 18,                                  //!< Binary level PNG, 0 or 1, default is 0.
-    IMWRITE_PXM_BINARY = 32,                                   //!< For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
-    IMWRITE_EXR_TYPE = (3 << 4) + 0 /* 48 */,                  //!< override EXR storage type (FLOAT (FP32) is default)
-    IMWRITE_EXR_COMPRESSION = (3 << 4) + 1 /* 49 */,           //!< override EXR compression type (ZIP_COMPRESSION = 3 is default)
+    IMWRITE_JPEG_QUALITY        = 1,  //!< For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
+    IMWRITE_JPEG_PROGRESSIVE    = 2,  //!< Enable JPEG features, 0 or 1, default is False.
+    IMWRITE_JPEG_OPTIMIZE       = 3,  //!< Enable JPEG features, 0 or 1, default is False.
+    IMWRITE_JPEG_RST_INTERVAL   = 4,  //!< JPEG restart interval, 0 - 65535, default is 0 - no restart.
+    IMWRITE_JPEG_LUMA_QUALITY   = 5,  //!< Separate luma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
+    IMWRITE_JPEG_CHROMA_QUALITY = 6,  //!< Separate chroma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
+    IMWRITE_JPEG_SAMPLING_FACTOR = 7, //!< For JPEG, set sampling factor. See cv::ImwriteJPEGSamplingFactorParams.
+    IMWRITE_PNG_COMPRESSION     = 16, //!< For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
+    IMWRITE_PNG_STRATEGY        = 17, //!< One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
+    IMWRITE_PNG_BILEVEL         = 18, //!< Binary level PNG, 0 or 1, default is 0.
+    IMWRITE_PNG_FILTER          = 19, //!< One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB.
+    IMWRITE_PXM_BINARY          = 32, //!< For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
+    IMWRITE_EXR_TYPE            = (3 << 4) + 0 /* 48 */, //!< override EXR storage type (FLOAT (FP32) is default)
+    IMWRITE_EXR_COMPRESSION     = (3 << 4) + 1 /* 49 */, //!< override EXR compression type (ZIP_COMPRESSION = 3 is default)
     IMWRITE_EXR_DWA_COMPRESSION_LEVEL = (3 << 4) + 2 /* 50 */, //!< override EXR DWA compression level (45 is default)
-    IMWRITE_WEBP_QUALITY = 64,                                 //!< For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
-    IMWRITE_HDR_COMPRESSION = (5 << 4) + 0 /* 80 */,           //!< specify HDR compression
-    IMWRITE_PAM_TUPLETYPE = 128,                               //!< For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
-    IMWRITE_TIFF_RESUNIT = 256,                                //!< For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
-    IMWRITE_TIFF_XDPI = 257,                                   //!< For TIFF, use to specify the X direction DPI
-    IMWRITE_TIFF_YDPI = 258,                                   //!< For TIFF, use to specify the Y direction DPI
-    IMWRITE_TIFF_COMPRESSION = 259,                            //!< For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
-    IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,                  //!< For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
-    IMWRITE_AVIF_QUALITY = 512,                                //!< For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
-    IMWRITE_AVIF_DEPTH = 513,                                  //!< For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_32F. Default is 8.
-    IMWRITE_AVIF_SPEED = 514                                   //!< For AVIF, it is between 0 (slowest) and (fastest). Default is 9.
+    IMWRITE_WEBP_QUALITY        = 64, //!< For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
+    IMWRITE_HDR_COMPRESSION     = (5 << 4) + 0 /* 80 */, //!< specify HDR compression
+    IMWRITE_PAM_TUPLETYPE       = 128,//!< For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
+    IMWRITE_TIFF_RESUNIT        = 256,//!< For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
+    IMWRITE_TIFF_XDPI           = 257,//!< For TIFF, use to specify the X direction DPI
+    IMWRITE_TIFF_YDPI           = 258,//!< For TIFF, use to specify the Y direction DPI
+    IMWRITE_TIFF_COMPRESSION    = 259,//!< For TIFF, use to specify the image compression scheme. See cv::ImwriteTiffCompressionFlags. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
+    IMWRITE_TIFF_ROWSPERSTRIP   = 278,//!< For TIFF, use to specify the number of rows per strip.
+    IMWRITE_TIFF_PREDICTOR      = 317,//!< For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags.
+    IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,//!< For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
+    IMWRITE_AVIF_QUALITY        = 512,//!< For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
+    IMWRITE_AVIF_DEPTH          = 513,//!< For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_32F. Default is 8.
+    IMWRITE_AVIF_SPEED          = 514,//!< For AVIF, it is between 0 (slowest) and (fastest). Default is 9.
+    IMWRITE_JPEGXL_QUALITY      = 640,//!< For JPEG XL, it can be a quality from 0 to 100 (the higher is the better). Default value is 95. If set, distance parameter is re-calicurated from quality level automatically. This parameter request libjxl v0.10 or later.
+    IMWRITE_JPEGXL_EFFORT       = 641,//!< For JPEG XL, encoder effort/speed level without affecting decoding speed; it is between 1 (fastest) and 10 (slowest). Default is 7.
+    IMWRITE_JPEGXL_DISTANCE     = 642,//!< For JPEG XL, distance level for lossy compression: target max butteraugli distance, lower = higher quality, 0 = lossless; range: 0 .. 25. Default is 1.
+    IMWRITE_JPEGXL_DECODING_SPEED = 643,//!< For JPEG XL, decoding speed tier for the provided options; minimum is 0 (slowest to decode, best quality/density), and maximum is 4 (fastest to decode, at the cost of some quality/density). Default is 0.
+    IMWRITE_GIF_LOOP            = 1024, //!< Not functional since 4.12.0. Replaced by cv::Animation::loop_count.
+    IMWRITE_GIF_SPEED           = 1025, //!< Not functional since 4.12.0. Replaced by cv::Animation::durations.
+    IMWRITE_GIF_QUALITY         = 1026, //!< For GIF, it can be a quality from 1 to 8. Default is 2. See cv::ImwriteGifCompressionFlags.
+    IMWRITE_GIF_DITHER          = 1027, //!< For GIF, it can be a quality from -1(most dither) to 3(no dither). Default is 0.
+    IMWRITE_GIF_TRANSPARENCY    = 1028, //!< For GIF, the alpha channel lower than this will be set to transparent. Default is 1.
+    IMWRITE_GIF_COLORTABLE      = 1029  //!< For GIF, 0 means global color table is used, 1 means local color table is used. Default is 0.
 };
 
 enum
@@ -989,6 +998,48 @@ enum
     IMWRITE_JPEG_SAMPLING_FACTOR_444 = 0x111111  //!< 1x1,1x1,1x1(No subsampling)
 };
 
+enum {
+  IMWRITE_TIFF_COMPRESSION_NONE = 1,            //!< dump mode
+  IMWRITE_TIFF_COMPRESSION_CCITTRLE = 2,        //!< CCITT modified Huffman RLE
+  IMWRITE_TIFF_COMPRESSION_CCITTFAX3 = 3,       //!< CCITT Group 3 fax encoding
+  IMWRITE_TIFF_COMPRESSION_CCITT_T4 = 3,        //!< CCITT T.4 (TIFF 6 name)
+  IMWRITE_TIFF_COMPRESSION_CCITTFAX4 = 4,       //!< CCITT Group 4 fax encoding
+  IMWRITE_TIFF_COMPRESSION_CCITT_T6 = 4,        //!< CCITT T.6 (TIFF 6 name)
+  IMWRITE_TIFF_COMPRESSION_LZW = 5,             //!< Lempel-Ziv  & Welch
+  IMWRITE_TIFF_COMPRESSION_OJPEG = 6,           //!< !6.0 JPEG
+  IMWRITE_TIFF_COMPRESSION_JPEG = 7,            //!< %JPEG DCT compression
+  IMWRITE_TIFF_COMPRESSION_T85 = 9,             //!< !TIFF/FX T.85 JBIG compression
+  IMWRITE_TIFF_COMPRESSION_T43 = 10,            //!< !TIFF/FX T.43 colour by layered JBIG compression
+  IMWRITE_TIFF_COMPRESSION_NEXT = 32766,        //!< NeXT 2-bit RLE
+  IMWRITE_TIFF_COMPRESSION_CCITTRLEW = 32771,   //!< #1 w/ word alignment
+  IMWRITE_TIFF_COMPRESSION_PACKBITS = 32773,    //!< Macintosh RLE
+  IMWRITE_TIFF_COMPRESSION_THUNDERSCAN = 32809, //!< ThunderScan RLE
+  IMWRITE_TIFF_COMPRESSION_IT8CTPAD = 32895,    //!< IT8 CT w/padding
+  IMWRITE_TIFF_COMPRESSION_IT8LW = 32896,       //!< IT8 Linework RLE
+  IMWRITE_TIFF_COMPRESSION_IT8MP = 32897,       //!< IT8 Monochrome picture
+  IMWRITE_TIFF_COMPRESSION_IT8BL = 32898,       //!< IT8 Binary line art
+  IMWRITE_TIFF_COMPRESSION_PIXARFILM = 32908,   //!< Pixar companded 10bit LZW
+  IMWRITE_TIFF_COMPRESSION_PIXARLOG = 32909,    //!< Pixar companded 11bit ZIP
+  IMWRITE_TIFF_COMPRESSION_DEFLATE = 32946,     //!< Deflate compression, legacy tag
+  IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE = 8,   //!< Deflate compression, as recognized by Adobe
+  IMWRITE_TIFF_COMPRESSION_DCS = 32947,         //!< Kodak DCS encoding
+  IMWRITE_TIFF_COMPRESSION_JBIG = 34661,        //!< ISO JBIG
+  IMWRITE_TIFF_COMPRESSION_SGILOG = 34676,      //!< SGI Log Luminance RLE
+  IMWRITE_TIFF_COMPRESSION_SGILOG24 = 34677,    //!< SGI Log 24-bit packed
+  IMWRITE_TIFF_COMPRESSION_JP2000 = 34712,      //!< Leadtools JPEG2000
+  IMWRITE_TIFF_COMPRESSION_LERC = 34887,        //!< ESRI Lerc codec: https://github.com/Esri/lerc
+  IMWRITE_TIFF_COMPRESSION_LZMA = 34925,        //!< LZMA2
+  IMWRITE_TIFF_COMPRESSION_ZSTD = 50000,        //!< ZSTD: WARNING not registered in Adobe-maintained registry
+  IMWRITE_TIFF_COMPRESSION_WEBP = 50001,        //!< WEBP: WARNING not registered in Adobe-maintained registry
+  IMWRITE_TIFF_COMPRESSION_JXL = 50002          //!< JPEGXL: WARNING not registered in Adobe-maintained registry
+};
+
+enum {
+    IMWRITE_TIFF_PREDICTOR_NONE = 1,              //!< no prediction scheme used
+    IMWRITE_TIFF_PREDICTOR_HORIZONTAL = 2,        //!< horizontal differencing
+    IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT = 3      //!< floating point predictor
+};
+
 enum
 {
     /*IMWRITE_EXR_TYPE_UNIT = 0, //!< not supported */
@@ -998,16 +1049,16 @@ enum
 
 enum
 {
-    IMWRITE_EXR_COMPRESSION_NO = 0,    //!< no compression
-    IMWRITE_EXR_COMPRESSION_RLE = 1,   //!< run length encoding
-    IMWRITE_EXR_COMPRESSION_ZIPS = 2,  //!< zlib compression, one scan line at a time
-    IMWRITE_EXR_COMPRESSION_ZIP = 3,   //!< zlib compression, in blocks of 16 scan lines
-    IMWRITE_EXR_COMPRESSION_PIZ = 4,   //!< piz-based wavelet compression
+    IMWRITE_EXR_COMPRESSION_NO    = 0, //!< no compression
+    IMWRITE_EXR_COMPRESSION_RLE   = 1, //!< run length encoding
+    IMWRITE_EXR_COMPRESSION_ZIPS  = 2, //!< zlib compression, one scan line at a time
+    IMWRITE_EXR_COMPRESSION_ZIP   = 3, //!< zlib compression, in blocks of 16 scan lines
+    IMWRITE_EXR_COMPRESSION_PIZ   = 4, //!< piz-based wavelet compression
     IMWRITE_EXR_COMPRESSION_PXR24 = 5, //!< lossy 24-bit float compression
-    IMWRITE_EXR_COMPRESSION_B44 = 6,   //!< lossy 4-by-4 pixel block compression, fixed compression rate
-    IMWRITE_EXR_COMPRESSION_B44A = 7,  //!< lossy 4-by-4 pixel block compression, flat fields are compressed more
-    IMWRITE_EXR_COMPRESSION_DWAA = 8,  //!< lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access. Supported since OpenEXR 2.2.0.
-    IMWRITE_EXR_COMPRESSION_DWAB = 9,  //!< lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION. Supported since OpenEXR 2.2.0.
+    IMWRITE_EXR_COMPRESSION_B44   = 6, //!< lossy 4-by-4 pixel block compression, fixed compression rate
+    IMWRITE_EXR_COMPRESSION_B44A  = 7, //!< lossy 4-by-4 pixel block compression, flat fields are compressed more
+    IMWRITE_EXR_COMPRESSION_DWAA  = 8, //!< lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access. Supported since OpenEXR 2.2.0.
+    IMWRITE_EXR_COMPRESSION_DWAB  = 9, //!< lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION. Supported since OpenEXR 2.2.0.
 };
 
 //! Imwrite PNG specific flags used to tune the compression algorithm.
@@ -1027,6 +1078,17 @@ enum
     IMWRITE_PNG_STRATEGY_FIXED = 4         //!< Using this value prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
 };
 
+//! Imwrite PNG specific values for IMWRITE_PNG_FILTER parameter key
+enum {
+  IMWRITE_PNG_FILTER_NONE           = 8,   //!< Applies no filter to the PNG image (useful when you want to save the raw pixel data without any compression filter).
+  IMWRITE_PNG_FILTER_SUB            = 16,  //!< Applies the "sub" filter, which calculates the difference between the current byte and the previous byte in the row.
+  IMWRITE_PNG_FILTER_UP             = 32,  //!< applies the "up" filter, which calculates the difference between the current byte and the corresponding byte directly above it.
+  IMWRITE_PNG_FILTER_AVG            = 64,  //!< applies the "average" filter, which calculates the average of the byte to the left and the byte above.
+  IMWRITE_PNG_FILTER_PAETH          = 128, //!< applies the "Paeth" filter, a more complex filter that predicts the next pixel value based on neighboring pixels.
+  IMWRITE_PNG_FAST_FILTERS          = (IMWRITE_PNG_FILTER_NONE | IMWRITE_PNG_FILTER_SUB | IMWRITE_PNG_FILTER_UP), //!< This is a combination of IMWRITE_PNG_FILTER_NONE, IMWRITE_PNG_FILTER_SUB, and IMWRITE_PNG_FILTER_UP, typically used for faster compression.
+  IMWRITE_PNG_ALL_FILTERS           = (IMWRITE_PNG_FAST_FILTERS | IMWRITE_PNG_FILTER_AVG | IMWRITE_PNG_FILTER_PAETH) //!< This combines all available filters (NONE, SUB, UP, AVG, and PAETH), which will attempt to apply all of them for the best possible compression.
+};
+
 //! Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
 enum
 {
@@ -1043,6 +1105,18 @@ enum
 {
     IMWRITE_HDR_COMPRESSION_NONE = 0,
     IMWRITE_HDR_COMPRESSION_RLE = 1
+};
+
+//! Imwrite GIF specific values for IMWRITE_GIF_QUALITY parameter key, if larger than 3, then its related to the size of the color table.
+enum {
+  IMWRITE_GIF_FAST_NO_DITHER       = 1,
+  IMWRITE_GIF_FAST_FLOYD_DITHER    = 2,
+  IMWRITE_GIF_COLORTABLE_SIZE_8    = 3,
+  IMWRITE_GIF_COLORTABLE_SIZE_16   = 4,
+  IMWRITE_GIF_COLORTABLE_SIZE_32   = 5,
+  IMWRITE_GIF_COLORTABLE_SIZE_64   = 6,
+  IMWRITE_GIF_COLORTABLE_SIZE_128  = 7,
+  IMWRITE_GIF_COLORTABLE_SIZE_256  = 8
 };
 
 enum

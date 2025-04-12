@@ -20,10 +20,9 @@ Future<void> _builder(BuildInput input, BuildOutputBuilder output) async {
   final packagePath = Uri.directory(await getPackagePath(packageName));
   final sourceDir = packagePath.resolve('src/');
   // final outDir = Uri.directory(packagePath).resolve('build/');
-  final logger =
-      Logger("")
-        ..level = Level.ALL
-        ..onRecord.listen((record) => stderr.writeln(record.message));
+  final logger = Logger("")
+    ..level = Level.ALL
+    ..onRecord.listen((record) => stderr.writeln(record.message));
   // ..onRecord.listen((record) => print(record.message));
 
   final exModsDefault = parseUserDefinedExcludeModules(packagePath.resolve("pubspec.yaml").toFilePath());

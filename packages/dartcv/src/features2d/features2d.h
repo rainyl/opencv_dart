@@ -153,11 +153,13 @@ CvStatus* cv_BFMatcher_knnMatch(
     BFMatcher self, Mat query, Mat train, int k, VecVecDMatch* rval, CvCallback_0 callback
 );
 
+#ifdef HAVE_OPENCV_FLANN
 CvStatus* cv_FlannBasedMatcher_create(FlannBasedMatcher* rval);
 void cv_FlannBasedMatcher_close(FlannBasedMatcherPtr self);
 CvStatus* cv_FlannBasedMatcher_knnMatch(
     FlannBasedMatcher self, Mat query, Mat train, int k, VecVecDMatch* rval, CvCallback_0 callback
 );
+#endif
 
 CvStatus* cv_drawKeyPoints(
     Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags, CvCallback_0 callback

@@ -320,6 +320,7 @@ CvStatus* cv_BFMatcher_knnMatch(
     END_WRAP
 }
 
+#ifdef HAVE_OPENCV_FLANN
 CvStatus* cv_FlannBasedMatcher_create(FlannBasedMatcher* rval) {
     BEGIN_WRAP
     rval->ptr = new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create());
@@ -340,6 +341,7 @@ CvStatus* cv_FlannBasedMatcher_knnMatch(
     }
     END_WRAP
 }
+#endif
 
 CvStatus* cv_drawKeyPoints(
     Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags, CvCallback_0 callback
