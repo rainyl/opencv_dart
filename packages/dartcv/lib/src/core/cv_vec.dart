@@ -25,19 +25,17 @@ class Vec2b extends CvVec<cvg.Vec2b> {
     }
   }
   factory Vec2b(int v1, int v2) {
-    final p =
-        calloc<cvg.Vec2b>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2b>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2b._(p);
   }
 
   factory Vec2b.fromPointer(ffi.Pointer<cvg.Vec2b> ptr, [bool attach = true]) => Vec2b._(ptr, attach);
   factory Vec2b.fromNative(cvg.Vec2b v) {
-    final p =
-        calloc<cvg.Vec2b>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2b>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2b._(p);
   }
 
@@ -80,21 +78,19 @@ class Vec3b extends CvVec<cvg.Vec3b> {
     }
   }
   factory Vec3b(int v1, int v2, int v3) {
-    final p =
-        calloc<cvg.Vec3b>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3b>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3b._(p);
   }
 
   factory Vec3b.fromPointer(ffi.Pointer<cvg.Vec3b> ptr, [bool attach = true]) => Vec3b._(ptr, attach);
   factory Vec3b.fromNative(cvg.Vec3b v) {
-    final p =
-        calloc<cvg.Vec3b>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3b>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3b._(p);
   }
 
@@ -141,23 +137,21 @@ class Vec4b extends CvVec<cvg.Vec4b> {
     }
   }
   factory Vec4b(int v1, int v2, int v3, int v4) {
-    final p =
-        calloc<cvg.Vec4b>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4b>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4b._(p);
   }
 
   factory Vec4b.fromPointer(ffi.Pointer<cvg.Vec4b> ptr, [bool attach = true]) => Vec4b._(ptr, attach);
   factory Vec4b.fromNative(cvg.Vec4b v) {
-    final p =
-        calloc<cvg.Vec4b>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4b>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4b._(p);
   }
 
@@ -208,19 +202,17 @@ class Vec2w extends CvVec<cvg.Vec2w> {
     }
   }
   factory Vec2w(int v1, int v2) {
-    final p =
-        calloc<cvg.Vec2w>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2w>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2w._(p);
   }
 
   factory Vec2w.fromPointer(ffi.Pointer<cvg.Vec2w> ptr, [bool attach = true]) => Vec2w._(ptr, attach);
   factory Vec2w.fromNative(cvg.Vec2w v) {
-    final p =
-        calloc<cvg.Vec2w>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2w>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2w._(p);
   }
 
@@ -263,21 +255,19 @@ class Vec3w extends CvVec<cvg.Vec3w> {
     }
   }
   factory Vec3w(int v1, int v2, int v3) {
-    final p =
-        calloc<cvg.Vec3w>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3w>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3w._(p);
   }
 
   factory Vec3w.fromPointer(ffi.Pointer<cvg.Vec3w> ptr, [bool attach = true]) => Vec3w._(ptr, attach);
   factory Vec3w.fromNative(cvg.Vec3w v) {
-    final p =
-        calloc<cvg.Vec3w>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3w>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3w._(p);
   }
 
@@ -324,23 +314,21 @@ class Vec4w extends CvVec<cvg.Vec4w> {
     }
   }
   factory Vec4w(int v1, int v2, int v3, int v4) {
-    final p =
-        calloc<cvg.Vec4w>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4w>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4w._(p);
   }
 
   factory Vec4w.fromPointer(ffi.Pointer<cvg.Vec4w> ptr, [bool attach = true]) => Vec4w._(ptr, attach);
   factory Vec4w.fromNative(cvg.Vec4w v) {
-    final p =
-        calloc<cvg.Vec4w>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4w>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4w._(p);
   }
   int get val1 => ref.val1;
@@ -390,19 +378,17 @@ class Vec2s extends CvVec<cvg.Vec2s> {
     }
   }
   factory Vec2s(int v1, int v2) {
-    final p =
-        calloc<cvg.Vec2s>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2s>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2s._(p);
   }
 
   factory Vec2s.fromPointer(ffi.Pointer<cvg.Vec2s> ptr, [bool attach = true]) => Vec2s._(ptr, attach);
   factory Vec2s.fromNative(cvg.Vec2s v) {
-    final p =
-        calloc<cvg.Vec2s>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2s>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2s._(p);
   }
   int get val1 => ref.val1;
@@ -444,21 +430,19 @@ class Vec3s extends CvVec<cvg.Vec3s> {
     }
   }
   factory Vec3s(int v1, int v2, int v3) {
-    final p =
-        calloc<cvg.Vec3s>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3s>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3s._(p);
   }
 
   factory Vec3s.fromPointer(ffi.Pointer<cvg.Vec3s> ptr, [bool attach = true]) => Vec3s._(ptr, attach);
   factory Vec3s.fromNative(cvg.Vec3s v) {
-    final p =
-        calloc<cvg.Vec3s>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3s>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3s._(p);
   }
 
@@ -505,23 +489,21 @@ class Vec4s extends CvVec<cvg.Vec4s> {
     }
   }
   factory Vec4s(int v1, int v2, int v3, int v4) {
-    final p =
-        calloc<cvg.Vec4s>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4s>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4s._(p);
   }
 
   factory Vec4s.fromPointer(ffi.Pointer<cvg.Vec4s> ptr, [bool attach = true]) => Vec4s._(ptr, attach);
   factory Vec4s.fromNative(cvg.Vec4s v) {
-    final p =
-        calloc<cvg.Vec4s>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4s>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4s._(p);
   }
 
@@ -572,19 +554,17 @@ class Vec2i extends CvVec<cvg.Vec2i> {
     }
   }
   factory Vec2i(int v1, int v2) {
-    final p =
-        calloc<cvg.Vec2i>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2i>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2i._(p);
   }
 
   factory Vec2i.fromPointer(ffi.Pointer<cvg.Vec2i> ptr, [bool attach = true]) => Vec2i._(ptr, attach);
   factory Vec2i.fromNative(cvg.Vec2i v) {
-    final p =
-        calloc<cvg.Vec2i>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2i>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2i._(p);
   }
 
@@ -627,21 +607,19 @@ class Vec3i extends CvVec<cvg.Vec3i> {
     }
   }
   factory Vec3i(int v1, int v2, int v3) {
-    final p =
-        calloc<cvg.Vec3i>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3i>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3i._(p);
   }
 
   factory Vec3i.fromPointer(ffi.Pointer<cvg.Vec3i> ptr, [bool attach = true]) => Vec3i._(ptr, attach);
   factory Vec3i.fromNative(cvg.Vec3i v) {
-    final p =
-        calloc<cvg.Vec3i>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3i>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3i._(p);
   }
 
@@ -688,23 +666,21 @@ class Vec4i extends CvVec<cvg.Vec4i> {
     }
   }
   factory Vec4i(int v1, int v2, int v3, int v4) {
-    final p =
-        calloc<cvg.Vec4i>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4i>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4i._(p);
   }
 
   factory Vec4i.fromPointer(ffi.Pointer<cvg.Vec4i> ptr, [bool attach = true]) => Vec4i._(ptr, attach);
   factory Vec4i.fromNative(cvg.Vec4i v) {
-    final p =
-        calloc<cvg.Vec4i>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4i>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4i._(p);
   }
 
@@ -755,27 +731,25 @@ class Vec6i extends CvVec<cvg.Vec6i> {
     }
   }
   factory Vec6i(int v1, int v2, int v3, int v4, int v5, int v6) {
-    final p =
-        calloc<cvg.Vec6i>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4
-          ..ref.val5 = v5
-          ..ref.val6 = v6;
+    final p = calloc<cvg.Vec6i>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4
+      ..ref.val5 = v5
+      ..ref.val6 = v6;
     return Vec6i._(p);
   }
 
   factory Vec6i.fromPointer(ffi.Pointer<cvg.Vec6i> ptr, [bool attach = true]) => Vec6i._(ptr, attach);
   factory Vec6i.fromNative(cvg.Vec6i v) {
-    final p =
-        calloc<cvg.Vec6i>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4
-          ..ref.val5 = v.val5
-          ..ref.val6 = v.val6;
+    final p = calloc<cvg.Vec6i>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4
+      ..ref.val5 = v.val5
+      ..ref.val6 = v.val6;
     return Vec6i._(p);
   }
 
@@ -834,31 +808,29 @@ class Vec8i extends CvVec<cvg.Vec8i> {
     }
   }
   factory Vec8i(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8) {
-    final p =
-        calloc<cvg.Vec8i>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4
-          ..ref.val5 = v5
-          ..ref.val6 = v6
-          ..ref.val7 = v7
-          ..ref.val8 = v8;
+    final p = calloc<cvg.Vec8i>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4
+      ..ref.val5 = v5
+      ..ref.val6 = v6
+      ..ref.val7 = v7
+      ..ref.val8 = v8;
     return Vec8i._(p);
   }
 
   factory Vec8i.fromPointer(ffi.Pointer<cvg.Vec8i> ptr, [bool attach = true]) => Vec8i._(ptr, attach);
   factory Vec8i.fromNative(cvg.Vec8i v) {
-    final p =
-        calloc<cvg.Vec8i>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4
-          ..ref.val5 = v.val5
-          ..ref.val6 = v.val6
-          ..ref.val7 = v.val7
-          ..ref.val8 = v.val8;
+    final p = calloc<cvg.Vec8i>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4
+      ..ref.val5 = v.val5
+      ..ref.val6 = v.val6
+      ..ref.val7 = v.val7
+      ..ref.val8 = v.val8;
     return Vec8i._(p);
   }
 
@@ -925,19 +897,17 @@ class Vec2f extends CvVec<cvg.Vec2f> {
     }
   }
   factory Vec2f(double v1, double v2) {
-    final p =
-        calloc<cvg.Vec2f>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2f>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2f._(p);
   }
 
   factory Vec2f.fromPointer(ffi.Pointer<cvg.Vec2f> ptr, [bool attach = true]) => Vec2f._(ptr, attach);
   factory Vec2f.fromNative(cvg.Vec2f v) {
-    final p =
-        calloc<cvg.Vec2f>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2f>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2f._(p);
   }
 
@@ -980,21 +950,19 @@ class Vec3f extends CvVec<cvg.Vec3f> {
     }
   }
   factory Vec3f(double v1, double v2, double v3) {
-    final p =
-        calloc<cvg.Vec3f>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3f>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3f._(p);
   }
 
   factory Vec3f.fromPointer(ffi.Pointer<cvg.Vec3f> ptr, [bool attach = true]) => Vec3f._(ptr, attach);
   factory Vec3f.fromNative(cvg.Vec3f v) {
-    final p =
-        calloc<cvg.Vec3f>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3f>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3f._(p);
   }
 
@@ -1042,23 +1010,21 @@ class Vec4f extends CvVec<cvg.Vec4f> {
     }
   }
   factory Vec4f(double v1, double v2, double v3, double v4) {
-    final p =
-        calloc<cvg.Vec4f>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4f>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4f._(p);
   }
 
   factory Vec4f.fromPointer(ffi.Pointer<cvg.Vec4f> ptr, [bool attach = true]) => Vec4f._(ptr, attach);
   factory Vec4f.fromNative(cvg.Vec4f v) {
-    final p =
-        calloc<cvg.Vec4f>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4f>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4f._(p);
   }
 
@@ -1110,27 +1076,25 @@ class Vec6f extends CvVec<cvg.Vec6f> {
     }
   }
   factory Vec6f(double v1, double v2, double v3, double v4, double v5, double v6) {
-    final p =
-        calloc<cvg.Vec6f>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4
-          ..ref.val5 = v5
-          ..ref.val6 = v6;
+    final p = calloc<cvg.Vec6f>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4
+      ..ref.val5 = v5
+      ..ref.val6 = v6;
     return Vec6f._(p);
   }
 
   factory Vec6f.fromPointer(ffi.Pointer<cvg.Vec6f> ptr, [bool attach = true]) => Vec6f._(ptr, attach);
   factory Vec6f.fromNative(cvg.Vec6f v) {
-    final p =
-        calloc<cvg.Vec6f>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4
-          ..ref.val5 = v.val5
-          ..ref.val6 = v.val6;
+    final p = calloc<cvg.Vec6f>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4
+      ..ref.val5 = v.val5
+      ..ref.val6 = v.val6;
     return Vec6f._(p);
   }
 
@@ -1190,19 +1154,17 @@ class Vec2d extends CvVec<cvg.Vec2d> {
     }
   }
   factory Vec2d(double v1, double v2) {
-    final p =
-        calloc<cvg.Vec2d>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2;
+    final p = calloc<cvg.Vec2d>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2;
     return Vec2d._(p);
   }
 
   factory Vec2d.fromPointer(ffi.Pointer<cvg.Vec2d> ptr, [bool attach = true]) => Vec2d._(ptr, attach);
   factory Vec2d.fromNative(cvg.Vec2d v) {
-    final p =
-        calloc<cvg.Vec2d>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2;
+    final p = calloc<cvg.Vec2d>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2;
     return Vec2d._(p);
   }
 
@@ -1245,21 +1207,19 @@ class Vec3d extends CvVec<cvg.Vec3d> {
     }
   }
   factory Vec3d(double v1, double v2, double v3) {
-    final p =
-        calloc<cvg.Vec3d>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3;
+    final p = calloc<cvg.Vec3d>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3;
     return Vec3d._(p);
   }
 
   factory Vec3d.fromPointer(ffi.Pointer<cvg.Vec3d> ptr, [bool attach = true]) => Vec3d._(ptr, attach);
   factory Vec3d.fromNative(cvg.Vec3d v) {
-    final p =
-        calloc<cvg.Vec3d>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3;
+    final p = calloc<cvg.Vec3d>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3;
     return Vec3d._(p);
   }
 
@@ -1307,23 +1267,21 @@ class Vec4d extends CvVec<cvg.Vec4d> {
     }
   }
   factory Vec4d(double v1, double v2, double v3, double v4) {
-    final p =
-        calloc<cvg.Vec4d>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4;
+    final p = calloc<cvg.Vec4d>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4;
     return Vec4d._(p);
   }
 
   factory Vec4d.fromPointer(ffi.Pointer<cvg.Vec4d> ptr, [bool attach = true]) => Vec4d._(ptr, attach);
   factory Vec4d.fromNative(cvg.Vec4d v) {
-    final p =
-        calloc<cvg.Vec4d>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4;
+    final p = calloc<cvg.Vec4d>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4;
     return Vec4d._(p);
   }
 
@@ -1375,27 +1333,25 @@ class Vec6d extends CvVec<cvg.Vec6d> {
     }
   }
   factory Vec6d(double v1, double v2, double v3, double v4, double v5, double v6) {
-    final p =
-        calloc<cvg.Vec6d>()
-          ..ref.val1 = v1
-          ..ref.val2 = v2
-          ..ref.val3 = v3
-          ..ref.val4 = v4
-          ..ref.val5 = v5
-          ..ref.val6 = v6;
+    final p = calloc<cvg.Vec6d>()
+      ..ref.val1 = v1
+      ..ref.val2 = v2
+      ..ref.val3 = v3
+      ..ref.val4 = v4
+      ..ref.val5 = v5
+      ..ref.val6 = v6;
     return Vec6d._(p);
   }
 
   factory Vec6d.fromPointer(ffi.Pointer<cvg.Vec6d> ptr, [bool attach = true]) => Vec6d._(ptr, attach);
   factory Vec6d.fromNative(cvg.Vec6d v) {
-    final p =
-        calloc<cvg.Vec6d>()
-          ..ref.val1 = v.val1
-          ..ref.val2 = v.val2
-          ..ref.val3 = v.val3
-          ..ref.val4 = v.val4
-          ..ref.val5 = v.val5
-          ..ref.val6 = v.val6;
+    final p = calloc<cvg.Vec6d>()
+      ..ref.val1 = v.val1
+      ..ref.val2 = v.val2
+      ..ref.val3 = v.val3
+      ..ref.val4 = v.val4
+      ..ref.val5 = v.val5
+      ..ref.val6 = v.val6;
     return Vec6d._(p);
   }
 

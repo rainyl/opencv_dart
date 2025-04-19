@@ -54,11 +54,13 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () async {
                   final picker = ImagePicker();
-                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  final img =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     final path = img.path;
                     final mat = cv.imread(path);
-                    print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                    print(
+                        "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
                     debugPrint("mat.data.length: ${mat.data.length}");
                     // heavy computation
                     final (gray, blur) = await heavyTaskAsync(mat, count: 1);
@@ -75,16 +77,22 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   // heavy computation
                   // final (gray, blur) = await heavyTask(bytes);
                   // setState(() {
                   //   images = [bytes, gray, blur];
                   // });
-                  final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                  final (gray, blur) =
+                      await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
                   setState(() {
-                    images = [bytes, cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2];
+                    images = [
+                      bytes,
+                      cv.imencode(".png", gray).$2,
+                      cv.imencode(".png", blur).$2
+                    ];
                   });
                 },
                 child: const Text("Process"),
@@ -96,10 +104,13 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
+                        itemBuilder: (ctx, idx) =>
+                            Card(child: Image.memory(images[idx])),
                       ),
                     ),
-                    Expanded(child: SingleChildScrollView(child: Text(cv.getBuildInformation()))),
+                    Expanded(
+                        child: SingleChildScrollView(
+                            child: Text(cv.getBuildInformation()))),
                   ],
                 ),
               ),

@@ -107,25 +107,24 @@ class Fisheye {
     distorted ??= Mat.empty();
 
     cvRun(
-      () =>
-          Kundistorted == null
-              ? ccalib3d.cv_fisheye_distortPoints(
-                undistorted.ref,
-                distorted!.ref,
-                K.ref,
-                D.ref,
-                alpha,
-                ffi.nullptr,
-              )
-              : ccalib3d.cv_fisheye_distortPoints_1(
-                undistorted.ref,
-                distorted!.ref,
-                Kundistorted.ref,
-                K.ref,
-                D.ref,
-                alpha,
-                ffi.nullptr,
-              ),
+      () => Kundistorted == null
+          ? ccalib3d.cv_fisheye_distortPoints(
+              undistorted.ref,
+              distorted!.ref,
+              K.ref,
+              D.ref,
+              alpha,
+              ffi.nullptr,
+            )
+          : ccalib3d.cv_fisheye_distortPoints_1(
+              undistorted.ref,
+              distorted!.ref,
+              Kundistorted.ref,
+              K.ref,
+              D.ref,
+              alpha,
+              ffi.nullptr,
+            ),
     );
     return distorted;
   }
@@ -142,25 +141,24 @@ class Fisheye {
     distorted ??= Mat.empty();
 
     return cvRunAsync0(
-      (callback) =>
-          Kundistorted == null
-              ? ccalib3d.cv_fisheye_distortPoints(
-                undistorted.ref,
-                distorted!.ref,
-                K.ref,
-                D.ref,
-                alpha,
-                callback,
-              )
-              : ccalib3d.cv_fisheye_distortPoints_1(
-                undistorted.ref,
-                distorted!.ref,
-                Kundistorted.ref,
-                K.ref,
-                D.ref,
-                alpha,
-                callback,
-              ),
+      (callback) => Kundistorted == null
+          ? ccalib3d.cv_fisheye_distortPoints(
+              undistorted.ref,
+              distorted!.ref,
+              K.ref,
+              D.ref,
+              alpha,
+              callback,
+            )
+          : ccalib3d.cv_fisheye_distortPoints_1(
+              undistorted.ref,
+              distorted!.ref,
+              Kundistorted.ref,
+              K.ref,
+              D.ref,
+              alpha,
+              callback,
+            ),
       (c) => c.complete(distorted),
     );
   }

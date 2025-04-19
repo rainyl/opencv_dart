@@ -482,7 +482,7 @@ class ORB extends CvStruct<cvg.ORB> {
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -544,30 +544,31 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   }
 
   factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
-    blobColor: r.blobColor,
-    filterByArea: r.filterByArea,
-    filterByCircularity: r.filterByCircularity,
-    filterByColor: r.filterByColor,
-    filterByConvexity: r.filterByConvexity,
-    filterByInertia: r.filterByInertia,
-    maxArea: r.maxArea,
-    maxCircularity: r.maxCircularity,
-    maxConvexity: r.maxConvexity,
-    maxInertiaRatio: r.maxInertiaRatio,
-    maxThreshold: r.maxThreshold,
-    minArea: r.minArea,
-    minCircularity: r.minCircularity,
-    minConvexity: r.minConvexity,
-    minDistBetweenBlobs: r.minDistBetweenBlobs,
-    minInertiaRatio: r.minInertiaRatio,
-    minRepeatability: r.minRepeatability,
-    minThreshold: r.minThreshold,
-    thresholdStep: r.thresholdStep,
-  );
+        blobColor: r.blobColor,
+        filterByArea: r.filterByArea,
+        filterByCircularity: r.filterByCircularity,
+        filterByColor: r.filterByColor,
+        filterByConvexity: r.filterByConvexity,
+        filterByInertia: r.filterByInertia,
+        maxArea: r.maxArea,
+        maxCircularity: r.maxCircularity,
+        maxConvexity: r.maxConvexity,
+        maxInertiaRatio: r.maxInertiaRatio,
+        maxThreshold: r.maxThreshold,
+        minArea: r.minArea,
+        minCircularity: r.minCircularity,
+        minConvexity: r.minConvexity,
+        minDistBetweenBlobs: r.minDistBetweenBlobs,
+        minInertiaRatio: r.minInertiaRatio,
+        minRepeatability: r.minRepeatability,
+        minThreshold: r.minThreshold,
+        thresholdStep: r.thresholdStep,
+      );
   factory SimpleBlobDetectorParams.fromPointer(
     ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
     bool attach = true,
-  ]) => SimpleBlobDetectorParams._(p, attach);
+  ]) =>
+      SimpleBlobDetectorParams._(p, attach);
 
   @override
   cvg.SimpleBlobDetectorParams get ref => ptr.ref;
@@ -638,21 +639,21 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
   @override
   List<num> get props => [
-    maxArea,
-    minArea,
-    minConvexity,
-    maxConvexity,
-    minInertiaRatio,
-    maxInertiaRatio,
-    minThreshold,
-    maxThreshold,
-    thresholdStep,
-    minDistBetweenBlobs,
-    minRepeatability,
-    minThreshold,
-    thresholdStep,
-    minDistBetweenBlobs,
-  ];
+        maxArea,
+        minArea,
+        minConvexity,
+        maxConvexity,
+        minInertiaRatio,
+        maxInertiaRatio,
+        minThreshold,
+        maxThreshold,
+        thresholdStep,
+        minDistBetweenBlobs,
+        minRepeatability,
+        minThreshold,
+        thresholdStep,
+        minDistBetweenBlobs,
+      ];
 }
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.

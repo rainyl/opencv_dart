@@ -33,12 +33,13 @@ extension MatAsync on Mat {
     int g = 0,
     int b = 0,
     MatType? type,
-  }) async => Mat.fromScalar(
-    rows,
-    cols,
-    type ?? MatType.CV_8UC3,
-    Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0),
-  );
+  }) async =>
+      Mat.fromScalar(
+        rows,
+        cols,
+        type ?? MatType.CV_8UC3,
+        Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0),
+      );
 
   static Future<Mat> eyeAsync(int rows, int cols, MatType type) async {
     final p = calloc<cvg.Mat>();
@@ -70,12 +71,11 @@ extension MatAsync on Mat {
   }
 
   Future<void> copyToAsync(Mat dst, {Mat? mask}) async => cvRunAsync0(
-    (callback) =>
-        mask == null
+        (callback) => mask == null
             ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
             : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
-    (c) => c.complete(),
-  );
+        (c) => c.complete(),
+      );
 
   Future<Mat> convertToAsync(MatType type, {double alpha = 1, double beta = 0}) async {
     final dst = Mat.empty();

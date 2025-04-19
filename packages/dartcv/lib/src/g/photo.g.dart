@@ -17,17 +17,13 @@ import 'package:dartcv4/src/g/types.g.dart' as imp1;
 ///
 class CvNativePhoto {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  CvNativePhoto(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
+  CvNativePhoto(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  CvNativePhoto.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
+  CvNativePhoto.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup)
       : _lookup = lookup;
 
   void cv_AlignMTB_close(
@@ -39,10 +35,8 @@ class CvNativePhoto {
   }
 
   late final _cv_AlignMTB_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>(
-          'cv_AlignMTB_close');
-  late final _cv_AlignMTB_close =
-      _cv_AlignMTB_closePtr.asFunction<void Function(AlignMTBPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>('cv_AlignMTB_close');
+  late final _cv_AlignMTB_close = _cv_AlignMTB_closePtr.asFunction<void Function(AlignMTBPtr)>();
 
   ffi.Pointer<CvStatus> cv_AlignMTB_process(
     AlignMTB b,
@@ -60,11 +54,10 @@ class CvNativePhoto {
 
   late final _cv_AlignMTB_processPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(AlignMTB, VecMat, ffi.Pointer<VecMat>,
-              imp1.CvCallback_0)>>('cv_AlignMTB_process');
-  late final _cv_AlignMTB_process = _cv_AlignMTB_processPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          AlignMTB, VecMat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              AlignMTB, VecMat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>>('cv_AlignMTB_process');
+  late final _cv_AlignMTB_process = _cv_AlignMTB_processPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(AlignMTB, VecMat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>();
 
   void cv_MergeMertens_close(
     MergeMertensPtr b,
@@ -75,10 +68,8 @@ class CvNativePhoto {
   }
 
   late final _cv_MergeMertens_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>(
-          'cv_MergeMertens_close');
-  late final _cv_MergeMertens_close =
-      _cv_MergeMertens_closePtr.asFunction<void Function(MergeMertensPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>('cv_MergeMertens_close');
+  late final _cv_MergeMertens_close = _cv_MergeMertens_closePtr.asFunction<void Function(MergeMertensPtr)>();
 
   ffi.Pointer<CvStatus> cv_MergeMertens_process(
     MergeMertens b,
@@ -95,12 +86,10 @@ class CvNativePhoto {
   }
 
   late final _cv_MergeMertens_processPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat,
-              imp1.CvCallback_0)>>('cv_MergeMertens_process');
-  late final _cv_MergeMertens_process = _cv_MergeMertens_processPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          MergeMertens, VecMat, Mat, imp1.CvCallback_0)>();
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat, imp1.CvCallback_0)>>(
+      'cv_MergeMertens_process');
+  late final _cv_MergeMertens_process = _cv_MergeMertens_processPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(MergeMertens, VecMat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_colorChange(
     Mat src,
@@ -124,11 +113,10 @@ class CvNativePhoto {
 
   late final _cv_colorChangePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Float, imp1.CvCallback_0)>>('cv_colorChange');
-  late final _cv_colorChange = _cv_colorChangePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>>('cv_colorChange');
+  late final _cv_colorChange = _cv_colorChangePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_createAlignMTB(
     ffi.Pointer<AlignMTB> rval,
@@ -138,12 +126,10 @@ class CvNativePhoto {
     );
   }
 
-  late final _cv_createAlignMTBPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<AlignMTB>)>>('cv_createAlignMTB');
-  late final _cv_createAlignMTB = _cv_createAlignMTBPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<AlignMTB>)>();
+  late final _cv_createAlignMTBPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<AlignMTB>)>>('cv_createAlignMTB');
+  late final _cv_createAlignMTB =
+      _cv_createAlignMTBPtr.asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<AlignMTB>)>();
 
   ffi.Pointer<CvStatus> cv_createAlignMTB_1(
     int max_bits,
@@ -160,11 +146,11 @@ class CvNativePhoto {
   }
 
   late final _cv_createAlignMTB_1Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Bool,
-              ffi.Pointer<AlignMTB>)>>('cv_createAlignMTB_1');
-  late final _cv_createAlignMTB_1 = _cv_createAlignMTB_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(int, int, bool, ffi.Pointer<AlignMTB>)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Bool, ffi.Pointer<AlignMTB>)>>(
+      'cv_createAlignMTB_1');
+  late final _cv_createAlignMTB_1 = _cv_createAlignMTB_1Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, int, bool, ffi.Pointer<AlignMTB>)>();
 
   ffi.Pointer<CvStatus> cv_createMergeMertens(
     ffi.Pointer<MergeMertens> rval,
@@ -174,12 +160,11 @@ class CvNativePhoto {
     );
   }
 
-  late final _cv_createMergeMertensPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<MergeMertens>)>>('cv_createMergeMertens');
-  late final _cv_createMergeMertens = _cv_createMergeMertensPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<MergeMertens>)>();
+  late final _cv_createMergeMertensPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<MergeMertens>)>>(
+          'cv_createMergeMertens');
+  late final _cv_createMergeMertens =
+      _cv_createMergeMertensPtr.asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<MergeMertens>)>();
 
   ffi.Pointer<CvStatus> cv_createMergeMertens_1(
     double contrast_weight,
@@ -197,11 +182,10 @@ class CvNativePhoto {
 
   late final _cv_createMergeMertens_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Float,
-              ffi.Pointer<MergeMertens>)>>('cv_createMergeMertens_1');
-  late final _cv_createMergeMertens_1 = _cv_createMergeMertens_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          double, double, double, ffi.Pointer<MergeMertens>)>();
+          ffi.Pointer<CvStatus> Function(
+              ffi.Float, ffi.Float, ffi.Float, ffi.Pointer<MergeMertens>)>>('cv_createMergeMertens_1');
+  late final _cv_createMergeMertens_1 = _cv_createMergeMertens_1Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(double, double, double, ffi.Pointer<MergeMertens>)>();
 
   ffi.Pointer<CvStatus> cv_detailEnhance(
     Mat src,
@@ -220,12 +204,11 @@ class CvNativePhoto {
   }
 
   late final _cv_detailEnhancePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              imp1.CvCallback_0)>>('cv_detailEnhance');
-  late final _cv_detailEnhance = _cv_detailEnhancePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, double, double, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>>(
+      'cv_detailEnhance');
+  late final _cv_detailEnhance = _cv_detailEnhancePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_edgePreservingFilter(
     Mat src,
@@ -247,11 +230,10 @@ class CvNativePhoto {
 
   late final _cv_edgePreservingFilterPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Float,
-              ffi.Float, imp1.CvCallback_0)>>('cv_edgePreservingFilter');
-  late final _cv_edgePreservingFilter = _cv_edgePreservingFilterPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, int, double, double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, ffi.Int, ffi.Float, ffi.Float, imp1.CvCallback_0)>>('cv_edgePreservingFilter');
+  late final _cv_edgePreservingFilter = _cv_edgePreservingFilterPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoising(
     Mat src,
@@ -265,12 +247,11 @@ class CvNativePhoto {
     );
   }
 
-  late final _cv_fastNlMeansDenoisingPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_fastNlMeansDenoising');
-  late final _cv_fastNlMeansDenoising = _cv_fastNlMeansDenoisingPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_fastNlMeansDenoisingPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_fastNlMeansDenoising');
+  late final _cv_fastNlMeansDenoising =
+      _cv_fastNlMeansDenoisingPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColored(
     Mat src,
@@ -284,13 +265,11 @@ class CvNativePhoto {
     );
   }
 
-  late final _cv_fastNlMeansDenoisingColoredPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_fastNlMeansDenoisingColored');
-  late final _cv_fastNlMeansDenoisingColored =
-      _cv_fastNlMeansDenoisingColoredPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_fastNlMeansDenoisingColoredPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_fastNlMeansDenoisingColored');
+  late final _cv_fastNlMeansDenoisingColored = _cv_fastNlMeansDenoisingColoredPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColoredMulti(
     VecMat src,
@@ -309,13 +288,11 @@ class CvNativePhoto {
   }
 
   late final _cv_fastNlMeansDenoisingColoredMultiPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int,
-              imp1.CvCallback_0)>>('cv_fastNlMeansDenoisingColoredMulti');
-  late final _cv_fastNlMeansDenoisingColoredMulti =
-      _cv_fastNlMeansDenoisingColoredMultiPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat, Mat, int, int, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int, imp1.CvCallback_0)>>(
+      'cv_fastNlMeansDenoisingColoredMulti');
+  late final _cv_fastNlMeansDenoisingColoredMulti = _cv_fastNlMeansDenoisingColoredMultiPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VecMat, Mat, int, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColoredMulti_1(
     VecMat src,
@@ -343,20 +320,10 @@ class CvNativePhoto {
 
   late final _cv_fastNlMeansDenoisingColoredMulti_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecMat,
-              Mat,
-              ffi.Int,
-              ffi.Int,
-              ffi.Float,
-              ffi.Float,
-              ffi.Int,
-              ffi.Int,
-              imp1.CvCallback_0)>>('cv_fastNlMeansDenoisingColoredMulti_1');
-  late final _cv_fastNlMeansDenoisingColoredMulti_1 =
-      _cv_fastNlMeansDenoisingColoredMulti_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(VecMat, Mat, int, int, double, double,
-              int, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int, ffi.Float, ffi.Float, ffi.Int,
+              ffi.Int, imp1.CvCallback_0)>>('cv_fastNlMeansDenoisingColoredMulti_1');
+  late final _cv_fastNlMeansDenoisingColoredMulti_1 = _cv_fastNlMeansDenoisingColoredMulti_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(VecMat, Mat, int, int, double, double, int, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColored_1(
     Mat src,
@@ -380,18 +347,10 @@ class CvNativePhoto {
 
   late final _cv_fastNlMeansDenoisingColored_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Float,
-              ffi.Float,
-              ffi.Int,
-              ffi.Int,
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, ffi.Int, ffi.Int,
               imp1.CvCallback_0)>>('cv_fastNlMeansDenoisingColored_1');
-  late final _cv_fastNlMeansDenoisingColored_1 =
-      _cv_fastNlMeansDenoisingColored_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, int, int, imp1.CvCallback_0)>();
+  late final _cv_fastNlMeansDenoisingColored_1 = _cv_fastNlMeansDenoisingColored_1Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, int, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_fastNlMeansDenoising_1(
     Mat src,
@@ -413,12 +372,10 @@ class CvNativePhoto {
 
   late final _cv_fastNlMeansDenoising_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Int, ffi.Int,
-              imp1.CvCallback_0)>>('cv_fastNlMeansDenoising_1');
-  late final _cv_fastNlMeansDenoising_1 =
-      _cv_fastNlMeansDenoising_1Ptr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, int, int, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Float, ffi.Int, ffi.Int, imp1.CvCallback_0)>>('cv_fastNlMeansDenoising_1');
+  late final _cv_fastNlMeansDenoising_1 = _cv_fastNlMeansDenoising_1Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_illuminationChange(
     Mat src,
@@ -440,11 +397,10 @@ class CvNativePhoto {
 
   late final _cv_illuminationChangePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              imp1.CvCallback_0)>>('cv_illuminationChange');
-  late final _cv_illuminationChange = _cv_illuminationChangePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>>('cv_illuminationChange');
+  late final _cv_illuminationChange = _cv_illuminationChangePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_inpaint(
     Mat src,
@@ -466,11 +422,10 @@ class CvNativePhoto {
 
   late final _cv_inpaintPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Int,
-              imp1.CvCallback_0)>>('cv_inpaint');
-  late final _cv_inpaint = _cv_inpaintPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Float, ffi.Int, imp1.CvCallback_0)>>('cv_inpaint');
+  late final _cv_inpaint = _cv_inpaintPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_pencilSketch(
     Mat src,
@@ -494,11 +449,10 @@ class CvNativePhoto {
 
   late final _cv_pencilSketchPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Float, imp1.CvCallback_0)>>('cv_pencilSketch');
-  late final _cv_pencilSketch = _cv_pencilSketchPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>>('cv_pencilSketch');
+  late final _cv_pencilSketch = _cv_pencilSketchPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_seamlessClone(
     Mat src,
@@ -522,11 +476,10 @@ class CvNativePhoto {
 
   late final _cv_seamlessClonePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint, Mat, ffi.Int,
-              imp1.CvCallback_0)>>('cv_seamlessClone');
-  late final _cv_seamlessClone = _cv_seamlessClonePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, CvPoint, Mat, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, CvPoint, Mat, ffi.Int, imp1.CvCallback_0)>>('cv_seamlessClone');
+  late final _cv_seamlessClone = _cv_seamlessClonePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint, Mat, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_stylization(
     Mat src,
@@ -545,12 +498,11 @@ class CvNativePhoto {
   }
 
   late final _cv_stylizationPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              imp1.CvCallback_0)>>('cv_stylization');
-  late final _cv_stylization = _cv_stylizationPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, double, double, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>>(
+      'cv_stylization');
+  late final _cv_stylization = _cv_stylizationPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_textureFlattening(
     Mat src,
@@ -574,11 +526,10 @@ class CvNativePhoto {
 
   late final _cv_textureFlatteningPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Int, imp1.CvCallback_0)>>('cv_textureFlattening');
-  late final _cv_textureFlattening = _cv_textureFlatteningPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, double, double, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int, imp1.CvCallback_0)>>('cv_textureFlattening');
+  late final _cv_textureFlattening = _cv_textureFlatteningPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, int, imp1.CvCallback_0)>();
 
   late final addresses = _SymbolAddresses(this);
 }
@@ -586,10 +537,10 @@ class CvNativePhoto {
 class _SymbolAddresses {
   final CvNativePhoto _library;
   _SymbolAddresses(this._library);
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>>
-      get cv_AlignMTB_close => _library._cv_AlignMTB_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>>
-      get cv_MergeMertens_close => _library._cv_MergeMertens_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(AlignMTBPtr)>> get cv_AlignMTB_close =>
+      _library._cv_AlignMTB_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(MergeMertensPtr)>> get cv_MergeMertens_close =>
+      _library._cv_MergeMertens_closePtr;
 }
 
 final class AlignMTB extends ffi.Struct {

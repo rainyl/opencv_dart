@@ -378,19 +378,19 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
 
   @override
   List<num> get props => [
-    alpha,
-    beta,
-    eta,
-    minScore,
-    maxBoxes,
-    edgeMinMag,
-    edgeMergeThr,
-    clusterMinMag,
-    maxAspectRatio,
-    minBoxArea,
-    gamma,
-    kappa,
-  ];
+        alpha,
+        beta,
+        eta,
+        minScore,
+        maxBoxes,
+        edgeMinMag,
+        edgeMergeThr,
+        clusterMinMag,
+        maxAspectRatio,
+        minBoxArea,
+        gamma,
+        kappa,
+      ];
 
   @override
   cvg.EdgeBoxes get ref => ptr.ref;
@@ -590,21 +590,20 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
     double Sigma = 1.0,
     bool SumFlag = true,
   }) {
-    final p =
-        calloc<cvg.EdgeDrawingParams>()
-          ..ref.AnchorThresholdValue = AnchorThresholdValue
-          ..ref.EdgeDetectionOperator = EdgeDetectionOperator
-          ..ref.GradientThresholdValue = GradientThresholdValue
-          ..ref.LineFitErrorThreshold = LineFitErrorThreshold
-          ..ref.MaxDistanceBetweenTwoLines = MaxDistanceBetweenTwoLines
-          ..ref.MaxErrorThreshold = MaxErrorThreshold
-          ..ref.MinLineLength = MinLineLength
-          ..ref.MinPathLength = MinPathLength
-          ..ref.NFAValidation = NFAValidation
-          ..ref.PFmode = PFmode
-          ..ref.ScanInterval = ScanInterval
-          ..ref.Sigma = Sigma
-          ..ref.SumFlag = SumFlag;
+    final p = calloc<cvg.EdgeDrawingParams>()
+      ..ref.AnchorThresholdValue = AnchorThresholdValue
+      ..ref.EdgeDetectionOperator = EdgeDetectionOperator
+      ..ref.GradientThresholdValue = GradientThresholdValue
+      ..ref.LineFitErrorThreshold = LineFitErrorThreshold
+      ..ref.MaxDistanceBetweenTwoLines = MaxDistanceBetweenTwoLines
+      ..ref.MaxErrorThreshold = MaxErrorThreshold
+      ..ref.MinLineLength = MinLineLength
+      ..ref.MinPathLength = MinPathLength
+      ..ref.NFAValidation = NFAValidation
+      ..ref.PFmode = PFmode
+      ..ref.ScanInterval = ScanInterval
+      ..ref.Sigma = Sigma
+      ..ref.SumFlag = SumFlag;
     return EdgeDrawingParams.fromPointer(p);
   }
 
@@ -651,20 +650,20 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
 
   @override
   List<Object?> get props => [
-    AnchorThresholdValue,
-    EdgeDetectionOperator,
-    GradientThresholdValue,
-    LineFitErrorThreshold,
-    MaxDistanceBetweenTwoLines,
-    MaxErrorThreshold,
-    MinLineLength,
-    MinPathLength,
-    NFAValidation,
-    PFmode,
-    ScanInterval,
-    Sigma,
-    SumFlag,
-  ];
+        AnchorThresholdValue,
+        EdgeDetectionOperator,
+        GradientThresholdValue,
+        LineFitErrorThreshold,
+        MaxDistanceBetweenTwoLines,
+        MaxErrorThreshold,
+        MinLineLength,
+        MinPathLength,
+        NFAValidation,
+        PFmode,
+        ScanInterval,
+        Sigma,
+        SumFlag,
+      ];
 
   @override
   cvg.EdgeDrawingParams get ref => ptr.ref;
