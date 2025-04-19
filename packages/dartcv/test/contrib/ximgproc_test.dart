@@ -295,10 +295,13 @@ void main() async {
 
     const nSize = 21;
 
-    final elementRLE = await cv.ximgproc_rl.getStructuringElementAsync(cv.MORPH_RECT, (
-      nSize * 2 + 1,
-      nSize * 2 + 1,
-    ));
+    final elementRLE = await cv.ximgproc_rl.getStructuringElementAsync(
+      cv.MORPH_RECT,
+      (
+        nSize * 2 + 1,
+        nSize * 2 + 1,
+      ),
+    );
     final dst = await cv.ximgproc_rl.erodeAsync(src2, elementRLE, bBoundaryOn: false);
     expect(dst.isEmpty, false);
 

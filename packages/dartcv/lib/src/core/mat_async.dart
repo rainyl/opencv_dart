@@ -127,11 +127,14 @@ extension MatAsync on Mat {
 
   Future<Scalar> meanAsync({Mat? mask}) async {
     final s = calloc<cvg.Scalar>();
-    return cvRunAsync0<Scalar>((callback) {
-      return mask == null
-          ? ccore.cv_Mat_mean(ref, s, callback)
-          : ccore.cv_Mat_mean_1(ref, mask.ref, s, callback);
-    }, (c) => c.complete(Scalar.fromPointer(s)));
+    return cvRunAsync0<Scalar>(
+      (callback) {
+        return mask == null
+            ? ccore.cv_Mat_mean(ref, s, callback)
+            : ccore.cv_Mat_mean_1(ref, mask.ref, s, callback);
+      },
+      (c) => c.complete(Scalar.fromPointer(s)),
+    );
   }
 
   /// Calculates a square root of array elements.
