@@ -635,6 +635,10 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
+  /// Returns a **reference**
+  ///
+  /// Note: the memory of returned [VecPoint] is owned by this [VecVecPoint],
+  /// explicitly call [VecPoint.clone] if the parent [VecVecPoint] may be disposed.
   @override
   VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
 
@@ -711,6 +715,10 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
+  /// Returns a **reference**
+  ///
+  /// Note: the memory of returned [VecPoint2f] is owned by this [VecVecPoint2f],
+  /// explicitly call [VecPoint2f.clone] if the parent [VecVecPoint2f] may be disposed.
   @override
   VecPoint2f operator [](int idx) =>
       VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
@@ -789,6 +797,10 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
+  /// Returns a **reference**
+  ///
+  /// Note: the memory of returned [VecPoint3f] is owned by this [VecVecPoint3f],
+  /// explicitly call [VecPoint3f.clone] if the parent [VecVecPoint3f] may be disposed.
   @override
   VecPoint3f operator [](int idx) =>
       VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);

@@ -196,6 +196,10 @@ class VecVecDMatch extends VecUnmodifible<cvg.VecVecDMatch, VecDMatch> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
+  /// Returns a **reference**
+  ///
+  /// Note: the memory of returned [VecDMatch] is owned by this [VecVecDMatch],
+  /// explicitly call [VecDMatch.clone] if the parent [VecVecDMatch] may be disposed.
   @override
   VecDMatch operator [](int idx) =>
       VecDMatch.fromPointer(ccore.std_VecVecDMatch_get_p(ptr, idx), attach: false);

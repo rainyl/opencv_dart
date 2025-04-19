@@ -39,7 +39,7 @@ analyzer:
     non_constant_identifier_names: ignore
     parameter_assignments: error
 formatter:
-  pagewidth: 110
+  page_width: 110
 
 linter:
   rules:
@@ -217,7 +217,6 @@ linter:
     - unnecessary_this
     - unnecessary_to_list_in_spreads
     - unrelated_type_equality_checks
-    - unsafe_html
     - use_build_context_synchronously
     - use_colored_box
     - use_decorated_box

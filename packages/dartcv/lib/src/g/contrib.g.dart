@@ -17,17 +17,13 @@ import 'package:dartcv4/src/g/types.g.dart' as imp1;
 ///
 class CvNativeContrib {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  CvNativeContrib(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
+  CvNativeContrib(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  CvNativeContrib.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
+  CvNativeContrib.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup)
       : _lookup = lookup;
 
   void cv_aruco_Dictionary_close(
@@ -39,10 +35,9 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_Dictionary_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>(
-          'cv_aruco_Dictionary_close');
-  late final _cv_aruco_Dictionary_close = _cv_aruco_Dictionary_closePtr
-      .asFunction<void Function(ArucoDictionaryPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>('cv_aruco_Dictionary_close');
+  late final _cv_aruco_Dictionary_close =
+      _cv_aruco_Dictionary_closePtr.asFunction<void Function(ArucoDictionaryPtr)>();
 
   ffi.Pointer<CvStatus> cv_aruco_Dictionary_create(
     ffi.Pointer<ArucoDictionary> rval,
@@ -52,13 +47,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_Dictionary_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ArucoDictionary>)>>('cv_aruco_Dictionary_create');
-  late final _cv_aruco_Dictionary_create =
-      _cv_aruco_Dictionary_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDictionary>)>();
+  late final _cv_aruco_Dictionary_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDictionary>)>>(
+          'cv_aruco_Dictionary_create');
+  late final _cv_aruco_Dictionary_create = _cv_aruco_Dictionary_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDictionary>)>();
 
   ffi.Pointer<CvStatus> cv_aruco_Dictionary_create_1(
     Mat bytesList,
@@ -76,12 +69,10 @@ class CvNativeContrib {
 
   late final _cv_aruco_Dictionary_create_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int,
-              ffi.Pointer<ArucoDictionary>)>>('cv_aruco_Dictionary_create_1');
-  late final _cv_aruco_Dictionary_create_1 =
-      _cv_aruco_Dictionary_create_1Ptr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, int, int, ffi.Pointer<ArucoDictionary>)>();
+              Mat, ffi.Int, ffi.Int, ffi.Pointer<ArucoDictionary>)>>('cv_aruco_Dictionary_create_1');
+  late final _cv_aruco_Dictionary_create_1 = _cv_aruco_Dictionary_create_1Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, int, int, ffi.Pointer<ArucoDictionary>)>();
 
   ffi.Pointer<CvStatus> cv_aruco_Dictionary_generateImageMarker(
     ArucoDictionary self,
@@ -100,13 +91,11 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_Dictionary_generateImageMarkerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Int, ffi.Int, Mat,
-              ffi.Int)>>('cv_aruco_Dictionary_generateImageMarker');
-  late final _cv_aruco_Dictionary_generateImageMarker =
-      _cv_aruco_Dictionary_generateImageMarkerPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ArucoDictionary, int, int, Mat, int)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Int, ffi.Int, Mat, ffi.Int)>>(
+      'cv_aruco_Dictionary_generateImageMarker');
+  late final _cv_aruco_Dictionary_generateImageMarker = _cv_aruco_Dictionary_generateImageMarkerPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, int, int, Mat, int)>();
 
   int cv_aruco_Dictionary_getDistanceToId(
     ArucoDictionary self,
@@ -122,13 +111,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_Dictionary_getDistanceToIdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ArucoDictionary, Mat, ffi.Int,
-              ffi.Bool)>>('cv_aruco_Dictionary_getDistanceToId');
+  late final _cv_aruco_Dictionary_getDistanceToIdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary, Mat, ffi.Int, ffi.Bool)>>(
+          'cv_aruco_Dictionary_getDistanceToId');
   late final _cv_aruco_Dictionary_getDistanceToId =
-      _cv_aruco_Dictionary_getDistanceToIdPtr
-          .asFunction<int Function(ArucoDictionary, Mat, int, bool)>();
+      _cv_aruco_Dictionary_getDistanceToIdPtr.asFunction<int Function(ArucoDictionary, Mat, int, bool)>();
 
   ffi.Pointer<CvStatus> cv_aruco_Dictionary_get_bytesList(
     ArucoDictionary self,
@@ -140,13 +127,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_Dictionary_get_bytesListPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ArucoDictionary,
-              ffi.Pointer<Mat>)>>('cv_aruco_Dictionary_get_bytesList');
-  late final _cv_aruco_Dictionary_get_bytesList =
-      _cv_aruco_Dictionary_get_bytesListPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Pointer<Mat>)>();
+  late final _cv_aruco_Dictionary_get_bytesListPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Pointer<Mat>)>>(
+          'cv_aruco_Dictionary_get_bytesList');
+  late final _cv_aruco_Dictionary_get_bytesList = _cv_aruco_Dictionary_get_bytesListPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, ffi.Pointer<Mat>)>();
 
   int cv_aruco_Dictionary_get_markerSize(
     ArucoDictionary self,
@@ -157,11 +142,9 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_Dictionary_get_markerSizePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary)>>(
-          'cv_aruco_Dictionary_get_markerSize');
+      _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary)>>('cv_aruco_Dictionary_get_markerSize');
   late final _cv_aruco_Dictionary_get_markerSize =
-      _cv_aruco_Dictionary_get_markerSizePtr
-          .asFunction<int Function(ArucoDictionary)>();
+      _cv_aruco_Dictionary_get_markerSizePtr.asFunction<int Function(ArucoDictionary)>();
 
   int cv_aruco_Dictionary_get_maxCorrectionBits(
     ArucoDictionary self,
@@ -175,8 +158,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDictionary)>>(
           'cv_aruco_Dictionary_get_maxCorrectionBits');
   late final _cv_aruco_Dictionary_get_maxCorrectionBits =
-      _cv_aruco_Dictionary_get_maxCorrectionBitsPtr
-          .asFunction<int Function(ArucoDictionary)>();
+      _cv_aruco_Dictionary_get_maxCorrectionBitsPtr.asFunction<int Function(ArucoDictionary)>();
 
   bool cv_aruco_Dictionary_identify(
     ArucoDictionary self,
@@ -196,16 +178,10 @@ class CvNativeContrib {
 
   late final _cv_aruco_Dictionary_identifyPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Bool Function(
-              ArucoDictionary,
-              Mat,
-              ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>,
+          ffi.Bool Function(ArucoDictionary, Mat, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>,
               ffi.Double)>>('cv_aruco_Dictionary_identify');
-  late final _cv_aruco_Dictionary_identify =
-      _cv_aruco_Dictionary_identifyPtr.asFunction<
-          bool Function(ArucoDictionary, Mat, ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>, double)>();
+  late final _cv_aruco_Dictionary_identify = _cv_aruco_Dictionary_identifyPtr
+      .asFunction<bool Function(ArucoDictionary, Mat, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>, double)>();
 
   ffi.Pointer<CvStatus> cv_aruco_Dictionary_set_bytesList(
     ArucoDictionary self,
@@ -217,13 +193,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_Dictionary_set_bytesListPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ArucoDictionary, Mat)>>('cv_aruco_Dictionary_set_bytesList');
-  late final _cv_aruco_Dictionary_set_bytesList =
-      _cv_aruco_Dictionary_set_bytesListPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, Mat)>();
+  late final _cv_aruco_Dictionary_set_bytesListPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, Mat)>>(
+          'cv_aruco_Dictionary_set_bytesList');
+  late final _cv_aruco_Dictionary_set_bytesList = _cv_aruco_Dictionary_set_bytesListPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ArucoDictionary, Mat)>();
 
   void cv_aruco_Dictionary_set_markerSize(
     ArucoDictionary self,
@@ -239,8 +213,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionary, ffi.Int)>>(
           'cv_aruco_Dictionary_set_markerSize');
   late final _cv_aruco_Dictionary_set_markerSize =
-      _cv_aruco_Dictionary_set_markerSizePtr
-          .asFunction<void Function(ArucoDictionary, int)>();
+      _cv_aruco_Dictionary_set_markerSizePtr.asFunction<void Function(ArucoDictionary, int)>();
 
   void cv_aruco_Dictionary_set_maxCorrectionBits(
     ArucoDictionary self,
@@ -256,8 +229,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDictionary, ffi.Int)>>(
           'cv_aruco_Dictionary_set_maxCorrectionBits');
   late final _cv_aruco_Dictionary_set_maxCorrectionBits =
-      _cv_aruco_Dictionary_set_maxCorrectionBitsPtr
-          .asFunction<void Function(ArucoDictionary, int)>();
+      _cv_aruco_Dictionary_set_maxCorrectionBitsPtr.asFunction<void Function(ArucoDictionary, int)>();
 
   void cv_aruco_arucoDetector_close(
     ArucoDetectorPtr self,
@@ -268,10 +240,9 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_arucoDetector_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>(
-          'cv_aruco_arucoDetector_close');
-  late final _cv_aruco_arucoDetector_close = _cv_aruco_arucoDetector_closePtr
-      .asFunction<void Function(ArucoDetectorPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>('cv_aruco_arucoDetector_close');
+  late final _cv_aruco_arucoDetector_close =
+      _cv_aruco_arucoDetector_closePtr.asFunction<void Function(ArucoDetectorPtr)>();
 
   ffi.Pointer<CvStatus> cv_aruco_arucoDetector_create(
     ffi.Pointer<ArucoDetector> rval,
@@ -281,10 +252,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_arucoDetector_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ArucoDetector>)>>('cv_aruco_arucoDetector_create');
+  late final _cv_aruco_arucoDetector_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetector>)>>(
+          'cv_aruco_arucoDetector_create');
   late final _cv_aruco_arucoDetector_create = _cv_aruco_arucoDetector_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetector>)>();
 
@@ -304,10 +274,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(ArucoDictionary, ArucoDetectorParams,
               ffi.Pointer<ArucoDetector>)>>('cv_aruco_arucoDetector_create_1');
-  late final _cv_aruco_arucoDetector_create_1 =
-      _cv_aruco_arucoDetector_create_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(ArucoDictionary, ArucoDetectorParams,
-              ffi.Pointer<ArucoDetector>)>();
+  late final _cv_aruco_arucoDetector_create_1 = _cv_aruco_arucoDetector_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(ArucoDictionary, ArucoDetectorParams, ffi.Pointer<ArucoDetector>)>();
 
   ffi.Pointer<CvStatus> cv_aruco_arucoDetector_detectMarkers(
     ArucoDetector self,
@@ -329,22 +297,11 @@ class CvNativeContrib {
 
   late final _cv_aruco_arucoDetector_detectMarkersPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ArucoDetector,
-              Mat,
-              ffi.Pointer<VecVecPoint2f>,
-              ffi.Pointer<VecI32>,
-              ffi.Pointer<VecVecPoint2f>,
-              imp1.CvCallback_0)>>('cv_aruco_arucoDetector_detectMarkers');
-  late final _cv_aruco_arucoDetector_detectMarkers =
-      _cv_aruco_arucoDetector_detectMarkersPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ArucoDetector,
-              Mat,
-              ffi.Pointer<VecVecPoint2f>,
-              ffi.Pointer<VecI32>,
-              ffi.Pointer<VecVecPoint2f>,
-              imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(ArucoDetector, Mat, ffi.Pointer<VecVecPoint2f>, ffi.Pointer<VecI32>,
+              ffi.Pointer<VecVecPoint2f>, imp1.CvCallback_0)>>('cv_aruco_arucoDetector_detectMarkers');
+  late final _cv_aruco_arucoDetector_detectMarkers = _cv_aruco_arucoDetector_detectMarkersPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(ArucoDetector, Mat, ffi.Pointer<VecVecPoint2f>, ffi.Pointer<VecI32>,
+          ffi.Pointer<VecVecPoint2f>, imp1.CvCallback_0)>();
 
   void cv_aruco_detectorParameters_close(
     ArucoDetectorParamsPtr ap,
@@ -358,8 +315,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParamsPtr)>>(
           'cv_aruco_detectorParameters_close');
   late final _cv_aruco_detectorParameters_close =
-      _cv_aruco_detectorParameters_closePtr
-          .asFunction<void Function(ArucoDetectorParamsPtr)>();
+      _cv_aruco_detectorParameters_closePtr.asFunction<void Function(ArucoDetectorParamsPtr)>();
 
   ffi.Pointer<CvStatus> cv_aruco_detectorParameters_create(
     ffi.Pointer<ArucoDetectorParams> rval,
@@ -369,14 +325,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_createPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  ffi.Pointer<ArucoDetectorParams>)>>(
-      'cv_aruco_detectorParameters_create');
-  late final _cv_aruco_detectorParameters_create =
-      _cv_aruco_detectorParameters_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetectorParams>)>();
+  late final _cv_aruco_detectorParameters_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetectorParams>)>>(
+          'cv_aruco_detectorParameters_create');
+  late final _cv_aruco_detectorParameters_create = _cv_aruco_detectorParameters_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ArucoDetectorParams>)>();
 
   double cv_aruco_detectorParameters_get_adaptiveThreshConstant(
     ArucoDetectorParams self,
@@ -465,8 +418,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParams)>>(
           'cv_aruco_detectorParameters_get_aprilTagDeglitch');
   late final _cv_aruco_detectorParameters_get_aprilTagDeglitch =
-      _cv_aruco_detectorParameters_get_aprilTagDeglitchPtr
-          .asFunction<int Function(ArucoDetectorParams)>();
+      _cv_aruco_detectorParameters_get_aprilTagDeglitchPtr.asFunction<int Function(ArucoDetectorParams)>();
 
   double cv_aruco_detectorParameters_get_aprilTagMaxLineFitMse(
     ArucoDetectorParams self,
@@ -495,8 +447,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParams)>>(
           'cv_aruco_detectorParameters_get_aprilTagMaxNmaxima');
   late final _cv_aruco_detectorParameters_get_aprilTagMaxNmaxima =
-      _cv_aruco_detectorParameters_get_aprilTagMaxNmaximaPtr
-          .asFunction<int Function(ArucoDetectorParams)>();
+      _cv_aruco_detectorParameters_get_aprilTagMaxNmaximaPtr.asFunction<int Function(ArucoDetectorParams)>();
 
   int cv_aruco_detectorParameters_get_aprilTagMinClusterPixels(
     ArucoDetectorParams self,
@@ -660,8 +611,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParams)>>(
           'cv_aruco_detectorParameters_get_markerBorderBits');
   late final _cv_aruco_detectorParameters_get_markerBorderBits =
-      _cv_aruco_detectorParameters_get_markerBorderBitsPtr
-          .asFunction<int Function(ArucoDetectorParams)>();
+      _cv_aruco_detectorParameters_get_markerBorderBitsPtr.asFunction<int Function(ArucoDetectorParams)>();
 
   double cv_aruco_detectorParameters_get_maxErroneousBitsInBorderRate(
     ArucoDetectorParams self,
@@ -720,8 +670,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(ArucoDetectorParams)>>(
           'cv_aruco_detectorParameters_get_minDistanceToBorder');
   late final _cv_aruco_detectorParameters_get_minDistanceToBorder =
-      _cv_aruco_detectorParameters_get_minDistanceToBorderPtr
-          .asFunction<int Function(ArucoDetectorParams)>();
+      _cv_aruco_detectorParameters_get_minDistanceToBorderPtr.asFunction<int Function(ArucoDetectorParams)>();
 
   double cv_aruco_detectorParameters_get_minMarkerDistanceRate(
     ArucoDetectorParams self,
@@ -765,8 +714,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Double Function(ArucoDetectorParams)>>(
           'cv_aruco_detectorParameters_get_minOtsuStdDev');
   late final _cv_aruco_detectorParameters_get_minOtsuStdDev =
-      _cv_aruco_detectorParameters_get_minOtsuStdDevPtr
-          .asFunction<double Function(ArucoDetectorParams)>();
+      _cv_aruco_detectorParameters_get_minOtsuStdDevPtr.asFunction<double Function(ArucoDetectorParams)>();
 
   double cv_aruco_detectorParameters_get_perspectiveRemoveIgnoredMarginPerCell(
     ArucoDetectorParams self,
@@ -824,9 +772,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_adaptiveThreshConstantPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_adaptiveThreshConstant');
   late final _cv_aruco_detectorParameters_set_adaptiveThreshConstant =
       _cv_aruco_detectorParameters_set_adaptiveThreshConstantPtr
@@ -843,9 +789,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMaxPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMax');
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMax =
       _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMaxPtr
@@ -862,9 +806,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMinPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMin');
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMin =
       _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeMinPtr
@@ -881,9 +823,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStepPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStep');
   late final _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStep =
       _cv_aruco_detectorParameters_set_adaptiveThreshWinSizeStepPtr
@@ -899,10 +839,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_aprilTagCriticalRadPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
-      'cv_aruco_detectorParameters_set_aprilTagCriticalRad');
+  late final _cv_aruco_detectorParameters_set_aprilTagCriticalRadPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
+          'cv_aruco_detectorParameters_set_aprilTagCriticalRad');
   late final _cv_aruco_detectorParameters_set_aprilTagCriticalRad =
       _cv_aruco_detectorParameters_set_aprilTagCriticalRadPtr
           .asFunction<void Function(ArucoDetectorParams, double)>();
@@ -917,9 +856,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_aprilTagDeglitchPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
-      'cv_aruco_detectorParameters_set_aprilTagDeglitch');
+  late final _cv_aruco_detectorParameters_set_aprilTagDeglitchPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+          'cv_aruco_detectorParameters_set_aprilTagDeglitch');
   late final _cv_aruco_detectorParameters_set_aprilTagDeglitch =
       _cv_aruco_detectorParameters_set_aprilTagDeglitchPtr
           .asFunction<void Function(ArucoDetectorParams, int)>();
@@ -935,9 +874,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_aprilTagMaxLineFitMsePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
           'cv_aruco_detectorParameters_set_aprilTagMaxLineFitMse');
   late final _cv_aruco_detectorParameters_set_aprilTagMaxLineFitMse =
       _cv_aruco_detectorParameters_set_aprilTagMaxLineFitMsePtr
@@ -953,9 +890,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_aprilTagMaxNmaximaPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
-      'cv_aruco_detectorParameters_set_aprilTagMaxNmaxima');
+  late final _cv_aruco_detectorParameters_set_aprilTagMaxNmaximaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+          'cv_aruco_detectorParameters_set_aprilTagMaxNmaxima');
   late final _cv_aruco_detectorParameters_set_aprilTagMaxNmaxima =
       _cv_aruco_detectorParameters_set_aprilTagMaxNmaximaPtr
           .asFunction<void Function(ArucoDetectorParams, int)>();
@@ -971,9 +908,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_aprilTagMinClusterPixelsPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_aprilTagMinClusterPixels');
   late final _cv_aruco_detectorParameters_set_aprilTagMinClusterPixels =
       _cv_aruco_detectorParameters_set_aprilTagMinClusterPixelsPtr
@@ -990,9 +925,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiffPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiff');
   late final _cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiff =
       _cv_aruco_detectorParameters_set_aprilTagMinWhiteBlackDiffPtr
@@ -1008,10 +941,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_aprilTagQuadDecimatePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
-      'cv_aruco_detectorParameters_set_aprilTagQuadDecimate');
+  late final _cv_aruco_detectorParameters_set_aprilTagQuadDecimatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
+          'cv_aruco_detectorParameters_set_aprilTagQuadDecimate');
   late final _cv_aruco_detectorParameters_set_aprilTagQuadDecimate =
       _cv_aruco_detectorParameters_set_aprilTagQuadDecimatePtr
           .asFunction<void Function(ArucoDetectorParams, double)>();
@@ -1026,10 +958,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_aprilTagQuadSigmaPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
-      'cv_aruco_detectorParameters_set_aprilTagQuadSigma');
+  late final _cv_aruco_detectorParameters_set_aprilTagQuadSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Float)>>(
+          'cv_aruco_detectorParameters_set_aprilTagQuadSigma');
   late final _cv_aruco_detectorParameters_set_aprilTagQuadSigma =
       _cv_aruco_detectorParameters_set_aprilTagQuadSigmaPtr
           .asFunction<void Function(ArucoDetectorParams, double)>();
@@ -1045,9 +976,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_cornerRefinementMaxIterationsPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_cornerRefinementMaxIterations');
   late final _cv_aruco_detectorParameters_set_cornerRefinementMaxIterations =
       _cv_aruco_detectorParameters_set_cornerRefinementMaxIterationsPtr
@@ -1064,9 +993,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_cornerRefinementMethodPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_cornerRefinementMethod');
   late final _cv_aruco_detectorParameters_set_cornerRefinementMethod =
       _cv_aruco_detectorParameters_set_cornerRefinementMethodPtr
@@ -1083,9 +1010,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_cornerRefinementMinAccuracyPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_cornerRefinementMinAccuracy');
   late final _cv_aruco_detectorParameters_set_cornerRefinementMinAccuracy =
       _cv_aruco_detectorParameters_set_cornerRefinementMinAccuracyPtr
@@ -1102,9 +1027,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_cornerRefinementWinSizePtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_cornerRefinementWinSize');
   late final _cv_aruco_detectorParameters_set_cornerRefinementWinSize =
       _cv_aruco_detectorParameters_set_cornerRefinementWinSizePtr
@@ -1120,9 +1043,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_detectInvertedMarkerPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Bool)>>(
-      'cv_aruco_detectorParameters_set_detectInvertedMarker');
+  late final _cv_aruco_detectorParameters_set_detectInvertedMarkerPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Bool)>>(
+          'cv_aruco_detectorParameters_set_detectInvertedMarker');
   late final _cv_aruco_detectorParameters_set_detectInvertedMarker =
       _cv_aruco_detectorParameters_set_detectInvertedMarkerPtr
           .asFunction<void Function(ArucoDetectorParams, bool)>();
@@ -1137,10 +1060,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_errorCorrectionRatePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
-      'cv_aruco_detectorParameters_set_errorCorrectionRate');
+  late final _cv_aruco_detectorParameters_set_errorCorrectionRatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+          'cv_aruco_detectorParameters_set_errorCorrectionRate');
   late final _cv_aruco_detectorParameters_set_errorCorrectionRate =
       _cv_aruco_detectorParameters_set_errorCorrectionRatePtr
           .asFunction<void Function(ArucoDetectorParams, double)>();
@@ -1155,9 +1077,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_markerBorderBitsPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
-      'cv_aruco_detectorParameters_set_markerBorderBits');
+  late final _cv_aruco_detectorParameters_set_markerBorderBitsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+          'cv_aruco_detectorParameters_set_markerBorderBits');
   late final _cv_aruco_detectorParameters_set_markerBorderBits =
       _cv_aruco_detectorParameters_set_markerBorderBitsPtr
           .asFunction<void Function(ArucoDetectorParams, int)>();
@@ -1173,9 +1095,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRate');
   late final _cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRate =
       _cv_aruco_detectorParameters_set_maxErroneousBitsInBorderRatePtr
@@ -1192,9 +1112,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_maxMarkerPerimeterRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_maxMarkerPerimeterRate');
   late final _cv_aruco_detectorParameters_set_maxMarkerPerimeterRate =
       _cv_aruco_detectorParameters_set_maxMarkerPerimeterRatePtr
@@ -1211,9 +1129,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_minCornerDistanceRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_minCornerDistanceRate');
   late final _cv_aruco_detectorParameters_set_minCornerDistanceRate =
       _cv_aruco_detectorParameters_set_minCornerDistanceRatePtr
@@ -1229,9 +1145,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_minDistanceToBorderPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
-      'cv_aruco_detectorParameters_set_minDistanceToBorder');
+  late final _cv_aruco_detectorParameters_set_minDistanceToBorderPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+          'cv_aruco_detectorParameters_set_minDistanceToBorder');
   late final _cv_aruco_detectorParameters_set_minDistanceToBorder =
       _cv_aruco_detectorParameters_set_minDistanceToBorderPtr
           .asFunction<void Function(ArucoDetectorParams, int)>();
@@ -1247,9 +1163,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_minMarkerDistanceRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_minMarkerDistanceRate');
   late final _cv_aruco_detectorParameters_set_minMarkerDistanceRate =
       _cv_aruco_detectorParameters_set_minMarkerDistanceRatePtr
@@ -1266,9 +1180,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_minMarkerPerimeterRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_minMarkerPerimeterRate');
   late final _cv_aruco_detectorParameters_set_minMarkerPerimeterRate =
       _cv_aruco_detectorParameters_set_minMarkerPerimeterRatePtr
@@ -1284,10 +1196,9 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_detectorParameters_set_minOtsuStdDevPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
-      'cv_aruco_detectorParameters_set_minOtsuStdDev');
+  late final _cv_aruco_detectorParameters_set_minOtsuStdDevPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+          'cv_aruco_detectorParameters_set_minOtsuStdDev');
   late final _cv_aruco_detectorParameters_set_minOtsuStdDev =
       _cv_aruco_detectorParameters_set_minOtsuStdDevPtr
           .asFunction<void Function(ArucoDetectorParams, double)>();
@@ -1303,9 +1214,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCellPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCell');
   late final _cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCell =
       _cv_aruco_detectorParameters_set_perspectiveRemoveIgnoredMarginPerCellPtr
@@ -1322,9 +1231,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCellPtr =
-      _lookup<
-              ffi
-              .NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Int)>>(
           'cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCell');
   late final _cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCell =
       _cv_aruco_detectorParameters_set_perspectiveRemovePixelPerCellPtr
@@ -1341,9 +1248,7 @@ class CvNativeContrib {
   }
 
   late final _cv_aruco_detectorParameters_set_polygonalApproxAccuracyRatePtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParams, ffi.Double)>>(
           'cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate');
   late final _cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate =
       _cv_aruco_detectorParameters_set_polygonalApproxAccuracyRatePtr
@@ -1367,12 +1272,10 @@ class CvNativeContrib {
 
   late final _cv_aruco_drawDetectedMarkersPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar,
-              imp1.CvCallback_0)>>('cv_aruco_drawDetectedMarkers');
-  late final _cv_aruco_drawDetectedMarkers =
-      _cv_aruco_drawDetectedMarkersPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>();
+              Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>>('cv_aruco_drawDetectedMarkers');
+  late final _cv_aruco_drawDetectedMarkers = _cv_aruco_drawDetectedMarkersPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_aruco_generateImageMarker(
     int dictionaryId,
@@ -1394,12 +1297,10 @@ class CvNativeContrib {
 
   late final _cv_aruco_generateImageMarkerPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Int,
-              Mat, imp1.CvCallback_0)>>('cv_aruco_generateImageMarker');
-  late final _cv_aruco_generateImageMarker =
-      _cv_aruco_generateImageMarkerPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              int, int, int, int, Mat, imp1.CvCallback_0)>();
+              ffi.Int, ffi.Int, ffi.Int, ffi.Int, Mat, imp1.CvCallback_0)>>('cv_aruco_generateImageMarker');
+  late final _cv_aruco_generateImageMarker = _cv_aruco_generateImageMarkerPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, int, int, int, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_aruco_getPredefinedDictionary(
     int dictionaryId,
@@ -1411,14 +1312,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_aruco_getPredefinedDictionaryPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  ffi.Int, ffi.Pointer<ArucoDictionary>)>>(
-      'cv_aruco_getPredefinedDictionary');
-  late final _cv_aruco_getPredefinedDictionary =
-      _cv_aruco_getPredefinedDictionaryPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(int, ffi.Pointer<ArucoDictionary>)>();
+  late final _cv_aruco_getPredefinedDictionaryPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ArucoDictionary>)>>(
+          'cv_aruco_getPredefinedDictionary');
+  late final _cv_aruco_getPredefinedDictionary = _cv_aruco_getPredefinedDictionaryPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, ffi.Pointer<ArucoDictionary>)>();
 
   void cv_img_hash_BlockMeanHash_close(
     BlockMeanHashPtr self,
@@ -1429,11 +1327,9 @@ class CvNativeContrib {
   }
 
   late final _cv_img_hash_BlockMeanHash_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>(
-          'cv_img_hash_BlockMeanHash_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>('cv_img_hash_BlockMeanHash_close');
   late final _cv_img_hash_BlockMeanHash_close =
-      _cv_img_hash_BlockMeanHash_closePtr
-          .asFunction<void Function(BlockMeanHashPtr)>();
+      _cv_img_hash_BlockMeanHash_closePtr.asFunction<void Function(BlockMeanHashPtr)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_compare(
     BlockMeanHash self,
@@ -1453,16 +1349,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_BlockMeanHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              BlockMeanHash,
-              Mat,
-              Mat,
-              ffi.Pointer<ffi.Double>,
+          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>,
               imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_compare');
-  late final _cv_img_hash_BlockMeanHash_compare =
-      _cv_img_hash_BlockMeanHash_comparePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat,
-              ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+  late final _cv_img_hash_BlockMeanHash_compare = _cv_img_hash_BlockMeanHash_comparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_compute(
     BlockMeanHash self,
@@ -1478,14 +1368,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_img_hash_BlockMeanHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat,
-              imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_compute');
-  late final _cv_img_hash_BlockMeanHash_compute =
-      _cv_img_hash_BlockMeanHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_img_hash_BlockMeanHash_computePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_img_hash_BlockMeanHash_compute');
+  late final _cv_img_hash_BlockMeanHash_compute = _cv_img_hash_BlockMeanHash_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(BlockMeanHash, Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_create(
     int mode,
@@ -1501,12 +1388,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_BlockMeanHash_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<BlockMeanHash>,
-              imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_create');
-  late final _cv_img_hash_BlockMeanHash_create =
-      _cv_img_hash_BlockMeanHash_createPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              int, ffi.Pointer<BlockMeanHash>, imp1.CvCallback_0)>();
+              ffi.Int, ffi.Pointer<BlockMeanHash>, imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_create');
+  late final _cv_img_hash_BlockMeanHash_create = _cv_img_hash_BlockMeanHash_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, ffi.Pointer<BlockMeanHash>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_getMean(
     BlockMeanHash self,
@@ -1522,12 +1407,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_BlockMeanHash_getMeanPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Pointer<VecF64>,
-              imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_getMean');
-  late final _cv_img_hash_BlockMeanHash_getMean =
-      _cv_img_hash_BlockMeanHash_getMeanPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, ffi.Pointer<VecF64>, imp1.CvCallback_0)>();
+              BlockMeanHash, ffi.Pointer<VecF64>, imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_getMean');
+  late final _cv_img_hash_BlockMeanHash_getMean = _cv_img_hash_BlockMeanHash_getMeanPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Pointer<VecF64>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_setMode(
     BlockMeanHash self,
@@ -1541,14 +1424,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_img_hash_BlockMeanHash_setModePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Int,
-              imp1.CvCallback_0)>>('cv_img_hash_BlockMeanHash_setMode');
-  late final _cv_img_hash_BlockMeanHash_setMode =
-      _cv_img_hash_BlockMeanHash_setModePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              BlockMeanHash, int, imp1.CvCallback_0)>();
+  late final _cv_img_hash_BlockMeanHash_setModePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Int, imp1.CvCallback_0)>>(
+          'cv_img_hash_BlockMeanHash_setMode');
+  late final _cv_img_hash_BlockMeanHash_setMode = _cv_img_hash_BlockMeanHash_setModePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(BlockMeanHash, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_averageHash_compare(
     Mat a,
@@ -1566,12 +1446,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_averageHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>,
-              imp1.CvCallback_0)>>('cv_img_hash_averageHash_compare');
-  late final _cv_img_hash_averageHash_compare =
-      _cv_img_hash_averageHash_comparePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>>('cv_img_hash_averageHash_compare');
+  late final _cv_img_hash_averageHash_compare = _cv_img_hash_averageHash_comparePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_averageHash_compute(
     Mat inputArr,
@@ -1585,13 +1463,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_img_hash_averageHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_img_hash_averageHash_compute');
-  late final _cv_img_hash_averageHash_compute =
-      _cv_img_hash_averageHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_img_hash_averageHash_computePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_img_hash_averageHash_compute');
+  late final _cv_img_hash_averageHash_compute = _cv_img_hash_averageHash_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_colorMomentHash_compare(
     Mat a,
@@ -1609,12 +1485,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_colorMomentHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>,
-              imp1.CvCallback_0)>>('cv_img_hash_colorMomentHash_compare');
-  late final _cv_img_hash_colorMomentHash_compare =
-      _cv_img_hash_colorMomentHash_comparePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>>('cv_img_hash_colorMomentHash_compare');
+  late final _cv_img_hash_colorMomentHash_compare = _cv_img_hash_colorMomentHash_comparePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_colorMomentHash_compute(
     Mat inputArr,
@@ -1628,13 +1502,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_img_hash_colorMomentHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat,
-              imp1.CvCallback_0)>>('cv_img_hash_colorMomentHash_compute');
-  late final _cv_img_hash_colorMomentHash_compute =
-      _cv_img_hash_colorMomentHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_img_hash_colorMomentHash_computePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_img_hash_colorMomentHash_compute');
+  late final _cv_img_hash_colorMomentHash_compute = _cv_img_hash_colorMomentHash_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_marrHildrethHash_compare(
     Mat a,
@@ -1656,17 +1528,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_marrHildrethHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Float,
-              ffi.Float,
-              ffi.Pointer<ffi.Double>,
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, ffi.Pointer<ffi.Double>,
               imp1.CvCallback_0)>>('cv_img_hash_marrHildrethHash_compare');
-  late final _cv_img_hash_marrHildrethHash_compare =
-      _cv_img_hash_marrHildrethHash_comparePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, double, double,
-              ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+  late final _cv_img_hash_marrHildrethHash_compare = _cv_img_hash_marrHildrethHash_comparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_marrHildrethHash_compute(
     Mat inputArr,
@@ -1685,13 +1550,11 @@ class CvNativeContrib {
   }
 
   late final _cv_img_hash_marrHildrethHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              imp1.CvCallback_0)>>('cv_img_hash_marrHildrethHash_compute');
-  late final _cv_img_hash_marrHildrethHash_compute =
-      _cv_img_hash_marrHildrethHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>>(
+      'cv_img_hash_marrHildrethHash_compute');
+  late final _cv_img_hash_marrHildrethHash_compute = _cv_img_hash_marrHildrethHash_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_pHash_compare(
     Mat a,
@@ -1709,12 +1572,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_pHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>,
-              imp1.CvCallback_0)>>('cv_img_hash_pHash_compare');
-  late final _cv_img_hash_pHash_compare =
-      _cv_img_hash_pHash_comparePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>>('cv_img_hash_pHash_compare');
+  late final _cv_img_hash_pHash_compare = _cv_img_hash_pHash_comparePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_pHash_compute(
     Mat inputArr,
@@ -1728,13 +1589,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_img_hash_pHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_img_hash_pHash_compute');
+  late final _cv_img_hash_pHash_computePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_img_hash_pHash_compute');
   late final _cv_img_hash_pHash_compute =
-      _cv_img_hash_pHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+      _cv_img_hash_pHash_computePtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_radialVarianceHash_compare(
     Mat a,
@@ -1756,17 +1615,10 @@ class CvNativeContrib {
 
   late final _cv_img_hash_radialVarianceHash_comparePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Double,
-              ffi.Int,
-              ffi.Pointer<ffi.Double>,
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int, ffi.Pointer<ffi.Double>,
               imp1.CvCallback_0)>>('cv_img_hash_radialVarianceHash_compare');
-  late final _cv_img_hash_radialVarianceHash_compare =
-      _cv_img_hash_radialVarianceHash_comparePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, double, int,
-              ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
+  late final _cv_img_hash_radialVarianceHash_compare = _cv_img_hash_radialVarianceHash_comparePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_img_hash_radialVarianceHash_compute(
     Mat inputArr,
@@ -1785,13 +1637,11 @@ class CvNativeContrib {
   }
 
   late final _cv_img_hash_radialVarianceHash_computePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
-              imp1.CvCallback_0)>>('cv_img_hash_radialVarianceHash_compute');
-  late final _cv_img_hash_radialVarianceHash_compute =
-      _cv_img_hash_radialVarianceHash_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, int, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int, imp1.CvCallback_0)>>(
+      'cv_img_hash_radialVarianceHash_compute');
+  late final _cv_img_hash_radialVarianceHash_compute = _cv_img_hash_radialVarianceHash_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, imp1.CvCallback_0)>();
 
   void cv_quality_QualityBRISQUE_close(
     QualityBRISQUEPtr self,
@@ -1802,11 +1652,9 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualityBRISQUE_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>(
-          'cv_quality_QualityBRISQUE_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>('cv_quality_QualityBRISQUE_close');
   late final _cv_quality_QualityBRISQUE_close =
-      _cv_quality_QualityBRISQUE_closePtr
-          .asFunction<void Function(QualityBRISQUEPtr)>();
+      _cv_quality_QualityBRISQUE_closePtr.asFunction<void Function(QualityBRISQUEPtr)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_compute(
     QualityBRISQUE self,
@@ -1824,15 +1672,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityBRISQUE_computePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              QualityBRISQUE,
-              Mat,
-              ffi.Pointer<Scalar>,
+          ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat, ffi.Pointer<Scalar>,
               imp1.CvCallback_0)>>('cv_quality_QualityBRISQUE_compute');
-  late final _cv_quality_QualityBRISQUE_compute =
-      _cv_quality_QualityBRISQUE_computePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              QualityBRISQUE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualityBRISQUE_compute = _cv_quality_QualityBRISQUE_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(QualityBRISQUE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_computeFeatures_static(
     Mat img,
@@ -1846,13 +1689,12 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_quality_QualityBRISQUE_computeFeatures_staticPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
-      'cv_quality_QualityBRISQUE_computeFeatures_static');
+  late final _cv_quality_QualityBRISQUE_computeFeatures_staticPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_quality_QualityBRISQUE_computeFeatures_static');
   late final _cv_quality_QualityBRISQUE_computeFeatures_static =
-      _cv_quality_QualityBRISQUE_computeFeatures_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+      _cv_quality_QualityBRISQUE_computeFeatures_staticPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_compute_static(
     Mat img,
@@ -1872,16 +1714,12 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityBRISQUE_compute_staticPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<Scalar>,
-              imp1.CvCallback_0)>>('cv_quality_QualityBRISQUE_compute_static');
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_quality_QualityBRISQUE_compute_static');
   late final _cv_quality_QualityBRISQUE_compute_static =
       _cv_quality_QualityBRISQUE_compute_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_create(
     ffi.Pointer<ffi.Char> model_file,
@@ -1899,18 +1737,11 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityBRISQUE_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<QualityBRISQUE>,
-              imp1.CvCallback_0)>>('cv_quality_QualityBRISQUE_create');
-  late final _cv_quality_QualityBRISQUE_create =
-      _cv_quality_QualityBRISQUE_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<QualityBRISQUE>,
-              imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<QualityBRISQUE>, imp1.CvCallback_0)>>('cv_quality_QualityBRISQUE_create');
+  late final _cv_quality_QualityBRISQUE_create = _cv_quality_QualityBRISQUE_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<QualityBRISQUE>, imp1.CvCallback_0)>();
 
   void cv_quality_QualityGMSD_close(
     QualityGMSDPtr self,
@@ -1921,10 +1752,9 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualityGMSD_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>(
-          'cv_quality_QualityGMSD_close');
-  late final _cv_quality_QualityGMSD_close = _cv_quality_QualityGMSD_closePtr
-      .asFunction<void Function(QualityGMSDPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>('cv_quality_QualityGMSD_close');
+  late final _cv_quality_QualityGMSD_close =
+      _cv_quality_QualityGMSD_closePtr.asFunction<void Function(QualityGMSDPtr)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityGMSD_compute(
     QualityGMSD self,
@@ -1942,12 +1772,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityGMSD_computePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(QualityGMSD, Mat, ffi.Pointer<Scalar>,
-              imp1.CvCallback_0)>>('cv_quality_QualityGMSD_compute');
-  late final _cv_quality_QualityGMSD_compute =
-      _cv_quality_QualityGMSD_computePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              QualityGMSD, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+              QualityGMSD, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_quality_QualityGMSD_compute');
+  late final _cv_quality_QualityGMSD_compute = _cv_quality_QualityGMSD_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(QualityGMSD, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityGMSD_compute_static(
     Mat ref,
@@ -1969,10 +1797,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>,
               imp1.CvCallback_0)>>('cv_quality_QualityGMSD_compute_static');
-  late final _cv_quality_QualityGMSD_compute_static =
-      _cv_quality_QualityGMSD_compute_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualityGMSD_compute_static = _cv_quality_QualityGMSD_compute_staticPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityGMSD_create(
     Mat ref,
@@ -1984,13 +1810,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_quality_QualityGMSD_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<QualityGMSD>)>>('cv_quality_QualityGMSD_create');
-  late final _cv_quality_QualityGMSD_create =
-      _cv_quality_QualityGMSD_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>();
+  late final _cv_quality_QualityGMSD_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>>(
+          'cv_quality_QualityGMSD_create');
+  late final _cv_quality_QualityGMSD_create = _cv_quality_QualityGMSD_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>();
 
   void cv_quality_QualityMSE_close(
     QualityMSEPtr self,
@@ -2001,10 +1825,9 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualityMSE_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>(
-          'cv_quality_QualityMSE_close');
-  late final _cv_quality_QualityMSE_close = _cv_quality_QualityMSE_closePtr
-      .asFunction<void Function(QualityMSEPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>('cv_quality_QualityMSE_close');
+  late final _cv_quality_QualityMSE_close =
+      _cv_quality_QualityMSE_closePtr.asFunction<void Function(QualityMSEPtr)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityMSE_compute(
     QualityMSE self,
@@ -2022,12 +1845,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityMSE_computePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(QualityMSE, Mat, ffi.Pointer<Scalar>,
-              imp1.CvCallback_0)>>('cv_quality_QualityMSE_compute');
-  late final _cv_quality_QualityMSE_compute =
-      _cv_quality_QualityMSE_computePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              QualityMSE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+              QualityMSE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_quality_QualityMSE_compute');
+  late final _cv_quality_QualityMSE_compute = _cv_quality_QualityMSE_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(QualityMSE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityMSE_compute_static(
     Mat ref,
@@ -2049,10 +1870,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>,
               imp1.CvCallback_0)>>('cv_quality_QualityMSE_compute_static');
-  late final _cv_quality_QualityMSE_compute_static =
-      _cv_quality_QualityMSE_compute_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualityMSE_compute_static = _cv_quality_QualityMSE_compute_staticPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityMSE_create(
     Mat ref,
@@ -2067,13 +1886,11 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualityMSE_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityMSE>,
-              imp1.CvCallback_0)>>('cv_quality_QualityMSE_create');
-  late final _cv_quality_QualityMSE_create =
-      _cv_quality_QualityMSE_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<QualityMSE>, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityMSE>, imp1.CvCallback_0)>>(
+      'cv_quality_QualityMSE_create');
+  late final _cv_quality_QualityMSE_create = _cv_quality_QualityMSE_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityMSE>, imp1.CvCallback_0)>();
 
   void cv_quality_QualityPSNR_close(
     QualityPSNRPtr self,
@@ -2084,10 +1901,9 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualityPSNR_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>(
-          'cv_quality_QualityPSNR_close');
-  late final _cv_quality_QualityPSNR_close = _cv_quality_QualityPSNR_closePtr
-      .asFunction<void Function(QualityPSNRPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>('cv_quality_QualityPSNR_close');
+  late final _cv_quality_QualityPSNR_close =
+      _cv_quality_QualityPSNR_closePtr.asFunction<void Function(QualityPSNRPtr)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityPSNR_compute(
     QualityPSNR self,
@@ -2105,12 +1921,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityPSNR_computePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(QualityPSNR, Mat, ffi.Pointer<Scalar>,
-              imp1.CvCallback_0)>>('cv_quality_QualityPSNR_compute');
-  late final _cv_quality_QualityPSNR_compute =
-      _cv_quality_QualityPSNR_computePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              QualityPSNR, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+              QualityPSNR, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_quality_QualityPSNR_compute');
+  late final _cv_quality_QualityPSNR_compute = _cv_quality_QualityPSNR_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(QualityPSNR, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityPSNR_compute_static(
     Mat ref,
@@ -2132,17 +1946,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityPSNR_compute_staticPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Double,
-              Mat,
-              ffi.Pointer<Scalar>,
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, Mat, ffi.Pointer<Scalar>,
               imp1.CvCallback_0)>>('cv_quality_QualityPSNR_compute_static');
-  late final _cv_quality_QualityPSNR_compute_static =
-      _cv_quality_QualityPSNR_compute_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualityPSNR_compute_static = _cv_quality_QualityPSNR_compute_staticPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualityPSNR_create(
     Mat ref,
@@ -2160,15 +1967,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualityPSNR_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              ffi.Double,
-              ffi.Pointer<QualityPSNR>,
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Double, ffi.Pointer<QualityPSNR>,
               imp1.CvCallback_0)>>('cv_quality_QualityPSNR_create');
-  late final _cv_quality_QualityPSNR_create =
-      _cv_quality_QualityPSNR_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, double, ffi.Pointer<QualityPSNR>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualityPSNR_create = _cv_quality_QualityPSNR_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, double, ffi.Pointer<QualityPSNR>, imp1.CvCallback_0)>();
 
   double cv_quality_QualityPSNR_getMaxPixelValue(
     QualityPSNR self,
@@ -2182,8 +1984,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Double Function(QualityPSNR)>>(
           'cv_quality_QualityPSNR_getMaxPixelValue');
   late final _cv_quality_QualityPSNR_getMaxPixelValue =
-      _cv_quality_QualityPSNR_getMaxPixelValuePtr
-          .asFunction<double Function(QualityPSNR)>();
+      _cv_quality_QualityPSNR_getMaxPixelValuePtr.asFunction<double Function(QualityPSNR)>();
 
   void cv_quality_QualityPSNR_setMaxPixelValue(
     QualityPSNR self,
@@ -2199,8 +2000,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(QualityPSNR, ffi.Double)>>(
           'cv_quality_QualityPSNR_setMaxPixelValue');
   late final _cv_quality_QualityPSNR_setMaxPixelValue =
-      _cv_quality_QualityPSNR_setMaxPixelValuePtr
-          .asFunction<void Function(QualityPSNR, double)>();
+      _cv_quality_QualityPSNR_setMaxPixelValuePtr.asFunction<void Function(QualityPSNR, double)>();
 
   void cv_quality_QualitySSIM_close(
     QualitySSIMPtr self,
@@ -2211,10 +2011,9 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualitySSIM_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>(
-          'cv_quality_QualitySSIM_close');
-  late final _cv_quality_QualitySSIM_close = _cv_quality_QualitySSIM_closePtr
-      .asFunction<void Function(QualitySSIMPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>('cv_quality_QualitySSIM_close');
+  late final _cv_quality_QualitySSIM_close =
+      _cv_quality_QualitySSIM_closePtr.asFunction<void Function(QualitySSIMPtr)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualitySSIM_compute(
     QualitySSIM self,
@@ -2232,12 +2031,10 @@ class CvNativeContrib {
 
   late final _cv_quality_QualitySSIM_computePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(QualitySSIM, Mat, ffi.Pointer<Scalar>,
-              imp1.CvCallback_0)>>('cv_quality_QualitySSIM_compute');
-  late final _cv_quality_QualitySSIM_compute =
-      _cv_quality_QualitySSIM_computePtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              QualitySSIM, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+              QualitySSIM, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>>('cv_quality_QualitySSIM_compute');
+  late final _cv_quality_QualitySSIM_compute = _cv_quality_QualitySSIM_computePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(QualitySSIM, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualitySSIM_compute_static(
     Mat ref,
@@ -2259,10 +2056,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>,
               imp1.CvCallback_0)>>('cv_quality_QualitySSIM_compute_static');
-  late final _cv_quality_QualitySSIM_compute_static =
-      _cv_quality_QualitySSIM_compute_staticPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
+  late final _cv_quality_QualitySSIM_compute_static = _cv_quality_QualitySSIM_compute_staticPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_quality_QualitySSIM_create(
     Mat ref,
@@ -2277,13 +2072,11 @@ class CvNativeContrib {
   }
 
   late final _cv_quality_QualitySSIM_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualitySSIM>,
-              imp1.CvCallback_0)>>('cv_quality_QualitySSIM_create');
-  late final _cv_quality_QualitySSIM_create =
-      _cv_quality_QualitySSIM_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, ffi.Pointer<QualitySSIM>, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualitySSIM>, imp1.CvCallback_0)>>(
+      'cv_quality_QualitySSIM_create');
+  late final _cv_quality_QualitySSIM_create = _cv_quality_QualitySSIM_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualitySSIM>, imp1.CvCallback_0)>();
 
   void cv_wechat_qrcode_WeChatQRCode_close(
     WeChatQRCodePtr self,
@@ -2294,11 +2087,9 @@ class CvNativeContrib {
   }
 
   late final _cv_wechat_qrcode_WeChatQRCode_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>(
-          'cv_wechat_qrcode_WeChatQRCode_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>('cv_wechat_qrcode_WeChatQRCode_close');
   late final _cv_wechat_qrcode_WeChatQRCode_close =
-      _cv_wechat_qrcode_WeChatQRCode_closePtr
-          .asFunction<void Function(WeChatQRCodePtr)>();
+      _cv_wechat_qrcode_WeChatQRCode_closePtr.asFunction<void Function(WeChatQRCodePtr)>();
 
   ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_create(
     ffi.Pointer<WeChatQRCode> qrcode,
@@ -2308,13 +2099,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_wechat_qrcode_WeChatQRCode_createPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>>(
-      'cv_wechat_qrcode_WeChatQRCode_create');
-  late final _cv_wechat_qrcode_WeChatQRCode_create =
-      _cv_wechat_qrcode_WeChatQRCode_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>();
+  late final _cv_wechat_qrcode_WeChatQRCode_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>>(
+          'cv_wechat_qrcode_WeChatQRCode_create');
+  late final _cv_wechat_qrcode_WeChatQRCode_create = _cv_wechat_qrcode_WeChatQRCode_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<WeChatQRCode>)>();
 
   ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_create_1(
     ffi.Pointer<ffi.Char> detector_prototxt_path,
@@ -2343,15 +2132,9 @@ class CvNativeContrib {
               ffi.Pointer<ffi.Char>,
               ffi.Pointer<WeChatQRCode>,
               imp1.CvCallback_0)>>('cv_wechat_qrcode_WeChatQRCode_create_1');
-  late final _cv_wechat_qrcode_WeChatQRCode_create_1 =
-      _cv_wechat_qrcode_WeChatQRCode_create_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<WeChatQRCode>,
-              imp1.CvCallback_0)>();
+  late final _cv_wechat_qrcode_WeChatQRCode_create_1 = _cv_wechat_qrcode_WeChatQRCode_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>, ffi.Pointer<WeChatQRCode>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
     WeChatQRCode self,
@@ -2370,18 +2153,13 @@ class CvNativeContrib {
   }
 
   late final _cv_wechat_qrcode_WeChatQRCode_detectAndDecodePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  WeChatQRCode,
-                  Mat,
-                  ffi.Pointer<VecMat>,
-                  ffi.Pointer<VecVecChar>,
-                  imp1.CvCallback_0)>>(
-      'cv_wechat_qrcode_WeChatQRCode_detectAndDecode');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(WeChatQRCode, Mat, ffi.Pointer<VecMat>, ffi.Pointer<VecVecChar>,
+              imp1.CvCallback_0)>>('cv_wechat_qrcode_WeChatQRCode_detectAndDecode');
   late final _cv_wechat_qrcode_WeChatQRCode_detectAndDecode =
       _cv_wechat_qrcode_WeChatQRCode_detectAndDecodePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(WeChatQRCode, Mat, ffi.Pointer<VecMat>,
-              ffi.Pointer<VecVecChar>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              WeChatQRCode, Mat, ffi.Pointer<VecMat>, ffi.Pointer<VecVecChar>, imp1.CvCallback_0)>();
 
   double cv_wechat_qrcode_WeChatQRCode_getScaleFactor(
     WeChatQRCode self,
@@ -2395,8 +2173,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Float Function(WeChatQRCode)>>(
           'cv_wechat_qrcode_WeChatQRCode_getScaleFactor');
   late final _cv_wechat_qrcode_WeChatQRCode_getScaleFactor =
-      _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr
-          .asFunction<double Function(WeChatQRCode)>();
+      _cv_wechat_qrcode_WeChatQRCode_getScaleFactorPtr.asFunction<double Function(WeChatQRCode)>();
 
   void cv_wechat_qrcode_WeChatQRCode_setScaleFactor(
     WeChatQRCode self,
@@ -2412,8 +2189,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(WeChatQRCode, ffi.Float)>>(
           'cv_wechat_qrcode_WeChatQRCode_setScaleFactor');
   late final _cv_wechat_qrcode_WeChatQRCode_setScaleFactor =
-      _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr
-          .asFunction<void Function(WeChatQRCode, double)>();
+      _cv_wechat_qrcode_WeChatQRCode_setScaleFactorPtr.asFunction<void Function(WeChatQRCode, double)>();
 
   void cv_ximgproc_EdgeBoxes_close(
     EdgeBoxesPtr self,
@@ -2424,8 +2200,7 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>>(
-          'cv_ximgproc_EdgeBoxes_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>>('cv_ximgproc_EdgeBoxes_close');
   late final _cv_ximgproc_EdgeBoxes_close =
       _cv_ximgproc_EdgeBoxes_closePtr.asFunction<void Function(EdgeBoxesPtr)>();
 
@@ -2477,22 +2252,9 @@ class CvNativeContrib {
               ffi.Float,
               ffi.Float,
               ffi.Pointer<EdgeBoxes>)>>('cv_ximgproc_EdgeBoxes_create');
-  late final _cv_ximgproc_EdgeBoxes_create =
-      _cv_ximgproc_EdgeBoxes_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              double,
-              double,
-              double,
-              double,
-              int,
-              double,
-              double,
-              double,
-              double,
-              double,
-              double,
-              double,
-              ffi.Pointer<EdgeBoxes>)>();
+  late final _cv_ximgproc_EdgeBoxes_create = _cv_ximgproc_EdgeBoxes_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(double, double, double, double, int, double, double, double, double,
+          double, double, double, ffi.Pointer<EdgeBoxes>)>();
 
   double cv_ximgproc_EdgeBoxes_getAlpha(
     EdgeBoxes self,
@@ -2503,11 +2265,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getAlphaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getAlpha');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getAlpha');
   late final _cv_ximgproc_EdgeBoxes_getAlpha =
-      _cv_ximgproc_EdgeBoxes_getAlphaPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getAlphaPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getBeta(
     EdgeBoxes self,
@@ -2518,10 +2278,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getBetaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getBeta');
-  late final _cv_ximgproc_EdgeBoxes_getBeta = _cv_ximgproc_EdgeBoxes_getBetaPtr
-      .asFunction<double Function(EdgeBoxes)>();
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getBeta');
+  late final _cv_ximgproc_EdgeBoxes_getBeta =
+      _cv_ximgproc_EdgeBoxes_getBetaPtr.asFunction<double Function(EdgeBoxes)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeBoxes_getBoundingBoxes(
     EdgeBoxes self,
@@ -2543,17 +2302,11 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_EdgeBoxes_getBoundingBoxesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeBoxes,
-              Mat,
-              Mat,
-              ffi.Pointer<VecRect>,
-              ffi.Pointer<VecF32>,
+          ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat, ffi.Pointer<VecRect>, ffi.Pointer<VecF32>,
               imp1.CvCallback_0)>>('cv_ximgproc_EdgeBoxes_getBoundingBoxes');
-  late final _cv_ximgproc_EdgeBoxes_getBoundingBoxes =
-      _cv_ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat,
-              ffi.Pointer<VecRect>, ffi.Pointer<VecF32>, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeBoxes_getBoundingBoxes = _cv_ximgproc_EdgeBoxes_getBoundingBoxesPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          EdgeBoxes, Mat, Mat, ffi.Pointer<VecRect>, ffi.Pointer<VecF32>, imp1.CvCallback_0)>();
 
   double cv_ximgproc_EdgeBoxes_getClusterMinMag(
     EdgeBoxes self,
@@ -2564,11 +2317,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getClusterMinMagPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getClusterMinMag');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getClusterMinMag');
   late final _cv_ximgproc_EdgeBoxes_getClusterMinMag =
-      _cv_ximgproc_EdgeBoxes_getClusterMinMagPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getClusterMinMagPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getEdgeMergeThr(
     EdgeBoxes self,
@@ -2579,11 +2330,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getEdgeMergeThrPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getEdgeMergeThr');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getEdgeMergeThr');
   late final _cv_ximgproc_EdgeBoxes_getEdgeMergeThr =
-      _cv_ximgproc_EdgeBoxes_getEdgeMergeThrPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getEdgeMergeThrPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getEdgeMinMag(
     EdgeBoxes self,
@@ -2594,11 +2343,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getEdgeMinMagPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getEdgeMinMag');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getEdgeMinMag');
   late final _cv_ximgproc_EdgeBoxes_getEdgeMinMag =
-      _cv_ximgproc_EdgeBoxes_getEdgeMinMagPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getEdgeMinMagPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getEta(
     EdgeBoxes self,
@@ -2609,8 +2356,7 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getEtaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getEta');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getEta');
   late final _cv_ximgproc_EdgeBoxes_getEta =
       _cv_ximgproc_EdgeBoxes_getEtaPtr.asFunction<double Function(EdgeBoxes)>();
 
@@ -2623,11 +2369,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getGammaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getGamma');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getGamma');
   late final _cv_ximgproc_EdgeBoxes_getGamma =
-      _cv_ximgproc_EdgeBoxes_getGammaPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getGammaPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getKappa(
     EdgeBoxes self,
@@ -2638,11 +2382,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getKappaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getKappa');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getKappa');
   late final _cv_ximgproc_EdgeBoxes_getKappa =
-      _cv_ximgproc_EdgeBoxes_getKappaPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getKappaPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getMaxAspectRatio(
     EdgeBoxes self,
@@ -2653,11 +2395,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getMaxAspectRatioPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getMaxAspectRatio');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getMaxAspectRatio');
   late final _cv_ximgproc_EdgeBoxes_getMaxAspectRatio =
-      _cv_ximgproc_EdgeBoxes_getMaxAspectRatioPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getMaxAspectRatioPtr.asFunction<double Function(EdgeBoxes)>();
 
   int cv_ximgproc_EdgeBoxes_getMaxBoxes(
     EdgeBoxes self,
@@ -2668,11 +2408,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getMaxBoxesPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getMaxBoxes');
+      _lookup<ffi.NativeFunction<ffi.Int Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getMaxBoxes');
   late final _cv_ximgproc_EdgeBoxes_getMaxBoxes =
-      _cv_ximgproc_EdgeBoxes_getMaxBoxesPtr
-          .asFunction<int Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getMaxBoxesPtr.asFunction<int Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getMinBoxArea(
     EdgeBoxes self,
@@ -2683,11 +2421,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getMinBoxAreaPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getMinBoxArea');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getMinBoxArea');
   late final _cv_ximgproc_EdgeBoxes_getMinBoxArea =
-      _cv_ximgproc_EdgeBoxes_getMinBoxAreaPtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getMinBoxAreaPtr.asFunction<double Function(EdgeBoxes)>();
 
   double cv_ximgproc_EdgeBoxes_getMinScore(
     EdgeBoxes self,
@@ -2698,11 +2434,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_getMinScorePtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>(
-          'cv_ximgproc_EdgeBoxes_getMinScore');
+      _lookup<ffi.NativeFunction<ffi.Float Function(EdgeBoxes)>>('cv_ximgproc_EdgeBoxes_getMinScore');
   late final _cv_ximgproc_EdgeBoxes_getMinScore =
-      _cv_ximgproc_EdgeBoxes_getMinScorePtr
-          .asFunction<double Function(EdgeBoxes)>();
+      _cv_ximgproc_EdgeBoxes_getMinScorePtr.asFunction<double Function(EdgeBoxes)>();
 
   void cv_ximgproc_EdgeBoxes_setAlpha(
     EdgeBoxes self,
@@ -2715,11 +2449,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setAlphaPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
-          'cv_ximgproc_EdgeBoxes_setAlpha');
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>('cv_ximgproc_EdgeBoxes_setAlpha');
   late final _cv_ximgproc_EdgeBoxes_setAlpha =
-      _cv_ximgproc_EdgeBoxes_setAlphaPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setAlphaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setBeta(
     EdgeBoxes self,
@@ -2732,10 +2464,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setBetaPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
-          'cv_ximgproc_EdgeBoxes_setBeta');
-  late final _cv_ximgproc_EdgeBoxes_setBeta = _cv_ximgproc_EdgeBoxes_setBetaPtr
-      .asFunction<void Function(EdgeBoxes, double)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>('cv_ximgproc_EdgeBoxes_setBeta');
+  late final _cv_ximgproc_EdgeBoxes_setBeta =
+      _cv_ximgproc_EdgeBoxes_setBetaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setClusterMinMag(
     EdgeBoxes self,
@@ -2751,8 +2482,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setClusterMinMag');
   late final _cv_ximgproc_EdgeBoxes_setClusterMinMag =
-      _cv_ximgproc_EdgeBoxes_setClusterMinMagPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setClusterMinMagPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setEdgeMergeThr(
     EdgeBoxes self,
@@ -2768,8 +2498,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setEdgeMergeThr');
   late final _cv_ximgproc_EdgeBoxes_setEdgeMergeThr =
-      _cv_ximgproc_EdgeBoxes_setEdgeMergeThrPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setEdgeMergeThrPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setEdgeMinMag(
     EdgeBoxes self,
@@ -2785,8 +2514,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setEdgeMinMag');
   late final _cv_ximgproc_EdgeBoxes_setEdgeMinMag =
-      _cv_ximgproc_EdgeBoxes_setEdgeMinMagPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setEdgeMinMagPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setEta(
     EdgeBoxes self,
@@ -2799,10 +2527,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setEtaPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
-          'cv_ximgproc_EdgeBoxes_setEta');
-  late final _cv_ximgproc_EdgeBoxes_setEta = _cv_ximgproc_EdgeBoxes_setEtaPtr
-      .asFunction<void Function(EdgeBoxes, double)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>('cv_ximgproc_EdgeBoxes_setEta');
+  late final _cv_ximgproc_EdgeBoxes_setEta =
+      _cv_ximgproc_EdgeBoxes_setEtaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setGamma(
     EdgeBoxes self,
@@ -2815,11 +2542,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setGammaPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
-          'cv_ximgproc_EdgeBoxes_setGamma');
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>('cv_ximgproc_EdgeBoxes_setGamma');
   late final _cv_ximgproc_EdgeBoxes_setGamma =
-      _cv_ximgproc_EdgeBoxes_setGammaPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setGammaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setKappa(
     EdgeBoxes self,
@@ -2832,11 +2557,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setKappaPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
-          'cv_ximgproc_EdgeBoxes_setKappa');
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>('cv_ximgproc_EdgeBoxes_setKappa');
   late final _cv_ximgproc_EdgeBoxes_setKappa =
-      _cv_ximgproc_EdgeBoxes_setKappaPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setKappaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setMaxAspectRatio(
     EdgeBoxes self,
@@ -2852,8 +2575,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setMaxAspectRatio');
   late final _cv_ximgproc_EdgeBoxes_setMaxAspectRatio =
-      _cv_ximgproc_EdgeBoxes_setMaxAspectRatioPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setMaxAspectRatioPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setMaxBoxes(
     EdgeBoxes self,
@@ -2866,11 +2588,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeBoxes_setMaxBoxesPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Int)>>(
-          'cv_ximgproc_EdgeBoxes_setMaxBoxes');
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Int)>>('cv_ximgproc_EdgeBoxes_setMaxBoxes');
   late final _cv_ximgproc_EdgeBoxes_setMaxBoxes =
-      _cv_ximgproc_EdgeBoxes_setMaxBoxesPtr
-          .asFunction<void Function(EdgeBoxes, int)>();
+      _cv_ximgproc_EdgeBoxes_setMaxBoxesPtr.asFunction<void Function(EdgeBoxes, int)>();
 
   void cv_ximgproc_EdgeBoxes_setMinBoxArea(
     EdgeBoxes self,
@@ -2886,8 +2606,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setMinBoxArea');
   late final _cv_ximgproc_EdgeBoxes_setMinBoxArea =
-      _cv_ximgproc_EdgeBoxes_setMinBoxAreaPtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setMinBoxAreaPtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeBoxes_setMinScore(
     EdgeBoxes self,
@@ -2903,8 +2622,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(EdgeBoxes, ffi.Float)>>(
           'cv_ximgproc_EdgeBoxes_setMinScore');
   late final _cv_ximgproc_EdgeBoxes_setMinScore =
-      _cv_ximgproc_EdgeBoxes_setMinScorePtr
-          .asFunction<void Function(EdgeBoxes, double)>();
+      _cv_ximgproc_EdgeBoxes_setMinScorePtr.asFunction<void Function(EdgeBoxes, double)>();
 
   void cv_ximgproc_EdgeDrawing_close(
     EdgeDrawingPtr self,
@@ -2915,10 +2633,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeDrawing_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>(
-          'cv_ximgproc_EdgeDrawing_close');
-  late final _cv_ximgproc_EdgeDrawing_close = _cv_ximgproc_EdgeDrawing_closePtr
-      .asFunction<void Function(EdgeDrawingPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>('cv_ximgproc_EdgeDrawing_close');
+  late final _cv_ximgproc_EdgeDrawing_close =
+      _cv_ximgproc_EdgeDrawing_closePtr.asFunction<void Function(EdgeDrawingPtr)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_create(
     ffi.Pointer<EdgeDrawing> rval,
@@ -2928,13 +2645,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<EdgeDrawing>)>>('cv_ximgproc_EdgeDrawing_create');
-  late final _cv_ximgproc_EdgeDrawing_create =
-      _cv_ximgproc_EdgeDrawing_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<EdgeDrawing>)>();
+  late final _cv_ximgproc_EdgeDrawing_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<EdgeDrawing>)>>(
+          'cv_ximgproc_EdgeDrawing_create');
+  late final _cv_ximgproc_EdgeDrawing_create = _cv_ximgproc_EdgeDrawing_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<EdgeDrawing>)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectEdges(
     EdgeDrawing self,
@@ -2948,14 +2663,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_detectEdgesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_detectEdges');
-  late final _cv_ximgproc_EdgeDrawing_detectEdges =
-      _cv_ximgproc_EdgeDrawing_detectEdgesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_detectEdgesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_EdgeDrawing_detectEdges');
+  late final _cv_ximgproc_EdgeDrawing_detectEdges = _cv_ximgproc_EdgeDrawing_detectEdgesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectEllipses(
     EdgeDrawing self,
@@ -2969,14 +2681,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_detectEllipsesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_detectEllipses');
-  late final _cv_ximgproc_EdgeDrawing_detectEllipses =
-      _cv_ximgproc_EdgeDrawing_detectEllipsesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_detectEllipsesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_EdgeDrawing_detectEllipses');
+  late final _cv_ximgproc_EdgeDrawing_detectEllipses = _cv_ximgproc_EdgeDrawing_detectEllipsesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectLines(
     EdgeDrawing self,
@@ -2990,14 +2699,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_detectLinesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_detectLines');
-  late final _cv_ximgproc_EdgeDrawing_detectLines =
-      _cv_ximgproc_EdgeDrawing_detectLinesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_detectLinesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_EdgeDrawing_detectLines');
+  late final _cv_ximgproc_EdgeDrawing_detectLines = _cv_ximgproc_EdgeDrawing_detectLinesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getEdgeImage(
     EdgeDrawing self,
@@ -3011,14 +2717,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_getEdgeImagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_getEdgeImage');
-  late final _cv_ximgproc_EdgeDrawing_getEdgeImage =
-      _cv_ximgproc_EdgeDrawing_getEdgeImagePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_getEdgeImagePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_EdgeDrawing_getEdgeImage');
+  late final _cv_ximgproc_EdgeDrawing_getEdgeImage = _cv_ximgproc_EdgeDrawing_getEdgeImagePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getGradientImage(
     EdgeDrawing self,
@@ -3032,14 +2735,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_EdgeDrawing_getGradientImagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_getGradientImage');
-  late final _cv_ximgproc_EdgeDrawing_getGradientImage =
-      _cv_ximgproc_EdgeDrawing_getGradientImagePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_getGradientImagePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_EdgeDrawing_getGradientImage');
+  late final _cv_ximgproc_EdgeDrawing_getGradientImage = _cv_ximgproc_EdgeDrawing_getGradientImagePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getParams(
     EdgeDrawing self,
@@ -3055,14 +2755,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_EdgeDrawing_getParamsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing,
-              ffi.Pointer<EdgeDrawingParams>,
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<EdgeDrawingParams>,
               imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_getParams');
-  late final _cv_ximgproc_EdgeDrawing_getParams =
-      _cv_ximgproc_EdgeDrawing_getParamsPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing,
-              ffi.Pointer<EdgeDrawingParams>, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_getParams = _cv_ximgproc_EdgeDrawing_getParamsPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<EdgeDrawingParams>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
     EdgeDrawing self,
@@ -3077,14 +2773,12 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  EdgeDrawing, ffi.Pointer<VecI32>, imp1.CvCallback_0)>>(
-      'cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecI32>,
+              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines');
   late final _cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines =
-      _cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, ffi.Pointer<VecI32>, imp1.CvCallback_0)>();
+      _cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLinesPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecI32>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getSegments(
     EdgeDrawing self,
@@ -3102,10 +2796,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecVecPoint>,
               imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_getSegments');
-  late final _cv_ximgproc_EdgeDrawing_getSegments =
-      _cv_ximgproc_EdgeDrawing_getSegmentsPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, ffi.Pointer<VecVecPoint>, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_EdgeDrawing_getSegments = _cv_ximgproc_EdgeDrawing_getSegmentsPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, ffi.Pointer<VecVecPoint>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_setParams(
     EdgeDrawing self,
@@ -3120,13 +2812,11 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_EdgeDrawing_setParamsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(EdgeDrawing, EdgeDrawingParams,
-              imp1.CvCallback_0)>>('cv_ximgproc_EdgeDrawing_setParams');
-  late final _cv_ximgproc_EdgeDrawing_setParams =
-      _cv_ximgproc_EdgeDrawing_setParamsPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              EdgeDrawing, EdgeDrawingParams, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, EdgeDrawingParams, imp1.CvCallback_0)>>(
+      'cv_ximgproc_EdgeDrawing_setParams');
+  late final _cv_ximgproc_EdgeDrawing_setParams = _cv_ximgproc_EdgeDrawing_setParamsPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(EdgeDrawing, EdgeDrawingParams, imp1.CvCallback_0)>();
 
   void cv_ximgproc_GraphSegmentation_close(
     GraphSegmentationPtr self,
@@ -3140,8 +2830,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Void Function(GraphSegmentationPtr)>>(
           'cv_ximgproc_GraphSegmentation_close');
   late final _cv_ximgproc_GraphSegmentation_close =
-      _cv_ximgproc_GraphSegmentation_closePtr
-          .asFunction<void Function(GraphSegmentationPtr)>();
+      _cv_ximgproc_GraphSegmentation_closePtr.asFunction<void Function(GraphSegmentationPtr)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_GraphSegmentation_create(
     double sigma,
@@ -3158,14 +2847,11 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_GraphSegmentation_createPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Int,
-                  ffi.Pointer<GraphSegmentation>)>>(
-      'cv_ximgproc_GraphSegmentation_create');
-  late final _cv_ximgproc_GraphSegmentation_create =
-      _cv_ximgproc_GraphSegmentation_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              double, double, int, ffi.Pointer<GraphSegmentation>)>();
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Float, ffi.Float, ffi.Int,
+              ffi.Pointer<GraphSegmentation>)>>('cv_ximgproc_GraphSegmentation_create');
+  late final _cv_ximgproc_GraphSegmentation_create = _cv_ximgproc_GraphSegmentation_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(double, double, int, ffi.Pointer<GraphSegmentation>)>();
 
   double cv_ximgproc_GraphSegmentation_getK(
     GraphSegmentation self,
@@ -3179,8 +2865,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Float Function(GraphSegmentation)>>(
           'cv_ximgproc_GraphSegmentation_getK');
   late final _cv_ximgproc_GraphSegmentation_getK =
-      _cv_ximgproc_GraphSegmentation_getKPtr
-          .asFunction<double Function(GraphSegmentation)>();
+      _cv_ximgproc_GraphSegmentation_getKPtr.asFunction<double Function(GraphSegmentation)>();
 
   int cv_ximgproc_GraphSegmentation_getMinSize(
     GraphSegmentation self,
@@ -3194,8 +2879,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Int Function(GraphSegmentation)>>(
           'cv_ximgproc_GraphSegmentation_getMinSize');
   late final _cv_ximgproc_GraphSegmentation_getMinSize =
-      _cv_ximgproc_GraphSegmentation_getMinSizePtr
-          .asFunction<int Function(GraphSegmentation)>();
+      _cv_ximgproc_GraphSegmentation_getMinSizePtr.asFunction<int Function(GraphSegmentation)>();
 
   double cv_ximgproc_GraphSegmentation_getSigma(
     GraphSegmentation self,
@@ -3209,8 +2893,7 @@ class CvNativeContrib {
       _lookup<ffi.NativeFunction<ffi.Double Function(GraphSegmentation)>>(
           'cv_ximgproc_GraphSegmentation_getSigma');
   late final _cv_ximgproc_GraphSegmentation_getSigma =
-      _cv_ximgproc_GraphSegmentation_getSigmaPtr
-          .asFunction<double Function(GraphSegmentation)>();
+      _cv_ximgproc_GraphSegmentation_getSigmaPtr.asFunction<double Function(GraphSegmentation)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_GraphSegmentation_processImage(
     GraphSegmentation self,
@@ -3227,14 +2910,10 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_GraphSegmentation_processImagePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  GraphSegmentation, Mat, Mat, imp1.CvCallback_0)>>(
+          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(GraphSegmentation, Mat, Mat, imp1.CvCallback_0)>>(
       'cv_ximgproc_GraphSegmentation_processImage');
-  late final _cv_ximgproc_GraphSegmentation_processImage =
-      _cv_ximgproc_GraphSegmentation_processImagePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              GraphSegmentation, Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_GraphSegmentation_processImage = _cv_ximgproc_GraphSegmentation_processImagePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(GraphSegmentation, Mat, Mat, imp1.CvCallback_0)>();
 
   void cv_ximgproc_GraphSegmentation_setK(
     GraphSegmentation self,
@@ -3246,12 +2925,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_GraphSegmentation_setKPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Float)>>(
-      'cv_ximgproc_GraphSegmentation_setK');
+  late final _cv_ximgproc_GraphSegmentation_setKPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Float)>>(
+          'cv_ximgproc_GraphSegmentation_setK');
   late final _cv_ximgproc_GraphSegmentation_setK =
-      _cv_ximgproc_GraphSegmentation_setKPtr
-          .asFunction<void Function(GraphSegmentation, double)>();
+      _cv_ximgproc_GraphSegmentation_setKPtr.asFunction<void Function(GraphSegmentation, double)>();
 
   void cv_ximgproc_GraphSegmentation_setMinSize(
     GraphSegmentation self,
@@ -3263,12 +2941,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_GraphSegmentation_setMinSizePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Int)>>(
-      'cv_ximgproc_GraphSegmentation_setMinSize');
+  late final _cv_ximgproc_GraphSegmentation_setMinSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Int)>>(
+          'cv_ximgproc_GraphSegmentation_setMinSize');
   late final _cv_ximgproc_GraphSegmentation_setMinSize =
-      _cv_ximgproc_GraphSegmentation_setMinSizePtr
-          .asFunction<void Function(GraphSegmentation, int)>();
+      _cv_ximgproc_GraphSegmentation_setMinSizePtr.asFunction<void Function(GraphSegmentation, int)>();
 
   void cv_ximgproc_GraphSegmentation_setSigma(
     GraphSegmentation self,
@@ -3280,12 +2957,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_GraphSegmentation_setSigmaPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Double)>>(
-      'cv_ximgproc_GraphSegmentation_setSigma');
+  late final _cv_ximgproc_GraphSegmentation_setSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GraphSegmentation, ffi.Double)>>(
+          'cv_ximgproc_GraphSegmentation_setSigma');
   late final _cv_ximgproc_GraphSegmentation_setSigma =
-      _cv_ximgproc_GraphSegmentation_setSigmaPtr
-          .asFunction<void Function(GraphSegmentation, double)>();
+      _cv_ximgproc_GraphSegmentation_setSigmaPtr.asFunction<void Function(GraphSegmentation, double)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_PeiLinNormalization(
     Mat I,
@@ -3299,13 +2975,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_PeiLinNormalizationPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, imp1.CvCallback_0)>>('cv_ximgproc_PeiLinNormalization');
-  late final _cv_ximgproc_PeiLinNormalization =
-      _cv_ximgproc_PeiLinNormalizationPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_PeiLinNormalizationPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>>(
+          'cv_ximgproc_PeiLinNormalization');
+  late final _cv_ximgproc_PeiLinNormalization = _cv_ximgproc_PeiLinNormalizationPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_RFFeatureGetter_clear(
     RFFeatureGetter self,
@@ -3315,12 +2989,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_RFFeatureGetter_clearPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>>(
-      'cv_ximgproc_RFFeatureGetter_clear');
+  late final _cv_ximgproc_RFFeatureGetter_clearPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>>(
+          'cv_ximgproc_RFFeatureGetter_clear');
   late final _cv_ximgproc_RFFeatureGetter_clear =
-      _cv_ximgproc_RFFeatureGetter_clearPtr
-          .asFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>();
+      _cv_ximgproc_RFFeatureGetter_clearPtr.asFunction<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>();
 
   void cv_ximgproc_RFFeatureGetter_close(
     RFFeatureGetterPtr self,
@@ -3331,11 +3004,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_RFFeatureGetter_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(RFFeatureGetterPtr)>>(
-          'cv_ximgproc_RFFeatureGetter_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(RFFeatureGetterPtr)>>('cv_ximgproc_RFFeatureGetter_close');
   late final _cv_ximgproc_RFFeatureGetter_close =
-      _cv_ximgproc_RFFeatureGetter_closePtr
-          .asFunction<void Function(RFFeatureGetterPtr)>();
+      _cv_ximgproc_RFFeatureGetter_closePtr.asFunction<void Function(RFFeatureGetterPtr)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_RFFeatureGetter_create(
     ffi.Pointer<RFFeatureGetter> rval,
@@ -3345,13 +3016,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_RFFeatureGetter_createPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>>(
-      'cv_ximgproc_RFFeatureGetter_create');
-  late final _cv_ximgproc_RFFeatureGetter_create =
-      _cv_ximgproc_RFFeatureGetter_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>();
+  late final _cv_ximgproc_RFFeatureGetter_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>>(
+          'cv_ximgproc_RFFeatureGetter_create');
+  late final _cv_ximgproc_RFFeatureGetter_create = _cv_ximgproc_RFFeatureGetter_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<RFFeatureGetter>)>();
 
   bool cv_ximgproc_RFFeatureGetter_empty(
     RFFeatureGetter self,
@@ -3362,11 +3031,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_RFFeatureGetter_emptyPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(RFFeatureGetter)>>(
-          'cv_ximgproc_RFFeatureGetter_empty');
+      _lookup<ffi.NativeFunction<ffi.Bool Function(RFFeatureGetter)>>('cv_ximgproc_RFFeatureGetter_empty');
   late final _cv_ximgproc_RFFeatureGetter_empty =
-      _cv_ximgproc_RFFeatureGetter_emptyPtr
-          .asFunction<bool Function(RFFeatureGetter)>();
+      _cv_ximgproc_RFFeatureGetter_emptyPtr.asFunction<bool Function(RFFeatureGetter)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_RFFeatureGetter_getFeatures(
     RFFeatureGetter self,
@@ -3394,20 +3061,12 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_RFFeatureGetter_getFeaturesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              RFFeatureGetter,
-              Mat,
-              Mat,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              imp1.CvCallback_0)>>('cv_ximgproc_RFFeatureGetter_getFeatures');
+          ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, Mat, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Int, imp1.CvCallback_0)>>('cv_ximgproc_RFFeatureGetter_getFeatures');
   late final _cv_ximgproc_RFFeatureGetter_getFeatures =
       _cv_ximgproc_RFFeatureGetter_getFeaturesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, Mat, int, int,
-              int, int, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              RFFeatureGetter, Mat, Mat, int, int, int, int, int, imp1.CvCallback_0)>();
 
   void cv_ximgproc_StructuredEdgeDetection_close(
     StructuredEdgeDetectionPtr self,
@@ -3417,12 +3076,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_StructuredEdgeDetection_closePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(StructuredEdgeDetectionPtr)>>(
-      'cv_ximgproc_StructuredEdgeDetection_close');
+  late final _cv_ximgproc_StructuredEdgeDetection_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StructuredEdgeDetectionPtr)>>(
+          'cv_ximgproc_StructuredEdgeDetection_close');
   late final _cv_ximgproc_StructuredEdgeDetection_close =
-      _cv_ximgproc_StructuredEdgeDetection_closePtr
-          .asFunction<void Function(StructuredEdgeDetectionPtr)>();
+      _cv_ximgproc_StructuredEdgeDetection_closePtr.asFunction<void Function(StructuredEdgeDetectionPtr)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_computeOrientation(
     StructuredEdgeDetection self,
@@ -3438,16 +3096,13 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_StructuredEdgeDetection_computeOrientationPtr =
-      _lookup<
-              ffi.NativeFunction<
-                  ffi.Pointer<CvStatus> Function(
-                      StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>>(
-          'cv_ximgproc_StructuredEdgeDetection_computeOrientation');
+  late final _cv_ximgproc_StructuredEdgeDetection_computeOrientationPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat,
+              imp1.CvCallback_0)>>('cv_ximgproc_StructuredEdgeDetection_computeOrientation');
   late final _cv_ximgproc_StructuredEdgeDetection_computeOrientation =
-      _cv_ximgproc_StructuredEdgeDetection_computeOrientationPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>();
+      _cv_ximgproc_StructuredEdgeDetection_computeOrientationPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_create(
     ffi.Pointer<ffi.Char> model,
@@ -3460,14 +3115,12 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_StructuredEdgeDetection_createPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
-                  ffi.Pointer<StructuredEdgeDetection>)>>(
-      'cv_ximgproc_StructuredEdgeDetection_create');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>,
+              ffi.Pointer<StructuredEdgeDetection>)>>('cv_ximgproc_StructuredEdgeDetection_create');
   late final _cv_ximgproc_StructuredEdgeDetection_create =
       _cv_ximgproc_StructuredEdgeDetection_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>, ffi.Pointer<StructuredEdgeDetection>)>();
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<StructuredEdgeDetection>)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_create_1(
     ffi.Pointer<ffi.Char> model,
@@ -3482,18 +3135,13 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_StructuredEdgeDetection_create_1Ptr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  ffi.Pointer<ffi.Char>,
-                  ffi.Pointer<RFFeatureGetter>,
-                  ffi.Pointer<StructuredEdgeDetection>)>>(
-      'cv_ximgproc_StructuredEdgeDetection_create_1');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<RFFeatureGetter>,
+              ffi.Pointer<StructuredEdgeDetection>)>>('cv_ximgproc_StructuredEdgeDetection_create_1');
   late final _cv_ximgproc_StructuredEdgeDetection_create_1 =
       _cv_ximgproc_StructuredEdgeDetection_create_1Ptr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<RFFeatureGetter>,
-              ffi.Pointer<StructuredEdgeDetection>)>();
+              ffi.Pointer<ffi.Char>, ffi.Pointer<RFFeatureGetter>, ffi.Pointer<StructuredEdgeDetection>)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_detectEdges(
     StructuredEdgeDetection self,
@@ -3510,14 +3158,12 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_StructuredEdgeDetection_detectEdgesPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>>(
-      'cv_ximgproc_StructuredEdgeDetection_detectEdges');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat,
+              imp1.CvCallback_0)>>('cv_ximgproc_StructuredEdgeDetection_detectEdges');
   late final _cv_ximgproc_StructuredEdgeDetection_detectEdges =
-      _cv_ximgproc_StructuredEdgeDetection_detectEdgesPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>();
+      _cv_ximgproc_StructuredEdgeDetection_detectEdgesPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_edgesNms(
     StructuredEdgeDetection self,
@@ -3544,22 +3190,13 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_StructuredEdgeDetection_edgesNmsPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Pointer<CvStatus> Function(
-                  StructuredEdgeDetection,
-                  Mat,
-                  Mat,
-                  Mat,
-                  ffi.Int,
-                  ffi.Int,
-                  ffi.Float,
-                  ffi.Bool,
-                  imp1.CvCallback_0)>>(
-      'cv_ximgproc_StructuredEdgeDetection_edgesNms');
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, Mat, ffi.Int, ffi.Int, ffi.Float,
+              ffi.Bool, imp1.CvCallback_0)>>('cv_ximgproc_StructuredEdgeDetection_edgesNms');
   late final _cv_ximgproc_StructuredEdgeDetection_edgesNms =
       _cv_ximgproc_StructuredEdgeDetection_edgesNmsPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, Mat,
-              int, int, double, bool, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              StructuredEdgeDetection, Mat, Mat, Mat, int, int, double, bool, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_anisotropicDiffusion(
     Mat src,
@@ -3581,12 +3218,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_anisotropicDiffusionPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Int, imp1.CvCallback_0)>>('cv_ximgproc_anisotropicDiffusion');
-  late final _cv_ximgproc_anisotropicDiffusion =
-      _cv_ximgproc_anisotropicDiffusionPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, int, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float, ffi.Int,
+              imp1.CvCallback_0)>>('cv_ximgproc_anisotropicDiffusion');
+  late final _cv_ximgproc_anisotropicDiffusion = _cv_ximgproc_anisotropicDiffusionPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_edgePreservingFilter(
     Mat src,
@@ -3605,13 +3240,11 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_edgePreservingFilterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double,
-              imp1.CvCallback_0)>>('cv_ximgproc_edgePreservingFilter');
-  late final _cv_ximgproc_edgePreservingFilter =
-      _cv_ximgproc_edgePreservingFilterPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, int, double, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, imp1.CvCallback_0)>>(
+      'cv_ximgproc_edgePreservingFilter');
+  late final _cv_ximgproc_edgePreservingFilter = _cv_ximgproc_edgePreservingFilterPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_findEllipses(
     Mat image,
@@ -3633,12 +3266,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_findEllipsesPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-              ffi.Float, imp1.CvCallback_0)>>('cv_ximgproc_findEllipses');
-  late final _cv_ximgproc_findEllipses =
-      _cv_ximgproc_findEllipsesPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, double, double, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>>('cv_ximgproc_findEllipses');
+  late final _cv_ximgproc_findEllipses = _cv_ximgproc_findEllipsesPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_niBlackThreshold(
     Mat src,
@@ -3666,20 +3297,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_niBlackThresholdPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat,
-              Mat,
-              ffi.Double,
-              ffi.Int,
-              ffi.Int,
-              ffi.Double,
-              ffi.Int,
-              ffi.Double,
-              imp1.CvCallback_0)>>('cv_ximgproc_niBlackThreshold');
-  late final _cv_ximgproc_niBlackThreshold =
-      _cv_ximgproc_niBlackThresholdPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, int, double,
-              int, double, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int, ffi.Int, ffi.Double, ffi.Int,
+              ffi.Double, imp1.CvCallback_0)>>('cv_ximgproc_niBlackThreshold');
+  late final _cv_ximgproc_niBlackThreshold = _cv_ximgproc_niBlackThresholdPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, int, double, int, double, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_createRLEImage(
     VecPoint3i runs,
@@ -3695,14 +3316,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_rl_createRLEImagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecPoint3i, Mat, CvSize,
-              imp1.CvCallback_0)>>('cv_ximgproc_rl_createRLEImage');
-  late final _cv_ximgproc_rl_createRLEImage =
-      _cv_ximgproc_rl_createRLEImagePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              VecPoint3i, Mat, CvSize, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_rl_createRLEImagePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VecPoint3i, Mat, CvSize, imp1.CvCallback_0)>>(
+          'cv_ximgproc_rl_createRLEImage');
+  late final _cv_ximgproc_rl_createRLEImage = _cv_ximgproc_rl_createRLEImagePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VecPoint3i, Mat, CvSize, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_dilate(
     Mat rlSrc,
@@ -3720,13 +3338,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_rl_dilatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint,
-              imp1.CvCallback_0)>>('cv_ximgproc_rl_dilate');
-  late final _cv_ximgproc_rl_dilate = _cv_ximgproc_rl_dilatePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, CvPoint, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_rl_dilatePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint, imp1.CvCallback_0)>>(
+          'cv_ximgproc_rl_dilate');
+  late final _cv_ximgproc_rl_dilate = _cv_ximgproc_rl_dilatePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_erode(
     Mat rlSrc,
@@ -3748,11 +3364,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_rl_erodePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Bool, CvPoint,
-              imp1.CvCallback_0)>>('cv_ximgproc_rl_erode');
-  late final _cv_ximgproc_rl_erode = _cv_ximgproc_rl_erodePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          Mat, Mat, Mat, bool, CvPoint, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              Mat, Mat, Mat, ffi.Bool, CvPoint, imp1.CvCallback_0)>>('cv_ximgproc_rl_erode');
+  late final _cv_ximgproc_rl_erode = _cv_ximgproc_rl_erodePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, bool, CvPoint, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_getStructuringElement(
     int shape,
@@ -3770,12 +3385,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_rl_getStructuringElementPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Int, CvSize, ffi.Pointer<Mat>,
-              imp1.CvCallback_0)>>('cv_ximgproc_rl_getStructuringElement');
-  late final _cv_ximgproc_rl_getStructuringElement =
-      _cv_ximgproc_rl_getStructuringElementPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+              ffi.Int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_ximgproc_rl_getStructuringElement');
+  late final _cv_ximgproc_rl_getStructuringElement = _cv_ximgproc_rl_getStructuringElementPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   bool cv_ximgproc_rl_isRLMorphologyPossible(
     Mat rlStructuringElement,
@@ -3786,11 +3399,9 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_rl_isRLMorphologyPossiblePtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>(
-          'cv_ximgproc_rl_isRLMorphologyPossible');
+      _lookup<ffi.NativeFunction<ffi.Bool Function(Mat)>>('cv_ximgproc_rl_isRLMorphologyPossible');
   late final _cv_ximgproc_rl_isRLMorphologyPossible =
-      _cv_ximgproc_rl_isRLMorphologyPossiblePtr
-          .asFunction<bool Function(Mat)>();
+      _cv_ximgproc_rl_isRLMorphologyPossiblePtr.asFunction<bool Function(Mat)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_morphologyEx(
     Mat rlSrc,
@@ -3814,12 +3425,10 @@ class CvNativeContrib {
 
   late final _cv_ximgproc_rl_morphologyExPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, Mat, ffi.Bool,
-              CvPoint, imp1.CvCallback_0)>>('cv_ximgproc_rl_morphologyEx');
-  late final _cv_ximgproc_rl_morphologyEx =
-      _cv_ximgproc_rl_morphologyExPtr.asFunction<
           ffi.Pointer<CvStatus> Function(
-              Mat, Mat, int, Mat, bool, CvPoint, imp1.CvCallback_0)>();
+              Mat, Mat, ffi.Int, Mat, ffi.Bool, CvPoint, imp1.CvCallback_0)>>('cv_ximgproc_rl_morphologyEx');
+  late final _cv_ximgproc_rl_morphologyEx = _cv_ximgproc_rl_morphologyExPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int, Mat, bool, CvPoint, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_paint(
     Mat image,
@@ -3835,12 +3444,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_rl_paintPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, Scalar, imp1.CvCallback_0)>>('cv_ximgproc_rl_paint');
-  late final _cv_ximgproc_rl_paint = _cv_ximgproc_rl_paintPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_rl_paintPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp1.CvCallback_0)>>(
+          'cv_ximgproc_rl_paint');
+  late final _cv_ximgproc_rl_paint = _cv_ximgproc_rl_paintPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_rl_threshold(
     Mat src,
@@ -3859,13 +3467,11 @@ class CvNativeContrib {
   }
 
   late final _cv_ximgproc_rl_thresholdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
-              imp1.CvCallback_0)>>('cv_ximgproc_rl_threshold');
-  late final _cv_ximgproc_rl_threshold =
-      _cv_ximgproc_rl_thresholdPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, double, int, imp1.CvCallback_0)>();
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int, imp1.CvCallback_0)>>(
+      'cv_ximgproc_rl_threshold');
+  late final _cv_ximgproc_rl_threshold = _cv_ximgproc_rl_thresholdPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, double, int, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ximgproc_thinning(
     Mat src,
@@ -3881,12 +3487,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_ximgproc_thinningPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              Mat, Mat, ffi.Int, imp1.CvCallback_0)>>('cv_ximgproc_thinning');
-  late final _cv_ximgproc_thinning = _cv_ximgproc_thinningPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(Mat, Mat, int, imp1.CvCallback_0)>();
+  late final _cv_ximgproc_thinningPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, imp1.CvCallback_0)>>(
+          'cv_ximgproc_thinning');
+  late final _cv_ximgproc_thinning =
+      _cv_ximgproc_thinningPtr.asFunction<ffi.Pointer<CvStatus> Function(Mat, Mat, int, imp1.CvCallback_0)>();
 
   void cv_xobjdetect_WBDetector_close(
     PtrWBDetectorPtr self,
@@ -3897,11 +3502,9 @@ class CvNativeContrib {
   }
 
   late final _cv_xobjdetect_WBDetector_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>(
-          'cv_xobjdetect_WBDetector_close');
+      _lookup<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>('cv_xobjdetect_WBDetector_close');
   late final _cv_xobjdetect_WBDetector_close =
-      _cv_xobjdetect_WBDetector_closePtr
-          .asFunction<void Function(PtrWBDetectorPtr)>();
+      _cv_xobjdetect_WBDetector_closePtr.asFunction<void Function(PtrWBDetectorPtr)>();
 
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_create(
     ffi.Pointer<PtrWBDetector> rval,
@@ -3911,13 +3514,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_xobjdetect_WBDetector_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<PtrWBDetector>)>>('cv_xobjdetect_WBDetector_create');
-  late final _cv_xobjdetect_WBDetector_create =
-      _cv_xobjdetect_WBDetector_createPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>)>();
+  late final _cv_xobjdetect_WBDetector_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>)>>(
+          'cv_xobjdetect_WBDetector_create');
+  late final _cv_xobjdetect_WBDetector_create = _cv_xobjdetect_WBDetector_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<PtrWBDetector>)>();
 
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_detect(
     PtrWBDetector self,
@@ -3935,15 +3536,10 @@ class CvNativeContrib {
 
   late final _cv_xobjdetect_WBDetector_detectPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrWBDetector,
-              Mat,
-              ffi.Pointer<VecRect>,
+          ffi.Pointer<CvStatus> Function(PtrWBDetector, Mat, ffi.Pointer<VecRect>,
               ffi.Pointer<VecF64>)>>('cv_xobjdetect_WBDetector_detect');
-  late final _cv_xobjdetect_WBDetector_detect =
-      _cv_xobjdetect_WBDetector_detectPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrWBDetector, Mat, ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>();
+  late final _cv_xobjdetect_WBDetector_detect = _cv_xobjdetect_WBDetector_detectPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(PtrWBDetector, Mat, ffi.Pointer<VecRect>, ffi.Pointer<VecF64>)>();
 
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_read(
     PtrWBDetector self,
@@ -3955,14 +3551,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_xobjdetect_WBDetector_readPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(PtrWBDetector,
-              ffi.Pointer<ffi.Char>)>>('cv_xobjdetect_WBDetector_read');
-  late final _cv_xobjdetect_WBDetector_read =
-      _cv_xobjdetect_WBDetector_readPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrWBDetector, ffi.Pointer<ffi.Char>)>();
+  late final _cv_xobjdetect_WBDetector_readPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>)>>(
+          'cv_xobjdetect_WBDetector_read');
+  late final _cv_xobjdetect_WBDetector_read = _cv_xobjdetect_WBDetector_readPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>)>();
 
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_train(
     PtrWBDetector self,
@@ -3980,10 +3573,8 @@ class CvNativeContrib {
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>)>>('cv_xobjdetect_WBDetector_train');
-  late final _cv_xobjdetect_WBDetector_train =
-      _cv_xobjdetect_WBDetector_trainPtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrWBDetector, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+  late final _cv_xobjdetect_WBDetector_train = _cv_xobjdetect_WBDetector_trainPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
 
   ffi.Pointer<CvStatus> cv_xobjdetect_WBDetector_write(
     PtrWBDetector self,
@@ -3995,14 +3586,11 @@ class CvNativeContrib {
     );
   }
 
-  late final _cv_xobjdetect_WBDetector_writePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(PtrWBDetector,
-              ffi.Pointer<ffi.Char>)>>('cv_xobjdetect_WBDetector_write');
-  late final _cv_xobjdetect_WBDetector_write =
-      _cv_xobjdetect_WBDetector_writePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              PtrWBDetector, ffi.Pointer<ffi.Char>)>();
+  late final _cv_xobjdetect_WBDetector_writePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>)>>(
+          'cv_xobjdetect_WBDetector_write');
+  late final _cv_xobjdetect_WBDetector_write = _cv_xobjdetect_WBDetector_writePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(PtrWBDetector, ffi.Pointer<ffi.Char>)>();
 
   late final addresses = _SymbolAddresses(this);
 }
@@ -4010,53 +3598,38 @@ class CvNativeContrib {
 class _SymbolAddresses {
   final CvNativeContrib _library;
   _SymbolAddresses(this._library);
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>>
-      get cv_aruco_Dictionary_close => _library._cv_aruco_Dictionary_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>>
-      get cv_aruco_arucoDetector_close =>
-          _library._cv_aruco_arucoDetector_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDictionaryPtr)>> get cv_aruco_Dictionary_close =>
+      _library._cv_aruco_Dictionary_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorPtr)>> get cv_aruco_arucoDetector_close =>
+      _library._cv_aruco_arucoDetector_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParamsPtr)>>
-      get cv_aruco_detectorParameters_close =>
-          _library._cv_aruco_detectorParameters_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>
-      get cv_img_hash_BlockMeanHash_close =>
-          _library._cv_img_hash_BlockMeanHash_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>>
-      get cv_quality_QualityBRISQUE_close =>
-          _library._cv_quality_QualityBRISQUE_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>>
-      get cv_quality_QualityGMSD_close =>
-          _library._cv_quality_QualityGMSD_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>>
-      get cv_quality_QualityMSE_close =>
-          _library._cv_quality_QualityMSE_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>>
-      get cv_quality_QualityPSNR_close =>
-          _library._cv_quality_QualityPSNR_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>>
-      get cv_quality_QualitySSIM_close =>
-          _library._cv_quality_QualitySSIM_closePtr;
+      get cv_aruco_detectorParameters_close => _library._cv_aruco_detectorParameters_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>> get cv_img_hash_BlockMeanHash_close =>
+      _library._cv_img_hash_BlockMeanHash_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityBRISQUEPtr)>> get cv_quality_QualityBRISQUE_close =>
+      _library._cv_quality_QualityBRISQUE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityGMSDPtr)>> get cv_quality_QualityGMSD_close =>
+      _library._cv_quality_QualityGMSD_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityMSEPtr)>> get cv_quality_QualityMSE_close =>
+      _library._cv_quality_QualityMSE_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualityPSNRPtr)>> get cv_quality_QualityPSNR_close =>
+      _library._cv_quality_QualityPSNR_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(QualitySSIMPtr)>> get cv_quality_QualitySSIM_close =>
+      _library._cv_quality_QualitySSIM_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(WeChatQRCodePtr)>>
-      get cv_wechat_qrcode_WeChatQRCode_close =>
-          _library._cv_wechat_qrcode_WeChatQRCode_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>>
-      get cv_ximgproc_EdgeBoxes_close =>
-          _library._cv_ximgproc_EdgeBoxes_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>>
-      get cv_ximgproc_EdgeDrawing_close =>
-          _library._cv_ximgproc_EdgeDrawing_closePtr;
+      get cv_wechat_qrcode_WeChatQRCode_close => _library._cv_wechat_qrcode_WeChatQRCode_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeBoxesPtr)>> get cv_ximgproc_EdgeBoxes_close =>
+      _library._cv_ximgproc_EdgeBoxes_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EdgeDrawingPtr)>> get cv_ximgproc_EdgeDrawing_close =>
+      _library._cv_ximgproc_EdgeDrawing_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(GraphSegmentationPtr)>>
-      get cv_ximgproc_GraphSegmentation_close =>
-          _library._cv_ximgproc_GraphSegmentation_closePtr;
+      get cv_ximgproc_GraphSegmentation_close => _library._cv_ximgproc_GraphSegmentation_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RFFeatureGetterPtr)>>
-      get cv_ximgproc_RFFeatureGetter_close =>
-          _library._cv_ximgproc_RFFeatureGetter_closePtr;
+      get cv_ximgproc_RFFeatureGetter_close => _library._cv_ximgproc_RFFeatureGetter_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StructuredEdgeDetectionPtr)>>
-      get cv_ximgproc_StructuredEdgeDetection_close =>
-          _library._cv_ximgproc_StructuredEdgeDetection_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>>
-      get cv_xobjdetect_WBDetector_close =>
-          _library._cv_xobjdetect_WBDetector_closePtr;
+      get cv_ximgproc_StructuredEdgeDetection_close => _library._cv_ximgproc_StructuredEdgeDetection_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(PtrWBDetectorPtr)>> get cv_xobjdetect_WBDetector_close =>
+      _library._cv_xobjdetect_WBDetector_closePtr;
 }
 
 final class ArucoDetector extends ffi.Struct {

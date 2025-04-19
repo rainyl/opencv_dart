@@ -17,17 +17,13 @@ import 'package:dartcv4/src/g/types.g.dart' as imp1;
 ///
 class CvNativeImgcodecs {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  CvNativeImgcodecs(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
+  CvNativeImgcodecs(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  CvNativeImgcodecs.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
+  CvNativeImgcodecs.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup)
       : _lookup = lookup;
 
   bool cv_haveImageReader(
@@ -39,10 +35,8 @@ class CvNativeImgcodecs {
   }
 
   late final _cv_haveImageReaderPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Char>)>>(
-          'cv_haveImageReader');
-  late final _cv_haveImageReader =
-      _cv_haveImageReaderPtr.asFunction<bool Function(ffi.Pointer<ffi.Char>)>();
+      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Char>)>>('cv_haveImageReader');
+  late final _cv_haveImageReader = _cv_haveImageReaderPtr.asFunction<bool Function(ffi.Pointer<ffi.Char>)>();
 
   bool cv_haveImageWriter(
     ffi.Pointer<ffi.Char> filename,
@@ -53,10 +47,8 @@ class CvNativeImgcodecs {
   }
 
   late final _cv_haveImageWriterPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Char>)>>(
-          'cv_haveImageWriter');
-  late final _cv_haveImageWriter =
-      _cv_haveImageWriterPtr.asFunction<bool Function(ffi.Pointer<ffi.Char>)>();
+      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Char>)>>('cv_haveImageWriter');
+  late final _cv_haveImageWriter = _cv_haveImageWriterPtr.asFunction<bool Function(ffi.Pointer<ffi.Char>)>();
 
   int cv_imcount(
     ffi.Pointer<ffi.Char> filename,
@@ -68,11 +60,9 @@ class CvNativeImgcodecs {
     );
   }
 
-  late final _cv_imcountPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Size Function(ffi.Pointer<ffi.Char>, ffi.Int)>>('cv_imcount');
-  late final _cv_imcount =
-      _cv_imcountPtr.asFunction<int Function(ffi.Pointer<ffi.Char>, int)>();
+  late final _cv_imcountPtr =
+      _lookup<ffi.NativeFunction<ffi.Size Function(ffi.Pointer<ffi.Char>, ffi.Int)>>('cv_imcount');
+  late final _cv_imcount = _cv_imcountPtr.asFunction<int Function(ffi.Pointer<ffi.Char>, int)>();
 
   ffi.Pointer<CvStatus> cv_imdecode(
     VecUChar buf,
@@ -90,11 +80,10 @@ class CvNativeImgcodecs {
 
   late final _cv_imdecodePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(VecUChar, ffi.Int, ffi.Pointer<Mat>,
-              imp1.CvCallback_0)>>('cv_imdecode');
-  late final _cv_imdecode = _cv_imdecodePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VecUChar, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+          ffi.Pointer<CvStatus> Function(
+              VecUChar, ffi.Int, ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_imdecode');
+  late final _cv_imdecode = _cv_imdecodePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VecUChar, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imencode(
     ffi.Pointer<ffi.Char> fileExt,
@@ -114,15 +103,11 @@ class CvNativeImgcodecs {
 
   late final _cv_imencodePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              Mat,
-              ffi.Pointer<ffi.Bool>,
-              ffi.Pointer<VecUChar>,
-              imp1.CvCallback_0)>>('cv_imencode');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>,
+              ffi.Pointer<VecUChar>, imp1.CvCallback_0)>>('cv_imencode');
   late final _cv_imencode = _cv_imencodePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
-          ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imencode_1(
     ffi.Pointer<ffi.Char> fileExt,
@@ -144,16 +129,11 @@ class CvNativeImgcodecs {
 
   late final _cv_imencode_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              Mat,
-              VecI32,
-              ffi.Pointer<ffi.Bool>,
-              ffi.Pointer<VecUChar>,
-              imp1.CvCallback_0)>>('cv_imencode_1');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32, ffi.Pointer<ffi.Bool>,
+              ffi.Pointer<VecUChar>, imp1.CvCallback_0)>>('cv_imencode_1');
   late final _cv_imencode_1 = _cv_imencode_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32,
-          ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32, ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<VecUChar>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imread(
     ffi.Pointer<ffi.Char> filename,
@@ -171,11 +151,10 @@ class CvNativeImgcodecs {
 
   late final _cv_imreadPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
-              ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_imread');
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<Mat>, imp1.CvCallback_0)>>('cv_imread');
   late final _cv_imread = _cv_imreadPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          ffi.Pointer<ffi.Char>, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, ffi.Pointer<Mat>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imwrite(
     ffi.Pointer<ffi.Char> filename,
@@ -193,11 +172,10 @@ class CvNativeImgcodecs {
 
   late final _cv_imwritePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_imwrite');
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_imwrite');
   late final _cv_imwrite = _cv_imwritePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
-          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_imwrite_1(
     ffi.Pointer<ffi.Char> filename,
@@ -217,11 +195,11 @@ class CvNativeImgcodecs {
 
   late final _cv_imwrite_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_imwrite_1');
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<ffi.Char>, Mat, VecI32, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_imwrite_1');
   late final _cv_imwrite_1 = _cv_imwrite_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32,
-          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, Mat, VecI32, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 }
 
 typedef CvStatus = imp1.CvStatus;
