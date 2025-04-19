@@ -81,13 +81,13 @@ Future<Mat> bitwiseANDAsync(InputArray src1, InputArray src2, {OutputArray? dst,
   dst ??= Mat.empty();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_bitwise_and(src1.ref, src2.ref, dst!.ref, callback), (c) {
-          return c.complete(dst);
-        })
+        return c.complete(dst);
+      })
       : cvRunAsync0((callback) => ccore.cv_bitwise_and_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback), (
-          c,
-        ) {
-          return c.complete(dst);
-        });
+        c,
+      ) {
+        return c.complete(dst);
+      });
 }
 
 /// BitwiseNot inverts every bit of an array.
@@ -98,11 +98,11 @@ Future<Mat> bitwiseNOTAsync(InputArray src, {OutputArray? dst, InputArray? mask}
   dst ??= Mat.empty();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_bitwise_not(src.ref, dst!.ref, callback), (c) {
-          return c.complete(dst);
-        })
+        return c.complete(dst);
+      })
       : cvRunAsync0((callback) => ccore.cv_bitwise_not_1(src.ref, dst!.ref, mask.ref, callback), (c) {
-          return c.complete(dst);
-        });
+        return c.complete(dst);
+      });
 }
 
 /// BitwiseOr calculates the per-element bit-wise disjunction of two arrays
@@ -114,13 +114,13 @@ Future<Mat> bitwiseORAsync(InputArray src1, InputArray src2, {OutputArray? dst, 
   dst ??= Mat.empty();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_bitwise_or(src1.ref, src2.ref, dst!.ref, callback), (c) {
-          return c.complete(dst);
-        })
+        return c.complete(dst);
+      })
       : cvRunAsync0((callback) => ccore.cv_bitwise_or_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback), (
-          c,
-        ) {
-          return c.complete(dst);
-        });
+        c,
+      ) {
+        return c.complete(dst);
+      });
 }
 
 /// BitwiseXor calculates the per-element bit-wise "exclusive or" operation
@@ -132,13 +132,13 @@ Future<Mat> bitwiseXORAsync(InputArray src1, InputArray src2, {OutputArray? dst,
   dst ??= Mat.empty();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_bitwise_xor(src1.ref, src2.ref, dst!.ref, callback), (c) {
-          return c.complete(dst);
-        })
+        return c.complete(dst);
+      })
       : cvRunAsync0((callback) => ccore.cv_bitwise_xor_1(src1.ref, src2.ref, dst!.ref, mask.ref, callback), (
-          c,
-        ) {
-          return c.complete(dst);
-        });
+        c,
+      ) {
+        return c.complete(dst);
+      });
 }
 
 /// BatchDistance is a naive nearest neighbor finder.
@@ -856,11 +856,11 @@ Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(InputArray src, {InputArray
   final stddev = calloc<cvg.Scalar>();
   return mask == null
       ? cvRunAsync0((callback) => ccore.cv_meanStdDev(src.ref, mean, stddev, callback), (c) {
-          return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
-        })
+        return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+      })
       : cvRunAsync0((callback) => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, callback), (c) {
-          return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
-        });
+        return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+      });
 }
 
 /// Merge creates one multi-channel array out of several single-channel ones.

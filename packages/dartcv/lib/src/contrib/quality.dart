@@ -93,13 +93,10 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [computeFeatures]
-  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>(
-        (callback) {
-          features ??= Mat.empty();
-          return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
-        },
-        (c) => c.complete(features),
-      );
+  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>((callback) {
+    features ??= Mat.empty();
+    return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
+  }, (c) => c.complete(features));
 
   static final finalizer = OcvFinalizer<cvg.QualityBRISQUEPtr>(
     ccontrib.addresses.cv_quality_QualityBRISQUE_close,

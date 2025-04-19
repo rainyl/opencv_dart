@@ -621,9 +621,9 @@ void main() async {
 
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
-                lutSize * lutType.channels,
-                (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
-              ),
+              lutSize * lutType.channels,
+              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+            ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
@@ -680,11 +680,12 @@ void main() async {
   });
 
   test('cv.merge', () {
-    final src = [
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-    ].cvd;
+    final src =
+        [
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+        ].cvd;
     final dst = cv.merge(src);
     expect(dst.isEmpty, equals(false));
     expect(dst.channels, equals(3));

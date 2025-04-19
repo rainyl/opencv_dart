@@ -268,17 +268,18 @@ void main() async {
 
   // fitEllipse
   test('cv.fitEllipseAsync', () async {
-    final pv = [
-      cv.Point(1, 1),
-      cv.Point(0, 1),
-      cv.Point(0, 2),
-      cv.Point(1, 3),
-      cv.Point(2, 3),
-      cv.Point(4, 2),
-      cv.Point(4, 1),
-      cv.Point(0, 3),
-      cv.Point(0, 2),
-    ].cvd;
+    final pv =
+        [
+          cv.Point(1, 1),
+          cv.Point(0, 1),
+          cv.Point(0, 2),
+          cv.Point(1, 3),
+          cv.Point(2, 3),
+          cv.Point(4, 2),
+          cv.Point(4, 1),
+          cv.Point(0, 3),
+          cv.Point(0, 2),
+        ].cvd;
     final rect = await cv.fitEllipseAsync(pv);
     expect(rect.center.x, closeTo(1.92, 0.1));
     expect(rect.center.y, closeTo(1.78, 0.1));
@@ -942,14 +943,15 @@ void main() async {
     await drawDescription(image, intersectionArea.toInt(), "", cv.Point(70, 520));
 
     // This concave polygon is invalid input to intersectConvexConvex so it returns an invalid intersection
-    final cv.VecPoint notConvex = [
-      cv.Point(25, 560),
-      cv.Point(25, 590),
-      cv.Point(45, 580),
-      cv.Point(60, 600),
-      cv.Point(60, 550),
-      cv.Point(45, 570),
-    ].asVec();
+    final cv.VecPoint notConvex =
+        [
+          cv.Point(25, 560),
+          cv.Point(25, 590),
+          cv.Point(45, 580),
+          cv.Point(60, 600),
+          cv.Point(60, 550),
+          cv.Point(45, 570),
+        ].asVec();
     intersectionArea = await drawIntersection(
       image,
       makeRectangle(cv.Point(10, 550), cv.Point(50, 600)),
