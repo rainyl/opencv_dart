@@ -349,6 +349,10 @@ class VecVecChar extends VecUnmodifible<cvg.VecVecChar, VecChar> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => throw UnsupportedError('Not supported');
 
+  /// Returns a **reference**
+  ///
+  /// Note: the memory of returned [VecChar] is owned by this [VecVecChar],
+  /// explicitly call [VecChar.clone] if the parent [VecVecChar] may be disposed.
   @override
   VecChar operator [](int idx) => VecChar.fromPointer(ccore.std_VecVecChar_get(ptr, idx), attach: false);
 

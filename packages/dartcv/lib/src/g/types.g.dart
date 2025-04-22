@@ -45,48 +45,28 @@ typedef CvCallback_1 = ffi.Pointer<ffi.NativeFunction<CvCallback_1Function>>;
 typedef CvCallback_1Function = ffi.Void Function(ffi.Pointer<ffi.Void>);
 typedef DartCvCallback_1Function = void Function(ffi.Pointer<ffi.Void>);
 typedef CvCallback_2 = ffi.Pointer<ffi.NativeFunction<CvCallback_2Function>>;
-typedef CvCallback_2Function = ffi.Void Function(
-    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-typedef DartCvCallback_2Function = void Function(
-    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef CvCallback_2Function = ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_2Function = void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef CvCallback_3 = ffi.Pointer<ffi.NativeFunction<CvCallback_3Function>>;
 typedef CvCallback_3Function = ffi.Void Function(
     ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef DartCvCallback_3Function = void Function(
     ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef CvCallback_4 = ffi.Pointer<ffi.NativeFunction<CvCallback_4Function>>;
-typedef CvCallback_4Function = ffi.Void Function(ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-typedef DartCvCallback_4Function = void Function(ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef CvCallback_4Function = ffi.Void Function(
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_4Function = void Function(
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef CvCallback_5 = ffi.Pointer<ffi.NativeFunction<CvCallback_5Function>>;
-typedef CvCallback_5Function = ffi.Void Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>);
-typedef DartCvCallback_5Function = void Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>);
+typedef CvCallback_5Function = ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_5Function = void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef CvCallback_6 = ffi.Pointer<ffi.NativeFunction<CvCallback_6Function>>;
-typedef CvCallback_6Function = ffi.Void Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>);
-typedef DartCvCallback_6Function = void Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>);
+typedef CvCallback_6Function = ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
+typedef DartCvCallback_6Function = void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 typedef CvCallback_7 = ffi.Pointer<ffi.NativeFunction<CvCallback_7Function>>;
 typedef CvCallback_7Function = ffi.Void Function(
     ffi.Pointer<ffi.Void>,

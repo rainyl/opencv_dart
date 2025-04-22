@@ -17,17 +17,13 @@ import 'package:dartcv4/src/g/types.g.dart' as imp1;
 ///
 class CvNativeVideoIO {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  CvNativeVideoIO(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
+  CvNativeVideoIO(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  CvNativeVideoIO.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
+  CvNativeVideoIO.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup)
       : _lookup = lookup;
 
   void cv_VideoCapture_close(
@@ -39,10 +35,8 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoCapture_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>>(
-          'cv_VideoCapture_close');
-  late final _cv_VideoCapture_close =
-      _cv_VideoCapture_closePtr.asFunction<void Function(VideoCapturePtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>>('cv_VideoCapture_close');
+  late final _cv_VideoCapture_close = _cv_VideoCapture_closePtr.asFunction<void Function(VideoCapturePtr)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_create(
     ffi.Pointer<VideoCapture> rval,
@@ -52,12 +46,11 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoCapture_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VideoCapture>)>>('cv_VideoCapture_create');
-  late final _cv_VideoCapture_create = _cv_VideoCapture_createPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoCapture>)>();
+  late final _cv_VideoCapture_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoCapture>)>>(
+          'cv_VideoCapture_create');
+  late final _cv_VideoCapture_create =
+      _cv_VideoCapture_createPtr.asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoCapture>)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_create_1(
     ffi.Pointer<ffi.Char> filename,
@@ -75,15 +68,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoCapture_create_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Int,
-              ffi.Pointer<VideoCapture>,
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<VideoCapture>,
               imp1.CvCallback_0)>>('cv_VideoCapture_create_1');
-  late final _cv_VideoCapture_create_1 =
-      _cv_VideoCapture_create_1Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int,
-              ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>();
+  late final _cv_VideoCapture_create_1 = _cv_VideoCapture_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, int, ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_create_2(
     int index,
@@ -102,14 +91,9 @@ class CvNativeVideoIO {
   late final _cv_VideoCapture_create_2Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<VideoCapture>,
-              imp1.CvCallback_0)>>('cv_VideoCapture_create_2');
-  late final _cv_VideoCapture_create_2 =
-      _cv_VideoCapture_create_2Ptr.asFunction<
-          ffi.Pointer<CvStatus> Function(
-              int, int, ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>();
+              ffi.Int, ffi.Int, ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>>('cv_VideoCapture_create_2');
+  late final _cv_VideoCapture_create_2 = _cv_VideoCapture_create_2Ptr
+      .asFunction<ffi.Pointer<CvStatus> Function(int, int, ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>();
 
   double cv_VideoCapture_get(
     VideoCapture self,
@@ -122,10 +106,8 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoCapture_getPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(VideoCapture, ffi.Int)>>(
-          'cv_VideoCapture_get');
-  late final _cv_VideoCapture_get =
-      _cv_VideoCapture_getPtr.asFunction<double Function(VideoCapture, int)>();
+      _lookup<ffi.NativeFunction<ffi.Double Function(VideoCapture, ffi.Int)>>('cv_VideoCapture_get');
+  late final _cv_VideoCapture_get = _cv_VideoCapture_getPtr.asFunction<double Function(VideoCapture, int)>();
 
   ffi.Pointer<ffi.Char> cv_VideoCapture_getBackendName(
     VideoCapture self,
@@ -139,8 +121,7 @@ class CvNativeVideoIO {
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(VideoCapture)>>(
           'cv_VideoCapture_getBackendName');
   late final _cv_VideoCapture_getBackendName =
-      _cv_VideoCapture_getBackendNamePtr
-          .asFunction<ffi.Pointer<ffi.Char> Function(VideoCapture)>();
+      _cv_VideoCapture_getBackendNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(VideoCapture)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_grab(
     VideoCapture self,
@@ -152,12 +133,11 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoCapture_grabPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoCapture, imp1.CvCallback_0)>>('cv_VideoCapture_grab');
-  late final _cv_VideoCapture_grab = _cv_VideoCapture_grabPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoCapture, imp1.CvCallback_0)>();
+  late final _cv_VideoCapture_grabPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoCapture, imp1.CvCallback_0)>>(
+          'cv_VideoCapture_grab');
+  late final _cv_VideoCapture_grab =
+      _cv_VideoCapture_grabPtr.asFunction<ffi.Pointer<CvStatus> Function(VideoCapture, imp1.CvCallback_0)>();
 
   bool cv_VideoCapture_isOpened(
     VideoCapture self,
@@ -168,8 +148,7 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoCapture_isOpenedPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(VideoCapture)>>(
-          'cv_VideoCapture_isOpened');
+      _lookup<ffi.NativeFunction<ffi.Bool Function(VideoCapture)>>('cv_VideoCapture_isOpened');
   late final _cv_VideoCapture_isOpened =
       _cv_VideoCapture_isOpenedPtr.asFunction<bool Function(VideoCapture)>();
 
@@ -189,14 +168,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoCapture_openPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              ffi.Pointer<ffi.Char>,
-              ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoCapture_open');
   late final _cv_VideoCapture_open = _cv_VideoCapture_openPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          VideoCapture, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_open_1(
     VideoCapture self,
@@ -216,15 +192,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoCapture_open_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              ffi.Pointer<ffi.Char>,
-              ffi.Int,
-              ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoCapture_open_1');
   late final _cv_VideoCapture_open_1 = _cv_VideoCapture_open_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>, int,
-          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          VideoCapture, ffi.Pointer<ffi.Char>, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_open_2(
     VideoCapture self,
@@ -243,13 +215,9 @@ class CvNativeVideoIO {
   late final _cv_VideoCapture_open_2Ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              ffi.Int,
-              ffi.Pointer<ffi.Bool>,
-              imp1.CvCallback_0)>>('cv_VideoCapture_open_2');
+              VideoCapture, ffi.Int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_VideoCapture_open_2');
   late final _cv_VideoCapture_open_2 = _cv_VideoCapture_open_2Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VideoCapture, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(VideoCapture, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_open_3(
     VideoCapture self,
@@ -269,15 +237,10 @@ class CvNativeVideoIO {
 
   late final _cv_VideoCapture_open_3Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Int, ffi.Int, ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoCapture_open_3');
   late final _cv_VideoCapture_open_3 = _cv_VideoCapture_open_3Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VideoCapture, int, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(VideoCapture, int, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_read(
     VideoCapture self,
@@ -296,13 +259,9 @@ class CvNativeVideoIO {
   late final _cv_VideoCapture_readPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              Mat,
-              ffi.Pointer<ffi.Bool>,
-              imp1.CvCallback_0)>>('cv_VideoCapture_read');
+              VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_VideoCapture_read');
   late final _cv_VideoCapture_read = _cv_VideoCapture_readPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_release(
     VideoCapture self,
@@ -313,10 +272,9 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoCapture_releasePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoCapture)>>(
-          'cv_VideoCapture_release');
-  late final _cv_VideoCapture_release = _cv_VideoCapture_releasePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(VideoCapture)>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoCapture)>>('cv_VideoCapture_release');
+  late final _cv_VideoCapture_release =
+      _cv_VideoCapture_releasePtr.asFunction<ffi.Pointer<CvStatus> Function(VideoCapture)>();
 
   ffi.Pointer<CvStatus> cv_VideoCapture_retrieve(
     VideoCapture self,
@@ -336,16 +294,10 @@ class CvNativeVideoIO {
 
   late final _cv_VideoCapture_retrievePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoCapture,
-              Mat,
-              ffi.Int,
-              ffi.Pointer<ffi.Bool>,
+          ffi.Pointer<CvStatus> Function(VideoCapture, Mat, ffi.Int, ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoCapture_retrieve');
-  late final _cv_VideoCapture_retrieve =
-      _cv_VideoCapture_retrievePtr.asFunction<
-          ffi.Pointer<CvStatus> Function(VideoCapture, Mat, int,
-              ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+  late final _cv_VideoCapture_retrieve = _cv_VideoCapture_retrievePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(VideoCapture, Mat, int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   void cv_VideoCapture_set(
     VideoCapture self,
@@ -359,12 +311,11 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoCapture_setPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              VideoCapture, ffi.Int, ffi.Double)>>('cv_VideoCapture_set');
-  late final _cv_VideoCapture_set = _cv_VideoCapture_setPtr
-      .asFunction<void Function(VideoCapture, int, double)>();
+  late final _cv_VideoCapture_setPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoCapture, ffi.Int, ffi.Double)>>(
+          'cv_VideoCapture_set');
+  late final _cv_VideoCapture_set =
+      _cv_VideoCapture_setPtr.asFunction<void Function(VideoCapture, int, double)>();
 
   void cv_VideoWriter_close(
     VideoWriterPtr self,
@@ -375,10 +326,8 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoWriter_closePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>>(
-          'cv_VideoWriter_close');
-  late final _cv_VideoWriter_close =
-      _cv_VideoWriter_closePtr.asFunction<void Function(VideoWriterPtr)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>>('cv_VideoWriter_close');
+  late final _cv_VideoWriter_close = _cv_VideoWriter_closePtr.asFunction<void Function(VideoWriterPtr)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_create(
     ffi.Pointer<VideoWriter> rval,
@@ -388,12 +337,11 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoWriter_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<VideoWriter>)>>('cv_VideoWriter_create');
-  late final _cv_VideoWriter_create = _cv_VideoWriter_createPtr
-      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoWriter>)>();
+  late final _cv_VideoWriter_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoWriter>)>>(
+          'cv_VideoWriter_create');
+  late final _cv_VideoWriter_create =
+      _cv_VideoWriter_createPtr.asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<VideoWriter>)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_create_1(
     ffi.Pointer<ffi.Char> name,
@@ -419,18 +367,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoWriter_create_1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Int,
-              ffi.Double,
-              ffi.Int,
-              ffi.Int,
-              ffi.Bool,
-              ffi.Pointer<VideoWriter>,
-              imp1.CvCallback_0)>>('cv_VideoWriter_create_1');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double, ffi.Int, ffi.Int,
+              ffi.Bool, ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>>('cv_VideoWriter_create_1');
   late final _cv_VideoWriter_create_1 = _cv_VideoWriter_create_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, double, int,
-          int, bool, ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(
+          ffi.Pointer<ffi.Char>, int, double, int, int, bool, ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_create_2(
     ffi.Pointer<ffi.Char> name,
@@ -458,19 +399,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoWriter_create_2Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              ffi.Pointer<ffi.Char>,
-              ffi.Int,
-              ffi.Int,
-              ffi.Double,
-              ffi.Int,
-              ffi.Int,
-              ffi.Bool,
-              ffi.Pointer<VideoWriter>,
-              imp1.CvCallback_0)>>('cv_VideoWriter_create_2');
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int, ffi.Double, ffi.Int,
+              ffi.Int, ffi.Bool, ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>>('cv_VideoWriter_create_2');
   late final _cv_VideoWriter_create_2 = _cv_VideoWriter_create_2Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, int, double,
-          int, int, bool, ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, int, int, double, int, int, bool,
+          ffi.Pointer<VideoWriter>, imp1.CvCallback_0)>();
 
   int cv_VideoWriter_fourcc(
     int c1,
@@ -486,10 +419,9 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoWriter_fourccPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Char, ffi.Char, ffi.Char,
-              ffi.Char)>>('cv_VideoWriter_fourcc');
+  late final _cv_VideoWriter_fourccPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Char, ffi.Char, ffi.Char, ffi.Char)>>(
+          'cv_VideoWriter_fourcc');
   late final _cv_VideoWriter_fourcc =
       _cv_VideoWriter_fourccPtr.asFunction<int Function(int, int, int, int)>();
 
@@ -504,10 +436,8 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoWriter_getPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(VideoWriter, ffi.Int)>>(
-          'cv_VideoWriter_get');
-  late final _cv_VideoWriter_get =
-      _cv_VideoWriter_getPtr.asFunction<double Function(VideoWriter, int)>();
+      _lookup<ffi.NativeFunction<ffi.Double Function(VideoWriter, ffi.Int)>>('cv_VideoWriter_get');
+  late final _cv_VideoWriter_get = _cv_VideoWriter_getPtr.asFunction<double Function(VideoWriter, int)>();
 
   ffi.Pointer<ffi.Char> cv_VideoWriter_getBackendName(
     VideoWriter self,
@@ -520,8 +450,8 @@ class CvNativeVideoIO {
   late final _cv_VideoWriter_getBackendNamePtr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(VideoWriter)>>(
           'cv_VideoWriter_getBackendName');
-  late final _cv_VideoWriter_getBackendName = _cv_VideoWriter_getBackendNamePtr
-      .asFunction<ffi.Pointer<ffi.Char> Function(VideoWriter)>();
+  late final _cv_VideoWriter_getBackendName =
+      _cv_VideoWriter_getBackendNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(VideoWriter)>();
 
   bool cv_VideoWriter_isOpened(
     VideoWriter self,
@@ -532,10 +462,8 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoWriter_isOpenedPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(VideoWriter)>>(
-          'cv_VideoWriter_isOpened');
-  late final _cv_VideoWriter_isOpened =
-      _cv_VideoWriter_isOpenedPtr.asFunction<bool Function(VideoWriter)>();
+      _lookup<ffi.NativeFunction<ffi.Bool Function(VideoWriter)>>('cv_VideoWriter_isOpened');
+  late final _cv_VideoWriter_isOpened = _cv_VideoWriter_isOpenedPtr.asFunction<bool Function(VideoWriter)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_open(
     VideoWriter self,
@@ -563,19 +491,11 @@ class CvNativeVideoIO {
 
   late final _cv_VideoWriter_openPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoWriter,
-              ffi.Pointer<ffi.Char>,
-              ffi.Int,
-              ffi.Double,
-              ffi.Int,
-              ffi.Int,
-              ffi.Bool,
-              ffi.Pointer<ffi.Bool>,
-              imp1.CvCallback_0)>>('cv_VideoWriter_open');
+          ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, ffi.Int, ffi.Double, ffi.Int,
+              ffi.Int, ffi.Bool, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>>('cv_VideoWriter_open');
   late final _cv_VideoWriter_open = _cv_VideoWriter_openPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int,
-          double, int, int, bool, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int, double, int, int, bool,
+          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_open_1(
     VideoWriter self,
@@ -617,17 +537,8 @@ class CvNativeVideoIO {
               ffi.Pointer<ffi.Bool>,
               imp1.CvCallback_0)>>('cv_VideoWriter_open_1');
   late final _cv_VideoWriter_open_1 = _cv_VideoWriter_open_1Ptr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          VideoWriter,
-          ffi.Pointer<ffi.Char>,
-          int,
-          int,
-          double,
-          int,
-          int,
-          bool,
-          ffi.Pointer<ffi.Bool>,
-          imp1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(VideoWriter, ffi.Pointer<ffi.Char>, int, int, double, int, int, bool,
+          ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_release(
     VideoWriter self,
@@ -638,10 +549,9 @@ class CvNativeVideoIO {
   }
 
   late final _cv_VideoWriter_releasePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoWriter)>>(
-          'cv_VideoWriter_release');
-  late final _cv_VideoWriter_release = _cv_VideoWriter_releasePtr
-      .asFunction<ffi.Pointer<CvStatus> Function(VideoWriter)>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoWriter)>>('cv_VideoWriter_release');
+  late final _cv_VideoWriter_release =
+      _cv_VideoWriter_releasePtr.asFunction<ffi.Pointer<CvStatus> Function(VideoWriter)>();
 
   void cv_VideoWriter_set(
     VideoWriter self,
@@ -655,12 +565,10 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoWriter_setPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(VideoWriter, ffi.Int, ffi.Double)>>(
-      'cv_VideoWriter_set');
-  late final _cv_VideoWriter_set = _cv_VideoWriter_setPtr
-      .asFunction<void Function(VideoWriter, int, double)>();
+  late final _cv_VideoWriter_setPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(VideoWriter, ffi.Int, ffi.Double)>>('cv_VideoWriter_set');
+  late final _cv_VideoWriter_set =
+      _cv_VideoWriter_setPtr.asFunction<void Function(VideoWriter, int, double)>();
 
   ffi.Pointer<CvStatus> cv_VideoWriter_write(
     VideoWriter self,
@@ -674,12 +582,11 @@ class CvNativeVideoIO {
     );
   }
 
-  late final _cv_VideoWriter_writePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<CvStatus> Function(
-              VideoWriter, Mat, imp1.CvCallback_0)>>('cv_VideoWriter_write');
-  late final _cv_VideoWriter_write = _cv_VideoWriter_writePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp1.CvCallback_0)>();
+  late final _cv_VideoWriter_writePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp1.CvCallback_0)>>(
+          'cv_VideoWriter_write');
+  late final _cv_VideoWriter_write = _cv_VideoWriter_writePtr
+      .asFunction<ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp1.CvCallback_0)>();
 
   late final addresses = _SymbolAddresses(this);
 }
@@ -687,10 +594,10 @@ class CvNativeVideoIO {
 class _SymbolAddresses {
   final CvNativeVideoIO _library;
   _SymbolAddresses(this._library);
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>>
-      get cv_VideoCapture_close => _library._cv_VideoCapture_closePtr;
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>>
-      get cv_VideoWriter_close => _library._cv_VideoWriter_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoCapturePtr)>> get cv_VideoCapture_close =>
+      _library._cv_VideoCapture_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(VideoWriterPtr)>> get cv_VideoWriter_close =>
+      _library._cv_VideoWriter_closePtr;
 }
 
 typedef CvStatus = imp1.CvStatus;
