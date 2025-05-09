@@ -34,12 +34,25 @@ if(ANDROID AND(DEFINED ANDROID_ABI))
   endif()
 endif()
 
-# Try to include user config file if it exists
-if(EXISTS "${CMAKE_SOURCE_DIR}/opencv_config.cmake")
-  message(STATUS "Including user opencv_config.cmake from app root")
-  include("${CMAKE_SOURCE_DIR}/opencv_config.cmake")
+# Generate module config from pubspec.yaml using Dart script
+find_program(DART_EXECUTABLE dart)
+if(NOT DART_EXECUTABLE)
+  message(FATAL_ERROR "Dart SDK not found! Please install Dart to build this package.")
+endif()
+
+set(DARTCV_MODULES_CMAKE "${CMAKE_BINARY_DIR}/dartcv_modules.cmake")
+execute_process(
+  COMMAND ${DART_EXECUTABLE} ${CMAKE_SOURCE_DIR}/bin/generate_dartcv_cmake.dart --stdout
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_FILE ${DARTCV_MODULES_CMAKE}
+  ERROR_QUIET
+)
+
+if(EXISTS "${DARTCV_MODULES_CMAKE}")
+  message(STATUS "Including generated dartcv_modules.cmake from build directory")
+  include("${DARTCV_MODULES_CMAKE}")
 else()
-  message(STATUS "No user opencv_config.cmake found in app root, using default module settings.")
+  message(STATUS "No dartcv_modules.cmake found, using default module settings.")
   set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV calib3d module" FORCE)
   set(DARTCV_WITH_CONTRIB ON CACHE BOOL "Enable OpenCV contrib module" FORCE)
   set(DARTCV_WITH_DNN ON CACHE BOOL "Enable OpenCV dnn module" FORCE)
