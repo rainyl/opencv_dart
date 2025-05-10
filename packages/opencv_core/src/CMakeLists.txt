@@ -15,9 +15,11 @@ endmacro()
 
 function(_parse_dartcv_cmake_vars)
   # Generate module config from pubspec.yaml using Dart script
+  # The step should not be mendatary for better user experience
   find_program(DART_EXECUTABLE dart)
   if(NOT DART_EXECUTABLE)
     message(WARNING "Dart SDK not found! Will use default modules.")
+    return()
   endif()
 
   message(DEBUG "CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
@@ -134,6 +136,7 @@ message(DEBUG "DARTCV_WITH_VIDEOIO: ${DARTCV_WITH_VIDEOIO}")
 message(STATUS "Enabled modules: ${_enabled_modules}")
 message(STATUS "Disabled modules: ${_disabled_modules}")
 
+# TODO: remove this line when finished
 message(FATAL_ERROR "EXIT")
 
 include(FetchContent)
