@@ -78,7 +78,7 @@ android {
           }
         }
 
-        def targetPlatforms = project.getProperty('target-platform').split(',') as List
+        def targetPlatforms = (project.hasProperty('target-platform') ? project.getProperty('target-platform') : 'android-arm,android-arm64,android-x86,android-x64').split(',') as List
         if (!targetPlatforms.isEmpty()) {
           def platformAbiMap = [
             'android-arm64': 'arm64-v8a',

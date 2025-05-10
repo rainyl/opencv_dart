@@ -34,19 +34,39 @@ if(ANDROID AND(DEFINED ANDROID_ABI))
   endif()
 endif()
 
-set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV calib3d module" FORCE)
-set(DARTCV_WITH_CONTRIB ON CACHE BOOL "Enable OpenCV contrib module" FORCE)
-set(DARTCV_WITH_DNN ON CACHE BOOL "Enable OpenCV dnn module" FORCE)
-set(DARTCV_WITH_FEATURE2D ON CACHE BOOL "Enable OpenCV feature2d module" FORCE)
-set(DARTCV_WITH_HIGHGUI OFF CACHE BOOL "Enable OpenCV highgui module" FORCE)
-set(DARTCV_WITH_IMGPROC ON CACHE BOOL "Enable OpenCV imgproc module" FORCE)
-set(DARTCV_WITH_OBJDETECT ON CACHE BOOL "Enable OpenCV objdetect module" FORCE)
-set(DARTCV_WITH_PHOTO ON CACHE BOOL "Enable OpenCV photo module" FORCE)
-set(DARTCV_WITH_STITCHING ON CACHE BOOL "Enable OpenCV stitching module" FORCE)
-set(DARTCV_WITH_VIDEO ON CACHE BOOL "Enable OpenCV video module")
-set(DARTCV_WITH_VIDEOIO ON CACHE BOOL "Enable OpenCV videoio module" FORCE)
-set(DARTCV_WITH_GAPI OFF CACHE BOOL "Enable OpenCV gapi module" FORCE)
-set(DARTCV_WORLD OFF CACHE BOOL "Enable OpenCV world module" FORCE)
+# Generate module config from pubspec.yaml using Dart script
+find_program(DART_EXECUTABLE dart)
+if(NOT DART_EXECUTABLE)
+  message(FATAL_ERROR "Dart SDK not found! Please install Dart to build this package.")
+endif()
+
+set(DARTCV_MODULES_CMAKE "${CMAKE_BINARY_DIR}/dartcv_modules.cmake")
+execute_process(
+  COMMAND ${DART_EXECUTABLE} ${CMAKE_SOURCE_DIR}/bin/generate_dartcv_cmake.dart --stdout
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_FILE ${DARTCV_MODULES_CMAKE}
+  ERROR_QUIET
+)
+
+if(EXISTS "${DARTCV_MODULES_CMAKE}")
+  message(STATUS "Including generated dartcv_modules.cmake from build directory")
+  include("${DARTCV_MODULES_CMAKE}")
+else()
+  message(STATUS "No dartcv_modules.cmake found, using default module settings.")
+  set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV calib3d module" FORCE)
+  set(DARTCV_WITH_CONTRIB ON CACHE BOOL "Enable OpenCV contrib module" FORCE)
+  set(DARTCV_WITH_DNN ON CACHE BOOL "Enable OpenCV dnn module" FORCE)
+  set(DARTCV_WITH_FEATURE2D ON CACHE BOOL "Enable OpenCV feature2d module" FORCE)
+  set(DARTCV_WITH_HIGHGUI OFF CACHE BOOL "Enable OpenCV highgui module" FORCE)
+  set(DARTCV_WITH_IMGPROC ON CACHE BOOL "Enable OpenCV imgproc module" FORCE)
+  set(DARTCV_WITH_OBJDETECT ON CACHE BOOL "Enable OpenCV objdetect module" FORCE)
+  set(DARTCV_WITH_PHOTO ON CACHE BOOL "Enable OpenCV photo module" FORCE)
+  set(DARTCV_WITH_STITCHING ON CACHE BOOL "Enable OpenCV stitching module" FORCE)
+  set(DARTCV_WITH_VIDEO ON CACHE BOOL "Enable OpenCV video module" FORCE)
+  set(DARTCV_WITH_VIDEOIO ON CACHE BOOL "Enable OpenCV videoio module" FORCE)
+  set(DARTCV_WITH_GAPI OFF CACHE BOOL "Enable OpenCV gapi module" FORCE)
+  set(DARTCV_WORLD OFF CACHE BOOL "Enable OpenCV world module" FORCE)
+endif()
 
 set(OPENCV_VERSION "${_version_opencv}")
 set(DARTCV_DISABLE_DOWNLOAD_OPENCV OFF)

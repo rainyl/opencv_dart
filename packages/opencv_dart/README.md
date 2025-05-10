@@ -12,7 +12,6 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 >
 > - Q&A: [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
 > - ~~If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)~~ Won't update until `Native Assets` being stable.
->
 
 ## Supported platforms
 
@@ -45,3 +44,43 @@ see [Demos](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#Demos)
 ## License
 
 [Apache-2.0 License](LICENSE)
+
+## Customizing OpenCV Modules
+
+You can enable or disable specific OpenCV modules for your build by specifying them in your app's `pubspec.yaml` file under the `dartcv_modules` section. A Dart script will read this section and generate a `dartcv_modules.cmake` file, which is used by the build system.
+
+### Example `pubspec.yaml` configuration
+
+```yaml
+dartcv_modules:
+  exclude:
+    - contrib
+    - dnn
+    - features2d
+# or
+# dartcv_modules:
+#   include:
+#     - core
+#     - imgproc
+```
+
+- Use `exclude` to disable specific modules, or `include` to enable only specific modules.
+- The Dart script will generate a `dartcv_modules.cmake` file in your app root before building.
+- If neither is specified, all default modules will be enabled.
+
+### iOS/macOS Module Selection
+
+For iOS and macOS, module selection is handled via CocoaPods. In your `ios/Podfile` or `macos/Podfile`, specify only the modules you need:
+
+```ruby
+pod 'DartCvIOS/core', '4.11.0.2'
+pod 'DartCvIOS/imgproc', '4.11.0.2'
+# Add more as needed
+```
+
+- Only the modules you list will be included in your app.
+- Make sure your Podfile matches your desired module configuration.
+
+### Generating the CMake Config
+
+The build system will automatically generate the CMake config from your `pubspec.yaml` at build time. You do not need to run any script manually.
