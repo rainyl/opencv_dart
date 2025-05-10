@@ -13,6 +13,53 @@ macro(_find_version _version_var _version_file _regex_find _regex_replace)
   endif()
 endmacro()
 
+function(_parse_dartcv_cmake_vars)
+  # Generate module config from pubspec.yaml using Dart script
+  find_program(DART_EXECUTABLE dart)
+  if(NOT DART_EXECUTABLE)
+    message(WARNING "Dart SDK not found! Will use default modules.")
+  endif()
+
+  message(DEBUG "CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+  # find user project directory
+  # TODO: currently work in android, need to be tested on linux and windows
+  get_filename_component(_working_dir "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" DIRECTORY)
+  while(NOT EXISTS "${_working_dir}/build" AND NOT "${_working_dir}" STREQUAL "/")
+    get_filename_component(_working_dir "${_working_dir}" DIRECTORY)
+  endwhile()
+  message(DEBUG "WORKING_DIR: ${_working_dir}")
+
+  execute_process(
+    COMMAND ${DART_EXECUTABLE} run dartcv4:gen_cmake_vars
+    OUTPUT_VARIABLE _output
+    WORKING_DIRECTORY ${_working_dir}
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+
+  message(DEBUG "Generate command output:\n${_output}")
+
+  string(REGEX MATCH "###DARTCV_GEN_CMAKE_VAR_BEGIN###\n.*###DARTCV_GEN_CMAKE_VAR_END###" _content ${_output})
+  if(_content)
+    string(REGEX REPLACE "###DARTCV_GEN_CMAKE_VAR_BEGIN###\n" "" _content ${_content})
+    string(REGEX REPLACE "###DARTCV_GEN_CMAKE_VAR_END###" "" _content ${_content})
+    string(STRIP _content ${_content})
+  else()
+    message(WARNING "No matching DARTCV_GEN_CMAKE_VAR block found.")
+    return()
+  endif()
+
+  # Split to lines
+  string(REGEX REPLACE "\r?\n" ";" _lines "${_content}")
+  foreach(_line IN LISTS _lines)
+    if(_line MATCHES "^([^=]+)=(ON|OFF)$")
+      set(_var_name "DARTCV_WITH_${CMAKE_MATCH_1}")
+      set(_var_value "${CMAKE_MATCH_2}")
+      set(${_var_name} ${_var_value} CACHE BOOL "Enable OpenCV ${CMAKE_MATCH_1} module" FORCE)
+    endif()
+  endforeach()
+endfunction()
+
 _find_version(_version_project "${PROJ_DIR}/pubspec.yaml" "^version: (.+)*$" "version: (.+)*$")
 _find_version(_version_opencv "${PROJ_DIR}/pubspec.yaml" "^opencv_version: (.+)*$" "opencv_version: (.+)*$")
 _find_version(_version_dartcv "${PROJ_DIR}/pubspec.yaml" "^dartcv_version: (.+)*$" "dartcv_version: (.+)*$")
@@ -27,49 +74,67 @@ set(PROJECT_VERSION "${_version_project}")
 
 # Flutter doesn't support build android-x86, disable here
 # https://docs.flutter.dev/deployment/android#what-are-the-supported-target-architectures
-if(ANDROID AND(DEFINED ANDROID_ABI))
+if(ANDROID AND (DEFINED ANDROID_ABI))
   if(${ANDROID_ABI} STREQUAL "x86")
     message(STATUS "Unsupported ABI: x86")
     return()
   endif()
 endif()
 
-# Generate module config from pubspec.yaml using Dart script
-find_program(DART_EXECUTABLE dart)
-if(NOT DART_EXECUTABLE)
-  message(FATAL_ERROR "Dart SDK not found! Please install Dart to build this package.")
-endif()
+_parse_dartcv_cmake_vars()
 
-set(DARTCV_MODULES_CMAKE "${CMAKE_BINARY_DIR}/dartcv_modules.cmake")
-execute_process(
-  COMMAND ${DART_EXECUTABLE} ${CMAKE_SOURCE_DIR}/bin/generate_dartcv_cmake.dart --stdout
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_FILE ${DARTCV_MODULES_CMAKE}
-  ERROR_QUIET
-)
+set(_enabled_modules "core")
+set(_disabled_modules)
+set(_modules CALIB3D CONTRIB DNN FEATURES2D IMGPROC OBJDETECT PHOTO STITCHING VIDEO)
+foreach(_m IN LISTS _modules)
+  if(NOT DEFINED ${DARTCV_WITH_${_m}})
+    set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV ${_m} module" FORCE)
+  endif()
 
-if(EXISTS "${DARTCV_MODULES_CMAKE}")
-  message(STATUS "Including generated dartcv_modules.cmake from build directory")
-  include("${DARTCV_MODULES_CMAKE}")
-else()
-  message(STATUS "No dartcv_modules.cmake found, using default module settings.")
-  set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV calib3d module" FORCE)
-  set(DARTCV_WITH_CONTRIB ON CACHE BOOL "Enable OpenCV contrib module" FORCE)
-  set(DARTCV_WITH_DNN ON CACHE BOOL "Enable OpenCV dnn module" FORCE)
-  set(DARTCV_WITH_FEATURE2D ON CACHE BOOL "Enable OpenCV feature2d module" FORCE)
-  set(DARTCV_WITH_HIGHGUI OFF CACHE BOOL "Enable OpenCV highgui module" FORCE)
-  set(DARTCV_WITH_IMGPROC ON CACHE BOOL "Enable OpenCV imgproc module" FORCE)
-  set(DARTCV_WITH_OBJDETECT ON CACHE BOOL "Enable OpenCV objdetect module" FORCE)
-  set(DARTCV_WITH_PHOTO ON CACHE BOOL "Enable OpenCV photo module" FORCE)
-  set(DARTCV_WITH_STITCHING ON CACHE BOOL "Enable OpenCV stitching module" FORCE)
-  set(DARTCV_WITH_VIDEO ON CACHE BOOL "Enable OpenCV video module" FORCE)
-  set(DARTCV_WITH_VIDEOIO OFF CACHE BOOL "Enable OpenCV videoio module" FORCE)
-  set(DARTCV_WITH_GAPI OFF CACHE BOOL "Enable OpenCV gapi module" FORCE)
-  set(DARTCV_WORLD OFF CACHE BOOL "Enable OpenCV world module" FORCE)
-endif()
+  string(TOLOWER ${_m} _m_lower)
+  if(${DARTCV_WITH_${_m}})
+    set(_enabled_modules ${_enabled_modules} ${_m_lower})
+  else()
+    set(_disabled_modules ${_disabled_modules} ${_m_lower})
+  endif()
+endforeach()
+
+set(_modules HIGHGUI VIDEOIO)
+foreach(_m IN LISTS _modules)
+  if(NOT DEFINED ${DARTCV_WITH_${_m}})
+    set(DARTCV_WITH_CALIB3D OFF CACHE BOOL "Enable OpenCV ${_m} module" FORCE)
+  endif()
+
+  string(TOLOWER ${_m} _m_lower)
+  if(${DARTCV_WITH_${_m}})
+    set(_enabled_modules ${_enabled_modules} ${_m_lower})
+  else()
+    set(_disabled_modules ${_disabled_modules} ${_m_lower})
+  endif()
+endforeach()
+
+set(DARTCV_WITH_GAPI OFF CACHE BOOL "Enable OpenCV gapi module" FORCE)
+set(DARTCV_WORLD OFF CACHE BOOL "Enable OpenCV world module" FORCE)
 
 set(OPENCV_VERSION "${_version_opencv}")
 set(DARTCV_DISABLE_DOWNLOAD_OPENCV OFF)
+
+message(DEBUG "DARTCV_WITH_CALIB3D: ${DARTCV_WITH_CALIB3D}")
+message(DEBUG "DARTCV_WITH_CONTRIB: ${DARTCV_WITH_CONTRIB}")
+message(DEBUG "DARTCV_WITH_DNN: ${DARTCV_WITH_DNN}")
+message(DEBUG "DARTCV_WITH_FEATURES2D: ${DARTCV_WITH_FEATURES2D}")
+message(DEBUG "DARTCV_WITH_HIGHGUI: ${DARTCV_WITH_HIGHGUI}")
+message(DEBUG "DARTCV_WITH_IMGPROC: ${DARTCV_WITH_IMGPROC}")
+message(DEBUG "DARTCV_WITH_OBJDETECT: ${DARTCV_WITH_OBJDETECT}")
+message(DEBUG "DARTCV_WITH_PHOTO: ${DARTCV_WITH_PHOTO}")
+message(DEBUG "DARTCV_WITH_STITCHING: ${DARTCV_WITH_STITCHING}")
+message(DEBUG "DARTCV_WITH_VIDEO: ${DARTCV_WITH_VIDEO}")
+message(DEBUG "DARTCV_WITH_VIDEOIO: ${DARTCV_WITH_VIDEOIO}")
+
+message(STATUS "Enabled modules: ${_enabled_modules}")
+message(STATUS "Disabled modules: ${_disabled_modules}")
+
+message(FATAL_ERROR "EXIT")
 
 include(FetchContent)
 FetchContent_Declare(

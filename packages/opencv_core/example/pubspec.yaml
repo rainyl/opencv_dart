@@ -95,3 +95,16 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+hooks:
+  user_defines:
+    dartcv4:
+      exclude_modules:
+        - contrib
+        - dnn
+        - features2d
+        - core
+      include_modules:
+        - core
+        - imgproc
+        - videoio
