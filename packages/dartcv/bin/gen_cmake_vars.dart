@@ -62,14 +62,16 @@ Map<String, String> parseUserDefinedExcludeModules(String pubspecPath, {bool exc
       // include is priority over exclude
       final includeModules = dartcvDefines['include_modules'] as YamlList? ?? YamlList();
 
-      final include = includeModules
-          .map((dynamic module) => module.toString().toLowerCase())
-          .where((e) => defaultModuleSettings.containsKey(e))
-          .toList();
-      final exclude = excludeModules
-          .map((dynamic module) => module.toString().toLowerCase())
-          .where((e) => defaultModuleSettings.containsKey(e) && !include.contains(e))
-          .toList();
+      final include =
+          includeModules
+              .map((dynamic module) => module.toString().toLowerCase())
+              .where((e) => defaultModuleSettings.containsKey(e))
+              .toList();
+      final exclude =
+          excludeModules
+              .map((dynamic module) => module.toString().toLowerCase())
+              .where((e) => defaultModuleSettings.containsKey(e) && !include.contains(e))
+              .toList();
 
       final result = {
         for (final e in defaultModuleSettings.keys)
