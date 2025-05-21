@@ -590,21 +590,20 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
     double Sigma = 1.0,
     bool SumFlag = true,
   }) {
-    final p =
-        calloc<cvg.EdgeDrawingParams>()
-          ..ref.AnchorThresholdValue = AnchorThresholdValue
-          ..ref.EdgeDetectionOperator = EdgeDetectionOperator
-          ..ref.GradientThresholdValue = GradientThresholdValue
-          ..ref.LineFitErrorThreshold = LineFitErrorThreshold
-          ..ref.MaxDistanceBetweenTwoLines = MaxDistanceBetweenTwoLines
-          ..ref.MaxErrorThreshold = MaxErrorThreshold
-          ..ref.MinLineLength = MinLineLength
-          ..ref.MinPathLength = MinPathLength
-          ..ref.NFAValidation = NFAValidation
-          ..ref.PFmode = PFmode
-          ..ref.ScanInterval = ScanInterval
-          ..ref.Sigma = Sigma
-          ..ref.SumFlag = SumFlag;
+    final p = calloc<cvg.EdgeDrawingParams>()
+      ..ref.AnchorThresholdValue = AnchorThresholdValue
+      ..ref.EdgeDetectionOperator = EdgeDetectionOperator
+      ..ref.GradientThresholdValue = GradientThresholdValue
+      ..ref.LineFitErrorThreshold = LineFitErrorThreshold
+      ..ref.MaxDistanceBetweenTwoLines = MaxDistanceBetweenTwoLines
+      ..ref.MaxErrorThreshold = MaxErrorThreshold
+      ..ref.MinLineLength = MinLineLength
+      ..ref.MinPathLength = MinPathLength
+      ..ref.NFAValidation = NFAValidation
+      ..ref.PFmode = PFmode
+      ..ref.ScanInterval = ScanInterval
+      ..ref.Sigma = Sigma
+      ..ref.SumFlag = SumFlag;
     return EdgeDrawingParams.fromPointer(p);
   }
 

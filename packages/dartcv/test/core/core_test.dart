@@ -680,12 +680,11 @@ void main() async {
   });
 
   test('cv.merge', () {
-    final src =
-        [
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-        ].cvd;
+    final src = [
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+    ].cvd;
     final dst = cv.merge(src);
     expect(dst.isEmpty, equals(false));
     expect(dst.channels, equals(3));

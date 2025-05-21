@@ -18,12 +18,11 @@ class Scalar extends CvStruct<cvg.Scalar> {
   }
 
   factory Scalar([double val1 = 0.0, double val2 = 0.0, double val3 = 0.0, double val4 = 0.0]) {
-    final p =
-        calloc<cvg.Scalar>()
-          ..ref.val1 = val1
-          ..ref.val2 = val2
-          ..ref.val3 = val3
-          ..ref.val4 = val4;
+    final p = calloc<cvg.Scalar>()
+      ..ref.val1 = val1
+      ..ref.val2 = val2
+      ..ref.val3 = val3
+      ..ref.val4 = val4;
     return Scalar._(p);
   }
   factory Scalar.fromNative(cvg.Scalar s) => Scalar(s.val1, s.val2, s.val3, s.val4);

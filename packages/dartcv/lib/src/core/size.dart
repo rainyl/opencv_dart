@@ -17,20 +17,18 @@ class Size extends CvStruct<cvg.CvSize> {
   }
 
   factory Size(int width, int height) {
-    final p =
-        calloc<cvg.CvSize>()
-          ..ref.height = height
-          ..ref.width = width;
+    final p = calloc<cvg.CvSize>()
+      ..ref.height = height
+      ..ref.width = width;
     return Size.fromPointer(p);
   }
 
   factory Size.fromNative(cvg.CvSize sz) => Size(sz.width, sz.height);
 
   factory Size.fromRecord((int, int) record) {
-    final p =
-        calloc<cvg.CvSize>()
-          ..ref.height = record.$2
-          ..ref.width = record.$1;
+    final p = calloc<cvg.CvSize>()
+      ..ref.height = record.$2
+      ..ref.width = record.$1;
     return Size.fromPointer(p);
   }
 
@@ -67,28 +65,25 @@ class Size2f extends CvStruct<cvg.CvSize2f> {
   }
 
   factory Size2f(double width, double height) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = height
-          ..ref.width = width;
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = height
+      ..ref.width = width;
     return Size2f.fromPointer(p);
   }
 
   factory Size2f.fromNative(cvg.CvSize2f sz) => Size2f(sz.width, sz.height);
 
   factory Size2f.fromRecord((double, double) record) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = record.$2
-          ..ref.width = record.$1;
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = record.$2
+      ..ref.width = record.$1;
     return Size2f.fromPointer(p);
   }
 
   factory Size2f.fromSize(Size size) {
-    final p =
-        calloc<cvg.CvSize2f>()
-          ..ref.height = size.height.toDouble()
-          ..ref.width = size.width.toDouble();
+    final p = calloc<cvg.CvSize2f>()
+      ..ref.height = size.height.toDouble()
+      ..ref.width = size.width.toDouble();
     return Size2f.fromPointer(p);
   }
 

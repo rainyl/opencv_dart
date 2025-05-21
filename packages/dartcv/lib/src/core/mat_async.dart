@@ -70,10 +70,9 @@ extension MatAsync on Mat {
   }
 
   Future<void> copyToAsync(Mat dst, {Mat? mask}) async => cvRunAsync0(
-    (callback) =>
-        mask == null
-            ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
-            : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
+    (callback) => mask == null
+        ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
+        : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
     (c) => c.complete(),
   );
 

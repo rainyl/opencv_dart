@@ -20,15 +20,14 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
     }
   }
   factory KeyPoint(double x, double y, double size, double angle, double response, int octave, int classID) {
-    final ptr =
-        calloc<cvg.KeyPoint>()
-          ..ref.x = x
-          ..ref.y = y
-          ..ref.size = size
-          ..ref.angle = angle
-          ..ref.response = response
-          ..ref.octave = octave
-          ..ref.classID = classID;
+    final ptr = calloc<cvg.KeyPoint>()
+      ..ref.x = x
+      ..ref.y = y
+      ..ref.size = size
+      ..ref.angle = angle
+      ..ref.response = response
+      ..ref.octave = octave
+      ..ref.classID = classID;
     return KeyPoint._(ptr);
   }
   factory KeyPoint.fromNative(cvg.KeyPoint r) =>
