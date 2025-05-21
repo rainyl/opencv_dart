@@ -34,7 +34,7 @@ function(_parse_dartcv_cmake_vars)
 
   if(ANDROID AND DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
     get_filename_component(_working_dir "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" DIRECTORY)
-  elseif(WIN32)
+  elseif(WIN32 OR UNIX)
     get_filename_component(_working_dir "${CMAKE_BINARY_DIR}" DIRECTORY)
   endif()
 
