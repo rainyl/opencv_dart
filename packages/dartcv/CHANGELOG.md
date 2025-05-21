@@ -4,6 +4,7 @@
 * add `MatType.elemSize` `MatType.elemSize1`
 * remove deprecated `(double x, double y, double z).asPoint3f`
   `(double x, double y).asPoint2f` `(int x, int y).asPoint` `VecPoint.toVecVecPoint`
+* add `bin/gen_cmake_vars.dart` for generating optional module vars for CMake
 
 ## 1.1.3
 

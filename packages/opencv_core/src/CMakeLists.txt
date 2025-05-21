@@ -30,19 +30,17 @@ function(_parse_dartcv_cmake_vars)
   endif()
 
   # Infer working directory
-  message(DEBUG "CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-
+  message(STATUS "CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
   if(ANDROID AND DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
     get_filename_component(_working_dir "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" DIRECTORY)
   elseif(WIN32 OR UNIX)
     get_filename_component(_working_dir "${CMAKE_BINARY_DIR}" DIRECTORY)
   endif()
 
-  # TODO: currently work in android, need to be tested on linux and windows
-  message(DEBUG "WORKING_DIR: ${_working_dir}")
+  message(STATUS "WORKING_DIR: ${_working_dir}")
 
-  if(NOT DEFINED _working_dir OR NOT EXISTS ${_working_dir})
-    message(FATAL_ERROR "Can not infer working directory or it is not exists.")
+  if(NOT DEFINED _working_dir)
+    message(FATAL_ERROR "Can not infer working directory.")
   endif()
 
   while(NOT EXISTS "${_working_dir}/build" AND NOT "${_working_dir}" STREQUAL "/")
@@ -148,8 +146,6 @@ message(DEBUG "DARTCV_WITH_VIDEOIO: ${DARTCV_WITH_VIDEOIO}")
 message(STATUS "Enabled modules: ${_enabled_modules}")
 message(STATUS "Disabled modules: ${_disabled_modules}")
 
-# TODO: remove this line when finished
-# message(FATAL_ERROR "EXIT")
 include(FetchContent)
 FetchContent_Declare(
   libdartcv
