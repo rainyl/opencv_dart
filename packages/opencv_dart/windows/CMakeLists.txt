@@ -22,12 +22,6 @@ set(FFMPEG_USE_STATIC_LIBS OFF)
 # This can be changed to accommodate different builds.
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
-if(NOT FFMPEG_LIB_PATHS)
-  message(FATAL_ERROR "FFMPEG library paths not found!")
-else()
-  message(STATUS "FFMPEG_LIB_PATHS: ${FFMPEG_LIB_PATHS}")
-endif()
-
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.

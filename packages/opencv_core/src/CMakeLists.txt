@@ -16,32 +16,57 @@ endmacro()
 function(_parse_dartcv_cmake_vars)
   # Generate module config from pubspec.yaml using Dart script
   # The step should not be mendatary for better user experience
-  find_program(DART_EXECUTABLE dart)
+  if(WIN32)
+    find_program(DART_EXECUTABLE dart.bat)
+  else()
+    find_program(DART_EXECUTABLE dart)
+  endif()
+
   if(NOT DART_EXECUTABLE)
     message(WARNING "Dart SDK not found! Will use default modules.")
     return()
+  else()
+    message(STATUS "Dart SDK found: ${DART_EXECUTABLE}")
   endif()
 
+  # Infer working directory
   message(DEBUG "CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-  # find user project directory
+
+  if(ANDROID AND DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+    get_filename_component(_working_dir "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" DIRECTORY)
+  elseif(WIN32)
+    get_filename_component(_working_dir "${CMAKE_BINARY_DIR}" DIRECTORY)
+  endif()
+
   # TODO: currently work in android, need to be tested on linux and windows
-  get_filename_component(_working_dir "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" DIRECTORY)
+  message(DEBUG "WORKING_DIR: ${_working_dir}")
+
+  if(NOT DEFINED _working_dir OR NOT EXISTS ${_working_dir})
+    message(FATAL_ERROR "Can not infer working directory or it is not exists.")
+  endif()
+
   while(NOT EXISTS "${_working_dir}/build" AND NOT "${_working_dir}" STREQUAL "/")
     get_filename_component(_working_dir "${_working_dir}" DIRECTORY)
   endwhile()
-  message(DEBUG "WORKING_DIR: ${_working_dir}")
+
+  message(STATUS "Final WORKING_DIR: ${_working_dir}")
 
   execute_process(
     COMMAND ${DART_EXECUTABLE} run dartcv4:gen_cmake_vars
     OUTPUT_VARIABLE _output
+    ERROR_VARIABLE _error
     WORKING_DIRECTORY ${_working_dir}
-    ERROR_QUIET
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 
-  message(DEBUG "Generate command output:\n${_output}")
+  message(STATUS "Generate command output:\n${_output}")
+
+  if(_error)
+    message(FATAL_ERROR "Error while running dartcv4:gen_cmake_vars: ${_error}")
+  endif(_error)
 
   string(REGEX MATCH "###DARTCV_GEN_CMAKE_VAR_BEGIN###\n.*###DARTCV_GEN_CMAKE_VAR_END###" _content ${_output})
+
   if(_content)
     string(REGEX REPLACE "###DARTCV_GEN_CMAKE_VAR_BEGIN###\n" "" _content ${_content})
     string(REGEX REPLACE "###DARTCV_GEN_CMAKE_VAR_END###" "" _content ${_content})
@@ -53,6 +78,7 @@ function(_parse_dartcv_cmake_vars)
 
   # Split to lines
   string(REGEX REPLACE "\r?\n" ";" _lines "${_content}")
+
   foreach(_line IN LISTS _lines)
     if(_line MATCHES "^([^=]+)=(ON|OFF)$")
       set(_var_name "DARTCV_WITH_${CMAKE_MATCH_1}")
@@ -76,7 +102,7 @@ set(PROJECT_VERSION "${_version_project}")
 
 # Flutter doesn't support build android-x86, disable here
 # https://docs.flutter.dev/deployment/android#what-are-the-supported-target-architectures
-if(ANDROID AND (DEFINED ANDROID_ABI))
+if(ANDROID AND(DEFINED ANDROID_ABI))
   if(${ANDROID_ABI} STREQUAL "x86")
     message(STATUS "Unsupported ABI: x86")
     return()
@@ -87,27 +113,13 @@ _parse_dartcv_cmake_vars()
 
 set(_enabled_modules "core")
 set(_disabled_modules)
-set(_modules CALIB3D CONTRIB DNN FEATURES2D IMGPROC OBJDETECT PHOTO STITCHING VIDEO)
+
+# ebabled modules by default
+set(_modules CALIB3D CONTRIB DNN FEATURES2D HIGHGUI IMGPROC OBJDETECT PHOTO STITCHING VIDEO VIDEOIO)
+
 foreach(_m IN LISTS _modules)
-  if(NOT DEFINED ${DARTCV_WITH_${_m}})
-    set(DARTCV_WITH_CALIB3D ON CACHE BOOL "Enable OpenCV ${_m} module" FORCE)
-  endif()
-
   string(TOLOWER ${_m} _m_lower)
-  if(${DARTCV_WITH_${_m}})
-    set(_enabled_modules ${_enabled_modules} ${_m_lower})
-  else()
-    set(_disabled_modules ${_disabled_modules} ${_m_lower})
-  endif()
-endforeach()
 
-set(_modules HIGHGUI VIDEOIO)
-foreach(_m IN LISTS _modules)
-  if(NOT DEFINED ${DARTCV_WITH_${_m}})
-    set(DARTCV_WITH_CALIB3D OFF CACHE BOOL "Enable OpenCV ${_m} module" FORCE)
-  endif()
-
-  string(TOLOWER ${_m} _m_lower)
   if(${DARTCV_WITH_${_m}})
     set(_enabled_modules ${_enabled_modules} ${_m_lower})
   else()
@@ -137,8 +149,7 @@ message(STATUS "Enabled modules: ${_enabled_modules}")
 message(STATUS "Disabled modules: ${_disabled_modules}")
 
 # TODO: remove this line when finished
-message(FATAL_ERROR "EXIT")
-
+# message(FATAL_ERROR "EXIT")
 include(FetchContent)
 FetchContent_Declare(
   libdartcv

@@ -12,7 +12,7 @@ const defaultModuleSettings = {
   "features2d": "ON",
   "flann": "ON",
   // "gapi", // disabled
-  "highgui": "ON",
+  "highgui": "OFF",
   "imgproc": "ON",
   "imgcodecs": "ON",
   "objdetect": "ON",
