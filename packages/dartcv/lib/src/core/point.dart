@@ -19,10 +19,9 @@ class Point extends CvStruct<cvg.CvPoint> {
     }
   }
   factory Point(int x, int y) {
-    final ptr =
-        calloc<cvg.CvPoint>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point.fromPointer(ptr);
   }
   factory Point.fromNative(cvg.CvPoint p) => Point(p.x, p.y);
@@ -55,10 +54,9 @@ class Point2f extends CvStruct<cvg.CvPoint2f> {
     }
   }
   factory Point2f(double x, double y) {
-    final ptr =
-        calloc<cvg.CvPoint2f>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint2f>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point2f.fromPointer(ptr);
   }
   factory Point2f.fromNative(cvg.CvPoint2f p) => Point2f(p.x, p.y);
@@ -91,10 +89,9 @@ class Point2d extends CvStruct<cvg.CvPoint2d> {
     }
   }
   factory Point2d(double x, double y) {
-    final ptr =
-        calloc<cvg.CvPoint2d>()
-          ..ref.x = x
-          ..ref.y = y;
+    final ptr = calloc<cvg.CvPoint2d>()
+      ..ref.x = x
+      ..ref.y = y;
     return Point2d.fromPointer(ptr);
   }
   factory Point2d.fromNative(cvg.CvPoint2d p) => Point2d(p.x, p.y);
@@ -127,11 +124,10 @@ class Point3f extends CvStruct<cvg.CvPoint3f> {
     }
   }
   factory Point3f(double x, double y, double z) {
-    final ptr =
-        calloc<cvg.CvPoint3f>()
-          ..ref.x = x
-          ..ref.y = y
-          ..ref.z = z;
+    final ptr = calloc<cvg.CvPoint3f>()
+      ..ref.x = x
+      ..ref.y = y
+      ..ref.z = z;
     return Point3f.fromPointer(ptr);
   }
   factory Point3f.fromNative(cvg.CvPoint3f p) => Point3f(p.x, p.y, p.z);
@@ -167,11 +163,10 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
     }
   }
   factory Point3i(int x, int y, int z) {
-    final ptr =
-        calloc<cvg.CvPoint3i>()
-          ..ref.x = x
-          ..ref.y = y
-          ..ref.z = z;
+    final ptr = calloc<cvg.CvPoint3i>()
+      ..ref.x = x
+      ..ref.y = y
+      ..ref.z = z;
     return Point3i.fromPointer(ptr);
   }
   factory Point3i.fromNative(cvg.CvPoint3i p) => Point3i(p.x, p.y, p.z);

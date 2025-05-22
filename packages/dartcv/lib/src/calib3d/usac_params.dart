@@ -26,21 +26,20 @@ class UsacParams extends CvStruct<cvg.UsacParams> {
     int finalPolisher = NONE_POLISHER,
     int finalPolisherIterations = 0,
   }) {
-    final p =
-        calloc<cvg.UsacParams>()
-          ..ref.confidence = confidence
-          ..ref.isParallel = isParallel
-          ..ref.loIterations = loIterations
-          ..ref.loMethod = loMethod
-          ..ref.loSampleSize = loSampleSize
-          ..ref.maxIterations = maxIterations
-          ..ref.neighborsSearch = neighborsSearch
-          ..ref.randomGeneratorState = randomGeneratorState
-          ..ref.sampler = sampler
-          ..ref.score = score
-          ..ref.threshold = threshold
-          ..ref.final_polisher = finalPolisher
-          ..ref.final_polisher_iterations = finalPolisherIterations;
+    final p = calloc<cvg.UsacParams>()
+      ..ref.confidence = confidence
+      ..ref.isParallel = isParallel
+      ..ref.loIterations = loIterations
+      ..ref.loMethod = loMethod
+      ..ref.loSampleSize = loSampleSize
+      ..ref.maxIterations = maxIterations
+      ..ref.neighborsSearch = neighborsSearch
+      ..ref.randomGeneratorState = randomGeneratorState
+      ..ref.sampler = sampler
+      ..ref.score = score
+      ..ref.threshold = threshold
+      ..ref.final_polisher = finalPolisher
+      ..ref.final_polisher_iterations = finalPolisherIterations;
     return UsacParams.fromPointer(p);
   }
 

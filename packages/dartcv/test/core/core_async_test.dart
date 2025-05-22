@@ -410,12 +410,11 @@ void main() async {
   });
 
   test('cv.merge async', () async {
-    final src =
-        [
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-          cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
-        ].cvd;
+    final src = [
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+      cv.Mat.randu(101, 102, cv.MatType.CV_8UC1),
+    ].cvd;
     final dst = await cv.mergeAsync(src);
     expect(dst.isEmpty, equals(false));
     expect(dst.channels, equals(3));

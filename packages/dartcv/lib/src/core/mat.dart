@@ -34,10 +34,9 @@ class Mat extends CvStruct<cvg.Mat> {
     final p = calloc<cvg.Mat>();
     final (rows, cols, elemsize) = (mat.rows, mat.cols, mat.elemSize);
     cvRun(
-      () =>
-          roi == null
-              ? ccore.cv_Mat_create_11(mat.ref, rows, cols, mat.type.value, 0, 0, p, ffi.nullptr)
-              : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
+      () => roi == null
+          ? ccore.cv_Mat_create_11(mat.ref, rows, cols, mat.type.value, 0, 0, p, ffi.nullptr)
+          : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
     );
     final dst = Mat._(p, attach: false, externalSize: rows * cols * elemsize);
     if (copy) return dst.clone();
@@ -201,10 +200,9 @@ class Mat extends CvStruct<cvg.Mat> {
       case VecF64() when rows != null && cols != null && type != null:
       case VecF16() when rows != null && cols != null && type != null:
         cvRun(
-          () =>
-              copyData
-                  ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
-                  : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
+          () => copyData
+              ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
+              : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
         );
       default:
         throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
@@ -379,40 +377,33 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION - Properties
   //SECTION - At Set
 
-  int atU8(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_u8_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_u8_2(ref, i0, i1) : ccore.cv_Mat_get_u8_3(ref, i0, i1, i2));
+  int atU8(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_u8_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_u8_2(ref, i0, i1) : ccore.cv_Mat_get_u8_3(ref, i0, i1, i2));
 
-  int atI8(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_i8_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_i8_2(ref, i0, i1) : ccore.cv_Mat_get_i8_3(ref, i0, i1, i2));
+  int atI8(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i8_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i8_2(ref, i0, i1) : ccore.cv_Mat_get_i8_3(ref, i0, i1, i2));
 
-  int atU16(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_u16_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_u16_2(ref, i0, i1) : ccore.cv_Mat_get_u16_3(ref, i0, i1, i2));
+  int atU16(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_u16_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_u16_2(ref, i0, i1) : ccore.cv_Mat_get_u16_3(ref, i0, i1, i2));
 
-  int atI16(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_i16_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_i16_2(ref, i0, i1) : ccore.cv_Mat_get_i16_3(ref, i0, i1, i2));
+  int atI16(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i16_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i16_2(ref, i0, i1) : ccore.cv_Mat_get_i16_3(ref, i0, i1, i2));
 
-  int atI32(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_i32_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_i32_2(ref, i0, i1) : ccore.cv_Mat_get_i32_3(ref, i0, i1, i2));
+  int atI32(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_i32_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_i32_2(ref, i0, i1) : ccore.cv_Mat_get_i32_3(ref, i0, i1, i2));
 
-  double atF32(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_f32_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_f32_2(ref, i0, i1) : ccore.cv_Mat_get_f32_3(ref, i0, i1, i2));
+  double atF32(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_f32_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_f32_2(ref, i0, i1) : ccore.cv_Mat_get_f32_3(ref, i0, i1, i2));
 
-  double atF64(int i0, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_get_f64_1(ref, i0)
-          : (i2 == null ? ccore.cv_Mat_get_f64_2(ref, i0, i1) : ccore.cv_Mat_get_f64_3(ref, i0, i1, i2));
+  double atF64(int i0, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_get_f64_1(ref, i0)
+      : (i2 == null ? ccore.cv_Mat_get_f64_2(ref, i0, i1) : ccore.cv_Mat_get_f64_3(ref, i0, i1, i2));
 
   /// wrapper of cv::Mat::at()
   ///
@@ -548,54 +539,43 @@ class Mat extends CvStruct<cvg.Mat> {
   //!SECTION At
 
   //SECTION - Set
-  void setU8(int i0, int val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_u8_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_u8_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_u8_3(ref, i0, i1, i2, val));
+  void setU8(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_u8_1(ref, i0, val)
+      : (i2 == null ? ccore.cv_Mat_set_u8_2(ref, i0, i1, val) : ccore.cv_Mat_set_u8_3(ref, i0, i1, i2, val));
 
-  void setI8(int i0, int val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_i8_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_i8_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_i8_3(ref, i0, i1, i2, val));
+  void setI8(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i8_1(ref, i0, val)
+      : (i2 == null ? ccore.cv_Mat_set_i8_2(ref, i0, i1, val) : ccore.cv_Mat_set_i8_3(ref, i0, i1, i2, val));
 
-  void setU16(int i0, int val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_u16_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
+  void setU16(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_u16_1(ref, i0, val)
+      : (i2 == null
+            ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
 
-  void setI16(int i0, int val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_i16_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
+  void setI16(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i16_1(ref, i0, val)
+      : (i2 == null
+            ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
 
-  void setI32(int i0, int val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_i32_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
+  void setI32(int i0, int val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_i32_1(ref, i0, val)
+      : (i2 == null
+            ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
 
-  void setF32(int i0, double val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_f32_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
+  void setF32(int i0, double val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_f32_1(ref, i0, val)
+      : (i2 == null
+            ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
 
-  void setF64(int i0, double val, {int? i1, int? i2}) =>
-      i1 == null
-          ? ccore.cv_Mat_set_f64_1(ref, i0, val)
-          : (i2 == null
-              ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
-              : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
+  void setF64(int i0, double val, {int? i1, int? i2}) => i1 == null
+      ? ccore.cv_Mat_set_f64_1(ref, i0, val)
+      : (i2 == null
+            ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
 
   void setVec<T extends CvVec>(int row, int col, T val) {
     switch (val) {
@@ -1237,10 +1217,9 @@ class Mat extends CvStruct<cvg.Mat> {
   /// zeros before copying the data.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a33fd5d125b4c302b0c9aa86980791a77
-  void copyTo(Mat dst, {Mat? mask}) =>
-      mask == null
-          ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
-          : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
+  void copyTo(Mat dst, {Mat? mask}) => mask == null
+      ? cvRun(() => ccore.cv_Mat_copyTo(ref, dst.ref, ffi.nullptr))
+      : cvRun(() => ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, ffi.nullptr));
 
   /// Converts an array to another data type with optional scaling.
   ///

@@ -20,12 +20,11 @@ class DMatch extends CvStruct<cvg.DMatch> {
     }
   }
   factory DMatch(int queryIdx, int trainIdx, int imgIdx, double distance) {
-    final ptr =
-        calloc<cvg.DMatch>()
-          ..ref.queryIdx = queryIdx
-          ..ref.trainIdx = trainIdx
-          ..ref.imgIdx = imgIdx
-          ..ref.distance = distance;
+    final ptr = calloc<cvg.DMatch>()
+      ..ref.queryIdx = queryIdx
+      ..ref.trainIdx = trainIdx
+      ..ref.imgIdx = imgIdx
+      ..ref.distance = distance;
     return DMatch._(ptr);
   }
   factory DMatch.fromNative(cvg.DMatch r) => DMatch(r.queryIdx, r.trainIdx, r.imgIdx, r.distance);

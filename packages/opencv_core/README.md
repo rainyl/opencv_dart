@@ -22,6 +22,37 @@ OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](htt
 
 [Supported modules](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#status)
 
+## Customizing OpenCV Modules
+
+You can enable or disable specific OpenCV modules for your build by specifying them in your app's `pubspec.yaml` file.
+
+> [!NOTE]
+>
+> Currently only Android, Windows, and Linux are supported.
+
+### Example `pubspec.yaml` configuration
+
+```yaml
+# ...Your existing configuration...
+hooks:
+  user_defines:
+    dartcv4:
+      exclude_modules:
+        - contrib
+        - dnn
+        - features2d
+        - core
+      include_modules:
+        - core # core is always required thus will be ignored even configured here.
+        - imgproc
+        - videoio
+```
+
+- valid modules: `core`, `calib3d`, `contrib`, `dnn`, `features2d`, `flann`, `highgui`, `imgproc`, `imgcodecs`, `objdetect`, `photo`, `stitching`, `video`, `videoio`
+- Use `exclude_modules` to disable specific modules, or `include_modules` to enable specific modules.
+- If neither is specified, all modules except `highgui` will be enabled.
+- also refer to [example/pubspec.yaml](https://github.com/rainyl/opencv_dart/blob/main/packages/opencv_dart/example/pubspec.yaml)
+
 ## Package Size
 
 ![opencv_dart_size_report](images/opencv_core_size_report.svg)

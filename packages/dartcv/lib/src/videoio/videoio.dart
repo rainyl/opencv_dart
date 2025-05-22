@@ -169,30 +169,30 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     final codec_ = VideoWriter.fourcc(codec);
     apiPreference == null
         ? cvRun(
-          () => cvideoio.cv_VideoWriter_create_1(
-            cname.cast(),
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        )
+            () => cvideoio.cv_VideoWriter_create_1(
+              cname.cast(),
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          )
         : cvRun(
-          () => cvideoio.cv_VideoWriter_create_2(
-            cname.cast(),
-            apiPreference,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        );
+            () => cvideoio.cv_VideoWriter_create_2(
+              cname.cast(),
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          );
     calloc.free(cname);
     return VideoWriter._(p);
   }
@@ -210,32 +210,32 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     final p = calloc<ffi.Bool>();
     apiPreference == null
         ? cvRun(
-          () => cvideoio.cv_VideoWriter_open(
-            ref,
-            cname,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        )
+            () => cvideoio.cv_VideoWriter_open(
+              ref,
+              cname,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          )
         : cvRun(
-          () => cvideoio.cv_VideoWriter_open_1(
-            ref,
-            cname,
-            apiPreference,
-            codec_,
-            fps,
-            frameSize.$1,
-            frameSize.$2,
-            isColor,
-            p,
-            ffi.nullptr,
-          ),
-        );
+            () => cvideoio.cv_VideoWriter_open_1(
+              ref,
+              cname,
+              apiPreference,
+              codec_,
+              fps,
+              frameSize.$1,
+              frameSize.$2,
+              isColor,
+              p,
+              ffi.nullptr,
+            ),
+          );
     calloc.free(cname);
     calloc.free(p);
   }

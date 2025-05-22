@@ -12,7 +12,6 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 >
 > - Q&A: [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
 > - ~~If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, see more in [native-assets branch](https://github.com/rainyl/opencv_dart/tree/native-assets)~~ Won't update until `Native Assets` being stable.
->
 
 ## Supported platforms
 
@@ -27,6 +26,37 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 ## Supported modules
 
 [Supported modules](https://github.com/rainyl/opencv_dart?tab=readme-ov-file#status)
+
+## Customizing OpenCV Modules
+
+You can enable or disable specific OpenCV modules for your build by specifying them in your app's `pubspec.yaml` file.
+
+> [!NOTE]
+>
+> Currently only Android, Windows, and Linux are supported.
+
+### Example `pubspec.yaml` configuration
+
+```yaml
+# ...Your existing configuration...
+hooks:
+  user_defines:
+    dartcv4:
+      exclude_modules:
+        - contrib
+        - dnn
+        - features2d
+        - core
+      include_modules:
+        - core # core is always required thus will be ignored even configured here.
+        - imgproc
+        - videoio
+```
+
+- valid modules: `core`, `calib3d`, `contrib`, `dnn`, `features2d`, `flann`, `highgui`, `imgproc`, `imgcodecs`, `objdetect`, `photo`, `stitching`, `video`, `videoio`
+- Use `exclude_modules` to disable specific modules, or `include_modules` to enable specific modules.
+- If neither is specified, all modules except `highgui` will be enabled.
+- also refer to [example/pubspec.yaml](https://github.com/rainyl/opencv_dart/blob/main/packages/opencv_dart/example/pubspec.yaml)
 
 ## Package Size
 
