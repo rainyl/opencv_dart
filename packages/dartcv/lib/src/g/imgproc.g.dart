@@ -1109,6 +1109,40 @@ class CvNativeImgproc {
   late final _cv_approxPolyDP = _cv_approxPolyDPPtr.asFunction<
       ffi.Pointer<CvStatus> Function(VecPoint, double, bool, ffi.Pointer<VecPoint>, imp1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_approxPolyN(
+    VecPoint curve,
+    int n_segments,
+    double epsilon_percentage,
+    bool ensure_convex,
+    ffi.Pointer<VecPoint> rval,
+    imp1.CvCallback_0 callback,
+    ) {
+      return _cv_approxPolyN(curve, n_segments, epsilon_percentage, ensure_convex, rval, callback);
+  }
+
+  late final _cv_approxPolyNPtr = _lookup<
+    ffi.NativeFunction<
+      ffi.Pointer<CvStatus> Function(
+        VecPoint, ffi.Int, ffi.Float, ffi.Bool, ffi.Pointer<VecPoint>, imp1.CvCallback_0)>>('cv_approxPolyN');
+  late final _cv_approxPolyN = _cv_approxPolyNPtr.asFunction<ffi.Pointer<CvStatus> Function(VecPoint, int, double, bool, ffi.Pointer<VecPoint>, imp1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_approxPolyN2f(
+    VecPoint2f curve,
+    int n_segments,
+    double epsilon_percentage,
+    bool ensure_convex,
+    ffi.Pointer<VecPoint2f> rval,
+    imp1.CvCallback_0 callback,
+    ) {
+      return _cv_approxPolyN2f(curve, n_segments, epsilon_percentage, ensure_convex, rval, callback);
+  }
+
+  late final _cv_approxPolyN2fPtr = _lookup<
+    ffi.NativeFunction<
+      ffi.Pointer<CvStatus> Function(
+        VecPoint2f, ffi.Int, ffi.Float, ffi.Bool, ffi.Pointer<VecPoint2f>, imp1.CvCallback_0)>>('cv_approxPolyN2f');
+  late final _cv_approxPolyN2f = _cv_approxPolyN2fPtr.asFunction<ffi.Pointer<CvStatus> Function(VecPoint2f, int, double, bool, ffi.Pointer<VecPoint2f>, imp1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_arcLength(
     VecPoint curve,
     bool is_closed,
