@@ -72,9 +72,13 @@ files:
         name: VecRect
       cv_ButtonCallbackFunction:
         name: cv_ButtonCallbackFunction
+        dart-name: Dartcv_ButtonCallbackFunction
       cv_MouseCallbackFunction:
         name: cv_MouseCallbackFunction
+        dart-name: Dartcv_MouseCallbackFunction
       cv_OpenGlDrawCallbackFunction:
         name: cv_OpenGlDrawCallbackFunction
+        dart-name: Dartcv_OpenGlDrawCallbackFunction
       cv_TrackbarCallbackFunction:
         name: cv_TrackbarCallbackFunction
+        dart-name: Dartcv_TrackbarCallbackFunction

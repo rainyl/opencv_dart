@@ -10,12 +10,23 @@ void main() async {
     cv.line(img, cv.Point(75, 50), cv.Point(25, 25), color);
     await cv.rectangleAsync(img, cv.Rect(125, 25, 175, 75), color);
 
-    final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-    final length = await cv.arcLengthAsync(contours.first, true);
-    final triangleContour = await cv.approxPolyDPAsync(contours.first, 0.04 * length, true);
-    final expected = <cv.Point>[cv.Point(25, 25), cv.Point(25, 75), cv.Point(75, 50)];
-    expect(triangleContour.length, equals(expected.length));
-    expect(triangleContour.toList(), expected);
+    {
+      final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final length = await cv.arcLengthAsync(contours.first, true);
+      final triangleContour = await cv.approxPolyDPAsync(contours.first, 0.04 * length, true);
+      final expected = <cv.Point>[cv.Point(25, 25), cv.Point(25, 75), cv.Point(75, 50)];
+      expect(triangleContour.length, equals(expected.length));
+      expect(triangleContour.toList(), expected);
+    }
+
+    {
+      final (contours, _) = await cv.findContours2fAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final length = await cv.arcLength2fAsync(contours.first, true);
+      final triangleContour = await cv.approxPolyDP2fAsync(contours.first, 0.04 * length, true);
+      final expected = <cv.Point2f>[cv.Point2f(25, 25), cv.Point2f(25, 75), cv.Point2f(75, 50)];
+      expect(triangleContour.length, equals(expected.length));
+      expect(triangleContour.toList(), expected);
+    }
   });
 
   test("cv.approxPolyNAsync", () async {
@@ -25,31 +36,54 @@ void main() async {
     cv.line(img, cv.Point(25, 75), cv.Point(75, 50), color);
     cv.line(img, cv.Point(75, 50), cv.Point(25, 25), color);
     cv.rectangle(img, cv.Rect(125, 25, 175, 75), color);
-    final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-    final expected = <cv.Point>[cv.Point(76, 50), cv.Point(25, 76), cv.Point(25, 25)];
     {
+      final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final expected = <cv.Point>[cv.Point(76, 50), cv.Point(25, 76), cv.Point(25, 25)];
       final triangleContour = await cv.approxPolyNAsync(contours.first, 3);
       expect(triangleContour.toList(), expected);
     }
 
-    // TODO: 2f version test
+    {
+      final (contours, _) = await cv.findContours2fAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final expected = <cv.Point2f>[cv.Point2f(76, 50), cv.Point2f(25, 75.50), cv.Point2f(25, 24.50)];
+      final triangleContour = await cv.approxPolyN2fAsync(contours.first, 3);
+      expect(triangleContour.toList(), expected);
+    }
   });
 
   test('cv.convexHullAsync, cv.convexityDefectsAsync', () async {
     final img = await cv.imreadAsync("test/images/face-detect.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
-    final (contours, hierarchy) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-    expect(contours.length, greaterThan(0));
-    expect(hierarchy.isEmpty, false);
+    {
+      final (contours, hierarchy) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      expect(contours.length, greaterThan(0));
+      expect(hierarchy.isEmpty, false);
 
-    final area = await cv.contourAreaAsync(contours.first);
-    expect(area, closeTo(127280.0, 1e-4));
+      final area = await cv.contourAreaAsync(contours.first);
+      expect(area, closeTo(127280.0, 1e-4));
 
-    final hull = await cv.convexHullAsync(contours.first, clockwise: true, returnPoints: false);
-    expect(hull.isEmpty, false);
+      final hull = await cv.convexHullAsync(contours.first, clockwise: true, returnPoints: false);
+      expect(hull.isEmpty, false);
 
-    final defects = await cv.convexityDefectsAsync(contours.first, hull);
-    expect(defects.isEmpty, false);
+      final defects = await cv.convexityDefectsAsync(contours.first, hull);
+      expect(defects.isEmpty, false);
+    }
+
+    {
+      final (contours, hierarchy) =
+          await cv.findContours2fAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      expect(contours.length, greaterThan(0));
+      expect(hierarchy.isEmpty, false);
+
+      final area = await cv.contourArea2fAsync(contours.first);
+      expect(area, closeTo(127280.0, 1e-4));
+
+      final hull = await cv.convexHull2fAsync(contours.first, clockwise: true, returnPoints: false);
+      expect(hull.isEmpty, false);
+
+      // final defects = await cv.convexityDefects2fAsync(contours.first, hull);
+      // expect(defects.isEmpty, false);
+    }
   });
 
   test('cv.calcBackProjectAsync', () async {
@@ -179,8 +213,16 @@ void main() async {
 
   // cv.contourAreaAsync
   test('cv.contourAreaAsync', () async {
-    final contour = <cv.Point>[cv.Point(0, 0), cv.Point(100, 0), cv.Point(100, 100), cv.Point(0, 100)].cvd;
-    expect(await cv.contourAreaAsync(contour), equals(10000));
+    {
+      final contour = <cv.Point>[cv.Point(0, 0), cv.Point(100, 0), cv.Point(100, 100), cv.Point(0, 100)].cvd;
+      expect(await cv.contourAreaAsync(contour), equals(10000));
+    }
+
+    {
+      final contour =
+          <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(100, 0), cv.Point2f(100, 100), cv.Point2f(0, 100)].cvd;
+      expect(await cv.contourArea2fAsync(contour), equals(10000));
+    }
   });
 
   test('cv.getStructuringElementAsync', () async {
@@ -264,9 +306,17 @@ void main() async {
     final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
-    final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-    final r = await cv.boundingRectAsync(contours.first);
-    expect(r.width > 0 && r.height > 0, true);
+    {
+      final (contours, _) = await cv.findContoursAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final r = await cv.boundingRectAsync(contours.first);
+      expect(r.width > 0 && r.height > 0, true);
+    }
+
+    {
+      final (contours, _) = await cv.findContours2fAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final r = await cv.boundingRect2fAsync(contours.first);
+      expect(r.width > 0 && r.height > 0, true);
+    }
   });
 
   test('cv.boxPointsAsync, cv.minAreaRectAsync', () async {
@@ -274,13 +324,25 @@ void main() async {
     expect(img.isEmpty, false);
 
     final (_, thresImg) = await cv.thresholdAsync(img, 25, 255, cv.THRESH_BINARY);
-    final (contours, _) = await cv.findContoursAsync(thresImg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+    {
+      final (contours, _) = await cv.findContoursAsync(thresImg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
-    final rect = await cv.minAreaRectAsync(contours.first);
-    expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
+      final rect = await cv.minAreaRectAsync(contours.first);
+      expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
 
-    final pts = await cv.boxPointsAsync(rect);
-    expect(pts.isEmpty, false);
+      final pts = await cv.boxPointsAsync(rect);
+      expect(pts.isEmpty, false);
+    }
+
+    {
+      final (contours, _) = await cv.findContours2fAsync(thresImg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+      final rect = await cv.minAreaRect2fAsync(contours.first);
+      expect(rect.size.width > 0 && rect.points.isNotEmpty, true);
+
+      final pts = await cv.boxPointsAsync(rect);
+      expect(pts.isEmpty, false);
+    }
   });
 
   // fitEllipse
@@ -300,6 +362,14 @@ void main() async {
     expect(rect.center.x, closeTo(1.92, 0.1));
     expect(rect.center.y, closeTo(1.78, 0.1));
     expect(rect.angle, closeTo(78.60807800292969, 1e-4));
+
+    {
+      final pv1 = pv.map((e) => cv.Point2f(e.x.toDouble(), e.y.toDouble())).toList().cvd;
+      final rect = await cv.fitEllipse2fAsync(pv1);
+      expect(rect.center.x, closeTo(1.92, 0.1));
+      expect(rect.center.y, closeTo(1.78, 0.1));
+      expect(rect.angle, closeTo(78.60807800292969, 1e-4));
+    }
   });
 
   // minEnclosingCircle
@@ -310,6 +380,14 @@ void main() async {
     expect(radius, closeTo(2.0, 1e-3));
     expect(center.x, closeTo(0.0, 1e-3));
     expect(center.y, closeTo(0.0, 1e-3));
+
+    {
+      final pts1 = pts.map((e) => cv.Point2f(e.x.toDouble(), e.y.toDouble())).toList().cvd;
+      final (center, radius) = await cv.minEnclosingCircle2fAsync(pts1);
+      expect(radius, closeTo(2.0, 1e-3));
+      expect(center.x, closeTo(0.0, 1e-3));
+      expect(center.y, closeTo(0.0, 1e-3));
+    }
   });
 
   // pointPolygonTest
@@ -326,6 +404,14 @@ void main() async {
     for (final t in tests) {
       final r = await cv.pointPolygonTestAsync(pts.cvd, t.$3, t.$5);
       expect(r, closeTo(t.$4, 1e-3));
+    }
+
+    {
+      final pts1 = pts.map((e) => cv.Point2f(e.x.toDouble(), e.y.toDouble())).toList().cvd;
+      for (final t in tests) {
+        final r = await cv.pointPolygonTest2fAsync(pts1, t.$3, t.$5);
+        expect(r, closeTo(t.$4, 1e-3));
+      }
     }
   });
 
@@ -736,8 +822,16 @@ void main() async {
   // fitLine
   test('cv.fitLineAsync', () async {
     final pts = [cv.Point(125, 24), cv.Point(124, 75), cv.Point(175, 76), cv.Point(176, 25)];
-    final dst = await cv.fitLineAsync(pts.cvd, cv.DIST_L2, 0, 0.01, 0.01);
-    expect(dst.isEmpty, false);
+    {
+      final dst = await cv.fitLineAsync(pts.cvd, cv.DIST_L2, 0, 0.01, 0.01);
+      expect(dst.isEmpty, false);
+    }
+
+    {
+      final pts1 = pts.map((e) => cv.Point2f(e.x.toDouble(), e.y.toDouble())).toList().cvd;
+      final dst1 = await cv.fitLine2fAsync(pts1, cv.DIST_L2, 0, 0.01, 0.01);
+      expect(dst1.isEmpty, false);
+    }
   });
 
   // matchShapes

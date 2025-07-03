@@ -33,11 +33,27 @@ import '../native_lib.dart' show cimgproc;
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
 Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) async {
   final vec = VecPoint();
-  return cvRunAsync0((callback) => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec.ptr, callback), (
-    c,
-  ) {
-    return c.complete(vec);
-  });
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_approxPolyDP(curve.ref, epsilon, closed, vec.ptr, callback),
+    (c) {
+      return c.complete(vec);
+    },
+  );
+}
+
+/// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
+///
+/// For further details, please see:
+///
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
+Future<VecPoint2f> approxPolyDP2fAsync(VecPoint2f curve, double epsilon, bool closed) async {
+  final vec = VecPoint2f();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_approxPolyDP2f(curve.ref, epsilon, closed, vec.ptr, callback),
+    (c) {
+      return c.complete(vec);
+    },
+  );
 }
 
 /// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
@@ -45,15 +61,20 @@ Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) 
 /// For further details, please see:
 ///
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
-Future<VecPoint> approxPolyNAsync(VecPoint curve, int nsides,
-    {double epsilon_percentage = -1.0, bool ensure_convex = true}) async {
+Future<VecPoint> approxPolyNAsync(
+  VecPoint curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) async {
   final vec = VecPoint();
   return cvRunAsync0(
-      (callback) =>
-          cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
-      (c) {
-    return c.complete(vec);
-  });
+    (callback) =>
+        cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
+    (c) {
+      return c.complete(vec);
+    },
+  );
 }
 
 /// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
@@ -90,6 +111,20 @@ Future<double> arcLengthAsync(VecPoint curve, bool closed) async {
   });
 }
 
+/// ArcLength calculates a contour perimeter or a curve length.
+///
+/// For further details, please see:
+///
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
+Future<double> arcLength2fAsync(VecPoint2f curve, bool closed) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0((callback) => cimgproc.cv_arcLength2f(curve.ref, closed, p, callback), (c) {
+    final rval = p.value;
+    calloc.free(p);
+    return c.complete(rval);
+  });
+}
+
 /// ConvexHull finds the convex hull of a point set.
 ///
 /// For further details, please see:
@@ -109,6 +144,25 @@ Future<Mat> convexHullAsync(
   );
 }
 
+/// ConvexHull finds the convex hull of a point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
+Future<Mat> convexHull2fAsync(
+  VecPoint2f points, {
+  Mat? hull,
+  bool clockwise = false,
+  bool returnPoints = true,
+}) async {
+  hull ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_convexHull2f(points.ref, hull!.ref, clockwise, returnPoints, callback),
+    (c) {
+      return c.complete(hull);
+    },
+  );
+}
+
 /// ConvexityDefects finds the convexity defects of a contour.
 ///
 /// For further details, please see:
@@ -122,6 +176,22 @@ Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDef
     },
   );
 }
+
+// convexityDefects does not support std::vector<cv::Poinit2f>
+// https://github.com/opencv/opencv/blob/31b0eeea0b44b370fd0712312df4214d4ae1b158/modules/imgproc/src/convhull.cpp#L318
+// /// ConvexityDefects finds the convexity defects of a contour.
+// ///
+// /// For further details, please see:
+// /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
+// Future<Mat> convexityDefects2fAsync(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) async {
+//   convexityDefects ??= Mat.empty();
+//   return cvRunAsync0(
+//     (callback) => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, callback),
+//     (c) {
+//       return c.complete(convexityDefects);
+//     },
+//   );
+// }
 
 /// CvtColor converts an image from one color space to another.
 /// It converts the src Mat image to the dst Mat using the
@@ -476,6 +546,17 @@ Future<Rect> boundingRectAsync(VecPoint points) async {
   });
 }
 
+/// BoundingRect calculates the up-right bounding rectangle of a point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
+Future<Rect> boundingRect2fAsync(VecPoint2f points) async {
+  final rect = calloc<cvg.CvRect>();
+  return cvRunAsync0((callback) => cimgproc.cv_boundingRect2f(points.ref, rect, callback), (c) {
+    return c.complete(Rect.fromPointer(rect));
+  });
+}
+
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
 ///
 /// return: [bottom left, top left, top right, bottom right]
@@ -501,6 +582,19 @@ Future<double> contourAreaAsync(VecPoint contour) async {
   });
 }
 
+/// ContourArea calculates a contour area.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
+Future<double> contourArea2fAsync(VecPoint2f contour) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0((callback) => cimgproc.cv_contourArea2f(contour.ref, p, callback), (c) {
+    final rval = p.value;
+    calloc.free(p);
+    return c.complete(rval);
+  });
+}
+
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
 ///
 /// For further details, please see:
@@ -508,6 +602,17 @@ Future<double> contourAreaAsync(VecPoint contour) async {
 Future<RotatedRect> minAreaRectAsync(VecPoint points) async {
   final p = calloc<cvg.RotatedRect>();
   return cvRunAsync0((callback) => cimgproc.cv_minAreaRect(points.ref, p, callback), (c) {
+    return c.complete(RotatedRect.fromPointer(p));
+  });
+}
+
+/// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
+Future<RotatedRect> minAreaRect2fAsync(VecPoint2f points) async {
+  final p = calloc<cvg.RotatedRect>();
+  return cvRunAsync0((callback) => cimgproc.cv_minAreaRect2f(points.ref, p, callback), (c) {
     return c.complete(RotatedRect.fromPointer(p));
   });
 }
@@ -523,6 +628,17 @@ Future<RotatedRect> fitEllipseAsync(VecPoint points) async {
   });
 }
 
+/// FitEllipse Fits an ellipse around a set of 2D points.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
+Future<RotatedRect> fitEllipse2fAsync(VecPoint2f points) async {
+  final p = calloc<cvg.RotatedRect>();
+  return cvRunAsync0((callback) => cimgproc.cv_fitEllipse2f(points.ref, p, callback), (c) {
+    return c.complete(RotatedRect.fromPointer(p));
+  });
+}
+
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
 ///
 /// For further details, please see:
@@ -531,6 +647,22 @@ Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points)
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
   return cvRunAsync0((callback) => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, callback), (
+    c,
+  ) {
+    final rval = (Point2f.fromPointer(center), pRadius.value);
+    calloc.free(pRadius);
+    return c.complete(rval);
+  });
+}
+
+/// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
+Future<(Point2f center, double radius)> minEnclosingCircle2fAsync(VecPoint2f points) async {
+  final center = calloc<cvg.CvPoint2f>();
+  final pRadius = calloc<ffi.Float>();
+  return cvRunAsync0((callback) => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, callback), (
     c,
   ) {
     final rval = (Point2f.fromPointer(center), pRadius.value);
@@ -554,6 +686,21 @@ Future<(Contours contours, VecVec4i hierarchy)> findContoursAsync(Mat src, int m
   );
 }
 
+/// FindContours finds contours in a binary image.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
+Future<(Contours2f contours, VecVec4i hierarchy)> findContours2fAsync(Mat src, int mode, int method) async {
+  final hierarchy = VecVec4i();
+  final contours = VecVecPoint2f();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_findContours2f(src.ref, contours.ptr, hierarchy.ptr, mode, method, callback),
+    (c) {
+      return c.complete((contours, hierarchy));
+    },
+  );
+}
+
 /// PointPolygonTest performs a point-in-contour test.
 ///
 /// For further details, please see:
@@ -562,6 +709,22 @@ Future<double> pointPolygonTestAsync(VecPoint points, Point2f pt, bool measureDi
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, p, callback),
+    (c) {
+      final rval = p.value;
+      calloc.free(p);
+      return c.complete(rval);
+    },
+  );
+}
+
+/// PointPolygonTest performs a point-in-contour test.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
+Future<double> pointPolygonTest2fAsync(VecPoint2f points, Point2f pt, bool measureDist) async {
+  final p = calloc<ffi.Double>();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_pointPolygonTest2f(points.ref, pt.ref, measureDist, p, callback),
     (c) {
       final rval = p.value;
       calloc.free(p);
@@ -1711,12 +1874,12 @@ Future<Mat> drawContoursAsync(
   Scalar color, {
   int thickness = 1,
   int lineType = LINE_8,
-  InputArray? hierarchy, // TODO: replace with vec
+  VecVec4i? hierarchy,
   int maxLevel = 0x3f3f3f3f,
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  hierarchy ??= Mat.empty();
+  hierarchy ??= VecVec4i();
   return cvRunAsync0(
     (callback) => cimgproc.cv_drawContours_1(
       image.ref,
@@ -1874,6 +2037,27 @@ Future<Mat> fitLineAsync(
   line ??= Mat.empty();
   return cvRunAsync0(
     (callback) => cimgproc.cv_fitLine(points.ref, line!.ref, distType, param, reps, aeps, callback),
+    (c) {
+      return c.complete(line);
+    },
+  );
+}
+
+/// FitLine2f fits a line to a 2D or 3D point set.
+/// distType: DistanceTypes
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaaf9519f5f52f4d24805d2b64f4049706
+Future<Mat> fitLine2fAsync(
+  VecPoint2f points,
+  int distType,
+  double param,
+  double reps,
+  double aeps, {
+  OutputArray? line,
+}) {
+  line ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_fitLine2f(points.ref, line!.ref, distType, param, reps, aeps, callback),
     (c) {
       return c.complete(line);
     },

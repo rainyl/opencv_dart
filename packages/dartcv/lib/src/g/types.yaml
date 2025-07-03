@@ -6,24 +6,34 @@ files:
     symbols:
       CvCallback_0Function:
         name: CvCallback_0Function
+        dart-name: DartCvCallback_0Function
       CvCallback_1Function:
         name: CvCallback_1Function
+        dart-name: DartCvCallback_1Function
       CvCallback_2Function:
         name: CvCallback_2Function
+        dart-name: DartCvCallback_2Function
       CvCallback_3Function:
         name: CvCallback_3Function
+        dart-name: DartCvCallback_3Function
       CvCallback_4Function:
         name: CvCallback_4Function
+        dart-name: DartCvCallback_4Function
       CvCallback_5Function:
         name: CvCallback_5Function
+        dart-name: DartCvCallback_5Function
       CvCallback_6Function:
         name: CvCallback_6Function
+        dart-name: DartCvCallback_6Function
       CvCallback_7Function:
         name: CvCallback_7Function
+        dart-name: DartCvCallback_7Function
       CvCallback_8Function:
         name: CvCallback_8Function
+        dart-name: DartCvCallback_8Function
       CvCallback_9Function:
         name: CvCallback_9Function
+        dart-name: DartCvCallback_9Function
       c:@S@CvPoint:
         name: CvPoint
       c:@S@CvPoint2d:
@@ -286,7 +296,6 @@ files:
         name: VecVecPoint3iPtr
       c:types.h@T@VecVecPointPtr:
         name: VecVecPointPtr
-      c:types.h@T@uchar:
-        name: uchar
       c:types.h@T@ushort:
         name: ushort
+        dart-name: Dartushort

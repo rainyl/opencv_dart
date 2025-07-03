@@ -104,8 +104,16 @@ files:
         name: cv_applyColorMap_1
       c:@F@cv_approxPolyDP:
         name: cv_approxPolyDP
+      c:@F@cv_approxPolyDP2f:
+        name: cv_approxPolyDP2f
+      c:@F@cv_approxPolyN:
+        name: cv_approxPolyN
+      c:@F@cv_approxPolyN2f:
+        name: cv_approxPolyN2f
       c:@F@cv_arcLength:
         name: cv_arcLength
+      c:@F@cv_arcLength2f:
+        name: cv_arcLength2f
       c:@F@cv_arrowedLine:
         name: cv_arrowedLine
       c:@F@cv_bilateralFilter:
@@ -114,6 +122,8 @@ files:
         name: cv_blur
       c:@F@cv_boundingRect:
         name: cv_boundingRect
+      c:@F@cv_boundingRect2f:
+        name: cv_boundingRect2f
       c:@F@cv_boxFilter:
         name: cv_boxFilter
       c:@F@cv_boxPoints:
@@ -138,10 +148,16 @@ files:
         name: cv_connectedComponents_1
       c:@F@cv_contourArea:
         name: cv_contourArea
+      c:@F@cv_contourArea2f:
+        name: cv_contourArea2f
       c:@F@cv_convexHull:
         name: cv_convexHull
+      c:@F@cv_convexHull2f:
+        name: cv_convexHull2f
       c:@F@cv_convexityDefects:
         name: cv_convexityDefects
+      c:@F@cv_convexityDefects2f:
+        name: cv_convexityDefects2f
       c:@F@cv_cornerSubPix:
         name: cv_cornerSubPix
       c:@F@cv_cvtColor:
@@ -174,10 +190,16 @@ files:
         name: cv_filter2D
       c:@F@cv_findContours:
         name: cv_findContours
+      c:@F@cv_findContours2f:
+        name: cv_findContours2f
       c:@F@cv_fitEllipse:
         name: cv_fitEllipse
+      c:@F@cv_fitEllipse2f:
+        name: cv_fitEllipse2f
       c:@F@cv_fitLine:
         name: cv_fitLine
+      c:@F@cv_fitLine2f:
+        name: cv_fitLine2f
       c:@F@cv_floodFill:
         name: cv_floodFill
       c:@F@cv_getAffineTransform:
@@ -212,6 +234,8 @@ files:
         name: cv_invertAffineTransform
       c:@F@cv_isContourConvex:
         name: cv_isContourConvex
+      c:@F@cv_isContourConvex2f:
+        name: cv_isContourConvex2f
       c:@F@cv_line:
         name: cv_line
       c:@F@cv_linearPolar:
@@ -226,8 +250,12 @@ files:
         name: cv_medianBlur
       c:@F@cv_minAreaRect:
         name: cv_minAreaRect
+      c:@F@cv_minAreaRect2f:
+        name: cv_minAreaRect2f
       c:@F@cv_minEnclosingCircle:
         name: cv_minEnclosingCircle
+      c:@F@cv_minEnclosingCircle2f:
+        name: cv_minEnclosingCircle2f
       c:@F@cv_moments:
         name: cv_moments
       c:@F@cv_morphologyDefaultBorderValue:
@@ -240,6 +268,8 @@ files:
         name: cv_phaseCorrelate
       c:@F@cv_pointPolygonTest:
         name: cv_pointPolygonTest
+      c:@F@cv_pointPolygonTest2f:
+        name: cv_pointPolygonTest2f
       c:@F@cv_polylines:
         name: cv_polylines
       c:@F@cv_putText:
