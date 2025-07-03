@@ -3,6 +3,8 @@
 * support optional modules, configure it in `pubspec.yaml`, from this version, both opencv_core and
   opencv_dart can enable/disable optional modules.
 * added `approxPolyN`.
+* add more high-precision functions (`arcLength2f`, etc.) to `imgproc` module, https://github.com/rainyl/opencv_dart/pull/364
+* breaking change: optional arg `hierarchy` of `drawContours` now change from `Mat` to `VecVec4i` type.
 
 ## 1.4.1
 

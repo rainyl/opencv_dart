@@ -1,6 +1,8 @@
 ## 1.1.5
 
 * added `approxPolyN`.
+* add more high-precision functions (`arcLength2f`, etc.) to `imgproc` module, https://github.com/rainyl/opencv_dart/pull/364
+* breaking change: optional arg `hierarchy` of `drawContours` now change from `Mat` to `VecVec4i` type.
 
 ## 1.1.4
 
