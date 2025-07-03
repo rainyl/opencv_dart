@@ -18,6 +18,23 @@ void main() async {
     expect(triangleContour.toList(), expected);
   });
 
+  test("cv.approxPolyN", () {
+    final img = cv.Mat.create(cols: 100, rows: 200, type: cv.MatType.CV_8UC1);
+    final color = cv.Scalar.all(255);
+    cv.line(img, cv.Point(25, 25), cv.Point(25, 75), color);
+    cv.line(img, cv.Point(25, 75), cv.Point(75, 50), color);
+    cv.line(img, cv.Point(75, 50), cv.Point(25, 25), color);
+    cv.rectangle(img, cv.Rect(125, 25, 175, 75), color);
+    final (contours, _) = cv.findContours(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+    final expected = <cv.Point>[cv.Point(76, 50), cv.Point(25, 76), cv.Point(25, 25)];
+    {
+      final triangleContour = cv.approxPolyN(contours.first, 3);
+      expect(triangleContour.toList(), expected);
+    }
+
+    // TODO: 2f version test
+  });
+
   test('cv.convexHull, cv.convexityDefects', () {
     final img = cv.imread("test/images/face-detect.jpg", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
@@ -877,9 +894,8 @@ void main() async {
         handleNested: handleNested,
       );
       if (intersectArea > 0) {
-        final fillColor = !cv.isContourConvex(p1) || !cv.isContourConvex(p2)
-            ? cv.Scalar(0, 0, 255)
-            : cv.Scalar.all(200);
+        final fillColor =
+            !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
         cv.fillPoly(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), fillColor);
       }
       cv.polylines(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), true, cv.Scalar.black);

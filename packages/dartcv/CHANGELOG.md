@@ -1,3 +1,7 @@
+## 1.1.5
+
+* added `approxPolyN`.
+
 ## 1.1.4
 
 * remove deprecated `MatType.toInt()`, should use MatType.value instead

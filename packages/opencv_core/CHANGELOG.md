@@ -2,6 +2,7 @@
 
 * support optional modules, configure it in `pubspec.yaml`, from this version, both opencv_core and
   opencv_dart can enable/disable optional modules.
+* added `approxPolyN`.
 
 ## 1.4.1
 

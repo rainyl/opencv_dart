@@ -1,5 +1,7 @@
-.PHONY: ffigen ffigen_test clone_repo clean_repo
+.PHONY: ffigen ffigen_test clone_repo clean_repo test test_coverage
 
+DART_EXEC := $(abspath $(dir $(shell which dart)))/cache/dart-sdk/bin/dart
+UNAME_S := $(shell uname -s)
 
 ffigen:
 	dart run ffigen --config ffigen/ffigen_const.yaml
@@ -32,7 +34,15 @@ ffigen_test: clone_repo
 	dart run ffigen --config ffigen/ffigen_core.yaml
 
 test:
-	dart test
+ifeq ($(UNAME_S),Darwin)
+	DYLD_LIBRARY_PATH=`pwd`/libdartcv/lib $(DART_EXEC) test
+else
+	LD_LIBRARY_PATH=`pwd`/libdartcv/lib $(DART_EXEC) test
+endif
 
 test_coverage:
-	dart pub global run coverage:test_with_coverage
+ifeq ($(UNAME_S),Darwin)
+	DYLD_FALLBACK_LIBRARY_PATH=`pwd`/libdartcv/lib $(DART_EXEC) pub global run coverage:test_with_coverage
+else
+	LD_LIBRARY_PATH=`pwd`/libdartcv/lib $(DART_EXEC) pub global run coverage:test_with_coverage
+endif
