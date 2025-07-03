@@ -193,6 +193,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/lennartalff">
+                    <img src="https://avatars.githubusercontent.com/u/33184858?v=4" width="100;" alt="lennartalff"/>
+                    <br />
+                    <sub><b>Thies Lennart Alff</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/totemat">
                     <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
                     <br />
