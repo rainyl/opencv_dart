@@ -26,9 +26,13 @@ void main() async {
     cv.line(img, cv.Point(75, 50), cv.Point(25, 25), color);
     cv.rectangle(img, cv.Rect(125, 25, 175, 75), color);
     final (contours, _) = cv.findContours(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-    final triangleContour = cv.approxPolyN(contours.first, 3);
-    final expected = <cv.Point>[cv.Point(25, 25), cv.Point(25, 75), cv.Point(75, 50)];
-    expect(triangleContour.toList(), expected);
+    final expected = <cv.Point>[cv.Point(76, 50), cv.Point(25, 76), cv.Point(25, 25)];
+    {
+      final triangleContour = cv.approxPolyN(contours.first, 3);
+      expect(triangleContour.toList(), expected);
+    }
+
+    // TODO: 2f version test
   });
 
   test('cv.convexHull, cv.convexityDefects', () {

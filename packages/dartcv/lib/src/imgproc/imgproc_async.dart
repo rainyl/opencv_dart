@@ -40,6 +40,42 @@ Future<VecPoint> approxPolyDPAsync(VecPoint curve, double epsilon, bool closed) 
   });
 }
 
+/// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
+///
+/// For further details, please see:
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
+Future<VecPoint> approxPolyNAsync(VecPoint curve, int nsides,
+    {double epsilon_percentage = -1.0, bool ensure_convex = true}) async {
+  final vec = VecPoint();
+  return cvRunAsync0(
+      (callback) =>
+          cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
+      (c) {
+    return c.complete(vec);
+  });
+}
+
+/// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
+///
+/// For further details, please see:
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
+Future<VecPoint2f> approxPolyN2fAsync(
+  VecPoint2f curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) async {
+  final vec = VecPoint2f();
+  return cvRunAsync0(
+      (callback) =>
+          cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
+      (c) {
+    return c.complete(vec);
+  });
+}
+
 /// ArcLength calculates a contour perimeter or a curve length.
 ///
 /// For further details, please see:
