@@ -2138,7 +2138,7 @@ class CvNativeImgproc {
     Scalar color,
     int thickness,
     int lineType,
-    Mat hierarchy,
+    VecVec4i hierarchy,
     int maxLevel,
     CvPoint offset,
     imp$1.CvCallback_0 callback,
@@ -2166,13 +2166,13 @@ class CvNativeImgproc {
               Scalar,
               ffi.Int,
               ffi.Int,
-              Mat,
+              VecVec4i,
               ffi.Int,
               CvPoint,
               imp$1.CvCallback_0)>>('cv_drawContours_1');
   late final _cv_drawContours_1 = _cv_drawContours_1Ptr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, VecVecPoint, int, Scalar, int, int,
-          Mat, int, CvPoint, imp$1.CvCallback_0)>();
+          VecVec4i, int, CvPoint, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ellipse(
     Mat img,

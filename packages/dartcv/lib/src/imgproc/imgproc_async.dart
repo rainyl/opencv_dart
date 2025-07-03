@@ -177,19 +177,21 @@ Future<Mat> convexityDefectsAsync(VecPoint contour, Mat hull, {Mat? convexityDef
   );
 }
 
-/// ConvexityDefects finds the convexity defects of a contour.
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
-Future<Mat> convexityDefects2fAsync(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) async {
-  convexityDefects ??= Mat.empty();
-  return cvRunAsync0(
-    (callback) => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, callback),
-    (c) {
-      return c.complete(convexityDefects);
-    },
-  );
-}
+// convexityDefects does not support std::vector<cv::Poinit2f>
+// https://github.com/opencv/opencv/blob/31b0eeea0b44b370fd0712312df4214d4ae1b158/modules/imgproc/src/convhull.cpp#L318
+// /// ConvexityDefects finds the convexity defects of a contour.
+// ///
+// /// For further details, please see:
+// /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
+// Future<Mat> convexityDefects2fAsync(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) async {
+//   convexityDefects ??= Mat.empty();
+//   return cvRunAsync0(
+//     (callback) => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, callback),
+//     (c) {
+//       return c.complete(convexityDefects);
+//     },
+//   );
+// }
 
 /// CvtColor converts an image from one color space to another.
 /// It converts the src Mat image to the dst Mat using the
@@ -1872,12 +1874,12 @@ Future<Mat> drawContoursAsync(
   Scalar color, {
   int thickness = 1,
   int lineType = LINE_8,
-  InputArray? hierarchy, // TODO: replace with vec
+  VecVec4i? hierarchy,
   int maxLevel = 0x3f3f3f3f,
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  hierarchy ??= Mat.empty();
+  hierarchy ??= VecVec4i();
   return cvRunAsync0(
     (callback) => cimgproc.cv_drawContours_1(
       image.ref,

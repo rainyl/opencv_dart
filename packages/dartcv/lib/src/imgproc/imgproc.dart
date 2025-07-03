@@ -53,11 +53,16 @@ VecPoint2f approxPolyDP2f(VecPoint2f curve, double epsilon, bool closed) {
 /// For further details, please see:
 ///
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
-VecPoint approxPolyN(VecPoint curve, int nsides,
-    {double epsilon_percentage = -1.0, bool ensure_convex = true}) {
+VecPoint approxPolyN(
+  VecPoint curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) {
   final vec = VecPoint();
-  cvRun(() =>
-      cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr));
+  cvRun(
+    () => cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr),
+  );
   return vec;
 }
 
@@ -66,11 +71,17 @@ VecPoint approxPolyN(VecPoint curve, int nsides,
 /// For further details, please see:
 ///
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
-VecPoint2f approxPolyN2f(VecPoint2f curve, int nsides,
-    {double epsilon_percentage = -1.0, bool ensure_convex = true}) {
+VecPoint2f approxPolyN2f(
+  VecPoint2f curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) {
   final vec = VecPoint2f();
-  cvRun(() =>
-      cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr));
+  cvRun(
+    () =>
+        cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr),
+  );
   return vec;
 }
 
@@ -130,15 +141,17 @@ Mat convexityDefects(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
   return convexityDefects;
 }
 
-/// ConvexityDefects finds the convexity defects of a contour.
-///
-/// For further details, please see:
-/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
-Mat convexityDefects2f(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) {
-  convexityDefects ??= Mat.empty();
-  cvRun(() => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, ffi.nullptr));
-  return convexityDefects;
-}
+// convexityDefects does not support std::vector<cv::Poinit2f>
+// https://github.com/opencv/opencv/blob/31b0eeea0b44b370fd0712312df4214d4ae1b158/modules/imgproc/src/convhull.cpp#L318
+// /// ConvexityDefects finds the convexity defects of a contour.
+// ///
+// /// For further details, please see:
+// /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
+// Mat convexityDefects2f(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) {
+//   convexityDefects ??= Mat.empty();
+//   cvRun(() => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, ffi.nullptr));
+//   return convexityDefects;
+// }
 
 /// CvtColor converts an image from one color space to another.
 /// It converts the src Mat image to the dst Mat using the
@@ -1611,12 +1624,12 @@ Mat drawContours(
   Scalar color, {
   int thickness = 1,
   int lineType = LINE_8,
-  InputArray? hierarchy, // TODO: replace with vec
+  VecVec4i? hierarchy,
   int maxLevel = 0x3f3f3f3f,
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  hierarchy ??= Mat.empty();
+  hierarchy ??= VecVec4i();
   cvRun(
     () => cimgproc.cv_drawContours_1(
       image.ref,
