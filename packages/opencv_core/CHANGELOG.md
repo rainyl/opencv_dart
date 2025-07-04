@@ -1,3 +1,7 @@
+## 1.4.2+1
+
+* fix: optional modules parsing in cmake script
+
 ## 1.4.2
 
 * support optional modules, configure it in `pubspec.yaml`, from this version, both opencv_core and
