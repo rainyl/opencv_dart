@@ -16,10 +16,12 @@ endmacro()
 function(_parse_dartcv_cmake_vars)
   # Generate module config from pubspec.yaml using Dart script
   # The step should not be mendatary for better user experience
-  if(WIN32)
+  if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     find_program(DART_EXECUTABLE dart.bat)
-  else()
+  elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     find_program(DART_EXECUTABLE dart)
+  else()
+    message(FATAL_ERROR "Current host system ${CMAKE_HOST_SYSTEM_NAME} is not supported!")
   endif()
 
   if(NOT DART_EXECUTABLE)
@@ -59,9 +61,9 @@ function(_parse_dartcv_cmake_vars)
 
   message(STATUS "Generate command output:\n${_output}")
 
-  if(_error)
-    message(FATAL_ERROR "Error while running dartcv4:gen_cmake_vars: ${_error}")
-  endif(_error)
+  if(_error OR (NOT _output))
+    message(FATAL_ERROR "Error while running dartcv4:gen_cmake_vars, error: ${_error}, output: ${_output}")
+  endif()
 
   string(REGEX MATCH "###DARTCV_GEN_CMAKE_VAR_BEGIN###\n.*###DARTCV_GEN_CMAKE_VAR_END###" _content ${_output})
 
@@ -100,7 +102,7 @@ set(PROJECT_VERSION "${_version_project}")
 
 # Flutter doesn't support build android-x86, disable here
 # https://docs.flutter.dev/deployment/android#what-are-the-supported-target-architectures
-if(ANDROID AND(DEFINED ANDROID_ABI))
+if(ANDROID AND (DEFINED ANDROID_ABI))
   if(${ANDROID_ABI} STREQUAL "x86")
     message(STATUS "Unsupported ABI: x86")
     return()
