@@ -471,6 +471,29 @@ class CvNativeFeatures2d {
       _cv_FlannBasedMatcher_createPtr.asFunction<
           ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannBasedMatcher>)>();
 
+  ffi.Pointer<CvStatus> cv_FlannBasedMatcher_create_1(
+    ffi.Pointer<FlannBasedMatcher> rval,
+    FlannIndexParams indexParams,
+    FlannIndexParams searchParams,
+  ) {
+    return _cv_FlannBasedMatcher_create_1(
+      rval,
+      indexParams,
+      searchParams,
+    );
+  }
+
+  late final _cv_FlannBasedMatcher_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<FlannBasedMatcher>,
+              FlannIndexParams,
+              FlannIndexParams)>>('cv_FlannBasedMatcher_create_1');
+  late final _cv_FlannBasedMatcher_create_1 =
+      _cv_FlannBasedMatcher_create_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannBasedMatcher>,
+              FlannIndexParams, FlannIndexParams)>();
+
   ffi.Pointer<CvStatus> cv_FlannBasedMatcher_knnMatch(
     FlannBasedMatcher self,
     Mat query,
@@ -1060,6 +1083,272 @@ class CvNativeFeatures2d {
       ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, VecKeyPoint,
           VecDMatch, Mat, Scalar, Scalar, VecChar, int, imp$1.CvCallback_0)>();
 
+  void cv_flann_IndexParams_close(
+    FlannIndexParamsPtr self,
+  ) {
+    return _cv_flann_IndexParams_close(
+      self,
+    );
+  }
+
+  late final _cv_flann_IndexParams_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FlannIndexParamsPtr)>>(
+          'cv_flann_IndexParams_close');
+  late final _cv_flann_IndexParams_close = _cv_flann_IndexParams_closePtr
+      .asFunction<void Function(FlannIndexParamsPtr)>();
+
+  ffi.Pointer<CvStatus> cv_flann_IndexParams_create(
+    ffi.Pointer<FlannIndexParams> rval,
+  ) {
+    return _cv_flann_IndexParams_create(
+      rval,
+    );
+  }
+
+  late final _cv_flann_IndexParams_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<FlannIndexParams>)>>('cv_flann_IndexParams_create');
+  late final _cv_flann_IndexParams_create =
+      _cv_flann_IndexParams_createPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannIndexParams>)>();
+
+  void cv_flann_IndexParams_getAll(
+    FlannIndexParams self,
+    ffi.Pointer<VecVecChar> names,
+    ffi.Pointer<VecI32> types,
+    ffi.Pointer<VecVecChar> strValues,
+    ffi.Pointer<VecF64> numValues,
+  ) {
+    return _cv_flann_IndexParams_getAll(
+      self,
+      names,
+      types,
+      strValues,
+      numValues,
+    );
+  }
+
+  late final _cv_flann_IndexParams_getAllPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              FlannIndexParams,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecF64>)>>('cv_flann_IndexParams_getAll');
+  late final _cv_flann_IndexParams_getAll =
+      _cv_flann_IndexParams_getAllPtr.asFunction<
+          void Function(
+              FlannIndexParams,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecI32>,
+              ffi.Pointer<VecVecChar>,
+              ffi.Pointer<VecF64>)>();
+
+  void cv_flann_IndexParams_getDouble(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    double defaultValue,
+    ffi.Pointer<ffi.Double> rval,
+  ) {
+    return _cv_flann_IndexParams_getDouble(
+      self,
+      key,
+      defaultValue,
+      rval,
+    );
+  }
+
+  late final _cv_flann_IndexParams_getDoublePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Double,
+              ffi.Pointer<ffi.Double>)>>('cv_flann_IndexParams_getDouble');
+  late final _cv_flann_IndexParams_getDouble =
+      _cv_flann_IndexParams_getDoublePtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, double,
+              ffi.Pointer<ffi.Double>)>();
+
+  void cv_flann_IndexParams_getInt(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    int defaultValue,
+    ffi.Pointer<ffi.Int> rval,
+  ) {
+    return _cv_flann_IndexParams_getInt(
+      self,
+      key,
+      defaultValue,
+      rval,
+    );
+  }
+
+  late final _cv_flann_IndexParams_getIntPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Int,
+              ffi.Pointer<ffi.Int>)>>('cv_flann_IndexParams_getInt');
+  late final _cv_flann_IndexParams_getInt =
+      _cv_flann_IndexParams_getIntPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, int,
+              ffi.Pointer<ffi.Int>)>();
+
+  void cv_flann_IndexParams_getString(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    ffi.Pointer<ffi.Char> defaultValue,
+    ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+  ) {
+    return _cv_flann_IndexParams_getString(
+      self,
+      key,
+      defaultValue,
+      rval,
+    );
+  }
+
+  late final _cv_flann_IndexParams_getStringPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+                  ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>>(
+      'cv_flann_IndexParams_getString');
+  late final _cv_flann_IndexParams_getString =
+      _cv_flann_IndexParams_getStringPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>();
+
+  ffi.Pointer<ffi.Void> cv_flann_IndexParams_params_ptr(
+    FlannIndexParams self,
+  ) {
+    return _cv_flann_IndexParams_params_ptr(
+      self,
+    );
+  }
+
+  late final _cv_flann_IndexParams_params_ptrPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(FlannIndexParams)>>(
+      'cv_flann_IndexParams_params_ptr');
+  late final _cv_flann_IndexParams_params_ptr =
+      _cv_flann_IndexParams_params_ptrPtr
+          .asFunction<ffi.Pointer<ffi.Void> Function(FlannIndexParams)>();
+
+  void cv_flann_IndexParams_setAlgorithm(
+    FlannIndexParams self,
+    int value,
+  ) {
+    return _cv_flann_IndexParams_setAlgorithm(
+      self,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setAlgorithmPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FlannIndexParams, ffi.Int)>>(
+          'cv_flann_IndexParams_setAlgorithm');
+  late final _cv_flann_IndexParams_setAlgorithm =
+      _cv_flann_IndexParams_setAlgorithmPtr
+          .asFunction<void Function(FlannIndexParams, int)>();
+
+  void cv_flann_IndexParams_setBool(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    bool value,
+  ) {
+    return _cv_flann_IndexParams_setBool(
+      self,
+      key,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setBoolPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Bool)>>('cv_flann_IndexParams_setBool');
+  late final _cv_flann_IndexParams_setBool =
+      _cv_flann_IndexParams_setBoolPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, bool)>();
+
+  void cv_flann_IndexParams_setDouble(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    double value,
+  ) {
+    return _cv_flann_IndexParams_setDouble(
+      self,
+      key,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setDoublePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Double)>>('cv_flann_IndexParams_setDouble');
+  late final _cv_flann_IndexParams_setDouble =
+      _cv_flann_IndexParams_setDoublePtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, double)>();
+
+  void cv_flann_IndexParams_setFloat(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    double value,
+  ) {
+    return _cv_flann_IndexParams_setFloat(
+      self,
+      key,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setFloatPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Float)>>('cv_flann_IndexParams_setFloat');
+  late final _cv_flann_IndexParams_setFloat =
+      _cv_flann_IndexParams_setFloatPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, double)>();
+
+  void cv_flann_IndexParams_setInt(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    int value,
+  ) {
+    return _cv_flann_IndexParams_setInt(
+      self,
+      key,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setIntPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Int)>>('cv_flann_IndexParams_setInt');
+  late final _cv_flann_IndexParams_setInt =
+      _cv_flann_IndexParams_setIntPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, int)>();
+
+  void cv_flann_IndexParams_setString(
+    FlannIndexParams self,
+    ffi.Pointer<ffi.Char> key,
+    ffi.Pointer<ffi.Char> value,
+  ) {
+    return _cv_flann_IndexParams_setString(
+      self,
+      key,
+      value,
+    );
+  }
+
+  late final _cv_flann_IndexParams_setStringPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('cv_flann_IndexParams_setString');
+  late final _cv_flann_IndexParams_setString =
+      _cv_flann_IndexParams_setStringPtr.asFunction<
+          void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -1093,6 +1382,8 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get cv_SimpleBlobDetector_close =>
           _library._cv_SimpleBlobDetector_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FlannIndexParamsPtr)>>
+      get cv_flann_IndexParams_close => _library._cv_flann_IndexParams_closePtr;
 }
 
 final class AKAZE extends ffi.Struct {
@@ -1131,6 +1422,51 @@ final class FlannBasedMatcher extends ffi.Struct {
 }
 
 typedef FlannBasedMatcherPtr = ffi.Pointer<FlannBasedMatcher>;
+
+final class FlannIndexParams extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef FlannIndexParamsPtr = ffi.Pointer<FlannIndexParams>;
+
+enum FlannIndexType {
+  FLANN_INDEX_TYPE_8U(0),
+  FLANN_INDEX_TYPE_8S(1),
+  FLANN_INDEX_TYPE_16U(2),
+  FLANN_INDEX_TYPE_16S(3),
+  FLANN_INDEX_TYPE_32S(4),
+  FLANN_INDEX_TYPE_32F(5),
+  FLANN_INDEX_TYPE_64F(6),
+  FLANN_INDEX_TYPE_STRING(7),
+  FLANN_INDEX_TYPE_BOOL(8),
+  FLANN_INDEX_TYPE_ALGORITHM(9);
+
+  static const LAST_VALUE_FLANN_INDEX_TYPE = FLANN_INDEX_TYPE_ALGORITHM;
+
+  final int value;
+  const FlannIndexType(this.value);
+
+  static FlannIndexType fromValue(int value) => switch (value) {
+        0 => FLANN_INDEX_TYPE_8U,
+        1 => FLANN_INDEX_TYPE_8S,
+        2 => FLANN_INDEX_TYPE_16U,
+        3 => FLANN_INDEX_TYPE_16S,
+        4 => FLANN_INDEX_TYPE_32S,
+        5 => FLANN_INDEX_TYPE_32F,
+        6 => FLANN_INDEX_TYPE_64F,
+        7 => FLANN_INDEX_TYPE_STRING,
+        8 => FLANN_INDEX_TYPE_BOOL,
+        9 => FLANN_INDEX_TYPE_ALGORITHM,
+        _ => throw ArgumentError('Unknown value for FlannIndexType: $value'),
+      };
+
+  @override
+  String toString() {
+    if (this == FLANN_INDEX_TYPE_ALGORITHM)
+      return "FlannIndexType.FLANN_INDEX_TYPE_ALGORITHM, FlannIndexType.LAST_VALUE_FLANN_INDEX_TYPE";
+    return super.toString();
+  }
+}
 
 final class GFTTDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -1230,5 +1566,8 @@ final class SimpleBlobDetectorParams extends ffi.Struct {
 typedef SimpleBlobDetectorPtr = ffi.Pointer<SimpleBlobDetector>;
 typedef VecChar = imp$1.VecChar;
 typedef VecDMatch = imp$1.VecDMatch;
+typedef VecF64 = imp$1.VecF64;
+typedef VecI32 = imp$1.VecI32;
 typedef VecKeyPoint = imp$1.VecKeyPoint;
+typedef VecVecChar = imp$1.VecVecChar;
 typedef VecVecDMatch = imp$1.VecVecDMatch;

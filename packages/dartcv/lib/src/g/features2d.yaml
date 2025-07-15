@@ -4,6 +4,8 @@ files:
     used-config:
       ffi-native: false
     symbols:
+      c:@E@FlannIndexType:
+        name: FlannIndexType
       c:@F@cv_AKAZE_close:
         name: cv_AKAZE_close
       c:@F@cv_AKAZE_create:
@@ -48,6 +50,8 @@ files:
         name: cv_FlannBasedMatcher_close
       c:@F@cv_FlannBasedMatcher_create:
         name: cv_FlannBasedMatcher_create
+      c:@F@cv_FlannBasedMatcher_create_1:
+        name: cv_FlannBasedMatcher_create_1
       c:@F@cv_FlannBasedMatcher_knnMatch:
         name: cv_FlannBasedMatcher_knnMatch
       c:@F@cv_GFTTDetector_close:
@@ -102,6 +106,32 @@ files:
         name: cv_drawKeyPoints
       c:@F@cv_drawMatches:
         name: cv_drawMatches
+      c:@F@cv_flann_IndexParams_close:
+        name: cv_flann_IndexParams_close
+      c:@F@cv_flann_IndexParams_create:
+        name: cv_flann_IndexParams_create
+      c:@F@cv_flann_IndexParams_getAll:
+        name: cv_flann_IndexParams_getAll
+      c:@F@cv_flann_IndexParams_getDouble:
+        name: cv_flann_IndexParams_getDouble
+      c:@F@cv_flann_IndexParams_getInt:
+        name: cv_flann_IndexParams_getInt
+      c:@F@cv_flann_IndexParams_getString:
+        name: cv_flann_IndexParams_getString
+      c:@F@cv_flann_IndexParams_params_ptr:
+        name: cv_flann_IndexParams_params_ptr
+      c:@F@cv_flann_IndexParams_setAlgorithm:
+        name: cv_flann_IndexParams_setAlgorithm
+      c:@F@cv_flann_IndexParams_setBool:
+        name: cv_flann_IndexParams_setBool
+      c:@F@cv_flann_IndexParams_setDouble:
+        name: cv_flann_IndexParams_setDouble
+      c:@F@cv_flann_IndexParams_setFloat:
+        name: cv_flann_IndexParams_setFloat
+      c:@F@cv_flann_IndexParams_setInt:
+        name: cv_flann_IndexParams_setInt
+      c:@F@cv_flann_IndexParams_setString:
+        name: cv_flann_IndexParams_setString
       c:@S@AKAZE:
         name: AKAZE
       c:@S@AgastFeatureDetector:
@@ -114,6 +144,8 @@ files:
         name: FastFeatureDetector
       c:@S@FlannBasedMatcher:
         name: FlannBasedMatcher
+      c:@S@FlannIndexParams:
+        name: FlannIndexParams
       c:@S@GFTTDetector:
         name: GFTTDetector
       c:@S@KAZE:
@@ -140,6 +172,8 @@ files:
         name: FastFeatureDetectorPtr
       c:features2d.h@T@FlannBasedMatcherPtr:
         name: FlannBasedMatcherPtr
+      c:features2d.h@T@FlannIndexParamsPtr:
+        name: FlannIndexParamsPtr
       c:features2d.h@T@GFTTDetectorPtr:
         name: GFTTDetectorPtr
       c:features2d.h@T@KAZEPtr:
@@ -162,7 +196,13 @@ files:
         name: VecChar
       c:types.h@T@VecDMatch:
         name: VecDMatch
+      c:types.h@T@VecF64:
+        name: VecF64
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecKeyPoint:
         name: VecKeyPoint
+      c:types.h@T@VecVecChar:
+        name: VecVecChar
       c:types.h@T@VecVecDMatch:
         name: VecVecDMatch
