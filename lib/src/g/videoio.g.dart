@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<ffi.Void Function(VideoCapturePtr)>()
@@ -29,22 +29,22 @@ external ffi.Pointer<CvStatus> cv_VideoCapture_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Int,
-        ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>()
+        ffi.Pointer<VideoCapture>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_create_1(
   ffi.Pointer<ffi.Char> filename,
   int apiPreference,
   ffi.Pointer<VideoCapture> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ffi.Int, ffi.Int, ffi.Pointer<VideoCapture>, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Pointer<VideoCapture>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_create_2(
   int index,
   int apiPreference,
   ffi.Pointer<VideoCapture> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Double Function(VideoCapture, ffi.Int)>()
@@ -58,10 +58,10 @@ external ffi.Pointer<ffi.Char> cv_VideoCapture_getBackendName(
   VideoCapture self,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_grab(
   VideoCapture self,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Bool Function(VideoCapture)>()
@@ -71,54 +71,54 @@ external bool cv_VideoCapture_isOpened(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_open(
   VideoCapture self,
   ffi.Pointer<ffi.Char> uri,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Pointer<ffi.Char>, ffi.Int,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_open_1(
   VideoCapture self,
   ffi.Pointer<ffi.Char> uri,
   int apiPreference,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VideoCapture, ffi.Int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        VideoCapture, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_open_2(
   VideoCapture self,
   int device,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(VideoCapture, ffi.Int, ffi.Int,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_open_3(
   VideoCapture self,
   int device,
   int apiPreference,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        VideoCapture, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_read(
   VideoCapture self,
   Mat buf,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(VideoCapture)>()
@@ -127,14 +127,14 @@ external ffi.Pointer<CvStatus> cv_VideoCapture_release(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        VideoCapture, Mat, ffi.Int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(VideoCapture, Mat, ffi.Int,
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoCapture_retrieve(
   VideoCapture self,
   Mat image,
   int flag,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(VideoCapture, ffi.Int, ffi.Double)>()
@@ -163,7 +163,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_create(
         ffi.Int,
         ffi.Bool,
         ffi.Pointer<VideoWriter>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoWriter_create_1(
   ffi.Pointer<ffi.Char> name,
   int fourcc,
@@ -172,7 +172,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_create_1(
   int height,
   bool isColor,
   ffi.Pointer<VideoWriter> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -185,7 +185,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_create_1(
         ffi.Int,
         ffi.Bool,
         ffi.Pointer<VideoWriter>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoWriter_create_2(
   ffi.Pointer<ffi.Char> name,
   int apiPreference,
@@ -195,7 +195,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_create_2(
   int height,
   bool isColor,
   ffi.Pointer<VideoWriter> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Int Function(ffi.Char, ffi.Char, ffi.Char, ffi.Char)>()
@@ -232,7 +232,7 @@ external bool cv_VideoWriter_isOpened(
         ffi.Int,
         ffi.Bool,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoWriter_open(
   VideoWriter self,
   ffi.Pointer<ffi.Char> name,
@@ -242,7 +242,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_open(
   int height,
   bool isColor,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -256,7 +256,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_open(
         ffi.Int,
         ffi.Bool,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoWriter_open_1(
   VideoWriter self,
   ffi.Pointer<ffi.Char> name,
@@ -267,7 +267,7 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_open_1(
   int height,
   bool isColor,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(VideoWriter)>()
@@ -283,11 +283,11 @@ external void cv_VideoWriter_set(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(VideoWriter, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_VideoWriter_write(
   VideoWriter self,
   Mat img,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 const addresses = _SymbolAddresses();
@@ -302,8 +302,8 @@ class _SymbolAddresses {
           ffi.Native.addressOf(self.cv_VideoWriter_close);
 }
 
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
 
 final class VideoCapture extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

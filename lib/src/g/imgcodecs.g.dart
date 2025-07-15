@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 
 @ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Char>)>()
 external bool cv_haveImageReader(
@@ -34,69 +34,69 @@ external int cv_imcount(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VecUChar, ffi.Int, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        VecUChar, ffi.Int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imdecode(
   VecUChar buf,
   int flags,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
-        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imencode(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
   ffi.Pointer<ffi.Bool> success,
   ffi.Pointer<VecUChar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32,
-        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, ffi.Pointer<VecUChar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imencode_1(
   ffi.Pointer<ffi.Char> fileExt,
   Mat img,
   VecI32 params,
   ffi.Pointer<ffi.Bool> success,
   ffi.Pointer<VecUChar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Char>, ffi.Int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imread(
   ffi.Pointer<ffi.Char> filename,
   int flags,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        ffi.Pointer<ffi.Char>, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat,
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imwrite(
   ffi.Pointer<ffi.Char> filename,
   Mat img,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, Mat, VecI32,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_imwrite_1(
   ffi.Pointer<ffi.Char> filename,
   Mat img,
   VecI32 params,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
-typedef VecI32 = imp1.VecI32;
-typedef VecUChar = imp1.VecUChar;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
+typedef VecI32 = imp$1.VecI32;
+typedef VecUChar = imp$1.VecUChar;

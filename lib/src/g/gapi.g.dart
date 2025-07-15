@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<
@@ -294,7 +294,7 @@ external void gapi_GComputation_Close(
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(GMat, GMat, ffi.Pointer<GComputation>)>()
 external ffi.Pointer<CvStatus> gapi_GComputation_New(
-  GMat in1,
+  GMat in$,
   GMat out,
   ffi.Pointer<GComputation> rval,
 );
@@ -302,7 +302,7 @@ external ffi.Pointer<CvStatus> gapi_GComputation_New(
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(GMat, GScalar, ffi.Pointer<GComputation>)>()
 external ffi.Pointer<CvStatus> gapi_GComputation_New_1(
-  GMat in1,
+  GMat in$,
   GScalar out,
   ffi.Pointer<GComputation> rval,
 );
@@ -328,18 +328,18 @@ external ffi.Pointer<CvStatus> gapi_GComputation_New_3(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(GComputation, Mat, imp1.CvCallback_1)>()
+    ffi.Pointer<CvStatus> Function(GComputation, Mat, imp$1.CvCallback_1)>()
 external ffi.Pointer<CvStatus> gapi_GComputation_apply(
   GComputation self,
-  Mat in1,
-  imp1.CvCallback_1 callback,
+  Mat in$,
+  imp$1.CvCallback_1 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(GComputation, Mat, ffi.Pointer<Scalar>)>()
 external ffi.Pointer<CvStatus> gapi_GComputation_apply_1(
   GComputation self,
-  Mat in1,
+  Mat in$,
   ffi.Pointer<Scalar> out,
 );
 
@@ -687,7 +687,7 @@ external ffi.Pointer<CvStatus> gapi_convertTo(
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(GMat, ffi.Pointer<GMat>)>()
 external ffi.Pointer<CvStatus> gapi_copy_1(
-  GMat in1,
+  GMat in$,
   ffi.Pointer<GMat> rval,
 );
 
@@ -1233,10 +1233,10 @@ class _SymbolAddresses {
       get gapi_GScalar_Close => ffi.Native.addressOf(self.gapi_GScalar_Close);
 }
 
-typedef CvPoint = imp1.CvPoint;
-typedef CvRect = imp1.CvRect;
-typedef CvSize = imp1.CvSize;
-typedef CvStatus = imp1.CvStatus;
+typedef CvPoint = imp$1.CvPoint;
+typedef CvRect = imp$1.CvRect;
+typedef CvSize = imp$1.CvSize;
+typedef CvStatus = imp$1.CvStatus;
 
 final class GArrayGArrayPoint extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -1344,7 +1344,7 @@ final class GScalar extends ffi.Struct {
 }
 
 typedef GScalarPtr = ffi.Pointer<GScalar>;
-typedef Mat = imp1.Mat;
+typedef Mat = imp$1.Mat;
 
 final class Prim extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -1352,19 +1352,19 @@ final class Prim extends ffi.Struct {
 
 typedef PrimPtr = ffi.Pointer<Prim>;
 typedef Prims = VecPrim;
-typedef Scalar = imp1.Scalar;
+typedef Scalar = imp$1.Scalar;
 
 final class VecGMat extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef VecGMatPtr = ffi.Pointer<VecGMat>;
-typedef VecPoint = imp1.VecPoint;
+typedef VecPoint = imp$1.VecPoint;
 
 final class VecPrim extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef VecPrimPtr = ffi.Pointer<VecPrim>;
-typedef VecVec4i = imp1.VecVec4i;
-typedef VecVecPoint = imp1.VecVecPoint;
+typedef VecVec4i = imp$1.VecVec4i;
+typedef VecVecPoint = imp$1.VecVecPoint;

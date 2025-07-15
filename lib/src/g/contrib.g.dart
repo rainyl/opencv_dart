@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<ffi.Void Function(ArucoDictionaryPtr)>()
@@ -127,14 +127,14 @@ external ffi.Pointer<CvStatus> cv_aruco_arucoDetector_create_1(
         ffi.Pointer<VecVecPoint2f>,
         ffi.Pointer<VecI32>,
         ffi.Pointer<VecVecPoint2f>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_aruco_arucoDetector_detectMarkers(
   ArucoDetector self,
   Mat inputArr,
   ffi.Pointer<VecVecPoint2f> out_markerCorners,
   ffi.Pointer<VecI32> out_markerIds,
   ffi.Pointer<VecVecPoint2f> out_rejectedCandidates,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(ArucoDetectorParamsPtr)>()
@@ -470,25 +470,25 @@ external void cv_aruco_detectorParameters_set_polygonalApproxAccuracyRate(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, VecVecPoint2f, VecI32, Scalar, imp1.CvCallback_0)>()
+        Mat, VecVecPoint2f, VecI32, Scalar, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_aruco_drawDetectedMarkers(
   Mat image,
   VecVecPoint2f markerCorners,
   VecI32 markerIds,
   Scalar borderColor,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ffi.Int, ffi.Int, ffi.Int, ffi.Int, Mat, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_aruco_generateImageMarker(
   int dictionaryId,
   int id,
   int sidePixels,
   int borderBits,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -505,146 +505,147 @@ external void cv_img_hash_BlockMeanHash_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        BlockMeanHash, Mat, Mat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_compare(
   BlockMeanHash self,
   Mat hashOne,
   Mat hashTwo,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BlockMeanHash, Mat, Mat, imp1.CvCallback_0)>()
+        BlockMeanHash, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_compute(
   BlockMeanHash self,
   Mat inputArr,
   Mat outputArr,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ffi.Int, ffi.Pointer<BlockMeanHash>, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Pointer<BlockMeanHash>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_create(
   int mode,
   ffi.Pointer<BlockMeanHash> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BlockMeanHash, ffi.Pointer<VecF64>, imp1.CvCallback_0)>()
+        BlockMeanHash, ffi.Pointer<VecF64>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_getMean(
   BlockMeanHash self,
   ffi.Pointer<VecF64> rval,
-  imp1.CvCallback_0 callback,
-);
-
-@ffi.Native<
-    ffi.Pointer<CvStatus> Function(BlockMeanHash, ffi.Int, imp1.CvCallback_0)>()
-external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_setMode(
-  BlockMeanHash self,
-  int mode,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        BlockMeanHash, ffi.Int, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_img_hash_BlockMeanHash_setMode(
+  BlockMeanHash self,
+  int mode,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_averageHash_compare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_averageHash_compute(
   Mat inputArr,
   Mat outputArr,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_colorMomentHash_compare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_colorMomentHash_compute(
   Mat inputArr,
   Mat outputArr,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Float, ffi.Float,
-        ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_marrHildrethHash_compare(
   Mat a,
   Mat b,
   double alpha,
   double scale,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_marrHildrethHash_compute(
   Mat inputArr,
   Mat outputArr,
   double alpha,
   double scale,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_pHash_compare(
   Mat a,
   Mat b,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_pHash_compute(
   Mat inputArr,
   Mat outputArr,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int,
-        ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_radialVarianceHash_compare(
   Mat a,
   Mat b,
   double sigma,
   int numOfAngleLine,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Double, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Double, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_img_hash_radialVarianceHash_compute(
   Mat inputArr,
   Mat outputArr,
   double sigma,
   int numOfAngleLine,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(QualityBRISQUEPtr)>()
@@ -654,40 +655,40 @@ external void cv_quality_QualityBRISQUE_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        QualityBRISQUE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        QualityBRISQUE, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_compute(
   QualityBRISQUE self,
   Mat img,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_computeFeatures_static(
   Mat img,
   Mat features,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<ffi.Char>,
-        ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Char>, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_compute_static(
   Mat img,
   ffi.Pointer<ffi.Char> model_file,
   ffi.Pointer<ffi.Char> range_file,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
-        ffi.Pointer<QualityBRISQUE>, imp1.CvCallback_0)>()
+        ffi.Pointer<QualityBRISQUE>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityBRISQUE_create(
   ffi.Pointer<ffi.Char> model_file,
   ffi.Pointer<ffi.Char> range_file,
   ffi.Pointer<QualityBRISQUE> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(QualityGMSDPtr)>()
@@ -697,23 +698,23 @@ external void cv_quality_QualityGMSD_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        QualityGMSD, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        QualityGMSD, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityGMSD_compute(
   QualityGMSD self,
   Mat cmp,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityGMSD_compute_static(
   Mat ref,
   Mat cmp,
   Mat qualityMap,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, ffi.Pointer<QualityGMSD>)>()
@@ -729,32 +730,32 @@ external void cv_quality_QualityMSE_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        QualityMSE, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        QualityMSE, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityMSE_compute(
   QualityMSE self,
   Mat cmpImgs,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityMSE_compute_static(
   Mat ref,
   Mat cmp,
   Mat qualityMap,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Pointer<QualityMSE>, imp1.CvCallback_0)>()
+        Mat, ffi.Pointer<QualityMSE>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityMSE_create(
   Mat ref,
   ffi.Pointer<QualityMSE> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(QualityPSNRPtr)>()
@@ -764,34 +765,34 @@ external void cv_quality_QualityPSNR_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        QualityPSNR, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        QualityPSNR, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityPSNR_compute(
   QualityPSNR self,
   Mat cmp,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Double, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Double, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityPSNR_compute_static(
   Mat ref,
   Mat cmp,
   double maxPixelValue,
   Mat qualityMap,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Double, ffi.Pointer<QualityPSNR>, imp1.CvCallback_0)>()
+        Mat, ffi.Double, ffi.Pointer<QualityPSNR>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualityPSNR_create(
   Mat ref,
   double maxPixelValue,
   ffi.Pointer<QualityPSNR> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Double Function(QualityPSNR)>()
@@ -812,32 +813,32 @@ external void cv_quality_QualitySSIM_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        QualitySSIM, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        QualitySSIM, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualitySSIM_compute(
   QualitySSIM self,
   Mat cmp,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualitySSIM_compute_static(
   Mat ref,
   Mat cmp,
   Mat qualityMap,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, ffi.Pointer<QualitySSIM>, imp1.CvCallback_0)>()
+        Mat, ffi.Pointer<QualitySSIM>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_quality_QualitySSIM_create(
   Mat ref,
   ffi.Pointer<QualitySSIM> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(WeChatQRCodePtr)>()
@@ -857,25 +858,25 @@ external ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_create(
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<ffi.Char>,
         ffi.Pointer<WeChatQRCode>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_create_1(
   ffi.Pointer<ffi.Char> detector_prototxt_path,
   ffi.Pointer<ffi.Char> detector_caffe_model_path,
   ffi.Pointer<ffi.Char> super_resolution_prototxt_path,
   ffi.Pointer<ffi.Char> super_resolution_caffe_model_path,
   ffi.Pointer<WeChatQRCode> qrcode,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(WeChatQRCode, Mat, ffi.Pointer<VecMat>,
-        ffi.Pointer<VecVecChar>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecVecChar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
   WeChatQRCode self,
   Mat img,
   ffi.Pointer<VecMat> out_points,
   ffi.Pointer<VecVecChar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Float Function(WeChatQRCode)>()
@@ -937,14 +938,14 @@ external double cv_ximgproc_EdgeBoxes_getBeta(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(EdgeBoxes, Mat, Mat, ffi.Pointer<VecRect>,
-        ffi.Pointer<VecF32>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecF32>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeBoxes_getBoundingBoxes(
   EdgeBoxes self,
   Mat edge_map,
   Mat orientation_map,
   ffi.Pointer<VecRect> out_boxes,
   ffi.Pointer<VecF32> scores,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Float Function(EdgeBoxes)>()
@@ -1080,79 +1081,79 @@ external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_create(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectEdges(
   EdgeDrawing self,
   Mat src,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectEllipses(
   EdgeDrawing self,
   Mat ellipses,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_detectLines(
   EdgeDrawing self,
   Mat lines,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getEdgeImage(
   EdgeDrawing self,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(EdgeDrawing, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getGradientImage(
   EdgeDrawing self,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        EdgeDrawing, ffi.Pointer<EdgeDrawingParams>, imp1.CvCallback_0)>()
+        EdgeDrawing, ffi.Pointer<EdgeDrawingParams>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getParams(
   EdgeDrawing self,
   ffi.Pointer<EdgeDrawingParams> params,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        EdgeDrawing, ffi.Pointer<VecI32>, imp1.CvCallback_0)>()
+        EdgeDrawing, ffi.Pointer<VecI32>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
   EdgeDrawing self,
   ffi.Pointer<VecI32> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        EdgeDrawing, ffi.Pointer<VecVecPoint>, imp1.CvCallback_0)>()
+        EdgeDrawing, ffi.Pointer<VecVecPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_getSegments(
   EdgeDrawing self,
   ffi.Pointer<VecVecPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        EdgeDrawing, EdgeDrawingParams, imp1.CvCallback_0)>()
+        EdgeDrawing, EdgeDrawingParams, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_EdgeDrawing_setParams(
   EdgeDrawing self,
   EdgeDrawingParams params,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(GraphSegmentationPtr)>()
@@ -1187,12 +1188,12 @@ external double cv_ximgproc_GraphSegmentation_getSigma(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        GraphSegmentation, Mat, Mat, imp1.CvCallback_0)>()
+        GraphSegmentation, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_GraphSegmentation_processImage(
   GraphSegmentation self,
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(GraphSegmentation, ffi.Float)>()
@@ -1213,11 +1214,11 @@ external void cv_ximgproc_GraphSegmentation_setSigma(
   double val,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_PeiLinNormalization(
   Mat I,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(RFFeatureGetter)>()
@@ -1242,7 +1243,7 @@ external bool cv_ximgproc_RFFeatureGetter_empty(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(RFFeatureGetter, Mat, Mat, ffi.Int, ffi.Int,
-        ffi.Int, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_RFFeatureGetter_getFeatures(
   RFFeatureGetter self,
   Mat src,
@@ -1252,7 +1253,7 @@ external ffi.Pointer<CvStatus> cv_ximgproc_RFFeatureGetter_getFeatures(
   int shrink,
   int outNum,
   int gradNum,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(StructuredEdgeDetectionPtr)>()
@@ -1262,13 +1263,13 @@ external void cv_ximgproc_StructuredEdgeDetection_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>()
+        StructuredEdgeDetection, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus>
     cv_ximgproc_StructuredEdgeDetection_computeOrientation(
   StructuredEdgeDetection self,
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -1290,17 +1291,17 @@ external ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        StructuredEdgeDetection, Mat, Mat, imp1.CvCallback_0)>()
+        StructuredEdgeDetection, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_detectEdges(
   StructuredEdgeDetection self,
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(StructuredEdgeDetection, Mat, Mat, Mat,
-        ffi.Int, ffi.Int, ffi.Float, ffi.Bool, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Float, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_edgesNms(
   StructuredEdgeDetection self,
   Mat edge_image,
@@ -1310,47 +1311,47 @@ external ffi.Pointer<CvStatus> cv_ximgproc_StructuredEdgeDetection_edgesNms(
   int s_,
   double m,
   bool isParallel,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_anisotropicDiffusion(
   Mat src,
   Mat dst,
   double alpha,
   double K,
   int niters,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Int, ffi.Double, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Int, ffi.Double, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_edgePreservingFilter(
   Mat src,
   Mat dst,
   int d,
   double threshold,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_findEllipses(
   Mat image,
   Mat ellipses,
   double scoreThreshold,
   double reliabilityThreshold,
   double centerDistanceThreshold,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Int, ffi.Int,
-        ffi.Double, ffi.Int, ffi.Double, imp1.CvCallback_0)>()
+        ffi.Double, ffi.Int, ffi.Double, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_niBlackThreshold(
   Mat src,
   Mat dst,
@@ -1360,49 +1361,50 @@ external ffi.Pointer<CvStatus> cv_ximgproc_niBlackThreshold(
   double k,
   int binarizationMethod,
   double r,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VecPoint3i, Mat, CvSize, imp1.CvCallback_0)>()
+        VecPoint3i, Mat, CvSize, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_createRLEImage(
   VecPoint3i runs,
   Mat res,
   CvSize size,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, CvPoint, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(
+        Mat, Mat, Mat, CvPoint, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_dilate(
   Mat rlSrc,
   Mat rlDest,
   Mat rlKernel,
   CvPoint anchor,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Bool, CvPoint, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Bool, CvPoint, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_erode(
   Mat rlSrc,
   Mat rlDest,
   Mat rlKernel,
   bool bBoundaryOn,
   CvPoint anchor,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ffi.Int, CvSize, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        ffi.Int, CvSize, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_getStructuringElement(
   int shape,
   CvSize ksize,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Bool Function(Mat)>()
@@ -1412,7 +1414,7 @@ external bool cv_ximgproc_rl_isRLMorphologyPossible(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Int, Mat, ffi.Bool, CvPoint, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Int, Mat, ffi.Bool, CvPoint, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_morphologyEx(
   Mat rlSrc,
   Mat rlDest,
@@ -1420,36 +1422,36 @@ external ffi.Pointer<CvStatus> cv_ximgproc_rl_morphologyEx(
   Mat rlKernel,
   bool bBoundaryOnForErosion,
   CvPoint anchor,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Scalar, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_paint(
   Mat image,
   Mat rlSrc,
   Scalar value,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Double, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Double, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_rl_threshold(
   Mat src,
   Mat rlDest,
   double thresh,
   int type,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ximgproc_thinning(
   Mat src,
   Mat dst,
   int thinningType,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(PtrWBDetectorPtr)>()
@@ -1593,9 +1595,9 @@ final class Box extends ffi.Struct {
   external int y;
 }
 
-typedef CvPoint = imp1.CvPoint;
-typedef CvSize = imp1.CvSize;
-typedef CvStatus = imp1.CvStatus;
+typedef CvPoint = imp$1.CvPoint;
+typedef CvSize = imp$1.CvSize;
+typedef CvStatus = imp$1.CvStatus;
 
 final class EdgeBoxes extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
@@ -1655,7 +1657,7 @@ final class GraphSegmentation extends ffi.Struct {
 }
 
 typedef GraphSegmentationPtr = ffi.Pointer<GraphSegmentation>;
-typedef Mat = imp1.Mat;
+typedef Mat = imp$1.Mat;
 
 final class PtrWBDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
@@ -1698,22 +1700,22 @@ final class RFFeatureGetter extends ffi.Struct {
 }
 
 typedef RFFeatureGetterPtr = ffi.Pointer<RFFeatureGetter>;
-typedef Scalar = imp1.Scalar;
+typedef Scalar = imp$1.Scalar;
 
 final class StructuredEdgeDetection extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 }
 
 typedef StructuredEdgeDetectionPtr = ffi.Pointer<StructuredEdgeDetection>;
-typedef VecF32 = imp1.VecF32;
-typedef VecF64 = imp1.VecF64;
-typedef VecI32 = imp1.VecI32;
-typedef VecMat = imp1.VecMat;
-typedef VecPoint3i = imp1.VecPoint3i;
-typedef VecRect = imp1.VecRect;
-typedef VecVecChar = imp1.VecVecChar;
-typedef VecVecPoint = imp1.VecVecPoint;
-typedef VecVecPoint2f = imp1.VecVecPoint2f;
+typedef VecF32 = imp$1.VecF32;
+typedef VecF64 = imp$1.VecF64;
+typedef VecI32 = imp$1.VecI32;
+typedef VecMat = imp$1.VecMat;
+typedef VecPoint3i = imp$1.VecPoint3i;
+typedef VecRect = imp$1.VecRect;
+typedef VecVecChar = imp$1.VecVecChar;
+typedef VecVecPoint = imp$1.VecVecPoint;
+typedef VecVecPoint2f = imp$1.VecVecPoint2f;
 
 final class WeChatQRCode extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

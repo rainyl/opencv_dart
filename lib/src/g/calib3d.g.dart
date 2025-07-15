@@ -14,37 +14,37 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Pointer<Vec3d>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_RQDecomp3x3(
-  imp1.MatIn src,
-  imp1.MatOut mtxR,
-  imp1.MatOut mtxQ,
-  imp1.MatOut Qx,
-  imp1.MatOut Qy,
-  imp1.MatOut Qz,
+  imp$1.MatIn src,
+  imp$1.MatOut mtxR,
+  imp$1.MatOut mtxQ,
+  imp$1.MatOut Qx,
+  imp$1.MatOut Qy,
+  imp$1.MatOut Qz,
   ffi.Pointer<Vec3d> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatOut, imp1.MatOut, imp1.CvCallback_0)>()
+        imp$1.MatIn, imp$1.MatOut, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Rodrigues(
-  imp1.MatIn src,
-  imp1.MatOut dst,
-  imp1.MatOut jacobian,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn src,
+  imp$1.MatOut dst,
+  imp$1.MatOut jacobian,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -59,7 +59,7 @@ external ffi.Pointer<CvStatus> cv_Rodrigues(
         ffi.Int,
         TermCriteria,
         ffi.Pointer<ffi.Double>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_calibrateCamera(
   VecVecPoint3f objectPoints,
   VecVecPoint2f imagePoints,
@@ -71,7 +71,7 @@ external ffi.Pointer<CvStatus> cv_calibrateCamera(
   int flag,
   TermCriteria criteria,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Bool Function(Mat, CvSize)>()
@@ -82,134 +82,134 @@ external bool cv_checkChessboard(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, ffi.Int, imp1.MatIn, imp1.MatOut, imp1.CvCallback_0)>()
+        imp$1.MatIn, ffi.Int, imp$1.MatIn, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_computeCorrespondEpilines(
-  imp1.MatIn src,
+  imp$1.MatIn src,
   int whichImage,
-  imp1.MatIn F,
-  imp1.MatOut lines,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn F,
+  imp$1.MatOut lines,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatOut, imp1.CvCallback_0)>()
+        imp$1.MatIn, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_convertPointsFromHomogeneous(
-  imp1.MatIn src,
-  imp1.MatOut dst,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn src,
+  imp$1.MatOut dst,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatOut, imp1.CvCallback_0)>()
+        imp$1.MatIn, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_convertPointsHomogeneous(
-  imp1.MatIn src,
-  imp1.MatOut dst,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn src,
+  imp$1.MatOut dst,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatOut, imp1.CvCallback_0)>()
+        imp$1.MatIn, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_convertPointsToHomogeneous(
-  imp1.MatIn src,
-  imp1.MatOut dst,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn src,
+  imp$1.MatOut dst,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, imp1.MatIn,
-        imp1.MatOut, imp1.MatOut, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatIn,
+        imp$1.MatOut, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_correctMatches(
-  imp1.MatIn F,
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatOut newPoints1,
-  imp1.MatOut newPoints2,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn F,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatOut newPoints1,
+  imp$1.MatOut newPoints2,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatOut, imp1.MatOut, imp1.MatOut, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatOut, imp$1.MatOut,
+        imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_decomposeEssentialMat(
-  imp1.MatIn E,
-  imp1.MatOut R1,
-  imp1.MatOut R2,
-  imp1.MatOut t,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn E,
+  imp$1.MatOut R1,
+  imp$1.MatOut R2,
+  imp$1.MatOut t,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, VecMat, VecMat,
-        VecMat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, VecMat, VecMat,
+        VecMat, ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_decomposeHomographyMat(
-  imp1.MatIn H,
-  imp1.MatIn K,
+  imp$1.MatIn H,
+  imp$1.MatIn K,
   VecMat rotations,
   VecMat translations,
   VecMat normals,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.CvCallback_0)>()
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_decomposeProjectionMatrix(
-  imp1.MatIn projMatrix,
-  imp1.MatOut cameraMatrix,
-  imp1.MatOut rotMatrix,
-  imp1.MatOut transVect,
-  imp1.MatOut rotMatrixX,
-  imp1.MatOut rotMatrixY,
-  imp1.MatOut rotMatrixZ,
-  imp1.MatOut eulerAngles,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn projMatrix,
+  imp$1.MatOut cameraMatrix,
+  imp$1.MatOut rotMatrix,
+  imp$1.MatOut transVect,
+  imp$1.MatOut rotMatrixX,
+  imp$1.MatOut rotMatrixY,
+  imp$1.MatOut rotMatrixZ,
+  imp$1.MatOut eulerAngles,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, CvSize, VecPoint2f, ffi.Bool, imp1.CvCallback_0)>()
+        Mat, CvSize, VecPoint2f, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_drawChessboardCorners(
   Mat image,
   CvSize patternSize,
   VecPoint2f corners,
   bool patternWasFound,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatInOut, imp1.MatIn, imp1.MatIn,
-        imp1.MatIn, imp1.MatIn, ffi.Float, ffi.Int, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatInOut, imp$1.MatIn, imp$1.MatIn,
+        imp$1.MatIn, imp$1.MatIn, ffi.Float, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_drawFrameAxes(
-  imp1.MatInOut image,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
-  imp1.MatIn rvec,
-  imp1.MatIn tvec,
+  imp$1.MatInOut image,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatIn rvec,
+  imp$1.MatIn tvec,
   double length,
   int thickness,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffine2D(
   VecPoint2f from,
   VecPoint2f to,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -223,7 +223,7 @@ external ffi.Pointer<CvStatus> cv_estimateAffine2D(
         ffi.Double,
         ffi.Size,
         ffi.Pointer<Mat>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffine2D_1(
   VecPoint2f from,
   VecPoint2f to,
@@ -234,24 +234,24 @@ external ffi.Pointer<CvStatus> cv_estimateAffine2D_1(
   double confidence,
   int refineIters,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Pointer<ffi.Double>, ffi.Bool,
-        ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffine3D(
   Mat src,
   Mat dst,
   ffi.Pointer<ffi.Double> scale,
   bool force_rotation,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, ffi.Double, ffi.Double,
-        ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffine3D_1(
   Mat src,
   Mat dst,
@@ -260,17 +260,17 @@ external ffi.Pointer<CvStatus> cv_estimateAffine3D_1(
   double ransacThreshold,
   double confidence,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffinePartial2D(
   VecPoint2f from,
   VecPoint2f to,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -284,7 +284,7 @@ external ffi.Pointer<CvStatus> cv_estimateAffinePartial2D(
         ffi.Double,
         ffi.Size,
         ffi.Pointer<Mat>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateAffinePartial2D_1(
   VecPoint2f from,
   VecPoint2f to,
@@ -295,107 +295,107 @@ external ffi.Pointer<CvStatus> cv_estimateAffinePartial2D_1(
   double confidence,
   int refineIters,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, CvSize, imp1.MatIn, ffi.Float,
-        ffi.Bool, imp1.MatOut, ffi.Pointer<Scalar>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, CvSize, imp$1.MatIn, ffi.Float,
+        ffi.Bool, imp$1.MatOut, ffi.Pointer<Scalar>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateChessboardSharpness(
-  imp1.MatIn image,
+  imp$1.MatIn image,
   CvSize patternSize,
-  imp1.MatIn corners,
+  imp$1.MatIn corners,
   double rise_distance,
   bool vertical,
-  imp1.MatOut sharpness,
+  imp$1.MatOut sharpness,
   ffi.Pointer<Scalar> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Double,
         ffi.Double,
         ffi.Pointer<ffi.Int>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_estimateTranslation3D(
-  imp1.MatIn src,
-  imp1.MatIn dst,
-  imp1.MatOut out,
-  imp1.MatOut inliers,
+  imp$1.MatIn src,
+  imp$1.MatIn dst,
+  imp$1.MatOut out,
+  imp$1.MatOut inliers,
   double ransacThreshold,
   double confidence,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(VecMat, VecMat, imp1.MatIn, imp1.MatIn,
-        imp1.MatOut, imp1.MatIn, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(VecMat, VecMat, imp$1.MatIn, imp$1.MatIn,
+        imp$1.MatOut, imp$1.MatIn, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_filterHomographyDecompByVisibleRefpoints(
   VecMat rotations,
   VecMat normals,
-  imp1.MatIn beforePoints,
-  imp1.MatIn afterPoints,
-  imp1.MatOut possibleSolutions,
-  imp1.MatIn pointsMask,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn beforePoints,
+  imp$1.MatIn afterPoints,
+  imp$1.MatOut possibleSolutions,
+  imp$1.MatIn pointsMask,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatInOut, ffi.Double, ffi.Int,
-        ffi.Double, imp1.MatInOut, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatInOut, ffi.Double, ffi.Int,
+        ffi.Double, imp$1.MatInOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_filterSpeckles(
-  imp1.MatInOut img,
+  imp$1.MatInOut img,
   double newVal,
   int maxSpeckleSize,
   double maxDiff,
-  imp1.MatInOut buf,
-  imp1.CvCallback_0 callback,
+  imp$1.MatInOut buf,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatInOut, CvSize,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatInOut, CvSize,
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_find4QuadCornerSubpix(
-  imp1.MatIn img,
-  imp1.MatInOut corners,
+  imp$1.MatIn img,
+  imp$1.MatInOut corners,
   CvSize region_size,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
-        ffi.Int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findChessboardCorners(
   Mat image,
   CvSize patternSize,
   ffi.Pointer<VecPoint2f> corners,
   int flags,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
-        ffi.Int, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
   Mat image,
   CvSize patternSize,
   ffi.Pointer<VecPoint2f> out_corners,
   int flags,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, CvSize, ffi.Pointer<VecPoint2f>,
-        ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
   Mat image,
   CvSize patternSize,
@@ -403,147 +403,154 @@ external ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
   int flags,
   Mat meta,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, CvSize, imp1.MatOut, ffi.Int,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, CvSize, imp$1.MatOut, ffi.Int,
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findCirclesGrid(
-  imp1.MatIn image,
+  imp$1.MatIn image,
   CvSize patternSize,
-  imp1.MatOut centers,
+  imp$1.MatOut centers,
   int flags,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Double,
         CvPoint2d,
         ffi.Int,
         ffi.Double,
         ffi.Double,
         ffi.Int,
-        imp1.MatOut,
+        imp$1.MatOut,
         ffi.Pointer<Mat>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findEssentialMat(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
   double focal,
   CvPoint2d pp,
   int method,
   double prob,
   double threshold,
   int maxIters,
-  imp1.MatOut mask,
+  imp$1.MatOut mask,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Int,
         ffi.Double,
         ffi.Double,
         ffi.Int,
-        imp1.MatOut,
+        imp$1.MatOut,
         ffi.Pointer<Mat>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findEssentialMat_1(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatIn cameraMatrix,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatIn cameraMatrix,
   int method,
   double prob,
   double threshold,
   int maxIters,
-  imp1.MatOut mask,
+  imp$1.MatOut mask,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Int,
         ffi.Double,
         ffi.Double,
         ffi.Int,
-        imp1.MatOut,
+        imp$1.MatOut,
         ffi.Pointer<Mat>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findFundamentalMat(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
   int method,
   double ransacReprojThreshold,
   double confidence,
   int maxIters,
-  imp1.MatOut mask,
+  imp$1.MatOut mask,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, imp1.MatOut,
-        UsacParams, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatOut,
+        UsacParams, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findFundamentalMat_1(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatOut mask,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatOut mask,
   UsacParams params,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, imp1.MatOut, ffi.Int,
-        ffi.Double, ffi.Double, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        ffi.Int,
+        ffi.Double,
+        ffi.Double,
+        ffi.Pointer<Mat>,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findFundamentalMat_2(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatOut mask,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatOut mask,
   int method,
   double ransacReprojThreshold,
   double confidence,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, imp1.MatOut,
-        ffi.Int, ffi.Double, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Int, ffi.Double, imp$1.MatOut,
+        ffi.Int, ffi.Double, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findHomography(
   Mat src,
   Mat dst,
   int method,
   double ransacReprojThreshold,
-  imp1.MatOut mask,
+  imp$1.MatOut mask,
   int maxIters,
   double confidence,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, imp1.MatOut,
-        UsacParams, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatOut,
+        UsacParams, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findHomography_1(
-  imp1.MatIn srcPoints,
-  imp1.MatIn dstPoints,
-  imp1.MatOut mask,
+  imp$1.MatIn srcPoints,
+  imp$1.MatIn dstPoints,
+  imp$1.MatOut mask,
   UsacParams params,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -551,155 +558,163 @@ external ffi.Pointer<CvStatus> cv_findHomography_1(
         VecMat,
         VecMat,
         CvSize,
-        imp1.MatInOut,
-        imp1.MatInOut,
+        imp$1.MatInOut,
+        imp$1.MatInOut,
         VecMat,
         VecMat,
         ffi.Int,
         TermCriteria,
         ffi.Pointer<ffi.Double>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_calibrate(
   VecMat objectPoints,
   VecMat imagePoints,
   CvSize imageSize,
-  imp1.MatInOut k,
-  imp1.MatInOut d,
+  imp$1.MatInOut k,
+  imp$1.MatInOut d,
   VecMat rvecs,
   VecMat tvecs,
   int flags,
   TermCriteria criteria,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatOut, imp1.MatIn,
-        imp1.MatIn, ffi.Double, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatOut, imp$1.MatIn,
+        imp$1.MatIn, ffi.Double, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_distortPoints(
-  imp1.MatIn undistorted,
-  imp1.MatOut distorted,
-  imp1.MatIn K,
-  imp1.MatIn D,
+  imp$1.MatIn undistorted,
+  imp$1.MatOut distorted,
+  imp$1.MatIn K,
+  imp$1.MatIn D,
   double alpha,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatOut, imp1.MatInOut,
-        imp1.MatIn, imp1.MatIn, ffi.Double, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatOut, imp$1.MatInOut,
+        imp$1.MatIn, imp$1.MatIn, ffi.Double, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_distortPoints_1(
-  imp1.MatIn undistorted,
-  imp1.MatOut distorted,
-  imp1.MatInOut Kundistorted,
-  imp1.MatIn K,
-  imp1.MatIn D,
+  imp$1.MatIn undistorted,
+  imp$1.MatOut distorted,
+  imp$1.MatInOut Kundistorted,
+  imp$1.MatIn K,
+  imp$1.MatIn D,
   double alpha,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, CvSize, imp1.MatIn,
-        imp1.MatOut, ffi.Double, CvSize, ffi.Double, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(
+        imp$1.MatIn,
+        imp$1.MatIn,
+        CvSize,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        ffi.Double,
+        CvSize,
+        ffi.Double,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus>
     cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
-  imp1.MatIn k,
-  imp1.MatIn d,
+  imp$1.MatIn k,
+  imp$1.MatIn d,
   CvSize imgSize,
-  imp1.MatIn r,
-  imp1.MatOut p,
+  imp$1.MatIn r,
+  imp$1.MatOut p,
   double balance,
   CvSize newSize,
   double fovScale,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         CvSize,
         ffi.Int,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.CvCallback_0)>()
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_initUndistortRectifyMap(
-  imp1.MatIn k,
-  imp1.MatIn d,
-  imp1.MatIn r,
-  imp1.MatIn p,
+  imp$1.MatIn k,
+  imp$1.MatIn d,
+  imp$1.MatIn r,
+  imp$1.MatIn p,
   CvSize imgSize,
   int m1type,
-  imp1.MatOut map1,
-  imp1.MatOut map2,
-  imp1.CvCallback_0 callback,
+  imp$1.MatOut map1,
+  imp$1.MatOut map2,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Double,
-        imp1.MatOut,
-        imp1.CvCallback_0)>()
+        imp$1.MatOut,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_projectPoints(
-  imp1.MatIn objectPoints,
-  imp1.MatOut imagePoints,
-  imp1.MatIn rvec,
-  imp1.MatIn tvec,
-  imp1.MatIn k,
-  imp1.MatIn d,
+  imp$1.MatIn objectPoints,
+  imp$1.MatOut imagePoints,
+  imp$1.MatIn rvec,
+  imp$1.MatIn tvec,
+  imp$1.MatIn k,
+  imp$1.MatIn d,
   double alpha,
-  imp1.MatOut jacobian,
-  imp1.CvCallback_0 callback,
+  imp$1.MatOut jacobian,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Bool,
         ffi.Int,
         TermCriteria,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_solvePnP(
-  imp1.MatIn objectPoints,
-  imp1.MatIn imagePoints,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
-  imp1.MatOut rvec,
-  imp1.MatOut tvec,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatOut rvec,
+  imp$1.MatOut tvec,
   bool useExtrinsicGuess,
   int flags,
   TermCriteria criteria,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_undistortImage(
   Mat distorted,
   Mat undistorted,
   Mat k,
   Mat d,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, Mat, CvSize, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, Mat, CvSize, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_undistortImage_1(
   Mat distorted,
   Mat undistorted,
@@ -707,12 +722,12 @@ external ffi.Pointer<CvStatus> cv_fisheye_undistortImage_1(
   Mat d,
   Mat knew,
   CvSize size,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, Mat, Mat, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_undistortPoints(
   Mat distorted,
   Mat undistorted,
@@ -720,23 +735,23 @@ external ffi.Pointer<CvStatus> cv_fisheye_undistortPoints(
   Mat d,
   Mat R,
   Mat P,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, CvSize, ffi.Bool, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        Mat, CvSize, ffi.Bool, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_getDefaultNewCameraMatrix(
   Mat cameraMatrix,
   CvSize size,
   bool centerPrincipalPoint,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, CvSize, ffi.Double, CvSize,
-        ffi.Pointer<CvRect>, ffi.Bool, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        ffi.Pointer<CvRect>, ffi.Bool, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_getOptimalNewCameraMatrix(
   Mat cameraMatrix,
   Mat distCoeffs,
@@ -746,12 +761,12 @@ external ffi.Pointer<CvStatus> cv_getOptimalNewCameraMatrix(
   ffi.Pointer<CvRect> validPixROI,
   bool centerPrincipalPoint,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, CvSize, ffi.Int, Mat, Mat, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, CvSize, ffi.Int, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_initUndistortRectifyMap(
   Mat cameraMatrix,
   Mat distCoeffs,
@@ -761,256 +776,256 @@ external ffi.Pointer<CvStatus> cv_initUndistortRectifyMap(
   int m1type,
   Mat map1,
   Mat map2,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         CvSize,
         ffi.Int,
         ffi.Int,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Int,
         ffi.Double,
         ffi.Pointer<ffi.Float>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_initWideAngleProjMap(
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
   CvSize size,
   int destImageWidth,
   int m1type,
-  imp1.MatOut map1,
-  imp1.MatOut map2,
+  imp$1.MatOut map1,
+  imp$1.MatOut map2,
   int projType,
   double alpha,
   ffi.Pointer<ffi.Float> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        imp1.MatIn, imp1.MatIn, imp1.MatOut, imp1.MatOut, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatOut,
+        imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_matMulDeriv(
-  imp1.MatIn A,
-  imp1.MatIn B,
-  imp1.MatOut dABdA,
-  imp1.MatOut dABdB,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn A,
+  imp$1.MatIn B,
+  imp$1.MatOut dABdA,
+  imp$1.MatOut dABdB,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Double,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_projectPoints(
-  imp1.MatIn objectPoints,
-  imp1.MatIn rvec,
-  imp1.MatIn tvec,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
-  imp1.MatOut imagePoints,
-  imp1.MatOut jacobian,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn rvec,
+  imp$1.MatIn tvec,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatOut imagePoints,
+  imp$1.MatOut jacobian,
   double aspectRatio,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Double,
-        imp1.MatInOut,
-        imp1.MatOut,
+        imp$1.MatInOut,
+        imp$1.MatOut,
         ffi.Pointer<ffi.Int>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_recoverPose(
-  imp1.MatIn E,
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatIn cameraMatrix,
-  imp1.MatOut R,
-  imp1.MatOut t,
+  imp$1.MatIn E,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatOut R,
+  imp$1.MatOut t,
   double distanceThresh,
-  imp1.MatInOut mask,
-  imp1.MatOut triangulatedPoints,
+  imp$1.MatInOut mask,
+  imp$1.MatOut triangulatedPoints,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Double,
         CvPoint2d,
-        imp1.MatInOut,
+        imp$1.MatInOut,
         ffi.Pointer<ffi.Int>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_recoverPose_1(
-  imp1.MatIn E,
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatOut R,
-  imp1.MatOut t,
+  imp$1.MatIn E,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatOut R,
+  imp$1.MatOut t,
   double focal,
   CvPoint2d pp,
-  imp1.MatInOut mask,
+  imp$1.MatInOut mask,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatOut, imp1.MatIn,
-        ffi.Bool, ffi.Int, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatOut, imp$1.MatIn,
+        ffi.Bool, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_reprojectImageTo3D(
-  imp1.MatIn disparity,
-  imp1.MatOut _3dImage,
-  imp1.MatIn Q,
+  imp$1.MatIn disparity,
+  imp$1.MatOut _3dImage,
+  imp$1.MatIn Q,
   bool handleMissingValues,
   int ddepth,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Double Function(imp1.MatIn, imp1.MatIn, imp1.MatIn)>()
+@ffi.Native<ffi.Double Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatIn)>()
 external double cv_sampsonDistance(
-  imp1.MatIn pt1,
-  imp1.MatIn pt2,
-  imp1.MatIn F,
+  imp$1.MatIn pt1,
+  imp$1.MatIn pt2,
+  imp$1.MatIn F,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Pointer<VecMat>,
         ffi.Pointer<VecMat>,
         ffi.Int,
         ffi.Pointer<ffi.Int>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solveP3P(
-  imp1.MatIn objectPoints,
-  imp1.MatIn imagePoints,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
   ffi.Pointer<VecMat> rvecs,
   ffi.Pointer<VecMat> tvecs,
   int flags,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Bool,
         ffi.Int,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnP(
-  imp1.MatIn objectPoints,
-  imp1.MatIn imagePoints,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
-  imp1.MatOut rvec,
-  imp1.MatOut tvec,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatOut rvec,
+  imp$1.MatOut tvec,
   bool useExtrinsicGuess,
   int flags,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         ffi.Pointer<VecMat>,
         ffi.Pointer<VecMat>,
         ffi.Bool,
         ffi.Int,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
         ffi.Pointer<ffi.Int>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnPGeneric(
-  imp1.MatIn objectPoints,
-  imp1.MatIn imagePoints,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
   ffi.Pointer<VecMat> rvecs,
   ffi.Pointer<VecMat> tvecs,
   bool useExtrinsicGuess,
   int flags,
-  imp1.MatIn rvec,
-  imp1.MatIn tvec,
-  imp1.MatOut reprojectionError,
+  imp$1.MatIn rvec,
+  imp$1.MatIn tvec,
+  imp$1.MatOut reprojectionError,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Bool,
         ffi.Int,
         ffi.Float,
         ffi.Double,
-        imp1.MatOut,
+        imp$1.MatOut,
         ffi.Int,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnPRansac(
-  imp1.MatIn objectPoints,
-  imp1.MatIn imagePoints,
-  imp1.MatIn cameraMatrix,
-  imp1.MatIn distCoeffs,
-  imp1.MatOut rvec,
-  imp1.MatOut tvec,
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatOut rvec,
+  imp$1.MatOut tvec,
   bool useExtrinsicGuess,
   int iterationsCount,
   double reprojectionError,
   double confidence,
-  imp1.MatOut inliers,
+  imp$1.MatOut inliers,
   int flags,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, Mat, Mat,
-        imp1.UsacParams, ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        imp$1.UsacParams, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnPRansac_1(
   Mat objectPoints,
   Mat imagePoints,
@@ -1019,14 +1034,14 @@ external ffi.Pointer<CvStatus> cv_solvePnPRansac_1(
   Mat rvec,
   Mat tvec,
   Mat inliers,
-  imp1.UsacParams params,
+  imp$1.UsacParams params,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, Mat, Mat, imp1.TermCriteria, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, Mat, Mat, imp$1.TermCriteria, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnPRefineLM(
   Mat objectPoints,
   Mat imagePoints,
@@ -1034,13 +1049,13 @@ external ffi.Pointer<CvStatus> cv_solvePnPRefineLM(
   Mat distCoeffs,
   Mat rvec,
   Mat tvec,
-  imp1.TermCriteria criteria,
-  imp1.CvCallback_0 callback,
+  imp$1.TermCriteria criteria,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, Mat, Mat,
-        imp1.TermCriteria, ffi.Double, imp1.CvCallback_0)>()
+        imp$1.TermCriteria, ffi.Double, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_solvePnPRefineVVS(
   Mat objectPoints,
   Mat imagePoints,
@@ -1048,9 +1063,9 @@ external ffi.Pointer<CvStatus> cv_solvePnPRefineVVS(
   Mat distCoeffs,
   Mat rvec,
   Mat tvec,
-  imp1.TermCriteria criteria,
+  imp$1.TermCriteria criteria,
   double VVSlambda,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -1058,147 +1073,147 @@ external ffi.Pointer<CvStatus> cv_solvePnPRefineVVS(
         VecMat,
         VecMat,
         VecMat,
-        imp1.MatInOut,
-        imp1.MatInOut,
-        imp1.MatInOut,
-        imp1.MatInOut,
+        imp$1.MatInOut,
+        imp$1.MatInOut,
+        imp$1.MatInOut,
+        imp$1.MatInOut,
         CvSize,
-        imp1.MatInOut,
-        imp1.MatInOut,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatInOut,
+        imp$1.MatInOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
         VecMat,
         VecMat,
-        imp1.MatOut,
+        imp$1.MatOut,
         ffi.Int,
-        imp1.TermCriteria,
+        imp$1.TermCriteria,
         ffi.Pointer<ffi.Double>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_stereoCalibrate(
   VecMat objectPoints,
   VecMat imagePoints1,
   VecMat imagePoints2,
-  imp1.MatInOut cameraMatrix1,
-  imp1.MatInOut distCoeffs1,
-  imp1.MatInOut cameraMatrix2,
-  imp1.MatInOut distCoeffs2,
+  imp$1.MatInOut cameraMatrix1,
+  imp$1.MatInOut distCoeffs1,
+  imp$1.MatInOut cameraMatrix2,
+  imp$1.MatInOut distCoeffs2,
   CvSize imageSize,
-  imp1.MatInOut R,
-  imp1.MatInOut T,
-  imp1.MatOut E,
-  imp1.MatOut F,
+  imp$1.MatInOut R,
+  imp$1.MatInOut T,
+  imp$1.MatOut E,
+  imp$1.MatOut F,
   VecMat rvecs,
   VecMat tvecs,
-  imp1.MatOut perViewErrors,
+  imp$1.MatOut perViewErrors,
   int flags,
-  imp1.TermCriteria criteria,
+  imp$1.TermCriteria criteria,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         CvSize,
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Int,
         ffi.Double,
         CvSize,
-        ffi.Pointer<imp1.CvRect>,
-        ffi.Pointer<imp1.CvRect>,
-        imp1.CvCallback_0)>()
+        ffi.Pointer<imp$1.CvRect>,
+        ffi.Pointer<imp$1.CvRect>,
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_stereoRectify(
-  imp1.MatIn cameraMatrix1,
-  imp1.MatIn distCoeffs1,
-  imp1.MatIn cameraMatrix2,
-  imp1.MatIn distCoeffs2,
+  imp$1.MatIn cameraMatrix1,
+  imp$1.MatIn distCoeffs1,
+  imp$1.MatIn cameraMatrix2,
+  imp$1.MatIn distCoeffs2,
   CvSize imageSize,
-  imp1.MatIn R,
-  imp1.MatIn T,
-  imp1.MatOut R1,
-  imp1.MatOut R2,
-  imp1.MatOut P1,
-  imp1.MatOut P2,
-  imp1.MatOut Q,
+  imp$1.MatIn R,
+  imp$1.MatIn T,
+  imp$1.MatOut R1,
+  imp$1.MatOut R2,
+  imp$1.MatOut P1,
+  imp$1.MatOut P2,
+  imp$1.MatOut Q,
   int flags,
   double alpha,
   CvSize newImageSize,
-  ffi.Pointer<imp1.CvRect> validPixROI1,
-  ffi.Pointer<imp1.CvRect> validPixROI2,
-  imp1.CvCallback_0 callback,
+  ffi.Pointer<imp$1.CvRect> validPixROI1,
+  ffi.Pointer<imp$1.CvRect> validPixROI2,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        imp1.MatIn,
-        imp1.MatIn,
-        imp1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
         CvSize,
-        imp1.MatOut,
-        imp1.MatOut,
+        imp$1.MatOut,
+        imp$1.MatOut,
         ffi.Double,
         ffi.Pointer<ffi.Bool>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_stereoRectifyUncalibrated(
-  imp1.MatIn points1,
-  imp1.MatIn points2,
-  imp1.MatIn F,
+  imp$1.MatIn points1,
+  imp$1.MatIn points2,
+  imp$1.MatIn F,
   CvSize imgSize,
-  imp1.MatOut H1,
-  imp1.MatOut H2,
+  imp$1.MatOut H1,
+  imp$1.MatOut H2,
   double threshold,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(imp1.MatIn, imp1.MatIn, imp1.MatIn,
-        imp1.MatIn, imp1.MatOut, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(imp$1.MatIn, imp$1.MatIn, imp$1.MatIn,
+        imp$1.MatIn, imp$1.MatOut, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_triangulatePoints(
-  imp1.MatIn projMatr1,
-  imp1.MatIn projMatr2,
-  imp1.MatIn projPoints1,
-  imp1.MatIn projPoints2,
-  imp1.MatOut points4D,
-  imp1.CvCallback_0 callback,
+  imp$1.MatIn projMatr1,
+  imp$1.MatIn projMatr2,
+  imp$1.MatIn projPoints1,
+  imp$1.MatIn projPoints2,
+  imp$1.MatOut points4D,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, Mat, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_undistort(
   Mat src,
   Mat dst,
   Mat cameraMatrix,
   Mat distCoeffs,
   Mat newCameraMatrix,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, imp1.TermCriteria, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, imp$1.TermCriteria, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_undistortImagePoints(
   Mat src,
   Mat dst,
   Mat cameraMatrix,
   Mat distCoeffs,
-  imp1.TermCriteria criteria,
-  imp1.CvCallback_0 callback,
+  imp$1.TermCriteria criteria,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, Mat, Mat, Mat, TermCriteria, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, Mat, Mat, Mat, TermCriteria, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_undistortPoints(
   Mat distorted,
   Mat undistorted,
@@ -1207,31 +1222,31 @@ external ffi.Pointer<CvStatus> cv_undistortPoints(
   Mat r,
   Mat p,
   TermCriteria criteria,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Int, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Int, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_validateDisparity(
   Mat disparity,
   Mat cost,
   int minDisparity,
   int numberOfDisparities,
   int disp12MaxDisp,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-typedef CvPoint2d = imp1.CvPoint2d;
-typedef CvRect = imp1.CvRect;
-typedef CvSize = imp1.CvSize;
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
-typedef Scalar = imp1.Scalar;
-typedef TermCriteria = imp1.TermCriteria;
-typedef UsacParams = imp1.UsacParams;
-typedef Vec3d = imp1.Vec3d;
-typedef VecMat = imp1.VecMat;
-typedef VecPoint2f = imp1.VecPoint2f;
-typedef VecVecPoint2f = imp1.VecVecPoint2f;
-typedef VecVecPoint3f = imp1.VecVecPoint3f;
+typedef CvPoint2d = imp$1.CvPoint2d;
+typedef CvRect = imp$1.CvRect;
+typedef CvSize = imp$1.CvSize;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
+typedef Scalar = imp$1.Scalar;
+typedef TermCriteria = imp$1.TermCriteria;
+typedef UsacParams = imp$1.UsacParams;
+typedef Vec3d = imp$1.Vec3d;
+typedef VecMat = imp$1.VecMat;
+typedef VecPoint2f = imp$1.VecPoint2f;
+typedef VecVecPoint2f = imp$1.VecVecPoint2f;
+typedef VecVecPoint3f = imp$1.VecVecPoint3f;

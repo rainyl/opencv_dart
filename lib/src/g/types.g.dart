@@ -935,7 +935,5 @@ final class VecVecPoint3i extends ffi.Struct {
 
 typedef VecVecPoint3iPtr = ffi.Pointer<VecVecPoint3i>;
 typedef VecVecPointPtr = ffi.Pointer<VecVecPoint>;
-typedef uchar = ffi.UnsignedChar;
-typedef Dartuchar = int;
 typedef ushort = ffi.UnsignedShort;
 typedef Dartushort = int;

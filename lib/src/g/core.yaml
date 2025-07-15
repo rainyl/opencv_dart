@@ -6,6 +6,7 @@ files:
     symbols:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
+        dart-name: DartErrorCallbackFunction
       c:@F@CvStatus_close:
         name: CvStatus_close
       c:@F@cv_LUT:
@@ -56,6 +57,8 @@ files:
         name: cv_Mat_create_5
       c:@F@cv_Mat_create_6:
         name: cv_Mat_create_6
+      c:@F@cv_Mat_create_6_no_copy:
+        name: cv_Mat_create_6_no_copy
       c:@F@cv_Mat_create_7:
         name: cv_Mat_create_7
       c:@F@cv_Mat_create_8:
@@ -1612,12 +1615,14 @@ files:
         name: std_VecVecPoint_set
       c:@F@std_VecVecPoint_shrink_to_fit:
         name: std_VecVecPoint_shrink_to_fit
-      c:@T@double_t:
-        name: double_t
-      c:@T@float_t:
-        name: float_t
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:math.h@T@double_t:
+        name: double_t
+        dart-name: Dartdouble_t
+      c:math.h@T@float_t:
+        name: float_t
+        dart-name: Dartfloat_t
       c:types.h@T@CvPoint:
         name: CvPoint
       c:types.h@T@CvPoint2f:
@@ -1758,3 +1763,6 @@ files:
         name: VecVecPoint3f
       c:types.h@T@VecVecPoint3i:
         name: VecVecPoint3i
+      c:types.h@T@uchar:
+        name: uchar
+        dart-name: Dartuchar

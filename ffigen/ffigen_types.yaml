@@ -7,7 +7,7 @@ output:
     output: 'package:dartcv4/src/g/types.yaml'
     import-path: 'package:dartcv4/src/g/types.g.dart'
 ffi-native:
-  assetId: 'package:dartcv4/dartcv.dart' # Optional.
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true

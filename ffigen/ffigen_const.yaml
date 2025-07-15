@@ -4,7 +4,7 @@ description: |
 output:
   bindings: ../lib/src/g/constants.g.dart
 ffi-native:
-  assetId: 'package:dartcv4/dartcv.dart' # Optional.
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: ""
 sort: true
 include-unused-typedefs: true

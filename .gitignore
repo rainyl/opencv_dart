@@ -34,6 +34,7 @@ publish/
 *.exe
 .DS_Store
 packages/
+.ccls-cache/
 
 # Files and directories created by pub
 .dart_tool/

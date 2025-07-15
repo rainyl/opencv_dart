@@ -2027,7 +2027,7 @@ enum VideoAccelerationType {
         3 => VIDEO_ACCELERATION_VAAPI,
         4 => VIDEO_ACCELERATION_MFX,
         _ => throw ArgumentError(
-            "Unknown value for VideoAccelerationType: $value"),
+            'Unknown value for VideoAccelerationType: $value'),
       };
 }
 

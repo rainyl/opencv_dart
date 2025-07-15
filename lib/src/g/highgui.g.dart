@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
@@ -213,10 +213,10 @@ external int cv_waitKeyEx(
   int delay,
 );
 
-typedef CvRect = imp1.CvRect;
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
-typedef VecRect = imp1.VecRect;
+typedef CvRect = imp$1.CvRect;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
+typedef VecRect = imp$1.VecRect;
 typedef cv_ButtonCallback
     = ffi.Pointer<ffi.NativeFunction<cv_ButtonCallbackFunction>>;
 typedef cv_ButtonCallbackFunction = ffi.Void Function(

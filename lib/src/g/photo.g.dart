@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<ffi.Void Function(AlignMTBPtr)>()
@@ -24,12 +24,12 @@ external void cv_AlignMTB_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        AlignMTB, VecMat, ffi.Pointer<VecMat>, imp1.CvCallback_0)>()
+        AlignMTB, VecMat, ffi.Pointer<VecMat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AlignMTB_process(
   AlignMTB b,
   VecMat src,
   ffi.Pointer<VecMat> dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(MergeMertensPtr)>()
@@ -39,17 +39,17 @@ external void cv_MergeMertens_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        MergeMertens, VecMat, Mat, imp1.CvCallback_0)>()
+        MergeMertens, VecMat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_MergeMertens_process(
   MergeMertens b,
   VecMat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_colorChange(
   Mat src,
   Mat mask,
@@ -57,7 +57,7 @@ external ffi.Pointer<CvStatus> cv_colorChange(
   double red_mul,
   double green_mul,
   double blue_mul,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<AlignMTB>)>()
@@ -92,55 +92,55 @@ external ffi.Pointer<CvStatus> cv_createMergeMertens_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_detailEnhance(
   Mat src,
   Mat dst,
   double sigma_s,
   double sigma_r,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Int, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Int, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_edgePreservingFilter(
   Mat src,
   Mat dst,
   int filter,
   double sigma_s,
   double sigma_r,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoising(
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
-@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp1.CvCallback_0)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColored(
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        VecMat, Mat, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        VecMat, Mat, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColoredMulti(
   VecMat src,
   Mat dst,
   int imgToDenoiseIndex,
   int temporalWindowSize,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(VecMat, Mat, ffi.Int, ffi.Int, ffi.Float,
-        ffi.Float, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        ffi.Float, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColoredMulti_1(
   VecMat src,
   Mat dst,
@@ -150,12 +150,12 @@ external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColoredMulti_1(
   double hColor,
   int templateWindowSize,
   int searchWindowSize,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColored_1(
   Mat src,
   Mat dst,
@@ -163,48 +163,48 @@ external ffi.Pointer<CvStatus> cv_fastNlMeansDenoisingColored_1(
   double hColor,
   int templateWindowSize,
   int searchWindowSize,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fastNlMeansDenoising_1(
   Mat src,
   Mat dst,
   double h,
   int templateWindowSize,
   int searchWindowSize,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_illuminationChange(
   Mat src,
   Mat mask,
   Mat dst,
   double alpha,
   double beta,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Float, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Float, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_inpaint(
   Mat src,
   Mat mask,
   Mat dst,
   double inpaint_radius,
   int algorithm_type,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_pencilSketch(
   Mat src,
   Mat dst1,
@@ -212,12 +212,12 @@ external ffi.Pointer<CvStatus> cv_pencilSketch(
   double sigma_s,
   double sigma_r,
   double shade_factor,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, CvPoint, Mat, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, CvPoint, Mat, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_seamlessClone(
   Mat src,
   Mat dst,
@@ -225,23 +225,23 @@ external ffi.Pointer<CvStatus> cv_seamlessClone(
   CvPoint p,
   Mat blend,
   int flags,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, ffi.Float, ffi.Float, imp1.CvCallback_0)>()
+        Mat, Mat, ffi.Float, ffi.Float, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_stylization(
   Mat src,
   Mat dst,
   double sigma_s,
   double sigma_r,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int, imp1.CvCallback_0)>()
+        Mat, Mat, Mat, ffi.Float, ffi.Float, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_textureFlattening(
   Mat src,
   Mat mask,
@@ -249,7 +249,7 @@ external ffi.Pointer<CvStatus> cv_textureFlattening(
   double low_threshold,
   double high_threshold,
   int kernel_size,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 const addresses = _SymbolAddresses();
@@ -268,13 +268,13 @@ final class AlignMTB extends ffi.Struct {
 }
 
 typedef AlignMTBPtr = ffi.Pointer<AlignMTB>;
-typedef CvPoint = imp1.CvPoint;
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
+typedef CvPoint = imp$1.CvPoint;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
 
 final class MergeMertens extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef MergeMertensPtr = ffi.Pointer<MergeMertens>;
-typedef VecMat = imp1.VecMat;
+typedef VecMat = imp$1.VecMat;

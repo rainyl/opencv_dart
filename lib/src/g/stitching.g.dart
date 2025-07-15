@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<ffi.Void Function(StitcherPtr)>()
@@ -24,32 +24,32 @@ external void cv_Stitcher_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Stitcher, ffi.Pointer<VecI32>, imp1.CvCallback_0)>()
+        Stitcher, ffi.Pointer<VecI32>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_component(
   Stitcher self,
   ffi.Pointer<VecI32> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Stitcher, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        Stitcher, Mat, ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_composePanorama(
   Stitcher self,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_composePanorama_1(
   Stitcher self,
   VecMat mats,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<Stitcher>)>()
@@ -60,13 +60,13 @@ external ffi.Pointer<CvStatus> cv_Stitcher_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        Stitcher, VecMat, VecMat, ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_estimateTransform(
   Stitcher self,
   VecMat mats,
   VecMat masks,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Double Function(Stitcher)>()
@@ -148,25 +148,25 @@ external void cv_Stitcher_set_waveCorrection(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        Stitcher, VecMat, Mat, ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_stitch(
   Stitcher self,
   VecMat mats,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Stitcher, VecMat, VecMat, Mat,
-        ffi.Pointer<ffi.Int>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Int>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_Stitcher_stitch_1(
   Stitcher self,
   VecMat mats,
   VecMat masks,
   Mat rpano,
   ffi.Pointer<ffi.Int> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 const addresses = _SymbolAddresses();
@@ -177,8 +177,8 @@ class _SymbolAddresses {
       get cv_Stitcher_close => ffi.Native.addressOf(self.cv_Stitcher_close);
 }
 
-typedef CvStatus = imp1.CvStatus;
-typedef Mat = imp1.Mat;
+typedef CvStatus = imp$1.CvStatus;
+typedef Mat = imp$1.Mat;
 
 const int STITCHING_ERR_CAMERA_PARAMS_ADJUST_FAIL = 3;
 
@@ -197,5 +197,5 @@ final class Stitcher extends ffi.Struct {
 }
 
 typedef StitcherPtr = ffi.Pointer<Stitcher>;
-typedef VecI32 = imp1.VecI32;
-typedef VecMat = imp1.VecMat;
+typedef VecI32 = imp$1.VecI32;
+typedef VecMat = imp$1.VecMat;

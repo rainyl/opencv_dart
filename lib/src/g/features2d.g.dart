@@ -14,7 +14,7 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<ffi.Void Function(AKAZEPtr)>()
@@ -29,24 +29,24 @@ external ffi.Pointer<CvStatus> cv_AKAZE_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        AKAZE, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        AKAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AKAZE_detect(
   AKAZE self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AKAZE_detectAndCompute(
   AKAZE self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(AgastFeatureDetectorPtr)>()
@@ -61,12 +61,12 @@ external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat,
-        ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_detect(
   AgastFeatureDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(BFMatcherPtr)>()
@@ -89,25 +89,25 @@ external ffi.Pointer<CvStatus> cv_BFMatcher_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(BFMatcher, Mat, Mat, ffi.Int,
-        ffi.Pointer<VecVecDMatch>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecVecDMatch>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BFMatcher_knnMatch(
   BFMatcher self,
   Mat query,
   Mat train,
   int k,
   ffi.Pointer<VecVecDMatch> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>, imp1.CvCallback_0)>()
+        BFMatcher, Mat, Mat, ffi.Pointer<VecDMatch>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BFMatcher_match(
   BFMatcher self,
   Mat query,
   Mat train,
   ffi.Pointer<VecDMatch> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(BRISKPtr)>()
@@ -122,24 +122,24 @@ external ffi.Pointer<CvStatus> cv_BRISK_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BRISK, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        BRISK, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BRISK_detect(
   BRISK self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BRISK_detectAndCompute(
   BRISK self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(FastFeatureDetectorPtr)>()
@@ -164,12 +164,12 @@ external ffi.Pointer<CvStatus> cv_FastFeatureDetector_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat,
-        ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_FastFeatureDetector_detect(
   FastFeatureDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(FlannBasedMatcherPtr)>()
@@ -184,14 +184,14 @@ external ffi.Pointer<CvStatus> cv_FlannBasedMatcher_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(FlannBasedMatcher, Mat, Mat, ffi.Int,
-        ffi.Pointer<VecVecDMatch>, imp1.CvCallback_0)>()
+        ffi.Pointer<VecVecDMatch>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_FlannBasedMatcher_knnMatch(
   FlannBasedMatcher self,
   Mat query,
   Mat train,
   int k,
   ffi.Pointer<VecVecDMatch> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(GFTTDetectorPtr)>()
@@ -206,12 +206,12 @@ external ffi.Pointer<CvStatus> cv_GFTTDetector_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_GFTTDetector_detect(
   GFTTDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(KAZEPtr)>()
@@ -226,24 +226,24 @@ external ffi.Pointer<CvStatus> cv_KAZE_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KAZE, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        KAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KAZE_detect(
   KAZE self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KAZE_detectAndCompute(
   KAZE self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(MSERPtr)>()
@@ -258,12 +258,12 @@ external ffi.Pointer<CvStatus> cv_MSER_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        MSER, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        MSER, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_MSER_detect(
   MSER self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(ORBPtr)>()
@@ -294,17 +294,17 @@ external ffi.Pointer<CvStatus> cv_ORB_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ORB, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        ORB, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ORB_detect(
   ORB self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<VecKeyPoint>, Mat,
-        ffi.Bool, imp1.CvCallback_0)>()
+        ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ORB_detectAndCompute(
   ORB self,
   Mat src,
@@ -312,7 +312,7 @@ external ffi.Pointer<CvStatus> cv_ORB_detectAndCompute(
   ffi.Pointer<VecKeyPoint> out_keypoints,
   Mat desc,
   bool useProvidedKeypoints,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(SIFTPtr)>()
@@ -327,24 +327,24 @@ external ffi.Pointer<CvStatus> cv_SIFT_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        SIFT, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        SIFT, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_SIFT_detect(
   SIFT self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+        SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_SIFT_detectAndCompute(
   SIFT self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -372,30 +372,30 @@ external ffi.Pointer<CvStatus> cv_SimpleBlobDetector_create_1(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        SimpleBlobDetector, Mat, ffi.Pointer<VecKeyPoint>, imp1.CvCallback_0)>()
+    ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat,
+        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_SimpleBlobDetector_detect(
   SimpleBlobDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        Mat, VecKeyPoint, Mat, Scalar, ffi.Int, imp1.CvCallback_0)>()
+        Mat, VecKeyPoint, Mat, Scalar, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_drawKeyPoints(
   Mat src,
   VecKeyPoint kp,
   Mat dst,
   Scalar color,
   int flags,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, VecKeyPoint, Mat, VecKeyPoint,
-        VecDMatch, Mat, Scalar, Scalar, VecChar, ffi.Int, imp1.CvCallback_0)>()
+        VecDMatch, Mat, Scalar, Scalar, VecChar, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_drawMatches(
   Mat img1,
   VecKeyPoint kp1,
@@ -407,7 +407,107 @@ external ffi.Pointer<CvStatus> cv_drawMatches(
   Scalar pointColor,
   VecChar matchesMask,
   int flags,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Void Function(FlannIndexParamsPtr)>()
+external void cv_flann_IndexParams_close(
+  FlannIndexParamsPtr self,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<FlannIndexParams>)>()
+external ffi.Pointer<CvStatus> cv_flann_IndexParams_create(
+  ffi.Pointer<FlannIndexParams> rval,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<VecVecChar>,
+        ffi.Pointer<VecI32>, ffi.Pointer<VecVecChar>, ffi.Pointer<VecF64>)>()
+external void cv_flann_IndexParams_getAll(
+  FlannIndexParams self,
+  ffi.Pointer<VecVecChar> names,
+  ffi.Pointer<VecI32> types,
+  ffi.Pointer<VecVecChar> strValues,
+  ffi.Pointer<VecF64> numValues,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Double>)>()
+external void cv_flann_IndexParams_getDouble(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  ffi.Pointer<ffi.Double> rval,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Int>)>()
+external void cv_flann_IndexParams_getInt(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  ffi.Pointer<ffi.Int> rval,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>,
+        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external void cv_flann_IndexParams_getString(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Void> Function(FlannIndexParams)>()
+external ffi.Pointer<ffi.Void> cv_flann_IndexParams_params_ptr(
+  FlannIndexParams self,
+);
+
+@ffi.Native<ffi.Void Function(FlannIndexParams, ffi.Int)>()
+external void cv_flann_IndexParams_setAlgorithm(
+  FlannIndexParams self,
+  int value,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Bool)>()
+external void cv_flann_IndexParams_setBool(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  bool value,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Double)>()
+external void cv_flann_IndexParams_setDouble(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  double value,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Float)>()
+external void cv_flann_IndexParams_setFloat(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  double value,
+);
+
+@ffi.Native<
+    ffi.Void Function(FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Int)>()
+external void cv_flann_IndexParams_setInt(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  int value,
+);
+
+@ffi.Native<
+    ffi.Void Function(
+        FlannIndexParams, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>()
+external void cv_flann_IndexParams_setString(
+  FlannIndexParams self,
+  ffi.Pointer<ffi.Char> key,
+  ffi.Pointer<ffi.Char> value,
 );
 
 const addresses = _SymbolAddresses();
@@ -443,6 +543,9 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SimpleBlobDetectorPtr)>>
       get cv_SimpleBlobDetector_close =>
           ffi.Native.addressOf(self.cv_SimpleBlobDetector_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FlannIndexParamsPtr)>>
+      get cv_flann_IndexParams_close =>
+          ffi.Native.addressOf(self.cv_flann_IndexParams_close);
 }
 
 final class AKAZE extends ffi.Struct {
@@ -468,7 +571,7 @@ final class BRISK extends ffi.Struct {
 }
 
 typedef BRISKPtr = ffi.Pointer<BRISK>;
-typedef CvStatus = imp1.CvStatus;
+typedef CvStatus = imp$1.CvStatus;
 
 final class FastFeatureDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -481,6 +584,51 @@ final class FlannBasedMatcher extends ffi.Struct {
 }
 
 typedef FlannBasedMatcherPtr = ffi.Pointer<FlannBasedMatcher>;
+
+final class FlannIndexParams extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef FlannIndexParamsPtr = ffi.Pointer<FlannIndexParams>;
+
+enum FlannIndexType {
+  FLANN_INDEX_TYPE_8U(0),
+  FLANN_INDEX_TYPE_8S(1),
+  FLANN_INDEX_TYPE_16U(2),
+  FLANN_INDEX_TYPE_16S(3),
+  FLANN_INDEX_TYPE_32S(4),
+  FLANN_INDEX_TYPE_32F(5),
+  FLANN_INDEX_TYPE_64F(6),
+  FLANN_INDEX_TYPE_STRING(7),
+  FLANN_INDEX_TYPE_BOOL(8),
+  FLANN_INDEX_TYPE_ALGORITHM(9);
+
+  static const LAST_VALUE_FLANN_INDEX_TYPE = FLANN_INDEX_TYPE_ALGORITHM;
+
+  final int value;
+  const FlannIndexType(this.value);
+
+  static FlannIndexType fromValue(int value) => switch (value) {
+        0 => FLANN_INDEX_TYPE_8U,
+        1 => FLANN_INDEX_TYPE_8S,
+        2 => FLANN_INDEX_TYPE_16U,
+        3 => FLANN_INDEX_TYPE_16S,
+        4 => FLANN_INDEX_TYPE_32S,
+        5 => FLANN_INDEX_TYPE_32F,
+        6 => FLANN_INDEX_TYPE_64F,
+        7 => FLANN_INDEX_TYPE_STRING,
+        8 => FLANN_INDEX_TYPE_BOOL,
+        9 => FLANN_INDEX_TYPE_ALGORITHM,
+        _ => throw ArgumentError('Unknown value for FlannIndexType: $value'),
+      };
+
+  @override
+  String toString() {
+    if (this == FLANN_INDEX_TYPE_ALGORITHM)
+      return "FlannIndexType.FLANN_INDEX_TYPE_ALGORITHM, FlannIndexType.LAST_VALUE_FLANN_INDEX_TYPE";
+    return super.toString();
+  }
+}
 
 final class GFTTDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -499,7 +647,7 @@ final class MSER extends ffi.Struct {
 }
 
 typedef MSERPtr = ffi.Pointer<MSER>;
-typedef Mat = imp1.Mat;
+typedef Mat = imp$1.Mat;
 
 final class ORB extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -512,7 +660,7 @@ final class SIFT extends ffi.Struct {
 }
 
 typedef SIFTPtr = ffi.Pointer<SIFT>;
-typedef Scalar = imp1.Scalar;
+typedef Scalar = imp$1.Scalar;
 
 final class SimpleBlobDetector extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -578,7 +726,10 @@ final class SimpleBlobDetectorParams extends ffi.Struct {
 }
 
 typedef SimpleBlobDetectorPtr = ffi.Pointer<SimpleBlobDetector>;
-typedef VecChar = imp1.VecChar;
-typedef VecDMatch = imp1.VecDMatch;
-typedef VecKeyPoint = imp1.VecKeyPoint;
-typedef VecVecDMatch = imp1.VecVecDMatch;
+typedef VecChar = imp$1.VecChar;
+typedef VecDMatch = imp$1.VecDMatch;
+typedef VecF64 = imp$1.VecF64;
+typedef VecI32 = imp$1.VecI32;
+typedef VecKeyPoint = imp$1.VecKeyPoint;
+typedef VecVecChar = imp$1.VecVecChar;
+typedef VecVecDMatch = imp$1.VecVecDMatch;

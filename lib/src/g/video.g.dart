@@ -14,17 +14,17 @@
 library;
 
 import 'dart:ffi' as ffi;
-import 'package:dartcv4/src/g/types.g.dart' as imp1;
+import 'package:dartcv4/src/g/types.g.dart' as imp$1;
 import '' as self;
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BackgroundSubtractorKNN, Mat, Mat, imp1.CvCallback_0)>()
+        BackgroundSubtractorKNN, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BackgroundSubtractorKNN_apply(
   BackgroundSubtractorKNN self,
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(BackgroundSubtractorKNNPtr)>()
@@ -50,12 +50,12 @@ external ffi.Pointer<CvStatus> cv_BackgroundSubtractorKNN_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BackgroundSubtractorMOG2, Mat, Mat, imp1.CvCallback_0)>()
+        BackgroundSubtractorMOG2, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BackgroundSubtractorMOG2_apply(
   BackgroundSubtractorMOG2 self,
   Mat src,
   Mat dst,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Void Function(BackgroundSubtractorMOG2Ptr)>()
@@ -86,12 +86,12 @@ external void cv_KalmanFilter_close(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KalmanFilter, Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        KalmanFilter, Mat, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KalmanFilter_correct(
   KalmanFilter self,
   Mat measurement,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -197,43 +197,43 @@ external ffi.Pointer<CvStatus> cv_KalmanFilter_get_transitionMatrix(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KalmanFilter, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        KalmanFilter, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KalmanFilter_init(
   KalmanFilter self,
   int dynamParams,
   int measureParams,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KalmanFilter, ffi.Int, ffi.Int, ffi.Int, ffi.Int, imp1.CvCallback_0)>()
+        KalmanFilter, ffi.Int, ffi.Int, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KalmanFilter_init_1(
   KalmanFilter self,
   int dynamParams,
   int measureParams,
   int controlParams,
   int type,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KalmanFilter, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        KalmanFilter, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KalmanFilter_predict(
   KalmanFilter self,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KalmanFilter, Mat, ffi.Pointer<Mat>, imp1.CvCallback_0)>()
+        KalmanFilter, Mat, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KalmanFilter_predict_1(
   KalmanFilter self,
   Mat control,
   ffi.Pointer<Mat> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(KalmanFilter, Mat)>()
@@ -308,28 +308,28 @@ external ffi.Pointer<CvStatus> cv_TrackerMIL_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        TrackerMIL, Mat, CvRect, imp1.CvCallback_0)>()
+        TrackerMIL, Mat, CvRect, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_TrackerMIL_init(
   TrackerMIL self,
   Mat image,
   CvRect bbox,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(TrackerMIL, Mat, ffi.Pointer<CvRect>,
-        ffi.Pointer<ffi.Bool>, imp1.CvCallback_0)>()
+        ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_TrackerMIL_update(
   TrackerMIL self,
   Mat image,
   ffi.Pointer<CvRect> boundingBox,
   ffi.Pointer<ffi.Bool> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Double, ffi.Int, ffi.Int,
-        ffi.Int, ffi.Int, ffi.Double, ffi.Int, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Double, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_calcOpticalFlowFarneback(
   Mat prevImg,
   Mat nextImg,
@@ -341,7 +341,7 @@ external ffi.Pointer<CvStatus> cv_calcOpticalFlowFarneback(
   int polyN,
   double polySigma,
   int flags,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -352,7 +352,7 @@ external ffi.Pointer<CvStatus> cv_calcOpticalFlowFarneback(
         ffi.Pointer<VecPoint2f>,
         ffi.Pointer<VecUChar>,
         ffi.Pointer<VecF32>,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK(
   Mat prevImg,
   Mat nextImg,
@@ -360,7 +360,7 @@ external ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK(
   ffi.Pointer<VecPoint2f> nextPts,
   ffi.Pointer<VecUChar> status,
   ffi.Pointer<VecF32> err,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
@@ -376,7 +376,7 @@ external ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK(
         TermCriteria,
         ffi.Int,
         ffi.Double,
-        imp1.CvCallback_0)>()
+        imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK_1(
   Mat prevImg,
   Mat nextImg,
@@ -389,12 +389,12 @@ external ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK_1(
   TermCriteria criteria,
   int flags,
   double minEigThreshold,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Int, TermCriteria, Mat,
-        ffi.Int, ffi.Pointer<ffi.Double>, imp1.CvCallback_0)>()
+        ffi.Int, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_findTransformECC(
   Mat templateImage,
   Mat inputImage,
@@ -404,7 +404,7 @@ external ffi.Pointer<CvStatus> cv_findTransformECC(
   Mat inputMask,
   int gaussFiltSize,
   ffi.Pointer<ffi.Double> rval,
-  imp1.CvCallback_0 callback,
+  imp$1.CvCallback_0 callback,
 );
 
 const addresses = _SymbolAddresses();
@@ -436,17 +436,17 @@ final class BackgroundSubtractorMOG2 extends ffi.Struct {
 }
 
 typedef BackgroundSubtractorMOG2Ptr = ffi.Pointer<BackgroundSubtractorMOG2>;
-typedef CvRect = imp1.CvRect;
-typedef CvSize = imp1.CvSize;
-typedef CvStatus = imp1.CvStatus;
+typedef CvRect = imp$1.CvRect;
+typedef CvSize = imp$1.CvSize;
+typedef CvStatus = imp$1.CvStatus;
 
 final class KalmanFilter extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef KalmanFilterPtr = ffi.Pointer<KalmanFilter>;
-typedef Mat = imp1.Mat;
-typedef TermCriteria = imp1.TermCriteria;
+typedef Mat = imp$1.Mat;
+typedef TermCriteria = imp$1.TermCriteria;
 
 final class Tracker extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
@@ -464,6 +464,6 @@ final class TrackerMIL extends ffi.Struct {
 
 typedef TrackerMILPtr = ffi.Pointer<TrackerMIL>;
 typedef TrackerPtr = ffi.Pointer<Tracker>;
-typedef VecF32 = imp1.VecF32;
-typedef VecPoint2f = imp1.VecPoint2f;
-typedef VecUChar = imp1.VecUChar;
+typedef VecF32 = imp$1.VecF32;
+typedef VecPoint2f = imp$1.VecPoint2f;
+typedef VecUChar = imp$1.VecUChar;

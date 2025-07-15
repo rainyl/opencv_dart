@@ -3,12 +3,9 @@
 
 import 'dart:io';
 
+import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
-import 'package:native_assets_cli/code_assets_builder.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
-import 'package:yaml/yaml.dart';
-
-import 'parse_user_defines.dart';
 
 Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>? optionalModules}) async {
   final packagePath = Directory(await getPackagePath('dartcv4'));
@@ -17,22 +14,19 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>
     // ..onRecord.listen((record) => print(record.message));
     ..onRecord.listen((record) => stderr.write(record.message));
 
-  // final userDefines = input.userDefines;
-  final userDefines = await parseUserDefines(
-    File.fromUri(packagePath.uri.resolve('pubspec.yaml')),
-    'dartcv4',
-    logger: logger,
-  );
-  logger.info(userDefines);
-  // {include_modules: [calib3d, contrib, dnn, features2d, highgui, imgcodecs, imgproc, objdetect, photo, stitching, video, videoio]}
-
   optionalModules ??= [];
-  if (userDefines.containsKey('include_modules')) {
-    final moduels = userDefines['include_modules'] as YamlList?;
-    if (moduels != null) {
-      optionalModules.addAll(moduels.cast<String>());
-    }
+  final userDefines = input.userDefines;
+  final includeModules = userDefines["include_modules"] as List?;
+  final excludeModules = userDefines["exclude_modules"] as List?;
+  if (includeModules != null) {
+    optionalModules.addAll(includeModules.cast<String>());
   }
+  if (excludeModules != null) {
+    optionalModules.removeWhere(excludeModules.contains);
+  }
+  logger.info("[dartcv4] include modules: $includeModules\n");
+  logger.info("[dartcv4] exclude modules: $excludeModules\n");
+  logger.info("[dartcv4] merged modules: $optionalModules\n");
 
   final moduleDefines = {
     'DARTCV_WITH_CALIB3D': optionalModules.contains('calib3d') ? 'ON' : 'OFF',
@@ -40,7 +34,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>
     'DARTCV_WITH_DNN': optionalModules.contains('dnn') ? 'ON' : 'OFF',
     'DARTCV_WITH_FEATURES2D': optionalModules.contains('features2d') ? 'ON' : 'OFF',
     'DARTCV_WITH_HIGHGUI': optionalModules.contains('highgui') ? 'ON' : 'OFF',
-    // 'DARTCV_WITH_IMGCODECS': optionalModules.contains('imgcodecs')? 'ON' : 'OFF',
+    'DARTCV_WITH_IMGCODECS': optionalModules.contains('imgcodecs') ? 'ON' : 'OFF',
     'DARTCV_WITH_IMGPROC': optionalModules.contains('imgproc') ? 'ON' : 'OFF',
     'DARTCV_WITH_OBJDETECT': optionalModules.contains('objdetect') ? 'ON' : 'OFF',
     'DARTCV_WITH_PHOTO': optionalModules.contains('photo') ? 'ON' : 'OFF',
@@ -70,4 +64,18 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>
     outDir: input.outputDirectory.resolve('install/'),
     names: {'dartcv': 'dartcv.dart'},
   );
+
+  final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
+  // if (optionalModules.contains('highgui') || optionalModules.contains('videoio')) {
+  //   for (final lib in ffmpegLibs) {
+  //     final r = await output.findAndAddCodeAssets(
+  //       input,
+  //       outDir: input.outputDirectory.resolve('install/'),
+  //       names: {'lib$lib\\.\\d+\\.(so|dll|dylib)': "$lib.dart"},
+  //       regExp: true,
+  //     );
+
+  //     logger.info(r);
+  //   }
+  // }
 }
