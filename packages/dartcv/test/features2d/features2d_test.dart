@@ -10,7 +10,7 @@ void main() async {
     expect(params.get<String>('not exist', "abc"), "abc");
     expect(params.getAll(), {});
 
-    params.setAlgorithm(0);
+    params.setAlgorithm(cv.FlannAlgorithm.FLANN_INDEX_LINEAR);
     params.set<bool>("bool_0", true);
     params.set<double>("double_0", 241.0);
     params.set<int>("int_0", 241);
@@ -27,7 +27,7 @@ void main() async {
 
     final all = params.getAll();
     expect(all, <String, dynamic>{
-      "algorithm": 0,
+      "algorithm": cv.FlannAlgorithm.FLANN_INDEX_LINEAR,
       "bool_0": true,
       "double_0": 241.0,
       "int_0": 241,
@@ -35,7 +35,7 @@ void main() async {
     });
 
     final map = {
-      "algorithm": 0,
+      "algorithm": cv.FlannAlgorithm.FLANN_INDEX_LINEAR,
       "bool_0": true,
       "double_0": 241.0,
       "int_0": 241,
@@ -345,14 +345,11 @@ void main() async {
       // https://github.com/rainyl/opencv_dart/issues/369
       final indexParams = cv.FlannIndexParams.fromMap(
         {
-          // 'algorithm': 6,
-          // 'table_number': 10,
-          // 'key_size': 20,
-          // 'multi_probe_level': 0,
+          'algorithm': cv.FlannAlgorithm.FLANN_INDEX_KDTREE,
           "trees": 4,
         },
       );
-      final searchParams = cv.FlannSearchParams(checks: 50);
+      final searchParams = cv.FlannSearchParams(checks: 32);
       final matcher = cv.FlannBasedMatcher.create(indexParams: indexParams, searchParams: searchParams);
       final dmatches = matcher.knnMatch(desc11, desc21, 2);
       expect(dmatches.length, greaterThan(0));

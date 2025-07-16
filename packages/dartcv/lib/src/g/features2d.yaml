@@ -4,6 +4,10 @@ files:
     used-config:
       ffi-native: false
     symbols:
+      c:@E@FlannAlgorithm:
+        name: FlannAlgorithm
+      c:@E@FlannDistance:
+        name: FlannDistance
       c:@E@FlannIndexType:
         name: FlannIndexType
       c:@F@cv_AKAZE_close:

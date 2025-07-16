@@ -1417,11 +1417,87 @@ final class FastFeatureDetector extends ffi.Struct {
 
 typedef FastFeatureDetectorPtr = ffi.Pointer<FastFeatureDetector>;
 
+enum FlannAlgorithm {
+  FLANN_INDEX_LINEAR(0),
+  FLANN_INDEX_KDTREE(1),
+  FLANN_INDEX_KMEANS(2),
+  FLANN_INDEX_COMPOSITE(3),
+  FLANN_INDEX_KDTREE_SINGLE(4),
+  FLANN_INDEX_HIERARCHICAL(5),
+  FLANN_INDEX_LSH(6),
+  FLANN_INDEX_SAVED(254),
+  FLANN_INDEX_AUTOTUNED(255);
+
+  final int value;
+  const FlannAlgorithm(this.value);
+
+  static FlannAlgorithm fromValue(int value) => switch (value) {
+        0 => FLANN_INDEX_LINEAR,
+        1 => FLANN_INDEX_KDTREE,
+        2 => FLANN_INDEX_KMEANS,
+        3 => FLANN_INDEX_COMPOSITE,
+        4 => FLANN_INDEX_KDTREE_SINGLE,
+        5 => FLANN_INDEX_HIERARCHICAL,
+        6 => FLANN_INDEX_LSH,
+        254 => FLANN_INDEX_SAVED,
+        255 => FLANN_INDEX_AUTOTUNED,
+        _ => throw ArgumentError('Unknown value for FlannAlgorithm: $value'),
+      };
+}
+
 final class FlannBasedMatcher extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 typedef FlannBasedMatcherPtr = ffi.Pointer<FlannBasedMatcher>;
+
+enum FlannDistance {
+  FLANN_DIST_EUCLIDEAN(1),
+  FLANN_DIST_MANHATTAN(2),
+  FLANN_DIST_MINKOWSKI(3),
+  FLANN_DIST_MAX(4),
+  FLANN_DIST_HIST_INTERSECT(5),
+  FLANN_DIST_HELLINGER(6),
+  FLANN_DIST_CHI_SQUARE(7),
+  FLANN_DIST_KULLBACK_LEIBLER(8),
+  FLANN_DIST_HAMMING(9),
+  FLANN_DIST_DNAMMING(10);
+
+  static const FLANN_DIST_L2 = FLANN_DIST_EUCLIDEAN;
+  static const FLANN_DIST_L1 = FLANN_DIST_MANHATTAN;
+  static const FLANN_DIST_CS = FLANN_DIST_CHI_SQUARE;
+  static const FLANN_DIST_KL = FLANN_DIST_KULLBACK_LEIBLER;
+
+  final int value;
+  const FlannDistance(this.value);
+
+  static FlannDistance fromValue(int value) => switch (value) {
+        1 => FLANN_DIST_EUCLIDEAN,
+        2 => FLANN_DIST_MANHATTAN,
+        3 => FLANN_DIST_MINKOWSKI,
+        4 => FLANN_DIST_MAX,
+        5 => FLANN_DIST_HIST_INTERSECT,
+        6 => FLANN_DIST_HELLINGER,
+        7 => FLANN_DIST_CHI_SQUARE,
+        8 => FLANN_DIST_KULLBACK_LEIBLER,
+        9 => FLANN_DIST_HAMMING,
+        10 => FLANN_DIST_DNAMMING,
+        _ => throw ArgumentError('Unknown value for FlannDistance: $value'),
+      };
+
+  @override
+  String toString() {
+    if (this == FLANN_DIST_EUCLIDEAN)
+      return "FlannDistance.FLANN_DIST_EUCLIDEAN, FlannDistance.FLANN_DIST_L2";
+    if (this == FLANN_DIST_MANHATTAN)
+      return "FlannDistance.FLANN_DIST_MANHATTAN, FlannDistance.FLANN_DIST_L1";
+    if (this == FLANN_DIST_CHI_SQUARE)
+      return "FlannDistance.FLANN_DIST_CHI_SQUARE, FlannDistance.FLANN_DIST_CS";
+    if (this == FLANN_DIST_KULLBACK_LEIBLER)
+      return "FlannDistance.FLANN_DIST_KULLBACK_LEIBLER, FlannDistance.FLANN_DIST_KL";
+    return super.toString();
+  }
+}
 
 final class FlannIndexParams extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;

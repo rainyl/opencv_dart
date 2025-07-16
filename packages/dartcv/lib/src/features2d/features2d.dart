@@ -45,6 +45,8 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
           params.set<String>(entry.key, entry.value as String);
         case bool():
           params.set<bool>(entry.key, entry.value as bool);
+        case cvg.FlannAlgorithm():
+          params.set<cvg.FlannAlgorithm>(entry.key, entry.value as cvg.FlannAlgorithm);
         default:
           throw ArgumentError('Value type ${entry.value.runtimeType} is not supported for FlannIndexParams');
       }
@@ -125,7 +127,7 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
         cvg.FlannIndexType.FLANN_INDEX_TYPE_32F || cvg.FlannIndexType.FLANN_INDEX_TYPE_64F => numValues[i],
         cvg.FlannIndexType.FLANN_INDEX_TYPE_BOOL => numValues[i].toInt() != 0,
         cvg.FlannIndexType.FLANN_INDEX_TYPE_STRING => names1[i],
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_ALGORITHM => numValues[i].toInt(),
+        cvg.FlannIndexType.FLANN_INDEX_TYPE_ALGORITHM => cvg.FlannAlgorithm.fromValue(numValues[i].toInt()),
       };
     }
 
@@ -138,33 +140,28 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
     cfeatures2d.cv_flann_IndexParams_setString(ref, ckey, cvalue);
     calloc.free(ckey);
     calloc.free(cvalue);
-    return;
   }
 
   void setInt(String key, int value) {
     final ckey = key.toNativeUtf8().cast<ffi.Char>();
     cfeatures2d.cv_flann_IndexParams_setInt(ref, ckey, value);
     calloc.free(ckey);
-    return;
   }
 
   void setDouble(String key, double value) {
     final ckey = key.toNativeUtf8().cast<ffi.Char>();
     cfeatures2d.cv_flann_IndexParams_setDouble(ref, ckey, value);
     calloc.free(ckey);
-    return;
   }
 
   void setBool(String key, bool value) {
     final ckey = key.toNativeUtf8().cast<ffi.Char>();
     cfeatures2d.cv_flann_IndexParams_setBool(ref, ckey, value);
     calloc.free(ckey);
-    return;
   }
 
-  void setAlgorithm(int value) {
-    cfeatures2d.cv_flann_IndexParams_setAlgorithm(ref, value);
-    return;
+  void setAlgorithm(cvg.FlannAlgorithm value) {
+    cfeatures2d.cv_flann_IndexParams_setAlgorithm(ref, value.value);
   }
 
   T get<T>(String key, [T? defaultValue]) {
@@ -180,15 +177,6 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
   }
 
   void set<T>(String key, T value) {
-    if (key == 'algorithm') {
-      if (value is int) {
-        setAlgorithm(value as int);
-        return;
-      } else {
-        throw ArgumentError("`algorithm` is a special preserved key for `setAlgorithm()` "
-            "which only accepts `int`, but got value type: ${T.runtimeType}");
-      }
-    }
     switch (value) {
       case int():
         setInt(key, value);
@@ -198,6 +186,8 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
         setString(key, value);
       case bool():
         setBool(key, value);
+      case cvg.FlannAlgorithm():
+        setAlgorithm(value);
       default:
         throw ArgumentError("Unsupported type: ${value.runtimeType}");
     }
