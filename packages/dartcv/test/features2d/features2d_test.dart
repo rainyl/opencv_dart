@@ -43,14 +43,21 @@ void main() async {
     };
     final params1 = cv.FlannIndexParams.fromMap(map);
     expect(params1.getAll(), map);
+
+    expect(params1.toString(), startsWith("FlannIndexParams(address=0x"));
   });
 
   test('cv.FlannSearchParams', () {
     final params = cv.FlannSearchParams(eps: 1.0, exploreAllTrees: true);
-    expect(params.checks, 32);
-    expect(params.eps, 1.0);
-    expect(params.sorted, true);
-    expect(params.exploreAllTrees, true);
+
+    params.checks = 50;
+    params.eps = 0.5;
+    params.sorted = false;
+    params.exploreAllTrees = false;
+    expect(params.checks, 50);
+    expect(params.eps, 0.5);
+    expect(params.sorted, false);
+    expect(params.exploreAllTrees, false);
     expect(params.toString(), startsWith("FlannSearchParams(address=0x"));
   });
 
@@ -343,12 +350,15 @@ void main() async {
 
     {
       // https://github.com/rainyl/opencv_dart/issues/369
-      final indexParams = cv.FlannIndexParams.fromMap(
-        {
-          'algorithm': cv.FlannAlgorithm.FLANN_INDEX_KDTREE,
-          "trees": 4,
-        },
-      );
+      // final indexParams = cv.FlannIndexParams.fromMap(
+      //   {
+      //     'algorithm': cv.FlannAlgorithm.FLANN_INDEX_KDTREE,
+      //     "trees": 4,
+      //   },
+      // );
+      final indexParams = cv.FlannKDTreeIndexParams();
+      expect(indexParams.toString(), startsWith("FlannKDTreeIndexParams(address=0x"));
+
       final searchParams = cv.FlannSearchParams(checks: 32);
       final matcher = cv.FlannBasedMatcher.create(indexParams: indexParams, searchParams: searchParams);
       final dmatches = matcher.knnMatch(desc11, desc21, 2);

@@ -192,6 +192,11 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
         throw ArgumentError("Unsupported type: ${value.runtimeType}");
     }
   }
+
+  @override
+  String toString() {
+    return "FlannIndexParams(address=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 class FlannSearchParams extends FlannIndexParams {
@@ -269,21 +274,25 @@ class FlannSearchParams extends FlannIndexParams {
 }
 
 class FlannKDTreeIndexParams extends FlannIndexParams {
-  FlannKDTreeIndexParams.fromPointer(
-    super.ptr, [
-    super.attach = true,
-  ]) : super.fromPointer();
+  FlannKDTreeIndexParams.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
 
-  factory FlannKDTreeIndexParams({
-    int trees = 4,
-  }) {
+  factory FlannKDTreeIndexParams({int trees = 4}) {
     final p = calloc<cvg.FlannIndexParams>();
     cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
     final params = FlannKDTreeIndexParams.fromPointer(p);
 
+    params.setAlgorithm(cvg.FlannAlgorithm.FLANN_INDEX_KDTREE);
     params.setInt('trees', trees);
 
     return params;
+  }
+
+  int get trees => getInt("trees");
+  set trees(int value) => setInt("trees", value);
+
+  @override
+  String toString() {
+    return 'FlannKDTreeIndexParams(address=0x${ptr.address.toRadixString(16)}, trees=$trees)';
   }
 }
 
