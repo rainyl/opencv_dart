@@ -6,3 +6,4 @@ library dartcv.features2d;
 
 export 'src/features2d/features2d.dart';
 export 'src/features2d/features2d_async.dart';
+export 'src/g/features2d.g.dart' show FlannIndexType, FlannAlgorithm, FlannDistance;
