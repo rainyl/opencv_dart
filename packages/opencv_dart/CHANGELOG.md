@@ -1,3 +1,10 @@
+## 1.4.3
+
+* add `FlannIndexParams`, `FlannSearchParams`, `FlannKDTreeIndexParams`
+* add `FlannBasedMatcher.create`
+* bump opencv to 4.12.0
+* [android] fix ffmpeg search logic in `ffmpeg-config.cmake`, https://github.com/rainyl/opencv_dart/issues/293
+
 ## 1.4.2+1
 
 * fix: optional modules parsing in cmake script

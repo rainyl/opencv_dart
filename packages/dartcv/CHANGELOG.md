@@ -1,3 +1,9 @@
+## 1.1.6
+
+* add `FlannIndexParams`, `FlannSearchParams`, `FlannKDTreeIndexParams`
+* add `FlannBasedMatcher.create`
+* bump opencv to 4.12.0
+
 ## 1.1.5
 
 * added `approxPolyN`.
