@@ -2,6 +2,65 @@ import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
+  test('cv.FlannIndexParams', () {
+    final params = cv.FlannIndexParams.empty();
+
+    expect(params.get<double>('not exist', 0), 0);
+    expect(params.get<int>('not exist', 1), 1);
+    expect(params.get<String>('not exist', "abc"), "abc");
+    expect(params.getAll(), {});
+
+    params.setAlgorithm(cv.FlannAlgorithm.FLANN_INDEX_LINEAR);
+    params.set<bool>("bool_0", true);
+    params.set<double>("double_0", 241.0);
+    params.set<int>("int_0", 241);
+    params.set<String>("string_0", "string_0");
+
+    final double0 = params.get<double>("double_0");
+    expect(double0, 241.0);
+
+    final int0 = params.get<int>("int_0");
+    expect(int0, 241);
+
+    final string0 = params.get<String>("string_0");
+    expect(string0, "string_0");
+
+    final all = params.getAll();
+    expect(all, <String, dynamic>{
+      "algorithm": cv.FlannAlgorithm.FLANN_INDEX_LINEAR,
+      "bool_0": true,
+      "double_0": 241.0,
+      "int_0": 241,
+      "string_0": "string_0",
+    });
+
+    final map = {
+      "algorithm": cv.FlannAlgorithm.FLANN_INDEX_LINEAR,
+      "bool_0": true,
+      "double_0": 241.0,
+      "int_0": 241,
+      "string_0": "string_0",
+    };
+    final params1 = cv.FlannIndexParams.fromMap(map);
+    expect(params1.getAll(), map);
+
+    expect(params1.toString(), startsWith("FlannIndexParams(address=0x"));
+  });
+
+  test('cv.FlannSearchParams', () {
+    final params = cv.FlannSearchParams(eps: 1.0, exploreAllTrees: true);
+
+    params.checks = 50;
+    params.eps = 0.5;
+    params.sorted = false;
+    params.exploreAllTrees = false;
+    expect(params.checks, 50);
+    expect(params.eps, 0.5);
+    expect(params.sorted, false);
+    expect(params.exploreAllTrees, false);
+    expect(params.toString(), startsWith("FlannSearchParams(address=0x"));
+  });
+
   test('cv.AKAZE', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
@@ -281,12 +340,32 @@ void main() async {
 
     final desc11 = desc1.convertTo(cv.MatType.CV_32FC1);
     final desc21 = desc2.convertTo(cv.MatType.CV_32FC1);
+    {
+      final matcher = cv.FlannBasedMatcher.empty();
+      final dmatches = matcher.knnMatch(desc11, desc21, 2);
+      expect(dmatches.length, greaterThan(0));
 
-    final matcher = cv.FlannBasedMatcher.empty();
-    final dmatches = matcher.knnMatch(desc11, desc21, 2);
-    expect(dmatches.length, greaterThan(0));
+      matcher.dispose();
+    }
 
-    matcher.dispose();
+    {
+      // https://github.com/rainyl/opencv_dart/issues/369
+      // final indexParams = cv.FlannIndexParams.fromMap(
+      //   {
+      //     'algorithm': cv.FlannAlgorithm.FLANN_INDEX_KDTREE,
+      //     "trees": 4,
+      //   },
+      // );
+      final indexParams = cv.FlannKDTreeIndexParams();
+      expect(indexParams.toString(), startsWith("FlannKDTreeIndexParams(address=0x"));
+
+      final searchParams = cv.FlannSearchParams(checks: 32);
+      final matcher = cv.FlannBasedMatcher.create(indexParams: indexParams, searchParams: searchParams);
+      final dmatches = matcher.knnMatch(desc11, desc21, 2);
+      expect(dmatches.length, greaterThan(0));
+
+      matcher.dispose();
+    }
   });
 
   test('cv.SIFT', () {

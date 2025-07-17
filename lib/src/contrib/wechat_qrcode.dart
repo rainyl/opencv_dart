@@ -20,10 +20,7 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory WeChatQRCode.fromPointer(
-    cvg.WeChatQRCodePtr ptr, [
-    bool attach = true,
-  ]) =>
+  factory WeChatQRCode.fromPointer(cvg.WeChatQRCodePtr ptr, [bool attach = true]) =>
       WeChatQRCode._(ptr, attach);
 
   factory WeChatQRCode.empty() {
@@ -56,32 +53,40 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
 
   /// Both detects and decodes QR code. To simplify the usage, there is a only API: detectAndDecode.
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#a27c167d2d58e5ee4418fd3a9ed5876cc
-  (List<String>, VecMat points) detectAndDecode(
-    InputArray img, [
-    VecMat? points,
-  ]) {
+  (List<String>, VecMat points) detectAndDecode(InputArray img, [VecMat? points]) {
     points ??= VecMat();
     final strs = VecVecChar();
-    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
-        ref, img.ref, points!.ptr, strs.ptr, ffi.nullptr));
+    cvRun(
+      () => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+        ref,
+        img.ref,
+        points!.ptr,
+        strs.ptr,
+        ffi.nullptr,
+      ),
+    );
     final rval = (strs.asStringList(), points);
     strs.dispose();
     return rval;
   }
 
-  Future<(List<String>, VecMat)> detectAndDecodeAsync(
-    InputArray img, [
-    VecMat? points,
-  ]) async {
+  Future<(List<String>, VecMat)> detectAndDecodeAsync(InputArray img, [VecMat? points]) async {
     points ??= VecMat();
     final strs = VecVecChar();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
-            ref, img.ref, points!.ptr, strs.ptr, callback), (c) {
-      final rval = (strs.asStringList(), points!);
-      strs.dispose();
-      return c.complete(rval);
-    });
+      (callback) => ccontrib.cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
+        ref,
+        img.ref,
+        points!.ptr,
+        strs.ptr,
+        callback,
+      ),
+      (c) {
+        final rval = (strs.asStringList(), points!);
+        strs.dispose();
+        return c.complete(rval);
+      },
+    );
   }
 
   /// https://docs.opencv.org/4.x/d5/d04/classcv_1_1wechat__qrcode_1_1WeChatQRCode.html#abf807138abc2626c159abd3e9a80e791
@@ -101,8 +106,9 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
   set scaleFactor(double scaleFactor) =>
       ccontrib.cv_wechat_qrcode_WeChatQRCode_setScaleFactor(ref, scaleFactor);
 
-  static final finalizer =
-      OcvFinalizer<cvg.WeChatQRCodePtr>(ccontrib.addresses.cv_wechat_qrcode_WeChatQRCode_close);
+  static final finalizer = OcvFinalizer<cvg.WeChatQRCodePtr>(
+    ccontrib.addresses.cv_wechat_qrcode_WeChatQRCode_close,
+  );
 
   void dispose() {
     finalizer.detach(this);

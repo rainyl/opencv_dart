@@ -312,14 +312,8 @@ void main() async {
       expect(dst2.isEmpty, equals(false));
       for (int i = 0; i < dst1.rows; i++) {
         for (int j = 0; j < dst1.cols; j++) {
-          expect(
-            dst1.at<double>(i, j),
-            closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001),
-          );
-          expect(
-            dst2.at<double>(i, j),
-            closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001),
-          );
+          expect(dst1.at<double>(i, j), closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001));
+          expect(dst2.at<double>(i, j), closeTo((i + 1).toDouble() / (j + 1).toDouble(), 0.001));
         }
       }
     });
@@ -406,13 +400,7 @@ void main() async {
     final mean = cv.Mat.empty();
     final eigenvectors = cv.Mat.empty();
     final eigenvalues = cv.Mat.empty();
-    cv.PCACompute(
-      src,
-      mean,
-      eigenvalues: eigenvalues,
-      eigenvectors: eigenvectors,
-      maxComponents: 2,
-    );
+    cv.PCACompute(src, mean, eigenvalues: eigenvalues, eigenvectors: eigenvectors, maxComponents: 2);
     expect(mean.isEmpty || eigenvectors.isEmpty || eigenvalues.isEmpty, equals(false));
     expect(eigenvectors.rows, equals(2));
   });
@@ -632,10 +620,10 @@ void main() async {
           // 0-1: 65536-1-0 2-3: 65536-1-1 3-4: 65536-1-2
 
           final lutData = switch (lutDepth) {
-            cv.MatType.CV_32F ||
-            cv.MatType.CV_16F ||
-            cv.MatType.CV_64F =>
-              List.generate(lutSize * lutType.channels, (i) => (lutSize - (i ~/ channel) - 1).toDouble()),
+            cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
+              lutSize * lutType.channels,
+              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+            ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
@@ -785,11 +773,7 @@ void main() async {
   test('cv.solve', () {
     final a = cv.Mat.zeros(3, 3, cv.MatType.CV_32FC1);
     final b = cv.Mat.zeros(3, 1, cv.MatType.CV_32FC1);
-    final testPoints = [
-      (1.0, 1.0, 1.0, 0.0),
-      (0.0, 0.0, 1.0, 2.0),
-      (9.0, 3.0, 1.0, 2.0),
-    ];
+    final testPoints = [(1.0, 1.0, 1.0, 0.0), (0.0, 0.0, 1.0, 2.0), (9.0, 3.0, 1.0, 2.0)];
     for (var i = 0; i < testPoints.length; i++) {
       a.set(i, 0, testPoints[i].$1);
       a.set(i, 1, testPoints[i].$2);
@@ -1026,13 +1010,19 @@ void main() async {
     expect(dst.isEmpty, false);
   });
 
-  test('cv.setNumThreads', onPlatform: {
-    "mac-os": const Skip("seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150"),
-  }, () {
-    cv.setNumThreads(2);
-    final n = cv.getNumThreads();
-    expect(n, equals(2));
-  });
+  test(
+    'cv.setNumThreads',
+    onPlatform: {
+      "mac-os": const Skip(
+        "seems won't work properly on macos, https://github.com/opencv/opencv/issues/5150",
+      ),
+    },
+    () {
+      cv.setNumThreads(2);
+      final n = cv.getNumThreads();
+      expect(n, equals(2));
+    },
+  );
 
   test('cv.getNumThreads', () {
     final n = cv.getNumThreads();

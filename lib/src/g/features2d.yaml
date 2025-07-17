@@ -4,6 +4,10 @@ files:
     used-config:
       ffi-native: true
     symbols:
+      c:@E@FlannAlgorithm:
+        name: FlannAlgorithm
+      c:@E@FlannDistance:
+        name: FlannDistance
       c:@E@FlannIndexType:
         name: FlannIndexType
       c:@F@cv_AKAZE_close:
@@ -50,6 +54,8 @@ files:
         name: cv_FlannBasedMatcher_close
       c:@F@cv_FlannBasedMatcher_create:
         name: cv_FlannBasedMatcher_create
+      c:@F@cv_FlannBasedMatcher_create_1:
+        name: cv_FlannBasedMatcher_create_1
       c:@F@cv_FlannBasedMatcher_knnMatch:
         name: cv_FlannBasedMatcher_knnMatch
       c:@F@cv_GFTTDetector_close:

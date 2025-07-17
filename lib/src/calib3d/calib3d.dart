@@ -125,24 +125,11 @@ Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
 /// void cv::decomposeEssentialMat (InputArray E, OutputArray R1, OutputArray R2, OutputArray t);
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga54a2f5b3f8aeaf6c76d4a31dece85d5d
-(Mat r1, Mat r2, Mat t) decomposeEssentialMat(
-  Mat E, {
-  OutputArray? R1,
-  OutputArray? R2,
-  OutputArray? t,
-}) {
+(Mat r1, Mat r2, Mat t) decomposeEssentialMat(Mat E, {OutputArray? R1, OutputArray? R2, OutputArray? t}) {
   R1 ??= Mat.empty();
   R2 ??= Mat.empty();
   t ??= Mat.empty();
-  cvRun(
-    () => ccalib3d.cv_decomposeEssentialMat(
-      E.ref,
-      R1!.ref,
-      R2!.ref,
-      t!.ref,
-      ffi.nullptr,
-    ),
-  );
+  cvRun(() => ccalib3d.cv_decomposeEssentialMat(E.ref, R1!.ref, R2!.ref, t!.ref, ffi.nullptr));
   return (R1, R2, t);
 }
 
@@ -469,14 +456,7 @@ void filterSpeckles(
 }) {
   buf ??= Mat.empty();
   return cvRun(
-    () => ccalib3d.cv_filterSpeckles(
-      img.ref,
-      newVal,
-      maxSpeckleSize,
-      maxDiff,
-      buf!.ref,
-      ffi.nullptr,
-    ),
+    () => ccalib3d.cv_filterSpeckles(img.ref, newVal, maxSpeckleSize, maxDiff, buf!.ref, ffi.nullptr),
   );
 }
 
@@ -485,20 +465,10 @@ void filterSpeckles(
 /// bool cv::find4QuadCornerSubpix (InputArray img, InputOutputArray corners, Size region_size)
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gab8816c8a176e1d78893b843b3f01557a
-bool find4QuadCornerSubpix(
-  InputArray img,
-  InputOutputArray corners,
-  (int, int) regionSize,
-) {
+bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) regionSize) {
   final prval = calloc<ffi.Bool>();
   cvRun(
-    () => ccalib3d.cv_find4QuadCornerSubpix(
-      img.ref,
-      corners.ref,
-      regionSize.cvd.ref,
-      prval,
-      ffi.nullptr,
-    ),
+    () => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvd.ref, prval, ffi.nullptr),
   );
   final rval = prval.value;
   calloc.free(prval);
@@ -601,14 +571,7 @@ bool find4QuadCornerSubpix(
   centers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
   cvRun(
-    () => ccalib3d.cv_findCirclesGrid(
-      image.ref,
-      patternSize.ref,
-      centers!.ref,
-      flags,
-      prval,
-      ffi.nullptr,
-    ),
+    () => ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, ffi.nullptr),
   );
   final rval = prval.value;
   calloc.free(prval);
@@ -723,23 +686,12 @@ Mat findFundamentalMat(
 /// Mat cv::findFundamentalMat (InputArray points1, InputArray points2, OutputArray mask, const UsacParams &params)
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gae850fad056e407befb9e2db04dd9e509
-Mat findFundamentalMatUsac(
-  InputArray points1,
-  InputArray points2,
-  UsacParams params, {
-  OutputArray? mask,
-}) {
+Mat findFundamentalMatUsac(InputArray points1, InputArray points2, UsacParams params, {OutputArray? mask}) {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
   cvRun(
-    () => ccalib3d.cv_findFundamentalMat_1(
-      points1.ref,
-      points2.ref,
-      mask!.ref,
-      params.ref,
-      prval,
-      ffi.nullptr,
-    ),
+    () =>
+        ccalib3d.cv_findFundamentalMat_1(points1.ref, points2.ref, mask!.ref, params.ref, prval, ffi.nullptr),
   );
   return Mat.fromPointer(prval);
 }
@@ -780,23 +732,12 @@ Mat findHomography(
 /// Mat cv::findHomography (InputArray srcPoints, InputArray dstPoints, OutputArray mask, const UsacParams &params)
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga4b3841447530523e5272ec05c5d1e411
-Mat findHomographyUsac(
-  InputArray srcPoints,
-  InputArray dstPoints,
-  UsacParams params, {
-  OutputArray? mask,
-}) {
+Mat findHomographyUsac(InputArray srcPoints, InputArray dstPoints, UsacParams params, {OutputArray? mask}) {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
   cvRun(
-    () => ccalib3d.cv_findHomography_1(
-      srcPoints.ref,
-      dstPoints.ref,
-      mask!.ref,
-      params.ref,
-      prval,
-      ffi.nullptr,
-    ),
+    () =>
+        ccalib3d.cv_findHomography_1(srcPoints.ref, dstPoints.ref, mask!.ref, params.ref, prval, ffi.nullptr),
   );
   return Mat.fromPointer(prval);
 }
@@ -927,15 +868,7 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
 (Mat dABdA, Mat dABdB) matMulDeriv(InputArray A, InputArray B, {OutputArray? dABdA, OutputArray? dABdB}) {
   dABdA ??= Mat.empty();
   dABdB ??= Mat.empty();
-  cvRun(
-    () => ccalib3d.cv_matMulDeriv(
-      A.ref,
-      B.ref,
-      dABdA!.ref,
-      dABdB!.ref,
-      ffi.nullptr,
-    ),
-  );
+  cvRun(() => ccalib3d.cv_matMulDeriv(A.ref, B.ref, dABdA!.ref, dABdB!.ref, ffi.nullptr));
   return (dABdA, dABdB);
 }
 
@@ -1078,21 +1011,10 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
 /// void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga61585db663d9da06b68e70cfbf6a1eac
-Mat Rodrigues(
-  InputArray src, {
-  OutputArray? dst,
-  OutputArray? jacobian,
-}) {
+Mat Rodrigues(InputArray src, {OutputArray? dst, OutputArray? jacobian}) {
   dst ??= Mat.empty();
   jacobian ??= Mat.empty();
-  cvRun(
-    () => ccalib3d.cv_Rodrigues(
-      src.ref,
-      dst!.ref,
-      jacobian!.ref,
-      ffi.nullptr,
-    ),
-  );
+  cvRun(() => ccalib3d.cv_Rodrigues(src.ref, dst!.ref, jacobian!.ref, ffi.nullptr));
   return dst;
 }
 
@@ -1116,16 +1038,8 @@ Mat Rodrigues(
   Qz ??= Mat.empty();
   final prval = calloc<cvg.Vec3d>();
   cvRun(
-    () => ccalib3d.cv_RQDecomp3x3(
-      src.ref,
-      mtxR!.ref,
-      mtxQ!.ref,
-      Qx!.ref,
-      Qy!.ref,
-      Qz!.ref,
-      prval,
-      ffi.nullptr,
-    ),
+    () =>
+        ccalib3d.cv_RQDecomp3x3(src.ref, mtxR!.ref, mtxQ!.ref, Qx!.ref, Qy!.ref, Qz!.ref, prval, ffi.nullptr),
   );
   return (Vec3d.fromPointer(prval), mtxR, mtxQ);
 }

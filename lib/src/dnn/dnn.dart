@@ -99,11 +99,7 @@ class Net extends CvStruct<cvg.Net> {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
-  factory Net.fromPointer(
-    cvg.NetPtr ptr, [
-    bool attach = true,
-  ]) =>
-      Net._(ptr, attach);
+  factory Net.fromPointer(cvg.NetPtr ptr, [bool attach = true]) => Net._(ptr, attach);
 
   factory Net.empty() {
     final p = calloc<cvg.Net>();

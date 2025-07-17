@@ -37,6 +37,54 @@ VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
   return vec;
 }
 
+/// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
+///
+/// For further details, please see:
+///
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga0012a5fdaea70b8a9970165d98722b4c
+VecPoint2f approxPolyDP2f(VecPoint2f curve, double epsilon, bool closed) {
+  final vec = VecPoint2f();
+  cvRun(() => cimgproc.cv_approxPolyDP2f(curve.ref, epsilon, closed, vec.ptr, ffi.nullptr));
+  return vec;
+}
+
+/// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
+///
+/// For further details, please see:
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
+VecPoint approxPolyN(
+  VecPoint curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) {
+  final vec = VecPoint();
+  cvRun(
+    () => cimgproc.cv_approxPolyN(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr),
+  );
+  return vec;
+}
+
+/// ApproxPolyN approximates a polygon with a convex hull with a specified accuracy and number of sides.
+///
+/// For further details, please see:
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga88981607a2d61b95074688aac55625cc
+VecPoint2f approxPolyN2f(
+  VecPoint2f curve,
+  int nsides, {
+  double epsilon_percentage = -1.0,
+  bool ensure_convex = true,
+}) {
+  final vec = VecPoint2f();
+  cvRun(
+    () =>
+        cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, ffi.nullptr),
+  );
+  return vec;
+}
+
 /// ArcLength calculates a contour perimeter or a curve length.
 ///
 /// For further details, please see:
@@ -45,6 +93,19 @@ VecPoint approxPolyDP(VecPoint curve, double epsilon, bool closed) {
 double arcLength(VecPoint curve, bool closed) {
   final p = calloc<ffi.Double>();
   cvRun(() => cimgproc.cv_arcLength(curve.ref, closed, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
+}
+
+/// ArcLength calculates a contour perimeter or a curve length.
+///
+/// For further details, please see:
+///
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
+double arcLength2f(VecPoint2f curve, bool closed) {
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_arcLength2f(curve.ref, closed, p, ffi.nullptr));
   final rval = p.value;
   calloc.free(p);
   return rval;
@@ -60,6 +121,16 @@ Mat convexHull(VecPoint points, {Mat? hull, bool clockwise = false, bool returnP
   return hull;
 }
 
+/// ConvexHull finds the convex hull of a point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga014b28e56cb8854c0de4a211cb2be656
+Mat convexHull2f(VecPoint2f points, {Mat? hull, bool clockwise = false, bool returnPoints = true}) {
+  hull ??= Mat.empty();
+  cvRun(() => cimgproc.cv_convexHull2f(points.ref, hull!.ref, clockwise, returnPoints, ffi.nullptr));
+  return hull;
+}
+
 /// ConvexityDefects finds the convexity defects of a contour.
 ///
 /// For further details, please see:
@@ -69,6 +140,18 @@ Mat convexityDefects(VecPoint contour, Mat hull, {Mat? convexityDefects}) {
   cvRun(() => cimgproc.cv_convexityDefects(contour.ref, hull.ref, convexityDefects!.ref, ffi.nullptr));
   return convexityDefects;
 }
+
+// convexityDefects does not support std::vector<cv::Poinit2f>
+// https://github.com/opencv/opencv/blob/31b0eeea0b44b370fd0712312df4214d4ae1b158/modules/imgproc/src/convhull.cpp#L318
+// /// ConvexityDefects finds the convexity defects of a contour.
+// ///
+// /// For further details, please see:
+// /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gada4437098113fd8683c932e0567f47ba
+// Mat convexityDefects2f(VecPoint2f contour, Mat hull, {Mat? convexityDefects}) {
+//   convexityDefects ??= Mat.empty();
+//   cvRun(() => cimgproc.cv_convexityDefects2f(contour.ref, hull.ref, convexityDefects!.ref, ffi.nullptr));
+//   return convexityDefects;
+// }
 
 /// CvtColor converts an image from one color space to another.
 /// It converts the src Mat image to the dst Mat using the
@@ -127,14 +210,7 @@ Mat calcHist(
 ///
 /// For futher details, please see:
 /// https:///docs.opencv.org/3.4/d6/dc7/group__imgproc__hist.html#ga3a0af640716b456c3d14af8aee12e3ca
-Mat calcBackProject(
-  VecMat src,
-  VecI32 channels,
-  Mat hist,
-  VecF32 ranges, {
-  Mat? dst,
-  double scale = 1.0,
-}) {
+Mat calcBackProject(VecMat src, VecI32 channels, Mat hist, VecF32 ranges, {Mat? dst, double scale = 1.0}) {
   dst ??= Mat.empty();
   cvRun(
     () => cimgproc.cv_calcBackProject(
@@ -400,6 +476,16 @@ Rect boundingRect(VecPoint points) {
   return Rect.fromPointer(rect);
 }
 
+/// BoundingRect calculates the up-right bounding rectangle of a point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
+Rect boundingRect2f(VecPoint2f points) {
+  final rect = calloc<cvg.CvRect>();
+  cvRun(() => cimgproc.cv_boundingRect2f(points.ref, rect, ffi.nullptr));
+  return Rect.fromPointer(rect);
+}
+
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
 ///
 /// return: [bottom left, top left, top right, bottom right]
@@ -423,6 +509,18 @@ double contourArea(VecPoint contour) {
   return rval;
 }
 
+/// ContourArea calculates a contour area.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
+double contourArea2f(VecPoint2f contour) {
+  final p = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_contourArea2f(contour.ref, p, ffi.nullptr));
+  final rval = p.value;
+  calloc.free(p);
+  return rval;
+}
+
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
 ///
 /// For further details, please see:
@@ -433,6 +531,16 @@ RotatedRect minAreaRect(VecPoint points) {
   return RotatedRect.fromPointer(p);
 }
 
+/// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
+RotatedRect minAreaRect2f(VecPoint2f points) {
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => cimgproc.cv_minAreaRect2f(points.ref, p, ffi.nullptr));
+  return RotatedRect.fromPointer(p);
+}
+
 /// FitEllipse Fits an ellipse around a set of 2D points.
 ///
 /// For further details, please see:
@@ -440,6 +548,16 @@ RotatedRect minAreaRect(VecPoint points) {
 RotatedRect fitEllipse(VecPoint points) {
   final p = calloc<cvg.RotatedRect>();
   cvRun(() => cimgproc.cv_fitEllipse(points.ref, p, ffi.nullptr));
+  return RotatedRect.fromPointer(p);
+}
+
+/// FitEllipse Fits an ellipse around a set of 2D points.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
+RotatedRect fitEllipse2f(VecPoint2f points) {
+  final p = calloc<cvg.RotatedRect>();
+  cvRun(() => cimgproc.cv_fitEllipse2f(points.ref, p, ffi.nullptr));
   return RotatedRect.fromPointer(p);
 }
 
@@ -456,6 +574,19 @@ RotatedRect fitEllipse(VecPoint points) {
   return rval;
 }
 
+/// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
+(Point2f center, double radius) minEnclosingCircle2f(VecPoint2f points) {
+  final center = calloc<cvg.CvPoint2f>();
+  final pRadius = calloc<ffi.Float>();
+  cvRun(() => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, ffi.nullptr));
+  final rval = (Point2f.fromPointer(center), pRadius.value);
+  calloc.free(pRadius);
+  return rval;
+}
+
 /// FindContours finds contours in a binary image.
 ///
 /// For further details, please see:
@@ -464,6 +595,17 @@ RotatedRect fitEllipse(VecPoint points) {
   final hierarchy = VecVec4i();
   final contours = VecVecPoint();
   cvRun(() => cimgproc.cv_findContours(src.ref, contours.ptr, hierarchy.ptr, mode, method, ffi.nullptr));
+  return (contours, hierarchy);
+}
+
+/// FindContours finds contours in a binary image.
+///
+/// For further details, please see:
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0
+(Contours2f contours, VecVec4i hierarchy) findContours2f(Mat src, int mode, int method) {
+  final hierarchy = VecVec4i();
+  final contours = Contours2f();
+  cvRun(() => cimgproc.cv_findContours2f(src.ref, contours.ptr, hierarchy.ptr, mode, method, ffi.nullptr));
   return (contours, hierarchy);
 }
 
@@ -479,6 +621,18 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
   return rval;
 }
 
+/// PointPolygonTest performs a point-in-contour test.
+///
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
+double pointPolygonTest2f(VecPoint2f points, Point2f pt, bool measureDist) {
+  final r = calloc<ffi.Double>();
+  cvRun(() => cimgproc.cv_pointPolygonTest2f(points.ref, pt.ref, measureDist, r, ffi.nullptr));
+  final rval = r.value;
+  calloc.free(r);
+  return rval;
+}
+
 /// ConnectedComponents computes the connected components labeled image of boolean image.
 ///
 /// For further details, please see:
@@ -486,15 +640,8 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
   final p = calloc<ffi.Int>();
   cvRun(
-    () => cimgproc.cv_connectedComponents(
-      image.ref,
-      labels.ref,
-      connectivity,
-      ltype,
-      ccltype,
-      p,
-      ffi.nullptr,
-    ),
+    () =>
+        cimgproc.cv_connectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p, ffi.nullptr),
   );
   final rval = p.value;
   calloc.free(p);
@@ -560,12 +707,7 @@ Moments moments(Mat src, {bool binaryImage = false}) {
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaf9bba239dfca11654cb7f50f889fc2ff
-Mat pyrDown(
-  Mat src, {
-  Mat? dst,
-  (int, int) dstsize = (0, 0),
-  int borderType = BORDER_DEFAULT,
-}) {
+Mat pyrDown(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   cvRun(() => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
@@ -575,12 +717,7 @@ Mat pyrDown(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gada75b59bdaaca411ed6fee10085eb784
-Mat pyrUp(
-  Mat src, {
-  Mat? dst,
-  (int, int) dstsize = (0, 0),
-  int borderType = BORDER_DEFAULT,
-}) {
+Mat pyrUp(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   cvRun(() => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
   return dst;
@@ -1053,13 +1190,7 @@ Mat HoughLinesPointSet(
 ///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
-(double, Mat dst) threshold(
-  InputArray src,
-  double thresh,
-  double maxval,
-  int type, {
-  OutputArray? dst,
-}) {
+(double, Mat dst) threshold(InputArray src, double thresh, double maxval, int type, {OutputArray? dst}) {
   dst ??= Mat.empty();
   final p = calloc<ffi.Double>();
   cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
@@ -1142,16 +1273,8 @@ Mat circle(
   int shift = 0,
 }) {
   cvRun(
-    () => cimgproc.cv_circle_1(
-      img.ref,
-      center.ref,
-      radius,
-      color.ref,
-      thickness,
-      lineType,
-      shift,
-      ffi.nullptr,
-    ),
+    () =>
+        cimgproc.cv_circle_1(img.ref, center.ref, radius, color.ref, thickness, lineType, shift, ffi.nullptr),
   );
   return img;
 }
@@ -1222,9 +1345,7 @@ Mat rectangle(
   int lineType = LINE_8,
   int shift = 0,
 }) {
-  cvRun(
-    () => cimgproc.cv_rectangle_1(img.ref, rect.ref, color.ref, thickness, lineType, shift, ffi.nullptr),
-  );
+  cvRun(() => cimgproc.cv_rectangle_1(img.ref, rect.ref, color.ref, thickness, lineType, shift, ffi.nullptr));
   return img;
 }
 
@@ -1241,9 +1362,7 @@ Mat fillPoly(
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  cvRun(
-    () => cimgproc.cv_fillPoly_1(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref, ffi.nullptr),
-  );
+  cvRun(() => cimgproc.cv_fillPoly_1(img.ref, pts.ref, color.ref, lineType, shift, offset!.ref, ffi.nullptr));
   return img;
 }
 
@@ -1270,26 +1389,11 @@ Mat polylines(
 ///
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga3d2abfcb995fd2db908c8288199dba82
-(Size size, int baseline) getTextSize(
-  String text,
-  int fontFace,
-  double fontScale,
-  int thickness,
-) {
+(Size size, int baseline) getTextSize(String text, int fontFace, double fontScale, int thickness) {
   final pBaseline = calloc<ffi.Int>();
   final size = calloc<cvg.CvSize>();
   final textPtr = text.toNativeUtf8().cast<ffi.Char>();
-  cvRun(
-    () => cimgproc.cv_getTextSize(
-      textPtr,
-      fontFace,
-      fontScale,
-      thickness,
-      pBaseline,
-      size,
-      ffi.nullptr,
-    ),
-  );
+  cvRun(() => cimgproc.cv_getTextSize(textPtr, fontFace, fontScale, thickness, pBaseline, size, ffi.nullptr));
   final rval = (Size.fromPointer(size), pBaseline.value);
   calloc.free(pBaseline);
   return rval;
@@ -1520,12 +1624,12 @@ Mat drawContours(
   Scalar color, {
   int thickness = 1,
   int lineType = LINE_8,
-  InputArray? hierarchy, // TODO: replace with vec
+  VecVec4i? hierarchy,
   int maxLevel = 0x3f3f3f3f,
   Point? offset,
 }) {
   offset ??= Point(0, 0);
-  hierarchy ??= Mat.empty();
+  hierarchy ??= VecVec4i();
   cvRun(
     () => cimgproc.cv_drawContours_1(
       image.ref,
@@ -1665,6 +1769,16 @@ Mat fitLine(VecPoint points, int distType, double param, double reps, double aep
   return line;
 }
 
+/// FitLine fits a line to a 2D or 3D point set.
+/// distType: DistanceTypes
+/// For further details, please see:
+/// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf849da1fdafa67ee84b1e9a23b93f91f
+Mat fitLine2f(VecPoint2f points, int distType, double param, double reps, double aeps, {OutputArray? line}) {
+  line ??= Mat.empty();
+  cvRun(() => cimgproc.cv_fitLine2f(points.ref, line!.ref, distType, param, reps, aeps, ffi.nullptr));
+  return line;
+}
+
 /// Compares two shapes.
 /// method: ShapeMatchModes
 /// For further details, please see:
@@ -1764,6 +1878,15 @@ Mat accumulateWeighted(InputArray src, InputOutputArray dst, double alpha, {Inpu
 ///
 /// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga8abf8010377b58cbc16db6734d92941b
 bool isContourConvex(VecPoint contour) => cimgproc.cv_isContourConvex(contour.ref);
+
+/// Tests a contour convexity.
+///
+/// The function tests whether the input contour is convex or not.
+/// The contour must be simple, that is, without self-intersections.
+/// Otherwise, the function output is undefined.
+///
+/// https://docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#ga8abf8010377b58cbc16db6734d92941b
+bool isContourConvex2f(VecPoint2f contour) => cimgproc.cv_isContourConvex2f(contour.ref);
 
 /// Finds intersection of two convex polygons.
 ///

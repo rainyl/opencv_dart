@@ -152,13 +152,7 @@ Future<T> cvRunAsync3<T>(
 
 Future<T> cvRunAsync4<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
-  void Function(
-    Completer<T> completer,
-    VoidPtr p,
-    VoidPtr p1,
-    VoidPtr p2,
-    VoidPtr p3,
-  ) onComplete,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) onComplete,
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_4Function> ccallback;
@@ -174,14 +168,7 @@ Future<T> cvRunAsync4<T>(
 
 Future<T> cvRunAsync5<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
-  void Function(
-    Completer<T> completer,
-    VoidPtr p,
-    VoidPtr p1,
-    VoidPtr p2,
-    VoidPtr p3,
-    VoidPtr p4,
-  ) onComplete,
+  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) onComplete,
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_5Function> ccallback;
@@ -222,12 +209,10 @@ void cvAssert(bool condition, [String? msg]) {
 }
 
 // finalizers
-typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
-    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
+typedef NativeFinalizerFunctionT<T extends ffi.NativeType> =
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
-ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(
-  NativeFinalizerFunctionT<T> func,
-) =>
+ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());
 
 // native types

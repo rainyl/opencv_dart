@@ -26,13 +26,7 @@ class ximgproc {
   ///
   /// The function applies Perona-Malik anisotropic diffusion to an image.
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#gaffedd976e0a8efb5938107acab185ec2
-  static Mat anisotropicDiffusion(
-    InputArray src,
-    double alpha,
-    double K,
-    int niters, {
-    OutputArray? dst,
-  }) {
+  static Mat anisotropicDiffusion(InputArray src, double alpha, double K, int niters, {OutputArray? dst}) {
     dst ??= Mat.empty();
     cvRun(() => ccontrib.cv_ximgproc_anisotropicDiffusion(src.ref, dst!.ref, alpha, K, niters, ffi.nullptr));
     return dst;
@@ -51,10 +45,11 @@ class ximgproc {
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
-        (callback) =>
-            ccontrib.cv_ximgproc_anisotropicDiffusion(src.ref, dst!.ref, alpha, K, niters, callback), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_anisotropicDiffusion(src.ref, dst!.ref, alpha, K, niters, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Smoothes an image using the Edge-Preserving filter.
@@ -144,16 +139,18 @@ class ximgproc {
   }) async {
     ellipses ??= Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_findEllipses(
-              image.ref,
-              ellipses!.ref,
-              scoreThreshold,
-              reliabilityThreshold,
-              centerDistanceThreshold,
-              callback,
-            ), (c) {
-      return c.complete(ellipses);
-    });
+      (callback) => ccontrib.cv_ximgproc_findEllipses(
+        image.ref,
+        ellipses!.ref,
+        scoreThreshold,
+        reliabilityThreshold,
+        centerDistanceThreshold,
+        callback,
+      ),
+      (c) {
+        return c.complete(ellipses);
+      },
+    );
   }
 
   /// Performs thresholding on input images using Niblack's technique or some of
@@ -203,19 +200,21 @@ class ximgproc {
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_niBlackThreshold(
-              src.ref,
-              dst!.ref,
-              maxValue,
-              type,
-              blockSize,
-              k,
-              binarizationMethod,
-              r,
-              callback,
-            ), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_niBlackThreshold(
+        src.ref,
+        dst!.ref,
+        maxValue,
+        type,
+        blockSize,
+        k,
+        binarizationMethod,
+        r,
+        callback,
+      ),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
@@ -261,10 +260,12 @@ class ximgproc {
     int thinningType = THINNING_ZHANGSUEN,
   }) async {
     dst ??= Mat.empty();
-    return cvRunAsync0((callback) => ccontrib.cv_ximgproc_thinning(src.ref, dst!.ref, thinningType, callback),
-        (c) {
-      return c.complete(dst);
-    });
+    return cvRunAsync0(
+      (callback) => ccontrib.cv_ximgproc_thinning(src.ref, dst!.ref, thinningType, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   static const int THINNING_ZHANGSUEN = 0;
@@ -377,19 +378,19 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
 
   @override
   List<num> get props => [
-        alpha,
-        beta,
-        eta,
-        minScore,
-        maxBoxes,
-        edgeMinMag,
-        edgeMergeThr,
-        clusterMinMag,
-        maxAspectRatio,
-        minBoxArea,
-        gamma,
-        kappa,
-      ];
+    alpha,
+    beta,
+    eta,
+    minScore,
+    maxBoxes,
+    edgeMinMag,
+    edgeMergeThr,
+    clusterMinMag,
+    maxAspectRatio,
+    minBoxArea,
+    gamma,
+    kappa,
+  ];
 
   @override
   cvg.EdgeBoxes get ref => ptr.ref;
@@ -428,8 +429,9 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
 
   bool isEmpty() => ccontrib.cv_ximgproc_RFFeatureGetter_empty(ref);
 
-  static final finalizer =
-      OcvFinalizer<cvg.RFFeatureGetterPtr>(ccontrib.addresses.cv_ximgproc_RFFeatureGetter_close);
+  static final finalizer = OcvFinalizer<cvg.RFFeatureGetterPtr>(
+    ccontrib.addresses.cv_ximgproc_RFFeatureGetter_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -555,8 +557,9 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
 
   set minSize(int value) => ccontrib.cv_ximgproc_GraphSegmentation_setMinSize(ref, value);
 
-  static final finalizer =
-      OcvFinalizer<cvg.GraphSegmentationPtr>(ccontrib.addresses.cv_ximgproc_GraphSegmentation_close);
+  static final finalizer = OcvFinalizer<cvg.GraphSegmentationPtr>(
+    ccontrib.addresses.cv_ximgproc_GraphSegmentation_close,
+  );
 
   void dispose() {
     finalizer.detach(this);
@@ -647,20 +650,20 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
 
   @override
   List<Object?> get props => [
-        AnchorThresholdValue,
-        EdgeDetectionOperator,
-        GradientThresholdValue,
-        LineFitErrorThreshold,
-        MaxDistanceBetweenTwoLines,
-        MaxErrorThreshold,
-        MinLineLength,
-        MinPathLength,
-        NFAValidation,
-        PFmode,
-        ScanInterval,
-        Sigma,
-        SumFlag,
-      ];
+    AnchorThresholdValue,
+    EdgeDetectionOperator,
+    GradientThresholdValue,
+    LineFitErrorThreshold,
+    MaxDistanceBetweenTwoLines,
+    MaxErrorThreshold,
+    MinLineLength,
+    MinPathLength,
+    NFAValidation,
+    PFmode,
+    ScanInterval,
+    Sigma,
+    SumFlag,
+  ];
 
   @override
   cvg.EdgeDrawingParams get ref => ptr.ref;
@@ -761,9 +764,11 @@ class ximgproc_rl {
   static Future<Mat> createRLEImageAsync(VecPoint3i runs, {(int, int) size = (0, 0)}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvd.ref, callback), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvd.ref, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Dilates an run-length encoded binary image by using a specific structuring element.
@@ -784,11 +789,12 @@ class ximgproc_rl {
   static Future<Mat> dilateAsync(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) =>
-            ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.toPoint().ref, callback),
-        (c) {
-      return c.complete(dst);
-    });
+      (callback) =>
+          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.toPoint().ref, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Erodes an run-length encoded binary image by using a specific structuring element.
@@ -825,16 +831,18 @@ class ximgproc_rl {
   }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_erode(
-              rlSrc.ref,
-              dst.ref,
-              rlKernel.ref,
-              bBoundaryOn,
-              anchor.toPoint().ref,
-              callback,
-            ), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_rl_erode(
+        rlSrc.ref,
+        dst.ref,
+        rlKernel.ref,
+        bBoundaryOn,
+        anchor.toPoint().ref,
+        callback,
+      ),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Returns a run length encoded structuring element of the specified size and shape.
@@ -852,10 +860,11 @@ class ximgproc_rl {
   static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, callback),
-        (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Check whether a custom made structuring element can be used with run length morphological operations.
@@ -902,17 +911,19 @@ class ximgproc_rl {
   }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_morphologyEx(
-              rlSrc.ref,
-              dst.ref,
-              op,
-              rlKernel.ref,
-              bBoundaryOnForErosion,
-              anchor.toPoint().ref,
-              callback,
-            ), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_rl_morphologyEx(
+        rlSrc.ref,
+        dst.ref,
+        op,
+        rlKernel.ref,
+        bBoundaryOnForErosion,
+        anchor.toPoint().ref,
+        callback,
+      ),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 
   /// Paint run length encoded binary image into an image.
@@ -927,10 +938,12 @@ class ximgproc_rl {
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga7cabc1c2901b8b58082f8febc366638b
   static Future<Mat> paintAsync(InputOutputArray image, InputArray rlSrc, Scalar value) async {
-    return cvRunAsync0((callback) => ccontrib.cv_ximgproc_rl_paint(image.ref, rlSrc.ref, value.ref, callback),
-        (c) {
-      return c.complete(image);
-    });
+    return cvRunAsync0(
+      (callback) => ccontrib.cv_ximgproc_rl_paint(image.ref, rlSrc.ref, value.ref, callback),
+      (c) {
+        return c.complete(image);
+      },
+    );
   }
 
   /// Applies a fixed-level threshold to each array element.
@@ -948,8 +961,10 @@ class ximgproc_rl {
   static Future<Mat> thresholdAsync(InputArray src, double thresh, int type) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_ximgproc_rl_threshold(src.ref, dst.ref, thresh, type, callback), (c) {
-      return c.complete(dst);
-    });
+      (callback) => ccontrib.cv_ximgproc_rl_threshold(src.ref, dst.ref, thresh, type, callback),
+      (c) {
+        return c.complete(dst);
+      },
+    );
   }
 }

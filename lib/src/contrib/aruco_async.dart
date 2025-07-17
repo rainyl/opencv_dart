@@ -19,16 +19,18 @@ extension ArucoDetectorAsync on ArucoDetector {
     final rejected = VecVecPoint2f();
     final ids = VecI32();
     return cvRunAsync0(
-        (callback) => ccontrib.cv_aruco_arucoDetector_detectMarkers(
-              ref,
-              image.ref,
-              corners.ptr,
-              ids.ptr,
-              rejected.ptr,
-              callback,
-            ), (c) {
-      return c.complete((corners, ids, rejected));
-    });
+      (callback) => ccontrib.cv_aruco_arucoDetector_detectMarkers(
+        ref,
+        image.ref,
+        corners.ptr,
+        ids.ptr,
+        rejected.ptr,
+        callback,
+      ),
+      (c) {
+        return c.complete((corners, ids, rejected));
+      },
+    );
   }
 }
 
@@ -59,14 +61,16 @@ Future<Mat> arucoGenerateImageMarkerAsync(
 ]) async {
   outImg ??= Mat.empty();
   return cvRunAsync0(
-      (callback) => ccontrib.cv_aruco_generateImageMarker(
-            dictionaryId.value,
-            id,
-            sidePixels,
-            borderBits,
-            outImg!.ref,
-            callback,
-          ), (c) {
-    c.complete(outImg);
-  });
+    (callback) => ccontrib.cv_aruco_generateImageMarker(
+      dictionaryId.value,
+      id,
+      sidePixels,
+      borderBits,
+      outImg!.ref,
+      callback,
+    ),
+    (c) {
+      c.complete(outImg);
+    },
+  );
 }

@@ -3,6 +3,8 @@
 
 import 'dart:io';
 
+import 'package:code_assets/code_assets.dart';
+import 'package:dartcv4/src/hook_helpers/libtool_macos.dart';
 import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
@@ -66,16 +68,27 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>
   );
 
   final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
-  // if (optionalModules.contains('highgui') || optionalModules.contains('videoio')) {
-  //   for (final lib in ffmpegLibs) {
-  //     final r = await output.findAndAddCodeAssets(
-  //       input,
-  //       outDir: input.outputDirectory.resolve('install/'),
-  //       names: {'lib$lib\\.\\d+\\.(so|dll|dylib)': "$lib.dart"},
-  //       regExp: true,
-  //     );
+  if (optionalModules.contains('highgui') || optionalModules.contains('videoio')) {
+    for (final lib in ffmpegLibs) {
+      final r = await output.findAndAddCodeAssets(
+        input,
+        outDir: input.outputDirectory.resolve('install/'),
+        names: {'lib$lib\\.\\d+\\.(so|dll|dylib)': "$lib.dart"},
+        regExp: true,
+      );
 
-  //     logger.info(r);
-  //   }
-  // }
+      // TODO: dartdev does not support adding FAT libraries yet.
+      // https://github.com/dart-lang/sdk/issues/61130
+
+      // final libFile = r.first.file!;
+      // final targetArch = input.config.code.targetArchitecture;
+
+      // final archs = await getArchitectures(libFile, logger: logger);
+
+      // if (archs.keys.length > 1) {
+      //   logger.info('$lib has multiple architectures, thining and overriting with $targetArch');
+      //   await splitDylibArchitectures(libFile, targetArch, libFile);
+      // }
+    }
+  }
 }

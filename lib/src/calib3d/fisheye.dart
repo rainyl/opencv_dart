@@ -72,23 +72,25 @@ class Fisheye {
     tvecs ??= VecMat();
     final prval = calloc<ffi.Double>();
     return cvRunAsync0(
-        (callback) => ccalib3d.cv_fisheye_calibrate(
-              objectPoints.ref,
-              imagePoints.ref,
-              imageSize.ref,
-              K.ref,
-              D.ref,
-              rvecs!.ref,
-              tvecs!.ref,
-              flags,
-              criteria!.ref,
-              prval,
-              callback,
-            ), (c) {
-      final rval = prval.value;
-      calloc.free(prval);
-      return c.complete((rval, rvecs!, tvecs!));
-    });
+      (callback) => ccalib3d.cv_fisheye_calibrate(
+        objectPoints.ref,
+        imagePoints.ref,
+        imageSize.ref,
+        K.ref,
+        D.ref,
+        rvecs!.ref,
+        tvecs!.ref,
+        flags,
+        criteria!.ref,
+        prval,
+        callback,
+      ),
+      (c) {
+        final rval = prval.value;
+        calloc.free(prval);
+        return c.complete((rval, rvecs!, tvecs!));
+      },
+    );
   }
 
   /// Distorts 2D points using fisheye model.
@@ -140,14 +142,7 @@ class Fisheye {
 
     return cvRunAsync0(
       (callback) => Kundistorted == null
-          ? ccalib3d.cv_fisheye_distortPoints(
-              undistorted.ref,
-              distorted!.ref,
-              K.ref,
-              D.ref,
-              alpha,
-              callback,
-            )
+          ? ccalib3d.cv_fisheye_distortPoints(undistorted.ref, distorted!.ref, K.ref, D.ref, alpha, callback)
           : ccalib3d.cv_fisheye_distortPoints_1(
               undistorted.ref,
               distorted!.ref,
@@ -395,23 +390,25 @@ class Fisheye {
     tvec ??= Mat.empty();
     final prval = calloc<ffi.Bool>();
     return cvRunAsync0(
-        (callback) => ccalib3d.cv_fisheye_solvePnP(
-              objectPoints.ref,
-              imagePoints.ref,
-              cameraMatrix.ref,
-              distCoeffs.ref,
-              rvec!.ref,
-              tvec!.ref,
-              useExtrinsicGuess,
-              flags,
-              criteria!.ref,
-              prval,
-              callback,
-            ), (c) {
-      final rval = prval.value;
-      calloc.free(prval);
-      return c.complete((rval, rvec!, tvec!));
-    });
+      (callback) => ccalib3d.cv_fisheye_solvePnP(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        flags,
+        criteria!.ref,
+        prval,
+        callback,
+      ),
+      (c) {
+        final rval = prval.value;
+        calloc.free(prval);
+        return c.complete((rval, rvec!, tvec!));
+      },
+    );
   }
 
   /// void distortPoints (InputArray undistorted, InputArray Kundistorted, InputArray K, InputArray D, OutputArray distorted, double alpha=0)

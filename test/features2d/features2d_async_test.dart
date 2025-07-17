@@ -255,15 +255,9 @@ void main() async {
   });
 
   test('cv.BFMatcherAsync', () async {
-    final desc1 = await cv.imreadAsync(
-      "test/images/sift_descriptor.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final desc1 = await cv.imreadAsync("test/images/sift_descriptor.png", flags: cv.IMREAD_GRAYSCALE);
     expect(desc1.isEmpty, false);
-    final desc2 = await cv.imreadAsync(
-      "test/images/sift_descriptor.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final desc2 = await cv.imreadAsync("test/images/sift_descriptor.png", flags: cv.IMREAD_GRAYSCALE);
     expect(desc2.isEmpty, false);
 
     final matcher = cv.BFMatcher.empty();
@@ -281,15 +275,9 @@ void main() async {
   });
 
   test('cv.FlannBasedMatcherAsync', () async {
-    final desc1 = await cv.imreadAsync(
-      "test/images/sift_descriptor.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final desc1 = await cv.imreadAsync("test/images/sift_descriptor.png", flags: cv.IMREAD_GRAYSCALE);
     expect(desc1.isEmpty, false);
-    final desc2 = await cv.imreadAsync(
-      "test/images/sift_descriptor.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final desc2 = await cv.imreadAsync("test/images/sift_descriptor.png", flags: cv.IMREAD_GRAYSCALE);
     expect(desc2.isEmpty, false);
 
     final desc11 = desc1.convertTo(cv.MatType.CV_32FC1);
@@ -303,10 +291,7 @@ void main() async {
   });
 
   test('cv.SIFTAsync', () async {
-    final img = await cv.imreadAsync(
-      "test/images/lenna.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
     final si = cv.SIFT.empty();
@@ -323,10 +308,7 @@ void main() async {
 
   test('cv.drawMatchesAsync', () async {
     final query = await cv.imreadAsync("test/images/box.png", flags: cv.IMREAD_GRAYSCALE);
-    final train = await cv.imreadAsync(
-      "test/images/box_in_scene.png",
-      flags: cv.IMREAD_GRAYSCALE,
-    );
+    final train = await cv.imreadAsync("test/images/box_in_scene.png", flags: cv.IMREAD_GRAYSCALE);
     expect(query.isEmpty, false);
     expect(train.isEmpty, false);
 

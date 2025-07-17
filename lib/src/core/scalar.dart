@@ -13,7 +13,7 @@ import 'base.dart';
 class Scalar extends CvStruct<cvg.Scalar> {
   Scalar._(ffi.Pointer<cvg.Scalar> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Scalar>());
     }
   }
 

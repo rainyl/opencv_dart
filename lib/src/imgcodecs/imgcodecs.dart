@@ -67,13 +67,10 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
   final dst = Mat.empty();
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imread(cname, flags, dst.ptr, callback),
-    (c) {
-      calloc.free(cname);
-      return c.complete(dst);
-    },
-  );
+  return cvRunAsync0((callback) => cimgcodecs.cv_imread(cname, flags, dst.ptr, callback), (c) {
+    calloc.free(cname);
+    return c.complete(dst);
+  });
 }
 
 /// write a Mat to an image file.
@@ -104,10 +101,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   }
 
   if (params == null) {
-    return cvRunAsync0(
-      (callback) => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, callback),
-      completeFunc,
-    );
+    return cvRunAsync0((callback) => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, callback), completeFunc);
   }
   return cvRunAsync0(
     (callback) => cimgcodecs.cv_imwrite_1(fname.cast(), img.ref, params.ref, p, callback),
@@ -121,11 +115,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
 ///
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga461f9ac09887e47797a54567df3b8b63
-(bool, Uint8List) imencode(
-  String ext,
-  InputArray img, {
-  VecI32? params,
-}) {
+(bool, Uint8List) imencode(String ext, InputArray img, {VecI32? params}) {
   final (success, vec) = imencodeVec(ext, img, params: params);
   final u8List = vec.toU8List(); // will copy data
   vec.dispose();
@@ -133,11 +123,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
 }
 
 /// Same as [imencode] but returns [VecUChar]
-(bool, VecUChar) imencodeVec(
-  String ext,
-  InputArray img, {
-  VecI32? params,
-}) {
+(bool, VecUChar) imencodeVec(String ext, InputArray img, {VecI32? params}) {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -153,11 +139,7 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
 }
 
 /// async version of [imencode]
-Future<(bool, Uint8List)> imencodeAsync(
-  String ext,
-  InputArray img, {
-  VecI32? params,
-}) async {
+Future<(bool, Uint8List)> imencodeAsync(String ext, InputArray img, {VecI32? params}) async {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -185,11 +167,7 @@ Future<(bool, Uint8List)> imencodeAsync(
 }
 
 /// Same as [imencodeAsync] but returns [VecUChar]
-Future<(bool, VecUChar)> imencodeVecAsync(
-  String ext,
-  InputArray img, {
-  VecI32? params,
-}) async {
+Future<(bool, VecUChar)> imencodeVecAsync(String ext, InputArray img, {VecI32? params}) async {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -244,10 +222,7 @@ Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) async {
 /// Same as [imdecodeAsync] but accepts [VecUChar]
 Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst}) async {
   dst ??= Mat.empty();
-  return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback),
-    (c) {
-      return c.complete(dst);
-    },
-  );
+  return cvRunAsync0((callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback), (c) {
+    return c.complete(dst);
+  });
 }

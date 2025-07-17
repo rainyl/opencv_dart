@@ -20,25 +20,25 @@ dev_dependencies:
   ffigen: ^19.0.0
   test: ^1.25.2
 
-hooks:
-  user_defines:
-    dartcv4:
-      include_modules:
-        # - calib3d
-        # - contrib
-        # - dnn
-        # - features2d
-        # - highgui
-        # - imgcodecs
-        - imgproc
-        # - objdetect
-        # - photo
-        # - stitching
-        # - video
-        # - videoio
-
 topics:
   - opencv
   - image
   - ffi
   - flutter
+
+hooks:
+  user_defines:
+    dartcv4:
+      include_modules:
+        - calib3d
+        - contrib
+        - dnn
+        - features2d
+        # - highgui
+        - imgcodecs
+        - imgproc
+        - objdetect
+        - photo
+        - stitching
+        - video
+        # - videoio

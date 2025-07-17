@@ -283,13 +283,19 @@ void main() async {
     final faceFeature2 = await recognizer.featureAsync(alignedFace2);
 
     // Test matching features using L2 distance
-    final matchScoreL2 =
-        await recognizer.matchAsync(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_NORM_L2);
+    final matchScoreL2 = await recognizer.matchAsync(
+      faceFeature,
+      faceFeature2,
+      disType: cv.FaceRecognizerSF.FR_NORM_L2,
+    );
     expect(matchScoreL2, greaterThanOrEqualTo(0));
 
     // Test matching features using Cosine distance
-    final matchScoreCosine =
-        await recognizer.matchAsync(faceFeature, faceFeature2, disType: cv.FaceRecognizerSF.FR_COSINE);
+    final matchScoreCosine = await recognizer.matchAsync(
+      faceFeature,
+      faceFeature2,
+      disType: cv.FaceRecognizerSF.FR_COSINE,
+    );
     expect(matchScoreCosine, greaterThanOrEqualTo(0));
 
     // Clean up

@@ -15,7 +15,7 @@ import 'base.dart';
 class Moments extends CvStruct<cvg.Moment> {
   Moments._(ffi.Pointer<cvg.Moment> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Moment>());
     }
   }
 
@@ -63,29 +63,29 @@ class Moments extends CvStruct<cvg.Moment> {
 
   @override
   List<double> get props => [
-        m00,
-        m01,
-        m02,
-        m03,
-        m10,
-        m11,
-        m12,
-        m20,
-        m21,
-        m30,
-        mu20,
-        mu11,
-        mu02,
-        mu30,
-        mu21,
-        mu12,
-        mu03,
-        nu20,
-        nu11,
-        nu02,
-        nu30,
-        nu21,
-        nu12,
-        nu03,
-      ];
+    m00,
+    m01,
+    m02,
+    m03,
+    m10,
+    m11,
+    m12,
+    m20,
+    m21,
+    m30,
+    mu20,
+    mu11,
+    mu02,
+    mu30,
+    mu21,
+    mu12,
+    mu03,
+    nu20,
+    nu11,
+    nu02,
+    nu30,
+    nu21,
+    nu12,
+    nu03,
+  ];
 }

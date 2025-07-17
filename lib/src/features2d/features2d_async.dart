@@ -70,12 +70,9 @@ extension BRISKAsync on BRISK {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, callback), (c) {
+      return c.complete(ret);
+    });
   }
 
   /// DetectAndCompute keypoints and compute in an image using BRISK.
@@ -118,12 +115,11 @@ extension GFTTDetectorAsync on GFTTDetector {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, callback), (
+      c,
+    ) {
+      return c.complete(ret);
+    });
   }
 }
 
@@ -134,12 +130,9 @@ extension KAZEAsync on KAZE {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, callback), (c) {
+      return c.complete(ret);
+    });
   }
 
   /// DetectAndCompute keypoints and compute in an image using KAZE.
@@ -165,12 +158,9 @@ extension MSERAsync on MSER {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, callback), (c) {
+      return c.complete(ret);
+    });
   }
 }
 
@@ -181,12 +171,9 @@ extension ORBAsync on ORB {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, callback), (c) {
+      return c.complete(ret);
+    });
   }
 
   /// DetectAndCompute keypoints and compute in an image using ORB.
@@ -289,12 +276,9 @@ extension SIFTAsync on SIFT {
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
   Future<VecKeyPoint> detectAsync(Mat src) async {
     final ret = VecKeyPoint();
-    return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, callback),
-      (c) {
-        return c.complete(ret);
-      },
-    );
+    return cvRunAsync0((callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, callback), (c) {
+      return c.complete(ret);
+    });
   }
 
   /// DetectAndCompute keypoints and compute in an image using SIFT.
@@ -321,14 +305,8 @@ Future<void> drawKeyPointsAsync(
   DrawMatchesFlag flag,
 ) async {
   await cvRunAsync0<void>(
-    (callback) => cfeatures2d.cv_drawKeyPoints(
-      src.ref,
-      keypoints.ref,
-      dst.ref,
-      color.ref,
-      flag.value,
-      callback,
-    ),
+    (callback) =>
+        cfeatures2d.cv_drawKeyPoints(src.ref, keypoints.ref, dst.ref, color.ref, flag.value, callback),
     (c) => c.complete(),
   );
 }

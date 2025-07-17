@@ -20,17 +20,11 @@ void checkSVD(cv.Mat w, cv.Mat u, cv.Mat vt) {
 
   expect(checkFunc([w.at<double>(0, 0), w.at<double>(1, 0)], resultW), true);
   expect(
-    checkFunc(
-      [u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)],
-      resultU,
-    ),
+    checkFunc([u.at<double>(0, 0), u.at<double>(0, 1), u.at<double>(1, 0), u.at<double>(1, 1)], resultU),
     true,
   );
   expect(
-    checkFunc(
-      [vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)],
-      resultVt,
-    ),
+    checkFunc([vt.at<double>(0, 0), vt.at<double>(0, 1), vt.at<double>(1, 0), vt.at<double>(1, 1)], resultVt),
     true,
   );
 }

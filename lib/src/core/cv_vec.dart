@@ -21,7 +21,7 @@ abstract class CvVec<T extends ffi.Struct> extends CvStruct<T> {
 class Vec2b extends CvVec<cvg.Vec2b> {
   Vec2b._(ffi.Pointer<cvg.Vec2b> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2b>());
     }
   }
   factory Vec2b(int v1, int v2) {
@@ -74,7 +74,7 @@ class Vec2b extends CvVec<cvg.Vec2b> {
 class Vec3b extends CvVec<cvg.Vec3b> {
   Vec3b._(ffi.Pointer<cvg.Vec3b> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3b>());
     }
   }
   factory Vec3b(int v1, int v2, int v3) {
@@ -133,7 +133,7 @@ class Vec3b extends CvVec<cvg.Vec3b> {
 class Vec4b extends CvVec<cvg.Vec4b> {
   Vec4b._(ffi.Pointer<cvg.Vec4b> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4b>());
     }
   }
   factory Vec4b(int v1, int v2, int v3, int v4) {
@@ -198,7 +198,7 @@ class Vec4b extends CvVec<cvg.Vec4b> {
 class Vec2w extends CvVec<cvg.Vec2w> {
   Vec2w._(ffi.Pointer<cvg.Vec2w> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2w>());
     }
   }
   factory Vec2w(int v1, int v2) {
@@ -251,7 +251,7 @@ class Vec2w extends CvVec<cvg.Vec2w> {
 class Vec3w extends CvVec<cvg.Vec3w> {
   Vec3w._(ffi.Pointer<cvg.Vec3w> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3w>());
     }
   }
   factory Vec3w(int v1, int v2, int v3) {
@@ -310,7 +310,7 @@ class Vec3w extends CvVec<cvg.Vec3w> {
 class Vec4w extends CvVec<cvg.Vec4w> {
   Vec4w._(ffi.Pointer<cvg.Vec4w> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4w>());
     }
   }
   factory Vec4w(int v1, int v2, int v3, int v4) {
@@ -374,7 +374,7 @@ class Vec4w extends CvVec<cvg.Vec4w> {
 class Vec2s extends CvVec<cvg.Vec2s> {
   Vec2s._(ffi.Pointer<cvg.Vec2s> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2s>());
     }
   }
   factory Vec2s(int v1, int v2) {
@@ -426,7 +426,7 @@ class Vec2s extends CvVec<cvg.Vec2s> {
 class Vec3s extends CvVec<cvg.Vec3s> {
   Vec3s._(ffi.Pointer<cvg.Vec3s> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3s>());
     }
   }
   factory Vec3s(int v1, int v2, int v3) {
@@ -485,7 +485,7 @@ class Vec3s extends CvVec<cvg.Vec3s> {
 class Vec4s extends CvVec<cvg.Vec4s> {
   Vec4s._(ffi.Pointer<cvg.Vec4s> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4s>());
     }
   }
   factory Vec4s(int v1, int v2, int v3, int v4) {
@@ -550,7 +550,7 @@ class Vec4s extends CvVec<cvg.Vec4s> {
 class Vec2i extends CvVec<cvg.Vec2i> {
   Vec2i._(ffi.Pointer<cvg.Vec2i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2i>());
     }
   }
   factory Vec2i(int v1, int v2) {
@@ -603,7 +603,7 @@ class Vec2i extends CvVec<cvg.Vec2i> {
 class Vec3i extends CvVec<cvg.Vec3i> {
   Vec3i._(ffi.Pointer<cvg.Vec3i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3i>());
     }
   }
   factory Vec3i(int v1, int v2, int v3) {
@@ -662,7 +662,7 @@ class Vec3i extends CvVec<cvg.Vec3i> {
 class Vec4i extends CvVec<cvg.Vec4i> {
   Vec4i._(ffi.Pointer<cvg.Vec4i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4i>());
     }
   }
   factory Vec4i(int v1, int v2, int v3, int v4) {
@@ -727,7 +727,7 @@ class Vec4i extends CvVec<cvg.Vec4i> {
 class Vec6i extends CvVec<cvg.Vec6i> {
   Vec6i._(ffi.Pointer<cvg.Vec6i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec6i>());
     }
   }
   factory Vec6i(int v1, int v2, int v3, int v4, int v5, int v6) {
@@ -804,7 +804,7 @@ class Vec6i extends CvVec<cvg.Vec6i> {
 class Vec8i extends CvVec<cvg.Vec8i> {
   Vec8i._(ffi.Pointer<cvg.Vec8i> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec8i>());
     }
   }
   factory Vec8i(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8) {
@@ -893,7 +893,7 @@ class Vec8i extends CvVec<cvg.Vec8i> {
 class Vec2f extends CvVec<cvg.Vec2f> {
   Vec2f._(ffi.Pointer<cvg.Vec2f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2f>());
     }
   }
   factory Vec2f(double v1, double v2) {
@@ -946,7 +946,7 @@ class Vec2f extends CvVec<cvg.Vec2f> {
 class Vec3f extends CvVec<cvg.Vec3f> {
   Vec3f._(ffi.Pointer<cvg.Vec3f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3f>());
     }
   }
   factory Vec3f(double v1, double v2, double v3) {
@@ -1006,7 +1006,7 @@ class Vec3f extends CvVec<cvg.Vec3f> {
 class Vec4f extends CvVec<cvg.Vec4f> {
   Vec4f._(ffi.Pointer<cvg.Vec4f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4f>());
     }
   }
   factory Vec4f(double v1, double v2, double v3, double v4) {
@@ -1072,7 +1072,7 @@ class Vec4f extends CvVec<cvg.Vec4f> {
 class Vec6f extends CvVec<cvg.Vec6f> {
   Vec6f._(ffi.Pointer<cvg.Vec6f> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec6f>());
     }
   }
   factory Vec6f(double v1, double v2, double v3, double v4, double v5, double v6) {
@@ -1150,7 +1150,7 @@ class Vec6f extends CvVec<cvg.Vec6f> {
 class Vec2d extends CvVec<cvg.Vec2d> {
   Vec2d._(ffi.Pointer<cvg.Vec2d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec2d>());
     }
   }
   factory Vec2d(double v1, double v2) {
@@ -1203,7 +1203,7 @@ class Vec2d extends CvVec<cvg.Vec2d> {
 class Vec3d extends CvVec<cvg.Vec3d> {
   Vec3d._(ffi.Pointer<cvg.Vec3d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec3d>());
     }
   }
   factory Vec3d(double v1, double v2, double v3) {
@@ -1263,7 +1263,7 @@ class Vec3d extends CvVec<cvg.Vec3d> {
 class Vec4d extends CvVec<cvg.Vec4d> {
   Vec4d._(ffi.Pointer<cvg.Vec4d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec4d>());
     }
   }
   factory Vec4d(double v1, double v2, double v3, double v4) {
@@ -1329,7 +1329,7 @@ class Vec4d extends CvVec<cvg.Vec4d> {
 class Vec6d extends CvVec<cvg.Vec6d> {
   Vec6d._(ffi.Pointer<cvg.Vec6d> ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
+      finalizer.attach(this, ptr.cast(), detach: this, externalSize: ffi.sizeOf<cvg.Vec6d>());
     }
   }
   factory Vec6d(double v1, double v2, double v3, double v4, double v5, double v6) {
@@ -1404,13 +1404,18 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 }
 
 class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
-  VecVec4i.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVec4i.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec4i>(),
+      );
     }
   }
 
-  factory VecVec4i([int length = 0]) => VecVec4i.fromPointer(ccore.std_VecVec4i_new(length));
+  factory VecVec4i([int length = 0]) => VecVec4i.fromPointer(ccore.std_VecVec4i_new(length), length: length);
 
   factory VecVec4i.fromList(List<Vec4i> pts) => VecVec4i.generate(pts.length, (i) => pts[i], dispose: false);
 
@@ -1421,7 +1426,7 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
       ccore.std_VecVec4i_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec4i.fromPointer(p);
+    return VecVec4i.fromPointer(p, length: length);
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVec4iPtr>(ccore.addresses.std_VecVec4i_free);
@@ -1487,13 +1492,18 @@ class VecVec4iIterator extends VecIterator<Vec4i> {
 }
 
 class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
-  VecVec4f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVec4f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec4f>(),
+      );
     }
   }
 
-  factory VecVec4f([int length = 0]) => VecVec4f.fromPointer(ccore.std_VecVec4f_new(length));
+  factory VecVec4f([int length = 0]) => VecVec4f.fromPointer(ccore.std_VecVec4f_new(length), length: length);
 
   factory VecVec4f.fromList(List<Vec4f> pts) => VecVec4f.generate(pts.length, (i) => pts[i], dispose: false);
 
@@ -1504,7 +1514,7 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
       ccore.std_VecVec4f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec4f.fromPointer(p);
+    return VecVec4f.fromPointer(p, length: length);
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.std_VecVec4f_free);
@@ -1570,13 +1580,18 @@ class VecVec4fIterator extends VecIterator<Vec4f> {
 }
 
 class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
-  VecVec6f.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
+  VecVec6f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
+      finalizer.attach(
+        this,
+        ptr.cast<ffi.Void>(),
+        detach: this,
+        externalSize: length == null ? null : length * ffi.sizeOf<cvg.Vec6f>(),
+      );
     }
   }
 
-  factory VecVec6f([int length = 0]) => VecVec6f.fromPointer(ccore.std_VecVec6f_new(length));
+  factory VecVec6f([int length = 0]) => VecVec6f.fromPointer(ccore.std_VecVec6f_new(length), length: length);
 
   factory VecVec6f.fromList(List<Vec6f> pts) => VecVec6f.generate(pts.length, (i) => pts[i], dispose: false);
 
@@ -1587,7 +1602,7 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
       ccore.std_VecVec6f_set(p, i, v.ref);
       if (dispose) v.dispose();
     }
-    return VecVec6f.fromPointer(p);
+    return VecVec6f.fromPointer(p, length: length);
   }
 
   static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.std_VecVec4f_free);
