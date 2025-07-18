@@ -3,30 +3,49 @@
 
 import 'dart:io';
 
-import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
-Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {List<String>? optionalModules}) async {
+const allowedModules = {
+  'calib3d',
+  'contrib',
+  'dnn',
+  'features2d',
+  'highgui',
+  'imgcodecs',
+  'imgproc',
+  'objdetect',
+  'photo',
+  'stitching',
+  'video',
+  'videoio',
+};
+
+Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>? optionalModules}) async {
   final packagePath = Directory(await getPackagePath('dartcv4'));
   final logger = Logger('')
     ..level = Level.ALL
     // ..onRecord.listen((record) => print(record.message));
     ..onRecord.listen((record) => stderr.write(record.message));
 
-  optionalModules ??= [];
+  optionalModules ??= allowedModules.toSet();
   final userDefines = input.userDefines;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
-  if (includeModules != null) {
-    optionalModules.addAll(includeModules.cast<String>());
+
+  // do not trust user input, filter the modules
+  final includeModulesFiltered = includeModules?.where(allowedModules.contains).toList();
+  final excludeModulesFiltered = excludeModules?.where(allowedModules.contains).toList();
+
+  if (includeModulesFiltered != null) {
+    optionalModules.addAll(includeModulesFiltered.cast<String>());
   }
-  if (excludeModules != null) {
-    optionalModules.removeWhere(excludeModules.contains);
+  if (excludeModulesFiltered != null) {
+    optionalModules.removeWhere(excludeModulesFiltered.contains);
   }
-  logger.info("[dartcv4] include modules: $includeModules\n");
-  logger.info("[dartcv4] exclude modules: $excludeModules\n");
+  logger.info("[dartcv4] include modules: $includeModulesFiltered\n");
+  logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
   logger.info("[dartcv4] merged modules: $optionalModules\n");
 
   final moduleDefines = {

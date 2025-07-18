@@ -69,7 +69,7 @@ void main(List<String> arguments) {
 
 void showImage(String path) {
   final mat = cv.imread(path);
-  print(mat);
+  print("Mat: $mat");
   // final win = cv.Window(path);
   // win.imshow(mat);
   // final gray = cv.cvtColor(mat, cv.COLOR_BGR2GRAY);
