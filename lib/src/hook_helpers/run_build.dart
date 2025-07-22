@@ -7,6 +7,8 @@ import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
+import 'patchelf_linux.dart';
+
 const allowedModules = {
   'calib3d',
   'contrib',
@@ -90,21 +92,18 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     final r = await output.findAndAddCodeAssets(
       input,
       outDir: input.outputDirectory.resolve('install/'),
-      names: {for (final lib in ffmpegLibs) '(lib)?$lib(.)?\\d+\\.(so|dll|dylib)': "$lib.dart"},
+      names: {for (final lib in ffmpegLibs) '(?:lib)?$lib(?:-\\d+)?(?:\\.(?:so|dll|dylib))': "$lib.dart"},
       regExp: true,
     );
+
+    for (final lib in r) {
+      await setRPath(lib.file!, name: r'$ORIGIN');
+    }
 
     // TODO: dartdev does not support adding FAT libraries yet.
     // https://github.com/dart-lang/sdk/issues/61130
 
-    final libFiles = r.map((e) => e.file!.toFilePath());
+    final libFiles = r.map((e) => e.file!.toFilePath()).toList();
     logger.info("adding $libFiles");
-
-    // final archs = await getArchitectures(libFile, logger: logger);
-
-    // if (archs.keys.length > 1) {
-    //   logger.info('$lib has multiple architectures, thining and overriting with $targetArch');
-    //   await splitDylibArchitectures(libFile, targetArch, libFile);
-    // }
   }
 }
