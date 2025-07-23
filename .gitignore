@@ -1,7 +1,6 @@
 # See https://www.dartlang.org/guides/libraries/private-files
 
 bak/
-android/
 .idea/
 .vscode/
 .bak/
