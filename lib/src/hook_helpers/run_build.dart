@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
@@ -88,22 +89,25 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   );
 
   final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
+  String ffPattern(String lib) => '(?:lib)?$lib(?:.\\d+)?(?:\\.(?:so|dll|dylib))';
   if (optionalModules.contains('highgui') || optionalModules.contains('videoio')) {
     final r = await output.findAndAddCodeAssets(
       input,
       outDir: input.outputDirectory.resolve('install/'),
-      names: {for (final lib in ffmpegLibs) '(?:lib)?$lib(?:-\\d+)?(?:\\.(?:so|dll|dylib))': "$lib.dart"},
+      names: {for (final lib in ffmpegLibs) ffPattern(lib): "$lib.dart"},
       regExp: true,
     );
 
-    for (final lib in r) {
-      await setRPath(lib.file!, name: r'$ORIGIN');
+    if (input.config.code.targetOS == OS.linux) {
+      for (final lib in r) {
+        await setRPath(lib.file!, name: r'$ORIGIN');
+      }
     }
 
     // TODO: dartdev does not support adding FAT libraries yet.
     // https://github.com/dart-lang/sdk/issues/61130
 
     final libFiles = r.map((e) => e.file!.toFilePath()).toList();
-    logger.info("adding $libFiles");
+    logger.info("adding FFMPEG libraries: $libFiles");
   }
 }
