@@ -21,6 +21,7 @@ OpenCV Bindings for Dart Language.
 >
 > for flutter:
 >
+> 0. use `main` channel of Flutter
 > 1. take a look at https://pub.dev/packages/dartcv4/versions and find the latest version, e.g., `2.0.0-dev.2`
 > 2. add to your `pubspec.yaml`
 > 3. `flutter config --enable-native-assets`
@@ -121,7 +122,7 @@ void main() {
 
 #### Flutter
 
-see [example](https://github.com/rainyl/opencv_dart/tree/2.x/example)
+see [example](https://github.com/rainyl/opencv_dart/tree/2.x/example/flutter)
 
 ~~More examples are on the way...~~ see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
 

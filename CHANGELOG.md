@@ -1,3 +1,8 @@
+## 2.1.0-dev.1
+
+- sync main branch, now support all methods in `dartcv v1.1.6`
+- :tada: this version supports windows, linux, macos, android and ios, for platforms except ios, ffmpeg is also supported.
+
 ## 2.1.0-dev.0
 
 - Many breaking changes in this version, keep using old version if you do not want to modify your code.
