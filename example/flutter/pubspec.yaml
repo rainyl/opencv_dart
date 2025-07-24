@@ -94,6 +94,7 @@ flutter:
 hooks:
   user_defines:
     dartcv4:
+      # debug: true
       include_modules:
         - calib3d
         - contrib

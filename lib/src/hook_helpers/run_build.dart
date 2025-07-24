@@ -1,6 +1,8 @@
 // Copyright (c) 2025, Rainyl. All rights reserved. Use of this source code is governed by a
 // Apache 2.0 license that can be found in the LICENSE file.
 
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:code_assets/code_assets.dart';
@@ -27,19 +29,20 @@ const allowedModules = {
 
 Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>? optionalModules}) async {
   final packagePath = Directory(await getPackagePath('dartcv4'));
-  final logger = Logger('')
-    ..level = Level.ALL
-    // ..onRecord.listen((record) => print(record.message));
-    ..onRecord.listen((record) => stderr.write(record.message));
 
   optionalModules ??= allowedModules.toSet();
   final userDefines = input.userDefines;
+  final debugMode = userDefines["debug"] as bool? ?? false;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
 
+  final logger = Logger('')
+    ..level = Level.ALL
+    ..onRecord.listen((record) => debugMode ? stderr.write(record.message) : print(record.message));
+
   // do not trust user input, filter the modules
-  final includeModulesFiltered = includeModules?.where(allowedModules.contains).toList();
-  final excludeModulesFiltered = excludeModules?.where(allowedModules.contains).toList();
+  final includeModulesFiltered = includeModules?.where(allowedModules.contains).toSet();
+  final excludeModulesFiltered = excludeModules?.where(allowedModules.contains).toSet();
 
   if (includeModulesFiltered != null) {
     optionalModules.addAll(includeModulesFiltered.cast<String>());
@@ -67,7 +70,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   };
 
   final builder = CMakeBuilder.create(
-    logLevel: LogLevel.DEBUG,
+    logLevel: debugMode ? LogLevel.DEBUG : LogLevel.STATUS,
     name: input.packageName,
     sourceDir: packagePath.uri.resolve("src"),
     targets: ['install'],
@@ -107,7 +110,11 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     // TODO: dartdev does not support adding FAT libraries yet.
     // https://github.com/dart-lang/sdk/issues/61130
 
-    final libFiles = r.map((e) => e.file!.toFilePath()).toList();
-    logger.info("adding FFMPEG libraries: $libFiles");
+    if (r.isEmpty) {
+      logger.warning("FFMPEG libraries not found, please check your build configuration.");
+    } else {
+      final libFiles = r.map((e) => e.file!.toFilePath()).toList();
+      logger.info("adding FFMPEG libraries: $libFiles");
+    }
   }
 }
