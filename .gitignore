@@ -6,6 +6,7 @@ bak/
 .bak/
 .pytest_cache/
 test/_data/
+test/logs
 ffigen_test/
 replace.py
 generate.py

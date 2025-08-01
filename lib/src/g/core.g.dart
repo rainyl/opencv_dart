@@ -2683,6 +2683,11 @@ external void registerErrorCallback(
   ErrorCallback callback,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogCallbackEx)>()
+external ffi.Pointer<CvStatus> replaceWriteLogMessageEx(
+  LogCallbackEx arg0,
+);
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int)>()
 external ffi.Pointer<CvStatus> setLogLevel(
   int logLevel,
@@ -5618,6 +5623,21 @@ typedef DartErrorCallbackFunction = void Function(
     int line,
     ffi.Pointer<ffi.Void> userdata);
 typedef KeyPoint = imp$1.KeyPoint;
+typedef LogCallbackEx = ffi.Pointer<ffi.NativeFunction<LogCallbackExFunction>>;
+typedef LogCallbackExFunction = ffi.Void Function(
+    ffi.Int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    ffi.Pointer<ffi.Char> file,
+    ffi.Int line,
+    ffi.Pointer<ffi.Char> func,
+    ffi.Pointer<ffi.Char> message);
+typedef DartLogCallbackExFunction = void Function(
+    int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    ffi.Pointer<ffi.Char> file,
+    int line,
+    ffi.Pointer<ffi.Char> func,
+    ffi.Pointer<ffi.Char> message);
 typedef Mat = imp$1.Mat;
 typedef MatStep = imp$1.MatStep;
 typedef RNG = imp$1.RNG;

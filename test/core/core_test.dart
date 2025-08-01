@@ -1,5 +1,8 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
+
 import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 void main() async {
@@ -13,6 +16,21 @@ void main() async {
     cv.setLogLevel(cv.LOG_LEVEL_WARNING);
     final level = cv.getLogLevel();
     expect(level, equals(cv.LOG_LEVEL_WARNING));
+  });
+
+  test('cv.replaceWriteLogMessageEx', () {
+    Logger.root.level = Level.ALL;
+    final logFile = File('test/logs/core_test.log');
+    final logger = Logger('core_test')
+      ..onRecord.listen(
+        (record) => logFile.writeAsStringSync('${record.time}: ${record.message}\n', mode: FileMode.append),
+      );
+    cv.setLogLevel(cv.LOG_LEVEL_DEBUG);
+    cv.replaceWriteLogMessageEx(
+      callback: (logLevel, tag, file, line, func, message) =>
+          logger.warning("[dartcv][$logLevel][$tag]-$file:$line:$func: $message"),
+    );
+    cv.replaceWriteLogMessageEx(callback: null);
   });
 
   test('openCvVersion', () async {
@@ -621,9 +639,9 @@ void main() async {
 
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
-              lutSize * lutType.channels,
-              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
-            ),
+                lutSize * lutType.channels,
+                (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+              ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);

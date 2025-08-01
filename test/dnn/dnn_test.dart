@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 bool checkCaffeNet(cv.Net net) {
@@ -143,6 +144,22 @@ bool checkTflite(cv.Net net) {
 }
 
 void main() async {
+  // shows how to log to a file
+  Logger.root.level = Level.ALL;
+  final logFile = File('test/logs/core_test.log');
+  if (!(await logFile.parent.exists())) {
+    await logFile.parent.create(recursive: true);
+  }
+  final logger = Logger('core_test')
+    ..onRecord.listen(
+      (record) => logFile.writeAsStringSync('${record.time}: ${record.message}\n', mode: FileMode.append),
+    );
+  cv.setLogLevel(cv.LOG_LEVEL_DEBUG);
+  cv.replaceWriteLogMessageEx(
+    callback: (logLevel, tag, file, line, func, message) =>
+        logger.warning("[dartcv][$logLevel][$tag]-$file:$line:$func: $message"),
+  );
+
   test('cv.Net.fromFile', () async {
     final net = cv.Net.empty();
     expect(net.isEmpty, true);
