@@ -45,6 +45,53 @@ int getLogLevel() {
   return level;
 }
 
+void defaultLogCallback(
+  int logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+) {
+  final logMessage = "[dartcv][$logLevel][$tag]-$file:$line:$func: $message";
+  // ignore: avoid_print
+  print(logMessage);
+}
+
+typedef LogCallbackFunction = void Function(
+  int logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+);
+void replaceWriteLogMessageEx({
+  LogCallbackFunction? callback,
+}) {
+  if (callback == null) {
+    cvRun(() => ccore.replaceWriteLogMessageEx(ffi.nullptr));
+  } else {
+    void cCallback(
+      int logLevel,
+      ffi.Pointer<ffi.Char> tag,
+      ffi.Pointer<ffi.Char> file,
+      int line,
+      ffi.Pointer<ffi.Char> func,
+      ffi.Pointer<ffi.Char> message,
+    ) {
+      final tagStr = tag.cast<Utf8>().toDartString();
+      final fileStr = file.cast<Utf8>().toDartString();
+      final funcStr = func.cast<Utf8>().toDartString();
+      final messageStr = message.cast<Utf8>().toDartString();
+      callback(logLevel, tagStr, fileStr, line, funcStr, messageStr);
+    }
+
+    final fp = ffi.NativeCallable<cvg.LogCallbackExFunction>.isolateLocal(cCallback);
+    cvRun(() => ccore.replaceWriteLogMessageEx(fp.nativeFunction));
+  }
+}
+
 /// get version
 String openCvVersion() => ccore.getCvVersion().toDartString();
 
