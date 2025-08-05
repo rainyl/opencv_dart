@@ -973,6 +973,16 @@ external ffi.Pointer<CvStatus> cv_Mat_region(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, ffi.Int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_Mat_reinterpret(
+  Mat self,
+  int type,
+  ffi.Pointer<Mat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat)>()
 external ffi.Pointer<CvStatus> cv_Mat_release(
   Mat self,
@@ -2673,14 +2683,30 @@ external ffi.Pointer<ffi.Char> getBuildInfo();
 @ffi.Native<ffi.Pointer<ffi.Char> Function()>()
 external ffi.Pointer<ffi.Char> getCvVersion();
 
+@ffi.Native<LogCallback Function()>()
+external LogCallback getLogCallback();
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>()
 external ffi.Pointer<CvStatus> getLogLevel(
   ffi.Pointer<ffi.Int> logLevel,
 );
 
+@ffi.Native<LogCallback>()
+external LogCallback logCallback;
+
 @ffi.Native<ffi.Void Function(ErrorCallback)>()
 external void registerErrorCallback(
   ErrorCallback callback,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogCallback)>()
+external ffi.Pointer<CvStatus> replaceWriteLogMessageEx(
+  LogCallback callback,
+);
+
+@ffi.Native<ffi.Void Function(LogCallback)>()
+external void setLogCallback(
+  LogCallback callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int)>()
@@ -5618,6 +5644,29 @@ typedef DartErrorCallbackFunction = void Function(
     int line,
     ffi.Pointer<ffi.Void> userdata);
 typedef KeyPoint = imp$1.KeyPoint;
+typedef LogCallback = ffi.Pointer<ffi.NativeFunction<LogCallbackFunction>>;
+typedef LogCallbackFunction = ffi.Void Function(
+    ffi.Int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    ffi.Size tagLen,
+    ffi.Pointer<ffi.Char> file,
+    ffi.Size fileLen,
+    ffi.Int line,
+    ffi.Pointer<ffi.Char> func,
+    ffi.Size funcLen,
+    ffi.Pointer<ffi.Char> message,
+    ffi.Size msgLen);
+typedef DartLogCallbackFunction = void Function(
+    int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    int tagLen,
+    ffi.Pointer<ffi.Char> file,
+    int fileLen,
+    int line,
+    ffi.Pointer<ffi.Char> func,
+    int funcLen,
+    ffi.Pointer<ffi.Char> message,
+    int msgLen);
 typedef Mat = imp$1.Mat;
 typedef MatStep = imp$1.MatStep;
 typedef RNG = imp$1.RNG;

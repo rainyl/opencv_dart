@@ -1187,6 +1187,20 @@ class Mat extends CvStruct<cvg.Mat> {
     return dst;
   }
 
+  /// Reset the type of matrix.
+  ///
+  /// The methods reset the data type of matrix.
+  /// If the new type and the old type of the matrix have the same element size,
+  /// the current buffer can be reused.
+  /// The method needs to consider whether the current mat is a submatrix or has any references.
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#aa0e41c53a2a4301e40c3fb6236443436
+  Mat reinterpret(MatType type) {
+    final dst = Mat.empty();
+    cvRun(() => ccore.cv_Mat_reinterpret(ref, type.value, dst.ptr, ffi.nullptr));
+    return dst;
+  }
+
   Mat transpose({bool inplace = false}) {
     final dst = inplace ? this : Mat.empty();
     cvRun(() => ccore.cv_Mat_t(ref, dst.ptr, ffi.nullptr));
