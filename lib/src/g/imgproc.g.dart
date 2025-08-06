@@ -1128,6 +1128,13 @@ external ffi.Pointer<CvStatus> cv_getAffineTransform2f(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(RotatedRect, Mat, imp$1.MatOut)>()
+external ffi.Pointer<CvStatus> cv_getClosestEllipsePoints(
+  RotatedRect ellipse_params,
+  Mat points,
+  imp$1.MatOut closest_pts,
+);
+
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
         ffi.Int, ffi.Double, ffi.Int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
@@ -1668,6 +1675,20 @@ external ffi.Pointer<CvStatus> cv_sqrBoxFilter(
 external ffi.Pointer<CvStatus> cv_threshold(
   Mat src,
   Mat dst,
+  double thresh,
+  double maxvalue,
+  int typ,
+  ffi.Pointer<ffi.Double> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, ffi.Double, ffi.Double,
+        ffi.Int, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_thresholdWithMask(
+  Mat src,
+  Mat dst,
+  Mat mask,
   double thresh,
   double maxvalue,
   int typ,

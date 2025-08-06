@@ -411,6 +411,102 @@ class Fisheye {
     );
   }
 
+  /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme for fisheye camera moodel.
+  ///
+  /// https://docs.opencv.org/4.x/db/d58/group__calib3d__fisheye.html#gabc1c7a253a8cf2a09f948f8426967a56
+  static (bool rval, Mat rvec, Mat tvec, Mat inliers) solvePnPRansac(
+    InputArray objectPoints,
+    InputArray imagePoints,
+    InputArray cameraMatrix,
+    InputArray distCoeffs, {
+    OutputArray? rvec,
+    OutputArray? tvec,
+    OutputArray? inliers,
+    double reprojectionError = 8.0,
+    int iterationsCount = 100,
+    double confidence = 0.99,
+    bool useExtrinsicGuess = false,
+    int flags = SOLVEPNP_ITERATIVE,
+    TermCriteria? criteria,
+  }) {
+    rvec ??= Mat.empty();
+    tvec ??= Mat.empty();
+    inliers ??= Mat.empty();
+    criteria ??= TermCriteria(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
+    final prval = calloc<ffi.Bool>();
+    cvRun(
+      () => ccalib3d.cv_fisheye_solvePnPRansac(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        iterationsCount,
+        reprojectionError,
+        confidence,
+        inliers!.ref,
+        flags,
+        criteria!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    calloc.free(prval);
+    return (rval, rvec, tvec, inliers);
+  }
+
+  /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme for fisheye camera moodel.
+  ///
+  /// https://docs.opencv.org/4.x/db/d58/group__calib3d__fisheye.html#gabc1c7a253a8cf2a09f948f8426967a56
+  static Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacAsync(
+    InputArray objectPoints,
+    InputArray imagePoints,
+    InputArray cameraMatrix,
+    InputArray distCoeffs, {
+    OutputArray? rvec,
+    OutputArray? tvec,
+    OutputArray? inliers,
+    double reprojectionError = 8.0,
+    int iterationsCount = 100,
+    double confidence = 0.99,
+    bool useExtrinsicGuess = false,
+    int flags = SOLVEPNP_ITERATIVE,
+    TermCriteria? criteria,
+  }) async {
+    rvec ??= Mat.empty();
+    tvec ??= Mat.empty();
+    inliers ??= Mat.empty();
+    criteria ??= TermCriteria(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
+    final prval = calloc<ffi.Bool>();
+    return cvRunAsync0(
+      (callback) => ccalib3d.cv_fisheye_solvePnPRansac(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        iterationsCount,
+        reprojectionError,
+        confidence,
+        inliers!.ref,
+        flags,
+        criteria!.ref,
+        prval,
+        callback,
+      ),
+      (c) {
+        final rval = prval.value;
+        calloc.free(prval);
+        return c.complete((rval, rvec!, tvec!, inliers!));
+      },
+    );
+  }
+
   /// void distortPoints (InputArray undistorted, InputArray Kundistorted, InputArray K, InputArray D, OutputArray distorted, double alpha=0)
   ///
   /// FisheyeUndistortImage transforms an image to compensate for fisheye lens distortion

@@ -90,6 +90,8 @@ files:
         name: cv_fisheye_projectPoints
       c:@F@cv_fisheye_solvePnP:
         name: cv_fisheye_solvePnP
+      c:@F@cv_fisheye_solvePnPRansac:
+        name: cv_fisheye_solvePnPRansac
       c:@F@cv_fisheye_undistortImage:
         name: cv_fisheye_undistortImage
       c:@F@cv_fisheye_undistortImage_1:

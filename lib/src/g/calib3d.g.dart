@@ -703,6 +703,41 @@ external ffi.Pointer<CvStatus> cv_fisheye_solvePnP(
 );
 
 @ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatIn,
+        imp$1.MatOut,
+        imp$1.MatOut,
+        ffi.Bool,
+        ffi.Int,
+        ffi.Float,
+        ffi.Double,
+        imp$1.MatOut,
+        ffi.Int,
+        TermCriteria,
+        ffi.Pointer<ffi.Bool>,
+        imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_fisheye_solvePnPRansac(
+  imp$1.MatIn objectPoints,
+  imp$1.MatIn imagePoints,
+  imp$1.MatIn cameraMatrix,
+  imp$1.MatIn distCoeffs,
+  imp$1.MatOut rvec,
+  imp$1.MatOut tvec,
+  bool useExtrinsicGuess,
+  int iterationsCount,
+  double reprojectionError,
+  double confidence,
+  imp$1.MatOut inliers,
+  int flags,
+  TermCriteria criteria,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_fisheye_undistortImage(
   Mat distorted,
