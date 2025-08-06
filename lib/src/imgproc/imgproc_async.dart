@@ -1377,8 +1377,8 @@ Future<(double, Mat dst)> thresholdAsync(
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => mask == null
-        ? cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr)
-        : cimgproc.cv_thresholdWithMask(src.ref, dst!.ref, mask.ref, thresh, maxval, type, p, ffi.nullptr),
+        ? cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, callback)
+        : cimgproc.cv_thresholdWithMask(src.ref, dst!.ref, mask.ref, thresh, maxval, type, p, callback),
     (c) {
       final rval = (p.value, dst!);
       calloc.free(p);

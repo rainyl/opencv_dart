@@ -23,8 +23,8 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../g/imgproc.g.dart' as cvg;
 import '../g/imgproc.g.dart' as cimgproc;
+import '../g/imgproc.g.dart' as cvg;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///
