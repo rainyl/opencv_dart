@@ -8,6 +8,118 @@ files:
         name: cv_RQDecomp3x3
       c:@F@cv_Rodrigues:
         name: cv_Rodrigues
+      c:@F@cv_StereoBM_close:
+        name: cv_StereoBM_close
+      c:@F@cv_StereoBM_compute:
+        name: cv_StereoBM_compute
+      c:@F@cv_StereoBM_create:
+        name: cv_StereoBM_create
+      c:@F@cv_StereoBM_getBlockSize:
+        name: cv_StereoBM_getBlockSize
+      c:@F@cv_StereoBM_getDisp12MaxDiff:
+        name: cv_StereoBM_getDisp12MaxDiff
+      c:@F@cv_StereoBM_getMinDisparity:
+        name: cv_StereoBM_getMinDisparity
+      c:@F@cv_StereoBM_getNumDisparities:
+        name: cv_StereoBM_getNumDisparities
+      c:@F@cv_StereoBM_getPreFilterCap:
+        name: cv_StereoBM_getPreFilterCap
+      c:@F@cv_StereoBM_getPreFilterSize:
+        name: cv_StereoBM_getPreFilterSize
+      c:@F@cv_StereoBM_getPreFilterType:
+        name: cv_StereoBM_getPreFilterType
+      c:@F@cv_StereoBM_getROI1:
+        name: cv_StereoBM_getROI1
+      c:@F@cv_StereoBM_getROI2:
+        name: cv_StereoBM_getROI2
+      c:@F@cv_StereoBM_getSmallerBlockSize:
+        name: cv_StereoBM_getSmallerBlockSize
+      c:@F@cv_StereoBM_getSpeckleRange:
+        name: cv_StereoBM_getSpeckleRange
+      c:@F@cv_StereoBM_getSpeckleWindowSize:
+        name: cv_StereoBM_getSpeckleWindowSize
+      c:@F@cv_StereoBM_getTextureThreshold:
+        name: cv_StereoBM_getTextureThreshold
+      c:@F@cv_StereoBM_getUniquenessRatio:
+        name: cv_StereoBM_getUniquenessRatio
+      c:@F@cv_StereoBM_setBlockSize:
+        name: cv_StereoBM_setBlockSize
+      c:@F@cv_StereoBM_setDisp12MaxDiff:
+        name: cv_StereoBM_setDisp12MaxDiff
+      c:@F@cv_StereoBM_setMinDisparity:
+        name: cv_StereoBM_setMinDisparity
+      c:@F@cv_StereoBM_setNumDisparities:
+        name: cv_StereoBM_setNumDisparities
+      c:@F@cv_StereoBM_setPreFilterCap:
+        name: cv_StereoBM_setPreFilterCap
+      c:@F@cv_StereoBM_setPreFilterSize:
+        name: cv_StereoBM_setPreFilterSize
+      c:@F@cv_StereoBM_setPreFilterType:
+        name: cv_StereoBM_setPreFilterType
+      c:@F@cv_StereoBM_setROI1:
+        name: cv_StereoBM_setROI1
+      c:@F@cv_StereoBM_setROI2:
+        name: cv_StereoBM_setROI2
+      c:@F@cv_StereoBM_setSmallerBlockSize:
+        name: cv_StereoBM_setSmallerBlockSize
+      c:@F@cv_StereoBM_setSpeckleRange:
+        name: cv_StereoBM_setSpeckleRange
+      c:@F@cv_StereoBM_setSpeckleWindowSize:
+        name: cv_StereoBM_setSpeckleWindowSize
+      c:@F@cv_StereoBM_setTextureThreshold:
+        name: cv_StereoBM_setTextureThreshold
+      c:@F@cv_StereoBM_setUniquenessRatio:
+        name: cv_StereoBM_setUniquenessRatio
+      c:@F@cv_StereoSGBM_close:
+        name: cv_StereoSGBM_close
+      c:@F@cv_StereoSGBM_compute:
+        name: cv_StereoSGBM_compute
+      c:@F@cv_StereoSGBM_create:
+        name: cv_StereoSGBM_create
+      c:@F@cv_StereoSGBM_getBlockSize:
+        name: cv_StereoSGBM_getBlockSize
+      c:@F@cv_StereoSGBM_getDisp12MaxDiff:
+        name: cv_StereoSGBM_getDisp12MaxDiff
+      c:@F@cv_StereoSGBM_getMinDisparity:
+        name: cv_StereoSGBM_getMinDisparity
+      c:@F@cv_StereoSGBM_getMode:
+        name: cv_StereoSGBM_getMode
+      c:@F@cv_StereoSGBM_getNumDisparities:
+        name: cv_StereoSGBM_getNumDisparities
+      c:@F@cv_StereoSGBM_getP1:
+        name: cv_StereoSGBM_getP1
+      c:@F@cv_StereoSGBM_getP2:
+        name: cv_StereoSGBM_getP2
+      c:@F@cv_StereoSGBM_getPreFilterCap:
+        name: cv_StereoSGBM_getPreFilterCap
+      c:@F@cv_StereoSGBM_getSpeckleRange:
+        name: cv_StereoSGBM_getSpeckleRange
+      c:@F@cv_StereoSGBM_getSpeckleWindowSize:
+        name: cv_StereoSGBM_getSpeckleWindowSize
+      c:@F@cv_StereoSGBM_getUniquenessRatio:
+        name: cv_StereoSGBM_getUniquenessRatio
+      c:@F@cv_StereoSGBM_setBlockSize:
+        name: cv_StereoSGBM_setBlockSize
+      c:@F@cv_StereoSGBM_setDisp12MaxDiff:
+        name: cv_StereoSGBM_setDisp12MaxDiff
+      c:@F@cv_StereoSGBM_setMinDisparity:
+        name: cv_StereoSGBM_setMinDisparity
+      c:@F@cv_StereoSGBM_setMode:
+        name: cv_StereoSGBM_setMode
+      c:@F@cv_StereoSGBM_setNumDisparities:
+        name: cv_StereoSGBM_setNumDisparities
+      c:@F@cv_StereoSGBM_setP1:
+        name: cv_StereoSGBM_setP1
+      c:@F@cv_StereoSGBM_setP2:
+        name: cv_StereoSGBM_setP2
+      c:@F@cv_StereoSGBM_setPreFilterCap:
+        name: cv_StereoSGBM_setPreFilterCap
+      c:@F@cv_StereoSGBM_setSpeckleRange:
+        name: cv_StereoSGBM_setSpeckleRange
+      c:@F@cv_StereoSGBM_setSpeckleWindowSize:
+        name: cv_StereoSGBM_setSpeckleWindowSize
+      c:@F@cv_StereoSGBM_setUniquenessRatio:
+        name: cv_StereoSGBM_setUniquenessRatio
       c:@F@cv_calibrateCamera:
         name: cv_calibrateCamera
       c:@F@cv_checkChessboard:
@@ -148,6 +260,14 @@ files:
         name: cv_undistortPoints
       c:@F@cv_validateDisparity:
         name: cv_validateDisparity
+      c:@S@StereoBM:
+        name: StereoBM
+      c:@S@StereoSGBM:
+        name: StereoSGBM
+      c:stereo.h@T@StereoBMPtr:
+        name: StereoBMPtr
+      c:stereo.h@T@StereoSGBMPtr:
+        name: StereoSGBMPtr
       c:types.h@T@CvPoint2d:
         name: CvPoint2d
       c:types.h@T@CvRect:

@@ -15,6 +15,7 @@ library;
 
 import 'dart:ffi' as ffi;
 import 'package:dartcv4/src/g/types.g.dart' as imp$1;
+import '' as self;
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
@@ -45,6 +46,352 @@ external ffi.Pointer<CvStatus> cv_Rodrigues(
   imp$1.MatOut dst,
   imp$1.MatOut jacobian,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Void Function(StereoBMPtr)>()
+external void cv_StereoBM_close(
+  StereoBMPtr self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        StereoBM, imp$1.MatIn, imp$1.MatIn, imp$1.MatOut)>()
+external ffi.Pointer<CvStatus> cv_StereoBM_compute(
+  StereoBM self,
+  imp$1.MatIn left,
+  imp$1.MatIn right,
+  imp$1.MatOut disparity,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Pointer<StereoBM>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_StereoBM_create(
+  int numDisparities,
+  int blockSize,
+  ffi.Pointer<StereoBM> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getBlockSize(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getDisp12MaxDiff(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getMinDisparity(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getNumDisparities(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getPreFilterCap(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getPreFilterSize(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getPreFilterType(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Pointer<CvRect> Function(StereoBM)>()
+external ffi.Pointer<CvRect> cv_StereoBM_getROI1(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Pointer<CvRect> Function(StereoBM)>()
+external ffi.Pointer<CvRect> cv_StereoBM_getROI2(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getSmallerBlockSize(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getSpeckleRange(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getSpeckleWindowSize(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getTextureThreshold(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoBM)>()
+external int cv_StereoBM_getUniquenessRatio(
+  StereoBM self,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setBlockSize(
+  StereoBM self,
+  int blockSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setDisp12MaxDiff(
+  StereoBM self,
+  int disp12MaxDiff,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setMinDisparity(
+  StereoBM self,
+  int minDisparity,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setNumDisparities(
+  StereoBM self,
+  int numDisparities,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setPreFilterCap(
+  StereoBM self,
+  int preFilterCap,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setPreFilterSize(
+  StereoBM self,
+  int preFilterSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setPreFilterType(
+  StereoBM self,
+  int preFilterType,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, CvRect)>()
+external void cv_StereoBM_setROI1(
+  StereoBM self,
+  CvRect roi1,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, CvRect)>()
+external void cv_StereoBM_setROI2(
+  StereoBM self,
+  CvRect roi2,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setSmallerBlockSize(
+  StereoBM self,
+  int blockSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setSpeckleRange(
+  StereoBM self,
+  int speckleRange,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setSpeckleWindowSize(
+  StereoBM self,
+  int speckleWindowSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setTextureThreshold(
+  StereoBM self,
+  int textureThreshold,
+);
+
+@ffi.Native<ffi.Void Function(StereoBM, ffi.Int)>()
+external void cv_StereoBM_setUniquenessRatio(
+  StereoBM self,
+  int uniquenessRatio,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBMPtr)>()
+external void cv_StereoSGBM_close(
+  StereoSGBMPtr self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        StereoSGBM, imp$1.MatIn, imp$1.MatIn, imp$1.MatOut)>()
+external ffi.Pointer<CvStatus> cv_StereoSGBM_compute(
+  StereoSGBM self,
+  imp$1.MatIn left,
+  imp$1.MatIn right,
+  imp$1.MatOut disparity,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Pointer<StereoSGBM>,
+        imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_StereoSGBM_create(
+  int minDisparity,
+  int numDisparities,
+  int blockSize,
+  int P1,
+  int P2,
+  int disp12MaxDiff,
+  int preFilterCap,
+  int uniquenessRatio,
+  int speckleWindowSize,
+  int speckleRange,
+  int mode,
+  ffi.Pointer<StereoSGBM> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getBlockSize(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getDisp12MaxDiff(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getMinDisparity(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getMode(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getNumDisparities(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getP1(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getP2(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getPreFilterCap(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getSpeckleRange(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getSpeckleWindowSize(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Int Function(StereoSGBM)>()
+external int cv_StereoSGBM_getUniquenessRatio(
+  StereoSGBM self,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setBlockSize(
+  StereoSGBM self,
+  int blockSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setDisp12MaxDiff(
+  StereoSGBM self,
+  int disp12MaxDiff,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setMinDisparity(
+  StereoSGBM self,
+  int minDisparity,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setMode(
+  StereoSGBM self,
+  int mode,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setNumDisparities(
+  StereoSGBM self,
+  int numDisparities,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setP1(
+  StereoSGBM self,
+  int P1,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setP2(
+  StereoSGBM self,
+  int P2,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setPreFilterCap(
+  StereoSGBM self,
+  int preFilterCap,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setSpeckleRange(
+  StereoSGBM self,
+  int speckleRange,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setSpeckleWindowSize(
+  StereoSGBM self,
+  int speckleWindowSize,
+);
+
+@ffi.Native<ffi.Void Function(StereoSGBM, ffi.Int)>()
+external void cv_StereoSGBM_setUniquenessRatio(
+  StereoSGBM self,
+  int uniquenessRatio,
 );
 
 @ffi.Native<
@@ -1272,12 +1619,34 @@ external ffi.Pointer<CvStatus> cv_validateDisparity(
   imp$1.CvCallback_0 callback,
 );
 
+const addresses = _SymbolAddresses();
+
+class _SymbolAddresses {
+  const _SymbolAddresses();
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StereoBMPtr)>>
+      get cv_StereoBM_close => ffi.Native.addressOf(self.cv_StereoBM_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StereoSGBMPtr)>>
+      get cv_StereoSGBM_close => ffi.Native.addressOf(self.cv_StereoSGBM_close);
+}
+
 typedef CvPoint2d = imp$1.CvPoint2d;
 typedef CvRect = imp$1.CvRect;
 typedef CvSize = imp$1.CvSize;
 typedef CvStatus = imp$1.CvStatus;
 typedef Mat = imp$1.Mat;
 typedef Scalar = imp$1.Scalar;
+
+final class StereoBM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef StereoBMPtr = ffi.Pointer<StereoBM>;
+
+final class StereoSGBM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef StereoSGBMPtr = ffi.Pointer<StereoSGBM>;
 typedef TermCriteria = imp$1.TermCriteria;
 typedef UsacParams = imp$1.UsacParams;
 typedef Vec3d = imp$1.Vec3d;
