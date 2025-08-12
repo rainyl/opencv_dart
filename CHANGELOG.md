@@ -1,3 +1,9 @@
+## 2.1.0-dev.2
+
+- add `Mat.reinterpret`
+- add `fisheye.solvePnPRansac`, support `mask` for `cv.threshold`
+- add `StereoBM`, `StereoSGBM` from `calib3d` module
+
 ## 2.1.0-dev.1
 
 - sync main branch, now support all methods in `dartcv v1.1.6`
