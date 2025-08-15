@@ -277,4 +277,58 @@ void main() async {
       expect(dst1.isEmpty, false);
     }
   });
+
+  test('cv.Fisheye.solvePnPRansac', () async {
+    final objectPoints = cv.Mat.from2DList(
+      [
+        <double>[0, 0, 0],
+        <double>[1, 0, 0],
+        <double>[0, 1, 0],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC3,
+      rows: 4,
+      cols: 1,
+    );
+    final imagePoints = cv.Mat.from2DList(
+      [
+        <double>[500, 500],
+        <double>[600, 500],
+        <double>[500, 600],
+        <double>[500, 400],
+      ],
+      cv.MatType.CV_64FC2,
+      rows: 4,
+      cols: 1,
+    );
+    final cameraMatrix = cv.Mat.from2DList(
+      [
+        <double>[600, 0, 512],
+        <double>[0, 600, 384],
+        <double>[0, 0, 1],
+      ],
+      cv.MatType.CV_64FC1,
+      rows: 3,
+      cols: 3,
+    );
+    final distCoeffs = cv.Mat.fromList(4, 1, cv.MatType.CV_64FC1, <double>[-0.01, 0.01, 0, 0]);
+
+    {
+      final (rval, rvec, tvec, inliers) =
+          cv.Fisheye.solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(rval, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
+
+    {
+      final (rval, rvec, tvec, inliers) =
+          await cv.Fisheye.solvePnPRansacAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      expect(rval, true);
+      expect(rvec.isEmpty, false);
+      expect(tvec.isEmpty, false);
+      expect(inliers.isEmpty, false);
+    }
+  });
 }

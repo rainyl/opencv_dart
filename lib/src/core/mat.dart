@@ -83,19 +83,18 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// [data] should be a 2D list of numbers with a shape of (rows, cols).
   /// [type] specifies the Mat type.
-  factory Mat.from2DList(Iterable<Iterable<num>> data, MatType type) {
-    final rows = data.length;
-    final cols = data.first.length;
-    final flatData = <num>[];
-    cvAssert(rows > 0, "The input data must not be empty.");
-    cvAssert(
-      cols > 0 &&
-          data.every((r) {
-            flatData.addAll(r);
-            return r.length == cols;
-          }),
-      "All rows must have the same number of columns.",
-    );
+  ///
+  /// if [rows] or [cols] is not specified, it will be inferred from the data.
+  /// if [rows] and [cols] are specified, they must be equal to the shape of the data.
+  factory Mat.from2DList(Iterable<Iterable<num>> data, MatType type, {int? cols, int? rows}) {
+    // here we support given [cols] and [rows] since sometimes Mat's channel is specified by
+    // [type], e.g., 64FC3 for Point3d, in such occasions, [cols] should be 1 but not real [cols]
+    // of [data]
+    rows ??= data.length;
+    cols ??= data.first.length;
+    cvAssert(rows > 0 && cols > 0, "The input data must have the same number of elements.");
+
+    final flatData = <num>[for (final row in data) ...row];
     return Mat.fromList(rows, cols, type, flatData);
   }
 
