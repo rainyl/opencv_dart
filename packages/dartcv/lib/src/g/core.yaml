@@ -7,6 +7,9 @@ files:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
         dart-name: DartErrorCallbackFunction
+      LogCallbackFunction:
+        name: LogCallbackFunction
+        dart-name: DartLogCallbackFunction
       c:@F@CvStatus_close:
         name: CvStatus_close
       c:@F@cv_LUT:
@@ -253,6 +256,8 @@ files:
         name: cv_Mat_ptr_uchar_3
       c:@F@cv_Mat_region:
         name: cv_Mat_region
+      c:@F@cv_Mat_reinterpret:
+        name: cv_Mat_reinterpret
       c:@F@cv_Mat_release:
         name: cv_Mat_release
       c:@F@cv_Mat_reshape:
@@ -627,10 +632,16 @@ files:
         name: getBuildInfo
       c:@F@getCvVersion:
         name: getCvVersion
+      c:@F@getLogCallback:
+        name: getLogCallback
       c:@F@getLogLevel:
         name: getLogLevel
       c:@F@registerErrorCallback:
         name: registerErrorCallback
+      c:@F@replaceWriteLogMessageEx:
+        name: replaceWriteLogMessageEx
+      c:@F@setLogCallback:
+        name: setLogCallback
       c:@F@setLogLevel:
         name: setLogLevel
       c:@F@std_VecChar_clear:
@@ -1615,8 +1626,12 @@ files:
         name: std_VecVecPoint_set
       c:@F@std_VecVecPoint_shrink_to_fit:
         name: std_VecVecPoint_shrink_to_fit
+      c:@logCallback:
+        name: logCallback
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
+      c:logging.h@T@LogCallback:
+        name: LogCallback
       c:math.h@T@double_t:
         name: double_t
         dart-name: Dartdouble_t
