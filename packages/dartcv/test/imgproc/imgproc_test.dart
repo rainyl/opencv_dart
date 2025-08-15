@@ -256,9 +256,19 @@ void main() async {
   });
 
   test('cv.threshold', () {
-    final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
-    final (_, dst) = cv.threshold(src, 100, 255, cv.THRESH_BINARY);
-    expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
+    {
+      final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+      final (_, dst) = cv.threshold(src, 100, 255, cv.THRESH_BINARY);
+      expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
+    }
+    // threshold with mask
+    {
+      final src = cv.imread("test/images/circles.jpg", flags: cv.IMREAD_COLOR);
+      final mask = cv.Mat.ones(src.rows, src.cols, cv.MatType.CV_8UC1);
+      final (_, dst) = cv.threshold(src, 100, 255, cv.THRESH_BINARY, mask: mask);
+      // cv.imwrite("test/images_out/threshold_mask.png", dst);
+      expect((dst.width, dst.height, dst.channels), (src.width, src.height, src.channels));
+    }
   });
 
   test('cv.distanceTransform', () {

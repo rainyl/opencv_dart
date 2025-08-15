@@ -2379,6 +2379,28 @@ class CvNativeCore {
       ffi.Pointer<CvStatus> Function(
           Mat, CvRect, ffi.Pointer<Mat>, imp$1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_Mat_reinterpret(
+    Mat self,
+    int type,
+    ffi.Pointer<Mat> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_Mat_reinterpret(
+      self,
+      type,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_Mat_reinterpretPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Pointer<Mat>,
+              imp$1.CvCallback_0)>>('cv_Mat_reinterpret');
+  late final _cv_Mat_reinterpret = _cv_Mat_reinterpretPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          Mat, int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_Mat_release(
     Mat self,
   ) {
@@ -6432,6 +6454,15 @@ class CvNativeCore {
   late final _getCvVersion =
       _getCvVersionPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
 
+  LogCallback getLogCallback() {
+    return _getLogCallback();
+  }
+
+  late final _getLogCallbackPtr =
+      _lookup<ffi.NativeFunction<LogCallback Function()>>('getLogCallback');
+  late final _getLogCallback =
+      _getLogCallbackPtr.asFunction<LogCallback Function()>();
+
   ffi.Pointer<CvStatus> getLogLevel(
     ffi.Pointer<ffi.Int> logLevel,
   ) {
@@ -6446,6 +6477,13 @@ class CvNativeCore {
   late final _getLogLevel = _getLogLevelPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>();
 
+  late final ffi.Pointer<LogCallback> _logCallback =
+      _lookup<LogCallback>('logCallback');
+
+  LogCallback get logCallback => _logCallback.value;
+
+  set logCallback(LogCallback value) => _logCallback.value = value;
+
   void registerErrorCallback(
     ErrorCallback callback,
   ) {
@@ -6459,6 +6497,34 @@ class CvNativeCore {
           'registerErrorCallback');
   late final _registerErrorCallback =
       _registerErrorCallbackPtr.asFunction<void Function(ErrorCallback)>();
+
+  ffi.Pointer<CvStatus> replaceWriteLogMessageEx(
+    LogCallback callback,
+  ) {
+    return _replaceWriteLogMessageEx(
+      callback,
+    );
+  }
+
+  late final _replaceWriteLogMessageExPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvStatus> Function(LogCallback)>>(
+          'replaceWriteLogMessageEx');
+  late final _replaceWriteLogMessageEx = _replaceWriteLogMessageExPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(LogCallback)>();
+
+  void setLogCallback(
+    LogCallback callback,
+  ) {
+    return _setLogCallback(
+      callback,
+    );
+  }
+
+  late final _setLogCallbackPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(LogCallback)>>(
+          'setLogCallback');
+  late final _setLogCallback =
+      _setLogCallbackPtr.asFunction<void Function(LogCallback)>();
 
   ffi.Pointer<CvStatus> setLogLevel(
     int logLevel,
@@ -14391,6 +14457,29 @@ typedef DartErrorCallbackFunction = void Function(
     int line,
     ffi.Pointer<ffi.Void> userdata);
 typedef KeyPoint = imp$1.KeyPoint;
+typedef LogCallback = ffi.Pointer<ffi.NativeFunction<LogCallbackFunction>>;
+typedef LogCallbackFunction = ffi.Void Function(
+    ffi.Int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    ffi.Size tagLen,
+    ffi.Pointer<ffi.Char> file,
+    ffi.Size fileLen,
+    ffi.Int line,
+    ffi.Pointer<ffi.Char> func,
+    ffi.Size funcLen,
+    ffi.Pointer<ffi.Char> message,
+    ffi.Size msgLen);
+typedef DartLogCallbackFunction = void Function(
+    int logLevel,
+    ffi.Pointer<ffi.Char> tag,
+    int tagLen,
+    ffi.Pointer<ffi.Char> file,
+    int fileLen,
+    int line,
+    ffi.Pointer<ffi.Char> func,
+    int funcLen,
+    ffi.Pointer<ffi.Char> message,
+    int msgLen);
 typedef Mat = imp$1.Mat;
 typedef MatStep = imp$1.MatStep;
 typedef RNG = imp$1.RNG;

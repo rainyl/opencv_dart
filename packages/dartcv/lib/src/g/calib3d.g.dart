@@ -96,6 +96,916 @@ class CvNativeCalib3d {
       ffi.Pointer<CvStatus> Function(
           imp$1.MatIn, imp$1.MatOut, imp$1.MatOut, imp$1.CvCallback_0)>();
 
+  void cv_StereoBM_close(
+    StereoBMPtr self,
+  ) {
+    return _cv_StereoBM_close(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBMPtr)>>(
+          'cv_StereoBM_close');
+  late final _cv_StereoBM_close =
+      _cv_StereoBM_closePtr.asFunction<void Function(StereoBMPtr)>();
+
+  ffi.Pointer<CvStatus> cv_StereoBM_compute(
+    StereoBM self,
+    imp$1.MatIn left,
+    imp$1.MatIn right,
+    imp$1.MatOut disparity,
+  ) {
+    return _cv_StereoBM_compute(
+      self,
+      left,
+      right,
+      disparity,
+    );
+  }
+
+  late final _cv_StereoBM_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(StereoBM, imp$1.MatIn, imp$1.MatIn,
+              imp$1.MatOut)>>('cv_StereoBM_compute');
+  late final _cv_StereoBM_compute = _cv_StereoBM_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          StereoBM, imp$1.MatIn, imp$1.MatIn, imp$1.MatOut)>();
+
+  ffi.Pointer<CvStatus> cv_StereoBM_create(
+    int numDisparities,
+    int blockSize,
+    ffi.Pointer<StereoBM> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_StereoBM_create(
+      numDisparities,
+      blockSize,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_StereoBM_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<StereoBM>,
+              imp$1.CvCallback_0)>>('cv_StereoBM_create');
+  late final _cv_StereoBM_create = _cv_StereoBM_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          int, int, ffi.Pointer<StereoBM>, imp$1.CvCallback_0)>();
+
+  int cv_StereoBM_getBlockSize(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getBlockSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getBlockSize');
+  late final _cv_StereoBM_getBlockSize =
+      _cv_StereoBM_getBlockSizePtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getDisp12MaxDiff(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getDisp12MaxDiff(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getDisp12MaxDiffPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getDisp12MaxDiff');
+  late final _cv_StereoBM_getDisp12MaxDiff =
+      _cv_StereoBM_getDisp12MaxDiffPtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getMinDisparity(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getMinDisparity(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getMinDisparityPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getMinDisparity');
+  late final _cv_StereoBM_getMinDisparity =
+      _cv_StereoBM_getMinDisparityPtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getNumDisparities(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getNumDisparities(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getNumDisparitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getNumDisparities');
+  late final _cv_StereoBM_getNumDisparities =
+      _cv_StereoBM_getNumDisparitiesPtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getPreFilterCap(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getPreFilterCap(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getPreFilterCapPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getPreFilterCap');
+  late final _cv_StereoBM_getPreFilterCap =
+      _cv_StereoBM_getPreFilterCapPtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getPreFilterSize(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getPreFilterSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getPreFilterSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getPreFilterSize');
+  late final _cv_StereoBM_getPreFilterSize =
+      _cv_StereoBM_getPreFilterSizePtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getPreFilterType(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getPreFilterType(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getPreFilterTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getPreFilterType');
+  late final _cv_StereoBM_getPreFilterType =
+      _cv_StereoBM_getPreFilterTypePtr.asFunction<int Function(StereoBM)>();
+
+  ffi.Pointer<CvRect> cv_StereoBM_getROI1(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getROI1(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getROI1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvRect> Function(StereoBM)>>(
+          'cv_StereoBM_getROI1');
+  late final _cv_StereoBM_getROI1 = _cv_StereoBM_getROI1Ptr
+      .asFunction<ffi.Pointer<CvRect> Function(StereoBM)>();
+
+  ffi.Pointer<CvRect> cv_StereoBM_getROI2(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getROI2(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getROI2Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<CvRect> Function(StereoBM)>>(
+          'cv_StereoBM_getROI2');
+  late final _cv_StereoBM_getROI2 = _cv_StereoBM_getROI2Ptr
+      .asFunction<ffi.Pointer<CvRect> Function(StereoBM)>();
+
+  int cv_StereoBM_getSmallerBlockSize(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getSmallerBlockSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getSmallerBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getSmallerBlockSize');
+  late final _cv_StereoBM_getSmallerBlockSize =
+      _cv_StereoBM_getSmallerBlockSizePtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getSpeckleRange(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getSpeckleRange(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getSpeckleRangePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getSpeckleRange');
+  late final _cv_StereoBM_getSpeckleRange =
+      _cv_StereoBM_getSpeckleRangePtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getSpeckleWindowSize(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getSpeckleWindowSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getSpeckleWindowSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getSpeckleWindowSize');
+  late final _cv_StereoBM_getSpeckleWindowSize =
+      _cv_StereoBM_getSpeckleWindowSizePtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getTextureThreshold(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getTextureThreshold(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getTextureThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getTextureThreshold');
+  late final _cv_StereoBM_getTextureThreshold =
+      _cv_StereoBM_getTextureThresholdPtr.asFunction<int Function(StereoBM)>();
+
+  int cv_StereoBM_getUniquenessRatio(
+    StereoBM self,
+  ) {
+    return _cv_StereoBM_getUniquenessRatio(
+      self,
+    );
+  }
+
+  late final _cv_StereoBM_getUniquenessRatioPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoBM)>>(
+          'cv_StereoBM_getUniquenessRatio');
+  late final _cv_StereoBM_getUniquenessRatio =
+      _cv_StereoBM_getUniquenessRatioPtr.asFunction<int Function(StereoBM)>();
+
+  void cv_StereoBM_setBlockSize(
+    StereoBM self,
+    int blockSize,
+  ) {
+    return _cv_StereoBM_setBlockSize(
+      self,
+      blockSize,
+    );
+  }
+
+  late final _cv_StereoBM_setBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setBlockSize');
+  late final _cv_StereoBM_setBlockSize =
+      _cv_StereoBM_setBlockSizePtr.asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setDisp12MaxDiff(
+    StereoBM self,
+    int disp12MaxDiff,
+  ) {
+    return _cv_StereoBM_setDisp12MaxDiff(
+      self,
+      disp12MaxDiff,
+    );
+  }
+
+  late final _cv_StereoBM_setDisp12MaxDiffPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setDisp12MaxDiff');
+  late final _cv_StereoBM_setDisp12MaxDiff = _cv_StereoBM_setDisp12MaxDiffPtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setMinDisparity(
+    StereoBM self,
+    int minDisparity,
+  ) {
+    return _cv_StereoBM_setMinDisparity(
+      self,
+      minDisparity,
+    );
+  }
+
+  late final _cv_StereoBM_setMinDisparityPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setMinDisparity');
+  late final _cv_StereoBM_setMinDisparity = _cv_StereoBM_setMinDisparityPtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setNumDisparities(
+    StereoBM self,
+    int numDisparities,
+  ) {
+    return _cv_StereoBM_setNumDisparities(
+      self,
+      numDisparities,
+    );
+  }
+
+  late final _cv_StereoBM_setNumDisparitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setNumDisparities');
+  late final _cv_StereoBM_setNumDisparities = _cv_StereoBM_setNumDisparitiesPtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setPreFilterCap(
+    StereoBM self,
+    int preFilterCap,
+  ) {
+    return _cv_StereoBM_setPreFilterCap(
+      self,
+      preFilterCap,
+    );
+  }
+
+  late final _cv_StereoBM_setPreFilterCapPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setPreFilterCap');
+  late final _cv_StereoBM_setPreFilterCap = _cv_StereoBM_setPreFilterCapPtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setPreFilterSize(
+    StereoBM self,
+    int preFilterSize,
+  ) {
+    return _cv_StereoBM_setPreFilterSize(
+      self,
+      preFilterSize,
+    );
+  }
+
+  late final _cv_StereoBM_setPreFilterSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setPreFilterSize');
+  late final _cv_StereoBM_setPreFilterSize = _cv_StereoBM_setPreFilterSizePtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setPreFilterType(
+    StereoBM self,
+    int preFilterType,
+  ) {
+    return _cv_StereoBM_setPreFilterType(
+      self,
+      preFilterType,
+    );
+  }
+
+  late final _cv_StereoBM_setPreFilterTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setPreFilterType');
+  late final _cv_StereoBM_setPreFilterType = _cv_StereoBM_setPreFilterTypePtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setROI1(
+    StereoBM self,
+    CvRect roi1,
+  ) {
+    return _cv_StereoBM_setROI1(
+      self,
+      roi1,
+    );
+  }
+
+  late final _cv_StereoBM_setROI1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, CvRect)>>(
+          'cv_StereoBM_setROI1');
+  late final _cv_StereoBM_setROI1 =
+      _cv_StereoBM_setROI1Ptr.asFunction<void Function(StereoBM, CvRect)>();
+
+  void cv_StereoBM_setROI2(
+    StereoBM self,
+    CvRect roi2,
+  ) {
+    return _cv_StereoBM_setROI2(
+      self,
+      roi2,
+    );
+  }
+
+  late final _cv_StereoBM_setROI2Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, CvRect)>>(
+          'cv_StereoBM_setROI2');
+  late final _cv_StereoBM_setROI2 =
+      _cv_StereoBM_setROI2Ptr.asFunction<void Function(StereoBM, CvRect)>();
+
+  void cv_StereoBM_setSmallerBlockSize(
+    StereoBM self,
+    int blockSize,
+  ) {
+    return _cv_StereoBM_setSmallerBlockSize(
+      self,
+      blockSize,
+    );
+  }
+
+  late final _cv_StereoBM_setSmallerBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setSmallerBlockSize');
+  late final _cv_StereoBM_setSmallerBlockSize =
+      _cv_StereoBM_setSmallerBlockSizePtr
+          .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setSpeckleRange(
+    StereoBM self,
+    int speckleRange,
+  ) {
+    return _cv_StereoBM_setSpeckleRange(
+      self,
+      speckleRange,
+    );
+  }
+
+  late final _cv_StereoBM_setSpeckleRangePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setSpeckleRange');
+  late final _cv_StereoBM_setSpeckleRange = _cv_StereoBM_setSpeckleRangePtr
+      .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setSpeckleWindowSize(
+    StereoBM self,
+    int speckleWindowSize,
+  ) {
+    return _cv_StereoBM_setSpeckleWindowSize(
+      self,
+      speckleWindowSize,
+    );
+  }
+
+  late final _cv_StereoBM_setSpeckleWindowSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setSpeckleWindowSize');
+  late final _cv_StereoBM_setSpeckleWindowSize =
+      _cv_StereoBM_setSpeckleWindowSizePtr
+          .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setTextureThreshold(
+    StereoBM self,
+    int textureThreshold,
+  ) {
+    return _cv_StereoBM_setTextureThreshold(
+      self,
+      textureThreshold,
+    );
+  }
+
+  late final _cv_StereoBM_setTextureThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setTextureThreshold');
+  late final _cv_StereoBM_setTextureThreshold =
+      _cv_StereoBM_setTextureThresholdPtr
+          .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoBM_setUniquenessRatio(
+    StereoBM self,
+    int uniquenessRatio,
+  ) {
+    return _cv_StereoBM_setUniquenessRatio(
+      self,
+      uniquenessRatio,
+    );
+  }
+
+  late final _cv_StereoBM_setUniquenessRatioPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoBM, ffi.Int)>>(
+          'cv_StereoBM_setUniquenessRatio');
+  late final _cv_StereoBM_setUniquenessRatio =
+      _cv_StereoBM_setUniquenessRatioPtr
+          .asFunction<void Function(StereoBM, int)>();
+
+  void cv_StereoSGBM_close(
+    StereoSGBMPtr self,
+  ) {
+    return _cv_StereoSGBM_close(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBMPtr)>>(
+          'cv_StereoSGBM_close');
+  late final _cv_StereoSGBM_close =
+      _cv_StereoSGBM_closePtr.asFunction<void Function(StereoSGBMPtr)>();
+
+  ffi.Pointer<CvStatus> cv_StereoSGBM_compute(
+    StereoSGBM self,
+    imp$1.MatIn left,
+    imp$1.MatIn right,
+    imp$1.MatOut disparity,
+  ) {
+    return _cv_StereoSGBM_compute(
+      self,
+      left,
+      right,
+      disparity,
+    );
+  }
+
+  late final _cv_StereoSGBM_computePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(StereoSGBM, imp$1.MatIn, imp$1.MatIn,
+              imp$1.MatOut)>>('cv_StereoSGBM_compute');
+  late final _cv_StereoSGBM_compute = _cv_StereoSGBM_computePtr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          StereoSGBM, imp$1.MatIn, imp$1.MatIn, imp$1.MatOut)>();
+
+  ffi.Pointer<CvStatus> cv_StereoSGBM_create(
+    int minDisparity,
+    int numDisparities,
+    int blockSize,
+    int P1,
+    int P2,
+    int disp12MaxDiff,
+    int preFilterCap,
+    int uniquenessRatio,
+    int speckleWindowSize,
+    int speckleRange,
+    int mode,
+    ffi.Pointer<StereoSGBM> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_StereoSGBM_create(
+      minDisparity,
+      numDisparities,
+      blockSize,
+      P1,
+      P2,
+      disp12MaxDiff,
+      preFilterCap,
+      uniquenessRatio,
+      speckleWindowSize,
+      speckleRange,
+      mode,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_StereoSGBM_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<StereoSGBM>,
+              imp$1.CvCallback_0)>>('cv_StereoSGBM_create');
+  late final _cv_StereoSGBM_create = _cv_StereoSGBM_createPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, int, int, int, int, int, int, int,
+          int, int, int, ffi.Pointer<StereoSGBM>, imp$1.CvCallback_0)>();
+
+  int cv_StereoSGBM_getBlockSize(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getBlockSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getBlockSize');
+  late final _cv_StereoSGBM_getBlockSize =
+      _cv_StereoSGBM_getBlockSizePtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getDisp12MaxDiff(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getDisp12MaxDiff(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getDisp12MaxDiffPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getDisp12MaxDiff');
+  late final _cv_StereoSGBM_getDisp12MaxDiff =
+      _cv_StereoSGBM_getDisp12MaxDiffPtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getMinDisparity(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getMinDisparity(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getMinDisparityPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getMinDisparity');
+  late final _cv_StereoSGBM_getMinDisparity =
+      _cv_StereoSGBM_getMinDisparityPtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getMode(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getMode(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getModePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getMode');
+  late final _cv_StereoSGBM_getMode =
+      _cv_StereoSGBM_getModePtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getNumDisparities(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getNumDisparities(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getNumDisparitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getNumDisparities');
+  late final _cv_StereoSGBM_getNumDisparities =
+      _cv_StereoSGBM_getNumDisparitiesPtr
+          .asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getP1(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getP1(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getP1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getP1');
+  late final _cv_StereoSGBM_getP1 =
+      _cv_StereoSGBM_getP1Ptr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getP2(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getP2(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getP2Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getP2');
+  late final _cv_StereoSGBM_getP2 =
+      _cv_StereoSGBM_getP2Ptr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getPreFilterCap(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getPreFilterCap(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getPreFilterCapPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getPreFilterCap');
+  late final _cv_StereoSGBM_getPreFilterCap =
+      _cv_StereoSGBM_getPreFilterCapPtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getSpeckleRange(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getSpeckleRange(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getSpeckleRangePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getSpeckleRange');
+  late final _cv_StereoSGBM_getSpeckleRange =
+      _cv_StereoSGBM_getSpeckleRangePtr.asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getSpeckleWindowSize(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getSpeckleWindowSize(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getSpeckleWindowSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getSpeckleWindowSize');
+  late final _cv_StereoSGBM_getSpeckleWindowSize =
+      _cv_StereoSGBM_getSpeckleWindowSizePtr
+          .asFunction<int Function(StereoSGBM)>();
+
+  int cv_StereoSGBM_getUniquenessRatio(
+    StereoSGBM self,
+  ) {
+    return _cv_StereoSGBM_getUniquenessRatio(
+      self,
+    );
+  }
+
+  late final _cv_StereoSGBM_getUniquenessRatioPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(StereoSGBM)>>(
+          'cv_StereoSGBM_getUniquenessRatio');
+  late final _cv_StereoSGBM_getUniquenessRatio =
+      _cv_StereoSGBM_getUniquenessRatioPtr
+          .asFunction<int Function(StereoSGBM)>();
+
+  void cv_StereoSGBM_setBlockSize(
+    StereoSGBM self,
+    int blockSize,
+  ) {
+    return _cv_StereoSGBM_setBlockSize(
+      self,
+      blockSize,
+    );
+  }
+
+  late final _cv_StereoSGBM_setBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setBlockSize');
+  late final _cv_StereoSGBM_setBlockSize = _cv_StereoSGBM_setBlockSizePtr
+      .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setDisp12MaxDiff(
+    StereoSGBM self,
+    int disp12MaxDiff,
+  ) {
+    return _cv_StereoSGBM_setDisp12MaxDiff(
+      self,
+      disp12MaxDiff,
+    );
+  }
+
+  late final _cv_StereoSGBM_setDisp12MaxDiffPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setDisp12MaxDiff');
+  late final _cv_StereoSGBM_setDisp12MaxDiff =
+      _cv_StereoSGBM_setDisp12MaxDiffPtr
+          .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setMinDisparity(
+    StereoSGBM self,
+    int minDisparity,
+  ) {
+    return _cv_StereoSGBM_setMinDisparity(
+      self,
+      minDisparity,
+    );
+  }
+
+  late final _cv_StereoSGBM_setMinDisparityPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setMinDisparity');
+  late final _cv_StereoSGBM_setMinDisparity = _cv_StereoSGBM_setMinDisparityPtr
+      .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setMode(
+    StereoSGBM self,
+    int mode,
+  ) {
+    return _cv_StereoSGBM_setMode(
+      self,
+      mode,
+    );
+  }
+
+  late final _cv_StereoSGBM_setModePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setMode');
+  late final _cv_StereoSGBM_setMode =
+      _cv_StereoSGBM_setModePtr.asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setNumDisparities(
+    StereoSGBM self,
+    int numDisparities,
+  ) {
+    return _cv_StereoSGBM_setNumDisparities(
+      self,
+      numDisparities,
+    );
+  }
+
+  late final _cv_StereoSGBM_setNumDisparitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setNumDisparities');
+  late final _cv_StereoSGBM_setNumDisparities =
+      _cv_StereoSGBM_setNumDisparitiesPtr
+          .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setP1(
+    StereoSGBM self,
+    int P1,
+  ) {
+    return _cv_StereoSGBM_setP1(
+      self,
+      P1,
+    );
+  }
+
+  late final _cv_StereoSGBM_setP1Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setP1');
+  late final _cv_StereoSGBM_setP1 =
+      _cv_StereoSGBM_setP1Ptr.asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setP2(
+    StereoSGBM self,
+    int P2,
+  ) {
+    return _cv_StereoSGBM_setP2(
+      self,
+      P2,
+    );
+  }
+
+  late final _cv_StereoSGBM_setP2Ptr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setP2');
+  late final _cv_StereoSGBM_setP2 =
+      _cv_StereoSGBM_setP2Ptr.asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setPreFilterCap(
+    StereoSGBM self,
+    int preFilterCap,
+  ) {
+    return _cv_StereoSGBM_setPreFilterCap(
+      self,
+      preFilterCap,
+    );
+  }
+
+  late final _cv_StereoSGBM_setPreFilterCapPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setPreFilterCap');
+  late final _cv_StereoSGBM_setPreFilterCap = _cv_StereoSGBM_setPreFilterCapPtr
+      .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setSpeckleRange(
+    StereoSGBM self,
+    int speckleRange,
+  ) {
+    return _cv_StereoSGBM_setSpeckleRange(
+      self,
+      speckleRange,
+    );
+  }
+
+  late final _cv_StereoSGBM_setSpeckleRangePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setSpeckleRange');
+  late final _cv_StereoSGBM_setSpeckleRange = _cv_StereoSGBM_setSpeckleRangePtr
+      .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setSpeckleWindowSize(
+    StereoSGBM self,
+    int speckleWindowSize,
+  ) {
+    return _cv_StereoSGBM_setSpeckleWindowSize(
+      self,
+      speckleWindowSize,
+    );
+  }
+
+  late final _cv_StereoSGBM_setSpeckleWindowSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setSpeckleWindowSize');
+  late final _cv_StereoSGBM_setSpeckleWindowSize =
+      _cv_StereoSGBM_setSpeckleWindowSizePtr
+          .asFunction<void Function(StereoSGBM, int)>();
+
+  void cv_StereoSGBM_setUniquenessRatio(
+    StereoSGBM self,
+    int uniquenessRatio,
+  ) {
+    return _cv_StereoSGBM_setUniquenessRatio(
+      self,
+      uniquenessRatio,
+    );
+  }
+
+  late final _cv_StereoSGBM_setUniquenessRatioPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(StereoSGBM, ffi.Int)>>(
+          'cv_StereoSGBM_setUniquenessRatio');
+  late final _cv_StereoSGBM_setUniquenessRatio =
+      _cv_StereoSGBM_setUniquenessRatioPtr
+          .asFunction<void Function(StereoSGBM, int)>();
+
   ffi.Pointer<CvStatus> cv_calibrateCamera(
     VecVecPoint3f objectPoints,
     VecVecPoint2f imagePoints,
@@ -1609,6 +2519,79 @@ class CvNativeCalib3d {
           ffi.Pointer<ffi.Bool>,
           imp$1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_fisheye_solvePnPRansac(
+    imp$1.MatIn objectPoints,
+    imp$1.MatIn imagePoints,
+    imp$1.MatIn cameraMatrix,
+    imp$1.MatIn distCoeffs,
+    imp$1.MatOut rvec,
+    imp$1.MatOut tvec,
+    bool useExtrinsicGuess,
+    int iterationsCount,
+    double reprojectionError,
+    double confidence,
+    imp$1.MatOut inliers,
+    int flags,
+    TermCriteria criteria,
+    ffi.Pointer<ffi.Bool> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_fisheye_solvePnPRansac(
+      objectPoints,
+      imagePoints,
+      cameraMatrix,
+      distCoeffs,
+      rvec,
+      tvec,
+      useExtrinsicGuess,
+      iterationsCount,
+      reprojectionError,
+      confidence,
+      inliers,
+      flags,
+      criteria,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_fisheye_solvePnPRansacPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatOut,
+              imp$1.MatOut,
+              ffi.Bool,
+              ffi.Int,
+              ffi.Float,
+              ffi.Double,
+              imp$1.MatOut,
+              ffi.Int,
+              TermCriteria,
+              ffi.Pointer<ffi.Bool>,
+              imp$1.CvCallback_0)>>('cv_fisheye_solvePnPRansac');
+  late final _cv_fisheye_solvePnPRansac =
+      _cv_fisheye_solvePnPRansacPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatIn,
+              imp$1.MatOut,
+              imp$1.MatOut,
+              bool,
+              int,
+              double,
+              double,
+              imp$1.MatOut,
+              int,
+              TermCriteria,
+              ffi.Pointer<ffi.Bool>,
+              imp$1.CvCallback_0)>();
+
   ffi.Pointer<CvStatus> cv_fisheye_undistortImage(
     Mat distorted,
     Mat undistorted,
@@ -2788,6 +3771,17 @@ class CvNativeCalib3d {
   late final _cv_validateDisparity = _cv_validateDisparityPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
           Mat, Mat, int, int, int, imp$1.CvCallback_0)>();
+
+  late final addresses = _SymbolAddresses(this);
+}
+
+class _SymbolAddresses {
+  final CvNativeCalib3d _library;
+  _SymbolAddresses(this._library);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StereoBMPtr)>>
+      get cv_StereoBM_close => _library._cv_StereoBM_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(StereoSGBMPtr)>>
+      get cv_StereoSGBM_close => _library._cv_StereoSGBM_closePtr;
 }
 
 typedef CvPoint2d = imp$1.CvPoint2d;
@@ -2796,6 +3790,18 @@ typedef CvSize = imp$1.CvSize;
 typedef CvStatus = imp$1.CvStatus;
 typedef Mat = imp$1.Mat;
 typedef Scalar = imp$1.Scalar;
+
+final class StereoBM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef StereoBMPtr = ffi.Pointer<StereoBM>;
+
+final class StereoSGBM extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef StereoSGBMPtr = ffi.Pointer<StereoSGBM>;
 typedef TermCriteria = imp$1.TermCriteria;
 typedef UsacParams = imp$1.UsacParams;
 typedef Vec3d = imp$1.Vec3d;

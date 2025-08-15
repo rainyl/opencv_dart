@@ -2667,6 +2667,26 @@ class CvNativeImgproc {
       ffi.Pointer<CvStatus> Function(
           VecPoint2f, VecPoint2f, ffi.Pointer<Mat>, imp$1.CvCallback_0)>();
 
+  ffi.Pointer<CvStatus> cv_getClosestEllipsePoints(
+    RotatedRect ellipse_params,
+    Mat points,
+    imp$1.MatOut closest_pts,
+  ) {
+    return _cv_getClosestEllipsePoints(
+      ellipse_params,
+      points,
+      closest_pts,
+    );
+  }
+
+  late final _cv_getClosestEllipsePointsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              RotatedRect, Mat, imp$1.MatOut)>>('cv_getClosestEllipsePoints');
+  late final _cv_getClosestEllipsePoints =
+      _cv_getClosestEllipsePointsPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(RotatedRect, Mat, imp$1.MatOut)>();
+
   ffi.Pointer<CvStatus> cv_getGaussianKernel(
     int ksize,
     double sigma,
@@ -3918,6 +3938,43 @@ class CvNativeImgproc {
               imp$1.CvCallback_0)>>('cv_threshold');
   late final _cv_threshold = _cv_thresholdPtr.asFunction<
       ffi.Pointer<CvStatus> Function(Mat, Mat, double, double, int,
+          ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_thresholdWithMask(
+    Mat src,
+    Mat dst,
+    Mat mask,
+    double thresh,
+    double maxvalue,
+    int typ,
+    ffi.Pointer<ffi.Double> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_thresholdWithMask(
+      src,
+      dst,
+      mask,
+      thresh,
+      maxvalue,
+      typ,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_thresholdWithMaskPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              Mat,
+              Mat,
+              Mat,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Pointer<ffi.Double>,
+              imp$1.CvCallback_0)>>('cv_thresholdWithMask');
+  late final _cv_thresholdWithMask = _cv_thresholdWithMaskPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, double, double, int,
           ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_warpAffine(

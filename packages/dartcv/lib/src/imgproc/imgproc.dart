@@ -1188,12 +1188,30 @@ Mat HoughLinesPointSet(
 
 /// Threshold applies a fixed-level threshold to each array element.
 ///
+/// **Note**
+///   This function also supports [thresholdWithMask](https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga42315f66bd4d7cde06c450287d610720)
+///   If the [mask] is empty, thresholdWithMask is equivalent to threshold.
+///   If the [mask] is not empty, dst must be of the same size and type as src,
+///   so that outliers pixels are left as-is.
+///
+///
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
-(double, Mat dst) threshold(InputArray src, double thresh, double maxval, int type, {OutputArray? dst}) {
-  dst ??= Mat.empty();
+(double, Mat dst) threshold(
+  InputArray src,
+  double thresh,
+  double maxval,
+  int type, {
+  OutputArray? dst,
+  InputArray? mask,
+}) {
+  dst ??= mask == null ? Mat.empty() : Mat.zeros(src.rows, src.cols, src.type);
   final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr));
+  cvRun(
+    () => mask == null
+        ? cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr)
+        : cimgproc.cv_thresholdWithMask(src.ref, dst!.ref, mask.ref, thresh, maxval, type, p, ffi.nullptr),
+  );
   final rval = (p.value, dst);
   calloc.free(p);
   return rval;

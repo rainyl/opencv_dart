@@ -206,6 +206,8 @@ files:
         name: cv_getAffineTransform
       c:@F@cv_getAffineTransform2f:
         name: cv_getAffineTransform2f
+      c:@F@cv_getClosestEllipsePoints:
+        name: cv_getClosestEllipsePoints
       c:@F@cv_getGaussianKernel:
         name: cv_getGaussianKernel
       c:@F@cv_getPerspectiveTransform:
@@ -296,6 +298,8 @@ files:
         name: cv_sqrBoxFilter
       c:@F@cv_threshold:
         name: cv_threshold
+      c:@F@cv_thresholdWithMask:
+        name: cv_thresholdWithMask
       c:@F@cv_warpAffine:
         name: cv_warpAffine
       c:@F@cv_warpAffine_1:

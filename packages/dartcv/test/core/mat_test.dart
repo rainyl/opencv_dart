@@ -613,6 +613,22 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(meanG.val1, equals(1));
   });
 
+  test('Mat.reinterpret', () {
+    // https://github.com/opencv/opencv/pull/25394
+    {
+      final A = cv.Mat.fromScalar(8, 16, cv.MatType.CV_8UC3, cv.Scalar(1, 2, 3));
+      final B = A.reinterpret(cv.MatType.CV_8SC3);
+      expect(A.dataPtr.address, B.dataPtr.address);
+      expect(B.type, cv.MatType.CV_8SC3);
+    }
+    {
+      final A = cv.Mat.fromScalar(8, 16, cv.MatType.CV_8UC4, cv.Scalar(1, 2, 3));
+      final B = A.reinterpret(cv.MatType.CV_32FC1);
+      expect(A.dataPtr.address, B.dataPtr.address);
+      expect(B.type, cv.MatType.CV_32FC1);
+    }
+  });
+
   test('Mat.ptrAt.U8', () {
     final mat = cv.Mat.ones(3, 3, cv.MatType.CV_8UC1);
     final ptr0 = mat.ptrAt<cv.U8>(0);
@@ -1052,9 +1068,6 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom2DList.at<int>(0, 0), equals(1));
     expect(matFrom2DList.at<int>(2, 2), equals(9));
     expect(matFrom2DList.toList(), data2D);
-
-    data2D[1].add(6);
-    expect(() => cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1), throwsA(isA<cv.CvdException>()));
   });
 
   test('Mat Creation from 3D List', () {

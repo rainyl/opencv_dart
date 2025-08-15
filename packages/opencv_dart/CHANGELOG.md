@@ -1,3 +1,9 @@
+## 1.4.4
+
+* add `Mat.reinterpret`
+* add `fisheye.solvePnPRansac`, support `mask` for `cv.threshold`
+* add `StereoBM`, `StereoSGBM` from `calib3d` module
+
 ## 1.4.3
 
 * add `FlannIndexParams`, `FlannSearchParams`, `FlannKDTreeIndexParams`
