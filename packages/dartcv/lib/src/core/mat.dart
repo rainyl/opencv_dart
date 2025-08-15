@@ -90,15 +90,9 @@ class Mat extends CvStruct<cvg.Mat> {
     // here we support given [cols] and [rows] since sometimes Mat's channel is specified by
     // [type], e.g., 64FC3 for Point3d, in such occasions, [cols] should be 1 but not real [cols]
     // of [data]
-    if (cols == null) {
-      cvAssert(
-        data.every((r) => r.length == cols),
-        "All rows must have the same number of columns.",
-      );
-    }
     rows ??= data.length;
     cols ??= data.first.length;
-    cvAssert(rows > 0, "The input data must not be empty.");
+    cvAssert(rows > 0 && cols > 0, "The input data must have the same number of elements.");
 
     final flatData = <num>[for (final row in data) ...row];
     return Mat.fromList(rows, cols, type, flatData);

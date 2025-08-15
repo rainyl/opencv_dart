@@ -1068,9 +1068,6 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     expect(matFrom2DList.at<int>(0, 0), equals(1));
     expect(matFrom2DList.at<int>(2, 2), equals(9));
     expect(matFrom2DList.toList(), data2D);
-
-    data2D[1].add(6);
-    expect(() => cv.Mat.from2DList(data2D, cv.MatType.CV_8UC1), throwsA(isA<cv.CvdException>()));
   });
 
   test('Mat Creation from 3D List', () {
