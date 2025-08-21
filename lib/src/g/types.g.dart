@@ -422,6 +422,12 @@ final class TermCriteria extends ffi.Struct {
   external double epsilon;
 }
 
+final class UMat extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef UMatPtr = ffi.Pointer<UMat>;
+
 final class UsacParams extends ffi.Struct {
   @ffi.Double()
   external double confidence;

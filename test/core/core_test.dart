@@ -586,7 +586,7 @@ void main() async {
   test('cv.LUT', () {
     void testOneLUT(cv.Mat src, cv.Mat lut) {
       expect(lut.channels == src.channels || lut.channels == 1, true);
-      expect(lut.isContinus, true);
+      expect(lut.isContinuous, true);
       final sw = Stopwatch();
       sw.start();
       final dst = cv.LUT(src, lut);
