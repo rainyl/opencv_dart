@@ -20,6 +20,26 @@ import "exception.dart" show CvException, CvdException;
 const double CV_PI = 3.1415926535897932384626433832795;
 const double CV_2PI = 6.283185307179586476925286766559;
 const double CV_LOG2 = 0.69314718055994530941723212145818;
+const int CV_MAX_DIM = 32;
+const int CV_CN_MAX = 512;
+const int CV_CN_SHIFT = 3;
+const int CV_DEPTH_MAX = 1 << CV_CN_SHIFT;
+const int CV_MAT_CN_MASK = (CV_CN_MAX - 1) << CV_CN_SHIFT;
+// const int  CV_MAT_CN(flags)       =  ((((flags) & CV_MAT_CN_MASK) >> CV_CN_SHIFT) + 1);
+const int CV_MAT_TYPE_MASK = CV_DEPTH_MAX * CV_CN_MAX - 1;
+// const int  CV_MAT_TYPE(flags)     =  ((flags) & CV_MAT_TYPE_MASK);
+const int CV_MAT_CONT_FLAG_SHIFT = 14;
+const int CV_MAT_CONT_FLAG = 1 << CV_MAT_CONT_FLAG_SHIFT;
+// const int  CV_IS_MAT_CONT(flags)  =  ((flags) & CV_MAT_CONT_FLAG);
+// const int CV_IS_CONT_MAT = CV_IS_MAT_CONT;
+const int CV_SUBMAT_FLAG_SHIFT = 15;
+const int CV_SUBMAT_FLAG = 1 << CV_SUBMAT_FLAG_SHIFT;
+// const int  CV_IS_SUBMAT(flags)    =  ((flags) & CV_MAT_SUBMAT_FLAG);
+
+int CV_MAT_CN(int flags) => ((flags & CV_MAT_CN_MASK) >> CV_CN_SHIFT) + 1;
+int CV_MAT_TYPE(int flags) => flags & CV_MAT_TYPE_MASK;
+bool CV_IS_MAT_CONT(int flags) => (flags & CV_MAT_CONT_FLAG) != 0;
+bool CV_IS_SUBMAT(int flags) => (flags & CV_SUBMAT_FLAG) != 0;
 
 const int CV_U8_MAX = 255; // uchar
 const int CV_U8_MIN = 0;
@@ -209,8 +229,8 @@ void cvAssert(bool condition, [String? msg]) {
 }
 
 // finalizers
-typedef NativeFinalizerFunctionT<T extends ffi.NativeType> =
-    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
+typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());

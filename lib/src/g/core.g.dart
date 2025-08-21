@@ -382,6 +382,17 @@ external int cv_Mat_flags(
   Mat self,
 );
 
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(Mat, ffi.Int, ffi.Int, ffi.Pointer<UMat>,
+        imp$1.CvCallback_0)>(isLeaf: true)
+external ffi.Pointer<CvStatus> cv_Mat_getUMat(
+  Mat self,
+  int accessFlags,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<ffi.Pointer<Vec2b> Function(Mat, ffi.Int, ffi.Int)>(isLeaf: true)
 external ffi.Pointer<Vec2b> cv_Mat_get_Vec2b(
   Mat self,
@@ -1683,6 +1694,477 @@ external ffi.Pointer<CvStatus> cv_SVDecomp(
   Mat d,
   int flags,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Void Function(UMat)>()
+external void cv_UMat_addref(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_channels(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat, ffi.Int, ffi.Int, ffi.Bool)>()
+external int cv_UMat_checkVector(
+  UMat self,
+  int elemChannels,
+  int depth,
+  bool requireContinuous,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_clone(
+  UMat self,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Void Function(imp$1.UMatPtr)>()
+external void cv_UMat_close(
+  imp$1.UMatPtr self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_col(
+  UMat self,
+  int x,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_colRange(
+  UMat self,
+  int startcol,
+  int endcol,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_cols(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Double, ffi.Double, UMat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_convertTo(
+  UMat self,
+  int rtype,
+  double alpha,
+  double beta,
+  UMat dst,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(UMat, UMat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_copyTo(
+  UMat self,
+  UMat dst,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(UMat, UMat, UMat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_copyTo_2(
+  UMat self,
+  UMat mask,
+  UMat dst,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_createFunc(
+  UMat self,
+  int rows,
+  int cols,
+  int type,
+  int usageFlags,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(UMat, ffi.Int, ffi.Pointer<ffi.Int>, ffi.Int,
+        ffi.Int, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_createFunc_2(
+  UMat self,
+  int ndims,
+  ffi.Pointer<ffi.Int> sizes,
+  int type,
+  int usageFlags,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_1(
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_2(
+  int rows,
+  int cols,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, Scalar, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_3(
+  int rows,
+  int cols,
+  int type,
+  Scalar s,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Pointer<ffi.Int>, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_4(
+  int ndims,
+  ffi.Pointer<ffi.Int> sizes,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Pointer<ffi.Int>, ffi.Int,
+        Scalar, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_5(
+  int ndims,
+  ffi.Pointer<ffi.Int> sizes,
+  int type,
+  Scalar value,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(UMat, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_6(
+  UMat self,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_7(
+  UMat self,
+  int rowStart,
+  int rowEnd,
+  int colStart,
+  int colEnd,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_8(
+  UMat self,
+  int x,
+  int y,
+  int width,
+  int height,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(UMat, CvRect, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_9(
+  UMat self,
+  CvRect roi,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(UMat, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_diag(
+  UMat d,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_eye(
+  int rows,
+  int cols,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_ones(
+  int rows,
+  int cols,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Pointer<ffi.Int>, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_ones_1(
+  int ndims,
+  ffi.Pointer<ffi.Int> sizes,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_zeros(
+  int rows,
+  int cols,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Pointer<ffi.Int>, ffi.Int, ffi.Int, ffi.Pointer<UMat>)>()
+external ffi.Pointer<CvStatus> cv_UMat_create_zeros_1(
+  int ndims,
+  ffi.Pointer<ffi.Int> sizes,
+  int type,
+  int usageFlags,
+  ffi.Pointer<UMat> rval,
+);
+
+@ffi.Native<ffi.Void Function(UMat)>()
+external void cv_UMat_deallocate(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_depth(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_diag(
+  UMat self,
+  int d,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_dims(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, UMat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_dot(
+  UMat self,
+  UMat m,
+  ffi.Pointer<ffi.Double> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_elemSize(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_elemSize1(
+  UMat self,
+);
+
+@ffi.Native<ffi.Bool Function(UMat)>()
+external bool cv_UMat_empty(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_flags(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Pointer<Mat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_getMat(
+  UMat self,
+  int accessFlags,
+  ffi.Pointer<Mat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Void> Function(UMat, ffi.Int)>()
+external ffi.Pointer<ffi.Void> cv_UMat_handle(
+  UMat self,
+  int accessFlags,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_inv(
+  UMat self,
+  int method,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(UMat)>()
+external bool cv_UMat_isContinuous(
+  UMat self,
+);
+
+@ffi.Native<ffi.Bool Function(UMat)>()
+external bool cv_UMat_isSubmatrix(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, UMat, ffi.Double, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_mul(
+  UMat self,
+  UMat m,
+  double scale,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Size Function(UMat)>()
+external int cv_UMat_offset(
+  UMat self,
+);
+
+@ffi.Native<ffi.Void Function(UMat)>()
+external void cv_UMat_release(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_reshape(
+  UMat self,
+  int cn,
+  int rows,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(UMat, ffi.Int, ffi.Int, ffi.Pointer<ffi.Int>,
+        ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_reshape_2(
+  UMat self,
+  int cn,
+  int newndims,
+  ffi.Pointer<ffi.Int> newsz,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_row(
+  UMat self,
+  int y,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Int, ffi.Int, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_rowRange(
+  UMat self,
+  int startrow,
+  int endrow,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_rows(
+  UMat self,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(UMat, Scalar, UMat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_setTo(
+  UMat self,
+  Scalar s,
+  UMat mask,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Pointer<VecI32> Function(UMat)>()
+external ffi.Pointer<VecI32> cv_UMat_size(
+  UMat self,
+);
+
+@ffi.Native<MatStep Function(UMat)>()
+external MatStep cv_UMat_step(
+  UMat self,
+);
+
+@ffi.Native<ffi.Size Function(UMat, ffi.Int)>()
+external int cv_UMat_step1(
+  UMat self,
+  int i,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        UMat, ffi.Pointer<UMat>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_UMat_t(
+  UMat self,
+  ffi.Pointer<UMat> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Size Function(UMat)>()
+external int cv_UMat_total(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_type(
+  UMat self,
+);
+
+@ffi.Native<ffi.Int Function(UMat)>()
+external int cv_UMat_usageFlags(
+  UMat self,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, Mat, imp$1.CvCallback_0)>()
@@ -5546,6 +6028,8 @@ class _SymbolAddresses {
       get cv_Mat_closeVoid => ffi.Native.addressOf(self.cv_Mat_closeVoid);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp$1.RNGPtr)>>
       get cv_RNG_close => ffi.Native.addressOf(self.cv_RNG_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp$1.UMatPtr)>>
+      get cv_UMat_close => ffi.Native.addressOf(self.cv_UMat_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp$1.VecCharPtr)>>
       get std_VecChar_free => ffi.Native.addressOf(self.std_VecChar_free);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(imp$1.VecDMatchPtr)>>
@@ -5673,6 +6157,7 @@ typedef RNG = imp$1.RNG;
 typedef RotatedRect = imp$1.RotatedRect;
 typedef Scalar = imp$1.Scalar;
 typedef TermCriteria = imp$1.TermCriteria;
+typedef UMat = imp$1.UMat;
 typedef Vec2b = imp$1.Vec2b;
 typedef Vec2d = imp$1.Vec2d;
 typedef Vec2f = imp$1.Vec2f;

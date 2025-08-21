@@ -324,7 +324,7 @@ void main() async {
   test('cv.LUT async', () async {
     Future<void> testOneLUT(cv.Mat src, cv.Mat lut) async {
       expect(lut.channels == src.channels || lut.channels == 1, true);
-      expect(lut.isContinus, true);
+      expect(lut.isContinuous, true);
       final sw = Stopwatch();
       sw.start();
       final dst = await cv.LUTAsync(src, lut);
