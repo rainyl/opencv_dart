@@ -111,8 +111,9 @@ endif()
 
 _parse_dartcv_cmake_vars()
 
+set(DARTCV_WITH_VIDEOIO OFF CACHE BOOL "Enable OpenCV videoio module" FORCE)
 set(_enabled_modules "core")
-set(_disabled_modules)
+set(_disabled_modules "videoio")
 
 # ebabled modules by default
 set(_modules CALIB3D CONTRIB DNN FEATURES2D HIGHGUI IMGPROC OBJDETECT PHOTO STITCHING VIDEO VIDEOIO)
