@@ -14,290 +14,17 @@ import '../core/base.dart';
 import '../core/dmatch.dart';
 import '../core/keypoint.dart';
 import '../core/mat.dart';
+import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
 import '../g/features2d.g.dart' as cvg;
 import '../g/features2d.g.dart' as cfeatures2d;
-
-class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
-  FlannIndexParams.fromPointer(cvg.FlannIndexParamsPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast());
-    }
-  }
-
-  factory FlannIndexParams.empty() {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    return FlannIndexParams.fromPointer(p);
-  }
-
-  factory FlannIndexParams.fromMap(Map<String, dynamic> map) {
-    final params = FlannIndexParams.empty();
-    for (final entry in map.entries) {
-      switch (entry.value) {
-        case int():
-          params.set<int>(entry.key, entry.value as int);
-        case double():
-          params.set<double>(entry.key, entry.value as double);
-        case String():
-          params.set<String>(entry.key, entry.value as String);
-        case bool():
-          params.set<bool>(entry.key, entry.value as bool);
-        case cvg.FlannAlgorithm():
-          params.set<cvg.FlannAlgorithm>(entry.key, entry.value as cvg.FlannAlgorithm);
-        default:
-          throw ArgumentError('Value type ${entry.value.runtimeType} is not supported for FlannIndexParams');
-      }
-    }
-    return params;
-  }
-
-  static final finalizer = OcvFinalizer<cvg.FlannIndexParamsPtr>(
-    cfeatures2d.addresses.cv_flann_IndexParams_close,
-  );
-
-  @override
-  cvg.FlannIndexParams get ref => ptr.ref;
-
-  String getString(String key, [String defaultValue = ""]) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    final cdefault = defaultValue.toNativeUtf8().cast<ffi.Char>();
-    final crval = calloc<ffi.Pointer<ffi.Char>>();
-    cfeatures2d.cv_flann_IndexParams_getString(ref, ckey, cdefault, crval);
-    calloc.free(ckey);
-    calloc.free(cdefault);
-
-    final rval = crval.value.cast<ffi.Char>().toDartString();
-    calloc.free(crval);
-    return rval;
-  }
-
-  int getInt(String key, [int defaultValue = -1]) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    final crval = calloc<ffi.Int>();
-    cfeatures2d.cv_flann_IndexParams_getInt(ref, ckey, defaultValue, crval);
-    calloc.free(ckey);
-    final rval = crval.value;
-    calloc.free(crval);
-    return rval;
-  }
-
-  double getDouble(String key, [double defaultValue = -1]) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    final crval = calloc<ffi.Double>();
-    cfeatures2d.cv_flann_IndexParams_getDouble(ref, ckey, defaultValue, crval);
-    calloc.free(ckey);
-    final rval = crval.value;
-    calloc.free(crval);
-    return rval;
-  }
-
-  // bool getBool(String key, [bool defaultValue = false]) {
-  //   final ckey = key.toNativeUtf8().cast<ffi.Char>();
-  //   final crval = calloc<ffi.Bool>();
-  //   cfeatures2d.cv_flann_IndexParams_getBool(ref, ckey, defaultValue, crval);
-  //   calloc.free(ckey);
-  //   final rval = crval.value;
-  //   calloc.free(crval);
-  //   return rval;
-  // }
-
-  Map<String, dynamic> getAll() {
-    final names = VecVecChar();
-    final types = VecI32();
-    final strValues = VecVecChar();
-    final numValues = VecF64();
-
-    cfeatures2d.cv_flann_IndexParams_getAll(ref, names.ptr, types.ptr, strValues.ptr, numValues.ptr);
-
-    final rval = <String, dynamic>{};
-    final names1 = names.asStringList();
-    for (var i = 0; i < names1.length; i++) {
-      final name = names1[i];
-      final type = types[i];
-      rval[name] = switch (cvg.FlannIndexType.fromValue(type)) {
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_8U ||
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_8S ||
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_16U ||
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_16S ||
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_32S =>
-          numValues[i].toInt(),
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_32F || cvg.FlannIndexType.FLANN_INDEX_TYPE_64F => numValues[i],
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_BOOL => numValues[i].toInt() != 0,
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_STRING => names1[i],
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_ALGORITHM => cvg.FlannAlgorithm.fromValue(numValues[i].toInt()),
-      };
-    }
-
-    return rval;
-  }
-
-  void setString(String key, String value) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    final cvalue = value.toNativeUtf8().cast<ffi.Char>();
-    cfeatures2d.cv_flann_IndexParams_setString(ref, ckey, cvalue);
-    calloc.free(ckey);
-    calloc.free(cvalue);
-  }
-
-  void setInt(String key, int value) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    cfeatures2d.cv_flann_IndexParams_setInt(ref, ckey, value);
-    calloc.free(ckey);
-  }
-
-  void setDouble(String key, double value) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    cfeatures2d.cv_flann_IndexParams_setDouble(ref, ckey, value);
-    calloc.free(ckey);
-  }
-
-  void setBool(String key, bool value) {
-    final ckey = key.toNativeUtf8().cast<ffi.Char>();
-    cfeatures2d.cv_flann_IndexParams_setBool(ref, ckey, value);
-    calloc.free(ckey);
-  }
-
-  void setAlgorithm(cvg.FlannAlgorithm value) {
-    cfeatures2d.cv_flann_IndexParams_setAlgorithm(ref, value.value);
-  }
-
-  T get<T>(String key, [T? defaultValue]) {
-    if (T == int) {
-      return getInt(key, defaultValue as int? ?? -1) as T;
-    } else if (T == double) {
-      return getDouble(key, defaultValue as double? ?? -1.0) as T;
-    } else if (T == String) {
-      return getString(key, defaultValue as String? ?? "") as T;
-    } else {
-      throw ArgumentError("Unsupported type: ${T.runtimeType}");
-    }
-  }
-
-  void set<T>(String key, T value) {
-    switch (value) {
-      case int():
-        setInt(key, value);
-      case double():
-        setDouble(key, value);
-      case String():
-        setString(key, value);
-      case bool():
-        setBool(key, value);
-      case cvg.FlannAlgorithm():
-        setAlgorithm(value);
-      default:
-        throw ArgumentError("Unsupported type: ${value.runtimeType}");
-    }
-  }
-
-  @override
-  String toString() {
-    return "FlannIndexParams(address=0x${ptr.address.toRadixString(16)})";
-  }
-}
-
-class FlannSearchParams extends FlannIndexParams {
-  FlannSearchParams.fromPointer(
-    super.ptr,
-    int checks,
-    double eps,
-    bool sorted,
-    bool exploreAllTrees, [
-    super.attach = true,
-  ])  : _checks = checks,
-        _eps = eps,
-        _sorted = sorted,
-        _exploreAllTrees = exploreAllTrees,
-        super.fromPointer();
-
-  factory FlannSearchParams({
-    int checks = 32,
-    double eps = 0.0,
-    bool sorted = true,
-    bool exploreAllTrees = false,
-  }) {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    final params = FlannSearchParams.fromPointer(p, checks, eps, sorted, exploreAllTrees);
-
-    params.setInt('checks', checks);
-    params.setDouble('eps', eps);
-
-    params.setInt('sorted', sorted ? 1 : 0);
-    params.setInt('explore_all_trees', exploreAllTrees ? 1 : 0);
-
-    return params;
-  }
-
-  int _checks;
-  double _eps;
-  bool _sorted;
-  bool _exploreAllTrees;
-
-  int get checks => _checks;
-  double get eps => _eps;
-  bool get sorted => _sorted;
-  bool get exploreAllTrees => _exploreAllTrees;
-
-  set checks(int value) {
-    _checks = value;
-    setInt("checks", value);
-  }
-
-  set eps(double value) {
-    _eps = value;
-    setDouble("eps", value);
-  }
-
-  set sorted(bool value) {
-    _sorted = value;
-    setInt("sorted", value ? 1 : 0);
-  }
-
-  set exploreAllTrees(bool value) {
-    _exploreAllTrees = value;
-    setInt("explore_all_trees", value ? 1 : 0);
-  }
-
-  @override
-  String toString() {
-    return "FlannSearchParams("
-        "address=0x${ptr.address.toRadixString(16)}, "
-        "checks=$checks, "
-        "eps=$eps, "
-        "sorted=$sorted, "
-        "exploreAllTrees=$exploreAllTrees)";
-  }
-}
-
-class FlannKDTreeIndexParams extends FlannIndexParams {
-  FlannKDTreeIndexParams.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
-
-  factory FlannKDTreeIndexParams({int trees = 4}) {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    final params = FlannKDTreeIndexParams.fromPointer(p);
-
-    params.setAlgorithm(cvg.FlannAlgorithm.FLANN_INDEX_KDTREE);
-    params.setInt('trees', trees);
-
-    return params;
-  }
-
-  int get trees => getInt("trees");
-  set trees(int value) => setInt("trees", value);
-
-  @override
-  String toString() {
-    return 'FlannKDTreeIndexParams(address=0x${ptr.address.toRadixString(16)}, trees=$trees)';
-  }
-}
+import 'features2d_base.dart';
+import 'features2d_enum.dart';
 
 /// AKAZE is a wrapper around the cv::AKAZE algorithm.
-class AKAZE extends CvStruct<cvg.AKAZE> {
+class AKAZE extends Feature2D<cvg.AKAZE> {
   AKAZE._(cvg.AKAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -315,27 +42,74 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
     return AKAZE._(p);
   }
 
+  /// The AKAZE constructor.
+  ///
+  /// https://docs.opencv.org/4.x/d8/d30/classcv_1_1AKAZE.html#ac5d847ee303373416c7ad1950ea046ed
+  factory AKAZE.create({
+    AKAZEDescriptorType descriptorType = AKAZEDescriptorType.DESCRIPTOR_MLDB,
+    int descriptorSize = 0,
+    int descriptorChannels = 3,
+    double threshold = 0.001,
+    int nOctaves = 4,
+    int nOctaveLayers = 4,
+    KAZEDiffusivityType diffusivity = KAZEDiffusivityType.DIFF_PM_G2,
+    int maxPoints = -1,
+  }) {
+    final p = calloc<cvg.AKAZE>();
+    cvRun(
+      () => cfeatures2d.cv_AKAZE_create_1(
+        descriptorType.value,
+        descriptorSize,
+        descriptorChannels,
+        threshold,
+        nOctaves,
+        nOctaveLayers,
+        diffusivity.value,
+        maxPoints,
+        p,
+      ),
+    );
+    return AKAZE._(p);
+  }
+
   /// Detect keypoints in an image using AKAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_AKAZE_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
   }
 
   /// DetectAndCompute keypoints and compute in an image using AKAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  (VecKeyPoint ret, Mat desc) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  @override
+  (VecKeyPoint ret, Mat desc) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
+      () => cfeatures2d.cv_AKAZE_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        ffi.nullptr,
+      ),
     );
-    return (ret, desc);
+    return (keypoints, descriptors);
   }
 
   static final finalizer = OcvFinalizer<cvg.AKAZEPtr>(cfeatures2d.addresses.cv_AKAZE_close);
@@ -347,10 +121,47 @@ class AKAZE extends CvStruct<cvg.AKAZE> {
 
   @override
   cvg.AKAZE get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.AKAZE";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_AKAZE_empty(ref);
+
+  AKAZEDescriptorType get descriptorType =>
+      AKAZEDescriptorType.fromValue(cfeatures2d.cv_AKAZE_getDescriptorType(ref));
+  set descriptorType(AKAZEDescriptorType value) => cfeatures2d.cv_AKAZE_setDescriptorType(ref, value.value);
+
+  int get descriptorSize => cfeatures2d.cv_AKAZE_getDescriptorSize(ref);
+  set descriptorSize(int value) => cfeatures2d.cv_AKAZE_setDescriptorSize(ref, value);
+
+  int get descriptorChannels => cfeatures2d.cv_AKAZE_getDescriptorChannels(ref);
+  set descriptorChannels(int value) => cfeatures2d.cv_AKAZE_setDescriptorChannels(ref, value);
+
+  double get threshold => cfeatures2d.cv_AKAZE_getThreshold(ref);
+  set threshold(double value) => cfeatures2d.cv_AKAZE_setThreshold(ref, value);
+
+  int get nOctaves => cfeatures2d.cv_AKAZE_getNOctaves(ref);
+  set nOctaves(int value) => cfeatures2d.cv_AKAZE_setNOctaves(ref, value);
+
+  int get nOctaveLayers => cfeatures2d.cv_AKAZE_getNOctaveLayers(ref);
+  set nOctaveLayers(int value) => cfeatures2d.cv_AKAZE_setNOctaveLayers(ref, value);
+
+  KAZEDiffusivityType get diffusivity =>
+      KAZEDiffusivityType.fromValue(cfeatures2d.cv_AKAZE_getDiffusivity(ref));
+  set diffusivity(KAZEDiffusivityType value) => cfeatures2d.cv_AKAZE_setDiffusivity(ref, value.value);
+
+  int get maxPoints => cfeatures2d.cv_AKAZE_getMaxPoints(ref);
+  set maxPoints(int value) => cfeatures2d.cv_AKAZE_setMaxPoints(ref, value);
+
+  @override
+  String toString() {
+    return "AKAZE(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// AgastFeatureDetector is a wrapper around the cv::AgastFeatureDetector.
-class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
+class AgastFeatureDetector extends Feature2D<cvg.AgastFeatureDetector> {
   AgastFeatureDetector._(cvg.AgastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -369,14 +180,42 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
     return AgastFeatureDetector._(p);
   }
 
+  /// create (int threshold=10, bool nonmaxSuppression=true, AgastFeatureDetector::DetectorType type=AgastFeatureDetector::OAST_9_16)
+  ///
+  /// https://docs.opencv.org/4.x/d7/d19/classcv_1_1AgastFeatureDetector.html#ae1987fb24e86701236773dfa7f6dabee
+  factory AgastFeatureDetector.create({
+    int threshold = 10,
+    bool nonmaxSuppression = true,
+    AgastDetectorType type = AgastDetectorType.OAST_9_16,
+  }) {
+    final p = calloc<cvg.AgastFeatureDetector>();
+    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p));
+    return AgastFeatureDetector._(p);
+  }
+
   /// Detect keypoints in an image using AgastFeatureDetector.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(
+      () => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr),
+    );
+    return keypoints;
+  }
+
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    throw UnsupportedError("This function is not supported by AgastFeatureDetector");
   }
 
   static final finalizer = OcvFinalizer<cvg.AgastFeatureDetectorPtr>(
@@ -390,10 +229,30 @@ class AgastFeatureDetector extends CvStruct<cvg.AgastFeatureDetector> {
 
   @override
   cvg.AgastFeatureDetector get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.AgastFeatureDetector";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_AgastFeatureDetector_empty(ref);
+
+  int get threshold => cfeatures2d.cv_AgastFeatureDetector_getThreshold(ref);
+  set threshold(int value) => cfeatures2d.cv_AgastFeatureDetector_setThreshold(ref, value);
+
+  bool get nonmaxSuppression => cfeatures2d.cv_AgastFeatureDetector_getNonmaxSuppression(ref);
+  set nonmaxSuppression(bool value) => cfeatures2d.cv_AgastFeatureDetector_setNonmaxSuppression(ref, value);
+
+  AgastDetectorType get type => AgastDetectorType.fromValue(cfeatures2d.cv_AgastFeatureDetector_getType(ref));
+  set type(AgastDetectorType value) => cfeatures2d.cv_AgastFeatureDetector_setType(ref, value.value);
+
+  @override
+  String toString() {
+    return "AgastFeatureDetector(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// BRISK is a wrapper around the cv::BRISK algorithm.
-class BRISK extends CvStruct<cvg.BRISK> {
+class BRISK extends Feature2D<cvg.BRISK> {
   BRISK._(cvg.BRISKPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -404,10 +263,107 @@ class BRISK extends CvStruct<cvg.BRISK> {
   /// returns a new BRISK algorithm
   ///
   /// For further details, please see:
-  /// https://docs.opencv.org/master/d8/d30/classcv_1_1AKAZE.html
+  /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html
   factory BRISK.empty() {
     final p = calloc<cvg.BRISK>();
     cvRun(() => cfeatures2d.cv_BRISK_create(p));
+    return BRISK._(p);
+  }
+
+  /// The BRISK constructor
+  ///
+  /// [thresh] AGAST detection threshold score.
+  /// [octaves] detection octaves. Use 0 to do single scale.
+  /// [patternScale] apply this scale to the pattern used for sampling the neighbourhood of a keypoint.
+  ///
+  ///```c++
+  /// CV_WRAP static Ptr<BRISK> create(int thresh=30, int octaves=3, float patternScale=1.0f);
+  ///```
+  /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html#ad3b513ded80119670e5efa90a31705ac
+  factory BRISK.create({int thresh = 30, int octaves = 3, double patternScale = 1.0}) {
+    final p = calloc<cvg.BRISK>();
+    cvRun(() => cfeatures2d.cv_BRISK_create_3(thresh, octaves, patternScale, p));
+    return BRISK._(p);
+  }
+
+  /// The BRISK constructor for a custom pattern
+  ///
+  /// [radiusList] defines the radii (in pixels) where the samples around a keypoint are taken (for keypoint scale 1).
+  /// [numberList] defines the number of sampling points on the sampling circle. Must be the same size as radiusList..
+  /// [dMax] threshold for the short pairings used for descriptor formation (in pixels for keypoint scale 1).
+  /// [dMin] threshold for the long pairings used for orientation determination (in pixels for keypoint scale 1).
+  /// [indexChange] index remapping of the bits.
+  ///
+  /// ```c++
+  /// CV_WRAP static Ptr<BRISK> create(const std::vector<float> &radiusList, const std::vector<int> &numberList,
+  ///     float dMax=5.85f, float dMin=8.2f, const std::vector<int>& indexChange=std::vector<int>());
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html#ad3b513ded80119670e5efa90a31705ac
+  factory BRISK.create1({
+    required List<double> radiusList,
+    required List<int> numberList,
+    double dMax = 5.85,
+    double dMin = 8.2,
+    List<int>? indexChange,
+  }) {
+    final p = calloc<cvg.BRISK>();
+    final radiusList_ = radiusList.f32;
+    final numberList_ = numberList.i32;
+    final indexChange_ = indexChange?.i32 ?? VecI32();
+    cvRun(
+      () => cfeatures2d.cv_BRISK_create_1(radiusList_.ref, numberList_.ref, dMax, dMin, indexChange_.ref, p),
+    );
+    radiusList_.dispose();
+    numberList_.dispose();
+    indexChange_.dispose();
+    return BRISK._(p);
+  }
+
+  /// The BRISK constructor for a custom pattern, detection threshold and octaves
+  ///
+  /// [thresh] AGAST detection threshold score.
+  /// [octaves] detection octaves. Use 0 to do single scale.
+  /// [radiusList] defines the radii (in pixels) where the samples around a keypoint are taken (for keypoint scale 1).
+  /// [numberList] defines the number of sampling points on the sampling circle. Must be the same size as radiusList..
+  /// [dMax] threshold for the short pairings used for descriptor formation (in pixels for keypoint scale 1).
+  /// [dMin] threshold for the long pairings used for orientation determination (in pixels for keypoint scale 1).
+  /// [indexChange] index remapping of the bits.
+  ///
+  /// ```c++
+  /// CV_WRAP static Ptr<BRISK> create(int thresh, int octaves, const std::vector<float> &radiusList,
+  ///     const std::vector<int> &numberList, float dMax=5.85f, float dMin=8.2f,
+  ///     const std::vector<int>& indexChange=std::vector<int>());
+  ///```
+  /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html#a4204a459edce314ace1c2bd783e2b185
+  factory BRISK.create2({
+    required int thresh,
+    required int octaves,
+    required List<double> radiusList,
+    required List<int> numberList,
+    double dMax = 5.85,
+    double dMin = 8.2,
+    List<int>? indexChange,
+  }) {
+    final p = calloc<cvg.BRISK>();
+    final radiusList_ = radiusList.f32;
+    final numberList_ = numberList.i32;
+    final indexChange_ = indexChange?.i32 ?? VecI32();
+    cvRun(
+      () => cfeatures2d.cv_BRISK_create_2(
+        thresh,
+        octaves,
+        radiusList_.ref,
+        numberList_.ref,
+        dMax,
+        dMin,
+        indexChange_.ref,
+        p,
+      ),
+    );
+    radiusList_.dispose();
+    numberList_.dispose();
+    indexChange_.dispose();
     return BRISK._(p);
   }
 
@@ -415,23 +371,40 @@ class BRISK extends CvStruct<cvg.BRISK> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_BRISK_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
   }
 
   /// DetectAndCompute keypoints and compute in an image using BRISK.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     cvRun(
-      () => cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr),
+      () => cfeatures2d.cv_BRISK_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        ffi.nullptr,
+      ),
     );
-    return (ret, desc);
+    return (keypoints, descriptors);
   }
 
   static final finalizer = OcvFinalizer<cvg.BRISKPtr>(cfeatures2d.addresses.cv_BRISK_close);
@@ -443,24 +416,34 @@ class BRISK extends CvStruct<cvg.BRISK> {
 
   @override
   cvg.BRISK get ref => ptr.ref;
-}
 
-enum FastFeatureDetectorType {
-  /// FastFeatureDetector::TYPE_5_8
-  TYPE_5_8(0),
+  @override
+  String get defaultName => "${super.defaultName}.BRISK";
 
-  /// FastFeatureDetector::TYPE_7_12
-  TYPE_7_12(1),
+  @override
+  bool get isEmpty => cfeatures2d.cv_BRISK_empty(ref);
 
-  /// FastFeatureDetector::TYPE_9_16
-  TYPE_9_16(2);
+  int get threshold => cfeatures2d.cv_BRISK_getThreshold(ref);
+  set threshold(int value) => cfeatures2d.cv_BRISK_setThreshold(ref, value);
 
-  const FastFeatureDetectorType(this.value);
-  final int value;
+  /// Set detection octaves.
+  ///  [octaves] detection octaves. Use 0 to do single scale.
+  int get octaves => cfeatures2d.cv_BRISK_getOctaves(ref);
+  set octaves(int value) => cfeatures2d.cv_BRISK_setOctaves(ref, value);
+
+  /// Set detection patternScale.
+  ///  [patternScale] apply this scale to the pattern used for sampling the neighbourhood of a keypoint.
+  double get patternScale => cfeatures2d.cv_BRISK_getPatternScale(ref);
+  set patternScale(double value) => cfeatures2d.cv_BRISK_setPatternScale(ref, value);
+
+  @override
+  String toString() {
+    return "BRISK(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// FastFeatureDetector is a wrapper around the cv::FastFeatureDetector.
-class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
+class FastFeatureDetector extends Feature2D<cvg.FastFeatureDetector> {
   FastFeatureDetector._(cvg.FastFeatureDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -497,10 +480,25 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(
+      () => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr),
+    );
+    return keypoints;
+  }
+
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    throw UnsupportedError("This function/feature is not supported.");
   }
 
   static final finalizer = OcvFinalizer<cvg.FastFeatureDetectorPtr>(
@@ -514,10 +512,31 @@ class FastFeatureDetector extends CvStruct<cvg.FastFeatureDetector> {
 
   @override
   cvg.FastFeatureDetector get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.FastFeatureDetector";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_FastFeatureDetector_empty(ref);
+
+  int get threshold => cfeatures2d.cv_FastFeatureDetector_getThreshold(ref);
+  set threshold(int value) => cfeatures2d.cv_FastFeatureDetector_setThreshold(ref, value);
+
+  bool get nonmaxSuppression => cfeatures2d.cv_FastFeatureDetector_getNonmaxSuppression(ref);
+  set nonmaxSuppression(bool value) => cfeatures2d.cv_FastFeatureDetector_setNonmaxSuppression(ref, value);
+
+  FastFeatureDetectorType get type =>
+      FastFeatureDetectorType.fromValue(cfeatures2d.cv_FastFeatureDetector_getType(ref));
+  set type(FastFeatureDetectorType value) => cfeatures2d.cv_FastFeatureDetector_setType(ref, value.value);
+
+  @override
+  String toString() {
+    return "FastFeatureDetector(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// GFTTDetector is a wrapper around the cv::GFTTDetector.
-class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
+class GFTTDetector extends Feature2D<cvg.GFTTDetector> {
   GFTTDetector._(cvg.GFTTDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -536,14 +555,83 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
     return GFTTDetector._(p);
   }
 
+  /// ```c++
+  /// CV_WRAP static Ptr<GFTTDetector> create( int maxCorners=1000, double qualityLevel=0.01, double minDistance=1,
+  /// int blockSize=3, bool useHarrisDetector=false, double k=0.04 );
+  /// ```
+  factory GFTTDetector.create({
+    int maxFeatures = 1000,
+    double qualityLevel = 0.01,
+    double minDistance = 1,
+    int blockSize = 3,
+    bool useHarrisDetector = false,
+    double k = 0.04,
+  }) {
+    final p = calloc<cvg.GFTTDetector>();
+    cvRun(
+      () => cfeatures2d.cv_GFTTDetector_create_2(
+        maxFeatures,
+        qualityLevel,
+        minDistance,
+        blockSize,
+        useHarrisDetector,
+        k,
+        p,
+      ),
+    );
+    return GFTTDetector._(p);
+  }
+
+  /// ```c++
+  /// CV_WRAP static Ptr<GFTTDetector> create( int maxCorners, double qualityLevel, double minDistance,
+  /// int blockSize, int gradiantSize, bool useHarrisDetector=false, double k=0.04 );
+  /// ```
+  factory GFTTDetector.create1({
+    int maxCorners = 1000,
+    double qualityLevel = 0.01,
+    double minDistance = 1,
+    int blockSize = 3,
+    int gradiantSize = 3,
+    bool useHarrisDetector = false,
+    double k = 0.04,
+  }) {
+    final p = calloc<cvg.GFTTDetector>();
+    cvRun(
+      () => cfeatures2d.cv_GFTTDetector_create_1(
+        maxCorners,
+        qualityLevel,
+        minDistance,
+        blockSize,
+        gradiantSize,
+        useHarrisDetector,
+        k,
+        p,
+      ),
+    );
+    return GFTTDetector._(p);
+  }
+
   /// Detect keypoints in an image using GFTTDetector.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
+  }
+
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    throw UnsupportedError("This function/feature is not supported.");
   }
 
   static final finalizer = OcvFinalizer<cvg.GFTTDetectorPtr>(cfeatures2d.addresses.cv_GFTTDetector_close);
@@ -555,10 +643,42 @@ class GFTTDetector extends CvStruct<cvg.GFTTDetector> {
 
   @override
   cvg.GFTTDetector get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.GFTTDetector";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_GFTTDetector_empty(ref);
+
+  int get maxFeatures => cfeatures2d.cv_GFTTDetector_getMaxFeatures(ref);
+  set maxFeatures(int value) => cfeatures2d.cv_GFTTDetector_setMaxFeatures(ref, value);
+
+  double get qualityLevel => cfeatures2d.cv_GFTTDetector_getQualityLevel(ref);
+  set qualityLevel(double value) => cfeatures2d.cv_GFTTDetector_setQualityLevel(ref, value);
+
+  double get minDistance => cfeatures2d.cv_GFTTDetector_getMinDistance(ref);
+  set minDistance(double value) => cfeatures2d.cv_GFTTDetector_setMinDistance(ref, value);
+
+  int get blockSize => cfeatures2d.cv_GFTTDetector_getBlockSize(ref);
+  set blockSize(int value) => cfeatures2d.cv_GFTTDetector_setBlockSize(ref, value);
+
+  int get gradientSize => cfeatures2d.cv_GFTTDetector_getGradientSize(ref);
+  set gradientSize(int value) => cfeatures2d.cv_GFTTDetector_setGradientSize(ref, value);
+
+  bool get harrisDetector => cfeatures2d.cv_GFTTDetector_getHarrisDetector(ref);
+  set harrisDetector(bool value) => cfeatures2d.cv_GFTTDetector_setHarrisDetector(ref, value);
+
+  double get k => cfeatures2d.cv_GFTTDetector_getK(ref);
+  set k(double value) => cfeatures2d.cv_GFTTDetector_setK(ref, value);
+
+  @override
+  String toString() {
+    return "GFTTDetector(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// KAZE is a wrapper around the cv::KAZE.
-class KAZE extends CvStruct<cvg.KAZE> {
+class KAZE extends Feature2D<cvg.KAZE> {
   KAZE._(cvg.KAZEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -576,25 +696,83 @@ class KAZE extends CvStruct<cvg.KAZE> {
     return KAZE._(p);
   }
 
+  //// The KAZE constructor
+  ///
+  /// [extended] Set to enable extraction of extended (128-byte) descriptor.
+  /// [upright] Set to enable use of upright descriptors (non rotation-invariant).
+  /// [threshold] Detector response threshold to accept point
+  /// [nOctaves] Maximum octave evolution of the image
+  /// [nOctaveLayers] Default number of sublevels per scale level
+  /// [diffusivity] Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or DIFF_CHARBONNIER
+  /// ```c++
+  /// CV_WRAP static Ptr<KAZE> create(bool extended=false, bool upright=false,
+  ///  float threshold = 0.001f,
+  ///  int nOctaves = 4, int nOctaveLayers = 4,
+  ///  KAZE::DiffusivityType diffusivity = KAZE::DIFF_PM_G2);
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/d3/d61/classcv_1_1KAZE.html#a2fdb3848a465a55bc39941f5af99f7e3
+  factory KAZE.create({
+    bool extended = false,
+    bool upright = false,
+    double threshold = 0.001,
+    int nOctaves = 4,
+    int nOctaveLayers = 4,
+    KAZEDiffusivityType diffusivity = KAZEDiffusivityType.DIFF_PM_G2,
+  }) {
+    final p = calloc<cvg.KAZE>();
+    cvRun(
+      () => cfeatures2d.cv_KAZE_create_1(
+        extended,
+        upright,
+        threshold,
+        nOctaves,
+        nOctaveLayers,
+        diffusivity.value,
+        p,
+      ),
+    );
+    return KAZE._(p);
+  }
+
   /// Detect keypoints in an image using KAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_KAZE_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
   }
 
   /// DetectAndCompute keypoints and compute in an image using KAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr));
-    return (ret, desc);
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
+    cvRun(
+      () => cfeatures2d.cv_KAZE_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        ffi.nullptr,
+      ),
+    );
+    return (keypoints, descriptors);
   }
 
   static final finalizer = OcvFinalizer<cvg.KAZEPtr>(cfeatures2d.addresses.cv_KAZE_close);
@@ -606,10 +784,40 @@ class KAZE extends CvStruct<cvg.KAZE> {
 
   @override
   cvg.KAZE get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.KAZE";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_KAZE_empty(ref);
+
+  set extended(bool extended) => cfeatures2d.cv_KAZE_setExtended(ref, extended);
+  bool get extended => cfeatures2d.cv_KAZE_getExtended(ref);
+
+  set upright(bool upright) => cfeatures2d.cv_KAZE_setUpright(ref, upright);
+  bool get upright => cfeatures2d.cv_KAZE_getUpright(ref);
+
+  set threshold(double threshold) => cfeatures2d.cv_KAZE_setThreshold(ref, threshold);
+  double get threshold => cfeatures2d.cv_KAZE_getThreshold(ref);
+
+  set octaves(int octaves) => cfeatures2d.cv_KAZE_setNOctaves(ref, octaves);
+  int get octaves => cfeatures2d.cv_KAZE_getNOctaves(ref);
+
+  set nOctaveLayers(int octaveLayers) => cfeatures2d.cv_KAZE_setNOctaveLayers(ref, octaveLayers);
+  int get nOctaveLayers => cfeatures2d.cv_KAZE_getNOctaveLayers(ref);
+
+  set diffusivity(KAZEDiffusivityType diff) => cfeatures2d.cv_KAZE_setDiffusivity(ref, diff.value);
+  KAZEDiffusivityType get diffusivity =>
+      KAZEDiffusivityType.fromValue(cfeatures2d.cv_KAZE_getDiffusivity(ref));
+
+  @override
+  String toString() {
+    return "KAZE(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// MSER is a wrapper around the cv::MSER.
-class MSER extends CvStruct<cvg.MSER> {
+class MSER extends Feature2D<cvg.MSER> {
   MSER._(cvg.MSERPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -627,14 +835,74 @@ class MSER extends CvStruct<cvg.MSER> {
     return MSER._(p);
   }
 
+  /// Full constructor for %MSER detector
+  ///
+  /// delta it compares \f$(size_{i}-size_{i-delta})/size_{i-delta}\f$
+  /// min_area prune the area which smaller than minArea
+  /// max_area prune the area which bigger than maxArea
+  /// max_variation prune the area have similar size to its children
+  /// min_diversity for color image, trace back to cut off mser with diversity less than min_diversity
+  /// max_evolution  for color image, the evolution steps
+  /// area_threshold for color image, the area threshold to cause re-initialize
+  /// min_margin for color image, ignore too small margin
+  /// edge_blur_size for color image, the aperture size for edge blur
+  /// ```c++
+  ///CV_WRAP static Ptr<MSER> create( int delta=5, int min_area=60, int max_area=14400,
+  ///      double max_variation=0.25, double min_diversity=.2,
+  ///      int max_evolution=200, double area_threshold=1.01,
+  ///      double min_margin=0.003, int edge_blur_size=5 );
+  /// ```
+  ///
+  factory MSER.create({
+    int delta = 5,
+    int minArea = 60,
+    int maxArea = 14400,
+    double maxVariation = 0.25,
+    double minDiversity = 0.2,
+    int maxEvolution = 200,
+    double areaThreshold = 1.01,
+    double minMargin = 0.003,
+    int edgeBlurSize = 5,
+  }) {
+    final p = calloc<cvg.MSER>();
+    cvRun(
+      () => cfeatures2d.cv_MSER_create_1(
+        delta,
+        minArea,
+        maxArea,
+        maxVariation,
+        minDiversity,
+        maxEvolution,
+        areaThreshold,
+        minMargin,
+        edgeBlurSize,
+        p,
+      ),
+    );
+    return MSER._(p);
+  }
+
   /// Detect keypoints in an image using MSER.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_MSER_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
+  }
+
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 
   static final finalizer = OcvFinalizer<cvg.MSERPtr>(cfeatures2d.addresses.cv_MSER_close);
@@ -646,18 +914,51 @@ class MSER extends CvStruct<cvg.MSER> {
 
   @override
   cvg.MSER get ref => ptr.ref;
-}
 
-enum ORBScoreType {
-  HARRIS_SCORE(0),
-  FAST_SCORE(1);
+  @override
+  String get defaultName => "${super.defaultName}.MSER";
 
-  const ORBScoreType(this.value);
-  final int value;
+  @override
+  bool get isEmpty => cfeatures2d.cv_MSER_empty(ref);
+
+  set delta(int delta) => cfeatures2d.cv_MSER_setDelta(ref, delta);
+  int get delta => cfeatures2d.cv_MSER_getDelta(ref);
+
+  set minArea(int minArea) => cfeatures2d.cv_MSER_setMinArea(ref, minArea);
+  int get minArea => cfeatures2d.cv_MSER_getMinArea(ref);
+
+  set maxArea(int maxArea) => cfeatures2d.cv_MSER_setMaxArea(ref, maxArea);
+  int get maxArea => cfeatures2d.cv_MSER_getMaxArea(ref);
+
+  set maxVariation(double maxVariation) => cfeatures2d.cv_MSER_setMaxVariation(ref, maxVariation);
+  double get maxVariation => cfeatures2d.cv_MSER_getMaxVariation(ref);
+
+  set minDiversity(double minDiversity) => cfeatures2d.cv_MSER_setMinDiversity(ref, minDiversity);
+  double get minDiversity => cfeatures2d.cv_MSER_getMinDiversity(ref);
+
+  set maxEvolution(int maxEvolution) => cfeatures2d.cv_MSER_setMaxEvolution(ref, maxEvolution);
+  int get maxEvolution => cfeatures2d.cv_MSER_getMaxEvolution(ref);
+
+  set areaThreshold(double areaThreshold) => cfeatures2d.cv_MSER_setAreaThreshold(ref, areaThreshold);
+  double get areaThreshold => cfeatures2d.cv_MSER_getAreaThreshold(ref);
+
+  set minMargin(double minMargin) => cfeatures2d.cv_MSER_setMinMargin(ref, minMargin);
+  double get minMargin => cfeatures2d.cv_MSER_getMinMargin(ref);
+
+  set edgeBlurSize(int edgeBlurSize) => cfeatures2d.cv_MSER_setEdgeBlurSize(ref, edgeBlurSize);
+  int get edgeBlurSize => cfeatures2d.cv_MSER_getEdgeBlurSize(ref);
+
+  set pass2Only(bool pass2Only) => cfeatures2d.cv_MSER_setPass2Only(ref, pass2Only);
+  bool get pass2Only => cfeatures2d.cv_MSER_getPass2Only(ref);
+
+  @override
+  String toString() {
+    return "MSER(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// ORB is a wrapper around the cv::ORB.
-class ORB extends CvStruct<cvg.ORB> {
+class ORB extends Feature2D<cvg.ORB> {
   ORB._(cvg.ORBPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast<ffi.Void>(), detach: this);
@@ -712,37 +1013,40 @@ class ORB extends CvStruct<cvg.ORB> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_ORB_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
   }
 
   /// DetectAndCompute keypoints and compute in an image using ORB.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  @override
   (VecKeyPoint, Mat) detectAndCompute(
     Mat src,
     Mat mask, {
     VecKeyPoint? keypoints,
-    Mat? description,
+    Mat? descriptors,
     bool useProvidedKeypoints = false,
   }) {
     keypoints ??= VecKeyPoint();
-    description ??= Mat.empty();
+    descriptors ??= Mat.empty();
     cvRun(
       () => cfeatures2d.cv_ORB_detectAndCompute(
         ref,
         src.ref,
         mask.ref,
+        descriptors!.ref,
         keypoints!.ptr,
-        description!.ref,
         useProvidedKeypoints,
         ffi.nullptr,
       ),
     );
-    return (keypoints, description);
+    return (keypoints, descriptors);
   }
 
   static final finalizer = OcvFinalizer<cvg.ORBPtr>(cfeatures2d.addresses.cv_ORB_close);
@@ -754,186 +1058,48 @@ class ORB extends CvStruct<cvg.ORB> {
 
   @override
   cvg.ORB get ref => ptr.ref;
-}
-
-class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
-  SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
-    if (attach) {
-      finalizer.attach(this, ptr.cast(), detach: this);
-    }
-  }
-
-  factory SimpleBlobDetectorParams.empty() {
-    final p = calloc<cvg.SimpleBlobDetectorParams>();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetectorParams_create(p));
-    return SimpleBlobDetectorParams._(p);
-  }
-
-  factory SimpleBlobDetectorParams({
-    int? blobColor,
-    bool? filterByArea,
-    bool? filterByCircularity,
-    bool? filterByColor,
-    bool? filterByConvexity,
-    bool? filterByInertia,
-    double? maxArea,
-    double? maxCircularity,
-    double? maxConvexity,
-    double? maxInertiaRatio,
-    double? maxThreshold,
-    double? minArea,
-    double? minCircularity,
-    double? minConvexity,
-    double? minDistBetweenBlobs,
-    double? minInertiaRatio,
-    int? minRepeatability,
-    double? minThreshold,
-    double? thresholdStep,
-  }) {
-    final p = calloc<cvg.SimpleBlobDetectorParams>();
-    if (blobColor != null) p.ref.blobColor = blobColor;
-    if (filterByArea != null) p.ref.filterByArea = filterByArea;
-    if (filterByCircularity != null) {
-      p.ref.filterByCircularity = filterByCircularity;
-    }
-    if (filterByColor != null) p.ref.filterByColor = filterByColor;
-    if (filterByConvexity != null) p.ref.filterByConvexity = filterByConvexity;
-    if (filterByInertia != null) p.ref.filterByInertia = filterByInertia;
-    if (maxArea != null) p.ref.maxArea = maxArea;
-    if (maxCircularity != null) p.ref.maxCircularity = maxCircularity;
-    if (maxConvexity != null) p.ref.maxConvexity = maxConvexity;
-    if (maxInertiaRatio != null) p.ref.maxInertiaRatio = maxInertiaRatio;
-    if (maxThreshold != null) p.ref.maxThreshold = maxThreshold;
-    if (minArea != null) p.ref.minArea = minArea;
-    if (minCircularity != null) p.ref.minCircularity = minCircularity;
-    if (minConvexity != null) p.ref.minConvexity = minConvexity;
-    if (minDistBetweenBlobs != null) {
-      p.ref.minDistBetweenBlobs = minDistBetweenBlobs;
-    }
-    if (minInertiaRatio != null) p.ref.minInertiaRatio = minInertiaRatio;
-    if (minRepeatability != null) p.ref.minRepeatability = minRepeatability;
-    if (minThreshold != null) p.ref.minThreshold = minThreshold;
-    if (thresholdStep != null) p.ref.thresholdStep = thresholdStep;
-
-    return SimpleBlobDetectorParams._(p);
-  }
-
-  factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
-        blobColor: r.blobColor,
-        filterByArea: r.filterByArea,
-        filterByCircularity: r.filterByCircularity,
-        filterByColor: r.filterByColor,
-        filterByConvexity: r.filterByConvexity,
-        filterByInertia: r.filterByInertia,
-        maxArea: r.maxArea,
-        maxCircularity: r.maxCircularity,
-        maxConvexity: r.maxConvexity,
-        maxInertiaRatio: r.maxInertiaRatio,
-        maxThreshold: r.maxThreshold,
-        minArea: r.minArea,
-        minCircularity: r.minCircularity,
-        minConvexity: r.minConvexity,
-        minDistBetweenBlobs: r.minDistBetweenBlobs,
-        minInertiaRatio: r.minInertiaRatio,
-        minRepeatability: r.minRepeatability,
-        minThreshold: r.minThreshold,
-        thresholdStep: r.thresholdStep,
-      );
-  factory SimpleBlobDetectorParams.fromPointer(
-    ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
-    bool attach = true,
-  ]) =>
-      SimpleBlobDetectorParams._(p, attach);
 
   @override
-  cvg.SimpleBlobDetectorParams get ref => ptr.ref;
-
-  static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
-
-  void dispose() {
-    finalizer.detach(this);
-    calloc.free(ptr);
-  }
-
-  int get blobColor => ref.blobColor;
-  set blobColor(int value) => ref.blobColor = value;
-
-  bool get filterByArea => ref.filterByArea;
-  set filterByArea(bool value) => ref.filterByArea = value;
-
-  bool get filterByCircularity => ref.filterByCircularity;
-  set filterByCircularity(bool value) => ref.filterByCircularity = value;
-
-  bool get filterByColor => ref.filterByColor;
-  set filterByColor(bool value) => ref.filterByColor = value;
-
-  bool get filterByConvexity => ref.filterByConvexity;
-  set filterByConvexity(bool value) => ref.filterByConvexity = value;
-
-  bool get filterByInertia => ref.filterByInertia;
-  set filterByInertia(bool value) => ref.filterByInertia = value;
-
-  double get maxArea => ref.maxArea;
-  set maxArea(double v) => ref.maxArea = v;
-
-  double get maxCircularity => ref.maxCircularity;
-  set maxCircularity(double v) => ref.maxCircularity = v;
-
-  double get maxConvexity => ref.maxConvexity;
-  set maxConvexity(double v) => ref.maxConvexity = v;
-
-  double get maxInertiaRatio => ref.maxInertiaRatio;
-  set maxInertiaRatio(double v) => ref.maxInertiaRatio = v;
-
-  double get maxThreshold => ref.maxThreshold;
-  set maxThreshold(double v) => ref.maxThreshold = v;
-
-  double get minArea => ref.minArea;
-  set minArea(double v) => ref.minArea = v;
-
-  double get minCircularity => ref.minCircularity;
-  set minCircularity(double v) => ref.minCircularity = v;
-
-  double get minConvexity => ref.minConvexity;
-  set minConvexity(double v) => ref.minConvexity = v;
-
-  double get minDistBetweenBlobs => ref.minDistBetweenBlobs;
-  set minDistBetweenBlobs(double v) => ref.minDistBetweenBlobs = v;
-
-  double get minInertiaRatio => ref.minInertiaRatio;
-  set minInertiaRatio(double v) => ref.minInertiaRatio = v;
-
-  int get minRepeatability => ref.minRepeatability;
-  set minRepeatability(int v) => ref.minRepeatability = v;
-
-  double get minThreshold => ref.minThreshold;
-  set minThreshold(double v) => ref.minThreshold = v;
-
-  double get thresholdStep => ref.thresholdStep;
-  set thresholdStep(double v) => ref.thresholdStep = v;
+  String get defaultName => "${super.defaultName}.ORB";
 
   @override
-  List<num> get props => [
-        maxArea,
-        minArea,
-        minConvexity,
-        maxConvexity,
-        minInertiaRatio,
-        maxInertiaRatio,
-        minThreshold,
-        maxThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-        minRepeatability,
-        minThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-      ];
+  bool get isEmpty => cfeatures2d.cv_ORB_empty(ref);
+
+  int get maxFeatures => cfeatures2d.cv_ORB_getMaxFeatures(ref);
+  set maxFeatures(int value) => cfeatures2d.cv_ORB_setMaxFeatures(ref, value);
+
+  double get scaleFactor => cfeatures2d.cv_ORB_getScaleFactor(ref);
+  set scaleFactor(double value) => cfeatures2d.cv_ORB_setScaleFactor(ref, value);
+
+  int get nLevels => cfeatures2d.cv_ORB_getNLevels(ref);
+  set nLevels(int value) => cfeatures2d.cv_ORB_setNLevels(ref, value);
+
+  int get edgeThreshold => cfeatures2d.cv_ORB_getEdgeThreshold(ref);
+  set edgeThreshold(int value) => cfeatures2d.cv_ORB_setEdgeThreshold(ref, value);
+
+  int get firstLevel => cfeatures2d.cv_ORB_getFirstLevel(ref);
+  set firstLevel(int value) => cfeatures2d.cv_ORB_setFirstLevel(ref, value);
+
+  int get WTA_K => cfeatures2d.cv_ORB_getWTA_K(ref);
+  set WTA_K(int value) => cfeatures2d.cv_ORB_setWTA_K(ref, value);
+
+  ORBScoreType get scoreType => ORBScoreType.fromValue(cfeatures2d.cv_ORB_getScoreType(ref));
+  set scoreType(ORBScoreType value) => cfeatures2d.cv_ORB_setScoreType(ref, value.value);
+
+  int get patchSize => cfeatures2d.cv_ORB_getPatchSize(ref);
+  set patchSize(int value) => cfeatures2d.cv_ORB_setPatchSize(ref, value);
+
+  int get fastThreshold => cfeatures2d.cv_ORB_getFastThreshold(ref);
+  set fastThreshold(int value) => cfeatures2d.cv_ORB_setFastThreshold(ref, value);
+
+  @override
+  String toString() {
+    return "ORB(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// SimpleBlobDetector is a wrapper around the cv::SimpleBlobDetector.
-class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
+class SimpleBlobDetector extends Feature2D<cvg.SimpleBlobDetector> {
   SimpleBlobDetector._(cvg.SimpleBlobDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -963,10 +1129,25 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(
+      () => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr),
+    );
+    return keypoints;
+  }
+
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    VecKeyPoint? keypoints,
+    Mat? descriptors,
+    bool useProvidedKeypoints = false,
+  }) {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 
   static final finalizer = OcvFinalizer<cvg.SimpleBlobDetectorPtr>(
@@ -980,6 +1161,24 @@ class SimpleBlobDetector extends CvStruct<cvg.SimpleBlobDetector> {
 
   @override
   cvg.SimpleBlobDetector get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.SimpleBlobDetector";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_SimpleBlobDetector_empty(ref);
+
+  set params(SimpleBlobDetectorParams params) => cfeatures2d.cv_SimpleBlobDetector_setParams(ref, params.ref);
+  SimpleBlobDetectorParams get params =>
+      SimpleBlobDetectorParams.fromPointer(cfeatures2d.cv_SimpleBlobDetector_getParams(ref));
+
+  VecVecPoint getBlobContours() =>
+      VecVecPoint.fromPointer(cfeatures2d.cv_SimpleBlobDetector_getBlobContours(ref));
+
+  @override
+  String toString() {
+    return "SimpleBlobDetector(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// BFMatcher is a wrapper around the cv::BFMatcher.
@@ -994,13 +1193,16 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// returns a new BFMatcher algorithm
   ///
   /// For further details, please see:
-  /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
+  /// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html
   factory BFMatcher.empty() {
     final p = calloc<cvg.BFMatcher>();
     cvRun(() => cfeatures2d.cv_BFMatcher_create(p));
     return BFMatcher._(p);
   }
 
+  /// Brute-force matcher create method.
+  ///
+  /// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html#a02ef4d594b33d091767cbfe442aefb8a
   factory BFMatcher.create({int type = NORM_L2, bool crossCheck = false}) {
     final p = calloc<cvg.BFMatcher>();
     cvRun(() => cfeatures2d.cv_BFMatcher_create_1(type, crossCheck, p));
@@ -1036,6 +1238,11 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
 
   @override
   cvg.BFMatcher get ref => ptr.ref;
+
+  @override
+  String toString() {
+    return "BFMatcher(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// FlannBasedMatcher is a wrapper around the cv::FlannBasedMatcher.
@@ -1051,13 +1258,14 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   /// returns a new FlannBasedMatcher algorithm
   ///
   /// For further details, please see:
-  /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
+  /// https://docs.opencv.org/4.x/dc/de2/classcv_1_1FlannBasedMatcher.html
   factory FlannBasedMatcher.empty() {
     final p = calloc<cvg.FlannBasedMatcher>();
     cvRun(() => cfeatures2d.cv_FlannBasedMatcher_create(p));
     return FlannBasedMatcher._(p);
   }
 
+  /// https://docs.opencv.org/4.x/dc/de2/classcv_1_1FlannBasedMatcher.html#ab9114a6471e364ad221f89068ca21382
   factory FlannBasedMatcher.create({FlannIndexParams? indexParams, FlannSearchParams? searchParams}) {
     if (indexParams == null && searchParams == null) {
       return FlannBasedMatcher.empty();
@@ -1094,27 +1302,15 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
 
   @override
   cvg.FlannBasedMatcher get ref => ptr.ref;
-}
 
-enum DrawMatchesFlag {
-  /// DEFAULT creates new image and for each keypoint only the center point will be drawn
-  DEFAULT(0),
-
-  /// DRAW_OVER_OUTIMG draws matches on existing content of image
-  DRAW_OVER_OUTIMG(1),
-
-  /// NOT_DRAW_SINGLE_POINTS will not draw single points
-  NOT_DRAW_SINGLE_POINTS(2),
-
-  /// DRAW_RICH_KEYPOINTS draws the circle around each keypoint with keypoint size and orientation
-  DRAW_RICH_KEYPOINTS(4);
-
-  const DrawMatchesFlag(this.value);
-  final int value;
+  @override
+  String toString() {
+    return "FlannBasedMatcher(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 /// SIFT is a wrapper around the cv::SIFT.
-class SIFT extends CvStruct<cvg.SIFT> {
+class SIFT extends Feature2D<cvg.SIFT> {
   SIFT._(cvg.SIFTPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
@@ -1125,10 +1321,79 @@ class SIFT extends CvStruct<cvg.SIFT> {
   /// returns a new SIFT algorithm
   ///
   /// For further details, please see:
-  /// https://docs.opencv.org/master/d5/d3c/classcv_1_1xfeatures2d_1_1SIFT.html
+  /// https://docs.opencv.org/4.x/d7/d60/classcv_1_1SIFT.html
   factory SIFT.empty() {
     final p = calloc<cvg.SIFT>();
     cvRun(() => cfeatures2d.cv_SIFT_create(p));
+    return SIFT._(p);
+  }
+
+  /// Create SIFT with specified descriptorType.
+  ///
+  /// [nfeatures] The number of best features to retain. The features are ranked by their scores
+  /// (measured in SIFT algorithm as the local contrast)
+  ///
+  /// [nOctaveLayers] The number of layers in each octave. 3 is the value used in D. Lowe paper. The
+  /// number of octaves is computed automatically from the image resolution.
+  ///
+  /// [contrastThreshold] The contrast threshold used to filter out weak features in semi-uniform
+  /// (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+  /// Note: The contrast threshold will be divided by nOctaveLayers when the filtering is applied. When
+  /// [nOctaveLayers] is set to default and if you want to use the value used in D. Lowe paper, 0.03, set
+  /// this argument to 0.09.
+  ///
+  /// [edgeThreshold] The threshold used to filter out edge-like features. Note that the its meaning
+  /// is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are
+  /// filtered out (more features are retained).
+  ///
+  /// [sigma] The sigma of the Gaussian applied to the input image at the octave \#0. If your image
+  /// is captured with a weak camera with soft lenses, you might want to reduce the number.
+  ///
+  /// [descriptorType] The type of descriptors. Only CV_32F and CV_8U are supported.
+  ///
+  /// [enable_precise_upscale] Whether to enable precise upscaling in the scale pyramid, which maps
+  /// index $\texttt{x}$ to $\texttt{2x}$. This prevents localization bias. The option
+  /// is disabled by default.
+  ///
+  /// ```c++
+  /// CV_WRAP static Ptr<SIFT> create(int nfeatures, int nOctaveLayers,
+  ///     double contrastThreshold, double edgeThreshold,
+  ///     double sigma, int descriptorType, bool enable_precise_upscale = false);
+  /// ```
+  ///
+  /// https://docs.opencv.org/4.x/d7/d60/classcv_1_1SIFT.html#a4264f700a8133074fb477e30d9beb331
+  factory SIFT.create({
+    int nfeatures = 0,
+    int nOctaveLayers = 3,
+    double contrastThreshold = 0.04,
+    double edgeThreshold = 10,
+    double sigma = 1.6,
+    int? descriptorType,
+    bool enable_precise_upscale = false,
+  }) {
+    final p = calloc<cvg.SIFT>();
+    cvRun(
+      () => descriptorType == null
+          ? cfeatures2d.cv_SIFT_create_2(
+              nfeatures,
+              nOctaveLayers,
+              contrastThreshold,
+              edgeThreshold,
+              sigma,
+              enable_precise_upscale,
+              p,
+            )
+          : cfeatures2d.cv_SIFT_create_1(
+              nfeatures,
+              nOctaveLayers,
+              contrastThreshold,
+              edgeThreshold,
+              sigma,
+              descriptorType,
+              enable_precise_upscale,
+              p,
+            ),
+    );
     return SIFT._(p);
   }
 
@@ -1136,21 +1401,40 @@ class SIFT extends CvStruct<cvg.SIFT> {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  VecKeyPoint detect(Mat src) {
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, ffi.nullptr));
-    return ret;
+  @override
+  VecKeyPoint detect(Mat src, {VecKeyPoint? keypoints, Mat? mask}) {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    cvRun(() => cfeatures2d.cv_SIFT_detect(ref, src.ref, keypoints!.ptr, mask!.ref, ffi.nullptr));
+    return keypoints;
   }
 
   /// DetectAndCompute keypoints and compute in an image using SIFT.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  (VecKeyPoint, Mat) detectAndCompute(Mat src, Mat mask) {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
-    cvRun(() => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, ffi.nullptr));
-    return (ret, desc);
+  @override
+  (VecKeyPoint, Mat) detectAndCompute(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
+    cvRun(
+      () => cfeatures2d.cv_SIFT_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        ffi.nullptr,
+      ),
+    );
+    return (keypoints, descriptors);
   }
 
   static final finalizer = OcvFinalizer<cvg.SIFTPtr>(cfeatures2d.addresses.cv_SIFT_close);
@@ -1162,11 +1446,45 @@ class SIFT extends CvStruct<cvg.SIFT> {
 
   @override
   cvg.SIFT get ref => ptr.ref;
+
+  @override
+  String get defaultName => "${super.defaultName}.SIFT";
+
+  @override
+  bool get isEmpty => cfeatures2d.cv_SIFT_empty(ref);
+
+  set NFeatures(int maxFeatures) => cfeatures2d.cv_SIFT_setNFeatures(ref, maxFeatures);
+  int get NFeatures => cfeatures2d.cv_SIFT_getNFeatures(ref);
+
+  set nOctaveLayers(int nOctaveLayers) => cfeatures2d.cv_SIFT_setNOctaveLayers(ref, nOctaveLayers);
+  int get nOctaveLayers => cfeatures2d.cv_SIFT_getNOctaveLayers(ref);
+
+  set contrastThreshold(double contrastThreshold) =>
+      cfeatures2d.cv_SIFT_setContrastThreshold(ref, contrastThreshold);
+  double get contrastThreshold => cfeatures2d.cv_SIFT_getContrastThreshold(ref);
+
+  set edgeThreshold(double edgeThreshold) => cfeatures2d.cv_SIFT_setEdgeThreshold(ref, edgeThreshold);
+  double get edgeThreshold => cfeatures2d.cv_SIFT_getEdgeThreshold(ref);
+
+  set sigma(double sigma) => cfeatures2d.cv_SIFT_setSigma(ref, sigma);
+  double get sigma => cfeatures2d.cv_SIFT_getSigma(ref);
+
+  @override
+  String toString() {
+    return "SIFT(addr=0x${ptr.address.toRadixString(16)})";
+  }
 }
 
 void drawKeyPoints(Mat src, VecKeyPoint keypoints, Mat dst, Scalar color, DrawMatchesFlag flag) {
   cvRun(
-    () => cfeatures2d.cv_drawKeyPoints(src.ref, keypoints.ref, dst.ref, color.ref, flag.value, ffi.nullptr),
+    () => cfeatures2d.cv_drawKeyPoints(
+      src.ref,
+      keypoints.ref,
+      dst.ref,
+      color.ref,
+      flag.value,
+      ffi.nullptr,
+    ),
   );
 }
 

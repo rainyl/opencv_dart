@@ -28,25 +28,140 @@ external ffi.Pointer<CvStatus> cv_AKAZE_create(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        AKAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
-external ffi.Pointer<CvStatus> cv_AKAZE_detect(
-  AKAZE self,
-  Mat src,
-  ffi.Pointer<VecKeyPoint> rval,
-  imp$1.CvCallback_0 callback,
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Int, ffi.Float,
+        ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<AKAZE>)>()
+external ffi.Pointer<CvStatus> cv_AKAZE_create_1(
+  int descriptor_type,
+  int descriptor_size,
+  int descriptor_channels,
+  double threshold,
+  int nOctaves,
+  int nOctaveLayers,
+  int diffusivity,
+  int max_points,
+  ffi.Pointer<AKAZE> rval,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        AKAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        AKAZE, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_AKAZE_detect(
+  AKAZE self,
+  Mat src,
+  ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(AKAZE, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AKAZE_detectAndCompute(
   AKAZE self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(AKAZE)>()
+external bool cv_AKAZE_empty(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(AKAZE)>()
+external ffi.Pointer<ffi.Char> cv_AKAZE_getDefaultName(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getDescriptorChannels(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getDescriptorSize(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getDescriptorType(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getDiffusivity(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getMaxPoints(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getNOctaveLayers(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Int Function(AKAZE)>()
+external int cv_AKAZE_getNOctaves(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Double Function(AKAZE)>()
+external double cv_AKAZE_getThreshold(
+  AKAZE self,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setDescriptorChannels(
+  AKAZE self,
+  int dch,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setDescriptorSize(
+  AKAZE self,
+  int dsize,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setDescriptorType(
+  AKAZE self,
+  int dtype,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setDiffusivity(
+  AKAZE self,
+  int diff,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setMaxPoints(
+  AKAZE self,
+  int max_points,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setNOctaveLayers(
+  AKAZE self,
+  int octaveLayers,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Int)>()
+external void cv_AKAZE_setNOctaves(
+  AKAZE self,
+  int octaves,
+);
+
+@ffi.Native<ffi.Void Function(AKAZE, ffi.Double)>()
+external void cv_AKAZE_setThreshold(
+  AKAZE self,
+  double threshold,
 );
 
 @ffi.Native<ffi.Void Function(AgastFeatureDetectorPtr)>()
@@ -60,13 +175,80 @@ external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_create(
 );
 
 @ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        ffi.Int, ffi.Bool, ffi.Int, ffi.Pointer<AgastFeatureDetector>)>()
+external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_create_1(
+  int threshold,
+  bool nonmaxSuppression,
+  int type,
+  ffi.Pointer<AgastFeatureDetector> rval,
+);
+
+@ffi.Native<
     ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat,
-        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_detect(
   AgastFeatureDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_AgastFeatureDetector_detectAndCompute(
+  AgastFeatureDetector self,
+  Mat src,
+  Mat mask,
+  Mat desc,
+  ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(AgastFeatureDetector)>()
+external bool cv_AgastFeatureDetector_empty(
+  AgastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(AgastFeatureDetector)>()
+external ffi.Pointer<ffi.Char> cv_AgastFeatureDetector_getDefaultName(
+  AgastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Bool Function(AgastFeatureDetector)>()
+external bool cv_AgastFeatureDetector_getNonmaxSuppression(
+  AgastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Int Function(AgastFeatureDetector)>()
+external int cv_AgastFeatureDetector_getThreshold(
+  AgastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Int Function(AgastFeatureDetector)>()
+external int cv_AgastFeatureDetector_getType(
+  AgastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Void Function(AgastFeatureDetector, ffi.Bool)>()
+external void cv_AgastFeatureDetector_setNonmaxSuppression(
+  AgastFeatureDetector self,
+  bool f,
+);
+
+@ffi.Native<ffi.Void Function(AgastFeatureDetector, ffi.Int)>()
+external void cv_AgastFeatureDetector_setThreshold(
+  AgastFeatureDetector self,
+  int threshold,
+);
+
+@ffi.Native<ffi.Void Function(AgastFeatureDetector, ffi.Int)>()
+external void cv_AgastFeatureDetector_setType(
+  AgastFeatureDetector self,
+  int type,
 );
 
 @ffi.Native<ffi.Void Function(BFMatcherPtr)>()
@@ -122,24 +304,105 @@ external ffi.Pointer<CvStatus> cv_BRISK_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BRISK, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
-external ffi.Pointer<CvStatus> cv_BRISK_detect(
-  BRISK self,
-  Mat src,
-  ffi.Pointer<VecKeyPoint> rval,
-  imp$1.CvCallback_0 callback,
+        VecF32, VecI32, ffi.Float, ffi.Float, VecI32, ffi.Pointer<BRISK>)>()
+external ffi.Pointer<CvStatus> cv_BRISK_create_1(
+  VecF32 radiusList,
+  VecI32 numberList,
+  double dMax,
+  double dMin,
+  VecI32 indexChange,
+  ffi.Pointer<BRISK> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, VecF32, VecI32, ffi.Float,
+        ffi.Float, VecI32, ffi.Pointer<BRISK>)>()
+external ffi.Pointer<CvStatus> cv_BRISK_create_2(
+  int thresh,
+  int octaves,
+  VecF32 radiusList,
+  VecI32 numberList,
+  double dMax,
+  double dMin,
+  VecI32 indexChange,
+  ffi.Pointer<BRISK> rval,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        BRISK, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ffi.Int, ffi.Int, ffi.Float, ffi.Pointer<BRISK>)>()
+external ffi.Pointer<CvStatus> cv_BRISK_create_3(
+  int thresh,
+  int octaves,
+  double patternScale,
+  ffi.Pointer<BRISK> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        BRISK, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_BRISK_detect(
+  BRISK self,
+  Mat src,
+  ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(BRISK, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_BRISK_detectAndCompute(
   BRISK self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(BRISK)>()
+external bool cv_BRISK_empty(
+  BRISK self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(BRISK)>()
+external ffi.Pointer<ffi.Char> cv_BRISK_getDefaultName(
+  BRISK self,
+);
+
+@ffi.Native<ffi.Int Function(BRISK)>()
+external int cv_BRISK_getOctaves(
+  BRISK self,
+);
+
+@ffi.Native<ffi.Float Function(BRISK)>()
+external double cv_BRISK_getPatternScale(
+  BRISK self,
+);
+
+@ffi.Native<ffi.Int Function(BRISK)>()
+external int cv_BRISK_getThreshold(
+  BRISK self,
+);
+
+@ffi.Native<ffi.Void Function(BRISK, ffi.Int)>()
+external void cv_BRISK_setOctaves(
+  BRISK self,
+  int octaves,
+);
+
+@ffi.Native<ffi.Void Function(BRISK, ffi.Float)>()
+external void cv_BRISK_setPatternScale(
+  BRISK self,
+  double patternScale,
+);
+
+@ffi.Native<ffi.Void Function(BRISK, ffi.Int)>()
+external void cv_BRISK_setThreshold(
+  BRISK self,
+  int threshold,
 );
 
 @ffi.Native<ffi.Void Function(FastFeatureDetectorPtr)>()
@@ -164,12 +427,69 @@ external ffi.Pointer<CvStatus> cv_FastFeatureDetector_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat,
-        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_FastFeatureDetector_detect(
   FastFeatureDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_FastFeatureDetector_detectAndCompute(
+  FastFeatureDetector self,
+  Mat src,
+  Mat mask,
+  Mat desc,
+  ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(FastFeatureDetector)>()
+external bool cv_FastFeatureDetector_empty(
+  FastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(FastFeatureDetector)>()
+external ffi.Pointer<ffi.Char> cv_FastFeatureDetector_getDefaultName(
+  FastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Bool Function(FastFeatureDetector)>()
+external bool cv_FastFeatureDetector_getNonmaxSuppression(
+  FastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Int Function(FastFeatureDetector)>()
+external int cv_FastFeatureDetector_getThreshold(
+  FastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Int Function(FastFeatureDetector)>()
+external int cv_FastFeatureDetector_getType(
+  FastFeatureDetector self,
+);
+
+@ffi.Native<ffi.Void Function(FastFeatureDetector, ffi.Bool)>()
+external void cv_FastFeatureDetector_setNonmaxSuppression(
+  FastFeatureDetector self,
+  bool f,
+);
+
+@ffi.Native<ffi.Void Function(FastFeatureDetector, ffi.Int)>()
+external void cv_FastFeatureDetector_setThreshold(
+  FastFeatureDetector self,
+  int threshold,
+);
+
+@ffi.Native<ffi.Void Function(FastFeatureDetector, ffi.Int)>()
+external void cv_FastFeatureDetector_setType(
+  FastFeatureDetector self,
+  int type,
 );
 
 @ffi.Native<ffi.Void Function(FlannBasedMatcherPtr)>()
@@ -214,13 +534,141 @@ external ffi.Pointer<CvStatus> cv_GFTTDetector_create(
 );
 
 @ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Double, ffi.Double, ffi.Int,
+        ffi.Int, ffi.Bool, ffi.Double, ffi.Pointer<GFTTDetector>)>()
+external ffi.Pointer<CvStatus> cv_GFTTDetector_create_1(
+  int maxCorners,
+  double qualityLevel,
+  double minDistance,
+  int blockSize,
+  int gradiantSize,
+  bool useHarrisDetector,
+  double k,
+  ffi.Pointer<GFTTDetector> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Double, ffi.Double, ffi.Int,
+        ffi.Bool, ffi.Double, ffi.Pointer<GFTTDetector>)>()
+external ffi.Pointer<CvStatus> cv_GFTTDetector_create_2(
+  int maxCorners,
+  double qualityLevel,
+  double minDistance,
+  int blockSize,
+  bool useHarrisDetector,
+  double k,
+  ffi.Pointer<GFTTDetector> rval,
+);
+
+@ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_GFTTDetector_detect(
   GFTTDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(GFTTDetector, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_GFTTDetector_detectAndCompute(
+  GFTTDetector self,
+  Mat src,
+  Mat mask,
+  Mat descriptors,
+  ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(GFTTDetector)>()
+external bool cv_GFTTDetector_empty(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Int Function(GFTTDetector)>()
+external int cv_GFTTDetector_getBlockSize(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(GFTTDetector)>()
+external ffi.Pointer<ffi.Char> cv_GFTTDetector_getDefaultName(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Int Function(GFTTDetector)>()
+external int cv_GFTTDetector_getGradientSize(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Bool Function(GFTTDetector)>()
+external bool cv_GFTTDetector_getHarrisDetector(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Double Function(GFTTDetector)>()
+external double cv_GFTTDetector_getK(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Int Function(GFTTDetector)>()
+external int cv_GFTTDetector_getMaxFeatures(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Double Function(GFTTDetector)>()
+external double cv_GFTTDetector_getMinDistance(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Double Function(GFTTDetector)>()
+external double cv_GFTTDetector_getQualityLevel(
+  GFTTDetector self,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Int)>()
+external void cv_GFTTDetector_setBlockSize(
+  GFTTDetector self,
+  int blockSize,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Int)>()
+external void cv_GFTTDetector_setGradientSize(
+  GFTTDetector self,
+  int gradientSize_,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Bool)>()
+external void cv_GFTTDetector_setHarrisDetector(
+  GFTTDetector self,
+  bool val,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Double)>()
+external void cv_GFTTDetector_setK(
+  GFTTDetector self,
+  double k,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Int)>()
+external void cv_GFTTDetector_setMaxFeatures(
+  GFTTDetector self,
+  int maxFeatures,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Double)>()
+external void cv_GFTTDetector_setMinDistance(
+  GFTTDetector self,
+  double minDistance,
+);
+
+@ffi.Native<ffi.Void Function(GFTTDetector, ffi.Double)>()
+external void cv_GFTTDetector_setQualityLevel(
+  GFTTDetector self,
+  double qlevel,
 );
 
 @ffi.Native<ffi.Void Function(KAZEPtr)>()
@@ -234,25 +682,116 @@ external ffi.Pointer<CvStatus> cv_KAZE_create(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        KAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
-external ffi.Pointer<CvStatus> cv_KAZE_detect(
-  KAZE self,
-  Mat src,
-  ffi.Pointer<VecKeyPoint> rval,
-  imp$1.CvCallback_0 callback,
+    ffi.Pointer<CvStatus> Function(ffi.Bool, ffi.Bool, ffi.Float, ffi.Int,
+        ffi.Int, ffi.Int, ffi.Pointer<KAZE>)>()
+external ffi.Pointer<CvStatus> cv_KAZE_create_1(
+  bool extended,
+  bool upright,
+  double threshold,
+  int nOctaves,
+  int nOctaveLayers,
+  int diffusivity,
+  ffi.Pointer<KAZE> rval,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        KAZE, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        KAZE, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_KAZE_detect(
+  KAZE self,
+  Mat src,
+  ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(KAZE, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_KAZE_detectAndCompute(
   KAZE self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(KAZE)>()
+external bool cv_KAZE_empty(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(KAZE)>()
+external ffi.Pointer<ffi.Char> cv_KAZE_getDefaultName(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Int Function(KAZE)>()
+external int cv_KAZE_getDiffusivity(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Bool Function(KAZE)>()
+external bool cv_KAZE_getExtended(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Int Function(KAZE)>()
+external int cv_KAZE_getNOctaveLayers(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Int Function(KAZE)>()
+external int cv_KAZE_getNOctaves(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Double Function(KAZE)>()
+external double cv_KAZE_getThreshold(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Bool Function(KAZE)>()
+external bool cv_KAZE_getUpright(
+  KAZE self,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Int)>()
+external void cv_KAZE_setDiffusivity(
+  KAZE self,
+  int diff,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Bool)>()
+external void cv_KAZE_setExtended(
+  KAZE self,
+  bool extended,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Int)>()
+external void cv_KAZE_setNOctaveLayers(
+  KAZE self,
+  int octaveLayers,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Int)>()
+external void cv_KAZE_setNOctaves(
+  KAZE self,
+  int octaves,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Double)>()
+external void cv_KAZE_setThreshold(
+  KAZE self,
+  double threshold,
+);
+
+@ffi.Native<ffi.Void Function(KAZE, ffi.Bool)>()
+external void cv_KAZE_setUpright(
+  KAZE self,
+  bool upright,
 );
 
 @ffi.Native<ffi.Void Function(MSERPtr)>()
@@ -267,12 +806,182 @@ external ffi.Pointer<CvStatus> cv_MSER_create(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        MSER, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ffi.Int,
+        ffi.Int,
+        ffi.Int,
+        ffi.Double,
+        ffi.Double,
+        ffi.Int,
+        ffi.Double,
+        ffi.Double,
+        ffi.Int,
+        ffi.Pointer<MSER>)>()
+external ffi.Pointer<CvStatus> cv_MSER_create_1(
+  int delta,
+  int min_area,
+  int max_area,
+  double max_variation,
+  double min_diversity,
+  int max_evolution,
+  double area_threshold,
+  double min_margin,
+  int edge_blur_size,
+  ffi.Pointer<MSER> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        MSER, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_MSER_detect(
   MSER self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(MSER, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_MSER_detectAndCompute(
+  MSER self,
+  Mat src,
+  Mat mask,
+  Mat desc,
+  ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(MSER, Mat, ffi.Pointer<VecVecPoint>,
+        ffi.Pointer<VecRect>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_MSER_detectRegions(
+  MSER self,
+  Mat image,
+  ffi.Pointer<VecVecPoint> rval,
+  ffi.Pointer<VecRect> bboxes,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(MSER)>()
+external bool cv_MSER_empty(
+  MSER self,
+);
+
+@ffi.Native<ffi.Double Function(MSER)>()
+external double cv_MSER_getAreaThreshold(
+  MSER self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(MSER)>()
+external ffi.Pointer<ffi.Char> cv_MSER_getDefaultName(
+  MSER self,
+);
+
+@ffi.Native<ffi.Int Function(MSER)>()
+external int cv_MSER_getDelta(
+  MSER self,
+);
+
+@ffi.Native<ffi.Int Function(MSER)>()
+external int cv_MSER_getEdgeBlurSize(
+  MSER self,
+);
+
+@ffi.Native<ffi.Int Function(MSER)>()
+external int cv_MSER_getMaxArea(
+  MSER self,
+);
+
+@ffi.Native<ffi.Int Function(MSER)>()
+external int cv_MSER_getMaxEvolution(
+  MSER self,
+);
+
+@ffi.Native<ffi.Double Function(MSER)>()
+external double cv_MSER_getMaxVariation(
+  MSER self,
+);
+
+@ffi.Native<ffi.Int Function(MSER)>()
+external int cv_MSER_getMinArea(
+  MSER self,
+);
+
+@ffi.Native<ffi.Double Function(MSER)>()
+external double cv_MSER_getMinDiversity(
+  MSER self,
+);
+
+@ffi.Native<ffi.Double Function(MSER)>()
+external double cv_MSER_getMinMargin(
+  MSER self,
+);
+
+@ffi.Native<ffi.Bool Function(MSER)>()
+external bool cv_MSER_getPass2Only(
+  MSER self,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Double)>()
+external void cv_MSER_setAreaThreshold(
+  MSER self,
+  double areaThreshold,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Int)>()
+external void cv_MSER_setDelta(
+  MSER self,
+  int delta,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Int)>()
+external void cv_MSER_setEdgeBlurSize(
+  MSER self,
+  int edge_blur_size,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Int)>()
+external void cv_MSER_setMaxArea(
+  MSER self,
+  int maxArea,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Int)>()
+external void cv_MSER_setMaxEvolution(
+  MSER self,
+  int maxEvolution,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Double)>()
+external void cv_MSER_setMaxVariation(
+  MSER self,
+  double maxVariation,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Int)>()
+external void cv_MSER_setMinArea(
+  MSER self,
+  int minArea,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Double)>()
+external void cv_MSER_setMinDiversity(
+  MSER self,
+  double minDiversity,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Double)>()
+external void cv_MSER_setMinMargin(
+  MSER self,
+  double min_margin,
+);
+
+@ffi.Native<ffi.Void Function(MSER, ffi.Bool)>()
+external void cv_MSER_setPass2Only(
+  MSER self,
+  bool f,
 );
 
 @ffi.Native<ffi.Void Function(ORBPtr)>()
@@ -303,25 +1012,135 @@ external ffi.Pointer<CvStatus> cv_ORB_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        ORB, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ORB, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ORB_detect(
   ORB self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<VecKeyPoint>, Mat,
+    ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>,
         ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ORB_detectAndCompute(
   ORB self,
   Mat src,
   Mat mask,
-  ffi.Pointer<VecKeyPoint> out_keypoints,
   Mat desc,
+  ffi.Pointer<VecKeyPoint> out_keypoints,
   bool useProvidedKeypoints,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(ORB)>()
+external bool cv_ORB_empty(
+  ORB self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(ORB)>()
+external ffi.Pointer<ffi.Char> cv_ORB_getDefaultName(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getEdgeThreshold(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getFastThreshold(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getFirstLevel(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getMaxFeatures(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getNLevels(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getPatchSize(
+  ORB self,
+);
+
+@ffi.Native<ffi.Double Function(ORB)>()
+external double cv_ORB_getScaleFactor(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getScoreType(
+  ORB self,
+);
+
+@ffi.Native<ffi.Int Function(ORB)>()
+external int cv_ORB_getWTA_K(
+  ORB self,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setEdgeThreshold(
+  ORB self,
+  int edgeThreshold,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setFastThreshold(
+  ORB self,
+  int fastThreshold,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setFirstLevel(
+  ORB self,
+  int firstLevel,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setMaxFeatures(
+  ORB self,
+  int maxFeatures,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setNLevels(
+  ORB self,
+  int nlevels,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setPatchSize(
+  ORB self,
+  int patchSize,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Double)>()
+external void cv_ORB_setScaleFactor(
+  ORB self,
+  double scaleFactor,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setScoreType(
+  ORB self,
+  int scoreType,
+);
+
+@ffi.Native<ffi.Void Function(ORB, ffi.Int)>()
+external void cv_ORB_setWTA_K(
+  ORB self,
+  int wta_k,
 );
 
 @ffi.Native<ffi.Void Function(SIFTPtr)>()
@@ -335,25 +1154,119 @@ external ffi.Pointer<CvStatus> cv_SIFT_create(
 );
 
 @ffi.Native<
-    ffi.Pointer<CvStatus> Function(
-        SIFT, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
-external ffi.Pointer<CvStatus> cv_SIFT_detect(
-  SIFT self,
-  Mat src,
-  ffi.Pointer<VecKeyPoint> rval,
-  imp$1.CvCallback_0 callback,
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Double, ffi.Double,
+        ffi.Double, ffi.Int, ffi.Bool, ffi.Pointer<SIFT>)>()
+external ffi.Pointer<CvStatus> cv_SIFT_create_1(
+  int nfeatures,
+  int nOctaveLayers,
+  double contrastThreshold,
+  double edgeThreshold,
+  double sigma,
+  int descriptorType,
+  bool enable_precise_upscale,
+  ffi.Pointer<SIFT> rval,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Double, ffi.Double,
+        ffi.Double, ffi.Bool, ffi.Pointer<SIFT>)>()
+external ffi.Pointer<CvStatus> cv_SIFT_create_2(
+  int nfeatures,
+  int nOctaveLayers,
+  double contrastThreshold,
+  double edgeThreshold,
+  double sigma,
+  bool enable_precise_upscale,
+  ffi.Pointer<SIFT> rval,
 );
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(
-        SIFT, Mat, Mat, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        SIFT, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_SIFT_detect(
+  SIFT self,
+  Mat src,
+  ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(SIFT, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_SIFT_detectAndCompute(
   SIFT self,
   Mat src,
   Mat mask,
   Mat desc,
   ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(SIFT)>()
+external bool cv_SIFT_empty(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Double Function(SIFT)>()
+external double cv_SIFT_getContrastThreshold(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(SIFT)>()
+external ffi.Pointer<ffi.Char> cv_SIFT_getDefaultName(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Double Function(SIFT)>()
+external double cv_SIFT_getEdgeThreshold(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Int Function(SIFT)>()
+external int cv_SIFT_getNFeatures(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Int Function(SIFT)>()
+external int cv_SIFT_getNOctaveLayers(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Double Function(SIFT)>()
+external double cv_SIFT_getSigma(
+  SIFT self,
+);
+
+@ffi.Native<ffi.Void Function(SIFT, ffi.Double)>()
+external void cv_SIFT_setContrastThreshold(
+  SIFT self,
+  double contrastThreshold,
+);
+
+@ffi.Native<ffi.Void Function(SIFT, ffi.Double)>()
+external void cv_SIFT_setEdgeThreshold(
+  SIFT self,
+  double edgeThreshold,
+);
+
+@ffi.Native<ffi.Void Function(SIFT, ffi.Int)>()
+external void cv_SIFT_setNFeatures(
+  SIFT self,
+  int maxFeatures,
+);
+
+@ffi.Native<ffi.Void Function(SIFT, ffi.Int)>()
+external void cv_SIFT_setNOctaveLayers(
+  SIFT self,
+  int nOctaveLayers,
+);
+
+@ffi.Native<ffi.Void Function(SIFT, ffi.Double)>()
+external void cv_SIFT_setSigma(
+  SIFT self,
+  double sigma,
 );
 
 @ffi.Native<
@@ -382,12 +1295,53 @@ external ffi.Pointer<CvStatus> cv_SimpleBlobDetector_create_1(
 
 @ffi.Native<
     ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat,
-        ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>()
+        ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_SimpleBlobDetector_detect(
   SimpleBlobDetector self,
   Mat src,
   ffi.Pointer<VecKeyPoint> rval,
+  Mat mask,
   imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
+    ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat, Mat, Mat,
+        ffi.Pointer<VecKeyPoint>, ffi.Bool, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_SimpleBlobDetector_detectAndCompute(
+  SimpleBlobDetector self,
+  Mat src,
+  Mat mask,
+  Mat desc,
+  ffi.Pointer<VecKeyPoint> rval,
+  bool useProvidedKeypoints,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Bool Function(SimpleBlobDetector)>()
+external bool cv_SimpleBlobDetector_empty(
+  SimpleBlobDetector self,
+);
+
+@ffi.Native<ffi.Pointer<VecVecPoint> Function(SimpleBlobDetector)>()
+external ffi.Pointer<VecVecPoint> cv_SimpleBlobDetector_getBlobContours(
+  SimpleBlobDetector self,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(SimpleBlobDetector)>()
+external ffi.Pointer<ffi.Char> cv_SimpleBlobDetector_getDefaultName(
+  SimpleBlobDetector self,
+);
+
+@ffi.Native<
+    ffi.Pointer<SimpleBlobDetectorParams> Function(SimpleBlobDetector)>()
+external ffi.Pointer<SimpleBlobDetectorParams> cv_SimpleBlobDetector_getParams(
+  SimpleBlobDetector self,
+);
+
+@ffi.Native<ffi.Void Function(SimpleBlobDetector, SimpleBlobDetectorParams)>()
+external void cv_SimpleBlobDetector_setParams(
+  SimpleBlobDetector self,
+  SimpleBlobDetectorParams params,
 );
 
 @ffi.Native<
@@ -816,8 +1770,11 @@ final class SimpleBlobDetectorParams extends ffi.Struct {
 typedef SimpleBlobDetectorPtr = ffi.Pointer<SimpleBlobDetector>;
 typedef VecChar = imp$1.VecChar;
 typedef VecDMatch = imp$1.VecDMatch;
+typedef VecF32 = imp$1.VecF32;
 typedef VecF64 = imp$1.VecF64;
 typedef VecI32 = imp$1.VecI32;
 typedef VecKeyPoint = imp$1.VecKeyPoint;
+typedef VecRect = imp$1.VecRect;
 typedef VecVecChar = imp$1.VecVecChar;
 typedef VecVecDMatch = imp$1.VecVecDMatch;
+typedef VecVecPoint = imp$1.VecVecPoint;
