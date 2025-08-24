@@ -115,4 +115,4 @@ jobs:
           run: |
             cd example/flutter
             flutter config --enable-native-assets
-            flutter build ios --no-codesign
+            flutter build ios --no-codesign --simulator
