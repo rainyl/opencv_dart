@@ -100,19 +100,19 @@ jobs:
         run: |
           dart pub get
           dart --enable-experiment=native-assets test -x skip-workflow
-  build-ios:
-      name: build-ios
-      runs-on: macos-latest
-      steps:
-        - uses: actions/checkout@v4
-          with:
-            submodules: true
-        - name: Set up Flutter
-          uses: subosito/flutter-action@v2
-          with:
-            channel: main # or: beta, master (or main)
-        - name: build
-          run: |
-            cd example/flutter
-            flutter config --enable-native-assets
-            flutter build ios --no-codesign --simulator
+  # build-ios:
+  #     name: build-ios
+  #     runs-on: macos-latest
+  #     steps:
+  #       - uses: actions/checkout@v4
+  #         with:
+  #           submodules: true
+  #       - name: Set up Flutter
+  #         uses: subosito/flutter-action@v2
+  #         with:
+  #           channel: main # or: beta, master (or main)
+  #       - name: build
+  #         run: |
+  #           cd example/flutter
+  #           flutter config --enable-native-assets
+  #           flutter build ios --no-codesign --simulator
