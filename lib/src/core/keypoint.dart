@@ -69,8 +69,7 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   @override
   cvg.KeyPoint get ref => ptr.ref;
   @override
-  String toString() =>
-      "KeyPoint("
+  String toString() => "KeyPoint("
       "${x.toStringAsFixed(3)}, "
       "${y.toStringAsFixed(3)}, "
       "${size.toStringAsFixed(3)}, "

@@ -57,9 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Native Packages'),
-        ),
+        appBar: AppBar(title: const Text('Native Packages')),
         body: Container(
           alignment: Alignment.center,
           child: Column(
@@ -67,13 +65,15 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () async {
                   final picker = ImagePicker();
-                  final img =
-                      await picker.pickImage(source: ImageSource.gallery);
+                  final img = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
                   if (img != null) {
                     final path = img.path;
                     final mat = cv.imread(path);
                     print(
-                        "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                      "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path",
+                    );
                     final (success, bytes) = cv.imencode(".png", mat);
                     // heavy computation
                     final (gray, blur) = await heavyTask(bytes);
@@ -86,8 +86,9 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context)
-                      .load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(
+                    context,
+                  ).load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   print("bytes: ${bytes.length}");
                   // heavy computation
@@ -96,13 +97,12 @@ class _MyAppState extends State<MyApp> {
                   //   images = [bytes, gray, blur];
                   // });
                   final im = await cv.imdecodeAsync(bytes, cv.IMREAD_COLOR);
-                  final (gray, blur) =
-                      await heavyTaskAsync(im);
+                  final (gray, blur) = await heavyTaskAsync(im);
                   setState(() {
                     images = [
                       bytes,
                       cv.imencode(".png", gray).$2,
-                      cv.imencode(".png", blur).$2
+                      cv.imencode(".png", blur).$2,
                     ];
                   });
                 },
@@ -115,9 +115,8 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(
-                          child: Image.memory(images[idx]),
-                        ),
+                        itemBuilder: (ctx, idx) =>
+                            Card(child: Image.memory(images[idx])),
                       ),
                     ),
                     Expanded(

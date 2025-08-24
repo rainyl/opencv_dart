@@ -378,19 +378,19 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
 
   @override
   List<num> get props => [
-    alpha,
-    beta,
-    eta,
-    minScore,
-    maxBoxes,
-    edgeMinMag,
-    edgeMergeThr,
-    clusterMinMag,
-    maxAspectRatio,
-    minBoxArea,
-    gamma,
-    kappa,
-  ];
+        alpha,
+        beta,
+        eta,
+        minScore,
+        maxBoxes,
+        edgeMinMag,
+        edgeMergeThr,
+        clusterMinMag,
+        maxAspectRatio,
+        minBoxArea,
+        gamma,
+        kappa,
+      ];
 
   @override
   cvg.EdgeBoxes get ref => ptr.ref;
@@ -650,20 +650,20 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
 
   @override
   List<Object?> get props => [
-    AnchorThresholdValue,
-    EdgeDetectionOperator,
-    GradientThresholdValue,
-    LineFitErrorThreshold,
-    MaxDistanceBetweenTwoLines,
-    MaxErrorThreshold,
-    MinLineLength,
-    MinPathLength,
-    NFAValidation,
-    PFmode,
-    ScanInterval,
-    Sigma,
-    SumFlag,
-  ];
+        AnchorThresholdValue,
+        EdgeDetectionOperator,
+        GradientThresholdValue,
+        LineFitErrorThreshold,
+        MaxDistanceBetweenTwoLines,
+        MaxErrorThreshold,
+        MinLineLength,
+        MinPathLength,
+        NFAValidation,
+        PFmode,
+        ScanInterval,
+        Sigma,
+        SumFlag,
+      ];
 
   @override
   cvg.EdgeDrawingParams get ref => ptr.ref;

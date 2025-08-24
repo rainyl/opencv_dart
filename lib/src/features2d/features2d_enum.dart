@@ -8,12 +8,12 @@ enum AKAZEDescriptorType {
   final int value;
 
   factory AKAZEDescriptorType.fromValue(int value) => switch (value) {
-    2 => DESCRIPTOR_KAZE_UPRIGHT,
-    3 => DESCRIPTOR_KAZE,
-    4 => DESCRIPTOR_MLDB_UPRIGHT,
-    5 => DESCRIPTOR_MLDB,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid AKAZE descriptor type'),
-  };
+        2 => DESCRIPTOR_KAZE_UPRIGHT,
+        3 => DESCRIPTOR_KAZE,
+        4 => DESCRIPTOR_MLDB_UPRIGHT,
+        5 => DESCRIPTOR_MLDB,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid AKAZE descriptor type'),
+      };
 }
 
 enum KAZEDiffusivityType {
@@ -26,12 +26,12 @@ enum KAZEDiffusivityType {
   final int value;
 
   factory KAZEDiffusivityType.fromValue(int value) => switch (value) {
-    0 => DIFF_PM_G1,
-    1 => DIFF_PM_G2,
-    2 => DIFF_WEICKERT,
-    3 => DIFF_CHARBONNIER,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid KAZE diffusivity type'),
-  };
+        0 => DIFF_PM_G1,
+        1 => DIFF_PM_G2,
+        2 => DIFF_WEICKERT,
+        3 => DIFF_CHARBONNIER,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid KAZE diffusivity type'),
+      };
 }
 
 enum AgastDetectorType {
@@ -44,12 +44,12 @@ enum AgastDetectorType {
   final int value;
 
   factory AgastDetectorType.fromValue(int value) => switch (value) {
-    0 => AGAST_5_8,
-    1 => AGAST_7_12d,
-    2 => AGAST_7_12s,
-    3 => OAST_9_16,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid detector type'),
-  };
+        0 => AGAST_5_8,
+        1 => AGAST_7_12d,
+        2 => AGAST_7_12s,
+        3 => OAST_9_16,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid detector type'),
+      };
 }
 
 enum FastFeatureDetectorType {
@@ -66,11 +66,11 @@ enum FastFeatureDetectorType {
   final int value;
 
   factory FastFeatureDetectorType.fromValue(int value) => switch (value) {
-    0 => TYPE_5_8,
-    1 => TYPE_7_12,
-    2 => TYPE_9_16,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid FastFeatureDetector type'),
-  };
+        0 => TYPE_5_8,
+        1 => TYPE_7_12,
+        2 => TYPE_9_16,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid FastFeatureDetector type'),
+      };
 }
 
 enum ORBScoreType {
@@ -81,10 +81,10 @@ enum ORBScoreType {
   final int value;
 
   factory ORBScoreType.fromValue(int value) => switch (value) {
-    0 => HARRIS_SCORE,
-    1 => FAST_SCORE,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid ORB score type'),
-  };
+        0 => HARRIS_SCORE,
+        1 => FAST_SCORE,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid ORB score type'),
+      };
 }
 
 enum DrawMatchesFlag {
@@ -104,10 +104,10 @@ enum DrawMatchesFlag {
   final int value;
 
   factory DrawMatchesFlag.fromValue(int value) => switch (value) {
-    0 => DEFAULT,
-    1 => DRAW_OVER_OUTIMG,
-    2 => NOT_DRAW_SINGLE_POINTS,
-    4 => DRAW_RICH_KEYPOINTS,
-    _ => throw ArgumentError.value(value, 'value', 'Invalid DrawMatchesFlag value'),
-  };
+        0 => DEFAULT,
+        1 => DRAW_OVER_OUTIMG,
+        2 => NOT_DRAW_SINGLE_POINTS,
+        4 => DRAW_RICH_KEYPOINTS,
+        _ => throw ArgumentError.value(value, 'value', 'Invalid DrawMatchesFlag value'),
+      };
 }

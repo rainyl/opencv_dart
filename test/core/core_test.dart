@@ -621,9 +621,9 @@ void main() async {
 
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
-              lutSize * lutType.channels,
-              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
-            ),
+                lutSize * lutType.channels,
+                (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+              ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);

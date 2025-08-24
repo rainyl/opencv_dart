@@ -37,7 +37,7 @@ class UMat extends CvStruct<cvg.UMat> {
     return UMat._(p);
   }
 
-  /// constructs 2D matrix and fills it with the specified value [s].
+  /// constructs 2D matrix and fills it with the specified value.
   ///
   ///```c++
   /// UMat(int rows, int cols, int type, UMatUsageFlags usageFlags = USAGE_DEFAULT);

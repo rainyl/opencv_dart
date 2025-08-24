@@ -60,6 +60,7 @@ class StereoBM extends CvStruct<cvg.StereoBM> {
   set ROI2(Rect val) => cvg.cv_StereoBM_setROI2(ref, val.ref);
 
   int get smallerBlockSize => cvg.cv_StereoBM_getSmallerBlockSize(ref);
+
   /// Warning: do nothing
   ///
   /// https://github.com/opencv/opencv/blob/75d9ac39643f8e08edf3299e47ffd1468e0c5196/modules/calib3d/src/stereobm.cpp#L1335

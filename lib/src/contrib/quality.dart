@@ -93,14 +93,18 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [computeFeatures]
-  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>((callback) {
-    features ??= Mat.empty();
-    return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
-  }, (c) => c.complete(features));
+  static Future<Mat> computeFeaturesAsync(Mat img, {Mat? features}) async => cvRunAsync0<Mat>(
+        (callback) {
+          features ??= Mat.empty();
+          return ccontrib.cv_quality_QualityBRISQUE_computeFeatures_static(img.ref, features!.ref, callback);
+        },
+        (c) => c.complete(features),
+      );
 
   static final finalizer = OcvFinalizer<cvg.QualityBRISQUEPtr>(
     ccontrib.addresses.cv_quality_QualityBRISQUE_close,
   );
+
   @override
   cvg.QualityBRISQUE get ref => ptr.ref;
 }
@@ -164,6 +168,7 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityGMSDPtr>(ccontrib.addresses.cv_quality_QualityGMSD_close);
+
   @override
   cvg.QualityGMSD get ref => ptr.ref;
 }
@@ -229,6 +234,7 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityMSEPtr>(ccontrib.addresses.cv_quality_QualityMSE_close);
+
   @override
   cvg.QualityMSE get ref => ptr.ref;
 }
@@ -310,9 +316,11 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
   }
 
   double get maxPixelValue => ccontrib.cv_quality_QualityPSNR_getMaxPixelValue(ref);
+
   set maxPixelValue(double value) => ccontrib.cv_quality_QualityPSNR_setMaxPixelValue(ref, value);
 
   static final finalizer = OcvFinalizer<cvg.QualityPSNRPtr>(ccontrib.addresses.cv_quality_QualityPSNR_close);
+
   @override
   cvg.QualityPSNR get ref => ptr.ref;
 }
@@ -376,6 +384,7 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualitySSIMPtr>(ccontrib.addresses.cv_quality_QualitySSIM_close);
+
   @override
   cvg.QualitySSIM get ref => ptr.ref;
 }
