@@ -18,20 +18,20 @@ void main() async {
   });
 
   test('cv.replaceWriteLogMessage', () {
-    cv.setLogLevel(cv.LogLevel.DEBUG);
+    cv.setLogLevel(cv.LogLevel.WARNING);
     cv.replaceWriteLogMessage(callback: cv.defaultLogCallback);
     Isolate.run(() async {
-      cv.writeLogMessage(cv.LogLevel.DEBUG, 'This is a test log message.');
+      cv.writeLogMessage(cv.LogLevel.WARNING, 'This is a test log message.');
     });
     // reset log callback
     cv.replaceWriteLogMessage(callback: null);
   });
 
   test('cv.replaceWriteLogMessageEx', () {
-    cv.setLogLevel(cv.LogLevel.DEBUG);
+    cv.setLogLevel(cv.LogLevel.WARNING);
     cv.replaceWriteLogMessageEx(callback: cv.defaultLogCallbackEx);
     Isolate.run(() async {
-      cv.writeLogMessageEx(cv.LogLevel.DEBUG, 'This is a test log message.', file: "core_test.dart");
+      cv.writeLogMessageEx(cv.LogLevel.WARNING, 'This is a test log message.', file: "core_test.dart");
     });
     cv.replaceWriteLogMessageEx(callback: null);
   });
