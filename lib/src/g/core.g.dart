@@ -3168,6 +3168,9 @@ external ffi.Pointer<ffi.Char> getCvVersion();
 @ffi.Native<LogCallback Function()>()
 external LogCallback getLogCallback();
 
+@ffi.Native<LogCallbackEx Function()>()
+external LogCallbackEx getLogCallbackEx();
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Int>)>()
 external ffi.Pointer<CvStatus> getLogLevel(
   ffi.Pointer<ffi.Int> logLevel,
@@ -3176,19 +3179,32 @@ external ffi.Pointer<CvStatus> getLogLevel(
 @ffi.Native<LogCallback>()
 external LogCallback logCallback;
 
+@ffi.Native<LogCallbackEx>()
+external LogCallbackEx logCallbackEx;
+
 @ffi.Native<ffi.Void Function(ErrorCallback)>()
 external void registerErrorCallback(
   ErrorCallback callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(LogCallback)>()
-external ffi.Pointer<CvStatus> replaceWriteLogMessageEx(
+external ffi.Pointer<CvStatus> replaceWriteLogMessage(
   LogCallback callback,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogCallbackEx)>()
+external ffi.Pointer<CvStatus> replaceWriteLogMessageEx(
+  LogCallbackEx callback,
 );
 
 @ffi.Native<ffi.Void Function(LogCallback)>()
 external void setLogCallback(
   LogCallback callback,
+);
+
+@ffi.Native<ffi.Void Function(LogCallbackEx)>()
+external void setLogCallbackEx(
+  LogCallbackEx callback,
 );
 
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Int)>()
@@ -6016,6 +6032,24 @@ external void std_VecVecPoint_shrink_to_fit(
   ffi.Pointer<VecVecPoint> self,
 );
 
+@ffi.Native<ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Char>)>()
+external void writeLogMessage(
+  int logLevel,
+  ffi.Pointer<ffi.Char> message,
+);
+
+@ffi.Native<
+    ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+        ffi.Int, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>()
+external void writeLogMessageEx(
+  int logLevel,
+  ffi.Pointer<ffi.Char> tag,
+  ffi.Pointer<ffi.Char> file,
+  int line,
+  ffi.Pointer<ffi.Char> func,
+  ffi.Pointer<ffi.Char> message,
+);
+
 const addresses = _SymbolAddresses();
 
 class _SymbolAddresses {
@@ -6129,7 +6163,8 @@ typedef DartErrorCallbackFunction = void Function(
     ffi.Pointer<ffi.Void> userdata);
 typedef KeyPoint = imp$1.KeyPoint;
 typedef LogCallback = ffi.Pointer<ffi.NativeFunction<LogCallbackFunction>>;
-typedef LogCallbackFunction = ffi.Void Function(
+typedef LogCallbackEx = ffi.Pointer<ffi.NativeFunction<LogCallbackExFunction>>;
+typedef LogCallbackExFunction = ffi.Void Function(
     ffi.Int logLevel,
     ffi.Pointer<ffi.Char> tag,
     ffi.Size tagLen,
@@ -6140,7 +6175,7 @@ typedef LogCallbackFunction = ffi.Void Function(
     ffi.Size funcLen,
     ffi.Pointer<ffi.Char> message,
     ffi.Size msgLen);
-typedef DartLogCallbackFunction = void Function(
+typedef DartLogCallbackExFunction = void Function(
     int logLevel,
     ffi.Pointer<ffi.Char> tag,
     int tagLen,
@@ -6151,6 +6186,10 @@ typedef DartLogCallbackFunction = void Function(
     int funcLen,
     ffi.Pointer<ffi.Char> message,
     int msgLen);
+typedef LogCallbackFunction = ffi.Void Function(
+    ffi.Int logLevel, ffi.Pointer<ffi.Char> message, ffi.Size msgLen);
+typedef DartLogCallbackFunction = void Function(
+    int logLevel, ffi.Pointer<ffi.Char> message, int msgLen);
 typedef Mat = imp$1.Mat;
 typedef MatStep = imp$1.MatStep;
 typedef RNG = imp$1.RNG;
