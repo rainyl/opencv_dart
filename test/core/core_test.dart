@@ -1,18 +1,39 @@
 // ignore_for_file: avoid_print
+import 'dart:isolate';
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
   test('setLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_ERROR);
+    cv.setLogLevel(cv.LogLevel.ERROR);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_ERROR));
+    expect(level, equals(cv.LogLevel.ERROR));
   });
 
   test('getLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_WARNING);
+    cv.setLogLevel(cv.LogLevel.WARNING);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_WARNING));
+    expect(level, equals(cv.LogLevel.WARNING));
+  });
+
+  test('cv.replaceWriteLogMessage', () {
+    cv.setLogLevel(cv.LogLevel.DEBUG);
+    cv.replaceWriteLogMessage(callback: cv.defaultLogCallback);
+    Isolate.run(() async {
+      cv.writeLogMessage(cv.LogLevel.DEBUG, 'This is a test log message.');
+    });
+    // reset log callback
+    cv.replaceWriteLogMessage(callback: null);
+  });
+
+  test('cv.replaceWriteLogMessageEx', () {
+    cv.setLogLevel(cv.LogLevel.DEBUG);
+    cv.replaceWriteLogMessageEx(callback: cv.defaultLogCallbackEx);
+    Isolate.run(() async {
+      cv.writeLogMessageEx(cv.LogLevel.DEBUG, 'This is a test log message.', file: "core_test.dart");
+    });
+    cv.replaceWriteLogMessageEx(callback: null);
   });
 
   test('openCvVersion', () async {

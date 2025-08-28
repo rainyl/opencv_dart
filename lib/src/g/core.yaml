@@ -7,6 +7,9 @@ files:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
         dart-name: DartErrorCallbackFunction
+      LogCallbackExFunction:
+        name: LogCallbackExFunction
+        dart-name: DartLogCallbackExFunction
       LogCallbackFunction:
         name: LogCallbackFunction
         dart-name: DartLogCallbackFunction
@@ -752,14 +755,20 @@ files:
         name: getCvVersion
       c:@F@getLogCallback:
         name: getLogCallback
+      c:@F@getLogCallbackEx:
+        name: getLogCallbackEx
       c:@F@getLogLevel:
         name: getLogLevel
       c:@F@registerErrorCallback:
         name: registerErrorCallback
+      c:@F@replaceWriteLogMessage:
+        name: replaceWriteLogMessage
       c:@F@replaceWriteLogMessageEx:
         name: replaceWriteLogMessageEx
       c:@F@setLogCallback:
         name: setLogCallback
+      c:@F@setLogCallbackEx:
+        name: setLogCallbackEx
       c:@F@setLogLevel:
         name: setLogLevel
       c:@F@std_VecChar_clear:
@@ -1744,12 +1753,20 @@ files:
         name: std_VecVecPoint_set
       c:@F@std_VecVecPoint_shrink_to_fit:
         name: std_VecVecPoint_shrink_to_fit
+      c:@F@writeLogMessage:
+        name: writeLogMessage
+      c:@F@writeLogMessageEx:
+        name: writeLogMessageEx
       c:@logCallback:
         name: logCallback
+      c:@logCallbackEx:
+        name: logCallbackEx
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
       c:logging.h@T@LogCallback:
         name: LogCallback
+      c:logging.h@T@LogCallbackEx:
+        name: LogCallbackEx
       c:math.h@T@double_t:
         name: double_t
         dart-name: Dartdouble_t

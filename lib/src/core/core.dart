@@ -22,27 +22,158 @@ import 'scalar.dart';
 import 'termcriteria.dart';
 import 'vec.dart';
 
-/// Constants for log levels
-const int LOG_LEVEL_SILENT = 0;
-const int LOG_LEVEL_FATAL = 1;
-const int LOG_LEVEL_ERROR = 2;
-const int LOG_LEVEL_WARNING = 3;
-const int LOG_LEVEL_INFO = 4;
-const int LOG_LEVEL_DEBUG = 5;
-const int LOG_LEVEL_VERBOSE = 6;
+enum LogLevel {
+  SILENT(0),
+  FATAL(1),
+  ERROR(2),
+  WARNING(3),
+  INFO(4),
+  DEBUG(5),
+  VERBOSE(6);
+
+  final int value;
+  const LogLevel(this.value);
+
+  factory LogLevel.fromValue(int value) {
+    return switch (value) {
+      0 => LogLevel.SILENT,
+      1 => LogLevel.FATAL,
+      2 => LogLevel.ERROR,
+      3 => LogLevel.WARNING,
+      4 => LogLevel.INFO,
+      5 => LogLevel.DEBUG,
+      6 => LogLevel.VERBOSE,
+      _ => throw ArgumentError.value(value, 'value', 'Invalid log level value'),
+    };
+  }
+}
 
 /// Sets the global logging level.
-void setLogLevel(int logLevel) {
-  cvRun(() => ccore.setLogLevel(logLevel));
+void setLogLevel(LogLevel logLevel) {
+  cvRun(() => ccore.setLogLevel(logLevel.value));
 }
 
 /// Gets the global logging level.
-int getLogLevel() {
+LogLevel getLogLevel() {
   final p = calloc<ffi.Int>();
   cvRun(() => ccore.getLogLevel(p));
   final level = p.value;
   calloc.free(p);
-  return level;
+  return LogLevel.fromValue(level);
+}
+
+void writeLogMessage(LogLevel logLevel, String message) {
+  final cmsg = message.toNativeUtf8().cast<ffi.Char>();
+  ccore.writeLogMessage(logLevel.value, cmsg);
+  calloc.free(cmsg);
+}
+
+/// Writes a log message.
+///
+/// if [tag], [file], [line], [func] are all null, then it will be the same as [writeLogMessage].
+void writeLogMessageEx(
+  LogLevel logLevel,
+  String message, {
+  String? tag,
+  String? file,
+  int? line,
+  String? func,
+}) {
+  final cmsg = message.toNativeUtf8().cast<ffi.Char>();
+
+  if (tag == null && file == null && line == null && func == null) {
+    ccore.writeLogMessage(logLevel.value, cmsg);
+  } else {
+    final ctag = (tag ?? "").toNativeUtf8().cast<ffi.Char>();
+    final cfile = (file ?? "").toNativeUtf8().cast<ffi.Char>();
+    final cfunc = (func ?? "").toNativeUtf8().cast<ffi.Char>();
+    ccore.writeLogMessageEx(logLevel.value, ctag, cfile, line ?? -1, cfunc, cmsg);
+    calloc.free(ctag);
+    calloc.free(cfile);
+    calloc.free(cfunc);
+  }
+
+  calloc.free(cmsg);
+}
+
+void defaultLogCallback(LogLevel logLevel, String message) {
+  final logMessage = "[dartcv][${logLevel.name}]: $message";
+  // ignore: avoid_print
+  print(logMessage);
+}
+
+void defaultLogCallbackEx(
+  LogLevel logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+) {
+  final logMessage = "[dartcv][${logLevel.name}][$tag]$file:$line:$func: $message";
+  // ignore: avoid_print
+  print(logMessage);
+}
+
+typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
+typedef LogCallbackExFunction = void Function(
+  LogLevel logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+);
+
+ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
+ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;
+
+void replaceWriteLogMessage({LogCallbackFunction? callback}) {
+  if (callback == null) {
+    cvRun(() => ccore.replaceWriteLogMessage(ffi.nullptr));
+    _logCallback?.close();
+    _logCallback = null;
+  } else {
+    void cCallback(int logLevel, ffi.Pointer<ffi.Char> message, int msgLen) {
+      final messageStr = message.cast<Utf8>().toDartString(length: msgLen);
+      callback(LogLevel.fromValue(logLevel), messageStr);
+    }
+
+    final fp = ffi.NativeCallable<cvg.LogCallbackFunction>.listener(cCallback);
+    cvRun(() => ccore.replaceWriteLogMessage(fp.nativeFunction));
+    _logCallback = fp;
+  }
+}
+
+void replaceWriteLogMessageEx({LogCallbackExFunction? callback}) {
+  if (callback == null) {
+    cvRun(() => ccore.replaceWriteLogMessageEx(ffi.nullptr));
+    _logCallbackEx?.close();
+    _logCallbackEx = null;
+  } else {
+    void cCallback(
+      int logLevel,
+      ffi.Pointer<ffi.Char> tag,
+      int tagLen,
+      ffi.Pointer<ffi.Char> file,
+      int fileLen,
+      int line,
+      ffi.Pointer<ffi.Char> func,
+      int funcLen,
+      ffi.Pointer<ffi.Char> message,
+      int msgLen,
+    ) {
+      final tagStr = tag.cast<Utf8>().toDartString(length: tagLen);
+      final fileStr = file.cast<Utf8>().toDartString(length: fileLen);
+      final funcStr = func.cast<Utf8>().toDartString(length: funcLen);
+      final messageStr = message.cast<Utf8>().toDartString(length: msgLen);
+      callback(LogLevel.fromValue(logLevel), tagStr, fileStr, line, funcStr, messageStr);
+    }
+
+    final fp = ffi.NativeCallable<cvg.LogCallbackExFunction>.listener(cCallback);
+    cvRun(() => ccore.replaceWriteLogMessageEx(fp.nativeFunction));
+    _logCallbackEx = fp;
+  }
 }
 
 /// get version
