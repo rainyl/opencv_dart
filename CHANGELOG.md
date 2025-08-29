@@ -1,3 +1,10 @@
+## 2.1.0-dev.3
+
+- bump dependencies
+- add `UMat`
+- [features2d] add more functions/constructions
+- add custom loggers, support user-defined logger callback
+
 ## 2.1.0-dev.2
 
 - add `Mat.reinterpret`
