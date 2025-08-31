@@ -4,6 +4,7 @@
 - add `UMat`
 - [features2d] add more functions/constructions
 - add custom loggers, support user-defined logger callback
+- add `cv.freetype` module
 
 ## 2.1.0-dev.2
 

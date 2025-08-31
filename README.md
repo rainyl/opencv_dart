@@ -97,6 +97,7 @@ OpenCV Bindings for Dart Language.
 | xobjdetect    | :white_check_mark: | :white_check_mark: |                      |
 | xphoto        | :x:                | :x:                |                      |
 | quality       | :white_check_mark: | :white_check_mark: |                      |
+| freetype      | :white_check_mark: | :white_check_mark: |                      |
 
 - :x: : not finished
 - :ballot_box_with_check: : partially supported
