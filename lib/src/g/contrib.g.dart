@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
-//    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
 // Author: Rainyl
 // License: Apache-2.0
@@ -503,6 +502,7 @@ external void cv_freetype_FreeType2_close(
   FreeType2Ptr self,
 );
 
+/// C wrappers
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<FreeType2>)>()
 external ffi.Pointer<CvStatus> cv_freetype_FreeType2_create(
   ffi.Pointer<FreeType2> rval,
