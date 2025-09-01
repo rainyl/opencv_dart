@@ -65,115 +65,310 @@ void main() async {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ak = cv.AKAZE.empty();
-    final kp = ak.detect(img);
-    expect(kp.length, greaterThan(512));
+    for (final ak in [cv.AKAZE.empty(), cv.AKAZE.create()]) {
+      expect(ak.isEmpty, isA<bool>());
+      final kp = ak.detect(img);
+      expect(kp.length, greaterThan(512));
+      expect(ak.defaultName, 'Feature2D.AKAZE');
 
-    final mask = cv.Mat.empty();
-    final (kp2, desc) = ak.detectAndCompute(img, mask);
-    expect(kp2.length, greaterThan(512));
-    expect(desc.isEmpty, false);
+      final mask = cv.Mat.empty();
+      final (kp2, desc) = ak.detectAndCompute(img, mask);
+      expect(kp2.length, greaterThan(512));
+      expect(desc.isEmpty, false);
 
-    ak.dispose();
+      final type = ak.descriptorType;
+      expect(type, isA<cv.AKAZEDescriptorType>());
+      ak.descriptorType = cv.AKAZEDescriptorType.DESCRIPTOR_KAZE;
+      expect(ak.descriptorType, cv.AKAZEDescriptorType.DESCRIPTOR_KAZE);
+
+      ak.descriptorSize = 10;
+      expect(ak.descriptorSize, 10);
+
+      ak.descriptorChannels = 1;
+      expect(ak.descriptorChannels, 1);
+
+      ak.threshold = 0.1;
+      expect(ak.threshold, closeTo(0.1, 1.0e-5));
+
+      ak.nOctaves = 10;
+      expect(ak.nOctaves, 10);
+
+      ak.nOctaveLayers = 10;
+      expect(ak.nOctaveLayers, 10);
+
+      ak.diffusivity = cv.KAZEDiffusivityType.DIFF_CHARBONNIER;
+      expect(ak.diffusivity, cv.KAZEDiffusivityType.DIFF_CHARBONNIER);
+
+      ak.maxPoints = 100;
+      expect(ak.maxPoints, 100);
+
+      expect(ak.toString(), startsWith("AKAZE(addr=0x"));
+
+      ak.dispose();
+    }
   });
 
   test('cv.AgastFeatureDetector', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
-    final ad = cv.AgastFeatureDetector.empty();
-    final kp = ad.detect(img);
-    expect(kp.length, greaterThan(2800));
 
-    ad.dispose();
+    for (final ad in [cv.AgastFeatureDetector.empty(), cv.AgastFeatureDetector.create()]) {
+      expect(ad.isEmpty, isA<bool>());
+      expect(ad.defaultName, 'Feature2D.AgastFeatureDetector');
+
+      final kp = ad.detect(img);
+      expect(kp.length, greaterThan(2800));
+
+      expect(() => ad.detectAndCompute(cv.Mat.empty(), cv.Mat.empty()), throwsUnsupportedError);
+
+      ad.threshold = 100;
+      expect(ad.threshold, closeTo(100, 1.0e-5));
+
+      ad.nonmaxSuppression = true;
+      expect(ad.nonmaxSuppression, true);
+
+      ad.type = cv.AgastDetectorType.AGAST_5_8;
+      expect(ad.type, cv.AgastDetectorType.AGAST_5_8);
+
+      expect(ad.toString(), startsWith("AgastFeatureDetector(addr=0x"));
+
+      ad.dispose();
+    }
   });
 
   test('cv.BRISK', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
-    final br = cv.BRISK.empty();
-    final kp = br.detect(img);
-    expect(kp.length, greaterThan(512));
+    for (final br in [
+      cv.BRISK.empty(),
+      cv.BRISK.create(),
+      cv.BRISK.create1(radiusList: [1, 2, 3], numberList: [4, 5, 6]),
+      cv.BRISK.create2(thresh: 30, octaves: 3, radiusList: [1, 2, 3], numberList: [4, 5, 6]),
+    ]) {
+      expect(br.isEmpty, isA<bool>());
+      expect(br.defaultName, 'Feature2D.BRISK');
 
-    final mask = cv.Mat.empty();
-    final (kp2, desc) = br.detectAndCompute(img, mask);
-    expect(kp2.length, greaterThan(512));
-    expect(desc.isEmpty, false);
+      final kp = br.detect(img);
+      expect(kp.length, greaterThan(512));
 
-    br.dispose();
+      final mask = cv.Mat.empty();
+      final (kp2, desc) = br.detectAndCompute(img, mask);
+      expect(kp2.length, greaterThan(512));
+      expect(desc.isEmpty, false);
+
+      br.threshold = 30;
+      expect(br.threshold, closeTo(30, 1.0e-5));
+
+      br.octaves = 3;
+      expect(br.octaves, 3);
+
+      br.patternScale = 1.0;
+      expect(br.patternScale, closeTo(1.0, 1.0e-5));
+
+      expect(br.toString(), startsWith("BRISK(addr=0x"));
+      br.dispose();
+    }
   });
 
   test('cv.FastFeatureDetector', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final fd = cv.FastFeatureDetector.empty();
-    final kp = fd.detect(img);
-    expect(kp.length, greaterThan(2690));
+    for (final fd in [cv.FastFeatureDetector.empty(), cv.FastFeatureDetector.create()]) {
+      expect(fd.isEmpty, isA<bool>());
+      expect(fd.defaultName, 'Feature2D.FastFeatureDetector');
 
-    final fd1 = cv.FastFeatureDetector.create();
-    final kp1 = fd1.detect(img);
-    expect(kp1.length, greaterThan(2690));
+      final kp = fd.detect(img);
+      expect(kp.length, greaterThan(2690));
 
-    fd.dispose();
+      expect(() => fd.detectAndCompute(cv.Mat.empty(), cv.Mat.empty()), throwsUnsupportedError);
+
+      fd.threshold = 10;
+      expect(fd.threshold, closeTo(10, 1.0e-5));
+
+      fd.nonmaxSuppression = true;
+      expect(fd.nonmaxSuppression, true);
+
+      fd.type = cv.FastFeatureDetectorType.TYPE_5_8;
+      expect(fd.type, cv.FastFeatureDetectorType.TYPE_5_8);
+
+      expect(fd.toString(), startsWith("FastFeatureDetector(addr=0x"));
+
+      fd.dispose();
+    }
   });
 
   test('cv.GFTTDetector', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final gf = cv.GFTTDetector.empty();
-    final kp = gf.detect(img);
-    expect(kp.length, greaterThan(512));
+    for (final detector in [cv.GFTTDetector.empty(), cv.GFTTDetector.create(), cv.GFTTDetector.create1()]) {
+      expect(detector.isEmpty, isA<bool>());
+      expect(detector.defaultName, 'Feature2D.GFTTDetector');
 
-    gf.dispose();
+      final kp = detector.detect(img);
+      expect(kp.length, greaterThan(512));
+
+      expect(() => detector.detectAndCompute(cv.Mat.empty(), cv.Mat.empty()), throwsUnsupportedError);
+
+      detector.maxFeatures = 100;
+      expect(detector.maxFeatures, 100);
+
+      detector.qualityLevel = 0.1;
+      expect(detector.qualityLevel, closeTo(0.1, 1.0e-5));
+
+      detector.minDistance = 10.0;
+      expect(detector.minDistance, closeTo(10.0, 1.0e-5));
+
+      detector.blockSize = 3;
+      expect(detector.blockSize, 3);
+
+      detector.gradientSize = 10;
+      expect(detector.gradientSize, 10);
+
+      detector.harrisDetector = true;
+      expect(detector.harrisDetector, true);
+
+      detector.k = 0.04;
+      expect(detector.k, closeTo(0.04, 1.0e-5));
+
+      expect(detector.toString(), startsWith("GFTTDetector(addr=0x"));
+
+      detector.dispose();
+    }
   });
 
   test('cv.KAZE', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ka = cv.KAZE.empty();
-    final kp = ka.detect(img);
-    expect(kp.length, greaterThan(0));
+    for (final ka in [cv.KAZE.empty(), cv.KAZE.create()]) {
+      expect(ka.isEmpty, isA<bool>());
+      expect(ka.defaultName, 'Feature2D.KAZE');
 
-    final mask = cv.Mat.empty();
-    final (kp2, desc) = ka.detectAndCompute(img, mask);
-    expect(kp2.length, greaterThan(0));
-    expect(desc.isEmpty, false);
+      final mask = cv.Mat.empty();
+      final (kp2, desc) = ka.detectAndCompute(img, mask);
+      expect(kp2.length, greaterThan(0));
+      expect(desc.isEmpty, false);
 
-    ka.dispose();
+      ka.extended = true;
+      expect(ka.extended, true);
+
+      ka.upright = true;
+      expect(ka.upright, true);
+
+      ka.threshold = 0.001;
+      expect(ka.threshold, closeTo(0.001, 1.0e-5));
+
+      ka.octaves = 3;
+      expect(ka.octaves, 3);
+
+      ka.nOctaveLayers = 3;
+      expect(ka.nOctaveLayers, 3);
+
+      ka.diffusivity = cv.KAZEDiffusivityType.DIFF_PM_G2;
+      expect(ka.diffusivity, cv.KAZEDiffusivityType.DIFF_PM_G2);
+
+      expect(ka.toString(), startsWith("KAZE(addr=0x"));
+
+      ka.dispose();
+    }
   });
 
   test('cv.MSER', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final gf = cv.MSER.empty();
-    final kp = gf.detect(img);
-    expect(kp.length, greaterThan(0));
+    for (final ms in [cv.MSER.empty(), cv.MSER.create()]) {
+      expect(ms.isEmpty, isA<bool>());
+      expect(ms.defaultName, 'Feature2D.MSER');
 
-    gf.dispose();
+      final kp = ms.detect(img);
+      expect(kp.length, greaterThan(0));
+
+      ms.delta = 5;
+      expect(ms.delta, 5);
+
+      ms.minArea = 100;
+      expect(ms.minArea, 100);
+
+      ms.maxArea = 1000;
+      expect(ms.maxArea, 1000);
+
+      ms.maxVariation = 0.01;
+      expect(ms.maxVariation, 0.01);
+
+      ms.minDiversity = 0.01;
+      expect(ms.minDiversity, 0.01);
+
+      ms.maxEvolution = 100;
+      expect(ms.maxEvolution, 100);
+
+      ms.areaThreshold = 1.0;
+      expect(ms.areaThreshold, 1.0);
+
+      ms.minMargin = 0.01;
+      expect(ms.minMargin, 0.01);
+
+      ms.edgeBlurSize = 3;
+      expect(ms.edgeBlurSize, 3);
+
+      ms.pass2Only = true;
+      expect(ms.pass2Only, true);
+
+      expect(ms.toString(), startsWith("MSER(addr=0x"));
+
+      ms.dispose();
+    }
   });
 
   test('cv.ORB', () {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_COLOR);
     expect(img.isEmpty, false);
 
-    final ka = cv.ORB.empty();
-    final kp = ka.detect(img);
+    for (final orb in [cv.ORB.empty(), cv.ORB.create()]) {
+      expect(orb.isEmpty, isA<bool>());
+      expect(orb.defaultName, 'Feature2D.ORB');
 
-    expect(kp.length, 500);
+      final kp = orb.detect(img);
+      expect(kp.length, 500);
 
-    final orb = cv.ORB.create();
-    final kp1 = orb.detect(img);
-    expect(kp1.length, 500);
+      final mask = cv.Mat.empty();
+      final (kp2, desc) = orb.detectAndCompute(img, mask);
+      expect(kp2.length, 500);
+      expect(desc.isEmpty, false);
 
-    final mask = cv.Mat.empty();
-    final (kp2, desc) = ka.detectAndCompute(img, mask);
-    expect(kp2.length, 500);
-    expect(desc.isEmpty, false);
+      orb.maxFeatures = 100;
+      expect(orb.maxFeatures, 100);
 
-    orb.dispose();
+      orb.scaleFactor = 1.2;
+      expect(orb.scaleFactor, 1.2);
+
+      orb.nLevels = 8;
+      expect(orb.nLevels, 8);
+
+      orb.edgeThreshold = 31;
+      expect(orb.edgeThreshold, 31);
+
+      orb.firstLevel = 0;
+      expect(orb.firstLevel, 0);
+
+      orb.WTA_K = 2;
+      expect(orb.WTA_K, 2);
+
+      orb.scoreType = cv.ORBScoreType.FAST_SCORE;
+      expect(orb.scoreType, cv.ORBScoreType.FAST_SCORE);
+
+      orb.patchSize = 31;
+      expect(orb.patchSize, 31);
+
+      orb.fastThreshold = 20;
+      expect(orb.fastThreshold, 20);
+
+      expect(orb.toString(), startsWith('ORB(addr=0x'));
+
+      orb.dispose();
+    }
   });
 
   test('cv.SimpleBlobDetector', () {
@@ -308,6 +503,16 @@ void main() async {
     final kp1 = detector1.detect(img);
     expect(kp1.length, 0);
 
+    expect(detector1.defaultName, 'Feature2D.SimpleBlobDetector');
+    expect(detector1.isEmpty, isA<bool>());
+
+    detector1.params = params;
+    expect(detector1.params, params);
+
+    expect(detector1.getBlobContours(), isA<cv.VecVecPoint>());
+
+    expect(detector1.toString(), startsWith('SimpleBlobDetector(addr=0x'));
+
     detector1.dispose();
     params.dispose();
   });
@@ -318,18 +523,17 @@ void main() async {
     final desc2 = cv.imread("test/images/sift_descriptor.png", flags: cv.IMREAD_GRAYSCALE);
     expect(desc2.isEmpty, false);
 
-    final matcher = cv.BFMatcher.empty();
-    final dmatches = matcher.knnMatch(desc1, desc2, 2);
-    expect(dmatches.length, greaterThan(0));
+    for (final matcher in [cv.BFMatcher.empty(), cv.BFMatcher.create()]) {
+      final dmatches = matcher.knnMatch(desc1, desc2, 2);
+      expect(dmatches.length, greaterThan(0));
 
-    final matcher1 = cv.BFMatcher.create();
-    final dmatches1 = matcher1.knnMatch(desc1, desc2, 2);
-    expect(dmatches1.length, greaterThan(0));
+      final matches = matcher.match(desc1, desc2);
+      expect(matches.length, greaterThan(0));
 
-    final matches = matcher.match(desc1, desc2);
-    expect(matches.length, greaterThan(0));
+      expect(matcher.toString(), startsWith("BFMatcher(addr=0x"));
 
-    matcher.dispose();
+      matcher.dispose();
+    }
   });
 
   test('cv.FlannBasedMatcher', () {
@@ -364,6 +568,8 @@ void main() async {
       final dmatches = matcher.knnMatch(desc11, desc21, 2);
       expect(dmatches.length, greaterThan(0));
 
+      expect(matcher.toString(), startsWith("FlannBasedMatcher(addr=0x"));
+
       matcher.dispose();
     }
   });
@@ -372,16 +578,47 @@ void main() async {
     final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
     expect(img.isEmpty, false);
 
-    final si = cv.SIFT.empty();
-    final kp = si.detect(img);
-    expect(kp.length, greaterThan(0));
+    for (final si in [
+      cv.SIFT.empty(),
+      cv.SIFT.create(
+        nfeatures: 0,
+        nOctaveLayers: 3,
+        contrastThreshold: 0.04,
+        edgeThreshold: 10,
+        sigma: 1.6,
+        descriptorType: cv.MatType.CV_32F,
+      ),
+    ]) {
+      expect(si.defaultName, 'Feature2D.SIFT');
+      expect(si.isEmpty, isA<bool>());
 
-    final mask = cv.Mat.empty();
-    final (kp2, desc) = si.detectAndCompute(img, mask);
-    expect(kp2.length, greaterThan(0));
-    expect(desc.isEmpty, false);
+      final kp = si.detect(img);
+      expect(kp.length, greaterThan(0));
 
-    si.dispose();
+      final mask = cv.Mat.empty();
+      final (kp2, desc) = si.detectAndCompute(img, mask);
+      expect(kp2.length, greaterThan(0));
+      expect(desc.isEmpty, false);
+
+      si.NFeatures = 100;
+      expect(si.NFeatures, 100);
+
+      si.nOctaveLayers = 10;
+      expect(si.nOctaveLayers, 10);
+
+      si.contrastThreshold = 0.05;
+      expect(si.contrastThreshold, 0.05);
+
+      si.edgeThreshold = 15;
+      expect(si.edgeThreshold, 15);
+
+      si.sigma = 2.0;
+      expect(si.sigma, 2.0);
+
+      expect(si.toString(), startsWith("SIFT(addr=0x"));
+
+      si.dispose();
+    }
   });
 
   test('cv.drawMatches', () {

@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
-//    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
 // Author: Rainyl
 // License: Apache-2.0
@@ -1419,6 +1418,203 @@ class CvNativeContrib {
   late final _cv_aruco_getPredefinedDictionary =
       _cv_aruco_getPredefinedDictionaryPtr.asFunction<
           ffi.Pointer<CvStatus> Function(int, ffi.Pointer<ArucoDictionary>)>();
+
+  void cv_freetype_FreeType2_close(
+    FreeType2Ptr self,
+  ) {
+    return _cv_freetype_FreeType2_close(
+      self,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_closePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FreeType2Ptr)>>(
+          'cv_freetype_FreeType2_close');
+  late final _cv_freetype_FreeType2_close =
+      _cv_freetype_FreeType2_closePtr.asFunction<void Function(FreeType2Ptr)>();
+
+  /// C wrappers
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_create(
+    ffi.Pointer<FreeType2> rval,
+  ) {
+    return _cv_freetype_FreeType2_create(
+      rval,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_createPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Pointer<FreeType2>)>>('cv_freetype_FreeType2_create');
+  late final _cv_freetype_FreeType2_create = _cv_freetype_FreeType2_createPtr
+      .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<FreeType2>)>();
+
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_getTextSize(
+    FreeType2 self,
+    ffi.Pointer<ffi.Char> text,
+    int fontHeight,
+    int thickness,
+    ffi.Pointer<ffi.Int> baseLine,
+    ffi.Pointer<CvSize> rval,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_freetype_FreeType2_getTextSize(
+      self,
+      text,
+      fontHeight,
+      thickness,
+      baseLine,
+      rval,
+      callback,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_getTextSizePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<ffi.Int>,
+              ffi.Pointer<CvSize>,
+              imp$1.CvCallback_0)>>('cv_freetype_FreeType2_getTextSize');
+  late final _cv_freetype_FreeType2_getTextSize =
+      _cv_freetype_FreeType2_getTextSizePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              ffi.Pointer<ffi.Char>,
+              int,
+              int,
+              ffi.Pointer<ffi.Int>,
+              ffi.Pointer<CvSize>,
+              imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_loadFontData(
+    FreeType2 self,
+    ffi.Pointer<ffi.Char> fontFileName,
+    int idx,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_freetype_FreeType2_loadFontData(
+      self,
+      fontFileName,
+      idx,
+      callback,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_loadFontDataPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int,
+              imp$1.CvCallback_0)>>('cv_freetype_FreeType2_loadFontData');
+  late final _cv_freetype_FreeType2_loadFontData =
+      _cv_freetype_FreeType2_loadFontDataPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2, ffi.Pointer<ffi.Char>, int, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_loadFontData_buf(
+    FreeType2 self,
+    ffi.Pointer<ffi.Char> pBuf,
+    int bufSize,
+    int idx,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_freetype_FreeType2_loadFontData_buf(
+      self,
+      pBuf,
+      bufSize,
+      idx,
+      callback,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_loadFontData_bufPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              ffi.Pointer<ffi.Char>,
+              ffi.Size,
+              ffi.Int,
+              imp$1.CvCallback_0)>>('cv_freetype_FreeType2_loadFontData_buf');
+  late final _cv_freetype_FreeType2_loadFontData_buf =
+      _cv_freetype_FreeType2_loadFontData_bufPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FreeType2, ffi.Pointer<ffi.Char>, int,
+              int, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_putText(
+    FreeType2 self,
+    imp$1.MatInOut img,
+    ffi.Pointer<ffi.Char> text,
+    CvPoint org,
+    int fontHeight,
+    Scalar color,
+    int thickness,
+    int line_type,
+    bool bottomLeftOrigin,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_freetype_FreeType2_putText(
+      self,
+      img,
+      text,
+      org,
+      fontHeight,
+      color,
+      thickness,
+      line_type,
+      bottomLeftOrigin,
+      callback,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_putTextPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              imp$1.MatInOut,
+              ffi.Pointer<ffi.Char>,
+              CvPoint,
+              ffi.Int,
+              Scalar,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_freetype_FreeType2_putText');
+  late final _cv_freetype_FreeType2_putText =
+      _cv_freetype_FreeType2_putTextPtr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              FreeType2,
+              imp$1.MatInOut,
+              ffi.Pointer<ffi.Char>,
+              CvPoint,
+              int,
+              Scalar,
+              int,
+              int,
+              bool,
+              imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_freetype_FreeType2_setSplitNumber(
+    FreeType2 self,
+    int num,
+  ) {
+    return _cv_freetype_FreeType2_setSplitNumber(
+      self,
+      num,
+    );
+  }
+
+  late final _cv_freetype_FreeType2_setSplitNumberPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<CvStatus> Function(FreeType2, ffi.Int)>>(
+      'cv_freetype_FreeType2_setSplitNumber');
+  late final _cv_freetype_FreeType2_setSplitNumber =
+      _cv_freetype_FreeType2_setSplitNumberPtr
+          .asFunction<ffi.Pointer<CvStatus> Function(FreeType2, int)>();
 
   void cv_img_hash_BlockMeanHash_close(
     BlockMeanHashPtr self,
@@ -4027,6 +4223,9 @@ class _SymbolAddresses {
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ArucoDetectorParamsPtr)>>
       get cv_aruco_detectorParameters_close =>
           _library._cv_aruco_detectorParameters_closePtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(FreeType2Ptr)>>
+      get cv_freetype_FreeType2_close =>
+          _library._cv_freetype_FreeType2_closePtr;
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BlockMeanHashPtr)>>
       get cv_img_hash_BlockMeanHash_close =>
           _library._cv_img_hash_BlockMeanHash_closePtr;
@@ -4168,6 +4367,12 @@ final class EdgeDrawingParams extends ffi.Struct {
 }
 
 typedef EdgeDrawingPtr = ffi.Pointer<EdgeDrawing>;
+
+final class FreeType2 extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef FreeType2Ptr = ffi.Pointer<FreeType2>;
 
 final class GraphSegmentation extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;

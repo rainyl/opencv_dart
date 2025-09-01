@@ -14,16 +14,74 @@ files:
         name: cv_AKAZE_close
       c:@F@cv_AKAZE_create:
         name: cv_AKAZE_create
+      c:@F@cv_AKAZE_create_1:
+        name: cv_AKAZE_create_1
       c:@F@cv_AKAZE_detect:
         name: cv_AKAZE_detect
       c:@F@cv_AKAZE_detectAndCompute:
         name: cv_AKAZE_detectAndCompute
+      c:@F@cv_AKAZE_empty:
+        name: cv_AKAZE_empty
+      c:@F@cv_AKAZE_getDefaultName:
+        name: cv_AKAZE_getDefaultName
+      c:@F@cv_AKAZE_getDescriptorChannels:
+        name: cv_AKAZE_getDescriptorChannels
+      c:@F@cv_AKAZE_getDescriptorSize:
+        name: cv_AKAZE_getDescriptorSize
+      c:@F@cv_AKAZE_getDescriptorType:
+        name: cv_AKAZE_getDescriptorType
+      c:@F@cv_AKAZE_getDiffusivity:
+        name: cv_AKAZE_getDiffusivity
+      c:@F@cv_AKAZE_getMaxPoints:
+        name: cv_AKAZE_getMaxPoints
+      c:@F@cv_AKAZE_getNOctaveLayers:
+        name: cv_AKAZE_getNOctaveLayers
+      c:@F@cv_AKAZE_getNOctaves:
+        name: cv_AKAZE_getNOctaves
+      c:@F@cv_AKAZE_getThreshold:
+        name: cv_AKAZE_getThreshold
+      c:@F@cv_AKAZE_setDescriptorChannels:
+        name: cv_AKAZE_setDescriptorChannels
+      c:@F@cv_AKAZE_setDescriptorSize:
+        name: cv_AKAZE_setDescriptorSize
+      c:@F@cv_AKAZE_setDescriptorType:
+        name: cv_AKAZE_setDescriptorType
+      c:@F@cv_AKAZE_setDiffusivity:
+        name: cv_AKAZE_setDiffusivity
+      c:@F@cv_AKAZE_setMaxPoints:
+        name: cv_AKAZE_setMaxPoints
+      c:@F@cv_AKAZE_setNOctaveLayers:
+        name: cv_AKAZE_setNOctaveLayers
+      c:@F@cv_AKAZE_setNOctaves:
+        name: cv_AKAZE_setNOctaves
+      c:@F@cv_AKAZE_setThreshold:
+        name: cv_AKAZE_setThreshold
       c:@F@cv_AgastFeatureDetector_close:
         name: cv_AgastFeatureDetector_close
       c:@F@cv_AgastFeatureDetector_create:
         name: cv_AgastFeatureDetector_create
+      c:@F@cv_AgastFeatureDetector_create_1:
+        name: cv_AgastFeatureDetector_create_1
       c:@F@cv_AgastFeatureDetector_detect:
         name: cv_AgastFeatureDetector_detect
+      c:@F@cv_AgastFeatureDetector_detectAndCompute:
+        name: cv_AgastFeatureDetector_detectAndCompute
+      c:@F@cv_AgastFeatureDetector_empty:
+        name: cv_AgastFeatureDetector_empty
+      c:@F@cv_AgastFeatureDetector_getDefaultName:
+        name: cv_AgastFeatureDetector_getDefaultName
+      c:@F@cv_AgastFeatureDetector_getNonmaxSuppression:
+        name: cv_AgastFeatureDetector_getNonmaxSuppression
+      c:@F@cv_AgastFeatureDetector_getThreshold:
+        name: cv_AgastFeatureDetector_getThreshold
+      c:@F@cv_AgastFeatureDetector_getType:
+        name: cv_AgastFeatureDetector_getType
+      c:@F@cv_AgastFeatureDetector_setNonmaxSuppression:
+        name: cv_AgastFeatureDetector_setNonmaxSuppression
+      c:@F@cv_AgastFeatureDetector_setThreshold:
+        name: cv_AgastFeatureDetector_setThreshold
+      c:@F@cv_AgastFeatureDetector_setType:
+        name: cv_AgastFeatureDetector_setType
       c:@F@cv_BFMatcher_close:
         name: cv_BFMatcher_close
       c:@F@cv_BFMatcher_create:
@@ -38,10 +96,32 @@ files:
         name: cv_BRISK_close
       c:@F@cv_BRISK_create:
         name: cv_BRISK_create
+      c:@F@cv_BRISK_create_1:
+        name: cv_BRISK_create_1
+      c:@F@cv_BRISK_create_2:
+        name: cv_BRISK_create_2
+      c:@F@cv_BRISK_create_3:
+        name: cv_BRISK_create_3
       c:@F@cv_BRISK_detect:
         name: cv_BRISK_detect
       c:@F@cv_BRISK_detectAndCompute:
         name: cv_BRISK_detectAndCompute
+      c:@F@cv_BRISK_empty:
+        name: cv_BRISK_empty
+      c:@F@cv_BRISK_getDefaultName:
+        name: cv_BRISK_getDefaultName
+      c:@F@cv_BRISK_getOctaves:
+        name: cv_BRISK_getOctaves
+      c:@F@cv_BRISK_getPatternScale:
+        name: cv_BRISK_getPatternScale
+      c:@F@cv_BRISK_getThreshold:
+        name: cv_BRISK_getThreshold
+      c:@F@cv_BRISK_setOctaves:
+        name: cv_BRISK_setOctaves
+      c:@F@cv_BRISK_setPatternScale:
+        name: cv_BRISK_setPatternScale
+      c:@F@cv_BRISK_setThreshold:
+        name: cv_BRISK_setThreshold
       c:@F@cv_FastFeatureDetector_close:
         name: cv_FastFeatureDetector_close
       c:@F@cv_FastFeatureDetector_create:
@@ -50,6 +130,24 @@ files:
         name: cv_FastFeatureDetector_create_1
       c:@F@cv_FastFeatureDetector_detect:
         name: cv_FastFeatureDetector_detect
+      c:@F@cv_FastFeatureDetector_detectAndCompute:
+        name: cv_FastFeatureDetector_detectAndCompute
+      c:@F@cv_FastFeatureDetector_empty:
+        name: cv_FastFeatureDetector_empty
+      c:@F@cv_FastFeatureDetector_getDefaultName:
+        name: cv_FastFeatureDetector_getDefaultName
+      c:@F@cv_FastFeatureDetector_getNonmaxSuppression:
+        name: cv_FastFeatureDetector_getNonmaxSuppression
+      c:@F@cv_FastFeatureDetector_getThreshold:
+        name: cv_FastFeatureDetector_getThreshold
+      c:@F@cv_FastFeatureDetector_getType:
+        name: cv_FastFeatureDetector_getType
+      c:@F@cv_FastFeatureDetector_setNonmaxSuppression:
+        name: cv_FastFeatureDetector_setNonmaxSuppression
+      c:@F@cv_FastFeatureDetector_setThreshold:
+        name: cv_FastFeatureDetector_setThreshold
+      c:@F@cv_FastFeatureDetector_setType:
+        name: cv_FastFeatureDetector_setType
       c:@F@cv_FlannBasedMatcher_close:
         name: cv_FlannBasedMatcher_close
       c:@F@cv_FlannBasedMatcher_create:
@@ -62,22 +160,140 @@ files:
         name: cv_GFTTDetector_close
       c:@F@cv_GFTTDetector_create:
         name: cv_GFTTDetector_create
+      c:@F@cv_GFTTDetector_create_1:
+        name: cv_GFTTDetector_create_1
+      c:@F@cv_GFTTDetector_create_2:
+        name: cv_GFTTDetector_create_2
       c:@F@cv_GFTTDetector_detect:
         name: cv_GFTTDetector_detect
+      c:@F@cv_GFTTDetector_detectAndCompute:
+        name: cv_GFTTDetector_detectAndCompute
+      c:@F@cv_GFTTDetector_empty:
+        name: cv_GFTTDetector_empty
+      c:@F@cv_GFTTDetector_getBlockSize:
+        name: cv_GFTTDetector_getBlockSize
+      c:@F@cv_GFTTDetector_getDefaultName:
+        name: cv_GFTTDetector_getDefaultName
+      c:@F@cv_GFTTDetector_getGradientSize:
+        name: cv_GFTTDetector_getGradientSize
+      c:@F@cv_GFTTDetector_getHarrisDetector:
+        name: cv_GFTTDetector_getHarrisDetector
+      c:@F@cv_GFTTDetector_getK:
+        name: cv_GFTTDetector_getK
+      c:@F@cv_GFTTDetector_getMaxFeatures:
+        name: cv_GFTTDetector_getMaxFeatures
+      c:@F@cv_GFTTDetector_getMinDistance:
+        name: cv_GFTTDetector_getMinDistance
+      c:@F@cv_GFTTDetector_getQualityLevel:
+        name: cv_GFTTDetector_getQualityLevel
+      c:@F@cv_GFTTDetector_setBlockSize:
+        name: cv_GFTTDetector_setBlockSize
+      c:@F@cv_GFTTDetector_setGradientSize:
+        name: cv_GFTTDetector_setGradientSize
+      c:@F@cv_GFTTDetector_setHarrisDetector:
+        name: cv_GFTTDetector_setHarrisDetector
+      c:@F@cv_GFTTDetector_setK:
+        name: cv_GFTTDetector_setK
+      c:@F@cv_GFTTDetector_setMaxFeatures:
+        name: cv_GFTTDetector_setMaxFeatures
+      c:@F@cv_GFTTDetector_setMinDistance:
+        name: cv_GFTTDetector_setMinDistance
+      c:@F@cv_GFTTDetector_setQualityLevel:
+        name: cv_GFTTDetector_setQualityLevel
       c:@F@cv_KAZE_close:
         name: cv_KAZE_close
       c:@F@cv_KAZE_create:
         name: cv_KAZE_create
+      c:@F@cv_KAZE_create_1:
+        name: cv_KAZE_create_1
       c:@F@cv_KAZE_detect:
         name: cv_KAZE_detect
       c:@F@cv_KAZE_detectAndCompute:
         name: cv_KAZE_detectAndCompute
+      c:@F@cv_KAZE_empty:
+        name: cv_KAZE_empty
+      c:@F@cv_KAZE_getDefaultName:
+        name: cv_KAZE_getDefaultName
+      c:@F@cv_KAZE_getDiffusivity:
+        name: cv_KAZE_getDiffusivity
+      c:@F@cv_KAZE_getExtended:
+        name: cv_KAZE_getExtended
+      c:@F@cv_KAZE_getNOctaveLayers:
+        name: cv_KAZE_getNOctaveLayers
+      c:@F@cv_KAZE_getNOctaves:
+        name: cv_KAZE_getNOctaves
+      c:@F@cv_KAZE_getThreshold:
+        name: cv_KAZE_getThreshold
+      c:@F@cv_KAZE_getUpright:
+        name: cv_KAZE_getUpright
+      c:@F@cv_KAZE_setDiffusivity:
+        name: cv_KAZE_setDiffusivity
+      c:@F@cv_KAZE_setExtended:
+        name: cv_KAZE_setExtended
+      c:@F@cv_KAZE_setNOctaveLayers:
+        name: cv_KAZE_setNOctaveLayers
+      c:@F@cv_KAZE_setNOctaves:
+        name: cv_KAZE_setNOctaves
+      c:@F@cv_KAZE_setThreshold:
+        name: cv_KAZE_setThreshold
+      c:@F@cv_KAZE_setUpright:
+        name: cv_KAZE_setUpright
       c:@F@cv_MSER_close:
         name: cv_MSER_close
       c:@F@cv_MSER_create:
         name: cv_MSER_create
+      c:@F@cv_MSER_create_1:
+        name: cv_MSER_create_1
       c:@F@cv_MSER_detect:
         name: cv_MSER_detect
+      c:@F@cv_MSER_detectAndCompute:
+        name: cv_MSER_detectAndCompute
+      c:@F@cv_MSER_detectRegions:
+        name: cv_MSER_detectRegions
+      c:@F@cv_MSER_empty:
+        name: cv_MSER_empty
+      c:@F@cv_MSER_getAreaThreshold:
+        name: cv_MSER_getAreaThreshold
+      c:@F@cv_MSER_getDefaultName:
+        name: cv_MSER_getDefaultName
+      c:@F@cv_MSER_getDelta:
+        name: cv_MSER_getDelta
+      c:@F@cv_MSER_getEdgeBlurSize:
+        name: cv_MSER_getEdgeBlurSize
+      c:@F@cv_MSER_getMaxArea:
+        name: cv_MSER_getMaxArea
+      c:@F@cv_MSER_getMaxEvolution:
+        name: cv_MSER_getMaxEvolution
+      c:@F@cv_MSER_getMaxVariation:
+        name: cv_MSER_getMaxVariation
+      c:@F@cv_MSER_getMinArea:
+        name: cv_MSER_getMinArea
+      c:@F@cv_MSER_getMinDiversity:
+        name: cv_MSER_getMinDiversity
+      c:@F@cv_MSER_getMinMargin:
+        name: cv_MSER_getMinMargin
+      c:@F@cv_MSER_getPass2Only:
+        name: cv_MSER_getPass2Only
+      c:@F@cv_MSER_setAreaThreshold:
+        name: cv_MSER_setAreaThreshold
+      c:@F@cv_MSER_setDelta:
+        name: cv_MSER_setDelta
+      c:@F@cv_MSER_setEdgeBlurSize:
+        name: cv_MSER_setEdgeBlurSize
+      c:@F@cv_MSER_setMaxArea:
+        name: cv_MSER_setMaxArea
+      c:@F@cv_MSER_setMaxEvolution:
+        name: cv_MSER_setMaxEvolution
+      c:@F@cv_MSER_setMaxVariation:
+        name: cv_MSER_setMaxVariation
+      c:@F@cv_MSER_setMinArea:
+        name: cv_MSER_setMinArea
+      c:@F@cv_MSER_setMinDiversity:
+        name: cv_MSER_setMinDiversity
+      c:@F@cv_MSER_setMinMargin:
+        name: cv_MSER_setMinMargin
+      c:@F@cv_MSER_setPass2Only:
+        name: cv_MSER_setPass2Only
       c:@F@cv_ORB_close:
         name: cv_ORB_close
       c:@F@cv_ORB_create:
@@ -88,14 +304,82 @@ files:
         name: cv_ORB_detect
       c:@F@cv_ORB_detectAndCompute:
         name: cv_ORB_detectAndCompute
+      c:@F@cv_ORB_empty:
+        name: cv_ORB_empty
+      c:@F@cv_ORB_getDefaultName:
+        name: cv_ORB_getDefaultName
+      c:@F@cv_ORB_getEdgeThreshold:
+        name: cv_ORB_getEdgeThreshold
+      c:@F@cv_ORB_getFastThreshold:
+        name: cv_ORB_getFastThreshold
+      c:@F@cv_ORB_getFirstLevel:
+        name: cv_ORB_getFirstLevel
+      c:@F@cv_ORB_getMaxFeatures:
+        name: cv_ORB_getMaxFeatures
+      c:@F@cv_ORB_getNLevels:
+        name: cv_ORB_getNLevels
+      c:@F@cv_ORB_getPatchSize:
+        name: cv_ORB_getPatchSize
+      c:@F@cv_ORB_getScaleFactor:
+        name: cv_ORB_getScaleFactor
+      c:@F@cv_ORB_getScoreType:
+        name: cv_ORB_getScoreType
+      c:@F@cv_ORB_getWTA_K:
+        name: cv_ORB_getWTA_K
+      c:@F@cv_ORB_setEdgeThreshold:
+        name: cv_ORB_setEdgeThreshold
+      c:@F@cv_ORB_setFastThreshold:
+        name: cv_ORB_setFastThreshold
+      c:@F@cv_ORB_setFirstLevel:
+        name: cv_ORB_setFirstLevel
+      c:@F@cv_ORB_setMaxFeatures:
+        name: cv_ORB_setMaxFeatures
+      c:@F@cv_ORB_setNLevels:
+        name: cv_ORB_setNLevels
+      c:@F@cv_ORB_setPatchSize:
+        name: cv_ORB_setPatchSize
+      c:@F@cv_ORB_setScaleFactor:
+        name: cv_ORB_setScaleFactor
+      c:@F@cv_ORB_setScoreType:
+        name: cv_ORB_setScoreType
+      c:@F@cv_ORB_setWTA_K:
+        name: cv_ORB_setWTA_K
       c:@F@cv_SIFT_close:
         name: cv_SIFT_close
       c:@F@cv_SIFT_create:
         name: cv_SIFT_create
+      c:@F@cv_SIFT_create_1:
+        name: cv_SIFT_create_1
+      c:@F@cv_SIFT_create_2:
+        name: cv_SIFT_create_2
       c:@F@cv_SIFT_detect:
         name: cv_SIFT_detect
       c:@F@cv_SIFT_detectAndCompute:
         name: cv_SIFT_detectAndCompute
+      c:@F@cv_SIFT_empty:
+        name: cv_SIFT_empty
+      c:@F@cv_SIFT_getContrastThreshold:
+        name: cv_SIFT_getContrastThreshold
+      c:@F@cv_SIFT_getDefaultName:
+        name: cv_SIFT_getDefaultName
+      c:@F@cv_SIFT_getEdgeThreshold:
+        name: cv_SIFT_getEdgeThreshold
+      c:@F@cv_SIFT_getNFeatures:
+        name: cv_SIFT_getNFeatures
+      c:@F@cv_SIFT_getNOctaveLayers:
+        name: cv_SIFT_getNOctaveLayers
+      c:@F@cv_SIFT_getSigma:
+        name: cv_SIFT_getSigma
+      c:@F@cv_SIFT_setContrastThreshold:
+        name: cv_SIFT_setContrastThreshold
+      c:@F@cv_SIFT_setEdgeThreshold:
+        name: cv_SIFT_setEdgeThreshold
+      c:@F@cv_SIFT_setNFeatures:
+        name: cv_SIFT_setNFeatures
+      c:@F@cv_SIFT_setNOctaveLayers:
+        name: cv_SIFT_setNOctaveLayers
+      c:@F@cv_SIFT_setSigma:
+        name: cv_SIFT_setSigma
       c:@F@cv_SimpleBlobDetectorParams_create:
         name: cv_SimpleBlobDetectorParams_create
       c:@F@cv_SimpleBlobDetector_close:
@@ -106,6 +390,18 @@ files:
         name: cv_SimpleBlobDetector_create_1
       c:@F@cv_SimpleBlobDetector_detect:
         name: cv_SimpleBlobDetector_detect
+      c:@F@cv_SimpleBlobDetector_detectAndCompute:
+        name: cv_SimpleBlobDetector_detectAndCompute
+      c:@F@cv_SimpleBlobDetector_empty:
+        name: cv_SimpleBlobDetector_empty
+      c:@F@cv_SimpleBlobDetector_getBlobContours:
+        name: cv_SimpleBlobDetector_getBlobContours
+      c:@F@cv_SimpleBlobDetector_getDefaultName:
+        name: cv_SimpleBlobDetector_getDefaultName
+      c:@F@cv_SimpleBlobDetector_getParams:
+        name: cv_SimpleBlobDetector_getParams
+      c:@F@cv_SimpleBlobDetector_setParams:
+        name: cv_SimpleBlobDetector_setParams
       c:@F@cv_drawKeyPoints:
         name: cv_drawKeyPoints
       c:@F@cv_drawMatches:
@@ -200,13 +496,19 @@ files:
         name: VecChar
       c:types.h@T@VecDMatch:
         name: VecDMatch
+      c:types.h@T@VecF32:
+        name: VecF32
       c:types.h@T@VecF64:
         name: VecF64
       c:types.h@T@VecI32:
         name: VecI32
       c:types.h@T@VecKeyPoint:
         name: VecKeyPoint
+      c:types.h@T@VecRect:
+        name: VecRect
       c:types.h@T@VecVecChar:
         name: VecVecChar
       c:types.h@T@VecVecDMatch:
         name: VecVecDMatch
+      c:types.h@T@VecVecPoint:
+        name: VecVecPoint

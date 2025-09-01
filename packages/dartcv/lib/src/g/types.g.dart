@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
-//    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
 // Author: Rainyl
 // License: Apache-2.0
@@ -421,6 +420,12 @@ final class TermCriteria extends ffi.Struct {
   @ffi.Double()
   external double epsilon;
 }
+
+final class UMat extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef UMatPtr = ffi.Pointer<UMat>;
 
 final class UsacParams extends ffi.Struct {
   @ffi.Double()

@@ -7,6 +7,7 @@ library dartcv.contrib;
 export 'src/contrib/aruco.dart';
 export 'src/contrib/aruco_async.dart';
 export 'src/contrib/aruco_dict.dart';
+export 'src/contrib/freetype.dart';
 export 'src/contrib/img_hash.dart';
 export 'src/contrib/quality.dart';
 export 'src/contrib/wechat_qrcode.dart';

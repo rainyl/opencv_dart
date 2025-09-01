@@ -74,6 +74,8 @@ files:
         name: Scalar
       c:@S@TermCriteria:
         name: TermCriteria
+      c:@S@UMat:
+        name: UMat
       c:@S@UsacParams:
         name: UsacParams
       c:@S@Vec2b:
@@ -232,6 +234,8 @@ files:
         name: MatPtr
       c:types.h@T@RNGPtr:
         name: RNGPtr
+      c:types.h@T@UMatPtr:
+        name: UMatPtr
       c:types.h@T@VecCharPtr:
         name: VecCharPtr
       c:types.h@T@VecDMatchPtr:

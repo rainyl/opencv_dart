@@ -166,6 +166,20 @@ files:
         name: cv_aruco_generateImageMarker
       c:@F@cv_aruco_getPredefinedDictionary:
         name: cv_aruco_getPredefinedDictionary
+      c:@F@cv_freetype_FreeType2_close:
+        name: cv_freetype_FreeType2_close
+      c:@F@cv_freetype_FreeType2_create:
+        name: cv_freetype_FreeType2_create
+      c:@F@cv_freetype_FreeType2_getTextSize:
+        name: cv_freetype_FreeType2_getTextSize
+      c:@F@cv_freetype_FreeType2_loadFontData:
+        name: cv_freetype_FreeType2_loadFontData
+      c:@F@cv_freetype_FreeType2_loadFontData_buf:
+        name: cv_freetype_FreeType2_loadFontData_buf
+      c:@F@cv_freetype_FreeType2_putText:
+        name: cv_freetype_FreeType2_putText
+      c:@F@cv_freetype_FreeType2_setSplitNumber:
+        name: cv_freetype_FreeType2_setSplitNumber
       c:@F@cv_img_hash_BlockMeanHash_close:
         name: cv_img_hash_BlockMeanHash_close
       c:@F@cv_img_hash_BlockMeanHash_compare:
@@ -428,6 +442,8 @@ files:
         name: EdgeDrawing
       c:@S@EdgeDrawingParams:
         name: EdgeDrawingParams
+      c:@S@FreeType2:
+        name: FreeType2
       c:@S@GraphSegmentation:
         name: GraphSegmentation
       c:@S@PtrWBDetector:
@@ -454,6 +470,8 @@ files:
         name: ArucoDetectorPtr
       c:aruco.h@T@ArucoDictionaryPtr:
         name: ArucoDictionaryPtr
+      c:freetype.h@T@FreeType2Ptr:
+        name: FreeType2Ptr
       c:img_hash.h@T@BlockMeanHashPtr:
         name: BlockMeanHashPtr
       c:quality.h@T@QualityBRISQUEPtr:

@@ -11,7 +11,7 @@ void main() async {
     expect((mat1.width, mat1.height, mat1.channels), (100, 100, 3));
     expect(mat1.type, cv.MatType.CV_8UC3);
     expect(mat1.total, equals(100 * 100));
-    expect(mat1.isContinus, equals(true));
+    expect(mat1.isContinuous, equals(true));
     expect(mat1.step.$1, equals(100 * 3));
     expect(mat1.elemSize, equals(3));
     expect(mat1.at<int>(0, 0, 0), 255);

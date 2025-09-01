@@ -1,18 +1,39 @@
 // ignore_for_file: avoid_print
+import 'dart:isolate';
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
   test('setLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_ERROR);
+    cv.setLogLevel(cv.LogLevel.ERROR);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_ERROR));
+    expect(level, equals(cv.LogLevel.ERROR));
   });
 
   test('getLogLevel', () {
-    cv.setLogLevel(cv.LOG_LEVEL_WARNING);
+    cv.setLogLevel(cv.LogLevel.WARNING);
     final level = cv.getLogLevel();
-    expect(level, equals(cv.LOG_LEVEL_WARNING));
+    expect(level, equals(cv.LogLevel.WARNING));
+  });
+
+  test('cv.replaceWriteLogMessage', () {
+    cv.setLogLevel(cv.LogLevel.WARNING);
+    cv.replaceWriteLogMessage(callback: cv.defaultLogCallback);
+    Isolate.run(() async {
+      cv.writeLogMessage(cv.LogLevel.WARNING, 'This is a test log message.');
+    });
+    // reset log callback
+    cv.replaceWriteLogMessage(callback: null);
+  });
+
+  test('cv.replaceWriteLogMessageEx', () {
+    cv.setLogLevel(cv.LogLevel.WARNING);
+    cv.replaceWriteLogMessageEx(callback: cv.defaultLogCallbackEx);
+    Isolate.run(() async {
+      cv.writeLogMessageEx(cv.LogLevel.WARNING, 'This is a test log message.', file: "core_test.dart");
+    });
+    cv.replaceWriteLogMessageEx(callback: null);
   });
 
   test('openCvVersion', () async {
@@ -586,7 +607,7 @@ void main() async {
   test('cv.LUT', () {
     void testOneLUT(cv.Mat src, cv.Mat lut) {
       expect(lut.channels == src.channels || lut.channels == 1, true);
-      expect(lut.isContinus, true);
+      expect(lut.isContinuous, true);
       final sw = Stopwatch();
       sw.start();
       final dst = cv.LUT(src, lut);
@@ -621,9 +642,9 @@ void main() async {
 
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
-              lutSize * lutType.channels,
-              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
-            ),
+                lutSize * lutType.channels,
+                (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+              ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);

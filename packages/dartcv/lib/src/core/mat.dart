@@ -17,6 +17,7 @@ import 'point.dart';
 import 'rect.dart';
 import 'scalar.dart';
 import 'size.dart';
+import 'umat.dart';
 import 'vec.dart';
 
 class Mat extends CvStruct<cvg.Mat> {
@@ -339,7 +340,7 @@ class Mat extends CvStruct<cvg.Mat> {
   int get channels => ccore.cv_Mat_channels(ref);
   int get total => ccore.cv_Mat_total(ref);
   bool get isEmpty => ccore.cv_Mat_empty(ref);
-  bool get isContinus => ccore.cv_Mat_isContinuous(ref);
+  bool get isContinuous => ccore.cv_Mat_isContinuous(ref);
   bool get isSubmatrix => ccore.cv_Mat_isSubmatrix(ref);
   (int, int, int) get step {
     final ms = ccore.cv_Mat_step(ref);
@@ -1403,6 +1404,15 @@ class Mat extends CvStruct<cvg.Mat> {
     final dst = Mat.empty();
     cvRun(() => ccore.cv_Mat_t(ref, dst.ptr, ffi.nullptr));
     return dst;
+  }
+
+  /// retrieve [UMat] from [Mat]
+  ///
+  /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a6df360cd5a78aa8a3fcf2d445b7e7764
+  UMat getUMat(AccessFlag accessFlags, {UMatUsageFlags usageFlags = UMatUsageFlags.USAGE_DEFAULT}) {
+    final umat = UMat.empty();
+    cvRun(() => ccore.cv_Mat_getUMat(ref, accessFlags.value, usageFlags.value, umat.ptr, ffi.nullptr));
+    return umat;
   }
 
   /// This Method converts single-channel Mat to 2D List
