@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var images = <Uint8List>[];
+  final _ft = cv.FreeType2.create();
 
   @override
   void initState() {

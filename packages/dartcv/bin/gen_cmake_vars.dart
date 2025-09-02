@@ -11,6 +11,7 @@ const defaultModuleSettings = {
   "dnn": "ON",
   "features2d": "ON",
   "flann": "ON",
+  "freetype": "OFF",
   // "gapi", // disabled
   "highgui": "OFF",
   "imgproc": "ON",

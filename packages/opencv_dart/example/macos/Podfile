@@ -31,6 +31,9 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_macos_pods File.dirname(File.realpath(__FILE__))
+
+  pod 'DartCvMacOS/freetype', '~> 4.12.0.2'
+
   target 'RunnerTests' do
     inherit! :search_paths
   end

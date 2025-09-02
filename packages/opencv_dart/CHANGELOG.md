@@ -1,3 +1,11 @@
+## 1.4.5
+
+* bump dependencies
+* add `UMat`
+* [features2d] add more functions/constructions
+* add custom loggers, support user-defined logger callback
+* add `cv.freetype` module
+
 ## 1.4.4
 
 * add `Mat.reinterpret`
