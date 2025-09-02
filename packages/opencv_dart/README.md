@@ -11,7 +11,7 @@ use [opencv_core](https://pub.dev/packages/opencv_core)
 > e.g., `export DARTCV_CACHE_DIR=$HOME/.cache/dartcv`
 >
 > - Q&A: [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
-> - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using v2.x version, refer to [2.x](https://github.com/rainyl/opencv_dart/tree/2.x)
+> - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using 2.x version, refer to [2.x](https://github.com/rainyl/opencv_dart/tree/2.x)
 
 ## Supported platforms
 

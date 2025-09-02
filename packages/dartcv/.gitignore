@@ -8,3 +8,4 @@ pubspec.lock
 
 test/models
 libdartcv*
+!example/
