@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var images = <Uint8List>[];
+  final _ft = cv.FreeType2.create();
 
   @override
   void initState() {
@@ -77,11 +78,6 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () async {
                   final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
-                  // heavy computation
-                  // final (gray, blur) = await heavyTask(bytes);
-                  // setState(() {
-                  //   images = [bytes, gray, blur];
-                  // });
                   final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
                   setState(() {
                     images = [bytes, cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2];

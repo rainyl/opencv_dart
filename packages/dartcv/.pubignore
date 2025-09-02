@@ -16,3 +16,4 @@ ffigen/
 Makefile
 libdartcv*
 !example/
+*.ttf

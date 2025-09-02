@@ -7,6 +7,9 @@ files:
       ErrorCallbackFunction:
         name: ErrorCallbackFunction
         dart-name: DartErrorCallbackFunction
+      LogCallbackExFunction:
+        name: LogCallbackExFunction
+        dart-name: DartLogCallbackExFunction
       LogCallbackFunction:
         name: LogCallbackFunction
         dart-name: DartLogCallbackFunction
@@ -82,6 +85,8 @@ files:
         name: cv_Mat_eye
       c:@F@cv_Mat_flags:
         name: cv_Mat_flags
+      c:@F@cv_Mat_getUMat:
+        name: cv_Mat_getUMat
       c:@F@cv_Mat_get_Vec2b:
         name: cv_Mat_get_Vec2b
       c:@F@cv_Mat_get_Vec2d:
@@ -424,6 +429,122 @@ files:
         name: cv_SVD_backSubst
       c:@F@cv_SVDecomp:
         name: cv_SVDecomp
+      c:@F@cv_UMat_addref:
+        name: cv_UMat_addref
+      c:@F@cv_UMat_channels:
+        name: cv_UMat_channels
+      c:@F@cv_UMat_checkVector:
+        name: cv_UMat_checkVector
+      c:@F@cv_UMat_clone:
+        name: cv_UMat_clone
+      c:@F@cv_UMat_close:
+        name: cv_UMat_close
+      c:@F@cv_UMat_col:
+        name: cv_UMat_col
+      c:@F@cv_UMat_colRange:
+        name: cv_UMat_colRange
+      c:@F@cv_UMat_cols:
+        name: cv_UMat_cols
+      c:@F@cv_UMat_convertTo:
+        name: cv_UMat_convertTo
+      c:@F@cv_UMat_copyTo:
+        name: cv_UMat_copyTo
+      c:@F@cv_UMat_copyTo_2:
+        name: cv_UMat_copyTo_2
+      c:@F@cv_UMat_createFunc:
+        name: cv_UMat_createFunc
+      c:@F@cv_UMat_createFunc_2:
+        name: cv_UMat_createFunc_2
+      c:@F@cv_UMat_create_1:
+        name: cv_UMat_create_1
+      c:@F@cv_UMat_create_2:
+        name: cv_UMat_create_2
+      c:@F@cv_UMat_create_3:
+        name: cv_UMat_create_3
+      c:@F@cv_UMat_create_4:
+        name: cv_UMat_create_4
+      c:@F@cv_UMat_create_5:
+        name: cv_UMat_create_5
+      c:@F@cv_UMat_create_6:
+        name: cv_UMat_create_6
+      c:@F@cv_UMat_create_7:
+        name: cv_UMat_create_7
+      c:@F@cv_UMat_create_8:
+        name: cv_UMat_create_8
+      c:@F@cv_UMat_create_9:
+        name: cv_UMat_create_9
+      c:@F@cv_UMat_create_diag:
+        name: cv_UMat_create_diag
+      c:@F@cv_UMat_create_eye:
+        name: cv_UMat_create_eye
+      c:@F@cv_UMat_create_ones:
+        name: cv_UMat_create_ones
+      c:@F@cv_UMat_create_ones_1:
+        name: cv_UMat_create_ones_1
+      c:@F@cv_UMat_create_zeros:
+        name: cv_UMat_create_zeros
+      c:@F@cv_UMat_create_zeros_1:
+        name: cv_UMat_create_zeros_1
+      c:@F@cv_UMat_deallocate:
+        name: cv_UMat_deallocate
+      c:@F@cv_UMat_depth:
+        name: cv_UMat_depth
+      c:@F@cv_UMat_diag:
+        name: cv_UMat_diag
+      c:@F@cv_UMat_dims:
+        name: cv_UMat_dims
+      c:@F@cv_UMat_dot:
+        name: cv_UMat_dot
+      c:@F@cv_UMat_elemSize:
+        name: cv_UMat_elemSize
+      c:@F@cv_UMat_elemSize1:
+        name: cv_UMat_elemSize1
+      c:@F@cv_UMat_empty:
+        name: cv_UMat_empty
+      c:@F@cv_UMat_flags:
+        name: cv_UMat_flags
+      c:@F@cv_UMat_getMat:
+        name: cv_UMat_getMat
+      c:@F@cv_UMat_handle:
+        name: cv_UMat_handle
+      c:@F@cv_UMat_inv:
+        name: cv_UMat_inv
+      c:@F@cv_UMat_isContinuous:
+        name: cv_UMat_isContinuous
+      c:@F@cv_UMat_isSubmatrix:
+        name: cv_UMat_isSubmatrix
+      c:@F@cv_UMat_mul:
+        name: cv_UMat_mul
+      c:@F@cv_UMat_offset:
+        name: cv_UMat_offset
+      c:@F@cv_UMat_release:
+        name: cv_UMat_release
+      c:@F@cv_UMat_reshape:
+        name: cv_UMat_reshape
+      c:@F@cv_UMat_reshape_2:
+        name: cv_UMat_reshape_2
+      c:@F@cv_UMat_row:
+        name: cv_UMat_row
+      c:@F@cv_UMat_rowRange:
+        name: cv_UMat_rowRange
+      c:@F@cv_UMat_rows:
+        name: cv_UMat_rows
+      c:@F@cv_UMat_setTo:
+        name: cv_UMat_setTo
+      c:@F@cv_UMat_size:
+        name: cv_UMat_size
+      c:@F@cv_UMat_step:
+        name: cv_UMat_step
+      c:@F@cv_UMat_step1:
+        name: cv_UMat_step1
+      c:@F@cv_UMat_t:
+        name: cv_UMat_t
+      c:@F@cv_UMat_total:
+        name: cv_UMat_total
+      c:@F@cv_UMat_type:
+        name: cv_UMat_type
+      c:@F@cv_UMat_usageFlags:
+        name: cv_UMat_usageFlags
       c:@F@cv_absdiff:
         name: cv_absdiff
       c:@F@cv_add:
@@ -634,14 +755,20 @@ files:
         name: getCvVersion
       c:@F@getLogCallback:
         name: getLogCallback
+      c:@F@getLogCallbackEx:
+        name: getLogCallbackEx
       c:@F@getLogLevel:
         name: getLogLevel
       c:@F@registerErrorCallback:
         name: registerErrorCallback
+      c:@F@replaceWriteLogMessage:
+        name: replaceWriteLogMessage
       c:@F@replaceWriteLogMessageEx:
         name: replaceWriteLogMessageEx
       c:@F@setLogCallback:
         name: setLogCallback
+      c:@F@setLogCallbackEx:
+        name: setLogCallbackEx
       c:@F@setLogLevel:
         name: setLogLevel
       c:@F@std_VecChar_clear:
@@ -1626,12 +1753,20 @@ files:
         name: std_VecVecPoint_set
       c:@F@std_VecVecPoint_shrink_to_fit:
         name: std_VecVecPoint_shrink_to_fit
+      c:@F@writeLogMessage:
+        name: writeLogMessage
+      c:@F@writeLogMessageEx:
+        name: writeLogMessageEx
       c:@logCallback:
         name: logCallback
+      c:@logCallbackEx:
+        name: logCallbackEx
       c:exception.h@T@ErrorCallback:
         name: ErrorCallback
       c:logging.h@T@LogCallback:
         name: LogCallback
+      c:logging.h@T@LogCallbackEx:
+        name: LogCallbackEx
       c:math.h@T@double_t:
         name: double_t
         dart-name: Dartdouble_t
@@ -1670,6 +1805,8 @@ files:
         name: Scalar
       c:types.h@T@TermCriteria:
         name: TermCriteria
+      c:types.h@T@UMat:
+        name: UMat
       c:types.h@T@Vec2b:
         name: Vec2b
       c:types.h@T@Vec2d:

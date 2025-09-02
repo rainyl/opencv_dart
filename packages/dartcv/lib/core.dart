@@ -25,4 +25,5 @@ export 'src/core/scalar.dart';
 export 'src/core/size.dart';
 export 'src/core/svd.dart';
 export 'src/core/termcriteria.dart';
+export 'src/core/umat.dart';
 export 'src/core/vec.dart';

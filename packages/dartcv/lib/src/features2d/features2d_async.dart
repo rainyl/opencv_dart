@@ -14,18 +14,20 @@ import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../native_lib.dart' show cfeatures2d;
 import './features2d.dart';
+import 'features2d_enum.dart';
 
 extension AKAZEAsync on AKAZE {
   /// Detect keypoints in an image using AKAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
     return cvRunAsync0<VecKeyPoint>(
-      (callback) => cfeatures2d.cv_AKAZE_detect(ref, src.ref, ret.ptr, callback),
+      (callback) => cfeatures2d.cv_AKAZE_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
       (c) {
-        return c.complete(ret);
+        return c.complete(keypoints);
       },
     );
   }
@@ -34,14 +36,27 @@ extension AKAZEAsync on AKAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     return cvRunAsync0(
-      (callback) =>
-          cfeatures2d.cv_AKAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
+      (callback) => cfeatures2d.cv_AKAZE_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        callback,
+      ),
       (c) {
-        return c.complete((ret, desc));
+        return c.complete((keypoints!, descriptors!));
       },
     );
   }
@@ -52,14 +67,30 @@ extension AgastFeatureDetectorAsync on AgastFeatureDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, ret.ptr, callback),
+      (callback) =>
+          cfeatures2d.cv_AgastFeatureDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
       (c) {
-        return c.complete(ret);
+        return c.complete(keypoints);
       },
     );
+  }
+
+  /// DetectAndCompute keypoints and compute in an image using AKAZE.
+  ///
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 }
 
@@ -68,25 +99,42 @@ extension BRISKAsync on BRISK {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, ret.ptr, callback), (c) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_BRISK_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
   }
 
   /// DetectAndCompute keypoints and compute in an image using BRISK.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     return cvRunAsync0(
-      (callback) =>
-          cfeatures2d.cv_BRISK_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
+      (callback) => cfeatures2d.cv_BRISK_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        callback,
+      ),
       (c) {
-        return c.complete((ret, desc));
+        return c.complete((keypoints!, descriptors!));
       },
     );
   }
@@ -97,14 +145,30 @@ extension FastFeatureDetectorAsync on FastFeatureDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, ret.ptr, callback),
+      (callback) =>
+          cfeatures2d.cv_FastFeatureDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
       (c) {
-        return c.complete(ret);
+        return c.complete(keypoints);
       },
     );
+  }
+
+  /// DetectAndCompute keypoints and compute in an image using AKAZE.
+  ///
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 }
 
@@ -113,13 +177,29 @@ extension GFTTDetectorAsync on GFTTDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, ret.ptr, callback), (
-      c,
-    ) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_GFTTDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
+  }
+
+  /// DetectAndCompute keypoints and compute in an image using AKAZE.
+  ///
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 }
 
@@ -128,24 +208,42 @@ extension KAZEAsync on KAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, ret.ptr, callback), (c) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_KAZE_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
   }
 
   /// DetectAndCompute keypoints and compute in an image using KAZE.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_KAZE_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
+      (callback) => cfeatures2d.cv_KAZE_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        callback,
+      ),
       (c) {
-        return c.complete((ret, desc));
+        return c.complete((keypoints!, descriptors!));
       },
     );
   }
@@ -156,11 +254,29 @@ extension MSERAsync on MSER {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, ret.ptr, callback), (c) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_MSER_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
+  }
+
+  /// DetectAndCompute keypoints and compute in an image using AKAZE.
+  ///
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 }
 
@@ -169,11 +285,15 @@ extension ORBAsync on ORB {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, ret.ptr, callback), (c) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_ORB_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
   }
 
   /// DetectAndCompute keypoints and compute in an image using ORB.
@@ -194,8 +314,8 @@ extension ORBAsync on ORB {
         ref,
         src.ref,
         mask.ref,
-        keypoints!.ptr,
         description!.ref,
+        keypoints!.ptr,
         useProvidedKeypoints,
         callback,
       ),
@@ -211,14 +331,30 @@ extension SimpleBlobDetectorAsync on SimpleBlobDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, ret.ptr, callback),
+      (callback) =>
+          cfeatures2d.cv_SimpleBlobDetector_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
       (c) {
-        return c.complete(ret);
+        return c.complete(keypoints);
       },
     );
+  }
+
+  /// DetectAndCompute keypoints and compute in an image using AKAZE.
+  ///
+  /// For further details, please see:
+  /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    throw UnsupportedError("This fuction/feature is not supported.");
   }
 }
 
@@ -274,24 +410,42 @@ extension SIFTAsync on SIFT {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src) async {
-    final ret = VecKeyPoint();
-    return cvRunAsync0((callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, ret.ptr, callback), (c) {
-      return c.complete(ret);
-    });
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+    keypoints ??= VecKeyPoint();
+    mask ??= Mat.empty();
+    return cvRunAsync0(
+      (callback) => cfeatures2d.cv_SIFT_detect(ref, src.ref, keypoints!.ptr, mask!.ref, callback),
+      (c) {
+        return c.complete(keypoints);
+      },
+    );
   }
 
   /// DetectAndCompute keypoints and compute in an image using SIFT.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#a8be0d1c20b08eb867184b8d74c15a677
-  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(Mat src, Mat mask) async {
-    final desc = Mat.empty();
-    final ret = VecKeyPoint();
+  Future<(VecKeyPoint, Mat)> detectAndComputeAsync(
+    Mat src,
+    Mat mask, {
+    Mat? descriptors,
+    VecKeyPoint? keypoints,
+    bool useProvidedKeypoints = false,
+  }) async {
+    descriptors ??= Mat.empty();
+    keypoints ??= VecKeyPoint();
     return cvRunAsync0(
-      (callback) => cfeatures2d.cv_SIFT_detectAndCompute(ref, src.ref, mask.ref, desc.ref, ret.ptr, callback),
+      (callback) => cfeatures2d.cv_SIFT_detectAndCompute(
+        ref,
+        src.ref,
+        mask.ref,
+        descriptors!.ref,
+        keypoints!.ptr,
+        useProvidedKeypoints,
+        callback,
+      ),
       (c) {
-        return c.complete((ret, desc));
+        return c.complete((keypoints!, descriptors!));
       },
     );
   }

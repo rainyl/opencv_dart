@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // opencv_dart - OpenCV bindings for Dart language
-//    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
 //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
 // Author: Rainyl
 // License: Apache-2.0
@@ -59,16 +58,58 @@ class CvNativeFeatures2d {
   late final _cv_AKAZE_create = _cv_AKAZE_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<AKAZE>)>();
 
+  ffi.Pointer<CvStatus> cv_AKAZE_create_1(
+    int descriptor_type,
+    int descriptor_size,
+    int descriptor_channels,
+    double threshold,
+    int nOctaves,
+    int nOctaveLayers,
+    int diffusivity,
+    int max_points,
+    ffi.Pointer<AKAZE> rval,
+  ) {
+    return _cv_AKAZE_create_1(
+      descriptor_type,
+      descriptor_size,
+      descriptor_channels,
+      threshold,
+      nOctaves,
+      nOctaveLayers,
+      diffusivity,
+      max_points,
+      rval,
+    );
+  }
+
+  late final _cv_AKAZE_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Float,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<AKAZE>)>>('cv_AKAZE_create_1');
+  late final _cv_AKAZE_create_1 = _cv_AKAZE_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          int, int, int, double, int, int, int, int, ffi.Pointer<AKAZE>)>();
+
   ffi.Pointer<CvStatus> cv_AKAZE_detect(
     AKAZE self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_AKAZE_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -76,10 +117,10 @@ class CvNativeFeatures2d {
   late final _cv_AKAZE_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(AKAZE, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_AKAZE_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_AKAZE_detect');
   late final _cv_AKAZE_detect = _cv_AKAZE_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          AKAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          AKAZE, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_AKAZE_detectAndCompute(
     AKAZE self,
@@ -87,6 +128,7 @@ class CvNativeFeatures2d {
     Mat mask,
     Mat desc,
     ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_AKAZE_detectAndCompute(
@@ -95,6 +137,7 @@ class CvNativeFeatures2d {
       mask,
       desc,
       rval,
+      useProvidedKeypoints,
       callback,
     );
   }
@@ -107,11 +150,280 @@ class CvNativeFeatures2d {
               Mat,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
               imp$1.CvCallback_0)>>('cv_AKAZE_detectAndCompute');
   late final _cv_AKAZE_detectAndCompute =
       _cv_AKAZE_detectAndComputePtr.asFunction<
           ffi.Pointer<CvStatus> Function(AKAZE, Mat, Mat, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_AKAZE_empty(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_empty(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(AKAZE)>>('cv_AKAZE_empty');
+  late final _cv_AKAZE_empty =
+      _cv_AKAZE_emptyPtr.asFunction<bool Function(AKAZE)>();
+
+  ffi.Pointer<ffi.Char> cv_AKAZE_getDefaultName(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(AKAZE)>>(
+          'cv_AKAZE_getDefaultName');
+  late final _cv_AKAZE_getDefaultName = _cv_AKAZE_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(AKAZE)>();
+
+  int cv_AKAZE_getDescriptorChannels(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getDescriptorChannels(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getDescriptorChannelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getDescriptorChannels');
+  late final _cv_AKAZE_getDescriptorChannels =
+      _cv_AKAZE_getDescriptorChannelsPtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getDescriptorSize(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getDescriptorSize(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getDescriptorSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getDescriptorSize');
+  late final _cv_AKAZE_getDescriptorSize =
+      _cv_AKAZE_getDescriptorSizePtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getDescriptorType(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getDescriptorType(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getDescriptorTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getDescriptorType');
+  late final _cv_AKAZE_getDescriptorType =
+      _cv_AKAZE_getDescriptorTypePtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getDiffusivity(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getDiffusivity(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getDiffusivityPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getDiffusivity');
+  late final _cv_AKAZE_getDiffusivity =
+      _cv_AKAZE_getDiffusivityPtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getMaxPoints(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getMaxPoints(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getMaxPointsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getMaxPoints');
+  late final _cv_AKAZE_getMaxPoints =
+      _cv_AKAZE_getMaxPointsPtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getNOctaveLayers(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getNOctaveLayers(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getNOctaveLayers');
+  late final _cv_AKAZE_getNOctaveLayers =
+      _cv_AKAZE_getNOctaveLayersPtr.asFunction<int Function(AKAZE)>();
+
+  int cv_AKAZE_getNOctaves(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getNOctaves(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getNOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AKAZE)>>(
+          'cv_AKAZE_getNOctaves');
+  late final _cv_AKAZE_getNOctaves =
+      _cv_AKAZE_getNOctavesPtr.asFunction<int Function(AKAZE)>();
+
+  double cv_AKAZE_getThreshold(
+    AKAZE self,
+  ) {
+    return _cv_AKAZE_getThreshold(
+      self,
+    );
+  }
+
+  late final _cv_AKAZE_getThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(AKAZE)>>(
+          'cv_AKAZE_getThreshold');
+  late final _cv_AKAZE_getThreshold =
+      _cv_AKAZE_getThresholdPtr.asFunction<double Function(AKAZE)>();
+
+  void cv_AKAZE_setDescriptorChannels(
+    AKAZE self,
+    int dch,
+  ) {
+    return _cv_AKAZE_setDescriptorChannels(
+      self,
+      dch,
+    );
+  }
+
+  late final _cv_AKAZE_setDescriptorChannelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setDescriptorChannels');
+  late final _cv_AKAZE_setDescriptorChannels =
+      _cv_AKAZE_setDescriptorChannelsPtr
+          .asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setDescriptorSize(
+    AKAZE self,
+    int dsize,
+  ) {
+    return _cv_AKAZE_setDescriptorSize(
+      self,
+      dsize,
+    );
+  }
+
+  late final _cv_AKAZE_setDescriptorSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setDescriptorSize');
+  late final _cv_AKAZE_setDescriptorSize =
+      _cv_AKAZE_setDescriptorSizePtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setDescriptorType(
+    AKAZE self,
+    int dtype,
+  ) {
+    return _cv_AKAZE_setDescriptorType(
+      self,
+      dtype,
+    );
+  }
+
+  late final _cv_AKAZE_setDescriptorTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setDescriptorType');
+  late final _cv_AKAZE_setDescriptorType =
+      _cv_AKAZE_setDescriptorTypePtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setDiffusivity(
+    AKAZE self,
+    int diff,
+  ) {
+    return _cv_AKAZE_setDiffusivity(
+      self,
+      diff,
+    );
+  }
+
+  late final _cv_AKAZE_setDiffusivityPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setDiffusivity');
+  late final _cv_AKAZE_setDiffusivity =
+      _cv_AKAZE_setDiffusivityPtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setMaxPoints(
+    AKAZE self,
+    int max_points,
+  ) {
+    return _cv_AKAZE_setMaxPoints(
+      self,
+      max_points,
+    );
+  }
+
+  late final _cv_AKAZE_setMaxPointsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setMaxPoints');
+  late final _cv_AKAZE_setMaxPoints =
+      _cv_AKAZE_setMaxPointsPtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setNOctaveLayers(
+    AKAZE self,
+    int octaveLayers,
+  ) {
+    return _cv_AKAZE_setNOctaveLayers(
+      self,
+      octaveLayers,
+    );
+  }
+
+  late final _cv_AKAZE_setNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setNOctaveLayers');
+  late final _cv_AKAZE_setNOctaveLayers =
+      _cv_AKAZE_setNOctaveLayersPtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setNOctaves(
+    AKAZE self,
+    int octaves,
+  ) {
+    return _cv_AKAZE_setNOctaves(
+      self,
+      octaves,
+    );
+  }
+
+  late final _cv_AKAZE_setNOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Int)>>(
+          'cv_AKAZE_setNOctaves');
+  late final _cv_AKAZE_setNOctaves =
+      _cv_AKAZE_setNOctavesPtr.asFunction<void Function(AKAZE, int)>();
+
+  void cv_AKAZE_setThreshold(
+    AKAZE self,
+    double threshold,
+  ) {
+    return _cv_AKAZE_setThreshold(
+      self,
+      threshold,
+    );
+  }
+
+  late final _cv_AKAZE_setThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(AKAZE, ffi.Double)>>(
+          'cv_AKAZE_setThreshold');
+  late final _cv_AKAZE_setThreshold =
+      _cv_AKAZE_setThresholdPtr.asFunction<void Function(AKAZE, double)>();
 
   void cv_AgastFeatureDetector_close(
     AgastFeatureDetectorPtr self,
@@ -144,16 +456,42 @@ class CvNativeFeatures2d {
       _cv_AgastFeatureDetector_createPtr.asFunction<
           ffi.Pointer<CvStatus> Function(ffi.Pointer<AgastFeatureDetector>)>();
 
+  ffi.Pointer<CvStatus> cv_AgastFeatureDetector_create_1(
+    int threshold,
+    bool nonmaxSuppression,
+    int type,
+    ffi.Pointer<AgastFeatureDetector> rval,
+  ) {
+    return _cv_AgastFeatureDetector_create_1(
+      threshold,
+      nonmaxSuppression,
+      type,
+      rval,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_create_1Ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Bool, ffi.Int,
+                  ffi.Pointer<AgastFeatureDetector>)>>(
+      'cv_AgastFeatureDetector_create_1');
+  late final _cv_AgastFeatureDetector_create_1 =
+      _cv_AgastFeatureDetector_create_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(
+              int, bool, int, ffi.Pointer<AgastFeatureDetector>)>();
+
   ffi.Pointer<CvStatus> cv_AgastFeatureDetector_detect(
     AgastFeatureDetector self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_AgastFeatureDetector_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -164,11 +502,174 @@ class CvNativeFeatures2d {
               AgastFeatureDetector,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              Mat,
               imp$1.CvCallback_0)>>('cv_AgastFeatureDetector_detect');
   late final _cv_AgastFeatureDetector_detect =
       _cv_AgastFeatureDetector_detectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_AgastFeatureDetector_detectAndCompute(
+    AgastFeatureDetector self,
+    Mat src,
+    Mat mask,
+    Mat desc,
+    ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_AgastFeatureDetector_detectAndCompute(
+      self,
+      src,
+      mask,
+      desc,
+      rval,
+      useProvidedKeypoints,
+      callback,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_detectAndComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              AgastFeatureDetector,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_AgastFeatureDetector_detectAndCompute');
+  late final _cv_AgastFeatureDetector_detectAndCompute =
+      _cv_AgastFeatureDetector_detectAndComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(AgastFeatureDetector, Mat, Mat, Mat,
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_AgastFeatureDetector_empty(
+    AgastFeatureDetector self,
+  ) {
+    return _cv_AgastFeatureDetector_empty(
+      self,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(AgastFeatureDetector)>>(
+          'cv_AgastFeatureDetector_empty');
+  late final _cv_AgastFeatureDetector_empty = _cv_AgastFeatureDetector_emptyPtr
+      .asFunction<bool Function(AgastFeatureDetector)>();
+
+  ffi.Pointer<ffi.Char> cv_AgastFeatureDetector_getDefaultName(
+    AgastFeatureDetector self,
+  ) {
+    return _cv_AgastFeatureDetector_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_getDefaultNamePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              AgastFeatureDetector)>>('cv_AgastFeatureDetector_getDefaultName');
+  late final _cv_AgastFeatureDetector_getDefaultName =
+      _cv_AgastFeatureDetector_getDefaultNamePtr
+          .asFunction<ffi.Pointer<ffi.Char> Function(AgastFeatureDetector)>();
+
+  bool cv_AgastFeatureDetector_getNonmaxSuppression(
+    AgastFeatureDetector self,
+  ) {
+    return _cv_AgastFeatureDetector_getNonmaxSuppression(
+      self,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_getNonmaxSuppressionPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(AgastFeatureDetector)>>(
+          'cv_AgastFeatureDetector_getNonmaxSuppression');
+  late final _cv_AgastFeatureDetector_getNonmaxSuppression =
+      _cv_AgastFeatureDetector_getNonmaxSuppressionPtr
+          .asFunction<bool Function(AgastFeatureDetector)>();
+
+  int cv_AgastFeatureDetector_getThreshold(
+    AgastFeatureDetector self,
+  ) {
+    return _cv_AgastFeatureDetector_getThreshold(
+      self,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_getThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AgastFeatureDetector)>>(
+          'cv_AgastFeatureDetector_getThreshold');
+  late final _cv_AgastFeatureDetector_getThreshold =
+      _cv_AgastFeatureDetector_getThresholdPtr
+          .asFunction<int Function(AgastFeatureDetector)>();
+
+  int cv_AgastFeatureDetector_getType(
+    AgastFeatureDetector self,
+  ) {
+    return _cv_AgastFeatureDetector_getType(
+      self,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_getTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(AgastFeatureDetector)>>(
+          'cv_AgastFeatureDetector_getType');
+  late final _cv_AgastFeatureDetector_getType =
+      _cv_AgastFeatureDetector_getTypePtr
+          .asFunction<int Function(AgastFeatureDetector)>();
+
+  void cv_AgastFeatureDetector_setNonmaxSuppression(
+    AgastFeatureDetector self,
+    bool f,
+  ) {
+    return _cv_AgastFeatureDetector_setNonmaxSuppression(
+      self,
+      f,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_setNonmaxSuppressionPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(AgastFeatureDetector, ffi.Bool)>>(
+      'cv_AgastFeatureDetector_setNonmaxSuppression');
+  late final _cv_AgastFeatureDetector_setNonmaxSuppression =
+      _cv_AgastFeatureDetector_setNonmaxSuppressionPtr
+          .asFunction<void Function(AgastFeatureDetector, bool)>();
+
+  void cv_AgastFeatureDetector_setThreshold(
+    AgastFeatureDetector self,
+    int threshold,
+  ) {
+    return _cv_AgastFeatureDetector_setThreshold(
+      self,
+      threshold,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_setThresholdPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(AgastFeatureDetector, ffi.Int)>>(
+      'cv_AgastFeatureDetector_setThreshold');
+  late final _cv_AgastFeatureDetector_setThreshold =
+      _cv_AgastFeatureDetector_setThresholdPtr
+          .asFunction<void Function(AgastFeatureDetector, int)>();
+
+  void cv_AgastFeatureDetector_setType(
+    AgastFeatureDetector self,
+    int type,
+  ) {
+    return _cv_AgastFeatureDetector_setType(
+      self,
+      type,
+    );
+  }
+
+  late final _cv_AgastFeatureDetector_setTypePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(AgastFeatureDetector, ffi.Int)>>(
+      'cv_AgastFeatureDetector_setType');
+  late final _cv_AgastFeatureDetector_setType =
+      _cv_AgastFeatureDetector_setTypePtr
+          .asFunction<void Function(AgastFeatureDetector, int)>();
 
   void cv_BFMatcher_close(
     BFMatcherPtr self,
@@ -306,16 +807,102 @@ class CvNativeFeatures2d {
   late final _cv_BRISK_create = _cv_BRISK_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<BRISK>)>();
 
+  ffi.Pointer<CvStatus> cv_BRISK_create_1(
+    VecF32 radiusList,
+    VecI32 numberList,
+    double dMax,
+    double dMin,
+    VecI32 indexChange,
+    ffi.Pointer<BRISK> rval,
+  ) {
+    return _cv_BRISK_create_1(
+      radiusList,
+      numberList,
+      dMax,
+      dMin,
+      indexChange,
+      rval,
+    );
+  }
+
+  late final _cv_BRISK_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(VecF32, VecI32, ffi.Float, ffi.Float,
+              VecI32, ffi.Pointer<BRISK>)>>('cv_BRISK_create_1');
+  late final _cv_BRISK_create_1 = _cv_BRISK_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          VecF32, VecI32, double, double, VecI32, ffi.Pointer<BRISK>)>();
+
+  ffi.Pointer<CvStatus> cv_BRISK_create_2(
+    int thresh,
+    int octaves,
+    VecF32 radiusList,
+    VecI32 numberList,
+    double dMax,
+    double dMin,
+    VecI32 indexChange,
+    ffi.Pointer<BRISK> rval,
+  ) {
+    return _cv_BRISK_create_2(
+      thresh,
+      octaves,
+      radiusList,
+      numberList,
+      dMax,
+      dMin,
+      indexChange,
+      rval,
+    );
+  }
+
+  late final _cv_BRISK_create_2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              VecF32,
+              VecI32,
+              ffi.Float,
+              ffi.Float,
+              VecI32,
+              ffi.Pointer<BRISK>)>>('cv_BRISK_create_2');
+  late final _cv_BRISK_create_2 = _cv_BRISK_create_2Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, int, VecF32, VecI32, double, double,
+          VecI32, ffi.Pointer<BRISK>)>();
+
+  ffi.Pointer<CvStatus> cv_BRISK_create_3(
+    int thresh,
+    int octaves,
+    double patternScale,
+    ffi.Pointer<BRISK> rval,
+  ) {
+    return _cv_BRISK_create_3(
+      thresh,
+      octaves,
+      patternScale,
+      rval,
+    );
+  }
+
+  late final _cv_BRISK_create_3Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Int, ffi.Int, ffi.Float,
+              ffi.Pointer<BRISK>)>>('cv_BRISK_create_3');
+  late final _cv_BRISK_create_3 = _cv_BRISK_create_3Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, int, double, ffi.Pointer<BRISK>)>();
+
   ffi.Pointer<CvStatus> cv_BRISK_detect(
     BRISK self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_BRISK_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -323,10 +910,10 @@ class CvNativeFeatures2d {
   late final _cv_BRISK_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(BRISK, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_BRISK_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_BRISK_detect');
   late final _cv_BRISK_detect = _cv_BRISK_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          BRISK, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          BRISK, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_BRISK_detectAndCompute(
     BRISK self,
@@ -334,6 +921,7 @@ class CvNativeFeatures2d {
     Mat mask,
     Mat desc,
     ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_BRISK_detectAndCompute(
@@ -342,6 +930,7 @@ class CvNativeFeatures2d {
       mask,
       desc,
       rval,
+      useProvidedKeypoints,
       callback,
     );
   }
@@ -354,11 +943,129 @@ class CvNativeFeatures2d {
               Mat,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
               imp$1.CvCallback_0)>>('cv_BRISK_detectAndCompute');
   late final _cv_BRISK_detectAndCompute =
       _cv_BRISK_detectAndComputePtr.asFunction<
           ffi.Pointer<CvStatus> Function(BRISK, Mat, Mat, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_BRISK_empty(
+    BRISK self,
+  ) {
+    return _cv_BRISK_empty(
+      self,
+    );
+  }
+
+  late final _cv_BRISK_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(BRISK)>>('cv_BRISK_empty');
+  late final _cv_BRISK_empty =
+      _cv_BRISK_emptyPtr.asFunction<bool Function(BRISK)>();
+
+  ffi.Pointer<ffi.Char> cv_BRISK_getDefaultName(
+    BRISK self,
+  ) {
+    return _cv_BRISK_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_BRISK_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(BRISK)>>(
+          'cv_BRISK_getDefaultName');
+  late final _cv_BRISK_getDefaultName = _cv_BRISK_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(BRISK)>();
+
+  int cv_BRISK_getOctaves(
+    BRISK self,
+  ) {
+    return _cv_BRISK_getOctaves(
+      self,
+    );
+  }
+
+  late final _cv_BRISK_getOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(BRISK)>>(
+          'cv_BRISK_getOctaves');
+  late final _cv_BRISK_getOctaves =
+      _cv_BRISK_getOctavesPtr.asFunction<int Function(BRISK)>();
+
+  double cv_BRISK_getPatternScale(
+    BRISK self,
+  ) {
+    return _cv_BRISK_getPatternScale(
+      self,
+    );
+  }
+
+  late final _cv_BRISK_getPatternScalePtr =
+      _lookup<ffi.NativeFunction<ffi.Float Function(BRISK)>>(
+          'cv_BRISK_getPatternScale');
+  late final _cv_BRISK_getPatternScale =
+      _cv_BRISK_getPatternScalePtr.asFunction<double Function(BRISK)>();
+
+  int cv_BRISK_getThreshold(
+    BRISK self,
+  ) {
+    return _cv_BRISK_getThreshold(
+      self,
+    );
+  }
+
+  late final _cv_BRISK_getThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(BRISK)>>(
+          'cv_BRISK_getThreshold');
+  late final _cv_BRISK_getThreshold =
+      _cv_BRISK_getThresholdPtr.asFunction<int Function(BRISK)>();
+
+  void cv_BRISK_setOctaves(
+    BRISK self,
+    int octaves,
+  ) {
+    return _cv_BRISK_setOctaves(
+      self,
+      octaves,
+    );
+  }
+
+  late final _cv_BRISK_setOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(BRISK, ffi.Int)>>(
+          'cv_BRISK_setOctaves');
+  late final _cv_BRISK_setOctaves =
+      _cv_BRISK_setOctavesPtr.asFunction<void Function(BRISK, int)>();
+
+  void cv_BRISK_setPatternScale(
+    BRISK self,
+    double patternScale,
+  ) {
+    return _cv_BRISK_setPatternScale(
+      self,
+      patternScale,
+    );
+  }
+
+  late final _cv_BRISK_setPatternScalePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(BRISK, ffi.Float)>>(
+          'cv_BRISK_setPatternScale');
+  late final _cv_BRISK_setPatternScale =
+      _cv_BRISK_setPatternScalePtr.asFunction<void Function(BRISK, double)>();
+
+  void cv_BRISK_setThreshold(
+    BRISK self,
+    int threshold,
+  ) {
+    return _cv_BRISK_setThreshold(
+      self,
+      threshold,
+    );
+  }
+
+  late final _cv_BRISK_setThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(BRISK, ffi.Int)>>(
+          'cv_BRISK_setThreshold');
+  late final _cv_BRISK_setThreshold =
+      _cv_BRISK_setThresholdPtr.asFunction<void Function(BRISK, int)>();
 
   void cv_FastFeatureDetector_close(
     FastFeatureDetectorPtr self,
@@ -419,12 +1126,14 @@ class CvNativeFeatures2d {
     FastFeatureDetector self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_FastFeatureDetector_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -435,11 +1144,173 @@ class CvNativeFeatures2d {
               FastFeatureDetector,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              Mat,
               imp$1.CvCallback_0)>>('cv_FastFeatureDetector_detect');
   late final _cv_FastFeatureDetector_detect =
       _cv_FastFeatureDetector_detectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_FastFeatureDetector_detectAndCompute(
+    FastFeatureDetector self,
+    Mat src,
+    Mat mask,
+    Mat desc,
+    ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_FastFeatureDetector_detectAndCompute(
+      self,
+      src,
+      mask,
+      desc,
+      rval,
+      useProvidedKeypoints,
+      callback,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_detectAndComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              FastFeatureDetector,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_FastFeatureDetector_detectAndCompute');
+  late final _cv_FastFeatureDetector_detectAndCompute =
+      _cv_FastFeatureDetector_detectAndComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(FastFeatureDetector, Mat, Mat, Mat,
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_FastFeatureDetector_empty(
+    FastFeatureDetector self,
+  ) {
+    return _cv_FastFeatureDetector_empty(
+      self,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(FastFeatureDetector)>>(
+          'cv_FastFeatureDetector_empty');
+  late final _cv_FastFeatureDetector_empty = _cv_FastFeatureDetector_emptyPtr
+      .asFunction<bool Function(FastFeatureDetector)>();
+
+  ffi.Pointer<ffi.Char> cv_FastFeatureDetector_getDefaultName(
+    FastFeatureDetector self,
+  ) {
+    return _cv_FastFeatureDetector_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_getDefaultNamePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<ffi.Char> Function(FastFeatureDetector)>>(
+      'cv_FastFeatureDetector_getDefaultName');
+  late final _cv_FastFeatureDetector_getDefaultName =
+      _cv_FastFeatureDetector_getDefaultNamePtr
+          .asFunction<ffi.Pointer<ffi.Char> Function(FastFeatureDetector)>();
+
+  bool cv_FastFeatureDetector_getNonmaxSuppression(
+    FastFeatureDetector self,
+  ) {
+    return _cv_FastFeatureDetector_getNonmaxSuppression(
+      self,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_getNonmaxSuppressionPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(FastFeatureDetector)>>(
+          'cv_FastFeatureDetector_getNonmaxSuppression');
+  late final _cv_FastFeatureDetector_getNonmaxSuppression =
+      _cv_FastFeatureDetector_getNonmaxSuppressionPtr
+          .asFunction<bool Function(FastFeatureDetector)>();
+
+  int cv_FastFeatureDetector_getThreshold(
+    FastFeatureDetector self,
+  ) {
+    return _cv_FastFeatureDetector_getThreshold(
+      self,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_getThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FastFeatureDetector)>>(
+          'cv_FastFeatureDetector_getThreshold');
+  late final _cv_FastFeatureDetector_getThreshold =
+      _cv_FastFeatureDetector_getThresholdPtr
+          .asFunction<int Function(FastFeatureDetector)>();
+
+  int cv_FastFeatureDetector_getType(
+    FastFeatureDetector self,
+  ) {
+    return _cv_FastFeatureDetector_getType(
+      self,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_getTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FastFeatureDetector)>>(
+          'cv_FastFeatureDetector_getType');
+  late final _cv_FastFeatureDetector_getType =
+      _cv_FastFeatureDetector_getTypePtr
+          .asFunction<int Function(FastFeatureDetector)>();
+
+  void cv_FastFeatureDetector_setNonmaxSuppression(
+    FastFeatureDetector self,
+    bool f,
+  ) {
+    return _cv_FastFeatureDetector_setNonmaxSuppression(
+      self,
+      f,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_setNonmaxSuppressionPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(FastFeatureDetector, ffi.Bool)>>(
+      'cv_FastFeatureDetector_setNonmaxSuppression');
+  late final _cv_FastFeatureDetector_setNonmaxSuppression =
+      _cv_FastFeatureDetector_setNonmaxSuppressionPtr
+          .asFunction<void Function(FastFeatureDetector, bool)>();
+
+  void cv_FastFeatureDetector_setThreshold(
+    FastFeatureDetector self,
+    int threshold,
+  ) {
+    return _cv_FastFeatureDetector_setThreshold(
+      self,
+      threshold,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_setThresholdPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(FastFeatureDetector, ffi.Int)>>(
+      'cv_FastFeatureDetector_setThreshold');
+  late final _cv_FastFeatureDetector_setThreshold =
+      _cv_FastFeatureDetector_setThresholdPtr
+          .asFunction<void Function(FastFeatureDetector, int)>();
+
+  void cv_FastFeatureDetector_setType(
+    FastFeatureDetector self,
+    int type,
+  ) {
+    return _cv_FastFeatureDetector_setType(
+      self,
+      type,
+    );
+  }
+
+  late final _cv_FastFeatureDetector_setTypePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(FastFeatureDetector, ffi.Int)>>(
+      'cv_FastFeatureDetector_setType');
+  late final _cv_FastFeatureDetector_setType =
+      _cv_FastFeatureDetector_setTypePtr
+          .asFunction<void Function(FastFeatureDetector, int)>();
 
   void cv_FlannBasedMatcher_close(
     FlannBasedMatcherPtr self,
@@ -555,16 +1426,91 @@ class CvNativeFeatures2d {
   late final _cv_GFTTDetector_create = _cv_GFTTDetector_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<GFTTDetector>)>();
 
+  ffi.Pointer<CvStatus> cv_GFTTDetector_create_1(
+    int maxCorners,
+    double qualityLevel,
+    double minDistance,
+    int blockSize,
+    int gradiantSize,
+    bool useHarrisDetector,
+    double k,
+    ffi.Pointer<GFTTDetector> rval,
+  ) {
+    return _cv_GFTTDetector_create_1(
+      maxCorners,
+      qualityLevel,
+      minDistance,
+      blockSize,
+      gradiantSize,
+      useHarrisDetector,
+      k,
+      rval,
+    );
+  }
+
+  late final _cv_GFTTDetector_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double,
+              ffi.Pointer<GFTTDetector>)>>('cv_GFTTDetector_create_1');
+  late final _cv_GFTTDetector_create_1 =
+      _cv_GFTTDetector_create_1Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(int, double, double, int, int, bool,
+              double, ffi.Pointer<GFTTDetector>)>();
+
+  ffi.Pointer<CvStatus> cv_GFTTDetector_create_2(
+    int maxCorners,
+    double qualityLevel,
+    double minDistance,
+    int blockSize,
+    bool useHarrisDetector,
+    double k,
+    ffi.Pointer<GFTTDetector> rval,
+  ) {
+    return _cv_GFTTDetector_create_2(
+      maxCorners,
+      qualityLevel,
+      minDistance,
+      blockSize,
+      useHarrisDetector,
+      k,
+      rval,
+    );
+  }
+
+  late final _cv_GFTTDetector_create_2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Double,
+              ffi.Pointer<GFTTDetector>)>>('cv_GFTTDetector_create_2');
+  late final _cv_GFTTDetector_create_2 =
+      _cv_GFTTDetector_create_2Ptr.asFunction<
+          ffi.Pointer<CvStatus> Function(int, double, double, int, bool, double,
+              ffi.Pointer<GFTTDetector>)>();
+
   ffi.Pointer<CvStatus> cv_GFTTDetector_detect(
     GFTTDetector self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_GFTTDetector_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -575,10 +1521,295 @@ class CvNativeFeatures2d {
               GFTTDetector,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              Mat,
               imp$1.CvCallback_0)>>('cv_GFTTDetector_detect');
   late final _cv_GFTTDetector_detect = _cv_GFTTDetector_detectPtr.asFunction<
-      ffi.Pointer<CvStatus> Function(
-          GFTTDetector, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(GFTTDetector, Mat,
+          ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_GFTTDetector_detectAndCompute(
+    GFTTDetector self,
+    Mat src,
+    Mat mask,
+    Mat descriptors,
+    ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_GFTTDetector_detectAndCompute(
+      self,
+      src,
+      mask,
+      descriptors,
+      rval,
+      useProvidedKeypoints,
+      callback,
+    );
+  }
+
+  late final _cv_GFTTDetector_detectAndComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              GFTTDetector,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_GFTTDetector_detectAndCompute');
+  late final _cv_GFTTDetector_detectAndCompute =
+      _cv_GFTTDetector_detectAndComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(GFTTDetector, Mat, Mat, Mat,
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_GFTTDetector_empty(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_empty(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(GFTTDetector)>>(
+          'cv_GFTTDetector_empty');
+  late final _cv_GFTTDetector_empty =
+      _cv_GFTTDetector_emptyPtr.asFunction<bool Function(GFTTDetector)>();
+
+  int cv_GFTTDetector_getBlockSize(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getBlockSize(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getBlockSize');
+  late final _cv_GFTTDetector_getBlockSize =
+      _cv_GFTTDetector_getBlockSizePtr.asFunction<int Function(GFTTDetector)>();
+
+  ffi.Pointer<ffi.Char> cv_GFTTDetector_getDefaultName(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getDefaultName');
+  late final _cv_GFTTDetector_getDefaultName =
+      _cv_GFTTDetector_getDefaultNamePtr
+          .asFunction<ffi.Pointer<ffi.Char> Function(GFTTDetector)>();
+
+  int cv_GFTTDetector_getGradientSize(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getGradientSize(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getGradientSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getGradientSize');
+  late final _cv_GFTTDetector_getGradientSize =
+      _cv_GFTTDetector_getGradientSizePtr
+          .asFunction<int Function(GFTTDetector)>();
+
+  bool cv_GFTTDetector_getHarrisDetector(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getHarrisDetector(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getHarrisDetectorPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getHarrisDetector');
+  late final _cv_GFTTDetector_getHarrisDetector =
+      _cv_GFTTDetector_getHarrisDetectorPtr
+          .asFunction<bool Function(GFTTDetector)>();
+
+  double cv_GFTTDetector_getK(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getK(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getKPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getK');
+  late final _cv_GFTTDetector_getK =
+      _cv_GFTTDetector_getKPtr.asFunction<double Function(GFTTDetector)>();
+
+  int cv_GFTTDetector_getMaxFeatures(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getMaxFeatures(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getMaxFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getMaxFeatures');
+  late final _cv_GFTTDetector_getMaxFeatures =
+      _cv_GFTTDetector_getMaxFeaturesPtr
+          .asFunction<int Function(GFTTDetector)>();
+
+  double cv_GFTTDetector_getMinDistance(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getMinDistance(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getMinDistancePtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getMinDistance');
+  late final _cv_GFTTDetector_getMinDistance =
+      _cv_GFTTDetector_getMinDistancePtr
+          .asFunction<double Function(GFTTDetector)>();
+
+  double cv_GFTTDetector_getQualityLevel(
+    GFTTDetector self,
+  ) {
+    return _cv_GFTTDetector_getQualityLevel(
+      self,
+    );
+  }
+
+  late final _cv_GFTTDetector_getQualityLevelPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(GFTTDetector)>>(
+          'cv_GFTTDetector_getQualityLevel');
+  late final _cv_GFTTDetector_getQualityLevel =
+      _cv_GFTTDetector_getQualityLevelPtr
+          .asFunction<double Function(GFTTDetector)>();
+
+  void cv_GFTTDetector_setBlockSize(
+    GFTTDetector self,
+    int blockSize,
+  ) {
+    return _cv_GFTTDetector_setBlockSize(
+      self,
+      blockSize,
+    );
+  }
+
+  late final _cv_GFTTDetector_setBlockSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Int)>>(
+          'cv_GFTTDetector_setBlockSize');
+  late final _cv_GFTTDetector_setBlockSize = _cv_GFTTDetector_setBlockSizePtr
+      .asFunction<void Function(GFTTDetector, int)>();
+
+  void cv_GFTTDetector_setGradientSize(
+    GFTTDetector self,
+    int gradientSize_,
+  ) {
+    return _cv_GFTTDetector_setGradientSize(
+      self,
+      gradientSize_,
+    );
+  }
+
+  late final _cv_GFTTDetector_setGradientSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Int)>>(
+          'cv_GFTTDetector_setGradientSize');
+  late final _cv_GFTTDetector_setGradientSize =
+      _cv_GFTTDetector_setGradientSizePtr
+          .asFunction<void Function(GFTTDetector, int)>();
+
+  void cv_GFTTDetector_setHarrisDetector(
+    GFTTDetector self,
+    bool val,
+  ) {
+    return _cv_GFTTDetector_setHarrisDetector(
+      self,
+      val,
+    );
+  }
+
+  late final _cv_GFTTDetector_setHarrisDetectorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Bool)>>(
+          'cv_GFTTDetector_setHarrisDetector');
+  late final _cv_GFTTDetector_setHarrisDetector =
+      _cv_GFTTDetector_setHarrisDetectorPtr
+          .asFunction<void Function(GFTTDetector, bool)>();
+
+  void cv_GFTTDetector_setK(
+    GFTTDetector self,
+    double k,
+  ) {
+    return _cv_GFTTDetector_setK(
+      self,
+      k,
+    );
+  }
+
+  late final _cv_GFTTDetector_setKPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Double)>>(
+          'cv_GFTTDetector_setK');
+  late final _cv_GFTTDetector_setK = _cv_GFTTDetector_setKPtr
+      .asFunction<void Function(GFTTDetector, double)>();
+
+  void cv_GFTTDetector_setMaxFeatures(
+    GFTTDetector self,
+    int maxFeatures,
+  ) {
+    return _cv_GFTTDetector_setMaxFeatures(
+      self,
+      maxFeatures,
+    );
+  }
+
+  late final _cv_GFTTDetector_setMaxFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Int)>>(
+          'cv_GFTTDetector_setMaxFeatures');
+  late final _cv_GFTTDetector_setMaxFeatures =
+      _cv_GFTTDetector_setMaxFeaturesPtr
+          .asFunction<void Function(GFTTDetector, int)>();
+
+  void cv_GFTTDetector_setMinDistance(
+    GFTTDetector self,
+    double minDistance,
+  ) {
+    return _cv_GFTTDetector_setMinDistance(
+      self,
+      minDistance,
+    );
+  }
+
+  late final _cv_GFTTDetector_setMinDistancePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Double)>>(
+          'cv_GFTTDetector_setMinDistance');
+  late final _cv_GFTTDetector_setMinDistance =
+      _cv_GFTTDetector_setMinDistancePtr
+          .asFunction<void Function(GFTTDetector, double)>();
+
+  void cv_GFTTDetector_setQualityLevel(
+    GFTTDetector self,
+    double qlevel,
+  ) {
+    return _cv_GFTTDetector_setQualityLevel(
+      self,
+      qlevel,
+    );
+  }
+
+  late final _cv_GFTTDetector_setQualityLevelPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GFTTDetector, ffi.Double)>>(
+          'cv_GFTTDetector_setQualityLevel');
+  late final _cv_GFTTDetector_setQualityLevel =
+      _cv_GFTTDetector_setQualityLevelPtr
+          .asFunction<void Function(GFTTDetector, double)>();
 
   void cv_KAZE_close(
     KAZEPtr self,
@@ -607,16 +1838,46 @@ class CvNativeFeatures2d {
   late final _cv_KAZE_create = _cv_KAZE_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<KAZE>)>();
 
+  ffi.Pointer<CvStatus> cv_KAZE_create_1(
+    bool extended,
+    bool upright,
+    double threshold,
+    int nOctaves,
+    int nOctaveLayers,
+    int diffusivity,
+    ffi.Pointer<KAZE> rval,
+  ) {
+    return _cv_KAZE_create_1(
+      extended,
+      upright,
+      threshold,
+      nOctaves,
+      nOctaveLayers,
+      diffusivity,
+      rval,
+    );
+  }
+
+  late final _cv_KAZE_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(ffi.Bool, ffi.Bool, ffi.Float, ffi.Int,
+              ffi.Int, ffi.Int, ffi.Pointer<KAZE>)>>('cv_KAZE_create_1');
+  late final _cv_KAZE_create_1 = _cv_KAZE_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          bool, bool, double, int, int, int, ffi.Pointer<KAZE>)>();
+
   ffi.Pointer<CvStatus> cv_KAZE_detect(
     KAZE self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_KAZE_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -624,10 +1885,10 @@ class CvNativeFeatures2d {
   late final _cv_KAZE_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(KAZE, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_KAZE_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_KAZE_detect');
   late final _cv_KAZE_detect = _cv_KAZE_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          KAZE, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          KAZE, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_KAZE_detectAndCompute(
     KAZE self,
@@ -635,6 +1896,7 @@ class CvNativeFeatures2d {
     Mat mask,
     Mat desc,
     ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_KAZE_detectAndCompute(
@@ -643,6 +1905,7 @@ class CvNativeFeatures2d {
       mask,
       desc,
       rval,
+      useProvidedKeypoints,
       callback,
     );
   }
@@ -655,11 +1918,219 @@ class CvNativeFeatures2d {
               Mat,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
               imp$1.CvCallback_0)>>('cv_KAZE_detectAndCompute');
   late final _cv_KAZE_detectAndCompute =
       _cv_KAZE_detectAndComputePtr.asFunction<
           ffi.Pointer<CvStatus> Function(KAZE, Mat, Mat, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_KAZE_empty(
+    KAZE self,
+  ) {
+    return _cv_KAZE_empty(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(KAZE)>>('cv_KAZE_empty');
+  late final _cv_KAZE_empty =
+      _cv_KAZE_emptyPtr.asFunction<bool Function(KAZE)>();
+
+  ffi.Pointer<ffi.Char> cv_KAZE_getDefaultName(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(KAZE)>>(
+          'cv_KAZE_getDefaultName');
+  late final _cv_KAZE_getDefaultName = _cv_KAZE_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(KAZE)>();
+
+  int cv_KAZE_getDiffusivity(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getDiffusivity(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getDiffusivityPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(KAZE)>>(
+          'cv_KAZE_getDiffusivity');
+  late final _cv_KAZE_getDiffusivity =
+      _cv_KAZE_getDiffusivityPtr.asFunction<int Function(KAZE)>();
+
+  bool cv_KAZE_getExtended(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getExtended(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getExtendedPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(KAZE)>>(
+          'cv_KAZE_getExtended');
+  late final _cv_KAZE_getExtended =
+      _cv_KAZE_getExtendedPtr.asFunction<bool Function(KAZE)>();
+
+  int cv_KAZE_getNOctaveLayers(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getNOctaveLayers(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(KAZE)>>(
+          'cv_KAZE_getNOctaveLayers');
+  late final _cv_KAZE_getNOctaveLayers =
+      _cv_KAZE_getNOctaveLayersPtr.asFunction<int Function(KAZE)>();
+
+  int cv_KAZE_getNOctaves(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getNOctaves(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getNOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(KAZE)>>(
+          'cv_KAZE_getNOctaves');
+  late final _cv_KAZE_getNOctaves =
+      _cv_KAZE_getNOctavesPtr.asFunction<int Function(KAZE)>();
+
+  double cv_KAZE_getThreshold(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getThreshold(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(KAZE)>>(
+          'cv_KAZE_getThreshold');
+  late final _cv_KAZE_getThreshold =
+      _cv_KAZE_getThresholdPtr.asFunction<double Function(KAZE)>();
+
+  bool cv_KAZE_getUpright(
+    KAZE self,
+  ) {
+    return _cv_KAZE_getUpright(
+      self,
+    );
+  }
+
+  late final _cv_KAZE_getUprightPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(KAZE)>>(
+          'cv_KAZE_getUpright');
+  late final _cv_KAZE_getUpright =
+      _cv_KAZE_getUprightPtr.asFunction<bool Function(KAZE)>();
+
+  void cv_KAZE_setDiffusivity(
+    KAZE self,
+    int diff,
+  ) {
+    return _cv_KAZE_setDiffusivity(
+      self,
+      diff,
+    );
+  }
+
+  late final _cv_KAZE_setDiffusivityPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Int)>>(
+          'cv_KAZE_setDiffusivity');
+  late final _cv_KAZE_setDiffusivity =
+      _cv_KAZE_setDiffusivityPtr.asFunction<void Function(KAZE, int)>();
+
+  void cv_KAZE_setExtended(
+    KAZE self,
+    bool extended,
+  ) {
+    return _cv_KAZE_setExtended(
+      self,
+      extended,
+    );
+  }
+
+  late final _cv_KAZE_setExtendedPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Bool)>>(
+          'cv_KAZE_setExtended');
+  late final _cv_KAZE_setExtended =
+      _cv_KAZE_setExtendedPtr.asFunction<void Function(KAZE, bool)>();
+
+  void cv_KAZE_setNOctaveLayers(
+    KAZE self,
+    int octaveLayers,
+  ) {
+    return _cv_KAZE_setNOctaveLayers(
+      self,
+      octaveLayers,
+    );
+  }
+
+  late final _cv_KAZE_setNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Int)>>(
+          'cv_KAZE_setNOctaveLayers');
+  late final _cv_KAZE_setNOctaveLayers =
+      _cv_KAZE_setNOctaveLayersPtr.asFunction<void Function(KAZE, int)>();
+
+  void cv_KAZE_setNOctaves(
+    KAZE self,
+    int octaves,
+  ) {
+    return _cv_KAZE_setNOctaves(
+      self,
+      octaves,
+    );
+  }
+
+  late final _cv_KAZE_setNOctavesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Int)>>(
+          'cv_KAZE_setNOctaves');
+  late final _cv_KAZE_setNOctaves =
+      _cv_KAZE_setNOctavesPtr.asFunction<void Function(KAZE, int)>();
+
+  void cv_KAZE_setThreshold(
+    KAZE self,
+    double threshold,
+  ) {
+    return _cv_KAZE_setThreshold(
+      self,
+      threshold,
+    );
+  }
+
+  late final _cv_KAZE_setThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Double)>>(
+          'cv_KAZE_setThreshold');
+  late final _cv_KAZE_setThreshold =
+      _cv_KAZE_setThresholdPtr.asFunction<void Function(KAZE, double)>();
+
+  void cv_KAZE_setUpright(
+    KAZE self,
+    bool upright,
+  ) {
+    return _cv_KAZE_setUpright(
+      self,
+      upright,
+    );
+  }
+
+  late final _cv_KAZE_setUprightPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(KAZE, ffi.Bool)>>(
+          'cv_KAZE_setUpright');
+  late final _cv_KAZE_setUpright =
+      _cv_KAZE_setUprightPtr.asFunction<void Function(KAZE, bool)>();
 
   void cv_MSER_close(
     MSERPtr self,
@@ -688,16 +2159,61 @@ class CvNativeFeatures2d {
   late final _cv_MSER_create = _cv_MSER_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<MSER>)>();
 
+  ffi.Pointer<CvStatus> cv_MSER_create_1(
+    int delta,
+    int min_area,
+    int max_area,
+    double max_variation,
+    double min_diversity,
+    int max_evolution,
+    double area_threshold,
+    double min_margin,
+    int edge_blur_size,
+    ffi.Pointer<MSER> rval,
+  ) {
+    return _cv_MSER_create_1(
+      delta,
+      min_area,
+      max_area,
+      max_variation,
+      min_diversity,
+      max_evolution,
+      area_threshold,
+      min_margin,
+      edge_blur_size,
+      rval,
+    );
+  }
+
+  late final _cv_MSER_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Pointer<MSER>)>>('cv_MSER_create_1');
+  late final _cv_MSER_create_1 = _cv_MSER_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(int, int, int, double, double, int, double,
+          double, int, ffi.Pointer<MSER>)>();
+
   ffi.Pointer<CvStatus> cv_MSER_detect(
     MSER self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_MSER_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -705,10 +2221,397 @@ class CvNativeFeatures2d {
   late final _cv_MSER_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(MSER, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_MSER_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_MSER_detect');
   late final _cv_MSER_detect = _cv_MSER_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          MSER, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          MSER, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_MSER_detectAndCompute(
+    MSER self,
+    Mat src,
+    Mat mask,
+    Mat desc,
+    ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_MSER_detectAndCompute(
+      self,
+      src,
+      mask,
+      desc,
+      rval,
+      useProvidedKeypoints,
+      callback,
+    );
+  }
+
+  late final _cv_MSER_detectAndComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              MSER,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_MSER_detectAndCompute');
+  late final _cv_MSER_detectAndCompute =
+      _cv_MSER_detectAndComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(MSER, Mat, Mat, Mat,
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_MSER_detectRegions(
+    MSER self,
+    Mat image,
+    ffi.Pointer<VecVecPoint> rval,
+    ffi.Pointer<VecRect> bboxes,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_MSER_detectRegions(
+      self,
+      image,
+      rval,
+      bboxes,
+      callback,
+    );
+  }
+
+  late final _cv_MSER_detectRegionsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              MSER,
+              Mat,
+              ffi.Pointer<VecVecPoint>,
+              ffi.Pointer<VecRect>,
+              imp$1.CvCallback_0)>>('cv_MSER_detectRegions');
+  late final _cv_MSER_detectRegions = _cv_MSER_detectRegionsPtr.asFunction<
+      ffi.Pointer<CvStatus> Function(MSER, Mat, ffi.Pointer<VecVecPoint>,
+          ffi.Pointer<VecRect>, imp$1.CvCallback_0)>();
+
+  bool cv_MSER_empty(
+    MSER self,
+  ) {
+    return _cv_MSER_empty(
+      self,
+    );
+  }
+
+  late final _cv_MSER_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(MSER)>>('cv_MSER_empty');
+  late final _cv_MSER_empty =
+      _cv_MSER_emptyPtr.asFunction<bool Function(MSER)>();
+
+  double cv_MSER_getAreaThreshold(
+    MSER self,
+  ) {
+    return _cv_MSER_getAreaThreshold(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getAreaThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(MSER)>>(
+          'cv_MSER_getAreaThreshold');
+  late final _cv_MSER_getAreaThreshold =
+      _cv_MSER_getAreaThresholdPtr.asFunction<double Function(MSER)>();
+
+  ffi.Pointer<ffi.Char> cv_MSER_getDefaultName(
+    MSER self,
+  ) {
+    return _cv_MSER_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(MSER)>>(
+          'cv_MSER_getDefaultName');
+  late final _cv_MSER_getDefaultName = _cv_MSER_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(MSER)>();
+
+  int cv_MSER_getDelta(
+    MSER self,
+  ) {
+    return _cv_MSER_getDelta(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getDeltaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(MSER)>>('cv_MSER_getDelta');
+  late final _cv_MSER_getDelta =
+      _cv_MSER_getDeltaPtr.asFunction<int Function(MSER)>();
+
+  int cv_MSER_getEdgeBlurSize(
+    MSER self,
+  ) {
+    return _cv_MSER_getEdgeBlurSize(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getEdgeBlurSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(MSER)>>(
+          'cv_MSER_getEdgeBlurSize');
+  late final _cv_MSER_getEdgeBlurSize =
+      _cv_MSER_getEdgeBlurSizePtr.asFunction<int Function(MSER)>();
+
+  int cv_MSER_getMaxArea(
+    MSER self,
+  ) {
+    return _cv_MSER_getMaxArea(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMaxAreaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(MSER)>>('cv_MSER_getMaxArea');
+  late final _cv_MSER_getMaxArea =
+      _cv_MSER_getMaxAreaPtr.asFunction<int Function(MSER)>();
+
+  int cv_MSER_getMaxEvolution(
+    MSER self,
+  ) {
+    return _cv_MSER_getMaxEvolution(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMaxEvolutionPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(MSER)>>(
+          'cv_MSER_getMaxEvolution');
+  late final _cv_MSER_getMaxEvolution =
+      _cv_MSER_getMaxEvolutionPtr.asFunction<int Function(MSER)>();
+
+  double cv_MSER_getMaxVariation(
+    MSER self,
+  ) {
+    return _cv_MSER_getMaxVariation(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMaxVariationPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(MSER)>>(
+          'cv_MSER_getMaxVariation');
+  late final _cv_MSER_getMaxVariation =
+      _cv_MSER_getMaxVariationPtr.asFunction<double Function(MSER)>();
+
+  int cv_MSER_getMinArea(
+    MSER self,
+  ) {
+    return _cv_MSER_getMinArea(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMinAreaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(MSER)>>('cv_MSER_getMinArea');
+  late final _cv_MSER_getMinArea =
+      _cv_MSER_getMinAreaPtr.asFunction<int Function(MSER)>();
+
+  double cv_MSER_getMinDiversity(
+    MSER self,
+  ) {
+    return _cv_MSER_getMinDiversity(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMinDiversityPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(MSER)>>(
+          'cv_MSER_getMinDiversity');
+  late final _cv_MSER_getMinDiversity =
+      _cv_MSER_getMinDiversityPtr.asFunction<double Function(MSER)>();
+
+  double cv_MSER_getMinMargin(
+    MSER self,
+  ) {
+    return _cv_MSER_getMinMargin(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getMinMarginPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(MSER)>>(
+          'cv_MSER_getMinMargin');
+  late final _cv_MSER_getMinMargin =
+      _cv_MSER_getMinMarginPtr.asFunction<double Function(MSER)>();
+
+  bool cv_MSER_getPass2Only(
+    MSER self,
+  ) {
+    return _cv_MSER_getPass2Only(
+      self,
+    );
+  }
+
+  late final _cv_MSER_getPass2OnlyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(MSER)>>(
+          'cv_MSER_getPass2Only');
+  late final _cv_MSER_getPass2Only =
+      _cv_MSER_getPass2OnlyPtr.asFunction<bool Function(MSER)>();
+
+  void cv_MSER_setAreaThreshold(
+    MSER self,
+    double areaThreshold,
+  ) {
+    return _cv_MSER_setAreaThreshold(
+      self,
+      areaThreshold,
+    );
+  }
+
+  late final _cv_MSER_setAreaThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Double)>>(
+          'cv_MSER_setAreaThreshold');
+  late final _cv_MSER_setAreaThreshold =
+      _cv_MSER_setAreaThresholdPtr.asFunction<void Function(MSER, double)>();
+
+  void cv_MSER_setDelta(
+    MSER self,
+    int delta,
+  ) {
+    return _cv_MSER_setDelta(
+      self,
+      delta,
+    );
+  }
+
+  late final _cv_MSER_setDeltaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Int)>>(
+          'cv_MSER_setDelta');
+  late final _cv_MSER_setDelta =
+      _cv_MSER_setDeltaPtr.asFunction<void Function(MSER, int)>();
+
+  void cv_MSER_setEdgeBlurSize(
+    MSER self,
+    int edge_blur_size,
+  ) {
+    return _cv_MSER_setEdgeBlurSize(
+      self,
+      edge_blur_size,
+    );
+  }
+
+  late final _cv_MSER_setEdgeBlurSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Int)>>(
+          'cv_MSER_setEdgeBlurSize');
+  late final _cv_MSER_setEdgeBlurSize =
+      _cv_MSER_setEdgeBlurSizePtr.asFunction<void Function(MSER, int)>();
+
+  void cv_MSER_setMaxArea(
+    MSER self,
+    int maxArea,
+  ) {
+    return _cv_MSER_setMaxArea(
+      self,
+      maxArea,
+    );
+  }
+
+  late final _cv_MSER_setMaxAreaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Int)>>(
+          'cv_MSER_setMaxArea');
+  late final _cv_MSER_setMaxArea =
+      _cv_MSER_setMaxAreaPtr.asFunction<void Function(MSER, int)>();
+
+  void cv_MSER_setMaxEvolution(
+    MSER self,
+    int maxEvolution,
+  ) {
+    return _cv_MSER_setMaxEvolution(
+      self,
+      maxEvolution,
+    );
+  }
+
+  late final _cv_MSER_setMaxEvolutionPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Int)>>(
+          'cv_MSER_setMaxEvolution');
+  late final _cv_MSER_setMaxEvolution =
+      _cv_MSER_setMaxEvolutionPtr.asFunction<void Function(MSER, int)>();
+
+  void cv_MSER_setMaxVariation(
+    MSER self,
+    double maxVariation,
+  ) {
+    return _cv_MSER_setMaxVariation(
+      self,
+      maxVariation,
+    );
+  }
+
+  late final _cv_MSER_setMaxVariationPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Double)>>(
+          'cv_MSER_setMaxVariation');
+  late final _cv_MSER_setMaxVariation =
+      _cv_MSER_setMaxVariationPtr.asFunction<void Function(MSER, double)>();
+
+  void cv_MSER_setMinArea(
+    MSER self,
+    int minArea,
+  ) {
+    return _cv_MSER_setMinArea(
+      self,
+      minArea,
+    );
+  }
+
+  late final _cv_MSER_setMinAreaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Int)>>(
+          'cv_MSER_setMinArea');
+  late final _cv_MSER_setMinArea =
+      _cv_MSER_setMinAreaPtr.asFunction<void Function(MSER, int)>();
+
+  void cv_MSER_setMinDiversity(
+    MSER self,
+    double minDiversity,
+  ) {
+    return _cv_MSER_setMinDiversity(
+      self,
+      minDiversity,
+    );
+  }
+
+  late final _cv_MSER_setMinDiversityPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Double)>>(
+          'cv_MSER_setMinDiversity');
+  late final _cv_MSER_setMinDiversity =
+      _cv_MSER_setMinDiversityPtr.asFunction<void Function(MSER, double)>();
+
+  void cv_MSER_setMinMargin(
+    MSER self,
+    double min_margin,
+  ) {
+    return _cv_MSER_setMinMargin(
+      self,
+      min_margin,
+    );
+  }
+
+  late final _cv_MSER_setMinMarginPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Double)>>(
+          'cv_MSER_setMinMargin');
+  late final _cv_MSER_setMinMargin =
+      _cv_MSER_setMinMarginPtr.asFunction<void Function(MSER, double)>();
+
+  void cv_MSER_setPass2Only(
+    MSER self,
+    bool f,
+  ) {
+    return _cv_MSER_setPass2Only(
+      self,
+      f,
+    );
+  }
+
+  late final _cv_MSER_setPass2OnlyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(MSER, ffi.Bool)>>(
+          'cv_MSER_setPass2Only');
+  late final _cv_MSER_setPass2Only =
+      _cv_MSER_setPass2OnlyPtr.asFunction<void Function(MSER, bool)>();
 
   void cv_ORB_close(
     ORBPtr self,
@@ -784,12 +2687,14 @@ class CvNativeFeatures2d {
     ORB self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_ORB_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -797,17 +2702,17 @@ class CvNativeFeatures2d {
   late final _cv_ORB_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(ORB, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_ORB_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_ORB_detect');
   late final _cv_ORB_detect = _cv_ORB_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          ORB, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          ORB, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_ORB_detectAndCompute(
     ORB self,
     Mat src,
     Mat mask,
-    ffi.Pointer<VecKeyPoint> out_keypoints,
     Mat desc,
+    ffi.Pointer<VecKeyPoint> out_keypoints,
     bool useProvidedKeypoints,
     imp$1.CvCallback_0 callback,
   ) {
@@ -815,8 +2720,8 @@ class CvNativeFeatures2d {
       self,
       src,
       mask,
-      out_keypoints,
       desc,
+      out_keypoints,
       useProvidedKeypoints,
       callback,
     );
@@ -828,13 +2733,305 @@ class CvNativeFeatures2d {
               ORB,
               Mat,
               Mat,
-              ffi.Pointer<VecKeyPoint>,
               Mat,
+              ffi.Pointer<VecKeyPoint>,
               ffi.Bool,
               imp$1.CvCallback_0)>>('cv_ORB_detectAndCompute');
   late final _cv_ORB_detectAndCompute = _cv_ORB_detectAndComputePtr.asFunction<
-      ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, ffi.Pointer<VecKeyPoint>,
-          Mat, bool, imp$1.CvCallback_0)>();
+      ffi.Pointer<CvStatus> Function(ORB, Mat, Mat, Mat,
+          ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_ORB_empty(
+    ORB self,
+  ) {
+    return _cv_ORB_empty(
+      self,
+    );
+  }
+
+  late final _cv_ORB_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(ORB)>>('cv_ORB_empty');
+  late final _cv_ORB_empty = _cv_ORB_emptyPtr.asFunction<bool Function(ORB)>();
+
+  ffi.Pointer<ffi.Char> cv_ORB_getDefaultName(
+    ORB self,
+  ) {
+    return _cv_ORB_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ORB)>>(
+          'cv_ORB_getDefaultName');
+  late final _cv_ORB_getDefaultName = _cv_ORB_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(ORB)>();
+
+  int cv_ORB_getEdgeThreshold(
+    ORB self,
+  ) {
+    return _cv_ORB_getEdgeThreshold(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getEdgeThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>(
+          'cv_ORB_getEdgeThreshold');
+  late final _cv_ORB_getEdgeThreshold =
+      _cv_ORB_getEdgeThresholdPtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getFastThreshold(
+    ORB self,
+  ) {
+    return _cv_ORB_getFastThreshold(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getFastThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>(
+          'cv_ORB_getFastThreshold');
+  late final _cv_ORB_getFastThreshold =
+      _cv_ORB_getFastThresholdPtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getFirstLevel(
+    ORB self,
+  ) {
+    return _cv_ORB_getFirstLevel(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getFirstLevelPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>(
+          'cv_ORB_getFirstLevel');
+  late final _cv_ORB_getFirstLevel =
+      _cv_ORB_getFirstLevelPtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getMaxFeatures(
+    ORB self,
+  ) {
+    return _cv_ORB_getMaxFeatures(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getMaxFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>(
+          'cv_ORB_getMaxFeatures');
+  late final _cv_ORB_getMaxFeatures =
+      _cv_ORB_getMaxFeaturesPtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getNLevels(
+    ORB self,
+  ) {
+    return _cv_ORB_getNLevels(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getNLevelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>('cv_ORB_getNLevels');
+  late final _cv_ORB_getNLevels =
+      _cv_ORB_getNLevelsPtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getPatchSize(
+    ORB self,
+  ) {
+    return _cv_ORB_getPatchSize(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getPatchSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>('cv_ORB_getPatchSize');
+  late final _cv_ORB_getPatchSize =
+      _cv_ORB_getPatchSizePtr.asFunction<int Function(ORB)>();
+
+  double cv_ORB_getScaleFactor(
+    ORB self,
+  ) {
+    return _cv_ORB_getScaleFactor(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getScaleFactorPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(ORB)>>(
+          'cv_ORB_getScaleFactor');
+  late final _cv_ORB_getScaleFactor =
+      _cv_ORB_getScaleFactorPtr.asFunction<double Function(ORB)>();
+
+  int cv_ORB_getScoreType(
+    ORB self,
+  ) {
+    return _cv_ORB_getScoreType(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getScoreTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>('cv_ORB_getScoreType');
+  late final _cv_ORB_getScoreType =
+      _cv_ORB_getScoreTypePtr.asFunction<int Function(ORB)>();
+
+  int cv_ORB_getWTA_K(
+    ORB self,
+  ) {
+    return _cv_ORB_getWTA_K(
+      self,
+    );
+  }
+
+  late final _cv_ORB_getWTA_KPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ORB)>>('cv_ORB_getWTA_K');
+  late final _cv_ORB_getWTA_K =
+      _cv_ORB_getWTA_KPtr.asFunction<int Function(ORB)>();
+
+  void cv_ORB_setEdgeThreshold(
+    ORB self,
+    int edgeThreshold,
+  ) {
+    return _cv_ORB_setEdgeThreshold(
+      self,
+      edgeThreshold,
+    );
+  }
+
+  late final _cv_ORB_setEdgeThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setEdgeThreshold');
+  late final _cv_ORB_setEdgeThreshold =
+      _cv_ORB_setEdgeThresholdPtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setFastThreshold(
+    ORB self,
+    int fastThreshold,
+  ) {
+    return _cv_ORB_setFastThreshold(
+      self,
+      fastThreshold,
+    );
+  }
+
+  late final _cv_ORB_setFastThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setFastThreshold');
+  late final _cv_ORB_setFastThreshold =
+      _cv_ORB_setFastThresholdPtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setFirstLevel(
+    ORB self,
+    int firstLevel,
+  ) {
+    return _cv_ORB_setFirstLevel(
+      self,
+      firstLevel,
+    );
+  }
+
+  late final _cv_ORB_setFirstLevelPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setFirstLevel');
+  late final _cv_ORB_setFirstLevel =
+      _cv_ORB_setFirstLevelPtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setMaxFeatures(
+    ORB self,
+    int maxFeatures,
+  ) {
+    return _cv_ORB_setMaxFeatures(
+      self,
+      maxFeatures,
+    );
+  }
+
+  late final _cv_ORB_setMaxFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setMaxFeatures');
+  late final _cv_ORB_setMaxFeatures =
+      _cv_ORB_setMaxFeaturesPtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setNLevels(
+    ORB self,
+    int nlevels,
+  ) {
+    return _cv_ORB_setNLevels(
+      self,
+      nlevels,
+    );
+  }
+
+  late final _cv_ORB_setNLevelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setNLevels');
+  late final _cv_ORB_setNLevels =
+      _cv_ORB_setNLevelsPtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setPatchSize(
+    ORB self,
+    int patchSize,
+  ) {
+    return _cv_ORB_setPatchSize(
+      self,
+      patchSize,
+    );
+  }
+
+  late final _cv_ORB_setPatchSizePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setPatchSize');
+  late final _cv_ORB_setPatchSize =
+      _cv_ORB_setPatchSizePtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setScaleFactor(
+    ORB self,
+    double scaleFactor,
+  ) {
+    return _cv_ORB_setScaleFactor(
+      self,
+      scaleFactor,
+    );
+  }
+
+  late final _cv_ORB_setScaleFactorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Double)>>(
+          'cv_ORB_setScaleFactor');
+  late final _cv_ORB_setScaleFactor =
+      _cv_ORB_setScaleFactorPtr.asFunction<void Function(ORB, double)>();
+
+  void cv_ORB_setScoreType(
+    ORB self,
+    int scoreType,
+  ) {
+    return _cv_ORB_setScoreType(
+      self,
+      scoreType,
+    );
+  }
+
+  late final _cv_ORB_setScoreTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setScoreType');
+  late final _cv_ORB_setScoreType =
+      _cv_ORB_setScoreTypePtr.asFunction<void Function(ORB, int)>();
+
+  void cv_ORB_setWTA_K(
+    ORB self,
+    int wta_k,
+  ) {
+    return _cv_ORB_setWTA_K(
+      self,
+      wta_k,
+    );
+  }
+
+  late final _cv_ORB_setWTA_KPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ORB, ffi.Int)>>(
+          'cv_ORB_setWTA_K');
+  late final _cv_ORB_setWTA_K =
+      _cv_ORB_setWTA_KPtr.asFunction<void Function(ORB, int)>();
 
   void cv_SIFT_close(
     SIFTPtr self,
@@ -863,16 +3060,89 @@ class CvNativeFeatures2d {
   late final _cv_SIFT_create = _cv_SIFT_createPtr
       .asFunction<ffi.Pointer<CvStatus> Function(ffi.Pointer<SIFT>)>();
 
+  ffi.Pointer<CvStatus> cv_SIFT_create_1(
+    int nfeatures,
+    int nOctaveLayers,
+    double contrastThreshold,
+    double edgeThreshold,
+    double sigma,
+    int descriptorType,
+    bool enable_precise_upscale,
+    ffi.Pointer<SIFT> rval,
+  ) {
+    return _cv_SIFT_create_1(
+      nfeatures,
+      nOctaveLayers,
+      contrastThreshold,
+      edgeThreshold,
+      sigma,
+      descriptorType,
+      enable_precise_upscale,
+      rval,
+    );
+  }
+
+  late final _cv_SIFT_create_1Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Double,
+              ffi.Int,
+              ffi.Bool,
+              ffi.Pointer<SIFT>)>>('cv_SIFT_create_1');
+  late final _cv_SIFT_create_1 = _cv_SIFT_create_1Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          int, int, double, double, double, int, bool, ffi.Pointer<SIFT>)>();
+
+  ffi.Pointer<CvStatus> cv_SIFT_create_2(
+    int nfeatures,
+    int nOctaveLayers,
+    double contrastThreshold,
+    double edgeThreshold,
+    double sigma,
+    bool enable_precise_upscale,
+    ffi.Pointer<SIFT> rval,
+  ) {
+    return _cv_SIFT_create_2(
+      nfeatures,
+      nOctaveLayers,
+      contrastThreshold,
+      edgeThreshold,
+      sigma,
+      enable_precise_upscale,
+      rval,
+    );
+  }
+
+  late final _cv_SIFT_create_2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              ffi.Int,
+              ffi.Int,
+              ffi.Double,
+              ffi.Double,
+              ffi.Double,
+              ffi.Bool,
+              ffi.Pointer<SIFT>)>>('cv_SIFT_create_2');
+  late final _cv_SIFT_create_2 = _cv_SIFT_create_2Ptr.asFunction<
+      ffi.Pointer<CvStatus> Function(
+          int, int, double, double, double, bool, ffi.Pointer<SIFT>)>();
+
   ffi.Pointer<CvStatus> cv_SIFT_detect(
     SIFT self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_SIFT_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -880,10 +3150,10 @@ class CvNativeFeatures2d {
   late final _cv_SIFT_detectPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<CvStatus> Function(SIFT, Mat, ffi.Pointer<VecKeyPoint>,
-              imp$1.CvCallback_0)>>('cv_SIFT_detect');
+              Mat, imp$1.CvCallback_0)>>('cv_SIFT_detect');
   late final _cv_SIFT_detect = _cv_SIFT_detectPtr.asFunction<
       ffi.Pointer<CvStatus> Function(
-          SIFT, Mat, ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+          SIFT, Mat, ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
 
   ffi.Pointer<CvStatus> cv_SIFT_detectAndCompute(
     SIFT self,
@@ -891,6 +3161,7 @@ class CvNativeFeatures2d {
     Mat mask,
     Mat desc,
     ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_SIFT_detectAndCompute(
@@ -899,6 +3170,7 @@ class CvNativeFeatures2d {
       mask,
       desc,
       rval,
+      useProvidedKeypoints,
       callback,
     );
   }
@@ -911,11 +3183,189 @@ class CvNativeFeatures2d {
               Mat,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
               imp$1.CvCallback_0)>>('cv_SIFT_detectAndCompute');
   late final _cv_SIFT_detectAndCompute =
       _cv_SIFT_detectAndComputePtr.asFunction<
           ffi.Pointer<CvStatus> Function(SIFT, Mat, Mat, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_SIFT_empty(
+    SIFT self,
+  ) {
+    return _cv_SIFT_empty(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(SIFT)>>('cv_SIFT_empty');
+  late final _cv_SIFT_empty =
+      _cv_SIFT_emptyPtr.asFunction<bool Function(SIFT)>();
+
+  double cv_SIFT_getContrastThreshold(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getContrastThreshold(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getContrastThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(SIFT)>>(
+          'cv_SIFT_getContrastThreshold');
+  late final _cv_SIFT_getContrastThreshold =
+      _cv_SIFT_getContrastThresholdPtr.asFunction<double Function(SIFT)>();
+
+  ffi.Pointer<ffi.Char> cv_SIFT_getDefaultName(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getDefaultNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(SIFT)>>(
+          'cv_SIFT_getDefaultName');
+  late final _cv_SIFT_getDefaultName = _cv_SIFT_getDefaultNamePtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(SIFT)>();
+
+  double cv_SIFT_getEdgeThreshold(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getEdgeThreshold(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getEdgeThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(SIFT)>>(
+          'cv_SIFT_getEdgeThreshold');
+  late final _cv_SIFT_getEdgeThreshold =
+      _cv_SIFT_getEdgeThresholdPtr.asFunction<double Function(SIFT)>();
+
+  int cv_SIFT_getNFeatures(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getNFeatures(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getNFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(SIFT)>>(
+          'cv_SIFT_getNFeatures');
+  late final _cv_SIFT_getNFeatures =
+      _cv_SIFT_getNFeaturesPtr.asFunction<int Function(SIFT)>();
+
+  int cv_SIFT_getNOctaveLayers(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getNOctaveLayers(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(SIFT)>>(
+          'cv_SIFT_getNOctaveLayers');
+  late final _cv_SIFT_getNOctaveLayers =
+      _cv_SIFT_getNOctaveLayersPtr.asFunction<int Function(SIFT)>();
+
+  double cv_SIFT_getSigma(
+    SIFT self,
+  ) {
+    return _cv_SIFT_getSigma(
+      self,
+    );
+  }
+
+  late final _cv_SIFT_getSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Double Function(SIFT)>>(
+          'cv_SIFT_getSigma');
+  late final _cv_SIFT_getSigma =
+      _cv_SIFT_getSigmaPtr.asFunction<double Function(SIFT)>();
+
+  void cv_SIFT_setContrastThreshold(
+    SIFT self,
+    double contrastThreshold,
+  ) {
+    return _cv_SIFT_setContrastThreshold(
+      self,
+      contrastThreshold,
+    );
+  }
+
+  late final _cv_SIFT_setContrastThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFT, ffi.Double)>>(
+          'cv_SIFT_setContrastThreshold');
+  late final _cv_SIFT_setContrastThreshold = _cv_SIFT_setContrastThresholdPtr
+      .asFunction<void Function(SIFT, double)>();
+
+  void cv_SIFT_setEdgeThreshold(
+    SIFT self,
+    double edgeThreshold,
+  ) {
+    return _cv_SIFT_setEdgeThreshold(
+      self,
+      edgeThreshold,
+    );
+  }
+
+  late final _cv_SIFT_setEdgeThresholdPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFT, ffi.Double)>>(
+          'cv_SIFT_setEdgeThreshold');
+  late final _cv_SIFT_setEdgeThreshold =
+      _cv_SIFT_setEdgeThresholdPtr.asFunction<void Function(SIFT, double)>();
+
+  void cv_SIFT_setNFeatures(
+    SIFT self,
+    int maxFeatures,
+  ) {
+    return _cv_SIFT_setNFeatures(
+      self,
+      maxFeatures,
+    );
+  }
+
+  late final _cv_SIFT_setNFeaturesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFT, ffi.Int)>>(
+          'cv_SIFT_setNFeatures');
+  late final _cv_SIFT_setNFeatures =
+      _cv_SIFT_setNFeaturesPtr.asFunction<void Function(SIFT, int)>();
+
+  void cv_SIFT_setNOctaveLayers(
+    SIFT self,
+    int nOctaveLayers,
+  ) {
+    return _cv_SIFT_setNOctaveLayers(
+      self,
+      nOctaveLayers,
+    );
+  }
+
+  late final _cv_SIFT_setNOctaveLayersPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFT, ffi.Int)>>(
+          'cv_SIFT_setNOctaveLayers');
+  late final _cv_SIFT_setNOctaveLayers =
+      _cv_SIFT_setNOctaveLayersPtr.asFunction<void Function(SIFT, int)>();
+
+  void cv_SIFT_setSigma(
+    SIFT self,
+    double sigma,
+  ) {
+    return _cv_SIFT_setSigma(
+      self,
+      sigma,
+    );
+  }
+
+  late final _cv_SIFT_setSigmaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(SIFT, ffi.Double)>>(
+          'cv_SIFT_setSigma');
+  late final _cv_SIFT_setSigma =
+      _cv_SIFT_setSigmaPtr.asFunction<void Function(SIFT, double)>();
 
   ffi.Pointer<CvStatus> cv_SimpleBlobDetectorParams_create(
     ffi.Pointer<SimpleBlobDetectorParams> rval,
@@ -989,12 +3439,14 @@ class CvNativeFeatures2d {
     SimpleBlobDetector self,
     Mat src,
     ffi.Pointer<VecKeyPoint> rval,
+    Mat mask,
     imp$1.CvCallback_0 callback,
   ) {
     return _cv_SimpleBlobDetector_detect(
       self,
       src,
       rval,
+      mask,
       callback,
     );
   }
@@ -1005,11 +3457,127 @@ class CvNativeFeatures2d {
               SimpleBlobDetector,
               Mat,
               ffi.Pointer<VecKeyPoint>,
+              Mat,
               imp$1.CvCallback_0)>>('cv_SimpleBlobDetector_detect');
   late final _cv_SimpleBlobDetector_detect =
       _cv_SimpleBlobDetector_detectPtr.asFunction<
           ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat,
-              ffi.Pointer<VecKeyPoint>, imp$1.CvCallback_0)>();
+              ffi.Pointer<VecKeyPoint>, Mat, imp$1.CvCallback_0)>();
+
+  ffi.Pointer<CvStatus> cv_SimpleBlobDetector_detectAndCompute(
+    SimpleBlobDetector self,
+    Mat src,
+    Mat mask,
+    Mat desc,
+    ffi.Pointer<VecKeyPoint> rval,
+    bool useProvidedKeypoints,
+    imp$1.CvCallback_0 callback,
+  ) {
+    return _cv_SimpleBlobDetector_detectAndCompute(
+      self,
+      src,
+      mask,
+      desc,
+      rval,
+      useProvidedKeypoints,
+      callback,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_detectAndComputePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<CvStatus> Function(
+              SimpleBlobDetector,
+              Mat,
+              Mat,
+              Mat,
+              ffi.Pointer<VecKeyPoint>,
+              ffi.Bool,
+              imp$1.CvCallback_0)>>('cv_SimpleBlobDetector_detectAndCompute');
+  late final _cv_SimpleBlobDetector_detectAndCompute =
+      _cv_SimpleBlobDetector_detectAndComputePtr.asFunction<
+          ffi.Pointer<CvStatus> Function(SimpleBlobDetector, Mat, Mat, Mat,
+              ffi.Pointer<VecKeyPoint>, bool, imp$1.CvCallback_0)>();
+
+  bool cv_SimpleBlobDetector_empty(
+    SimpleBlobDetector self,
+  ) {
+    return _cv_SimpleBlobDetector_empty(
+      self,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_emptyPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(SimpleBlobDetector)>>(
+          'cv_SimpleBlobDetector_empty');
+  late final _cv_SimpleBlobDetector_empty = _cv_SimpleBlobDetector_emptyPtr
+      .asFunction<bool Function(SimpleBlobDetector)>();
+
+  ffi.Pointer<VecVecPoint> cv_SimpleBlobDetector_getBlobContours(
+    SimpleBlobDetector self,
+  ) {
+    return _cv_SimpleBlobDetector_getBlobContours(
+      self,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_getBlobContoursPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<VecVecPoint> Function(
+              SimpleBlobDetector)>>('cv_SimpleBlobDetector_getBlobContours');
+  late final _cv_SimpleBlobDetector_getBlobContours =
+      _cv_SimpleBlobDetector_getBlobContoursPtr
+          .asFunction<ffi.Pointer<VecVecPoint> Function(SimpleBlobDetector)>();
+
+  ffi.Pointer<ffi.Char> cv_SimpleBlobDetector_getDefaultName(
+    SimpleBlobDetector self,
+  ) {
+    return _cv_SimpleBlobDetector_getDefaultName(
+      self,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_getDefaultNamePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<ffi.Char> Function(SimpleBlobDetector)>>(
+      'cv_SimpleBlobDetector_getDefaultName');
+  late final _cv_SimpleBlobDetector_getDefaultName =
+      _cv_SimpleBlobDetector_getDefaultNamePtr
+          .asFunction<ffi.Pointer<ffi.Char> Function(SimpleBlobDetector)>();
+
+  ffi.Pointer<SimpleBlobDetectorParams> cv_SimpleBlobDetector_getParams(
+    SimpleBlobDetector self,
+  ) {
+    return _cv_SimpleBlobDetector_getParams(
+      self,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_getParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<SimpleBlobDetectorParams> Function(
+              SimpleBlobDetector)>>('cv_SimpleBlobDetector_getParams');
+  late final _cv_SimpleBlobDetector_getParams =
+      _cv_SimpleBlobDetector_getParamsPtr.asFunction<
+          ffi.Pointer<SimpleBlobDetectorParams> Function(SimpleBlobDetector)>();
+
+  void cv_SimpleBlobDetector_setParams(
+    SimpleBlobDetector self,
+    SimpleBlobDetectorParams params,
+  ) {
+    return _cv_SimpleBlobDetector_setParams(
+      self,
+      params,
+    );
+  }
+
+  late final _cv_SimpleBlobDetector_setParamsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(SimpleBlobDetector,
+              SimpleBlobDetectorParams)>>('cv_SimpleBlobDetector_setParams');
+  late final _cv_SimpleBlobDetector_setParams =
+      _cv_SimpleBlobDetector_setParamsPtr.asFunction<
+          void Function(SimpleBlobDetector, SimpleBlobDetectorParams)>();
 
   ffi.Pointer<CvStatus> cv_drawKeyPoints(
     Mat src,
@@ -1642,8 +4210,11 @@ final class SimpleBlobDetectorParams extends ffi.Struct {
 typedef SimpleBlobDetectorPtr = ffi.Pointer<SimpleBlobDetector>;
 typedef VecChar = imp$1.VecChar;
 typedef VecDMatch = imp$1.VecDMatch;
+typedef VecF32 = imp$1.VecF32;
 typedef VecF64 = imp$1.VecF64;
 typedef VecI32 = imp$1.VecI32;
 typedef VecKeyPoint = imp$1.VecKeyPoint;
+typedef VecRect = imp$1.VecRect;
 typedef VecVecChar = imp$1.VecVecChar;
 typedef VecVecDMatch = imp$1.VecVecDMatch;
+typedef VecVecPoint = imp$1.VecVecPoint;

@@ -22,6 +22,7 @@ headers:
     - ../src/dartcv/contrib/wechat_qrcode.h
     - ../src/dartcv/contrib/ximgproc.h
     - ../src/dartcv/contrib/xobjdetect.h
+    - ../src/dartcv/freetype/freetype.h
   include-directives:
     - ../src/dartcv/contrib/aruco.h
     - ../src/dartcv/contrib/img_hash.h
@@ -29,6 +30,7 @@ headers:
     - ../src/dartcv/contrib/wechat_qrcode.h
     - ../src/dartcv/contrib/ximgproc.h
     - ../src/dartcv/contrib/xobjdetect.h
+    - ../src/dartcv/freetype/freetype.h
 
 functions:
   symbol-address:
@@ -39,7 +41,6 @@ functions:
 preamble: |
   // coverage:ignore-file
   // opencv_dart - OpenCV bindings for Dart language
-  //    some c wrappers were from gocv: https://github.com/hybridgroup/gocv
   //    License: Apache-2.0 https://github.com/hybridgroup/gocv/blob/release/LICENSE.txt
   // Author: Rainyl
   // License: Apache-2.0

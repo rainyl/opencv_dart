@@ -7,6 +7,9 @@ OpenCV for Flutter, if `highgui` or `videoio` is required, use [opencv_dart](htt
 > OpenCV SDK (~100M) will be downloaded via `FetchContent` of cmake, you can
 > set `DARTCV_CACHE_DIR` environment variable to cache it and avoid downloading it again.
 > e.g., `export DARTCV_CACHE_DIR=$HOME/.cache/dartcv`
+>
+> - Q&A: [#212](https://github.com/rainyl/opencv_dart/issues/212) or open new issues.
+> - If you are using flutter with [Native Assets](https://github.com/flutter/flutter/issues/129757) feature supported, consider using 2.x version, refer to [2.x](https://github.com/rainyl/opencv_dart/tree/2.x)
 
 ## Supported platforms
 
@@ -48,10 +51,32 @@ hooks:
         - videoio
 ```
 
-- valid modules: `core`, `calib3d`, `contrib`, `dnn`, `features2d`, `flann`, `highgui`, `imgproc`, `imgcodecs`, `objdetect`, `photo`, `stitching`, `video`, `videoio`
+- valid modules: `core`, `calib3d`, `contrib`, `dnn`, `features2d`, `flann`, `freetype`, `highgui`, `imgproc`, `imgcodecs`, `objdetect`, `photo`, `stitching`, `video`, `videoio`
+- `freetype` module is disabled by default, if you need it, add it to `include_modules`.
 - Use `exclude_modules` to disable specific modules, or `include_modules` to enable specific modules.
 - If neither is specified, all modules except `highgui` will be enabled.
 - also refer to [example/pubspec.yaml](https://github.com/rainyl/opencv_dart/blob/main/packages/opencv_dart/example/pubspec.yaml)
+
+
+### Note for macOS and iOS users
+
+`freetype` is disabled by default, if you need them, add the following lines to `<your project>/<macos or ios>/Podfile`.
+
+```ruby
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_install_all_macos_pods File.dirname(File.realpath(__FILE__))
+
+  pod 'DartCvMacOS/freetype', '~> 4.12.0.2' # add this line if you need freetype on macos
+  pod 'DartCvIOS/freetype', '~> 4.12.0.2' # add this line if you need freetype on ios
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+```
 
 ## Package Size
 
