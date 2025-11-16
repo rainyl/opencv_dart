@@ -1669,6 +1669,16 @@ external ffi.Pointer<CvStatus> cv_sqrBoxFilter(
 );
 
 @ffi.Native<
+    ffi.Pointer<CvStatus> Function(
+        Mat, imp$1.MatOut, CvSize, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_stackBlur(
+  Mat src,
+  imp$1.MatOut dst,
+  CvSize ksize,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<
     ffi.Pointer<CvStatus> Function(Mat, Mat, ffi.Double, ffi.Double, ffi.Int,
         ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_threshold(

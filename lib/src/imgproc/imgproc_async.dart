@@ -90,11 +90,12 @@ Future<VecPoint2f> approxPolyN2fAsync(
 }) async {
   final vec = VecPoint2f();
   return cvRunAsync0(
-      (callback) =>
-          cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
-      (c) {
-    return c.complete(vec);
-  });
+    (callback) =>
+        cimgproc.cv_approxPolyN2f(curve.ref, nsides, epsilon_percentage, ensure_convex, vec.ptr, callback),
+    (c) {
+      return c.complete(vec);
+    },
+  );
 }
 
 /// ArcLength calculates a contour perimeter or a curve length.
@@ -391,6 +392,29 @@ Future<Mat> sqrBoxFilterAsync(
       borderType,
       callback,
     ),
+    (c) {
+      return c.complete(dst);
+    },
+  );
+}
+
+/// Blurs an image using the stackBlur.
+///
+/// The function applies and stackBlur to an image.
+/// stackBlur can generate similar results as Gaussian blur, and the time consumption does not
+/// increase with the increase of kernel size. It creates a kind of moving stack of colors whilst
+/// scanning through the image. Thereby it just has to add one new block of color to the right side
+/// of the stack and remove the leftmost color. The remaining colors on the topmost layer of
+/// the stack are either added on or reduced by one, depending on if they are on the right or on
+/// the left side of the stack. The only supported borderType is BORDER_REPLICATE. Original paper
+/// was proposed by Mario Klingemann, which can be found
+/// https://underdestruction.com/2004/02/25/stackblur-2004.
+///
+/// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga13a01048a8a200aab032ce86a9e7c7be
+Future<Mat> stackBlurAsync(Mat src, (int, int) ksize, {Mat? dst}) {
+  dst ??= Mat.empty();
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_stackBlur(src.ref, dst!.ref, ksize.cvd.ref, callback),
     (c) {
       return c.complete(dst);
     },

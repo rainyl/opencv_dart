@@ -146,6 +146,14 @@ void main() async {
     expect(dst.isEmpty || dst.rows != img.rows || dst.cols != img.cols, false);
   });
 
+  test('cv.stackBlur', () {
+    final img = cv.imread("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
+    expect(img.isEmpty, false);
+
+    final dst = cv.stackBlur(img, (3, 3));
+    expect(dst.isEmpty || dst.rows != img.rows || dst.cols != img.cols, false);
+  });
+
   test("cv2.findContours, cv.drawContours", () {
     final src = cv.imread("test/images/markers_6x6_250.png", flags: cv.IMREAD_GRAYSCALE);
     expect((src.width, src.height, src.channels), (612, 760, 1));

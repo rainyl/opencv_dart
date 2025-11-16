@@ -296,6 +296,8 @@ files:
         name: cv_spatialGradient
       c:@F@cv_sqrBoxFilter:
         name: cv_sqrBoxFilter
+      c:@F@cv_stackBlur:
+        name: cv_stackBlur
       c:@F@cv_threshold:
         name: cv_threshold
       c:@F@cv_thresholdWithMask:

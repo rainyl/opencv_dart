@@ -56,7 +56,7 @@ jobs:
       - name: Run Test
         run: |
           dart pub get
-          dart --enable-experiment=native-assets test -x skip-workflow
+          dart test -x skip-workflow
 
   build-windows:
     name: build-windows
@@ -78,7 +78,7 @@ jobs:
       - name: Run Test
         run: |
           dart pub get
-          dart --enable-experiment=native-assets test
+          dart test
   build-macos:
     name: build-macos
     runs-on: macos-latest
@@ -99,7 +99,7 @@ jobs:
       - name: Run Test
         run: |
           dart pub get
-          dart --enable-experiment=native-assets test -x skip-workflow
+          dart test -x skip-workflow
   # build-ios:
   #     name: build-ios
   #     runs-on: macos-latest
