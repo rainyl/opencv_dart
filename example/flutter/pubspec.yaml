@@ -94,12 +94,13 @@ flutter:
 hooks:
   user_defines:
     dartcv4:
-      # debug: true
+      debug: true
       include_modules:
         - calib3d
         - contrib
         - dnn
         - features2d
+        - freetype
         - highgui
         - imgcodecs
         - imgproc

@@ -12,26 +12,34 @@ import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
 import 'patchelf_linux.dart';
 
-const allowedModules = {
+const defaultIncludedModules = {
   'calib3d',
-  'contrib',
-  'dnn',
   'features2d',
-  'freetype',
-  'highgui',
   'imgcodecs',
   'imgproc',
   'objdetect',
   'photo',
   'stitching',
+};
+
+// large modules are disabled by default
+const defaultExcludedModules = {
+  'contrib',
+  'freetype',
+  'highgui',
   'video',
   'videoio',
+  'dnn',
+};
+
+const allowedModules = {
+  ...defaultIncludedModules,
+  ...defaultExcludedModules,
 };
 
 Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>? optionalModules}) async {
   final packagePath = Directory(await getPackagePath('dartcv4'));
-
-  optionalModules ??= allowedModules.toSet();
+  final modules = optionalModules ?? {...defaultIncludedModules};
   final userDefines = input.userDefines;
   final debugMode = userDefines["debug"] as bool? ?? false;
   final includeModules = userDefines["include_modules"] as List?;
@@ -41,34 +49,38 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     ..level = Level.ALL
     ..onRecord.listen((record) => debugMode ? stderr.write(record.message) : print(record.message));
 
-  // do not trust user input, filter the modules
-  final includeModulesFiltered = includeModules?.where(allowedModules.contains).toSet();
-  final excludeModulesFiltered = excludeModules?.where(allowedModules.contains).toSet();
+  final includeList = (includeModules ?? const []).cast<String>();
+  final excludeList = (excludeModules ?? const []).cast<String>();
 
-  if (includeModulesFiltered != null) {
-    optionalModules.addAll(includeModulesFiltered.cast<String>());
+  final includeModulesFiltered = includeList.where(allowedModules.contains).toSet();
+  final excludeModulesFiltered = excludeList.where(allowedModules.contains).toSet();
+
+  if (includeModulesFiltered.isNotEmpty) {
+    modules
+      ..clear()
+      ..addAll(includeModulesFiltered);
   }
-  if (excludeModulesFiltered != null) {
-    optionalModules.removeWhere(excludeModulesFiltered.contains);
+  if (excludeModulesFiltered.isNotEmpty) {
+    modules.removeAll(excludeModulesFiltered);
   }
   logger.info("[dartcv4] include modules: $includeModulesFiltered\n");
   logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
-  logger.info("[dartcv4] merged modules: $optionalModules\n");
+  logger.info("[dartcv4] merged modules: $modules\n");
 
   final moduleDefines = {
-    'DARTCV_WITH_CALIB3D': optionalModules.contains('calib3d') ? 'ON' : 'OFF',
-    'DARTCV_WITH_CONTRIB': optionalModules.contains('contrib') ? 'ON' : 'OFF',
-    'DARTCV_WITH_DNN': optionalModules.contains('dnn') ? 'ON' : 'OFF',
-    'DARTCV_WITH_FEATURES2D': optionalModules.contains('features2d') ? 'ON' : 'OFF',
-    'DARTCV_WITH_FREETYPE': optionalModules.contains('freetype') ? 'ON' : 'OFF',
-    'DARTCV_WITH_HIGHGUI': optionalModules.contains('highgui') ? 'ON' : 'OFF',
-    'DARTCV_WITH_IMGCODECS': optionalModules.contains('imgcodecs') ? 'ON' : 'OFF',
-    'DARTCV_WITH_IMGPROC': optionalModules.contains('imgproc') ? 'ON' : 'OFF',
-    'DARTCV_WITH_OBJDETECT': optionalModules.contains('objdetect') ? 'ON' : 'OFF',
-    'DARTCV_WITH_PHOTO': optionalModules.contains('photo') ? 'ON' : 'OFF',
-    'DARTCV_WITH_STITCHING': optionalModules.contains('stitching') ? 'ON' : 'OFF',
-    'DARTCV_WITH_VIDEO': optionalModules.contains('video') ? 'ON' : 'OFF',
-    'DARTCV_WITH_VIDEOIO': optionalModules.contains('videoio') ? 'ON' : 'OFF',
+    'DARTCV_WITH_CALIB3D': modules.contains('calib3d') ? 'ON' : 'OFF',
+    'DARTCV_WITH_CONTRIB': modules.contains('contrib') ? 'ON' : 'OFF',
+    'DARTCV_WITH_DNN': modules.contains('dnn') ? 'ON' : 'OFF',
+    'DARTCV_WITH_FEATURES2D': modules.contains('features2d') ? 'ON' : 'OFF',
+    'DARTCV_WITH_FREETYPE': modules.contains('freetype') ? 'ON' : 'OFF',
+    'DARTCV_WITH_HIGHGUI': modules.contains('highgui') ? 'ON' : 'OFF',
+    'DARTCV_WITH_IMGCODECS': modules.contains('imgcodecs') ? 'ON' : 'OFF',
+    'DARTCV_WITH_IMGPROC': modules.contains('imgproc') ? 'ON' : 'OFF',
+    'DARTCV_WITH_OBJDETECT': modules.contains('objdetect') ? 'ON' : 'OFF',
+    'DARTCV_WITH_PHOTO': modules.contains('photo') ? 'ON' : 'OFF',
+    'DARTCV_WITH_STITCHING': modules.contains('stitching') ? 'ON' : 'OFF',
+    'DARTCV_WITH_VIDEO': modules.contains('video') ? 'ON' : 'OFF',
+    'DARTCV_WITH_VIDEOIO': modules.contains('videoio') ? 'ON' : 'OFF',
   };
 
   final builder = CMakeBuilder.create(
@@ -76,7 +88,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     name: input.packageName,
     sourceDir: packagePath.uri.resolve("src"),
     targets: ['install'],
-    buildLocal: true,
+    buildLocal: false,
     defines: {
       'FFMPEG_USE_STATIC_LIBS': 'OFF',
       'DARTCV_ENABLE_INSTALL': 'ON',
@@ -95,7 +107,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
 
   final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
   String ffPattern(String lib) => '(?:lib)?$lib(?:.\\d+)?(?:\\.(?:so|dll|dylib))';
-  if (optionalModules.contains('highgui') || optionalModules.contains('videoio')) {
+  if (modules.contains('highgui') || modules.contains('videoio')) {
     final r = await output.findAndAddCodeAssets(
       input,
       outDir: input.outputDirectory.resolve('install/'),

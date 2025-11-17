@@ -9,23 +9,20 @@ OpenCV Bindings for Dart Language.
 | <a href="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml"><img src="https://github.com/rainyl/opencv_dart/actions/workflows/build_test_native_assets.yaml/badge.svg" alt="Native Assets Build"></a> |                    <a href="https://discord.gg/rtkC7MWvPJ"><img src="https://img.shields.io/discord/1268767086683885598?logo=discord" alt="Discord Server"></a>                    |                                                                                                                                                        |
 
 > [!IMPORTANT]
-> `v2.x` is prepared for [Native Assets](https://github.com/dart-lang/sdk/issues/50565), Use only if you know what you are doing!
+> The minimum required dart sdk version is `3.10` (Flutter `3.38`) that supports hooks (Native-Assets).
 >
 > Usage:
 >
 > for pure dart:
 >
-> 1. take a look at https://pub.dev/packages/dartcv4/versions and find the latest version, e.g., `2.0.0-dev.2`
-> 2. add to your `pubspec.yaml`
-> 3. `dart --enable-experiment=native-assets run <path-to-your-code>`
+> 1. `dart pub add dartcv4`
+> 2. `dart run <path-to-your-code>`
 >
 > for flutter:
 >
-> 0. use `main` channel of Flutter
-> 1. take a look at https://pub.dev/packages/dartcv4/versions and find the latest version, e.g., `2.0.0-dev.2`
-> 2. add to your `pubspec.yaml`
-> 3. `flutter config --enable-native-assets`
-> 4. `flutter run`
+> 1. `flutter pub add dartcv4`
+> 2. `flutter config --enable-native-assets`
+> 3. `flutter run`
 >
 
 > [!NOTE]
@@ -40,6 +37,7 @@ OpenCV Bindings for Dart Language.
     - [Usage](#usage)
       - [Pure Dart](#pure-dart)
       - [Flutter](#flutter)
+      - [Configure hooks options](#configure-hooks-options)
     - [TODO](#todo)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
@@ -126,6 +124,46 @@ void main() {
 see [example](https://github.com/rainyl/opencv_dart/tree/2.x/example/flutter)
 
 ~~More examples are on the way...~~ see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
+
+#### Configure hooks options
+
+dartcv4 now supports hooks options, you can configure it in `pubspec.yaml`
+
+```yaml
+hooks:
+  user_defines:
+    dartcv4:
+      # debug: true
+      include_modules: # `core` is always included
+        - imgcodecs
+        - imgproc
+        # ...
+      exclude_modules:
+        - contrib
+        - dnn
+        # ...
+```
+
+- `debug`: enable debug mode, default is `false`, if enabled, all messages will be printed to stderr.
+- valid modules:
+  - `core`: always included
+  - included by default:
+    - `calib3d`
+    - `features2d`
+    - `imgproc`
+    - `imgcodecs`
+    - `objdetect`
+    - `photo`
+    - `stitching`
+  - excluded by default:
+    - `contrib`
+    - `dnn`
+    - `freetype`
+    - `highgui`
+    - `video`
+    - `videoio`
+- Note: even a module is excluded, it's dart code is still available, but throws a symbol not found exception when called.
+- `videoio` and `highgui` will introduce FFMPEG dynamic libraries (except for ios, ffmpeg is not supported on ios for now).
 
 ### TODO
 

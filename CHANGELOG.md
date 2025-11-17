@@ -1,3 +1,10 @@
+## 2.1.0
+
+- NOTE: Breaking change.
+- The minimum required dart sdk version is 3.10 that supports hooks (Native-Assets) stable.
+- add `stackBlur` function in `imgproc` module.
+- Breaking change: default included models:  `calib3d`,`features2d`,`imgcodecs`,`imgproc`,`objdetect`,`photo`,`stitching`, default excluded modules:`contrib`,`freetype`,`highgui`,`video`,`videoio`,`dnn`.
+
 ## 2.1.0-dev.3
 
 - bump dependencies
