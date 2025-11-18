@@ -36,6 +36,7 @@ hooks:
         - contrib
         - dnn
         - features2d
+        - freetype
         - highgui
         - imgcodecs
         - imgproc
