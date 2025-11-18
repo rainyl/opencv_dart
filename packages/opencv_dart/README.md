@@ -1,9 +1,9 @@
 # opencv_dart
 
-OpenCV for Flutter, includes all modules. if `videoio` and `highgui` are not reqired,
-use [opencv_core](https://pub.dev/packages/opencv_core)
+OpenCV for Flutter.
 
 > [!IMPORTANT]
+> `v1.4.5` is the last version of `v1.x`, for Flutter >= `3.38` (Dart >= `3.10`), please use `v2.x` instead.
 >
 > From `v1.3.0`, dynamic libraries will be built locally, invoked by flutter during the build.
 > Note: OpenCV SDK (~100M) will be downloaded via `FetchContent` of cmake, you can
