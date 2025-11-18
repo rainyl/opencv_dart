@@ -75,6 +75,7 @@ if (DARTCV_WITH_FREETYPE)
   set(FT_DISABLE_BROTLI ON CACHE BOOL "")
   set(HB_BUILD_SUBSET OFF CACHE BOOL "")
   set(HB_HAVE_FREETYPE ON CACHE BOOL "")
+  set(HB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)  # -fPIC
 
   if(MSVC)
@@ -86,11 +87,13 @@ if (DARTCV_WITH_FREETYPE)
           libharfbuzz
           GIT_REPOSITORY https://github.com/harfbuzz/harfbuzz.git
           GIT_TAG 11.2.1
+          GIT_SHALLOW TRUE
   )
   FetchContent_Declare(
           libfreetype
           GIT_REPOSITORY https://github.com/freetype/freetype.git
           GIT_TAG VER-2-13-3
+          GIT_SHALLOW TRUE
   )
   FetchContent_MakeAvailable(libfreetype libharfbuzz)
 
