@@ -11,7 +11,7 @@ import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../native_lib.dart' show cstitching;
+import '../g/stitching.g.dart' as cstitching;
 import './stitching.dart';
 
 extension StitcherAsync on Stitcher {

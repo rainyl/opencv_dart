@@ -23,8 +23,8 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
+import '../g/imgproc.g.dart' as cimgproc;
 import '../g/imgproc.g.dart' as cvg;
-import '../native_lib.dart' show cimgproc;
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///
@@ -329,6 +329,32 @@ Mat sqrBoxFilter(
       anchor!.ref,
       normalize,
       borderType,
+      ffi.nullptr,
+    ),
+  );
+  return dst;
+}
+
+/// Blurs an image using the stackBlur.
+///
+/// The function applies and stackBlur to an image.
+/// stackBlur can generate similar results as Gaussian blur, and the time consumption does not
+/// increase with the increase of kernel size. It creates a kind of moving stack of colors whilst
+/// scanning through the image. Thereby it just has to add one new block of color to the right side
+/// of the stack and remove the leftmost color. The remaining colors on the topmost layer of
+/// the stack are either added on or reduced by one, depending on if they are on the right or on
+/// the left side of the stack. The only supported borderType is BORDER_REPLICATE. Original paper
+/// was proposed by Mario Klingemann, which can be found
+/// https://underdestruction.com/2004/02/25/stackblur-2004.
+///
+/// https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#ga13a01048a8a200aab032ce86a9e7c7be
+Mat stackBlur(Mat src, (int, int) ksize, {Mat? dst}) {
+  dst ??= Mat.empty();
+  cvRun(
+    () => cimgproc.cv_stackBlur(
+      src.ref,
+      dst!.ref,
+      ksize.cvd.ref,
       ffi.nullptr,
     ),
   );

@@ -14,7 +14,6 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../g/calib3d.g.dart' as cvg;
-import '../native_lib.dart' show ccalib3d;
 
 /// Class for computing stereo correspondence using the block matching algorithm,
 /// introduced and contributed to OpenCV by K. Konolige.
@@ -39,72 +38,72 @@ class StereoBM extends CvStruct<cvg.StereoBM> {
   /// https://docs.opencv.org/4.x/d9/dba/classcv_1_1StereoBM.html#a119436b6cb382e0895dd0fa58229ec17
   factory StereoBM.create({int numDisparities = 0, int blockSize = 21}) {
     final p = calloc<cvg.StereoBM>();
-    cvRun(() => ccalib3d.cv_StereoBM_create(numDisparities, blockSize, p, ffi.nullptr));
+    cvRun(() => cvg.cv_StereoBM_create(numDisparities, blockSize, p, ffi.nullptr));
     return StereoBM._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.StereoBMPtr>(ccalib3d.addresses.cv_StereoBM_close);
+  static final finalizer = OcvFinalizer<cvg.StereoBMPtr>(cvg.addresses.cv_StereoBM_close);
 
-  int get preFilterCap => ccalib3d.cv_StereoBM_getPreFilterCap(ref);
-  set preFilterCap(int val) => ccalib3d.cv_StereoBM_setPreFilterCap(ref, val);
+  int get preFilterCap => cvg.cv_StereoBM_getPreFilterCap(ref);
+  set preFilterCap(int val) => cvg.cv_StereoBM_setPreFilterCap(ref, val);
 
-  int get preFilterSize => ccalib3d.cv_StereoBM_getPreFilterSize(ref);
-  set preFilterSize(int val) => ccalib3d.cv_StereoBM_setPreFilterSize(ref, val);
+  int get preFilterSize => cvg.cv_StereoBM_getPreFilterSize(ref);
+  set preFilterSize(int val) => cvg.cv_StereoBM_setPreFilterSize(ref, val);
 
-  int get preFilterType => ccalib3d.cv_StereoBM_getPreFilterType(ref);
-  set preFilterType(int val) => ccalib3d.cv_StereoBM_setPreFilterType(ref, val);
+  int get preFilterType => cvg.cv_StereoBM_getPreFilterType(ref);
+  set preFilterType(int val) => cvg.cv_StereoBM_setPreFilterType(ref, val);
 
-  Rect get ROI1 => Rect.fromPointer(ccalib3d.cv_StereoBM_getROI1(ref));
-  set ROI1(Rect val) => ccalib3d.cv_StereoBM_setROI1(ref, val.ref);
+  Rect get ROI1 => Rect.fromPointer(cvg.cv_StereoBM_getROI1(ref));
+  set ROI1(Rect val) => cvg.cv_StereoBM_setROI1(ref, val.ref);
 
-  Rect get ROI2 => Rect.fromPointer(ccalib3d.cv_StereoBM_getROI2(ref));
-  set ROI2(Rect val) => ccalib3d.cv_StereoBM_setROI2(ref, val.ref);
+  Rect get ROI2 => Rect.fromPointer(cvg.cv_StereoBM_getROI2(ref));
+  set ROI2(Rect val) => cvg.cv_StereoBM_setROI2(ref, val.ref);
 
-  int get smallerBlockSize => ccalib3d.cv_StereoBM_getSmallerBlockSize(ref);
+  int get smallerBlockSize => cvg.cv_StereoBM_getSmallerBlockSize(ref);
 
   /// Warning: do nothing
   ///
   /// https://github.com/opencv/opencv/blob/75d9ac39643f8e08edf3299e47ffd1468e0c5196/modules/calib3d/src/stereobm.cpp#L1335
-  set smallerBlockSize(int val) => ccalib3d.cv_StereoBM_setSmallerBlockSize(ref, val);
+  set smallerBlockSize(int val) => cvg.cv_StereoBM_setSmallerBlockSize(ref, val);
 
-  int get textureThreshold => ccalib3d.cv_StereoBM_getTextureThreshold(ref);
-  set textureThreshold(int val) => ccalib3d.cv_StereoBM_setTextureThreshold(ref, val);
+  int get textureThreshold => cvg.cv_StereoBM_getTextureThreshold(ref);
+  set textureThreshold(int val) => cvg.cv_StereoBM_setTextureThreshold(ref, val);
 
-  int get uniquenessRatio => ccalib3d.cv_StereoBM_getUniquenessRatio(ref);
-  set uniquenessRatio(int val) => ccalib3d.cv_StereoBM_setUniquenessRatio(ref, val);
+  int get uniquenessRatio => cvg.cv_StereoBM_getUniquenessRatio(ref);
+  set uniquenessRatio(int val) => cvg.cv_StereoBM_setUniquenessRatio(ref, val);
 
   //  Public Member Functions inherited from cv::StereoMatcher
 
   Mat compute(Mat left, Mat right, {Mat? disparity}) {
     disparity ??= Mat.empty();
-    cvRun(() => ccalib3d.cv_StereoBM_compute(ref, left.ref, right.ref, disparity!.ref));
+    cvRun(() => cvg.cv_StereoBM_compute(ref, left.ref, right.ref, disparity!.ref));
     return disparity;
   }
 
-  int get blockSize => ccalib3d.cv_StereoBM_getBlockSize(ref);
-  set blockSize(int val) => ccalib3d.cv_StereoBM_setBlockSize(ref, val);
+  int get blockSize => cvg.cv_StereoBM_getBlockSize(ref);
+  set blockSize(int val) => cvg.cv_StereoBM_setBlockSize(ref, val);
 
-  int get disp12MaxDiff => ccalib3d.cv_StereoBM_getDisp12MaxDiff(ref);
-  set disp12MaxDiff(int val) => ccalib3d.cv_StereoBM_setDisp12MaxDiff(ref, val);
+  int get disp12MaxDiff => cvg.cv_StereoBM_getDisp12MaxDiff(ref);
+  set disp12MaxDiff(int val) => cvg.cv_StereoBM_setDisp12MaxDiff(ref, val);
 
-  int get minDisparity => ccalib3d.cv_StereoBM_getMinDisparity(ref);
-  set minDisparity(int val) => ccalib3d.cv_StereoBM_setMinDisparity(ref, val);
+  int get minDisparity => cvg.cv_StereoBM_getMinDisparity(ref);
+  set minDisparity(int val) => cvg.cv_StereoBM_setMinDisparity(ref, val);
 
   // int  getNumDisparities
-  int get numDisparities => ccalib3d.cv_StereoBM_getNumDisparities(ref);
-  set numDisparities(int val) => ccalib3d.cv_StereoBM_setNumDisparities(ref, val);
+  int get numDisparities => cvg.cv_StereoBM_getNumDisparities(ref);
+  set numDisparities(int val) => cvg.cv_StereoBM_setNumDisparities(ref, val);
 
   // int  getSpeckleRange
-  int get speckleRange => ccalib3d.cv_StereoBM_getSpeckleRange(ref);
-  set speckleRange(int val) => ccalib3d.cv_StereoBM_setSpeckleRange(ref, val);
+  int get speckleRange => cvg.cv_StereoBM_getSpeckleRange(ref);
+  set speckleRange(int val) => cvg.cv_StereoBM_setSpeckleRange(ref, val);
 
   // int  getSpeckleWindowSize
-  int get speckleWindowSize => ccalib3d.cv_StereoBM_getSpeckleWindowSize(ref);
-  set speckleWindowSize(int val) => ccalib3d.cv_StereoBM_setSpeckleWindowSize(ref, val);
+  int get speckleWindowSize => cvg.cv_StereoBM_getSpeckleWindowSize(ref);
+  set speckleWindowSize(int val) => cvg.cv_StereoBM_setSpeckleWindowSize(ref, val);
 
   void dispose() {
     finalizer.detach(this);
-    ccalib3d.cv_StereoBM_close(ptr);
+    cvg.cv_StereoBM_close(ptr);
   }
 
   @override
@@ -159,7 +158,7 @@ class StereoSGBM extends CvStruct<cvg.StereoSGBM> {
   }) {
     final p = calloc<cvg.StereoSGBM>();
     cvRun(
-      () => ccalib3d.cv_StereoSGBM_create(
+      () => cvg.cv_StereoSGBM_create(
         minDisparity,
         numDisparities,
         blockSize,
@@ -178,55 +177,55 @@ class StereoSGBM extends CvStruct<cvg.StereoSGBM> {
     return StereoSGBM._(p);
   }
 
-  static final finalizer = OcvFinalizer<cvg.StereoSGBMPtr>(ccalib3d.addresses.cv_StereoSGBM_close);
+  static final finalizer = OcvFinalizer<cvg.StereoSGBMPtr>(cvg.addresses.cv_StereoSGBM_close);
 
-  int get preFilterCap => ccalib3d.cv_StereoSGBM_getPreFilterCap(ref);
-  set preFilterCap(int val) => ccalib3d.cv_StereoSGBM_setPreFilterCap(ref, val);
+  int get preFilterCap => cvg.cv_StereoSGBM_getPreFilterCap(ref);
+  set preFilterCap(int val) => cvg.cv_StereoSGBM_setPreFilterCap(ref, val);
 
-  int get mode => ccalib3d.cv_StereoSGBM_getMode(ref);
-  set mode(int val) => ccalib3d.cv_StereoSGBM_setMode(ref, val);
+  int get mode => cvg.cv_StereoSGBM_getMode(ref);
+  set mode(int val) => cvg.cv_StereoSGBM_setMode(ref, val);
 
-  int get P1 => ccalib3d.cv_StereoSGBM_getP1(ref);
-  set P1(int val) => ccalib3d.cv_StereoSGBM_setP1(ref, val);
+  int get P1 => cvg.cv_StereoSGBM_getP1(ref);
+  set P1(int val) => cvg.cv_StereoSGBM_setP1(ref, val);
 
-  int get P2 => ccalib3d.cv_StereoSGBM_getP2(ref);
-  set P2(int val) => ccalib3d.cv_StereoSGBM_setP2(ref, val);
+  int get P2 => cvg.cv_StereoSGBM_getP2(ref);
+  set P2(int val) => cvg.cv_StereoSGBM_setP2(ref, val);
 
-  int get uniquenessRatio => ccalib3d.cv_StereoSGBM_getUniquenessRatio(ref);
-  set uniquenessRatio(int val) => ccalib3d.cv_StereoSGBM_setUniquenessRatio(ref, val);
+  int get uniquenessRatio => cvg.cv_StereoSGBM_getUniquenessRatio(ref);
+  set uniquenessRatio(int val) => cvg.cv_StereoSGBM_setUniquenessRatio(ref, val);
 
   //  Public Member Functions inherited from cv::StereoMatcher
 
   Mat compute(Mat left, Mat right, {Mat? disparity}) {
     disparity ??= Mat.empty();
-    cvRun(() => ccalib3d.cv_StereoSGBM_compute(ref, left.ref, right.ref, disparity!.ref));
+    cvRun(() => cvg.cv_StereoSGBM_compute(ref, left.ref, right.ref, disparity!.ref));
     return disparity;
   }
 
-  int get blockSize => ccalib3d.cv_StereoSGBM_getBlockSize(ref);
-  set blockSize(int val) => ccalib3d.cv_StereoSGBM_setBlockSize(ref, val);
+  int get blockSize => cvg.cv_StereoSGBM_getBlockSize(ref);
+  set blockSize(int val) => cvg.cv_StereoSGBM_setBlockSize(ref, val);
 
-  int get disp12MaxDiff => ccalib3d.cv_StereoSGBM_getDisp12MaxDiff(ref);
-  set disp12MaxDiff(int val) => ccalib3d.cv_StereoSGBM_setDisp12MaxDiff(ref, val);
+  int get disp12MaxDiff => cvg.cv_StereoSGBM_getDisp12MaxDiff(ref);
+  set disp12MaxDiff(int val) => cvg.cv_StereoSGBM_setDisp12MaxDiff(ref, val);
 
-  int get minDisparity => ccalib3d.cv_StereoSGBM_getMinDisparity(ref);
-  set minDisparity(int val) => ccalib3d.cv_StereoSGBM_setMinDisparity(ref, val);
+  int get minDisparity => cvg.cv_StereoSGBM_getMinDisparity(ref);
+  set minDisparity(int val) => cvg.cv_StereoSGBM_setMinDisparity(ref, val);
 
   // int  getNumDisparities
-  int get numDisparities => ccalib3d.cv_StereoSGBM_getNumDisparities(ref);
-  set numDisparities(int val) => ccalib3d.cv_StereoSGBM_setNumDisparities(ref, val);
+  int get numDisparities => cvg.cv_StereoSGBM_getNumDisparities(ref);
+  set numDisparities(int val) => cvg.cv_StereoSGBM_setNumDisparities(ref, val);
 
   // int  getSpeckleRange
-  int get speckleRange => ccalib3d.cv_StereoSGBM_getSpeckleRange(ref);
-  set speckleRange(int val) => ccalib3d.cv_StereoSGBM_setSpeckleRange(ref, val);
+  int get speckleRange => cvg.cv_StereoSGBM_getSpeckleRange(ref);
+  set speckleRange(int val) => cvg.cv_StereoSGBM_setSpeckleRange(ref, val);
 
   // int  getSpeckleWindowSize
-  int get speckleWindowSize => ccalib3d.cv_StereoSGBM_getSpeckleWindowSize(ref);
-  set speckleWindowSize(int val) => ccalib3d.cv_StereoSGBM_setSpeckleWindowSize(ref, val);
+  int get speckleWindowSize => cvg.cv_StereoSGBM_getSpeckleWindowSize(ref);
+  set speckleWindowSize(int val) => cvg.cv_StereoSGBM_setSpeckleWindowSize(ref, val);
 
   void dispose() {
     finalizer.detach(this);
-    ccalib3d.cv_StereoSGBM_close(ptr);
+    cvg.cv_StereoSGBM_close(ptr);
   }
 
   @override

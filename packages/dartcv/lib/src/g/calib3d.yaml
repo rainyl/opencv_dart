@@ -2,7 +2,7 @@ format_version: 1.0.0
 files:
   package:dartcv4/src/g/calib3d.g.dart:
     used-config:
-      ffi-native: false
+      ffi-native: true
     symbols:
       c:@F@cv_RQDecomp3x3:
         name: cv_RQDecomp3x3

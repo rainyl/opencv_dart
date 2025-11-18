@@ -14,7 +14,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 abstract class ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo);
@@ -134,7 +134,7 @@ const int BLOCK_MEAN_HASH_MODE_1 = 1;
 /// BlockMeanHash is implementation of the BlockMeanHash algorithm.
 class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   BlockMeanHash._(cvg.BlockMeanHashPtr ptr, [this._mode = BLOCK_MEAN_HASH_MODE_0, bool attach = true])
-    : super.fromPointer(ptr) {
+      : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }

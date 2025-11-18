@@ -6,7 +6,7 @@ library cv.svd;
 
 import 'dart:ffi' as ffi;
 
-import '../native_lib.dart' show ccore;
+import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 

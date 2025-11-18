@@ -14,7 +14,7 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../native_lib.dart' show cobjdetect;
+import '../g/objdetect.g.dart' as cobjdetect;
 import './objdetect.dart';
 
 extension CascadeClassifierAsync on CascadeClassifier {

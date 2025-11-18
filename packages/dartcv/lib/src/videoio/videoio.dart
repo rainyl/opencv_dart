@@ -13,7 +13,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../g/constants.g.dart';
 import '../g/videoio.g.dart' as cvg;
-import '../native_lib.dart' show cvideoio;
+import '../g/videoio.g.dart' as cvideoio;
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {
   VideoCapture._(cvg.VideoCapturePtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

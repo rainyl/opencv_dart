@@ -19,7 +19,7 @@ import '../core/scalar.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
 import '../g/features2d.g.dart' as cvg;
-import '../native_lib.dart' show cfeatures2d;
+import '../g/features2d.g.dart' as cfeatures2d;
 import 'features2d_base.dart';
 import 'features2d_enum.dart';
 

@@ -2,7 +2,7 @@ format_version: 1.0.0
 files:
   package:dartcv4/src/g/dnn.g.dart:
     used-config:
-      ffi-native: false
+      ffi-native: true
     symbols:
       c:@F@cv_dnn_AsyncArray_close:
         name: cv_dnn_AsyncArray_close

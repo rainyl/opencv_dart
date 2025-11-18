@@ -14,7 +14,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
-import '../native_lib.dart' show cimgcodecs;
+import '../g/imgcodecs.g.dart' as cimgcodecs;
 
 /// Returns true if the specified image can be decoded by OpenCV.
 ///

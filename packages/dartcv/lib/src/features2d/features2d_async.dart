@@ -12,7 +12,7 @@ import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../native_lib.dart' show cfeatures2d;
+import '../g/features2d.g.dart' as cfeatures2d;
 import './features2d.dart';
 import 'features2d_enum.dart';
 

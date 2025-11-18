@@ -9,8 +9,8 @@ output:
 import:
   symbol-files:
     - 'package:dartcv4/src/g/types.yaml'
-# ffi-native:
-#   assetId: 'package:dartcv4/dartcv.dart' # Optional.
+ffi-native:
+  asset-id: 'package:dartcv4/dartcv.dart' # Optional.
 compiler-opts: "-Isrc -Idartcv"
 sort: true
 include-unused-typedefs: true

@@ -11,7 +11,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../g/imgproc.g.dart' as cvg;
-import '../native_lib.dart' show cimgproc;
+import '../g/imgproc.g.dart' as cimgproc;
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
   CLAHE._(cvg.CLAHEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
