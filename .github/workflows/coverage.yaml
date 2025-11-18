@@ -17,6 +17,10 @@ jobs:
     name: ubuntu
     runs-on: ubuntu-latest
     steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev
       - uses: actions/checkout@v4
       - uses: robinraju/release-downloader@v1.10
         with:
@@ -38,6 +42,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -58,6 +64,8 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
