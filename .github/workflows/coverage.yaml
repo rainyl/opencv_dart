@@ -30,7 +30,7 @@ jobs:
           channel: "stable"
       - name: test coverage
         run: |
-          cd "${{github.workspace}}\packages\dartcv"
+          cd "${{github.workspace}}/packages/dartcv"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
   macos:
@@ -50,7 +50,7 @@ jobs:
           channel: "stable"
       - name: test coverage
         run: |
-          cd "${{github.workspace}}\packages\dartcv"
+          cd "${{github.workspace}}/packages/dartcv"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
   windows:
