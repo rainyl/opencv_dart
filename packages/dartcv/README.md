@@ -1,4 +1,4 @@
-# opencv_dart
+# dartcv
 
 OpenCV Bindings for Dart Language.
 
@@ -10,25 +10,11 @@ OpenCV Bindings for Dart Language.
 
 > [!IMPORTANT]
 > The minimum required dart sdk version is `3.10` (Flutter `3.38`) that supports hooks (Native-Assets).
->
-> Usage:
->
-> for pure dart:
->
-> 1. `dart pub add dartcv4`
-> 2. `dart run <path-to-your-code>`
->
-> for flutter:
->
-> 1. `flutter pub add dartcv4`
-> 2. `flutter config --enable-native-assets`
-> 3. `flutter run`
->
 
 > [!NOTE]
 > WIP, contributions are welcome!
 
-- [opencv\_dart](#opencv_dart)
+- [dartcv](#dartcv)
   - [Example](#example)
   - [Supported Platforms](#supported-platforms)
   - [Status](#status)
@@ -54,7 +40,7 @@ OpenCV Bindings for Dart Language.
 | Platform | Supported          | Tested             | Prebuilt Binaries              |
 | -------- | ------------------ | ------------------ | ------------------------------ |
 | Android  | :white_check_mark: | :white_check_mark: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64(Simulator)          |
+| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64+arm64(Simulator)    |
 | Linux    | :white_check_mark: | :white_check_mark: | x64                            |
 | Windows  | :white_check_mark: | :white_check_mark: | x64                            |
 | macOS    | :white_check_mark: | :white_check_mark: | x64, arm64                     |

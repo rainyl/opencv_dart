@@ -1,3 +1,7 @@
+## 2.1.0+1
+
+- fix: C++ src not included
+
 ## 2.1.0
 
 - NOTE: Breaking change.
