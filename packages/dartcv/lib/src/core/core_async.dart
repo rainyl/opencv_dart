@@ -12,7 +12,7 @@ import 'package:ffi/ffi.dart';
 
 import '../g/constants.g.dart';
 import '../g/core.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
+import '../g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';

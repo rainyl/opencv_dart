@@ -5,7 +5,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ">=3.10.0 <4.0.0"
+  flutter: ">=3.38.1"
 
 dependencies:
   flutter:
@@ -37,8 +38,8 @@ hooks:
         - contrib
         - dnn
         - features2d
-        - core
       include_modules:
-        - core # core is always required thus will be ignored even configured here.
         - imgproc
         - videoio
+        - freetype
+        - imgcodecs

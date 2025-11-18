@@ -38,8 +38,72 @@ analyzer:
     missing_return: error
     non_constant_identifier_names: ignore
     parameter_assignments: error
+
 formatter:
   page_width: 110
+  trailing_commas: preserve
+
+custom_lint:
+  rules:
+    - avoid_global_state
+
+    - avoid_late_keyword:
+      allow_initialized: true
+      ignored_types:
+        - AnimationController
+
+    - avoid_non_null_assertion
+    - avoid_returning_widgets
+    - avoid_unnecessary_setstate
+    - avoid_unnecessary_type_assertions
+    - avoid_unnecessary_type_casts
+    - avoid_unrelated_type_assertions
+    - avoid_unused_parameters
+    - avoid_debug_print_in_release
+    - avoid_final_with_getter
+
+    - cyclomatic_complexity:
+      max_complexity: 10
+
+    - double_literal_format
+
+    - function_lines_of_code:
+      max_lines: 200
+
+    - member_ordering:
+      order:
+        - fields
+        - getters_setters
+        - constructors
+        - methods
+      widgets_order:
+        - init_state_method
+        - build_method
+        - did_change_dependencies_method
+        - did_update_widget_method
+        - deactivate_method
+        - dispose_method
+
+    - newline_before_return
+    - no_empty_block
+    - no_equal_then_else
+    - prefer_early_return
+
+    - no_magic_number:
+      allowed_in_widget_params: true
+
+    - number_of_parameters:
+      max_parameters: 7
+      exclude:
+        - method_name: copyWith
+
+    - prefer_conditional_expressions:
+      ignore_nested: true
+
+    - prefer_first
+    - prefer_last
+    - prefer_match_file_name
+    - proper_super_calls
 
 linter:
   rules:
@@ -189,7 +253,7 @@ linter:
     # We tend to use class organization close to standard Java convention, where fields come first.
     # Martin, R. C. & Coplien, J. O. (2013), Chapter 10: Classes. Clean code: a handbook of agile software craftsmanship , Prentice Hall , Upper Saddle River, NJ [etc.] . 136
     #    - sort_constructors_first
-    # - sort_pub_dependencies
+    - sort_pub_dependencies
     # - sort_unnamed_constructors_first
     - test_types_in_equals
     - throw_in_finally

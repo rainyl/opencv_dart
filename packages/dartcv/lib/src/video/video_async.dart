@@ -18,7 +18,7 @@ import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../g/constants.g.dart';
 import '../g/video.g.dart' as cvg;
-import '../native_lib.dart' show cvideo;
+import '../g/video.g.dart' as cvideo;
 import 'video.dart';
 
 extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {

@@ -14,7 +14,7 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
 import '../g/imgproc.g.dart' as cvg;
-import '../native_lib.dart' show cimgproc;
+import '../g/imgproc.g.dart' as cimgproc;
 
 class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   Subdiv2D._(cvg.Subdiv2DPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

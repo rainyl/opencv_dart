@@ -20,7 +20,7 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
+import '../g/dnn.g.dart' as cdnn;
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
 class Layer extends CvStruct<cvg.Layer> {

@@ -12,7 +12,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../g/photo.g.dart' as cvg;
-import '../native_lib.dart' show cphoto;
+import '../g/photo.g.dart' as cphoto;
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //

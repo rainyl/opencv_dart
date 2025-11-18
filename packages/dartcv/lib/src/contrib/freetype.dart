@@ -16,7 +16,7 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../g/constants.g.dart' show LINE_8;
 import '../g/contrib.g.dart' as cvg;
-import '../native_lib.dart' show ccontrib;
+import '../g/contrib.g.dart' as ccontrib;
 
 class FreeType2 extends CvStruct<cvg.FreeType2> {
   FreeType2._(super.ptr, [bool attach = true]) : super.fromPointer() {

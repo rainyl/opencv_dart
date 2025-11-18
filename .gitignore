@@ -34,7 +34,6 @@ publish/
 libdartcv*
 .DS_STORE
 .ccls-cache/
-example/
 
 # Files and directories created by pub
 .dart_tool/

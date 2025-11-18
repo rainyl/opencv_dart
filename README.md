@@ -41,15 +41,15 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 |      <img height="256" alt="" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/main/examples/texture_renderer/texture_rgba_renderer.gif">      | [videoio texture renderer](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/texture_renderer) |
 | <img height="256" alt="dnn_minist" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/dnn_mnist/images/screenshot.png"> |       [DNN MNIST inference](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/dnn_mnist)       |
 |   <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/stitching/stitching_demo.png">   |            [stitching](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/stitching)            |
-|   <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/camera_demo/images/demo.jpg">   |            [camera](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/camera_demo)            |
-|   <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/videoio/images/demo.png">   |            [videoio](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/videoio)            |
+|   <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/camera_demo/images/demo.jpg">    |            [camera](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/camera_demo)             |
+|     <img height="256" alt="stitching" src="https://raw.githubusercontent.com/rainyl/awesome-opencv_dart/refs/heads/main/examples/videoio/images/demo.png">      |              [videoio](https://github.com/rainyl/awesome-opencv_dart/tree/main/examples/videoio)              |
 
 ## Supported Platforms
 
 | Platform | Supported          | Tested             | Platforms                      |
 | -------- | ------------------ | ------------------ | ------------------------------ |
 | Android  | :white_check_mark: | :white_check_mark: | x86_64, arm64-v8a, armeabi-v7a |
-| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64(Simulator)          |
+| iOS      | :white_check_mark: | :white_check_mark: | arm64, x64+arm64(Simulator)    |
 | Linux    | :white_check_mark: | :white_check_mark: | x64, arm64                     |
 | Windows  | :white_check_mark: | :white_check_mark: | x64, arm64                     |
 | macOS    | :white_check_mark: | :white_check_mark: | x64, arm64                     |

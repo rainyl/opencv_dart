@@ -144,6 +144,14 @@ void main() async {
     expect(dst.isEmpty || dst.rows != img.rows || dst.cols != img.cols, false);
   });
 
+  test('cv.stackBlurAsync', () async {
+    final img = await cv.imreadAsync("test/images/lenna.png", flags: cv.IMREAD_GRAYSCALE);
+    expect(img.isEmpty, false);
+
+    final dst = await cv.stackBlurAsync(img, (3, 3));
+    expect(dst.isEmpty || dst.rows != img.rows || dst.cols != img.cols, false);
+  });
+
   test("cv.findContoursAsync, cv.drawContoursAsync", () async {
     final src = await cv.imreadAsync("test/images/markers_6x6_250.png", flags: cv.IMREAD_GRAYSCALE);
     expect((src.width, src.height, src.channels), (612, 760, 1));

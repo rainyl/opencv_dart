@@ -14,7 +14,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/stitching.g.dart' as cvg;
-import '../native_lib.dart' show cstitching;
+import '../g/stitching.g.dart' as cstitching;
 
 /// High level image stitcher.
 ///

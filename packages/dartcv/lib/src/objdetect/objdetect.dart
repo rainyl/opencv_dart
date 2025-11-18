@@ -18,7 +18,7 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../g/objdetect.g.dart' as cvg;
-import '../native_lib.dart' show cobjdetect;
+import '../g/objdetect.g.dart' as cobjdetect;
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

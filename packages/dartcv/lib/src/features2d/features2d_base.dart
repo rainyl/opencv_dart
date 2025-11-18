@@ -15,7 +15,7 @@ import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../g/features2d.g.dart' as cvg;
-import '../native_lib.dart' show cfeatures2d;
+import '../g/features2d.g.dart' as cfeatures2d;
 
 abstract class Feature2D<T extends ffi.Struct> extends CvStruct<T> {
   Feature2D.fromPointer(super.ptr) : super.fromPointer();

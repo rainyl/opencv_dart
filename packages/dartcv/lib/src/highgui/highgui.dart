@@ -14,7 +14,7 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../g/highgui.g.dart' as cvg;
-import '../native_lib.dart' show chighgui;
+import '../g/highgui.g.dart' as chighgui;
 
 String currentUIFramework() => chighgui.cv_currentUIFramework().toDartString();
 

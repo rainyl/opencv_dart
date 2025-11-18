@@ -8,7 +8,7 @@ import 'error_code.dart';
 
 class CvException implements Exception {
   CvException(int code, {this.msg = "", this.err = "", this.file = "", this.func = "", this.line = -1})
-    : code = ErrorCode(code);
+      : code = ErrorCode(code);
 
   ErrorCode code;
   String err;

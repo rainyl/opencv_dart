@@ -17,9 +17,9 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
+import '../g/calib3d.g.dart' as ccalib3d;
 import '../g/constants.g.dart';
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccalib3d;
 import 'usac_params.dart';
 
 /// CalibrateCamera finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.

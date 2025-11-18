@@ -4,41 +4,82 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v{{version}'
-      - 'dartcv4-v[0-9]+.[0-9]+.[0-9]+*'
   # pull_request:
 
 jobs:
-  test:
+  test-ubuntu:
+    name: test-ubuntu
     runs-on: ubuntu-latest
+
     steps:
+      - name: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev
       - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "main"
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "packages/dartcv/test/"
+          out-file-path: "test/"
           extract: true
-      - uses: robinraju/release-downloader@v1.10
+      - name: Run Test
+        run: |
+          dart pub get
+          dart test -x skip-workflow
+
+  test-windows:
+    name: test-windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
-          repository: "rainyl/dartcv"
-          latest: true
-          fileName: "libdartcv-linux-x64.tar.gz"
-          out-file-path: "packages/dartcv/libdartcv"
-          extract: true
+          submodules: true
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-      - name: test
-        env:
-          LD_LIBRARY_PATH: "${{github.workspace}}/packages/dartcv/libdartcv/lib"
+          channel: "main"
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "test/"
+          extract: true
+      - name: Run Test
         run: |
-          cd "${{github.workspace}}/packages/dartcv"
+          dart pub get
+          dart test -x skip-workflow
+  test-macos:
+    name: test-macos
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "main"
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "test/"
+          extract: true
+      - name: Run Test
+        run: |
+          dart pub get
           dart test -x skip-workflow
   publish-dartcv4:
     name: Publish dartcv4
-    if: startsWith(github.ref, 'refs/tags/dartcv4-v')
-    needs: [test]
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test-ubuntu, test-windows, test-macos]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -52,26 +93,6 @@ jobs:
       - name: Publish
         working-directory: packages/dartcv
         run: dart pub publish --force
-  publish-opencv-core:
-    if: startsWith(github.ref, 'refs/tags/v')
-    name: Publish opencv_core
-    needs: [test]
-    permissions:
-      id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    environment: pub.dev
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-      - name: Install dependencies
-        working-directory: packages/opencv_core
-        run: flutter pub get
-      - name: Publish
-        working-directory: packages/opencv_core
-        run: flutter pub publish --force
   publish-opencv-dart:
     if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_dart
@@ -93,7 +114,7 @@ jobs:
         working-directory: packages/opencv_dart
         run: flutter pub publish --force
   release:
-    needs: [test, publish-opencv-dart, publish-opencv-core]
+    needs: [test-ubuntu, test-windows, test-macos, publish-opencv-dart]
     runs-on: ubuntu-latest
     steps:
       - name: checkout

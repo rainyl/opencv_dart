@@ -11,7 +11,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../g/dnn.g.dart' as cvg;
-import '../native_lib.dart' show cdnn;
+import '../g/dnn.g.dart' as cdnn;
 
 class AsyncArray extends CvStruct<cvg.AsyncArray> {
   AsyncArray._(cvg.AsyncArrayPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

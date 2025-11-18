@@ -8,8 +8,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import '../g/core.g.dart' as ccore;
 import '../g/types.g.dart' as cvg;
-import '../native_lib.dart' show ccore;
 import 'base.dart';
 import 'vec.dart';
 
@@ -69,8 +69,7 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
   @override
   cvg.KeyPoint get ref => ptr.ref;
   @override
-  String toString() =>
-      "KeyPoint("
+  String toString() => "KeyPoint("
       "${x.toStringAsFixed(3)}, "
       "${y.toStringAsFixed(3)}, "
       "${size.toStringAsFixed(3)}, "

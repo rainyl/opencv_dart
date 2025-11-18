@@ -7,17 +7,19 @@ on:
       - "**.md"
       - "LICENSE"
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
       - "**.md"
       - "LICENSE"
 
 jobs:
-  windows:
-    name: windows
-    runs-on: windows-2022
+  macos:
+    name: macos
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -25,12 +27,27 @@ jobs:
           fileName: "models.zip"
           out-file-path: "packages/dartcv/test/"
           extract: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: test coverage
+        run: |
+          cd "${{github.workspace}}/packages/dartcv"
+          dart pub global activate coverage
+          dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
+  windows:
+    name: windows
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: robinraju/release-downloader@v1.10
         with:
-          repository: "rainyl/dartcv"
-          latest: true
-          fileName: "libdartcv-windows-x64-vs2022.tar.gz"
-          out-file-path: "packages/dartcv/libdartcv"
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - uses: subosito/flutter-action@v2
         with:
@@ -38,7 +55,6 @@ jobs:
       - name: test coverage
         run: |
           cd "${{github.workspace}}\packages\dartcv"
-          $env:PATH="${{github.workspace}}\packages\dartcv\libdartcv\lib;$env:PATH"
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
       - name: Upload to Codecov

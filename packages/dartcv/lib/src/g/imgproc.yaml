@@ -2,7 +2,7 @@ format_version: 1.0.0
 files:
   package:dartcv4/src/g/imgproc.g.dart:
     used-config:
-      ffi-native: false
+      ffi-native: true
     symbols:
       c:@F@cv_CLAHE_apply:
         name: cv_CLAHE_apply
@@ -296,6 +296,8 @@ files:
         name: cv_spatialGradient
       c:@F@cv_sqrBoxFilter:
         name: cv_sqrBoxFilter
+      c:@F@cv_stackBlur:
+        name: cv_stackBlur
       c:@F@cv_threshold:
         name: cv_threshold
       c:@F@cv_thresholdWithMask:

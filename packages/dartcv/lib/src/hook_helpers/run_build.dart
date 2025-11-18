@@ -1,0 +1,134 @@
+// Copyright (c) 2025, Rainyl. All rights reserved. Use of this source code is governed by a
+// Apache 2.0 license that can be found in the LICENSE file.
+
+// ignore_for_file: avoid_print
+
+import 'dart:io';
+
+import 'package:code_assets/code_assets.dart';
+import 'package:hooks/hooks.dart';
+import 'package:logging/logging.dart';
+import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
+
+import 'patchelf_linux.dart';
+
+const defaultIncludedModules = {
+  'calib3d',
+  'features2d',
+  'imgcodecs',
+  'imgproc',
+  'objdetect',
+  'photo',
+  'stitching',
+};
+
+// large modules are disabled by default
+const defaultExcludedModules = {
+  'contrib',
+  'freetype',
+  'highgui',
+  'video',
+  'videoio',
+  'dnn',
+};
+
+const allowedModules = {
+  ...defaultIncludedModules,
+  ...defaultExcludedModules,
+};
+
+Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>? optionalModules}) async {
+  final packagePath = Directory(await getPackagePath('dartcv4'));
+  final modules = optionalModules ?? {...defaultIncludedModules};
+  final userDefines = input.userDefines;
+  final debugMode = userDefines["debug"] as bool? ?? false;
+  final includeModules = userDefines["include_modules"] as List?;
+  final excludeModules = userDefines["exclude_modules"] as List?;
+
+  final logger = Logger('')
+    ..level = Level.ALL
+    ..onRecord.listen((record) => debugMode ? stderr.write(record.message) : print(record.message));
+
+  final includeList = (includeModules ?? const []).cast<String>();
+  final excludeList = (excludeModules ?? const []).cast<String>();
+
+  final includeModulesFiltered = includeList.where(allowedModules.contains).toSet();
+  final excludeModulesFiltered = excludeList.where(allowedModules.contains).toSet();
+
+  if (includeModulesFiltered.isNotEmpty) {
+    modules
+      ..clear()
+      ..addAll(includeModulesFiltered);
+  }
+  if (excludeModulesFiltered.isNotEmpty) {
+    modules.removeAll(excludeModulesFiltered);
+  }
+  logger.info("[dartcv4] include modules: $includeModulesFiltered\n");
+  logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
+  logger.info("[dartcv4] merged modules: $modules\n");
+
+  final moduleDefines = {
+    'DARTCV_WITH_CALIB3D': modules.contains('calib3d') ? 'ON' : 'OFF',
+    'DARTCV_WITH_CONTRIB': modules.contains('contrib') ? 'ON' : 'OFF',
+    'DARTCV_WITH_DNN': modules.contains('dnn') ? 'ON' : 'OFF',
+    'DARTCV_WITH_FEATURES2D': modules.contains('features2d') ? 'ON' : 'OFF',
+    'DARTCV_WITH_FREETYPE': modules.contains('freetype') ? 'ON' : 'OFF',
+    'DARTCV_WITH_HIGHGUI': modules.contains('highgui') ? 'ON' : 'OFF',
+    'DARTCV_WITH_IMGCODECS': modules.contains('imgcodecs') ? 'ON' : 'OFF',
+    'DARTCV_WITH_IMGPROC': modules.contains('imgproc') ? 'ON' : 'OFF',
+    'DARTCV_WITH_OBJDETECT': modules.contains('objdetect') ? 'ON' : 'OFF',
+    'DARTCV_WITH_PHOTO': modules.contains('photo') ? 'ON' : 'OFF',
+    'DARTCV_WITH_STITCHING': modules.contains('stitching') ? 'ON' : 'OFF',
+    'DARTCV_WITH_VIDEO': modules.contains('video') ? 'ON' : 'OFF',
+    'DARTCV_WITH_VIDEOIO': modules.contains('videoio') ? 'ON' : 'OFF',
+  };
+
+  final builder = CMakeBuilder.create(
+    logLevel: debugMode ? LogLevel.DEBUG : LogLevel.STATUS,
+    name: input.packageName,
+    sourceDir: packagePath.uri.resolve("src"),
+    targets: ['install'],
+    buildLocal: false,
+    defines: {
+      'FFMPEG_USE_STATIC_LIBS': 'OFF',
+      'DARTCV_ENABLE_INSTALL': 'ON',
+      'DARTCV_WORLD': 'OFF',
+      'CMAKE_INSTALL_PREFIX': input.outputDirectory.resolve('install/').toFilePath(),
+      ...moduleDefines,
+    },
+  );
+  await builder.run(input: input, output: output, logger: logger);
+
+  await output.findAndAddCodeAssets(
+    input,
+    outDir: input.outputDirectory.resolve('install/'),
+    names: {'dartcv': 'dartcv.dart'},
+  );
+
+  final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
+  String ffPattern(String lib) => '(?:lib)?$lib(?:.\\d+)?(?:\\.(?:so|dll|dylib))';
+  if (modules.contains('highgui') || modules.contains('videoio')) {
+    final r = await output.findAndAddCodeAssets(
+      input,
+      outDir: input.outputDirectory.resolve('install/'),
+      names: {for (final lib in ffmpegLibs) ffPattern(lib): "$lib.dart"},
+      regExp: true,
+    );
+
+    if (input.config.code.targetOS == OS.linux) {
+      for (final lib in r) {
+        await setRPath(lib.file!, name: r'$ORIGIN');
+      }
+    }
+
+    // TODO: dartdev does not support adding FAT libraries yet.
+    // https://github.com/dart-lang/sdk/issues/61130
+
+    if (r.isEmpty) {
+      logger.warning("FFMPEG libraries not found, please check your build configuration.");
+    } else {
+      final libFiles = r.map((e) => e.file!.toFilePath()).toList();
+      logger.info("adding FFMPEG libraries: $libFiles");
+    }
+  }
+}
