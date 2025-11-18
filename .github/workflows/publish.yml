@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v{{version}'
-      - 'dartcv4-v[0-9]+.[0-9]+.[0-9]+*'
   # pull_request:
 
 jobs:
