@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
 import 'dart:isolate';
 
 import 'package:dartcv4/dartcv.dart' as cv;
@@ -1074,7 +1075,8 @@ void main() async {
   test("cv.setUseOpenCL", () {
     cv.setUseOpenCL(false);
     expect(cv.useOpenCL(), equals(false));
-    if (cv.haveOpenCL()) {
+    // OpenCL for MacOS is disabled
+    if (cv.haveOpenCL() && !Platform.isMacOS) {
       cv.setUseOpenCL(true);
       expect(cv.useOpenCL(), equals(true));
     }
