@@ -29,7 +29,8 @@ enum LogLevel {
   WARNING(3),
   INFO(4),
   DEBUG(5),
-  VERBOSE(6);
+  VERBOSE(6)
+  ;
 
   final int value;
   const LogLevel(this.value);
@@ -116,14 +117,15 @@ void defaultLogCallbackEx(
 }
 
 typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
-typedef LogCallbackExFunction = void Function(
-  LogLevel logLevel,
-  String tag,
-  String file,
-  int line,
-  String func,
-  String message,
-);
+typedef LogCallbackExFunction =
+    void Function(
+      LogLevel logLevel,
+      String tag,
+      String file,
+      int line,
+      String func,
+      String message,
+    );
 
 ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
 ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;
@@ -1429,3 +1431,34 @@ void setNumThreads(int n) => ccore.cv_setNumThreads(n);
 
 /// Get the number of threads for OpenCV.
 int getNumThreads() => ccore.cv_getNumThreads();
+
+// OpenCL functions
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gad2e486ab8104a3b197001e27d54e2a95
+bool haveAmdBlas() => ccore.cv_ocl_haveAmdBlas();
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#ga593387b5285a57ea03350b363c74c6cf
+bool haveAmdFft() => ccore.cv_ocl_haveAmdFft();
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gaf8716694664cb127e7928c335b97d217
+bool haveOpenCL() => ccore.cv_ocl_haveOpenCL();
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#ga0744f1db6ed2ec8f8aa79a43449a4855
+bool haveSVM() => ccore.cv_ocl_haveSVM();
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gab747fa4efd88d3188f4ebcbc8a639c1e
+void setUseOpenCL(bool flag) => ccore.cv_ocl_setUseOpenCL(flag);
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#ga7f2f248d37cfa3e1e4122249f7dc8c49
+String typeToStr(int t) {
+  final p = ccore.cv_ocl_typeToStr(t);
+  return p.toDartString();
+}
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gadb3b41d4552e9db7887855e3a1b2af37
+bool useOpenCL() => ccore.cv_ocl_useOpenCL();
+
+/// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gaa3c1017cd44dcd6c739943f31bb8f248
+String vecopTypeToStr(int t) {
+  final p = ccore.cv_ocl_vecopTypeToStr(t);
+  return p.toDartString();
+}

@@ -256,6 +256,16 @@ double_t cv_getTickFrequency(void);
 void cv_setNumThreads(int n);
 int cv_getNumThreads(void);
 
+// OpenCL functions
+bool cv_ocl_haveAmdBlas();
+bool cv_ocl_haveAmdFft();
+bool cv_ocl_haveOpenCL();
+bool cv_ocl_haveSVM();
+void cv_ocl_setUseOpenCL(bool flag);
+const char* cv_ocl_typeToStr(int t);
+bool cv_ocl_useOpenCL();
+const char* cv_ocl_vecopTypeToStr(int t);
+
 #ifdef __cplusplus
 }
 #endif

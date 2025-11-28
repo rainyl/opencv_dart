@@ -1,3 +1,7 @@
+## 2.1.1
+
+- add: OpenCL functions, allow to disable OpenCL
+
 ## 2.1.0+1
 
 - fix: C++ src not included
