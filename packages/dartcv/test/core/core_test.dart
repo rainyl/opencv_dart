@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
 import 'dart:isolate';
 
 import 'package:dartcv4/dartcv.dart' as cv;
@@ -642,9 +643,9 @@ void main() async {
 
           final lutData = switch (lutDepth) {
             cv.MatType.CV_32F || cv.MatType.CV_16F || cv.MatType.CV_64F => List.generate(
-                lutSize * lutType.channels,
-                (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
-              ),
+              lutSize * lutType.channels,
+              (i) => (lutSize - (i ~/ channel) - 1).toDouble(),
+            ),
             _ => List.generate(lutSize * lutType.channels, (i) => lutSize - (i ~/ channel) - 1),
           };
           final lutInverse = cv.Mat.fromList(1, lutSize, lutType, lutData);
@@ -1048,5 +1049,44 @@ void main() async {
   test('cv.getNumThreads', () {
     final n = cv.getNumThreads();
     expect(n, greaterThan(0));
+  });
+
+  test("cv.haveAmdBlas", () {
+    expect(cv.haveAmdBlas(), isA<bool>());
+  });
+
+  test("cv.haveAmdFft", () {
+    expect(cv.haveAmdFft(), isA<bool>());
+  });
+
+  test("cv.haveOpenCL", () {
+    expect(cv.haveOpenCL(), isA<bool>());
+  });
+
+  test("cv.haveSVM", () {
+    expect(cv.haveSVM(), isA<bool>());
+  });
+
+  test('cv.useOpenCL', () {
+    print(cv.useOpenCL());
+    expect(cv.useOpenCL(), isA<bool>());
+  });
+
+  test("cv.setUseOpenCL", () {
+    cv.setUseOpenCL(false);
+    expect(cv.useOpenCL(), equals(false));
+    // OpenCL for MacOS is disabled
+    if (cv.haveOpenCL() && !Platform.isMacOS) {
+      cv.setUseOpenCL(true);
+      expect(cv.useOpenCL(), equals(true));
+    }
+  });
+
+  test('cv.typeToStr', () {
+    expect(cv.typeToStr(cv.MatType.CV_8UC3.value), equals("uchar3"));
+  });
+
+  test('cv.vecopTypeToStr', () {
+    expect(cv.vecopTypeToStr(cv.MatType.CV_8UC1.value), "uchar");
   });
 }

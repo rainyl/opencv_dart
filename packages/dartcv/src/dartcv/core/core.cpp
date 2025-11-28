@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <opencv2/core/ocl.hpp>
+
 
 CvStatus* cv_RotatedRect_points(RotatedRect rect, VecPoint2f* out_pts) {
     BEGIN_WRAP
@@ -1385,4 +1387,30 @@ void cv_setNumThreads(int n) {
 }
 int cv_getNumThreads(void) {
     return cv::getNumThreads();
+}
+
+// OpenCL functions
+bool cv_ocl_haveAmdBlas(){
+    return cv::ocl::haveAmdBlas();
+}
+bool cv_ocl_haveAmdFft(){
+    return cv::ocl::haveAmdFft();
+}
+bool cv_ocl_haveOpenCL(){
+    return cv::ocl::haveOpenCL();
+}
+bool cv_ocl_haveSVM(){
+    return cv::ocl::haveSVM();
+}
+void cv_ocl_setUseOpenCL(bool flag){
+    cv::ocl::setUseOpenCL(flag);
+}
+const char* cv_ocl_typeToStr(int t){
+    return cv::ocl::typeToStr(t);
+}
+bool cv_ocl_useOpenCL(){
+    return cv::ocl::useOpenCL();
+}
+const char* cv_ocl_vecopTypeToStr(int t){
+    return cv::ocl::vecopTypeToStr(t);
 }
