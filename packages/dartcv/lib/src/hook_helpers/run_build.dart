@@ -16,6 +16,7 @@ import 'patchelf_linux.dart';
 const defaultIncludedModules = {
   'calib3d',
   'features2d',
+  'flann',
   'imgcodecs',
   'imgproc',
   'objdetect',
@@ -25,12 +26,17 @@ const defaultIncludedModules = {
 
 // large modules are disabled by default
 const defaultExcludedModules = {
-  'contrib',
   'freetype',
   'highgui',
   'video',
   'videoio',
   'dnn',
+  'aruco',
+  'img_hash',
+  'quality',
+  'wechat_qrcode',
+  'ximgproc',
+  'xobjdetect',
 };
 
 const allowedModules = {
@@ -45,6 +51,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   final debugMode = userDefines["debug"] as bool? ?? false;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
+  final targetOS = input.config.code.targetOS;
 
   final logger = Logger('')
     ..level = Level.ALL
@@ -70,9 +77,9 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
 
   final moduleDefines = {
     'DARTCV_WITH_CALIB3D': modules.contains('calib3d') ? 'ON' : 'OFF',
-    'DARTCV_WITH_CONTRIB': modules.contains('contrib') ? 'ON' : 'OFF',
     'DARTCV_WITH_DNN': modules.contains('dnn') ? 'ON' : 'OFF',
     'DARTCV_WITH_FEATURES2D': modules.contains('features2d') ? 'ON' : 'OFF',
+    'DARTCV_WITH_FLANN': modules.contains('flann') ? 'ON' : 'OFF',
     'DARTCV_WITH_FREETYPE': modules.contains('freetype') ? 'ON' : 'OFF',
     'DARTCV_WITH_HIGHGUI': modules.contains('highgui') ? 'ON' : 'OFF',
     'DARTCV_WITH_IMGCODECS': modules.contains('imgcodecs') ? 'ON' : 'OFF',
@@ -82,6 +89,13 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     'DARTCV_WITH_STITCHING': modules.contains('stitching') ? 'ON' : 'OFF',
     'DARTCV_WITH_VIDEO': modules.contains('video') ? 'ON' : 'OFF',
     'DARTCV_WITH_VIDEOIO': modules.contains('videoio') ? 'ON' : 'OFF',
+    // Contrib modules
+    'DARTCV_WITH_ARUCO': modules.contains('aruco') ? 'ON' : 'OFF',
+    'DARTCV_WITH_IMG_HASH': modules.contains('img_hash') ? 'ON' : 'OFF',
+    'DARTCV_WITH_QUALITY': modules.contains('quality') ? 'ON' : 'OFF',
+    'DARTCV_WITH_WECHAT_QRCODE': modules.contains('wechat_qrcode') ? 'ON' : 'OFF',
+    'DARTCV_WITH_XIMGPROC': modules.contains('ximgproc') ? 'ON' : 'OFF',
+    'DARTCV_WITH_XOBJDETECT': modules.contains('xobjdetect') ? 'ON' : 'OFF',
   };
 
   var winGenerator = Generator.defaultGenerator;
@@ -104,26 +118,39 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     }
   }
 
-  final generator = switch (input.config.code.targetOS) {
+  final generator = switch (targetOS) {
     OS.linux => Generator.make,
     OS.macOS || OS.iOS => Generator.xcode,
     OS.windows => winGenerator,
     OS.android => Generator.ninja,
-    _ => throw ArgumentError.value(input.config.code.targetOS, 'targetOS', 'Unsupported target OS'),
+    _ => throw ArgumentError.value(targetOS, 'targetOS', 'Unsupported target OS'),
   };
   logger.warning('Using generator: ${generator.name}');
 
   final builder = CMakeBuilder.create(
     logLevel: debugMode ? LogLevel.DEBUG : LogLevel.STATUS,
+    appleArgs: const AppleBuilderArgs(enableArc: false, enableBitcode: false, enableVisibility: true),
     name: input.packageName,
     sourceDir: packagePath.uri.resolve("src"),
     targets: ['install'],
     buildLocal: false,
     generator: generator,
     defines: {
-      'FFMPEG_USE_STATIC_LIBS': 'OFF',
+      if (targetOS == OS.macOS) 'DEPLOYMENT_TARGET': '10.15',
+      if (targetOS == OS.iOS) 'DEPLOYMENT_TARGET': '12.0',
+      if (targetOS == OS.iOS || targetOS == OS.macOS) 'BUILD_TIFF': 'OFF',
+      if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_TIFF': 'OFF',
+      if (targetOS == OS.iOS || targetOS == OS.macOS) 'BUILD_OPENJPEG': 'OFF',
+      if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_OPENJPEG': 'OFF',
+      if (targetOS == OS.iOS) 'WITH_OPENCL': 'OFF',
+      if (targetOS == OS.iOS) 'WITH_OPENCLAMDBLAS': 'OFF',
+      if (targetOS == OS.iOS) 'WITH_OPENCLAMDFFT': 'OFF',
+      if (targetOS == OS.macOS) 'WITH_OPENCL': 'ON',
+      if (targetOS == OS.macOS) 'WITH_OPENCLAMDBLAS': 'ON',
+      if (targetOS == OS.macOS) 'WITH_OPENCLAMDFFT': 'ON',
+      if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_OPENCL_SVM': 'OFF',
+      // 'FFMPEG_USE_STATIC_LIBS': 'OFF',
       'DARTCV_ENABLE_INSTALL': 'ON',
-      'DARTCV_WORLD': 'OFF',
       'CMAKE_INSTALL_PREFIX': input.outputDirectory.resolve('install/').toFilePath(),
       ...moduleDefines,
     },

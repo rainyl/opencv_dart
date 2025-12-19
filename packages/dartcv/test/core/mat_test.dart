@@ -189,8 +189,7 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
         final mat = cv.Mat.fromVec(data.f16, rows: rows, cols: cols, type: type, copyData: copyData);
         expect(mat.isEmpty, false);
         expect(mat.shape, [rows, cols, channels]);
-        final pix = mat.at<cv.Vec3w>(0, 1);
-        expect(pix.val, [3.0.fp16, 4.0.fp16, 5.0.fp16]);
+        expect(mat.atPixel(0, 1), [3.0, 4.0, 5.0]);
       }
     }
   });

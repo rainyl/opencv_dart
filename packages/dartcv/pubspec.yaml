@@ -46,3 +46,9 @@ hooks:
         - stitching
         - video
         - videoio
+        - aruco
+        - img_hash
+        - quality
+        - wechat_qrcode
+        - ximgproc
+        - xobjdetect
