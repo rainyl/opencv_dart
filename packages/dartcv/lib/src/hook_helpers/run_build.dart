@@ -14,23 +14,23 @@ import 'package:native_toolchain_cmake/src/native_toolchain/msvc.dart';
 import 'patchelf_linux.dart';
 
 const defaultIncludedModules = {
-  'calib3d',
-  'features2d',
-  'flann',
   'imgcodecs',
   'imgproc',
-  'objdetect',
-  'photo',
-  'stitching',
 };
 
 // large modules are disabled by default
 const defaultExcludedModules = {
+  'calib3d',
+  'dnn',
+  'features2d',
+  'flann',
   'freetype',
   'highgui',
+  'objdetect',
+  'photo',
+  'stitching',
   'video',
   'videoio',
-  'dnn',
   'aruco',
   'img_hash',
   'quality',

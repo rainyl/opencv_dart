@@ -140,6 +140,7 @@ set(BUILD_opencv_core ON CACHE BOOL "Build core module" FORCE)
 set(BUILD_opencv_gapi ${DARTCV_WITH_GAPI} CACHE BOOL "Build gapi module" FORCE)
 set(BUILD_opencv_world OFF CACHE BOOL "Build all modules into world module" FORCE)
 set(BUILD_opencv_ml ${DARTCV_WITH_ML} CACHE BOOL "Build ml module" FORCE)
+set(BUILD_opencv_imgproc ${DARTCV_WITH_IMGPROC} CACHE BOOL "Build imgproc module" FORCE)
 
 if (DARTCV_WITH_CALIB3D)
   set(BUILD_opencv_calib3d ON CACHE BOOL "Build calib3d module" FORCE)
@@ -152,8 +153,6 @@ if (DARTCV_WITH_IMGCODECS)
   set(BUILD_opencv_imgcodecs ON CACHE BOOL "Build imgcodecs module" FORCE)
   set(BUILD_opencv_imgproc ON CACHE BOOL "Build imgproc module" FORCE)
 endif ()
-
-set(BUILD_opencv_imgproc ${DARTCV_WITH_IMGPROC} CACHE BOOL "Build imgproc module" FORCE)
 
 if (DARTCV_WITH_FEATURES2D)
   set(BUILD_opencv_features2d ON CACHE BOOL "Build features2d module" FORCE)

@@ -97,10 +97,10 @@ hooks:
       debug: true
       include_modules:
         - calib3d
-        - contrib
         - dnn
         - features2d
         - freetype
+        - flann
         - highgui
         - imgcodecs
         - imgproc
@@ -109,3 +109,9 @@ hooks:
         - stitching
         - video
         - videoio
+        - aruco
+        - img_hash
+        - quality
+        - wechat_qrcode
+        - ximgproc
+        - xobjdetect
