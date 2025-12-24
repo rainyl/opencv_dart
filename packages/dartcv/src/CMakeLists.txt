@@ -37,73 +37,114 @@ option(DARTCV_WITH_XOBJDETECT "Include xobjdetect module" OFF)
 
 option(DARTCV_ENABLE_INSTALL "Enable install" OFF)
 option(DARTCV_ENABLE_TEST "Enable tests" OFF)
+option(DARTCV_BUILD_OPENCV_FROM_SOURCE "Build opencv from source" ON)
+option(DARTCV_DISABLE_DOWNLOAD_OPENCV "Disable download opencv" OFF)
 
 option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
 
+# Set OpenCV version
+if(NOT OPENCV_VERSION)
+  set(OPENCV_VERSION "4.12.0")
+endif()
 
-if (MSVC)
+if(NOT DARTCV_OPENCV_VERSION)
+  set(DARTCV_OPENCV_VERSION "4.12.0.0")
+endif()
+
+
+if(MSVC)
   add_compile_definitions(_USE_MATH_DEFINES)
-endif ()
+endif()
 
-if (MSVC AND BUILD_WITH_STATIC_CRT)
-  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(MSVC AND BUILD_WITH_STATIC_CRT)
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug" CACHE STRING "MSVC runtime library" FORCE)
-  else ()
+  else()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded" CACHE STRING "MSVC runtime library" FORCE)
-  endif ()
-endif ()
+  endif()
+endif()
 
 # Include FFmpeg configuration from separate file
 #include(cmake/ffmpeg_options.cmake)
 
 # ============ download and prepare OpenCV =========
 # Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP in CMake 3.24:
-if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
   cmake_policy(SET CMP0135 NEW)
-endif ()
+endif()
 
-if (UNIX AND NOT ANDROID)
+if(UNIX AND NOT ANDROID)
   find_package(Iconv REQUIRED)
-endif ()
-
-# Set OpenCV version
-if (NOT OPENCV_VERSION)
-  set(OPENCV_VERSION "4.12.0")
-endif ()
+endif()
 
 include(FetchContent)
-include(cmake/opencv_options.cmake)
 
-if (DARTCV_WITH_ARUCO
-  OR DARTCV_WITH_IMG_HASH
-  OR DARTCV_WITH_QUALITY
-  OR DARTCV_WITH_WECHAT_QRCODE
-  OR DARTCV_WITH_XIMGPROC
-  OR DARTCV_WITH_XOBJDETECT
-)
-  FetchContent_Declare(
-    opencv_contrib
-    GIT_REPOSITORY https://github.com/opencv/opencv_contrib.git
-    GIT_TAG ${OPENCV_VERSION}
-    GIT_SHALLOW TRUE
+# Build from source
+if(DARTCV_BUILD_OPENCV_FROM_SOURCE)
+  include(cmake/opencv_options.cmake)
+
+  if(DARTCV_WITH_ARUCO
+    OR DARTCV_WITH_IMG_HASH
+    OR DARTCV_WITH_QUALITY
+    OR DARTCV_WITH_WECHAT_QRCODE
+    OR DARTCV_WITH_XIMGPROC
+    OR DARTCV_WITH_XOBJDETECT
   )
-  FetchContent_MakeAvailable(opencv_contrib)
-  set(OPENCV_EXTRA_MODULES_PATH ${opencv_contrib_SOURCE_DIR}/modules CACHE PATH "Path to opencv_contrib modules")
-endif ()
+    FetchContent_Declare(
+      opencv_contrib
+      URL https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz
+    )
+    FetchContent_MakeAvailable(opencv_contrib)
+    set(OPENCV_EXTRA_MODULES_PATH ${opencv_contrib_SOURCE_DIR}/modules CACHE PATH "Path to opencv_contrib modules")
+  endif()
 
-FetchContent_Declare(
-  opencv
-  GIT_REPOSITORY https://github.com/opencv/opencv.git
-  GIT_TAG ${OPENCV_VERSION}
-  GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(opencv)
+  FetchContent_Declare(
+    opencv
+    URL https://github.com/opencv/opencv/archive/refs/tags/${OPENCV_VERSION}.tar.gz
+  )
+  FetchContent_MakeAvailable(opencv)
+  set(DARTCV_DEP_INCLUDE_DIRS
+    ${OpenCV_INCLUDE_DIRS}
+    ${OPENCV_CONFIG_FILE_INCLUDE_DIR}
+    ${OPENCV_MODULE_opencv_LOCATION}/include
+    ${OPENCV_MODULE_opencv_core_LOCATION}/include
+    ${OPENCV_MODULE_opencv_calib3d_LOCATION}/include
+    ${OPENCV_MODULE_opencv_dnn_LOCATION}/include
+    ${OPENCV_MODULE_opencv_features2d_LOCATION}/include
+    ${OPENCV_MODULE_opencv_flann_LOCATION}/include
+    ${OPENCV_MODULE_opencv_gapi_LOCATION}/include
+    ${OPENCV_MODULE_opencv_highgui_LOCATION}/include
+    ${OPENCV_MODULE_opencv_imgcodecs_LOCATION}/include
+    ${OPENCV_MODULE_opencv_imgproc_LOCATION}/include
+    ${OPENCV_MODULE_opencv_ml_LOCATION}/include
+    ${OPENCV_MODULE_opencv_objdetect_LOCATION}/include
+    ${OPENCV_MODULE_opencv_photo_LOCATION}/include
+    ${OPENCV_MODULE_opencv_stitching_LOCATION}/include
+    ${OPENCV_MODULE_opencv_video_LOCATION}/include
+    ${OPENCV_MODULE_opencv_videoio_LOCATION}/include
+    # contrib
+    ${OPENCV_MODULE_opencv_aruco_LOCATION}/include
+    ${OPENCV_MODULE_opencv_img_hash_LOCATION}/include
+    ${OPENCV_MODULE_opencv_quality_LOCATION}/include
+    ${OPENCV_MODULE_opencv_wechat_qrcode_LOCATION}/include
+    ${OPENCV_MODULE_opencv_ximgproc_LOCATION}/include
+    ${OPENCV_MODULE_opencv_xobjdetect_LOCATION}/include
+    # ${freetype_SOURCE_DIR}/include
+    # ${harfbuzz_SOURCE_DIR}/src
+  )
+  # download prebuilt opencv static library
+else()
+  include(cmake/download_setup_opencv.cmake)
+  set(DARTCV_DEP_INCLUDE_DIRS
+    ${OpenCV_INCLUDE_DIRS})
+endif()
+
 # ============ OpenCV setup finished ==============
 
 
 set(DARTCV_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "DARTCV_INCLUDE_DIRS")
 
-if (DARTCV_WITH_FREETYPE)
+if(DARTCV_WITH_FREETYPE)
   set(FT_DISABLE_ZLIB ON CACHE BOOL "")
   set(FT_DISABLE_BZIP2 ON CACHE BOOL "")
   set(FT_DISABLE_HARFBUZZ ON CACHE BOOL "")
@@ -129,12 +170,17 @@ if (DARTCV_WITH_FREETYPE)
   )
 
   FetchContent_MakeAvailable(libfreetype libharfbuzz)
-endif ()
+endif()
 
 add_subdirectory(dartcv)
 
-if (DARTCV_ENABLE_INSTALL)
+if(DARTCV_ENABLE_INSTALL)
   set(ROOT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+  if (ANDROID)
+    message(STATUS "Installing ${FFMPEG_LIB_PATHS} to ${CMAKE_INSTALL_PREFIX}")
+    file(COPY ${FFMPEG_LIB_PATHS} DESTINATION ${CMAKE_INSTALL_PREFIX}/${ANDROID_ABI})
+  endif ()
 
   # install
   install(DIRECTORY ${ROOT_PROJECT_DIR}/dartcv
@@ -152,10 +198,12 @@ if (DARTCV_ENABLE_INSTALL)
     COMPONENT target_libs
   )
 
-  # Include FFmpeg installation configuration from separate file
-  #  include(cmake/ffmpeg_install.cmake)
-endif ()
+  install(FILES ${FFMPEG_LIB_PATHS}
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    COMPONENT ffmpeg_libs
+  )
+endif()
 
-if (DARTCV_ENABLE_TEST)
+if(DARTCV_ENABLE_TEST)
   add_subdirectory(test)
-endif ()
+endif()

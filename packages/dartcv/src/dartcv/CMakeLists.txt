@@ -187,41 +187,14 @@ if (APPLE AND (NOT IOS) AND DARTCV_WITH_FFMPEG)
   set(DARTCV_DEPS ${DARTCV_DEPS} ${FFMPEG_LIBRARIES})
 endif ()
 
-set(DARTCV_DEP_INCLUDE_DIRS
-  ${OpenCV_INCLUDE_DIRS}
-  ${OPENCV_CONFIG_FILE_INCLUDE_DIR}
-  ${OPENCV_MODULE_opencv_LOCATION}/include
-  ${OPENCV_MODULE_opencv_core_LOCATION}/include
-  ${OPENCV_MODULE_opencv_calib3d_LOCATION}/include
-  ${OPENCV_MODULE_opencv_dnn_LOCATION}/include
-  ${OPENCV_MODULE_opencv_features2d_LOCATION}/include
-  ${OPENCV_MODULE_opencv_flann_LOCATION}/include
-  ${OPENCV_MODULE_opencv_gapi_LOCATION}/include
-  ${OPENCV_MODULE_opencv_highgui_LOCATION}/include
-  ${OPENCV_MODULE_opencv_imgcodecs_LOCATION}/include
-  ${OPENCV_MODULE_opencv_imgproc_LOCATION}/include
-  ${OPENCV_MODULE_opencv_ml_LOCATION}/include
-  ${OPENCV_MODULE_opencv_objdetect_LOCATION}/include
-  ${OPENCV_MODULE_opencv_photo_LOCATION}/include
-  ${OPENCV_MODULE_opencv_stitching_LOCATION}/include
-  ${OPENCV_MODULE_opencv_video_LOCATION}/include
-  ${OPENCV_MODULE_opencv_videoio_LOCATION}/include
-  # contrib
-  ${OPENCV_MODULE_opencv_aruco_LOCATION}/include
-  ${OPENCV_MODULE_opencv_img_hash_LOCATION}/include
-  ${OPENCV_MODULE_opencv_quality_LOCATION}/include
-  ${OPENCV_MODULE_opencv_wechat_qrcode_LOCATION}/include
-  ${OPENCV_MODULE_opencv_ximgproc_LOCATION}/include
-  ${OPENCV_MODULE_opencv_xobjdetect_LOCATION}/include
-  # ${freetype_SOURCE_DIR}/include
-  # ${harfbuzz_SOURCE_DIR}/src
-)
-
 # ##############################################################################
 # Add library
 # ##############################################################################
 
 # provide include dir for other libs that depend on this one
+if(NOT DEFINED DARTCV_DEP_INCLUDE_DIRS)
+  set(DARTCV_DEP_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS})
+endif()
 set(dartcv_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 
 add_library(${LIBRARY_NAME} SHARED ${_cpp_files} ${_header_files})
