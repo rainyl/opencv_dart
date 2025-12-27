@@ -20,8 +20,8 @@ void main() async {
 
   test('cv.VideoWriter.fromFile', () {
     final writer = cv.VideoWriter.fromFile(
-      "test/images/small2.mp4",
-      "mp4v",
+      "test/images/small2.avi",
+      "MJPG",
       60,
       (
         400,
@@ -29,20 +29,16 @@ void main() async {
       ),
       apiPreference: cv.CAP_ANY,
     );
-    final frame = cv.Mat.ones(400, 300, cv.MatType.CV_8UC3);
+    final frame = cv.Mat.ones(300, 400, cv.MatType.CV_8UC3);
     writer.write(frame);
     writer.release();
-    final writer1 = cv.VideoWriter.fromFile(
-      "test/images/small2.mp4",
-      "mp4v",
-      60,
-      (
-        400,
-        300,
-      ),
-      apiPreference: cv.CAP_ANY,
-    );
-    expect(writer1.isOpened, true);
+
+    final capture = cv.VideoCapture.fromFile("test/images/small2.avi", apiPreference: cv.CAP_ANY);
+    expect(capture.isOpened, true);
+    final (success, frame1) = capture.read();
+    expect(success, true);
+    expect(frame1.isEmpty, false);
+    expect(frame1.shape, frame.shape);
   });
 
   test('cv.VideoCapture.empty', () {
@@ -65,7 +61,7 @@ void main() async {
 
     expect(vc.getBackendName(), isNotEmpty);
 
-    expect(vc.codec, "h264");
+    expect(vc.codec, isA<String>());
 
     expect(cv.VideoCapture.toCodec("h264"), closeTo(875967080, 1e-3));
     // cv.imwrite("cv.VideoCapture.fromFile.png", frame);

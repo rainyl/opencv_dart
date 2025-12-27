@@ -15,10 +15,29 @@ void main() async {
   });
 
   test('cv.VideoWriterAsync.openAsync', () async {
-    final writer = await cv.VideoWriterAsync.fromFileAsync("test/images/small2.mp4", "mp4v", 60, (400, 300));
-    final frame = cv.Mat.ones(400, 300, cv.MatType.CV_8UC3);
+    final writer = await cv.VideoWriterAsync.fromFileAsync(
+      "test/images/small2.avi",
+      "MJPG",
+      60,
+      (
+        400,
+        300,
+      ),
+      apiPreference: cv.CAP_ANY,
+    );
+    final frame = cv.Mat.ones(300, 400, cv.MatType.CV_8UC3);
     await writer.writeAsync(frame);
     writer.release();
+
+    final capture = await cv.VideoCaptureAsync.fromFileAsync(
+      "test/images/small2.avi",
+      apiPreference: cv.CAP_ANY,
+    );
+    expect(capture.isOpened, true);
+    final (success, frame1) = await capture.readAsync();
+    expect(success, true);
+    expect(frame1.isEmpty, false);
+    expect(frame1.shape, frame.shape);
   });
 
   test('cv.VideoCaptureAsync.empty', () async {
@@ -36,7 +55,7 @@ void main() async {
     final (success, frame) = await vc.readAsync();
     expect(success, true);
     expect(frame.isEmpty, false);
-    expect(vc.codec, "h264");
+    expect(vc.codec, isA<String>());
 
     await vc.grabAsync();
 

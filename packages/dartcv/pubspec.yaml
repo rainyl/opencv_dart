@@ -31,6 +31,7 @@ topics:
 hooks:
   user_defines:
     dartcv4:
+      debug: true
       include_modules:
         - calib3d
         - contrib
@@ -45,3 +46,9 @@ hooks:
         - stitching
         - video
         - videoio
+        - aruco
+        - img_hash
+        - quality
+        - wechat_qrcode
+        - ximgproc
+        - xobjdetect

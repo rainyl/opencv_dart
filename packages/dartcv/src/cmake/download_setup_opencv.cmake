@@ -99,7 +99,7 @@ else()
   include(FetchContent)
   FetchContent_Declare(
     libopencv
-    URL "${LIBOPENCV_URL_BASE}/${OPENCV_VERSION}/${LIB_FILENAME}"
+    URL "${LIBOPENCV_URL_BASE}/${DARTCV_OPENCV_VERSION}/${LIB_FILENAME}"
   )
   if(NOT libopencv_POPULATED)
     # FetchContent_Populate(libopencv)
@@ -128,6 +128,13 @@ else()
 endif()
 
 set(OpenCV_STATIC ON)
+
+find_package(OpenCV REQUIRED)
+
+set(FFMPEG_USE_STATIC_LIBS OFF)
+if (NOT IOS AND (DARTCV_WITH_HIGHGUI OR DARTCV_WITH_VIDEOIO))
+  find_package(FFMPEG REQUIRED)
+endif ()
 
 # restore the original value
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/_deps" CACHE PATH "Directory under which to collect all populated content" FORCE)
