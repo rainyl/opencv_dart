@@ -152,6 +152,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
       // 'FFMPEG_USE_STATIC_LIBS': 'OFF',
       'DARTCV_ENABLE_INSTALL': 'ON',
       'CMAKE_INSTALL_PREFIX': input.outputDirectory.resolve('install/').toFilePath(),
+      'DCMAKE_POLICY_VERSION_MINIMUM': '3.5',
       ...moduleDefines,
     },
   );
