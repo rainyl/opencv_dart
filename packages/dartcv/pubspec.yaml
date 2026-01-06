@@ -1,6 +1,7 @@
 name: dartcv4
 description: "OpenCV4 bindings for Dart language and Flutter, using dart:ffi. The most complete OpenCV bindings for Dart!"
-version: 2.1.1
+version: 2.2.0
+opencv_version: 4.13.0
 homepage: https://github.com/rainyl/opencv_dart
 
 environment:
@@ -8,7 +9,6 @@ environment:
 
 dependencies:
   code_assets: ^1.0.0
-  data_assets: ^0.19.6
   ffi: ^2.1.4
   hooks: ^1.0.0
   logging: ^1.3.0
@@ -31,6 +31,7 @@ topics:
 hooks:
   user_defines:
     dartcv4:
+      debug: true
       include_modules:
         - calib3d
         - contrib
@@ -45,3 +46,9 @@ hooks:
         - stitching
         - video
         - videoio
+        - aruco
+        - img_hash
+        - quality
+        - wechat_qrcode
+        - ximgproc
+        - xobjdetect

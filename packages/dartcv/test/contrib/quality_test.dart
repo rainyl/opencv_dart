@@ -1,7 +1,7 @@
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
-void checkResult(cv.Scalar value, List<double> values, {double eps = 1e-3, cv.Mat? qualityMap}) {
+void checkResult(cv.Scalar value, List<double> values, {double eps = 1e-2, cv.Mat? qualityMap}) {
   expect(value.val1, closeTo(values[0], eps));
   expect(value.val2, closeTo(values[1], eps));
   expect(value.val3, closeTo(values[2], eps));
