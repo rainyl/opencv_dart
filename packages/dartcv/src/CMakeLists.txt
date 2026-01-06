@@ -42,6 +42,22 @@ option(DARTCV_DISABLE_DOWNLOAD_OPENCV "Disable download opencv" OFF)
 
 option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
 
+get_filename_component(PROJ_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+
+macro(_find_version _version_var _version_file _regex_find _regex_replace)
+  # read versions
+  if(EXISTS ${_version_file})
+    file(STRINGS ${_version_file} _version_string REGEX ${_regex_find})
+    string(REGEX REPLACE ${_regex_replace} "\\1" _version_string "${_version_string}")
+    set(${_version_var} "${_version_string}")
+  else()
+    message(FATAL_ERROR "file ${_version_file} not found!")
+  endif()
+endmacro()
+
+_find_version(PROJECT_VERSION "${PROJ_DIR}/pubspec.yaml" "^version: (.+)*$" "version: (.+)*$")
+_find_version(OPENCV_VERSION "${PROJ_DIR}/pubspec.yaml" "^opencv_version: (.+)*$" "opencv_version: (.+)*$")
+
 # Set OpenCV version
 if(NOT OPENCV_VERSION)
   set(OPENCV_VERSION "4.12.0")
@@ -51,6 +67,9 @@ if(NOT DARTCV_OPENCV_VERSION)
   set(DARTCV_OPENCV_VERSION "4.12.0.0")
 endif()
 
+message(STATUS "dartcv Version: ${PROJECT_VERSION}")
+message(STATUS "OpenCV Version: ${OPENCV_VERSION}")
+message(STATUS "OpenCV Prebuilt Version: ${DARTCV_OPENCV_VERSION}")
 
 if(MSVC)
   add_compile_definitions(_USE_MATH_DEFINES)
