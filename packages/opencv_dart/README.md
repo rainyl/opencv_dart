@@ -151,22 +151,28 @@ hooks:
 - valid modules:
   - `core`: always included
   - included by default:
-    - `calib3d`
-    - `features2d`
     - `imgproc`
     - `imgcodecs`
-    - `objdetect`
-    - `photo`
-    - `stitching`
   - excluded by default:
-    - `contrib`
+    - `calib3d`
+    - `features2d`
+    - `flann`
     - `dnn`
     - `freetype`
     - `highgui`
     - `video`
     - `videoio`
+    - `objdetect`
+    - `photo`
+    - `stitching`
+    - `aruco`
+    - `img_hash`
+    - `quality`
+    - `wechat_qrcode`
+    - `ximgproc`
+    - `xobjdetect`
 - Note: even a module is excluded, it's dart code is still available, but throws a symbol not found exception when called.
-- `videoio` and `highgui` will introduce FFMPEG dynamic libraries (except for ios, ffmpeg is not supported on ios for now).
+- ~~`videoio` and `highgui` will introduce FFMPEG dynamic libraries (except for ios, ffmpeg is not supported on ios for now).~~ FFMPEG is no longer availabel with `dartcv >= 2.2.0`
 
 ## TODO
 

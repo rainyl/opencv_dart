@@ -30,6 +30,7 @@ topics:
 
 hooks:
   user_defines:
+    # this is for development and debug, not seen in production
     dartcv4:
       debug: true
       include_modules:

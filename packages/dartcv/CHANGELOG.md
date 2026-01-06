@@ -1,3 +1,12 @@
+## 2.2.0
+
+- breaking change: support building from opencv source code, it's now the default behavior, since this version, prebuilt opencv static binary is no longer included.
+- bump opencv version to `4.13.0`
+- NOTE: opencv `4.12.0` is the last version that provides prebuilt static binary.
+- breaking change: change default include modules to `imgcodecs` `imgproc`.
+- breaking change: change default excluded modules to `calib3d` `dnn` `features2d` `flann` `freetype` `highgui` `objdetect` `photo` `stitching` `video` `videoio` `aruco` `img_hash` `quality` `wechat_qrcode` `ximgproc` `xobjdetect`
+- breaking change: since this version, FFMPEG is no longer included.
+
 ## 2.1.1
 
 - add: OpenCL functions, allow to disable OpenCL
