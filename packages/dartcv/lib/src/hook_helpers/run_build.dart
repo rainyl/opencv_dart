@@ -9,7 +9,6 @@ import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
-import 'package:native_toolchain_cmake/src/native_toolchain/msvc.dart';
 
 import 'patchelf_linux.dart';
 
@@ -98,30 +97,10 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     'DARTCV_WITH_XOBJDETECT': modules.contains('xobjdetect') ? 'ON' : 'OFF',
   };
 
-  var winGenerator = Generator.defaultGenerator;
-  if (input.config.code.targetOS == OS.windows) {
-    final tools = await visualStudio.defaultResolver?.resolve(logger: logger);
-    if (tools == null) {
-      throw StateError('Failed to resolve Visual Studio tools');
-    }
-    for (final tool in tools) {
-      if (tool.version?.major == 16) {
-        winGenerator = Generator.vs2019;
-      } else if (tool.version?.major == 17) {
-        winGenerator = Generator.vs2022;
-      } else {
-        logger.warning(
-          'Skip Visual Studio version: ${tool.version}, '
-          'Currently on Visual Studio 2019 or 2022 is supported.',
-        );
-      }
-    }
-  }
-
   final generator = switch (targetOS) {
     OS.linux => Generator.make,
     OS.macOS || OS.iOS => Generator.xcode,
-    OS.windows => winGenerator,
+    OS.windows => Generator.defaultGenerator,
     OS.android => Generator.ninja,
     _ => throw ArgumentError.value(targetOS, 'targetOS', 'Unsupported target OS'),
   };
