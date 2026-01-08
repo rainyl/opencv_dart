@@ -50,6 +50,13 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   final debugMode = userDefines["debug"] as bool? ?? false;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
+  final platformDefines = {
+    OS.windows: userDefines["windows"] as Map<String, dynamic>?,
+    OS.linux: userDefines["linux"] as Map<String, dynamic>?,
+    OS.macOS: userDefines["macos"] as Map<String, dynamic>?,
+    OS.android: userDefines["android"] as Map<String, dynamic>?,
+    OS.iOS: userDefines["ios"] as Map<String, dynamic>?,
+  };
   final targetOS = input.config.code.targetOS;
 
   final logger = Logger('')
@@ -73,6 +80,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   logger.info("[dartcv4] include modules: $includeModulesFiltered\n");
   logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
   logger.info("[dartcv4] merged modules: $modules\n");
+  logger.info("[dartcv4] platform defines: $platformDefines\n");
 
   final moduleDefines = {
     'DARTCV_WITH_CALIB3D': modules.contains('calib3d') ? 'ON' : 'OFF',
@@ -97,13 +105,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     'DARTCV_WITH_XOBJDETECT': modules.contains('xobjdetect') ? 'ON' : 'OFF',
   };
 
-  final generator = switch (targetOS) {
-    OS.linux => Generator.make,
-    OS.macOS || OS.iOS => Generator.xcode,
-    OS.windows => Generator.defaultGenerator,
-    OS.android => Generator.ninja,
-    _ => throw ArgumentError.value(targetOS, 'targetOS', 'Unsupported target OS'),
-  };
+  final generator = _getGenerator(targetOS, platformDefines);
   logger.warning('Using generator: ${generator.name}');
 
   final builder = CMakeBuilder.create(
@@ -169,4 +171,26 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
       logger.info("adding FFMPEG libraries: $libFiles");
     }
   }
+}
+
+Generator _getGenerator(OS targetOS, Map<OS, Map<String, dynamic>?> platformDefines) {
+  if (platformDefines[targetOS] == null || platformDefines[targetOS]?['generator'] == null) {
+    return switch (targetOS) {
+      OS.linux => Generator.make,
+      OS.macOS || OS.iOS => Generator.xcode,
+      OS.windows => Generator.defaultGenerator,
+      OS.android => Generator.ninja,
+      _ => throw ArgumentError.value(targetOS, 'targetOS', 'Unsupported target OS'),
+    };
+  }
+  final generatorName = platformDefines[targetOS]!['generator'] as String;
+  return switch (generatorName) {
+    'Ninja' => Generator.ninja,
+    'Unix Makefiles' => Generator.make,
+    'Xcode' => Generator.xcode,
+    'Visual Studio 16 2019' => Generator.vs2019,
+    'Visual Studio 17 2022' => Generator.vs2022,
+    'Visual Studio 18 2026' => Generator.vs2026,
+    _ => throw ArgumentError.value(generatorName, 'generator', 'Unsupported generator'),
+  };
 }
