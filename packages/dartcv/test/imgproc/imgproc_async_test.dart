@@ -70,8 +70,11 @@ void main() async {
     }
 
     {
-      final (contours, hierarchy) =
-          await cv.findContours2fAsync(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+      final (contours, hierarchy) = await cv.findContours2fAsync(
+        img,
+        cv.RETR_EXTERNAL,
+        cv.CHAIN_APPROX_SIMPLE,
+      );
       expect(contours.length, greaterThan(0));
       expect(hierarchy.isEmpty, false);
 
@@ -227,8 +230,12 @@ void main() async {
     }
 
     {
-      final contour =
-          <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(100, 0), cv.Point2f(100, 100), cv.Point2f(0, 100)].cvd;
+      final contour = <cv.Point2f>[
+        cv.Point2f(0, 0),
+        cv.Point2f(100, 0),
+        cv.Point2f(100, 100),
+        cv.Point2f(0, 100),
+      ].cvd;
       expect(await cv.contourArea2fAsync(contour), equals(10000));
     }
   });
@@ -981,8 +988,9 @@ void main() async {
         handleNested: handleNested,
       );
       if (intersectArea > 0) {
-        final fillColor =
-            !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
+        final fillColor = !cv.isContourConvex(p1) || !cv.isContourConvex(p2)
+            ? cv.Scalar(0, 0, 255)
+            : cv.Scalar.all(200);
         await cv.fillPolyAsync(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), fillColor);
       }
       await cv.polylinesAsync(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), true, cv.Scalar.black);

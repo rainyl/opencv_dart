@@ -7,29 +7,10 @@ const String version = '0.0.1';
 
 ArgParser buildParser() {
   return ArgParser()
-    ..addFlag(
-      'help',
-      abbr: 'h',
-      negatable: false,
-      help: 'Print this usage information.',
-    )
-    ..addOption(
-      'image',
-      abbr: "i",
-      defaultsTo: "images/lenna.png",
-      help: "The image path.",
-    )
-    ..addFlag(
-      'verbose',
-      abbr: 'v',
-      negatable: false,
-      help: 'Show additional command output.',
-    )
-    ..addFlag(
-      'version',
-      negatable: false,
-      help: 'Print the tool version.',
-    );
+    ..addFlag('help', abbr: 'h', negatable: false, help: 'Print this usage information.')
+    ..addOption('image', abbr: "i", defaultsTo: "images/lenna.png", help: "The image path.")
+    ..addFlag('verbose', abbr: 'v', negatable: false, help: 'Show additional command output.')
+    ..addFlag('version', negatable: false, help: 'Print the tool version.');
 }
 
 void printUsage(ArgParser argParser) {
