@@ -62,6 +62,20 @@ files:
         name: cv_VideoWriter_set
       c:@F@cv_VideoWriter_write:
         name: cv_VideoWriter_write
+      c:@F@cv_video_registry_getBackends:
+        name: cv_video_registry_getBackends
+      c:@F@cv_video_registry_getCameraBackends:
+        name: cv_video_registry_getCameraBackends
+      c:@F@cv_video_registry_getStreamBackends:
+        name: cv_video_registry_getStreamBackends
+      c:@F@cv_video_registry_getStreamBufferedBackends:
+        name: cv_video_registry_getStreamBufferedBackends
+      c:@F@cv_video_registry_getWriterBackends:
+        name: cv_video_registry_getWriterBackends
+      c:@F@cv_video_registry_hasBackend:
+        name: cv_video_registry_hasBackend
+      c:@F@cv_video_registry_isBackendBuiltIn:
+        name: cv_video_registry_isBackendBuiltIn
       c:@S@VideoCapture:
         name: VideoCapture
       c:@S@VideoWriter:
