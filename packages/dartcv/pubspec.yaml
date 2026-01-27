@@ -33,6 +33,16 @@ hooks:
     # this is for development and debug, not seen in production
     dartcv4:
       debug: true
+      windows:
+        generator: "Visual Studio 18 2026"
+      linux:
+        generator: "Unix Makefiles"
+      macos:
+        generator: Ninja
+      android:
+        generator: Ninja
+      ios:
+        generator: Xcode
       include_modules:
         - calib3d
         - contrib
