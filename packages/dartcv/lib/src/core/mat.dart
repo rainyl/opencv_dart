@@ -550,32 +550,32 @@ class Mat extends CvStruct<cvg.Mat> {
   void setU16(int i0, int val, {int? i1, int? i2}) => i1 == null
       ? ccore.cv_Mat_set_u16_1(ref, i0, val)
       : (i2 == null
-          ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
+            ? ccore.cv_Mat_set_u16_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_u16_3(ref, i0, i1, i2, val));
 
   void setI16(int i0, int val, {int? i1, int? i2}) => i1 == null
       ? ccore.cv_Mat_set_i16_1(ref, i0, val)
       : (i2 == null
-          ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
+            ? ccore.cv_Mat_set_i16_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_i16_3(ref, i0, i1, i2, val));
 
   void setI32(int i0, int val, {int? i1, int? i2}) => i1 == null
       ? ccore.cv_Mat_set_i32_1(ref, i0, val)
       : (i2 == null
-          ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
+            ? ccore.cv_Mat_set_i32_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_i32_3(ref, i0, i1, i2, val));
 
   void setF32(int i0, double val, {int? i1, int? i2}) => i1 == null
       ? ccore.cv_Mat_set_f32_1(ref, i0, val)
       : (i2 == null
-          ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
+            ? ccore.cv_Mat_set_f32_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_f32_3(ref, i0, i1, i2, val));
 
   void setF64(int i0, double val, {int? i1, int? i2}) => i1 == null
       ? ccore.cv_Mat_set_f64_1(ref, i0, val)
       : (i2 == null
-          ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
-          : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
+            ? ccore.cv_Mat_set_f64_2(ref, i0, i1, val)
+            : ccore.cv_Mat_set_f64_3(ref, i0, i1, i2, val));
 
   void setVec<T extends CvVec>(int row, int col, T val) {
     switch (val) {
@@ -844,19 +844,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => addMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => addU8(val as int, inplace: inplace),
-          MatType.CV_8S => addI8(val as int, inplace: inplace),
-          MatType.CV_16U => addU16(val as int, inplace: inplace),
-          MatType.CV_16S => addI16(val as int, inplace: inplace),
-          MatType.CV_32S => addI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("add int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => addU8(val as int, inplace: inplace),
+        MatType.CV_8S => addI8(val as int, inplace: inplace),
+        MatType.CV_16U => addU16(val as int, inplace: inplace),
+        MatType.CV_16S => addI16(val as int, inplace: inplace),
+        MatType.CV_32S => addI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("add int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => addF32(val as double, inplace: inplace),
-          MatType.CV_64F => addF64(val as double, inplace: inplace),
-          // MatType.CV_16F => addF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("add double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => addF32(val as double, inplace: inplace),
+        MatType.CV_64F => addF64(val as double, inplace: inplace),
+        // MatType.CV_16F => addF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("add double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -910,19 +910,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => subtractMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => subtractU8(val as int, inplace: inplace),
-          MatType.CV_8S => subtractI8(val as int, inplace: inplace),
-          MatType.CV_16U => subtractU16(val as int, inplace: inplace),
-          MatType.CV_16S => subtractI16(val as int, inplace: inplace),
-          MatType.CV_32S => subtractI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("subtract int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => subtractU8(val as int, inplace: inplace),
+        MatType.CV_8S => subtractI8(val as int, inplace: inplace),
+        MatType.CV_16U => subtractU16(val as int, inplace: inplace),
+        MatType.CV_16S => subtractI16(val as int, inplace: inplace),
+        MatType.CV_32S => subtractI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("subtract int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => subtractF32(val as double, inplace: inplace),
-          MatType.CV_64F => subtractF64(val as double, inplace: inplace),
-          // MatType.CV_16F => subtractF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("subtract double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => subtractF32(val as double, inplace: inplace),
+        MatType.CV_64F => subtractF64(val as double, inplace: inplace),
+        // MatType.CV_16F => subtractF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("subtract double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -977,19 +977,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => multiplyMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
-          MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
-          MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
-          MatType.CV_16S => multiplyI16(val as int, inplace: inplace),
-          MatType.CV_32S => multiplyI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("multiply int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
+        MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
+        MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
+        MatType.CV_16S => multiplyI16(val as int, inplace: inplace),
+        MatType.CV_32S => multiplyI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("multiply int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => multiplyF32(val as double, inplace: inplace),
-          MatType.CV_64F => multiplyF64(val as double, inplace: inplace),
-          // MatType.CV_16F => multiplyF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("multiply double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => multiplyF32(val as double, inplace: inplace),
+        MatType.CV_64F => multiplyF64(val as double, inplace: inplace),
+        // MatType.CV_16F => multiplyF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("multiply double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -1045,19 +1045,19 @@ class Mat extends CvStruct<cvg.Mat> {
     return switch (val) {
       Mat() => divideMat(val as Mat, inplace: inplace),
       int() => switch (type.depth) {
-          MatType.CV_8U => divideU8(val as int, inplace: inplace),
-          MatType.CV_8S => divideI8(val as int, inplace: inplace),
-          MatType.CV_16U => divideU16(val as int, inplace: inplace),
-          MatType.CV_16S => divideI16(val as int, inplace: inplace),
-          MatType.CV_32S => divideI32(val as int, inplace: inplace),
-          _ => throw UnsupportedError("divide int to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_8U => divideU8(val as int, inplace: inplace),
+        MatType.CV_8S => divideI8(val as int, inplace: inplace),
+        MatType.CV_16U => divideU16(val as int, inplace: inplace),
+        MatType.CV_16S => divideI16(val as int, inplace: inplace),
+        MatType.CV_32S => divideI32(val as int, inplace: inplace),
+        _ => throw UnsupportedError("divide int to ${type.asString()} is not supported!"),
+      },
       double() => switch (type.depth) {
-          MatType.CV_32F => divideF32(val as double, inplace: inplace),
-          MatType.CV_64F => divideF64(val as double, inplace: inplace),
-          // MatType.CV_16F => divideF16(val as double, inplace: inplace), // TODO
-          _ => throw UnsupportedError("divide double to ${type.asString()} is not supported!"),
-        },
+        MatType.CV_32F => divideF32(val as double, inplace: inplace),
+        MatType.CV_64F => divideF64(val as double, inplace: inplace),
+        // MatType.CV_16F => divideF16(val as double, inplace: inplace), // TODO
+        _ => throw UnsupportedError("divide double to ${type.asString()} is not supported!"),
+      },
       _ => throw UnsupportedError("Type $T is not supported"),
     };
   }
@@ -1454,7 +1454,8 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   @override
-  String toString() => "Mat(addr=0x${ptr.address.toRadixString(16)}, "
+  String toString() =>
+      "Mat(addr=0x${ptr.address.toRadixString(16)}, "
       "type=${type.asString()}, rows=$rows, cols=$cols, channels=$channels)";
 
   static final finalizer = OcvFinalizer<cvg.MatPtr>(ccore.addresses.cv_Mat_close);

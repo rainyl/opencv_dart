@@ -136,8 +136,7 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
         cvg.FlannIndexType.FLANN_INDEX_TYPE_8S ||
         cvg.FlannIndexType.FLANN_INDEX_TYPE_16U ||
         cvg.FlannIndexType.FLANN_INDEX_TYPE_16S ||
-        cvg.FlannIndexType.FLANN_INDEX_TYPE_32S =>
-          numValues[i].toInt(),
+        cvg.FlannIndexType.FLANN_INDEX_TYPE_32S => numValues[i].toInt(),
         cvg.FlannIndexType.FLANN_INDEX_TYPE_32F || cvg.FlannIndexType.FLANN_INDEX_TYPE_64F => numValues[i],
         cvg.FlannIndexType.FLANN_INDEX_TYPE_BOOL => numValues[i].toInt() != 0,
         cvg.FlannIndexType.FLANN_INDEX_TYPE_STRING => names1[i],
@@ -221,11 +220,11 @@ class FlannSearchParams extends FlannIndexParams {
     bool sorted,
     bool exploreAllTrees, [
     super.attach = true,
-  ])  : _checks = checks,
-        _eps = eps,
-        _sorted = sorted,
-        _exploreAllTrees = exploreAllTrees,
-        super.fromPointer();
+  ]) : _checks = checks,
+       _eps = eps,
+       _sorted = sorted,
+       _exploreAllTrees = exploreAllTrees,
+       super.fromPointer();
 
   factory FlannSearchParams({
     int checks = 32,
@@ -312,7 +311,7 @@ class FlannKDTreeIndexParams extends FlannIndexParams {
 
 class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   SimpleBlobDetectorParams._(ffi.Pointer<cvg.SimpleBlobDetectorParams> ptr, [bool attach = true])
-      : super.fromPointer(ptr) {
+    : super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this);
     }
@@ -374,31 +373,30 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
   }
 
   factory SimpleBlobDetectorParams.fromNative(cvg.SimpleBlobDetectorParams r) => SimpleBlobDetectorParams(
-        blobColor: r.blobColor,
-        filterByArea: r.filterByArea,
-        filterByCircularity: r.filterByCircularity,
-        filterByColor: r.filterByColor,
-        filterByConvexity: r.filterByConvexity,
-        filterByInertia: r.filterByInertia,
-        maxArea: r.maxArea,
-        maxCircularity: r.maxCircularity,
-        maxConvexity: r.maxConvexity,
-        maxInertiaRatio: r.maxInertiaRatio,
-        maxThreshold: r.maxThreshold,
-        minArea: r.minArea,
-        minCircularity: r.minCircularity,
-        minConvexity: r.minConvexity,
-        minDistBetweenBlobs: r.minDistBetweenBlobs,
-        minInertiaRatio: r.minInertiaRatio,
-        minRepeatability: r.minRepeatability,
-        minThreshold: r.minThreshold,
-        thresholdStep: r.thresholdStep,
-      );
+    blobColor: r.blobColor,
+    filterByArea: r.filterByArea,
+    filterByCircularity: r.filterByCircularity,
+    filterByColor: r.filterByColor,
+    filterByConvexity: r.filterByConvexity,
+    filterByInertia: r.filterByInertia,
+    maxArea: r.maxArea,
+    maxCircularity: r.maxCircularity,
+    maxConvexity: r.maxConvexity,
+    maxInertiaRatio: r.maxInertiaRatio,
+    maxThreshold: r.maxThreshold,
+    minArea: r.minArea,
+    minCircularity: r.minCircularity,
+    minConvexity: r.minConvexity,
+    minDistBetweenBlobs: r.minDistBetweenBlobs,
+    minInertiaRatio: r.minInertiaRatio,
+    minRepeatability: r.minRepeatability,
+    minThreshold: r.minThreshold,
+    thresholdStep: r.thresholdStep,
+  );
   factory SimpleBlobDetectorParams.fromPointer(
     ffi.Pointer<cvg.SimpleBlobDetectorParams> p, [
     bool attach = true,
-  ]) =>
-      SimpleBlobDetectorParams._(p, attach);
+  ]) => SimpleBlobDetectorParams._(p, attach);
 
   @override
   cvg.SimpleBlobDetectorParams get ref => ptr.ref;
@@ -469,19 +467,19 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
   @override
   List<num> get props => [
-        maxArea,
-        minArea,
-        minConvexity,
-        maxConvexity,
-        minInertiaRatio,
-        maxInertiaRatio,
-        minThreshold,
-        maxThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-        minRepeatability,
-        minThreshold,
-        thresholdStep,
-        minDistBetweenBlobs,
-      ];
+    maxArea,
+    minArea,
+    minConvexity,
+    maxConvexity,
+    minInertiaRatio,
+    maxInertiaRatio,
+    minThreshold,
+    maxThreshold,
+    thresholdStep,
+    minDistBetweenBlobs,
+    minRepeatability,
+    minThreshold,
+    thresholdStep,
+    minDistBetweenBlobs,
+  ];
 }

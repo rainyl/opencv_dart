@@ -638,12 +638,12 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
 
   List<List<Point>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint_length_i(ptr, i),
-          (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint_length_i(ptr, i),
+      (j) => Point.fromPointer(ccore.std_VecVecPoint_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPointIterator extends VecIterator<VecPoint> {
@@ -719,12 +719,12 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
       VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
 
   List<List<Point2f>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint2f_length_i(ptr, i),
-          (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint2f_length_i(ptr, i),
+      (j) => Point2f.fromPointer(ccore.std_VecVecPoint2f_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
@@ -801,12 +801,12 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
       VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
 
   List<List<Point3f>> copyToList() => List.generate(
-        length,
-        (i) => List.generate(
-          ccore.std_VecVecPoint3f_length_i(ptr, i),
-          (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
-        ),
-      );
+    length,
+    (i) => List.generate(
+      ccore.std_VecVecPoint3f_length_i(ptr, i),
+      (j) => Point3f.fromPointer(ccore.std_VecVecPoint3f_get_ij(ptr, i, j)),
+    ),
+  );
 }
 
 class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
