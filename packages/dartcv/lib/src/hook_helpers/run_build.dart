@@ -44,6 +44,12 @@ const allowedModules = {
 };
 
 Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>? optionalModules}) async {
+  // Check if code assets are expected (not for web builds).
+  // Web builds use WASM/JS interop, not native code assets.
+  if (!input.config.buildCodeAssets) {
+    return;
+  }
+
   final packagePath = Directory(await getPackagePath('dartcv4'));
   final modules = optionalModules ?? {...defaultIncludedModules};
   final userDefines = input.userDefines;
