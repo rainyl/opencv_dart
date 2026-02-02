@@ -6,3 +6,4 @@ library dartcv.videoio;
 
 export 'src/videoio/videoio.dart';
 export 'src/videoio/videoio_async.dart';
+export 'src/videoio/videoio_registry.dart';

@@ -11,6 +11,7 @@
 
 #ifdef __cplusplus
 #include <opencv2/videoio.hpp>
+#include <opencv2/videoio/registry.hpp>
 extern "C" {
 #endif
 
@@ -52,6 +53,13 @@ CvStatus* cv_VideoCapture_grab(VideoCapture self, CvCallback_0 callback);
 // Decodes and returns the grabbed video frame.
 CvStatus* cv_VideoCapture_retrieve(VideoCapture self, Mat image, int flag, bool *rval, CvCallback_0 callback);
 const char* cv_VideoCapture_getBackendName(VideoCapture self);
+CvStatus* cv_video_registry_getBackends(int** rval, int* size);
+CvStatus* cv_video_registry_getCameraBackends(int** rval, int* size);
+CvStatus* cv_video_registry_getStreamBackends(int** rval, int* size);
+CvStatus* cv_video_registry_getStreamBufferedBackends(int** rval, int* size);
+CvStatus* cv_video_registry_getWriterBackends(int** rval, int* size);
+bool cv_video_registry_hasBackend(int api);
+bool cv_video_registry_isBackendBuiltIn(int api);
 
 // VideoWriter
 CvStatus* cv_VideoWriter_create(VideoWriter* rval);
