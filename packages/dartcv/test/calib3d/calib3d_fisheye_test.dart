@@ -314,8 +314,12 @@ void main() async {
     final distCoeffs = cv.Mat.fromList(4, 1, cv.MatType.CV_64FC1, <double>[-0.01, 0.01, 0, 0]);
 
     {
-      final (rval, rvec, tvec, inliers) =
-          cv.Fisheye.solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      final (rval, rvec, tvec, inliers) = cv.Fisheye.solvePnPRansac(
+        objectPoints,
+        imagePoints,
+        cameraMatrix,
+        distCoeffs,
+      );
       expect(rval, true);
       expect(rvec.isEmpty, false);
       expect(tvec.isEmpty, false);
@@ -323,8 +327,12 @@ void main() async {
     }
 
     {
-      final (rval, rvec, tvec, inliers) =
-          await cv.Fisheye.solvePnPRansacAsync(objectPoints, imagePoints, cameraMatrix, distCoeffs);
+      final (rval, rvec, tvec, inliers) = await cv.Fisheye.solvePnPRansacAsync(
+        objectPoints,
+        imagePoints,
+        cameraMatrix,
+        distCoeffs,
+      );
       expect(rval, true);
       expect(rvec.isEmpty, false);
       expect(tvec.isEmpty, false);

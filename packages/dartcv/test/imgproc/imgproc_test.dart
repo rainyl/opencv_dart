@@ -229,8 +229,12 @@ void main() async {
     }
 
     {
-      final contour =
-          <cv.Point2f>[cv.Point2f(0, 0), cv.Point2f(100, 0), cv.Point2f(100, 100), cv.Point2f(0, 100)].cvd;
+      final contour = <cv.Point2f>[
+        cv.Point2f(0, 0),
+        cv.Point2f(100, 0),
+        cv.Point2f(100, 100),
+        cv.Point2f(0, 100),
+      ].cvd;
       expect(cv.contourArea2f(contour), equals(10000));
     }
   });
@@ -956,8 +960,12 @@ void main() async {
     final rectangle = [cv.Point(0, 0), cv.Point(100, 0), cv.Point(100, 100), cv.Point(0, 100)].asVec();
     expect(cv.isContourConvex(rectangle), true);
 
-    final rectangle2f =
-        [cv.Point2f(0, 0), cv.Point2f(100, 0), cv.Point2f(100, 100), cv.Point2f(0, 100)].asVec();
+    final rectangle2f = [
+      cv.Point2f(0, 0),
+      cv.Point2f(100, 0),
+      cv.Point2f(100, 100),
+      cv.Point2f(0, 100),
+    ].asVec();
     expect(cv.isContourConvex2f(rectangle2f), true);
 
     final notConvex = [
@@ -994,8 +1002,9 @@ void main() async {
         handleNested: handleNested,
       );
       if (intersectArea > 0) {
-        final fillColor =
-            !cv.isContourConvex(p1) || !cv.isContourConvex(p2) ? cv.Scalar(0, 0, 255) : cv.Scalar.all(200);
+        final fillColor = !cv.isContourConvex(p1) || !cv.isContourConvex(p2)
+            ? cv.Scalar(0, 0, 255)
+            : cv.Scalar.all(200);
         cv.fillPoly(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), fillColor);
       }
       cv.polylines(image, cv.VecVecPoint.fromVecPoint(intersectionPolygon), true, cv.Scalar.black);

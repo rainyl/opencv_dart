@@ -148,7 +148,8 @@ enum StitcherStatus {
   OK,
   ERR_NEED_MORE_IMGS,
   ERR_HOMOGRAPHY_EST_FAIL,
-  ERR_CAMERA_PARAMS_ADJUST_FAIL;
+  ERR_CAMERA_PARAMS_ADJUST_FAIL
+  ;
 
   factory StitcherStatus.fromInt(int v) => values.firstWhere((e) => e.index == v);
 }
@@ -159,7 +160,8 @@ enum StitcherMode {
   PANORAMA,
 
   /// Mode for composing scans. Expects images under affine transformation does not compensate exposure by default.
-  SCANS;
+  SCANS
+  ;
 
   factory StitcherMode.fromInt(int v) => values.firstWhere((e) => e.index == v);
 }
