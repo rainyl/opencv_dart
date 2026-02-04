@@ -31,8 +31,6 @@ hooks:
     # this is for development and debug, not seen in production
     dartcv4:
       debug: true
-      windows:
-        generator: "Visual Studio 18 2026"
       linux:
         generator: "Unix Makefiles"
       macos:
