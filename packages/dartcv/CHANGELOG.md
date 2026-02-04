@@ -1,3 +1,9 @@
+## 2.2.1
+
+- support setting custom cmake generator
+- fix: Skip native build hook for web builds
+- new: support enumerating videoio backends
+
 ## 2.2.0
 
 - breaking change: support building from opencv source code, it's now the default behavior, since this version, prebuilt opencv static binary is no longer included.

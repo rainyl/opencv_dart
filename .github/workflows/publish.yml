@@ -52,6 +52,7 @@ jobs:
           out-file-path: "test/"
           extract: true
       - name: Run Test
+        shell: pwsh
         run: |
           dart pub get
           dart test -x skip-workflow
