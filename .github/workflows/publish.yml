@@ -45,6 +45,8 @@ jobs:
     name: test-windows
     runs-on: windows-latest
     steps:
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: actions/checkout@v4
         with:
           submodules: true

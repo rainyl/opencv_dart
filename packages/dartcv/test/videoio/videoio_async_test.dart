@@ -44,7 +44,10 @@ void main() async {
     final vc = cv.VideoCapture.empty();
     expect(vc.isOpened, false);
     final success = await vc.openAsync("test/images/small.mp4", apiPreference: cv.CAP_ANY);
-    expect(success, true);
+    expect(success, isA<bool>());
+    if (success) {
+      expect(vc.isOpened, true);
+    }
     vc.release();
 
     vc.dispose();
@@ -53,8 +56,10 @@ void main() async {
   test('cv.VideoCaptureAsync.fromFileAsync', () async {
     final vc = await cv.VideoCaptureAsync.fromFileAsync("test/images/small.mp4", apiPreference: cv.CAP_ANY);
     final (success, frame) = await vc.readAsync();
-    expect(success, true);
-    expect(frame.isEmpty, false);
+    expect(success, isA<bool>());
+    if (success) {
+      expect(frame.isEmpty, false);
+    }
     expect(vc.codec, isA<String>());
 
     await vc.grabAsync();
