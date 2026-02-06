@@ -1,10 +1,16 @@
-name: Publish to pub.dev and release
+name: Test, Publish to pub.dev and release
 
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v{{version}'
-  # pull_request:
+    branches: ["main"]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+  pull_request:
+    branches: ["main"]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
 
 jobs:
   test-ubuntu:
@@ -27,9 +33,10 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -38,6 +45,8 @@ jobs:
     name: test-windows
     runs-on: windows-latest
     steps:
+      - name: Enable Git long paths
+        run: git config --global core.longpaths true
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -49,10 +58,11 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
         shell: pwsh
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -71,9 +81,10 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -95,9 +106,9 @@ jobs:
         working-directory: packages/dartcv
         run: dart pub publish --force
   publish-opencv-dart:
-    if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_dart
-    needs: [test]
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test-ubuntu, test-windows, test-macos]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -115,7 +126,7 @@ jobs:
         working-directory: packages/opencv_dart
         run: flutter pub publish --force
   release:
-    needs: [test-ubuntu, test-windows, test-macos, publish-opencv-dart]
+    needs: [test-ubuntu, test-windows, test-macos, publish-dartcv4, publish-opencv-dart]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
