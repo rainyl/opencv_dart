@@ -33,9 +33,10 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -55,10 +56,11 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
         shell: pwsh
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -77,9 +79,10 @@ jobs:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
-          out-file-path: "test/"
+          out-file-path: "packages/dartcv/test/"
           extract: true
       - name: Run Test
+        working-directory: packages/dartcv
         run: |
           dart pub get
           dart test -x skip-workflow
@@ -101,8 +104,8 @@ jobs:
         working-directory: packages/dartcv
         run: dart pub publish --force
   publish-opencv-dart:
-    if: startsWith(github.ref, 'refs/tags/v')
     name: Publish opencv_dart
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: [test-ubuntu, test-windows, test-macos]
     permissions:
       id-token: write # Required for authentication using OIDC
