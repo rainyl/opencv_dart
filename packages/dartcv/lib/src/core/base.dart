@@ -229,8 +229,8 @@ void cvAssert(bool condition, [String? msg]) {
 }
 
 // finalizers
-typedef NativeFinalizerFunctionT<T extends ffi.NativeType>
-    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
+typedef NativeFinalizerFunctionT<T extends ffi.NativeType> =
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(T token)>>;
 
 ffi.NativeFinalizer OcvFinalizer<T extends ffi.NativeType>(NativeFinalizerFunctionT<T> func) =>
     ffi.NativeFinalizer(func.cast<ffi.NativeFinalizerFunction>());

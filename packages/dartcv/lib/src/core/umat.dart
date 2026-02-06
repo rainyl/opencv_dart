@@ -413,7 +413,8 @@ class UMat extends CvStruct<cvg.UMat> {
   }
 
   @override
-  String toString() => "UMat(addr=0x${ptr.address.toRadixString(16)}, "
+  String toString() =>
+      "UMat(addr=0x${ptr.address.toRadixString(16)}, "
       "type=${type.asString()}, rows=$rows, cols=$cols, channels=$channels)";
 
   static const int MAGIC_VAL = 0x42FF0000;
@@ -434,19 +435,20 @@ enum UMatUsageFlags {
   USAGE_ALLOCATE_DEVICE_MEMORY(1 << 1), // 2
 
   /// It is not equal to: USAGE_ALLOCATE_HOST_MEMORY | USAGE_ALLOCATE_DEVICE_MEMORY
-  USAGE_ALLOCATE_SHARED_MEMORY(1 << 2); // 4
+  USAGE_ALLOCATE_SHARED_MEMORY(1 << 2)
+  ; // 4
 
   final int value;
 
   const UMatUsageFlags(this.value);
 
   static UMatUsageFlags fromValue(int value) => switch (value) {
-        0 => USAGE_DEFAULT,
-        1 => USAGE_ALLOCATE_HOST_MEMORY,
-        2 => USAGE_ALLOCATE_DEVICE_MEMORY,
-        4 => USAGE_ALLOCATE_SHARED_MEMORY,
-        _ => throw ArgumentError('Unknown value for UMatUsageFlags: $value'),
-      };
+    0 => USAGE_DEFAULT,
+    1 => USAGE_ALLOCATE_HOST_MEMORY,
+    2 => USAGE_ALLOCATE_DEVICE_MEMORY,
+    4 => USAGE_ALLOCATE_SHARED_MEMORY,
+    _ => throw ArgumentError('Unknown value for UMatUsageFlags: $value'),
+  };
 }
 
 enum AccessFlag {
@@ -454,17 +456,18 @@ enum AccessFlag {
   ACCESS_WRITE(1 << 25), // 0x2000000
   ACCESS_RW(3 << 24), // 0x3000000
   ACCESS_MASK(3 << 24), // 0x3000000
-  ACCESS_FAST(1 << 26); // 0x4000000
+  ACCESS_FAST(1 << 26)
+  ; // 0x4000000
 
   final int value;
 
   const AccessFlag(this.value);
 
   static AccessFlag fromValue(int value) => switch (value) {
-        0x1000000 => ACCESS_READ,
-        0x2000000 => ACCESS_WRITE,
-        0x3000000 => ACCESS_RW,
-        0x4000000 => ACCESS_FAST,
-        _ => throw ArgumentError('Unknown value for AccessFlag: $value'),
-      };
+    0x1000000 => ACCESS_READ,
+    0x2000000 => ACCESS_WRITE,
+    0x3000000 => ACCESS_RW,
+    0x4000000 => ACCESS_FAST,
+    _ => throw ArgumentError('Unknown value for AccessFlag: $value'),
+  };
 }
