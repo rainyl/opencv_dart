@@ -1,3 +1,9 @@
+# dartcv
+
+## 2.2.1+1
+
+- fix: CMake definitions are not correctly passed when building ios
+
 ## 2.2.1
 
 - support setting custom cmake generator
