@@ -54,6 +54,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   final modules = optionalModules ?? {...defaultIncludedModules};
   final userDefines = input.userDefines;
   final debugMode = userDefines["debug"] as bool? ?? false;
+  final parallelJobs = userDefines["parallel_jobs"] as int? ?? Platform.numberOfProcessors;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
   final platformDefines = {
@@ -122,6 +123,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     targets: ['install'],
     buildLocal: false,
     generator: generator,
+    parallelJobs: parallelJobs,
     defines: {
       if (targetOS == OS.macOS) 'DEPLOYMENT_TARGET': '10.15',
       if (targetOS == OS.iOS) 'DEPLOYMENT_TARGET': '12.0',
