@@ -1,6 +1,6 @@
 name: dartcv4
 description: "OpenCV4 bindings for Dart language and Flutter, using dart:ffi. The most complete OpenCV bindings for Dart!"
-version: 2.2.0
+version: 2.2.1
 opencv_version: 4.13.0
 homepage: https://github.com/rainyl/opencv_dart
 
@@ -12,11 +12,9 @@ dependencies:
   ffi: ^2.1.4
   hooks: ^1.0.0
   logging: ^1.3.0
-  native_toolchain_cmake: ^0.2.2
+  native_toolchain_cmake: ^0.2.3
   # native_toolchain_cmake:
   #   path: ../native_toolchain_cmake
-  path: ^1.9.1
-  yaml: ^3.1.3
 
 dev_dependencies:
   ffigen: ^20.1.1
@@ -33,8 +31,6 @@ hooks:
     # this is for development and debug, not seen in production
     dartcv4:
       debug: true
-      windows:
-        generator: "Visual Studio 18 2026"
       linux:
         generator: "Unix Makefiles"
       macos:

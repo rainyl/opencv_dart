@@ -53,6 +53,7 @@ jobs:
         with:
           channel: "stable"
       - name: test coverage
+        shell: pwsh
         run: |
           cd "${{github.workspace}}\packages\dartcv"
           dart pub global activate coverage

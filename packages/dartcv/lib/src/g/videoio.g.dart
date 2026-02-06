@@ -308,6 +308,46 @@ external ffi.Pointer<CvStatus> cv_VideoWriter_write(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Int>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_video_registry_getBackends(
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ffi.Pointer<ffi.Int> size,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Int>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_video_registry_getCameraBackends(
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ffi.Pointer<ffi.Int> size,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Int>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_video_registry_getStreamBackends(
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ffi.Pointer<ffi.Int> size,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Int>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_video_registry_getStreamBufferedBackends(
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ffi.Pointer<ffi.Int> size,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Pointer<ffi.Int>>, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_video_registry_getWriterBackends(
+  ffi.Pointer<ffi.Pointer<ffi.Int>> rval,
+  ffi.Pointer<ffi.Int> size,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Int)>()
+external bool cv_video_registry_hasBackend(
+  int api,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Int)>()
+external bool cv_video_registry_isBackendBuiltIn(
+  int api,
+);
+
 const addresses = _SymbolAddresses();
 
 class _SymbolAddresses {
