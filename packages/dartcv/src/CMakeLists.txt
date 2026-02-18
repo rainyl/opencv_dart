@@ -114,7 +114,7 @@ if(DARTCV_BUILD_OPENCV_FROM_SOURCE)
       URL https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz
     )
     FetchContent_MakeAvailable(opencv_contrib)
-    set(OPENCV_EXTRA_MODULES_PATH ${opencv_contrib_SOURCE_DIR}/modules CACHE PATH "Path to opencv_contrib modules")
+    set(OPENCV_EXTRA_MODULES_PATH ${opencv_contrib_SOURCE_DIR}/modules CACHE PATH "Path to opencv_contrib modules" FORCE)
   endif()
 
   FetchContent_Declare(
