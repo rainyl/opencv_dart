@@ -1,5 +1,9 @@
 # opencv_dart
 
+## 2.2.1+2
+
+- fix: Explicitly disable building unused modules to reduce build time.
+
 ## 2.2.1+1
 
 - fix: CMake definitions are not correctly passed when building ios
