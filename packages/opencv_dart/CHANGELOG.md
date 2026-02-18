@@ -1,5 +1,9 @@
 # opencv_dart
 
+## 2.2.1+3
+
+- fix: opencv-contrib modules are not correctly built when changing include modules.
+
 ## 2.2.1+2
 
 - fix: Explicitly disable building unused modules to reduce build time.
