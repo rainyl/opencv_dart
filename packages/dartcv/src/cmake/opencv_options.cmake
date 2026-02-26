@@ -175,7 +175,7 @@ if(DARTCV_WITH_ARUCO)
   set(BUILD_opencv_aruco ON CACHE BOOL "Build aruco module" FORCE)
   set(BUILD_opencv_imgproc ON CACHE BOOL "Build imgproc module" FORCE)
   set(BUILD_opencv_calib3d ON CACHE BOOL "Build calib3d module" FORCE)
-  set(BUILD_opencv_features2d ON CACHE BOOL "Build features2d module" FORCE)
+  set(BUILD_opencv_objdetect ON CACHE BOOL "Build objdetect module" FORCE)
 endif()
 
 if(DARTCV_WITH_IMG_HASH)
