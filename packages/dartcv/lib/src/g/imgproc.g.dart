@@ -231,6 +231,39 @@ external ffi.Pointer<CvStatus> cv_Laplacian(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<ffi.Void Function(LineSegmentDetectorPtr)>()
+external void cv_LineSegmentDetector_close(
+  LineSegmentDetectorPtr self$1,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<LineSegmentDetector>)>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create(
+  ffi.Pointer<LineSegmentDetector> rval,
+);
+
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LineSegmentDetector,
+    Mat,
+    Mat,
+    Mat,
+    Mat,
+    Mat,
+    ffi.Pointer<ffi.Int>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_detect(
+  LineSegmentDetector self$1,
+  Mat image,
+  Mat lines,
+  Mat width,
+  Mat prec,
+  Mat nfa,
+  ffi.Pointer<ffi.Int> rval,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<
   ffi.Pointer<CvStatus> Function(
     Mat,
@@ -1980,6 +2013,8 @@ class _SymbolAddresses {
   const _SymbolAddresses();
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CLAHEPtr)>> get cv_CLAHE_close =>
       ffi.Native.addressOf(self.cv_CLAHE_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LineSegmentDetectorPtr)>>
+  get cv_LineSegmentDetector_close => ffi.Native.addressOf(self.cv_LineSegmentDetector_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>> get cv_Subdiv2D_close =>
       ffi.Native.addressOf(self.cv_Subdiv2D_close);
 }
@@ -1994,6 +2029,12 @@ typedef CvPoint2f = imp$1.CvPoint2f;
 typedef CvRect = imp$1.CvRect;
 typedef CvSize = imp$1.CvSize;
 typedef CvStatus = imp$1.CvStatus;
+
+final class LineSegmentDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef LineSegmentDetectorPtr = ffi.Pointer<LineSegmentDetector>;
 typedef Mat = imp$1.Mat;
 typedef Moment = imp$1.Moment;
 typedef RotatedRect = imp$1.RotatedRect;

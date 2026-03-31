@@ -772,6 +772,28 @@ CvStatus* cv_cornerSubPix(
     END_WRAP
 }
 
+CvStatus* cv_LineSegmentDetector_create(LineSegmentDetector* rval) {
+    BEGIN_WRAP
+    *rval = {new cv::LineSegmentDetector()};
+    END_WRAP
+}
+
+
+void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self) {
+    CVD_FREE(self);
+}
+
+CvStatus* cv_LineSegmentDetector_detect(
+    LineSegmentDetector self , Mat image, Mat lines, Mat width, Mat prec, Mat nfa, int* rval, CvCallback_0 callback
+) {
+    BEGIN_WRAP
+    *rval = self.ptr->detect(CVDEREF(image), CVDEREF(lines), CVDEREF(width), CVDEREF(prec), CVDEREF(nfa));
+    if (callback != nullptr) {
+        callback();
+    }
+    END_WRAP
+}
+
 CvStatus* cv_goodFeaturesToTrack(
     Mat img,
     VecPoint2f* corners,
