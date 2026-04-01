@@ -49,7 +49,7 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
   @override
   cvg.LineSegmentDetector get ref => ptr.ref;
 
-  (int rval, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa) detect(
+  (VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa) detect(
     InputArray image, {
     VecVec4f? lines,
     VecF64? width,
@@ -61,10 +61,8 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     prec ??= VecF64();
     nfa ??= VecF64();
 
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_LineSegmentDetector_detect(ref, image.ref, lines!.ref, width!.ref, prec!.ref, nfa!.ref, p, ffi.nullptr));
-    final rval = (p.value, lines, width, prec, nfa);
-    calloc.free(p);
+    cvRun(() => cimgproc.cv_LineSegmentDetector_detect(ref, image.ref, lines!.ref, width!.ref, prec!.ref, nfa!.ref, ffi.nullptr));
+    final rval = (lines, width, prec, nfa);
     return rval;
   }
 
