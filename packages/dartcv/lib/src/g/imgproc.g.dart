@@ -243,24 +243,47 @@ external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create(
 
 @ffi.Native<
   ffi.Pointer<CvStatus> Function(
+    ffi.Int,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Int,
+    ffi.Pointer<LineSegmentDetector>,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create1(
+  int refine,
+  double scale,
+  double sigma_scale,
+  double quant,
+  double ang_th,
+  double log_eps,
+  double density_th,
+  int n_bins,
+  ffi.Pointer<LineSegmentDetector> rval,
+);
+
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
     LineSegmentDetector,
     Mat,
-    Mat,
-    Mat,
-    Mat,
-    Mat,
-    ffi.Pointer<ffi.Int>,
+    VecVec4f,
+    VecF64,
+    VecF64,
+    VecF64,
     imp$1.CvCallback_0,
   )
 >()
 external ffi.Pointer<CvStatus> cv_LineSegmentDetector_detect(
   LineSegmentDetector self$1,
   Mat image,
-  Mat lines,
-  Mat width,
-  Mat prec,
-  Mat nfa,
-  ffi.Pointer<ffi.Int> rval,
+  VecVec4f lines,
+  VecF64 width,
+  VecF64 prec,
+  VecF64 nfa,
   imp$1.CvCallback_0 callback,
 );
 
@@ -2049,10 +2072,12 @@ typedef TermCriteria = imp$1.TermCriteria;
 typedef Vec4f = imp$1.Vec4f;
 typedef Vec6f = imp$1.Vec6f;
 typedef VecF32 = imp$1.VecF32;
+typedef VecF64 = imp$1.VecF64;
 typedef VecI32 = imp$1.VecI32;
 typedef VecMat = imp$1.VecMat;
 typedef VecPoint = imp$1.VecPoint;
 typedef VecPoint2f = imp$1.VecPoint2f;
+typedef VecVec4f = imp$1.VecVec4f;
 typedef VecVec4i = imp$1.VecVec4i;
 typedef VecVecPoint = imp$1.VecVecPoint;
 typedef VecVecPoint2f = imp$1.VecVecPoint2f;

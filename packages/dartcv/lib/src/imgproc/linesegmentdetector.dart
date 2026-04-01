@@ -27,7 +27,15 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
 
   factory LineSegmentDetector.empty() {
     final p = calloc<cvg.LineSegmentDetector>();
-    cvRun(() => cimgproc.cv_LineSegmentDetector_create(p));
+    cimgproc.cv_LineSegmentDetector_create(p);
+    return LineSegmentDetector._(p);
+  }
+
+  factory LineSegmentDetector([int refine = LineSegmentDetector.REFINE_NONE, double scale = 0.8, double sigmaScale = 0.6, double quant = 2.0, double angTh = 22.5, double logEps = 0, double densityTh = 0.7, int nBins = 1024]) => LineSegmentDetector.create(refine, scale, sigmaScale, quant, angTh, logEps, densityTh, nBins);
+
+  factory LineSegmentDetector.create([int refine = LineSegmentDetector.REFINE_NONE, double scale = 0.8, double sigmaScale = 0.6, double quant = 2.0, double angTh = 22.5, double logEps = 0, double densityTh = 0.7, int nBins = 1024]) {
+    final p = calloc<cvg.LineSegmentDetector>();
+    cimgproc.cv_LineSegmentDetector_create1(refine, scale, sigmaScale, quant, angTh, logEps, densityTh, nBins, p);
     return LineSegmentDetector._(p);
   }
 
@@ -41,17 +49,17 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
   @override
   cvg.LineSegmentDetector get ref => ptr.ref;
 
-  (int rval, Mat lines, Mat width, Mat prec, Mat nfa) detect(
+  (int rval, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa) detect(
     InputArray image, {
-    OutputArray? lines,
-    OutputArray? width,
-    OutputArray? prec,
-    OutputArray? nfa,
+    VecVec4f? lines,
+    VecF64? width,
+    VecF64? prec,
+    VecF64? nfa,
   }) {
-    lines ??= Mat.empty();
-    width ??= Mat.empty();
-    prec ??= Mat.empty();
-    nfa ??= Mat.empty();
+    lines ??= VecVec4f(); // caller is still responsible for dispose-ing these values
+    width ??= VecF64();
+    prec ??= VecF64();
+    nfa ??= VecF64();
 
     final p = calloc<ffi.Int>();
     cvRun(() => cimgproc.cv_LineSegmentDetector_detect(ref, image.ref, lines!.ref, width!.ref, prec!.ref, nfa!.ref, p, ffi.nullptr));
@@ -59,4 +67,8 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     calloc.free(p);
     return rval;
   }
+
+  static const int REFINE_NONE = 0;
+  static const int REFINE_STD = 1;
+  static const int REFINE_ADV = 2;
 }
