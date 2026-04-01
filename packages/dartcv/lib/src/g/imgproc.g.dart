@@ -287,6 +287,14 @@ external ffi.Pointer<CvStatus> cv_LineSegmentDetector_detect(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<ffi.Pointer<CvStatus> Function(LineSegmentDetector, Mat, VecVec4f, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_drawSegments(
+  LineSegmentDetector self$1,
+  Mat image,
+  VecVec4f lines,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<
   ffi.Pointer<CvStatus> Function(
     Mat,

@@ -46,6 +46,8 @@ files:
         name: cv_LineSegmentDetector_create1
       c:@F@cv_LineSegmentDetector_detect:
         name: cv_LineSegmentDetector_detect
+      c:@F@cv_LineSegmentDetector_drawSegments:
+        name: cv_LineSegmentDetector_drawSegments
       c:@F@cv_Scharr:
         name: cv_Scharr
       c:@F@cv_Sobel:

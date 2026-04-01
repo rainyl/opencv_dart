@@ -800,6 +800,16 @@ CvStatus* cv_LineSegmentDetector_detect(
     END_WRAP
 }
 
+CvStatus* cv_LineSegmentDetector_drawSegments(
+    LineSegmentDetector self , Mat image, VecVec4f lines, CvCallback_0 callback
+) {
+    BEGIN_WRAP(CVDEREF(self))->drawSegments(CVDEREF(image), CVDEREF(lines));
+    if (callback != nullptr) {
+        callback();
+    }
+    END_WRAP
+}
+
 CvStatus* cv_goodFeaturesToTrack(
     Mat img,
     VecPoint2f* corners,

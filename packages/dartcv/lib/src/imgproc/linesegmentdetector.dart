@@ -66,6 +66,10 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     return rval;
   }
 
+  void drawSegments(InputArray image, VecVec4f lines) {
+    cvRun(() => cimgproc.cv_LineSegmentDetector_drawSegments(ref, image.ref, lines.ref, ffi.nullptr));
+  }
+
   static const int REFINE_NONE = 0;
   static const int REFINE_STD = 1;
   static const int REFINE_ADV = 2;
