@@ -13,6 +13,7 @@ import '../core/cv_vec.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
+import '../core/mat.dart';
 import '../g/imgproc.g.dart' as cvg;
 import '../g/imgproc.g.dart' as cimgproc;
 
