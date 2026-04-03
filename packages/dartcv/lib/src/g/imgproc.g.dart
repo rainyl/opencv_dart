@@ -231,6 +231,70 @@ external ffi.Pointer<CvStatus> cv_Laplacian(
   imp$1.CvCallback_0 callback,
 );
 
+@ffi.Native<ffi.Void Function(LineSegmentDetectorPtr)>()
+external void cv_LineSegmentDetector_close(
+  LineSegmentDetectorPtr self$1,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<LineSegmentDetector>)>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create(
+  ffi.Pointer<LineSegmentDetector> rval,
+);
+
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    ffi.Int,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Double,
+    ffi.Int,
+    ffi.Pointer<LineSegmentDetector>,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create1(
+  int refine,
+  double scale,
+  double sigma_scale,
+  double quant,
+  double ang_th,
+  double log_eps,
+  double density_th,
+  int n_bins,
+  ffi.Pointer<LineSegmentDetector> rval,
+);
+
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LineSegmentDetector,
+    Mat,
+    VecVec4f,
+    VecF64,
+    VecF64,
+    VecF64,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_detect(
+  LineSegmentDetector self$1,
+  Mat image,
+  VecVec4f lines,
+  VecF64 width,
+  VecF64 prec,
+  VecF64 nfa,
+  imp$1.CvCallback_0 callback,
+);
+
+@ffi.Native<ffi.Pointer<CvStatus> Function(LineSegmentDetector, Mat, VecVec4f, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_drawSegments(
+  LineSegmentDetector self$1,
+  Mat image,
+  VecVec4f lines,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<
   ffi.Pointer<CvStatus> Function(
     Mat,
@@ -1980,6 +2044,8 @@ class _SymbolAddresses {
   const _SymbolAddresses();
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(CLAHEPtr)>> get cv_CLAHE_close =>
       ffi.Native.addressOf(self.cv_CLAHE_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LineSegmentDetectorPtr)>>
+  get cv_LineSegmentDetector_close => ffi.Native.addressOf(self.cv_LineSegmentDetector_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(Subdiv2DPtr)>> get cv_Subdiv2D_close =>
       ffi.Native.addressOf(self.cv_Subdiv2D_close);
 }
@@ -1994,6 +2060,12 @@ typedef CvPoint2f = imp$1.CvPoint2f;
 typedef CvRect = imp$1.CvRect;
 typedef CvSize = imp$1.CvSize;
 typedef CvStatus = imp$1.CvStatus;
+
+final class LineSegmentDetector extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> ptr;
+}
+
+typedef LineSegmentDetectorPtr = ffi.Pointer<LineSegmentDetector>;
 typedef Mat = imp$1.Mat;
 typedef Moment = imp$1.Moment;
 typedef RotatedRect = imp$1.RotatedRect;
@@ -2008,10 +2080,12 @@ typedef TermCriteria = imp$1.TermCriteria;
 typedef Vec4f = imp$1.Vec4f;
 typedef Vec6f = imp$1.Vec6f;
 typedef VecF32 = imp$1.VecF32;
+typedef VecF64 = imp$1.VecF64;
 typedef VecI32 = imp$1.VecI32;
 typedef VecMat = imp$1.VecMat;
 typedef VecPoint = imp$1.VecPoint;
 typedef VecPoint2f = imp$1.VecPoint2f;
+typedef VecVec4f = imp$1.VecVec4f;
 typedef VecVec4i = imp$1.VecVec4i;
 typedef VecVecPoint = imp$1.VecVecPoint;
 typedef VecVecPoint2f = imp$1.VecVecPoint2f;

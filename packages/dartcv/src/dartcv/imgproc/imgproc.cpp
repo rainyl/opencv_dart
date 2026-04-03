@@ -772,6 +772,44 @@ CvStatus* cv_cornerSubPix(
     END_WRAP
 }
 
+CvStatus* cv_LineSegmentDetector_create(LineSegmentDetector* rval) {
+    BEGIN_WRAP
+    *rval = {new cv::Ptr<cv::LineSegmentDetector>(cv::createLineSegmentDetector())};
+    END_WRAP
+}
+
+CvStatus* cv_LineSegmentDetector_create1(int refine, double scale, double sigma_scale, double quant, double ang_th, double log_eps, double density_th, int n_bins, LineSegmentDetector* rval) {
+    BEGIN_WRAP
+    *rval = {new cv::Ptr<cv::LineSegmentDetector>(
+        cv::createLineSegmentDetector(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins)
+    )};
+    END_WRAP
+}
+
+void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self) {
+    CVD_FREE(self);
+}
+
+CvStatus* cv_LineSegmentDetector_detect(
+    LineSegmentDetector self , Mat image, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa, CvCallback_0 callback
+) {
+    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(image), CVDEREF(lines), CVDEREF(width), CVDEREF(prec), CVDEREF(nfa));
+    if (callback != nullptr) {
+        callback();
+    }
+    END_WRAP
+}
+
+CvStatus* cv_LineSegmentDetector_drawSegments(
+    LineSegmentDetector self , Mat image, VecVec4f lines, CvCallback_0 callback
+) {
+    BEGIN_WRAP(CVDEREF(self))->drawSegments(CVDEREF(image), CVDEREF(lines));
+    if (callback != nullptr) {
+        callback();
+    }
+    END_WRAP
+}
+
 CvStatus* cv_goodFeaturesToTrack(
     Mat img,
     VecPoint2f* corners,

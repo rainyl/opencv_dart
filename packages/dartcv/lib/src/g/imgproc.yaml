@@ -38,6 +38,16 @@ files:
         name: cv_HoughLinesPointSet
       c:@F@cv_Laplacian:
         name: cv_Laplacian
+      c:@F@cv_LineSegmentDetector_close:
+        name: cv_LineSegmentDetector_close
+      c:@F@cv_LineSegmentDetector_create:
+        name: cv_LineSegmentDetector_create
+      c:@F@cv_LineSegmentDetector_create1:
+        name: cv_LineSegmentDetector_create1
+      c:@F@cv_LineSegmentDetector_detect:
+        name: cv_LineSegmentDetector_detect
+      c:@F@cv_LineSegmentDetector_drawSegments:
+        name: cv_LineSegmentDetector_drawSegments
       c:@F@cv_Scharr:
         name: cv_Scharr
       c:@F@cv_Sobel:
@@ -314,10 +324,14 @@ files:
         name: cv_watershed
       c:@S@CLAHE:
         name: CLAHE
+      c:@S@LineSegmentDetector:
+        name: LineSegmentDetector
       c:@S@Subdiv2D:
         name: Subdiv2D
       c:imgproc.h@T@CLAHEPtr:
         name: CLAHEPtr
+      c:imgproc.h@T@LineSegmentDetectorPtr:
+        name: LineSegmentDetectorPtr
       c:imgproc.h@T@Subdiv2DPtr:
         name: Subdiv2DPtr
       c:types.h@T@CvPoint:
@@ -346,6 +360,8 @@ files:
         name: Vec6f
       c:types.h@T@VecF32:
         name: VecF32
+      c:types.h@T@VecF64:
+        name: VecF64
       c:types.h@T@VecI32:
         name: VecI32
       c:types.h@T@VecMat:
@@ -354,6 +370,8 @@ files:
         name: VecPoint
       c:types.h@T@VecPoint2f:
         name: VecPoint2f
+      c:types.h@T@VecVec4f:
+        name: VecVec4f
       c:types.h@T@VecVec4i:
         name: VecVec4i
       c:types.h@T@VecVecPoint:
