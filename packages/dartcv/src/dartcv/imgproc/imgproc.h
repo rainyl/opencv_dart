@@ -1002,8 +1002,9 @@ CvStatus* cv_cornerSubPix(
 CvStatus* cv_LineSegmentDetector_create(LineSegmentDetector* rval);
 CvStatus* cv_LineSegmentDetector_create1(int refine, double scale, double sigma_scale, double quant, double ang_th, double log_eps, double density_th, int n_bins, LineSegmentDetector* rval);
 void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self);
-CvStatus* cv_LineSegmentDetector_detect(LineSegmentDetector self , Mat image, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa, CvCallback_0 callback);
-CvStatus* cv_LineSegmentDetector_drawSegments(LineSegmentDetector self , Mat image, VecVec4f lines, CvCallback_0 callback);
+CvStatus* cv_LineSegmentDetector_detect(LineSegmentDetector self, Mat image, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa, CvCallback_0 callback);
+CvStatus* cv_LineSegmentDetector_drawSegments(LineSegmentDetector self, Mat image, VecVec4f lines, CvCallback_0 callback);
+CvStatus* cv_LineSegmentDetector_compareSegments(LineSegmentDetector self, CvSize size, VecVec4f lines1, VecVec4f lines2, MatInOut image, int* rval, CvCallback_0 callback);
 
 
 // Determines strong corners on an image.

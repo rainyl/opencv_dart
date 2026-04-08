@@ -236,6 +236,27 @@ external void cv_LineSegmentDetector_close(
   LineSegmentDetectorPtr self$1,
 );
 
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LineSegmentDetector,
+    CvSize,
+    VecVec4f,
+    VecVec4f,
+    imp$1.MatInOut,
+    ffi.Pointer<ffi.Int>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_LineSegmentDetector_compareSegments(
+  LineSegmentDetector self$1,
+  CvSize size,
+  VecVec4f lines1,
+  VecVec4f lines2,
+  imp$1.MatInOut image,
+  ffi.Pointer<ffi.Int> rval,
+  imp$1.CvCallback_0 callback,
+);
+
 @ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<LineSegmentDetector>)>()
 external ffi.Pointer<CvStatus> cv_LineSegmentDetector_create(
   ffi.Pointer<LineSegmentDetector> rval,

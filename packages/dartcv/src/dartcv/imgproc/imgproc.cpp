@@ -787,6 +787,7 @@ CvStatus* cv_LineSegmentDetector_create1(int refine, double scale, double sigma_
 }
 
 void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self) {
+    self->ptr->reset();
     CVD_FREE(self);
 }
 
@@ -804,6 +805,16 @@ CvStatus* cv_LineSegmentDetector_drawSegments(
     LineSegmentDetector self , Mat image, VecVec4f lines, CvCallback_0 callback
 ) {
     BEGIN_WRAP(CVDEREF(self))->drawSegments(CVDEREF(image), CVDEREF(lines));
+    if (callback != nullptr) {
+        callback();
+    }
+    END_WRAP
+}
+
+CvStatus* cv_LineSegmentDetector_compareSegments(LineSegmentDetector self , CvSize size, VecVec4f lines1, VecVec4f lines2, MatInOut image, int* rval, CvCallback_0 callback){
+    BEGIN_WRAP
+    auto cSize = cv::Size(size.width, size.height);
+    *rval = (CVDEREF(self))->compareSegments(cSize, CVDEREF(lines1), CVDEREF(lines2), CVDEREF(image));
     if (callback != nullptr) {
         callback();
     }
