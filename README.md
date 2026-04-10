@@ -180,6 +180,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
 		</tr>
 		<tr>
             <td align="center">
+                <a href="https://github.com/dupuchba">
+                    <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
+                    <br />
+                    <sub><b>Baptiste DUPUCH</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Escaton615">
                     <img src="https://avatars.githubusercontent.com/u/6680284?v=4" width="100;" alt="Escaton615"/>
                     <br />
