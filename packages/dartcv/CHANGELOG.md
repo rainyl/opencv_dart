@@ -1,5 +1,10 @@
 # dartcv
 
+## 2.2.2
+
+- new: add `LineSegmentDetector` support (imgproc module)
+- bump `native_toolchain_cmake` to `0.2.5`
+
 ## 2.2.1+4
 
 - fix: aruco module is not correctly built when changing include modules.

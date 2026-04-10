@@ -122,9 +122,9 @@ void main() async {
 
 #### Flutter
 
-see [example](https://github.com/rainyl/opencv_dart/tree/2.x/example/flutter)
+see [example](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv/example/flutter)
 
-~~More examples are on the way...~~ see [opencv_dart.examples](https://github.com/rainyl/opencv_dart.examples) and share yours
+~~More examples are on the way...~~ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and share yours
 
 #### Configure hooks options
 
@@ -234,6 +234,13 @@ hooks:
             </td>
 		</tr>
 		<tr>
+            <td align="center">
+                <a href="https://github.com/dupuchba">
+                    <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
+                    <br />
+                    <sub><b>Baptiste DUPUCH</b></sub>
+                </a>
+            </td>
             <td align="center">
                 <a href="https://github.com/Escaton615">
                     <img src="https://avatars.githubusercontent.com/u/6680284?v=4" width="100;" alt="Escaton615"/>
