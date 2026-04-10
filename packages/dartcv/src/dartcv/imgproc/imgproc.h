@@ -20,9 +20,11 @@ extern "C" {
 #ifdef __cplusplus
 CVD_TYPEDEF(cv::Ptr<cv::CLAHE>, CLAHE);
 CVD_TYPEDEF(cv::Subdiv2D, Subdiv2D);
+CVD_TYPEDEF(cv::Ptr<cv::LineSegmentDetector>, LineSegmentDetector);
 #else
 CVD_TYPEDEF(void, CLAHE);
 CVD_TYPEDEF(void, Subdiv2D);
+CVD_TYPEDEF(void, LineSegmentDetector);
 #endif
 
 // SECTION - Image Filtering
@@ -997,6 +999,13 @@ CvStatus* cv_cornerSubPix(
 
 // Creates a smart pointer to a LineSegmentDetector object and initializes it.
 // Ptr< LineSegmentDetector > cv::createLineSegmentDetector (int refine=LSD_REFINE_STD, double scale=0.8, double sigma_scale=0.6, double quant=2.0, double ang_th=22.5, double log_eps=0, double density_th=0.7, int n_bins=1024)
+CvStatus* cv_LineSegmentDetector_create(LineSegmentDetector* rval);
+CvStatus* cv_LineSegmentDetector_create1(int refine, double scale, double sigma_scale, double quant, double ang_th, double log_eps, double density_th, int n_bins, LineSegmentDetector* rval);
+void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self);
+CvStatus* cv_LineSegmentDetector_detect(LineSegmentDetector self, Mat image, VecVec4f lines, VecF64 width, VecF64 prec, VecF64 nfa, CvCallback_0 callback);
+CvStatus* cv_LineSegmentDetector_drawSegments(LineSegmentDetector self, Mat image, VecVec4f lines, CvCallback_0 callback);
+CvStatus* cv_LineSegmentDetector_compareSegments(LineSegmentDetector self, CvSize size, VecVec4f lines1, VecVec4f lines2, MatInOut image, int* rval, CvCallback_0 callback);
+
 
 // Determines strong corners on an image.
 // Same as above, but returns also quality measure of the detected corners.
