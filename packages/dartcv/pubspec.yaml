@@ -10,7 +10,7 @@ environment:
 dependencies:
   code_assets: ^1.0.0
   ffi: ^2.1.4
-  hooks: ^1.0.0
+  hooks: ">=1.0.0 <3.0.0"
   logging: ^1.3.0
   native_toolchain_cmake: ^0.2.5
   # native_toolchain_cmake:
