@@ -3,7 +3,8 @@
 ## 2.2.2
 
 - new: add `LineSegmentDetector` support (imgproc module)
-- bump `native_toolchain_cmake` to `0.2.5`
+- bump `native_toolchain_cmake` to `0.3.1`
+- bump `hooks` to `2.1.0`
 
 ## 2.2.1+4
 
