@@ -1,3 +1,8 @@
+//
+// Created by Rainyl.
+// Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
+//
+
 #include "dartcv/core/core.h"
 #include "dartcv/core/lut.hpp"
 #include "dartcv/core/vec.hpp"
@@ -1405,12 +1410,48 @@ bool cv_ocl_haveSVM(){
 void cv_ocl_setUseOpenCL(bool flag){
     cv::ocl::setUseOpenCL(flag);
 }
+// Type name mapping replicated from cv::ocl (ocl.cpp). We do NOT call
+// cv::ocl::typeToStr/vecopTypeToStr here because they throw (via CV_Assert)
+// when OpenCV is built without OpenCL, which would escape across the FFI
+// boundary and crash. This table is build-independent.
 const char* cv_ocl_typeToStr(int t){
-    return cv::ocl::typeToStr(t);
+    static const char* tab[] = {
+        "uchar", "uchar2", "uchar3", "uchar4", 0, 0, 0, "uchar8", 0, 0, 0, 0, 0, 0, 0, "uchar16",
+        "char", "char2", "char3", "char4", 0, 0, 0, "char8", 0, 0, 0, 0, 0, 0, 0, "char16",
+        "ushort", "ushort2", "ushort3", "ushort4", 0, 0, 0, "ushort8", 0, 0, 0, 0, 0, 0, 0, "ushort16",
+        "short", "short2", "short3", "short4", 0, 0, 0, "short8", 0, 0, 0, 0, 0, 0, 0, "short16",
+        "int", "int2", "int3", "int4", 0, 0, 0, "int8", 0, 0, 0, 0, 0, 0, 0, "int16",
+        "float", "float2", "float3", "float4", 0, 0, 0, "float8", 0, 0, 0, 0, 0, 0, 0, "float16",
+        "double", "double2", "double3", "double4", 0, 0, 0, "double8", 0, 0, 0, 0, 0, 0, 0, "double16",
+        "half", "half2", "half3", "half4", 0, 0, 0, "half8", 0, 0, 0, 0, 0, 0, 0, "half16",
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    int cn = CV_MAT_CN(t), depth = CV_MAT_DEPTH(t);
+    if (depth > 7 || cn > 16) {
+        return "unknown";
+    }
+    const char* s = tab[depth * 16 + cn - 1];
+    return s != nullptr ? s : "unknown";
 }
 bool cv_ocl_useOpenCL(){
     return cv::ocl::useOpenCL();
 }
 const char* cv_ocl_vecopTypeToStr(int t){
-    return cv::ocl::vecopTypeToStr(t);
+    static const char* tab[] = {
+        "uchar", "short", "uchar3", "int", 0, 0, 0, "int2", 0, 0, 0, 0, 0, 0, 0, "int4",
+        "char", "short", "char3", "int", 0, 0, 0, "int2", 0, 0, 0, 0, 0, 0, 0, "int4",
+        "ushort", "int", "ushort3", "int2", 0, 0, 0, "int4", 0, 0, 0, 0, 0, 0, 0, "int8",
+        "short", "int", "short3", "int2", 0, 0, 0, "int4", 0, 0, 0, 0, 0, 0, 0, "int8",
+        "int", "int2", "int3", "int4", 0, 0, 0, "int8", 0, 0, 0, 0, 0, 0, 0, "int16",
+        "int", "int2", "int3", "int4", 0, 0, 0, "int8", 0, 0, 0, 0, 0, 0, 0, "int16",
+        "ulong", "ulong2", "ulong3", "ulong4", 0, 0, 0, "ulong8", 0, 0, 0, 0, 0, 0, 0, "ulong16",
+        "short", "short2", "short3", "short4", 0, 0, 0, "short8", 0, 0, 0, 0, 0, 0, 0, "short16",
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    int cn = CV_MAT_CN(t), depth = CV_MAT_DEPTH(t);
+    if (depth > 7 || cn > 16) {
+        return "unknown";
+    }
+    const char* s = tab[depth * 16 + cn - 1];
+    return s != nullptr ? s : "unknown";
 }

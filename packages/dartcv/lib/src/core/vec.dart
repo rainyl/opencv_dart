@@ -14,11 +14,36 @@ import '../g/types.g.dart' as cvg;
 import 'base.dart';
 import 'float16.dart';
 
+/// A wrapper around a native `std::vector<T>`.
+///
+/// The `data` / `dataPtr` / `dataView` getters expose a **view** over the native
+/// buffer (not a copy); it becomes invalid once this vector is [dispose]d or
+/// resized in a way that reallocates. Use the copy helpers (e.g. `toU8List`,
+/// `clone`) if the data must outlive the vector.
 abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi.Finalizable {
   Vec.fromPointer(this.ptr);
 
   ffi.Pointer<N> ptr;
   N get ref;
+
+  /// Whether this wrapper has been disposed. After [dispose] the underlying
+  /// native memory is freed and the wrapper must not be used any more.
+  bool _disposed = false;
+
+  /// Whether this wrapper has been disposed.
+  bool get isDisposed => _disposed;
+
+  /// Releases the underlying native resources. **Idempotent**: calling it more
+  /// than once is safe, but the wrapper must not be used after [dispose].
+  void dispose() {
+    if (_disposed) return;
+    _disposed = true;
+    freeNative();
+  }
+
+  /// Frees the native resources owned by this wrapper. Subclasses implement the
+  /// concrete free logic here; callers must use [dispose] instead.
+  void freeNative();
 
   @override
   int get length;
@@ -26,7 +51,6 @@ abstract class Vec<N extends ffi.Struct, T> with IterableMixin<T> implements ffi
   T operator [](int idx);
   void operator []=(int idx, T value);
 
-  void dispose();
   Vec clone();
   int size();
   void add(T element);
@@ -152,7 +176,7 @@ class VecUChar extends Vec<cvg.VecUChar, int> {
   cvg.VecUChar get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecUChar_free(ptr);
   }
@@ -251,7 +275,7 @@ class VecChar extends Vec<cvg.VecChar, int> {
   cvg.VecChar get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecChar_free(ptr);
   }
@@ -341,7 +365,7 @@ class VecVecChar extends VecUnmodifible<cvg.VecVecChar, VecChar> {
   cvg.VecVecChar get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVecChar_free(ptr);
   }
@@ -421,7 +445,7 @@ class VecU16 extends Vec<cvg.VecU16, int> {
   cvg.VecU16 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecU16_free(ptr);
   }
@@ -516,7 +540,7 @@ class VecI16 extends Vec<cvg.VecI16, int> {
   cvg.VecI16 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecI16_free(ptr);
   }
@@ -613,7 +637,7 @@ class VecI32 extends Vec<cvg.VecI32, int> {
   cvg.VecI32 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecI32_free(ptr);
   }
@@ -707,7 +731,7 @@ class VecF32 extends Vec<cvg.VecF32, double> {
   cvg.VecF32 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecF32_free(ptr);
   }
@@ -803,7 +827,7 @@ class VecF64 extends Vec<cvg.VecF64, double> {
   cvg.VecF64 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecF64_free(ptr);
   }
@@ -894,7 +918,7 @@ class VecF16 extends Vec<cvg.VecF16, double> {
   cvg.VecF16 get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecF16_free(ptr);
   }

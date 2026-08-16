@@ -39,7 +39,8 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
 
   static final finalizer = OcvFinalizer<cvg.Subdiv2DPtr>(cimgproc.addresses.cv_Subdiv2D_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cimgproc.cv_Subdiv2D_close(ptr);
   }

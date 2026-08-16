@@ -210,6 +210,55 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
   C_VISIBILITY_PRESET default
 )
 
+set(_link_flags "")
+if (DARTCV_TREESHAKE)
+  if (MSVC)
+    # /Gy: function-level linking; /OPT:REF: remove unreferenced; /OPT:ICF: merge identical COMDATs.
+    target_compile_options(${LIBRARY_NAME} PRIVATE /Gy)
+    string(APPEND _link_flags " /OPT:REF /OPT:ICF")
+  elseif (APPLE)
+    target_compile_options(${LIBRARY_NAME} PRIVATE -ffunction-sections -fdata-sections)
+    string(APPEND _link_flags " -Wl,-dead_strip")
+  else ()
+    target_compile_options(${LIBRARY_NAME} PRIVATE -ffunction-sections -fdata-sections)
+    string(APPEND _link_flags " -Wl,--gc-sections")
+  endif ()
+endif ()
+
+if (DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
+  message(STATUS "dartcv: restricting exports to symbols in ${DARTCV_KEEP_FILE}")
+  file(STRINGS ${DARTCV_KEEP_FILE} _keep_symbols)
+  if (MSVC)
+    # Build a .def from the keep-list (x64 export names are unmangled).
+    set(_def_file ${CMAKE_CURRENT_BINARY_DIR}/dartcv_exports.def)
+    file(WRITE ${_def_file} "EXPORTS\n")
+    foreach (_sym IN LISTS _keep_symbols)
+      string(STRIP ${_sym} _sym)
+      if (_sym)
+        file(APPEND ${_def_file} "    ${_sym}\n")
+      endif ()
+    endforeach ()
+    string(APPEND _link_flags " /DEF:${_def_file}")
+  elseif (APPLE)
+    # Mach-O symbols are prefixed with '_'; the keep-list holds plain C names.
+    set(_exported_list ${CMAKE_CURRENT_BINARY_DIR}/dartcv_exports_list.txt)
+    file(WRITE ${_exported_list} "")
+    foreach (_sym IN LISTS _keep_symbols)
+      string(STRIP ${_sym} _sym)
+      if (_sym)
+        file(APPEND ${_exported_list} "_${_sym}\n")
+      endif ()
+    endforeach ()
+    string(APPEND _link_flags " -Wl,-exported_symbols_list,${_exported_list}")
+  else ()
+    string(APPEND _link_flags " -Wl,--retain-symbols-file=${DARTCV_KEEP_FILE}")
+  endif ()
+endif ()
+
+if (_link_flags)
+  set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS "${_link_flags}")
+endif ()
+
 if (UNIX AND NOT APPLE)
   set_target_properties(${LIBRARY_NAME} PROPERTIES
     BUILD_WITH_INSTALL_RPATH FALSE
@@ -240,10 +289,20 @@ endif ()
 # endif (APPLE)
 
 if (WIN32)
-  set_target_properties(${LIBRARY_NAME} PROPERTIES
-    WINDOWS_EXPORT_ALL_SYMBOLS ON
-    COMPILE_FLAGS "/EHsc"
-  )
+  # When a keep-list restricts the exports, MSVC must NOT auto-export all
+  # symbols (WINDOWS_EXPORT_ALL_SYMBOLS would override the generated .def);
+  # otherwise export everything (default).
+  if (DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
+    set_target_properties(${LIBRARY_NAME} PROPERTIES
+      WINDOWS_EXPORT_ALL_SYMBOLS OFF
+      COMPILE_FLAGS "/EHsc"
+    )
+  else ()
+    set_target_properties(${LIBRARY_NAME} PROPERTIES
+      WINDOWS_EXPORT_ALL_SYMBOLS ON
+      COMPILE_FLAGS "/EHsc"
+    )
+  endif ()
 
   #  if (BUILD_WITH_STATIC_CRT)
   #    target_compile_options(${LIBRARY_NAME} PRIVATE "/MT")

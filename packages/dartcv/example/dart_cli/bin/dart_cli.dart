@@ -53,7 +53,10 @@ void showImage(String path) {
   print("Mat: $mat");
   // final win = cv.Window(path);
   // win.imshow(mat);
-  // final gray = cv.cvtColor(mat, cv.COLOR_BGR2GRAY);
+  final gray = cv.cvtColor(mat, cv.COLOR_BGR2GRAY);
+  print("Gray: $gray");
+  final canny = cv.canny(gray, 100, 200);
+  print("Canny: $canny");
   // win.waitKey(3000);
   // win.imshow(gray);
   // win.waitKey(0);

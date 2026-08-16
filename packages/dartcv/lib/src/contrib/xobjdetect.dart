@@ -39,7 +39,8 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
     ccontrib.addresses.cv_xobjdetect_WBDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_xobjdetect_WBDetector_close(ptr);
   }

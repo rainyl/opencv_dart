@@ -80,8 +80,7 @@ enum PredefinedDictionaryType {
   DICT_APRILTAG_36h11(20),
 
   ///< 6x6 bits, minimum hamming distance between any two codes = 12, 250 codes
-  DICT_ARUCO_MIP_36h12(21)
-  ;
+  DICT_ARUCO_MIP_36h12(21);
 
   const PredefinedDictionaryType(this.value);
   final int value;
@@ -151,7 +150,8 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
   cvg.ArucoDictionary get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.ArucoDictionaryPtr>(ccontrib.addresses.cv_aruco_Dictionary_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_aruco_Dictionary_close(ptr);
   }

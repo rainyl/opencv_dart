@@ -34,7 +34,8 @@ class Rng extends CvStruct<cvg.RNG> {
 
   static final finalizer = OcvFinalizer<cvg.RNGPtr>(ccore.addresses.cv_RNG_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccore.cv_RNG_close(ptr);
   }

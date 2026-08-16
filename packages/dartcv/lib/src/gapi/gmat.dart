@@ -37,7 +37,8 @@ class GMat extends CvStruct<cvg.GMat> {
   }
 
   static final finalizer = OcvFinalizer<cvg.GMatPtr>(cvg.addresses.gapi_GMat_Close);
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvg.gapi_GMat_Close(ptr);
   }

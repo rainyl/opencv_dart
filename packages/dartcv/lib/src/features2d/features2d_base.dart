@@ -73,6 +73,12 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
   );
 
   @override
+  void freeNative() {
+    finalizer.detach(this);
+    cfeatures2d.cv_flann_IndexParams_close(ptr);
+  }
+
+  @override
   cvg.FlannIndexParams get ref => ptr.ref;
 
   String getString(String key, [String defaultValue = ""]) {
@@ -84,6 +90,9 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
     calloc.free(cdefault);
 
     final rval = crval.value.cast<ffi.Char>().toDartString();
+    if (crval.value != ffi.nullptr) {
+      calloc.free(crval.value);
+    }
     calloc.free(crval);
     return rval;
   }
@@ -403,7 +412,8 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }

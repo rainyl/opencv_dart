@@ -34,7 +34,8 @@ class Layer extends CvStruct<cvg.Layer> {
 
   static final finalizer = OcvFinalizer<cvg.LayerPtr>(cdnn.addresses.cv_dnn_Layer_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cdnn.cv_dnn_Layer_close(ptr);
   }
@@ -44,6 +45,7 @@ class Layer extends CvStruct<cvg.Layer> {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => cdnn.cv_dnn_Layer_getName(ref, p));
     final r = p.value.toDartString();
+    calloc.free(p.value);
     calloc.free(p);
     return r;
   }
@@ -53,6 +55,7 @@ class Layer extends CvStruct<cvg.Layer> {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => cdnn.cv_dnn_Layer_getType(ref, p));
     final r = p.value.toDartString();
+    calloc.free(p.value);
     calloc.free(p);
     return r;
   }
@@ -258,6 +261,7 @@ class Net extends CvStruct<cvg.Net> {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     cvRun(() => cdnn.cv_dnn_Net_dump(ref, p));
     final ret = p.value.cast<Utf8>().toDartString();
+    calloc.free(p.value);
     calloc.free(p);
     return ret;
   }
@@ -390,7 +394,8 @@ class Net extends CvStruct<cvg.Net> {
 
   static final finalizer = OcvFinalizer<cvg.NetPtr>(cdnn.addresses.cv_dnn_Net_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cdnn.cv_dnn_Net_close(ptr);
   }

@@ -168,7 +168,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
     cobjdetect.addresses.cv_CascadeClassifier_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cobjdetect.cv_CascadeClassifier_close(ptr);
   }
@@ -400,7 +401,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   cvg.HOGDescriptor get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.HOGDescriptorPtr>(cobjdetect.addresses.cv_HOGDescriptor_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cobjdetect.cv_HOGDescriptor_close(ptr);
   }
@@ -457,6 +459,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       ),
     );
     final ss = v.value.cast<Utf8>().toDartString();
+    calloc.free(v.value);
     calloc.free(v);
     return (ss, straightQRcode);
   }
@@ -483,6 +486,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       ),
     );
     final ss = v.value.cast<Utf8>().toDartString();
+    calloc.free(v.value);
     calloc.free(v);
     return (ss, points, straightQRcode);
   }
@@ -511,6 +515,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       ),
     );
     final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
+    if (v.value != ffi.nullptr) {
+      calloc.free(v.value);
+    }
     calloc.free(v);
     return (s, points, straightCode);
   }
@@ -545,6 +552,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
           cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, ffi.nullptr),
     );
     final info = ret.value.cast<Utf8>().toDartString();
+    calloc.free(ret.value);
     calloc.free(ret);
     return (info, points, straightCode);
   }
@@ -603,7 +611,8 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
 
   static final finalizer = OcvFinalizer<cvg.QRCodeDetectorPtr>(cobjdetect.addresses.cv_QRCodeDetector_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cobjdetect.cv_QRCodeDetector_close(ptr);
   }
@@ -808,7 +817,8 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
 
   static final finalizer = OcvFinalizer<cvg.FaceDetectorYNPtr>(cobjdetect.addresses.cv_FaceDetectorYN_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cobjdetect.cv_FaceDetectorYN_close(ptr);
   }
@@ -901,7 +911,8 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
     cobjdetect.addresses.cv_FaceRecognizerSF_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cobjdetect.cv_FaceRecognizerSF_close(ptr);
   }

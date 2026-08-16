@@ -1,5 +1,6 @@
 //
-// Created by rainy on 2025/8/29.
+// Created by Rainyl on 2025/8/29.
+// Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 //
 
 #ifndef DARTCV_LIBRARY_FREETYPE_H

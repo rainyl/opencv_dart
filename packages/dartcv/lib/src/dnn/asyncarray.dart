@@ -31,7 +31,8 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
 
   static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(cdnn.addresses.cv_dnn_AsyncArray_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cdnn.cv_dnn_AsyncArray_close(ptr);
   }

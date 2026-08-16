@@ -36,11 +36,22 @@ option(DARTCV_WITH_XIMGPROC "Include ximgproc module" OFF)
 option(DARTCV_WITH_XOBJDETECT "Include xobjdetect module" OFF)
 
 option(DARTCV_ENABLE_INSTALL "Enable install" OFF)
-option(DARTCV_ENABLE_TEST "Enable tests" OFF)
 option(DARTCV_BUILD_OPENCV_FROM_SOURCE "Build opencv from source" ON)
 option(DARTCV_DISABLE_DOWNLOAD_OPENCV "Disable download opencv" OFF)
 
 option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
+
+# ---------------------------------------------------------------------------
+# Tree shaking / dead-code elimination
+# ---------------------------------------------------------------------------
+# DARTCV_TREESHAKE: enable function-level sections + linker garbage collection
+# so that native code not reachable from the exported symbols is stripped.
+# DARTCV_KEEP_FILE: optional path to a symbol keep-list (one C symbol per line).
+# When provided, only those symbols are exported (and everything unreachable
+# from them is garbage-collected). This is normally produced by hook/link.dart
+# from the recorded `@ffi.Native` usages during AOT builds.
+option(DARTCV_TREESHAKE "Enable linker dead-code elimination for dartcv" OFF)
+set(DARTCV_KEEP_FILE "" CACHE PATH "Path to a keep-list of exported dartcv symbols")
 
 get_filename_component(PROJ_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
@@ -221,8 +232,4 @@ if(DARTCV_ENABLE_INSTALL)
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     COMPONENT ffmpeg_libs
   )
-endif()
-
-if(DARTCV_ENABLE_TEST)
-  add_subdirectory(test)
 endif()

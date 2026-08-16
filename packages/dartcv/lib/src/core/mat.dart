@@ -27,21 +27,50 @@ class Mat extends CvStruct<cvg.Mat> {
     }
   }
 
+  // Creates a Mat wrapper from a fresh calloc'd struct, freeing the struct if
+  // the native call fails (otherwise `p` would be leaked on the error path).
+  factory Mat._create(
+    int? externalSize,
+    ffi.Pointer<cvg.CvStatus> Function(ffi.Pointer<cvg.Mat> p) create,
+  ) {
+    final p = calloc<cvg.Mat>();
+    try {
+      cvRun(() => create(p));
+    } catch (_) {
+      calloc.free(p);
+      rethrow;
+    }
+    return Mat._(p, externalSize: externalSize);
+  }
+
   //SECTION - Constructors
 
   /// create a [Mat] **reference** from another [Mat] if [copy] is false,
   /// otherwise a copy will be created.
+  ///
+  /// The reference returned when [copy] is false shares the underlying data with
+  /// [mat] (kept alive via OpenCV reference counting), but the wrapper itself is
+  /// not GC-managed, so call [Mat.dispose] when it is no longer needed.
   factory Mat.fromMat(Mat mat, {bool copy = false, Rect? roi}) {
     final p = calloc<cvg.Mat>();
     final (rows, cols, elemsize) = (mat.rows, mat.cols, mat.elemSize);
-    cvRun(
-      () => roi == null
-          ? ccore.cv_Mat_create_11(mat.ref, rows, cols, mat.type.value, 0, 0, p, ffi.nullptr)
-          : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
-    );
-    final dst = Mat._(p, attach: false, externalSize: rows * cols * elemsize);
-    if (copy) return dst.clone();
-    return dst;
+    try {
+      cvRun(
+        () => roi == null
+            ? ccore.cv_Mat_create_11(mat.ref, rows, cols, mat.type.value, 0, 0, p, ffi.nullptr)
+            : ccore.cv_Mat_create_13(mat.ref, roi.ref, p, ffi.nullptr),
+      );
+    } catch (_) {
+      calloc.free(p);
+      rethrow;
+    }
+    if (copy) {
+      final dst = Mat._(p, externalSize: rows * cols * elemsize);
+      final dstCopy = dst.clone();
+      dst.dispose();
+      return dstCopy;
+    }
+    return Mat._(p, attach: false, externalSize: rows * cols * elemsize);
   }
 
   /// Create a Mat from a list of data
@@ -130,12 +159,8 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat.fromPointer(cvg.MatPtr mat, {bool attach = true, int? externalSize}) =>
       Mat._(mat, attach: attach, externalSize: externalSize);
 
-  factory Mat.empty() {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create(p));
-    final mat = Mat._(p); // Mat created from Mat.empty tends to be changed, we can't know the size.
-    return mat;
-  }
+  // Mat created from Mat.empty tends to be changed, we can't know the size.
+  factory Mat.empty() => Mat._create(null, ccore.cv_Mat_create);
 
   /// Create a Mat from self-allocated buffer
   ///
@@ -145,6 +170,11 @@ class Mat extends CvStruct<cvg.Mat> {
   /// managing the native pointer yourself.
   /// Improper handling may lead to memory leaks or undefined behavior.
   ///
+  /// The resulting [Mat] **shares** the memory of [buff] (no copy is made):
+  /// [buff] must be at least `rows * cols * elemsize` bytes and must remain
+  /// valid (not freed or reused) for as long as the [Mat] is used. Calling
+  /// [Mat.dispose] releases the Mat header but does **not** free [buff].
+  ///
   /// This function can throw exception, so make sure to free the allocated
   /// memory inside a `try-finally` block!
   ///
@@ -153,7 +183,12 @@ class Mat extends CvStruct<cvg.Mat> {
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a51615ebf17a64c968df0bf49b4de6a3a
   factory Mat.fromBuffer(int rows, int cols, MatType type, ffi.Pointer<ffi.Void> buff) {
     final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, buff, p, ffi.nullptr));
+    try {
+      cvRun(() => ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, buff, p, ffi.nullptr));
+    } catch (_) {
+      calloc.free(p);
+      rethrow;
+    }
     return Mat._(p); // external data is not managed by OpenCV
   }
 
@@ -167,12 +202,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [s]	An optional value to initialize each matrix element with.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a3620c370690b5ca4d40c767be6fb4ceb
-  factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
-    return mat;
-  }
+  factory Mat.fromScalar(int rows, int cols, MatType type, Scalar s) => Mat._create(
+    rows * cols * type.elemSize,
+    (p) => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, ffi.nullptr),
+  );
 
   /// Create [Mat] from a vector [Vec]
   ///
@@ -182,30 +215,35 @@ class Mat extends CvStruct<cvg.Mat> {
   /// data will be copied if [copyData] is true, if [vec] is large, remember to dispose it.
   factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type, bool copyData = true}) {
     final p = calloc<cvg.Mat>();
-    switch (vec) {
-      case VecPoint():
-        cvRun(() => ccore.cv_Mat_create_7(vec.ref, p, ffi.nullptr));
-      case VecPoint2f():
-        cvRun(() => ccore.cv_Mat_create_8(vec.ref, p, ffi.nullptr));
-      case VecPoint3f():
-        cvRun(() => ccore.cv_Mat_create_9(vec.ref, p, ffi.nullptr));
-      case VecPoint3i():
-        cvRun(() => ccore.cv_Mat_create_10(vec.ref, p, ffi.nullptr));
-      case VecU8() when rows != null && cols != null && type != null:
-      case VecI8() when rows != null && cols != null && type != null:
-      case VecU16() when rows != null && cols != null && type != null:
-      case VecI16() when rows != null && cols != null && type != null:
-      case VecI32() when rows != null && cols != null && type != null:
-      case VecF32() when rows != null && cols != null && type != null:
-      case VecF64() when rows != null && cols != null && type != null:
-      case VecF16() when rows != null && cols != null && type != null:
-        cvRun(
-          () => copyData
-              ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
-              : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
-        );
-      default:
-        throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
+    try {
+      switch (vec) {
+        case VecPoint():
+          cvRun(() => ccore.cv_Mat_create_7(vec.ref, p, ffi.nullptr));
+        case VecPoint2f():
+          cvRun(() => ccore.cv_Mat_create_8(vec.ref, p, ffi.nullptr));
+        case VecPoint3f():
+          cvRun(() => ccore.cv_Mat_create_9(vec.ref, p, ffi.nullptr));
+        case VecPoint3i():
+          cvRun(() => ccore.cv_Mat_create_10(vec.ref, p, ffi.nullptr));
+        case VecU8() when rows != null && cols != null && type != null:
+        case VecI8() when rows != null && cols != null && type != null:
+        case VecU16() when rows != null && cols != null && type != null:
+        case VecI16() when rows != null && cols != null && type != null:
+        case VecI32() when rows != null && cols != null && type != null:
+        case VecF32() when rows != null && cols != null && type != null:
+        case VecF64() when rows != null && cols != null && type != null:
+        case VecF16() when rows != null && cols != null && type != null:
+          cvRun(
+            () => copyData
+                ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
+                : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
+          );
+        default:
+          throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
+      }
+    } catch (_) {
+      calloc.free(p);
+      rethrow;
     }
     return Mat._(p);
   }
@@ -214,12 +252,12 @@ class Mat extends CvStruct<cvg.Mat> {
     if (rows == 0 && cols == 0) {
       return Mat.empty();
     } else {
-      type = type ?? MatType.CV_8UC3;
+      type ??= MatType.CV_8UC3;
       final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
-      final p = calloc<cvg.Mat>();
-      cvRun(() => ccore.cv_Mat_create_5(scalar.ref, rows, cols, type!.value, p, ffi.nullptr));
-      final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
-      return mat;
+      return Mat._create(
+        rows * cols * type.elemSize,
+        (p) => ccore.cv_Mat_create_5(scalar.ref, rows, cols, type!.value, p, ffi.nullptr),
+      );
     }
   }
 
@@ -227,10 +265,11 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// Returns a reference of [Mat]
   factory Mat.fromRange(Mat mat, int rowStart, int rowEnd, {int colStart = 0, int? colEnd}) {
-    final p = calloc<cvg.Mat>();
     colEnd ??= mat.cols;
-    cvRun(() => ccore.cv_Mat_create_12(mat.ref, rowStart, rowEnd, colStart, colEnd!, p, ffi.nullptr));
-    return Mat._(p, externalSize: (rowEnd - rowStart) * (colEnd - colStart) * mat.type.elemSize);
+    return Mat._create(
+      (rowEnd - rowStart) * (colEnd - colStart) * mat.type.elemSize,
+      (p) => ccore.cv_Mat_create_12(mat.ref, rowStart, rowEnd, colStart, colEnd!, p, ffi.nullptr),
+    );
   }
 
   /// Returns an identity matrix of the specified size and type.
@@ -252,12 +291,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [type]	Created matrix type.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a458874f0ab8946136254da37ba06b78b
-  factory Mat.eye(int rows, int cols, MatType type) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_eye(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
-    return mat;
-  }
+  factory Mat.eye(int rows, int cols, MatType type) => Mat._create(
+    rows * cols * type.elemSize,
+    (p) => ccore.cv_Mat_eye(rows, cols, type.value, p, ffi.nullptr),
+  );
 
   /// Returns a zero array of the specified size and type.
   ///
@@ -279,12 +316,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [type] Created matrix type.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a56daa006391a670e9cb0cd08e3168c99
-  factory Mat.zeros(int rows, int cols, MatType type) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_zeros(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
-    return mat;
-  }
+  factory Mat.zeros(int rows, int cols, MatType type) => Mat._create(
+    rows * cols * type.elemSize,
+    (p) => ccore.cv_Mat_zeros(rows, cols, type.value, p, ffi.nullptr),
+  );
 
   /// Returns an array of all 1's of the specified size and type.
   ///
@@ -303,12 +338,10 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [type]	Created matrix type.
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a5e10227b777425407986727e2d26fcdc
-  factory Mat.ones(int rows, int cols, MatType type) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_Mat_ones(rows, cols, type.value, p, ffi.nullptr));
-    final mat = Mat._(p, externalSize: rows * cols * type.elemSize);
-    return mat;
-  }
+  factory Mat.ones(int rows, int cols, MatType type) => Mat._create(
+    rows * cols * type.elemSize,
+    (p) => ccore.cv_Mat_ones(rows, cols, type.value, p, ffi.nullptr),
+  );
 
   factory Mat.randn(int rows, int cols, MatType type, {Scalar? mean, Scalar? std}) {
     mean ??= Scalar.all(0);
@@ -354,12 +387,19 @@ class Mat extends CvStruct<cvg.Mat> {
   int get elemSize1 => ccore.cv_Mat_elemSize1(ref);
   int get dims => ccore.cv_Mat_dims(ref);
 
-  /// Get  a view of native data, and will be GCed when the Mat is GCed.
+  /// Get a view of native data.
+  ///
+  /// The returned [Uint8List] is a **view** over the Mat's native memory, NOT a
+  /// copy: it becomes dangling (invalid) once this [Mat] is [dispose]d or its
+  /// underlying buffer is reallocated. Copy the view (`Uint8List.fromList(data)`)
+  /// if you need data that outlives the Mat.
   Uint8List get data => dataPtr.asTypedList(total * elemSize);
 
   /// Get the data pointer of the Mat
   ///
-  /// DO NOT free the pointer, the native memory is managed by [Mat]
+  /// DO NOT free the pointer, the native memory is managed by [Mat].
+  /// The pointer is only valid while this [Mat] is alive and its buffer is not
+  /// reallocated.
   ffi.Pointer<U8> get dataPtr => ccore.cv_Mat_data(ref).cast<U8>();
 
   /// Mat.size
@@ -714,6 +754,9 @@ class Mat extends CvStruct<cvg.Mat> {
   ///
   /// https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html#a8b2912f6a6f5d55a3c9a7aae9134d862
   ffi.Pointer<T> ptrAt<T extends ffi.NativeType>(int i0, [int? i1, int? i2]) {
+    // debug-mode bounds checks (no overhead in release builds).
+    assert(i0 >= 0 && i0 < rows, "ptrAt: row $i0 out of [0, $rows)");
+    assert(i1 == null || (i1 >= 0 && i1 < cols), "ptrAt: col $i1 out of [0, $cols)");
     return switch ((i1, i2)) {
       (null, null) => ccore.cv_Mat_ptr_uchar_1(ref, i0).cast<T>(),
       (final int i1, null) => ccore.cv_Mat_ptr_uchar_2(ref, i0, i1).cast<T>(),
@@ -1449,6 +1492,9 @@ class Mat extends CvStruct<cvg.Mat> {
       () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p),
     );
     final rval = p.value.toDartString();
+    if (p.value != ffi.nullptr) {
+      calloc.free(p.value);
+    }
     calloc.free(p);
     return rval;
   }
@@ -1462,7 +1508,8 @@ class Mat extends CvStruct<cvg.Mat> {
 
   void release() => cvRun(() => ccore.cv_Mat_release(ref));
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccore.cv_Mat_close(ptr);
   }
@@ -1539,7 +1586,7 @@ class VecMat extends Vec<cvg.VecMat, Mat> {
   cvg.VecMat get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecMat_free(ptr);
   }

@@ -32,7 +32,8 @@ class Rect extends CvStruct<cvg.CvRect> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -79,7 +80,8 @@ class Rect2f extends CvStruct<cvg.CvRect2f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -133,7 +135,8 @@ class RotatedRect extends CvStruct<cvg.RotatedRect> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -236,7 +239,7 @@ class VecRect extends Vec<cvg.VecRect, Rect> {
   cvg.VecRect get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecRect_free(ptr);
   }
@@ -326,7 +329,7 @@ class VecRect2f extends Vec<cvg.VecRect2f, Rect2f> {
   cvg.VecRect2f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecRect2f_free(ptr);
   }

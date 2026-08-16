@@ -65,10 +65,29 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     OS.iOS: userDefines["ios"] as Map<String, dynamic>?,
   };
   final targetOS = input.config.code.targetOS;
+  // Whether to build OpenCV with OpenCL support for the target platform.
+  // NOTE: with OpenCL enabled, the OpenCV runtime may hang at process exit (race condition in OpenCL teardown).
+  // Reads `use_opencl` from the platform-specific user defines
+  // (e.g. `hooks.user_defines.dartcv4.windows.use_opencl` in pubspec.yaml).
+  // Defaults to false when unspecified; always false on iOS (not supported).
+  final useOpenCL = targetOS != OS.iOS && (platformDefines[targetOS]?['use_opencl'] as bool? ?? false);
+
+  // Whether to enable linker dead-code elimination (`DARTCV_TREESHAKE`).
+  final treeshake = userDefines["treeshake"] as bool? ?? false;
+  // Optional keep-list of exported dartcv symbols, normally produced by
+  // `hook/link.dart` from the recorded `@ffi.Native` usages (AOT builds).
+  // When present, CMake restricts the DLL exports to these symbols and strips
+  // everything unreachable from them. The file lives in the shared
+  // `hooks_runner/shared/<package>/` directory (checksum-independent) so both
+  // this build hook and the link hook can find it across build passes.
+  final keepFileUri = input.outputDirectory.resolve('../../dartcv_keep.txt');
+  final keepFile = File.fromUri(keepFileUri).existsSync() ? keepFileUri.toFilePath() : null;
 
   final logger = Logger('')
     ..level = Level.ALL
     ..onRecord.listen((record) => debugMode ? stderr.write(record.message) : print(record.message));
+  logger.info("[dartcv4] use_opencl: $useOpenCL\n");
+  logger.info("[dartcv4] treeshake: $treeshake keep_file: ${keepFile ?? 'none'}\n");
 
   final includeList = (includeModules ?? const []).cast<String>();
   final excludeList = (excludeModules ?? const []).cast<String>();
@@ -131,15 +150,16 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_TIFF': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'BUILD_OPENJPEG': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_OPENJPEG': 'OFF',
-      if (targetOS == OS.iOS) 'WITH_OPENCL': 'OFF',
-      if (targetOS == OS.iOS) 'WITH_OPENCLAMDBLAS': 'OFF',
-      if (targetOS == OS.iOS) 'WITH_OPENCLAMDFFT': 'OFF',
-      if (targetOS == OS.macOS) 'WITH_OPENCL': 'ON',
-      if (targetOS == OS.macOS) 'WITH_OPENCLAMDBLAS': 'ON',
-      if (targetOS == OS.macOS) 'WITH_OPENCLAMDFFT': 'ON',
+      'WITH_OPENCL': useOpenCL ? 'ON' : 'OFF',
+      if (useOpenCL && targetOS == OS.macOS) 'WITH_OPENCLAMDBLAS': 'ON',
+      if (useOpenCL && targetOS == OS.macOS) 'WITH_OPENCLAMDFFT': 'ON',
+      if (!useOpenCL) 'WITH_OPENCLAMDBLAS': 'OFF',
+      if (!useOpenCL) 'WITH_OPENCLAMDFFT': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_OPENCL_SVM': 'OFF',
       // 'FFMPEG_USE_STATIC_LIBS': 'OFF',
       'DARTCV_ENABLE_INSTALL': 'ON',
+      'DARTCV_TREESHAKE': treeshake ? 'ON' : 'OFF',
+      if (keepFile != null) 'DARTCV_KEEP_FILE': keepFile,
       'CMAKE_INSTALL_PREFIX': input.outputDirectory.resolve('install/').toFilePath(),
       'CMAKE_POLICY_VERSION_MINIMUM': '3.5',
       ...moduleDefines,

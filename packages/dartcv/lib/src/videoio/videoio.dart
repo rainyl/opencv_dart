@@ -55,7 +55,8 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   cvg.VideoCapture get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.VideoCapturePtr>(cvideoio.addresses.cv_VideoCapture_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideoio.cv_VideoCapture_close(ptr);
   }
@@ -269,7 +270,8 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   cvg.VideoWriter get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.VideoWriterPtr>(cvideoio.addresses.cv_VideoWriter_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideoio.cv_VideoWriter_close(ptr);
   }

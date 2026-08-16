@@ -57,7 +57,26 @@ const double CV_F32_MAX = 3.4028234663852886e+38;
 const double CV_F64_MAX = 1.7976931348623157e+308;
 
 // base structures
-abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {}
+abstract class CvObject<T extends ffi.NativeType> implements ffi.Finalizable {
+  /// Whether this object has been disposed. After [dispose] the underlying
+  /// native memory is freed and the object must not be used any more.
+  bool _disposed = false;
+
+  /// Whether this object has been disposed.
+  bool get isDisposed => _disposed;
+
+  /// Releases the underlying native resources. **Idempotent**: calling it more
+  /// than once is safe, but the object must not be used after [dispose].
+  void dispose() {
+    if (_disposed) return;
+    _disposed = true;
+    freeNative();
+  }
+
+  /// Frees the native resources owned by this object. Subclasses implement the
+  /// concrete free logic here; callers must use [dispose] instead.
+  void freeNative();
+}
 
 mixin ComparableMixin {
   List<Object?> get props;
@@ -110,13 +129,26 @@ Future<T> cvRunAsync0<T>(
 ) async {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse() {
     onComplete(completer);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 
@@ -128,13 +160,26 @@ Future<T> cvRunAsync1<T>(
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse(VoidPtr p) {
     onComplete(completer, p);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 
@@ -144,13 +189,26 @@ Future<T> cvRunAsync2<T>(
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_2Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse(VoidPtr p, VoidPtr p1) {
     onComplete(completer, p, p1);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 
@@ -160,13 +218,26 @@ Future<T> cvRunAsync3<T>(
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_3Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2) {
     onComplete(completer, p, p1, p2);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 
@@ -176,13 +247,26 @@ Future<T> cvRunAsync4<T>(
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_4Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) {
     onComplete(completer, p, p1, p2, p3);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 
@@ -192,13 +276,26 @@ Future<T> cvRunAsync5<T>(
 ) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_5Function> ccallback;
+  var closed = false;
+  void close() {
+    if (!closed) {
+      closed = true;
+      ccallback.close();
+    }
+  }
+
   void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) {
     onComplete(completer, p, p1, p2, p3, p4);
-    ccallback.close();
+    close();
   }
 
   ccallback = ffi.NativeCallable.listener(onResponse);
-  throwIfFailed(func(ccallback.nativeFunction));
+  try {
+    throwIfFailed(func(ccallback.nativeFunction));
+  } catch (_) {
+    close();
+    rethrow;
+  }
   return completer.future;
 }
 

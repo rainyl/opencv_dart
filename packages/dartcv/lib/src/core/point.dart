@@ -28,7 +28,8 @@ class Point extends CvStruct<cvg.CvPoint> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -63,7 +64,8 @@ class Point2f extends CvStruct<cvg.CvPoint2f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -98,7 +100,8 @@ class Point2d extends CvStruct<cvg.CvPoint2d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -134,7 +137,8 @@ class Point3f extends CvStruct<cvg.CvPoint3f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -173,7 +177,8 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -196,6 +201,11 @@ class Point3i extends CvStruct<cvg.CvPoint3i> {
 }
 
 class VecPoint extends Vec<cvg.VecPoint, Point> {
+  /// Whether this wrapper owns the pointed-to native memory. `false` for
+  /// *view* wrappers that alias a parent container's storage (see `VecVecPoint[i]`);
+  /// for those, [dispose] is a no-op because the parent is the actual owner.
+  bool _owned = true;
+
   VecPoint.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
       finalizer.attach(
@@ -228,6 +238,18 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPointPtr>(ccore.addresses.std_VecPoint_free);
+  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  /// Wraps a *view* of an inner vector owned by a parent container
+  /// (e.g. `VecVecPoint[i]`). The pointed-to `std::vector` is NOT owned here:
+  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
+  /// handle itself is freed by the GC via [viewFinalizer].
+  factory VecPoint._view(cvg.VecPointPtr ptr) {
+    final v = VecPoint.fromPointer(ptr, attach: false);
+    v._owned = false;
+    VecPoint.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
+    return v;
+  }
 
   @override
   VecPoint clone() => VecPoint.generate(length, (idx) => this[idx], dispose: true);
@@ -257,7 +279,9 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
   int get length => ccore.std_VecPoint_length(ptr);
 
   @override
-  void dispose() {
+  void freeNative() {
+    // views alias a parent container's memory; nothing to free here
+    if (!_owned) return;
     finalizer.detach(this);
     ccore.std_VecPoint_free(ptr);
   }
@@ -290,6 +314,11 @@ class VecPointIterator extends VecIterator<Point> {
 }
 
 class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
+  /// Whether this wrapper owns the pointed-to native memory. `false` for
+  /// *view* wrappers that alias a parent container's storage (see `VecVecPoint[i]`);
+  /// for those, [dispose] is a no-op because the parent is the actual owner.
+  bool _owned = true;
+
   VecPoint2f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
       finalizer.attach(
@@ -324,6 +353,18 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPoint2fPtr>(ccore.addresses.std_VecPoint2f_free);
+  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  /// Wraps a *view* of an inner vector owned by a parent container
+  /// (e.g. `VecVecPoint2f[i]`). The pointed-to `std::vector` is NOT owned here:
+  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
+  /// handle itself is freed by the GC via [viewFinalizer].
+  factory VecPoint2f._view(cvg.VecPoint2fPtr ptr) {
+    final v = VecPoint2f.fromPointer(ptr, attach: false);
+    v._owned = false;
+    VecPoint2f.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
+    return v;
+  }
 
   @override
   VecPoint2f clone() => VecPoint2f.generate(length, (idx) => this[idx], dispose: true);
@@ -359,7 +400,9 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
   cvg.VecPoint2f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
+    // views alias a parent container's memory; nothing to free here
+    if (!_owned) return;
     finalizer.detach(this);
     ccore.std_VecPoint2f_free(ptr);
   }
@@ -386,6 +429,11 @@ class VecPoint2fIterator extends VecIterator<Point2f> {
 }
 
 class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
+  /// Whether this wrapper owns the pointed-to native memory. `false` for
+  /// *view* wrappers that alias a parent container's storage (see `VecVecPoint[i]`);
+  /// for those, [dispose] is a no-op because the parent is the actual owner.
+  bool _owned = true;
+
   VecPoint3f.fromPointer(super.ptr, {bool attach = true, int? length}) : super.fromPointer() {
     if (attach) {
       finalizer.attach(
@@ -420,6 +468,18 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPoint3fPtr>(ccore.addresses.std_VecPoint3f_free);
+  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  /// Wraps a *view* of an inner vector owned by a parent container
+  /// (e.g. `VecVecPoint3f[i]`). The pointed-to `std::vector` is NOT owned here:
+  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
+  /// handle itself is freed by the GC via [viewFinalizer].
+  factory VecPoint3f._view(cvg.VecPoint3fPtr ptr) {
+    final v = VecPoint3f.fromPointer(ptr, attach: false);
+    v._owned = false;
+    VecPoint3f.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
+    return v;
+  }
 
   @override
   VecPoint3f clone() => VecPoint3f.generate(length, (idx) => this[idx], dispose: true);
@@ -455,7 +515,9 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
   cvg.VecPoint3f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
+    // views alias a parent container's memory; nothing to free here
+    if (!_owned) return;
     finalizer.detach(this);
     ccore.std_VecPoint3f_free(ptr);
   }
@@ -551,7 +613,7 @@ class VecPoint3i extends Vec<cvg.VecPoint3i, Point3i> {
   cvg.VecPoint3i get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecPoint3i_free(ptr);
   }
@@ -622,7 +684,7 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   cvg.VecVecPoint get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVecPoint_free(ptr);
   }
@@ -630,12 +692,15 @@ class VecVecPoint extends VecUnmodifible<cvg.VecVecPoint, VecPoint> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
-  /// Returns a **reference**
+  /// Returns a **reference view** of the inner vector at [idx].
   ///
-  /// Note: the memory of returned [VecPoint] is owned by this [VecVecPoint],
-  /// explicitly call [VecPoint.clone] if the parent [VecVecPoint] may be disposed.
+  /// Mutations performed through the returned [VecPoint] (e.g. [add], `[]=`,
+  /// [length]) are applied in place and reflected in this [VecVecPoint].
+  /// The view does not own the pointed-to memory: calling [VecPoint.dispose]
+  /// is a safe no-op, and the view is only valid while this [VecVecPoint] is
+  /// not structurally modified (resize/reserve/replace of the inner vector).
   @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
+  VecPoint operator [](int idx) => VecPoint._view(ccore.std_VecVecPoint_get_p(ptr, idx));
 
   List<List<Point>> copyToList() => List.generate(
     length,
@@ -653,9 +718,9 @@ class VecVecPointIterator extends VecIterator<VecPoint> {
   @override
   int get length => ccore.std_VecVecPoint_length(ptr);
 
-  /// return the reference
+  /// return a reference view, see [VecVecPoint.operator[]]
   @override
-  VecPoint operator [](int idx) => VecPoint.fromPointer(ccore.std_VecVecPoint_get_p(ptr, idx), attach: false);
+  VecPoint operator [](int idx) => VecPoint._view(ccore.std_VecVecPoint_get_p(ptr, idx));
 }
 
 class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
@@ -702,7 +767,7 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
   cvg.VecVecPoint2f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVecPoint2f_free(ptr);
   }
@@ -710,13 +775,15 @@ class VecVecPoint2f extends VecUnmodifible<cvg.VecVecPoint2f, VecPoint2f> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
-  /// Returns a **reference**
+  /// Returns a **reference view** of the inner vector at [idx].
   ///
-  /// Note: the memory of returned [VecPoint2f] is owned by this [VecVecPoint2f],
-  /// explicitly call [VecPoint2f.clone] if the parent [VecVecPoint2f] may be disposed.
+  /// Mutations performed through the returned [VecPoint2f] (e.g. [add], `[]=`,
+  /// [length]) are applied in place and reflected in this [VecVecPoint2f].
+  /// The view does not own the pointed-to memory: calling [VecPoint2f.dispose]
+  /// is a safe no-op, and the view is only valid while this [VecVecPoint2f] is
+  /// not structurally modified (resize/reserve/replace of the inner vector).
   @override
-  VecPoint2f operator [](int idx) =>
-      VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
+  VecPoint2f operator [](int idx) => VecPoint2f._view(ccore.std_VecVecPoint2f_get_p(ptr, idx));
 
   List<List<Point2f>> copyToList() => List.generate(
     length,
@@ -734,10 +801,9 @@ class VecVecPoint2fIterator extends VecIterator<VecPoint2f> {
   @override
   int get length => ccore.std_VecVecPoint2f_length(ptr);
 
-  /// return the reference
+  /// return a reference view, see [VecVecPoint2f.operator[]]
   @override
-  VecPoint2f operator [](int idx) =>
-      VecPoint2f.fromPointer(ccore.std_VecVecPoint2f_get_p(ptr, idx), attach: false);
+  VecPoint2f operator [](int idx) => VecPoint2f._view(ccore.std_VecVecPoint2f_get_p(ptr, idx));
 }
 
 class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
@@ -784,7 +850,7 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
   cvg.VecVecPoint3f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVecPoint3f_free(ptr);
   }
@@ -792,13 +858,15 @@ class VecVecPoint3f extends VecUnmodifible<cvg.VecVecPoint3f, VecPoint3f> {
   @override
   ffi.Pointer<ffi.Void> asVoid() => ref.ptr.cast<ffi.Void>();
 
-  /// Returns a **reference**
+  /// Returns a **reference view** of the inner vector at [idx].
   ///
-  /// Note: the memory of returned [VecPoint3f] is owned by this [VecVecPoint3f],
-  /// explicitly call [VecPoint3f.clone] if the parent [VecVecPoint3f] may be disposed.
+  /// Mutations performed through the returned [VecPoint3f] (e.g. [add], `[]=`,
+  /// [length]) are applied in place and reflected in this [VecVecPoint3f].
+  /// The view does not own the pointed-to memory: calling [VecPoint3f.dispose]
+  /// is a safe no-op, and the view is only valid while this [VecVecPoint3f] is
+  /// not structurally modified (resize/reserve/replace of the inner vector).
   @override
-  VecPoint3f operator [](int idx) =>
-      VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
+  VecPoint3f operator [](int idx) => VecPoint3f._view(ccore.std_VecVecPoint3f_get_p(ptr, idx));
 
   List<List<Point3f>> copyToList() => List.generate(
     length,
@@ -816,10 +884,9 @@ class VecVecPoint3fIterator extends VecIterator<VecPoint3f> {
   @override
   int get length => ccore.std_VecVecPoint3f_length(ptr);
 
-  /// return the reference
+  /// return a reference view, see [VecVecPoint3f.operator[]]
   @override
-  VecPoint3f operator [](int idx) =>
-      VecPoint3f.fromPointer(ccore.std_VecVecPoint3f_get_p(ptr, idx), attach: false);
+  VecPoint3f operator [](int idx) => VecPoint3f._view(ccore.std_VecVecPoint3f_get_p(ptr, idx));
 }
 
 extension ListPointExtension on List<Point> {

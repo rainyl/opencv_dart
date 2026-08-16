@@ -7,6 +7,6 @@ library dartcv.imgproc;
 export 'src/imgproc/clahe.dart';
 export 'src/imgproc/imgproc.dart';
 export 'src/imgproc/imgproc_async.dart';
+export 'src/imgproc/linesegmentdetector.dart';
 export 'src/imgproc/subdiv2d.dart';
 export 'src/imgproc/subdiv2d_async.dart';
-export 'src/imgproc/linesegmentdetector.dart';
