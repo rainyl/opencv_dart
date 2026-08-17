@@ -13,6 +13,9 @@
 - new: regenerate FFI bindings through the ffigen `FfiGenerator` API (`tool/ffigen.dart`) with `@RecordUse` + `record_use_mapping` output
 - bump `ffigen` to `21.0.0`
 - add dependencies: `meta`, `record_use`
+- new: add `CharucoBoard` / `CharucoDetector` bindings (contrib module)
+- fix(videoio): free native-allocated arrays in backend registry getters (memory leak); make `hasBackend` / `isBackendBuiltIn` exception-safe; skip unknown backend values in `getBackends`-family via `VideoCaptureAPIs.maybeFromValue`; always release probed cameras in `enumerateCameras`; support `16F` in `parseFrameFormat`
+- fix(videoio): writer tests write to per-test temp dirs (no shared-file race between parallel test files); silence OpenCV backend-probing warnings in videoio tests
 
 ## 2.2.2
 
