@@ -73,7 +73,8 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
 
   static final finalizer = OcvFinalizer<cvg.CLAHEPtr>(cimgproc.addresses.cv_CLAHE_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cimgproc.cv_CLAHE_close(ptr);
   }

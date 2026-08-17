@@ -53,7 +53,8 @@ class Moments extends CvStruct<cvg.Moment> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }

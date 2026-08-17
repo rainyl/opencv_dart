@@ -101,7 +101,8 @@ class StereoBM extends CvStruct<cvg.StereoBM> {
   int get speckleWindowSize => cvg.cv_StereoBM_getSpeckleWindowSize(ref);
   set speckleWindowSize(int val) => cvg.cv_StereoBM_setSpeckleWindowSize(ref, val);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvg.cv_StereoBM_close(ptr);
   }
@@ -223,7 +224,8 @@ class StereoSGBM extends CvStruct<cvg.StereoSGBM> {
   int get speckleWindowSize => cvg.cv_StereoSGBM_getSpeckleWindowSize(ref);
   set speckleWindowSize(int val) => cvg.cv_StereoSGBM_setSpeckleWindowSize(ref, val);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvg.cv_StereoSGBM_close(ptr);
   }

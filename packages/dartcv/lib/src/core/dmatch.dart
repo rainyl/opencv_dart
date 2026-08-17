@@ -32,7 +32,8 @@ class DMatch extends CvStruct<cvg.DMatch> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -116,7 +117,7 @@ class VecDMatch extends Vec<cvg.VecDMatch, DMatch> {
   cvg.VecDMatch get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr.ref.ptr);
     calloc.free(ptr);
@@ -187,7 +188,7 @@ class VecVecDMatch extends VecUnmodifible<cvg.VecVecDMatch, VecDMatch> {
   cvg.VecVecDMatch get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVecDMatch_free(ptr);
   }

@@ -54,7 +54,8 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
     cvideo.addresses.cv_BackgroundSubtractorMOG2_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideo.cv_BackgroundSubtractorMOG2_close(ptr);
   }
@@ -71,7 +72,8 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
     cvideo.addresses.cv_BackgroundSubtractorKNN_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideo.cv_BackgroundSubtractorKNN_close(ptr);
   }
@@ -272,7 +274,8 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
 
   static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(cvideo.addresses.cv_TrackerMIL_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideo.cv_TrackerMIL_close(ptr);
   }
@@ -329,7 +332,8 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
   cvg.KalmanFilter get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.KalmanFilterPtr>(cvideo.addresses.cv_KalmanFilter_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvideo.cv_KalmanFilter_close(ptr);
   }

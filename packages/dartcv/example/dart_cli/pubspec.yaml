@@ -20,6 +20,8 @@ dev_dependencies:
 hooks:
   user_defines:
     dartcv4:
+      debug: true
+      treeshake: true
       include_modules:
         # - calib3d
         # - contrib
@@ -27,7 +29,7 @@ hooks:
         # - features2d
         # - highgui
         - imgcodecs
-        # - imgproc
+        - imgproc
         # - objdetect
         # - photo
         # - stitching

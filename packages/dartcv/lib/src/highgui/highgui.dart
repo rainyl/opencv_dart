@@ -16,7 +16,12 @@ import '../core/rect.dart';
 import '../g/highgui.g.dart' as cvg;
 import '../g/highgui.g.dart' as chighgui;
 
-String currentUIFramework() => chighgui.cv_currentUIFramework().toDartString();
+String currentUIFramework() {
+  final p = chighgui.cv_currentUIFramework();
+  final s = p.toDartString();
+  calloc.free(p);
+  return s;
+}
 
 int getMouseWheelDelta(int flags) => chighgui.cv_getMouseWheelDelta(flags);
 

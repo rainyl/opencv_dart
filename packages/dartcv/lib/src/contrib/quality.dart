@@ -106,6 +106,12 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   );
 
   @override
+  void freeNative() {
+    finalizer.detach(this);
+    ccontrib.cv_quality_QualityBRISQUE_close(ptr);
+  }
+
+  @override
   cvg.QualityBRISQUE get ref => ptr.ref;
 }
 
@@ -168,6 +174,12 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityGMSDPtr>(ccontrib.addresses.cv_quality_QualityGMSD_close);
+
+  @override
+  void freeNative() {
+    finalizer.detach(this);
+    ccontrib.cv_quality_QualityGMSD_close(ptr);
+  }
 
   @override
   cvg.QualityGMSD get ref => ptr.ref;
@@ -234,6 +246,12 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualityMSEPtr>(ccontrib.addresses.cv_quality_QualityMSE_close);
+
+  @override
+  void freeNative() {
+    finalizer.detach(this);
+    ccontrib.cv_quality_QualityMSE_close(ptr);
+  }
 
   @override
   cvg.QualityMSE get ref => ptr.ref;
@@ -322,6 +340,12 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
   static final finalizer = OcvFinalizer<cvg.QualityPSNRPtr>(ccontrib.addresses.cv_quality_QualityPSNR_close);
 
   @override
+  void freeNative() {
+    finalizer.detach(this);
+    ccontrib.cv_quality_QualityPSNR_close(ptr);
+  }
+
+  @override
   cvg.QualityPSNR get ref => ptr.ref;
 }
 
@@ -384,6 +408,12 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   }
 
   static final finalizer = OcvFinalizer<cvg.QualitySSIMPtr>(ccontrib.addresses.cv_quality_QualitySSIM_close);
+
+  @override
+  void freeNative() {
+    finalizer.detach(this);
+    ccontrib.cv_quality_QualitySSIM_close(ptr);
+  }
 
   @override
   cvg.QualitySSIM get ref => ptr.ref;

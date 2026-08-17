@@ -56,7 +56,8 @@ class Vec2b extends CvVec<cvg.Vec2b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -115,7 +116,8 @@ class Vec3b extends CvVec<cvg.Vec3b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -180,7 +182,8 @@ class Vec4b extends CvVec<cvg.Vec4b> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -233,7 +236,8 @@ class Vec2w extends CvVec<cvg.Vec2w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -292,7 +296,8 @@ class Vec3w extends CvVec<cvg.Vec3w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -356,7 +361,8 @@ class Vec4w extends CvVec<cvg.Vec4w> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -408,7 +414,8 @@ class Vec2s extends CvVec<cvg.Vec2s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -467,7 +474,8 @@ class Vec3s extends CvVec<cvg.Vec3s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -532,7 +540,8 @@ class Vec4s extends CvVec<cvg.Vec4s> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -585,7 +594,8 @@ class Vec2i extends CvVec<cvg.Vec2i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -644,7 +654,8 @@ class Vec3i extends CvVec<cvg.Vec3i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -709,7 +720,8 @@ class Vec4i extends CvVec<cvg.Vec4i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -786,7 +798,8 @@ class Vec6i extends CvVec<cvg.Vec6i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -875,7 +888,8 @@ class Vec8i extends CvVec<cvg.Vec8i> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -928,7 +942,8 @@ class Vec2f extends CvVec<cvg.Vec2f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -987,7 +1002,8 @@ class Vec3f extends CvVec<cvg.Vec3f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1053,7 +1069,8 @@ class Vec4f extends CvVec<cvg.Vec4f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1131,7 +1148,8 @@ class Vec6f extends CvVec<cvg.Vec6f> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1185,7 +1203,8 @@ class Vec2d extends CvVec<cvg.Vec2d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1244,7 +1263,8 @@ class Vec3d extends CvVec<cvg.Vec3d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1310,7 +1330,8 @@ class Vec4d extends CvVec<cvg.Vec4d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1388,7 +1409,8 @@ class Vec6d extends CvVec<cvg.Vec6d> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -1465,7 +1487,7 @@ class VecVec4i extends Vec<cvg.VecVec4i, Vec4i> {
   cvg.VecVec4i get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVec4i_free(ptr);
   }
@@ -1553,7 +1575,7 @@ class VecVec4f extends Vec<cvg.VecVec4f, Vec4f> {
   cvg.VecVec4f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVec4f_free(ptr);
   }
@@ -1605,7 +1627,7 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
     return VecVec6f.fromPointer(p, length: length);
   }
 
-  static final finalizer = OcvFinalizer<cvg.VecVec4fPtr>(ccore.addresses.std_VecVec4f_free);
+  static final finalizer = OcvFinalizer<cvg.VecVec6fPtr>(ccore.addresses.std_VecVec6f_free);
 
   @override
   VecVec6f clone() => VecVec6f.generate(length, (idx) => this[idx], dispose: false);
@@ -1641,7 +1663,7 @@ class VecVec6f extends Vec<cvg.VecVec6f, Vec6f> {
   cvg.VecVec6f get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecVec6f_free(ptr);
   }

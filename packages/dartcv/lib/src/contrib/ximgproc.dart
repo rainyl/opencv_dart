@@ -377,6 +377,12 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
+  void freeNative() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
+  @override
   List<num> get props => [
     alpha,
     beta,
@@ -433,7 +439,8 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
     ccontrib.addresses.cv_ximgproc_RFFeatureGetter_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_ximgproc_RFFeatureGetter_close(ptr);
   }
@@ -514,7 +521,8 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
     ccontrib.addresses.cv_ximgproc_StructuredEdgeDetection_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_ximgproc_StructuredEdgeDetection_close(ptr);
   }
@@ -561,7 +569,8 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
     ccontrib.addresses.cv_ximgproc_GraphSegmentation_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_ximgproc_GraphSegmentation_close(ptr);
   }
@@ -647,6 +656,12 @@ class EdgeDrawingParams extends CvStruct<cvg.EdgeDrawingParams> {
   set SumFlag(bool value) => ref.SumFlag = value;
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
+
+  @override
+  void freeNative() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
 
   @override
   List<Object?> get props => [
@@ -739,7 +754,8 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
 
   static final finalizer = OcvFinalizer<cvg.EdgeDrawingPtr>(ccontrib.addresses.cv_ximgproc_EdgeDrawing_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_ximgproc_EdgeDrawing_close(ptr);
   }

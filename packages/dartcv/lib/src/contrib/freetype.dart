@@ -297,7 +297,8 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
     ccontrib.addresses.cv_freetype_FreeType2_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_freetype_FreeType2_close(ptr);
   }

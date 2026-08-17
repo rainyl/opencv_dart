@@ -143,7 +143,8 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
     ccontrib.addresses.cv_img_hash_BlockMeanHash_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_img_hash_BlockMeanHash_close(ptr);
   }

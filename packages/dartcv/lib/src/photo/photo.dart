@@ -46,7 +46,8 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
 
   static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(cphoto.addresses.cv_MergeMertens_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cphoto.cv_MergeMertens_close(ptr);
   }
@@ -111,7 +112,8 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
 
   static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(cphoto.addresses.cv_AlignMTB_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cphoto.cv_AlignMTB_close(ptr);
   }

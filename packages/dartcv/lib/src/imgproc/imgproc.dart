@@ -774,7 +774,7 @@ Mat morphologyEx(
   int borderType = BORDER_CONSTANT,
   Scalar? borderValue,
 }) {
-  borderValue = borderValue ?? Scalar();
+  borderValue ??= Scalar();
   dst ??= Mat.empty();
   anchor ??= Point(-1, -1);
   cvRun(

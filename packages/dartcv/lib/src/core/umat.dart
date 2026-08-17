@@ -58,7 +58,7 @@ class UMat extends CvStruct<cvg.UMat> {
       return UMat.empty(flags: flags);
     }
 
-    type = type ?? MatType.CV_8UC3;
+    type ??= MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
     final p = calloc<cvg.UMat>();
     cvRun(() => ccore.cv_UMat_create_3(rows, cols, type!.value, scalar.ref, flags.value, p));
@@ -407,7 +407,8 @@ class UMat extends CvStruct<cvg.UMat> {
   @override
   cvg.UMat get ref => ptr.ref;
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccore.cv_UMat_close(ptr);
   }
@@ -435,8 +436,7 @@ enum UMatUsageFlags {
   USAGE_ALLOCATE_DEVICE_MEMORY(1 << 1), // 2
 
   /// It is not equal to: USAGE_ALLOCATE_HOST_MEMORY | USAGE_ALLOCATE_DEVICE_MEMORY
-  USAGE_ALLOCATE_SHARED_MEMORY(1 << 2)
-  ; // 4
+  USAGE_ALLOCATE_SHARED_MEMORY(1 << 2); // 4
 
   final int value;
 
@@ -456,8 +456,7 @@ enum AccessFlag {
   ACCESS_WRITE(1 << 25), // 0x2000000
   ACCESS_RW(3 << 24), // 0x3000000
   ACCESS_MASK(3 << 24), // 0x3000000
-  ACCESS_FAST(1 << 26)
-  ; // 0x4000000
+  ACCESS_FAST(1 << 26); // 0x4000000
 
   final int value;
 

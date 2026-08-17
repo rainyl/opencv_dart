@@ -54,7 +54,8 @@ class ArucoRefineParameters extends CvStruct<cvg.ArucoRefineParams> {
     ccontrib.addresses.cv_aruco_refineParameters_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_aruco_refineParameters_close(ptr);
   }
@@ -96,7 +97,8 @@ class CharucoDetectorParameters extends CvStruct<cvg.CharucoDetectorParams> {
     ccontrib.addresses.cv_aruco_charucoDetectorParameters_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_aruco_charucoDetectorParameters_close(ptr);
   }
@@ -203,7 +205,8 @@ class CharucoDetector extends CvStruct<cvg.CharucoDetector> {
     ccontrib.addresses.cv_aruco_charucoDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_aruco_charucoDetector_close(ptr);
   }

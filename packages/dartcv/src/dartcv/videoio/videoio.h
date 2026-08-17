@@ -58,8 +58,8 @@ CvStatus* cv_video_registry_getCameraBackends(int** rval, int* size);
 CvStatus* cv_video_registry_getStreamBackends(int** rval, int* size);
 CvStatus* cv_video_registry_getStreamBufferedBackends(int** rval, int* size);
 CvStatus* cv_video_registry_getWriterBackends(int** rval, int* size);
-bool cv_video_registry_hasBackend(int api);
-bool cv_video_registry_isBackendBuiltIn(int api);
+CvStatus* cv_video_registry_hasBackend(int api, bool* rval);
+CvStatus* cv_video_registry_isBackendBuiltIn(int api, bool* rval);
 
 // VideoWriter
 CvStatus* cv_VideoWriter_create(VideoWriter* rval);

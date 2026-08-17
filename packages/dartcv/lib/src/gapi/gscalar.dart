@@ -43,7 +43,8 @@ class GScalar extends CvStruct<cvg.GScalar> {
   }
 
   static final finalizer = OcvFinalizer<cvg.GScalarPtr>(cvg.addresses.gapi_GScalar_Close);
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvg.gapi_GScalar_Close(ptr);
   }

@@ -135,6 +135,7 @@ hooks:
   user_defines:
     dartcv4:
       # debug: true
+      # treeshake: true # tree-shaking unused symbols, onyl works in AOT mode and Dart 3.13+.
       include_modules: # `core` is always included
         - imgcodecs
         - imgproc
@@ -143,9 +144,16 @@ hooks:
         - contrib
         - dnn
         # ...
+      # whether to build OpenCV with OpenCL support, per platform
+      windows:
+        use_opencl: false
+      linux:
+        use_opencl: true
 ```
 
 - `debug`: enable debug mode, default is `false`, if enabled, all messages will be printed to stderr.
+- `treeshake`: enable linker dead-code elimination, default is `false`. When enabled, the native library is compiled with function-level sections and the linker garbage-collects code that is not reachable from the exported symbols.
+- `use_opencl`: whether to build OpenCV with OpenCL support, default is `false` for all platforms. It can be configured per platform under a platform key (`windows`, `linux`, `macos`, `android`, `ios`). OpenCL is **always disabled on `ios`** since iOS does not support it. Enabling OpenCL may accelerate some operations (e.g. `dnn`), but it is disabled by default because the OpenCV OpenCL runtime can cause a racy hang-at-exit during process teardown; enable it only if you need the acceleration.
 - valid modules:
   - `core`: always included
   - included by default:

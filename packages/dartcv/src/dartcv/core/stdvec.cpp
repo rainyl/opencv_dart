@@ -1,10 +1,12 @@
 //
-// Created by rainy on 2024/12/16.
+// Created by Rainyl on 2025/8/29.
+// Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 //
 
 #include "stdvec.h"
 
 #include <cstddef>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -768,7 +770,13 @@ VecPoint std_VecVecPoint_get(VecVecPoint* self, size_t index) {
     return VecPoint{new std::vector<cv::Point>(self->ptr->at(index))};
 }
 VecPoint* std_VecVecPoint_get_p(VecVecPoint* self, int index) {
-    return new VecPoint{&(self->ptr->at(index))};
+    // A *view*: `ptr` aliases the inner vector owned by the outer container, so
+    // mutations propagate to the parent. The wrapper struct is calloc'd so the
+    // Dart side can free it with `calloc.free`/`calloc.nativeFree` without
+    // touching the aliased vector.
+    VecPoint* p = (VecPoint*)calloc(1, sizeof(VecPoint));
+    p->ptr = &(self->ptr->at(index));
+    return p;
 }
 
 CvPoint* std_VecVecPoint_get_ij(VecVecPoint* self, size_t i, size_t j) {
@@ -816,7 +824,9 @@ VecPoint2f std_VecVecPoint2f_get(VecVecPoint2f* self, size_t index) {
     return VecPoint2f{new std::vector<cv::Point2f>(self->ptr->at(index))};
 }
 VecPoint2f* std_VecVecPoint2f_get_p(VecVecPoint2f* self, int index) {
-    return new VecPoint2f{new std::vector<cv::Point2f>(self->ptr->at(index))};
+    VecPoint2f* p = (VecPoint2f*)calloc(1, sizeof(VecPoint2f));
+    p->ptr = &(self->ptr->at(index));
+    return p;
 }
 
 CvPoint2f* std_VecVecPoint2f_get_ij(VecVecPoint2f* self, size_t i, size_t j) {
@@ -865,7 +875,9 @@ VecPoint3f std_VecVecPoint3f_get(VecVecPoint3f* self, size_t index) {
     return VecPoint3f{new std::vector<cv::Point3f>(val)};
 }
 VecPoint3f* std_VecVecPoint3f_get_p(VecVecPoint3f* self, int index) {
-    return new VecPoint3f{&(self->ptr->at(index))};
+    VecPoint3f* p = (VecPoint3f*)calloc(1, sizeof(VecPoint3f));
+    p->ptr = &(self->ptr->at(index));
+    return p;
 }
 
 CvPoint3f* std_VecVecPoint3f_get_ij(VecVecPoint3f* self, size_t i, size_t j) {
@@ -914,7 +926,7 @@ VecPoint3i std_VecVecPoint3i_get(VecVecPoint3i* self, size_t index) {
     return VecPoint3i{new std::vector<cv::Point3i>(v)};
 }
 VecPoint3i* std_VecVecPoint3i_get_p(VecVecPoint3i* self, int index) {
-    return new VecPoint3i{&(self->ptr->at(index))};
+    return new VecPoint3i{new std::vector<cv::Point3i>(self->ptr->at(index))};
 }
 
 CvPoint3i* std_VecVecPoint3i_get_ij(VecVecPoint3i* self, size_t i, size_t j) {
@@ -957,10 +969,10 @@ VecVecChar* std_VecVecChar_new_3(char** val, VecI32 sizes) {
     if (!sizes.ptr || sizes.ptr->empty()) {
         return new VecVecChar{new std::vector<std::vector<char>>()};
     }
-    auto rv = new std::vector<std::vector<char>>(sizes.ptr->size());
+    auto rv = new std::vector<std::vector<char>>();
+    rv->reserve(sizes.ptr->size());
     for (size_t i = 0; i < sizes.ptr->size(); i++) {
-        auto t = std::vector<char>(val[i], val[i] + sizes.ptr->at(i));
-        rv->push_back(t);
+        rv->emplace_back(val[i], val[i] + sizes.ptr->at(i));
     }
     return new VecVecChar{rv};
 }

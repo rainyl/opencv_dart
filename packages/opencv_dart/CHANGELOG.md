@@ -1,9 +1,24 @@
 # opencv_dart
 
+## 2.3.0
+
+- new: memory-safety fixes:
+  - fix `VecVec6f` finalizer
+  - fix `strdup`/`calloc` memory leaks
+  - fix `Mat.fromMat(copy: true)` memory leak
+  - add null-guards in logging
+- new: idempotent `dispose()`/`freeNative()`, add `isDisposed` for all wrappers (P2 refactor, additive — no breaking API change)
+- new: native-assets tree-shaking: link hook writes `dartcv_keep.txt` from recorded uses (`@RecordUse`) + finalizer symbols; CMake `.def` / `--retain-symbols-file` restrict exports; keep-list only written on AOT builds; new `treeshake` hook option (Dart 3.13+)
+- new: `use_opencl` hook option to build OpenCV with OpenCL support, per-platform, default `false`, always disabled on `ios`
+- new: regenerate FFI bindings through the ffigen `FfiGenerator` API (`tool/ffigen.dart`) with `@RecordUse` + `record_use_mapping` output
+- bump `ffigen` to `21.0.0`
+- add dependencies: `meta`, `record_use`
+
 ## 2.2.2
 
 - new: add `LineSegmentDetector` support (imgproc module)
-- bump `native_toolchain_cmake` to `0.2.5`
+- bump `native_toolchain_cmake` to `0.3.1`
+- bump `hooks` to `2.1.0`
 
 ## 2.2.1+4
 

@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dartcv4:
     path: ../../
-  image_picker: ^1.1.2
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +95,7 @@ hooks:
   user_defines:
     dartcv4:
       debug: true
+      treeshake: true
       include_modules:
         - calib3d
         - dnn

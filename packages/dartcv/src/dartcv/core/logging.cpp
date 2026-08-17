@@ -50,16 +50,19 @@ void LogCallbackExProxy(
     const char* func,
     const char* message
 ) {
+    if (logCallbackEx == nullptr) {
+        return;
+    }
     logCallbackEx(
         static_cast<int>(logLevel),
-        strdup(tag),
+        tag,
         strlen(tag),
-        strdup(file),
+        file,
         strlen(file),
         line,
-        strdup(func),
+        func,
         strlen(func),
-        strdup(message),
+        message,
         strlen(message)
     );
 }
@@ -77,7 +80,9 @@ CvStatus* replaceWriteLogMessageEx(LogCallbackEx callback) {
 }
 
 void logCallbackProxy(cv::utils::logging::LogLevel logLevel, const char* message) {
-    logCallback(logLevel, strdup(message), strlen(message));
+    if (logCallback != nullptr) {
+        logCallback(logLevel, message, strlen(message));
+    }
 }
 
 CvStatus* replaceWriteLogMessage(LogCallback callback) {

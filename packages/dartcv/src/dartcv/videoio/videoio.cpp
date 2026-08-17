@@ -147,12 +147,16 @@ CvStatus *cv_video_registry_getWriterBackends(int **rval, int *size) {
   END_WRAP
 }
 
-bool cv_video_registry_hasBackend(int api) {
-  return cv::videoio_registry::hasBackend(static_cast<cv::VideoCaptureAPIs>(api));
+CvStatus* cv_video_registry_hasBackend(int api, bool* rval) {
+  BEGIN_WRAP
+  *rval = cv::videoio_registry::hasBackend(static_cast<cv::VideoCaptureAPIs>(api));
+  END_WRAP
 }
 
-bool cv_video_registry_isBackendBuiltIn(int api) {
-  return cv::videoio_registry::isBackendBuiltIn(static_cast<cv::VideoCaptureAPIs>(api));
+CvStatus* cv_video_registry_isBackendBuiltIn(int api, bool* rval) {
+  BEGIN_WRAP
+  *rval = cv::videoio_registry::isBackendBuiltIn(static_cast<cv::VideoCaptureAPIs>(api));
+  END_WRAP
 }
 
 // VideoWriter

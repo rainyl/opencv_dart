@@ -110,7 +110,8 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     ccontrib.addresses.cv_wechat_qrcode_WeChatQRCode_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_wechat_qrcode_WeChatQRCode_close(ptr);
   }

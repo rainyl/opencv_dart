@@ -46,6 +46,12 @@ class UsacParams extends CvStruct<cvg.UsacParams> {
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   @override
+  void freeNative() {
+    finalizer.detach(this);
+    calloc.free(ptr);
+  }
+
+  @override
   cvg.UsacParams get ref => ptr.ref;
 
   /// double confidence;

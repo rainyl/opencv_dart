@@ -36,12 +36,20 @@ class CameraInfo {
 }
 
 class VideoIORegistry {
+  static List<VideoCaptureAPIs> _backends(int size, ffi.Pointer<ffi.Int> p) {
+    return List.generate(
+      size,
+      (i) => VideoCaptureAPIs.maybeFromValue(p[i]),
+    ).whereType<VideoCaptureAPIs>().toList();
+  }
+
   /// Returns list of all available backends
   static List<VideoCaptureAPIs> getBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     final pszie = calloc<ffi.Int>();
     cvRun(() => cvg.cv_video_registry_getBackends(p, pszie));
-    final backends = List.generate(pszie.value, (i) => VideoCaptureAPIs.fromValue(p.value[i]));
+    final backends = _backends(pszie.value, p.value);
+    calloc.free(p.value);
     calloc.free(p);
     calloc.free(pszie);
     return backends;
@@ -52,7 +60,8 @@ class VideoIORegistry {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     final pszie = calloc<ffi.Int>();
     cvRun(() => cvg.cv_video_registry_getCameraBackends(p, pszie));
-    final backends = List.generate(pszie.value, (i) => VideoCaptureAPIs.fromValue(p.value[i]));
+    final backends = _backends(pszie.value, p.value);
+    calloc.free(p.value);
     calloc.free(p);
     calloc.free(pszie);
     return backends;
@@ -63,7 +72,8 @@ class VideoIORegistry {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     final pszie = calloc<ffi.Int>();
     cvRun(() => cvg.cv_video_registry_getStreamBackends(p, pszie));
-    final backends = List.generate(pszie.value, (i) => VideoCaptureAPIs.fromValue(p.value[i]));
+    final backends = _backends(pszie.value, p.value);
+    calloc.free(p.value);
     calloc.free(p);
     calloc.free(pszie);
     return backends;
@@ -74,7 +84,8 @@ class VideoIORegistry {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     final pszie = calloc<ffi.Int>();
     cvRun(() => cvg.cv_video_registry_getStreamBufferedBackends(p, pszie));
-    final backends = List.generate(pszie.value, (i) => VideoCaptureAPIs.fromValue(p.value[i]));
+    final backends = _backends(pszie.value, p.value);
+    calloc.free(p.value);
     calloc.free(p);
     calloc.free(pszie);
     return backends;
@@ -85,27 +96,44 @@ class VideoIORegistry {
     final p = calloc<ffi.Pointer<ffi.Int>>();
     final pszie = calloc<ffi.Int>();
     cvRun(() => cvg.cv_video_registry_getWriterBackends(p, pszie));
-    final backends = List.generate(pszie.value, (i) => VideoCaptureAPIs.fromValue(p.value[i]));
+    final backends = _backends(pszie.value, p.value);
+    calloc.free(p.value);
     calloc.free(p);
     calloc.free(pszie);
     return backends;
   }
 
   /// Returns true if backend is available
-  static bool hasBackend(VideoCaptureAPIs api) => cvg.cv_video_registry_hasBackend(api.value);
+  static bool hasBackend(VideoCaptureAPIs api) {
+    final p = calloc<ffi.Bool>();
+    cvRun(() => cvg.cv_video_registry_hasBackend(api.value, p));
+    final rval = p.value;
+    calloc.free(p);
+    return rval;
+  }
 
   /// Returns true if backend is built in (false if backend is used as plugin)
-  static bool isBackendBuiltIn(VideoCaptureAPIs api) => cvg.cv_video_registry_isBackendBuiltIn(api.value);
+  static bool isBackendBuiltIn(VideoCaptureAPIs api) {
+    final p = calloc<ffi.Bool>();
+    cvRun(() => cvg.cv_video_registry_isBackendBuiltIn(api.value, p));
+    final rval = p.value;
+    calloc.free(p);
+    return rval;
+  }
 
   /// Parses frame format from int to string
   ///
   /// -1 is returned if frame format is not valid
   static String parseFrameFormat(int frameFormat) {
-    final typeList = ['8U', '8S', '16U', '16S', '32S', '32F', '64F'];
+    const typeList = ['8U', '8S', '16U', '16S', '32S', '32F', '64F', '16F'];
     if (frameFormat == -1) {
       return "UnknownFormat";
     }
-    return '${typeList[frameFormat % 8]}C${frameFormat ~/ 8 + 1}';
+    final depth = frameFormat % 8;
+    if (depth < 0 || depth >= typeList.length) {
+      return "UnknownFormat";
+    }
+    return '${typeList[depth]}C${frameFormat ~/ 8 + 1}';
   }
 
   // enumerate cameras
@@ -114,13 +142,13 @@ class VideoIORegistry {
     final cameras = <CameraInfo>[];
     for (var cameraIndex = 0; cameraIndex < maxCameras; cameraIndex++) {
       final camera = VideoCapture.fromDevice(cameraIndex, apiPreference: apiPreference.value);
-      if (camera.isOpened) {
+      try {
+        if (!camera.isOpened) continue;
         final width = camera.get(CAP_PROP_FRAME_WIDTH);
         final height = camera.get(CAP_PROP_FRAME_HEIGHT);
         final fps = camera.get(CAP_PROP_FPS);
         final frameFormat = camera.get(CAP_PROP_FORMAT).toInt();
         final name = 'video_${parseFrameFormat(frameFormat)}';
-        camera.release();
         cameras.add(
           CameraInfo(
             name: name,
@@ -131,6 +159,8 @@ class VideoIORegistry {
             backend: apiPreference,
           ),
         );
+      } finally {
+        camera.release();
       }
     }
 
@@ -258,49 +288,20 @@ enum VideoCaptureAPIs {
   /// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Gemini330, Femto Mega)
   /// attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15,
   /// and higher versions of Linux kernel may have exceptions.
-  CAP_OBSENSOR(2600)
-  ;
+  CAP_OBSENSOR(2600);
 
   final int value;
   const VideoCaptureAPIs(this.value);
 
-  factory VideoCaptureAPIs.fromValue(int value) => switch (value) {
-    0 => CAP_ANY,
-    // 200 => CAP_VFW,
-    200 => CAP_V4L,
-    // 200 => CAP_V4L2,
-    300 => CAP_FIREWIRE,
-    // 300 => CAP_FIREWARE,
-    // 300 => CAP_IEEE1394,
-    // 300 => CAP_DC1394,
-    // 300 => CAP_CMU1394,
-    500 => CAP_QT,
-    600 => CAP_UNICAP,
-    700 => CAP_DSHOW,
-    800 => CAP_PVAPI,
-    900 => CAP_OPENNI,
-    910 => CAP_OPENNI_ASUS,
-    1000 => CAP_ANDROID,
-    1100 => CAP_XIAPI,
-    1200 => CAP_AVFOUNDATION,
-    1300 => CAP_GIGANETIX,
-    1400 => CAP_MSMF,
-    1410 => CAP_WINRT,
-    1500 => CAP_INTELPERC,
-    // 1500 => CAP_REALSENSE,
-    1600 => CAP_OPENNI2,
-    1610 => CAP_OPENNI2_ASUS,
-    1620 => CAP_OPENNI2_ASTRA,
-    1700 => CAP_GPHOTO2,
-    1800 => CAP_GSTREAMER,
-    1900 => CAP_FFMPEG,
-    2000 => CAP_IMAGES,
-    2100 => CAP_ARAVIS,
-    2200 => CAP_OPENCV_MJPEG,
-    2300 => CAP_INTEL_MFX,
-    2400 => CAP_XINE,
-    2500 => CAP_UEYE,
-    2600 => CAP_OBSENSOR,
-    _ => throw ArgumentError.value(value, 'value', 'No VideoCaptureAPIs with value $value'),
-  };
+  /// Returns the enum member matching [value], or `null` if [value] is unknown.
+  static VideoCaptureAPIs? maybeFromValue(int value) {
+    for (final e in VideoCaptureAPIs.values) {
+      if (e.value == value) return e;
+    }
+    return null;
+  }
+
+  factory VideoCaptureAPIs.fromValue(int value) =>
+      maybeFromValue(value) ??
+      (throw ArgumentError.value(value, 'value', 'No VideoCaptureAPIs with value $value'));
 }

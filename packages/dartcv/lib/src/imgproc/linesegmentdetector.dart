@@ -113,7 +113,8 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     cimgproc.addresses.cv_LineSegmentDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cimgproc.cv_LineSegmentDetector_close(ptr);
   }

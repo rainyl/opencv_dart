@@ -1,22 +1,32 @@
+import 'dart:io';
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() async {
   // videoio
+  final prevLogLevel = cv.getLogLevel();
+  cv.setLogLevel(cv.LogLevel.ERROR);
+  tearDownAll(() => cv.setLogLevel(prevLogLevel));
+
   test('cv.VideoWriter.empty', () {
+    final dir = Directory.systemTemp.createTempSync('dartcv_videoio_test_');
+    addTearDown(() => dir.deleteSync(recursive: true));
     final writer = cv.VideoWriter.empty();
     expect(writer.isOpened, equals(false));
     expect(cv.VideoWriter.fourcc("MJPG"), closeTo(1196444237, 1e-3));
-    writer.open("test/images/small2.avi", "mp4v", 60, (400, 300));
-    writer.open("test/images/small2.mp4", "mp4v", 60, (400, 300), apiPreference: cv.CAP_ANY);
+    writer.open("${dir.path}/out.avi", "mp4v", 60, (400, 300));
+    writer.open("${dir.path}/out.mp4", "mp4v", 60, (400, 300), apiPreference: cv.CAP_ANY);
     writer.release();
 
     writer.dispose();
   });
 
   test('cv.VideoWriter.fromFile', () {
+    final dir = Directory.systemTemp.createTempSync('dartcv_videoio_test_');
+    addTearDown(() => dir.deleteSync(recursive: true));
     final writer = cv.VideoWriter.fromFile(
-      "test/images/small2.avi",
+      "${dir.path}/out.avi",
       "MJPG",
       60,
       (
@@ -29,7 +39,7 @@ void main() async {
     writer.write(frame);
     writer.release();
 
-    final capture = cv.VideoCapture.fromFile("test/images/small2.avi", apiPreference: cv.CAP_ANY);
+    final capture = cv.VideoCapture.fromFile("${dir.path}/out.avi", apiPreference: cv.CAP_ANY);
     expect(capture.isOpened, true);
     final (success, frame1) = capture.read();
     expect(success, true);
@@ -57,7 +67,7 @@ void main() async {
       vc.grab();
     }
 
-    if(apiPreference != cv.CAP_ANY) {
+    if (apiPreference != cv.CAP_ANY) {
       expect(vc.getBackendName(), isNotEmpty);
     }
 

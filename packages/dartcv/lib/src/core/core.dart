@@ -29,8 +29,7 @@ enum LogLevel {
   WARNING(3),
   INFO(4),
   DEBUG(5),
-  VERBOSE(6)
-  ;
+  VERBOSE(6);
 
   final int value;
   const LogLevel(this.value);
@@ -179,12 +178,22 @@ void replaceWriteLogMessageEx({LogCallbackExFunction? callback}) {
 }
 
 /// get version
-String openCvVersion() => ccore.getCvVersion().toDartString();
+String openCvVersion() {
+  final p = ccore.getCvVersion();
+  final s = p.toDartString();
+  calloc.free(p);
+  return s;
+}
 
 /// Returns full configuration time cmake output.
 ///
 /// Returned value is raw cmake output including version control system revision, compiler version, compiler flags, enabled modules and third party libraries, etc. Output format depends on target architecture.
-String getBuildInformation() => ccore.getBuildInfo().toDartString();
+String getBuildInformation() {
+  final p = ccore.getBuildInfo();
+  final s = p.toDartString();
+  calloc.free(p);
+  return s;
+}
 
 /// AbsDiff calculates the per-element absolute difference between two arrays
 /// or between an array and a scalar.
@@ -1350,6 +1359,10 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
 
 /// KMeans finds centers of clusters and groups input samples around the clusters.
 ///
+/// Note: the `bestLabels` element of the returned record is the **same** [Mat]
+/// object that was passed in (it is filled in place, not a copy), so do not
+/// call `dispose()` on both. The `centers` element is a newly allocated Mat.
+///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d5/d38/group__core__cluster.html#ga9a34dc06c6ec9460e90860f15bcd2f88
 (double rval, Mat bestLabels, Mat centers) kmeans(
@@ -1450,6 +1463,7 @@ void setUseOpenCL(bool flag) => ccore.cv_ocl_setUseOpenCL(flag);
 
 /// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#ga7f2f248d37cfa3e1e4122249f7dc8c49
 String typeToStr(int t) {
+  // NOTE: the returned pointer is an OpenCV-owned static string (NOT heap allocated), do NOT free it.
   final p = ccore.cv_ocl_typeToStr(t);
   return p.toDartString();
 }
@@ -1459,6 +1473,7 @@ bool useOpenCL() => ccore.cv_ocl_useOpenCL();
 
 /// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gaa3c1017cd44dcd6c739943f31bb8f248
 String vecopTypeToStr(int t) {
+  // NOTE: the returned pointer is an OpenCV-owned static string (NOT heap allocated), do NOT free it.
   final p = ccore.cv_ocl_vecopTypeToStr(t);
   return p.toDartString();
 }

@@ -62,7 +62,8 @@ class CharucoBoard extends CvStruct<cvg.CharucoBoard> {
   cvg.CharucoBoard get ref => ptr.ref;
   static final finalizer = OcvFinalizer<cvg.CharucoBoardPtr>(ccontrib.addresses.cv_aruco_charucoBoard_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     ccontrib.cv_aruco_charucoBoard_close(ptr);
   }

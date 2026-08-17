@@ -1,7 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
 void main() {
+  final prevLogLevel = cv.getLogLevel();
+  cv.setLogLevel(cv.LogLevel.ERROR);
+  tearDownAll(() => cv.setLogLevel(prevLogLevel));
+
   test('cv.getBackends', () {
     final backends = cv.VideoIORegistry.getBackends();
     print(backends);

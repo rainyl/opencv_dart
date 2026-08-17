@@ -1,5 +1,6 @@
 //
-// Created by rainy on 2025/8/12.
+// Created by Rainyl on 2025/8/12.
+// Licensed: Apache 2.0 license. Copyright (c) 2024 Rainyl.
 //
 
 #include "stereo.h"

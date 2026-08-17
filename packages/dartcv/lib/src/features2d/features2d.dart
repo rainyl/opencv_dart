@@ -114,7 +114,8 @@ class AKAZE extends Feature2D<cvg.AKAZE> {
 
   static final finalizer = OcvFinalizer<cvg.AKAZEPtr>(cfeatures2d.addresses.cv_AKAZE_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_AKAZE_close(ptr);
   }
@@ -222,7 +223,8 @@ class AgastFeatureDetector extends Feature2D<cvg.AgastFeatureDetector> {
     cfeatures2d.addresses.cv_AgastFeatureDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_AgastFeatureDetector_close(ptr);
   }
@@ -409,7 +411,8 @@ class BRISK extends Feature2D<cvg.BRISK> {
 
   static final finalizer = OcvFinalizer<cvg.BRISKPtr>(cfeatures2d.addresses.cv_BRISK_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_BRISK_close(ptr);
   }
@@ -505,7 +508,8 @@ class FastFeatureDetector extends Feature2D<cvg.FastFeatureDetector> {
     cfeatures2d.addresses.cv_FastFeatureDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_FastFeatureDetector_close(ptr);
   }
@@ -636,7 +640,8 @@ class GFTTDetector extends Feature2D<cvg.GFTTDetector> {
 
   static final finalizer = OcvFinalizer<cvg.GFTTDetectorPtr>(cfeatures2d.addresses.cv_GFTTDetector_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_GFTTDetector_close(ptr);
   }
@@ -777,7 +782,8 @@ class KAZE extends Feature2D<cvg.KAZE> {
 
   static final finalizer = OcvFinalizer<cvg.KAZEPtr>(cfeatures2d.addresses.cv_KAZE_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_KAZE_close(ptr);
   }
@@ -907,7 +913,8 @@ class MSER extends Feature2D<cvg.MSER> {
 
   static final finalizer = OcvFinalizer<cvg.MSERPtr>(cfeatures2d.addresses.cv_MSER_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_MSER_close(ptr);
   }
@@ -1051,7 +1058,8 @@ class ORB extends Feature2D<cvg.ORB> {
 
   static final finalizer = OcvFinalizer<cvg.ORBPtr>(cfeatures2d.addresses.cv_ORB_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_ORB_close(ptr);
   }
@@ -1154,7 +1162,8 @@ class SimpleBlobDetector extends Feature2D<cvg.SimpleBlobDetector> {
     cfeatures2d.addresses.cv_SimpleBlobDetector_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_SimpleBlobDetector_close(ptr);
   }
@@ -1231,7 +1240,8 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
 
   static final finalizer = OcvFinalizer<cvg.BFMatcherPtr>(cfeatures2d.addresses.cv_BFMatcher_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_BFMatcher_close(ptr);
   }
@@ -1271,8 +1281,8 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
       return FlannBasedMatcher.empty();
     }
 
-    indexParams = indexParams ?? FlannKDTreeIndexParams();
-    searchParams = searchParams ?? FlannSearchParams();
+    indexParams ??= FlannKDTreeIndexParams();
+    searchParams ??= FlannSearchParams();
 
     final p = calloc<cvg.FlannBasedMatcher>();
     cvRun(() => cfeatures2d.cv_FlannBasedMatcher_create_1(p, indexParams!.ref, searchParams!.ref));
@@ -1295,7 +1305,8 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     cfeatures2d.addresses.cv_FlannBasedMatcher_close,
   );
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_FlannBasedMatcher_close(ptr);
   }
@@ -1439,7 +1450,8 @@ class SIFT extends Feature2D<cvg.SIFT> {
 
   static final finalizer = OcvFinalizer<cvg.SIFTPtr>(cfeatures2d.addresses.cv_SIFT_close);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cfeatures2d.cv_SIFT_close(ptr);
   }

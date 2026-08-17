@@ -74,7 +74,8 @@ class GComputation extends CvStruct<cvg.GComputation> {
   }
 
   static final finalizer = OcvFinalizer<cvg.GComputationPtr>(cvg.addresses.gapi_GComputation_Close);
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     cvg.gapi_GComputation_Close(ptr);
   }

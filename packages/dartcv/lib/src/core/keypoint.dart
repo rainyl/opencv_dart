@@ -37,7 +37,8 @@ class KeyPoint extends CvStruct<cvg.KeyPoint> {
 
   static final finalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
-  void dispose() {
+  @override
+  void freeNative() {
     finalizer.detach(this);
     calloc.free(ptr);
   }
@@ -143,7 +144,7 @@ class VecKeyPoint extends Vec<cvg.VecKeyPoint, KeyPoint> {
   cvg.VecKeyPoint get ref => ptr.ref;
 
   @override
-  void dispose() {
+  void freeNative() {
     finalizer.detach(this);
     ccore.std_VecKeyPoint_free(ptr);
   }

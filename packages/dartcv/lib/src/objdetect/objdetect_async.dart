@@ -286,6 +286,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
+        calloc.free(v.value);
         calloc.free(v);
         return c.complete((ss, straightQRcode!));
       },
@@ -311,6 +312,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
+        calloc.free(v.value);
         calloc.free(v);
         return c.complete((ss, points!, straightQRcode!));
       },
@@ -336,6 +338,9 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final s = v.value.cast<Utf8>().toDartString();
+        if (v.value != ffi.nullptr) {
+          calloc.free(v.value);
+        }
         calloc.free(v);
         return c.complete((s, points, straightCode!));
       },
@@ -368,6 +373,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
           cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, callback),
       (c) {
         final info = ret.value.cast<Utf8>().toDartString();
+        calloc.free(ret.value);
         calloc.free(ret);
         return c.complete((info, points, straightCode));
       },
