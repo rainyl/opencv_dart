@@ -201,6 +201,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/pariterre">
+                    <img src="https://avatars.githubusercontent.com/u/17518525?v=4" width="100;" alt="pariterre"/>
+                    <br />
+                    <sub><b>Pariterre</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/lennartalff">
                     <img src="https://avatars.githubusercontent.com/u/33184858?v=4" width="100;" alt="lennartalff"/>
                     <br />
