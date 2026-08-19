@@ -215,6 +215,15 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/jasaw">
+                    <img src="https://avatars.githubusercontent.com/u/721280?v=4" width="100;" alt="jasaw"/>
+                    <br />
+                    <sub><b>jasaw</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/totemat">
                     <img src="https://avatars.githubusercontent.com/u/9088953?v=4" width="100;" alt="totemat"/>
                     <br />
