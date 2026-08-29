@@ -1458,26 +1458,50 @@ class Mat extends CvStruct<cvg.Mat> {
     return umat;
   }
 
-  /// This Method converts single-channel Mat to 2D List
-  List<List<num>> toList() {
+  /// This method converts a Mat to a 2D list.
+  ///
+  /// For single-channel Mats the shape is `[rows][cols]`. For multi-channel Mats
+  /// each row is flattened to `cols * channels` values.
+  ///
+  /// When [copy] is `true` (default), the returned lists are ordinary Dart lists
+  /// (deep copy) and are safe to use after this [Mat] is disposed. When [copy] is
+  /// `false`, each row is a zero-copy view over the Mat's native memory: writing
+  /// to a row writes back to the [Mat], and the view becomes invalid once the
+  /// [Mat] is disposed or its buffer is reallocated.
+  List<List<num>> toList({bool copy = true}) {
     final ret = <List<num>>[];
-    forEachRow((r, v) => ret.add(v));
+    forEachRow((r, v) => ret.add(copy ? v.toList() : v));
     return ret;
   }
 
   /// Returns a 3D list of the mat, only for multi-channel mats.
   /// The list is ordered as [row][col][channels].
   ///
+  /// When [copy] is `true` (default), the returned lists are ordinary Dart lists
+  /// (deep copy) and are safe to use after this [Mat] is disposed. When [copy] is
+  /// `false`, each pixel list is a zero-copy view over the Mat's native memory:
+  /// writing to it writes back to the [Mat], and the view becomes invalid once
+  /// the [Mat] is disposed or its buffer is reallocated.
+  ///
   /// Example:
   /// ```dart
-  /// final mat = Mat.fromList(3, 3, MatType.CV_8UC1, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  /// final mat = Mat.fromList(
+  ///   2, 2, MatType.CV_8UC2,
+  ///   [1, 2, 3, 4, 5, 6, 7, 8],
+  /// );
   /// final list = mat.toList3D();
-  /// print(list); // [[[0, 1, 2], [3, 4, 5], [6, 7, 8]]]
+  /// print(list); // [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
   /// ```
-  List<List<List<num>>> toList3D() {
+  List<List<List<num>>> toList3D({bool copy = true}) {
     cvAssert(channels >= 2, "toList3D() only for channels >= 2, but this.channels=$channels");
     final rows = this.rows, cols = this.cols;
-    return List.generate(rows, (r) => List.generate(cols, (c) => atPixel(r, c)));
+    return List.generate(
+      rows,
+      (r) => List.generate(cols, (c) {
+        final pixel = atPixel(r, c);
+        return copy ? pixel.toList() : pixel;
+      }),
+    );
   }
 
   String toFmtString({

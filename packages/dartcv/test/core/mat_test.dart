@@ -1102,4 +1102,40 @@ array([[[  0,   1,   2], [  3,   4,   5], [  6,   7,   8]],
     data3D2[0].add([1, 2, 3]);
     expect(() => cv.Mat.from3DList(data3D2, cv.MatType.CV_8UC3), throwsA(isA<cv.CvdException>()));
   });
+
+  test('Mat.toList / toList3D copy parameter', () {
+    final mat = cv.Mat.from2DList([
+      [1, 2, 3],
+      [4, 5, 6],
+    ], cv.MatType.CV_8UC1);
+
+    // Default (copy: true) is a deep copy: modifying it does not change the Mat.
+    final copied = mat.toList();
+    copied[0][0] = 100;
+    expect(mat.at<int>(0, 0), 1);
+
+    // copy: false returns a view: modifying it writes back to the Mat.
+    final view = mat.toList(copy: false);
+    view[0][0] = 100;
+    expect(mat.at<int>(0, 0), 100);
+
+    final mat3 = cv.Mat.from3DList([
+      [
+        [1, 2],
+        [3, 4],
+      ],
+      [
+        [5, 6],
+        [7, 8],
+      ],
+    ], cv.MatType.CV_8UC2);
+
+    final copied3 = mat3.toList3D();
+    copied3[0][0][0] = 100;
+    expect(mat3.at<int>(0, 0, 0), 1);
+
+    final view3 = mat3.toList3D(copy: false);
+    view3[0][0][0] = 100;
+    expect(mat3.at<int>(0, 0, 0), 100);
+  });
 }
