@@ -67,7 +67,14 @@ macro(_find_version _version_var _version_file _regex_find _regex_replace)
 endmacro()
 
 _find_version(PROJECT_VERSION "${PROJ_DIR}/pubspec.yaml" "^version: (.+)*$" "version: (.+)*$")
-_find_version(OPENCV_VERSION "${PROJ_DIR}/pubspec.yaml" "^opencv_version: (.+)*$" "opencv_version: (.+)*$")
+
+# The pubspec records the OpenCV this package is developed against, and is the
+# default. A caller that asked for a different one — -DOPENCV_VERSION, or
+# `opencv_version` in a project's hooks — has already set it, so reading the
+# pubspec here would silently discard that choice.
+if(NOT OPENCV_VERSION)
+  _find_version(OPENCV_VERSION "${PROJ_DIR}/pubspec.yaml" "^opencv_version: (.+)*$" "opencv_version: (.+)*$")
+endif()
 
 # Set OpenCV version
 if(NOT OPENCV_VERSION)
