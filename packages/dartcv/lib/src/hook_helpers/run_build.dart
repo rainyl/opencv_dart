@@ -64,6 +64,15 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   final parallelJobs = userDefines["parallel_jobs"] as int? ?? Platform.numberOfProcessors;
   final includeModules = userDefines["include_modules"] as List?;
   final excludeModules = userDefines["exclude_modules"] as List?;
+  // Which OpenCV to build against.
+  //
+  // `opencv_version` builds that upstream tag from source instead of the
+  // version this package pins, for consumers who need their results to match
+  // another environment running a specific OpenCV. `opencv_dir` points at an
+  // OpenCV that is already built — it wins over `opencv_version`, and may also
+  // be given per platform, since a cross-compiled OpenCV lives in a different
+  // place for each target.
+  final opencvVersion = userDefines["opencv_version"] as String?;
   final platformDefines = {
     OS.windows: userDefines["windows"] as Map<String, dynamic>?,
     OS.linux: userDefines["linux"] as Map<String, dynamic>?,
@@ -77,6 +86,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   // Reads `use_opencl` from the platform-specific user defines
   // (e.g. `hooks.user_defines.dartcv4.windows.use_opencl` in pubspec.yaml).
   // Defaults to false when unspecified; always false on iOS (not supported).
+  final opencvDir = (platformDefines[targetOS]?['opencv_dir'] ?? userDefines['opencv_dir']) as String?;
   final useOpenCL = targetOS != OS.iOS && (platformDefines[targetOS]?['use_opencl'] as bool? ?? false);
 
   // Whether to enable linker dead-code elimination (`DARTCV_TREESHAKE`).
@@ -114,6 +124,11 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
   logger.info("[dartcv4] merged modules: $modules\n");
   logger.info("[dartcv4] platform defines: $platformDefines\n");
+  if (opencvDir != null) {
+    logger.info("[dartcv4] using the OpenCV in: $opencvDir\n");
+  } else if (opencvVersion != null) {
+    logger.info("[dartcv4] building OpenCV $opencvVersion from source\n");
+  }
 
   final moduleDefines = {
     'DARTCV_WITH_CALIB3D': modules.contains('calib3d') ? 'ON' : 'OFF',
@@ -164,6 +179,14 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
       if (!useOpenCL) 'WITH_OPENCLAMDFFT': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_OPENCL_SVM': 'OFF',
       // 'FFMPEG_USE_STATIC_LIBS': 'OFF',
+      if (opencvDir != null) ...{
+        'DARTCV_BUILD_OPENCV_FROM_SOURCE': 'OFF',
+        'DARTCV_DISABLE_DOWNLOAD_OPENCV': 'ON',
+        'OpenCV_DIR': opencvDir,
+      } else if (opencvVersion != null) ...{
+        'DARTCV_BUILD_OPENCV_FROM_SOURCE': 'ON',
+        'OPENCV_VERSION': opencvVersion,
+      },
       'DARTCV_ENABLE_INSTALL': 'ON',
       'DARTCV_TREESHAKE': treeshake ? 'ON' : 'OFF',
       if (keepFile != null) 'DARTCV_KEEP_FILE': keepFile,
