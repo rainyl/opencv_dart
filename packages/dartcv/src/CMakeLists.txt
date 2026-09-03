@@ -115,6 +115,15 @@ include(FetchContent)
 
 # Build from source
 if(DARTCV_BUILD_OPENCV_FROM_SOURCE)
+  # Same floor as the pre-built and bring-your-own paths: building an older
+  # OpenCV from source succeeds and then fails to compile dartcv against it.
+  if(OPENCV_VERSION VERSION_LESS DARTCV_MIN_OPENCV_VERSION)
+    message(FATAL_ERROR
+      "dartcv requires OpenCV ${DARTCV_MIN_OPENCV_VERSION} or newer, "
+      "but was asked to build ${OPENCV_VERSION} from source."
+    )
+  endif()
+
   include(cmake/opencv_options.cmake)
 
   if(DARTCV_WITH_ARUCO
