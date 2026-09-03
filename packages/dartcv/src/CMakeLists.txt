@@ -78,6 +78,10 @@ if(NOT DARTCV_OPENCV_VERSION)
   set(DARTCV_OPENCV_VERSION "4.12.0.0")
 endif()
 
+# Oldest OpenCV whose headers provide every API dartcv calls. Verified by
+# building dartcv against 4.8.1, 4.10.0, 4.11.0 and 4.12.0.
+set(DARTCV_MIN_OPENCV_VERSION "4.12")
+
 message(STATUS "dartcv Version: ${PROJECT_VERSION}")
 message(STATUS "OpenCV Version: ${OPENCV_VERSION}")
 message(STATUS "OpenCV Prebuilt Version: ${DARTCV_OPENCV_VERSION}")

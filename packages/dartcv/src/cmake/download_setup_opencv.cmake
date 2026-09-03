@@ -131,6 +131,22 @@ set(OpenCV_STATIC ON)
 
 find_package(OpenCV REQUIRED)
 
+# dartcv calls OpenCV APIs that were introduced in 4.12: Mat::reinterpret,
+# cv::thresholdWithMask, cv::getClosestEllipsePoints, fisheye::solvePnPRansac
+# and cv::utils::logging::internal::replaceWriteLogMessage.
+#
+# The downloaded and built-from-source paths always satisfy this, but a build
+# pointed at an existing OpenCV through OpenCV_DIR can be given anything. Below
+# the minimum the configure step succeeds and the failure surfaces much later,
+# as a wall of unrelated C++ errors: 8 with OpenCV 4.11, 31 with 4.8.1, none of
+# which name the version as the cause.
+if(OpenCV_VERSION VERSION_LESS DARTCV_MIN_OPENCV_VERSION)
+  message(FATAL_ERROR
+    "dartcv requires OpenCV ${DARTCV_MIN_OPENCV_VERSION} or newer, "
+    "but found ${OpenCV_VERSION} in ${OpenCV_DIR}."
+  )
+endif()
+
 set(FFMPEG_USE_STATIC_LIBS OFF)
 if (NOT IOS AND (DARTCV_WITH_HIGHGUI OR DARTCV_WITH_VIDEOIO))
   find_package(FFMPEG REQUIRED)
