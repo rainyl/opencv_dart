@@ -1,5 +1,10 @@
 # dartcv
 
+## 2.3.1
+
+- fix: OpenCV module dependencies are now resolved through a transitive CMake closure, so indirectly enabled modules (e.g. `objdetect`, `ximgproc`) correctly pull in required dependencies (`calib3d` -> `features2d`/`flann`) regardless of option order.
+- new: Dart build/link hooks validate `include_modules`/`exclude_modules` conflicts and report all conflicting dependencies at once.
+
 ## 2.3.0
 
 - new: memory-safety fixes:
