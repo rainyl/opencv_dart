@@ -164,12 +164,21 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/diegolopezrm">
+                    <img src="https://avatars.githubusercontent.com/u/63005462?v=4" width="100;" alt="diegolopezrm"/>
+                    <br />
+                    <sub><b>Diego López</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Jiinwoo">
                     <img src="https://avatars.githubusercontent.com/u/46522752?v=4" width="100;" alt="Jiinwoo"/>
                     <br />
                     <sub><b>JinWoo Jung</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/westito">
                     <img src="https://avatars.githubusercontent.com/u/536799?v=4" width="100;" alt="westito"/>
@@ -177,8 +186,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>westito</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/dupuchba">
                     <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
@@ -191,13 +198,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <img src="https://avatars.githubusercontent.com/u/6680284?v=4" width="100;" alt="Escaton615"/>
                     <br />
                     <sub><b>Escaton615</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/diegolopezrm">
-                    <img src="https://avatars.githubusercontent.com/u/63005462?v=4" width="100;" alt="diegolopezrm"/>
-                    <br />
-                    <sub><b>Diego López</b></sub>
                 </a>
             </td>
             <td align="center">
