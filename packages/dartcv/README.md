@@ -161,6 +161,18 @@ its bindings are developed and tested against. Two options change that, for
 projects that need a specific OpenCV — usually because their results have to
 match another environment, such as a Python service processing the same images.
 
+> [!WARNING]
+> The pinned version is the only one dartcv is developed and tested against.
+> OpenCV changes its API between releases, so a different version may fail to
+> compile, fail to link, or build cleanly and then behave differently at
+> runtime. **Problems that come from a non-default OpenCV are not supported by
+> opencv_dart**: before reporting one, reproduce it with the pinned version,
+> and if it only happens with yours, it is yours to carry.
+>
+> Use these options when you have a reason to accept that — matching another
+> environment's results, or a platform SDK you do not control — and pin the
+> version you tested, rather than tracking whatever is newest.
+
 - `opencv_version`: build this upstream tag from source instead of the pinned
   one, for example `"4.12.0"`. Must be 4.12 or newer; dartcv calls APIs that do
   not exist before then, and the build stops with a message saying so.
