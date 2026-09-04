@@ -10,6 +10,7 @@ import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
+import 'module_conflicts.dart';
 import 'patchelf_linux.dart';
 
 const defaultIncludedModules = {
@@ -120,6 +121,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   if (excludeModulesFiltered.isNotEmpty) {
     modules.removeAll(excludeModulesFiltered);
   }
+  validateModuleConflicts(modules: modules, explicitlyExcluded: excludeModulesFiltered);
   logger.info("[dartcv4] include modules: $includeModulesFiltered\n");
   logger.info("[dartcv4] exclude modules: $excludeModulesFiltered\n");
   logger.info("[dartcv4] merged modules: $modules\n");

@@ -5,8 +5,6 @@
 // file. After changing any native source (C/C++/CMake), modify this file (e.g.
 // append a comment line) to force the hooks to recompile.
 
-// rebuild: hasBackend/isBackendBuiltIn now return CvStatus (videoio.cpp)
-
 import 'package:dartcv4/src/hook_helpers/run_build.dart';
 import 'package:hooks/hooks.dart';
 

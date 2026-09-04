@@ -22,6 +22,7 @@
 
 import 'dart:io';
 
+import 'package:dartcv4/src/hook_helpers/module_conflicts.dart';
 import 'package:hooks/hooks.dart';
 
 const _defaultIncludedModules = {'imgcodecs', 'imgproc'};
@@ -83,6 +84,7 @@ Set<String> _builtModules(HookInputUserDefines userDefines) {
       ..addAll(inc);
   }
   modules.removeAll(exc);
+  validateModuleConflicts(modules: modules, explicitlyExcluded: exc);
   return modules;
 }
 
