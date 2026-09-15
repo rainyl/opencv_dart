@@ -169,7 +169,6 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     parallelJobs: parallelJobs,
     defines: {
       if (targetOS == OS.macOS) 'DEPLOYMENT_TARGET': '10.15',
-      if (targetOS == OS.iOS) 'DEPLOYMENT_TARGET': '12.0',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'BUILD_TIFF': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'WITH_TIFF': 'OFF',
       if (targetOS == OS.iOS || targetOS == OS.macOS) 'BUILD_OPENJPEG': 'OFF',
