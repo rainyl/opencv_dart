@@ -35,7 +35,6 @@ hooks:
   user_defines:
     dartcv4:
       exclude_modules:
-        - contrib
         - dnn
         - features2d
       include_modules:
