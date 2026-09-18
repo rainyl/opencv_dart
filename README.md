@@ -187,6 +187,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/heyarny">
+                    <img src="https://avatars.githubusercontent.com/u/821278?v=4" width="100;" alt="heyarny"/>
+                    <br />
+                    <sub><b>Arnold Stark</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/dupuchba">
                     <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
                     <br />
@@ -214,6 +221,8 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>Pariterre</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/lennartalff">
                     <img src="https://avatars.githubusercontent.com/u/33184858?v=4" width="100;" alt="lennartalff"/>
@@ -221,8 +230,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>Thies Lennart Alff</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/jasaw">
                     <img src="https://avatars.githubusercontent.com/u/721280?v=4" width="100;" alt="jasaw"/>
