@@ -3,6 +3,8 @@ name: Test, Publish to pub.dev and release
 on:
   push:
     branches: ["main"]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v{{version}}'
     paths-ignore:
       - "**.md"
       - "LICENSE"
@@ -11,6 +13,13 @@ on:
     paths-ignore:
       - "**.md"
       - "LICENSE"
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the version of the selected ref to pub.dev"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   test-ubuntu:
@@ -90,7 +99,7 @@ jobs:
           dart test -x skip-workflow
   publish-dartcv4:
     name: Publish dartcv4
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
     needs: [test-ubuntu, test-windows, test-macos]
     permissions:
       id-token: write # Required for authentication using OIDC
@@ -107,7 +116,7 @@ jobs:
         run: dart pub publish --force
   publish-opencv-dart:
     name: Publish opencv_dart
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
     needs: [test-ubuntu, test-windows, test-macos]
     permissions:
       id-token: write # Required for authentication using OIDC
