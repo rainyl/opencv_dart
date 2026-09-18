@@ -25,7 +25,7 @@ If you want to add a new OpenCV API/module:
    - For async APIs, pass a native callback and complete via `cvRunAsync`/`cvRunAsync0`; add a `<module>_async.dart` in `lib/src/<module>/`.
 3. Register the new `.cpp` files in `packages/dartcv/src/dartcv/CMakeLists.txt` under a `DARTCV_WITH_<MODULE>` guard, declare the module option in `packages/dartcv/src/CMakeLists.txt`, and wire its OpenCV module dependencies in `src/cmake/opencv_options.cmake`.
 4. Register the module in the Dart side so it can be selected at build time:
-   - add it to `allowedModules` in `lib/src/hook_helpers/run_build.dart` and the module maps in `hook/link.dart`,
+   - add it to `allowedModules` in `lib/src/hook_helpers/user_defines.dart` and the module maps in `hook/link.dart`,
    - add it to `hooks.user_defines.dartcv4.include_modules` in `packages/dartcv/pubspec.yaml` so it builds during development (consumers enable it the same way).
    - Modules are off by default; even when not built, the Dart code exists and throws "symbol not found" at call time.
 5. Generate the FFI bindings: add your `.h` file to the per-module ffigen config in `packages/dartcv/ffigen/` and run `dart tool/ffigen.dart` from `packages/dartcv`. This writes the `lib/src/g/<module>.g.dart` bindings plus the `<module>.record_use_mapping.g.dart` tables used for tree-shaking. **Do not** use `make ffigen` / `dart run ffigen --config ffigen/*.yaml` for a full regen — those skip the record-use mapping and silently break tree-shaking.

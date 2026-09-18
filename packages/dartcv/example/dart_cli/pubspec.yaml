@@ -24,7 +24,6 @@ hooks:
       treeshake: true
       include_modules:
         # - calib3d
-        # - contrib
         # - dnn
         # - features2d
         # - highgui

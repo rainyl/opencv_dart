@@ -43,6 +43,7 @@ hooks:
         generator: Ninja
       ios:
         generator: Xcode
+        deployment_target: "15.0"
       include_modules:
         - calib3d
         - dnn

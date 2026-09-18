@@ -14,7 +14,7 @@ Follow `CONTRIBUTING.md`. Flow: C wrapper in `src/dartcv/<module>/` → register
 
 C wrapper conventions (see `src/dartcv/core/types.h`): wrap C++ classes via `CVD_TYPEDEF`, every function returns a `CvStatus*` (`BEGIN_WRAP`/`END_WRAP` translate C++ exceptions). Async APIs pass a native callback and complete via `cvRunAsync`/`cvRunAsync0`.
 
-Modules are gated at build time: core is always on, the default is core+imgcodecs+imgproc. The checked-in `pubspec.yaml` `hooks.user_defines.dartcv4.include_modules` enables everything for dev. Even when a module isn't built, its Dart code exists and throws "symbol not found" at call time. Adding a module also means adding it to `allowedModules` in `lib/src/hook_helpers/run_build.dart` and the module maps in `hook/link.dart`.
+Modules are gated at build time: core is always on, the default is core+imgcodecs+imgproc. The checked-in `pubspec.yaml` `hooks.user_defines.dartcv4.include_modules` enables everything for dev. Even when a module isn't built, its Dart code exists and throws "symbol not found" at call time. Adding a module also means adding it to `allowedModules` in `lib/src/hook_helpers/user_defines.dart` and the module maps in `hook/link.dart`.
 
 ## Build & test (from `packages/dartcv`)
 

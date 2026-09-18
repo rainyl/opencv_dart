@@ -4,6 +4,8 @@
 
 - fix: OpenCV module dependencies are now resolved through a transitive CMake closure, so indirectly enabled modules (e.g. `objdetect`, `ximgproc`) correctly pull in required dependencies (`calib3d` -> `features2d`/`flann`) regardless of option order.
 - new: Dart build/link hooks validate `include_modules`/`exclude_modules` conflicts and report all conflicting dependencies at once.
+- new: `deployment_target` hook option to override the Apple `DEPLOYMENT_TARGET` per platform (`ios` / `macos`), e.g. `ios: {deployment_target: "15.0"}`.
+- fix: the Apple deployment target is no longer hardcoded (`12.0` on iOS, `10.15` on macOS); it follows the target's code configuration (the deployment target of the Flutter/Xcode app) and `deployment_target` overrides it when a specific minimum is needed.
 
 ## 2.3.0
 

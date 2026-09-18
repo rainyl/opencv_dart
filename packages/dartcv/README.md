@@ -25,6 +25,7 @@ OpenCV Bindings for Dart Language.
       - [Asynchronous](#asynchronous)
       - [Flutter](#flutter)
       - [Configure hooks options](#configure-hooks-options)
+    - [Choosing which OpenCV to build against](#choosing-which-opencv-to-build-against)
   - [TODO](#todo)
   - [Contributors](#contributors)
   - [Acknowledgement](#acknowledgement)
@@ -141,7 +142,7 @@ hooks:
         - imgproc
         # ...
       exclude_modules:
-        - contrib
+        - videoio
         - dnn
         # ...
       # whether to build OpenCV with OpenCL support, per platform
@@ -198,6 +199,8 @@ Neither option changes anything for projects that do not set them.
 - `debug`: enable debug mode, default is `false`, if enabled, all messages will be printed to stderr.
 - `treeshake`: enable linker dead-code elimination, default is `false`. When enabled, the native library is compiled with function-level sections and the linker garbage-collects code that is not reachable from the exported symbols.
 - `use_opencl`: whether to build OpenCV with OpenCL support, default is `false` for all platforms. It can be configured per platform under a platform key (`windows`, `linux`, `macos`, `android`, `ios`). OpenCL is **always disabled on `ios`** since iOS does not support it. Enabling OpenCL may accelerate some operations (e.g. `dnn`), but it is disabled by default because the OpenCV OpenCL runtime can cause a racy hang-at-exit during process teardown; enable it only if you need the acceleration.
+- `deployment_target`: minimum Apple platform version, read from the `ios` / `macos` sub-map, e.g. `ios: {deployment_target: "15.0"}`. It overrides the deployment target dartcv would otherwise use, which comes from the target's code configuration (the deployment target of the Flutter/Xcode app). Quote values with trailing zeros (`"10.10"`): YAML parses an unquoted `10.10` as the number `10.1`.
+- `generator`: the CMake generator to use, per platform under a platform key (`windows`, `linux`, `macos`, `android`, `ios`), one of `Ninja`, `Unix Makefiles`, `Xcode`, `Visual Studio 16 2019`, `Visual Studio 17 2022`, `Visual Studio 18 2026`. Defaults are platform specific: `Unix Makefiles` on Linux, `Xcode` on macOS/iOS, `Ninja` on Android and CMake's own default on Windows.
 - valid modules:
   - `core`: always included
   - included by default:

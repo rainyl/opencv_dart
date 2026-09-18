@@ -22,30 +22,9 @@
 
 import 'dart:io';
 
-import 'package:dartcv4/src/hook_helpers/module_conflicts.dart';
+import 'package:code_assets/code_assets.dart';
+import 'package:dartcv4/src/hook_helpers/user_defines.dart';
 import 'package:hooks/hooks.dart';
-
-const _defaultIncludedModules = {'imgcodecs', 'imgproc'};
-
-const _excludedByDefault = {
-  'calib3d',
-  'dnn',
-  'features2d',
-  'flann',
-  'freetype',
-  'highgui',
-  'objdetect',
-  'photo',
-  'stitching',
-  'video',
-  'videoio',
-  'aruco',
-  'img_hash',
-  'quality',
-  'wechat_qrcode',
-  'ximgproc',
-  'xobjdetect',
-};
 
 /// Maps a dartcv module to the ffigen binding file that declares it.
 const _moduleGfile = <String, String>{
@@ -69,24 +48,6 @@ const _moduleGfile = <String, String>{
   'ximgproc': 'contrib.g.dart',
   'xobjdetect': 'contrib.g.dart',
 };
-
-/// Resolves the set of built dartcv modules from the hook user defines.
-Set<String> _builtModules(HookInputUserDefines userDefines) {
-  final modules = {..._defaultIncludedModules};
-  final include = (userDefines['include_modules'] as List?)?.cast<String>() ?? const <String>[];
-  final exclude = (userDefines['exclude_modules'] as List?)?.cast<String>() ?? const <String>[];
-  final allowed = {..._defaultIncludedModules, ..._excludedByDefault};
-  final inc = include.where(allowed.contains).toSet();
-  final exc = exclude.where(allowed.contains).toSet();
-  if (inc.isNotEmpty) {
-    modules
-      ..clear()
-      ..addAll(inc);
-  }
-  modules.removeAll(exc);
-  validateModuleConflicts(modules: modules, explicitlyExcluded: exc);
-  return modules;
-}
 
 /// Reads the ffigen `_SymbolAddresses` class names (the finalizer-registered
 /// `*_close` / `*_free` / `*_delete` symbols) from the binding files of the
@@ -143,7 +104,10 @@ Map<String, String> _recordUseMapping(Uri gDir, Set<String> modules) {
 void main(List<String> args) async {
   await link(args, (input, output) async {
     final recorded = input.recordedUses;
-    final modules = _builtModules(input.userDefines);
+    final modules = UserDefineArgsParser(
+      input.userDefines,
+      targetOS: input.config.buildCodeAssets ? input.config.code.targetOS : null,
+    ).modules;
     final gDir = input.packageRoot.resolve('lib/src/g/');
     final mapping = _recordUseMapping(gDir, modules);
     final finalizerSymbols = await _finalizerSymbols(gDir, modules);
