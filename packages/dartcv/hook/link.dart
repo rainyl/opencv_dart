@@ -36,6 +36,7 @@ const _moduleGfile = <String, String>{
   'video': 'video.g.dart',
   'videoio': 'videoio.g.dart',
   'photo': 'photo.g.dart',
+  'ml': 'ml.g.dart',
   'stitching': 'stitching.g.dart',
   'objdetect': 'objdetect.g.dart',
   'highgui': 'highgui.g.dart',

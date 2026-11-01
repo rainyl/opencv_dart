@@ -1,0 +1,330 @@
+format_version: 1.0.0
+files:
+  package:dartcv4/src/g/ml.g.dart:
+    used-config:
+      ffi-native: true
+    symbols:
+      c:@F@cv_ml_ANN_MLP_calcError:
+        name: cv_ml_ANN_MLP_calcError
+      c:@F@cv_ml_ANN_MLP_clear:
+        name: cv_ml_ANN_MLP_clear
+      c:@F@cv_ml_ANN_MLP_close:
+        name: cv_ml_ANN_MLP_close
+      c:@F@cv_ml_ANN_MLP_create:
+        name: cv_ml_ANN_MLP_create
+      c:@F@cv_ml_ANN_MLP_empty:
+        name: cv_ml_ANN_MLP_empty
+      c:@F@cv_ml_ANN_MLP_getDefaultName:
+        name: cv_ml_ANN_MLP_getDefaultName
+      c:@F@cv_ml_ANN_MLP_getLayerSizes:
+        name: cv_ml_ANN_MLP_getLayerSizes
+      c:@F@cv_ml_ANN_MLP_getTermCriteria:
+        name: cv_ml_ANN_MLP_getTermCriteria
+      c:@F@cv_ml_ANN_MLP_getVarCount:
+        name: cv_ml_ANN_MLP_getVarCount
+      c:@F@cv_ml_ANN_MLP_getWeights:
+        name: cv_ml_ANN_MLP_getWeights
+      c:@F@cv_ml_ANN_MLP_get_annealCoolingRatio:
+        name: cv_ml_ANN_MLP_get_annealCoolingRatio
+      c:@F@cv_ml_ANN_MLP_get_annealFinalT:
+        name: cv_ml_ANN_MLP_get_annealFinalT
+      c:@F@cv_ml_ANN_MLP_get_annealInitialT:
+        name: cv_ml_ANN_MLP_get_annealInitialT
+      c:@F@cv_ml_ANN_MLP_get_annealItePerStep:
+        name: cv_ml_ANN_MLP_get_annealItePerStep
+      c:@F@cv_ml_ANN_MLP_get_backpropMomentumScale:
+        name: cv_ml_ANN_MLP_get_backpropMomentumScale
+      c:@F@cv_ml_ANN_MLP_get_backpropWeightScale:
+        name: cv_ml_ANN_MLP_get_backpropWeightScale
+      c:@F@cv_ml_ANN_MLP_get_rpropDW0:
+        name: cv_ml_ANN_MLP_get_rpropDW0
+      c:@F@cv_ml_ANN_MLP_get_rpropDWMax:
+        name: cv_ml_ANN_MLP_get_rpropDWMax
+      c:@F@cv_ml_ANN_MLP_get_rpropDWMin:
+        name: cv_ml_ANN_MLP_get_rpropDWMin
+      c:@F@cv_ml_ANN_MLP_get_rpropDWMinus:
+        name: cv_ml_ANN_MLP_get_rpropDWMinus
+      c:@F@cv_ml_ANN_MLP_get_rpropDWPlus:
+        name: cv_ml_ANN_MLP_get_rpropDWPlus
+      c:@F@cv_ml_ANN_MLP_get_trainMethod:
+        name: cv_ml_ANN_MLP_get_trainMethod
+      c:@F@cv_ml_ANN_MLP_isClassifier:
+        name: cv_ml_ANN_MLP_isClassifier
+      c:@F@cv_ml_ANN_MLP_isTrained:
+        name: cv_ml_ANN_MLP_isTrained
+      c:@F@cv_ml_ANN_MLP_load:
+        name: cv_ml_ANN_MLP_load
+      c:@F@cv_ml_ANN_MLP_loadFromString:
+        name: cv_ml_ANN_MLP_loadFromString
+      c:@F@cv_ml_ANN_MLP_predict:
+        name: cv_ml_ANN_MLP_predict
+      c:@F@cv_ml_ANN_MLP_save:
+        name: cv_ml_ANN_MLP_save
+      c:@F@cv_ml_ANN_MLP_setActivationFunction:
+        name: cv_ml_ANN_MLP_setActivationFunction
+      c:@F@cv_ml_ANN_MLP_setLayerSizes:
+        name: cv_ml_ANN_MLP_setLayerSizes
+      c:@F@cv_ml_ANN_MLP_setTermCriteria:
+        name: cv_ml_ANN_MLP_setTermCriteria
+      c:@F@cv_ml_ANN_MLP_setTrainMethod:
+        name: cv_ml_ANN_MLP_setTrainMethod
+      c:@F@cv_ml_ANN_MLP_set_annealCoolingRatio:
+        name: cv_ml_ANN_MLP_set_annealCoolingRatio
+      c:@F@cv_ml_ANN_MLP_set_annealFinalT:
+        name: cv_ml_ANN_MLP_set_annealFinalT
+      c:@F@cv_ml_ANN_MLP_set_annealInitialT:
+        name: cv_ml_ANN_MLP_set_annealInitialT
+      c:@F@cv_ml_ANN_MLP_set_annealItePerStep:
+        name: cv_ml_ANN_MLP_set_annealItePerStep
+      c:@F@cv_ml_ANN_MLP_set_backpropMomentumScale:
+        name: cv_ml_ANN_MLP_set_backpropMomentumScale
+      c:@F@cv_ml_ANN_MLP_set_backpropWeightScale:
+        name: cv_ml_ANN_MLP_set_backpropWeightScale
+      c:@F@cv_ml_ANN_MLP_set_rpropDW0:
+        name: cv_ml_ANN_MLP_set_rpropDW0
+      c:@F@cv_ml_ANN_MLP_set_rpropDWMax:
+        name: cv_ml_ANN_MLP_set_rpropDWMax
+      c:@F@cv_ml_ANN_MLP_set_rpropDWMin:
+        name: cv_ml_ANN_MLP_set_rpropDWMin
+      c:@F@cv_ml_ANN_MLP_set_rpropDWMinus:
+        name: cv_ml_ANN_MLP_set_rpropDWMinus
+      c:@F@cv_ml_ANN_MLP_set_rpropDWPlus:
+        name: cv_ml_ANN_MLP_set_rpropDWPlus
+      c:@F@cv_ml_ANN_MLP_train:
+        name: cv_ml_ANN_MLP_train
+      c:@F@cv_ml_ANN_MLP_train_1:
+        name: cv_ml_ANN_MLP_train_1
+      c:@F@cv_ml_KNearest_calcError:
+        name: cv_ml_KNearest_calcError
+      c:@F@cv_ml_KNearest_clear:
+        name: cv_ml_KNearest_clear
+      c:@F@cv_ml_KNearest_close:
+        name: cv_ml_KNearest_close
+      c:@F@cv_ml_KNearest_create:
+        name: cv_ml_KNearest_create
+      c:@F@cv_ml_KNearest_empty:
+        name: cv_ml_KNearest_empty
+      c:@F@cv_ml_KNearest_findNearest:
+        name: cv_ml_KNearest_findNearest
+      c:@F@cv_ml_KNearest_getDefaultName:
+        name: cv_ml_KNearest_getDefaultName
+      c:@F@cv_ml_KNearest_getVarCount:
+        name: cv_ml_KNearest_getVarCount
+      c:@F@cv_ml_KNearest_get_algorithmType:
+        name: cv_ml_KNearest_get_algorithmType
+      c:@F@cv_ml_KNearest_get_defaultK:
+        name: cv_ml_KNearest_get_defaultK
+      c:@F@cv_ml_KNearest_get_emax:
+        name: cv_ml_KNearest_get_emax
+      c:@F@cv_ml_KNearest_get_isClassifier:
+        name: cv_ml_KNearest_get_isClassifier
+      c:@F@cv_ml_KNearest_isClassifier:
+        name: cv_ml_KNearest_isClassifier
+      c:@F@cv_ml_KNearest_isTrained:
+        name: cv_ml_KNearest_isTrained
+      c:@F@cv_ml_KNearest_load:
+        name: cv_ml_KNearest_load
+      c:@F@cv_ml_KNearest_loadFromString:
+        name: cv_ml_KNearest_loadFromString
+      c:@F@cv_ml_KNearest_predict:
+        name: cv_ml_KNearest_predict
+      c:@F@cv_ml_KNearest_save:
+        name: cv_ml_KNearest_save
+      c:@F@cv_ml_KNearest_set_algorithmType:
+        name: cv_ml_KNearest_set_algorithmType
+      c:@F@cv_ml_KNearest_set_defaultK:
+        name: cv_ml_KNearest_set_defaultK
+      c:@F@cv_ml_KNearest_set_emax:
+        name: cv_ml_KNearest_set_emax
+      c:@F@cv_ml_KNearest_set_isClassifier:
+        name: cv_ml_KNearest_set_isClassifier
+      c:@F@cv_ml_KNearest_train:
+        name: cv_ml_KNearest_train
+      c:@F@cv_ml_KNearest_train_1:
+        name: cv_ml_KNearest_train_1
+      c:@F@cv_ml_SVM_calcError:
+        name: cv_ml_SVM_calcError
+      c:@F@cv_ml_SVM_clear:
+        name: cv_ml_SVM_clear
+      c:@F@cv_ml_SVM_close:
+        name: cv_ml_SVM_close
+      c:@F@cv_ml_SVM_create:
+        name: cv_ml_SVM_create
+      c:@F@cv_ml_SVM_empty:
+        name: cv_ml_SVM_empty
+      c:@F@cv_ml_SVM_getClassWeights:
+        name: cv_ml_SVM_getClassWeights
+      c:@F@cv_ml_SVM_getDecisionFunction:
+        name: cv_ml_SVM_getDecisionFunction
+      c:@F@cv_ml_SVM_getDefaultGrid:
+        name: cv_ml_SVM_getDefaultGrid
+      c:@F@cv_ml_SVM_getDefaultName:
+        name: cv_ml_SVM_getDefaultName
+      c:@F@cv_ml_SVM_getSupportVectors:
+        name: cv_ml_SVM_getSupportVectors
+      c:@F@cv_ml_SVM_getTermCriteria:
+        name: cv_ml_SVM_getTermCriteria
+      c:@F@cv_ml_SVM_getUncompressedSupportVectors:
+        name: cv_ml_SVM_getUncompressedSupportVectors
+      c:@F@cv_ml_SVM_getVarCount:
+        name: cv_ml_SVM_getVarCount
+      c:@F@cv_ml_SVM_get_C:
+        name: cv_ml_SVM_get_C
+      c:@F@cv_ml_SVM_get_coef0:
+        name: cv_ml_SVM_get_coef0
+      c:@F@cv_ml_SVM_get_degree:
+        name: cv_ml_SVM_get_degree
+      c:@F@cv_ml_SVM_get_gamma:
+        name: cv_ml_SVM_get_gamma
+      c:@F@cv_ml_SVM_get_kernelType:
+        name: cv_ml_SVM_get_kernelType
+      c:@F@cv_ml_SVM_get_nu:
+        name: cv_ml_SVM_get_nu
+      c:@F@cv_ml_SVM_get_p:
+        name: cv_ml_SVM_get_p
+      c:@F@cv_ml_SVM_get_type:
+        name: cv_ml_SVM_get_type
+      c:@F@cv_ml_SVM_isClassifier:
+        name: cv_ml_SVM_isClassifier
+      c:@F@cv_ml_SVM_isTrained:
+        name: cv_ml_SVM_isTrained
+      c:@F@cv_ml_SVM_load:
+        name: cv_ml_SVM_load
+      c:@F@cv_ml_SVM_loadFromString:
+        name: cv_ml_SVM_loadFromString
+      c:@F@cv_ml_SVM_predict:
+        name: cv_ml_SVM_predict
+      c:@F@cv_ml_SVM_save:
+        name: cv_ml_SVM_save
+      c:@F@cv_ml_SVM_setClassWeights:
+        name: cv_ml_SVM_setClassWeights
+      c:@F@cv_ml_SVM_setTermCriteria:
+        name: cv_ml_SVM_setTermCriteria
+      c:@F@cv_ml_SVM_set_C:
+        name: cv_ml_SVM_set_C
+      c:@F@cv_ml_SVM_set_coef0:
+        name: cv_ml_SVM_set_coef0
+      c:@F@cv_ml_SVM_set_degree:
+        name: cv_ml_SVM_set_degree
+      c:@F@cv_ml_SVM_set_gamma:
+        name: cv_ml_SVM_set_gamma
+      c:@F@cv_ml_SVM_set_kernelType:
+        name: cv_ml_SVM_set_kernelType
+      c:@F@cv_ml_SVM_set_nu:
+        name: cv_ml_SVM_set_nu
+      c:@F@cv_ml_SVM_set_p:
+        name: cv_ml_SVM_set_p
+      c:@F@cv_ml_SVM_set_type:
+        name: cv_ml_SVM_set_type
+      c:@F@cv_ml_SVM_train:
+        name: cv_ml_SVM_train
+      c:@F@cv_ml_SVM_trainAuto:
+        name: cv_ml_SVM_trainAuto
+      c:@F@cv_ml_SVM_train_1:
+        name: cv_ml_SVM_train_1
+      c:@F@cv_ml_TrainData_close:
+        name: cv_ml_TrainData_close
+      c:@F@cv_ml_TrainData_create:
+        name: cv_ml_TrainData_create
+      c:@F@cv_ml_TrainData_getCatCount:
+        name: cv_ml_TrainData_getCatCount
+      c:@F@cv_ml_TrainData_getCatMap:
+        name: cv_ml_TrainData_getCatMap
+      c:@F@cv_ml_TrainData_getCatOfs:
+        name: cv_ml_TrainData_getCatOfs
+      c:@F@cv_ml_TrainData_getClassLabels:
+        name: cv_ml_TrainData_getClassLabels
+      c:@F@cv_ml_TrainData_getDefaultSubstValues:
+        name: cv_ml_TrainData_getDefaultSubstValues
+      c:@F@cv_ml_TrainData_getLayout:
+        name: cv_ml_TrainData_getLayout
+      c:@F@cv_ml_TrainData_getMissing:
+        name: cv_ml_TrainData_getMissing
+      c:@F@cv_ml_TrainData_getNAllVars:
+        name: cv_ml_TrainData_getNAllVars
+      c:@F@cv_ml_TrainData_getNSamples:
+        name: cv_ml_TrainData_getNSamples
+      c:@F@cv_ml_TrainData_getNTestSamples:
+        name: cv_ml_TrainData_getNTestSamples
+      c:@F@cv_ml_TrainData_getNTrainSamples:
+        name: cv_ml_TrainData_getNTrainSamples
+      c:@F@cv_ml_TrainData_getNVars:
+        name: cv_ml_TrainData_getNVars
+      c:@F@cv_ml_TrainData_getNames:
+        name: cv_ml_TrainData_getNames
+      c:@F@cv_ml_TrainData_getNormCatResponses:
+        name: cv_ml_TrainData_getNormCatResponses
+      c:@F@cv_ml_TrainData_getResponseType:
+        name: cv_ml_TrainData_getResponseType
+      c:@F@cv_ml_TrainData_getResponses:
+        name: cv_ml_TrainData_getResponses
+      c:@F@cv_ml_TrainData_getSampleWeights:
+        name: cv_ml_TrainData_getSampleWeights
+      c:@F@cv_ml_TrainData_getSamples:
+        name: cv_ml_TrainData_getSamples
+      c:@F@cv_ml_TrainData_getSubMatrix:
+        name: cv_ml_TrainData_getSubMatrix
+      c:@F@cv_ml_TrainData_getSubVector:
+        name: cv_ml_TrainData_getSubVector
+      c:@F@cv_ml_TrainData_getTestNormCatResponses:
+        name: cv_ml_TrainData_getTestNormCatResponses
+      c:@F@cv_ml_TrainData_getTestResponses:
+        name: cv_ml_TrainData_getTestResponses
+      c:@F@cv_ml_TrainData_getTestSampleIdx:
+        name: cv_ml_TrainData_getTestSampleIdx
+      c:@F@cv_ml_TrainData_getTestSampleWeights:
+        name: cv_ml_TrainData_getTestSampleWeights
+      c:@F@cv_ml_TrainData_getTestSamples:
+        name: cv_ml_TrainData_getTestSamples
+      c:@F@cv_ml_TrainData_getTrainNormCatResponses:
+        name: cv_ml_TrainData_getTrainNormCatResponses
+      c:@F@cv_ml_TrainData_getTrainResponses:
+        name: cv_ml_TrainData_getTrainResponses
+      c:@F@cv_ml_TrainData_getTrainSampleIdx:
+        name: cv_ml_TrainData_getTrainSampleIdx
+      c:@F@cv_ml_TrainData_getTrainSampleWeights:
+        name: cv_ml_TrainData_getTrainSampleWeights
+      c:@F@cv_ml_TrainData_getTrainSamples:
+        name: cv_ml_TrainData_getTrainSamples
+      c:@F@cv_ml_TrainData_getVarIdx:
+        name: cv_ml_TrainData_getVarIdx
+      c:@F@cv_ml_TrainData_getVarSymbolFlags:
+        name: cv_ml_TrainData_getVarSymbolFlags
+      c:@F@cv_ml_TrainData_getVarType:
+        name: cv_ml_TrainData_getVarType
+      c:@F@cv_ml_TrainData_loadFromCSV:
+        name: cv_ml_TrainData_loadFromCSV
+      c:@F@cv_ml_TrainData_missingValue:
+        name: cv_ml_TrainData_missingValue
+      c:@F@cv_ml_TrainData_setTrainTestSplit:
+        name: cv_ml_TrainData_setTrainTestSplit
+      c:@F@cv_ml_TrainData_setTrainTestSplitRatio:
+        name: cv_ml_TrainData_setTrainTestSplitRatio
+      c:@F@cv_ml_TrainData_shuffleTrainTest:
+        name: cv_ml_TrainData_shuffleTrainTest
+      c:@S@ANN_MLP:
+        name: ANN_MLP
+      c:@S@KNearest:
+        name: KNearest
+      c:@S@MlParamGrid:
+        name: MlParamGrid
+      c:@S@SVM:
+        name: SVM
+      c:@S@TrainData:
+        name: TrainData
+      c:ann_mlp.h@T@ANN_MLPPtr:
+        name: ANN_MLPPtr
+      c:knearest.h@T@KNearestPtr:
+        name: KNearestPtr
+      c:svm.h@T@SVMPtr:
+        name: SVMPtr
+      c:train_data.h@T@TrainDataPtr:
+        name: TrainDataPtr
+      c:types.h@T@CvStatus:
+        name: CvStatus
+      c:types.h@T@Mat:
+        name: Mat
+      c:types.h@T@TermCriteria:
+        name: TermCriteria
+      c:types.h@T@VecVecChar:
+        name: VecVecChar
