@@ -124,7 +124,7 @@ class SVM extends CvStruct<cml.SVM> {
   /// Number of variables in training samples.
   int get varCount => cml.cv_ml_SVM_getVarCount(ref);
 
-  /// The name used when saving the model, e.g. `opencv_ml_svm`.
+  /// The name used when saving the model, `opencv_ml_svm`.
   String get defaultName {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     try {
@@ -161,8 +161,7 @@ class SVM extends CvStruct<cml.SVM> {
 
   /// Predicts the response for each row of [samples], one row of the returned Mat per sample.
   ///
-  /// With [StatModel.RAW_OUTPUT] the raw model output is returned instead (e.g. the SVM decision
-  /// function value).
+  /// With [StatModel.RAW_OUTPUT] the decision function values are returned instead of the labels.
   Mat predict(Mat samples, {int flags = 0}) {
     final p = calloc<ffi.Float>();
     final results = Mat.empty();

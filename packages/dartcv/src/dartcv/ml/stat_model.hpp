@@ -16,6 +16,19 @@ template <typename T> inline cv::Ptr<T> cvd_ml_checked(cv::Ptr<T> p, const std::
     return p;
 }
 
+/// cv::Algorithm::save, but failing when the file can not be opened: OpenCV only logs that, and
+/// models whose write() uses no FileStorage::write (e.g. KNearest) would silently save nothing.
+inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
+    cv::FileStorage fs(filename, cv::FileStorage::WRITE);
+    if (!fs.isOpened()) {
+        CV_Error(cv::Error::StsError, std::string("Failed to open ") + filename + " for writing");
+    }
+    fs << model.getDefaultName() << "{";
+    model.write(fs);
+    fs << "}";
+    fs.release();
+}
+
 /// Defines the functions declared by CVD_ML_STAT_MODEL_DECL(NAME) for the OpenCV class CVTYPE.
 #define CVD_ML_STAT_MODEL_IMPL(NAME, CVTYPE)                                                       \
     CvStatus* cv_ml_##NAME##_create(NAME* rval) {                                                  \
@@ -44,8 +57,8 @@ template <typename T> inline cv::Ptr<T> cvd_ml_checked(cv::Ptr<T> p, const std::
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_save(NAME self, const char* filename) {                               \
-        BEGIN_WRAP(CVDEREF(self))                                                                  \
-        ->save(filename);                                                                          \
+        BEGIN_WRAP                                                                                 \
+        cvd_ml_save(*CVDEREF(self), filename);                                                     \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_clear(NAME self) {                                                    \

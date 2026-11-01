@@ -91,7 +91,7 @@ class KNearest extends CvStruct<cml.KNearest> {
   /// Number of variables in training samples.
   int get varCount => cml.cv_ml_KNearest_getVarCount(ref);
 
-  /// The name used when saving the model, e.g. `opencv_ml_svm`.
+  /// The name used when saving the model, `opencv_ml_knn`, `opencv_ml_knn_kd` with [KDTREE].
   String get defaultName {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     try {
@@ -128,8 +128,7 @@ class KNearest extends CvStruct<cml.KNearest> {
 
   /// Predicts the response for each row of [samples], one row of the returned Mat per sample.
   ///
-  /// With [StatModel.RAW_OUTPUT] the raw model output is returned instead (e.g. the SVM decision
-  /// function value).
+  /// [flags] is ignored by this model.
   Mat predict(Mat samples, {int flags = 0}) {
     final p = calloc<ffi.Float>();
     final results = Mat.empty();

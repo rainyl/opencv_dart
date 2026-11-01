@@ -96,7 +96,7 @@ class ANN_MLP extends CvStruct<cml.ANN_MLP> {
   /// Number of variables in training samples.
   int get varCount => cml.cv_ml_ANN_MLP_getVarCount(ref);
 
-  /// The name used when saving the model, e.g. `opencv_ml_svm`.
+  /// The name used when saving the model, `opencv_ml_ann_mlp`.
   String get defaultName {
     final p = calloc<ffi.Pointer<ffi.Char>>();
     try {
@@ -133,8 +133,7 @@ class ANN_MLP extends CvStruct<cml.ANN_MLP> {
 
   /// Predicts the response for each row of [samples], one row of the returned Mat per sample.
   ///
-  /// With [StatModel.RAW_OUTPUT] the raw model output is returned instead (e.g. the SVM decision
-  /// function value).
+  /// [flags] is ignored by this model.
   Mat predict(Mat samples, {int flags = 0}) {
     final p = calloc<ffi.Float>();
     final results = Mat.empty();
@@ -205,7 +204,9 @@ class ANN_MLP extends CvStruct<cml.ANN_MLP> {
   /// The current training method.
   int get trainMethod => cml.cv_ml_ANN_MLP_get_trainMethod(ref);
 
-  /// Weights of the layer [layerIdx], 0 and the last index hold the input and output scales.
+  /// Weights of the network: index 0 holds the input scale, 1 to `layerSizes.total - 1` the
+  /// weights between consecutive layers, the next index the output scale and the last one its
+  /// inverse.
   Mat getWeights(int layerIdx) {
     final rval = Mat.empty();
     cvRun(() => cml.cv_ml_ANN_MLP_getWeights(ref, layerIdx, rval.ref));

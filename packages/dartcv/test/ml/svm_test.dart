@@ -113,6 +113,7 @@ void main() {
     expect(() => svm.predict(queryPoints()), throwsA(isA<cv.CvException>()));
     expect(() => cv.SVM.load('/nonexistent/svm.yml'), throwsA(isA<cv.CvException>()));
     expect(() => cv.SVM.loadFromString('not a model'), throwsA(isA<cv.CvException>()));
+    expect(() => trainedSvm().save('/nonexistent/dir/svm.yml'), throwsA(isA<cv.CvException>()));
 
     final samples64 = cv.Mat.fromList(10, 2, cv.MatType.CV_64FC1, clusterPoints);
     expect(

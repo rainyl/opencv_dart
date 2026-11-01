@@ -61,5 +61,6 @@ void main() {
     final knn = cv.KNearest.create();
     expect(() => knn.findNearest(queryPoints(), 3), throwsA(isA<cv.CvException>()));
     expect(() => cv.KNearest.loadFromString('%YAML:1.0\nfoo: 1\n'), throwsA(isA<cv.CvException>()));
+    expect(() => trainedKnn().save('/nonexistent/dir/knn.yml'), throwsA(isA<cv.CvException>()));
   });
 }

@@ -94,6 +94,7 @@ void main() {
     final mlp = cv.ANN_MLP.create();
     expect(() => mlp.predict(queryPoints()), throwsA(isA<cv.CvException>()));
     expect(() => cv.ANN_MLP.load('/nonexistent/mlp.xml'), throwsA(isA<cv.CvException>()));
+    expect(() => trainedMlp().save('/nonexistent/dir/mlp.xml'), throwsA(isA<cv.CvException>()));
     // the responses must have one column per output neuron
     mlp.layerSizes = cv.Mat.fromList(1, 3, cv.MatType.CV_32SC1, <int>[2, 6, 2]);
     final threeColumns = cv.Mat.zeros(10, 3, cv.MatType.CV_32FC1);
