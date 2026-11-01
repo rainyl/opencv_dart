@@ -3,8 +3,8 @@
 */
 
 #include "dartcv/ml/train_data.h"
-#include "dartcv/core/vec.hpp"
 #include <string>
+#include <vector>
 
 static cv::_InputArray cvd_or_noarray(Mat m) {
     if (m.ptr == nullptr || m.ptr->empty()) {
@@ -143,7 +143,12 @@ CvStatus* cv_ml_TrainData_getNames(TrainData self, VecVecChar* rval) {
     BEGIN_WRAP
     std::vector<cv::String> names;
     (CVDEREF(self))->getNames(names);
-    rval->ptr = vecstr_2_vecvecchar(names);
+    // fill the caller-owned vector in place, replacing rval->ptr would leak it
+    auto& out = CVDEREF_P(rval);
+    out.clear();
+    for (const auto& name : names) {
+        out.emplace_back(name.begin(), name.end());
+    }
     END_WRAP
 }
 
