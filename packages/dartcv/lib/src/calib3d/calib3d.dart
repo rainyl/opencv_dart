@@ -45,13 +45,13 @@ import 'usac_params.dart';
     () => ccalib3d.cv_calibrateCamera(
       objectPoints.ref,
       imagePoints.ref,
-      imageSize.cvd.ref,
+      imageSize.cvdRef,
       cameraMatrix.ref,
       distCoeffs.ref,
       rvecs!.ref,
       tvecs!.ref,
       flags,
-      criteria.cvd.ref,
+      criteria.cvdRef,
       cRmsErr,
       ffi.nullptr,
     ),
@@ -216,7 +216,7 @@ Mat drawChessboardCorners(
   cvRun(
     () => ccalib3d.cv_drawChessboardCorners(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners.ref,
       patternWasFound,
       ffi.nullptr,
@@ -368,7 +368,7 @@ Scalar estimateChessboardSharpness(
   cvRun(
     () => ccalib3d.cv_estimateChessboardSharpness(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners.ref,
       riseDistance,
       vertical,
@@ -468,7 +468,7 @@ void filterSpeckles(
 bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) regionSize) {
   final prval = calloc<ffi.Bool>();
   cvRun(
-    () => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvd.ref, prval, ffi.nullptr),
+    () => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, ffi.nullptr),
   );
   final rval = prval.value;
   calloc.free(prval);
@@ -490,7 +490,7 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
   cvRun(
     () => ccalib3d.cv_findChessboardCorners(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners!.ptr,
       flags,
       r,
@@ -516,7 +516,7 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
   cvRun(
     () => ccalib3d.cv_findChessboardCornersSB(
       image.ref,
-      patternSize.toSize().ref,
+      patternSize.cvdRef,
       corners.ptr,
       flags,
       p,
@@ -544,7 +544,7 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
   cvRun(
     () => ccalib3d.cv_findChessboardCornersSB_1(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners!.ptr,
       flags,
       meta!.ref,
@@ -781,9 +781,9 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
     () => ccalib3d.cv_getOptimalNewCameraMatrix(
       cameraMatrix.ref,
       distCoeffs.ref,
-      imageSize.cvd.ref,
+      imageSize.cvdRef,
       alpha,
-      newImgSize.cvd.ref,
+      newImgSize.cvdRef,
       validPixROI,
       centerPrincipalPoint,
       rval.ptr,
@@ -815,7 +815,7 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
       distCoeffs.ref,
       R.ref,
       newCameraMatrix.ref,
-      size.cvd.ref,
+      size.cvdRef,
       m1type,
       map1!.ref,
       map2!.ref,

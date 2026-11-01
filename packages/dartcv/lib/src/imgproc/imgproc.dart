@@ -271,7 +271,7 @@ Mat bilateralFilter(Mat src, int diameter, double sigmaColor, double sigmaSpace,
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
 Mat blur(Mat src, (int, int) ksize, {Mat? dst}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvd.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvdRef, ffi.nullptr));
   return dst;
 }
 
@@ -295,7 +295,7 @@ Mat boxFilter(
       src.ref,
       dst!.ref,
       depth,
-      ksize.cvd.ref,
+      ksize.cvdRef,
       anchor!.ref,
       normalize,
       borderType,
@@ -325,7 +325,7 @@ Mat sqrBoxFilter(
       src.ref,
       dst!.ref,
       depth,
-      ksize.cvd.ref,
+      ksize.cvdRef,
       anchor!.ref,
       normalize,
       borderType,
@@ -354,7 +354,7 @@ Mat stackBlur(Mat src, (int, int) ksize, {Mat? dst}) {
     () => cimgproc.cv_stackBlur(
       src.ref,
       dst!.ref,
-      ksize.cvd.ref,
+      ksize.cvdRef,
       ffi.nullptr,
     ),
   );
@@ -735,7 +735,7 @@ Moments moments(Mat src, {bool binaryImage = false}) {
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaf9bba239dfca11654cb7f50f889fc2ff
 Mat pyrDown(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
+  cvRun(() => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvdRef, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -745,7 +745,7 @@ Mat pyrDown(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BO
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gada75b59bdaaca411ed6fee10085eb784
 Mat pyrUp(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType, ffi.nullptr));
+  cvRun(() => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvdRef, borderType, ffi.nullptr));
   return dst;
 }
 
@@ -801,7 +801,7 @@ Mat morphologyEx(
 Mat getStructuringElement(int shape, (int, int) ksize, {Point? anchor}) {
   anchor ??= Point(-1, -1);
   final mat = Mat.empty();
-  cvRun(() => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ptr, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getStructuringElement(shape, ksize.cvdRef, mat.ptr, ffi.nullptr));
   return mat;
 }
 
@@ -821,7 +821,7 @@ Mat gaussianBlur(
 }) {
   dst ??= Mat.empty();
   cvRun(
-    () => cimgproc.cv_GaussianBlur(src.ref, dst!.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, ffi.nullptr),
+    () => cimgproc.cv_GaussianBlur(src.ref, dst!.ref, ksize.cvdRef, sigmaX, sigmaY, borderType, ffi.nullptr),
   );
   return dst;
 }
@@ -1498,7 +1498,7 @@ Mat resize(
   int interpolation = INTER_LINEAR,
 }) {
   dst ??= Mat.empty();
-  cvRun(() => cimgproc.cv_resize(src.ref, dst!.ref, dsize.cvd.ref, fx, fy, interpolation, ffi.nullptr));
+  cvRun(() => cimgproc.cv_resize(src.ref, dst!.ref, dsize.cvdRef, fx, fy, interpolation, ffi.nullptr));
   return dst;
 }
 
@@ -1514,7 +1514,7 @@ Mat getRectSubPix(
   int patchType = -1,
 }) {
   patch ??= Mat.empty();
-  cvRun(() => cimgproc.cv_getRectSubPix(image.ref, patchSize.cvd.ref, center.ref, patch!.ref, ffi.nullptr));
+  cvRun(() => cimgproc.cv_getRectSubPix(image.ref, patchSize.cvdRef, center.ref, patch!.ref, ffi.nullptr));
   return patch;
 }
 
@@ -1548,7 +1548,7 @@ Mat warpAffine(
       src.ref,
       dst!.ref,
       M.ref,
-      dsize.cvd.ref,
+      dsize.cvdRef,
       flags,
       borderMode,
       borderValue!.ref,
@@ -1579,7 +1579,7 @@ Mat warpPerspective(
       src.ref,
       dst!.ref,
       M.ref,
-      dsize.cvd.ref,
+      dsize.cvdRef,
       flags,
       borderMode,
       borderValue!.ref,

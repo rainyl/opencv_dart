@@ -46,13 +46,13 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
     (callback) => ccalib3d.cv_calibrateCamera(
       objectPoints.ref,
       imagePoints.ref,
-      imageSize.cvd.ref,
+      imageSize.cvdRef,
       cameraMatrix.ref,
       distCoeffs.ref,
       rvecs!.ref,
       tvecs!.ref,
       flags,
-      criteria.cvd.ref,
+      criteria.cvdRef,
       cRmsErr,
       callback,
     ),
@@ -238,7 +238,7 @@ Future<Mat> drawChessboardCornersAsync(
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawChessboardCorners(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners.ref,
       patternWasFound,
       callback,
@@ -393,7 +393,7 @@ Future<Scalar> estimateChessboardSharpnessAsync(
   return cvRunAsync0(
     (callback) => ccalib3d.cv_estimateChessboardSharpness(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners.ref,
       riseDistance,
       vertical,
@@ -501,7 +501,7 @@ Future<bool> find4QuadCornerSubpixAsync(
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
     (callback) =>
-        ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvd.ref, prval, callback),
+        ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, callback),
     (c) {
       final rval = prval.value;
       calloc.free(prval);
@@ -524,7 +524,7 @@ Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
   final r = calloc<ffi.Bool>();
   return cvRunAsync0(
     (callback) =>
-        ccalib3d.cv_findChessboardCorners(image.ref, patternSize.cvd.ref, corners!.ptr, flags, r, callback),
+        ccalib3d.cv_findChessboardCorners(image.ref, patternSize.cvdRef, corners!.ptr, flags, r, callback),
     (c) {
       final rval = r.value;
       calloc.free(r);
@@ -545,7 +545,7 @@ Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
   final b = calloc<ffi.Bool>();
   return cvRunAsync0(
     (callback) =>
-        ccalib3d.cv_findChessboardCornersSB(image.ref, patternSize.cvd.ref, corners!.ptr, flags, b, callback),
+        ccalib3d.cv_findChessboardCornersSB(image.ref, patternSize.cvdRef, corners!.ptr, flags, b, callback),
     (c) {
       final rval = b.value;
       calloc.free(b);
@@ -569,7 +569,7 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
   return cvRunAsync0(
     (callback) => ccalib3d.cv_findChessboardCornersSB_1(
       image.ref,
-      patternSize.cvd.ref,
+      patternSize.cvdRef,
       corners!.ptr,
       flags,
       meta!.ref,
@@ -825,9 +825,9 @@ Future<(Mat rval, Rect validPixROI)> getOptimalNewCameraMatrixAsync(
     (callback) => ccalib3d.cv_getOptimalNewCameraMatrix(
       cameraMatrix.ref,
       distCoeffs.ref,
-      imageSize.cvd.ref,
+      imageSize.cvdRef,
       alpha,
-      newImgSize.cvd.ref,
+      newImgSize.cvdRef,
       validPixROI,
       centerPrincipalPoint,
       rval.ptr,
@@ -859,7 +859,7 @@ Future<(Mat, Mat)> initUndistortRectifyMapAsync(
       distCoeffs.ref,
       R.ref,
       newCameraMatrix.ref,
-      size.cvd.ref,
+      size.cvdRef,
       m1type,
       map1!.ref,
       map2!.ref,

@@ -770,7 +770,7 @@ class ximgproc_rl {
   ///https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gaa2b3524997874269670f2f63d54d792d
   static Mat createRLEImage(VecPoint3i runs, {(int, int) size = (0, 0)}) {
     final dst = Mat.empty();
-    cvRun(() => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvd.ref, ffi.nullptr));
+    cvRun(() => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvdRef, ffi.nullptr));
     return dst;
   }
 
@@ -780,7 +780,7 @@ class ximgproc_rl {
   static Future<Mat> createRLEImageAsync(VecPoint3i runs, {(int, int) size = (0, 0)}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-      (callback) => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvd.ref, callback),
+      (callback) => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvdRef, callback),
       (c) {
         return c.complete(dst);
       },
@@ -794,7 +794,7 @@ class ximgproc_rl {
     final dst = Mat.empty();
     cvRun(
       () =>
-          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.toPoint().ref, ffi.nullptr),
+          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.pointRef, ffi.nullptr),
     );
     return dst;
   }
@@ -806,7 +806,7 @@ class ximgproc_rl {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) =>
-          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.toPoint().ref, callback),
+          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.pointRef, callback),
       (c) {
         return c.complete(dst);
       },
@@ -829,7 +829,7 @@ class ximgproc_rl {
         dst.ref,
         rlKernel.ref,
         bBoundaryOn,
-        anchor.toPoint().ref,
+        anchor.pointRef,
         ffi.nullptr,
       ),
     );
@@ -852,7 +852,7 @@ class ximgproc_rl {
         dst.ref,
         rlKernel.ref,
         bBoundaryOn,
-        anchor.toPoint().ref,
+        anchor.pointRef,
         callback,
       ),
       (c) {
@@ -866,7 +866,7 @@ class ximgproc_rl {
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
   static Mat getStructuringElement(int shape, (int, int) ksize) {
     final dst = Mat.empty();
-    cvRun(() => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, ffi.nullptr));
+    cvRun(() => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvdRef, dst.ptr, ffi.nullptr));
     return dst;
   }
 
@@ -876,7 +876,7 @@ class ximgproc_rl {
   static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async {
     final dst = Mat.empty();
     return cvRunAsync0(
-      (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvd.ref, dst.ptr, callback),
+      (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvdRef, dst.ptr, callback),
       (c) {
         return c.complete(dst);
       },
@@ -908,7 +908,7 @@ class ximgproc_rl {
         op,
         rlKernel.ref,
         bBoundaryOnForErosion,
-        anchor.toPoint().ref,
+        anchor.pointRef,
         ffi.nullptr,
       ),
     );
@@ -933,7 +933,7 @@ class ximgproc_rl {
         op,
         rlKernel.ref,
         bBoundaryOnForErosion,
-        anchor.toPoint().ref,
+        anchor.pointRef,
         callback,
       ),
       (c) {
