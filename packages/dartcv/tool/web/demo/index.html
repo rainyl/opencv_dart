@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- Spike demo page. Serve this directory with dartcv.mjs/.wasm, opencv.js, lenna.png and the
+     compiled Dart (main.dart.js for ?mode=js, main.mjs/main.wasm for ?mode=wasm). -->
+<html>
+<head><meta charset="utf-8"><title>dartcv web spike</title></head>
+<body>
+<pre id="out"></pre>
+<script>
+  window.report = (line) => {
+    console.log(line);
+    document.getElementById('out').textContent += line + '\n';
+  };
+  window.fetchBytes = async (url) => new Uint8Array(await (await fetch(url)).arrayBuffer());
+  window.decodeToImageData = async (bytes) => {
+    const bmp = await createImageBitmap(new Blob([bytes]));
+    const c = new OffscreenCanvas(bmp.width, bmp.height);
+    const ctx = c.getContext('2d');
+    ctx.drawImage(bmp, 0, 0);
+    return ctx.getImageData(0, 0, bmp.width, bmp.height);
+  };
+  window.Module = {}; // opencv.js reads a global Module if present
+  window.createDartcvModule = async (...args) => (await import('./dartcv.mjs')).default(...args);
+</script>
+<script src="opencv.js"></script>
+<script>
+  window.cvReady = (async () => {
+    if (cv instanceof Promise) { window.cv = await cv; return; }
+    if (!cv.Mat) await new Promise((r) => (cv.onRuntimeInitialized = r));
+  })();
+</script>
+<script type="module">
+  const mode = new URLSearchParams(location.search).get('mode') || 'js';
+  report('mode: ' + mode);
+  if (mode === 'wasm') {
+    const { compileStreaming } = await import('./main.mjs');
+    const app = await compileStreaming(fetch('main.wasm'));
+    const inst = await app.instantiate({});
+    inst.invokeMain();
+  } else {
+    const s = document.createElement('script');
+    s.src = 'main.dart.js';
+    document.body.appendChild(s);
+  }
+</script>
+</body>
+</html>
