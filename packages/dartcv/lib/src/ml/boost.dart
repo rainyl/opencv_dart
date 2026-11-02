@@ -171,11 +171,15 @@ class Boost extends CvStruct<cml.Boost> {
   static const int LOGIT = 2;
   static const int GENTLE = 3;
 
-  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a suboptimal split.
+  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a
+  /// suboptimal split. Must be >= 2, values above 15 are clamped to 15.
   int get maxCategories => cml.cv_ml_Boost_get_maxCategories(ref);
   set maxCategories(int value) => cvRun(() => cml.cv_ml_Boost_set_maxCategories(ref, value));
 
-  /// The maximum possible depth of the tree.
+  /// The maximum possible depth of the tree, values above 25 are clamped to 25.
+  ///
+  /// Training reserves memory for about 2^maxDepth nodes, so keep it small (e.g. 5 to 10). The
+  /// `DTrees` default, `INT_MAX`, makes OpenCV's training fail.
   int get maxDepth => cml.cv_ml_Boost_get_maxDepth(ref);
   set maxDepth(int value) => cvRun(() => cml.cv_ml_Boost_set_maxDepth(ref, value));
 
@@ -183,11 +187,12 @@ class Boost extends CvStruct<cml.Boost> {
   int get minSampleCount => cml.cv_ml_Boost_get_minSampleCount(ref);
   set minSampleCount(int value) => cvRun(() => cml.cv_ml_Boost_set_minSampleCount(ref, value));
 
-  /// If cvFolds > 1 then algorithms prunes the built decision tree using K-fold cross-validation procedure where K is equal to cvFolds.
+  /// The number of cross-validation folds used to prune the tree. OpenCV 4.x does not implement the
+  /// pruning: values > 1 throw and 1 is stored as 0 (no pruning).
   int get cvFolds => cml.cv_ml_Boost_get_cvFolds(ref);
   set cvFolds(int value) => cvRun(() => cml.cv_ml_Boost_set_cvFolds(ref, value));
 
-  /// If true then surrogate splits will be built.
+  /// Whether to build surrogate splits. Not implemented in OpenCV 4.x: training with `true` throws.
   bool get useSurrogates => cml.cv_ml_Boost_get_useSurrogates(ref);
   set useSurrogates(bool value) => cvRun(() => cml.cv_ml_Boost_set_useSurrogates(ref, value));
 

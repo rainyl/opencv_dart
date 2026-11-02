@@ -52,7 +52,7 @@ CvStatus* cv_ml_LogisticRegression_set_miniBatchSize(LogisticRegression self, in
     END_WRAP
 }
 
-CvStatus* cv_ml_LogisticRegression_get_learnt_thetas(LogisticRegression self, Mat rval) {
+CvStatus* cv_ml_LogisticRegression_getLearntThetas(LogisticRegression self, Mat rval) {
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->get_learnt_thetas();
     END_WRAP

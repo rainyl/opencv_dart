@@ -34,12 +34,16 @@ void main() {
     expect(labelsOf(forest.predict(queryPoints())), [0, 1]);
     expect(labelsOf(await forest.predictAsync(queryPoints())), [0, 1]);
     expect(forest.varImportance.total, 2);
-    expect(forest.oobError, greaterThanOrEqualTo(0));
+    // computed because calculateVarImportance is set; the clusters are separable
+    expect(forest.oobError, lessThan(0.5));
 
-    // first row: the class labels, then one row of votes per sample
+    // first row: the class labels, then one row of votes per sample, all 10 trees agreeing
     final votes = forest.getVotes(queryPoints());
-    expect(votes.rows, 3);
-    expect(votes.cols, 2);
+    expect(votes.toList(), [
+      [0, 1],
+      [10, 0],
+      [0, 10],
+    ]);
 
     final path = '${tempDir()}/forest.yml';
     forest.save(path);

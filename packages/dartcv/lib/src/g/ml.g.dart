@@ -1384,6 +1384,13 @@ external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_getDefaultName(
 );
 
 @meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_getLearntThetas(
+  LogisticRegression self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
 @ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Pointer<TermCriteria>)>()
 external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_getTermCriteria(
   LogisticRegression self$1,
@@ -1406,13 +1413,6 @@ external int cv_ml_LogisticRegression_get_iterations(
 @ffi.Native<ffi.Double Function(LogisticRegression)>()
 external double cv_ml_LogisticRegression_get_learningRate(
   LogisticRegression self$1,
-);
-
-@meta.RecordUse()
-@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, Mat)>()
-external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_get_learnt_thetas(
-  LogisticRegression self$1,
-  Mat rval,
 );
 
 @meta.RecordUse()

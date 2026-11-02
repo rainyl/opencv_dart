@@ -3,17 +3,14 @@ import 'package:test/test.dart';
 
 import 'ml_test_data.dart';
 
-/// SVMSGD needs centered data and -1 / 1 responses.
-cv.Mat centeredSamples() =>
-    cv.Mat.fromList(10, 2, cv.MatType.CV_32FC1, clusterPoints.map((e) => e - 5).toList());
+/// The negative class must be < 0.
 cv.Mat signResponses() =>
     cv.Mat.fromList(10, 1, cv.MatType.CV_32FC1, clusterLabels.map((e) => e == 0 ? -1.0 : 1.0).toList());
-cv.Mat centeredQuery() => cv.Mat.fromList(2, 2, cv.MatType.CV_32FC1, <double>[-3.8, -3.7, 3.7, 3.1]);
 
 cv.SVMSGD trainedSgd() {
   final sgd = cv.SVMSGD.create()
     ..setOptimalParameters(svmsgdType: cv.SVMSGD.ASGD, marginType: cv.SVMSGD.SOFT_MARGIN);
-  expect(sgd.train(centeredSamples(), cv.ROW_SAMPLE, signResponses()), true);
+  expect(sgd.train(clusterSamples(), cv.ROW_SAMPLE, signResponses()), true);
   return sgd;
 }
 
@@ -36,18 +33,30 @@ void main() {
     sgd.setOptimalParameters();
     expect(sgd.svmsgdType, cv.SVMSGD.ASGD);
     expect(sgd.marginType, cv.SVMSGD.SOFT_MARGIN);
+    expect(() => sgd.setOptimalParameters(svmsgdType: 7), throwsA(isA<cv.CvException>()));
   });
 
   test('cv.SVMSGD train, predict, save and load', () async {
     final sgd = trainedSgd();
     expect(sgd.weights.total, 2);
-    expect(sgd.shift.isFinite, true);
-    expect(labelsOf(sgd.predict(centeredQuery())), [-1, 1]);
-    expect(labelsOf(await sgd.predictAsync(centeredQuery())), [-1, 1]);
+    // predict is the sign of the decision function weights * x + shift
+    final w = sgd.weights;
+    double decision(double x, double y) => w.atNum(0, 0) * x + w.atNum(0, 1) * y + sgd.shift;
+    expect(decision(1.2, 1.3), lessThan(0));
+    expect(decision(8.7, 8.1), greaterThan(0));
+    expect(labelsOf(sgd.predict(queryPoints())), [-1, 1]);
+    expect(labelsOf(await sgd.predictAsync(queryPoints())), [-1, 1]);
 
     final path = '${tempDir()}/sgd.yml';
     sgd.save(path);
-    expect(labelsOf(cv.SVMSGD.load(path).predict(centeredQuery())), [-1, 1]);
+    expect(labelsOf(cv.SVMSGD.load(path).predict(queryPoints())), [-1, 1]);
+  });
+
+  test('cv.SVMSGD without negative responses trains a constant model', () {
+    final sgd = cv.SVMSGD.create()..setOptimalParameters();
+    expect(sgd.train(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesF32()), true);
+    expect(sgd.weights.atNum(0, 0), 0);
+    expect(labelsOf(sgd.predict(queryPoints())), [1, 1]);
   });
 
   test('cv.SVMSGD errors', () {

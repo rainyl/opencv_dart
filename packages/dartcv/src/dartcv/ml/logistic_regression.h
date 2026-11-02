@@ -32,7 +32,7 @@ int cv_ml_LogisticRegression_get_trainMethod(LogisticRegression self);
 CvStatus* cv_ml_LogisticRegression_set_trainMethod(LogisticRegression self, int val);
 int cv_ml_LogisticRegression_get_miniBatchSize(LogisticRegression self);
 CvStatus* cv_ml_LogisticRegression_set_miniBatchSize(LogisticRegression self, int val);
-CvStatus* cv_ml_LogisticRegression_get_learnt_thetas(LogisticRegression self, Mat rval);
+CvStatus* cv_ml_LogisticRegression_getLearntThetas(LogisticRegression self, Mat rval);
 CvStatus* cv_ml_LogisticRegression_getTermCriteria(LogisticRegression self, TermCriteria* rval);
 CvStatus* cv_ml_LogisticRegression_setTermCriteria(LogisticRegression self, TermCriteria val);
 

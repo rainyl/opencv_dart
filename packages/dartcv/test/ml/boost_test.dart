@@ -3,13 +3,17 @@ import 'package:test/test.dart';
 
 import 'ml_test_data.dart';
 
+/// Labels 3 and 7, so that class indices and labels differ.
+cv.Mat labels37() =>
+    cv.Mat.fromList(10, 1, cv.MatType.CV_32SC1, clusterLabels.map((e) => e == 0 ? 3 : 7).toList());
+
 cv.Boost trainedBoost() {
   final boost = cv.Boost.create()
     ..boostType = cv.Boost.REAL
     ..weakCount = 10
     ..maxDepth = 1
     ..minSampleCount = 1;
-  expect(boost.train(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32()), true);
+  expect(boost.train(clusterSamples(), cv.ROW_SAMPLE, labels37()), true);
   return boost;
 }
 
@@ -29,8 +33,8 @@ void main() {
 
   test('cv.Boost train, predict, save and load', () async {
     final boost = trainedBoost();
-    expect(labelsOf(boost.predict(queryPoints())), [0, 1]);
-    expect(labelsOf(await boost.predictAsync(queryPoints())), [0, 1]);
+    expect(labelsOf(boost.predict(queryPoints())), [3, 7]);
+    expect(labelsOf(await boost.predictAsync(queryPoints())), [3, 7]);
 
     // RAW_OUTPUT alone gives the class index, with PREDICT_SUM the sum of the weak responses
     expect(labelsOf(boost.predict(queryPoints(), flags: cv.StatModel.RAW_OUTPUT)), [0, 1]);
@@ -39,7 +43,7 @@ void main() {
 
     final path = '${tempDir()}/boost.yml';
     boost.save(path);
-    expect(labelsOf(cv.Boost.load(path).predict(queryPoints())), [0, 1]);
+    expect(labelsOf(cv.Boost.load(path).predict(queryPoints())), [3, 7]);
   });
 
   test('cv.Boost errors', () {

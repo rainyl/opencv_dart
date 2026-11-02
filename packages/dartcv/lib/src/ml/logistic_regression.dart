@@ -20,6 +20,10 @@ import 'ml_constants.dart';
 import 'train_data.dart';
 
 /// Implements Logistic Regression classifier.
+///
+/// Training needs `CV_32F` responses; predicted labels are `CV_32S` (`CV_32F` with
+/// [StatModel.RAW_OUTPUT]). With [MINI_BATCH] the number of steps is `termCriteria.maxCount`, not
+/// [iterations].
 /// https://docs.opencv.org/4.x/d6/df9/classcv_1_1ml_1_1LogisticRegression.html
 class LogisticRegression extends CvStruct<cml.LogisticRegression> {
   LogisticRegression._(cml.LogisticRegressionPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -205,7 +209,7 @@ class LogisticRegression extends CvStruct<cml.LogisticRegression> {
   /// The trained parameters, arranged across rows; for a two-class classification problem a single row.
   Mat get learntThetas {
     final rval = Mat.empty();
-    cvRun(() => cml.cv_ml_LogisticRegression_get_learnt_thetas(ref, rval.ref));
+    cvRun(() => cml.cv_ml_LogisticRegression_getLearntThetas(ref, rval.ref));
     return rval;
   }
 

@@ -177,9 +177,11 @@ class NormalBayesClassifier extends CvStruct<cml.NormalBayesClassifier> {
     }
   }
 
-  /// Predicts the response for each row of [inputs] and the probability of each class.
+  /// Predicts the response for each row of [inputs] and the likelihood of each class.
   ///
-  /// Returns the predicted labels and, per sample, the probabilities of the classes.
+  /// Returns the predicted labels and, per sample, the unnormalized likelihood of each class: the
+  /// values are not probabilities (a row does not sum to 1, and they underflow to 0 far from the
+  /// classes), but the largest one is the predicted class.
   (Mat outputs, Mat outputProbs) predictProb(Mat inputs, {int flags = 0}) {
     final p = calloc<ffi.Float>();
     final outputs = Mat.empty();

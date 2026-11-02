@@ -21,7 +21,9 @@ import 'train_data.dart';
 
 /// Stochastic Gradient Descent SVM classifier.
 ///
-/// A linear two-class classifier that works best on centered (zero mean) data.
+/// A linear two-class classifier. The responses of the negative class must be < 0 (use -1 and 1):
+/// responses >= 0 count as positive, and without any negative response training succeeds but
+/// yields a constant model that predicts 1.
 /// https://docs.opencv.org/4.x/d3/d14/classcv_1_1ml_1_1SVMSGD.html
 class SVMSGD extends CvStruct<cml.SVMSGD> {
   SVMSGD._(cml.SVMSGDPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
@@ -134,8 +136,7 @@ class SVMSGD extends CvStruct<cml.SVMSGD> {
 
   /// Predicts the response for each row of [samples], one row of the returned Mat per sample.
   ///
-  /// [flags] is ignored by this model. The responses are -1 or 1: training maps responses > 0 to 1
-  /// and the others to -1.
+  /// [flags] is ignored by this model. The predicted responses are -1 or 1.
   Mat predict(Mat samples, {int flags = 0}) {
     final p = calloc<ffi.Float>();
     final results = Mat.empty();

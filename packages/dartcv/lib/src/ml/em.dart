@@ -178,11 +178,16 @@ class EM extends CvStruct<cml.EM> {
   static const int START_M_STEP = 2;
   static const int START_AUTO_STEP = 0;
 
-  /// The number of mixture components in the Gaussian mixture model.
+  /// The number of mixture components in the Gaussian mixture model, must be >= 1.
+  ///
+  /// Retrain after changing it: OpenCV does not check it against a trained or loaded model, and
+  /// predicting with a mismatching value reads out of bounds. A rejected value is still stored.
   int get clustersNumber => cml.cv_ml_EM_get_clustersNumber(ref);
   set clustersNumber(int value) => cvRun(() => cml.cv_ml_EM_set_clustersNumber(ref, value));
 
   /// Constraint on covariance matrices, one of the `COV_MAT_*` types.
+  ///
+  /// Retrain after changing it, as for [clustersNumber].
   int get covarianceMatrixType => cml.cv_ml_EM_get_covarianceMatrixType(ref);
   set covarianceMatrixType(int value) => cvRun(() => cml.cv_ml_EM_set_covarianceMatrixType(ref, value));
 

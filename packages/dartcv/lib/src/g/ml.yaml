@@ -354,6 +354,8 @@ files:
         name: cv_ml_LogisticRegression_empty
       c:@F@cv_ml_LogisticRegression_getDefaultName:
         name: cv_ml_LogisticRegression_getDefaultName
+      c:@F@cv_ml_LogisticRegression_getLearntThetas:
+        name: cv_ml_LogisticRegression_getLearntThetas
       c:@F@cv_ml_LogisticRegression_getTermCriteria:
         name: cv_ml_LogisticRegression_getTermCriteria
       c:@F@cv_ml_LogisticRegression_getVarCount:
@@ -362,8 +364,6 @@ files:
         name: cv_ml_LogisticRegression_get_iterations
       c:@F@cv_ml_LogisticRegression_get_learningRate:
         name: cv_ml_LogisticRegression_get_learningRate
-      c:@F@cv_ml_LogisticRegression_get_learnt_thetas:
-        name: cv_ml_LogisticRegression_get_learnt_thetas
       c:@F@cv_ml_LogisticRegression_get_miniBatchSize:
         name: cv_ml_LogisticRegression_get_miniBatchSize
       c:@F@cv_ml_LogisticRegression_get_regularization:

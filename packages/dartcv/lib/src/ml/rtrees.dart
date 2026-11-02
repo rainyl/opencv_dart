@@ -165,11 +165,15 @@ class RTrees extends CvStruct<cml.RTrees> {
     }
   }
 
-  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a suboptimal split.
+  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a
+  /// suboptimal split. Must be >= 2, values above 15 are clamped to 15.
   int get maxCategories => cml.cv_ml_RTrees_get_maxCategories(ref);
   set maxCategories(int value) => cvRun(() => cml.cv_ml_RTrees_set_maxCategories(ref, value));
 
-  /// The maximum possible depth of the tree.
+  /// The maximum possible depth of the tree, values above 25 are clamped to 25.
+  ///
+  /// Training reserves memory for about 2^maxDepth nodes, so keep it small (e.g. 5 to 10). The
+  /// `DTrees` default, `INT_MAX`, makes OpenCV's training fail.
   int get maxDepth => cml.cv_ml_RTrees_get_maxDepth(ref);
   set maxDepth(int value) => cvRun(() => cml.cv_ml_RTrees_set_maxDepth(ref, value));
 
@@ -177,11 +181,12 @@ class RTrees extends CvStruct<cml.RTrees> {
   int get minSampleCount => cml.cv_ml_RTrees_get_minSampleCount(ref);
   set minSampleCount(int value) => cvRun(() => cml.cv_ml_RTrees_set_minSampleCount(ref, value));
 
-  /// If cvFolds > 1 then algorithms prunes the built decision tree using K-fold cross-validation procedure where K is equal to cvFolds.
+  /// The number of cross-validation folds used to prune the tree. OpenCV 4.x does not implement the
+  /// pruning: values > 1 throw and 1 is stored as 0 (no pruning).
   int get cvFolds => cml.cv_ml_RTrees_get_cvFolds(ref);
   set cvFolds(int value) => cvRun(() => cml.cv_ml_RTrees_set_cvFolds(ref, value));
 
-  /// If true then surrogate splits will be built.
+  /// Whether to build surrogate splits. Not implemented in OpenCV 4.x: training with `true` throws.
   bool get useSurrogates => cml.cv_ml_RTrees_get_useSurrogates(ref);
   set useSurrogates(bool value) => cvRun(() => cml.cv_ml_RTrees_set_useSurrogates(ref, value));
 
@@ -238,14 +243,17 @@ class RTrees extends CvStruct<cml.RTrees> {
 
   /// Returns the result of each individual tree in the forest.
   ///
-  /// The first row of the result holds the class labels, each following row the votes of one
-  /// sample of [samples] for each class.
+  /// For classification (`DTrees.PREDICT_MAX_VOTE`, the default) the first row holds the class
+  /// labels and each following row the number of votes of one sample of [samples] for each class
+  /// (`CV_32S`). For regression, with `DTrees.PREDICT_SUM`, or for a 2-class model with
+  /// [StatModel.RAW_OUTPUT], each row holds the value of each tree for one sample (`CV_32F`).
   Mat getVotes(Mat samples, {int flags = 0}) {
     final rval = Mat.empty();
     cvRun(() => cml.cv_ml_RTrees_getVotes(ref, samples.ref, rval.ref, flags));
     return rval;
   }
 
-  /// The out-of-bag error of the trained forest.
+  /// The out-of-bag error of the trained forest, only computed when [calculateVarImportance] is
+  /// set or [termCriteria] has an epsilon; 0 otherwise.
   double get oobError => cml.cv_ml_RTrees_getOOBError(ref);
 }

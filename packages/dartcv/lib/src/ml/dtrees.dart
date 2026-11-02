@@ -169,12 +169,15 @@ class DTrees extends CvStruct<cml.DTrees> {
   static const int PREDICT_MAX_VOTE = 2 << 8;
   static const int PREDICT_MASK = 3 << 8;
 
-  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a suboptimal split.
+  /// Cluster possible values of a categorical variable into K <= maxCategories clusters to find a
+  /// suboptimal split. Must be >= 2, values above 15 are clamped to 15.
   int get maxCategories => cml.cv_ml_DTrees_get_maxCategories(ref);
   set maxCategories(int value) => cvRun(() => cml.cv_ml_DTrees_set_maxCategories(ref, value));
 
-  /// The maximum possible depth of the tree. The default is `INT_MAX`, for which OpenCV's training
-  /// fails: set a finite depth before training.
+  /// The maximum possible depth of the tree, values above 25 are clamped to 25.
+  ///
+  /// Training reserves memory for about 2^maxDepth nodes, so keep it small (e.g. 5 to 10). The
+  /// default, `INT_MAX`, makes OpenCV's training fail: set a depth before training.
   int get maxDepth => cml.cv_ml_DTrees_get_maxDepth(ref);
   set maxDepth(int value) => cvRun(() => cml.cv_ml_DTrees_set_maxDepth(ref, value));
 
@@ -182,11 +185,12 @@ class DTrees extends CvStruct<cml.DTrees> {
   int get minSampleCount => cml.cv_ml_DTrees_get_minSampleCount(ref);
   set minSampleCount(int value) => cvRun(() => cml.cv_ml_DTrees_set_minSampleCount(ref, value));
 
-  /// If cvFolds > 1 then algorithms prunes the built decision tree using K-fold cross-validation procedure where K is equal to cvFolds.
+  /// The number of cross-validation folds used to prune the tree. OpenCV 4.x does not implement the
+  /// pruning: values > 1 throw and 1 is stored as 0 (no pruning).
   int get cvFolds => cml.cv_ml_DTrees_get_cvFolds(ref);
   set cvFolds(int value) => cvRun(() => cml.cv_ml_DTrees_set_cvFolds(ref, value));
 
-  /// If true then surrogate splits will be built.
+  /// Whether to build surrogate splits. Not implemented in OpenCV 4.x: training with `true` throws.
   bool get useSurrogates => cml.cv_ml_DTrees_get_useSurrogates(ref);
   set useSurrogates(bool value) => cvRun(() => cml.cv_ml_DTrees_set_useSurrogates(ref, value));
 

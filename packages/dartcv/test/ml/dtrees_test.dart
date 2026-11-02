@@ -38,6 +38,15 @@ void main() {
     // OpenCV rejects out-of-range values
     expect(() => tree.maxCategories = 1, throwsA(isA<cv.CvException>()));
     expect(() => tree.maxDepth = -1, throwsA(isA<cv.CvException>()));
+    // OpenCV clamps the depth and the categories, and does not implement CV pruning
+    tree
+      ..maxDepth = 30
+      ..maxCategories = 20
+      ..cvFolds = 1;
+    expect(tree.maxDepth, 25);
+    expect(tree.maxCategories, 15);
+    expect(tree.cvFolds, 0);
+    expect(() => tree.cvFolds = 5, throwsA(isA<cv.CvException>()));
   });
 
   test('cv.DTrees train, predict, save and load', () async {
@@ -59,16 +68,20 @@ void main() {
     expect(labelsOf(other.predict(queryPoints())), [0, 1]);
   });
 
+  test('cv.DTrees surrogate splits are not implemented', () {
+    final tree = cv.DTrees.create()
+      ..cvFolds = 0
+      ..maxDepth = 4
+      ..minSampleCount = 1
+      ..useSurrogates = true;
+    expect(
+      () => tree.train(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32()),
+      throwsA(isA<cv.CvException>()),
+    );
+  });
+
   test('cv.DTrees errors', () {
     expect(() => cv.DTrees.create().predict(queryPoints()), throwsA(isA<cv.CvException>()));
     expect(() => cv.DTrees.load('/nonexistent/tree.yml'), throwsA(isA<cv.CvException>()));
-    // the default maxDepth (INT_MAX) makes OpenCV's training fail
-    final unbounded = cv.DTrees.create()
-      ..cvFolds = 0
-      ..minSampleCount = 1;
-    expect(
-      () => unbounded.train(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32()),
-      throwsA(isA<cv.CvException>()),
-    );
   });
 }
