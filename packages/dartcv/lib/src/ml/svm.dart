@@ -295,7 +295,7 @@ class SVM extends CvStruct<cml.SVM> {
     final alpha = Mat.empty();
     final svidx = Mat.empty();
     try {
-      cvRun(() => cml.cv_ml_SVM_getDecisionFunction(ref, i, alpha.ref, svidx.ref, p));
+      cvRun(() => cml.cv_ml_SVM_getDecisionFunction(ref, i, alpha.ref, svidx.ref, p, ffi.nullptr));
       return (p.value, alpha, svidx);
     } catch (_) {
       alpha.dispose();

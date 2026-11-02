@@ -6,6 +6,7 @@
 #include "dartcv/ml/stat_model.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(RTrees, cv::ml::RTrees)
+CVD_ML_TREES_IMPL(RTrees)
 
 int cv_ml_RTrees_get_maxCategories(RTrees self) {
     return (CVDEREF(self))->getMaxCategories();
@@ -127,9 +128,14 @@ CvStatus* cv_ml_RTrees_setTermCriteria(RTrees self, TermCriteria val) {
     END_WRAP
 }
 
-CvStatus* cv_ml_RTrees_getVotes(RTrees self, Mat samples, Mat results, int flags) {
+CvStatus* cv_ml_RTrees_getVotes(
+    RTrees self, Mat samples, Mat results, int flags, CvCallback_0 callback
+) {
     BEGIN_WRAP(CVDEREF(self))
     ->getVotes(CVDEREF(samples), CVDEREF(results), flags);
+    if (callback != nullptr) {
+        callback();
+    }
     END_WRAP
 }
 double cv_ml_RTrees_getOOBError(RTrees self) {

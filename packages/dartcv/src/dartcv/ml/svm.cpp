@@ -92,9 +92,14 @@ CvStatus* cv_ml_SVM_getUncompressedSupportVectors(SVM self, Mat rval) {
     CVDEREF(rval) = (CVDEREF(self))->getUncompressedSupportVectors();
     END_WRAP
 }
-CvStatus* cv_ml_SVM_getDecisionFunction(SVM self, int i, Mat alpha, Mat svidx, double* rval) {
+CvStatus* cv_ml_SVM_getDecisionFunction(
+    SVM self, int i, Mat alpha, Mat svidx, double* rval, CvCallback_0 callback
+) {
     BEGIN_WRAP
     *rval = (CVDEREF(self))->getDecisionFunction(i, CVDEREF(alpha), CVDEREF(svidx));
+    if (callback != nullptr) {
+        callback();
+    }
     END_WRAP
 }
 CvStatus* cv_ml_SVM_getDefaultGrid(int paramId, MlParamGrid* rval) {

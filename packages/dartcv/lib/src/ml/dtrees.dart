@@ -13,6 +13,7 @@ import 'package:ffi/ffi.dart';
 import '../core/base.dart';
 import '../core/exception.dart';
 import '../core/mat.dart';
+import '../core/vec.dart';
 import '../g/ml.g.dart' as cml;
 import 'ml_constants.dart';
 import 'train_data.dart';
@@ -214,4 +215,159 @@ class DTrees extends CvStruct<cml.DTrees> {
   }
 
   set priors(Mat value) => cvRun(() => cml.cv_ml_DTrees_setPriors(ref, value.ref));
+
+  /// The indices of the root nodes, one per tree.
+  List<int> get roots {
+    final v = VecI32();
+    try {
+      cvRun(() => cml.cv_ml_DTrees_getRoots(ref, v.ptr));
+      return v.toList();
+    } finally {
+      v.dispose();
+    }
+  }
+
+  /// All the nodes of the trees, the children of a node are referenced by index.
+  List<DTreesNode> get nodes {
+    final count = calloc<ffi.Int>();
+    try {
+      cvRun(() => cml.cv_ml_DTrees_getNodes(ref, ffi.nullptr, 0, count));
+      final n = count.value;
+      final buf = calloc<cml.MlDTreesNode>(n);
+      try {
+        cvRun(() => cml.cv_ml_DTrees_getNodes(ref, buf, n, count));
+        return List.generate(n, (i) {
+          final e = buf[i];
+          return DTreesNode(
+            value: e.value,
+            classIdx: e.classIdx,
+            parent: e.parent,
+            left: e.left,
+            right: e.right,
+            defaultDir: e.defaultDir,
+            split: e.split,
+          );
+        });
+      } finally {
+        calloc.free(buf);
+      }
+    } finally {
+      calloc.free(count);
+    }
+  }
+
+  /// All the splits of the trees, referenced by [DTreesNode.split] and [DTreesSplit.next].
+  List<DTreesSplit> get splits {
+    final count = calloc<ffi.Int>();
+    try {
+      cvRun(() => cml.cv_ml_DTrees_getSplits(ref, ffi.nullptr, 0, count));
+      final n = count.value;
+      final buf = calloc<cml.MlDTreesSplit>(n);
+      try {
+        cvRun(() => cml.cv_ml_DTrees_getSplits(ref, buf, n, count));
+        return List.generate(n, (i) {
+          final e = buf[i];
+          return DTreesSplit(
+            varIdx: e.varIdx,
+            inversed: e.inversed,
+            quality: e.quality,
+            next: e.next,
+            c: e.c,
+            subsetOfs: e.subsetOfs,
+          );
+        });
+      } finally {
+        calloc.free(buf);
+      }
+    } finally {
+      calloc.free(count);
+    }
+  }
+
+  /// The bitsets of the splits on categorical variables, see [DTreesSplit.subsetOfs].
+  List<int> get subsets {
+    final v = VecI32();
+    try {
+      cvRun(() => cml.cv_ml_DTrees_getSubsets(ref, v.ptr));
+      return v.toList();
+    } finally {
+      v.dispose();
+    }
+  }
+}
+
+/// A node of a decision tree, see [DTrees.nodes].
+/// https://docs.opencv.org/4.x/db/d6d/classcv_1_1ml_1_1DTrees_1_1Node.html
+class DTreesNode {
+  const DTreesNode({
+    required this.value,
+    required this.classIdx,
+    required this.parent,
+    required this.left,
+    required this.right,
+    required this.defaultDir,
+    required this.split,
+  });
+
+  /// Value at the node: a class label for classification or an estimated value for regression.
+  final double value;
+
+  /// Class index normalized to 0..class_count-1 range, assigned to the node (classification only).
+  final int classIdx;
+
+  /// Index of the parent node, -1 for a root.
+  final int parent;
+
+  /// Index of the left child node, -1 for a leaf.
+  final int left;
+
+  /// Index of the right child node, -1 for a leaf.
+  final int right;
+
+  /// Default direction where to go (-1: left or +1: right) when a split value is missing.
+  final int defaultDir;
+
+  /// Index of the first split of the node in [DTrees.splits], -1 for a leaf.
+  final int split;
+
+  @override
+  String toString() =>
+      'DTreesNode(value: $value, classIdx: $classIdx, parent: $parent, left: $left, right: $right, '
+      'defaultDir: $defaultDir, split: $split)';
+}
+
+/// A split of a decision tree node, see [DTrees.splits].
+/// https://docs.opencv.org/4.x/d6/df3/classcv_1_1ml_1_1DTrees_1_1Split.html
+class DTreesSplit {
+  const DTreesSplit({
+    required this.varIdx,
+    required this.inversed,
+    required this.quality,
+    required this.next,
+    required this.c,
+    required this.subsetOfs,
+  });
+
+  /// Index of variable on which the split is created.
+  final int varIdx;
+
+  /// If true, then the inverse split rule is used (i.e. left and right branches are exchanged).
+  final bool inversed;
+
+  /// The split quality, a positive number.
+  final double quality;
+
+  /// Index of the next split in the list of splits for the node, -1 for the last one.
+  final int next;
+
+  /// The threshold value in case of split on an ordered variable.
+  final double c;
+
+  /// Offset of the bitset used by the split on a categorical variable in [DTrees.subsets].
+  final int subsetOfs;
+
+  @override
+  String toString() =>
+      'DTreesSplit(varIdx: $varIdx, inversed: $inversed, quality: $quality, next: $next, c: $c, '
+      'subsetOfs: $subsetOfs)';
 }

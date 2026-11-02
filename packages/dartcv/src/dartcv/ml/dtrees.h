@@ -20,7 +20,38 @@ CVD_TYPEDEF(cv::Ptr<cv::ml::DTrees>, DTrees);
 CVD_TYPEDEF(void*, DTrees);
 #endif
 
+/// Value copy of cv::ml::DTrees::Node.
+typedef struct MlDTreesNode {
+    double value;
+    int classIdx;
+    int parent;
+    int left;
+    int right;
+    int defaultDir;
+    int split;
+} MlDTreesNode;
+
+/// Value copy of cv::ml::DTrees::Split.
+typedef struct MlDTreesSplit {
+    int varIdx;
+    bool inversed;
+    float quality;
+    int next;
+    float c;
+    int subsetOfs;
+} MlDTreesSplit;
+
+/// Declares the tree structure accessors of DTrees and its subclasses.
+/// getNodes/getSplits copy at most `capacity` items into `rval` (which may be null) and always
+/// set `count` to the total number, so callers can size a buffer with a first call.
+#define CVD_ML_TREES_DECL(NAME)                                                                    \
+    CvStatus* cv_ml_##NAME##_getRoots(NAME self, VecI32* rval);                                    \
+    CvStatus* cv_ml_##NAME##_getSubsets(NAME self, VecI32* rval);                                  \
+    CvStatus* cv_ml_##NAME##_getNodes(NAME self, MlDTreesNode* rval, int capacity, int* count);    \
+    CvStatus* cv_ml_##NAME##_getSplits(NAME self, MlDTreesSplit* rval, int capacity, int* count);
+
 CVD_ML_STAT_MODEL_DECL(DTrees)
+CVD_ML_TREES_DECL(DTrees)
 
 int cv_ml_DTrees_get_maxCategories(DTrees self);
 CvStatus* cv_ml_DTrees_set_maxCategories(DTrees self, int val);

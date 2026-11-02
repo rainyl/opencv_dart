@@ -143,4 +143,37 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         END_WRAP                                                                                   \
     }
 
+/// Defines the functions declared by CVD_ML_TREES_DECL(NAME) (see dartcv/ml/dtrees.h).
+#define CVD_ML_TREES_IMPL(NAME)                                                                    \
+    CvStatus* cv_ml_##NAME##_getRoots(NAME self, VecI32* rval) {                                   \
+        BEGIN_WRAP                                                                                 \
+        CVDEREF_P(rval) = (CVDEREF(self))->getRoots();                                             \
+        END_WRAP                                                                                   \
+    }                                                                                              \
+    CvStatus* cv_ml_##NAME##_getSubsets(NAME self, VecI32* rval) {                                 \
+        BEGIN_WRAP                                                                                 \
+        CVDEREF_P(rval) = (CVDEREF(self))->getSubsets();                                           \
+        END_WRAP                                                                                   \
+    }                                                                                              \
+    CvStatus* cv_ml_##NAME##_getNodes(NAME self, MlDTreesNode* rval, int capacity, int* count) {   \
+        BEGIN_WRAP                                                                                 \
+        const auto& nodes = (CVDEREF(self))->getNodes();                                           \
+        *count = static_cast<int>(nodes.size());                                                   \
+        for (int i = 0; rval != nullptr && i < capacity && i < *count; i++) {                      \
+            const auto& n = nodes[i];                                                              \
+            rval[i] = {n.value, n.classIdx, n.parent, n.left, n.right, n.defaultDir, n.split};     \
+        }                                                                                          \
+        END_WRAP                                                                                   \
+    }                                                                                              \
+    CvStatus* cv_ml_##NAME##_getSplits(NAME self, MlDTreesSplit* rval, int capacity, int* count) { \
+        BEGIN_WRAP                                                                                 \
+        const auto& splits = (CVDEREF(self))->getSplits();                                         \
+        *count = static_cast<int>(splits.size());                                                  \
+        for (int i = 0; rval != nullptr && i < capacity && i < *count; i++) {                      \
+            const auto& s = splits[i];                                                             \
+            rval[i] = {s.varIdx, s.inversed, s.quality, s.next, s.c, s.subsetOfs};                 \
+        }                                                                                          \
+        END_WRAP                                                                                   \
+    }
+
 #endif  // CVD_ML_STAT_MODEL_HPP

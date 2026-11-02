@@ -6,6 +6,7 @@
 #define CVD_ML_BOOST_H
 
 #include "dartcv/core/types.h"
+#include "dartcv/ml/dtrees.h"
 #include "dartcv/ml/stat_model.h"
 #include "dartcv/ml/train_data.h"
 
@@ -21,6 +22,7 @@ CVD_TYPEDEF(void*, Boost);
 #endif
 
 CVD_ML_STAT_MODEL_DECL(Boost)
+CVD_ML_TREES_DECL(Boost)
 
 int cv_ml_Boost_get_maxCategories(Boost self);
 CvStatus* cv_ml_Boost_set_maxCategories(Boost self, int val);

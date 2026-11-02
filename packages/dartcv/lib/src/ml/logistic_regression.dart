@@ -102,7 +102,7 @@ class LogisticRegression extends CvStruct<cml.LogisticRegression> {
   /// Whether the model is a classifier (false for a regressor).
   bool get isClassifier => cml.cv_ml_LogisticRegression_isClassifier(ref);
 
-  /// Number of variables in training samples.
+  /// Number of learnt parameters per class: the number of variables plus one (the bias).
   int get varCount => cml.cv_ml_LogisticRegression_getVarCount(ref);
 
   /// The name used when saving the model, `opencv_ml_lr`.

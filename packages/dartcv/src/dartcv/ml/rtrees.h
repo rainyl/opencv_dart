@@ -6,6 +6,7 @@
 #define CVD_ML_RTREES_H
 
 #include "dartcv/core/types.h"
+#include "dartcv/ml/dtrees.h"
 #include "dartcv/ml/stat_model.h"
 #include "dartcv/ml/train_data.h"
 
@@ -21,6 +22,7 @@ CVD_TYPEDEF(void*, RTrees);
 #endif
 
 CVD_ML_STAT_MODEL_DECL(RTrees)
+CVD_ML_TREES_DECL(RTrees)
 
 int cv_ml_RTrees_get_maxCategories(RTrees self);
 CvStatus* cv_ml_RTrees_set_maxCategories(RTrees self, int val);
@@ -48,7 +50,9 @@ CvStatus* cv_ml_RTrees_getVarImportance(RTrees self, Mat rval);
 CvStatus* cv_ml_RTrees_getTermCriteria(RTrees self, TermCriteria* rval);
 CvStatus* cv_ml_RTrees_setTermCriteria(RTrees self, TermCriteria val);
 
-CvStatus* cv_ml_RTrees_getVotes(RTrees self, Mat samples, Mat results, int flags);
+CvStatus* cv_ml_RTrees_getVotes(
+    RTrees self, Mat samples, Mat results, int flags, CvCallback_0 callback
+);
 double cv_ml_RTrees_getOOBError(RTrees self);
 
 #ifdef __cplusplus

@@ -27,6 +27,13 @@ void main() {
     expect(raw.at<double>(0, 0), closeTo(rawSync.at<double>(0, 0), 1e-6));
     expect(labelsOf(await svm.predictAsync(queryPoints())), [0, 1]);
 
+    final (rho, alpha, svidx) = await svm.getDecisionFunctionAsync(0);
+    final (rhoSync, alphaSync, _) = svm.getDecisionFunction(0);
+    expect(rho, rhoSync);
+    expect(alpha.total, alphaSync.total);
+    expect(svidx.total, alphaSync.total);
+    await expectLater(svm.getDecisionFunctionAsync(5), throwsA(isA<cv.CvException>()));
+
     final data = cv.TrainData.create(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32())
       ..setTrainTestSplitRatio(0.6);
     final other = cv.SVM.create()..kernelType = cv.SVM.LINEAR;

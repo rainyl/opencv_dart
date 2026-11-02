@@ -6,6 +6,7 @@
 #include "dartcv/ml/stat_model.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(DTrees, cv::ml::DTrees)
+CVD_ML_TREES_IMPL(DTrees)
 
 int cv_ml_DTrees_get_maxCategories(DTrees self) {
     return (CVDEREF(self))->getMaxCategories();

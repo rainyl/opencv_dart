@@ -396,10 +396,44 @@ external ffi.Pointer<CvStatus> cv_ml_Boost_getDefaultName(
 );
 
 @meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<MlDTreesNode>, ffi.Int, ffi.Pointer<ffi.Int>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getNodes(
+  Boost self$1,
+  ffi.Pointer<MlDTreesNode> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
 @ffi.Native<ffi.Pointer<CvStatus> Function(Boost, Mat)>()
 external ffi.Pointer<CvStatus> cv_ml_Boost_getPriors(
   Boost self$1,
   Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getRoots(
+  Boost self$1,
+  ffi.Pointer<VecI32> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<MlDTreesSplit>, ffi.Int, ffi.Pointer<ffi.Int>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getSplits(
+  Boost self$1,
+  ffi.Pointer<MlDTreesSplit> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getSubsets(
+  Boost self$1,
+  ffi.Pointer<VecI32> rval,
 );
 
 @meta.RecordUse()
@@ -677,10 +711,46 @@ external ffi.Pointer<CvStatus> cv_ml_DTrees_getDefaultName(
 );
 
 @meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<MlDTreesNode>, ffi.Int, ffi.Pointer<ffi.Int>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getNodes(
+  DTrees self$1,
+  ffi.Pointer<MlDTreesNode> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
 @ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, Mat)>()
 external ffi.Pointer<CvStatus> cv_ml_DTrees_getPriors(
   DTrees self$1,
   Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getRoots(
+  DTrees self$1,
+  ffi.Pointer<VecI32> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<MlDTreesSplit>, ffi.Int, ffi.Pointer<ffi.Int>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getSplits(
+  DTrees self$1,
+  ffi.Pointer<MlDTreesSplit> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getSubsets(
+  DTrees self$1,
+  ffi.Pointer<VecI32> rval,
 );
 
 @meta.RecordUse()
@@ -1795,6 +1865,17 @@ external ffi.Pointer<CvStatus> cv_ml_RTrees_getDefaultName(
 );
 
 @meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<MlDTreesNode>, ffi.Int, ffi.Pointer<ffi.Int>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getNodes(
+  RTrees self$1,
+  ffi.Pointer<MlDTreesNode> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
 @ffi.Native<ffi.Double Function(RTrees)>()
 external double cv_ml_RTrees_getOOBError(
   RTrees self$1,
@@ -1805,6 +1886,31 @@ external double cv_ml_RTrees_getOOBError(
 external ffi.Pointer<CvStatus> cv_ml_RTrees_getPriors(
   RTrees self$1,
   Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getRoots(
+  RTrees self$1,
+  ffi.Pointer<VecI32> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<MlDTreesSplit>, ffi.Int, ffi.Pointer<ffi.Int>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getSplits(
+  RTrees self$1,
+  ffi.Pointer<MlDTreesSplit> rval,
+  int capacity,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<VecI32>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getSubsets(
+  RTrees self$1,
+  ffi.Pointer<VecI32> rval,
 );
 
 @meta.RecordUse()
@@ -1828,12 +1934,13 @@ external ffi.Pointer<CvStatus> cv_ml_RTrees_getVarImportance(
 );
 
 @meta.RecordUse()
-@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat, Mat, ffi.Int)>()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat, Mat, ffi.Int, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_ml_RTrees_getVotes(
   RTrees self$1,
   Mat samples,
   Mat results,
   int flags,
+  imp$1.CvCallback_0 callback,
 );
 
 @meta.RecordUse()
@@ -2323,13 +2430,16 @@ external ffi.Pointer<CvStatus> cv_ml_SVM_getClassWeights(
 );
 
 @meta.RecordUse()
-@ffi.Native<ffi.Pointer<CvStatus> Function(SVM, ffi.Int, Mat, Mat, ffi.Pointer<ffi.Double>)>()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(SVM, ffi.Int, Mat, Mat, ffi.Pointer<ffi.Double>, imp$1.CvCallback_0)
+>()
 external ffi.Pointer<CvStatus> cv_ml_SVM_getDecisionFunction(
   SVM self$1,
   int i,
   Mat alpha,
   Mat svidx,
   ffi.Pointer<ffi.Double> rval,
+  imp$1.CvCallback_0 callback,
 );
 
 @meta.RecordUse()
@@ -2994,6 +3104,85 @@ final class LogisticRegression extends ffi.Struct {
 typedef LogisticRegressionPtr = ffi.Pointer<LogisticRegression>;
 typedef Mat = imp$1.Mat;
 
+/// Value copy of cv::ml::DTrees::Node.
+final class MlDTreesNode extends ffi.Struct {
+  @ffi.Double()
+  external double value;
+
+  @ffi.Int()
+  external int classIdx;
+
+  @ffi.Int()
+  external int parent;
+
+  @ffi.Int()
+  external int left;
+
+  @ffi.Int()
+  external int right;
+
+  @ffi.Int()
+  external int defaultDir;
+
+  @ffi.Int()
+  external int split;
+
+  static ffi.Pointer<MlDTreesNode> $allocate(
+    ffi.Allocator $allocator, {
+    required double value,
+    required int classIdx,
+    required int parent,
+    required int left,
+    required int right,
+    required int defaultDir,
+    required int split,
+  }) => $allocator<MlDTreesNode>()
+    ..ref.value = value
+    ..ref.classIdx = classIdx
+    ..ref.parent = parent
+    ..ref.left = left
+    ..ref.right = right
+    ..ref.defaultDir = defaultDir
+    ..ref.split = split;
+}
+
+/// Value copy of cv::ml::DTrees::Split.
+final class MlDTreesSplit extends ffi.Struct {
+  @ffi.Int()
+  external int varIdx;
+
+  @ffi.Bool()
+  external bool inversed;
+
+  @ffi.Float()
+  external double quality;
+
+  @ffi.Int()
+  external int next;
+
+  @ffi.Float()
+  external double c;
+
+  @ffi.Int()
+  external int subsetOfs;
+
+  static ffi.Pointer<MlDTreesSplit> $allocate(
+    ffi.Allocator $allocator, {
+    required int varIdx,
+    required bool inversed,
+    required double quality,
+    required int next,
+    required double c,
+    required int subsetOfs,
+  }) => $allocator<MlDTreesSplit>()
+    ..ref.varIdx = varIdx
+    ..ref.inversed = inversed
+    ..ref.quality = quality
+    ..ref.next = next
+    ..ref.c = c
+    ..ref.subsetOfs = subsetOfs;
+}
+
 /// Value copy of cv::ml::ParamGrid.
 final class MlParamGrid extends ffi.Struct {
   @ffi.Double()
@@ -3072,5 +3261,6 @@ final class TrainData extends ffi.Struct {
 
 typedef TrainDataPtr = ffi.Pointer<TrainData>;
 typedef Vec2d = imp$1.Vec2d;
+typedef VecI32 = imp$1.VecI32;
 typedef VecMat = imp$1.VecMat;
 typedef VecVecChar = imp$1.VecVecChar;

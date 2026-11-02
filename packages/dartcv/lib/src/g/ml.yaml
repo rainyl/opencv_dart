@@ -106,8 +106,16 @@ files:
         name: cv_ml_Boost_empty
       c:@F@cv_ml_Boost_getDefaultName:
         name: cv_ml_Boost_getDefaultName
+      c:@F@cv_ml_Boost_getNodes:
+        name: cv_ml_Boost_getNodes
       c:@F@cv_ml_Boost_getPriors:
         name: cv_ml_Boost_getPriors
+      c:@F@cv_ml_Boost_getRoots:
+        name: cv_ml_Boost_getRoots
+      c:@F@cv_ml_Boost_getSplits:
+        name: cv_ml_Boost_getSplits
+      c:@F@cv_ml_Boost_getSubsets:
+        name: cv_ml_Boost_getSubsets
       c:@F@cv_ml_Boost_getVarCount:
         name: cv_ml_Boost_getVarCount
       c:@F@cv_ml_Boost_get_boostType:
@@ -184,8 +192,16 @@ files:
         name: cv_ml_DTrees_empty
       c:@F@cv_ml_DTrees_getDefaultName:
         name: cv_ml_DTrees_getDefaultName
+      c:@F@cv_ml_DTrees_getNodes:
+        name: cv_ml_DTrees_getNodes
       c:@F@cv_ml_DTrees_getPriors:
         name: cv_ml_DTrees_getPriors
+      c:@F@cv_ml_DTrees_getRoots:
+        name: cv_ml_DTrees_getRoots
+      c:@F@cv_ml_DTrees_getSplits:
+        name: cv_ml_DTrees_getSplits
+      c:@F@cv_ml_DTrees_getSubsets:
+        name: cv_ml_DTrees_getSubsets
       c:@F@cv_ml_DTrees_getVarCount:
         name: cv_ml_DTrees_getVarCount
       c:@F@cv_ml_DTrees_get_cvFolds:
@@ -442,10 +458,18 @@ files:
         name: cv_ml_RTrees_empty
       c:@F@cv_ml_RTrees_getDefaultName:
         name: cv_ml_RTrees_getDefaultName
+      c:@F@cv_ml_RTrees_getNodes:
+        name: cv_ml_RTrees_getNodes
       c:@F@cv_ml_RTrees_getOOBError:
         name: cv_ml_RTrees_getOOBError
       c:@F@cv_ml_RTrees_getPriors:
         name: cv_ml_RTrees_getPriors
+      c:@F@cv_ml_RTrees_getRoots:
+        name: cv_ml_RTrees_getRoots
+      c:@F@cv_ml_RTrees_getSplits:
+        name: cv_ml_RTrees_getSplits
+      c:@F@cv_ml_RTrees_getSubsets:
+        name: cv_ml_RTrees_getSubsets
       c:@F@cv_ml_RTrees_getTermCriteria:
         name: cv_ml_RTrees_getTermCriteria
       c:@F@cv_ml_RTrees_getVarCount:
@@ -746,6 +770,10 @@ files:
         name: KNearest
       c:@S@LogisticRegression:
         name: LogisticRegression
+      c:@S@MlDTreesNode:
+        name: MlDTreesNode
+      c:@S@MlDTreesSplit:
+        name: MlDTreesSplit
       c:@S@MlParamGrid:
         name: MlParamGrid
       c:@S@NormalBayesClassifier:
@@ -788,6 +816,8 @@ files:
         name: TermCriteria
       c:types.h@T@Vec2d:
         name: Vec2d
+      c:types.h@T@VecI32:
+        name: VecI32
       c:types.h@T@VecMat:
         name: VecMat
       c:types.h@T@VecVecChar:

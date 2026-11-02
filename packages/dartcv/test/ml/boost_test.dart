@@ -41,6 +41,12 @@ void main() {
     final raw = boost.predict(queryPoints(), flags: cv.StatModel.RAW_OUTPUT | cv.DTrees.PREDICT_SUM);
     expect(raw.atNum(0, 0) * raw.atNum(1, 0), lessThan(0));
 
+    // at most weakCount stumps, each a root with two leaves
+    final roots = boost.roots;
+    expect(roots.length, inInclusiveRange(1, 10));
+    expect(boost.nodes.length, roots.length * 3);
+    expect(boost.splits, hasLength(roots.length));
+
     final path = '${tempDir()}/boost.yml';
     boost.save(path);
     expect(labelsOf(cv.Boost.load(path).predict(queryPoints())), [3, 7]);

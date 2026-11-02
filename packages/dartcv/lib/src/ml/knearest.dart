@@ -82,7 +82,8 @@ class KNearest extends CvStruct<cml.KNearest> {
     (arena) => cvRun(() => cml.cv_ml_KNearest_save(ref, filename.toNativeUtf8(allocator: arena).cast())),
   );
 
-  /// Clears the model, it becomes untrained.
+  /// Calls OpenCV's `clear`, which does not reset this model: it stays trained. Create a new
+  /// model to start over.
   void clear() => cvRun(() => cml.cv_ml_KNearest_clear(ref));
 
   bool get isEmpty => cml.cv_ml_KNearest_empty(ref);

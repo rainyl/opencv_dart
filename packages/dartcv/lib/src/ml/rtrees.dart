@@ -14,8 +14,10 @@ import '../core/base.dart';
 import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/termcriteria.dart';
+import '../core/vec.dart';
 import '../g/ml.g.dart' as cml;
 import '../g/types.g.dart' as cvg;
+import 'dtrees.dart';
 import 'ml_constants.dart';
 import 'train_data.dart';
 
@@ -83,7 +85,8 @@ class RTrees extends CvStruct<cml.RTrees> {
     (arena) => cvRun(() => cml.cv_ml_RTrees_save(ref, filename.toNativeUtf8(allocator: arena).cast())),
   );
 
-  /// Clears the model, it becomes untrained.
+  /// Calls OpenCV's `clear`, which does not reset this model: it stays trained. Create a new
+  /// model to start over.
   void clear() => cvRun(() => cml.cv_ml_RTrees_clear(ref));
 
   bool get isEmpty => cml.cv_ml_RTrees_empty(ref);
@@ -249,11 +252,90 @@ class RTrees extends CvStruct<cml.RTrees> {
   /// [StatModel.RAW_OUTPUT], each row holds the value of each tree for one sample (`CV_32F`).
   Mat getVotes(Mat samples, {int flags = 0}) {
     final rval = Mat.empty();
-    cvRun(() => cml.cv_ml_RTrees_getVotes(ref, samples.ref, rval.ref, flags));
+    cvRun(() => cml.cv_ml_RTrees_getVotes(ref, samples.ref, rval.ref, flags, ffi.nullptr));
     return rval;
   }
 
   /// The out-of-bag error of the trained forest, only computed when [calculateVarImportance] is
   /// set or [termCriteria] has an epsilon; 0 otherwise.
   double get oobError => cml.cv_ml_RTrees_getOOBError(ref);
+
+  /// The indices of the root nodes, one per tree.
+  List<int> get roots {
+    final v = VecI32();
+    try {
+      cvRun(() => cml.cv_ml_RTrees_getRoots(ref, v.ptr));
+      return v.toList();
+    } finally {
+      v.dispose();
+    }
+  }
+
+  /// All the nodes of the trees, the children of a node are referenced by index.
+  List<DTreesNode> get nodes {
+    final count = calloc<ffi.Int>();
+    try {
+      cvRun(() => cml.cv_ml_RTrees_getNodes(ref, ffi.nullptr, 0, count));
+      final n = count.value;
+      final buf = calloc<cml.MlDTreesNode>(n);
+      try {
+        cvRun(() => cml.cv_ml_RTrees_getNodes(ref, buf, n, count));
+        return List.generate(n, (i) {
+          final e = buf[i];
+          return DTreesNode(
+            value: e.value,
+            classIdx: e.classIdx,
+            parent: e.parent,
+            left: e.left,
+            right: e.right,
+            defaultDir: e.defaultDir,
+            split: e.split,
+          );
+        });
+      } finally {
+        calloc.free(buf);
+      }
+    } finally {
+      calloc.free(count);
+    }
+  }
+
+  /// All the splits of the trees, referenced by [DTreesNode.split] and [DTreesSplit.next].
+  List<DTreesSplit> get splits {
+    final count = calloc<ffi.Int>();
+    try {
+      cvRun(() => cml.cv_ml_RTrees_getSplits(ref, ffi.nullptr, 0, count));
+      final n = count.value;
+      final buf = calloc<cml.MlDTreesSplit>(n);
+      try {
+        cvRun(() => cml.cv_ml_RTrees_getSplits(ref, buf, n, count));
+        return List.generate(n, (i) {
+          final e = buf[i];
+          return DTreesSplit(
+            varIdx: e.varIdx,
+            inversed: e.inversed,
+            quality: e.quality,
+            next: e.next,
+            c: e.c,
+            subsetOfs: e.subsetOfs,
+          );
+        });
+      } finally {
+        calloc.free(buf);
+      }
+    } finally {
+      calloc.free(count);
+    }
+  }
+
+  /// The bitsets of the splits on categorical variables, see [DTreesSplit.subsetOfs].
+  List<int> get subsets {
+    final v = VecI32();
+    try {
+      cvRun(() => cml.cv_ml_RTrees_getSubsets(ref, v.ptr));
+      return v.toList();
+    } finally {
+      v.dispose();
+    }
+  }
 }

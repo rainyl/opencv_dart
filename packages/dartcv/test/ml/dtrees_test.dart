@@ -68,6 +68,33 @@ void main() {
     expect(labelsOf(other.predict(queryPoints())), [0, 1]);
   });
 
+  test('cv.DTrees tree structure', () {
+    final tree = trainedTree();
+    final roots = tree.roots;
+    final nodes = tree.nodes;
+    final splits = tree.splits;
+    expect(roots, hasLength(1));
+    expect(nodes[roots.first].parent, -1);
+
+    final leaves = nodes.where((n) => n.left < 0 && n.right < 0).toList();
+    final inner = nodes.where((n) => n.left >= 0 || n.right >= 0).toList();
+    expect(inner, isNotEmpty);
+    // the two separable clusters end in leaves of both classes
+    expect(leaves.map((n) => n.value.round()).toSet(), {0, 1});
+    for (final n in leaves) {
+      expect(n.split, -1);
+    }
+    for (final n in inner) {
+      expect(nodes[n.left].parent, nodes.indexOf(n));
+      expect(nodes[n.right].parent, nodes.indexOf(n));
+      expect(splits[n.split].varIdx, anyOf(0, 1));
+      expect(splits[n.split].quality, greaterThan(0));
+    }
+    // no categorical variables, so no subsets
+    expect(tree.subsets, isEmpty);
+    expect(cv.DTrees.create().nodes, isEmpty);
+  });
+
   test('cv.DTrees surrogate splits are not implemented', () {
     final tree = cv.DTrees.create()
       ..cvFolds = 0

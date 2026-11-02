@@ -45,6 +45,13 @@ void main() {
       [0, 10],
     ]);
 
+    expect((await forest.getVotesAsync(queryPoints())).toList(), votes.toList());
+
+    // one tree per iteration of the termCriteria
+    expect(forest.roots, hasLength(10));
+    expect(forest.nodes.length, greaterThanOrEqualTo(10));
+    expect(forest.splits, isNotEmpty);
+
     final path = '${tempDir()}/forest.yml';
     forest.save(path);
     expect(labelsOf(cv.RTrees.load(path).predict(queryPoints())), [0, 1]);

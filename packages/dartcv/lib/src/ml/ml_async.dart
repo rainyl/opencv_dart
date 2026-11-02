@@ -100,6 +100,24 @@ extension TrainDataAsync on TrainData {
 }
 
 extension SVMAsync on SVM {
+  Future<(double rho, Mat alpha, Mat svidx)> getDecisionFunctionAsync(int i) async {
+    final p = calloc<ffi.Double>();
+    final alpha = Mat.empty();
+    final svidx = Mat.empty();
+    try {
+      return await cvRunAsync0<(double, Mat, Mat)>(
+        (callback) => cml.cv_ml_SVM_getDecisionFunction(ref, i, alpha.ref, svidx.ref, p, callback),
+        (c) => c.complete((p.value, alpha, svidx)),
+      );
+    } catch (_) {
+      alpha.dispose();
+      svidx.dispose();
+      rethrow;
+    } finally {
+      calloc.free(p);
+    }
+  }
+
   Future<bool> trainAsync(Mat samples, int layout, Mat responses) =>
       _boolAsync((p, cb) => cml.cv_ml_SVM_train_1(ref, samples.ref, layout, responses.ref, p, cb));
 
@@ -258,6 +276,19 @@ extension DTreesAsync on DTrees {
 }
 
 extension RTreesAsync on RTrees {
+  Future<Mat> getVotesAsync(Mat samples, {int flags = 0}) async {
+    final rval = Mat.empty();
+    try {
+      return await cvRunAsync0<Mat>(
+        (callback) => cml.cv_ml_RTrees_getVotes(ref, samples.ref, rval.ref, flags, callback),
+        (c) => c.complete(rval),
+      );
+    } catch (_) {
+      rval.dispose();
+      rethrow;
+    }
+  }
+
   Future<bool> trainAsync(Mat samples, int layout, Mat responses) =>
       _boolAsync((p, cb) => cml.cv_ml_RTrees_train_1(ref, samples.ref, layout, responses.ref, p, cb));
 

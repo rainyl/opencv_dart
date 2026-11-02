@@ -121,6 +121,41 @@ void main() async {
 }
 ```
 
+#### Machine learning
+
+The `ml` module (SVM, KNearest, ANN_MLP, DTrees, RTrees, Boost, EM, LogisticRegression,
+NormalBayesClassifier, SVMSGD) is excluded by default; enable it in your `pubspec.yaml`:
+
+```yaml
+hooks:
+  user_defines:
+    dartcv4:
+      include_modules:
+        - imgproc
+        - ml
+```
+
+```dart
+import 'package:dartcv4/dartcv.dart' as cv;
+
+void main() {
+  // one sample per row, CV_32F; class labels as CV_32S
+  final samples = cv.Mat.fromList(4, 2, cv.MatType.CV_32FC1, <double>[1, 1, 2, 2, 8, 8, 9, 9]);
+  final labels = cv.Mat.fromList(4, 1, cv.MatType.CV_32SC1, <int>[0, 0, 1, 1]);
+
+  final svm = cv.SVM.create()..kernelType = cv.SVM.LINEAR;
+  svm.train(samples, cv.ROW_SAMPLE, labels);
+
+  final query = cv.Mat.fromList(1, 2, cv.MatType.CV_32FC1, <double>[7.5, 8.5]);
+  print(svm.predict(query).atNum(0, 0)); // 1.0
+
+  svm.save("svm.yml"); // later: cv.SVM.load("svm.yml") or cv.SVM.loadFromString(asset)
+}
+```
+
+A complete digit recognition example (KNearest and SVM) is in
+[example/dart_cli/bin/ml_digits.dart](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv/example/dart_cli/bin/ml_digits.dart).
+
 #### Flutter
 
 see [example](https://github.com/rainyl/opencv_dart/tree/main/packages/dartcv/example/flutter)
