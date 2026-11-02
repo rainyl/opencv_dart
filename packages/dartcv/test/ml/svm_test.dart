@@ -77,15 +77,18 @@ void main() {
     expect(err, 0);
     expect(resp.rows, data.nTestSamples);
 
+    // trainAuto cross-validates on the whole data: balanced folds keep both classes in every fold,
+    // a random 2-fold split of so few samples can lose one and make OpenCV throw
+    final full = cv.TrainData.create(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32());
     final auto = cv.SVM.create()..kernelType = cv.SVM.LINEAR;
-    expect(auto.trainAuto(data, kFold: 2), true);
+    expect(auto.trainAuto(full, kFold: 2, balanced: true), true);
     expect(labelsOf(auto.predict(queryPoints())), [0, 1]);
 
     final grid = cv.SVM.getDefaultGrid(cv.SVM.PARAM_C);
     expect(grid.minVal, lessThan(grid.maxVal));
     expect(grid.logStep, greaterThan(1));
     expect(
-      auto.trainAuto(data, kFold: 2, Cgrid: const cv.ParamGrid(0.1, 10, 10)),
+      auto.trainAuto(full, kFold: 2, Cgrid: const cv.ParamGrid(0.1, 10, 10), balanced: true),
       true,
     );
   });
@@ -111,6 +114,8 @@ void main() {
   test('cv.SVM errors', () {
     final svm = cv.SVM.create();
     expect(() => svm.predict(queryPoints()), throwsA(isA<cv.CvException>()));
+    final data = cv.TrainData.create(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32());
+    expect(() => svm.calcError(data, false), throwsA(isA<cv.CvException>()));
     expect(() => cv.SVM.load('/nonexistent/svm.yml'), throwsA(isA<cv.CvException>()));
     expect(() => cv.SVM.loadFromString('not a model'), throwsA(isA<cv.CvException>()));
     expect(() => trainedSvm().save('/nonexistent/dir/svm.yml'), throwsA(isA<cv.CvException>()));

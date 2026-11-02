@@ -24,6 +24,15 @@ inline cv::_InputArray cvd_or_noarray(Mat m) {
     return cv::_InputArray(*m.ptr);
 }
 
+/// Fails for a model that is not trained. OpenCV does not always check: SVMImpl leaves var_count
+/// uninitialized, so a fresh SVM can pass predict's input check and divide by zero (a SIGFPE crash
+/// on x86) when the allocation reuses a freed trained SVM.
+inline void cvd_ml_check_trained(const cv::ml::StatModel& model) {
+    if (!model.isTrained()) {
+        CV_Error(cv::Error::StsError, "The model is not trained");
+    }
+}
+
 /// cv::Algorithm::save, but failing when the file can not be opened: OpenCV only logs that, and
 /// models whose write() uses no FileStorage::write (e.g. KNearest) would silently save nothing.
 inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
@@ -115,6 +124,7 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         NAME self, Mat samples, Mat results, int flags, float* rval, CvCallback_0 callback         \
     ) {                                                                                            \
         BEGIN_WRAP                                                                                 \
+        cvd_ml_check_trained(*CVDEREF(self));                                                      \
         *rval = (CVDEREF(self))->predict(CVDEREF(samples), CVDEREF(results), flags);               \
         if (callback != nullptr) {                                                                 \
             callback();                                                                            \
@@ -125,6 +135,7 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         NAME self, TrainData data, bool test, Mat resp, float* rval, CvCallback_0 callback         \
     ) {                                                                                            \
         BEGIN_WRAP                                                                                 \
+        cvd_ml_check_trained(*CVDEREF(self));                                                      \
         *rval = (CVDEREF(self))->calcError(CVDEREF(data), test, CVDEREF(resp));                    \
         if (callback != nullptr) {                                                                 \
             callback();                                                                            \

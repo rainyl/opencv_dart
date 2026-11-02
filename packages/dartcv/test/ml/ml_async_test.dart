@@ -33,7 +33,8 @@ void main() {
     expect(await other.trainWithDataAsync(data), true);
     final (err, _) = await other.calcErrorAsync(data, true);
     expect(err, other.calcError(data, true).$1);
-    expect(await other.trainAutoAsync(data, kFold: 2), true);
+    final full = cv.TrainData.create(clusterSamples(), cv.ROW_SAMPLE, clusterResponsesI32());
+    expect(await other.trainAutoAsync(full, kFold: 2, balanced: true), true);
 
     await expectLater(cv.SVM.create().predictAsync(queryPoints()), throwsA(isA<cv.CvException>()));
   });
