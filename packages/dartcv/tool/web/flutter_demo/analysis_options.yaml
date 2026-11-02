@@ -4,3 +4,8 @@ analyzer:
   exclude:
     - build/**
     - web/**
+
+# Match the repo-wide CI formatter (`dart format --line-length 110`).
+formatter:
+  page_width: 110
+  trailing_commas: preserve
