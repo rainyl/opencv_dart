@@ -46,11 +46,13 @@ void main() {
       expect(
         code,
         0,
-        reason: 'child must terminate within timeout after OpenCL usage; '
+        reason:
+            'child must terminate within timeout after OpenCL usage; '
             'stdout=$out stderr=$err',
       );
     },
-    skip: 'Racy pre-existing OpenCV OpenCL hang-at-exit; run manually via '
+    skip:
+        'Racy pre-existing OpenCV OpenCL hang-at-exit; run manually via '
         '`dart test --run-skipped -t repro test/core/opencl_exit_test.dart`. '
         'See file header for the diagnosis.',
     tags: 'repro',
