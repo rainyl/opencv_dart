@@ -16,6 +16,14 @@ template <typename T> inline cv::Ptr<T> cvd_ml_checked(cv::Ptr<T> p, const std::
     return p;
 }
 
+/// An optional input: an empty (or null) Mat becomes cv::noArray().
+inline cv::_InputArray cvd_or_noarray(Mat m) {
+    if (m.ptr == nullptr || m.ptr->empty()) {
+        return cv::_InputArray();
+    }
+    return cv::_InputArray(*m.ptr);
+}
+
 /// cv::Algorithm::save, but failing when the file can not be opened: OpenCV only logs that, and
 /// models whose write() uses no FileStorage::write (e.g. KNearest) would silently save nothing.
 inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {

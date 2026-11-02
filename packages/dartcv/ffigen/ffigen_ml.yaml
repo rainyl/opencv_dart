@@ -17,15 +17,29 @@ include-unused-typedefs: true
 headers:
   entry-points:
     - ../src/dartcv/ml/ann_mlp.h
+    - ../src/dartcv/ml/boost.h
+    - ../src/dartcv/ml/dtrees.h
+    - ../src/dartcv/ml/em.h
     - ../src/dartcv/ml/knearest.h
+    - ../src/dartcv/ml/logistic_regression.h
+    - ../src/dartcv/ml/normal_bayes_classifier.h
+    - ../src/dartcv/ml/rtrees.h
     - ../src/dartcv/ml/stat_model.h
     - ../src/dartcv/ml/svm.h
+    - ../src/dartcv/ml/svmsgd.h
     - ../src/dartcv/ml/train_data.h
   include-directives:
     - ../src/dartcv/ml/ann_mlp.h
+    - ../src/dartcv/ml/boost.h
+    - ../src/dartcv/ml/dtrees.h
+    - ../src/dartcv/ml/em.h
     - ../src/dartcv/ml/knearest.h
+    - ../src/dartcv/ml/logistic_regression.h
+    - ../src/dartcv/ml/normal_bayes_classifier.h
+    - ../src/dartcv/ml/rtrees.h
     - ../src/dartcv/ml/stat_model.h
     - ../src/dartcv/ml/svm.h
+    - ../src/dartcv/ml/svmsgd.h
     - ../src/dartcv/ml/train_data.h
 
 functions:

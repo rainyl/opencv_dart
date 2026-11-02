@@ -353,6 +353,780 @@ external ffi.Pointer<CvStatus> cv_ml_ANN_MLP_train_1(
 
 @meta.RecordUse()
 @ffi.Native<
+  ffi.Pointer<CvStatus> Function(Boost, TrainData, ffi.Bool, Mat, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_calcError(
+  Boost self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_clear(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(BoostPtr)>()
+external void cv_ml_Boost_close(
+  BoostPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<Boost>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_create(
+  ffi.Pointer<Boost> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_empty(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getDefaultName(
+  Boost self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_getPriors(
+  Boost self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_getVarCount(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_boostType(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_cvFolds(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_maxCategories(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_maxDepth(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_minSampleCount(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(Boost)>()
+external double cv_ml_Boost_get_regressionAccuracy(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_get_truncatePrunedTree(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_get_use1SERule(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_get_useSurrogates(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(Boost)>()
+external int cv_ml_Boost_get_weakCount(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Double Function(Boost)>()
+external double cv_ml_Boost_get_weightTrimRate(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_isClassifier(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(Boost)>()
+external bool cv_ml_Boost_isTrained(
+  Boost self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<Boost>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<Boost> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<Boost>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<Boost> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(Boost, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_predict(
+  Boost self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_save(
+  Boost self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_setPriors(
+  Boost self$1,
+  Mat val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_boostType(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_cvFolds(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_maxCategories(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_maxDepth(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_minSampleCount(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_regressionAccuracy(
+  Boost self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_truncatePrunedTree(
+  Boost self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_use1SERule(
+  Boost self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_useSurrogates(
+  Boost self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_weakCount(
+  Boost self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(Boost, ffi.Double)>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_set_weightTrimRate(
+  Boost self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(Boost, TrainData, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_train(
+  Boost self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(Boost, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_Boost_train_1(
+  Boost self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, TrainData, ffi.Bool, Mat, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_calcError(
+  DTrees self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_clear(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(DTreesPtr)>()
+external void cv_ml_DTrees_close(
+  DTreesPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<DTrees>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_create(
+  ffi.Pointer<DTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_empty(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getDefaultName(
+  DTrees self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_getPriors(
+  DTrees self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(DTrees)>()
+external int cv_ml_DTrees_getVarCount(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(DTrees)>()
+external int cv_ml_DTrees_get_cvFolds(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(DTrees)>()
+external int cv_ml_DTrees_get_maxCategories(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(DTrees)>()
+external int cv_ml_DTrees_get_maxDepth(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(DTrees)>()
+external int cv_ml_DTrees_get_minSampleCount(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(DTrees)>()
+external double cv_ml_DTrees_get_regressionAccuracy(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_get_truncatePrunedTree(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_get_use1SERule(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_get_useSurrogates(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_isClassifier(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(DTrees)>()
+external bool cv_ml_DTrees_isTrained(
+  DTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<DTrees>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<DTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<DTrees>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<DTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_predict(
+  DTrees self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_save(
+  DTrees self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_setPriors(
+  DTrees self$1,
+  Mat val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_cvFolds(
+  DTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_maxCategories(
+  DTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_maxDepth(
+  DTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_minSampleCount(
+  DTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_regressionAccuracy(
+  DTrees self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_truncatePrunedTree(
+  DTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_use1SERule(
+  DTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(DTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_set_useSurrogates(
+  DTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, TrainData, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_train(
+  DTrees self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(DTrees, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_DTrees_train_1(
+  DTrees self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, TrainData, ffi.Bool, Mat, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_calcError(
+  EM self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_clear(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(EMPtr)>()
+external void cv_ml_EM_close(
+  EMPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<EM>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_create(
+  ffi.Pointer<EM> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(EM)>()
+external bool cv_ml_EM_empty(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Pointer<VecMat>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_getCovs(
+  EM self$1,
+  ffi.Pointer<VecMat> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_getDefaultName(
+  EM self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_getMeans(
+  EM self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Pointer<TermCriteria>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_getTermCriteria(
+  EM self$1,
+  ffi.Pointer<TermCriteria> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(EM)>()
+external int cv_ml_EM_getVarCount(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_getWeights(
+  EM self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(EM)>()
+external int cv_ml_EM_get_clustersNumber(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(EM)>()
+external int cv_ml_EM_get_covarianceMatrixType(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(EM)>()
+external bool cv_ml_EM_isClassifier(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(EM)>()
+external bool cv_ml_EM_isTrained(
+  EM self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<EM>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<EM> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<EM>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<EM> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_predict(
+  EM self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, Mat, Mat, ffi.Pointer<Vec2d>, imp$1.CvCallback_0)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_predict2(
+  EM self$1,
+  Mat sample,
+  Mat probs,
+  ffi.Pointer<Vec2d> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_save(
+  EM self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, TermCriteria)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_setTermCriteria(
+  EM self$1,
+  TermCriteria val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_set_clustersNumber(
+  EM self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(EM, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_EM_set_covarianceMatrixType(
+  EM self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, TrainData, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_train(
+  EM self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    EM,
+    Mat,
+    Mat,
+    VecMat,
+    Mat,
+    Mat,
+    Mat,
+    Mat,
+    ffi.Pointer<ffi.Bool>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_trainE(
+  EM self$1,
+  Mat samples,
+  Mat means0,
+  VecMat covs0,
+  Mat weights0,
+  Mat logLikelihoods,
+  Mat labels,
+  Mat probs,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+/// Empty optional inputs (covs0, weights0) are passed to OpenCV as cv::noArray().
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, Mat, Mat, Mat, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_trainEM(
+  EM self$1,
+  Mat samples,
+  Mat logLikelihoods,
+  Mat labels,
+  Mat probs,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, Mat, Mat, Mat, Mat, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_trainM(
+  EM self$1,
+  Mat samples,
+  Mat probs0,
+  Mat logLikelihoods,
+  Mat labels,
+  Mat probs,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(EM, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_EM_train_1(
+  EM self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
   ffi.Pointer<CvStatus> Function(
     KNearest,
     TrainData,
@@ -551,6 +1325,952 @@ external ffi.Pointer<CvStatus> cv_ml_KNearest_train(
 >()
 external ffi.Pointer<CvStatus> cv_ml_KNearest_train_1(
   KNearest self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LogisticRegression,
+    TrainData,
+    ffi.Bool,
+    Mat,
+    ffi.Pointer<ffi.Float>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_calcError(
+  LogisticRegression self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_clear(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(LogisticRegressionPtr)>()
+external void cv_ml_LogisticRegression_close(
+  LogisticRegressionPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<LogisticRegression>)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_create(
+  ffi.Pointer<LogisticRegression> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(LogisticRegression)>()
+external bool cv_ml_LogisticRegression_empty(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_getDefaultName(
+  LogisticRegression self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Pointer<TermCriteria>)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_getTermCriteria(
+  LogisticRegression self$1,
+  ffi.Pointer<TermCriteria> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(LogisticRegression)>()
+external int cv_ml_LogisticRegression_getVarCount(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(LogisticRegression)>()
+external int cv_ml_LogisticRegression_get_iterations(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Double Function(LogisticRegression)>()
+external double cv_ml_LogisticRegression_get_learningRate(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_get_learnt_thetas(
+  LogisticRegression self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(LogisticRegression)>()
+external int cv_ml_LogisticRegression_get_miniBatchSize(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(LogisticRegression)>()
+external int cv_ml_LogisticRegression_get_regularization(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(LogisticRegression)>()
+external int cv_ml_LogisticRegression_get_trainMethod(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(LogisticRegression)>()
+external bool cv_ml_LogisticRegression_isClassifier(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(LogisticRegression)>()
+external bool cv_ml_LogisticRegression_isTrained(
+  LogisticRegression self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<LogisticRegression>)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<LogisticRegression> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<LogisticRegression>,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<LogisticRegression> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LogisticRegression,
+    Mat,
+    Mat,
+    ffi.Int,
+    ffi.Pointer<ffi.Float>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_predict(
+  LogisticRegression self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_save(
+  LogisticRegression self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, TermCriteria)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_setTermCriteria(
+  LogisticRegression self$1,
+  TermCriteria val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_set_iterations(
+  LogisticRegression self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Double)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_set_learningRate(
+  LogisticRegression self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_set_miniBatchSize(
+  LogisticRegression self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_set_regularization(
+  LogisticRegression self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(LogisticRegression, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_set_trainMethod(
+  LogisticRegression self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LogisticRegression,
+    TrainData,
+    ffi.Int,
+    ffi.Pointer<ffi.Bool>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_train(
+  LogisticRegression self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    LogisticRegression,
+    Mat,
+    ffi.Int,
+    Mat,
+    ffi.Pointer<ffi.Bool>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_LogisticRegression_train_1(
+  LogisticRegression self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    NormalBayesClassifier,
+    TrainData,
+    ffi.Bool,
+    Mat,
+    ffi.Pointer<ffi.Float>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_calcError(
+  NormalBayesClassifier self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(NormalBayesClassifier)>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_clear(
+  NormalBayesClassifier self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(NormalBayesClassifierPtr)>()
+external void cv_ml_NormalBayesClassifier_close(
+  NormalBayesClassifierPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<NormalBayesClassifier>)>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_create(
+  ffi.Pointer<NormalBayesClassifier> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(NormalBayesClassifier)>()
+external bool cv_ml_NormalBayesClassifier_empty(
+  NormalBayesClassifier self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(NormalBayesClassifier, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_getDefaultName(
+  NormalBayesClassifier self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(NormalBayesClassifier)>()
+external int cv_ml_NormalBayesClassifier_getVarCount(
+  NormalBayesClassifier self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(NormalBayesClassifier)>()
+external bool cv_ml_NormalBayesClassifier_isClassifier(
+  NormalBayesClassifier self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(NormalBayesClassifier)>()
+external bool cv_ml_NormalBayesClassifier_isTrained(
+  NormalBayesClassifier self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<NormalBayesClassifier>)>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<NormalBayesClassifier> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<NormalBayesClassifier>,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<NormalBayesClassifier> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    NormalBayesClassifier,
+    Mat,
+    Mat,
+    ffi.Int,
+    ffi.Pointer<ffi.Float>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_predict(
+  NormalBayesClassifier self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    NormalBayesClassifier,
+    Mat,
+    Mat,
+    Mat,
+    ffi.Int,
+    ffi.Pointer<ffi.Float>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_predictProb(
+  NormalBayesClassifier self$1,
+  Mat inputs,
+  Mat outputs,
+  Mat outputProbs,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(NormalBayesClassifier, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_save(
+  NormalBayesClassifier self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    NormalBayesClassifier,
+    TrainData,
+    ffi.Int,
+    ffi.Pointer<ffi.Bool>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_train(
+  NormalBayesClassifier self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(
+    NormalBayesClassifier,
+    Mat,
+    ffi.Int,
+    Mat,
+    ffi.Pointer<ffi.Bool>,
+    imp$1.CvCallback_0,
+  )
+>()
+external ffi.Pointer<CvStatus> cv_ml_NormalBayesClassifier_train_1(
+  NormalBayesClassifier self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, TrainData, ffi.Bool, Mat, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_calcError(
+  RTrees self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_clear(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(RTreesPtr)>()
+external void cv_ml_RTrees_close(
+  RTreesPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<RTrees>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_create(
+  ffi.Pointer<RTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_empty(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getDefaultName(
+  RTrees self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Double Function(RTrees)>()
+external double cv_ml_RTrees_getOOBError(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getPriors(
+  RTrees self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<TermCriteria>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getTermCriteria(
+  RTrees self$1,
+  ffi.Pointer<TermCriteria> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_getVarCount(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getVarImportance(
+  RTrees self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat, Mat, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_getVotes(
+  RTrees self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_get_activeVarCount(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_get_calculateVarImportance(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_get_cvFolds(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_get_maxCategories(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_get_maxDepth(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(RTrees)>()
+external int cv_ml_RTrees_get_minSampleCount(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(RTrees)>()
+external double cv_ml_RTrees_get_regressionAccuracy(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_get_truncatePrunedTree(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_get_use1SERule(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_get_useSurrogates(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_isClassifier(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(RTrees)>()
+external bool cv_ml_RTrees_isTrained(
+  RTrees self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<RTrees>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<RTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<RTrees>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<RTrees> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_predict(
+  RTrees self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_save(
+  RTrees self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_setPriors(
+  RTrees self$1,
+  Mat val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, TermCriteria)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_setTermCriteria(
+  RTrees self$1,
+  TermCriteria val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_activeVarCount(
+  RTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_calculateVarImportance(
+  RTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_cvFolds(
+  RTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_maxCategories(
+  RTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_maxDepth(
+  RTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_minSampleCount(
+  RTrees self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_regressionAccuracy(
+  RTrees self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_truncatePrunedTree(
+  RTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_use1SERule(
+  RTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(RTrees, ffi.Bool)>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_set_useSurrogates(
+  RTrees self$1,
+  bool val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, TrainData, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_train(
+  RTrees self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(RTrees, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_RTrees_train_1(
+  RTrees self$1,
+  Mat samples,
+  int layout,
+  Mat responses,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(SVMSGD, TrainData, ffi.Bool, Mat, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_calcError(
+  SVMSGD self$1,
+  TrainData data,
+  bool test,
+  Mat resp,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_clear(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(SVMSGDPtr)>()
+external void cv_ml_SVMSGD_close(
+  SVMSGDPtr self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<SVMSGD>)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_create(
+  ffi.Pointer<SVMSGD> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(SVMSGD)>()
+external bool cv_ml_SVMSGD_empty(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_getDefaultName(
+  SVMSGD self$1,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(SVMSGD)>()
+external double cv_ml_SVMSGD_getShift(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Pointer<TermCriteria>)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_getTermCriteria(
+  SVMSGD self$1,
+  ffi.Pointer<TermCriteria> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(SVMSGD)>()
+external int cv_ml_SVMSGD_getVarCount(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, Mat)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_getWeights(
+  SVMSGD self$1,
+  Mat rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(SVMSGD)>()
+external double cv_ml_SVMSGD_get_initialStepSize(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(SVMSGD)>()
+external double cv_ml_SVMSGD_get_marginRegularization(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(SVMSGD)>()
+external int cv_ml_SVMSGD_get_marginType(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Float Function(SVMSGD)>()
+external double cv_ml_SVMSGD_get_stepDecreasingPower(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function(SVMSGD)>()
+external int cv_ml_SVMSGD_get_svmsgdType(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(SVMSGD)>()
+external bool cv_ml_SVMSGD_isClassifier(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Bool Function(SVMSGD)>()
+external bool cv_ml_SVMSGD_isTrained(
+  SVMSGD self$1,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<SVMSGD>)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_load(
+  ffi.Pointer<ffi.Char> filepath,
+  ffi.Pointer<SVMSGD> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>, ffi.Pointer<SVMSGD>)
+>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_loadFromString(
+  ffi.Pointer<ffi.Char> strModel,
+  ffi.Pointer<ffi.Char> objname,
+  ffi.Pointer<SVMSGD> rval,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(SVMSGD, Mat, Mat, ffi.Int, ffi.Pointer<ffi.Float>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_predict(
+  SVMSGD self$1,
+  Mat samples,
+  Mat results,
+  int flags,
+  ffi.Pointer<ffi.Float> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Pointer<ffi.Char>)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_save(
+  SVMSGD self$1,
+  ffi.Pointer<ffi.Char> filename,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Int, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_setOptimalParameters(
+  SVMSGD self$1,
+  int svmsgdType,
+  int marginType,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, TermCriteria)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_setTermCriteria(
+  SVMSGD self$1,
+  TermCriteria val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_set_initialStepSize(
+  SVMSGD self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_set_marginRegularization(
+  SVMSGD self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_set_marginType(
+  SVMSGD self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Float)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_set_stepDecreasingPower(
+  SVMSGD self$1,
+  double val,
+);
+
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(SVMSGD, ffi.Int)>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_set_svmsgdType(
+  SVMSGD self$1,
+  int val,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(SVMSGD, TrainData, ffi.Int, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_train(
+  SVMSGD self$1,
+  TrainData data,
+  int flags,
+  ffi.Pointer<ffi.Bool> rval,
+  imp$1.CvCallback_0 callback,
+);
+
+@meta.RecordUse()
+@ffi.Native<
+  ffi.Pointer<CvStatus> Function(SVMSGD, Mat, ffi.Int, Mat, ffi.Pointer<ffi.Bool>, imp$1.CvCallback_0)
+>()
+external ffi.Pointer<CvStatus> cv_ml_SVMSGD_train_1(
+  SVMSGD self$1,
   Mat samples,
   int layout,
   Mat responses,
@@ -1184,8 +2904,22 @@ class _SymbolAddresses {
   const _SymbolAddresses();
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ANN_MLPPtr)>> get cv_ml_ANN_MLP_close =>
       ffi.Native.addressOf(self.cv_ml_ANN_MLP_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(BoostPtr)>> get cv_ml_Boost_close =>
+      ffi.Native.addressOf(self.cv_ml_Boost_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(DTreesPtr)>> get cv_ml_DTrees_close =>
+      ffi.Native.addressOf(self.cv_ml_DTrees_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(EMPtr)>> get cv_ml_EM_close =>
+      ffi.Native.addressOf(self.cv_ml_EM_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(KNearestPtr)>> get cv_ml_KNearest_close =>
       ffi.Native.addressOf(self.cv_ml_KNearest_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(LogisticRegressionPtr)>>
+  get cv_ml_LogisticRegression_close => ffi.Native.addressOf(self.cv_ml_LogisticRegression_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(NormalBayesClassifierPtr)>>
+  get cv_ml_NormalBayesClassifier_close => ffi.Native.addressOf(self.cv_ml_NormalBayesClassifier_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(RTreesPtr)>> get cv_ml_RTrees_close =>
+      ffi.Native.addressOf(self.cv_ml_RTrees_close);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SVMSGDPtr)>> get cv_ml_SVMSGD_close =>
+      ffi.Native.addressOf(self.cv_ml_SVMSGD_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(SVMPtr)>> get cv_ml_SVM_close =>
       ffi.Native.addressOf(self.cv_ml_SVM_close);
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(TrainDataPtr)>> get cv_ml_TrainData_close =>
@@ -1202,7 +2936,40 @@ final class ANN_MLP extends ffi.Struct {
 }
 
 typedef ANN_MLPPtr = ffi.Pointer<ANN_MLP>;
+
+final class Boost extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<Boost> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<Boost>()..ref.ptr = ptr;
+}
+
+typedef BoostPtr = ffi.Pointer<Boost>;
 typedef CvStatus = imp$1.CvStatus;
+
+final class DTrees extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<DTrees> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<DTrees>()..ref.ptr = ptr;
+}
+
+typedef DTreesPtr = ffi.Pointer<DTrees>;
+
+final class EM extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<EM> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<EM>()..ref.ptr = ptr;
+}
+
+typedef EMPtr = ffi.Pointer<EM>;
 
 final class KNearest extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
@@ -1214,6 +2981,17 @@ final class KNearest extends ffi.Struct {
 }
 
 typedef KNearestPtr = ffi.Pointer<KNearest>;
+
+final class LogisticRegression extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<LogisticRegression> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<LogisticRegression>()..ref.ptr = ptr;
+}
+
+typedef LogisticRegressionPtr = ffi.Pointer<LogisticRegression>;
 typedef Mat = imp$1.Mat;
 
 /// Value copy of cv::ml::ParamGrid.
@@ -1238,6 +3016,28 @@ final class MlParamGrid extends ffi.Struct {
     ..ref.logStep = logStep;
 }
 
+final class NormalBayesClassifier extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<NormalBayesClassifier> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<NormalBayesClassifier>()..ref.ptr = ptr;
+}
+
+typedef NormalBayesClassifierPtr = ffi.Pointer<NormalBayesClassifier>;
+
+final class RTrees extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<RTrees> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<RTrees>()..ref.ptr = ptr;
+}
+
+typedef RTreesPtr = ffi.Pointer<RTrees>;
+
 final class SVM extends ffi.Struct {
   external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
 
@@ -1248,6 +3048,17 @@ final class SVM extends ffi.Struct {
 }
 
 typedef SVMPtr = ffi.Pointer<SVM>;
+
+final class SVMSGD extends ffi.Struct {
+  external ffi.Pointer<ffi.Pointer<ffi.Void>> ptr;
+
+  static ffi.Pointer<SVMSGD> $allocate(
+    ffi.Allocator $allocator, {
+    required ffi.Pointer<ffi.Pointer<ffi.Void>> ptr,
+  }) => $allocator<SVMSGD>()..ref.ptr = ptr;
+}
+
+typedef SVMSGDPtr = ffi.Pointer<SVMSGD>;
 typedef TermCriteria = imp$1.TermCriteria;
 
 final class TrainData extends ffi.Struct {
@@ -1260,4 +3071,6 @@ final class TrainData extends ffi.Struct {
 }
 
 typedef TrainDataPtr = ffi.Pointer<TrainData>;
+typedef Vec2d = imp$1.Vec2d;
+typedef VecMat = imp$1.VecMat;
 typedef VecVecChar = imp$1.VecVecChar;

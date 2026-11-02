@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:test/test.dart';
 
 /// Two well separated 2D clusters, class 0 around (1.5, 1.5) and class 1 around (8.5, 8.5).
 const clusterPoints = <double>[
@@ -17,4 +20,11 @@ cv.Mat clusterResponsesF32() =>
 /// One query point near each cluster, expected labels `[0, 1]`.
 cv.Mat queryPoints() => cv.Mat.fromList(2, 2, cv.MatType.CV_32FC1, <double>[1.2, 1.3, 8.7, 8.1]);
 
-List<int> labelsOf(cv.Mat results) => List.generate(results.rows, (i) => results.at<double>(i, 0).round());
+List<int> labelsOf(cv.Mat results) => List.generate(results.rows, (i) => results.atNum(i, 0).round());
+
+/// A temp dir removed after the test.
+String tempDir() {
+  final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
+  addTearDown(() => dir.deleteSync(recursive: true));
+  return dir.path;
+}

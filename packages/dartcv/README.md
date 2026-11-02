@@ -60,7 +60,7 @@ OpenCV Bindings for Dart Language.
 | highgui    | :white_check_mark:      | :white_check_mark:      | HighGUI module          |
 | imgcodecs  | :white_check_mark:      | :white_check_mark:      | ImageCodecs module      |
 | imgproc    | :white_check_mark:      | :white_check_mark:      | ImageProc module        |
-| ml         | :ballot_box_with_check: | :ballot_box_with_check: | ML module               |
+| ml         | :white_check_mark:      | :white_check_mark:      | ML module               |
 | objdetect  | :white_check_mark:      | :white_check_mark:      | Object Detection module |
 | photo      | :white_check_mark:      | :white_check_mark:      | Photo module            |
 | stitching  | :ballot_box_with_check: | :ballot_box_with_check: | Stitching module        |

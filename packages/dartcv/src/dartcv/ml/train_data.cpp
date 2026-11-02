@@ -3,15 +3,9 @@
 */
 
 #include "dartcv/ml/train_data.h"
+#include "dartcv/ml/stat_model.hpp"
 #include <string>
 #include <vector>
-
-static cv::_InputArray cvd_or_noarray(Mat m) {
-    if (m.ptr == nullptr || m.ptr->empty()) {
-        return cv::_InputArray();
-    }
-    return cv::_InputArray(*m.ptr);
-}
 
 CvStatus* cv_ml_TrainData_create(
     Mat samples,

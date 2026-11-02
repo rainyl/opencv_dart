@@ -5,8 +5,15 @@
 library dartcv.ml;
 
 export 'src/ml/ann_mlp.dart';
+export 'src/ml/boost.dart';
+export 'src/ml/dtrees.dart';
+export 'src/ml/em.dart';
 export 'src/ml/knearest.dart';
+export 'src/ml/logistic_regression.dart';
 export 'src/ml/ml_async.dart';
 export 'src/ml/ml_constants.dart';
+export 'src/ml/normal_bayes_classifier.dart';
+export 'src/ml/rtrees.dart';
 export 'src/ml/svm.dart';
+export 'src/ml/svmsgd.dart';
 export 'src/ml/train_data.dart';
