@@ -784,8 +784,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// [inputSize]	the size of the input image
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a072418e5ce7beeb69c41edda75c41d2e
-  void setInputSize((int, int) inputSize) =>
-      cobjdetect.cv_FaceDetectorYN_setInputSize(ref, inputSize.cvdRef);
+  void setInputSize((int, int) inputSize) => cobjdetect.cv_FaceDetectorYN_setInputSize(ref, inputSize.cvdRef);
 
   /// Set the score threshold to filter out bounding boxes of score less than
   /// the given value.

@@ -793,8 +793,7 @@ class ximgproc_rl {
   static Mat dilate(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) {
     final dst = Mat.empty();
     cvRun(
-      () =>
-          ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.pointRef, ffi.nullptr),
+      () => ccontrib.cv_ximgproc_rl_dilate(rlSrc.ref, dst.ref, rlKernel.ref, anchor.pointRef, ffi.nullptr),
     );
     return dst;
   }

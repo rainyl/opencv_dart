@@ -500,8 +500,7 @@ Future<bool> find4QuadCornerSubpixAsync(
 ) async {
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
-    (callback) =>
-        ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, callback),
+    (callback) => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, callback),
     (c) {
       final rval = prval.value;
       calloc.free(prval);
