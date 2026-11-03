@@ -4,17 +4,15 @@
 
 library cv.objdetect;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/objdetect.g.dart' as cobjdetect;
+import '../ffi.dart' as ffi;
+import '../g/objdetect.g.dart' if (dart.library.js_interop) '../g_web/objdetect.g.dart' as cobjdetect;
+import '../package_ffi.dart';
 import './objdetect.dart';
 
 extension CascadeClassifierAsync on CascadeClassifier {

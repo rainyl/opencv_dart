@@ -1,6 +1,6 @@
 {
-    "name": "dartcv_flutter_web_demo",
-    "short_name": "dartcv_flutter_web_demo",
+    "name": "opencv_dart_example",
+    "short_name": "opencv_dart_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

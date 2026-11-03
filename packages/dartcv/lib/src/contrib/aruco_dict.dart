@@ -6,14 +6,12 @@
 
 library cv.contrib;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../g/contrib.g.dart' as ccontrib;
+import '../ffi.dart' as ffi;
+import '../g/contrib.g.dart' if (dart.library.js_interop) '../g_web/contrib.g.dart' as ccontrib;
+import '../g/contrib.g.dart' if (dart.library.js_interop) '../g_web/contrib.g.dart' as cvg;
+import '../package_ffi.dart';
 
 enum PredefinedDictionaryType {
   ///< 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes

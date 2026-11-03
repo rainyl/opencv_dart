@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'dart:ffi' as ffi;
-
 import 'package:dartcv4/dartcv.dart' as cv;
-import 'package:ffi/ffi.dart';
+import 'package:dartcv4/src/ffi.dart' as ffi;
+import 'package:dartcv4/src/package_ffi.dart';
 import 'package:test/test.dart';
 
 void main() async {

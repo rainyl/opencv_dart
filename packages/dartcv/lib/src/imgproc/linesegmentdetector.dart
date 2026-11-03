@@ -5,17 +5,15 @@
 // ignore_for_file: constant_identifier_names
 library cv.imgproc.linesegmentdetector;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/imgproc.g.dart' as cimgproc;
-import '../g/imgproc.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/imgproc.g.dart' if (dart.library.js_interop) '../g_web/imgproc.g.dart' as cimgproc;
+import '../g/imgproc.g.dart' if (dart.library.js_interop) '../g_web/imgproc.g.dart' as cvg;
+import '../package_ffi.dart';
 
 class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
   LineSegmentDetector._(cvg.LineSegmentDetectorPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

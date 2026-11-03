@@ -18,24 +18,19 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="dartcv4 on Flutter web (spike)">
+  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="dartcv_flutter_web_demo">
+  <meta name="apple-mobile-web-app-title" content="opencv_dart_example">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>dartcv_flutter_web_demo</title>
+  <title>opencv_dart_example</title>
   <link rel="manifest" href="manifest.json">
-  <!-- dartcv wasm backend: dartcv.mjs/dartcv.wasm from tool/web/build_wasm.sh, copied into web/.
-       Defined synchronously so it exists before Dart's main() runs. -->
-  <script>
-    window.createDartcvModule = async (...args) => (await import('./dartcv.mjs')).default(...args);
-  </script>
 </head>
 <body>
   <!--

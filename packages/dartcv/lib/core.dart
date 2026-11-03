@@ -27,3 +27,4 @@ export 'src/core/svd.dart';
 export 'src/core/termcriteria.dart';
 export 'src/core/umat.dart';
 export 'src/core/vec.dart';
+export 'src/init.dart';

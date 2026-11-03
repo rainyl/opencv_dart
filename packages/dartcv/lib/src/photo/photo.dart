@@ -4,15 +4,13 @@
 
 library cv.photo;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../g/photo.g.dart' as cvg;
-import '../g/photo.g.dart' as cphoto;
+import '../ffi.dart' as ffi;
+import '../g/photo.g.dart' if (dart.library.js_interop) '../g_web/photo.g.dart' as cphoto;
+import '../g/photo.g.dart' if (dart.library.js_interop) '../g_web/photo.g.dart' as cvg;
+import '../package_ffi.dart';
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.
 //

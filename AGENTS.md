@@ -30,6 +30,7 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 ## Regenerating FFI bindings
 
 - Intended generator: `dart tool/ffigen.dart` from `packages/dartcv`. Unlike the raw yaml runs, it also emits `@RecordUse()` and the `<module>.record_use_mapping.g.dart` tables that `hook/link.dart` consumes for tree-shaking.
+- Then run `dart tool/web/gen_web_bindings.dart` to refresh the web mirror in `lib/src/g_web/` (CI checks it). Web support is described in `packages/dartcv/tool/web/README.md`.
 - Do **not** use `make ffigen` / `dart run ffigen --config ffigen/*.yaml` for a full regen — it skips the record-use mapping, silently breaking tree-shaking.
 
 ## Style & checks
