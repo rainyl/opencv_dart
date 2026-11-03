@@ -117,6 +117,15 @@ class Size2f extends CvStruct<cvg.CvSize2f> {
 extension RecordSizeExtension1 on (int, int) {
   Size get cvd => toSize();
   Size toSize() => Size.fromRecord(this);
+
+  /// The struct value to pass to a native function, on the Dart heap.
+  ///
+  /// Use it instead of `cvd.ref`: that takes a view of the native memory of a
+  /// temporary wrapper, which a GC can free (through its finalizer) before
+  /// the call copies the struct, and the native code then reads freed memory.
+  cvg.CvSize get cvdRef => ffi.Struct.create<cvg.CvSize>()
+    ..width = this.$1
+    ..height = this.$2;
 }
 
 extension RecordSize2fExtension1 on (double, double) {

@@ -298,16 +298,19 @@ void drawDetectedCornersCharuco(
 ]) {
   final ids = charucoIds ?? VecI32();
   final disposeIds = charucoIds == null;
+  final color = cornerColor ?? Scalar(255, 0, 0, 0);
+  final disposeColor = cornerColor == null;
   cvRun(
     () => ccontrib.cv_aruco_drawDetectedCornersCharuco(
       image.ref,
       charucoCorners.ref,
       ids.ref,
-      (cornerColor ?? Scalar(255, 0, 0, 0)).ref,
+      color.ref,
       ffi.nullptr,
     ),
   );
   if (disposeIds) ids.dispose();
+  if (disposeColor) color.dispose();
 }
 
 (bool rval, Mat rvec, Mat tvec) estimatePoseCharucoBoard(

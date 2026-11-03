@@ -930,6 +930,15 @@ extension ListListPoint3fExtension on List<List<Point3f>> {
 
 extension PointRecordExtension on (int x, int y) {
   Point toPoint() => Point(this.$1, this.$2);
+
+  /// The struct value to pass to a native function, on the Dart heap.
+  ///
+  /// Use it instead of `toPoint().ref`: that takes a view of the native memory of a
+  /// temporary wrapper, which a GC can free (through its finalizer) before
+  /// the call copies the struct, and the native code then reads freed memory.
+  cvg.CvPoint get pointRef => ffi.Struct.create<cvg.CvPoint>()
+    ..x = this.$1
+    ..y = this.$2;
 }
 
 extension Point2fRecordExtension on (double x, double y) {
