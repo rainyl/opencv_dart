@@ -114,15 +114,14 @@ void defaultLogCallbackEx(
 }
 
 typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
-typedef LogCallbackExFunction =
-    void Function(
-      LogLevel logLevel,
-      String tag,
-      String file,
-      int line,
-      String func,
-      String message,
-    );
+typedef LogCallbackExFunction = void Function(
+  LogLevel logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+);
 
 ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
 ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;
