@@ -50,7 +50,16 @@ void main(List<String> args) {
   }
   reg.writeln('}');
   File('${outDir.path}/register.g.dart').writeAsStringSync(reg.toString());
-  final fmt = Process.runSync(Platform.resolvedExecutable, ['format', '--line-length', '110', outDir.path]);
+  // Pin the language version: without a resolved package config (e.g. in CI before `pub get`)
+  // dart format would fall back to the old short style.
+  final fmt = Process.runSync(Platform.resolvedExecutable, [
+    'format',
+    '--line-length',
+    '110',
+    '--language-version',
+    '3.10',
+    outDir.path,
+  ]);
   if (fmt.exitCode != 0) throw StateError('dart format failed: ${fmt.stderr}');
   print('wrote ${units.length} files, $count functions to ${outDir.path}');
 }
