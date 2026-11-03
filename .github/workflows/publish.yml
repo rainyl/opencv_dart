@@ -108,8 +108,9 @@ jobs:
           sudo apt-get install -y ninja-build
       - uses: mymindstorm/setup-emsdk@v14
         with:
+          # No actions-cache-folder: setup-emsdk builds the cache key from the workflow name,
+          # and the comma in this workflow's name is rejected as a key.
           version: "6.0.13"
-          actions-cache-folder: emsdk-cache
       - uses: dart-lang/setup-dart@v1
       - name: Check generated web bindings are up to date
         working-directory: packages/dartcv
