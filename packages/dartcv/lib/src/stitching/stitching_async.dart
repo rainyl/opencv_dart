@@ -5,13 +5,12 @@
 library cv.stitching;
 
 import 'dart:async';
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
 
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../g/stitching.g.dart' as cstitching;
+import '../ffi.dart' as ffi;
+import '../g/stitching.g.dart' if (dart.library.js_interop) '../g_web/stitching.g.dart' as cstitching;
+import '../package_ffi.dart';
 import './stitching.dart';
 
 extension StitcherAsync on Stitcher {

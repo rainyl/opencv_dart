@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv.dart' as cv;
 import 'package:image_picker/image_picker.dart';
 
-void main() {
+Future<void> main() async {
+  // Loads web/dartcv.wasm on the web; a no-op on other platforms.
+  await cv.initDartcv();
   runApp(const MyApp());
 }
 
@@ -58,7 +60,10 @@ class _MyAppState extends State<MyApp> {
                   final img = await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     final path = img.path;
-                    final mat = cv.imread(path);
+                    // On the web the picked file is a blob: URL, not a path the decoder can open.
+                    final mat = kIsWeb
+                        ? cv.imdecode(await img.readAsBytes(), cv.IMREAD_COLOR)
+                        : cv.imread(path);
                     print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
                     debugPrint("mat.data.length: ${mat.data.length}");
                     // heavy computation

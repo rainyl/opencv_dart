@@ -2,13 +2,11 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
-import '../g/constants.g.dart';
-import '../g/core.g.dart' as ccore;
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as ccore;
+import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';

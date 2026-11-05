@@ -4,10 +4,6 @@
 
 library cv.video;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -16,9 +12,11 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
-import '../g/constants.g.dart';
-import '../g/video.g.dart' as cvg;
-import '../g/video.g.dart' as cvideo;
+import '../ffi.dart' as ffi;
+import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/video.g.dart' if (dart.library.js_interop) '../g_web/video.g.dart' as cvg;
+import '../g/video.g.dart' if (dart.library.js_interop) '../g_web/video.g.dart' as cvideo;
+import '../package_ffi.dart';
 import 'video.dart';
 
 extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {

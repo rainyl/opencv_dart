@@ -4,10 +4,6 @@
 
 library cv.calib3d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/contours.dart';
 import '../core/cv_vec.dart';
@@ -17,9 +13,11 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../g/calib3d.g.dart' as ccalib3d;
-import '../g/constants.g.dart';
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/calib3d.g.dart' if (dart.library.js_interop) '../g_web/calib3d.g.dart' as ccalib3d;
+import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'usac_params.dart';
 
 /// CalibrateCamera finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.

@@ -6,13 +6,11 @@
 
 library cv.core;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
-import '../g/constants.g.dart';
-import '../g/core.g.dart' as cvg;
-import '../g/core.g.dart' as ccore;
+import '../ffi.dart' as ffi;
+import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as ccore;
+import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';
@@ -116,15 +114,14 @@ void defaultLogCallbackEx(
 }
 
 typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
-typedef LogCallbackExFunction =
-    void Function(
-      LogLevel logLevel,
-      String tag,
-      String file,
-      int line,
-      String func,
-      String message,
-    );
+typedef LogCallbackExFunction = void Function(
+  LogLevel logLevel,
+  String tag,
+  String file,
+  int line,
+  String func,
+  String message,
+);
 
 ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
 ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;

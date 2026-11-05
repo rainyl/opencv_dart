@@ -1,9 +1,7 @@
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../package_ffi.dart';
 
 class UsacParams extends CvStruct<cvg.UsacParams> {
   UsacParams.fromPointer(ffi.Pointer<cvg.UsacParams> ptr, [bool attach = true]) : super.fromPointer(ptr) {

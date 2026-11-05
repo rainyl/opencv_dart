@@ -6,15 +6,13 @@
 
 library cv.highgui;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
-import '../g/highgui.g.dart' as cvg;
-import '../g/highgui.g.dart' as chighgui;
+import '../ffi.dart' as ffi;
+import '../g/highgui.g.dart' if (dart.library.js_interop) '../g_web/highgui.g.dart' as chighgui;
+import '../g/highgui.g.dart' if (dart.library.js_interop) '../g_web/highgui.g.dart' as cvg;
+import '../package_ffi.dart';
 
 String currentUIFramework() {
   final p = chighgui.cv_currentUIFramework();
@@ -272,8 +270,7 @@ enum WindowFlag {
   WINDOW_GUI_EXPANDED(0x00000000),
 
   /// old fashious way
-  WINDOW_GUI_NORMAL(0x00000010)
-  ;
+  WINDOW_GUI_NORMAL(0x00000010);
 
   const WindowFlag(this.value);
   final double value;
@@ -293,8 +290,7 @@ enum WindowPropertyFlags {
   WND_PROP_OPENGL(3),
 
   /// checks whether the window exists and is visible
-  WND_PROP_VISIBLE(4)
-  ;
+  WND_PROP_VISIBLE(4);
 
   const WindowPropertyFlags(this.value);
   final int value;

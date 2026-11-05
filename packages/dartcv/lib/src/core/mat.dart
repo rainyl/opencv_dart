@@ -2,13 +2,12 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
-
-import '../g/core.g.dart' as ccore;
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as ccore;
+import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'cv_vec.dart';
 import 'float16.dart';
@@ -886,7 +885,8 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat add<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => addMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      // `T != double`: on the web 1.0 is also an int, so `add<double>(1)` must not take this branch.
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => addU8(val as int, inplace: inplace),
         MatType.CV_8S => addI8(val as int, inplace: inplace),
         MatType.CV_16U => addU16(val as int, inplace: inplace),
@@ -952,7 +952,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat subtract<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => subtractMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => subtractU8(val as int, inplace: inplace),
         MatType.CV_8S => subtractI8(val as int, inplace: inplace),
         MatType.CV_16U => subtractU16(val as int, inplace: inplace),
@@ -1019,7 +1019,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat multiply<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => multiplyMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
         MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
         MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
@@ -1087,7 +1087,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat divide<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => divideMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => divideU8(val as int, inplace: inplace),
         MatType.CV_8S => divideI8(val as int, inplace: inplace),
         MatType.CV_16U => divideU16(val as int, inplace: inplace),

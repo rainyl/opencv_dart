@@ -6,14 +6,12 @@
 
 library cv.calib3d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
-import '../g/calib3d.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/calib3d.g.dart' if (dart.library.js_interop) '../g_web/calib3d.g.dart' as cvg;
+import '../package_ffi.dart';
 
 /// Class for computing stereo correspondence using the block matching algorithm,
 /// introduced and contributed to OpenCV by K. Konolige.

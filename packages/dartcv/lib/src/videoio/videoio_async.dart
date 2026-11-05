@@ -4,15 +4,13 @@
 
 library cv.videoio;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/mat.dart';
-import '../g/constants.g.dart';
-import '../g/videoio.g.dart' as cvg;
-import '../g/videoio.g.dart' as cvideoio;
+import '../ffi.dart' as ffi;
+import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/videoio.g.dart' if (dart.library.js_interop) '../g_web/videoio.g.dart' as cvg;
+import '../g/videoio.g.dart' if (dart.library.js_interop) '../g_web/videoio.g.dart' as cvideoio;
+import '../package_ffi.dart';
 import 'videoio.dart';
 
 extension VideoCaptureAsync on VideoCapture {

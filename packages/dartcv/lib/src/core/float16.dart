@@ -3,11 +3,10 @@
 // that can be found in the LICENSE file.
 
 import 'dart:collection';
-import 'dart:ffi' as ffi;
 
-import 'package:ffi/ffi.dart';
-
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../package_ffi.dart';
 
 extension type Float16P(ffi.Pointer<ffi.Uint16> ptr) {
   double get value => float16(ptr.value);

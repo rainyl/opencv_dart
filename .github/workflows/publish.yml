@@ -36,7 +36,7 @@ jobs:
           submodules: true
       - uses: subosito/flutter-action@v2
         with:
-          channel: "main"
+          channel: "stable"
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -61,7 +61,7 @@ jobs:
           submodules: true
       - uses: subosito/flutter-action@v2
         with:
-          channel: "main"
+          channel: "stable"
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -84,7 +84,7 @@ jobs:
           submodules: true
       - uses: subosito/flutter-action@v2
         with:
-          channel: "main"
+          channel: "stable"
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -97,10 +97,76 @@ jobs:
         run: |
           dart pub get
           dart test -x skip-workflow
+  build-web:
+    name: build-web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Ninja
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          # No actions-cache-folder: setup-emsdk builds the cache key from the workflow name,
+          # and the comma in this workflow's name is rejected as a key.
+          version: "6.0.13"
+      - uses: dart-lang/setup-dart@v1
+      - name: Check generated web bindings are up to date
+        working-directory: packages/dartcv
+        run: |
+          dart tool/web/gen_web_bindings.dart
+          git diff --exit-code lib/src/g_web
+      - name: Build dartcv.wasm
+        working-directory: packages/dartcv
+        run: tool/web/build_wasm.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dartcv-web
+          path: |
+            packages/dartcv/build/web/dartcv.mjs
+            packages/dartcv/build/web/dartcv.wasm
+          if-no-files-found: error
+
+  test-web:
+    name: test-web
+    needs: [build-web]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - uses: actions/download-artifact@v4
+        with:
+          name: dartcv-web
+          path: packages/dartcv/build/web
+      - uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "rainyl/opencv_dart"
+          tag: "dnn_test_files"
+          fileName: "models.zip"
+          out-file-path: "packages/dartcv/test/"
+          extract: true
+      - name: Run tests in Chrome (dart2js and dart2wasm)
+        working-directory: packages/dartcv
+        run: |
+          dart pub get
+          dart test -p chrome test/web_test.dart
+          dart test -p chrome -c dart2wasm test/web_test.dart
+      - name: Build the opencv_dart example for the web against this dartcv4
+        working-directory: packages/opencv_dart/example
+        run: |
+          printf 'dependency_overrides:\n  dartcv4:\n    path: ../../dartcv\n' > pubspec_overrides.yaml
+          cp ../../dartcv/build/web/dartcv.mjs ../../dartcv/build/web/dartcv.wasm web/
+          flutter pub get
+          flutter build web
+          flutter build web --wasm
+
   publish-dartcv4:
     name: Publish dartcv4
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos]
+    needs: [test-ubuntu, test-windows, test-macos, test-web]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -117,7 +183,7 @@ jobs:
   publish-opencv-dart:
     name: Publish opencv_dart
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos]
+    needs: [test-ubuntu, test-windows, test-macos, test-web]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -135,11 +201,18 @@ jobs:
         working-directory: packages/opencv_dart
         run: flutter pub publish --force
   release:
-    needs: [test-ubuntu, test-windows, test-macos, publish-dartcv4, publish-opencv-dart]
+    needs: [test-ubuntu, test-windows, test-macos, test-web, publish-dartcv4, publish-opencv-dart]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dartcv-web
+          path: dartcv-web
+      # A fixed asset name keeps https://github.com/rainyl/opencv_dart/releases/latest/download/dartcv-web.zip stable.
+      - name: Package the web build
+        run: cd dartcv-web && zip ../dartcv-web.zip dartcv.mjs dartcv.wasm
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -147,3 +220,4 @@ jobs:
           draft: false
           prerelease: false
           generate_release_notes: true
+          files: dartcv-web.zip

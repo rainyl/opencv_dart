@@ -6,16 +6,14 @@
 
 library cv.features2d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/features2d.g.dart' as cvg;
-import '../g/features2d.g.dart' as cfeatures2d;
+import '../ffi.dart' as ffi;
+import '../g/features2d.g.dart' if (dart.library.js_interop) '../g_web/features2d.g.dart' as cfeatures2d;
+import '../g/features2d.g.dart' if (dart.library.js_interop) '../g_web/features2d.g.dart' as cvg;
+import '../package_ffi.dart';
 
 abstract class Feature2D<T extends ffi.Struct> extends CvStruct<T> {
   Feature2D.fromPointer(super.ptr) : super.fromPointer();
@@ -200,6 +198,9 @@ class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
 
   void set<T>(String key, T value) {
     switch (value) {
+      // On the web 241.0 is also an int, so `set<double>` is told apart by its type argument.
+      case double() when T == double:
+        setDouble(key, value);
       case int():
         setInt(key, value);
       case double():

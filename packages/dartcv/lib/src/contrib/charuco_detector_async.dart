@@ -4,17 +4,15 @@
 
 library cv.contrib;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
 import '../core/base.dart';
 import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as ccontrib;
+import '../ffi.dart' as ffi;
+import '../g/contrib.g.dart' if (dart.library.js_interop) '../g_web/contrib.g.dart' as ccontrib;
+import '../package_ffi.dart';
 import 'charuco_board.dart';
 import 'charuco_detector.dart';
 
