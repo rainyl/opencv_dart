@@ -36,6 +36,7 @@ const _modules = <String, String>{
   'highgui': 'highgui',
   'imgcodecs': 'imgcodecs',
   'imgproc': 'imgproc',
+  'ml': 'ml',
   'objdetect': 'objdetect',
   'photo': 'photo',
   'stitching': 'stitching',

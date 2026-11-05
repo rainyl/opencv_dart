@@ -70,6 +70,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     'DARTCV_WITH_HIGHGUI': args.modules.contains('highgui') ? 'ON' : 'OFF',
     'DARTCV_WITH_IMGCODECS': args.modules.contains('imgcodecs') ? 'ON' : 'OFF',
     'DARTCV_WITH_IMGPROC': args.modules.contains('imgproc') ? 'ON' : 'OFF',
+    'DARTCV_WITH_ML': args.modules.contains('ml') ? 'ON' : 'OFF',
     'DARTCV_WITH_OBJDETECT': args.modules.contains('objdetect') ? 'ON' : 'OFF',
     'DARTCV_WITH_PHOTO': args.modules.contains('photo') ? 'ON' : 'OFF',
     'DARTCV_WITH_STITCHING': args.modules.contains('stitching') ? 'ON' : 'OFF',

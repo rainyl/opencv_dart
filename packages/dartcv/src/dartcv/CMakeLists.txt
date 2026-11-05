@@ -103,6 +103,24 @@ if (DARTCV_WITH_IMGPROC)
   set(DARTCV_DEPS ${DARTCV_DEPS} opencv_imgproc)
 endif ()
 
+# ml
+if (DARTCV_WITH_ML)
+  set(_cpp_files ${_cpp_files}
+    "ml/ann_mlp.cpp"
+    "ml/boost.cpp"
+    "ml/dtrees.cpp"
+    "ml/em.cpp"
+    "ml/knearest.cpp"
+    "ml/logistic_regression.cpp"
+    "ml/normal_bayes_classifier.cpp"
+    "ml/rtrees.cpp"
+    "ml/svm.cpp"
+    "ml/svmsgd.cpp"
+    "ml/train_data.cpp"
+  )
+  set(DARTCV_DEPS ${DARTCV_DEPS} opencv_ml)
+endif ()
+
 # objdetect
 if (DARTCV_WITH_OBJDETECT)
   set(_cpp_files ${_cpp_files} "objdetect/objdetect.cpp")

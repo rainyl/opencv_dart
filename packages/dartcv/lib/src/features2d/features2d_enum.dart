@@ -2,8 +2,7 @@ enum AKAZEDescriptorType {
   DESCRIPTOR_KAZE_UPRIGHT(2),
   DESCRIPTOR_KAZE(3),
   DESCRIPTOR_MLDB_UPRIGHT(4),
-  DESCRIPTOR_MLDB(5)
-  ;
+  DESCRIPTOR_MLDB(5);
 
   const AKAZEDescriptorType(this.value);
   final int value;
@@ -21,8 +20,7 @@ enum KAZEDiffusivityType {
   DIFF_PM_G1(0),
   DIFF_PM_G2(1),
   DIFF_WEICKERT(2),
-  DIFF_CHARBONNIER(3)
-  ;
+  DIFF_CHARBONNIER(3);
 
   const KAZEDiffusivityType(this.value);
   final int value;
@@ -40,8 +38,7 @@ enum AgastDetectorType {
   AGAST_5_8(0),
   AGAST_7_12d(1),
   AGAST_7_12s(2),
-  OAST_9_16(3)
-  ;
+  OAST_9_16(3);
 
   const AgastDetectorType(this.value);
   final int value;
@@ -63,8 +60,7 @@ enum FastFeatureDetectorType {
   TYPE_7_12(1),
 
   /// FastFeatureDetector::TYPE_9_16
-  TYPE_9_16(2)
-  ;
+  TYPE_9_16(2);
 
   const FastFeatureDetectorType(this.value);
   final int value;
@@ -79,8 +75,7 @@ enum FastFeatureDetectorType {
 
 enum ORBScoreType {
   HARRIS_SCORE(0),
-  FAST_SCORE(1)
-  ;
+  FAST_SCORE(1);
 
   const ORBScoreType(this.value);
   final int value;
@@ -103,8 +98,7 @@ enum DrawMatchesFlag {
   NOT_DRAW_SINGLE_POINTS(2),
 
   /// DRAW_RICH_KEYPOINTS draws the circle around each keypoint with keypoint size and orientation
-  DRAW_RICH_KEYPOINTS(4)
-  ;
+  DRAW_RICH_KEYPOINTS(4);
 
   const DrawMatchesFlag(this.value);
   final int value;
