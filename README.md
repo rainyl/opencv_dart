@@ -215,14 +215,21 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/lumpidu">
+                    <img src="https://avatars.githubusercontent.com/u/734966?v=4" width="100;" alt="lumpidu"/>
+                    <br />
+                    <sub><b>Daniel Schnell</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/mdeleau">
                     <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
                     <br />
                     <sub><b>mdeleau</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/pariterre">
                     <img src="https://avatars.githubusercontent.com/u/17518525?v=4" width="100;" alt="pariterre"/>
