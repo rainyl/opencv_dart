@@ -3,8 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('cv.CharucoBoard', () {
-    final dict =
-        cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
+    final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
     final board = cv.CharucoBoard.create((5, 7), 0.04, 0.02, dict);
 
     expect(board.chessboardSize, cv.Size(5, 7));
@@ -33,8 +32,7 @@ void main() {
   });
 
   test('cv.CharucoBoard with custom ids', () {
-    final dict =
-        cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
+    final dict = cv.ArucoDictionary.predefined(cv.PredefinedDictionaryType.DICT_6X6_250);
     final ids = cv.VecI32.fromList(List.generate(17, (i) => i + 100));
     final board = cv.CharucoBoard.create((5, 7), 0.04, 0.02, dict, ids: ids);
 

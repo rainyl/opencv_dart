@@ -29,6 +29,7 @@ hooks:
         # - highgui
         - imgcodecs
         - imgproc
+        - ml
         # - objdetect
         # - photo
         # - stitching

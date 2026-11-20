@@ -22,6 +22,16 @@ void main() {
       );
     });
 
+    test('rejects quality when ml is explicitly excluded', () {
+      expect(
+        () => validateModuleConflicts(
+          modules: const {'quality'},
+          explicitlyExcluded: const {'ml'},
+        ),
+        throwsArgumentError,
+      );
+    });
+
     test('rejects ximgproc when calib3d is explicitly excluded', () {
       expect(
         () => validateModuleConflicts(

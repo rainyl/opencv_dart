@@ -12,6 +12,7 @@ ffigen:
 	dart run ffigen --config ffigen/ffigen_highgui.yaml
 	dart run ffigen --config ffigen/ffigen_imgcodecs.yaml
 	dart run ffigen --config ffigen/ffigen_imgproc.yaml
+	dart run ffigen --config ffigen/ffigen_ml.yaml
 	dart run ffigen --config ffigen/ffigen_objdetect.yaml
 	dart run ffigen --config ffigen/ffigen_photo.yaml
 	dart run ffigen --config ffigen/ffigen_stitching.yaml

@@ -272,8 +272,7 @@ enum WindowFlag {
   WINDOW_GUI_EXPANDED(0x00000000),
 
   /// old fashious way
-  WINDOW_GUI_NORMAL(0x00000010)
-  ;
+  WINDOW_GUI_NORMAL(0x00000010);
 
   const WindowFlag(this.value);
   final double value;
@@ -293,8 +292,7 @@ enum WindowPropertyFlags {
   WND_PROP_OPENGL(3),
 
   /// checks whether the window exists and is visible
-  WND_PROP_VISIBLE(4)
-  ;
+  WND_PROP_VISIBLE(4);
 
   const WindowPropertyFlags(this.value);
   final int value;
