@@ -29,6 +29,23 @@ jobs:
           # repository-wide rewrite. Keep it in sync with `fvm use`.
           flutter-version-file: .fvmrc
           cache: true
+          # `pubspec.lock` is not committed, so the pub cache key falls back to the
+          # per-package `pubspec.yaml` files; both get refreshed on a dependency bump.
+          pub-cache: true
+
+      - name: Resolve dependencies
+        run: |
+          for dir in packages/dartcv packages/dartcv/example/dart_cli; do
+            echo "::group::dart pub get $dir"
+            (cd "$dir" && dart pub get)
+            echo "::endgroup::"
+          done
+          for dir in packages/opencv_dart packages/dartcv/example/flutter \
+                     packages/opencv_dart/example; do
+            echo "::group::flutter pub get $dir"
+            (cd "$dir" && flutter pub get)
+            echo "::endgroup::"
+          done
 
       - name: Format code
         run: |
