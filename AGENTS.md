@@ -18,7 +18,7 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 
 ## Build & test (from `packages/dartcv`)
 
-- Requires Dart ≥ 3.10 (Flutter stable, see `.fvmrc`), CMake, and a C/C++ toolchain (Visual Studio on Windows; Ninja preferred on mac/linux/android).
+- Requires the Flutter SDK pinned in `.fvmrc` (currently `3.50.1` / Dart 3.14 — CI reads the same file), CMake, and a C/C++ toolchain (Visual Studio on Windows; Ninja preferred on mac/linux/android).
 - `dart pub get && dart test`
   - Since `dartcv 2.2.0`, OpenCV libraries are built from source by default (`DARTCV_BUILD_OPENCV_FROM_SOURCE=ON`), native-assets hooks (`hook/build.dart`, `hook/link.dart`) auto-build the `dartcv` shared lib.
   - Prebuilt OpenCV binaries from `rainyl/opencv.full` releases are only recommended for use before `dartcv 2.2.0` (large download); set `DARTCV_CACHE_DIR` to reuse the cache. `DARTCV_DISABLE_DOWNLOAD_OPENCV=1` forces a system `OpenCV_DIR`.
@@ -34,6 +34,9 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 
 ## Style & checks
 
-- Format with `dart format --line-length 110` (repo-wide; CI auto-commits the result). `analysis_options.yaml` sets `formatter.page_width: 110`, `trailing_commas: preserve`.
+- Format with plain `dart format` — no flags. Line width (110) and trailing-comma handling come from the `formatter:` block of the nearest `analysis_options.yaml` (`page_width: 110`, `trailing_commas: preserve`); the CLI `--line-length` flag is not needed and CI does not pass it either, so local and CI output are identical.
+- **Gotcha:** `dart format` reads only the *nearest* `analysis_options.yaml` and does not merge it with a parent package's. Every package **and example** under `packages/` therefore repeats the `formatter:` block; a new one that forgets it gets formatted at 80 columns instead of 110 (CI fails on it, and an editor would rewrap the files).
+- Never format `lib/src/g/*.g.dart` (and any other generated `*.g.dart`): those are ffigen output and must match a regeneration. CI excludes them.
+- CI (`.github/workflows/formatter.yaml`) runs the same `dart format` on every push and commits the result as `dart format ✅`; on a pull request it fails instead, since the token is read-only there. The SDK comes from `.fvmrc`, so a Flutter upgrade is one deliberate commit rather than a surprise repository-wide reformat.
 - `dart analyze` passes apart from the known `tool/ffigen.dart` errors. C++ follows `.clang-format` (LLVM-based, 2-space indent, column limit 100).
 - Tree-shaking (`DARTCV_TREESHAKE` + keep-list `dartcv_keep.txt`) only works on AOT builds; the link hook deliberately leaves the keep-list untouched on JIT (`dart test`) builds.

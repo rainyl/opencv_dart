@@ -1,23 +1,57 @@
-on:
-  push:
-
 name: Format Code
 
+on:
+  push:
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: write # the auto-commit of the push case below
+
 jobs:
-  build:
+  format:
     name: format code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          # `head_ref` is only set for pull_request events, `ref_name` is the branch
+          # on push: checking out the branch (not the merge commit) is what the
+          # auto-commit has to amend.
+          ref: ${{ github.head_ref || github.ref_name }}
+
       - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
+        with:
+          # `.fvmrc` pins the exact SDK: the formatter output changes between Dart
+          # releases, and an unpinned `stable` turns a formatter bump into a
+          # repository-wide rewrite. Keep it in sync with `fvm use`.
+          flutter-version-file: .fvmrc
+          cache: true
+
       - name: Format code
         run: |
-          dart format --line-length 110 \
-            $(find packages -name '*.dart' -not -name '*.g.dart' -and -not -name '*.freezed.dart')
+          git ls-files '*.dart' \
+            | grep -v '\.g\.dart$' \
+            | xargs -r -n 20 dart format
+
       - name: Commit changes
+        # On `push` the branch is writable: format it, as before.
+        if: github.event_name == 'push'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "dart format ✅"
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.ref_name }}
+
+      - name: Verify formatting
+        # On `pull_request` the token is read-only (and on a fork there is no branch
+        # to push to), so a PR can only be checked: fail instead of silently
+        # reporting a green run that changed nothing.
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! git diff --quiet; then
+            git --no-pager diff --stat
+            echo "::error::Unformatted sources. Run 'dart format' (110 columns) and commit the result."
+            exit 1
+          fi
