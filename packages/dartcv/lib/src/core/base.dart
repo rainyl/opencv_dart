@@ -94,6 +94,14 @@ abstract class ICvStruct<T extends ffi.Struct> extends CvObject<T> with Comparab
   ICvStruct.fromPointer(this.ptr);
 
   ffi.Pointer<T> ptr;
+
+  /// A **view** of the native memory behind [ptr], not a copy.
+  ///
+  /// Never call this on a temporary wrapper (`(w, h).cvd.ref`,
+  /// `toPoint().ref`): nothing keeps the wrapper alive, so its `NativeFinalizer`
+  /// may free the memory before the FFI trampoline copies the struct (#464).
+  /// Pass the Dart-heap struct instead: `(w, h).cvdRef`, `(x, y).pointRef`,
+  /// `(type, count, eps).cvdRef`, or keep the wrapper in a named local.
   T get ref;
 
   @override

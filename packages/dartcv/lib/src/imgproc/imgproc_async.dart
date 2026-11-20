@@ -329,7 +329,7 @@ Future<Mat> bilateralFilterAsync(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37
 Future<Mat> blurAsync(Mat src, (int, int) ksize, {Mat? dst}) async {
   dst ??= Mat.empty();
-  return cvRunAsync0((callback) => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvd.ref, callback), (c) {
+  return cvRunAsync0((callback) => cimgproc.cv_blur(src.ref, dst!.ref, ksize.cvdRef, callback), (c) {
     return c.complete(dst);
   });
 }
@@ -354,7 +354,7 @@ Future<Mat> boxFilterAsync(
       src.ref,
       dst!.ref,
       depth,
-      ksize.cvd.ref,
+      ksize.cvdRef,
       anchor!.ref,
       normalize,
       borderType,
@@ -386,7 +386,7 @@ Future<Mat> sqrBoxFilterAsync(
       src.ref,
       dst!.ref,
       depth,
-      ksize.cvd.ref,
+      ksize.cvdRef,
       anchor!.ref,
       normalize,
       borderType,
@@ -414,7 +414,7 @@ Future<Mat> sqrBoxFilterAsync(
 Future<Mat> stackBlurAsync(Mat src, (int, int) ksize, {Mat? dst}) {
   dst ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_stackBlur(src.ref, dst!.ref, ksize.cvd.ref, callback),
+    (callback) => cimgproc.cv_stackBlur(src.ref, dst!.ref, ksize.cvdRef, callback),
     (c) {
       return c.complete(dst);
     },
@@ -849,7 +849,7 @@ Future<Moments> momentsAsync(Mat src, {bool binaryImage = false}) async {
 Future<Mat> pyrDownAsync(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvd.ref, borderType, callback),
+    (callback) => cimgproc.cv_pyrDown(src.ref, dst!.ref, dstsize.cvdRef, borderType, callback),
     (c) {
       return c.complete(dst);
     },
@@ -863,7 +863,7 @@ Future<Mat> pyrDownAsync(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int bo
 Future<Mat> pyrUpAsync(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORDER_DEFAULT}) {
   dst ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvd.ref, borderType, callback),
+    (callback) => cimgproc.cv_pyrUp(src.ref, dst!.ref, dstsize.cvdRef, borderType, callback),
     (c) {
       return c.complete(dst);
     },
@@ -926,7 +926,7 @@ Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Point? anch
   anchor ??= Point(-1, -1);
   final mat = Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getStructuringElement(shape, ksize.cvd.ref, mat.ptr, callback),
+    (callback) => cimgproc.cv_getStructuringElement(shape, ksize.cvdRef, mat.ptr, callback),
     (c) {
       return c.complete(mat);
     },
@@ -950,7 +950,7 @@ Future<Mat> gaussianBlurAsync(
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) =>
-        cimgproc.cv_GaussianBlur(src.ref, dst!.ref, ksize.cvd.ref, sigmaX, sigmaY, borderType, callback),
+        cimgproc.cv_GaussianBlur(src.ref, dst!.ref, ksize.cvdRef, sigmaX, sigmaY, borderType, callback),
     (c) {
       return c.complete(dst);
     },
@@ -1701,7 +1701,7 @@ Future<Mat> resizeAsync(
 }) {
   dst ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_resize(src.ref, dst!.ref, dsize.cvd.ref, fx, fy, interpolation, callback),
+    (callback) => cimgproc.cv_resize(src.ref, dst!.ref, dsize.cvdRef, fx, fy, interpolation, callback),
     (c) {
       return c.complete(dst);
     },
@@ -1721,7 +1721,7 @@ Future<Mat> getRectSubPixAsync(
 }) {
   patch ??= Mat.empty();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getRectSubPix(image.ref, patchSize.cvd.ref, center.ref, patch!.ref, callback),
+    (callback) => cimgproc.cv_getRectSubPix(image.ref, patchSize.cvdRef, center.ref, patch!.ref, callback),
     (c) {
       return c.complete(patch);
     },
@@ -1762,7 +1762,7 @@ Future<Mat> warpAffineAsync(
       src.ref,
       dst!.ref,
       M.ref,
-      dsize.cvd.ref,
+      dsize.cvdRef,
       flags,
       borderMode,
       borderValue!.ref,
@@ -1795,7 +1795,7 @@ Future<Mat> warpPerspectiveAsync(
       src.ref,
       dst!.ref,
       M.ref,
-      dsize.cvd.ref,
+      dsize.cvdRef,
       flags,
       borderMode,
       borderValue!.ref,

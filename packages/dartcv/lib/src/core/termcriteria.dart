@@ -55,4 +55,14 @@ class TermCriteria extends CvStruct<cvg.TermCriteria> {
 extension TermCriteriaExtension on (int, int, double) {
   TermCriteria get cvd => toTermCriteria();
   TermCriteria toTermCriteria() => TermCriteria(this.$1, this.$2, this.$3);
+
+  /// The struct value to pass to a native function, on the Dart heap.
+  ///
+  /// Use it instead of `cvd.ref`: that takes a view of the native memory of a
+  /// temporary wrapper, which a GC can free (through its finalizer) before
+  /// the call copies the struct, and the native code then reads freed memory.
+  cvg.TermCriteria get cvdRef => ffi.Struct.create<cvg.TermCriteria>()
+    ..type = this.$1
+    ..maxCount = this.$2
+    ..epsilon = this.$3;
 }

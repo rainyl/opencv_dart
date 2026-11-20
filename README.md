@@ -194,6 +194,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/azlekov">
+                    <img src="https://avatars.githubusercontent.com/u/2267270?v=4" width="100;" alt="azlekov"/>
+                    <br />
+                    <sub><b>Asen Lekov</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/dupuchba">
                     <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
                     <br />
@@ -208,6 +215,15 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/lumpidu">
+                    <img src="https://avatars.githubusercontent.com/u/734966?v=4" width="100;" alt="lumpidu"/>
+                    <br />
+                    <sub><b>Daniel Schnell</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/mdeleau">
                     <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
                     <br />
@@ -221,8 +237,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>Pariterre</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/lennartalff">
                     <img src="https://avatars.githubusercontent.com/u/33184858?v=4" width="100;" alt="lennartalff"/>
