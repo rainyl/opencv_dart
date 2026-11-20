@@ -24,6 +24,7 @@ analyzer:
 
     # test_coverage
     - test/.test_coverage.dart
+    - build/**
 
   language:
     # We've seen errors tied to use of implicit operations similar to the ones described in
