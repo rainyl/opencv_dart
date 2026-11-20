@@ -141,14 +141,7 @@ extension SVMAsync on SVM {
     ParamGrid? degreeGrid,
     bool balanced = false,
   }) async {
-    final grids = calloc<cml.MlParamGrid>(6);
-    for (final (i, g) in [Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid].indexed) {
-      final v = g ?? SVM.getDefaultGrid(i);
-      grids[i]
-        ..minVal = v.minVal
-        ..maxVal = v.maxVal
-        ..logStep = v.logStep;
-    }
+    final grids = ParamGrid.allocateNative([Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid]);
     try {
       return await _boolAsync(
         (p, cb) => cml.cv_ml_SVM_trainAuto(

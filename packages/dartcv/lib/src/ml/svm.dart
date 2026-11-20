@@ -9,6 +9,7 @@ library cv.ml;
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:meta/meta.dart';
 
 import '../core/base.dart';
 import '../core/exception.dart';
@@ -35,6 +36,19 @@ class ParamGrid {
     g.minVal = minVal;
     g.maxVal = maxVal;
     g.logStep = logStep;
+  }
+
+  /// A native copy of the six `trainAuto` grids, in `C`, `gamma`, `p`, `nu`, `coeff`, `degree`
+  /// order, a `null` entry replaced by [SVM.getDefaultGrid] for its position.
+  ///
+  /// Shared by [SVM.trainAuto] and its async variant; free the result with `calloc.free`.
+  @internal
+  static ffi.Pointer<cml.MlParamGrid> allocateNative(List<ParamGrid?> grids) {
+    final p = calloc<cml.MlParamGrid>(grids.length);
+    for (final (i, g) in grids.indexed) {
+      (g ?? SVM.getDefaultGrid(i))._write(p[i]);
+    }
+    return p;
   }
 
   @override
@@ -333,7 +347,7 @@ class SVM extends CvStruct<cml.SVM> {
     bool balanced = false,
   }) {
     final p = calloc<ffi.Bool>();
-    final grids = _grids([Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid]);
+    final grids = ParamGrid.allocateNative([Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid]);
     try {
       cvRun(
         () => cml.cv_ml_SVM_trainAuto(
@@ -356,14 +370,5 @@ class SVM extends CvStruct<cml.SVM> {
       calloc.free(grids);
       calloc.free(p);
     }
-  }
-
-  /// Native copies of the six trainAuto grids, `null` ones replaced by the defaults.
-  static ffi.Pointer<cml.MlParamGrid> _grids(List<ParamGrid?> grids) {
-    final p = calloc<cml.MlParamGrid>(grids.length);
-    for (final (i, g) in grids.indexed) {
-      (g ?? getDefaultGrid(i))._write(p[i]);
-    }
-    return p;
   }
 }
