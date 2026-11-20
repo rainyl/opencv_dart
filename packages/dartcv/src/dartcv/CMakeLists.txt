@@ -243,7 +243,11 @@ if (DARTCV_TREESHAKE)
   endif ()
 endif ()
 
-if (DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
+# The keep-list only exists for tree-shaking builds (`hook/link.dart` writes it there, and
+# the build hook in run_build.dart deletes it when treeshake is off): restricting the
+# exports of a dev build to a list recorded by an AOT build strips the symbols the next
+# `dart test` needs.
+if (DARTCV_TREESHAKE AND DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
   # The paths in the link flags are quoted, the build directory may contain spaces.
   message(STATUS "dartcv: restricting exports to symbols in ${DARTCV_KEEP_FILE}")
   file(STRINGS ${DARTCV_KEEP_FILE} _keep_symbols)
@@ -310,8 +314,9 @@ endif ()
 if (WIN32)
   # When a keep-list restricts the exports, MSVC must NOT auto-export all
   # symbols (WINDOWS_EXPORT_ALL_SYMBOLS would override the generated .def);
-  # otherwise export everything (default).
-  if (DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
+  # otherwise export everything (default). Keep this condition in sync with the
+  # DARTCV_TREESHAKE one that builds the .def above.
+  if (DARTCV_TREESHAKE AND DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
     set_target_properties(${LIBRARY_NAME} PROPERTIES
       WINDOWS_EXPORT_ALL_SYMBOLS OFF
       COMPILE_FLAGS "/EHsc"

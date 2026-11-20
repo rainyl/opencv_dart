@@ -43,11 +43,25 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   // `hooks_runner/shared/<package>/` directory (checksum-independent) so both
   // this build hook and the link hook can find it across build passes.
   final keepFileUri = input.outputDirectory.resolve('../../dartcv_keep.txt');
-  final keepFile = File.fromUri(keepFileUri).existsSync() ? keepFileUri.toFilePath() : null;
 
   final logger = Logger('')
     ..level = Level.ALL
     ..onRecord.listen((record) => args.debug ? stderr.write(record.message) : print(record.message));
+
+  // The keep-list only makes sense for an AOT tree-shaking build: a JIT build
+  // (`dart run` / `dart test`, `linkingEnabled == false`) records no uses at all, and with
+  // `treeshake` off CMake does not honour the list anyway. Either way a list left behind by
+  // an earlier AOT build is stale and would strip exports this build needs, so drop it --
+  // the link hook recreates it on the next AOT build with `treeshake: true`.
+  if (!input.config.linkingEnabled || !args.treeshake) {
+    final stale = File.fromUri(keepFileUri);
+    if (stale.existsSync()) {
+      stale.deleteSync();
+      logger.info("[dartcv4] not an AOT tree-shaking build, removed ${stale.path}\n");
+    }
+  }
+  final keepFile = File.fromUri(keepFileUri).existsSync() ? keepFileUri.toFilePath() : null;
+
   logger.info("[dartcv4] use_opencl: ${args.useOpenCL}\n");
   logger.info("[dartcv4] treeshake: ${args.treeshake} keep_file: ${keepFile ?? 'none'}\n");
   logger.info("[dartcv4] include modules: ${args.includeModules}\n");

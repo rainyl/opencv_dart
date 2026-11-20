@@ -105,10 +105,11 @@ Map<String, String> _recordUseMapping(Uri gDir, Set<String> modules) {
 void main(List<String> args) async {
   await link(args, (input, output) async {
     final recorded = input.recordedUses;
-    final modules = UserDefineArgsParser(
+    final userArgs = UserDefineArgsParser(
       input.userDefines,
       targetOS: input.config.buildCodeAssets ? input.config.code.targetOS : null,
-    ).modules;
+    );
+    final modules = userArgs.modules;
     final gDir = input.packageRoot.resolve('lib/src/g/');
     final mapping = _recordUseMapping(gDir, modules);
     final finalizerSymbols = await _finalizerSymbols(gDir, modules);
@@ -122,31 +123,34 @@ void main(List<String> args) async {
     // run_build.dart) so the keep-list persists across build passes.
     final sharedDir = input.outputDirectory.resolve('../../');
     final diag = sharedDir.resolve('dartcv_link_diag.txt');
+
+    // The keep-list only restricts the exports of a tree-shaking build; with `treeshake`
+    // off the build hook deletes it, so writing it here would just leave a file the next
+    // build has to remove again.
+    final writeKeepList = recorded != null && userArgs.treeshake;
+
     final db = StringBuffer();
     db.writeln('recorded == null: ${recorded == null}');
+    db.writeln('treeshake: ${userArgs.treeshake}');
     db.writeln('calls count: ${recorded?.calls.length ?? 0}');
     if (recorded != null) {
       db.writeln('sample keys: ${recorded.calls.keys.take(10).map((d) => d.name).toList()}');
     }
     db.writeln('finalizer symbols: ${finalizerSymbols.length}');
     db.writeln('total keep symbols: ${symbols.length}');
+    db.writeln('wrote keep-list: $writeKeepList');
     File.fromUri(diag).writeAsStringSync(db.toString());
 
-    // Only (re)write the keep-list on AOT builds (`recordedUses` is present).
-    // On JIT builds (`dart run` / `dart test`) `recordedUses` is null, so the
-    // list would contain only the finalizer symbols and clobber the good
-    // AOT-derived list, breaking the next build's exports.
-    if (recorded != null) {
+    if (writeKeepList) {
       final keepFile = sharedDir.resolve('dartcv_keep.txt');
       File.fromUri(keepFile).createSync(recursive: true);
       File.fromUri(keepFile).writeAsStringSync(symbols.join('\n'));
-    }
-
-    if (recorded != null) {
       stdout.writeln(
         '[dartcv4] link: wrote ${symbols.length} native symbols '
         '(${recorded.calls.length} recorded + ${finalizerSymbols.length} finalizer) to ${sharedDir.toFilePath()}dartcv_keep.txt',
       );
+    } else if (!userArgs.treeshake) {
+      stdout.writeln('[dartcv4] link: treeshake is off, keep-list not written');
     } else {
       stdout.writeln(
         '[dartcv4] link: no recorded uses (JIT build), keep-list left untouched',
