@@ -84,8 +84,7 @@ void main() {
   // train on small rotations and shifts, test on the in-between ones
   final train = [
     for (final angle in [-10.0, 0.0, 10.0])
-      for (final (dx, dy) in [(0, 0), (-2, 0), (2, 0), (0, -2), (0, 2)])
-        (angle, dx, dy),
+      for (final (dx, dy) in [(0, 0), (-2, 0), (2, 0), (0, -2), (0, 2)]) (angle, dx, dy),
   ];
   final test = [
     for (final angle in [-5.0, 5.0])

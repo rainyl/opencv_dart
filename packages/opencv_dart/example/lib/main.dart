@@ -80,8 +80,7 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context)
-                      .load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   final (gray, blur) = await heavyTaskAsync(
                     cv.imdecode(bytes, cv.IMREAD_COLOR),
@@ -103,8 +102,7 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) =>
-                            Card(child: Image.memory(images[idx])),
+                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
                       ),
                     ),
                     Expanded(
