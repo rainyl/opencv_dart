@@ -38,7 +38,13 @@ class TrainData extends CvStruct<cml.TrainData> {
     Mat? sampleWeights,
     Mat? varType,
   }) {
+    // Named locals, not `(varIdx ?? empty).ref` in the call: a `.ref` view of a temporary wrapper
+    // can be freed by a GC before the native call reads it (#464).
     final empty = Mat.empty();
+    final idx = varIdx ?? empty;
+    final sIdx = sampleIdx ?? empty;
+    final weights = sampleWeights ?? empty;
+    final types = varType ?? empty;
     final p = calloc<cml.TrainData>();
     try {
       cvRun(
@@ -46,10 +52,10 @@ class TrainData extends CvStruct<cml.TrainData> {
           samples.ref,
           layout,
           responses.ref,
-          (varIdx ?? empty).ref,
-          (sampleIdx ?? empty).ref,
-          (sampleWeights ?? empty).ref,
-          (varType ?? empty).ref,
+          idx.ref,
+          sIdx.ref,
+          weights.ref,
+          types.ref,
           p,
         ),
       );
