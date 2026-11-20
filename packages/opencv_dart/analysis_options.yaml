@@ -40,6 +40,7 @@ analyzer:
     parameter_assignments: error
 formatter:
   page_width: 110
+  trailing_commas: preserve
 
 linter:
   rules:
