@@ -16,6 +16,7 @@ export 'features2d.dart';
 export 'highgui.dart';
 export 'imgcodecs.dart';
 export 'imgproc.dart';
+export 'ml.dart';
 export 'objdetect.dart';
 export 'photo.dart';
 export 'src/g/constants.g.dart' if (dart.library.js_interop) 'src/g_web/constants.g.dart';

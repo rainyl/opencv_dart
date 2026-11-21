@@ -26,6 +26,7 @@ const defaultExcludedModules = {
   'flann',
   'freetype',
   'highgui',
+  'ml',
   'objdetect',
   'photo',
   'stitching',

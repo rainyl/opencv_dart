@@ -78,8 +78,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         scaleFactor,
         minNeighbors,
         flags,
-        minSize.cvd.ref,
-        maxSize.cvd.ref,
+        minSize.cvdRef,
+        maxSize.cvdRef,
         ffi.nullptr,
       ),
     );
@@ -105,8 +105,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         scaleFactor,
         minNeighbors,
         flags,
-        minSize.cvd.ref,
-        maxSize.cvd.ref,
+        minSize.cvdRef,
+        maxSize.cvdRef,
         ffi.nullptr,
       ),
     );
@@ -135,8 +135,8 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
         scaleFactor,
         minNeighbors,
         flags,
-        minSize.cvd.ref,
-        maxSize.cvd.ref,
+        minSize.cvdRef,
+        maxSize.cvdRef,
         outputRejectLevels,
         ffi.nullptr,
       ),
@@ -226,8 +226,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         ref,
         img.ref,
         descriptors.ptr,
-        winStride.cvd.ref,
-        padding.cvd.ref,
+        winStride.cvdRef,
+        padding.cvdRef,
         locations.ptr,
         ffi.nullptr,
       ),
@@ -251,8 +251,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         img.ref,
         grad.ref,
         angleOfs.ref,
-        paddingTL.cvd.ref,
-        paddingBR.cvd.ref,
+        paddingTL.cvdRef,
+        paddingBR.cvdRef,
         ffi.nullptr,
       ),
     );
@@ -277,8 +277,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         foundLocations.ptr,
         weights.ptr,
         hitThreshold,
-        winStride.cvd.ref,
-        padding.cvd.ref,
+        winStride.cvdRef,
+        padding.cvdRef,
         searchLocations.ptr,
         ffi.nullptr,
       ),
@@ -303,8 +303,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         img.ref,
         foundLocations.ptr,
         hitThreshold,
-        winStride.cvd.ref,
-        padding.cvd.ref,
+        winStride.cvdRef,
+        padding.cvdRef,
         searchLocations.ptr,
         ffi.nullptr,
       ),
@@ -333,8 +333,8 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
         ref,
         image.ref,
         hitThreshold,
-        winStride.cvd.ref,
-        padding.cvd.ref,
+        winStride.cvdRef,
+        padding.cvdRef,
         scale,
         groupThreshold,
         useMeanshiftGrouping,
@@ -668,7 +668,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
       () => cobjdetect.cv_FaceDetectorYN_create(
         cModel,
         cConfig,
-        inputSize.cvd.ref,
+        inputSize.cvdRef,
         scoreThreshold,
         nmsThreshold,
         topK,
@@ -723,7 +723,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
         cFramework,
         bufM.ref,
         bufC.ref,
-        inputSize.cvd.ref,
+        inputSize.cvdRef,
         scoreThreshold,
         nmsThreshold,
         topK,
@@ -783,8 +783,7 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
   /// [inputSize]	the size of the input image
   ///
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a072418e5ce7beeb69c41edda75c41d2e
-  void setInputSize((int, int) inputSize) =>
-      cobjdetect.cv_FaceDetectorYN_setInputSize(ref, inputSize.cvd.ref);
+  void setInputSize((int, int) inputSize) => cobjdetect.cv_FaceDetectorYN_setInputSize(ref, inputSize.cvdRef);
 
   /// Set the score threshold to filter out bounding boxes of score less than
   /// the given value.

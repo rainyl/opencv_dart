@@ -85,7 +85,11 @@ class _MyAppState extends State<MyApp> {
                   final bytes = data.buffer.asUint8List();
                   final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
                   setState(() {
-                    images = [bytes, cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2];
+                    images = [
+                      bytes,
+                      cv.imencode(".png", gray).$2,
+                      cv.imencode(".png", blur).$2,
+                    ];
                   });
                 },
                 child: const Text("Process"),
@@ -100,7 +104,9 @@ class _MyAppState extends State<MyApp> {
                         itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
                       ),
                     ),
-                    Expanded(child: SingleChildScrollView(child: Text(cv.getBuildInformation()))),
+                    Expanded(
+                      child: SingleChildScrollView(child: Text(cv.getBuildInformation())),
+                    ),
                   ],
                 ),
               ),

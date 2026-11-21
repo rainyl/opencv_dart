@@ -27,7 +27,16 @@ linter:
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 
-# Same width as the repo-wide CI formatter (dart format --line-length 110).
+# Keep plain `dart format` (no --line-length) in sync with the repo-wide style:
+# a `formatter:` block here shadows the parent package's one, so it has to repeat it.
 formatter:
   page_width: 110
   trailing_commas: preserve
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - windows/**
+    - macos/**
+    - linux/**

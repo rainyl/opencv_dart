@@ -67,7 +67,7 @@ OpenCV Bindings for Dart Language. Support both asynchronous and synchronous!
 | highgui    | :white_check_mark:      | :white_check_mark:      | HighGUI module          |
 | imgcodecs  | :white_check_mark:      | :white_check_mark:      | ImageCodecs module      |
 | imgproc    | :white_check_mark:      | :white_check_mark:      | ImageProc module        |
-| ml         | :x:                     | :x:                     | ML module               |
+| ml         | :white_check_mark:      | :white_check_mark:      | ML module               |
 | objdetect  | :white_check_mark:      | :white_check_mark:      | Object Detection module |
 | photo      | :white_check_mark:      | :white_check_mark:      | Photo module            |
 | stitching  | :ballot_box_with_check: | :ballot_box_with_check: | Stitching module        |
@@ -194,6 +194,13 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/azlekov">
+                    <img src="https://avatars.githubusercontent.com/u/2267270?v=4" width="100;" alt="azlekov"/>
+                    <br />
+                    <sub><b>Asen Lekov</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/dupuchba">
                     <img src="https://avatars.githubusercontent.com/u/911705?v=4" width="100;" alt="dupuchba"/>
                     <br />
@@ -208,6 +215,15 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/lumpidu">
+                    <img src="https://avatars.githubusercontent.com/u/734966?v=4" width="100;" alt="lumpidu"/>
+                    <br />
+                    <sub><b>Daniel Schnell</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/mdeleau">
                     <img src="https://avatars.githubusercontent.com/u/112755117?v=4" width="100;" alt="mdeleau"/>
                     <br />
@@ -221,8 +237,6 @@ see [awesome-opencv_dart](https://github.com/rainyl/awesome-opencv_dart) and sha
                     <sub><b>Pariterre</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/lennartalff">
                     <img src="https://avatars.githubusercontent.com/u/33184858?v=4" width="100;" alt="lennartalff"/>

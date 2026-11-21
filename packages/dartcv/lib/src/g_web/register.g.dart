@@ -12,6 +12,7 @@ import 'gapi.g.dart' as $gapi;
 import 'highgui.g.dart' as $highgui;
 import 'imgcodecs.g.dart' as $imgcodecs;
 import 'imgproc.g.dart' as $imgproc;
+import 'ml.g.dart' as $ml;
 import 'objdetect.g.dart' as $objdetect;
 import 'photo.g.dart' as $photo;
 import 'stitching.g.dart' as $stitching;
@@ -30,6 +31,7 @@ void registerAll() {
   $highgui.$registerTypes();
   $imgcodecs.$registerTypes();
   $imgproc.$registerTypes();
+  $ml.$registerTypes();
   $objdetect.$registerTypes();
   $photo.$registerTypes();
   $stitching.$registerTypes();

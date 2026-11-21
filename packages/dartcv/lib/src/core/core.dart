@@ -114,14 +114,15 @@ void defaultLogCallbackEx(
 }
 
 typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
-typedef LogCallbackExFunction = void Function(
-  LogLevel logLevel,
-  String tag,
-  String file,
-  int line,
-  String func,
-  String message,
-);
+typedef LogCallbackExFunction =
+    void Function(
+      LogLevel logLevel,
+      String tag,
+      String file,
+      int line,
+      String func,
+      String message,
+    );
 
 ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
 ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;
@@ -1378,7 +1379,7 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
       data.ref,
       K,
       bestLabels.ref,
-      TermCriteria.fromRecord(criteria).ref,
+      criteria.cvdRef,
       attempts,
       flags,
       centers!.ref,
@@ -1411,7 +1412,7 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
       pts.ref,
       K,
       bestLabels.ref,
-      TermCriteria.fromRecord(criteria).ref,
+      criteria.cvdRef,
       attempts,
       flags,
       centers!.ref,

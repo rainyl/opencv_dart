@@ -64,11 +64,15 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () async {
                   final picker = ImagePicker();
-                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  final img = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
                   if (img != null) {
                     final path = img.path;
                     final mat = cv.imread(path);
-                    print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                    print(
+                      "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path",
+                    );
                     final (success, bytes) = cv.imencode(".png", mat);
                     // heavy computation
                     final (gray, blur) = await heavyTask(bytes);
@@ -92,7 +96,11 @@ class _MyAppState extends State<MyApp> {
                   final im = await cv.imdecodeAsync(bytes, cv.IMREAD_COLOR);
                   final (gray, blur) = await heavyTaskAsync(im);
                   setState(() {
-                    images = [bytes, cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2];
+                    images = [
+                      bytes,
+                      cv.imencode(".png", gray).$2,
+                      cv.imencode(".png", blur).$2,
+                    ];
                   });
                 },
                 child: const Text("Process"),
@@ -107,7 +115,11 @@ class _MyAppState extends State<MyApp> {
                         itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
                       ),
                     ),
-                    Expanded(child: SingleChildScrollView(child: Text(cv.getBuildInformation()))),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(cv.getBuildInformation()),
+                      ),
+                    ),
                   ],
                 ),
               ),

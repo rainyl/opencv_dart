@@ -23,11 +23,11 @@ PKG_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 BUILD_DIR="${BUILD_DIR:-$PKG_DIR/build/wasm}"
 OUT_DIR="${OUT_DIR:-$PKG_DIR/build/web}"
 # highgui needs a GUI backend and gapi is unfinished upstream, so neither is in the default set.
-MODULES="${MODULES:-calib3d dnn features2d flann freetype imgcodecs imgproc objdetect photo stitching video videoio aruco img_hash quality wechat_qrcode ximgproc xobjdetect}"
+MODULES="${MODULES:-calib3d dnn features2d flann freetype imgcodecs imgproc ml objdetect photo stitching video videoio aruco img_hash quality wechat_qrcode ximgproc xobjdetect}"
 GENERATOR_ARGS=()
 if command -v ninja >/dev/null; then GENERATOR_ARGS=(-G Ninja); fi
 
-ALL_MODULES="calib3d dnn features2d flann freetype highgui imgcodecs imgproc objdetect photo stitching video videoio gapi aruco img_hash quality wechat_qrcode ximgproc xobjdetect"
+ALL_MODULES="calib3d dnn features2d flann freetype highgui imgcodecs imgproc ml objdetect photo stitching video videoio gapi aruco img_hash quality wechat_qrcode ximgproc xobjdetect"
 MODULE_ARGS=()
 for m in $ALL_MODULES; do
   flag=OFF

@@ -258,10 +258,29 @@ abstract base class _Compound extends NativeType {
 
 abstract base class Struct extends _Compound implements SizedNativeType {
   Struct.$view(super.$bytes, super.$offset) : super.$view();
+
+  /// `dart:ffi`'s `Struct.create<T>()`: an instance on Dart-managed memory, which by-value
+  /// arguments copy into a wasm allocation instead of reading a `Pointer`'s memory.
+  static T create<T extends Struct>([TypedData? typedData, int offset = 0]) =>
+      _createDartManaged<T>(typedData, offset);
 }
 
 abstract base class Union extends _Compound implements SizedNativeType {
   Union.$view(super.$bytes, super.$offset) : super.$view();
+
+  /// `dart:ffi`'s `Union.create<T>()`.
+  static T create<T extends Union>([TypedData? typedData, int offset = 0]) =>
+      _createDartManaged<T>(typedData, offset);
+}
+
+T _createDartManaged<T extends _Compound>([TypedData? typedData, int offset = 0]) {
+  final s = _structs[T];
+  if (s == null) throw UnsupportedError('dartcv web: unknown native type $T (was initDartcv() awaited?)');
+  if (typedData == null) return s.$3(ByteData(s.$1), 0) as T;
+  final bytes = typedData is ByteData
+      ? typedData
+      : typedData.buffer.asByteData(typedData.offsetInBytes, typedData.lengthInBytes);
+  return s.$3(bytes, offset * typedData.elementSizeInBytes) as T;
 }
 
 /// Copies struct [s] (which may live in Dart memory) into a fresh wasm allocation of [size] bytes.

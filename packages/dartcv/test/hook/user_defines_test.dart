@@ -102,6 +102,15 @@ void main() {
       expect(args.modules, {'dnn'});
     });
 
+    test('ml is opt-in', () {
+      expect(defaultIncludedModules, isNot(contains('ml')));
+      final args = UserDefineArgsParser.fromMap(const {
+        'include_modules': ['imgproc', 'ml'],
+      }, targetOS: OS.linux);
+
+      expect(args.modules, {'imgproc', 'ml'});
+    });
+
     test('duplicate names are dropped', () {
       final args = UserDefineArgsParser.fromMap(const {
         'include_modules': ['imgproc', 'imgproc'],

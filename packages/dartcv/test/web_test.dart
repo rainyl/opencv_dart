@@ -49,6 +49,19 @@ import 'imgproc/imgproc_async_test.dart' as imgproc_imgproc_async_test;
 import 'imgproc/imgproc_test.dart' as imgproc_imgproc_test;
 import 'imgproc/linesegmentdetector_test.dart' as imgproc_linesegmentdetector_test;
 import 'imgproc/subdiv2d_test.dart' as imgproc_subdiv2d_test;
+import 'ml/ann_mlp_test.dart' as ml_ann_mlp_test;
+import 'ml/boost_test.dart' as ml_boost_test;
+import 'ml/dtrees_test.dart' as ml_dtrees_test;
+import 'ml/em_test.dart' as ml_em_test;
+import 'ml/knearest_test.dart' as ml_knearest_test;
+import 'ml/logistic_regression_test.dart' as ml_logistic_regression_test;
+import 'ml/ml_async_test.dart' as ml_ml_async_test;
+import 'ml/normal_bayes_classifier_test.dart' as ml_normal_bayes_classifier_test;
+import 'ml/rtrees_test.dart' as ml_rtrees_test;
+import 'ml/stat_model_test.dart' as ml_stat_model_test;
+import 'ml/svm_test.dart' as ml_svm_test;
+import 'ml/svmsgd_test.dart' as ml_svmsgd_test;
+import 'ml/train_data_test.dart' as ml_train_data_test;
 import 'photo/photo_async_test.dart' as photo_photo_async_test;
 import 'photo/photo_test.dart' as photo_photo_test;
 import 'stitching/stitching_async_test.dart' as stitching_stitching_async_test;
@@ -238,6 +251,45 @@ Future<void> main() async {
   });
   group('imgproc/subdiv2d_test.dart', () {
     imgproc_subdiv2d_test.main();
+  });
+  group('ml/ann_mlp_test.dart', () {
+    ml_ann_mlp_test.main();
+  });
+  group('ml/boost_test.dart', () {
+    ml_boost_test.main();
+  });
+  group('ml/dtrees_test.dart', () {
+    ml_dtrees_test.main();
+  });
+  group('ml/em_test.dart', () {
+    ml_em_test.main();
+  });
+  group('ml/knearest_test.dart', () {
+    ml_knearest_test.main();
+  });
+  group('ml/logistic_regression_test.dart', () {
+    ml_logistic_regression_test.main();
+  });
+  group('ml/ml_async_test.dart', () {
+    ml_ml_async_test.main();
+  });
+  group('ml/normal_bayes_classifier_test.dart', () {
+    ml_normal_bayes_classifier_test.main();
+  });
+  group('ml/rtrees_test.dart', () {
+    ml_rtrees_test.main();
+  });
+  group('ml/stat_model_test.dart', () {
+    ml_stat_model_test.main();
+  });
+  group('ml/svm_test.dart', () {
+    ml_svm_test.main();
+  });
+  group('ml/svmsgd_test.dart', () {
+    ml_svmsgd_test.main();
+  });
+  group('ml/train_data_test.dart', () {
+    ml_train_data_test.main();
   });
   group('photo/photo_async_test.dart', () {
     photo_photo_async_test.main();
