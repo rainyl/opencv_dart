@@ -1,5 +1,14 @@
 # opencv_dart
 
+## 2.3.2
+
+- new: add the `ml` module: `SVM` (with `trainAuto` / `getDefaultGrid` / `getDecisionFunction`), `KNearest`, `ANN_MLP`, `DTrees`, `RTrees` (with `getVotes` / `getVarImportance` / `getOOBError`), `Boost`, `EM`, `LogisticRegression`, `NormalBayesClassifier`, `SVMSGD` and `TrainData`, sync and async. It is opt-in: add `ml` to `hooks.user_defines.dartcv4.include_modules`.
+- new: `DTrees` / `RTrees` / `Boost` expose the tree structure (`roots`, `nodes`, `splits`, `subsets`) as plain Dart records.
+- new: the `ml` bindings fail loudly where OpenCV fails silently: `load` / `loadFromString` raise instead of returning an empty model, `save` raises when the file cannot be written (OpenCV only logs it, and e.g. `KNearest` would then write nothing), and `predict` / `calcError` raise on an untrained model (a fresh `SVM` could otherwise divide by zero).
+- new: `example/dart_cli/bin/ml_digits.dart`, digit recognition with `KNearest` and `SVM` on rendered Hershey glyphs, no dataset download.
+- fix: value structs are no longer passed to native code through the memory of a temporary wrapper. `(w, h).cvd.ref`, `.toPoint().ref`, `.toTermCriteria().ref` and `.toSize().ref` took a view of a `calloc` block owned by a wrapper that nothing kept alive, so a GC could run its `NativeFinalizer` before the FFI trampoline copied the struct and OpenCV then read freed memory: random `(-4:Insufficient memory) Failed to allocate ...`, `std::bad_array_new_length`, size assertions that the Dart side had already checked, or a `SIGSEGV` inside `libdartcv` (#464, and the window size in #415). Affected `warpAffine`/`warpPerspective`, `resize`, `pyrDown`/`pyrUp`, `blur`/`GaussianBlur`/`boxFilter`/`sqrBoxFilter`/`stackBlur`, `getStructuringElement`, `getRectSubPix`, `findChessboardCorners*`/`find4QuadCornerSubpix`/`drawChessboardCorners`/`estimateChessboardSharpness`, `calibrateCamera`/`getOptimalNewCameraMatrix`/`initUndistortRectifyMap`/fisheye, `kmeans`/`kmeansByPoints`, `blobFromImage(s)`, `calcOpticalFlowPyrLK`/`calcOpticalFlowFarneback`, `CascadeClassifier`/`FaceDetectorYN`/`CharucoDetector`, `ximgproc_rl`, `drawDetectedCornersCharuco`, sync and async variants.
+- new: `(w, h).cvdRef` -> `CvSize`, `(x, y).pointRef` -> `CvPoint` and `(type, count, eps).cvdRef` -> `TermCriteria` build the by-value struct on the Dart heap (no native allocation, nothing to free). Prefer them over `.cvd.ref`/`.toPoint().ref`, which must not be called on a temporary wrapper.
+
 ## 2.3.1
 
 - fix: OpenCV module dependencies are now resolved through a transitive CMake closure, so indirectly enabled modules (e.g. `objdetect`, `ximgproc`) correctly pull in required dependencies (`calib3d` -> `features2d`/`flann`) regardless of option order.
