@@ -97,10 +97,70 @@ jobs:
         run: |
           dart pub get
           dart test -x skip-workflow
+  check-release:
+    name: check-release
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+    needs: [test-ubuntu, test-windows, test-macos]
+    runs-on: ubuntu-latest
+    outputs:
+      # "true" when that package still has to be published, "false" when the version is already on
+      # pub.dev (which is not an error: a tag may only carry a dartcv4 change).
+      dartcv4: ${{ steps.versions.outputs.dartcv4 }}
+      wrapper: ${{ steps.versions.outputs.wrapper }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the versions and the changelogs
+        id: versions
+        run: |
+          set -euo pipefail
+          dartcv=$(sed -n 's/^version: *//p' packages/dartcv/pubspec.yaml)
+          wrapper=$(sed -n 's/^version: *//p' packages/opencv_dart/pubspec.yaml)
+          echo "dartcv4=$dartcv opencv_dart=$wrapper ref=$GITHUB_REF"
+
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            tag=${GITHUB_REF#refs/tags/v}
+            if [ "$tag" != "$dartcv" ]; then
+              echo "::error::tag v$tag must match packages/dartcv/pubspec.yaml version $dartcv"
+              exit 1
+            fi
+          fi
+
+          published() { curl -sf "https://pub.dev/api/packages/$1/versions/$2" > /dev/null; }
+          needs_section() {  # changelog of package $1 must have a "## $2" heading
+            if ! grep -qE "^## +\[?v?$2\]?$" "packages/$1/CHANGELOG.md"; then
+              echo "::error::packages/$1/CHANGELOG.md has no '## $2' section"
+              exit 1
+            fi
+          }
+
+          pub_dartcv4=true
+          if published dartcv4 "$dartcv"; then
+            echo "::notice::dartcv4 $dartcv is already published, skipping it"
+            pub_dartcv4=false
+          else
+            needs_section dartcv "$dartcv"
+          fi
+
+          pub_wrapper=true
+          if published opencv_dart "$wrapper"; then
+            echo "::notice::opencv_dart $wrapper is already published, skipping it"
+            pub_wrapper=false
+          else
+            needs_section opencv_dart "$wrapper"
+          fi
+
+          if [ "$pub_dartcv4" = false ] && [ "$pub_wrapper" = false ]; then
+            echo "::error::both versions are already on pub.dev - bump a version before tagging"
+            exit 1
+          fi
+
+          echo "dartcv4=$pub_dartcv4" >> "$GITHUB_OUTPUT"
+          echo "wrapper=$pub_wrapper" >> "$GITHUB_OUTPUT"
+
   publish-dartcv4:
     name: Publish dartcv4
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos]
+    needs: [test-ubuntu, test-windows, test-macos, check-release]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -109,15 +169,72 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
       - name: Install dependencies
+        if: needs.check-release.outputs.dartcv4 == 'true'
         working-directory: packages/dartcv
         run: dart pub get
       - name: Publish
+        if: needs.check-release.outputs.dartcv4 == 'true'
         working-directory: packages/dartcv
         run: dart pub publish --force
+      - name: Nothing to publish
+        if: needs.check-release.outputs.dartcv4 != 'true'
+        run: echo "dartcv4 is already on pub.dev, nothing to do"
+
+  wait-for-dartcv4:
+    name: wait-for-dartcv4
+    # A freshly published version is not resolvable immediately: pub.dev has to index it first, and
+    # publishing opencv_dart runs `pub get` as part of its validation. Instead of sleeping for a
+    # guessed amount of time, poll until opencv_dart's *own* resolution picks the new version - that
+    # also proves its `dartcv4` constraint admits it.
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+    needs: [check-release, publish-dartcv4]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Wait until opencv_dart resolves the new dartcv4
+        if: needs.check-release.outputs.wrapper == 'true'
+        working-directory: packages/opencv_dart
+        run: |
+          set -euo pipefail
+          want=$(sed -n 's/^version: *//p' ../dartcv/pubspec.yaml)
+          # A checked-in override would hide a constraint that does not admit $want.
+          rm -f pubspec_overrides.yaml pubspec.lock
+          resolved() {
+            flutter pub get > /dev/null 2>&1 || true
+            flutter pub deps --json 2>/dev/null | python3 -c '
+              import json, sys
+              deps = json.load(sys.stdin)["packages"]
+              print(next((p["version"] for p in deps if p["name"] == "dartcv4"), "none"))
+            ' 2>/dev/null || echo none
+          }
+          for attempt in $(seq 1 40); do        # 40 x 30s = 20 minutes
+            got=$(resolved)
+            if [ "$got" = "$want" ]; then
+              echo "dartcv4 $want resolved after $attempt attempt(s)"
+              exit 0
+            fi
+            echo "attempt $attempt: opencv_dart resolved dartcv4 '$got', want $want; sleeping 30s"
+            sleep 30
+          done
+          echo "::error::dartcv4 $want is still not resolvable after 20 minutes"
+          exit 1
+      - name: Validate opencv_dart against the new dartcv4
+        if: needs.check-release.outputs.wrapper == 'true'
+        working-directory: packages/opencv_dart
+        run: flutter pub publish --dry-run
+      - name: Nothing to publish
+        if: needs.check-release.outputs.wrapper != 'true'
+        run: echo "opencv_dart is already on pub.dev, nothing to do"
+
   publish-opencv-dart:
     name: Publish opencv_dart
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos]
+    needs: [check-release, wait-for-dartcv4]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -129,11 +246,53 @@ jobs:
         with:
           channel: "stable"
       - name: Install dependencies
+        if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
         run: flutter pub get
       - name: Publish
+        if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
-        run: flutter pub publish --force
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if flutter pub publish --force 2>&1 | tee /tmp/publish.log; then
+              exit 0
+            fi
+            # Only a dartcv4 that pub.dev does not serve yet is worth retrying; anything else (packaging,
+            # analysis) is a real failure.
+            if grep -qiE 'version solving failed|does not match any versions|could not find' /tmp/publish.log; then
+              echo "attempt $attempt: dartcv4 not visible yet, retrying in 2 minutes"
+              sleep 120
+            else
+              exit 1
+            fi
+          done
+          exit 1
+      - name: Nothing to publish
+        if: needs.check-release.outputs.wrapper != 'true'
+        run: echo "opencv_dart is already on pub.dev, nothing to do"
+
+  publish-dry-run:
+    name: publish-dry-run
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: dartcv4
+        working-directory: packages/dartcv
+        run: |
+          dart pub get
+          dart pub publish --dry-run
+      - name: opencv_dart
+        working-directory: packages/opencv_dart
+        run: |
+          flutter pub get
+          flutter pub publish --dry-run
+
   release:
     needs: [test-ubuntu, test-windows, test-macos, publish-dartcv4, publish-opencv-dart]
     runs-on: ubuntu-latest
