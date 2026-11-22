@@ -6,7 +6,7 @@ import 'dart:typed_data';
 
 import 'package:dartcv4/src/web/ffi.dart' as ffi;
 import 'package:dartcv4/src/web/runtime.dart' as $rt;
-import 'package:dartcv4/src/g_web/types.g.dart' as imp$1;
+import 'package:dartcv4/src/web/g/types.g.dart' as imp$1;
 
 typedef CvRect = imp$1.CvRect;
 

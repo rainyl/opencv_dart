@@ -29,8 +29,8 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 
 ## Regenerating FFI bindings
 
-- Intended generator: `dart tool/ffigen.dart` from `packages/dartcv`. Unlike the raw yaml runs, it also emits `@RecordUse()` and the `<module>.record_use_mapping.g.dart` tables that `hook/link.dart` consumes for tree-shaking.
-- Then run `dart tool/web/gen_web_bindings.dart` to refresh the web mirror in `lib/src/g_web/` (CI checks it). Web support is described in `packages/dartcv/tool/web/README.md`.
+- Intended generator: `dart tool/ffigen.dart` from `packages/dartcv` (optionally followed by module names, e.g. `dart tool/ffigen.dart types ml`, to regenerate only those). Unlike the raw yaml runs, it also emits `@RecordUse()` and the `<module>.record_use_mapping.g.dart` tables that `hook/link.dart` consumes for tree-shaking.
+- The same command then refreshes the web mirror in `lib/src/web/g/` by calling `tool/web/gen_web_bindings.dart` (`--no-web` skips that, and `dart tool/web/gen_web_bindings.dart [--check]` runs the web step alone: it only needs `lib/src/g/` on disk, which is what CI uses to fail when `lib/src/web/g/` is stale). Web support is described in `packages/dartcv/tool/web/README.md`.
 - Do **not** use `make ffigen` / `dart run ffigen --config ffigen/*.yaml` for a full regen — it skips the record-use mapping, silently breaking tree-shaking.
 
 ## Style & checks
@@ -39,5 +39,5 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 - **Gotcha:** `dart format` reads only the *nearest* `analysis_options.yaml` and does not merge it with a parent package's. Every package **and example** under `packages/` therefore repeats the `formatter:` block; a new one that forgets it gets formatted at 80 columns instead of 110 (CI fails on it, and an editor would rewrap the files).
 - Never format `lib/src/g/*.g.dart` (and any other generated `*.g.dart`): those are ffigen output and must match a regeneration. CI excludes them.
 - CI (`.github/workflows/formatter.yaml`) runs the same `dart format` on every push and commits the result as `dart format ✅`; on a pull request it fails instead, since the token is read-only there. The SDK comes from `.fvmrc`, so a Flutter upgrade is one deliberate commit rather than a surprise repository-wide reformat.
-- `dart analyze` passes apart from the known `tool/ffigen.dart` errors. C++ follows `.clang-format` (LLVM-based, 2-space indent, column limit 100).
+- `dart analyze` passes (the only warning is about the legacy analyzer plugin in `analysis_options.yaml`, deprecated upstream). C++ follows `.clang-format` (LLVM-based, 2-space indent, column limit 100).
 - Tree-shaking (`DARTCV_TREESHAKE` + keep-list `dartcv_keep.txt`) only works on AOT builds, and the list is only honoured when `treeshake` is on. `hook/link.dart` writes it for an AOT build with `treeshake: true` only; the build hook (`run_build.dart`) **deletes** a stale list whenever `treeshake` is off, because a list recorded by an earlier AOT build of the same `.dart_tool` would strip the exports the next `dart test` / `dart run` needs. The hooks cache means these files are refreshed when the native library is rebuilt, not on every `dart test`.

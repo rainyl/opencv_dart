@@ -13,9 +13,9 @@ import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
-import '../g/video.g.dart' if (dart.library.js_interop) '../g_web/video.g.dart' as cvg;
-import '../g/video.g.dart' if (dart.library.js_interop) '../g_web/video.g.dart' as cvideo;
+import '../g/constants.g.dart';
+import '../g/video.g.dart' if (dart.library.js_interop) '../web/g/video.g.dart' as cvg;
+import '../g/video.g.dart' if (dart.library.js_interop) '../web/g/video.g.dart' as cvideo;
 import '../package_ffi.dart';
 import 'video.dart';
 

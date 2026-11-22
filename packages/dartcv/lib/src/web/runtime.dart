@@ -2,7 +2,7 @@
 // Apache 2.0 license that can be found in the LICENSE file.
 
 // Web runtime: owns the Emscripten module instance and gives the generated bindings
-// (lib/src/g_web) and the dart:ffi stand-in (ffi.dart) access to its exports and memory.
+// (lib/src/web/g) and the dart:ffi stand-in (ffi.dart) access to its exports and memory.
 // ignore_for_file: public_member_api_docs
 
 import 'dart:convert';

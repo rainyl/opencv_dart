@@ -4,7 +4,7 @@
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
-import '../g_web/register.g.dart' as g;
+import 'g/register.g.dart' as g;
 import 'runtime.dart' as rt;
 
 Future<void>? _loading;

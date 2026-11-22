@@ -12,7 +12,7 @@ import '../core/mat.dart';
 import '../ffi.dart' as ffi;
 // import '../core/scalar.dart';
 // import '../core/vec.dart';
-import '../g/gapi.g.dart' if (dart.library.js_interop) '../g_web/gapi.g.dart' as cvg;
+import '../g/gapi.g.dart' if (dart.library.js_interop) '../web/g/gapi.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class GMat extends CvStruct<cvg.GMat> {

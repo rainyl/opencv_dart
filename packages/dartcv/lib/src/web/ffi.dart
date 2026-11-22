@@ -5,7 +5,7 @@
 // Emscripten module (wasm32: pointers, `int`, `long` and `size_t` are 32 bit).
 // lib/src/ffi.dart exports this library instead of dart:ffi when compiling for the web, so the
 // hand-written bindings compile unchanged. Struct layouts come from the generated
-// lib/src/g_web/*.g.dart files, which register themselves in initDartcv().
+// lib/src/web/g/*.g.dart files, which register themselves in initDartcv().
 // ignore_for_file: public_member_api_docs, camel_case_types, non_constant_identifier_names
 
 import 'dart:async';

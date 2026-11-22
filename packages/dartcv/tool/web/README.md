@@ -4,7 +4,7 @@ dartcv4 runs in the browser by compiling the same C wrapper (`src/dartcv`) and O
 WebAssembly with Emscripten. The hand-written Dart bindings are shared with native: on the web,
 `lib/src/ffi.dart` and `lib/src/package_ffi.dart` export a stand-in for `dart:ffi` /
 `package:ffi` backed by the wasm memory (`lib/src/web/`), and the ffigen output is mirrored by
-generated web bindings (`lib/src/g_web/`). It works with dart2js and dart2wasm, including Flutter
+generated web bindings (`lib/src/web/g/`). It works with dart2js and dart2wasm, including Flutter
 web (CanvasKit and skwasm).
 
 ## Using it
@@ -66,13 +66,25 @@ locations (scoop, chocolatey, the emsdk default directories).
 
 ## Regenerating the web bindings
 
-After `dart tool/ffigen.dart`, run:
+`dart tool/ffigen.dart` runs this at the end, so normally there is nothing to do by hand: it reads
+the freshly written `lib/src/g/*.g.dart` and rewrites `lib/src/web/g/`. The generator only needs
+those files, so it can also run on its own (this is what CI uses):
 
 ```bash
-dart tool/web/gen_web_bindings.dart
+dart tool/web/gen_web_bindings.dart           # rewrite lib/src/web/g
+dart tool/web/gen_web_bindings.dart --check   # report missing/stale/differing files, write nothing
 ```
 
-CI fails if `lib/src/g_web` is out of date.
+CI fails if `lib/src/web/g` is out of date. Modules removed from `tool/ffigen.dart`'s list have
+their `lib/src/web/g` file deleted on the next run.
+
+Two things are shared with the native bindings instead of mirrored:
+
+- `constants.g.dart` is nothing but `const int`s, so it has no web mirror at all: `tool/ffigen.dart`
+drops the unused `dart:ffi` import ffigen writes into it, and both platforms import the same
+`lib/src/g/constants.g.dart`.
+- Doc comments travel with their declaration, so the web bindings document the same API as the
+native ones.
 
 ## Testing
 

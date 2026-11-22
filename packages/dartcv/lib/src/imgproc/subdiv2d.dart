@@ -11,8 +11,8 @@ import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/imgproc.g.dart' if (dart.library.js_interop) '../g_web/imgproc.g.dart' as cimgproc;
-import '../g/imgproc.g.dart' if (dart.library.js_interop) '../g_web/imgproc.g.dart' as cvg;
+import '../g/imgproc.g.dart' if (dart.library.js_interop) '../web/g/imgproc.g.dart' as cimgproc;
+import '../g/imgproc.g.dart' if (dart.library.js_interop) '../web/g/imgproc.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class Subdiv2D extends CvStruct<cvg.Subdiv2D> {

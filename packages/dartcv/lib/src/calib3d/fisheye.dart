@@ -9,8 +9,8 @@ import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../ffi.dart' as ffi;
-import '../g/calib3d.g.dart' if (dart.library.js_interop) '../g_web/calib3d.g.dart' as ccalib3d;
-import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
+import '../g/calib3d.g.dart' if (dart.library.js_interop) '../web/g/calib3d.g.dart' as ccalib3d;
+import '../g/constants.g.dart';
 import '../package_ffi.dart';
 import 'calib3d.dart';
 

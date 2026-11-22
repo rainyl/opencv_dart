@@ -7,9 +7,9 @@
 library cv.core;
 
 import '../ffi.dart' as ffi;
-import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
-import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as ccore;
-import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as ccore;
+import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'base.dart';
 import 'mat.dart';

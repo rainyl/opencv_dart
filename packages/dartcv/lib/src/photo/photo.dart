@@ -8,8 +8,8 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../ffi.dart' as ffi;
-import '../g/photo.g.dart' if (dart.library.js_interop) '../g_web/photo.g.dart' as cphoto;
-import '../g/photo.g.dart' if (dart.library.js_interop) '../g_web/photo.g.dart' as cvg;
+import '../g/photo.g.dart' if (dart.library.js_interop) '../web/g/photo.g.dart' as cphoto;
+import '../g/photo.g.dart' if (dart.library.js_interop) '../web/g/photo.g.dart' as cvg;
 import '../package_ffi.dart';
 
 /// MergeMertens algorithm merge the ldr image should result in a HDR image.

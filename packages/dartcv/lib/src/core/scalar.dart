@@ -5,7 +5,7 @@
 import 'dart:math' as math;
 
 import '../ffi.dart' as ffi;
-import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'base.dart';
 

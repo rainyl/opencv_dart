@@ -11,7 +11,7 @@ import '../core/mat.dart';
 import '../core/scalar.dart';
 import '../ffi.dart' as ffi;
 import '../ffi.dart';
-import '../g/gapi.g.dart' if (dart.library.js_interop) '../g_web/gapi.g.dart' as cvg;
+import '../g/gapi.g.dart' if (dart.library.js_interop) '../web/g/gapi.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'gmat.dart';
 import 'gscalar.dart';

@@ -9,7 +9,7 @@ import 'dart:async';
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../ffi.dart' as ffi;
-import '../g/stitching.g.dart' if (dart.library.js_interop) '../g_web/stitching.g.dart' as cstitching;
+import '../g/stitching.g.dart' if (dart.library.js_interop) '../web/g/stitching.g.dart' as cstitching;
 import '../package_ffi.dart';
 import './stitching.dart';
 

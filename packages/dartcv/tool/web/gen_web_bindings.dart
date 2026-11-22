@@ -1,7 +1,7 @@
 // Copyright (c) 2025, Rainyl. All rights reserved. Use of this source code is governed by a
 // Apache 2.0 license that can be found in the LICENSE file.
 
-// Generates lib/src/g_web/*.g.dart from the ffigen output in lib/src/g/*.g.dart.
+// Generates lib/src/web/g/*.g.dart from the ffigen output in lib/src/g/*.g.dart.
 //
 //   dart run tool/web/gen_web_bindings.dart   (from packages/dartcv, after tool/ffigen.dart)
 //
@@ -18,23 +18,44 @@
 
 import 'dart:io';
 
-void main(List<String> args) {
-  final pkg = File.fromUri(Platform.script).parent.parent.parent;
-  final inDir = Directory('${pkg.path}/lib/src/g');
-  final outDir = Directory('${pkg.path}/lib/src/g_web')..createSync(recursive: true);
+/// Modules whose generated file is plain Dart: no `ffi.Native` declarations, no struct layouts,
+/// nothing that differs between native and wasm. `constants.g.dart` is nothing but `const int`s, so
+/// the native file is shared by both platforms (`dart tool/ffigen.dart` drops its unused `dart:ffi`
+/// import) and no web mirror is generated for it.
+const _platformIndependent = {'constants.g.dart'};
+
+/// Regenerates `lib/src/web/g/*.g.dart` (and `register.g.dart`) from the ffigen output in
+/// `lib/src/g`, for the package rooted at [packageDir].
+///
+/// Call this after the native bindings are written - `tool/ffigen.dart` does, so `dart
+/// tool/ffigen.dart` refreshes both mirrors in one go. Standalone (`dart
+/// tool/web/gen_web_bindings.dart`) it only needs the `lib/src/g` files on disk, which is what CI
+/// uses for its freshness check.
+///
+/// With [check] nothing is written: the files are generated into a temp directory and compared
+/// with the checked-in ones, and a [StateError] lists everything that is missing, stale or
+/// different (so CI can fail without touching the working tree).
+void generateWebBindings({required Directory packageDir, bool format = true, bool check = false}) {
+  final inDir = Directory('${packageDir.path}/lib/src/g');
+  // Not created in check mode: nothing is written there.
+  final outDir = check
+      ? Directory('${packageDir.path}/lib/src/web/g')
+      : (Directory('${packageDir.path}/lib/src/web/g')..createSync(recursive: true));
+
   final files = inDir.listSync().whereType<File>().where((f) => f.path.endsWith('.g.dart')).toList()
     ..sort((a, b) => a.path.compareTo(b.path));
   final units = <String, Unit>{};
   for (final f in files) {
     final name = f.uri.pathSegments.last;
-    if (name.contains('record_use_mapping')) continue;
+    if (name.contains('record_use_mapping') || _platformIndependent.contains(name)) continue;
     units[name] = Unit.parse(name, f.readAsStringSync());
   }
   final world = World(units);
+
+  final expected = <String, String>{};
   var count = 0;
   for (final u in units.values) {
-    final out = u.emit(world);
-    File('${outDir.path}/${u.name}').writeAsStringSync(out);
+    expected[u.name] = u.emit(world);
     count += u.functions.length;
   }
   // One entry point that registers every file's layouts and callback signatures.
@@ -49,19 +70,85 @@ void main(List<String> args) {
     reg.writeln('  ${u.alias}.\$registerTypes();');
   }
   reg.writeln('}');
-  File('${outDir.path}/register.g.dart').writeAsStringSync(reg.toString());
-  // Pin the language version: without a resolved package config (e.g. in CI before `pub get`)
-  // dart format would fall back to the old short style.
+  expected['register.g.dart'] = reg.toString();
+
+  if (check) {
+    _checkGeneratedFiles(outDir, expected, format: format);
+    print('lib/src/web/g is up to date (${units.length} files, $count functions)');
+    return;
+  }
+
+  for (final e in expected.entries) {
+    File('${outDir.path}/${e.key}').writeAsStringSync(e.value);
+  }
+  // A module dropped from tool/ffigen.dart's list leaves its mirror behind otherwise.
+  for (final f in outDir.listSync().whereType<File>()) {
+    final name = f.uri.pathSegments.last;
+    if (name.endsWith('.g.dart') && !expected.containsKey(name)) {
+      f.deleteSync();
+      print('removed stale ${f.path}');
+    }
+  }
+  if (format) _format(outDir);
+  print('wrote ${units.length} files, $count functions to ${outDir.path}');
+}
+
+void _format(Directory dir) {
+  // Every setting is passed explicitly instead of relying on the package's analysis_options.yaml,
+  // so that the `--check` comparison in a temp directory formats exactly like the real run:
+  //   * line length and trailing commas mirror `packages/dartcv/analysis_options.yaml`,
+  //   * the language version is pinned, or `dart format` would fall back to the old short style
+  //     when no package config is resolved (e.g. in CI before `pub get`).
   final fmt = Process.runSync(Platform.resolvedExecutable, [
     'format',
     '--line-length',
     '110',
+    '--trailing-commas',
+    'preserve',
     '--language-version',
     '3.10',
-    outDir.path,
+    dir.path,
   ]);
   if (fmt.exitCode != 0) throw StateError('dart format failed: ${fmt.stderr}');
-  print('wrote ${units.length} files, $count functions to ${outDir.path}');
+}
+
+/// Formats [expected] into a temp directory and compares it with [outDir] without writing there.
+void _checkGeneratedFiles(Directory outDir, Map<String, String> expected, {required bool format}) {
+  final tmp = Directory.systemTemp.createTempSync('dartcv_web_g_check_');
+  final problems = <String>[];
+  try {
+    for (final e in expected.entries) {
+      File('${tmp.path}/${e.key}').writeAsStringSync(e.value);
+    }
+    if (format) _format(tmp);
+    for (final e in expected.entries) {
+      final onDisk = File('${outDir.path}/${e.key}');
+      if (!onDisk.existsSync()) {
+        problems.add('missing   ${e.key}');
+      } else if (onDisk.readAsStringSync() != File('${tmp.path}/${e.key}').readAsStringSync()) {
+        problems.add('differs   ${e.key}');
+      }
+    }
+    if (outDir.existsSync()) {
+      for (final f in outDir.listSync().whereType<File>()) {
+        final name = f.uri.pathSegments.last;
+        if (name.endsWith('.g.dart') && !expected.containsKey(name)) problems.add('stale     $name');
+      }
+    }
+  } finally {
+    tmp.deleteSync(recursive: true);
+  }
+  if (problems.isNotEmpty) {
+    throw StateError(
+      'lib/src/web/g is out of date, run `dart tool/ffigen.dart` (or `dart tool/web/gen_web_bindings.dart`):\n'
+      '  ${problems.join('\n  ')}',
+    );
+  }
+}
+
+void main(List<String> args) {
+  final pkg = File.fromUri(Platform.script).parent.parent.parent;
+  generateWebBindings(packageDir: pkg, check: args.contains('--check'));
 }
 
 const _header = '''
@@ -72,6 +159,10 @@ const _header = '''
 // ---------------------------------------------------------------- parsing
 
 /// Splits a Dart file into top-level declarations (good enough for formatted ffigen output).
+///
+/// A doc comment between two declarations stays attached to the declaration that follows it, so the
+/// web bindings keep the documentation of the native ones. The file header itself (everything before
+/// the first declaration) is dropped: the web files have their own.
 List<String> splitTopLevel(String src) {
   final out = <String>[];
   var depth = 0, start = -1;
@@ -79,6 +170,13 @@ List<String> splitTopLevel(String src) {
   while (i < src.length) {
     final c = src[i];
     if (c == '/' && i + 1 < src.length && src[i + 1] == '/') {
+      // In the file header (nothing emitted yet): nothing to attach the comment to.
+      if (depth == 0 && start < 0 && out.isEmpty) {
+        i = src.indexOf('\n', i);
+        if (i < 0) break;
+        continue;
+      }
+      if (depth == 0 && start < 0) start = i;
       i = src.indexOf('\n', i);
       if (i < 0) break;
       continue;
@@ -134,6 +232,22 @@ List<String> splitArgs(String s) {
 
 String norm(String s) => s.replaceAll(RegExp(r'\s+'), ' ').replaceAll('< ', '<').replaceAll(' >', '>').trim();
 
+/// Splits a leading doc-comment block off a declaration chunk: `(comment, declaration)`.
+(String, String) splitDoc(String chunk) {
+  final lines = chunk.split('\n');
+  var k = 0;
+  while (k < lines.length && lines[k].trimLeft().startsWith('//')) {
+    k++;
+  }
+  if (k == 0) return ('', chunk);
+  // Blank lines between the comment and the declaration belong to neither.
+  var end = k;
+  while (end > 0 && lines[end - 1].trim().isEmpty) {
+    end--;
+  }
+  return (lines.sublist(0, end).join('\n'), lines.sublist(end).join('\n').trimLeft());
+}
+
 class Field {
   Field(this.name, this.type, this.annotation, this.arrayLen);
   final String name;
@@ -143,7 +257,8 @@ class Field {
 }
 
 class StructDecl {
-  StructDecl(this.name, this.isUnion, this.fields, this.rest);
+  StructDecl(this.name, this.isUnion, this.fields, this.rest, this.doc);
+  final String doc; // leading doc comment, already re-indented for the emitted file
   final String name;
   final bool isUnion;
   final List<Field> fields;
@@ -151,7 +266,8 @@ class StructDecl {
 }
 
 class FunctionDecl {
-  FunctionDecl(this.name, this.nativeRet, this.nativeParams, this.dartRet, this.dartParams);
+  FunctionDecl(this.name, this.nativeRet, this.nativeParams, this.dartRet, this.dartParams, this.doc);
+  final String doc; // leading doc comment
   final String name;
   final String nativeRet;
   final List<String> nativeParams;
@@ -172,7 +288,8 @@ class Unit {
 
   static Unit parse(String name, String src) {
     final u = Unit(name);
-    for (final d in splitTopLevel(src)) {
+    for (final chunk in splitTopLevel(src)) {
+      final (doc, d) = splitDoc(chunk);
       if (d.startsWith('import ')) {
         final m = RegExp(r"import 'package:dartcv4/src/g/([\w.]+)' as ([\w$]+);").firstMatch(d);
         if (m != null) u.imports[m.group(2)!] = m.group(1)!;
@@ -181,12 +298,12 @@ class Unit {
       if (d.startsWith('typedef ')) {
         final m = RegExp(r'^typedef (\w+) =\s*([\s\S]*);$').firstMatch(d)!;
         u.typedefs[m.group(1)!] = norm(m.group(2)!);
-        u.typedefSrc.add(d);
+        u.typedefSrc.add(doc.isEmpty ? d : '$doc\n$d');
         continue;
       }
       final cm = RegExp(r'^(?:final )?class (\w+) extends ffi\.(Struct|Union) \{([\s\S]*)\}$').firstMatch(d);
       if (cm != null) {
-        u.structs[cm.group(1)!] = _parseStruct(cm.group(1)!, cm.group(2) == 'Union', cm.group(3)!);
+        u.structs[cm.group(1)!] = _parseStruct(cm.group(1)!, cm.group(2) == 'Union', cm.group(3)!, doc);
         continue;
       }
       if (d.contains('library;')) continue;
@@ -195,22 +312,22 @@ class Unit {
       if (d.contains('@ffi.Native<') && global != null) {
         // C global variable: not exported by the wasm build.
         final (t, n) = (global.group(1)!, global.group(2)!);
-        u.verbatim.add(
-          "$t get $n => throw UnsupportedError('$n is not available on the web');\n"
-          "set $n($t v) => throw UnsupportedError('$n is not available on the web');",
-        );
+        final stub =
+            "$t get $n => throw UnsupportedError('$n is not available on the web');\n"
+            "set $n($t v) => throw UnsupportedError('$n is not available on the web');";
+        u.verbatim.add(doc.isEmpty ? stub : '$doc\n$stub');
         continue;
       }
       if (d.contains('@ffi.Native<')) {
-        u.functions.add(_parseFunction(d));
+        u.functions.add(_parseFunction(d, doc));
         continue;
       }
-      u.verbatim.add(d);
+      u.verbatim.add(doc.isEmpty ? d : '$doc\n$d');
     }
     return u;
   }
 
-  static StructDecl _parseStruct(String name, bool isUnion, String body) {
+  static StructDecl _parseStruct(String name, bool isUnion, String body, String doc) {
     final fields = <Field>[];
     final re = RegExp(r'((?:@[^\n]+\n\s*)*)external ([^;]+?) (\w+);');
     for (final m in re.allMatches(body)) {
@@ -227,10 +344,10 @@ class Unit {
       fields.add(Field(m.group(3)!, norm(m.group(2)!), annotation, arrayLen));
     }
     final rest = body.replaceAll(re, '').trim();
-    return StructDecl(name, isUnion, fields, rest);
+    return StructDecl(name, isUnion, fields, rest, doc);
   }
 
-  static FunctionDecl _parseFunction(String d) {
+  static FunctionDecl _parseFunction(String d, String doc) {
     final start = d.indexOf('@ffi.Native<') + '@ffi.Native<'.length;
     var depth = 1, i = start;
     for (; i < d.length; i++) {
@@ -247,7 +364,7 @@ class Unit {
       for (final p in splitArgs(ext.group(3)!))
         (norm(p.substring(0, p.lastIndexOf(RegExp(r'\s')))), p.substring(p.lastIndexOf(RegExp(r'\s')) + 1)),
     ];
-    return FunctionDecl(ext.group(2)!, nRet, nParams, norm(ext.group(1)!), params);
+    return FunctionDecl(ext.group(2)!, nRet, nParams, norm(ext.group(1)!), params, doc);
   }
 
   String emit(World w) {
@@ -258,7 +375,7 @@ class Unit {
       ..writeln("import 'package:dartcv4/src/web/ffi.dart' as ffi;")
       ..writeln(r"import 'package:dartcv4/src/web/runtime.dart' as $rt;");
     for (final e in imports.entries) {
-      b.writeln("import 'package:dartcv4/src/g_web/${e.value}' as ${e.key};");
+      b.writeln("import 'package:dartcv4/src/web/g/${e.value}' as ${e.key};");
     }
     b.writeln();
     for (final v in verbatim) {
@@ -527,7 +644,9 @@ class World {
   String emitStruct(Unit u, StructDecl s) {
     final l = layout(u, s.name);
     final base = s.isUnion ? 'ffi.Union' : 'ffi.Struct';
-    final b = StringBuffer()
+    final b = StringBuffer();
+    if (s.doc.isNotEmpty) b.writeln(s.doc);
+    b
       ..writeln('final class ${s.name} extends $base {')
       ..writeln('  ${s.name}.\$view(super.\$bytes, super.\$offset) : super.\$view();');
     for (var k = 0; k < s.fields.length; k++) {
@@ -608,6 +727,7 @@ class World {
   String emitFunction(Unit u, FunctionDecl f) {
     final b = StringBuffer();
     final params = f.dartParams.map((p) => '${p.$1} ${p.$2}').join(', ');
+    if (f.doc.isNotEmpty) b.writeln(f.doc);
     b.writeln('${f.dartRet} ${f.name}($params) {');
     final args = <String>[];
     final temps = <String>[];

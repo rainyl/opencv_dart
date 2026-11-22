@@ -6,7 +6,7 @@ import 'dart:typed_data';
 
 import 'package:dartcv4/src/web/ffi.dart' as ffi;
 import 'package:dartcv4/src/web/runtime.dart' as $rt;
-import 'package:dartcv4/src/g_web/types.g.dart' as imp$1;
+import 'package:dartcv4/src/web/g/types.g.dart' as imp$1;
 
 typedef ANN_MLPPtr = ffi.Pointer<ANN_MLP>;
 
@@ -104,6 +104,7 @@ final class LogisticRegression extends ffi.Struct {
   }) => $allocator<LogisticRegression>()..ref.ptr = ptr;
 }
 
+/// Value copy of cv::ml::DTrees::Node.
 final class MlDTreesNode extends ffi.Struct {
   MlDTreesNode.$view(super.$bytes, super.$offset) : super.$view();
   double get value => $f64(0);
@@ -139,6 +140,7 @@ final class MlDTreesNode extends ffi.Struct {
     ..ref.split = split;
 }
 
+/// Value copy of cv::ml::DTrees::Split.
 final class MlDTreesSplit extends ffi.Struct {
   MlDTreesSplit.$view(super.$bytes, super.$offset) : super.$view();
   int get varIdx => $i32(0);
@@ -170,6 +172,7 @@ final class MlDTreesSplit extends ffi.Struct {
     ..ref.subsetOfs = subsetOfs;
 }
 
+/// Value copy of cv::ml::ParamGrid.
 final class MlParamGrid extends ffi.Struct {
   MlParamGrid.$view(super.$bytes, super.$offset) : super.$view();
   double get minVal => $f64(0);
@@ -1394,6 +1397,7 @@ ffi.Pointer<CvStatus> cv_ml_EM_trainE(
   );
 }
 
+/// Empty optional inputs (covs0, weights0) are passed to OpenCV as cv::noArray().
 ffi.Pointer<CvStatus> cv_ml_EM_trainEM(
   EM self$1,
   Mat samples,
@@ -3050,6 +3054,7 @@ void cv_ml_TrainData_close(TrainDataPtr self$1) {
   $rt.call('cv_ml_TrainData_close', [$rt.i(self$1.address)]);
 }
 
+/// Empty Mats are passed to OpenCV as cv::noArray().
 ffi.Pointer<CvStatus> cv_ml_TrainData_create(
   Mat samples,
   int layout,

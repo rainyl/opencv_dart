@@ -114,9 +114,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - name: Check generated web bindings are up to date
         working-directory: packages/dartcv
-        run: |
-          dart tool/web/gen_web_bindings.dart
-          git diff --exit-code lib/src/g_web
+        run: dart tool/web/gen_web_bindings.dart --check
       - name: Build dartcv.wasm
         working-directory: packages/dartcv
         run: tool/web/build_wasm.sh

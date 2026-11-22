@@ -6,7 +6,7 @@ import 'dart:typed_data';
 
 import 'package:dartcv4/src/web/ffi.dart' as ffi;
 import 'package:dartcv4/src/web/runtime.dart' as $rt;
-import 'package:dartcv4/src/g_web/types.g.dart' as imp$1;
+import 'package:dartcv4/src/web/g/types.g.dart' as imp$1;
 
 LogCallback get logCallback => throw UnsupportedError('logCallback is not available on the web');
 set logCallback(LogCallback v) => throw UnsupportedError('logCallback is not available on the web');
@@ -373,10 +373,29 @@ ffi.Pointer<CvStatus> cv_Mat_copyTo_1(Mat self$1, Mat dst, Mat mask, imp$1.CvCal
   );
 }
 
+/// @brief Create empty Mat
+///
+/// ALL return values with a type of `Pointer of Struct`,
+/// e.g.,
+/// Mat, the internal pointer (Mat.ptr) MUST be NULL
+/// otherwise the memory of mat.ptr pointed to will NOT be freed correctly.
+/// Mat* mat = (Mat*)malloc(sizeof(Mat));
+/// CvStatus *status = cv_Mat_create(mat);
+/// Mat_close(mat);
+///
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create(ffi.Pointer<Mat> rval) {
   return ffi.Pointer<CvStatus>.fromAddress($rt.ru($rt.call('cv_Mat_create', [$rt.i(rval.address)])));
 }
 
+/// @brief Create Mat with specified size and type
+///
+/// @param rows number of rows
+/// @param cols number of columns
+/// @param type type of the created matrix
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_1(
   int rows,
   int cols,
@@ -405,6 +424,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_10(VecPoint3i vec, ffi.Pointer<Mat> rval, im
   );
 }
 
+/// @brief Create Mat with Mat::ptr
 ffi.Pointer<CvStatus> cv_Mat_create_11(
   Mat self$1,
   int rows,
@@ -478,6 +498,12 @@ ffi.Pointer<CvStatus> cv_Mat_create_13(
   }
 }
 
+/// @brief Create Mat with specified sizes and type
+///
+/// @param sizes array of integers, each describing a dimension
+/// @param type type of the created matrix
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_2(
   VecI32 sizes,
   int type,
@@ -496,6 +522,13 @@ ffi.Pointer<CvStatus> cv_Mat_create_2(
   );
 }
 
+/// @brief Create Mat with specified sizes and type
+///
+/// @param sizes array of integers, each describing a dimension
+/// @param type type of the created matrix
+/// @param ar array of values to initialize the matrix with
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_3(
   VecI32 sizes,
   int type,
@@ -521,6 +554,13 @@ ffi.Pointer<CvStatus> cv_Mat_create_3(
   }
 }
 
+/// @brief Create Mat with specified sizes, type and data buffer
+///
+/// @param sizes array of integers, each describing a dimension
+/// @param type type of the created matrix
+/// @param buf buffer to initialize the matrix with, will be copied
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_4(
   VecI32 sizes,
   int type,
@@ -541,6 +581,14 @@ ffi.Pointer<CvStatus> cv_Mat_create_4(
   );
 }
 
+/// @brief Create Mat with Scalar values
+///
+/// @param scalar array of values to initialize the matrix with
+/// @param rows number of rows
+/// @param cols number of columns
+/// @param type type of the created matrix
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_5(
   Scalar scalar,
   int rows,
@@ -568,6 +616,13 @@ ffi.Pointer<CvStatus> cv_Mat_create_5(
   }
 }
 
+/// @brief Create Mat with rows, cols, type and data buffer
+///
+/// @param sizes array of integers, each describing a dimension
+/// @param type type of the created matrix
+/// @param buf buffer to initialize the matrix with, will be copied
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_6(
   int rows,
   int cols,
@@ -612,6 +667,11 @@ ffi.Pointer<CvStatus> cv_Mat_create_6_no_copy(
   );
 }
 
+/// @brief Create Mat with specified vector of points
+///
+/// @param vec array of points
+/// @param rval Mat*
+/// @return CvStatus
 ffi.Pointer<CvStatus> cv_Mat_create_7(VecPoint vec, ffi.Pointer<Mat> rval, imp$1.CvCallback_0 callback) {
   return ffi.Pointer<CvStatus>.fromAddress(
     $rt.ru(

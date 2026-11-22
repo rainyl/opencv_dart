@@ -10,8 +10,8 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../ffi.dart' as ffi;
-import '../g/highgui.g.dart' if (dart.library.js_interop) '../g_web/highgui.g.dart' as chighgui;
-import '../g/highgui.g.dart' if (dart.library.js_interop) '../g_web/highgui.g.dart' as cvg;
+import '../g/highgui.g.dart' if (dart.library.js_interop) '../web/g/highgui.g.dart' as chighgui;
+import '../g/highgui.g.dart' if (dart.library.js_interop) '../web/g/highgui.g.dart' as cvg;
 import '../package_ffi.dart';
 
 String currentUIFramework() {

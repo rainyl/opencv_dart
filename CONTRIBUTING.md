@@ -28,7 +28,7 @@ If you want to add a new OpenCV API/module:
    - add it to `allowedModules` in `lib/src/hook_helpers/user_defines.dart` and the module maps in `hook/link.dart`,
    - add it to `hooks.user_defines.dartcv4.include_modules` in `packages/dartcv/pubspec.yaml` so it builds during development (consumers enable it the same way).
    - Modules are off by default; even when not built, the Dart code exists and throws "symbol not found" at call time.
-5. Generate the FFI bindings: add your `.h` file to the per-module ffigen config in `packages/dartcv/ffigen/` and run `dart tool/ffigen.dart` from `packages/dartcv`. This writes the `lib/src/g/<module>.g.dart` bindings plus the `<module>.record_use_mapping.g.dart` tables used for tree-shaking. **Do not** use `make ffigen` / `dart run ffigen --config ffigen/*.yaml` for a full regen — those skip the record-use mapping and silently break tree-shaking.
+5. Generate the FFI bindings: add your `.h` file to the per-module ffigen config in `packages/dartcv/ffigen/` and run `dart tool/ffigen.dart` from `packages/dartcv`. This writes the `lib/src/g/<module>.g.dart` bindings plus the `<module>.record_use_mapping.g.dart` tables used for tree-shaking, and then the web mirror in `lib/src/web/g/` (pass `--no-web` to skip that). **Do not** use `make ffigen` / `dart run ffigen --config ffigen/*.yaml` for a full regen — those skip the record-use mapping and silently break tree-shaking.
 6. Add the hand-written Dart code in `packages/dartcv/lib/src/<module>/` and export it from `lib/dartcv.dart`.
 7. Write tests in `packages/dartcv/test/<module>/`. Refer to [OpencvSharp](https://github.com/shimat/opencvsharp) and [gocv](https://github.com/hybridgroup/gocv) for expected behavior.
 8. Build and test, see below.

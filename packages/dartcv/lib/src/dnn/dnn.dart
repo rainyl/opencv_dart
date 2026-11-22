@@ -17,8 +17,8 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../g_web/dnn.g.dart' as cdnn;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../g_web/dnn.g.dart' as cvg;
+import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cdnn;
+import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cvg;
 import '../package_ffi.dart';
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.

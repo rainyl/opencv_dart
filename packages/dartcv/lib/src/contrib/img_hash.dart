@@ -10,8 +10,8 @@ import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/contrib.g.dart' if (dart.library.js_interop) '../g_web/contrib.g.dart' as ccontrib;
-import '../g/contrib.g.dart' if (dart.library.js_interop) '../g_web/contrib.g.dart' as cvg;
+import '../g/contrib.g.dart' if (dart.library.js_interop) '../web/g/contrib.g.dart' as ccontrib;
+import '../g/contrib.g.dart' if (dart.library.js_interop) '../web/g/contrib.g.dart' as cvg;
 import '../package_ffi.dart';
 
 abstract class ImgHashBase {

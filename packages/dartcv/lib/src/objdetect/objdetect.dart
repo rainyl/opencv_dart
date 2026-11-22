@@ -15,8 +15,8 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/objdetect.g.dart' if (dart.library.js_interop) '../g_web/objdetect.g.dart' as cobjdetect;
-import '../g/objdetect.g.dart' if (dart.library.js_interop) '../g_web/objdetect.g.dart' as cvg;
+import '../g/objdetect.g.dart' if (dart.library.js_interop) '../web/g/objdetect.g.dart' as cobjdetect;
+import '../g/objdetect.g.dart' if (dart.library.js_interop) '../web/g/objdetect.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {

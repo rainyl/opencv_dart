@@ -5,8 +5,8 @@
 library cv;
 
 import '../ffi.dart' as ffi;
-import '../g/core.g.dart' if (dart.library.js_interop) '../g_web/core.g.dart' as ccore;
-import '../g/types.g.dart' if (dart.library.js_interop) '../g_web/types.g.dart' as cvg;
+import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as ccore;
+import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'base.dart';
 import 'vec.dart';

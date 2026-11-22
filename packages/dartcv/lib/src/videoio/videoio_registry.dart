@@ -6,8 +6,8 @@ library cv.videoio_registry;
 
 import '../core/base.dart';
 import '../ffi.dart' as ffi;
-import '../g/constants.g.dart' if (dart.library.js_interop) '../g_web/constants.g.dart';
-import '../g/videoio.g.dart' if (dart.library.js_interop) '../g_web/videoio.g.dart' as cvg;
+import '../g/constants.g.dart';
+import '../g/videoio.g.dart' if (dart.library.js_interop) '../web/g/videoio.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'videoio.dart';
 
