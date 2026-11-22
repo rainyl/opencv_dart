@@ -12,6 +12,7 @@ export 'package:dartcv4/dnn.dart';
 export 'package:dartcv4/features2d.dart';
 export 'package:dartcv4/imgcodecs.dart';
 export 'package:dartcv4/imgproc.dart';
+export 'package:dartcv4/ml.dart';
 export 'package:dartcv4/objdetect.dart';
 export 'package:dartcv4/photo.dart';
 export 'package:dartcv4/src/g/constants.g.dart';
