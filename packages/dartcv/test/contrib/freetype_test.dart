@@ -1,17 +1,16 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
+import '../io_helpers.dart';
+
 void main() async {
-  final fontFile = File("test/font/hei.ttf");
+  const fontPath = "test/font/hei.ttf";
   test('cv.FreeType2 creation', () async {
     final ft = cv.FreeType2.create();
     ft.loadFontData("test/font/hei.ttf", 0);
     ft.setSplitNumber(1);
 
-    final buffer = await fontFile.readAsBytes();
-    ft.loadFontBuffer(buffer, 0);
+    ft.loadFontBuffer(readAsBytes(fontPath), 0);
   });
 
   test('cv.FreeType2 creation async', () async {
@@ -19,8 +18,7 @@ void main() async {
     await ft.loadFontDataAsync("test/font/hei.ttf", 0);
     ft.setSplitNumber(1);
 
-    final buffer = await fontFile.readAsBytes();
-    await ft.loadFontBufferAsync(buffer, 0);
+    await ft.loadFontBufferAsync(readAsBytes(fontPath), 0);
   });
 
   test('cv.FreeType2 putText', () {

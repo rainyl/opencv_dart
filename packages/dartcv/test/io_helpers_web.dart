@@ -1,8 +1,10 @@
-// The web side of the ml tests' file helpers: Emscripten's in-memory file system, which the C
-// side's `FileStorage` writes to as well, so `save`/`load` run unchanged in the browser.
+// The web side of the test file helpers: Emscripten's in-memory file system, which the C side's
+// `FileStorage`, `cv::imread`/`cv::imwrite` and FreeType's font loading use as well, so those tests
+// run unchanged in the browser.
 import 'dart:convert';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
+import 'dart:typed_data';
 
 import 'package:dartcv4/src/web/runtime.dart' as rt;
 import 'package:test/test.dart';
@@ -25,6 +27,13 @@ String readAsString(String path) =>
 
 void writeAsString(String path, String contents) =>
     _fs.callMethod('writeFile'.toJS, path.toJS, utf8.encode(contents).toJS);
+
+/// The bytes of [path], for the `*FromBuffer` / `loadFontBuffer` variants.
+Uint8List readAsBytes(String path) =>
+    Uint8List.fromList(_fs.callMethod<JSUint8Array>('readFile'.toJS, path.toJS).toDart);
+
+void writeBytes(String path, List<int> bytes) =>
+    _fs.callMethod('writeFile'.toJS, path.toJS, Uint8List.fromList(bytes).toJS);
 
 void _removeTree(String path, [JSObject? fs]) {
   fs ??= _fs;

@@ -1,8 +1,7 @@
 import 'package:dartcv4/dartcv.dart' as cv;
 
-// `tempDir`, `readAsString` and `writeAsString`: dart:io natively, Emscripten's in-memory file
-// system on the web (which the C side's FileStorage uses too), so `save`/`load` work there as well.
-export 'ml_test_io.dart' if (dart.library.js_interop) 'ml_test_io_web.dart';
+// `tempDir`, `readAsString`, `writeAsString`, `readAsBytes`, `writeBytes`.
+export '../io_helpers.dart';
 
 /// Two well separated 2D clusters, class 0 around (1.5, 1.5) and class 1 around (8.5, 8.5).
 const clusterPoints = <double>[

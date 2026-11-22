@@ -131,11 +131,21 @@ Future<void> main(List<String> args) async {
 
 /// Removes the `import 'dart:ffi' as ffi;` ffigen writes into a file that has no FFI
 /// declarations, so that such a file also compiles on the web.
+///
+/// Fails loudly when the import survives in another shape: this file has no web mirror, so a
+/// leftover `dart:ffi` import would break the web build with an error far from its cause.
 void _dropUnusedFfiImport(File file) {
   final src = file.readAsStringSync();
   final stripped = src.replaceFirst(
-    RegExp(r"^import 'dart:ffi' as ffi;\n\n", multiLine: true),
+    RegExp(r"^import 'dart:ffi' as ffi;\n\n+", multiLine: true),
     '',
   );
+  final leftover = stripped.contains("import 'dart:ffi'");
+  if (leftover) {
+    throw StateError(
+      '${file.path} still imports dart:ffi, but it is shared with the web build; '
+      'update _dropUnusedFfiImport() in tool/ffigen.dart',
+    );
+  }
   if (stripped != src) file.writeAsStringSync(stripped);
 }

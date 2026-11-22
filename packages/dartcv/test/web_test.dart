@@ -26,6 +26,7 @@ import 'contrib/aruco_test.dart' as contrib_aruco_test;
 import 'contrib/charuco_board_test.dart' as contrib_charuco_board_test;
 import 'contrib/charuco_detector_async_test.dart' as contrib_charuco_detector_async_test;
 import 'contrib/charuco_detector_test.dart' as contrib_charuco_detector_test;
+import 'contrib/freetype_test.dart' as contrib_freetype_test;
 import 'contrib/img_hash_async_test.dart' as contrib_img_hash_async_test;
 import 'contrib/img_hash_test.dart' as contrib_img_hash_test;
 import 'contrib/quality_test.dart' as contrib_quality_test;
@@ -38,12 +39,14 @@ import 'core/mat_test.dart' as core_mat_test;
 import 'core/others_test.dart' as core_others_test;
 import 'core/point_test.dart' as core_point_test;
 import 'core/point_view_test.dart' as core_point_view_test;
+import 'core/record_struct_test.dart' as core_record_struct_test;
 import 'core/rng_test.dart' as core_rng_test;
 import 'core/svd_test.dart' as core_svd_test;
 import 'core/umat_test.dart' as core_umat_test;
 import 'core/vec_test.dart' as core_vec_test;
 import 'features2d/features2d_async_test.dart' as features2d_features2d_async_test;
 import 'features2d/features2d_test.dart' as features2d_features2d_test;
+import 'imgcodecs_test.dart' as imgcodecs_test;
 import 'imgproc/clahe_test.dart' as imgproc_clahe_test;
 import 'imgproc/imgproc_async_test.dart' as imgproc_imgproc_async_test;
 import 'imgproc/imgproc_test.dart' as imgproc_imgproc_test;
@@ -62,6 +65,8 @@ import 'ml/stat_model_test.dart' as ml_stat_model_test;
 import 'ml/svm_test.dart' as ml_svm_test;
 import 'ml/svmsgd_test.dart' as ml_svmsgd_test;
 import 'ml/train_data_test.dart' as ml_train_data_test;
+import 'objdetect/objdetect_async_test.dart' as objdetect_objdetect_async_test;
+import 'objdetect/objdetect_test.dart' as objdetect_objdetect_test;
 import 'photo/photo_async_test.dart' as photo_photo_async_test;
 import 'photo/photo_test.dart' as photo_photo_test;
 import 'stitching/stitching_async_test.dart' as stitching_stitching_async_test;
@@ -73,6 +78,8 @@ import 'videoio/videoio_registry_test.dart' as videoio_videoio_registry_test;
 // test/models is downloaded by CI (release tag dnn_test_files); a missing model only fails its own test.
 const _optionalFixtures = [
   'models/detect.caffemodel',
+  'models/face_detection_yunet_2023mar.onnx',
+  'models/face_recognition_sface_2021dec.onnx',
   'models/detect.prototxt',
   'models/sr.caffemodel',
   'models/sr.prototxt',
@@ -183,6 +190,9 @@ Future<void> main() async {
   group('contrib/charuco_detector_test.dart', () {
     contrib_charuco_detector_test.main();
   });
+  group('contrib/freetype_test.dart', () {
+    contrib_freetype_test.main();
+  });
   group('contrib/img_hash_async_test.dart', () {
     contrib_img_hash_async_test.main();
   });
@@ -219,6 +229,9 @@ Future<void> main() async {
   group('core/point_view_test.dart', () {
     core_point_view_test.main();
   });
+  group('core/record_struct_test.dart', () {
+    core_record_struct_test.main();
+  });
   group('core/rng_test.dart', () {
     core_rng_test.main();
   });
@@ -236,6 +249,9 @@ Future<void> main() async {
   });
   group('features2d/features2d_test.dart', () {
     features2d_features2d_test.main();
+  });
+  group('imgcodecs_test.dart', () {
+    imgcodecs_test.main();
   });
   group('imgproc/clahe_test.dart', () {
     imgproc_clahe_test.main();
@@ -290,6 +306,12 @@ Future<void> main() async {
   });
   group('ml/train_data_test.dart', () {
     ml_train_data_test.main();
+  });
+  group('objdetect/objdetect_async_test.dart', () {
+    objdetect_objdetect_async_test.main();
+  });
+  group('objdetect/objdetect_test.dart', () {
+    objdetect_objdetect_test.main();
   });
   group('photo/photo_async_test.dart', () {
     photo_photo_async_test.main();

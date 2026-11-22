@@ -1,9 +1,10 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:dartcv4/src/core/mat_type.dart';
 import 'package:test/test.dart';
+
+import '../io_helpers.dart';
 
 cv.Mat visualizeFaceDetect(cv.Mat img, cv.Mat faces) {
   expect(faces.rows, greaterThanOrEqualTo(1));
@@ -247,7 +248,7 @@ void main() async {
     {
       // Test loading from buffer
       const modelPath = "test/models/face_detection_yunet_2023mar.onnx";
-      final buf = File(modelPath).readAsBytesSync();
+      final buf = readAsBytes(modelPath);
       final detector = cv.FaceDetectorYN.fromBuffer("onnx", buf, Uint8List(0), (320, 320));
 
       // Test loading image and setting input size

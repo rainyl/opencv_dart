@@ -1,5 +1,6 @@
-// The dart:io side of the ml tests' file helpers; `ml_test_io_web.dart` replaces it on the web.
+// The dart:io side of the test file helpers; `io_helpers_web.dart` replaces it on the web.
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:test/test.dart';
 
@@ -14,3 +15,8 @@ String tempDir() {
 String readAsString(String path) => File(path).readAsStringSync();
 
 void writeAsString(String path, String contents) => File(path).writeAsStringSync(contents);
+
+/// The bytes of [path], for the `*FromBuffer` / `loadFontBuffer` variants.
+Uint8List readAsBytes(String path) => File(path).readAsBytesSync();
+
+void writeBytes(String path, List<int> bytes) => File(path).writeAsBytesSync(bytes);
