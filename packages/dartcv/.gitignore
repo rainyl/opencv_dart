@@ -9,3 +9,9 @@ pubspec.lock
 test/models
 libdartcv*
 !example/
+
+# Test outputs: the suites write Mat/encoded images here (imgwrite, draw*, stitcher, ...), so the
+# files must not be tracked or every `dart test` leaves a dirty working tree. The directory itself
+# is kept, because the writers do not create it.
+test/images_out/*
+!test/images_out/.gitkeep

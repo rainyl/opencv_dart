@@ -126,6 +126,33 @@ jobs:
             packages/dartcv/build/web/dartcv.wasm
           if-no-files-found: error
 
+  build-web-windows:
+    name: build-web-windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: "7.0.0"
+      - uses: dart-lang/setup-dart@v1
+      # Smoke test for tool/web/build_wasm.ps1: a two-module build is a few minutes and covers the
+      # whole script (SDK discovery, emcmake, ninja, response-file link, export list). The full
+      # module set is built by the Linux `build-web` job.
+      - name: Build dartcv.wasm with the PowerShell script
+        working-directory: packages/dartcv
+        shell: pwsh
+        run: |
+          dart pub get
+          pwsh -File tool/web/build_wasm.ps1 -Modules imgproc,imgcodecs
+          if (-not (Test-Path build/web/dartcv.mjs)) { throw 'dartcv.mjs was not written' }
+          if (-not (Test-Path build/web/dartcv.wasm)) { throw 'dartcv.wasm was not written' }
+          $size = (Get-Item build/web/dartcv.wasm).Length
+          Write-Host "dartcv.wasm: $size bytes"
+          if ($size -lt 1MB) { throw "dartcv.wasm is suspiciously small ($size bytes)" }
+          $exports = (Get-Content build/web/exports.txt).Count
+          Write-Host "exports: $exports"
+          if ($exports -lt 500) { throw "only $exports exports" }
+
   test-web:
     name: test-web
     needs: [build-web]
