@@ -9,6 +9,7 @@
 - new: browser test suite (`test/web_test.dart`): runs the package's own tests in Chrome against the wasm build, with both dart2js and dart2wasm. It covers 58 of the 67 test files - everything that compiles for the web - and copies the fixtures into Emscripten's in-memory file system, so tests keep using plain paths.
 - new: the by-value struct handling of 2.3.2 also applies on the web, where `Struct.create`/`Union.create` build the struct on Dart-managed memory.
 - fix: `tool/ffigen.dart` uses the ffigen 23 API (`Input`, `Output(dart: DartOutput(...))`, a `Visitor` for `@RecordUse`). It did not compile against ffigen 23, and `make ffigen` / `dart run ffigen --config ...` still cannot replace it: they skip the record-use mapping and silently break tree-shaking.
+- new: `package:opencv_dart` re-exports the `ml` module, and its example app runs on the web (`initDartcv()` before `runApp`, `imdecode` for the image `image_picker` hands back as a `blob:` URL).
 
 ## 2.3.2
 

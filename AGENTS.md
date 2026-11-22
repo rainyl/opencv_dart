@@ -4,6 +4,7 @@
 
 - `packages/dartcv` is the real package (published as `dartcv4`, `pubspec.yaml` `name: dartcv4`). Nearly all work happens here; run `dart` commands from it, not the repo root (there is no root `pubspec.yaml`).
 - `packages/opencv_dart` is a Flutter wrapper that only re-exports `package:dartcv4`. It depends on the *published* `dartcv4` by default; to test local dartcv changes there, switch its `pubspec.yaml` to the commented-out `path: ../dartcv`.
+- `packages/opencv_dart/CHANGELOG.md` **always mirrors** `packages/dartcv/CHANGELOG.md`: every release gets the same version heading and the same entries in both files (only the `# ` title differs), because the wrapper is a re-export and a `dartcv4` change is an `opencv_dart` change. Write the notes once, copy them over; never document a change in one file only. History before `2.2.1` was versioned independently per package and is left as it is (the same number can mean different things there, e.g. `1.1.0`), so only compare/align from the current release on. `publish.yml`'s `check-release` job fails a release whose changelog has no section for the version being published.
 - `packages/dartcv/src/dartcv/<module>/` — hand-written C/C++ wrappers around OpenCV (`.cpp` + `.h` per module).
 - `packages/dartcv/lib/src/<module>/` — hand-written Dart bindings (sync + `*_async.dart`).
 - `packages/dartcv/lib/src/g/*.g.dart` — **generated** by ffigen (`types.g.dart`, `constants.g.dart`, `<module>.g.dart` + `<module>.record_use_mapping.g.dart`). Never hand-edit; analyzer excludes them.
