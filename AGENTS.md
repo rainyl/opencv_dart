@@ -22,7 +22,12 @@ Modules are gated at build time: core is always on, the default is core+imgcodec
 - `dart pub get && dart test`
   - Since `dartcv 2.2.0`, OpenCV libraries are built from source by default (`DARTCV_BUILD_OPENCV_FROM_SOURCE=ON`), native-assets hooks (`hook/build.dart`, `hook/link.dart`) auto-build the `dartcv` shared lib.
   - Prebuilt OpenCV binaries from `rainyl/opencv.full` releases are only recommended for use before `dartcv 2.2.0` (large download); set `DARTCV_CACHE_DIR` to reuse the cache. `DARTCV_DISABLE_DOWNLOAD_OPENCV=1` forces a system `OpenCV_DIR`.
-- **Critical gotcha:** the native-assets build cache is keyed on the *contents of `hook/build.dart` `hook/link.dart` and `pubspec.yaml`*. After changing any C/C++/CMake source, edit `hook/build.dart` (e.g. append a comment) or the hooks will not recompile.
+- The build hook declares its non-Dart inputs (`src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**`, and
+  `dartcv_keep.txt` while it uses one) through `output.dependencies`, so editing C/C++/CMake sources does
+  invalidate the hook cache. Dart sources (including `lib/src/g/*.g.dart`) and the `user_defines` of
+  `pubspec.yaml` are tracked by the SDK itself. Two consequences: a *missing* dependency makes Dart re-run
+  the hook on every invocation (that is why `dartcv_keep.txt` is only declared when it exists), and a
+  dependency outside the package (a byo OpenCV via `opencv_dir`) is not tracked at all.
 - Run one test: `dart test test/core/mat_test.dart`.
 - DNN tests read `test/models/*` (gitignored) — download `models.zip` from the GitHub release tag `dnn_test_files` (CI does this). videoio writer tests write to per-test temp dirs (so `dart test`'s parallel isolates never race on a shared file); only `test/images/small.mp4` is a committed read-only fixture. Other tests use `test/images/`.
 - Coverage (CI): `dart pub global activate coverage && dart pub global run coverage:test_with_coverage --package . --package-name dartcv4`.

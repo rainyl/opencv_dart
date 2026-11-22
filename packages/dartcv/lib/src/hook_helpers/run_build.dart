@@ -62,6 +62,17 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   }
   final keepFile = File.fromUri(keepFileUri).existsSync() ? keepFileUri.toFilePath() : null;
 
+  // The keep-list is an *input* of this build: when it changes the native library has to be rebuilt,
+  // otherwise the hook keeps reusing the exports of the list it first saw (issue #462). Declared only
+  // when the file was actually used -- a missing dependency makes Dart re-run the hook on every single
+  // invocation, and in the JIT / `treeshake: false` case the file is deleted above anyway.
+  if (keepFile != null) output.dependencies.add(keepFileUri);
+
+  // The C/C++ wrappers and the CMake logic are inputs too, and Dart only tracks Dart sources, so
+  // without this an edited `.cpp` leaves the hook a cache hit and the tests run against the previous
+  // binary (AGENTS.md used to require "touch hook/build.dart" after touching native code).
+  output.dependencies.addAll(_nativeSources(packagePath.uri.resolve('src/')));
+
   logger.info("[dartcv4] use_opencl: ${args.useOpenCL}\n");
   logger.info("[dartcv4] treeshake: ${args.treeshake} keep_file: ${keepFile ?? 'none'}\n");
   logger.info("[dartcv4] include modules: ${args.includeModules}\n");
@@ -169,6 +180,20 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
     } else {
       final libFiles = r.map((e) => e.file!.toFilePath()).toList();
       logger.info("adding FFMPEG libraries: $libFiles");
+    }
+  }
+}
+
+/// Files the native build reads that Dart does not track on its own: the top-level CMakeLists, the
+/// CMake modules and the C/C++ wrappers. `src/build/` is an artefact directory of manual builds, not
+/// an input, so the two source directories are walked explicitly instead of the whole `src/`.
+Iterable<Uri> _nativeSources(Uri srcDir) sync* {
+  yield srcDir.resolve('CMakeLists.txt');
+  for (final sub in ['cmake/', 'dartcv/']) {
+    final dir = Directory.fromUri(srcDir.resolve(sub));
+    if (!dir.existsSync()) continue;
+    for (final file in dir.listSync(recursive: true).whereType<File>()) {
+      yield file.uri;
     }
   }
 }

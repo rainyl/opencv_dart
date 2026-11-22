@@ -143,12 +143,23 @@ void main(List<String> args) async {
 
     if (writeKeepList) {
       final keepFile = sharedDir.resolve('dartcv_keep.txt');
-      File.fromUri(keepFile).createSync(recursive: true);
-      File.fromUri(keepFile).writeAsStringSync(symbols.join('\n'));
-      stdout.writeln(
-        '[dartcv4] link: wrote ${symbols.length} native symbols '
-        '(${recorded.calls.length} recorded + ${finalizerSymbols.length} finalizer) to ${sharedDir.toFilePath()}dartcv_keep.txt',
-      );
+      // Sorted, so the content only depends on the symbol set and not on the order the recorder
+      // happened to report it in.
+      final content = (symbols.toList()..sort()).join('\n');
+      // The build hook declares this file as a dependency while it uses it (`output.dependencies`),
+      // so rewriting identical content would bump its mtime and rebuild the whole native library on
+      // every build. Only touch it when the list actually changed.
+      final file = File.fromUri(keepFile);
+      if (file.existsSync() && file.readAsStringSync() == content) {
+        stdout.writeln('[dartcv4] link: keep-list unchanged (${symbols.length} symbols)');
+      } else {
+        file.createSync(recursive: true);
+        file.writeAsStringSync(content);
+        stdout.writeln(
+          '[dartcv4] link: wrote ${symbols.length} native symbols '
+          '(${recorded.calls.length} recorded + ${finalizerSymbols.length} finalizer) to ${sharedDir.toFilePath()}dartcv_keep.txt',
+        );
+      }
     } else if (!userArgs.treeshake) {
       stdout.writeln('[dartcv4] link: treeshake is off, keep-list not written');
     } else {
