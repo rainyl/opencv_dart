@@ -243,41 +243,6 @@ if (DARTCV_TREESHAKE)
   endif ()
 endif ()
 
-# The keep-list only exists for tree-shaking builds (`hook/link.dart` writes it there, and
-# the build hook in run_build.dart deletes it when treeshake is off): restricting the
-# exports of a dev build to a list recorded by an AOT build strips the symbols the next
-# `dart test` needs.
-if (DARTCV_TREESHAKE AND DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
-  # The paths in the link flags are quoted, the build directory may contain spaces.
-  message(STATUS "dartcv: restricting exports to symbols in ${DARTCV_KEEP_FILE}")
-  file(STRINGS ${DARTCV_KEEP_FILE} _keep_symbols)
-  if (MSVC)
-    # Build a .def from the keep-list (x64 export names are unmangled).
-    set(_def_file ${CMAKE_CURRENT_BINARY_DIR}/dartcv_exports.def)
-    file(WRITE ${_def_file} "EXPORTS\n")
-    foreach (_sym IN LISTS _keep_symbols)
-      string(STRIP ${_sym} _sym)
-      if (_sym)
-        file(APPEND ${_def_file} "    ${_sym}\n")
-      endif ()
-    endforeach ()
-    string(APPEND _link_flags " /DEF:\"${_def_file}\"")
-  elseif (APPLE)
-    # Mach-O symbols are prefixed with '_'; the keep-list holds plain C names.
-    set(_exported_list ${CMAKE_CURRENT_BINARY_DIR}/dartcv_exports_list.txt)
-    file(WRITE ${_exported_list} "")
-    foreach (_sym IN LISTS _keep_symbols)
-      string(STRIP ${_sym} _sym)
-      if (_sym)
-        file(APPEND ${_exported_list} "_${_sym}\n")
-      endif ()
-    endforeach ()
-    string(APPEND _link_flags " -Wl,-exported_symbols_list,\"${_exported_list}\"")
-  else ()
-    string(APPEND _link_flags " -Wl,--retain-symbols-file=\"${DARTCV_KEEP_FILE}\"")
-  endif ()
-endif ()
-
 if (_link_flags)
   set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS "${_link_flags}")
 endif ()
@@ -312,21 +277,12 @@ endif ()
 # endif (APPLE)
 
 if (WIN32)
-  # When a keep-list restricts the exports, MSVC must NOT auto-export all
-  # symbols (WINDOWS_EXPORT_ALL_SYMBOLS would override the generated .def);
-  # otherwise export everything (default). Keep this condition in sync with the
-  # DARTCV_TREESHAKE one that builds the .def above.
-  if (DARTCV_TREESHAKE AND DARTCV_KEEP_FILE AND EXISTS ${DARTCV_KEEP_FILE})
-    set_target_properties(${LIBRARY_NAME} PROPERTIES
-      WINDOWS_EXPORT_ALL_SYMBOLS OFF
-      COMPILE_FLAGS "/EHsc"
-    )
-  else ()
-    set_target_properties(${LIBRARY_NAME} PROPERTIES
-      WINDOWS_EXPORT_ALL_SYMBOLS ON
-      COMPILE_FLAGS "/EHsc"
-    )
-  endif ()
+  # The shared library exports everything (the tree-shaken variant is linked by
+  # `hook/link.dart`, which passes its own .def).
+  set_target_properties(${LIBRARY_NAME} PROPERTIES
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+    COMPILE_FLAGS "/EHsc"
+  )
 
   #  if (BUILD_WITH_STATIC_CRT)
   #    target_compile_options(${LIBRARY_NAME} PRIVATE "/MT")
@@ -334,3 +290,15 @@ if (WIN32)
 endif (WIN32)
 
 target_compile_definitions(${LIBRARY_NAME} PUBLIC DART_SHARED_LIB)
+
+# The tree-shaken variant of the library. It is added last, once ${LIBRARY_NAME}
+# has all its compile and link settings: `dntcm_add_treeshake_target` mirrors them.
+if (DARTCV_TREESHAKE_LINK)
+  if (NOT DEFINED DNTCM_CMAKE_DIR)
+    message(FATAL_ERROR
+      "DARTCV_TREESHAKE_LINK needs the CMake modules of package:native_toolchain_cmake. "
+      "Build through hook/build.dart (it passes -DDNTCM_CMAKE_DIR) or set it yourself.")
+  endif ()
+  include(${DNTCM_CMAKE_DIR}/treeshake.cmake)
+  dntcm_add_treeshake_target(NAME ${LIBRARY_NAME} TARGET ${LIBRARY_NAME})
+endif ()

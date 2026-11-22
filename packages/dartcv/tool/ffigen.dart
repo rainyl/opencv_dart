@@ -10,8 +10,8 @@
 // copying every field, and overrides two things the YAML format cannot express:
 //   * a `Visitor` setting `Func.recordUse` on every function - emits
 //     `@RecordUse()` on each `@ffi.Native` declaration (the compiler records
-//     which native symbols the final program uses, feeding the
-//     `dartcv_keep.txt` tree-shaking keep-list),
+//     which native symbols the final program uses, feeding the tree-shaking
+//     keep-list `hook/link.dart` links with),
 //   * `Output.recordUseMapping` - ffigen writes the
 //     `<module>.record_use_mapping.g.dart` name-to-symbol tables directly
 //     (read by `hook/link.dart`).

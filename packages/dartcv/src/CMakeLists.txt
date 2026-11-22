@@ -44,14 +44,15 @@ option(BUILD_WITH_STATIC_CRT "Build with static CRT" ON)
 # ---------------------------------------------------------------------------
 # Tree shaking / dead-code elimination
 # ---------------------------------------------------------------------------
-# DARTCV_TREESHAKE: enable function-level sections + linker garbage collection
-# so that native code not reachable from the exported symbols is stripped.
-# DARTCV_KEEP_FILE: optional path to a symbol keep-list (one C symbol per line).
-# When provided, only those symbols are exported (and everything unreachable
-# from them is garbage-collected). This is normally produced by hook/link.dart
-# from the recorded `@ffi.Native` usages during AOT builds.
+# DARTCV_TREESHAKE: compile one section per function/data item, so a link that
+# only exports the symbols the Dart code uses can garbage-collect the rest.
+# DARTCV_TREESHAKE_LINK: also add the `dartcv_treeshake` target, which is the
+# library `hook/link.dart` builds with the keep-list of the *current* build
+# (`package:native_toolchain_cmake`'s `dntcm_add_treeshake_target`). Only set for
+# AOT tree-shaking builds: it costs a second compile pass and is useless without
+# that keep-list, which only the link hook has.
 option(DARTCV_TREESHAKE "Enable linker dead-code elimination for dartcv" OFF)
-set(DARTCV_KEEP_FILE "" CACHE PATH "Path to a keep-list of exported dartcv symbols")
+option(DARTCV_TREESHAKE_LINK "Add the treeshake target link.dart builds" OFF)
 
 get_filename_component(PROJ_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 

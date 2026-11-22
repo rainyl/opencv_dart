@@ -1,5 +1,9 @@
 # opencv_dart
 
+## Unreleased
+
+- chore: `dartcv4` — tree-shaking fix (#462).
+
 ## 2.3.3
 
 - fix: the native build declares its non-Dart inputs as build-hook dependencies: `src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**` and, while it is used, the tree-shaking keep-list `dartcv_keep.txt`.

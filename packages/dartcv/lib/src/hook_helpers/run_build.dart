@@ -10,6 +10,7 @@ import 'package:hooks/hooks.dart';
 import 'package:logging/logging.dart';
 import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
+import 'library_names.dart';
 import 'patchelf_linux.dart';
 import 'user_defines.dart';
 
@@ -36,45 +37,19 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
 
   final packagePath = Directory(await getPackagePath('dartcv4'));
 
-  // Optional keep-list of exported dartcv symbols, normally produced by
-  // `hook/link.dart` from the recorded `@ffi.Native` usages (AOT builds).
-  // When present, CMake restricts the DLL exports to these symbols and strips
-  // everything unreachable from them. The file lives in the shared
-  // `hooks_runner/shared/<package>/` directory (checksum-independent) so both
-  // this build hook and the link hook can find it across build passes.
-  final keepFileUri = input.outputDirectory.resolve('../../dartcv_keep.txt');
-
   final logger = Logger('')
     ..level = Level.ALL
     ..onRecord.listen((record) => args.debug ? stderr.write(record.message) : print(record.message));
 
-  // The keep-list only makes sense for an AOT tree-shaking build: a JIT build
-  // (`dart run` / `dart test`, `linkingEnabled == false`) records no uses at all, and with
-  // `treeshake` off CMake does not honour the list anyway. Either way a list left behind by
-  // an earlier AOT build is stale and would strip exports this build needs, so drop it --
-  // the link hook recreates it on the next AOT build with `treeshake: true`.
-  if (!input.config.linkingEnabled || !args.treeshake) {
-    final stale = File.fromUri(keepFileUri);
-    if (stale.existsSync()) {
-      stale.deleteSync();
-      logger.info("[dartcv4] not an AOT tree-shaking build, removed ${stale.path}\n");
-    }
-  }
-  final keepFile = File.fromUri(keepFileUri).existsSync() ? keepFileUri.toFilePath() : null;
-
-  // The keep-list is an *input* of this build: when it changes the native library has to be rebuilt,
-  // otherwise the hook keeps reusing the exports of the list it first saw (issue #462). Declared only
-  // when the file was actually used -- a missing dependency makes Dart re-run the hook on every single
-  // invocation, and in the JIT / `treeshake: false` case the file is deleted above anyway.
-  if (keepFile != null) output.dependencies.add(keepFileUri);
+  final delegateToLinkHook = input.config.linkingEnabled && args.treeshake;
 
   // The C/C++ wrappers and the CMake logic are inputs too, and Dart only tracks Dart sources, so
   // without this an edited `.cpp` leaves the hook a cache hit and the tests run against the previous
-  // binary (AGENTS.md used to require "touch hook/build.dart" after touching native code).
+  // binary.
   output.dependencies.addAll(_nativeSources(packagePath.uri.resolve('src/')));
 
   logger.info("[dartcv4] use_opencl: ${args.useOpenCL}\n");
-  logger.info("[dartcv4] treeshake: ${args.treeshake} keep_file: ${keepFile ?? 'none'}\n");
+  logger.info("[dartcv4] treeshake: ${args.treeshake} (link hook: $delegateToLinkHook)\n");
   logger.info("[dartcv4] include modules: ${args.includeModules}\n");
   logger.info("[dartcv4] exclude modules: ${args.excludeModules}\n");
   logger.info("[dartcv4] merged modules: ${args.modules}\n");
@@ -113,7 +88,7 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   final builder = CMakeBuilder.create(
     logLevel: args.debug ? LogLevel.DEBUG : LogLevel.STATUS,
     appleArgs: const AppleBuilderArgs(enableArc: false, enableBitcode: false, enableVisibility: true),
-    name: input.packageName,
+    name: dartcvLibraryName,
     sourceDir: packagePath.uri.resolve("src"),
     targets: ['install'],
     buildLocal: false,
@@ -142,7 +117,9 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
       },
       'DARTCV_ENABLE_INSTALL': 'ON',
       'DARTCV_TREESHAKE': args.treeshake ? 'ON' : 'OFF',
-      if (keepFile != null) 'DARTCV_KEEP_FILE': keepFile,
+      // The tree-shaken library is linked by `hook/link.dart`, which only runs
+      // on AOT builds; a JIT (dev) build does not need the extra archive.
+      'DARTCV_TREESHAKE_LINK': delegateToLinkHook ? 'ON' : 'OFF',
       'CMAKE_INSTALL_PREFIX': input.outputDirectory.resolve('install/').toFilePath(),
       'CMAKE_POLICY_VERSION_MINIMUM': '3.5',
       ...moduleDefines,
@@ -150,11 +127,40 @@ Future<void> runBuild(BuildInput input, BuildOutputBuilder output, {Set<String>?
   );
   await builder.run(input: input, output: output, logger: logger);
 
-  await output.findAndAddCodeAssets(
-    input,
-    outDir: input.outputDirectory.resolve('install/'),
-    names: {'dartcv': 'dartcv.dart'},
-  );
+  final installDir = input.outputDirectory.resolve('install/');
+  if (delegateToLinkHook) {
+    // `hook/link.dart` links the final library with only the native symbols
+    // this build's Dart code uses (`CMakeBuilder.runLink`). It also gets this
+    // unrestricted library, so it can pass it through unchanged when the build
+    // records no usages (SDKs without the `record-use` experiment, platforms
+    // whose link hook is not given the recordings) or when the link fails.
+    //
+    // Located the same way as for a JIT build (`findCodeAssets` searches the
+    // install tree for the library file name of the configured link mode), so
+    // an unexpected layout or an unsatisfiable link mode skips the asset
+    // instead of handing a non-existent file to the SDK.
+    final assets = await output.findCodeAssets(
+      input,
+      outDir: installDir,
+      names: {dartcvLibraryName: dartcvAssetName},
+      logger: logger,
+    );
+    if (assets.isEmpty) {
+      logger.warning(
+        "[dartcv4] no ${input.config.code.linkModePreference} library for "
+        "'$dartcvLibraryName' in $installDir; the package cannot be used by this build\n",
+      );
+    }
+    for (final asset in assets) {
+      output.assets.code.add(asset, routing: ToLinkHook(input.packageName));
+    }
+  } else {
+    await output.findAndAddCodeAssets(
+      input,
+      outDir: installDir,
+      names: {dartcvLibraryName: dartcvAssetName},
+    );
+  }
 
   final ffmpegLibs = {"avcodec", "avdevice", "avfilter", "avformat", "avutil", "swresample", "swscale"};
   String ffPattern(String lib) => '(?:lib)?$lib(?:.\\d+)?(?:\\.(?:so|dll|dylib))';
