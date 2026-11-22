@@ -40,3 +40,4 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+    - web/**

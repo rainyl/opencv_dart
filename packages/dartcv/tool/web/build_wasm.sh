@@ -38,6 +38,10 @@ done
 # OpenCV turns off its filesystem helpers (utils::fs::exists, ...) for Emscripten; the in-memory
 # file system supports the POSIX calls they need, and wechat_qrcode/dnn model loading use them.
 CFLAGS_WASM="-fwasm-exceptions -DOPENCV_HAVE_FILESYSTEM_SUPPORT=1"
+# `-include iterator`: OpenCV 4.13's calib3d/stereo_geom.cpp calls std::back_inserter without
+# including <iterator>; emsdk 6.0.13's libc++ pulls it in, emsdk 7's (LLVM 22) does not. C++ only,
+# a C translation unit (some of Emscripten's are) has no <iterator>.
+CXXFLAGS_WASM="$CFLAGS_WASM -include iterator"
 
 if [[ ! -f "$BUILD_DIR/build.ninja" && ! -f "$BUILD_DIR/Makefile" ]]; then
   FETCH_ARGS=()
@@ -48,7 +52,7 @@ if [[ ! -f "$BUILD_DIR/build.ninja" && ! -f "$BUILD_DIR/Makefile" ]]; then
     -DWITH_OPENCL=OFF -DWITH_VULKAN=OFF -DWITH_PTHREADS_PF=OFF -DCV_ENABLE_INTRINSICS=OFF \
     -DBUILD_TIFF=OFF -DWITH_TIFF=OFF -DBUILD_OPENJPEG=OFF -DWITH_OPENJPEG=OFF \
     -DENABLE_LIBJPEG_TURBO_SIMD=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    -DCMAKE_C_FLAGS="$CFLAGS_WASM" -DCMAKE_CXX_FLAGS="$CFLAGS_WASM"
+    -DCMAKE_C_FLAGS="$CFLAGS_WASM" -DCMAKE_CXX_FLAGS="$CXXFLAGS_WASM"
 fi
 cmake --build "$BUILD_DIR" --target dartcv
 

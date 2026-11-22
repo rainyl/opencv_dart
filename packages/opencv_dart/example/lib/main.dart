@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:opencv_dart/opencv.dart' as cv;
 import 'package:image_picker/image_picker.dart';
 

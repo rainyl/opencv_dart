@@ -48,6 +48,22 @@ tool/web/build_wasm.sh            # writes build/web/dartcv.mjs and build/web/da
 `MODULES="imgproc imgcodecs"` builds a smaller module (core is always included). The full
 build is about 14 MB (4.4 MB gzip, 3.2 MB brotli).
 
+On Windows use the PowerShell port, which takes the same knobs:
+
+```powershell
+pwsh -File tool/web/build_wasm.ps1                        # writes build/web/dartcv.mjs and .wasm
+pwsh -File tool/web/build_wasm.ps1 -Modules imgproc,imgcodecs -Clean
+```
+
+It takes `-BuildDir`, `-OutDir`, `-OpenCVSrc`, `-ContribSrc`, `-Modules`, `-Emsdk <dir>` and
+`-Clean`, and links through a response file because the object list is longer than a Windows
+command line. It has been run end to end with emsdk 7.0.0 on Windows 11 (Ninja + CMake 4.3),
+producing the same `dartcv.mjs` / `dartcv.wasm` as the shell script.
+
+It does not care how Emscripten was installed: it uses `-Emsdk` (the emsdk root or its
+`upstream/emscripten`), else an `emcc` already on PATH, else `EMSDK` / `EMSDK_ROOT` and the usual
+locations (scoop, chocolatey, the emsdk default directories).
+
 ## Regenerating the web bindings
 
 After `dart tool/ffigen.dart`, run:

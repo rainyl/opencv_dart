@@ -38,6 +38,7 @@ dependencies:
     path: ../../
   image_picker: ^1.2.3
 
+  material_ui: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

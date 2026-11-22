@@ -4,7 +4,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:image_picker/image_picker.dart';
 
