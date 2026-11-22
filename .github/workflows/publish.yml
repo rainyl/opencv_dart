@@ -37,6 +37,34 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+      - name: Cache the Dart package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('packages/dartcv/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+      # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
+      # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
+      # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
+      # that changed C++ a stale binary. Cache the CMake build tree (`shared/`) instead and drop the
+      # cached *results* below: the hook then re-runs, `cmake --build` only redoes what changed, and
+      # the job drops from ~10-15 min to ~1 min. Must run after checkout: `hashFiles` reads the work
+      # tree.
+      - name: Restore the OpenCV build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/.dart_tool/hooks_runner/shared
+          key: >-
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
+            'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+      - name: Force the native build hooks to re-run
+        shell: bash
+        run: |
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/dartcv4 \
+                 packages/dartcv/.dart_tool/hooks_runner/ffigen
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -62,6 +90,34 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+      - name: Cache the Dart package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('packages/dartcv/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+      # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
+      # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
+      # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
+      # that changed C++ a stale binary. Cache the CMake build tree (`shared/`) instead and drop the
+      # cached *results* below: the hook then re-runs, `cmake --build` only redoes what changed, and
+      # the job drops from ~10-15 min to ~1 min. Must run after checkout: `hashFiles` reads the work
+      # tree.
+      - name: Restore the OpenCV build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/.dart_tool/hooks_runner/shared
+          key: >-
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
+            'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+      - name: Force the native build hooks to re-run
+        shell: bash
+        run: |
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/dartcv4 \
+                 packages/dartcv/.dart_tool/hooks_runner/ffigen
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -85,6 +141,34 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+      - name: Cache the Dart package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('packages/dartcv/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+      # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
+      # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
+      # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
+      # that changed C++ a stale binary. Cache the CMake build tree (`shared/`) instead and drop the
+      # cached *results* below: the hook then re-runs, `cmake --build` only redoes what changed, and
+      # the job drops from ~10-15 min to ~1 min. Must run after checkout: `hashFiles` reads the work
+      # tree.
+      - name: Restore the OpenCV build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/.dart_tool/hooks_runner/shared
+          key: >-
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
+            'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+      - name: Force the native build hooks to re-run
+        shell: bash
+        run: |
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/dartcv4 \
+                 packages/dartcv/.dart_tool/hooks_runner/ffigen
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
@@ -106,6 +190,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
+      # The CMake build tree for the wasm target holds the compiled OpenCV objects and its source
+      # checkout (`_deps`), so restoring it turns most of the build into a no-op. The key follows
+      # the emsdk version and the CMake inputs; `build/wasm` only gets reused for the same toolchain.
+      - name: Restore the wasm build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/build/wasm
+          key: wasm-${{ runner.os }}-emsdk-6.0.13-${{
+            hashFiles('packages/dartcv/tool/web/**', 'packages/dartcv/src/**',
+            'packages/dartcv/lib/src/g/*.g.dart') }}
+          restore-keys: |
+            wasm-${{ runner.os }}-emsdk-6.0.13-
       - uses: mymindstorm/setup-emsdk@v14
         with:
           # No actions-cache-folder: setup-emsdk builds the cache key from the workflow name,
@@ -131,6 +227,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      # The CMake build tree for the wasm target holds the compiled OpenCV objects and its source
+      # checkout (`_deps`), so restoring it turns most of the build into a no-op. The key follows
+      # the emsdk version and the CMake inputs; `build/wasm` only gets reused for the same toolchain.
+      - name: Restore the wasm build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/build/wasm
+          key: wasm-${{ runner.os }}-emsdk-7.0.0-${{
+            hashFiles('packages/dartcv/tool/web/**', 'packages/dartcv/src/**',
+            'packages/dartcv/lib/src/g/*.g.dart') }}
+          restore-keys: |
+            wasm-${{ runner.os }}-emsdk-7.0.0-
       - uses: mymindstorm/setup-emsdk@v14
         with:
           version: "7.0.0"
@@ -166,6 +274,12 @@ jobs:
         with:
           name: dartcv-web
           path: packages/dartcv/build/web
+      - name: Cache the Dart package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('packages/dartcv/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
       - uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
