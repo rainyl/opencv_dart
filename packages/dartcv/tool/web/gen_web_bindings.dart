@@ -524,9 +524,15 @@ class World {
     for (final f in s.fields) {
       final int fs, fa;
       if (f.arrayLen != null) {
-        final elem = resolve(u, RegExp(r'ffi\.Array<(.+)>').firstMatch(f.type)!.group(1)!);
-        fa = _sizes[elem.kind]!;
-        fs = fa * f.arrayLen!;
+        final elem = arrayElement(u, f);
+        if (elem.kind == 'S') {
+          final l = layout(elem.unit!, elem.struct!);
+          fa = l.align;
+          fs = l.size * f.arrayLen!;
+        } else {
+          fa = _sizes[elem.kind]!;
+          fs = fa * f.arrayLen!;
+        }
       } else {
         final t = fieldType(u, f);
         if (t.kind == 'S') {
@@ -551,14 +557,40 @@ class World {
     return Layout(size, align, offsets);
   });
 
+  /// The element type of an `ffi.Array<...>` field.
+  TypeRef arrayElement(Unit u, Field f) {
+    final m = RegExp(r'ffi\.Array<(.+)>').firstMatch(f.type);
+    if (m == null) {
+      throw UnresolvedType('cannot read the element type of ${f.type} (${u.name}.${f.name})');
+    }
+    return resolve(u, m.group(1)!);
+  }
+
   /// Flattens a struct to scalar leaves: (dart access path, kind).
+  ///
+  /// Only used for values passed or returned by value, where the wasm32 C ABI passes a struct that
+  /// flattens to a single scalar in a register. Anything this cannot represent faithfully throws,
+  /// so a new binding fails generation instead of producing a wrapper that reads the wrong bytes.
   List<(String, String)> leaves(Unit u, String name) {
     final s = u.structs[name]!;
     final out = <(String, String)>[];
+    if (s.isUnion && s.fields.length > 1) {
+      throw UnresolvedType(
+        '${u.name}: union ${s.name} has ${s.fields.length} overlapping members, it cannot be passed '
+        'or returned by value',
+      );
+    }
     for (final f in s.fields) {
       if (f.arrayLen != null) {
+        final elem = arrayElement(u, f);
+        if (elem.kind == 'S') {
+          throw UnresolvedType(
+            '${u.name}.${s.name}.${f.name}: arrays of structs cannot be passed or returned by value',
+          );
+        }
+        // One leaf per element, with the element's own kind (not a blanket u32).
         for (var k = 0; k < f.arrayLen!; k++) {
-          out.add(('${f.name}[$k]', 'u'));
+          out.add(('${f.name}[$k]', elem.kind));
         }
         continue;
       }

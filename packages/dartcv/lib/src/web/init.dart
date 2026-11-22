@@ -14,7 +14,22 @@ Future<void>? _loading;
 ///
 /// [moduleUrl] is the URL of `dartcv.mjs` (resolved against the page's base URI); `dartcv.wasm`
 /// is loaded from next to it.
-Future<void> initDartcv({String moduleUrl = 'dartcv.mjs'}) => _loading ??= _load(moduleUrl);
+Future<void> initDartcv({String moduleUrl = 'dartcv.mjs'}) async {
+  final pending = _loading;
+  if (pending != null) {
+    await pending;
+    return;
+  }
+  final started = _load(moduleUrl);
+  _loading = started;
+  try {
+    await started;
+  } catch (_) {
+    // Do not cache a failed load: the caller may retry, e.g. with another moduleUrl.
+    if (identical(_loading, started)) _loading = null;
+    rethrow;
+  }
+}
 
 Future<void> _load(String moduleUrl) async {
   final base = (globalContext['document'] as JSObject?)?['baseURI'] as JSString?;

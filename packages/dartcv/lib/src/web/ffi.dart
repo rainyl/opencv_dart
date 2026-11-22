@@ -556,6 +556,11 @@ final class NativeCallable<T extends Function> {
     if (sig == null) throw UnsupportedError('dartcv web: no wasm signature registered for $T');
     final (wasmSig, kinds) = sig;
     JSAny? invoke(List<JSAny?> raw) {
+      // `close()` frees the table entry, as dart:ffi frees the trampoline; a late call from C is a
+      // bug on either platform, so fail loudly instead of running the Dart callback again.
+      if (_closed) {
+        throw StateError('dartcv web: callback invoked after close() ($T)');
+      }
       final args = [for (var k = 0; k < kinds.length; k++) _fromJs(kinds[k], raw[k])];
       if (async) {
         scheduleMicrotask(() => Function.apply(callback, args));

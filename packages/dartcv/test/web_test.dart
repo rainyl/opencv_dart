@@ -44,6 +44,8 @@ import 'core/rng_test.dart' as core_rng_test;
 import 'core/svd_test.dart' as core_svd_test;
 import 'core/umat_test.dart' as core_umat_test;
 import 'core/vec_test.dart' as core_vec_test;
+import 'dnn/dnn_async_test.dart' as dnn_dnn_async_test;
+import 'dnn/dnn_test.dart' as dnn_dnn_test;
 import 'features2d/features2d_async_test.dart' as features2d_features2d_async_test;
 import 'features2d/features2d_test.dart' as features2d_features2d_test;
 import 'imgcodecs_test.dart' as imgcodecs_test;
@@ -77,13 +79,20 @@ import 'videoio/videoio_registry_test.dart' as videoio_videoio_registry_test;
 
 // test/models is downloaded by CI (release tag dnn_test_files); a missing model only fails its own test.
 const _optionalFixtures = [
+  'models/bvlc_googlenet.caffemodel',
+  'models/bvlc_googlenet.prototxt',
   'models/detect.caffemodel',
-  'models/face_detection_yunet_2023mar.onnx',
-  'models/face_recognition_sface_2021dec.onnx',
   'models/detect.prototxt',
+  'models/face_detection_yunet_2023mar.onnx',
+  'models/face_landmark.tflite',
+  'models/face_recognition_sface_2021dec.onnx',
+  'models/googlenet-9.onnx',
+  'models/googlenet_float32.tflite',
+  'models/openface.nn4.small2.v1.t7',
   'models/sr.caffemodel',
   'models/sr.prototxt',
   'models/structure_edge_model.yml',
+  'models/tensorflow_inception_graph.pb',
 ];
 
 const _fixtures = [
@@ -243,6 +252,12 @@ Future<void> main() async {
   });
   group('core/vec_test.dart', () {
     core_vec_test.main();
+  });
+  group('dnn/dnn_async_test.dart', () {
+    dnn_dnn_async_test.main();
+  });
+  group('dnn/dnn_test.dart', () {
+    dnn_dnn_test.main();
   });
   group('features2d/features2d_async_test.dart', () {
     features2d_features2d_async_test.main();
