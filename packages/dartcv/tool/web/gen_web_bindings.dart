@@ -511,11 +511,10 @@ class World {
     throw UnresolvedType('cannot resolve $t in ${u.name}');
   }
 
-  TypeRef fieldType(Unit u, Field f) => f.annotation != null && f.arrayLen == null
-      ? resolve(u, _annotationType(f.annotation!))
-      : resolve(u, f.type);
-
-  String _annotationType(String a) => a.startsWith('ffi.') ? a : a; // typedef names resolve via unit
+  /// The type of [f]: the `@ffi.*()` annotation when the field is a plain scalar (ffigen writes the
+  /// element type there), the declared type otherwise. Both are resolved as written.
+  TypeRef fieldType(Unit u, Field f) =>
+      f.annotation != null && f.arrayLen == null ? resolve(u, f.annotation!) : resolve(u, f.type);
 
   Layout layout(Unit u, String name) => _layouts.putIfAbsent('${u.name}:$name', () {
     final s = u.structs[name]!;
@@ -739,22 +738,30 @@ class World {
   };
 
   /// Dart type of a struct leaf, for the pointer case of _fromJs.
+  ///
+  /// [path] is a `leaves()` path, so a leaf may be indexed (`p[0]`); the index does not change the
+  /// Dart type of the field.
   String _leafPointerType(Unit u, String struct, String path) {
     var unit = u;
     var name = struct;
     final parts = path.split('.');
     for (var k = 0; k < parts.length; k++) {
-      final f = unit.structs[name]!.fields.firstWhere((f) => f.name == parts[k]);
-      if (k == parts.length - 1) return _qualify(unit, u, f.type);
+      final fieldName = parts[k].split('[').first;
+      final fields = unit.structs[name]?.fields;
+      final f = fields?.where((f) => f.name == fieldName).firstOrNull;
+      if (f == null) {
+        throw UnresolvedType('$name has no field "$fieldName" (leaf path "$path" of ${u.name})');
+      }
+      if (k == parts.length - 1) return f.type;
       final t = fieldType(unit, f);
+      if (t.unit == null) {
+        throw UnresolvedType('"$fieldName" of $name is not a struct (leaf path "$path" of ${u.name})');
+      }
       unit = t.unit!;
       name = t.struct!;
     }
-    throw StateError('bad path');
+    throw UnresolvedType('empty leaf path for $struct in ${u.name}');
   }
-
-  /// [type] is written relative to [from]; make it usable in [to] (only ffi.* types occur here).
-  String _qualify(Unit from, Unit to, String type) => type;
 
   String emitFunction(Unit u, FunctionDecl f) {
     final b = StringBuffer();
@@ -762,14 +769,15 @@ class World {
     if (f.doc.isNotEmpty) b.writeln(f.doc);
     b.writeln('${f.dartRet} ${f.name}($params) {');
     final args = <String>[];
-    final temps = <String>[];
+    final temps = <(String, int)>[];
     final r = resolve(u, f.nativeRet);
     String? sretSize;
     if (r.kind == 'S' && leaves(r.unit!, r.struct!).length != 1) {
-      sretSize = '${layout(r.unit!, r.struct!).size}';
-      b.writeln('  final \$sret = \$rt.malloc($sretSize);');
+      final size = layout(r.unit!, r.struct!).size;
+      sretSize = '$size';
+      b.writeln('  final \$sret = \$rt.scratch($sretSize);');
       args.add(r'$rt.i($sret)');
-      temps.add(r'$sret');
+      temps.add((r'$sret', size));
     }
     for (var k = 0; k < f.nativeParams.length; k++) {
       final t = resolve(u, f.nativeParams[k]);
@@ -780,8 +788,8 @@ class World {
           args.add(_toJs(l.single.$2, '$name.${l.single.$1}'));
         } else {
           final size = layout(t.unit!, t.struct!).size;
-          b.writeln('  final \$t$k = ffi.\$copyToWasm($name, $size);');
-          temps.add('\$t$k');
+          b.writeln('  final \$t$k = ffi.\$copyToWasm(\$rt.scratch($size), $name, $size);');
+          temps.add(('\$t$k', size));
           args.add('\$rt.i(\$t$k)');
         }
       } else {
@@ -815,8 +823,8 @@ class World {
         ..writeln('  try {')
         ..writeln('    $result')
         ..writeln('  } finally {');
-      for (final t in temps) {
-        b.writeln('    \$rt.free($t);');
+      for (final (t, size) in temps) {
+        b.writeln('    \$rt.releaseScratch($t, $size);');
       }
       b.writeln('  }');
     }

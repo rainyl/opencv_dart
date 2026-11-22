@@ -550,7 +550,7 @@ ffi.Pointer<CvStatus> cv_dnn_Net_setInput(
   Scalar mean,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(mean, 32);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), mean, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -565,7 +565,7 @@ ffi.Pointer<CvStatus> cv_dnn_Net_setInput(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 32);
   }
 }
 
@@ -592,8 +592,8 @@ ffi.Pointer<CvStatus> cv_dnn_blobFromImage(
   int ddepth,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(size, 8);
-  final $t4 = ffi.$copyToWasm(mean, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), size, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), mean, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -611,8 +611,8 @@ ffi.Pointer<CvStatus> cv_dnn_blobFromImage(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 32);
   }
 }
 
@@ -627,8 +627,8 @@ ffi.Pointer<CvStatus> cv_dnn_blobFromImages(
   int ddepth,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(size, 8);
-  final $t4 = ffi.$copyToWasm(mean, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), size, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), mean, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -646,8 +646,8 @@ ffi.Pointer<CvStatus> cv_dnn_blobFromImages(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 32);
   }
 }
 

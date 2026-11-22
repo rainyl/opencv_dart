@@ -116,13 +116,13 @@ ffi.Pointer<CvStatus> cv_CLAHE_create(ffi.Pointer<CLAHE> rval) {
 }
 
 ffi.Pointer<CvStatus> cv_CLAHE_create_1(double clipLimit, CvSize tileGridSize, ffi.Pointer<CLAHE> rval) {
-  final $t1 = ffi.$copyToWasm(tileGridSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), tileGridSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_CLAHE_create_1', [$rt.d(clipLimit), $rt.i($t1), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -141,11 +141,11 @@ void cv_CLAHE_setClipLimit(CLAHE self$1, double clipLimit) {
 }
 
 void cv_CLAHE_setTilesGridSize(CLAHE self$1, CvSize size) {
-  final $t1 = ffi.$copyToWasm(size, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     $rt.call('cv_CLAHE_setTilesGridSize', [$rt.i(self$1.ptr.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -158,7 +158,7 @@ ffi.Pointer<CvStatus> cv_GaussianBlur(
   int bt,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(ps, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), ps, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -174,7 +174,7 @@ ffi.Pointer<CvStatus> cv_GaussianBlur(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -379,7 +379,7 @@ ffi.Pointer<CvStatus> cv_LineSegmentDetector_compareSegments(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(size, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -395,7 +395,7 @@ ffi.Pointer<CvStatus> cv_LineSegmentDetector_compareSegments(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -542,13 +542,13 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_create(ffi.Pointer<Subdiv2D> rval) {
 }
 
 ffi.Pointer<CvStatus> cv_Subdiv2D_create_1(CvRect rect, ffi.Pointer<Subdiv2D> rval) {
-  final $t0 = ffi.$copyToWasm(rect, 16);
+  final $t0 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_Subdiv2D_create_1', [$rt.i($t0), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 16);
   }
 }
 
@@ -599,7 +599,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_findNearest(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -613,7 +613,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_findNearest(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -730,7 +730,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_getVoronoiFacetList(
 }
 
 ffi.Pointer<CvStatus> cv_Subdiv2D_initDelaunay(Subdiv2D self$1, CvRect rect, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(rect, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -742,7 +742,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_initDelaunay(Subdiv2D self$1, CvRect rect, imp
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -752,7 +752,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_insert(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -765,7 +765,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_insert(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -789,7 +789,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_locate(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -804,7 +804,7 @@ ffi.Pointer<CvStatus> cv_Subdiv2D_locate(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -1159,9 +1159,9 @@ ffi.Pointer<CvStatus> cv_arrowedLine(
   double tipLength,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt1, 8);
-  final $t2 = ffi.$copyToWasm(pt2, 8);
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt1, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), pt2, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1179,9 +1179,9 @@ ffi.Pointer<CvStatus> cv_arrowedLine(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
-    $rt.free($t3);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1208,7 +1208,7 @@ ffi.Pointer<CvStatus> cv_bilateralFilter(
 }
 
 ffi.Pointer<CvStatus> cv_blur(Mat src, Mat dst, CvSize ps, imp$1.CvCallback_0 callback) {
-  final $t2 = ffi.$copyToWasm(ps, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), ps, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1221,7 +1221,7 @@ ffi.Pointer<CvStatus> cv_blur(Mat src, Mat dst, CvSize ps, imp$1.CvCallback_0 ca
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -1255,8 +1255,8 @@ ffi.Pointer<CvStatus> cv_boxFilter(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(ps, 8);
-  final $t4 = ffi.$copyToWasm(anchor, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), ps, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1273,8 +1273,8 @@ ffi.Pointer<CvStatus> cv_boxFilter(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -1283,13 +1283,13 @@ ffi.Pointer<CvStatus> cv_boxPoints(
   ffi.Pointer<VecPoint2f> boxPts,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t0 = ffi.$copyToWasm(rect, 20);
+  final $t0 = ffi.$copyToWasm($rt.scratch(20), rect, 20);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_boxPoints', [$rt.i($t0), $rt.i(boxPts.address), $rt.i(callback.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 20);
   }
 }
 
@@ -1375,8 +1375,8 @@ ffi.Pointer<CvStatus> cv_circle(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(center, 8);
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), center, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1391,8 +1391,8 @@ ffi.Pointer<CvStatus> cv_circle(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t3);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1406,8 +1406,8 @@ ffi.Pointer<CvStatus> cv_circle_1(
   int shift,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(center, 8);
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), center, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1424,8 +1424,8 @@ ffi.Pointer<CvStatus> cv_circle_1(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t3);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1436,9 +1436,9 @@ ffi.Pointer<CvStatus> cv_clipLine(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t0 = ffi.$copyToWasm(imgRect, 16);
-  final $t1 = ffi.$copyToWasm(pt1, 8);
-  final $t2 = ffi.$copyToWasm(pt2, 8);
+  final $t0 = ffi.$copyToWasm($rt.scratch(16), imgRect, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt1, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), pt2, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1452,9 +1452,9 @@ ffi.Pointer<CvStatus> cv_clipLine(
       ),
     );
   } finally {
-    $rt.free($t0);
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t0, 16);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -1638,9 +1638,9 @@ ffi.Pointer<CvStatus> cv_cornerSubPix(
   TermCriteria criteria,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(winSize, 8);
-  final $t3 = ffi.$copyToWasm(zeroZone, 8);
-  final $t4 = ffi.$copyToWasm(criteria, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), winSize, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), zeroZone, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1655,9 +1655,9 @@ ffi.Pointer<CvStatus> cv_cornerSubPix(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 16);
   }
 }
 
@@ -1697,8 +1697,8 @@ ffi.Pointer<CvStatus> cv_dilate_1(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(anchor, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1715,8 +1715,8 @@ ffi.Pointer<CvStatus> cv_dilate_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1752,7 +1752,7 @@ ffi.Pointer<CvStatus> cv_drawContours(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1767,7 +1767,7 @@ ffi.Pointer<CvStatus> cv_drawContours(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1783,8 +1783,8 @@ ffi.Pointer<CvStatus> cv_drawContours_1(
   CvPoint offset,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(color, 32);
-  final $t8 = ffi.$copyToWasm(offset, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
+  final $t8 = ffi.$copyToWasm($rt.scratch(8), offset, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1803,8 +1803,8 @@ ffi.Pointer<CvStatus> cv_drawContours_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t8);
+    $rt.releaseScratch($t3, 32);
+    $rt.releaseScratch($t8, 8);
   }
 }
 
@@ -1819,9 +1819,9 @@ ffi.Pointer<CvStatus> cv_ellipse(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(center, 8);
-  final $t2 = ffi.$copyToWasm(axes, 8);
-  final $t6 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), center, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), axes, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1839,9 +1839,9 @@ ffi.Pointer<CvStatus> cv_ellipse(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
-    $rt.free($t6);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1858,9 +1858,9 @@ ffi.Pointer<CvStatus> cv_ellipse_1(
   int shift,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(center, 8);
-  final $t2 = ffi.$copyToWasm(axes, 8);
-  final $t6 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), center, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), axes, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1880,9 +1880,9 @@ ffi.Pointer<CvStatus> cv_ellipse_1(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
-    $rt.free($t6);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1917,8 +1917,8 @@ ffi.Pointer<CvStatus> cv_erode_1(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(anchor, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1935,13 +1935,13 @@ ffi.Pointer<CvStatus> cv_erode_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
 ffi.Pointer<CvStatus> cv_fillPoly(Mat img, VecVecPoint points, Scalar color, imp$1.CvCallback_0 callback) {
-  final $t2 = ffi.$copyToWasm(color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1954,7 +1954,7 @@ ffi.Pointer<CvStatus> cv_fillPoly(Mat img, VecVecPoint points, Scalar color, imp
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -1967,8 +1967,8 @@ ffi.Pointer<CvStatus> cv_fillPoly_1(
   CvPoint offset,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(color, 32);
-  final $t5 = ffi.$copyToWasm(offset, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), color, 32);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), offset, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1984,8 +1984,8 @@ ffi.Pointer<CvStatus> cv_fillPoly_1(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 32);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -1999,7 +1999,7 @@ ffi.Pointer<CvStatus> cv_filter2D(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(anchor, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2016,7 +2016,7 @@ ffi.Pointer<CvStatus> cv_filter2D(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -2146,10 +2146,10 @@ ffi.Pointer<CvStatus> cv_floodFill(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(seedPoint, 8);
-  final $t3 = ffi.$copyToWasm(newVal, 32);
-  final $t5 = ffi.$copyToWasm(loDiff, 32);
-  final $t6 = ffi.$copyToWasm(upDiff, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), seedPoint, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), newVal, 32);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), loDiff, 32);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), upDiff, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2168,10 +2168,10 @@ ffi.Pointer<CvStatus> cv_floodFill(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t3);
-    $rt.free($t5);
-    $rt.free($t6);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 32);
+    $rt.releaseScratch($t5, 32);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -2216,7 +2216,7 @@ ffi.Pointer<CvStatus> cv_getClosestEllipsePoints(
   Mat points,
   imp$1.MatOut closest_pts,
 ) {
-  final $t0 = ffi.$copyToWasm(ellipse_params, 20);
+  final $t0 = ffi.$copyToWasm($rt.scratch(20), ellipse_params, 20);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2228,7 +2228,7 @@ ffi.Pointer<CvStatus> cv_getClosestEllipsePoints(
       ),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 20);
   }
 }
 
@@ -2299,8 +2299,8 @@ ffi.Pointer<CvStatus> cv_getRectSubPix(
   Mat dst,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patchSize, 8);
-  final $t2 = ffi.$copyToWasm(center, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patchSize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), center, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2314,8 +2314,8 @@ ffi.Pointer<CvStatus> cv_getRectSubPix(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -2326,7 +2326,7 @@ ffi.Pointer<CvStatus> cv_getRotationMatrix2D(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t0 = ffi.$copyToWasm(center, 8);
+  final $t0 = ffi.$copyToWasm($rt.scratch(8), center, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2340,7 +2340,7 @@ ffi.Pointer<CvStatus> cv_getRotationMatrix2D(
       ),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 8);
   }
 }
 
@@ -2350,7 +2350,7 @@ ffi.Pointer<CvStatus> cv_getStructuringElement(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(ksize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), ksize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2363,7 +2363,7 @@ ffi.Pointer<CvStatus> cv_getStructuringElement(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -2463,7 +2463,7 @@ ffi.Pointer<CvStatus> cv_grabCut(
   int mode,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(rect, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2480,7 +2480,7 @@ ffi.Pointer<CvStatus> cv_grabCut(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -2560,9 +2560,9 @@ ffi.Pointer<CvStatus> cv_line(
   int shift,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt1, 8);
-  final $t2 = ffi.$copyToWasm(pt2, 8);
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt1, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), pt2, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2579,9 +2579,9 @@ ffi.Pointer<CvStatus> cv_line(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
-    $rt.free($t3);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -2593,7 +2593,7 @@ ffi.Pointer<CvStatus> cv_linearPolar(
   int flags,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(center, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), center, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2608,7 +2608,7 @@ ffi.Pointer<CvStatus> cv_linearPolar(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -2620,7 +2620,7 @@ ffi.Pointer<CvStatus> cv_logPolar(
   int flags,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(center, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), center, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2635,7 +2635,7 @@ ffi.Pointer<CvStatus> cv_logPolar(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -2805,8 +2805,8 @@ ffi.Pointer<CvStatus> cv_morphologyEx_1(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(pt, 8);
-  final $t7 = ffi.$copyToWasm(borderValue, 32);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
+  final $t7 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2824,8 +2824,8 @@ ffi.Pointer<CvStatus> cv_morphologyEx_1(
       ),
     );
   } finally {
-    $rt.free($t4);
-    $rt.free($t7);
+    $rt.releaseScratch($t4, 8);
+    $rt.releaseScratch($t7, 32);
   }
 }
 
@@ -2858,7 +2858,7 @@ ffi.Pointer<CvStatus> cv_pointPolygonTest(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2872,7 +2872,7 @@ ffi.Pointer<CvStatus> cv_pointPolygonTest(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -2883,7 +2883,7 @@ ffi.Pointer<CvStatus> cv_pointPolygonTest2f(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(pt, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), pt, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2897,7 +2897,7 @@ ffi.Pointer<CvStatus> cv_pointPolygonTest2f(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -2909,7 +2909,7 @@ ffi.Pointer<CvStatus> cv_polylines(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2924,7 +2924,7 @@ ffi.Pointer<CvStatus> cv_polylines(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -2938,8 +2938,8 @@ ffi.Pointer<CvStatus> cv_putText(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(org, 8);
-  final $t5 = ffi.$copyToWasm(color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), org, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2956,8 +2956,8 @@ ffi.Pointer<CvStatus> cv_putText(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -2973,8 +2973,8 @@ ffi.Pointer<CvStatus> cv_putText_1(
   bool bottomLeftOrigin,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(org, 8);
-  final $t5 = ffi.$copyToWasm(color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), org, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2993,8 +2993,8 @@ ffi.Pointer<CvStatus> cv_putText_1(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -3005,7 +3005,7 @@ ffi.Pointer<CvStatus> cv_pyrDown(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(dstsize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), dstsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3019,7 +3019,7 @@ ffi.Pointer<CvStatus> cv_pyrDown(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -3030,7 +3030,7 @@ ffi.Pointer<CvStatus> cv_pyrUp(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(dstsize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), dstsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3044,7 +3044,7 @@ ffi.Pointer<CvStatus> cv_pyrUp(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -3055,8 +3055,8 @@ ffi.Pointer<CvStatus> cv_rectangle(
   int thickness,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(rect, 16);
-  final $t2 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3070,8 +3070,8 @@ ffi.Pointer<CvStatus> cv_rectangle(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 16);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -3084,8 +3084,8 @@ ffi.Pointer<CvStatus> cv_rectangle_1(
   int shift,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(rect, 16);
-  final $t2 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3101,8 +3101,8 @@ ffi.Pointer<CvStatus> cv_rectangle_1(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 16);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -3116,7 +3116,7 @@ ffi.Pointer<CvStatus> cv_remap(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3133,7 +3133,7 @@ ffi.Pointer<CvStatus> cv_remap(
       ),
     );
   } finally {
-    $rt.free($t6);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -3146,7 +3146,7 @@ ffi.Pointer<CvStatus> cv_resize(
   int interp,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(sz, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), sz, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3162,7 +3162,7 @@ ffi.Pointer<CvStatus> cv_resize(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -3177,7 +3177,7 @@ ffi.Pointer<CvStatus> cv_sepFilter2D(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t5 = ffi.$copyToWasm(anchor, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3195,7 +3195,7 @@ ffi.Pointer<CvStatus> cv_sepFilter2D(
       ),
     );
   } finally {
-    $rt.free($t5);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -3231,8 +3231,8 @@ ffi.Pointer<CvStatus> cv_sqrBoxFilter(
   int borderType,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(ps, 8);
-  final $t4 = ffi.$copyToWasm(anchor, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), ps, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3249,13 +3249,13 @@ ffi.Pointer<CvStatus> cv_sqrBoxFilter(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
 ffi.Pointer<CvStatus> cv_stackBlur(Mat src, imp$1.MatOut dst, CvSize ksize, imp$1.CvCallback_0 callback) {
-  final $t2 = ffi.$copyToWasm(ksize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), ksize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3268,7 +3268,7 @@ ffi.Pointer<CvStatus> cv_stackBlur(Mat src, imp$1.MatOut dst, CvSize ksize, imp$
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -3329,7 +3329,7 @@ ffi.Pointer<CvStatus> cv_warpAffine(
   CvSize dsize,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(dsize, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3343,7 +3343,7 @@ ffi.Pointer<CvStatus> cv_warpAffine(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
@@ -3357,8 +3357,8 @@ ffi.Pointer<CvStatus> cv_warpAffine_1(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(dsize, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3375,13 +3375,13 @@ ffi.Pointer<CvStatus> cv_warpAffine_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
 ffi.Pointer<CvStatus> cv_warpPerspective(Mat src, Mat dst, Mat m, CvSize dsize, imp$1.CvCallback_0 callback) {
-  final $t3 = ffi.$copyToWasm(dsize, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3395,7 +3395,7 @@ ffi.Pointer<CvStatus> cv_warpPerspective(Mat src, Mat dst, Mat m, CvSize dsize, 
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
@@ -3409,8 +3409,8 @@ ffi.Pointer<CvStatus> cv_warpPerspective_1(
   Scalar borderValue,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(dsize, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3427,8 +3427,8 @@ ffi.Pointer<CvStatus> cv_warpPerspective_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 

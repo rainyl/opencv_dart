@@ -389,7 +389,7 @@ ffi.Pointer<CvStatus> cv_seamlessClone(
   int flags,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(p, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), p, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -405,7 +405,7 @@ ffi.Pointer<CvStatus> cv_seamlessClone(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 

@@ -24,6 +24,10 @@ void setModule(JSObject m) {
   _buffer = null;
 }
 
+/// Argument arrays for `Function.prototype.apply`, reused per arity: most OpenCV calls take five or
+/// more arguments, and `callAsFunction` stops at four.
+final _applyArgs = <int, JSArray<JSAny?>>{};
+
 /// Calls the exported C function [name] with already converted arguments.
 JSAny? call(String name, List<JSAny?> args) {
   final fn = _fns.putIfAbsent(name, () {
@@ -38,8 +42,19 @@ JSAny? call(String name, List<JSAny?> args) {
     1 => fn.callAsFunction(null, args[0]),
     2 => fn.callAsFunction(null, args[0], args[1]),
     3 => fn.callAsFunction(null, args[0], args[1], args[2]),
-    _ => fn.callMethodVarArgs('call'.toJS, [null, ...args]),
+    4 => fn.callAsFunction(null, args[0], args[1], args[2], args[3]),
+    // `apply` copies the arguments into the call when it dispatches, so sharing one array per arity
+    // is safe even if the callee calls back into Dart (a listener callback, ...).
+    _ => _apply(fn, args),
   };
+}
+
+JSAny? _apply(JSFunction fn, List<JSAny?> args) {
+  final arr = _applyArgs.putIfAbsent(args.length + 1, () => List<JSAny?>.filled(args.length + 1, null).toJS);
+  for (var k = 0; k < args.length; k++) {
+    arr[k + 1] = args[k];
+  }
+  return fn.callMethod<JSAny?>('apply'.toJS, null, arr);
 }
 
 bool hasSymbol(String name) => module.has('_$name');
@@ -99,6 +114,37 @@ int malloc(int size) {
 
 void free(int address) {
   if (address != 0) call('free', [address.toJS]);
+}
+
+// ---- scratch buffers ----
+
+/// The generated bindings copy a by-value struct into wasm memory for the duration of one call.
+/// Those buffers are short-lived and small, so recycle a few per size instead of paying a
+/// malloc/free pair per call. Kept separate from [free]: that one is also called with memory C
+/// allocated (`strdup`, ...), which must never enter this pool.
+const _scratchMaxSize = 64;
+const _scratchPerSize = 8;
+final _scratchFree = <int, List<int>>{};
+
+/// A buffer of [size] bytes, valid until the matching [releaseScratch].
+int scratch(int size) {
+  if (size > _scratchMaxSize) return malloc(size);
+  final pool = _scratchFree[size];
+  if (pool != null && pool.isNotEmpty) return pool.removeLast();
+  return malloc(size);
+}
+
+void releaseScratch(int address, int size) {
+  if (size > _scratchMaxSize) {
+    free(address);
+    return;
+  }
+  final pool = _scratchFree.putIfAbsent(size, () => <int>[]);
+  if (pool.length < _scratchPerSize) {
+    pool.add(address);
+  } else {
+    free(address);
+  }
 }
 
 int cStringLength(int address) {

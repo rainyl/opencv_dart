@@ -283,14 +283,14 @@ T _createDartManaged<T extends _Compound>([TypedData? typedData, int offset = 0]
   return s.$3(bytes, offset * typedData.elementSizeInBytes) as T;
 }
 
-/// Copies struct [s] (which may live in Dart memory) into a fresh wasm allocation of [size] bytes.
-int $copyToWasm(_Compound s, int size) {
-  final p = rt.malloc(size);
+/// Copies struct [s] (which may live in Dart memory) into the [address] buffer of [size] bytes,
+/// and returns that address (the generated bindings use the result inline as the argument).
+int $copyToWasm(int address, _Compound s, int size) {
   final d = rt.view, src = s._d;
   for (var k = 0; k < size; k++) {
-    d.setUint8(p + k, src.getUint8(s.$offset + k));
+    d.setUint8(address + k, src.getUint8(s.$offset + k));
   }
-  return p;
+  return address;
 }
 
 /// Copies [size] bytes at wasm [address] into Dart memory, for struct values returned by value.

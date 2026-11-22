@@ -231,20 +231,20 @@ void cv_StereoBM_setPreFilterType(StereoBM self$1, int preFilterType) {
 }
 
 void cv_StereoBM_setROI1(StereoBM self$1, CvRect roi1) {
-  final $t1 = ffi.$copyToWasm(roi1, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), roi1, 16);
   try {
     $rt.call('cv_StereoBM_setROI1', [$rt.i(self$1.ptr.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
 void cv_StereoBM_setROI2(StereoBM self$1, CvRect roi2) {
-  final $t1 = ffi.$copyToWasm(roi2, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), roi2, 16);
   try {
     $rt.call('cv_StereoBM_setROI2', [$rt.i(self$1.ptr.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -427,8 +427,8 @@ ffi.Pointer<CvStatus> cv_calibrateCamera(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(imageSize, 8);
-  final $t8 = ffi.$copyToWasm(criteria, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), imageSize, 8);
+  final $t8 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -448,17 +448,17 @@ ffi.Pointer<CvStatus> cv_calibrateCamera(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t8, 16);
   }
 }
 
 bool cv_checkChessboard(Mat img, CvSize size) {
-  final $t1 = ffi.$copyToWasm(size, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return $rt.rb($rt.call('cv_checkChessboard', [$rt.i(img.ptr.address), $rt.i($t1)]));
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -631,7 +631,7 @@ ffi.Pointer<CvStatus> cv_drawChessboardCorners(
   bool patternWasFound,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -645,7 +645,7 @@ ffi.Pointer<CvStatus> cv_drawChessboardCorners(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -829,7 +829,7 @@ ffi.Pointer<CvStatus> cv_estimateChessboardSharpness(
   ffi.Pointer<Scalar> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -846,7 +846,7 @@ ffi.Pointer<CvStatus> cv_estimateChessboardSharpness(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -929,7 +929,7 @@ ffi.Pointer<CvStatus> cv_find4QuadCornerSubpix(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(region_size, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), region_size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -943,7 +943,7 @@ ffi.Pointer<CvStatus> cv_find4QuadCornerSubpix(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -955,7 +955,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCorners(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -970,7 +970,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCorners(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -982,7 +982,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -997,7 +997,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCornersSB(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -1010,7 +1010,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1026,7 +1026,7 @@ ffi.Pointer<CvStatus> cv_findChessboardCornersSB_1(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -1038,7 +1038,7 @@ ffi.Pointer<CvStatus> cv_findCirclesGrid(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(patternSize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), patternSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1053,7 +1053,7 @@ ffi.Pointer<CvStatus> cv_findCirclesGrid(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -1070,7 +1070,7 @@ ffi.Pointer<CvStatus> cv_findEssentialMat(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(pp, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), pp, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1090,7 +1090,7 @@ ffi.Pointer<CvStatus> cv_findEssentialMat(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
@@ -1160,7 +1160,7 @@ ffi.Pointer<CvStatus> cv_findFundamentalMat_1(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(params, 64);
+  final $t3 = ffi.$copyToWasm($rt.scratch(64), params, 64);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1175,7 +1175,7 @@ ffi.Pointer<CvStatus> cv_findFundamentalMat_1(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 64);
   }
 }
 
@@ -1241,7 +1241,7 @@ ffi.Pointer<CvStatus> cv_findHomography_1(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(params, 64);
+  final $t3 = ffi.$copyToWasm($rt.scratch(64), params, 64);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1256,7 +1256,7 @@ ffi.Pointer<CvStatus> cv_findHomography_1(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 64);
   }
 }
 
@@ -1273,8 +1273,8 @@ ffi.Pointer<CvStatus> cv_fisheye_calibrate(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(imageSize, 8);
-  final $t8 = ffi.$copyToWasm(criteria, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), imageSize, 8);
+  final $t8 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1294,8 +1294,8 @@ ffi.Pointer<CvStatus> cv_fisheye_calibrate(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t8, 16);
   }
 }
 
@@ -1356,8 +1356,8 @@ ffi.Pointer<CvStatus> cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
   double fovScale,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(imgSize, 8);
-  final $t6 = ffi.$copyToWasm(newSize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), imgSize, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(8), newSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1375,8 +1375,8 @@ ffi.Pointer<CvStatus> cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t6);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t6, 8);
   }
 }
 
@@ -1391,7 +1391,7 @@ ffi.Pointer<CvStatus> cv_fisheye_initUndistortRectifyMap(
   imp$1.MatOut map2,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(imgSize, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), imgSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1409,7 +1409,7 @@ ffi.Pointer<CvStatus> cv_fisheye_initUndistortRectifyMap(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -1454,7 +1454,7 @@ ffi.Pointer<CvStatus> cv_fisheye_solvePnP(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t8 = ffi.$copyToWasm(criteria, 16);
+  final $t8 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1474,7 +1474,7 @@ ffi.Pointer<CvStatus> cv_fisheye_solvePnP(
       ),
     );
   } finally {
-    $rt.free($t8);
+    $rt.releaseScratch($t8, 16);
   }
 }
 
@@ -1495,7 +1495,7 @@ ffi.Pointer<CvStatus> cv_fisheye_solvePnPRansac(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t12 = ffi.$copyToWasm(criteria, 16);
+  final $t12 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1519,7 +1519,7 @@ ffi.Pointer<CvStatus> cv_fisheye_solvePnPRansac(
       ),
     );
   } finally {
-    $rt.free($t12);
+    $rt.releaseScratch($t12, 16);
   }
 }
 
@@ -1552,7 +1552,7 @@ ffi.Pointer<CvStatus> cv_fisheye_undistortImage_1(
   CvSize size,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t5 = ffi.$copyToWasm(size, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1568,7 +1568,7 @@ ffi.Pointer<CvStatus> cv_fisheye_undistortImage_1(
       ),
     );
   } finally {
-    $rt.free($t5);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -1603,7 +1603,7 @@ ffi.Pointer<CvStatus> cv_getDefaultNewCameraMatrix(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(size, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1617,7 +1617,7 @@ ffi.Pointer<CvStatus> cv_getDefaultNewCameraMatrix(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -1632,8 +1632,8 @@ ffi.Pointer<CvStatus> cv_getOptimalNewCameraMatrix(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(size, 8);
-  final $t4 = ffi.$copyToWasm(newImgSize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), size, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), newImgSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1651,8 +1651,8 @@ ffi.Pointer<CvStatus> cv_getOptimalNewCameraMatrix(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t4);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -1667,7 +1667,7 @@ ffi.Pointer<CvStatus> cv_initUndistortRectifyMap(
   Mat map2,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(size, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1685,7 +1685,7 @@ ffi.Pointer<CvStatus> cv_initUndistortRectifyMap(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -1702,7 +1702,7 @@ ffi.Pointer<CvStatus> cv_initWideAngleProjMap(
   ffi.Pointer<ffi.Float> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(size, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1722,7 +1722,7 @@ ffi.Pointer<CvStatus> cv_initWideAngleProjMap(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -1818,7 +1818,7 @@ ffi.Pointer<CvStatus> cv_recoverPose_1(
   ffi.Pointer<ffi.Int> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(pp, 16);
+  final $t6 = ffi.$copyToWasm($rt.scratch(16), pp, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1837,7 +1837,7 @@ ffi.Pointer<CvStatus> cv_recoverPose_1(
       ),
     );
   } finally {
-    $rt.free($t6);
+    $rt.releaseScratch($t6, 16);
   }
 }
 
@@ -2013,7 +2013,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRansac_1(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t7 = ffi.$copyToWasm(params, 64);
+  final $t7 = ffi.$copyToWasm($rt.scratch(64), params, 64);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2032,7 +2032,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRansac_1(
       ),
     );
   } finally {
-    $rt.free($t7);
+    $rt.releaseScratch($t7, 64);
   }
 }
 
@@ -2046,7 +2046,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRefineLM(
   imp$1.TermCriteria criteria,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(criteria, 16);
+  final $t6 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2063,7 +2063,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRefineLM(
       ),
     );
   } finally {
-    $rt.free($t6);
+    $rt.releaseScratch($t6, 16);
   }
 }
 
@@ -2078,7 +2078,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRefineVVS(
   double VVSlambda,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(criteria, 16);
+  final $t6 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2096,7 +2096,7 @@ ffi.Pointer<CvStatus> cv_solvePnPRefineVVS(
       ),
     );
   } finally {
-    $rt.free($t6);
+    $rt.releaseScratch($t6, 16);
   }
 }
 
@@ -2121,8 +2121,8 @@ ffi.Pointer<CvStatus> cv_stereoCalibrate(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t7 = ffi.$copyToWasm(imageSize, 8);
-  final $t16 = ffi.$copyToWasm(criteria, 16);
+  final $t7 = ffi.$copyToWasm($rt.scratch(8), imageSize, 8);
+  final $t16 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2150,8 +2150,8 @@ ffi.Pointer<CvStatus> cv_stereoCalibrate(
       ),
     );
   } finally {
-    $rt.free($t7);
-    $rt.free($t16);
+    $rt.releaseScratch($t7, 8);
+    $rt.releaseScratch($t16, 16);
   }
 }
 
@@ -2175,8 +2175,8 @@ ffi.Pointer<CvStatus> cv_stereoRectify(
   ffi.Pointer<imp$1.CvRect> validPixROI2,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(imageSize, 8);
-  final $t14 = ffi.$copyToWasm(newImageSize, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), imageSize, 8);
+  final $t14 = ffi.$copyToWasm($rt.scratch(8), newImageSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2203,8 +2203,8 @@ ffi.Pointer<CvStatus> cv_stereoRectify(
       ),
     );
   } finally {
-    $rt.free($t4);
-    $rt.free($t14);
+    $rt.releaseScratch($t4, 8);
+    $rt.releaseScratch($t14, 8);
   }
 }
 
@@ -2219,7 +2219,7 @@ ffi.Pointer<CvStatus> cv_stereoRectifyUncalibrated(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(imgSize, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), imgSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2237,7 +2237,7 @@ ffi.Pointer<CvStatus> cv_stereoRectifyUncalibrated(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
@@ -2293,7 +2293,7 @@ ffi.Pointer<CvStatus> cv_undistortImagePoints(
   imp$1.TermCriteria criteria,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(criteria, 16);
+  final $t4 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2308,7 +2308,7 @@ ffi.Pointer<CvStatus> cv_undistortImagePoints(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 16);
   }
 }
 
@@ -2322,7 +2322,7 @@ ffi.Pointer<CvStatus> cv_undistortPoints(
   TermCriteria criteria,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(criteria, 16);
+  final $t6 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2339,7 +2339,7 @@ ffi.Pointer<CvStatus> cv_undistortPoints(
       ),
     );
   } finally {
-    $rt.free($t6);
+    $rt.releaseScratch($t6, 16);
   }
 }
 

@@ -349,8 +349,8 @@ ffi.Pointer<CvStatus> Prim_from_Circle(
   int thick,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t0 = ffi.$copyToWasm(center, 8);
-  final $t1 = ffi.$copyToWasm(color, 32);
+  final $t0 = ffi.$copyToWasm($rt.scratch(8), center, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -366,8 +366,8 @@ ffi.Pointer<CvStatus> Prim_from_Circle(
       ),
     );
   } finally {
-    $rt.free($t0);
-    $rt.free($t1);
+    $rt.releaseScratch($t0, 8);
+    $rt.releaseScratch($t1, 32);
   }
 }
 
@@ -379,8 +379,8 @@ ffi.Pointer<CvStatus> Prim_from_FText(
   Scalar color,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(org, 8);
-  final $t4 = ffi.$copyToWasm(color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), org, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -395,13 +395,13 @@ ffi.Pointer<CvStatus> Prim_from_FText(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t4);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t4, 32);
   }
 }
 
 ffi.Pointer<CvStatus> Prim_from_Image(CvPoint org, Mat img, Mat alpha, ffi.Pointer<Prim> rval) {
-  final $t0 = ffi.$copyToWasm(org, 8);
+  final $t0 = ffi.$copyToWasm($rt.scratch(8), org, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -414,7 +414,7 @@ ffi.Pointer<CvStatus> Prim_from_Image(CvPoint org, Mat img, Mat alpha, ffi.Point
       ),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 8);
   }
 }
 
@@ -427,9 +427,9 @@ ffi.Pointer<CvStatus> Prim_from_Line(
   int thick,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t0 = ffi.$copyToWasm(color, 32);
-  final $t2 = ffi.$copyToWasm(pt1, 8);
-  final $t3 = ffi.$copyToWasm(pt2, 8);
+  final $t0 = ffi.$copyToWasm($rt.scratch(32), color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), pt1, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), pt2, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -445,20 +445,20 @@ ffi.Pointer<CvStatus> Prim_from_Line(
       ),
     );
   } finally {
-    $rt.free($t0);
-    $rt.free($t2);
-    $rt.free($t3);
+    $rt.releaseScratch($t0, 32);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
 ffi.Pointer<CvStatus> Prim_from_Mosaic(int cellSz, int decim, CvRect mos, ffi.Pointer<Prim> rval) {
-  final $t2 = ffi.$copyToWasm(mos, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), mos, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('Prim_from_Mosaic', [$rt.i(cellSz), $rt.i(decim), $rt.i($t2), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -470,7 +470,7 @@ ffi.Pointer<CvStatus> Prim_from_Poly(
   int shift,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t1 = ffi.$copyToWasm(color, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -485,7 +485,7 @@ ffi.Pointer<CvStatus> Prim_from_Poly(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 32);
   }
 }
 
@@ -497,8 +497,8 @@ ffi.Pointer<CvStatus> Prim_from_Rect(
   int thick,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t0 = ffi.$copyToWasm(color, 32);
-  final $t2 = ffi.$copyToWasm(rect, 16);
+  final $t0 = ffi.$copyToWasm($rt.scratch(32), color, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -513,8 +513,8 @@ ffi.Pointer<CvStatus> Prim_from_Rect(
       ),
     );
   } finally {
-    $rt.free($t0);
-    $rt.free($t2);
+    $rt.releaseScratch($t0, 32);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -530,8 +530,8 @@ ffi.Pointer<CvStatus> Prim_from_Text(
   int thick,
   ffi.Pointer<Prim> rval,
 ) {
-  final $t1 = ffi.$copyToWasm(color, 32);
-  final $t5 = ffi.$copyToWasm(org, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), color, 32);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), org, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -550,8 +550,8 @@ ffi.Pointer<CvStatus> Prim_from_Text(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t5);
+    $rt.releaseScratch($t1, 32);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -798,13 +798,13 @@ ffi.Pointer<CvStatus> gapi_GScalar_New_FromDouble(double v0, ffi.Pointer<GScalar
 }
 
 ffi.Pointer<CvStatus> gapi_GScalar_New_FromScalar(Scalar scalar, ffi.Pointer<GScalar> rval) {
-  final $t0 = ffi.$copyToWasm(scalar, 32);
+  final $t0 = ffi.$copyToWasm($rt.scratch(32), scalar, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('gapi_GScalar_New_FromScalar', [$rt.i($t0), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 32);
   }
 }
 
@@ -958,7 +958,7 @@ ffi.Pointer<CvStatus> gapi_Sobel(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t8 = ffi.$copyToWasm(borderValue, 32);
+  final $t8 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -977,7 +977,7 @@ ffi.Pointer<CvStatus> gapi_Sobel(
       ),
     );
   } finally {
-    $rt.free($t8);
+    $rt.releaseScratch($t8, 32);
   }
 }
 
@@ -993,7 +993,7 @@ ffi.Pointer<CvStatus> gapi_SobelXY(
   ffi.Pointer<GMat> rval,
   ffi.Pointer<GMat> rval1,
 ) {
-  final $t7 = ffi.$copyToWasm(borderValue, 32);
+  final $t7 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1012,7 +1012,7 @@ ffi.Pointer<CvStatus> gapi_SobelXY(
       ),
     );
   } finally {
-    $rt.free($t7);
+    $rt.releaseScratch($t7, 32);
   }
 }
 
@@ -1097,9 +1097,9 @@ ffi.Pointer<CvStatus> gapi_blur(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t1 = ffi.$copyToWasm(ksize, 8);
-  final $t2 = ffi.$copyToWasm(anchor, 8);
-  final $t4 = ffi.$copyToWasm(borderValue, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), ksize, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1114,9 +1114,9 @@ ffi.Pointer<CvStatus> gapi_blur(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
-    $rt.free($t4);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t4, 32);
   }
 }
 
@@ -1148,9 +1148,9 @@ ffi.Pointer<CvStatus> gapi_boxFilter(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(ksize, 8);
-  final $t3 = ffi.$copyToWasm(anchor, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), ksize, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1167,9 +1167,9 @@ ffi.Pointer<CvStatus> gapi_boxFilter(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1236,13 +1236,13 @@ ffi.Pointer<CvStatus> gapi_copy_1(GMat in$, ffi.Pointer<GMat> rval) {
 }
 
 ffi.Pointer<CvStatus> gapi_crop(GMat src, CvRect rect, ffi.Pointer<GMat> rval) {
-  final $t1 = ffi.$copyToWasm(rect, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), rect, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('gapi_crop', [$rt.i(src.ptr.address), $rt.i($t1), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -1255,8 +1255,8 @@ ffi.Pointer<CvStatus> gapi_dilate(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(anchor, 8);
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1272,8 +1272,8 @@ ffi.Pointer<CvStatus> gapi_dilate(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -1284,7 +1284,7 @@ ffi.Pointer<CvStatus> gapi_dilate3x3(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1298,7 +1298,7 @@ ffi.Pointer<CvStatus> gapi_dilate3x3(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1359,8 +1359,8 @@ ffi.Pointer<CvStatus> gapi_erode(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(anchor, 8);
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1376,8 +1376,8 @@ ffi.Pointer<CvStatus> gapi_erode(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -1388,7 +1388,7 @@ ffi.Pointer<CvStatus> gapi_erode3x3(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1402,7 +1402,7 @@ ffi.Pointer<CvStatus> gapi_erode3x3(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1416,9 +1416,9 @@ ffi.Pointer<CvStatus> gapi_filter2D(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(anchor, 8);
-  final $t4 = ffi.$copyToWasm(delta, 32);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(32), delta, 32);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1435,9 +1435,9 @@ ffi.Pointer<CvStatus> gapi_filter2D(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 32);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1707,8 +1707,8 @@ ffi.Pointer<CvStatus> gapi_gaussianBlur(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t1 = ffi.$copyToWasm(ksize, 8);
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), ksize, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1724,8 +1724,8 @@ ffi.Pointer<CvStatus> gapi_gaussianBlur(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t5);
+    $rt.releaseScratch($t1, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -1810,8 +1810,8 @@ ffi.Pointer<CvStatus> gapi_morphologyEx(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(anchor, 8);
-  final $t6 = ffi.$copyToWasm(borderValue, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1828,8 +1828,8 @@ ffi.Pointer<CvStatus> gapi_morphologyEx(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t6);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t6, 32);
   }
 }
 
@@ -1948,7 +1948,7 @@ ffi.Pointer<CvStatus> gapi_remap(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1964,7 +1964,7 @@ ffi.Pointer<CvStatus> gapi_remap(
       ),
     );
   } finally {
-    $rt.free($t5);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -1976,7 +1976,7 @@ ffi.Pointer<CvStatus> gapi_resize(
   int interpolation,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t1 = ffi.$copyToWasm(dsize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1991,12 +1991,12 @@ ffi.Pointer<CvStatus> gapi_resize(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
 ffi.Pointer<CvStatus> gapi_resizeP(GMat src, CvSize dsize, int interpolation, ffi.Pointer<GMat> rval) {
-  final $t1 = ffi.$copyToWasm(dsize, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2009,7 +2009,7 @@ ffi.Pointer<CvStatus> gapi_resizeP(GMat src, CvSize dsize, int interpolation, ff
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -2024,9 +2024,9 @@ ffi.Pointer<CvStatus> gapi_sepFilter(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t4 = ffi.$copyToWasm(anchor, 8);
-  final $t5 = ffi.$copyToWasm(delta, 32);
-  final $t7 = ffi.$copyToWasm(borderValue, 32);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), anchor, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), delta, 32);
+  final $t7 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2044,9 +2044,9 @@ ffi.Pointer<CvStatus> gapi_sepFilter(
       ),
     );
   } finally {
-    $rt.free($t4);
-    $rt.free($t5);
-    $rt.free($t7);
+    $rt.releaseScratch($t4, 8);
+    $rt.releaseScratch($t5, 32);
+    $rt.releaseScratch($t7, 32);
   }
 }
 
@@ -2142,8 +2142,8 @@ ffi.Pointer<CvStatus> gapi_warpAffine(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(dsize, 8);
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2159,8 +2159,8 @@ ffi.Pointer<CvStatus> gapi_warpAffine(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 
@@ -2173,8 +2173,8 @@ ffi.Pointer<CvStatus> gapi_warpPerspective(
   Scalar borderValue,
   ffi.Pointer<GMat> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(dsize, 8);
-  final $t5 = ffi.$copyToWasm(borderValue, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), dsize, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(32), borderValue, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2190,8 +2190,8 @@ ffi.Pointer<CvStatus> gapi_warpPerspective(
       ),
     );
   } finally {
-    $rt.free($t2);
-    $rt.free($t5);
+    $rt.releaseScratch($t2, 8);
+    $rt.releaseScratch($t5, 32);
   }
 }
 

@@ -138,8 +138,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_1(
   CvSize maxSize,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(minSize, 8);
-  final $t7 = ffi.$copyToWasm(maxSize, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(8), minSize, 8);
+  final $t7 = ffi.$copyToWasm($rt.scratch(8), maxSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -157,8 +157,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_1(
       ),
     );
   } finally {
-    $rt.free($t6);
-    $rt.free($t7);
+    $rt.releaseScratch($t6, 8);
+    $rt.releaseScratch($t7, 8);
   }
 }
 
@@ -174,8 +174,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_2(
   CvSize maxSize,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t7 = ffi.$copyToWasm(minSize, 8);
-  final $t8 = ffi.$copyToWasm(maxSize, 8);
+  final $t7 = ffi.$copyToWasm($rt.scratch(8), minSize, 8);
+  final $t8 = ffi.$copyToWasm($rt.scratch(8), maxSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -194,8 +194,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_2(
       ),
     );
   } finally {
-    $rt.free($t7);
-    $rt.free($t8);
+    $rt.releaseScratch($t7, 8);
+    $rt.releaseScratch($t8, 8);
   }
 }
 
@@ -213,8 +213,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_3(
   bool outputRejectLevels,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t8 = ffi.$copyToWasm(minSize, 8);
-  final $t9 = ffi.$copyToWasm(maxSize, 8);
+  final $t8 = ffi.$copyToWasm($rt.scratch(8), minSize, 8);
+  final $t9 = ffi.$copyToWasm($rt.scratch(8), maxSize, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -235,8 +235,8 @@ ffi.Pointer<CvStatus> cv_CascadeClassifier_detectMultiScale_3(
       ),
     );
   } finally {
-    $rt.free($t8);
-    $rt.free($t9);
+    $rt.releaseScratch($t8, 8);
+    $rt.releaseScratch($t9, 8);
   }
 }
 
@@ -249,12 +249,12 @@ int cv_CascadeClassifier_getFeatureType(CascadeClassifier self$1) {
 }
 
 CvSize cv_CascadeClassifier_getOriginalWindowSize(CascadeClassifier self$1) {
-  final $sret = $rt.malloc(8);
+  final $sret = $rt.scratch(8);
   try {
     $rt.call('cv_CascadeClassifier_getOriginalWindowSize', [$rt.i($sret), $rt.i(self$1.ptr.address)]);
     return CvSize.$view(ffi.$copyFromWasm($sret, 8), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 8);
   }
 }
 
@@ -293,7 +293,7 @@ ffi.Pointer<CvStatus> cv_FaceDetectorYN_create(
   int target_id,
   ffi.Pointer<FaceDetectorYN> rval,
 ) {
-  final $t2 = ffi.$copyToWasm(input_size, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), input_size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -311,7 +311,7 @@ ffi.Pointer<CvStatus> cv_FaceDetectorYN_create(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -327,7 +327,7 @@ ffi.Pointer<CvStatus> cv_FaceDetectorYN_create_1(
   int target_id,
   ffi.Pointer<FaceDetectorYN> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(input_size, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), input_size, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -346,7 +346,7 @@ ffi.Pointer<CvStatus> cv_FaceDetectorYN_create_1(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
@@ -369,12 +369,12 @@ ffi.Pointer<CvStatus> cv_FaceDetectorYN_detect(
 }
 
 CvSize cv_FaceDetectorYN_getInputSize(FaceDetectorYN self$1) {
-  final $sret = $rt.malloc(8);
+  final $sret = $rt.scratch(8);
   try {
     $rt.call('cv_FaceDetectorYN_getInputSize', [$rt.i($sret), $rt.i(self$1.ptr.address)]);
     return CvSize.$view(ffi.$copyFromWasm($sret, 8), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 8);
   }
 }
 
@@ -391,11 +391,11 @@ int cv_FaceDetectorYN_getTopK(FaceDetectorYN self$1) {
 }
 
 void cv_FaceDetectorYN_setInputSize(FaceDetectorYN self$1, CvSize input_size) {
-  final $t1 = ffi.$copyToWasm(input_size, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), input_size, 8);
   try {
     $rt.call('cv_FaceDetectorYN_setInputSize', [$rt.i(self$1.ptr.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -510,8 +510,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_compute(
   ffi.Pointer<VecPoint> locations,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(winStride, 8);
-  final $t4 = ffi.$copyToWasm(padding, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), winStride, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), padding, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -527,8 +527,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_compute(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 8);
   }
 }
 
@@ -541,8 +541,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_computeGradient(
   CvSize paddingBR,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(paddingTL, 8);
-  final $t5 = ffi.$copyToWasm(paddingBR, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), paddingTL, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), paddingBR, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -558,8 +558,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_computeGradient(
       ),
     );
   } finally {
-    $rt.free($t4);
-    $rt.free($t5);
+    $rt.releaseScratch($t4, 8);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -589,8 +589,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detect(
   ffi.Pointer<VecPoint> searchLocations,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t5 = ffi.$copyToWasm(winStride, 8);
-  final $t6 = ffi.$copyToWasm(padding, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), winStride, 8);
+  final $t6 = ffi.$copyToWasm($rt.scratch(8), padding, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -608,8 +608,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detect(
       ),
     );
   } finally {
-    $rt.free($t5);
-    $rt.free($t6);
+    $rt.releaseScratch($t5, 8);
+    $rt.releaseScratch($t6, 8);
   }
 }
 
@@ -623,8 +623,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detect2(
   ffi.Pointer<VecPoint> searchLocations,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(winStride, 8);
-  final $t5 = ffi.$copyToWasm(padding, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), winStride, 8);
+  final $t5 = ffi.$copyToWasm($rt.scratch(8), padding, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -641,8 +641,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detect2(
       ),
     );
   } finally {
-    $rt.free($t4);
-    $rt.free($t5);
+    $rt.releaseScratch($t4, 8);
+    $rt.releaseScratch($t5, 8);
   }
 }
 
@@ -676,8 +676,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detectMultiScale_1(
   ffi.Pointer<VecRect> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(winStride, 8);
-  final $t4 = ffi.$copyToWasm(padding, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), winStride, 8);
+  final $t4 = ffi.$copyToWasm($rt.scratch(8), padding, 8);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -696,8 +696,8 @@ ffi.Pointer<CvStatus> cv_HOGDescriptor_detectMultiScale_1(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
+    $rt.releaseScratch($t3, 8);
+    $rt.releaseScratch($t4, 8);
   }
 }
 

@@ -513,7 +513,7 @@ ffi.Pointer<CvStatus> cv_TrackerMIL_init(
   CvRect bbox,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(bbox, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), bbox, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -526,7 +526,7 @@ ffi.Pointer<CvStatus> cv_TrackerMIL_init(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -620,8 +620,8 @@ ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK_1(
   double minEigThreshold,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(winSize, 8);
-  final $t8 = ffi.$copyToWasm(criteria, 16);
+  final $t6 = ffi.$copyToWasm($rt.scratch(8), winSize, 8);
+  final $t8 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -642,8 +642,8 @@ ffi.Pointer<CvStatus> cv_calcOpticalFlowPyrLK_1(
       ),
     );
   } finally {
-    $rt.free($t6);
-    $rt.free($t8);
+    $rt.releaseScratch($t6, 8);
+    $rt.releaseScratch($t8, 16);
   }
 }
 
@@ -658,7 +658,7 @@ ffi.Pointer<CvStatus> cv_findTransformECC(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t4 = ffi.$copyToWasm(criteria, 16);
+  final $t4 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -676,7 +676,7 @@ ffi.Pointer<CvStatus> cv_findTransformECC(
       ),
     );
   } finally {
-    $rt.free($t4);
+    $rt.releaseScratch($t4, 16);
   }
 }
 

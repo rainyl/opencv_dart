@@ -447,13 +447,13 @@ ffi.Pointer<CvStatus> cv_ml_ANN_MLP_setLayerSizes(ANN_MLP self$1, Mat val) {
 }
 
 ffi.Pointer<CvStatus> cv_ml_ANN_MLP_setTermCriteria(ANN_MLP self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_ANN_MLP_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -1325,13 +1325,13 @@ ffi.Pointer<CvStatus> cv_ml_EM_save(EM self$1, ffi.Pointer<ffi.Char> filename) {
 }
 
 ffi.Pointer<CvStatus> cv_ml_EM_setTermCriteria(EM self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_EM_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -1845,13 +1845,13 @@ ffi.Pointer<CvStatus> cv_ml_LogisticRegression_save(
 }
 
 ffi.Pointer<CvStatus> cv_ml_LogisticRegression_setTermCriteria(LogisticRegression self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_LogisticRegression_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -2364,13 +2364,13 @@ ffi.Pointer<CvStatus> cv_ml_RTrees_setPriors(RTrees self$1, Mat val) {
 }
 
 ffi.Pointer<CvStatus> cv_ml_RTrees_setTermCriteria(RTrees self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_RTrees_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -2633,13 +2633,13 @@ ffi.Pointer<CvStatus> cv_ml_SVMSGD_setOptimalParameters(SVMSGD self$1, int svmsg
 }
 
 ffi.Pointer<CvStatus> cv_ml_SVMSGD_setTermCriteria(SVMSGD self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_SVMSGD_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -2917,13 +2917,13 @@ ffi.Pointer<CvStatus> cv_ml_SVM_setClassWeights(SVM self$1, Mat val) {
 }
 
 ffi.Pointer<CvStatus> cv_ml_SVM_setTermCriteria(SVM self$1, TermCriteria val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_ml_SVM_setTermCriteria', [$rt.i(self$1.ptr.address), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -2993,12 +2993,12 @@ ffi.Pointer<CvStatus> cv_ml_SVM_trainAuto(
   ffi.Pointer<ffi.Bool> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(Cgrid, 24);
-  final $t4 = ffi.$copyToWasm(gammaGrid, 24);
-  final $t5 = ffi.$copyToWasm(pGrid, 24);
-  final $t6 = ffi.$copyToWasm(nuGrid, 24);
-  final $t7 = ffi.$copyToWasm(coeffGrid, 24);
-  final $t8 = ffi.$copyToWasm(degreeGrid, 24);
+  final $t3 = ffi.$copyToWasm($rt.scratch(24), Cgrid, 24);
+  final $t4 = ffi.$copyToWasm($rt.scratch(24), gammaGrid, 24);
+  final $t5 = ffi.$copyToWasm($rt.scratch(24), pGrid, 24);
+  final $t6 = ffi.$copyToWasm($rt.scratch(24), nuGrid, 24);
+  final $t7 = ffi.$copyToWasm($rt.scratch(24), coeffGrid, 24);
+  final $t8 = ffi.$copyToWasm($rt.scratch(24), degreeGrid, 24);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3019,12 +3019,12 @@ ffi.Pointer<CvStatus> cv_ml_SVM_trainAuto(
       ),
     );
   } finally {
-    $rt.free($t3);
-    $rt.free($t4);
-    $rt.free($t5);
-    $rt.free($t6);
-    $rt.free($t7);
-    $rt.free($t8);
+    $rt.releaseScratch($t3, 24);
+    $rt.releaseScratch($t4, 24);
+    $rt.releaseScratch($t5, 24);
+    $rt.releaseScratch($t6, 24);
+    $rt.releaseScratch($t7, 24);
+    $rt.releaseScratch($t8, 24);
   }
 }
 

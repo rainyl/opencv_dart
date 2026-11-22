@@ -1840,13 +1840,13 @@ ffi.Pointer<CvStatus> cv_SimpleBlobDetector_create_1(
   SimpleBlobDetectorParams params,
   ffi.Pointer<SimpleBlobDetector> rval,
 ) {
-  final $t0 = ffi.$copyToWasm(params, 60);
+  final $t0 = ffi.$copyToWasm($rt.scratch(60), params, 60);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_SimpleBlobDetector_create_1', [$rt.i($t0), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 60);
   }
 }
 
@@ -1917,11 +1917,11 @@ ffi.Pointer<SimpleBlobDetectorParams> cv_SimpleBlobDetector_getParams(SimpleBlob
 }
 
 void cv_SimpleBlobDetector_setParams(SimpleBlobDetector self$1, SimpleBlobDetectorParams params) {
-  final $t1 = ffi.$copyToWasm(params, 60);
+  final $t1 = ffi.$copyToWasm($rt.scratch(60), params, 60);
   try {
     $rt.call('cv_SimpleBlobDetector_setParams', [$rt.i(self$1.ptr.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 60);
   }
 }
 
@@ -1933,7 +1933,7 @@ ffi.Pointer<CvStatus> cv_drawKeyPoints(
   int flags,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(color, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), color, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1948,7 +1948,7 @@ ffi.Pointer<CvStatus> cv_drawKeyPoints(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1965,8 +1965,8 @@ ffi.Pointer<CvStatus> cv_drawMatches(
   int flags,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t6 = ffi.$copyToWasm(matchesColor, 32);
-  final $t7 = ffi.$copyToWasm(pointColor, 32);
+  final $t6 = ffi.$copyToWasm($rt.scratch(32), matchesColor, 32);
+  final $t7 = ffi.$copyToWasm($rt.scratch(32), pointColor, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1986,8 +1986,8 @@ ffi.Pointer<CvStatus> cv_drawMatches(
       ),
     );
   } finally {
-    $rt.free($t6);
-    $rt.free($t7);
+    $rt.releaseScratch($t6, 32);
+    $rt.releaseScratch($t7, 32);
   }
 }
 

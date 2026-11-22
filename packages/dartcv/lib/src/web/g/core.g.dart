@@ -481,7 +481,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_13(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(roi, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), roi, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -494,7 +494,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_13(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -536,7 +536,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_3(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t2 = ffi.$copyToWasm(ar, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), ar, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -550,7 +550,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_3(
       ),
     );
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -597,7 +597,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_5(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t0 = ffi.$copyToWasm(scalar, 32);
+  final $t0 = ffi.$copyToWasm($rt.scratch(32), scalar, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -612,7 +612,7 @@ ffi.Pointer<CvStatus> cv_Mat_create_5(
       ),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 32);
   }
 }
 
@@ -1283,7 +1283,7 @@ ffi.Pointer<CvStatus> cv_Mat_region(
   ffi.Pointer<Mat> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(r, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), r, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1296,7 +1296,7 @@ ffi.Pointer<CvStatus> cv_Mat_region(
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -1380,7 +1380,7 @@ int cv_Mat_rows(Mat self$1) {
 }
 
 ffi.Pointer<CvStatus> cv_Mat_setTo(Mat self$1, Scalar value, Mat mask, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(value, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), value, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -1393,205 +1393,205 @@ ffi.Pointer<CvStatus> cv_Mat_setTo(Mat self$1, Scalar value, Mat mask, imp$1.CvC
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 32);
   }
 }
 
 void cv_Mat_set_Vec2b(Mat self$1, int i0, int i1, Vec2b val) {
-  final $t3 = ffi.$copyToWasm(val, 2);
+  final $t3 = ffi.$copyToWasm($rt.scratch(2), val, 2);
   try {
     $rt.call('cv_Mat_set_Vec2b', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 2);
   }
 }
 
 void cv_Mat_set_Vec2d(Mat self$1, int i0, int i1, Vec2d val) {
-  final $t3 = ffi.$copyToWasm(val, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('cv_Mat_set_Vec2d', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
 void cv_Mat_set_Vec2f(Mat self$1, int i0, int i1, Vec2f val) {
-  final $t3 = ffi.$copyToWasm(val, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('cv_Mat_set_Vec2f', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
 void cv_Mat_set_Vec2i(Mat self$1, int i0, int i1, Vec2i val) {
-  final $t3 = ffi.$copyToWasm(val, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('cv_Mat_set_Vec2i', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
 void cv_Mat_set_Vec2s(Mat self$1, int i0, int i1, Vec2s val) {
-  final $t3 = ffi.$copyToWasm(val, 4);
+  final $t3 = ffi.$copyToWasm($rt.scratch(4), val, 4);
   try {
     $rt.call('cv_Mat_set_Vec2s', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 4);
   }
 }
 
 void cv_Mat_set_Vec2w(Mat self$1, int i0, int i1, Vec2w val) {
-  final $t3 = ffi.$copyToWasm(val, 4);
+  final $t3 = ffi.$copyToWasm($rt.scratch(4), val, 4);
   try {
     $rt.call('cv_Mat_set_Vec2w', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 4);
   }
 }
 
 void cv_Mat_set_Vec3b(Mat self$1, int i0, int i1, Vec3b val) {
-  final $t3 = ffi.$copyToWasm(val, 3);
+  final $t3 = ffi.$copyToWasm($rt.scratch(3), val, 3);
   try {
     $rt.call('cv_Mat_set_Vec3b', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 3);
   }
 }
 
 void cv_Mat_set_Vec3d(Mat self$1, int i0, int i1, Vec3d val) {
-  final $t3 = ffi.$copyToWasm(val, 24);
+  final $t3 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     $rt.call('cv_Mat_set_Vec3d', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 24);
   }
 }
 
 void cv_Mat_set_Vec3f(Mat self$1, int i0, int i1, Vec3f val) {
-  final $t3 = ffi.$copyToWasm(val, 12);
+  final $t3 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('cv_Mat_set_Vec3f', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 12);
   }
 }
 
 void cv_Mat_set_Vec3i(Mat self$1, int i0, int i1, Vec3i val) {
-  final $t3 = ffi.$copyToWasm(val, 12);
+  final $t3 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('cv_Mat_set_Vec3i', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 12);
   }
 }
 
 void cv_Mat_set_Vec3s(Mat self$1, int i0, int i1, Vec3s val) {
-  final $t3 = ffi.$copyToWasm(val, 6);
+  final $t3 = ffi.$copyToWasm($rt.scratch(6), val, 6);
   try {
     $rt.call('cv_Mat_set_Vec3s', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 6);
   }
 }
 
 void cv_Mat_set_Vec3w(Mat self$1, int i0, int i1, Vec3w val) {
-  final $t3 = ffi.$copyToWasm(val, 6);
+  final $t3 = ffi.$copyToWasm($rt.scratch(6), val, 6);
   try {
     $rt.call('cv_Mat_set_Vec3w', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 6);
   }
 }
 
 void cv_Mat_set_Vec4b(Mat self$1, int i0, int i1, Vec4b val) {
-  final $t3 = ffi.$copyToWasm(val, 4);
+  final $t3 = ffi.$copyToWasm($rt.scratch(4), val, 4);
   try {
     $rt.call('cv_Mat_set_Vec4b', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 4);
   }
 }
 
 void cv_Mat_set_Vec4d(Mat self$1, int i0, int i1, Vec4d val) {
-  final $t3 = ffi.$copyToWasm(val, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), val, 32);
   try {
     $rt.call('cv_Mat_set_Vec4d', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
 void cv_Mat_set_Vec4f(Mat self$1, int i0, int i1, Vec4f val) {
-  final $t3 = ffi.$copyToWasm(val, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('cv_Mat_set_Vec4f', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
 void cv_Mat_set_Vec4i(Mat self$1, int i0, int i1, Vec4i val) {
-  final $t3 = ffi.$copyToWasm(val, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('cv_Mat_set_Vec4i', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
 void cv_Mat_set_Vec4s(Mat self$1, int i0, int i1, Vec4s val) {
-  final $t3 = ffi.$copyToWasm(val, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('cv_Mat_set_Vec4s', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
 void cv_Mat_set_Vec4w(Mat self$1, int i0, int i1, Vec4w val) {
-  final $t3 = ffi.$copyToWasm(val, 8);
+  final $t3 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('cv_Mat_set_Vec4w', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 8);
   }
 }
 
 void cv_Mat_set_Vec6d(Mat self$1, int i0, int i1, Vec6d val) {
-  final $t3 = ffi.$copyToWasm(val, 48);
+  final $t3 = ffi.$copyToWasm($rt.scratch(48), val, 48);
   try {
     $rt.call('cv_Mat_set_Vec6d', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 48);
   }
 }
 
 void cv_Mat_set_Vec6f(Mat self$1, int i0, int i1, Vec6f val) {
-  final $t3 = ffi.$copyToWasm(val, 24);
+  final $t3 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     $rt.call('cv_Mat_set_Vec6f', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 24);
   }
 }
 
 void cv_Mat_set_Vec6i(Mat self$1, int i0, int i1, Vec6i val) {
-  final $t3 = ffi.$copyToWasm(val, 24);
+  final $t3 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     $rt.call('cv_Mat_set_Vec6i', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 24);
   }
 }
 
 void cv_Mat_set_Vec8i(Mat self$1, int i0, int i1, Vec8i val) {
-  final $t3 = ffi.$copyToWasm(val, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), val, 32);
   try {
     $rt.call('cv_Mat_set_Vec8i', [$rt.i(self$1.ptr.address), $rt.i(i0), $rt.i(i1), $rt.i($t3)]);
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -1692,12 +1692,12 @@ ffi.Pointer<CvStatus> cv_Mat_sqrt(Mat self$1, Mat rval, imp$1.CvCallback_0 callb
 }
 
 MatStep cv_Mat_step(Mat self$1) {
-  final $sret = $rt.malloc(12);
+  final $sret = $rt.scratch(12);
   try {
     $rt.call('cv_Mat_step', [$rt.i($sret), $rt.i(self$1.ptr.address)]);
     return MatStep.$view(ffi.$copyFromWasm($sret, 12), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 12);
   }
 }
 
@@ -2004,35 +2004,35 @@ ffi.Pointer<CvStatus> cv_RNG_uniformDouble(RNG rng, double a, double b, ffi.Poin
 }
 
 ffi.Pointer<CvStatus> cv_RotatedRect_boundingRect(RotatedRect rect, ffi.Pointer<CvRect> rval) {
-  final $t0 = ffi.$copyToWasm(rect, 20);
+  final $t0 = ffi.$copyToWasm($rt.scratch(20), rect, 20);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_RotatedRect_boundingRect', [$rt.i($t0), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 20);
   }
 }
 
 ffi.Pointer<CvStatus> cv_RotatedRect_boundingRect2f(RotatedRect rect, ffi.Pointer<CvRect2f> rval) {
-  final $t0 = ffi.$copyToWasm(rect, 20);
+  final $t0 = ffi.$copyToWasm($rt.scratch(20), rect, 20);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_RotatedRect_boundingRect2f', [$rt.i($t0), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 20);
   }
 }
 
 ffi.Pointer<CvStatus> cv_RotatedRect_points(RotatedRect rect, ffi.Pointer<VecPoint2f> out_pts) {
-  final $t0 = ffi.$copyToWasm(rect, 20);
+  final $t0 = ffi.$copyToWasm($rt.scratch(20), rect, 20);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_RotatedRect_points', [$rt.i($t0), $rt.i(out_pts.address)])),
     );
   } finally {
-    $rt.free($t0);
+    $rt.releaseScratch($t0, 20);
   }
 }
 
@@ -2290,7 +2290,7 @@ ffi.Pointer<CvStatus> cv_UMat_create_3(
   int usageFlags,
   ffi.Pointer<UMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(s, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), s, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2305,7 +2305,7 @@ ffi.Pointer<CvStatus> cv_UMat_create_3(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -2337,7 +2337,7 @@ ffi.Pointer<CvStatus> cv_UMat_create_5(
   int usageFlags,
   ffi.Pointer<UMat> rval,
 ) {
-  final $t3 = ffi.$copyToWasm(value, 32);
+  final $t3 = ffi.$copyToWasm($rt.scratch(32), value, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2352,7 +2352,7 @@ ffi.Pointer<CvStatus> cv_UMat_create_5(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 32);
   }
 }
 
@@ -2407,13 +2407,13 @@ ffi.Pointer<CvStatus> cv_UMat_create_8(
 }
 
 ffi.Pointer<CvStatus> cv_UMat_create_9(UMat self$1, CvRect roi, ffi.Pointer<UMat> rval) {
-  final $t1 = ffi.$copyToWasm(roi, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), roi, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_UMat_create_9', [$rt.i(self$1.ptr.address), $rt.i($t1), $rt.i(rval.address)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -2740,7 +2740,7 @@ int cv_UMat_rows(UMat self$1) {
 }
 
 ffi.Pointer<CvStatus> cv_UMat_setTo(UMat self$1, Scalar s, UMat mask, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(s, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), s, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -2753,7 +2753,7 @@ ffi.Pointer<CvStatus> cv_UMat_setTo(UMat self$1, Scalar s, UMat mask, imp$1.CvCa
       ),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 32);
   }
 }
 
@@ -2762,12 +2762,12 @@ ffi.Pointer<VecI32> cv_UMat_size(UMat self$1) {
 }
 
 MatStep cv_UMat_step(UMat self$1) {
-  final $sret = $rt.malloc(12);
+  final $sret = $rt.scratch(12);
   try {
     $rt.call('cv_UMat_step', [$rt.i($sret), $rt.i(self$1.ptr.address)]);
     return MatStep.$view(ffi.$copyFromWasm($sret, 12), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 12);
   }
 }
 
@@ -3140,7 +3140,7 @@ ffi.Pointer<CvStatus> cv_copyMakeBorder(
   Scalar value,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t7 = ffi.$copyToWasm(value, 32);
+  final $t7 = ffi.$copyToWasm($rt.scratch(32), value, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3158,7 +3158,7 @@ ffi.Pointer<CvStatus> cv_copyMakeBorder(
       ),
     );
   } finally {
-    $rt.free($t7);
+    $rt.releaseScratch($t7, 32);
   }
 }
 
@@ -3442,8 +3442,8 @@ ffi.Pointer<CvStatus> cv_inRange_1(
   Mat dst,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t1 = ffi.$copyToWasm(lowerb, 32);
-  final $t2 = ffi.$copyToWasm(upperb, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), lowerb, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), upperb, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3457,8 +3457,8 @@ ffi.Pointer<CvStatus> cv_inRange_1(
       ),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 32);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -3506,7 +3506,7 @@ ffi.Pointer<CvStatus> cv_kmeans(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(criteria, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3524,7 +3524,7 @@ ffi.Pointer<CvStatus> cv_kmeans(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
@@ -3539,7 +3539,7 @@ ffi.Pointer<CvStatus> cv_kmeans_points(
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
 ) {
-  final $t3 = ffi.$copyToWasm(criteria, 16);
+  final $t3 = ffi.$copyToWasm($rt.scratch(16), criteria, 16);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru(
@@ -3557,7 +3557,7 @@ ffi.Pointer<CvStatus> cv_kmeans_points(
       ),
     );
   } finally {
-    $rt.free($t3);
+    $rt.releaseScratch($t3, 16);
   }
 }
 
@@ -3986,28 +3986,28 @@ ffi.Pointer<CvStatus> cv_randShuffle_1(Mat mat, double iterFactor, RNG rng, imp$
 }
 
 ffi.Pointer<CvStatus> cv_randn(Mat mat, Scalar mean, Scalar stddev, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(mean, 32);
-  final $t2 = ffi.$copyToWasm(stddev, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), mean, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), stddev, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_randn', [$rt.i(mat.ptr.address), $rt.i($t1), $rt.i($t2), $rt.i(callback.address)])),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 32);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
 ffi.Pointer<CvStatus> cv_randu(Mat mat, Scalar low, Scalar high, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(low, 32);
-  final $t2 = ffi.$copyToWasm(high, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), low, 32);
+  final $t2 = ffi.$copyToWasm($rt.scratch(32), high, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_randu', [$rt.i(mat.ptr.address), $rt.i($t1), $rt.i($t2), $rt.i(callback.address)])),
     );
   } finally {
-    $rt.free($t1);
-    $rt.free($t2);
+    $rt.releaseScratch($t1, 32);
+    $rt.releaseScratch($t2, 32);
   }
 }
 
@@ -4135,13 +4135,13 @@ ffi.Pointer<CvStatus> cv_scaleAdd(Mat src1, double alpha, Mat src2, Mat dst, imp
 }
 
 ffi.Pointer<CvStatus> cv_setIdentity(Mat src, Scalar scalar, imp$1.CvCallback_0 callback) {
-  final $t1 = ffi.$copyToWasm(scalar, 32);
+  final $t1 = ffi.$copyToWasm($rt.scratch(32), scalar, 32);
   try {
     return ffi.Pointer<CvStatus>.fromAddress(
       $rt.ru($rt.call('cv_setIdentity', [$rt.i(src.ptr.address), $rt.i($t1), $rt.i(callback.address)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 32);
   }
 }
 
@@ -4477,12 +4477,12 @@ void std_VecDMatch_free(imp$1.VecDMatchPtr self$1) {
 }
 
 DMatch std_VecDMatch_get(ffi.Pointer<VecDMatch> self$1, int index) {
-  final $sret = $rt.malloc(16);
+  final $sret = $rt.scratch(16);
   try {
     $rt.call('std_VecDMatch_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return DMatch.$view(ffi.$copyFromWasm($sret, 16), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 16);
   }
 }
 
@@ -4501,13 +4501,13 @@ ffi.Pointer<VecDMatch> std_VecDMatch_new(int length) {
 }
 
 ffi.Pointer<VecDMatch> std_VecDMatch_new_1(int length, DMatch val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<VecDMatch>.fromAddress(
       $rt.ru($rt.call('std_VecDMatch_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -4518,11 +4518,11 @@ ffi.Pointer<VecDMatch> std_VecDMatch_new_2(int length, ffi.Pointer<DMatch> val_p
 }
 
 void std_VecDMatch_push_back(ffi.Pointer<VecDMatch> self$1, DMatch val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecDMatch_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -4535,11 +4535,11 @@ void std_VecDMatch_resize(ffi.Pointer<VecDMatch> self$1, int new_len) {
 }
 
 void std_VecDMatch_set(ffi.Pointer<VecDMatch> self$1, int index, DMatch val) {
-  final $t2 = ffi.$copyToWasm(val, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecDMatch_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -4998,12 +4998,12 @@ void std_VecKeyPoint_free(imp$1.VecKeyPointPtr self$1) {
 }
 
 KeyPoint std_VecKeyPoint_get(ffi.Pointer<VecKeyPoint> self$1, int index) {
-  final $sret = $rt.malloc(28);
+  final $sret = $rt.scratch(28);
   try {
     $rt.call('std_VecKeyPoint_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return KeyPoint.$view(ffi.$copyFromWasm($sret, 28), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 28);
   }
 }
 
@@ -5022,13 +5022,13 @@ ffi.Pointer<VecKeyPoint> std_VecKeyPoint_new(int length) {
 }
 
 ffi.Pointer<VecKeyPoint> std_VecKeyPoint_new_1(int length, KeyPoint val) {
-  final $t1 = ffi.$copyToWasm(val, 28);
+  final $t1 = ffi.$copyToWasm($rt.scratch(28), val, 28);
   try {
     return ffi.Pointer<VecKeyPoint>.fromAddress(
       $rt.ru($rt.call('std_VecKeyPoint_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 28);
   }
 }
 
@@ -5039,11 +5039,11 @@ ffi.Pointer<VecKeyPoint> std_VecKeyPoint_new_2(int length, ffi.Pointer<KeyPoint>
 }
 
 void std_VecKeyPoint_push_back(ffi.Pointer<VecKeyPoint> self$1, KeyPoint val) {
-  final $t1 = ffi.$copyToWasm(val, 28);
+  final $t1 = ffi.$copyToWasm($rt.scratch(28), val, 28);
   try {
     $rt.call('std_VecKeyPoint_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 28);
   }
 }
 
@@ -5056,11 +5056,11 @@ void std_VecKeyPoint_resize(ffi.Pointer<VecKeyPoint> self$1, int new_len) {
 }
 
 void std_VecKeyPoint_set(ffi.Pointer<VecKeyPoint> self$1, int index, KeyPoint val) {
-  final $t2 = ffi.$copyToWasm(val, 28);
+  final $t2 = ffi.$copyToWasm($rt.scratch(28), val, 28);
   try {
     $rt.call('std_VecKeyPoint_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 28);
   }
 }
 
@@ -5154,12 +5154,12 @@ void std_VecPoint2f_free(imp$1.VecPoint2fPtr self$1) {
 }
 
 CvPoint2f std_VecPoint2f_get(ffi.Pointer<VecPoint2f> self$1, int index) {
-  final $sret = $rt.malloc(8);
+  final $sret = $rt.scratch(8);
   try {
     $rt.call('std_VecPoint2f_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvPoint2f.$view(ffi.$copyFromWasm($sret, 8), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 8);
   }
 }
 
@@ -5178,13 +5178,13 @@ ffi.Pointer<VecPoint2f> std_VecPoint2f_new(int length) {
 }
 
 ffi.Pointer<VecPoint2f> std_VecPoint2f_new_1(int length, CvPoint2f val) {
-  final $t1 = ffi.$copyToWasm(val, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     return ffi.Pointer<VecPoint2f>.fromAddress(
       $rt.ru($rt.call('std_VecPoint2f_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -5195,11 +5195,11 @@ ffi.Pointer<VecPoint2f> std_VecPoint2f_new_2(int length, ffi.Pointer<CvPoint2f> 
 }
 
 void std_VecPoint2f_push_back(ffi.Pointer<VecPoint2f> self$1, CvPoint2f val) {
-  final $t1 = ffi.$copyToWasm(val, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('std_VecPoint2f_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -5212,11 +5212,11 @@ void std_VecPoint2f_resize(ffi.Pointer<VecPoint2f> self$1, int new_len) {
 }
 
 void std_VecPoint2f_set(ffi.Pointer<VecPoint2f> self$1, int index, CvPoint2f val) {
-  final $t2 = ffi.$copyToWasm(val, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('std_VecPoint2f_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -5241,12 +5241,12 @@ void std_VecPoint3f_free(imp$1.VecPoint3fPtr self$1) {
 }
 
 CvPoint3f std_VecPoint3f_get(ffi.Pointer<VecPoint3f> self$1, int index) {
-  final $sret = $rt.malloc(12);
+  final $sret = $rt.scratch(12);
   try {
     $rt.call('std_VecPoint3f_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvPoint3f.$view(ffi.$copyFromWasm($sret, 12), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 12);
   }
 }
 
@@ -5265,13 +5265,13 @@ ffi.Pointer<VecPoint3f> std_VecPoint3f_new(int length) {
 }
 
 ffi.Pointer<VecPoint3f> std_VecPoint3f_new_1(int length, CvPoint3f val) {
-  final $t1 = ffi.$copyToWasm(val, 12);
+  final $t1 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     return ffi.Pointer<VecPoint3f>.fromAddress(
       $rt.ru($rt.call('std_VecPoint3f_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 12);
   }
 }
 
@@ -5282,11 +5282,11 @@ ffi.Pointer<VecPoint3f> std_VecPoint3f_new_2(int length, ffi.Pointer<CvPoint3f> 
 }
 
 void std_VecPoint3f_push_back(ffi.Pointer<VecPoint3f> self$1, CvPoint3f val) {
-  final $t1 = ffi.$copyToWasm(val, 12);
+  final $t1 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('std_VecPoint3f_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 12);
   }
 }
 
@@ -5299,11 +5299,11 @@ void std_VecPoint3f_resize(ffi.Pointer<VecPoint3f> self$1, int new_len) {
 }
 
 void std_VecPoint3f_set(ffi.Pointer<VecPoint3f> self$1, int index, CvPoint3f val) {
-  final $t2 = ffi.$copyToWasm(val, 12);
+  final $t2 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('std_VecPoint3f_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 12);
   }
 }
 
@@ -5328,12 +5328,12 @@ void std_VecPoint3i_free(imp$1.VecPoint3iPtr self$1) {
 }
 
 CvPoint3i std_VecPoint3i_get(ffi.Pointer<VecPoint3i> self$1, int index) {
-  final $sret = $rt.malloc(12);
+  final $sret = $rt.scratch(12);
   try {
     $rt.call('std_VecPoint3i_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvPoint3i.$view(ffi.$copyFromWasm($sret, 12), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 12);
   }
 }
 
@@ -5352,13 +5352,13 @@ ffi.Pointer<VecPoint3i> std_VecPoint3i_new(int length) {
 }
 
 ffi.Pointer<VecPoint3i> std_VecPoint3i_new_1(int length, CvPoint3i val) {
-  final $t1 = ffi.$copyToWasm(val, 12);
+  final $t1 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     return ffi.Pointer<VecPoint3i>.fromAddress(
       $rt.ru($rt.call('std_VecPoint3i_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 12);
   }
 }
 
@@ -5369,11 +5369,11 @@ ffi.Pointer<VecPoint3i> std_VecPoint3i_new_2(int length, ffi.Pointer<CvPoint3i> 
 }
 
 void std_VecPoint3i_push_back(ffi.Pointer<VecPoint3i> self$1, CvPoint3i val) {
-  final $t1 = ffi.$copyToWasm(val, 12);
+  final $t1 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('std_VecPoint3i_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 12);
   }
 }
 
@@ -5386,11 +5386,11 @@ void std_VecPoint3i_resize(ffi.Pointer<VecPoint3i> self$1, int new_len) {
 }
 
 void std_VecPoint3i_set(ffi.Pointer<VecPoint3i> self$1, int index, CvPoint3i val) {
-  final $t2 = ffi.$copyToWasm(val, 12);
+  final $t2 = ffi.$copyToWasm($rt.scratch(12), val, 12);
   try {
     $rt.call('std_VecPoint3i_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 12);
   }
 }
 
@@ -5415,12 +5415,12 @@ void std_VecPoint_free(imp$1.VecPointPtr self$1) {
 }
 
 CvPoint std_VecPoint_get(ffi.Pointer<VecPoint> self$1, int index) {
-  final $sret = $rt.malloc(8);
+  final $sret = $rt.scratch(8);
   try {
     $rt.call('std_VecPoint_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvPoint.$view(ffi.$copyFromWasm($sret, 8), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 8);
   }
 }
 
@@ -5439,13 +5439,13 @@ ffi.Pointer<VecPoint> std_VecPoint_new(int length) {
 }
 
 ffi.Pointer<VecPoint> std_VecPoint_new_1(int length, CvPoint val) {
-  final $t1 = ffi.$copyToWasm(val, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     return ffi.Pointer<VecPoint>.fromAddress(
       $rt.ru($rt.call('std_VecPoint_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -5456,11 +5456,11 @@ ffi.Pointer<VecPoint> std_VecPoint_new_2(int length, ffi.Pointer<CvPoint> val_pt
 }
 
 void std_VecPoint_push_back(ffi.Pointer<VecPoint> self$1, CvPoint val) {
-  final $t1 = ffi.$copyToWasm(val, 8);
+  final $t1 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('std_VecPoint_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 8);
   }
 }
 
@@ -5473,11 +5473,11 @@ void std_VecPoint_resize(ffi.Pointer<VecPoint> self$1, int new_len) {
 }
 
 void std_VecPoint_set(ffi.Pointer<VecPoint> self$1, int index, CvPoint val) {
-  final $t2 = ffi.$copyToWasm(val, 8);
+  final $t2 = ffi.$copyToWasm($rt.scratch(8), val, 8);
   try {
     $rt.call('std_VecPoint_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 8);
   }
 }
 
@@ -5502,12 +5502,12 @@ void std_VecRect2f_free(imp$1.VecRect2fPtr self$1) {
 }
 
 CvRect2f std_VecRect2f_get(ffi.Pointer<VecRect2f> self$1, int index) {
-  final $sret = $rt.malloc(16);
+  final $sret = $rt.scratch(16);
   try {
     $rt.call('std_VecRect2f_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvRect2f.$view(ffi.$copyFromWasm($sret, 16), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 16);
   }
 }
 
@@ -5526,13 +5526,13 @@ ffi.Pointer<VecRect2f> std_VecRect2f_new(int length) {
 }
 
 ffi.Pointer<VecRect2f> std_VecRect2f_new_1(int length, CvRect2f val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<VecRect2f>.fromAddress(
       $rt.ru($rt.call('std_VecRect2f_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -5543,11 +5543,11 @@ ffi.Pointer<VecRect2f> std_VecRect2f_new_2(int length, ffi.Pointer<CvRect2f> val
 }
 
 void std_VecRect2f_push_back(ffi.Pointer<VecRect2f> self$1, CvRect2f val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecRect2f_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -5560,11 +5560,11 @@ void std_VecRect2f_resize(ffi.Pointer<VecRect2f> self$1, int new_len) {
 }
 
 void std_VecRect2f_set(ffi.Pointer<VecRect2f> self$1, int index, CvRect2f val) {
-  final $t2 = ffi.$copyToWasm(val, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecRect2f_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -5589,12 +5589,12 @@ void std_VecRect_free(imp$1.VecRectPtr self$1) {
 }
 
 CvRect std_VecRect_get(ffi.Pointer<VecRect> self$1, int index) {
-  final $sret = $rt.malloc(16);
+  final $sret = $rt.scratch(16);
   try {
     $rt.call('std_VecRect_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return CvRect.$view(ffi.$copyFromWasm($sret, 16), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 16);
   }
 }
 
@@ -5613,13 +5613,13 @@ ffi.Pointer<VecRect> std_VecRect_new(int length) {
 }
 
 ffi.Pointer<VecRect> std_VecRect_new_1(int length, CvRect val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<VecRect>.fromAddress(
       $rt.ru($rt.call('std_VecRect_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -5630,11 +5630,11 @@ ffi.Pointer<VecRect> std_VecRect_new_2(int length, ffi.Pointer<CvRect> val_ptr) 
 }
 
 void std_VecRect_push_back(ffi.Pointer<VecRect> self$1, CvRect val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecRect_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -5647,11 +5647,11 @@ void std_VecRect_resize(ffi.Pointer<VecRect> self$1, int new_len) {
 }
 
 void std_VecRect_set(ffi.Pointer<VecRect> self$1, int index, CvRect val) {
-  final $t2 = ffi.$copyToWasm(val, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecRect_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -5678,12 +5678,12 @@ void std_VecRotatedRect_free(imp$1.VecRotatedRectPtr self$1) {
 }
 
 RotatedRect std_VecRotatedRect_get(ffi.Pointer<VecRotatedRect> self$1, int index) {
-  final $sret = $rt.malloc(20);
+  final $sret = $rt.scratch(20);
   try {
     $rt.call('std_VecRotatedRect_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return RotatedRect.$view(ffi.$copyFromWasm($sret, 20), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 20);
   }
 }
 
@@ -5702,13 +5702,13 @@ ffi.Pointer<VecRotatedRect> std_VecRotatedRect_new(int length) {
 }
 
 ffi.Pointer<VecRotatedRect> std_VecRotatedRect_new_1(int length, RotatedRect val) {
-  final $t1 = ffi.$copyToWasm(val, 20);
+  final $t1 = ffi.$copyToWasm($rt.scratch(20), val, 20);
   try {
     return ffi.Pointer<VecRotatedRect>.fromAddress(
       $rt.ru($rt.call('std_VecRotatedRect_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 20);
   }
 }
 
@@ -5719,11 +5719,11 @@ ffi.Pointer<VecRotatedRect> std_VecRotatedRect_new_2(int length, ffi.Pointer<Rot
 }
 
 void std_VecRotatedRect_push_back(ffi.Pointer<VecRotatedRect> self$1, RotatedRect val) {
-  final $t1 = ffi.$copyToWasm(val, 20);
+  final $t1 = ffi.$copyToWasm($rt.scratch(20), val, 20);
   try {
     $rt.call('std_VecRotatedRect_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 20);
   }
 }
 
@@ -5736,11 +5736,11 @@ void std_VecRotatedRect_resize(ffi.Pointer<VecRotatedRect> self$1, int new_len) 
 }
 
 void std_VecRotatedRect_set(ffi.Pointer<VecRotatedRect> self$1, int index, RotatedRect val) {
-  final $t2 = ffi.$copyToWasm(val, 20);
+  final $t2 = ffi.$copyToWasm($rt.scratch(20), val, 20);
   try {
     $rt.call('std_VecRotatedRect_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 20);
   }
 }
 
@@ -6079,12 +6079,12 @@ void std_VecVec4f_free(imp$1.VecVec4fPtr self$1) {
 }
 
 Vec4f std_VecVec4f_get(ffi.Pointer<VecVec4f> self$1, int index) {
-  final $sret = $rt.malloc(16);
+  final $sret = $rt.scratch(16);
   try {
     $rt.call('std_VecVec4f_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return Vec4f.$view(ffi.$copyFromWasm($sret, 16), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 16);
   }
 }
 
@@ -6103,13 +6103,13 @@ ffi.Pointer<VecVec4f> std_VecVec4f_new(int length) {
 }
 
 ffi.Pointer<VecVec4f> std_VecVec4f_new_1(int length, Vec4f val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<VecVec4f>.fromAddress(
       $rt.ru($rt.call('std_VecVec4f_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -6120,11 +6120,11 @@ ffi.Pointer<VecVec4f> std_VecVec4f_new_2(int length, ffi.Pointer<Vec4f> val_ptr)
 }
 
 void std_VecVec4f_push_back(ffi.Pointer<VecVec4f> self$1, Vec4f val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecVec4f_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -6137,11 +6137,11 @@ void std_VecVec4f_resize(ffi.Pointer<VecVec4f> self$1, int new_len) {
 }
 
 void std_VecVec4f_set(ffi.Pointer<VecVec4f> self$1, int index, Vec4f val) {
-  final $t2 = ffi.$copyToWasm(val, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecVec4f_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -6166,12 +6166,12 @@ void std_VecVec4i_free(imp$1.VecVec4iPtr self$1) {
 }
 
 Vec4i std_VecVec4i_get(ffi.Pointer<VecVec4i> self$1, int index) {
-  final $sret = $rt.malloc(16);
+  final $sret = $rt.scratch(16);
   try {
     $rt.call('std_VecVec4i_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return Vec4i.$view(ffi.$copyFromWasm($sret, 16), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 16);
   }
 }
 
@@ -6190,13 +6190,13 @@ ffi.Pointer<VecVec4i> std_VecVec4i_new(int length) {
 }
 
 ffi.Pointer<VecVec4i> std_VecVec4i_new_1(int length, Vec4i val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     return ffi.Pointer<VecVec4i>.fromAddress(
       $rt.ru($rt.call('std_VecVec4i_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -6207,11 +6207,11 @@ ffi.Pointer<VecVec4i> std_VecVec4i_new_2(int length, ffi.Pointer<Vec4i> val_ptr)
 }
 
 void std_VecVec4i_push_back(ffi.Pointer<VecVec4i> self$1, Vec4i val) {
-  final $t1 = ffi.$copyToWasm(val, 16);
+  final $t1 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecVec4i_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 16);
   }
 }
 
@@ -6224,11 +6224,11 @@ void std_VecVec4i_resize(ffi.Pointer<VecVec4i> self$1, int new_len) {
 }
 
 void std_VecVec4i_set(ffi.Pointer<VecVec4i> self$1, int index, Vec4i val) {
-  final $t2 = ffi.$copyToWasm(val, 16);
+  final $t2 = ffi.$copyToWasm($rt.scratch(16), val, 16);
   try {
     $rt.call('std_VecVec4i_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 16);
   }
 }
 
@@ -6253,12 +6253,12 @@ void std_VecVec6f_free(imp$1.VecVec6fPtr self$1) {
 }
 
 Vec6f std_VecVec6f_get(ffi.Pointer<VecVec6f> self$1, int index) {
-  final $sret = $rt.malloc(24);
+  final $sret = $rt.scratch(24);
   try {
     $rt.call('std_VecVec6f_get', [$rt.i($sret), $rt.i(self$1.address), $rt.i(index)]);
     return Vec6f.$view(ffi.$copyFromWasm($sret, 24), 0);
   } finally {
-    $rt.free($sret);
+    $rt.releaseScratch($sret, 24);
   }
 }
 
@@ -6277,13 +6277,13 @@ ffi.Pointer<VecVec6f> std_VecVec6f_new(int length) {
 }
 
 ffi.Pointer<VecVec6f> std_VecVec6f_new_1(int length, Vec6f val) {
-  final $t1 = ffi.$copyToWasm(val, 24);
+  final $t1 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     return ffi.Pointer<VecVec6f>.fromAddress(
       $rt.ru($rt.call('std_VecVec6f_new_1', [$rt.i(length), $rt.i($t1)])),
     );
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 24);
   }
 }
 
@@ -6294,11 +6294,11 @@ ffi.Pointer<VecVec6f> std_VecVec6f_new_2(int length, ffi.Pointer<Vec6f> val_ptr)
 }
 
 void std_VecVec6f_push_back(ffi.Pointer<VecVec6f> self$1, Vec6f val) {
-  final $t1 = ffi.$copyToWasm(val, 24);
+  final $t1 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     $rt.call('std_VecVec6f_push_back', [$rt.i(self$1.address), $rt.i($t1)]);
   } finally {
-    $rt.free($t1);
+    $rt.releaseScratch($t1, 24);
   }
 }
 
@@ -6311,11 +6311,11 @@ void std_VecVec6f_resize(ffi.Pointer<VecVec6f> self$1, int new_len) {
 }
 
 void std_VecVec6f_set(ffi.Pointer<VecVec6f> self$1, int index, Vec6f val) {
-  final $t2 = ffi.$copyToWasm(val, 24);
+  final $t2 = ffi.$copyToWasm($rt.scratch(24), val, 24);
   try {
     $rt.call('std_VecVec6f_set', [$rt.i(self$1.address), $rt.i(index), $rt.i($t2)]);
   } finally {
-    $rt.free($t2);
+    $rt.releaseScratch($t2, 24);
   }
 }
 
