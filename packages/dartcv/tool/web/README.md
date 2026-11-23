@@ -10,7 +10,7 @@ web (CanvasKit and skwasm).
 ## Using it
 
 1. Put `dartcv.js` and `dartcv.wasm` next to your page, e.g. in a Flutter app's `web/` folder.
-   Each GitHub release has them in `dartcv-web.zip`; or build them yourself (below).
+   Each GitHub release has them in `dartcv-web-<version>.zip`, or you build them yourself (below).
 2. Await `initDartcv()` once before any other call (it is a no-op on native platforms):
 
    ```dart

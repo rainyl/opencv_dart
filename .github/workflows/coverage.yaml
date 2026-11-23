@@ -12,29 +12,10 @@ on:
       - "**.md"
       - "LICENSE"
 
+# One OS is enough: coverage is collected from the same test suite `publish.yml` already runs on
+# three, and only this job's report is uploaded. The macOS job that used to run here computed
+# lcov.info and then dropped it, at the price of a full OpenCV build.
 jobs:
-  macos:
-    name: macos
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Enable Git long paths
-        run: git config --global core.longpaths true
-      - uses: robinraju/release-downloader@v1.10
-        with:
-          repository: "rainyl/opencv_dart"
-          tag: "dnn_test_files"
-          fileName: "models.zip"
-          out-file-path: "packages/dartcv/test/"
-          extract: true
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-      - name: test coverage
-        run: |
-          cd "${{github.workspace}}/packages/dartcv"
-          dart pub global activate coverage
-          dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
   windows:
     name: windows
     runs-on: windows-2022
@@ -42,20 +23,55 @@ jobs:
       - uses: actions/checkout@v4
       - name: Enable Git long paths
         run: git config --global core.longpaths true
-      - uses: robinraju/release-downloader@v1.10
+      - uses: subosito/flutter-action@v2
+        with:
+          # The SDK `.fvmrc` pins.
+          flutter-version-file: .fvmrc
+          cache: true
+      - name: Cache the Dart package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('packages/**/pubspec.yaml') }}
+          restore-keys: pub-${{ runner.os }}-
+      # Same reasoning as `publish.yml`: cache the CMake build tree, then drop the hook *results* so
+      # the hook re-runs against this checkout instead of reusing a stale binary.
+      - name: Restore the OpenCV build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/.dart_tool/hooks_runner/shared
+          key: >-
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
+            'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+      - name: Force the native build hooks to re-run
+        shell: bash
+        run: |
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/dartcv4 \
+                 packages/dartcv/.dart_tool/hooks_runner/ffigen
+      - name: Cache the dnn test models
+        id: models
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/test/models
+          # Bump the trailing version if the `dnn_test_files` release is replaced.
+          key: models-dnn_test_files-v1
+      - name: Download the dnn test models
+        if: steps.models.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
           out-file-path: "packages/dartcv/test/"
           extract: true
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
       - name: test coverage
         shell: pwsh
+        working-directory: packages/dartcv
         run: |
-          cd "${{github.workspace}}\packages\dartcv"
+          dart pub get
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage --package . --package-name dartcv4
       - name: Upload to Codecov
