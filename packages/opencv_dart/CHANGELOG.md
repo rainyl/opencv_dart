@@ -11,6 +11,11 @@
 - fix: `tool/ffigen.dart` uses the ffigen 23 API (`Input`, `Output(dart: DartOutput(...))`, a `Visitor` for `@RecordUse`). It did not compile against ffigen 23, and `make ffigen` / `dart run ffigen --config ...` still cannot replace it: they skip the record-use mapping and silently break tree-shaking.
 - new: `package:opencv_dart` re-exports the `ml` module, and its example app runs on the web (`initDartcv()` before `runApp`, `imdecode` for the image `image_picker` hands back as a `blob:` URL).
 
+## 2.3.3
+
+- fix: the native build declares its non-Dart inputs (`src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**`) as build-hook dependencies, so editing them invalidates the hook cache.
+- fix: tree-shaking happens in the link hook, with the keep-list of the current build (#462). The build hook no longer applies the previous build's list, so a clean build is tree-shaken too and a stale list can no longer strip symbols the new code uses. Falls back to the unrestricted library when no usages are recorded.
+
 ## 2.3.2
 
 - new: add the `ml` module: `SVM` (with `trainAuto` / `getDefaultGrid` / `getDecisionFunction`), `KNearest`, `ANN_MLP`, `DTrees`, `RTrees` (with `getVotes` / `getVarImportance` / `getOOBError`), `Boost`, `EM`, `LogisticRegression`, `NormalBayesClassifier`, `SVMSGD` and `TrainData`, sync and async. It is opt-in: add `ml` to `hooks.user_defines.dartcv4.include_modules`.

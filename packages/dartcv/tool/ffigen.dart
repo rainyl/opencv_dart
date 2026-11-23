@@ -10,7 +10,7 @@
 // YAML format cannot express:
 //   * a `Visitor` setting `Func.recordUse` on every function, which emits `@RecordUse()` on the
 //     generated `@ffi.Native` declarations (the compiler then records which native symbols the
-//     final program uses, feeding the `dartcv_keep.txt` tree-shaking keep-list),
+//     final program uses, feeding the tree-shaking keep-list that `hook/link.dart` links with),
 //   * `Output.recordUseMapping`, which makes ffigen write the
 //     `<module>.record_use_mapping.g.dart` name-to-symbol tables directly (read by
 //     `hook/link.dart`).
