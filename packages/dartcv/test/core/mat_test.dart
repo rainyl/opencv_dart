@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: use_named_constants, avoid_print
 
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:dartcv4/src/ffi.dart' as ffi;

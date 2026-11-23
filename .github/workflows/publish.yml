@@ -91,7 +91,13 @@ jobs:
       - name: Analyze
         if: runner.os == 'Linux'
         working-directory: packages/dartcv
-        run: dart analyze
+        run: |
+          # `example/dart_cli` and `example/flutter` are packages of their own (a path dependency on
+          # dartcv4, own `analysis_options.yaml`); analysing them without resolving their own
+          # dependencies reports every `package:` import in them as missing.
+          (cd example/dart_cli && dart pub get)
+          (cd example/flutter && flutter pub get)
+          dart analyze
       - name: Run Test
         working-directory: packages/dartcv
         run: dart test -x skip-workflow

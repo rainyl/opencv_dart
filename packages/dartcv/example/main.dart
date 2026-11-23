@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dartcv4/dartcv.dart' as cv;
 
 void main() {
