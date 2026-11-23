@@ -1,6 +1,6 @@
 # dartcv
 
-## Unreleased
+## 2.4.0-dev.0
 
 - new: **web support (experimental)**: the C wrapper and OpenCV are compiled to WebAssembly with Emscripten, the hand-written bindings are shared with native, and `highgui`/`gapi`/capture-backend `videoio` throw `UnsupportedError`; await `initDartcv()` once before any other call.
 - new: `dart tool/ffigen.dart` also refreshes `lib/src/web/g`, so one command regenerates both mirrors (`--no-web` skips the web half, `gen_web_bindings.dart --check` reports a stale one).
