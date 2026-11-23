@@ -3,7 +3,6 @@
 ## Unreleased
 
 - fix: tree-shaking happens in the link hook with the keep-list of the current build (#462). The build hook no longer applies the previous build's list, so a clean build is tree-shaken and a stale list can no longer strip symbols the new code uses. Falls back to the unrestricted library when no usages are recorded.
-- deps: `native_toolchain_cmake ^0.4.0-beta.1`.
 
 ## 2.3.3
 
