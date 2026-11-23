@@ -28,7 +28,6 @@ jobs:
           # releases, and an unpinned `stable` turns a formatter bump into a
           # repository-wide rewrite. Keep it in sync with `fvm use`.
           flutter-version-file: .fvmrc
-          cache: true
 
       - name: Format code
         run: |

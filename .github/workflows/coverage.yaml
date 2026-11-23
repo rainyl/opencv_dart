@@ -27,7 +27,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins.
           flutter-version-file: .fvmrc
-          cache: true
       # Same reasoning as `publish.yml`: cache the CMake build tree, then drop the hook *results* so
       # the hook re-runs against this checkout instead of reusing a stale binary.
       - name: Restore the OpenCV build tree

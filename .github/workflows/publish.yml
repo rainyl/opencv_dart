@@ -46,7 +46,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
           flutter-version-file: .fvmrc
-          cache: true
       # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
       # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
       # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
@@ -152,7 +151,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins; also what `dart test -p chrome` runs on.
           flutter-version-file: .fvmrc
-          cache: true
       - name: Install dependencies
         working-directory: packages/dartcv
         run: dart pub get
@@ -320,7 +318,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
           flutter-version-file: .fvmrc
-          cache: true
       - name: Wait until opencv_dart resolves the new dartcv4
         if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
@@ -371,7 +368,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
           flutter-version-file: .fvmrc
-          cache: true
       - name: Install dependencies
         if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
@@ -410,7 +406,6 @@ jobs:
         with:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
           flutter-version-file: .fvmrc
-          cache: true
       - name: dartcv4
         working-directory: packages/dartcv
         run: |
