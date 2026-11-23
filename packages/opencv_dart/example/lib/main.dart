@@ -57,14 +57,18 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () async {
                   final picker = ImagePicker();
-                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  final img = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
                   if (img != null) {
                     final path = img.path;
                     // On the web the picked file is a blob: URL, not a path the decoder can open.
                     final mat = kIsWeb
                         ? cv.imdecode(await img.readAsBytes(), cv.IMREAD_COLOR)
                         : cv.imread(path);
-                    print("cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path");
+                    print(
+                      "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path",
+                    );
                     debugPrint("mat.data.length: ${mat.data.length}");
                     // heavy computation
                     final (gray, blur) = await heavyTaskAsync(mat, count: 1);
@@ -81,9 +85,12 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
-                  final (gray, blur) = await heavyTaskAsync(cv.imdecode(bytes, cv.IMREAD_COLOR));
+                  final (gray, blur) = await heavyTaskAsync(
+                    cv.imdecode(bytes, cv.IMREAD_COLOR),
+                  );
                   setState(() {
                     images = [
                       bytes,
@@ -101,11 +108,14 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
+                        itemBuilder: (ctx, idx) =>
+                            Card(child: Image.memory(images[idx])),
                       ),
                     ),
                     Expanded(
-                      child: SingleChildScrollView(child: Text(cv.getBuildInformation())),
+                      child: SingleChildScrollView(
+                        child: Text(cv.getBuildInformation()),
+                      ),
                     ),
                   ],
                 ),
