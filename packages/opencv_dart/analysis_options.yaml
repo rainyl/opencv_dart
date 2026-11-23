@@ -2,8 +2,6 @@
 
 # https://github.com/solid-software/solid_lints/blob/master/lib/analysis_options.yaml
 analyzer:
-  plugins:
-    - custom_lint
   exclude:
     # General generated files
     - '**/*.g.dart'
